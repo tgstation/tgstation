@@ -10,7 +10,10 @@
 #define OFFSET_ABSOLUTE "Absolute offset"
 #define OFFSET_RELATIVE "Relative offset"
 
-/datum/spawnpanel/proc/spawn_item(list/spawn_params, mob/user)
+/*
+	Handles spawning an atom. See the call examples for the proper spawn parameters fetching.
+*/
+/datum/spawnpanel/proc/spawn_atom(list/spawn_params, mob/user)
 	if(!check_rights(R_SPAWN) || !spawn_params)
 		return
 
@@ -113,12 +116,7 @@
 				created_turf.name = atom_name
 			continue
 
-		var/atom/created_atom
-
-		if(use_droppod)
-			created_atom = new atom_to_spawn(pod)
-		else
-			created_atom = new atom_to_spawn(target)
+		var/atom/created_atom = new atom_to_spawn(use_droppod ? pod : target)
 
 		if(QDELETED(created_atom))
 			return

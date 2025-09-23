@@ -17,21 +17,39 @@
 
 GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 
+/*
+	An instance of a /tg/UI™ Spawn Panel. Stores preferences, spawns things, controls the UI. Unique for each user (their ckey).
+*/
 /datum/spawnpanel
+	/// Who this instance of spawn panel belongs to. The instances are unique to correctly keep modified values between multiple admins.
 	var/owner_ckey
+	/// Where and how the atom should be spawned.
 	var/where_target_type = WHERE_FLOOR_BELOW_MOB
+	/// The atom selected from the panel.
 	var/atom/selected_atom = null
+	/// The icon selected for the atom from the panel.
 	var/selected_atom_icon = null
+	/// The icon state selected for the atom from the panel.
 	var/selected_atom_icon_state = null
+	/// Should selected icon/icon state override the initial ones? Added as an edge case to not replace animated GAGS icons.
 	var/apply_icon_override = FALSE
+	/// A list of icon states to display in preview panels.
 	var/list/available_icon_states = null
+	/// Override for the icon size of the spawned mob.
 	var/atom_icon_size = 100
+	/// How many atoms will be spawned at once.
 	var/atom_amount = 1
+	/// Custom atom name (leave `null` for initial).
 	var/atom_name = null
+	/// Custom atom description (leave `null` for initial).
 	var/atom_desc = null
+	/// Custom atom dir (leave `null` for `2`).
 	var/atom_dir = 1
+	/// An associative list of x-y-z offsets.
 	var/offset = list()
+	/// The pivot point for offsetting — relative or absolute.
 	var/offset_type = OFFSET_RELATIVE
+	/// Precise mode toggle. Used for build-mode-like spawning experience and targeting datums.
 	var/precise_mode = PRECISE_MODE_OFF
 
 /datum/spawnpanel/New()
@@ -163,7 +181,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 				spawn_params["selected_atom_icon"] = selected_atom_icon
 				spawn_params["selected_atom_icon_state"] = selected_atom_icon_state
 
-			spawn_item(spawn_params, usr)
+			spawn_atom(spawn_params, usr)
 			return TRUE
 
 		if("toggle-precise-mode")
@@ -265,7 +283,7 @@ GLOBAL_LIST_INIT(spawnpanels_by_ckey, list())
 					spawn_params["Y"] = clicked_turf.y
 					spawn_params["Z"] = clicked_turf.z
 
-				spawn_item(spawn_params, user)
+				spawn_atom(spawn_params, user)
 
 			if(PRECISE_MODE_MARK)
 				var/client/admin_client = user.client
