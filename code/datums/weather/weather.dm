@@ -430,7 +430,9 @@
 	for(var/obj/item/stack/ore/hit_ore in weather_turf)
 		if(QDELETED(hit_ore))
 			continue
-		hit_ore.fire_act(1000) // ores that get struck by thunder are smelted
+		// ores that get struck by thunder are smelted
+		// a bolt of lightning can reach temperatures of 30,000 Kelvin which is 5x hotter than the sun
+		hit_ore.fire_act(30000)
 
 	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, extrarange = 10, falloff_distance = 10)
 	weather_turf.visible_message(span_danger("A thunderbolt strikes [weather_turf]!"))
