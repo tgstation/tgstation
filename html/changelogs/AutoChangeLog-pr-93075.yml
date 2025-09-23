@@ -1,0 +1,4 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - spellcheck: "Fixes 'souless' typo when trying to use enchanted deck of carot cards as a changeling."
