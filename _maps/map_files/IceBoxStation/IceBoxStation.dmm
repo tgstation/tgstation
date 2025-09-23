@@ -40166,7 +40166,7 @@
 /area/station/service/chapel)
 "lqz" = (
 /obj/structure/cable,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/ai)
 "lqA" = (
 /obj/effect/decal/cleanable/dirt,
@@ -41170,11 +41170,11 @@
 /turf/open/floor/carpet/blue,
 /area/station/security/prison/work)
 "lEg" = (
-/obj/machinery/door/window/left/directional/north{
-	name = "AI Core Door";
+/obj/structure/cable,
+/obj/machinery/door/window/brigdoor/right/directional/north{
+	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "lEj" = (
@@ -73074,9 +73074,6 @@
 	dir = 4
 	},
 /area/station/service/hydroponics)
-"uBi" = (
-/turf/closed/wall,
-/area/station/ai_monitored/turret_protected/ai)
 "uBs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -255046,8 +255043,8 @@ ujs
 mYh
 ogF
 hfy
-uBi
-uBi
+iHp
+iHp
 lqz
 dBQ
 eAx
@@ -255304,7 +255301,7 @@ lNC
 mlp
 lEg
 cvh
-uBi
+iHp
 eYH
 jIZ
 oFx
@@ -255560,9 +255557,9 @@ ujs
 mYh
 ruZ
 kfP
-uBi
-uBi
-uBi
+iHp
+iHp
+iHp
 deg
 mYh
 iHp
