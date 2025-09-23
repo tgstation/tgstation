@@ -2154,7 +2154,7 @@
 
 /datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(10, seconds_per_tick) && ishuman(metabolizer))
+	if(SPT_PROB(10, seconds_per_tick) && ishuman(drinker))
 		var/mob/living/carbon/human/metabolizer = drinker
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
