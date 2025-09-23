@@ -520,3 +520,6 @@
 
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
+
+/mob/living/silicon/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	return COMPONENT_NO_EXPOSE_REAGENTS
