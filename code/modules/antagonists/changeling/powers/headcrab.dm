@@ -1,10 +1,10 @@
 #define LAST_RESORT_EXPLOSION_RANGE 2
-#define LAST_RESORT_BLIND_RANGE 3
+#define LAST_RESORT_BLIND_RANGE 4
 
 /datum/action/changeling/headcrab
 	name = "Last Resort"
 	desc = "We sacrifice our current body in a moment of need, violently expanding to break through obstacles and reforming as a headslug. Costs 20 chemicals."
-	helptext = "We will violently expand, destroying weak walls around us, then be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	helptext = "We will violently expand, destroying obstacles around us, then be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	button_icon_state = "last_resort"
 	chemical_cost = 20
 	dna_cost = 1
@@ -22,19 +22,20 @@
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
 	var/confirm = tgui_alert(user, "Are we sure we wish to destroy our body and create a headslug?", "Last Resort", list("Yes", "No"))
-	if(confirm != "Yes")
+	if(active || confirm != "Yes")
 		return
-
+	active = TRUE
 	..()
-	user.anchored = TRUE
 	user.visible_message(span_boldwarning("[user]'s body begins to pulsate and swell unnaturally!"))
 	playsound(user, 'sound/effects/wounds/crack1.ogg', 100, TRUE)
 	animate(user, transform = user.transform * 1.5, color = COLOR_RED, time = 1 SECONDS)
-	stoplag(1 SECONDS)
 	if(is_walled(user))
+		user.Immobilize(1.5 SECONDS) // to prevent the breaking of the wrong walls (who would think of using the antistun after the last resort)
 		escaping_prison(user)
-		stoplag(1.1 SECONDS)
-	blood_explosion(user)
+	stoplag(1.1 SECONDS)
+	if(QDELETED(user))
+		return
+	gore_explosion(user)
 
 	var/datum/mind/stored_mind = user.mind
 	var/list/organs = user.get_organs_for_zone(BODY_ZONE_HEAD, TRUE)
@@ -46,13 +47,14 @@
 	user.gib(DROP_ALL_REMAINS)
 	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 0.5 SECONDS) // without this delay the worm will be almost dead due to the limbs thrown at it from the explosion :(
 
-/datum/action/changeling/headcrab/proc/blood_explosion(mob/living/user)
+/// Creates a light explosion, blinds and confuses mobs in range
+/datum/action/changeling/headcrab/proc/gore_explosion(mob/living/user)
 	user.visible_message(span_boldwarning("[user]'s body ruptures in a violent explosion of biomass!"))
-	playsound(user, 'sound/effects/goresplat.ogg', 100, TRUE)
+	playsound(user, 'sound/effects/goresplat.ogg', 100, TRUE) //yuck!!
 	explosion(user, light_impact_range = LAST_RESORT_EXPLOSION_RANGE, flame_range = 0, flash_range = 0, adminlog = TRUE, silent = TRUE, explosion_cause = src)
-	var/view_range = view(LAST_RESORT_BLIND_RANGE, user)
+	var/blind_range = view(LAST_RESORT_BLIND_RANGE, user)
 
-	for(var/turf/bloody_turf in view_range)
+	for(var/turf/bloody_turf in blind_range)
 		new /obj/effect/decal/cleanable/blood(bloody_turf)
 		for(var/mob/living/mob_in_turf in bloody_turf)
 			if(mob_in_turf == user)
@@ -61,7 +63,7 @@
 			mob_in_turf.add_blood_DNA(user.get_blood_dna_list())
 			playsound(mob_in_turf, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 
-	for(var/mob/living/carbon/human/blinded_human in view_range)
+	for(var/mob/living/carbon/human/blinded_human in blind_range)
 		if(blinded_human == user)
 			continue
 		var/obj/item/organ/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
@@ -72,7 +74,7 @@
 		blinded_human.set_eye_blur_if_lower(40 SECONDS)
 		blinded_human.adjust_confusion(12 SECONDS)
 
-	for(var/mob/living/silicon/blinded_silicon in view_range)
+	for(var/mob/living/silicon/blinded_silicon in blind_range)
 		to_chat(blinded_silicon, span_userdanger("Your sensors are disabled by a shower of blood!"))
 		blinded_silicon.Paralyze(6 SECONDS)
 
@@ -85,34 +87,37 @@
 	stored_mind.transfer_to(crab, force_key_move = TRUE)
 	spawn_location.transfer_observers_to(crab)
 	to_chat(crab, span_warning("We burst out of the remains of our former body in a shower of gore!"))
+	active = FALSE
 
+/// Ruptures nearby walls using the torn_wall component. Also it destroys objects with density.
 /datum/action/changeling/headcrab/proc/escaping_prison(mob/living/user)
-	user.visible_message(span_boldwarning("[user]'s expanding form begins crushing the surrounding walls!"))
-	var/list/obstacles = list()
-	var/list/walls = list()
+	user.visible_message(span_boldwarning("[user]'s expanding form begins crushing the surrounding obstacles!"))
+	var/list/walls_to_destroy = list()
+
 	for(var/turf/nearby_turf in range(1, user))
-		if(nearby_turf.density && !istype(nearby_turf, /turf/closed/wall/r_wall)) //can be contained in reinforced walls
-			obstacles += nearby_turf
+		if(iswallturf(nearby_turf))
+			walls_to_destroy += nearby_turf
 		else
-			for(var/obj/obstacle in nearby_turf)
-				if(obstacle.density)
-					obstacles += obstacle
+			for(var/obj/obj_obstacle in nearby_turf)
+				if(obj_obstacle.density && !(obj_obstacle.resistance_flags & INDESTRUCTIBLE) && obj_obstacle.anchored)
+					obj_obstacle.atom_destruction()
 
-	for(var/atom/obstacle as anything in obstacles)
-		if(istype(obstacle, /turf/closed/wall))
-			var/datum/component/torn_wall/torn_comp = obstacle.AddComponent(/datum/component/torn_wall)
-			if(torn_comp)
-				torn_comp.increase_stage()
-			walls += obstacle
-		else if(isobj(obstacle))
-			var/obj/obj_obstacle = obstacle
-			if(istype(obj_obstacle))
-				obj_obstacle.atom_destruction()
+	for(var/turf/closed/wall/wall in walls_to_destroy)
+		var/datum/component/torn_wall/torn_comp = wall.GetComponent(/datum/component/torn_wall)
+		if(!torn_comp)
+			torn_comp = wall.AddComponent(/datum/component/torn_wall)
+		if(torn_comp.current_stage == 0)
+			torn_comp.increase_stage()
 
-	addtimer(CALLBACK(src, PROC_REF(finalize_destruction), walls), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finalize_destruction), walls_to_destroy, user, user.loc), 1 SECONDS)
 
-/datum/action/changeling/headcrab/proc/finalize_destruction(list/affected_walls)
+/// Completes the destruction of the walls after a 1-second delay for more drama
+/datum/action/changeling/headcrab/proc/finalize_destruction(list/affected_walls, mob/living/user, atom/user_prev_loc)
+	if(QDELETED(user) || (user.loc != user_prev_loc))
+		return
 	for(var/turf/closed/wall/W in affected_walls)
+		if(QDELETED(W))
+			continue
 		var/datum/component/torn_wall/torn_comp = W.GetComponent(/datum/component/torn_wall)
 		if(torn_comp)
 			torn_comp.increase_stage()
@@ -121,13 +126,13 @@
 	var/turf/ling_turf = get_turf(user)
 	if(!ling_turf)
 		return FALSE
+	var/blocked_directions
+
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(ling_turf, dir)
-		if(!neighbor)
-			continue
-		if(!neighbor.is_blocked_turf(exclude_mobs = TRUE))
-			return FALSE
-	return TRUE
+		if(!neighbor || neighbor.is_blocked_turf(exclude_mobs = TRUE))
+			blocked_directions++
+	return blocked_directions >= 3 //1x2 cage won't be able to contain linga
 
 #undef LAST_RESORT_EXPLOSION_RANGE
 #undef LAST_RESORT_BLIND_RANGE
