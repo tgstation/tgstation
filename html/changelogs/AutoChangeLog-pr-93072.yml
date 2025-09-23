@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Bluespace anomalies should no longer teleport 'un-teleportable' mobs like anchored AIs or megafauna."
