@@ -110,8 +110,8 @@
 	name = "Secure safe"
 	result = /obj/item/wallframe/secure_safe
 	reqs = list(
-		/obj/item/stack/sheet/mineral/titanium = 10,
-		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stack/sheet/plasteel = 10,
+		/obj/item/stack/sheet/mineral/titanium = 5,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/rods = 5,
 		/obj/item/wallframe/button = 1,
@@ -128,6 +128,7 @@
 		/obj/item/stack/sheet/mineral/plastitanium = 10,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/rods = 5,
+		/obj/item/wallframe/secure_safe = 1,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_DRILL)
 	time = 90 SECONDS

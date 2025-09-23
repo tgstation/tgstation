@@ -6,6 +6,15 @@
 	base_icon_state = "wall_safe"
 	result_path = /obj/structure/secure_safe
 	pixel_shift = 32
+	//w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_GIGANTIC
+	obj_flags = CONDUCTS_ELECTRICITY
+	resistance_flags = FIRE_PROOF
+	custom_materials = list(
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+	)
+	material_flags = MATERIAL_EFFECTS
 
 /obj/item/wallframe/secure_safe/Initialize(mapload)
 	. = ..()
@@ -20,6 +29,15 @@
 	for(var/obj/item in contents)
 		item.forceMove(attached_to)
 
+/datum/armor/secure_safe
+	melee = 30
+	bullet = 30
+	laser = 20
+	energy = 20
+	bomb = 30
+	fire = 95
+	acid = 70
+
 /**
  * Wall safes
  * Holds items and uses the lockable storage component
@@ -33,6 +51,16 @@
 	base_icon_state = "wall_safe"
 	anchored = TRUE
 	density = FALSE
+	resistance_flags = FIRE_PROOF
+	obj_flags = CONDUCTS_ELECTRICITY
+	armor_type = /datum/armor/secure_safe
+	max_integrity = 300
+	damage_deflection = 21
+	custom_materials = list(
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+	)
+	material_flags = MATERIAL_EFFECTS
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 
@@ -77,11 +105,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	icon_state = "spare_safe"
 	base_icon_state = "spare_safe"
 	armor_type = /datum/armor/safe_caps_spare
-	max_integrity = 300
 	damage_deflection = 30 // prevents stealing the captain's spare using null rods/lavaland monsters/AP projectiles
 	density = TRUE
 	anchored_tabletop_offset = 6
-	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+	)
 	material_flags = MATERIAL_EFFECTS
 
 /datum/armor/safe_caps_spare
