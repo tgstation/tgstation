@@ -845,28 +845,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			balloon_alert(user, "not yours to rename!")
 			return
 
-		var/name_set = FALSE
-		var/desc_set = FALSE
-
-
 		var/input_name = tgui_input_text(user, "Locker Name", "Locker Name", max_length = MAX_NAME_LEN)
-
-		if(!isnull(input_name))
-			name_set = TRUE
 
 		var/input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
 
-		if(!isnull(input_desc))
-			desc = input_desc
-			desc_set = TRUE
-
-		var/bit_flag = NONE
-		if(name_set)
-			bit_flag |= UPDATE_NAME
-		if(desc_set)
-			bit_flag |= UPDATE_DESC
-		if(bit_flag)
-			update_appearance(bit_flag)
+		if(!isnull(input_name) || !isnull(input_desc))
+			src.AddComponent(/datum/component/rename, input_name? input_name : name, input_desc? input_desc : desc)
 
 	else if(opened)
 		if(istype(weapon, cutting_tool))
