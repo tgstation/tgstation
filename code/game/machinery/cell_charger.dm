@@ -77,9 +77,9 @@
 		charging.forceMove(drop_location())
 
 /obj/machinery/cell_charger/Exited(atom/movable/gone, direction)
-    . = ..()
-    if(gone == charging)
-        charging = null
+	. = ..()
+	if(gone == charging)
+		charging = null
 
 /obj/machinery/cell_charger/Destroy()
 	QDEL_NULL(charging)
