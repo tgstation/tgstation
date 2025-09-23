@@ -100,6 +100,8 @@
 		var/obj/item/gripped_item = held_items[i]
 		if(HAS_TRAIT_FROM(gripped_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)) //prostetic limbs are not held items, they are part of the body.
 			continue
+		if(gripped_item.item_flags & ABSTRACT) //not really flavoured as items
+			continue
 		.++
 
 //Sad that this will cause some overhead, but the alias seems necessary
@@ -456,6 +458,8 @@
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
 			if(!(include_flags & INCLUDE_PROSTHETICS) && HAS_TRAIT_FROM(item_contents, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)) //prostetic limbs are not equipped items, they are part of the body.
+				continue
+			if(!(include_flags & INCLUDE_ABSTRACT) && (item_contents.item_flags & ABSTRACT)) //not really flavoured as items
 				continue
 			items += item_contents
 	if (!(include_flags & INCLUDE_HELD))
