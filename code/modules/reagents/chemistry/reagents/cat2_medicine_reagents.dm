@@ -326,7 +326,7 @@
 	/// Temperatures below this number give radiation healing.
 	var/rads_heal_threshold = 100
 
-/datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/affected_mob)
+/datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	rads_heal_threshold = rand(rads_heal_threshold - 50, rads_heal_threshold + 50) // Basically this means 50K and below will always give the radiation heal, and upto 150K could. Calculated once.
 
