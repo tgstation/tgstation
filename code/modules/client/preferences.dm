@@ -571,4 +571,4 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	unlock_content = !!byond_member
 	if(unlock_content)
-		max_save_slots = 8
+		max_save_slots = 12
