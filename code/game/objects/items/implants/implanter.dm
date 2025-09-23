@@ -44,21 +44,19 @@
 	else
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(I))
+/obj/item/implanter/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!user.can_write(tool))
 		return ..()
-	if(!user.can_write(I))
-		return
 
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
-	if(user.get_active_held_item() != I)
+	if(user.get_active_held_item() != tool)
 		return
 	if(!user.can_perform_action(src))
 		return
 	if(new_name)
-		name = "implanter ([new_name])"
+		src.AddComponent(/datum/component/rename, "implanter ([new_name])", desc)
 	else
-		name = "implanter"
+		src.AddComponent(/datum/component/rename, "implanter", desc)
 
 /obj/item/implanter/Initialize(mapload)
 	. = ..()

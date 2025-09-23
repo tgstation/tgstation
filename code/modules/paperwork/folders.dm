@@ -112,12 +112,14 @@
 
 	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
 
-	if(!inputvalue)
-		return ITEM_INTERACT_BLOCKING
 	if(!user.can_perform_action(src))
 		return ITEM_INTERACT_BLOCKING
 
-	name = "folder[(inputvalue ? " - '[inputvalue]'" : null)]"
+	if(inputvalue)
+		src.AddComponent(/datum/component/rename, "folder[(" - '[inputvalue]'")]", desc)
+	else
+		src.AddComponent(/datum/component/rename, "folder", desc)
+
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 

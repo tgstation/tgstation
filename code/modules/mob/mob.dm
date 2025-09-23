@@ -1301,8 +1301,7 @@
 	if(!writing_instrument)
 		return FALSE
 
-	var/pen_info = writing_instrument.get_writing_implement_details()
-	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
+	if(!IS_WRITING_UTENSIL(writing_instrument))
 		if(!silent_if_not_writing_tool)
 			to_chat(src, span_warning("You can't write with \the [writing_instrument]!"))
 		return FALSE

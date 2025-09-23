@@ -44,9 +44,9 @@
 			return
 		if(new_name)
 			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			name = "implant case - '[new_name]'"
+			AddComponent(/datum/component/rename, "implant case - [new_name]", desc)
 		else
-			name = "implant case"
+			AddComponent(/datum/component/rename, "implant case", desc)
 	else if(istype(used_item, /obj/item/implanter))
 		var/obj/item/implanter/used_implanter = used_item
 		if(used_implanter.imp && !imp)
