@@ -234,7 +234,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
  * severity_max to the highest wound you're willing to tolerate, and severity_pick_mode to WOUND_PICK_LOWEST_SEVERITY.
  *
  * Args:
- * * list/wounding_types: A list of wounding_types. Only wounds that accept these wound types will be considered.
+ * * wounding_type: Wounding type wounds of which we should be searching for
  * * obj/item/bodypart/part: The limb we are considering. Extremely important for biostates.
  * * severity_min: The minimum wound severity we will search for.
  * * severity_max = severity_min: The maximum wound severity we will search for.
@@ -246,12 +246,10 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
  * Returns:
  * A randomly picked wound typepath meeting all the above criteria and being applicable to the part's biotype - or null if there were none.
  */
-/proc/get_corresponding_wound_type(list/wounding_types, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
+/proc/get_corresponding_wound_type(wounding_type, obj/item/bodypart/part, severity_min, severity_max = severity_min, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY, random_roll = TRUE, duplicates_allowed = FALSE, care_about_existing_wounds = TRUE)
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
-	var/list/wounding_type_list = list()
-	for (var/wounding_type in wounding_types)
-		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
+	var/list/wounding_type_list = GLOB.wounding_types_to_series[wounding_type]
 	if (!length(wounding_type_list))
 		return null
 

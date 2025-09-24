@@ -53,7 +53,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/datum/wound)
 
-	if(HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED) || HAS_TRAIT(owner, TRAIT_GODMODE))
+	if(!is_woundable())
 		return
 
 	// note that these are fed into an exponent, so these are magnified
@@ -86,8 +86,9 @@
 	var/list/datum/wound/possible_wounds = list()
 	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
-		if (pregen_data.can_be_applied_to(src, list(woundtype), random_roll = TRUE))
+		if (pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
 			possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
+
 	// quick re-check to see if exposed_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
@@ -191,11 +192,7 @@
 	if (isnull(limb))
 		limb = pick(bodyparts)
 
-	var/list/type_list = wounding_type
-	if (!islist(type_list))
-		type_list = list(type_list)
-
-	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(type_list, limb, min_severity, max_severity, severity_pick_mode)
+	var/datum/wound/corresponding_typepath = get_corresponding_wound_type(wounding_type, limb, min_severity, max_severity, severity_pick_mode)
 	if (corresponding_typepath)
 		return limb.force_wound_upwards(corresponding_typepath, wound_source = wound_source)
 
@@ -222,11 +219,7 @@
  * return_value_if_no_wound if no wound is found - if one IS found, the wound threshold for that wound.
  */
 /obj/item/bodypart/proc/get_wound_threshold_of_wound_type(wounding_type, severity, return_value_if_no_wound, wound_source)
-	var/list/type_list = wounding_type
-	if (!islist(type_list))
-		type_list = list(type_list)
-
-	var/datum/wound/wound_path = get_corresponding_wound_type(type_list, src, severity, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
+	var/datum/wound/wound_path = get_corresponding_wound_type(wounding_type, src, severity, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE)
 	if (wound_path)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_path]
 		return pregen_data.get_threshold_for(src, damage_source = wound_source)
