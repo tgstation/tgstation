@@ -603,3 +603,30 @@
   - bugfix: Kickflippers now catch their board every time
   loganuk:
   - bugfix: Fixes endless updates to det forensic scanner into the UI
+2025-09-24:
+  Aliceee2ch:
+  - image: Added inhand sprite for CE professional RCD
+  Ghommie:
+  - qol: You can now rotate cannons.
+  - bugfix: Bluespace anomalies should no longer teleport 'un-teleportable' mobs like
+      anchored AIs or megafauna.
+  Hardly:
+  - spellcheck: Fixes 'souless' typo when trying to use enchanted deck of carot cards
+      as a changeling.
+  Melbert:
+  - bugfix: Atrocinated text is upside down again.
+  Xander3359:
+  - bugfix: Fix SMES terminal having null cable_layer
+  mcbalaam, Ez-Briz:
+  - admin: Added a new TGUI spawn panel, removing it's ancestors - HTML "Create X"
+      panels
+  necromanceranne:
+  - balance: Special versions of hulk, such as the wizard's transformation spell and
+      the pirate warlord's superhuman powers, no longer suffer from arm breakage like
+      normal hulks do.
+  - balance: Hulk arm breaking now uses natural wound determination over forced wound
+      effects at arm health thresholds.
+  - code_imp: Cleans up some of the mutation code.
+  timothymtorres:
+  - rscadd: Add cooking oil, nutraslop, and beer keg to cargo supply packs. Nutraslop
+      serving trays and cooking oil vats can now be pushed and moved.
