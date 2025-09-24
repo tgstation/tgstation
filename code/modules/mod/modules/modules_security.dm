@@ -82,7 +82,7 @@
 /obj/item/mod/module/pepper_shoulders/on_part_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK)
 
-/obj/item/mod/module/pepper_shoulders/on_use()
+/obj/item/mod/module/pepper_shoulders/on_use(mob/activator)
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
@@ -117,7 +117,7 @@
 	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 
-/obj/item/mod/module/holster/on_use()
+/obj/item/mod/module/holster/on_use(mob/activator)
 	if(!holstered)
 		var/obj/item/gun/holding = mod.wearer.get_active_held_item()
 		if(!holding)
@@ -163,17 +163,23 @@
 	/// List of spans we add to the speaker.
 	var/list/voicespan = list(SPAN_COMMAND)
 
-/obj/item/mod/module/megaphone/on_activation()
+/obj/item/mod/module/megaphone/on_activation(mob/activator)
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(add_tts_filter))
 
-/obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE, deleting = FALSE)
-	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
+/obj/item/mod/module/megaphone/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOB_SAY))
 
 /obj/item/mod/module/megaphone/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	speech_args[SPEECH_SPANS] |= voicespan
 	drain_power(use_energy_cost)
+
+/obj/item/mod/module/megaphone/proc/add_tts_filter(mob/living/carbon/user, list/message_args)
+	SIGNAL_HANDLER
+	///A sharper and louder sound with a bit of echo
+	message_args[TREAT_TTS_FILTER_ARG] += "acrusher=samples=2:level_out=6,aecho=delays=90:decays=0.3,aemphasis=type=cd,acontrast=30,crystalizer=i=5"
 
 ///Criminal Capture - Generates hardlight bags you can put people in and sinch.
 /obj/item/mod/module/criminalcapture
@@ -203,7 +209,7 @@
 	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
 	return ..()
 
-/obj/item/mod/module/criminalcapture/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/criminalcapture/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(!linked_bodybag)
 		return
 	packup()
@@ -269,7 +275,7 @@
 	overlay_state_inactive = "module_mirage_grenade"
 	dispense_type = /obj/item/grenade/mirage
 
-/obj/item/mod/module/dispenser/mirage/on_use()
+/obj/item/mod/module/dispenser/mirage/on_use(mob/activator)
 	var/obj/item/grenade/mirage/grenade = ..()
 	grenade.arm_grenade(mod.wearer)
 
@@ -318,18 +324,18 @@
 	/// Effect image on projectiles.
 	var/image/projectile_effect
 	/// The dampening field
-	var/datum/proximity_monitor/advanced/projectile_dampener/dampening_field
+	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/dampening_field
 
 /obj/item/mod/module/projectile_dampener/Initialize(mapload)
 	. = ..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 
-/obj/item/mod/module/projectile_dampener/on_activation()
+/obj/item/mod/module/projectile_dampener/on_activation(mob/activator)
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
 	dampening_field = new(mod.wearer, field_radius, TRUE, src)
 
-/obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
+/obj/item/mod/module/projectile_dampener/on_deactivation(mob/activator, display_message, deleting = FALSE)
 	QDEL_NULL(dampening_field)
 
 ///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
@@ -429,12 +435,12 @@
 		scanned_slice = 1
 	COOLDOWN_START(src, scan_cooldown, scan_cooldown_time)
 
-/obj/item/mod/module/active_sonar/on_use()
-	balloon_alert(mod.wearer, "readying sonar...")
+/obj/item/mod/module/active_sonar/on_use(mob/activator)
+	balloon_alert(activator, "readying sonar...")
 	playsound(mod.wearer, 'sound/vehicles/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
 		return
-	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the radius of the sonar
+	playsound(src, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE) // Should be audible for the radius of the sonar
 	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [detect_living_creatures()] living beings nearby!"))
 	for(var/mob/living/creature as anything in keyed_creatures)
 		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)

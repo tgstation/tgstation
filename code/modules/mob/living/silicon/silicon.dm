@@ -1,5 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
+	abstract_type = /mob/living/silicon
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"

@@ -29,40 +29,22 @@
 		return "gurgles"
 	return  tongue.temp_say_mod || tongue.say_mod || ..()
 
-/mob/living/carbon/human/GetVoice()
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
-		return ("Unknown")
-
-	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
-		var/obj/item/clothing/mask/chameleon/V = wear_mask
-		if(V.voice_change && wear_id)
-			var/obj/item/card/id/idcard = wear_id.GetID()
-			if(istype(idcard))
-				return idcard.registered_name
-			else
-				return real_name
-		else
-			return real_name
-
-	if(mind)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling?.mimicing)
-			return changeling.mimicing
-	if(GetSpecialVoice())
-		return GetSpecialVoice()
+/mob/living/carbon/human/get_voice(add_id_name = FALSE)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE))
+		return "Unknown"
+	var/id_name = get_id_name("")
+	if(HAS_TRAIT(src, TRAIT_VOICE_MATCHES_ID) && id_name)
+		return id_name
+	if(override_voice)
+		return override_voice
+	if(add_id_name && real_name == id_name) // Allows for "Captain John" to have the voice "Captain Join" and not "John"
+		return get_id_name("", honorifics = TRUE)
 	return real_name
 
-/mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
-	if(new_voice)
-		special_voice = new_voice
-	return
-
-/mob/living/carbon/human/proc/UnsetSpecialVoice()
-	special_voice = ""
-	return
-
-/mob/living/carbon/human/proc/GetSpecialVoice()
-	return special_voice
+/mob/living/carbon/human/get_message_voice(visible_name)
+	. = ..()
+	if(. != name)
+		. += " (as [get_id_name("Unknown", honorifics = TRUE)])"
 
 /mob/living/carbon/human/binarycheck()
 	if(stat >= SOFT_CRIT)

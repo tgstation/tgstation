@@ -421,6 +421,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
+
+	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
+		reagents.flags |= NO_REACT
+
 	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
@@ -434,8 +438,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	reagents.flags &= ~(NO_REACT)
-	reagents.handle_reactions()
 	update_appearance(UPDATE_ICON)
 	if(flavor_text)
 		var/turf/T = get_turf(src)
@@ -939,14 +941,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	QDEL_NULL(cig_smoke)
 
 /obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(thing, /obj/item/food/grown))
+	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
 		return ..()
 
-	var/obj/item/food/grown/to_smoke = thing
 	if(packeditem)
 		to_chat(user, span_warning("It is already packed!"))
 		return
-	if(!HAS_TRAIT(to_smoke, TRAIT_DRIED))
+
+	var/obj/item/to_smoke = thing
+	if(istype(to_smoke, /obj/item/food/grown) && !HAS_TRAIT(to_smoke, TRAIT_DRIED))
 		to_chat(user, span_warning("It has to be dried first!"))
 		return
 
@@ -979,6 +982,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cobpipeoff"
 	inhand_icon_on = null
 	inhand_icon_off = null
+
+/obj/item/cigarette/pipe/crackpipe
+	name = "glass pipe"
+	desc = "An ergonomic, low-key delivery method for the combusted. This apparatus taught the ancients much wisdom."
+	icon_state = "crackpipe"
+	icon_on = "crackpipeon"
+	icon_off = "crackpipe"
+	inhand_icon_on = null
+	inhand_icon_off = null
+	lung_harm = 2
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 ///////////
 //ROLLING//
