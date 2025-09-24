@@ -135,11 +135,6 @@
 
 
 // Ensure we don't suck up ores that we've just dropped off
-/obj/item/storage/bag/ore/base_mouse_drop_handler(atom/over, src_location, over_location, params)
-	dropping_ores = TRUE
-	. = ..()
-	dropping_ores = FALSE
-
 /obj/item/storage/bag/ore/attack_self(mob/user, modifiers)
 	dropping_ores = TRUE
 	. = ..()
