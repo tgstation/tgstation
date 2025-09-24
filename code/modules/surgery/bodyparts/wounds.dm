@@ -96,35 +96,24 @@
 			continue
 
 		var/specific_injury_roll = (injury_roll + series_wounding_mods[pregen_data.wound_series])
-		if (!pregen_data.get_threshold_for(src, attack_direction, damage_source) > specific_injury_roll)
+		if (pregen_data.get_threshold_for(src, attack_direction, damage_source) > specific_injury_roll)
 			continue
 
-		if (!pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
-			continue
+		if (pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
+			possible_wounds[wound_type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
 
-		var/can_spawn = TRUE
+	for (var/datum/wound/wound_type as anything in possible_wounds)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
 		for (var/datum/wound/other_path as anything in possible_wounds)
-			var/datum/wound_pregen_data/other_data = GLOB.all_wound_pregen_data[type]
+			if (other_path == wound_type)
+				continue
+
 			if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
 				if (initial(wound_type.severity) > initial(other_path.severity))
 					possible_wounds -= other_path
-					continue
 			else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
 				if (initial(wound_type.severity) < initial(other_path.severity))
 					possible_wounds -= other_path
-					continue
-
-			if (other_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
-				if (initial(wound_type.severity) < initial(other_path.severity))
-					can_spawn = FALSE
-					break
-			else if (other_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
-				if (initial(wound_type.severity) > initial(other_path.severity))
-					can_spawn = FALSE
-					break
-
-		if (can_spawn)
-			possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
 
 	if (!length(possible_wounds))
 		return
