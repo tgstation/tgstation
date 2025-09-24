@@ -394,7 +394,7 @@
 				holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
 				return_list += holder
 			while(amount > 0)
-				var/obj/item/reagent_containers/container = locate() in surroundings
+				var/obj/item/reagent_containers/container = (locate() in surroundings) || (locate() in return_list)
 				if(isnull(container)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
 				if(QDELING(container)) //it's deleting...
@@ -404,7 +404,6 @@
 				if(reagent_volume)
 					container.reagents.trans_to(holder, min(amount, reagent_volume), target_id = path_key, no_react = TRUE)
 					amount -= reagent_volume
-				surroundings -= container
 				container.update_appearance(UPDATE_ICON)
 		else if(ispath(path_key, /obj/item/stack))
 			var/obj/item/stack/tally_stack
