@@ -384,13 +384,11 @@
 	if(recipe.structures)
 		requirements += recipe.structures
 
+	var/list/surroundings = get_environment(atom, recipe.blacklist)
 	for(var/path_key in requirements)
-		var/list/surroundings
 		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
 		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 			continue
-		surroundings = get_environment(atom, recipe.blacklist)
-		surroundings -= return_list
 		if(ispath(path_key, /datum/reagent))
 			if(!holder)
 				holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting

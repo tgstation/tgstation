@@ -58,6 +58,19 @@
 	register_context()
 	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
 
+/obj/item/clothing/under/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	SIGNAL_HANDLER
+	var/obj/item/clothing/under/any_original = locate() in components
+	if(!any_original)
+		has_sensors = sensor_mode = NO_SENSORS
+		return
+	has_sensor = any_original.has_sensor
+	sensor_mode = any_original.sensor_mode
+
+/obj/item/clothing/under/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	. = ..()
+	dump_attachments()
+
 /obj/item/clothing/under/setup_reskinning()
 	if(!check_setup_reskinning())
 		return
