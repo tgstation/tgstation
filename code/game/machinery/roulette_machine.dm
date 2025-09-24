@@ -310,8 +310,6 @@
 	var/extra_x = rand(0, 8)
 	var/extra_y = round(extra_x * 0.7)
 	animate(cash, 250 MILLISECONDS, pixel_z = 0, easing = BOUNCE_EASING | EASE_OUT) //fall to the ground
-	//animate(50 MILLISECONDS, pixel_z = , easing = BOUNCE_EASING | EASE_OUT) //bounce
-	//animate(50 MILLISECONDS, pixel_z = 0, easing = SINE_EASING | EASE_IN) // land
 	animate(300 MILLISECONDS, pixel_y = rand(-6, 6) + extra_y, pixel_x = rand(0 + extra_x, 8 + extra_x) * pick(1, -1), flags = ANIMATION_PARALLEL) //midnight shitcode instead of proper maths
 	playsound(cash, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
 
