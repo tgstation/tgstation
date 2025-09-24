@@ -74,7 +74,7 @@
 /**
  * Args:
  * * obj/item/bodypart/limb: The limb we are considering.
- * * list/suggested_wounding_types: The wounding types to be checked against the wounding types we require. Defaults to required_wounding_type.
+ * * suggested_wounding_typs: The wounding type to be checked against the wounding type we require. Defaults to required_wounding_type.
  * * datum/wound/old_wound: If we would replace a wound, this would be said wound. Nullable.
  * * random_roll = FALSE: If this is in the context of a random wound generation, and this wound wasn't specifically checked.
  *
@@ -83,7 +83,7 @@
  * if we have a biotype mismatch, if the limb isn't in a viable zone, or if there's any duplicate wound types.
  * TRUE otherwise.
  */
-/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types = required_wounding_type, datum/wound/old_wound, random_roll = FALSE, duplicates_allowed = src.duplicates_allowed, care_about_existing_wounds = TRUE)
+/datum/wound_pregen_data/proc/can_be_applied_to(obj/item/bodypart/limb, suggested_wounding_type = required_wounding_type, datum/wound/old_wound, random_roll = FALSE, duplicates_allowed = src.duplicates_allowed, care_about_existing_wounds = TRUE)
 	SHOULD_BE_PURE(TRUE)
 
 	if (!istype(limb))
@@ -92,7 +92,7 @@
 	if (random_roll && !can_be_randomly_generated)
 		return FALSE
 
-	if (!wounding_types_valid(suggested_wounding_types))
+	if (!wounding_types_valid(suggested_wounding_type))
 		return FALSE
 
 	if (care_about_existing_wounds)

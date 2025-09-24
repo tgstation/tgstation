@@ -90,8 +90,8 @@
 		return
 
 	var/list/datum/wound/possible_wounds = list()
-	for (var/datum/wound/type as anything in GLOB.all_wound_pregen_data)
-		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
+	for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
 		if (!pregen_data.compete_for_wounding)
 			continue
 
@@ -106,20 +106,20 @@
 		for (var/datum/wound/other_path as anything in possible_wounds)
 			var/datum/wound_pregen_data/other_data = GLOB.all_wound_pregen_data[type]
 			if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
-				if (initial(iterated_path.severity) > initial(other_path.severity))
+				if (initial(wound_type.severity) > initial(other_path.severity))
 					possible_wounds -= other_path
 					continue
 			else if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
-				if (initial(iterated_path.severity) < initial(other_path.severity))
+				if (initial(wound_type.severity) < initial(other_path.severity))
 					possible_wounds -= other_path
 					continue
 
 			if (other_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
-				if (initial(iterated_path.severity) < initial(other_path.severity))
+				if (initial(wound_type.severity) < initial(other_path.severity))
 					can_spawn = FALSE
 					break
 			else if (other_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
-				if (initial(iterated_path.severity) > initial(other_path.severity))
+				if (initial(wound_type.severity) > initial(other_path.severity))
 					can_spawn = FALSE
 					break
 

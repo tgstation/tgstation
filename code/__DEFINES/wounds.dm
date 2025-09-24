@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 
 		for (var/datum/wound/iterated_path as anything in wound_typepaths)
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[iterated_path]
-			if (pregen_data.can_be_applied_to(part, wounding_types, random_roll = random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
+			if (pregen_data.can_be_applied_to(part, wounding_type, random_roll = random_roll, duplicates_allowed = duplicates_allowed, care_about_existing_wounds = care_about_existing_wounds))
 				paths_to_pick_from[iterated_path] = wound_typepaths[iterated_path]
 
 	return pick_weight(paths_to_pick_from) // we found our winners!
