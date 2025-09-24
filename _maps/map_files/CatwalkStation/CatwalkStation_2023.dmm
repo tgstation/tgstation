@@ -25539,6 +25539,15 @@
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/central)
+"hsT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/disposal/incinerator)
 "htb" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack{
@@ -25890,6 +25899,7 @@
 	pixel_x = -5;
 	pixel_y = -6
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "hyS" = (
@@ -29029,9 +29039,7 @@
 "iso" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 4
-	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "isv" = (
@@ -47902,6 +47910,7 @@
 "nOD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "nOF" = (
@@ -50999,6 +51008,7 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "oII" = (
@@ -189305,7 +189315,7 @@ drW
 ntq
 shx
 tcD
-nOD
+hsT
 oIw
 ioi
 shx
