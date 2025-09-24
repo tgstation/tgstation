@@ -193,7 +193,8 @@
 	var/turf/closed/mineral/gibtonite/giberal_turf = bumped_into
 	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
 		last_bumpmine_tick = world.time
-		bumped_into.attackby(src, bumper, exp_multiplier = exp_multiplier)
+		var/turf/closed/mineral/rock = bumped_into
+		rock.attackby(src, bumper, exp_multiplier = exp_multiplier)
 		return
 
 	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
