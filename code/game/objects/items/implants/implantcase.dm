@@ -58,7 +58,7 @@
 	else
 		return ..()
 
-/obj/item/implantcase/nameformat(input)
+/obj/item/implantcase/nameformat(input, user)
 	return "implant case[input?  " - '[input]'" : null]"
 
 ///An implant case that spawns with a tracking implant, as well as an appropriate name and description.

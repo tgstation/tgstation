@@ -82,7 +82,7 @@
 /obj/item/reagent_containers/blood/universal
 	blood_type = BLOOD_TYPE_UNIVERSAL
 
-/obj/item/reagent_containers/blood/nameformat(input)
+/obj/item/reagent_containers/blood/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	labeled = TRUE
 	return "blood pack[input? " - [input]" : null]"

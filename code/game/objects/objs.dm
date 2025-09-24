@@ -351,9 +351,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	return TRUE
 
 /// Returns the final name of the object, and does any side effects of renaming, such as sounds.
-/obj/proc/nameformat(input)
+/obj/proc/nameformat(input, mob/living/user)
 	return input
 
 /// Same as nameformat, but for desc.
-/obj/proc/descformat(input)
+/obj/proc/descformat(input, mob/living/user)
 	return input

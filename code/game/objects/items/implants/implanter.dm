@@ -51,5 +51,5 @@
 		imp = new imp_type(src)
 	update_appearance()
 
-/obj/item/implanter/nameformat(input)
+/obj/item/implanter/nameformat(input, user)
 	return "implanter[input?  " ([input])" : null]"

@@ -50,7 +50,7 @@
 			if(input == old_name || !input)
 				to_chat(user, span_notice("You changed [renamed_obj] to... well... [renamed_obj]."))
 				return
-			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.nameformat(input), renamed_obj.desc)
+			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.nameformat(input, user), renamed_obj.desc)
 			to_chat(user, span_notice("You have successfully renamed \the [old_name] to [renamed_obj]."))
 			renamed_obj.update_appearance(UPDATE_NAME)
 
@@ -62,7 +62,7 @@
 			if(input == old_desc || !input)
 				to_chat(user, span_notice("You decide against changing [renamed_obj]'s description."))
 				return
-			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, renamed_obj.descformat(input))
+			renamed_obj.AddComponent(/datum/component/rename, renamed_obj.name, renamed_obj.descformat(input, user))
 			to_chat(user, span_notice("You have successfully changed [renamed_obj]'s description."))
 			renamed_obj.update_appearance(UPDATE_DESC)
 

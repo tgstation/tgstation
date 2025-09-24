@@ -220,7 +220,7 @@
 	icon_state = "book-[clamp(amount, 0, 5)]"
 	return ..()
 
-/obj/structure/bookcase/nameformat(input)
+/obj/structure/bookcase/nameformat(input, user)
 	return "bookcase[input? " ([input])" : null]"
 
 /obj/structure/bookcase/manuals/engineering

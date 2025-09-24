@@ -194,7 +194,7 @@
 	else
 		return ..()
 
-/obj/item/delivery/nameformat(input)
+/obj/item/delivery/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return "[name] ([input])" // This just repeatedly adds new labels, but i think that's intentional?
 

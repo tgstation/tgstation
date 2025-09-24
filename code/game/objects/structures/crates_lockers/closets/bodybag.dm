@@ -55,7 +55,7 @@
 		update_appearance()
 		qdel(src.GetComponent(/datum/component/rename))
 
-/obj/structure/closet/body_bag/nameformat(input)
+/obj/structure/closet/body_bag/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	tag_name = input
 	update_appearance()

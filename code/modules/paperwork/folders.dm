@@ -104,7 +104,7 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/folder/nameformat(input)
+/obj/item/folder/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return"folder[(input ? " - '[input]'" : null)]"
 
