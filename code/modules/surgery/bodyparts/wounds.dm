@@ -79,16 +79,6 @@
 	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && owner.can_bleed() && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
 		damage *= 1.5
 
-	// Check to see if exposed_wound_bonus applies
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_wearer = owner
-		var/list/clothing = human_wearer.get_clothing_on_part(src)
-		for(var/obj/item/clothing/clothes_check as anything in clothing)
-			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
-			if(clothes_check.get_armor_rating(WOUND))
-				exposed_wound_bonus = 0
-				break
-
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
 	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
@@ -112,12 +102,9 @@
 		if (!pregen_data.can_be_applied_to(src, woundtype, random_roll = TRUE))
 			continue
 
-		possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
-
+		var/can_spawn = TRUE
 		for (var/datum/wound/other_path as anything in possible_wounds)
-			if (other_path == iterated_path)
-				continue
-
+			var/datum/wound_pregen_data/other_data = GLOB.all_wound_pregen_data[type]
 			if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
 				if (initial(iterated_path.severity) > initial(other_path.severity))
 					possible_wounds -= other_path
@@ -127,16 +114,24 @@
 					possible_wounds -= other_path
 					continue
 
+			if (other_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
+				if (initial(iterated_path.severity) < initial(other_path.severity))
+					can_spawn = FALSE
+					break
+			else if (other_data.competition_mode == WOUND_COMPETITION_OVERPOWER_GREATERS)
+				if (initial(iterated_path.severity) > initial(other_path.severity))
+					can_spawn = FALSE
+					break
+
+		if (can_spawn)
+			possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
+
 	if (!length(possible_wounds))
 		return
 
 	var/datum/wound/possible_wound = pick_weight(possible_wounds)
-	if (isnull(possible_wound))
-		break
-
 	var/datum/wound_pregen_data/possible_pregen_data = GLOB.all_wound_pregen_data[possible_wound]
-
-	var/datum/wound/replaced_wound
+	var/datum/wound/replaced_wound = null
 	for(var/datum/wound/existing_wound as anything in wounds)
 		var/datum/wound_pregen_data/existing_pregen_data = GLOB.all_wound_pregen_data[existing_wound.type]
 		if(existing_pregen_data.wound_series == possible_pregen_data.wound_series)
