@@ -955,6 +955,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 		body_bag.close()
 		body_bag.tag_name = "[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]"
 		body_bag.AddComponent(/datum/component/rename, "[initial(body_bag.name)][body_bag.tag_name? " - [body_bag.tag_name]" : null]", body_bag.desc)
+		body_bag.update_icon()
 		body_bag.forceMove(morgue_tray)
 
 		morgue_tray.update_appearance()

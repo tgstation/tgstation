@@ -500,10 +500,8 @@
 
 /obj/machinery/hydroponics/update_name(updates)
 	. = ..()
-	if(myseed)
+	if(!GetComponent(/datum/component/rename) && myseed)
 		name = "[initial(name)] ([myseed.plantname])"
-	else
-		name = initial(name)
 
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()

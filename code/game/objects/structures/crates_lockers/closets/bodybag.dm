@@ -58,7 +58,7 @@
 /obj/structure/closet/body_bag/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	tag_name = input
-	update_appearance()
+	update_icon()
 	return tag_name ? "[initial(name)] - [tag_name]" : initial(name)
 
 /obj/structure/closet/body_bag/update_overlays()
