@@ -288,3 +288,4 @@
 /obj/item/suppressor/bikehorn
 	name = "bikehorn suppressor"
 	desc = ""
+	icon_state = "suppressor_bikehorn"

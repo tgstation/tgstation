@@ -226,9 +226,9 @@
 
 	if(suppressed && can_unsuppress) // if it can't be unsuppressed, we assume the suppressor is integrated into the gun itself and don't generate an overlay
 		var/list/suppressor_overlays = list()
-		if(istype(suppressed, /obj/item/suppressor/bikehorn))
-			suppressor_overlays += mutable_appearance(icon, "bikehorn_suppressor")
 		suppressor_overlays += mutable_appearance(icon, "[icon_state]_suppressor")
+		if(istype(suppressed, /obj/item/suppressor/bikehorn))
+			suppressor_overlays += mutable_appearance(icon, "supressor_bikehorn_overlay")
 		for(var/mutable_appearance/suppressor_overlay as anything in suppressor_overlays)
 			if(suppressor_x_offset)
 				suppressor_overlay.pixel_w = suppressor_x_offset
