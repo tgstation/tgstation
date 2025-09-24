@@ -55,7 +55,6 @@
 	armor_type = /datum/armor/secure_safe
 	max_integrity = 300
 	damage_deflection = 21
-	explosion_block = 1
 	custom_materials = list(
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
@@ -68,7 +67,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
-	AddElement(/datum/element/blocks_explosives)
 
 	if(!density)
 		find_and_hang_on_wall()
