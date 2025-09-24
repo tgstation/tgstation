@@ -11,11 +11,11 @@
 #define BLOCK_Z_IN_DOWN (1<<7) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP (1<<8) // Should this object block z uprise from below?
 #define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<12) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<13) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
-#define INFINITE_RESKIN (1<<14) // We can reskin this item infinitely
-#define CONDUCTS_ELECTRICITY (1<<15) //! Can this object conduct electricity?
-#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<16) //! Atoms don't spawn anything when deconstructed. They just vanish
+#define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
+#define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
+#define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
+#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<14) //! Atoms don't spawn anything when deconstructed. They just vanish
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
