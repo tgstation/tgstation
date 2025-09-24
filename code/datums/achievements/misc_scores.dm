@@ -93,6 +93,9 @@
 		index++
 	return data
 
+/datum/award/score/progress/fish/get_progress_string(progress_string)
+	return span_greenannounce("This is the first time you've caught a <B>[progress_string]!")
+
 /datum/award/score/progress/pda_themes
 	name = "Unlocked PDA Themes"
 	desc = "Track how many unlockable PDA themes, namely from maintenances disks, you've installed on your PDA (or another that you stole) so that you can use them on future rounds as well."
@@ -101,6 +104,9 @@
 
 /datum/award/score/progress/pda_themes/get_table()
 	return "pda_themes_progress"
+
+/datum/award/score/progress/pda_themes/get_progress_string(progress_string)
+	return span_greenannounce(span_tooltip("You can now select it on future rounds without having to install it again", "New PDA theme unlocked : <B>[progress_string]!</B>"))
 
 /datum/award/score/progress/pda_themes/get_progress(datum/achievement_data/holder)
 	var/list/data = list(
