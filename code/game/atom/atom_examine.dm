@@ -100,10 +100,6 @@
 
 	if(flags_1 & HOLOGRAM_1)
 		.["hologram"] = "It looks like a hologram."
-	if(flags_1 & UNPAINTABLE_1)
-		.["unpaintable"] = "It appears to be unpaintable."
-	if(flags_1 & SUPERMATTER_IGNORES_1)
-		.["supermatter proof"] = "It is immune to the supermatter's effects and will not be dusted."
 	if(flags_1 & IS_PLAYER_COLORABLE_1) // GAGs support for greyscale
 		.["recolorable"] = "It has a variety of colors that you can select from."
 
