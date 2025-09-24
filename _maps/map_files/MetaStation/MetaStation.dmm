@@ -43822,6 +43822,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/item/minigunpack,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "pfP" = (
