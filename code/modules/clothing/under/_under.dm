@@ -62,7 +62,7 @@
 	SIGNAL_HANDLER
 	var/obj/item/clothing/under/any_original = locate() in components
 	if(!any_original)
-		has_sensors = sensor_mode = NO_SENSORS
+		has_sensor = sensor_mode = NO_SENSORS
 		return
 	has_sensor = any_original.has_sensor
 	sensor_mode = any_original.sensor_mode
