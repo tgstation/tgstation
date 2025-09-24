@@ -45,7 +45,7 @@
 	if(user.stat != DEAD)
 		user.investigate_log("has been gibbed by headslug burst.", INVESTIGATE_DEATHS)
 	user.gib(DROP_ALL_REMAINS)
-	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 0.5 SECONDS) // without this delay the worm will be almost dead due to the limbs thrown at it from the explosion :(
+	addtimer(CALLBACK(src, PROC_REF(spawn_headcrab), stored_mind, user_turf, organs), 0.5 SECONDS) // without this delay the worm will be almost dead due to the explosion :(
 
 /// Creates a light explosion, blinds and confuses mobs in range
 /datum/action/changeling/headcrab/proc/gore_explosion(mob/living/user)
