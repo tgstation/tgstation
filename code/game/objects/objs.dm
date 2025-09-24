@@ -223,6 +223,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
 		.["renameable"] = "Use a pen on it to rename it or change its description."
+	if(obj_flags & CONDUCTS_ELECTRICITY)
+		.["conductive"] = "It appears to be a good conductor of electricity."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))

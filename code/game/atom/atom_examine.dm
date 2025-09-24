@@ -19,14 +19,17 @@
 		. += "<i>[desc]</i>"
 
 	var/list/tags_list = examine_tags(user)
+	var/list/post_descriptor = examine_post_descriptor(user)
+	var/post_desc_string = length(post_descriptor) ? " [jointext(post_descriptor, " ")]" : ""
 	if (length(tags_list))
 		var/tag_string = list()
 		for (var/atom_tag in tags_list)
 			tag_string += (isnull(tags_list[atom_tag]) ? atom_tag : span_tooltip(tags_list[atom_tag], atom_tag))
 		// some regex to ensure that we don't add another "and" if the final element's main text (not tooltip) has one
 		tag_string = english_list(tag_string, and_text = (findtext(tag_string[length(tag_string)], regex(@">.*?and .*?<"))) ? " " : " and ")
-		var/post_descriptor = examine_post_descriptor(user)
-		. += "[p_They()] [p_are()] a [tag_string] [examine_descriptor(user)][length(post_descriptor) ? " [jointext(post_descriptor, " ")]" : ""]."
+		. += "[p_They()] [p_are()] a [tag_string] [examine_descriptor(user)][post_desc_string]."
+	else if(post_desc_string)
+		. += "[p_They()] [p_are()] a [examine_descriptor(user)][post_desc_string]."
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
@@ -76,6 +79,33 @@
 	. = list()
 	if(abstract_type == type)
 		.[span_hypnophrase("abstract")] = "This is an abstract concept, you should report this to a strange entity called GITHUB!"
+
+	if(resistance_flags & INDESTRUCTIBLE)
+		.["indestructible"] = "It is extremely robust! It'll probably withstand anything that could happen to it!"
+	else
+		if(resistance_flags & LAVA_PROOF)
+			.["lavaproof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+			.["acidproof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
+		if(resistance_flags & FREEZE_PROOF)
+			.["freezeproof"] = "It is made of cold-resistant materials."
+		if(resistance_flags & FIRE_PROOF)
+			.["fireproof"] = "It is made of fire-retardant materials."
+		if(resistance_flags & SHUTTLE_CRUSH_PROOF)
+			.["crushproof"] = "It is extremely solid. It should be able to withstand being run over by a shuttle!"
+		if(resistance_flags & BOMB_PROOF)
+			.["bombproof"] = "It looks like it could survive an explosion!"
+		if(resistance_flags & FLAMMABLE)
+			.["flammable"] = "It looks like it could easily catch on fire."
+
+	if(flags_1 & HOLOGRAM_1)
+		.["hologram"] = "It looks like a hologram."
+	if(flags_1 & UNPAINTABLE_1)
+		.["unpaintable"] = "It appears to be unpaintable."
+	if(flags_1 & SUPERMATTER_IGNORES_1)
+		.["supermatter proof"] = "It is immune to the supermatter's effects and will not be dusted."
+	if(flags_1 & IS_PLAYER_COLORABLE_1) // GAGs support for greyscale
+		.["recolorable"] = "It has a variety of colors that you can select from."
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_TAGS, user, .)
 
