@@ -467,6 +467,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
+"ahW" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
+	},
+/obj/machinery/portable_atmospherics/scrubber/huge/movable,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos/upper)
 "aia" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
@@ -24086,6 +24093,7 @@
 "gXQ" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/structure/lattice/catwalk,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/upper)
 "gXR" = (
@@ -45137,10 +45145,10 @@
 /turf/open/openspace,
 /area/station/hallway/primary/central)
 "naa" = (
-/obj/structure/closet/firecloset,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/machinery/portable_atmospherics/pipe_scrubber,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "nah" = (
@@ -50592,10 +50600,8 @@
 	name = "Atmospherics"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "oCX" = (
@@ -125614,7 +125620,7 @@ heR
 heR
 mTz
 naa
-mUN
+ahW
 rZl
 nyz
 fgx
