@@ -53,6 +53,9 @@ FLOOR SAFES
 	for(var/iterating in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
 
+	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 22)
+
 	if(!mapload)
 		return
 
