@@ -133,7 +133,6 @@
 		UnregisterSignal(listening_to.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	listening_to = null
 
-
 // Ensure we don't suck up ores that we've just dropped off
 /obj/item/storage/bag/ore/attack_self(mob/user, modifiers)
 	dropping_ores = TRUE
