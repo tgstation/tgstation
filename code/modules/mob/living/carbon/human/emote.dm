@@ -57,7 +57,7 @@
 	message_mime = "mumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/screech // Those with the primitive trait (monkeys and ashwalkers) can run this.
+/datum/emote/living/carbon/human/screech // basically scream 2.0
 	key = "screech"
 	key_third_person = "screeches"
 	message = "screeches!"
@@ -68,11 +68,6 @@
 
 /datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
 	return user.dna.species.get_scream_sound(user)
-
-/datum/emote/living/carbon/human/screech/can_run_emote(mob/user, status_check = TRUE , intentional, params)
-	if(intentional && !HAS_TRAIT(user, TRAIT_PRIMITIVE))
-		return FALSE
-	return ..()
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
