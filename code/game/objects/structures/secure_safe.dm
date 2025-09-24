@@ -35,7 +35,7 @@
 	energy = 20
 	bomb = 30
 	fire = 95
-	acid = 70
+	acid = 30
 
 /**
  * Wall safes
