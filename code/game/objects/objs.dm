@@ -345,3 +345,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
+
+/obj/proc/rename_checks(mob/living/user)
+	return TRUE
+
+/obj/proc/nameformat(input)
+	return input
+
+/obj/proc/descformat(input)
+	return input

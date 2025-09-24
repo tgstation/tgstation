@@ -94,8 +94,6 @@
 /obj/item/folder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_type_in_typecache(tool, folder_insertables))
 		return insertables_act(user, tool)
-	if(IS_WRITING_UTENSIL(tool))
-		return writing_utensil_act(user, tool)
 	if(tool.tool_behaviour == TOOL_KNIFE || tool.tool_behaviour == TOOL_WIRECUTTER)
 		return sharp_thing_act(user, tool)
 	return NONE
@@ -106,22 +104,10 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/folder/proc/writing_utensil_act(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
-		return ITEM_INTERACT_BLOCKING
-
-	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
-
-	if(!user.can_perform_action(src))
-		return ITEM_INTERACT_BLOCKING
-
-	if(inputvalue)
-		src.AddComponent(/datum/component/rename, "folder[(" - '[inputvalue]'")]", desc)
-	else
-		src.AddComponent(/datum/component/rename, "folder", desc)
-
+/obj/item/folder/nameformat(input)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-	return ITEM_INTERACT_SUCCESS
+	return"folder[(input ? " - '[input]'" : null)]"
+
 
 /obj/item/folder/proc/sharp_thing_act(mob/user, obj/item/sharp_tool)
 	if(contents.len)

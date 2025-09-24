@@ -10,7 +10,7 @@
 	armor_type = /datum/armor/supplypod_beacon
 	resistance_flags = FIRE_PROOF
 	interaction_flags_click = ALLOW_SILICON_REACH
-	obj_flags = UNIQUE_RENAME
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	/// The linked console
 	var/obj/machinery/computer/cargo/express/express_console
 	/// If linked

@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 6, /datum/material/glass=SMALL_MATERIAL_AMOUNT *2)
 	///The implant in our implanter
 	var/obj/item/implant/imp = null
@@ -44,22 +45,11 @@
 	else
 		to_chat(user, span_warning("[src] fails to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!user.can_write(tool))
-		return ..()
-
-	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
-	if(user.get_active_held_item() != tool)
-		return
-	if(!user.can_perform_action(src))
-		return
-	if(new_name)
-		src.AddComponent(/datum/component/rename, "implanter ([new_name])", desc)
-	else
-		src.AddComponent(/datum/component/rename, "implanter", desc)
-
 /obj/item/implanter/Initialize(mapload)
 	. = ..()
 	if(!imp && imp_type)
 		imp = new imp_type(src)
 	update_appearance()
+
+/obj/item/implanter/nameformat(input)
+	return "implanter[input?  " ([input])" : null]"
