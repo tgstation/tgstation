@@ -68,6 +68,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
+	AddElement(/datum/element/blocks_explosives)
+
 	if(!density)
 		find_and_hang_on_wall()
 	if(mapload)
