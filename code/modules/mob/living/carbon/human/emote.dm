@@ -66,7 +66,7 @@
 	specific_emote_audio_cooldown = 10 SECONDS
 	vary = FALSE
 
-/datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
+/datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
 	return user.dna.species.get_scream_sound(user)
 
 /datum/emote/living/carbon/human/pale
