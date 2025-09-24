@@ -140,6 +140,8 @@
 	var/ballin = FALSE
 	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
 	var/last_bumpmine_tick = -1
+	/// Mining skill experience multiplier for bumpmining
+	var/exp_multiplier = 1
 	/// Cooldown on gibtonite detonation warnings
 	COOLDOWN_DECLARE(gibtonite_warning_cd)
 
@@ -152,6 +154,8 @@
 	. = ..()
 	UnregisterSignal(mod, list(COMSIG_MOD_MODULE_ACTIVATED, COMSIG_MOD_MODULE_DEACTIVATED))
 	toolspeed = initial(toolspeed)
+	use_energy_cost = initial(use_energy_cost)
+	exp_multiplier = initial(exp_multiplier)
 	ballin = FALSE
 
 /obj/item/mod/module/drill/on_activation(mob/activator)
@@ -189,7 +193,7 @@
 	var/turf/closed/mineral/gibtonite/giberal_turf = bumped_into
 	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
 		last_bumpmine_tick = world.time
-		bumped_into.attackby(src, bumper)
+		bumped_into.attackby(src, bumper, exp_multiplier = exp_multiplier)
 		return
 
 	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
@@ -206,6 +210,7 @@
 	// In sphere mode we get instamine and halved power drain
 	toolspeed = 0
 	use_energy_cost *= 0.5
+	exp_multiplier *= 0.2
 	if (!active)
 		on_activation()
 	ballin = TRUE
@@ -216,6 +221,7 @@
 		return
 	toolspeed = initial(toolspeed)
 	use_energy_cost *= 2
+	exp_multiplier /= 2
 	ballin = FALSE
 	if (!active)
 		on_deactivation()
