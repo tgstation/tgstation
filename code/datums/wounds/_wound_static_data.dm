@@ -39,12 +39,10 @@
 	/// The series of wounds this is in. See wounds.dm (the defines file) for a more detailed explanation - but tldr is that no 2 wounds of the same series can be on a limb.
 	var/wound_series
 
-	/// If true, we will attempt to, during a random wound roll, overpower and remove other wound typepaths from the possible wounds list using [competition_mode] and [overpower_wounds_of_even_severity].
+	/// If true, we will attempt to, during a random wound roll, overpower and remove other wound typepaths from the possible wounds list using competition_mode.
 	var/compete_for_wounding = TRUE
 	/// The competition mode with which we will remove other wounds from a possible wound roll assuming [compete_for_wounding] is TRUE. See wounds.dm, the defines file, for more information on what these do.
 	var/competition_mode = WOUND_COMPETITION_OVERPOWER_LESSERS
-	/// If this and [compete_for_wounding] is true, we will remove wounds of an even severity to us during a random wound roll.
-	var/overpower_wounds_of_even_severity = FALSE
 
 	/// A list of BIO_ defines that will be iterated over in order to determine the scar file our wound will generate.
 	/// Use generate_scar_priorities to create a custom list.
