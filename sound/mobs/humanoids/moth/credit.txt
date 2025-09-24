@@ -1,5 +1,9 @@
-"moth_flutter" modified from 
+"moth_flutter" modified from
 https://freesound.org/people/Godowan/sounds/240476/
 (CC 0 license)
 
 who knows where the original moth scream noise was I sure as hell don't
+
+moth_chitter and moth_squeak were taken and edited by Sothanforax from
+https://github.com/BeeStation/BeeStation-Hornet/tree/master/sound/emotes/moth
+(CC-BY-SA-3.0)
