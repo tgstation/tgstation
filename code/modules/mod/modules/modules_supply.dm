@@ -189,6 +189,8 @@
 	required_slots = list(ITEM_SLOT_BACK)
 	/// The ores stored in the bag.
 	var/list/ores = list()
+	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
+	var/dropping_ores = FALSE
 
 /obj/item/mod/module/orebag/on_equip()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
@@ -230,14 +232,16 @@
 	ores += ore
 
 /obj/item/mod/module/orebag/on_use(mob/activator)
+	dropping_ores = TRUE
 	for(var/obj/item/ore as anything in ores)
 		ore.forceMove(drop_location())
 		ores -= ore
+	dropping_ores = FALSE
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/orebag/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(istype(arrived, /obj/item/stack/ore))
+	if(istype(arrived, /obj/item/stack/ore) && !dropping_ores)
 		INVOKE_ASYNC(src, PROC_REF(move_ore), arrived)
 		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
 

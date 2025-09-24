@@ -105,6 +105,8 @@
 	var/spam_protection = FALSE
 	/// Mob we're currently tracking
 	var/mob/listening_to = null
+	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
+	var/dropping_ores = FALSE
 	/// Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
@@ -130,6 +132,18 @@
 	if (listening_to.loc)
 		UnregisterSignal(listening_to.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	listening_to = null
+
+
+// Ensure we don't suck up ores that we've just dropped off
+/obj/item/storage/bag/ore/base_mouse_drop_handler(atom/over, src_location, over_location, params)
+	dropping_ores = TRUE
+	. = ..()
+	dropping_ores = FALSE
+
+/obj/item/storage/bag/ore/attack_self(mob/user, modifiers)
+	dropping_ores = TRUE
+	. = ..()
+	dropping_ores = FALSE
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
@@ -202,7 +216,7 @@
 
 /obj/item/storage/bag/ore/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(is_type_in_list(arrived, atom_storage.can_hold))
+	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores)
 		pickup_ore(arrived, listening_to)
 
 /obj/item/storage/bag/ore/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
