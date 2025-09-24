@@ -59,7 +59,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
 
 /obj/item/clothing/under/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
-	SIGNAL_HANDLER
+	. = ..()
 	var/obj/item/clothing/under/any_original = locate() in components
 	if(!any_original)
 		has_sensor = sensor_mode = NO_SENSORS
