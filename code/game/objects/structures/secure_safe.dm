@@ -6,7 +6,6 @@
 	base_icon_state = "wall_safe"
 	result_path = /obj/structure/secure_safe
 	pixel_shift = 32
-	//w_class = WEIGHT_CLASS_HUGE
 	w_class = WEIGHT_CLASS_GIGANTIC
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
@@ -56,6 +55,7 @@
 	armor_type = /datum/armor/secure_safe
 	max_integrity = 300
 	damage_deflection = 21
+	explosion_block = 1
 	custom_materials = list(
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
@@ -82,6 +82,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
+
+/obj/structure/secure_safe/ex_act(severity, target)
+	if(severity <= EXPLODE_LIGHT)
+		return FALSE
+	return ..()
 
 /obj/structure/secure_safe/hos
 	name = "head of security's safe"
