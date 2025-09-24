@@ -346,11 +346,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return (1 / demolition_mod)
 	return demolition_mod
 
+/// Checks performed by a renamable object(through UNIQUE_RENAME obj_flag) before renaming begins.
 /obj/proc/rename_checks(mob/living/user)
 	return TRUE
 
+/// Returns the final name of the object, and does any side effects of renaming, such as sounds.
 /obj/proc/nameformat(input)
 	return input
 
+/// Same as nameformat, but for desc.
 /obj/proc/descformat(input)
 	return input

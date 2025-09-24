@@ -84,5 +84,5 @@
 
 /obj/item/reagent_containers/blood/nameformat(input)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-	labesled = TRUE
+	labeled = TRUE
 	return "blood pack[input? " - [input]" : null]"

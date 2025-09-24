@@ -68,7 +68,7 @@
 
 		if(OPTION_RESET)
 			qdel(renamed_obj.GetComponent(/datum/component/rename))
-			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name and description."))
+			to_chat(user, span_notice("You have successfully reset [renamed_obj]'s name[renamed_obj.obj_flags & RENAME_NO_DESC? "." : " and description."]"))
 			renamed_obj.update_appearance(UPDATE_NAME | UPDATE_DESC)
 
 #undef OPTION_RENAME
