@@ -6,23 +6,17 @@
 	force = 3
 	throw_speed = 2
 	throw_range = 5
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	var/created_name
 	var/build_step = ASSEMBLY_FIRST_STEP
 	var/robot_arm = /obj/item/bodypart/arm/right/robot
 
-/obj/item/bot_assembly/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	..()
-	if(IS_WRITING_UTENSIL(I))
-		rename_bot()
-		return
+/obj/item/bot_assembly/nameformat(input, user)
+	created_name = input
+	return input
 
-/obj/item/bot_assembly/proc/rename_bot()
-	var/t = sanitize_name(tgui_input_text(usr, "Enter a new robot name", "Robot Rename", created_name, MAX_NAME_LEN), allow_numbers = TRUE)
-	if(!t)
-		return
-	if(!in_range(src, usr) && loc != usr)
-		return
-	created_name = t
+/obj/item/bot_assembly/rename_reset()
+	created_name = initial(created_name)
 
 /**
  * Checks if the user can finish constructing a bot with a given item.

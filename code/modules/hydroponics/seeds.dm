@@ -484,6 +484,10 @@
 		return
 	productdesc = newproductdesc
 
+/obj/item/seeds/rename_reset()
+	plantname = initial(plantname)
+	productdesc = initial(productdesc)
+
 /obj/item/seeds/proc/randomize_stats()
 	set_lifespan(rand(25, 60))
 	set_endurance(rand(15, 35))

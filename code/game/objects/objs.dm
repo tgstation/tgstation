@@ -357,3 +357,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /// Same as nameformat, but for desc.
 /obj/proc/descformat(input, mob/living/user)
 	return input
+
+/// Called when UNIQUE_RENAME is reset
+/obj/proc/rename_reset()
+	return

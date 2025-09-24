@@ -61,6 +61,10 @@
 	update_icon()
 	return tag_name ? "[initial(name)] - [tag_name]" : initial(name)
 
+/obj/structure/closet/body_bag/rename_reset()
+	tag_name = null
+	update_icon()
+
 /obj/structure/closet/body_bag/update_overlays()
 	. = ..()
 	if(tag_name)
