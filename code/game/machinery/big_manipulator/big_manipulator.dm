@@ -9,24 +9,18 @@
 	greyscale_config = /datum/greyscale_config/big_manipulator
 	hud_possible = list(BIG_MANIP_HUD)
 
-	/// How quickly the manipulator will process it's actions.
-	var/speed_multiplier = 1
-
-	var/min_speed_multiplier =  MIN_SPEED_MULTIPLIER_TIER_1
-	var/max_speed_multiplier =  MAX_SPEED_MULTIPLIER_TIER_1
-
-	/// How many interaction points of each kind can we have?
-	var/interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
-
-	/// The current task of the manipulator.
-	var/current_task = CURRENT_TASK_NONE
-
 	/// Is the manipulator turned on?
 	var/on = FALSE
 	/// Is a cycle timer already running?
 	var/cycle_timer_running = FALSE
 
+	/// How quickly the manipulator will process it's actions.
+	var/speed_multiplier = 1
+	var/min_speed_multiplier =  MIN_SPEED_MULTIPLIER_TIER_1
+	var/max_speed_multiplier =  MAX_SPEED_MULTIPLIER_TIER_1
 
+	/// The current task of the manipulator.
+	var/current_task = CURRENT_TASK_NONE
 	var/current_task_start_time = 0
 	var/current_task_duration = 0
 
@@ -41,6 +35,13 @@
 	/// Is the power access wire cut? Disables the power button if `TRUE`.
 	var/power_access_wire_cut = FALSE
 
+	/// How many interaction points of each kind can we have?
+	var/interaction_point_limit = MAX_INTERACTION_POINTS_TIER_1
+	/// List of pickup points.
+	var/list/pickup_points = list()
+	/// List of dropoff points.
+	var/list/dropoff_points = list()
+
 	/// History of accessed pickup points for round-robin tasking.
 	var/roundrobin_history_pickup = 1
 	/// History of accessed dropoff points for round-robin tasking.
@@ -49,10 +50,7 @@
 	var/pickup_tasking = TASKING_ROUND_ROBIN
 	/// Which tasking scenario we use for dropoff points?
 	var/dropoff_tasking = TASKING_ROUND_ROBIN
-	/// List of pickup points.
-	var/list/pickup_points = list()
-	/// List of dropoff points.
-	var/list/dropoff_points = list()
+
 	/// List of all HUD icons resembling interaction points.
 	var/list/hud_points = list()
 
@@ -630,6 +628,8 @@
 		point_data["filtering_mode"] = point.filtering_mode
 		point_data["worker_interaction"] = point.worker_interaction
 		point_data["overflow_status"] = point.overflow_status
+		point_data["worker_use_rmb"] = point.worker_use_rmb
+		point_data["worker_combat_mode"] = point.worker_combat_mode
 		pickup_points_data += list(point_data)
 	data["pickup_points"] = pickup_points_data
 
@@ -649,6 +649,8 @@
 		point_data["filtering_mode"] = point.filtering_mode
 		point_data["worker_interaction"] = point.worker_interaction
 		point_data["overflow_status"] = point.overflow_status
+		point_data["worker_use_rmb"] = point.worker_use_rmb
+		point_data["worker_combat_mode"] = point.worker_combat_mode
 		dropoff_points_data += list(point_data)
 	data["dropoff_points"] = dropoff_points_data
 
@@ -763,6 +765,14 @@
 
 		if("delete_filter")
 			target_point.atom_filters.Cut(value, value + 1)
+			return TRUE
+
+		if("toggle_worker_rmb")
+			target_point.worker_use_rmb = !target_point.worker_use_rmb
+			return TRUE
+
+		if("toggle_worker_combat")
+			target_point.worker_combat_mode = !target_point.worker_combat_mode
 			return TRUE
 
 		if("move_to")

@@ -439,6 +439,24 @@ const PointSection = (props: {
                         }
                         tooltip="Toggle filter usage"
                       />
+                      <ConfigRow
+                        label="Alternative Worker Action"
+                        content={editingPoint.worker_use_rmb ? 'TRUE' : 'FALSE'}
+                        onClick={() =>
+                          adjustPoint(editingPoint.id, 'toggle_worker_rmb')
+                        }
+                        tooltip="Toggle RMB-like attack"
+                      />
+                      <ConfigRow
+                        label="Worker Combat Stance"
+                        content={
+                          editingPoint.worker_combat_mode ? 'TRUE' : 'FALSE'
+                        }
+                        onClick={() =>
+                          adjustPoint(editingPoint.id, 'toggle_worker_combat')
+                        }
+                        tooltip="Toggle using Combat Mode for interactions"
+                      />
                     </>
                   )}
                 </Table>

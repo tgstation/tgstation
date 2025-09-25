@@ -402,7 +402,12 @@
 	if(held_item.GetComponent(/datum/component/two_handed))
 		held_item.attack_self(monkey_resolve)
 
-	held_item.melee_attack_chain(monkey_resolve, type_to_use)
+	var/use_rmb = destination_point.worker_use_rmb
+	var/use_combat = destination_point.worker_combat_mode
+
+	monkey_resolve.combat_mode = use_combat
+	held_item.melee_attack_chain(monkey_resolve, type_to_use, list(RIGHT_CLICK = use_rmb ? TRUE : FALSE))
+	monkey_resolve.combat_mode = FALSE
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
 

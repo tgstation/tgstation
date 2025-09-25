@@ -21,6 +21,10 @@
 	var/overflow_status = POINT_OVERFLOW_ALLOWED
 	/// Which object category should the filters be looking out for.
 	var/filtering_mode = TAKE_ITEMS
+	/// Whether the worker will use combat mode while interacting with this point.
+	var/worker_combat_mode = FALSE
+	/// Whether the worker will simulate RMB instead of LMB on interaction.
+	var/worker_use_rmb = FALSE
 	/// List of types that can be picked up from this point
 	var/list/type_filters = list(
 		/obj/item,

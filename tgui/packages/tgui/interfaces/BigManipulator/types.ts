@@ -12,9 +12,11 @@ export type InteractionPoint = {
   mode: string;
   filters: string[];
   item_filters: string[];
-  filters_status: boolean;
+  filters_status: BooleanLike;
   filtering_mode: number;
   overflow_status: string;
+  worker_use_rmb: BooleanLike;
+  worker_combat_mode: BooleanLike;
 };
 
 export interface ManipulatorData {
