@@ -32,7 +32,9 @@
 	if(is_walled(user))
 		user.Immobilize(1.5 SECONDS) // to prevent the breaking of the wrong walls (who would think of using the antistun after the last resort)
 		escaping_prison(user)
-	stoplag(1.1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(gibbing), user), 1.1 SECONDS)
+
+/datum/action/changeling/headcrab/proc/gibbing(mob/living/user)
 	if(QDELETED(user))
 		return
 	gore_explosion(user)
@@ -49,34 +51,36 @@
 
 /// Creates a light explosion, blinds and confuses mobs in range
 /datum/action/changeling/headcrab/proc/gore_explosion(mob/living/user)
+	var/list/user_DNA = user.get_blood_dna_list()
 	user.visible_message(span_boldwarning("[user]'s body ruptures in a violent explosion of biomass!"))
 	playsound(user, 'sound/effects/goresplat.ogg', 100, TRUE) //yuck!!
 	explosion(user, light_impact_range = LAST_RESORT_EXPLOSION_RANGE, flame_range = 0, flash_range = 0, adminlog = TRUE, silent = TRUE, explosion_cause = src)
-	var/blind_range = view(LAST_RESORT_BLIND_RANGE, user)
+	user.spawn_gibs()
 
-	for(var/turf/bloody_turf in blind_range)
-		new /obj/effect/decal/cleanable/blood(bloody_turf)
-		for(var/mob/living/mob_in_turf in bloody_turf)
-			if(mob_in_turf == user)
+	for(var/turf/bloody_turf in view(LAST_RESORT_BLIND_RANGE, user))
+		var/obj/effect/decal/cleanable/blood/blood_spot = new(bloody_turf)
+		blood_spot.add_blood_DNA(user_DNA)
+
+	for(var/mob/living/blinded in view(LAST_RESORT_BLIND_RANGE, user))
+		if(blinded == user)
+			continue
+		blinded.visible_message(span_danger("[blinded] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
+		blinded.add_blood_DNA(user_DNA)
+		playsound(blinded, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
+
+		if(ishuman(blinded))
+			var/mob/living/carbon/human/blinded_human = blinded
+			var/obj/item/organ/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
+			if(!eyes || blinded_human.is_blind())
 				continue
-			mob_in_turf.visible_message(span_danger("[mob_in_turf] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
-			mob_in_turf.add_blood_DNA(user.get_blood_dna_list())
-			playsound(mob_in_turf, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
-
-	for(var/mob/living/carbon/human/blinded_human in blind_range)
-		if(blinded_human == user)
-			continue
-		var/obj/item/organ/eyes/eyes = blinded_human.get_organ_slot(ORGAN_SLOT_EYES)
-		if(!eyes || blinded_human.is_blind())
-			continue
-		to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))
-		blinded_human.Stun(4 SECONDS)
-		blinded_human.set_eye_blur_if_lower(40 SECONDS)
-		blinded_human.adjust_confusion(12 SECONDS)
-
-	for(var/mob/living/silicon/blinded_silicon in blind_range)
-		to_chat(blinded_silicon, span_userdanger("Your sensors are disabled by a shower of blood!"))
-		blinded_silicon.Paralyze(6 SECONDS)
+			to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))
+			blinded_human.Stun(4 SECONDS)
+			blinded_human.set_eye_blur_if_lower(40 SECONDS)
+			blinded_human.adjust_confusion(12 SECONDS)
+		if(issilicon(blinded))
+			var/mob/living/silicon/blinded_silicon = blinded
+			to_chat(blinded_silicon, span_userdanger("Your sensors are disabled by a shower of blood!"))
+			blinded_silicon.Paralyze(6 SECONDS)
 
 /// Creates the headrab to occupy
 /datum/action/changeling/headcrab/proc/spawn_headcrab(datum/mind/stored_mind, turf/spawn_location, list/organs)
@@ -96,18 +100,19 @@
 
 	for(var/turf/nearby_turf in range(1, user))
 		if(iswallturf(nearby_turf))
-			walls_to_destroy += nearby_turf
-		else
-			for(var/obj/obj_obstacle in nearby_turf)
-				if(obj_obstacle.density && !(obj_obstacle.resistance_flags & INDESTRUCTIBLE) && obj_obstacle.anchored)
-					obj_obstacle.atom_destruction()
-
-	for(var/turf/closed/wall/wall in walls_to_destroy)
-		var/datum/component/torn_wall/torn_comp = wall.GetComponent(/datum/component/torn_wall)
-		if(!torn_comp)
-			torn_comp = wall.AddComponent(/datum/component/torn_wall)
-		if(torn_comp.current_stage == 0)
-			torn_comp.increase_stage()
+			var/turf/closed/wall/nearby_wall = nearby_turf
+			var/datum/component/torn_wall/torn_comp = nearby_wall.GetComponent(/datum/component/torn_wall)
+			if(!torn_comp)
+				nearby_wall.AddComponent(/datum/component/torn_wall, current_stage = 1)
+			else
+				torn_comp.current_stage = 1
+			walls_to_destroy += nearby_wall
+			continue
+		for(var/obj/obj_obstacle in nearby_turf)
+			if(!obj_obstacle.density || (obj_obstacle.resistance_flags & INDESTRUCTIBLE) || !obj_obstacle.anchored)
+				continue
+			if(obj_obstacle.uses_integrity)
+				obj_obstacle.take_damage(300)
 
 	addtimer(CALLBACK(src, PROC_REF(finalize_destruction), walls_to_destroy, user, user.loc), 1 SECONDS)
 
@@ -115,12 +120,10 @@
 /datum/action/changeling/headcrab/proc/finalize_destruction(list/affected_walls, mob/living/user, atom/user_prev_loc)
 	if(QDELETED(user) || (user.loc != user_prev_loc))
 		return
-	for(var/turf/closed/wall/W in affected_walls)
-		if(QDELETED(W))
+	for(var/turf/closed/wall/wall in affected_walls)
+		if(QDELETED(wall))
 			continue
-		var/datum/component/torn_wall/torn_comp = W.GetComponent(/datum/component/torn_wall)
-		if(torn_comp)
-			torn_comp.increase_stage()
+		wall.AddComponent(/datum/component/torn_wall)
 
 /datum/action/changeling/headcrab/proc/is_walled(mob/living/user)
 	var/turf/ling_turf = get_turf(user)
