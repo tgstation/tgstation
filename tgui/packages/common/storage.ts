@@ -186,9 +186,12 @@ class StorageProxy implements StorageBackend {
             document.addEventListener('byondstorageupdated', async () => {
               setTimeout(() => {
                 const hub = new HubStorageBackend();
-                hub
-                  .get('panel-settings')
-                  .then((settings) => iframe.set('panel-settings', settings));
+
+                for (const setting of ["panel-settings", "chat-state", "chat-messages"]) {
+                  hub
+                    .get(setting)
+                    .then((settings) => iframe.set(setting, settings));
+                }
 
                 iframe.set('byondstorage-migrated', true);
                 Byond.winset(null, 'browser-options', '-byondstorage');
