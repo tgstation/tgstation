@@ -233,9 +233,10 @@
 					continue
 				var/turf/closed/mineral/drillable = rock
 				drillable.gets_drilled(user)
+				continue
 			else	//Open turf behavior.
 				if(istype(rock, /turf/open/lava))
-					if(!prob(100 - (i * 15)))
+					if(prob(50 - (i * 15)))
 						continue
 					var/obj/item/boulder/produced = produce_boulder(FALSE)
 					var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
