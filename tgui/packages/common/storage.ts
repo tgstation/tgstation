@@ -187,7 +187,7 @@ class StorageProxy implements StorageBackend {
               setTimeout(() => {
                 const hub = new HubStorageBackend();
 
-                for (const setting of ["panel-settings", "chat-state", "chat-messages"]) {
+                for (const setting of ['panel-settings', 'chat-state', 'chat-messages']) {
                   hub
                     .get(setting)
                     .then((settings) => iframe.set(setting, settings));
