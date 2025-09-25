@@ -892,7 +892,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Out athletics skill is used to set our potential base damage roll. It won't increase our potential damage roll, but will make our unarmed attack more consistent.
 	// For a normal human arm, this would cap at 10, and for a normal human leg, this would go up to 14.
-	lower_unarmed_damage =  clamp(lower_unarmed_damage + (user.mind ? user.mind.get_skill_level(/datum/skill/athletics) : 0), lower_unarmed_damage, upper_unarmed_damage)
+	lower_unarmed_damage =  min(lower_unarmed_damage + (user.mind?.get_skill_level(/datum/skill/athletics) || 0), upper_unarmed_damage)
 
 	// The actual damage roll. May still be augmented by further factors.
 	var/damage = rand(lower_unarmed_damage, upper_unarmed_damage)
