@@ -138,8 +138,8 @@
 		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/clothing/accessory))
-		return attach_accessory(attacking_item, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/clothing/accessory))
+		return attach_accessory(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	if(has_sensor == NO_SENSORS && (istype(tool, /obj/item/radio) && !istype(tool, /obj/item/radio/headset)))
 		balloon_alert(user, "installing sensors...")
