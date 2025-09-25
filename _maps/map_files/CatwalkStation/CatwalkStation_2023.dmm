@@ -19266,9 +19266,11 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/hfr_box/body/interface,
-/obj/item/hfr_box/body/waste_output{
-	pixel_x = -15
+/obj/item/hfr_box/body/interface{
+	pixel_x = 5
+	},
+/obj/item/hfr_box/body/fuel_input{
+	pixel_x = -10
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
