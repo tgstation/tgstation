@@ -243,8 +243,8 @@
 						qdel(produced)
 						continue
 					platform.alpha = 0
-					platform.pixel_y = -16
-					animate(platform, alpha = 255, time = 2 SECONDS, pixel_y = 0, easing = QUAD_EASING|EASE_OUT)
+					platform.pixel_z = -16
+					animate(platform, alpha = 255, time = 2 SECONDS, pixel_z = 0, easing = QUAD_EASING|EASE_OUT)
 				else if(prob(50))
 					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)

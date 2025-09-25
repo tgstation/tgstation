@@ -131,7 +131,7 @@
 		return null
 
 	var/active_platform_lifespan = platform_lifespan //Default to the assigned value.
-	if(timer_override > 1)
+	if(timer_override)
 		active_platform_lifespan = timer_override
 
 	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
