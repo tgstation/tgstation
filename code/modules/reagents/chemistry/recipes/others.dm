@@ -67,7 +67,7 @@
 	var/triggered_sparks = FALSE
 	for(var/creation_loop in 1 to round(created_volume))
 		var/datum/gas_mixture/enviro = reaction_location.return_air()
-		enviro.temperature = max(T20C, enviro.temperature * 1.05)
+		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.05), T20C, MAX_EXO_TEMP)
 		reaction_location.air_update_turf(FALSE, FALSE)
 		if(enviro.temperature >= MAX_EXO_TEMP && !triggered_sparks) //Only trigger once for performance concerns.
 			material_sheet.visible_message("\The [material_sheet] reacts with the ambient heat and ignites the air!")
@@ -103,7 +103,7 @@
 
 	for(var/creation_loop in 1 to round(created_volume))
 		var/datum/gas_mixture/enviro = reaction_location.return_air()
-		enviro.temperature = max(T20C, enviro.temperature * 1.08)
+		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.08), T20C, MAX_EXO_TEMP)
 		if(enviro.temperature >= MAX_EXO_TEMP)
 			radiation_pulse(
 				mineral_sheet,
