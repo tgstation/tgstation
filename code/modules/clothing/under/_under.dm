@@ -392,6 +392,9 @@
 				. += "Its vital tracker appears to be enabled."
 			if(SENSOR_COORDS)
 				. += "Its vital tracker and tracking beacon appear to be enabled."
+	else
+		. += span_small(span_tooltip("You can always use a station-bounced radio to install them", "It isn't equipped with medical sensors."))
+
 	if(LAZYLEN(attached_accessories))
 		var/list/accessories = list_accessories_with_icon(user)
 		. += "It has [english_list(accessories)] attached."
