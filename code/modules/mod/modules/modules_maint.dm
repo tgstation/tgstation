@@ -367,8 +367,9 @@
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
 		processing_z_move = TRUE
-		last_z_move_time = current_time
-		current_turf.zFall(mod.wearer)
+		// Only set timer if zFall actually works
+		if(current_turf.zFall(mod.wearer))
+			last_z_move_time = current_time
 		processing_z_move = FALSE
 		return
 
