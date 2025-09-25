@@ -1,0 +1,4 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "Luxury Shuttle windows now allow some projectiles to pass."

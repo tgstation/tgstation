@@ -267,6 +267,7 @@
 	return NONE
 
 /obj/item/inducer/cyborg/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
 	if(iscyborg(user) && iscyborg(interacting_with))
 		balloon_alert(user, "can't charge this!")
 		return ITEM_INTERACT_FAILURE
