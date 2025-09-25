@@ -87,6 +87,7 @@
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
 
 //Curd cheese, a general term which I will now proceed to stretch as thin as the toppings on a supermarket sandwich:
 //I'll use it as a substitute for ricotta, cottage cheese and quark, as well as any other non-aged, soft grainy cheese

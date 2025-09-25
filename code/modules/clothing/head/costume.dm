@@ -123,7 +123,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 

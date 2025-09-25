@@ -42,6 +42,7 @@
 	)
 	time = 5 SECONDS
 	category = CAT_CHEMISTRY
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY //there are two ways to make a chem bombcore. We go with the first one for mats check
 
 /datum/crafting_recipe/alcohol_burner
 	name = "Burner (Ethanol)"

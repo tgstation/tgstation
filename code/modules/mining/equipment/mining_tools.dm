@@ -319,6 +319,7 @@
 	item_flags = SLOWS_WHILE_IN_HAND | IMMUTABLE_SLOW
 	slowdown = 3
 	attack_speed = 1.2 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.6, /datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5)
 	/// The factor at which the recoil becomes less.
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.

@@ -538,6 +538,7 @@
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)

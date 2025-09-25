@@ -7,6 +7,7 @@
 	base_icon_state = "ladder"
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5)
 	///the ladder below this one
 	VAR_FINAL/obj/structure/ladder/down
 	///the ladder above this one

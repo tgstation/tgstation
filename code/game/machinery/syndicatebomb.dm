@@ -351,6 +351,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05)
 	var/adminlog = null
 	var/range_heavy = 3
 	var/range_medium = 9

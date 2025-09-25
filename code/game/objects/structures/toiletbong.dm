@@ -6,7 +6,7 @@
 	base_icon_state = "toiletbong"
 	density = FALSE
 	anchored = TRUE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.05, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 

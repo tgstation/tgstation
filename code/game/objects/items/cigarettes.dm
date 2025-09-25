@@ -994,7 +994,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_on = null
 	inhand_icon_off = null
 	lung_harm = 2
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 
 ///////////
 //ROLLING//

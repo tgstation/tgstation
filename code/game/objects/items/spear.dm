@@ -15,7 +15,7 @@
 	demolition_mod = 0.75
 	embed_type = /datum/embedding/spear
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 1.05)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 1.15)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
