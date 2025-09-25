@@ -630,3 +630,11 @@
   timothymtorres:
   - rscadd: Add cooking oil, nutraslop, and beer keg to cargo supply packs. Nutraslop
       serving trays and cooking oil vats can now be pushed and moved.
+2025-09-25:
+  Aliceee2ch:
+  - bugfix: Borg inducer can charge again
+  SmArtKar:
+  - bugfix: Fixed delayed viewport fitting on server join/init
+  necromanceranne:
+  - balance: Being frail or being more resistant to wounding is now more consistent
+      about how it hinders or benefits you.
