@@ -887,6 +887,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/lower_unarmed_damage = attacking_bodypart.unarmed_damage_low
 	var/upper_unarmed_damage = attacking_bodypart.unarmed_damage_high
 
+	// The presence of TRAIT_STRENGTH increases our upper unarmed damage. This is a damage cap increase.
+	upper_unarmed_damage += HAS_TRAIT(user, TRAIT_STRENGTH) ? 2 : 0
+
 	// Out athletics skill is used to set our potential base damage roll. It won't increase our potential damage roll, but will make our unarmed attack more consistent.
 	// For a normal human arm, this would cap at 10, and for a normal human leg, this would go up to 14.
 	lower_unarmed_damage =  clamp(lower_unarmed_damage + (user.mind ? user.mind.get_skill_level(/datum/skill/athletics) : 0), lower_unarmed_damage, upper_unarmed_damage)
