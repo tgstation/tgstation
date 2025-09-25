@@ -340,8 +340,9 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle
 	name = "\improper NT BR-38 battle rifle"
-	desc = "Nanotrasen's latest prototype security longarm, found exclusively in the hands of their private security teams and chambered for .38 Special. \
-		Technically a pistol-caliber carbine, despite the name and its use as a de facto designated marksman rifle."
+	desc = "Nanotrasen's latest prototype .38 Special longarm, found exclusively in the hands of their private security teams. \
+		Technically a pistol-caliber carbine, despite the name and its use as a designated marksman rifle. Acceleration technology \
+		enables improved ballistic performance, but necessitates maintenance."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "battle_rifle"
 	inhand_icon_state = "battle_rifle"
