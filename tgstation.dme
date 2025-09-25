@@ -2396,6 +2396,7 @@
 #include "code\game\objects\effects\decals\turfdecal\dirt.dm"
 #include "code\game\objects\effects\decals\turfdecal\markings.dm"
 #include "code\game\objects\effects\decals\turfdecal\tilecoloring.dm"
+#include "code\game\objects\effects\decals\turfdecal\weakpoint.dm"
 #include "code\game\objects\effects\decals\turfdecal\weather.dm"
 #include "code\game\objects\effects\effect_system\effect_shield.dm"
 #include "code\game\objects\effects\effect_system\effect_system.dm"
