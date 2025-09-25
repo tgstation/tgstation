@@ -381,12 +381,8 @@
 
 /obj/item/melee/energy/sword/surplus
 	name = "\improper Type I 'Iaito' energy sword"
-	desc = "Oversized, overengineered, and mass-produced. The two blades help make up for the poor cutting plane the emitter generates. Hopefully. \
-		Supposedly, this version of the energy sword was a Waffle Corp prototype that was first trialed in a variety of armed conflicts around the interstellar \
-		frontier. The success rate, and survival of its users, were abysmally low. To make matters worse, they had made so many of these swords (accidentally) that \
-		it would cost the company more disposing of them than trying to offload them to raise a quick buck. Thus, the 'Iaito' was 'born'. Often found in the hands of \
-		grunts, mooks, goons, criminals, wannabe assassins or lunatics. You may or may not fit into one of these categories if you are genuinely attempting to kill someone\
-		with this sword."
+	desc = "Oversized, overengineered, and somehow still mass-produced. The twin energy blades, theoretically, help make up for the poor cutting plane the emitter generates. \
+		When there are no more heroes in a desperate struggle, it's kill or be killed."
 	icon_state = "surplus_e_sword"
 	inhand_icon_state = "surplus_e_sword"
 	base_icon_state = "surplus_e_sword"
@@ -422,6 +418,20 @@
 		. += span_warning("[src] needs to be recharged.")
 
 	. += span_info("You get the sense that this weapon isn't very effective unless you hit someone while they are exposed in some way, like attacking from behind or while they're staggered.")
+	. += span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src].")
+
+/obj/item/melee/energy/sword/surplus/examine_more(mob/user)
+	. = ..()
+	. += "<i>This early iteration of the now infamous energy sword was, supposedly, a Waffle Corp prototype first trialed in a variety of armed conflicts \
+		around the interstellar frontier.<br>\
+		<br>\
+		Unfortunately, the success rate of the platform along with the survival rate of its users was abysmally low. \
+		To make matters worse, initial overestimation of its effectiveness meant that by the time its myriad flaws reared their heads, production had already \
+		reached such a level that the company behind it would have to pay more to properly disassemble and dispose of the swords, than if they started offloading them \
+		onto markets of various legitimacy to try and recoup costs. Thus, the Iaito was 'born'.<br><br>\
+		As a consequence of its haphazard proliferation and its low market price compared to later, improved energy sword models, examples of the Iaito are \
+		typically found in the hands of various grunts, mooks, goons, criminals, wannabe assassins, lunatics, or those otherwise embroiled in \
+		a desperate struggle. If you're actually trying to kill someone with this sword, you may or may not fit into one or more of those categories.</i>"
 
 /obj/item/melee/energy/sword/surplus/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

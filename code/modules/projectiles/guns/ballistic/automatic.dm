@@ -340,9 +340,8 @@
 
 /obj/item/gun/ballistic/automatic/battle_rifle
 	name = "\improper NT BR-38 battle rifle"
-	desc = "Nanotrasen's prototype security weapon, found exclusively in the hands of their private security teams. Chambered in .38 pistol rounds. \
-		Ignore that this makes it technically a carbine. And that it functions as a designated marksman rifle. Marketing weren't being very co-operative \
-		when it came time to name the gun. That, and the endless arguments in board rooms about exactly what designation the gun is meant to be."
+	desc = "Nanotrasen's latest prototype security longarm, found exclusively in the hands of their private security teams and chambered for .38 Special. \
+		Technically a pistol-caliber carbine, despite the name and its use as a de facto designated marksman rifle."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "battle_rifle"
 	inhand_icon_state = "battle_rifle"
@@ -399,26 +398,30 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Reset System"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
-	. = ..()
-	. += span_notice("<b><i>Looking down at \the [src], you recall something you read in a promotional pamphlet... </i></b>")
-
-	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity. \
-		This allows even less powerful cartridges to put out significant amounts of stopping power.")
-
-	. += span_notice("<b><i>However, you also remember some of the rumors...  </i></b>")
-
-	. += span_notice("In a sour twist of irony for Nanotrasen's historical issues with ballistics-based security weapons, the BR-38 has one significant flaw. \
-		It is possible for the weapon to suffer from unintended discombulations due to closed heat distribution systems should the weapon be tampered with. \
-		R&D are working on this issue before the weapon sees commercial sales. That, and trying to work out why the weapon's onboard computation systems suffer \
-		from so many calculation errors.")
-
 /obj/item/gun/ballistic/automatic/battle_rifle/examine(mob/user)
 	. = ..()
 	if(shots_before_degradation)
 		. += span_notice("[src] can fire [shots_before_degradation] more times before risking system degradation.")
 	else
 		. += span_notice("[src] is in the process of system degradation. It is currently at stage [degradation_stage] of [degradation_stage_max]. Use a multitool on [src] to recalibrate. Alternatively, insert it into a weapon recharger.")
+	. += span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src].")
+
+/obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
+	. = ..()
+
+	. += "<i>The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
+		<br>\
+		The acceleration rail built into the barrel assembly assists fired projectiles to higher velocities than unassisted bullets, \
+		allowing even less powerful cartridges, such as the venerable .38 Special, to put out <b>significant amounts of stopping power</b>. \
+		Even though the chambering makes this more of a pistol-caliber carbine than a battle rifle, countless arguments in both the marketing office \
+		and the corporate boardroom about the name meant that something had to give; in this case, the slightly misleading designation.<br>\
+		<br>\
+		It's hard to cover up everything about its troubled development, though.<br>\
+		<br>\
+		In a sour twist of irony for Nanotrasen's historical issues with ballistics-based security weapons, the BR-38 has one significant flaw. \
+		It is possible for the weapons system to suffer from unintended discombulations due to closed heat distribution systems, should the weapon be tampered with. \
+		Nanotrasen's weapons R&D teams are still working on this issue, while also trying to work out why the weapon's onboard computation systems \
+		suffer from so many calculation errors, before moving onto a full commercial rollout.</i>"
 
 /obj/item/gun/ballistic/automatic/battle_rifle/update_icon_state()
 	. = ..()
