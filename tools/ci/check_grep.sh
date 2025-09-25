@@ -247,7 +247,7 @@ if ls _maps/*.json | $grep "[A-Z]"; then
 fi;
 
 part "Ineffective easing flags in animate()"
-if $grep 'easing\w*=\w*(EASE_IN|EASE_OUT|(EASE_IN\w*\|\w*EASE_OUT))' $code_files; then
+if $grep 'easing\w*=\w*(EASE_IN|EASE_OUT|\(EASE_IN\w*\|\w*EASE_OUT\))' $code_files; then
     echo
     echo -e "${RED}ERROR: 'animate' was called with an easing argument and the default, LINEAR_EASING curve. This doesn't do anything and should be adjusted.${NC}"
     st=1
