@@ -99,7 +99,7 @@
 			.["flammable"] = "It looks like it could easily catch on fire."
 
 	if(flags_1 & HOLOGRAM_1)
-		.["hologram"] = "It looks like a hologram."
+		.["holographic"] = "It looks like a hologram."
 	if(flags_1 & IS_PLAYER_COLORABLE_1) // GAGs support for greyscale
 		.["recolorable"] = "It has a variety of colors that you can select from."
 
