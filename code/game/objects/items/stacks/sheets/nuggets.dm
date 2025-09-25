@@ -9,6 +9,7 @@
 	armor_type = /datum/armor/item_shard
 	material_type = null
 	item_flags = ABSTRACT
+	singular_name = "bit"
 	var/icon_prefix = ""
 
 /obj/item/stack/nugget/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
