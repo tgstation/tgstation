@@ -18,5 +18,4 @@ export type ForensicScannerCategory = {
   name: string;
   uiIcon: string;
   uiIconColor: string;
-}
-
+};
