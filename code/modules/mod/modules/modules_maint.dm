@@ -358,7 +358,7 @@
 	if(processing_z_move)
 		return
 
-	// Prevent rapid oscillation between Z-levels (add 0.5 second cooldown)
+	// Prevent rapid loops between Z-levels
 	var/current_time = world.time
 	if(current_time - last_z_move_time < 0.5 SECONDS)
 		return
