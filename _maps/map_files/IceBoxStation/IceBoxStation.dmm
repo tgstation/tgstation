@@ -80160,7 +80160,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = 9;
-	req_access = list("secuirty")
+	req_access = list("security")
 	},
 /obj/machinery/button/door{
 	id = "outerbrig";
@@ -80168,7 +80168,7 @@
 	normaldoorcontrol = 1;
 	pixel_x = 6;
 	pixel_y = -1;
-	req_access = list("secuirty")
+	req_access = list("security")
 	},
 /obj/machinery/button/door/directional/north{
 	id = "briggate";
