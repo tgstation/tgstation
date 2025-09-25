@@ -315,7 +315,7 @@
 	var/step_count = 0
 	/// If you use the module on a planetary turf, you fly up. To the sky.
 	var/you_fucked_up = FALSE
-		/// Flag to prevent infinite loops during Z-movement
+	/// Flag to prevent infinite loops during Z-movement
 	var/processing_z_move = FALSE
 	/// Timestamp of last Z-movement
 	var/last_z_move_time = 0
