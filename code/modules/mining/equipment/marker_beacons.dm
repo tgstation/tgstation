@@ -60,9 +60,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 
 /obj/item/stack/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
-	if(isnull(input_color))
-		return CLICK_ACTION_BLOCKING
-	if(!user.can_perform_action(src))
+	if(isnull(input_color) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
 	picked_color = input_color
 	update_appearance()
@@ -154,14 +152,11 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 
 /obj/structure/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, "Choose a color", "Beacon Color", GLOB.marker_beacon_colors)
-	if(isnull(input_color))
+	if(isnull(input_color) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
-	if(!user.can_perform_action(src))
-		return NONE
 	picked_color = input_color
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
-
 
 /* Preset marker beacon types, for mapping */
 // Set the icon_state here to make it clear for mappers.

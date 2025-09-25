@@ -132,7 +132,7 @@
 	if(scanner_wand)
 		balloon_alert(user, "already has a wand!")
 		return ITEM_INTERACT_BLOCKING
-	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
+	if!user.transferItemToLoc(tool, src)
 		balloon_alert(user, "stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
@@ -147,7 +147,7 @@
 		wand.selected_target = null
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	scanner_wand = tool
-	return
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

@@ -811,6 +811,10 @@
 	)
 	register_context()
 	register_item_context()
+	// If default crayon red colour, pick a more fun spraycan colour
+	if(!paint_color)
+		set_painting_tool_color(pick(COLOR_CRAYON_RED, COLOR_CRAYON_ORANGE, COLOR_CRAYON_YELLOW, COLOR_CRAYON_GREEN, COLOR_CRAYON_BLUE, COLOR_CRAYON_PURPLE))
+	refill()
 
 /obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -860,13 +864,6 @@
 		user.AddComponent(/datum/component/face_decal, "spray", EXTERNAL_ADJACENT, paint_color)
 	reagents.trans_to(user, used, volume_multiplier, transferred_by = user, methods = VAPOR)
 	return OXYLOSS
-
-/obj/item/toy/crayon/spraycan/Initialize(mapload)
-	. = ..()
-	// If default crayon red colour, pick a more fun spraycan colour
-	if(!paint_color)
-		set_painting_tool_color(pick(COLOR_CRAYON_RED, COLOR_CRAYON_ORANGE, COLOR_CRAYON_YELLOW, COLOR_CRAYON_GREEN, COLOR_CRAYON_BLUE, COLOR_CRAYON_PURPLE))
-	refill()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
