@@ -315,6 +315,10 @@
 	var/step_count = 0
 	/// If you use the module on a planetary turf, you fly up. To the sky.
 	var/you_fucked_up = FALSE
+		/// Flag to prevent infinite loops during Z-movement
+	var/processing_z_move = FALSE
+	/// Timestamp of last Z-movement
+	var/last_z_move_time = 0
 
 /obj/item/mod/module/atrocinator/on_activation(mob/activator)
 	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
@@ -350,10 +354,22 @@
 	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 
+	// Prevent infinite loops during Z-movement - No more time dilation (we hope)
+	if(processing_z_move)
+		return
+
+	// Prevent rapid oscillation between Z-levels (add 0.5 second cooldown)
+	var/current_time = world.time
+	if(current_time - last_z_move_time < 0.5 SECONDS)
+		return
+
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
+		processing_z_move = TRUE
+		last_z_move_time = current_time
 		current_turf.zFall(mod.wearer)
+		processing_z_move = FALSE
 		return
 
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
