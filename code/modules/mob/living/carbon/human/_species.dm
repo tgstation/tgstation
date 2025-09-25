@@ -1023,7 +1023,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /// Handles the stagger combo effect of our punch. Follows the same logic as the above proc, target is our owner, user is our attacker.
 /datum/species/proc/stagger_combo(mob/living/carbon/human/user, mob/living/carbon/human/target, atk_verb = "hit", limb_accuracy = 0, armor_block = 0)
 	// Randomly determines the effects of our punch. Limb accuracy is a bonus, armor block is a defense, attacker athletics provides a minor to significant bonus.
-	var/roll_them_bones = rand(-20, 20) + limb_accuracy - armor_block + (user.mind ? (user.mind.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER)/2) : 0)
+	var/roll_them_bones = rand(-20, 20) + limb_accuracy - armor_block + ((user.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER) / 2) || 0)
 
 	switch(roll_them_bones)
 		if (-INFINITY to 0) //Mostly a gimmie, this one just keeps them staggered briefly
