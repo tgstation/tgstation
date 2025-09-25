@@ -353,7 +353,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		if(0)
 			new_y += -source.get_transform_translation_size(old_div) / old_div
 
-	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = (EASE_IN|EASE_OUT))
+	animate(vis_overlay, transform = new_transform, pixel_x = new_x, pixel_y = new_y, time = UPDATE_TRANSFORM_ANIMATION_TIME, easing = SINE_EASING)
 	addtimer(CALLBACK(vis_overlay, TYPE_PROC_REF(/atom/movable/immerse_overlay, adjust_living_overlay_offset), source), UPDATE_TRANSFORM_ANIMATION_TIME)
 
 ///Spin the overlay in the opposite direction so it doesn't look like it's spinning at all.
