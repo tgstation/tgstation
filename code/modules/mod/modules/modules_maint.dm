@@ -321,10 +321,16 @@
 	var/last_z_move_time = 0
 
 /obj/item/mod/module/atrocinator/on_activation(mob/activator)
+	// Prevent activation while carrying someone to avoid lag issues
+	if(length(mod.wearer.buckled_mobs))
+		balloon_alert(activator, "can't activate while carrying someone!")
+		return MOD_CANCEL_ACTIVATE
+
 	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
+	RegisterSignal(mod.wearer, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_someone_buckled))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 	passtable_on(mod.wearer, REF(src))
 	check_upstairs() //todo at some point flip your screen around
@@ -341,6 +347,7 @@
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
+	UnregisterSignal(mod.wearer, COMSIG_LIVING_SET_BUCKLED)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 	passtable_off(mod.wearer, REF(src))
@@ -354,23 +361,14 @@
 	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 
-	// Prevent infinite loops during Z-movement - No more time dilation (we hope)
-	if(processing_z_move)
-		return
-
-	// Prevent rapid loops between Z-levels
-	var/current_time = world.time
-	if(current_time - last_z_move_time < 0.5 SECONDS)
+	// Prevent infinite loops when being fireman carried - just don't trigger at all
+	if(mod.wearer.buckled)
 		return
 
 	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
-		processing_z_move = TRUE
-		// Only set timer if zFall actually works
-		if(current_turf.zFall(mod.wearer))
-			last_z_move_time = current_time
-		processing_z_move = FALSE
+		current_turf.zFall(mod.wearer)
 		return
 
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
@@ -400,6 +398,13 @@
 /obj/item/mod/module/atrocinator/proc/on_talk(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	speech_args[SPEECH_SPANS] |= "upside_down"
+
+/// Prevent someone from being buckled to the wearer while atrocinator is active
+/obj/item/mod/module/atrocinator/proc/on_someone_buckled(datum/source, mob/living/buckled_mob, mob/living/buckler)
+	SIGNAL_HANDLER
+	if(buckled_mob) // Someone is being buckled to the wearer
+		balloon_alert(mod.wearer, "atrocinator interference!")
+		return COMPONENT_BLOCK_BUCKLE
 
 /obj/item/mod/module/recycler/donk/safe
 	name = "MOD foam dart recycler module"
