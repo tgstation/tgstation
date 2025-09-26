@@ -156,7 +156,7 @@
 		if(istype(new_object, /obj/machinery/door/airlock)) //carry over access-related and adjacent variables. The rest is not as important
 			var/obj/machinery/door/airlock/airlock = object
 			var/obj/machinery/door/new_airlock = new_object
-			new_airlock.unres_sides == airlock.unres_sides
+			new_airlock.unres_sides = airlock.unres_sides
 			new_airlock.req_access = airlock.req_access.Copy()
 			new_airlock.req_one_access = airlock.req_one_access.Copy()
 			new_airlock.locked = airlock.locked
