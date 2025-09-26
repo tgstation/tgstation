@@ -23,4 +23,5 @@
 /datum/element/empprotection/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list["EMP-proof"] = "It is shielded against electromagnetic pulses."
+	if(flags)
+		examine_list["EMP-proof"] = "It is shielded against electromagnetic pulses."
