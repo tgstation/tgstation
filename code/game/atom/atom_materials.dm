@@ -423,6 +423,9 @@
 			return FALSE
 	return TRUE
 
+/obj/item/stack/compare_materials(atom/target)
+	return TRUE //WIP DO NOT MERGE PR UNTIL I FIX THIS PART
+
 #undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION
 
 /**

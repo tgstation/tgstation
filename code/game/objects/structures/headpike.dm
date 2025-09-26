@@ -5,7 +5,7 @@
 	icon_state = "headpike"
 	density = FALSE
 	anchored = TRUE
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65)
 	var/obj/item/spear/spear
 	var/obj/item/spear/speartype = /obj/item/spear
 	var/obj/item/bodypart/head/victim

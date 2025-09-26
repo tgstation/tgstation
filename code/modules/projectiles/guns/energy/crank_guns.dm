@@ -7,6 +7,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket)
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2)
 
 /obj/item/gun/energy/laser/musket/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 22, offset_y = 11)
@@ -45,6 +46,12 @@
 	charge_sections = 1
 	spread = 22.5
 	obj_flags = UNIQUE_RENAME
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.25,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2,
+	)
 
 /obj/item/gun/energy/disabler/smoothbore/Initialize(mapload)
 	. = ..()
