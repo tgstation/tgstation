@@ -7,7 +7,7 @@
 
 	playsound(origin_turf, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 
-	for(var/mob/living/carbon/victim as anything in hearers(max(light_range, medium_range, heavy_range), origin_turf))
+	for(var/mob/living/carbon/victim in hearers(max(light_range, medium_range, heavy_range), origin_turf))
 		if(!victim.can_hear())
 			continue
 		var/distance = get_dist(origin_turf, victim.loc)

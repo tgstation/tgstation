@@ -595,7 +595,7 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/C in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/C in owner.get_all_cells())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)

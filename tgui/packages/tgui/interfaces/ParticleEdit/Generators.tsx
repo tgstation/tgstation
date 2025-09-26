@@ -66,10 +66,11 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
         {typeof A === 'number' ? (
           <NumberInput
             animated
+            tickWhileDragging
             value={A}
             minValue={0}
             step={1}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('edit', {
                 var: var_name,
                 var_mod: P_DATA_GENERATOR,
@@ -82,9 +83,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
           <>
             <NumberInput
               animated
+              tickWhileDragging
               value={A[0]}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   var_mod: P_DATA_GENERATOR,
@@ -101,9 +103,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             />
             <NumberInput
               animated
+              tickWhileDragging
               value={A[1]}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   var_mod: P_DATA_GENERATOR,
@@ -115,9 +118,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             />
             <NumberInput
               animated
+              tickWhileDragging
               value={A[2]}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   var_mod: P_DATA_GENERATOR,
@@ -135,9 +139,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
         {typeof B === 'number' ? (
           <NumberInput
             animated
+            tickWhileDragging
             value={B}
             step={1}
-            onDrag={(value) =>
+            onChange={(value) =>
               act('edit', {
                 var: var_name,
                 var_mod: P_DATA_GENERATOR,
@@ -151,9 +156,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
           <>
             <NumberInput
               animated
+              tickWhileDragging
               value={B[0]}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   var_mod: P_DATA_GENERATOR,
@@ -170,9 +176,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             />
             <NumberInput
               animated
+              tickWhileDragging
               value={B[1]}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   var_mod: P_DATA_GENERATOR,
@@ -189,9 +196,10 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
             />
             <NumberInput
               animated
+              tickWhileDragging
               value={B[2]}
               step={1}
-              onDrag={(value) =>
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   var_mod: P_DATA_GENERATOR,
