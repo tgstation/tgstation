@@ -723,20 +723,6 @@
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
 
-/**
- * Proc that sends a pda message to a user, asking them to approve or deny something. Topic handles the results, this sends the appropriate href links to the chat in a sane way.
- */
-/datum/computer_file/program/messenger/proc/receive_rolling_permission_prompt()
-	//First, we need to get formatting regarding the type or polled question
-
-
-	var/list/mob/living/receievers = list()
-	if(computer.inserted_pai && computer.inserted_pai.pai)
-		receievers += computer.inserted_pai.pai
-	if(computer.loc && isliving(computer.loc))
-		receievers += computer.loc
-	// Then, generate a text string to send to the PDA
-	// The text string will need vars that href to an approve or deny message.
 
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
