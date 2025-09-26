@@ -274,8 +274,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	var/mob/living/living_target = target
 	check_heat(living_target)
 
-	living_target.apply_status_effect(/datum/status_effect/washing_regen, shower_reagent)
-	living_target.add_mood_event("shower", /datum/mood_event/shower, shower_reagent)
+	if(iscarbon(living_target))
+		living_target.apply_status_effect(/datum/status_effect/washing_regen, shower_reagent)
+		living_target.add_mood_event("shower", /datum/mood_event/shower, shower_reagent)
 
 /**
  * Toggle whether shower is actually on and outputting water.
