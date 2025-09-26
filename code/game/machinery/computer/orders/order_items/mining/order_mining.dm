@@ -35,7 +35,7 @@
 	cost_per_order = 650
 
 /datum/orderable_item/mining/punching_mitts
-	purchase_path = /obj/item/clothing/gloves/gauntlets/punch_mitts
+	purchase_path = /obj/item/clothing/gloves/fingerless/punch_mitts
 	cost_per_order = 1000
 
 /datum/orderable_item/mining/crusher_retool_kit

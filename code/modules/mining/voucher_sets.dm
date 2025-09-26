@@ -105,6 +105,6 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "punch_mitts"
 	set_items = list(
-		/obj/item/clothing/gloves/gauntlets/punch_mitts,
+		/obj/item/clothing/gloves/fingerless/punch_mitts,
 		/obj/item/clothing/head/cowboy,
 	)

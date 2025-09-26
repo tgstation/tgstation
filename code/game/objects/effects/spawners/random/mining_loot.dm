@@ -43,6 +43,7 @@
 		/obj/item/organ/heart/cursed/wizard = 1,
 		/obj/item/jacobs_ladder = 1,
 		/obj/item/guardian_creator/miner = 1,
+		/obj/item/weldingtool/abductor = 1,
 		/obj/item/warp_cube/red = 1,
 		/obj/item/immortality_talisman = 1,
 		/obj/item/book/granter/action/spell/summonitem = 1,
