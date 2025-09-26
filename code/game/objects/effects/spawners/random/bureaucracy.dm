@@ -42,6 +42,7 @@
 	icon_state = "paper"
 	loot = list(
 		/obj/item/paper = 20,
+		/obj/item/paperplane = 2,
 		/obj/item/paper/crumpled = 2,
 		/obj/item/paper/crumpled/bloody = 2,
 		/obj/item/paper/crumpled/muddy = 2,
