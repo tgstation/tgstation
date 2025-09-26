@@ -84,17 +84,17 @@
 		.["indestructible"] = "It is extremely robust! It'll probably withstand anything that could happen to it!"
 	else
 		if(resistance_flags & LAVA_PROOF)
-			.["lavaproof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
+			.["lava-proof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
 		if(resistance_flags & (ACID_PROOF | UNACIDABLE))
-			.["acidproof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
+			.["acid-proof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
 		if(resistance_flags & FREEZE_PROOF)
-			.["freezeproof"] = "It is made of cold-resistant materials."
+			.["freeze-proof"] = "It is made of cold-resistant materials."
 		if(resistance_flags & FIRE_PROOF)
-			.["fireproof"] = "It is made of fire-retardant materials."
+			.["fire-proof"] = "It is made of fire-retardant materials."
 		if(resistance_flags & SHUTTLE_CRUSH_PROOF)
-			.["crushproof"] = "It is extremely solid. It should be able to withstand being run over by a shuttle!"
+			.["crush-proof"] = "It is extremely solid. It should be able to withstand being run over by a shuttle!"
 		if(resistance_flags & BOMB_PROOF)
-			.["bombproof"] = "It looks like it could survive an explosion!"
+			.["bomb-proof"] = "It looks like it could survive an explosion!"
 		if(resistance_flags & FLAMMABLE)
 			.["flammable"] = "It looks like it could easily catch on fire."
 
