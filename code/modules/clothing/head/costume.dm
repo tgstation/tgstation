@@ -123,6 +123,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 	dog_fashion = /datum/dog_fashion/head/cardborg
 
@@ -141,6 +142,7 @@
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor_type = /datum/armor/costume_bronze
+	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
@@ -172,6 +174,7 @@
 	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 /datum/armor/costume_bronze
 	melee = 5

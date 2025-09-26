@@ -22,6 +22,7 @@
 	force = 10
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 22, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	///What item is being charged currently?
 	var/obj/item/charging = null
 	///Did we put power into "charging" last process()?

@@ -412,6 +412,8 @@
 /atom/proc/compare_materials(atom/target)
 	if(length(custom_materials) != length(target.custom_materials))
 		return FALSE
+	if(custom_materials == target.custom_materials)
+		return TRUE
 	for(var/mat in custom_materials)
 		var/enemy_amount = target.custom_materials[mat]
 		if(!enemy_amount) //we couldn't find said material, early return so we won't perform a division by zero
@@ -421,20 +423,24 @@
 			return FALSE
 	return TRUE
 
+/obj/item/stack/compare_materials(atom/target)
+	return TRUE //WIP DO NOT MERGE PR UNTIL I FIX THIS PART
+
 #undef COMPARISION_ACCEPTABLE_MATERIAL_DEVIATION
 
 /**
- * Returns a string with the materials and their respective amounts in it (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)] )
- * also used in several unit tests.
+ * Returns a string with the materials and their respective amounts written in a way that reflects how it's displayed in the code
+ * (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)]). Also used in several unit tests.
+ * Not to be confused with get_material_english_list()
  */
-/atom/proc/get_materials_english_list()
+/atom/proc/transcribe_materials_list(mult = 1)
 	if(!custom_materials)
 		return "null"
 	var/text = "\[list("
 	var/index = 1
 	var/mats_len = length(custom_materials)
 	for(var/datum/material/mat as anything in custom_materials)
-		text += "[mat.type] = [custom_materials[mat]]"
+		text += "[mat.type] = [round(custom_materials[mat] * mult)]"
 		if(index < mats_len)
 			text += ", "
 		index++

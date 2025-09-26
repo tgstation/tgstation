@@ -390,6 +390,7 @@
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/iron = SMALL_MATERIAL_AMOUNT / 2)
 
 /obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
@@ -508,6 +509,7 @@
 	flags_cover = GLASSESCOVERSEYES
 	tint = INFINITY // You WILL Be blind, no matter what
 	dog_fashion = /datum/dog_fashion/head
+	custom_materials = null
 
 /obj/item/clothing/glasses/blindfold/Initialize(mapload)
 	. = ..()
@@ -519,6 +521,7 @@
 	icon_state = "trickblindfold"
 	inhand_icon_state = "blindfold"
 	flags_cover = GLASSESCOVERSEYES
+	custom_materials = null
 
 /obj/item/clothing/glasses/blindfold/white
 	name = "blind personnel blindfold"
@@ -793,3 +796,4 @@
 	icon_state = "phantom_glasses"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
+	custom_materials = null

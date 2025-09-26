@@ -176,6 +176,13 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	ammo_x_offset = 3
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT,
+	)
 
 ////////Laser Tag////////////////////
 
