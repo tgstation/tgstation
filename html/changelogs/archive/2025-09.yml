@@ -638,3 +638,8 @@
   necromanceranne:
   - balance: Being frail or being more resistant to wounding is now more consistent
       about how it hinders or benefits you.
+2025-09-26:
+  DaCoolBoss:
+  - bugfix: Luxury Shuttle windows now allow some projectiles to pass.
+  timothymtorres:
+  - qol: Climbable objects now show up as an examine tag.
