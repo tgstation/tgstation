@@ -70959,6 +70959,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/sign/departments/security/directional/east,
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
