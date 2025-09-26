@@ -1,7 +1,8 @@
 // ~wound damage/rolling defines
 /// the cornerstone of the wound threshold system, your base wound roll for any attack is rand(1, damage^this), after armor reduces said damage. See [/obj/item/bodypart/proc/check_wounding]
 #define WOUND_DAMAGE_EXPONENT 1.4
-/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference)
+/// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (25^1.4=91, for reference). Does not apply if the mob has TRAIT_BLOODY_MESS.
+/// This is further affected by TRAIT_EASILY_WOUNDED increasing the max considered damage (before applying the exponent) by 50%, and TRAIT_HARDLY_WOUNDED reducing it by 50%.
 #define WOUND_MAX_CONSIDERED_DAMAGE 25
 /// an attack must do this much damage after armor in order to roll for being a wound (so pressure damage/being on fire doesn't proc it)
 #define WOUND_MINIMUM_DAMAGE 5
@@ -250,19 +251,19 @@ GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	RETURN_TYPE(/datum/wound) // note that just because its set to return this doesnt mean its non-nullable
 
 	var/list/wounding_type_list = list()
-	for (var/wounding_type as anything in wounding_types)
+	for (var/wounding_type in wounding_types)
 		wounding_type_list += GLOB.wounding_types_to_series[wounding_type]
 	if (!length(wounding_type_list))
 		return null
 
 	var/list/datum/wound/paths_to_pick_from = list()
-	for (var/series as anything in shuffle(wounding_type_list))
+	for (var/series in shuffle(wounding_type_list))
 		var/list/severity_list = GLOB.wound_series_collections[series]
 		if (!length(severity_list))
 			continue
 
 		var/picked_severity
-		for (var/severity_text as anything in shuffle(GLOB.wound_severities_chronological))
+		for (var/severity_text in shuffle(GLOB.wound_severities_chronological))
 			var/severity = text2num(severity_text)
 			if (!ISINRANGE(severity, severity_min, severity_max))
 				continue

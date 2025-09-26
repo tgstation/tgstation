@@ -168,8 +168,8 @@
 	if (over_object == skater)
 		pick_up_board(skater)
 
-/obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board(mob/living/carbon/skater)
-	if (skater.incapacitated || !Adjacent(skater))
+/obj/vehicle/ridden/scooter/skateboard/proc/pick_up_board(mob/living/carbon/skater, forced = FALSE)
+	if ((skater.incapacitated || !Adjacent(skater)) && !forced)
 		return
 	if(has_buckled_mobs())
 		to_chat(skater, span_warning("You can't lift this up when somebody's on it."))

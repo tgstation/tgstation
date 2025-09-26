@@ -49,7 +49,7 @@
 /obj/structure/void_conduit/proc/build_view_turfs()
 	for(var/turf/affected_turf as anything in overlayed_turfs)
 		affected_turf.cut_overlay(void_overlay)
-	for(var/turf/affected_turf as anything in view(effect_range, src))
+	for(var/turf/affected_turf in view(effect_range, src))
 		if(!isopenturf(affected_turf))
 			continue
 		affected_turf.add_overlay(void_overlay)
@@ -72,7 +72,7 @@
 ///Sends out a pulse
 /obj/structure/void_conduit/proc/do_conduit_pulse()
 	var/list/turfs_to_affect = list()
-	for(var/turf/affected_turf as anything in view(effect_range, loc))
+	for(var/turf/affected_turf in view(effect_range, loc))
 		var/distance = get_dist(loc, affected_turf)
 		if(!turfs_to_affect["[distance]"])
 			turfs_to_affect["[distance]"] = list()

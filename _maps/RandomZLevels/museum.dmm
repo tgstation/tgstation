@@ -103,7 +103,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "aR" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -264,7 +264,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "cm" = (
 /obj/machinery/door/airlock/grunge,
 /obj/structure/barricade/wooden/crude,
@@ -815,7 +815,7 @@
 "gE" = (
 /obj/item/clothing/suit/caution,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "gG" = (
 /obj/effect/turf_decal/siding/dark_blue/corner{
 	dir = 4
@@ -952,7 +952,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "hT" = (
 /mob/living/basic/statue/mannequin{
 	name = "Dale Knox";
@@ -983,6 +983,9 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"ia" = (
+/turf/open/floor/iron/white/small,
+/area/awaymission/museum/cafeteria)
 "il" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/costume/judgerobe,
@@ -1160,7 +1163,7 @@
 	name = "Restrooms"
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "jy" = (
 /mob/living/basic/statue/mannequin{
 	name = "Dale Knox";
@@ -1183,7 +1186,7 @@
 	queue_id = "museum_right_wing"
 	},
 /turf/closed/indestructible/reinforced,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "jF" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/turf_decal/box,
@@ -1315,7 +1318,7 @@
 	name = "Restrooms"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "kA" = (
 /obj/machinery/conveyor{
 	dir = 1
@@ -1332,7 +1335,7 @@
 	id = "museum_cafeteria"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "kO" = (
 /obj/structure/railing{
 	dir = 8
@@ -1740,7 +1743,7 @@
 "nY" = (
 /obj/structure/sign/poster/official/no_erp/directional/north,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "nZ" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 1
@@ -1831,7 +1834,7 @@
 	queue_id = "museum_cafeteria"
 	},
 /turf/closed/indestructible/reinforced,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "oQ" = (
 /turf/open/floor/holofloor/beach/coast{
 	dir = 1
@@ -1914,7 +1917,7 @@
 	id = "museum_cafeteria"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "pD" = (
 /obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1954,7 +1957,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "pX" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
@@ -2317,6 +2320,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"sR" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum/cafeteria)
 "sX" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -2522,7 +2532,7 @@
 /obj/structure/tank_holder/extinguisher/anti,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "up" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2538,7 +2548,7 @@
 	id_tag = "museum_toilet2"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "ut" = (
 /obj/machinery/light/very_dim/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2546,7 +2556,7 @@
 /obj/structure/mop_bucket,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "uu" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/material,
@@ -2711,7 +2721,7 @@
 	note_info = "I'VE WORKED HERE FOR 7 YEARS! JUST TO BE REPLACED BY A VENDING MACHINE?! YOU KNOW WHAT? FUCK YOU, I'VE LOCKED DOWN THE CAFETERIA AND WON'T BE COMING OUT 'TILL YOU GIVE ME MY JOB BACK!"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "wh" = (
 /obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /obj/structure/lattice,
@@ -2723,7 +2733,7 @@
 	id = "museum_right_wing"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "wk" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/freezer,
@@ -2805,7 +2815,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "wZ" = (
 /turf/open/misc/beach/coast{
 	dir = 1
@@ -3547,7 +3557,7 @@
 /obj/structure/mirror/directional/east,
 /obj/structure/sink/directional/west,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "CI" = (
 /obj/effect/turf_decal/caution,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3973,7 +3983,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "FY" = (
 /obj/structure/chair/sofa/bench/left,
 /turf/open/floor/iron/cafeteria,
@@ -4156,7 +4166,7 @@
 	id = "museum_right_wing"
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "HE" = (
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 1
@@ -4210,7 +4220,7 @@
 	},
 /obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "HY" = (
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -4242,7 +4252,7 @@
 /area/awaymission/museum)
 "Ir" = (
 /turf/closed/indestructible/fakedoor,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "Iu" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
@@ -4369,7 +4379,7 @@
 	id_tag = "museum_toilet1"
 	},
 /turf/open/floor/iron,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "Js" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -4493,7 +4503,7 @@
 	content = list("Instructions; stand upright; remove safety clip; aim noozle at base of fire... the rest is up to you.")
 	},
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "KB" = (
 /obj/structure/sign/warning/no_smoking/circle/directional/east,
 /turf/open/floor/iron/cafeteria,
@@ -4623,7 +4633,7 @@
 /obj/effect/turf_decal/siding/dark_blue,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "Mg" = (
 /obj/structure/plaque/static_plaque/golden/commission/tram,
 /turf/closed/indestructible/reinforced,
@@ -4971,6 +4981,12 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"PI" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum/cafeteria)
 "PK" = (
 /obj/machinery/door/poddoor{
 	id = "gatewayfake"
@@ -5291,7 +5307,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/fake_scrubber,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "So" = (
 /obj/machinery/shower/directional/east,
 /turf/open/floor/iron/white/textured_large,
@@ -5340,7 +5356,7 @@
 	late_initialize_pop = 1
 	},
 /turf/open/floor/iron/dark,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "SU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/stack/spacecash/c1000,
@@ -5491,6 +5507,10 @@
 /obj/structure/fluff/fake_scrubber,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"Up" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
+/area/awaymission/museum/cafeteria)
 "Uq" = (
 /obj/effect/smooths_with_walls,
 /turf/cordon/secret,
@@ -5543,7 +5563,7 @@
 /obj/structure/sink/directional/west,
 /obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "UI" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -5878,7 +5898,7 @@
 	},
 /obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "WZ" = (
 /obj/structure/chair/sofa/bench{
 	dir = 1
@@ -6026,7 +6046,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/fake_camera,
 /turf/open/floor/iron/white/small,
-/area/awaymission/museum)
+/area/awaymission/museum/cafeteria)
 "Yr" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table/reinforced,
@@ -43388,11 +43408,11 @@ re
 re
 re
 re
-FK
+Ph
 HD
 wi
 ST
-FK
+Ph
 re
 re
 re
@@ -43637,17 +43657,17 @@ re
 re
 re
 re
-FK
-FK
-FK
-FK
-FK
-FK
-FK
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
 re
-FK
-aa
-uY
+Ph
+PI
+ms
 ci
 jC
 re
@@ -43894,19 +43914,19 @@ re
 re
 re
 re
-FK
+Ph
 aO
-FK
+Ph
 WY
-FK
+Ph
 HW
-FK
-FK
-FK
+Ph
+Ph
+Ph
 Mb
-TM
+Up
 wV
-FK
+Ph
 re
 re
 re
@@ -44151,19 +44171,19 @@ re
 re
 re
 re
-FK
+Ph
 wg
-FK
+Ph
 us
-FK
+Ph
 Jp
-FK
+Ph
 um
-FK
+Ph
 Mb
-uY
+ms
 wV
-FK
+Ph
 re
 re
 re
@@ -44408,17 +44428,17 @@ re
 re
 re
 re
-FK
-Gn
-Gn
-Gn
+Ph
+ia
+ia
+ia
 Sm
-Gn
+ia
 Kz
-Gn
-FK
+ia
+Ph
 ju
-uY
+ms
 ci
 Ir
 re
@@ -44665,19 +44685,19 @@ re
 re
 re
 re
-FK
+Ph
 nY
-Gn
-Gn
-Gn
-Gn
-Gn
-Gn
+ia
+ia
+ia
+ia
+ia
+ia
 kx
-uY
-uY
+ms
+ms
 wV
-FK
+Ph
 re
 re
 re
@@ -44922,19 +44942,19 @@ re
 re
 re
 re
-FK
+Ph
 ut
 UH
 gE
 CG
-Gn
+ia
 CG
 Yn
-FK
-RC
-TM
+Ph
+sR
+Up
 FU
-FK
+Ph
 re
 re
 re
@@ -45179,19 +45199,19 @@ re
 re
 re
 re
-FK
-FK
-FK
-FK
-FK
-FK
-FK
-FK
-FK
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
+Ph
 Mb
-uY
+ms
 wV
-FK
+Ph
 Uq
 re
 re
@@ -45444,9 +45464,9 @@ re
 re
 re
 re
-FK
+Ph
 pN
-uY
+ms
 hS
 oP
 re
@@ -45701,11 +45721,11 @@ re
 re
 re
 re
-FK
-FK
+Ph
+Ph
 pz
 kL
-FK
+Ph
 re
 re
 re
