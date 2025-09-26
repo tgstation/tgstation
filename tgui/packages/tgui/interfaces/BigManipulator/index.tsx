@@ -463,6 +463,39 @@ const PointSection = (props: {
               </Stack.Item>
             </Stack>
           </Section>
+          <Section title="Interaction Priorities">
+            <Stack vertical>
+              {editingPoint.settings_list.map((setting, index) => (
+                <Stack key={setting.name} align="center">
+                  <Stack.Item>
+                    <Button
+                      icon="arrow-up"
+                      disabled={index === 0}
+                      onClick={() =>
+                        index > 0 &&
+                        adjustPoint(editingPoint.id, 'priority_move_up', {
+                          name: setting.name,
+                        })
+                      }
+                    />
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    <Box
+                      className="candystripe"
+                      style={{
+                        padding: '4px 8px',
+                        border: '1px solid #40668c',
+                        width: `${Math.max(1, setting.priority_width) * 40}px`,
+                        display: 'inline-block',
+                      }}
+                    >
+                      {setting.name}
+                    </Box>
+                  </Stack.Item>
+                </Stack>
+              ))}
+            </Stack>
+          </Section>
           <Section
             title="Item Filters"
             buttons={

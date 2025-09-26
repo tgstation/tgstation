@@ -17,6 +17,7 @@ export type InteractionPoint = {
   overflow_status: string;
   worker_use_rmb: BooleanLike;
   worker_combat_mode: BooleanLike;
+  settings_list: PrioritySettings[];
 };
 
 export interface ManipulatorData {

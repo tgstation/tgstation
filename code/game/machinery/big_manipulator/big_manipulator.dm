@@ -630,6 +630,16 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
+
+		var/list/sorted_priorities_pick = point.get_sorted_priorities()
+		var/num_priorities_pick = length(sorted_priorities_pick)
+		var/list/settings_list_pick = list()
+		for(var/datum/manipulator_priority/pr_pick in sorted_priorities_pick)
+			var/list/entry_pick = list()
+			entry_pick["name"] = pr_pick.name
+			entry_pick["priority_width"] = (num_priorities_pick - pr_pick.number + 1)
+			settings_list_pick += list(entry_pick)
+		point_data["settings_list"] = settings_list_pick
 		pickup_points_data += list(point_data)
 	data["pickup_points"] = pickup_points_data
 
@@ -651,6 +661,16 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
+
+		var/list/sorted_priorities_drop = point.get_sorted_priorities()
+		var/num_priorities_drop = length(sorted_priorities_drop)
+		var/list/settings_list_drop = list()
+		for(var/datum/manipulator_priority/pr_drop in sorted_priorities_drop)
+			var/list/entry_drop = list()
+			entry_drop["name"] = pr_drop.name
+			entry_drop["priority_width"] = (num_priorities_drop - pr_drop.number + 1)
+			settings_list_drop += list(entry_drop)
+		point_data["settings_list"] = settings_list_drop
 		dropoff_points_data += list(point_data)
 	data["dropoff_points"] = dropoff_points_data
 
@@ -774,6 +794,34 @@
 		if("toggle_worker_combat")
 			target_point.worker_combat_mode = !target_point.worker_combat_mode
 			return TRUE
+
+		if("priority_move_up")
+			var/setting_name
+			if(islist(value))
+				setting_name = value["name"]
+			else
+				setting_name = value
+			if(!setting_name)
+				return FALSE
+
+			var/datum/manipulator_priority/target_priority = null
+			for(var/datum/manipulator_priority/p in target_point.interaction_priorities)
+				if(p.name == setting_name)
+					target_priority = p
+					break
+
+			if(!target_priority)
+				return FALSE
+
+			if(target_priority.number <= 1)
+				return TRUE
+
+			var/new_number = target_priority.number - 1
+			if(target_point.update_priority(target_priority, new_number))
+				SStgui.update_uis(src)
+				return TRUE
+
+			return FALSE
 
 		if("move_to")
 			var/button_number = text2num(value["buttonNumber"])
