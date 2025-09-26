@@ -64,15 +64,20 @@
 	var/turf/reaction_location = get_turf(holder.my_atom)
 	var/obj/material_sheet = new /obj/item/stack/sheet/mineral/plasma(reaction_location, round(created_volume))
 
+	if(!reaction_location)
+		return
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
 	var/triggered_sparks = FALSE
 	for(var/creation_loop in 1 to round(created_volume))
-		var/datum/gas_mixture/enviro = reaction_location.return_air()
 		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.05), T20C, MAX_EXO_TEMP)
-		reaction_location.air_update_turf(FALSE, FALSE)
+
 		if(enviro.temperature >= MAX_EXO_TEMP && !triggered_sparks) //Only trigger once for performance concerns.
 			material_sheet.visible_message("\The [material_sheet] reacts with the ambient heat and ignites the air!")
 			reaction_location.hotspot_expose(MAX_EXO_TEMP, CELL_VOLUME)
 			triggered_sparks = TRUE
+
+	reaction_location.air_update_turf(FALSE, FALSE)
 
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
@@ -86,10 +91,11 @@
 		return
 
 	new /obj/item/stack/sheet/mineral/gold(reaction_location, round(created_volume))
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
 	for(var/creation_loop in 1 to round(created_volume))
-		var/datum/gas_mixture/enviro = reaction_location.return_air()
 		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.1), T20C, MAX_EXO_TEMP)
-		reaction_location.air_update_turf(FALSE, FALSE)
+	reaction_location.air_update_turf(FALSE, FALSE)
 
 /datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
@@ -101,8 +107,11 @@
 	var/turf/reaction_location = get_turf(holder.my_atom)
 	var/obj/mineral_sheet = new /obj/item/stack/sheet/mineral/uranium(reaction_location, round(created_volume))
 
+	if(!reaction_location)
+		return
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
 	for(var/creation_loop in 1 to round(created_volume))
-		var/datum/gas_mixture/enviro = reaction_location.return_air()
 		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.08), T20C, MAX_EXO_TEMP)
 		if(enviro.temperature >= MAX_EXO_TEMP)
 			radiation_pulse(
@@ -113,7 +122,7 @@
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
 			)
 			mineral_sheet.propagate_radiation_pulse()
-		reaction_location.air_update_turf(FALSE, FALSE)
+	reaction_location.air_update_turf(FALSE, FALSE)
 
 /datum/chemical_reaction/silver_solidification
 	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
@@ -132,8 +141,16 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/hauntium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/turf/reaction_location = get_turf(holder.my_atom)
 	new /obj/item/stack/sheet/hauntium(get_turf(holder.my_atom), round(created_volume))
 
+	if(!reaction_location)
+		return
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
+	for(var/creation_loop in 1 to round(created_volume))
+		enviro.temperature = clamp(min(TCMB, enviro.temperature * 0.9), TCMB, enviro.temperature)
+	reaction_location.air_update_turf(FALSE, FALSE)
 #undef MAX_EXO_TEMP
 
 /datum/chemical_reaction/capsaicincondensation
