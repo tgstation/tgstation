@@ -8,6 +8,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	abstract_type = /obj/item/food
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
 	material_flags = MATERIAL_NO_EDIBILITY
@@ -152,7 +153,7 @@
 /// This proc handles the microwave component. Overwrite if you want special microwave results.
 /// By default, all food is microwavable. However, they will be microwaved into a bad recipe (burnt mess).
 /obj/item/food/proc/make_microwaveable()
-	AddElement(/datum/element/microwavable, /obj/item/food/badrecipe, skip_matcheck = TRUE)
+	AddElement(/datum/element/microwavable, /obj/item/food/badrecipe, bad_recipe = TRUE)
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
 /obj/item/food/proc/make_leave_trash()

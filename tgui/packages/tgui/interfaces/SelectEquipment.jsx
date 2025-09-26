@@ -12,27 +12,22 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
-
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 // here's an important mental define:
 // custom outfits give a ref keyword instead of path
-const getOutfitKey = (outfit) => outfit.path || outfit.ref;
+function getOutfitKey(outfit) {
+  return outfit.path || outfit.ref;
+}
 
-const useOutfitTabs = (categories) => {
-  return useLocalState('selected-tab', categories[0]);
-};
-
-export const SelectEquipment = (props) => {
+export function SelectEquipment(props) {
   const { act, data } = useBackend();
   const { name, icon64, current_outfit, favorites } = data;
 
-  const isFavorited = (entry) => favorites?.includes(entry.path);
-
   const outfits = map([...data.outfits, ...data.custom_outfits], (entry) => ({
     ...entry,
-    favorite: isFavorited(entry),
+    favorite: favorites?.includes(entry.path),
   }));
 
   // even if no custom outfits were sent, we still want to make sure there's
@@ -41,8 +36,7 @@ export const SelectEquipment = (props) => {
     ...outfits.map((entry) => entry.category),
     'Custom',
   ]);
-  const [tab] = useOutfitTabs(categories);
-
+  const [tab, setTab] = useState(categories[0]);
   const [searchText, setSearchText] = useState('');
   const searchFilter = createSearch(
     searchText,
@@ -61,10 +55,9 @@ export const SelectEquipment = (props) => {
     ],
   );
 
-  const getOutfitEntry = (current_outfit) =>
-    outfits.find((outfit) => getOutfitKey(outfit) === current_outfit);
-
-  const currentOutfitEntry = getOutfitEntry(current_outfit);
+  const currentOutfitEntry = outfits.find(
+    (outfit) => getOutfitKey(outfit) === current_outfit,
+  );
 
   return (
     <Window width={650} height={415} theme="admin">
@@ -82,21 +75,25 @@ export const SelectEquipment = (props) => {
                 />
               </Stack.Item>
               <Stack.Item>
-                <DisplayTabs categories={categories} />
+                <DisplayTabs
+                  categories={categories}
+                  tab={tab}
+                  onSelect={setTab}
+                />
               </Stack.Item>
-              <Stack.Item grow={1} basis={0}>
+              <Stack.Item grow basis={0}>
                 <OutfitDisplay entries={visibleOutfits} currentTab={tab} />
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item grow={1} basis={0}>
+          <Stack.Item grow basis={0}>
             <Stack fill vertical>
               <Stack.Item>
                 <Section>
                   <CurrentlySelectedDisplay entry={currentOutfitEntry} />
                 </Section>
               </Stack.Item>
-              <Stack.Item grow={1}>
+              <Stack.Item grow>
                 <Section fill title={name} textAlign="center">
                   <Image
                     m={0}
@@ -111,30 +108,31 @@ export const SelectEquipment = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
 
-const DisplayTabs = (props) => {
-  const { categories } = props;
-  const [tab, setTab] = useOutfitTabs(categories);
+function DisplayTabs(props) {
+  const { categories, tab, onSelect } = props;
+
   return (
     <Tabs textAlign="center">
       {categories.map((category) => (
         <Tabs.Tab
           key={category}
           selected={tab === category}
-          onClick={() => setTab(category)}
+          onClick={() => onSelect(category)}
         >
           {category}
         </Tabs.Tab>
       ))}
     </Tabs>
   );
-};
+}
 
-const OutfitDisplay = (props) => {
+function OutfitDisplay(props) {
   const { act, data } = useBackend();
-  const { current_outfit } = data;
+  const { current_outfit, categories } = data;
   const { entries, currentTab } = props;
+
   return (
     <Section fill scrollable>
       {entries.map((entry) => (
@@ -171,12 +169,13 @@ const OutfitDisplay = (props) => {
       )}
     </Section>
   );
-};
+}
 
-const CurrentlySelectedDisplay = (props) => {
+function CurrentlySelectedDisplay(props) {
   const { act, data } = useBackend();
   const { current_outfit } = data;
   const { entry } = props;
+
   return (
     <Stack align="center">
       {entry?.path && (
@@ -194,7 +193,7 @@ const CurrentlySelectedDisplay = (props) => {
           />
         </Stack.Item>
       )}
-      <Stack.Item grow={1} basis={0}>
+      <Stack.Item grow basis={0}>
         <Box color="label">Currently selected:</Box>
         <Box
           title={entry?.path}
@@ -223,4 +222,4 @@ const CurrentlySelectedDisplay = (props) => {
       </Stack.Item>
     </Stack>
   );
-};
+}

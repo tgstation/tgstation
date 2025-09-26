@@ -126,7 +126,7 @@
 	var/list/plane_info = list()
 
 	var/list/our_planes = our_hud?.get_planes_from(current_group)
-	for (var/plane_string as anything in our_planes)
+	for (var/plane_string in our_planes)
 		var/list/this_plane = list()
 		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
 		this_plane["name"] = plane.name

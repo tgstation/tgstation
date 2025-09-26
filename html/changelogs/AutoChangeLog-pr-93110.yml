@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "Add several new examine categories for objects descs that include: bomb-proof, flammable, holograhic, crush-proof, and conductive. Also use hyphens for multi-word examine tags."
+  - bugfix: "Fixes custom materials not appearing for things like structures when examined."

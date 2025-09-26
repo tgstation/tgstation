@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Adds hotkey to close all open uis, bound to \"home\" by default"
