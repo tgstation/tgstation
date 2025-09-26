@@ -10,8 +10,6 @@
 /// Shows if the machine is being used for a reagent scan.
 #define KIOSK_SCANNING_REAGENTS (1<<3)
 
-
-
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
@@ -132,7 +130,7 @@
 	if(scanner_wand)
 		balloon_alert(user, "already has a wand!")
 		return ITEM_INTERACT_BLOCKING
-	if!user.transferItemToLoc(tool, src)
+	if(!user.transferItemToLoc(tool, src))
 		balloon_alert(user, "stuck to your hand!")
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
