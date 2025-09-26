@@ -351,4 +351,7 @@
 #define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
 
 ///from mob/living/befriend()
-#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"
+#define COMSIG_LIVING_MADE_NEW_FRIEND "living_made_new_friend"
+
+/// From /mob/living/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
+#define COMSIG_LIVING_UPDATE_OFFSETS "living_update_offsets"

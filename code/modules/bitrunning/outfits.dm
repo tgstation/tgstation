@@ -43,7 +43,7 @@
 	/// Corresponding ammo
 	var/list/corresponding_ammo = list(
 		/obj/item/ammo_box/magazine/m9mm,
-		/obj/item/ammo_box/strilka310,
+		/obj/item/ammo_box/speedloader/strilka310,
 		/obj/item/ammo_box/magazine/uzim9mm,
 		/obj/item/ammo_box/magazine/m50,
 		/obj/item/food/pizzaslice/dank, // more silly, less destructive

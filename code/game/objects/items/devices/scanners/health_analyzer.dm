@@ -190,7 +190,17 @@
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span><br>"
-	if (!target.get_organ_slot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
+	
+	// Check for brain - both organic (carbon) and synthetic (cyborg MMI)
+	var/has_brain = FALSE
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN))
+		has_brain = TRUE
+	else if(iscyborg(target))
+		var/mob/living/silicon/robot/cyborg_target = target
+		if(cyborg_target.mmi?.brain)
+			has_brain = TRUE
+	
+	if(!has_brain) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 
 	if(iscarbon(target))

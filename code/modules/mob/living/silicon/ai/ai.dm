@@ -804,7 +804,7 @@
 	var/list/viewscale = getviewsize(client.view)
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
-/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/living/silicon/ai/proc/relay_speech(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	var/raw_translation = translate_language(speaker, message_language, raw_message, spans, message_mods)
 	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
 	var/treated_message = source.generate_messagepart(raw_translation, spans, message_mods)
@@ -1092,11 +1092,10 @@
 	. = ..()
 	.[/datum/job/ai::title] = minutes
 
-/mob/living/silicon/ai/get_voice()
-	. = ..()
-	if(ai_voicechanger && ai_voicechanger.changing_voice)
+/mob/living/silicon/ai/get_voice(add_id_name)
+	if(ai_voicechanger?.changing_voice)
 		return ai_voicechanger.say_name
-	return
+	return ..()
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)

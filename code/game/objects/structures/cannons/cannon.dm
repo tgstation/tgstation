@@ -22,6 +22,7 @@
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()

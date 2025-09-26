@@ -180,7 +180,7 @@
 			if(appears_dead)
 				bleed_text += ", but it has pooled and is not flowing."
 			else
-				if(HAS_TRAIT(src, TRAIT_BLOODY_MESS))
+				if(HAS_TRAIT(src, TRAIT_BLOOD_FOUNTAIN))
 					bleed_text += " incredibly quickly"
 				bleed_text += "!"
 

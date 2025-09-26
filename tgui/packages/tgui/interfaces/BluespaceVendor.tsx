@@ -86,13 +86,14 @@ export const BluespaceVendor = (props) => {
                 <Stack.Item>
                   <NumberInput
                     animated
+                    tickWhileDragging
                     value={tank_filling_amount}
                     step={1}
                     width="63px"
                     unit="% tank filling goal"
                     minValue={0}
                     maxValue={100}
-                    onDrag={(value) =>
+                    onChange={(value) =>
                       act('pumping_rate', {
                         rate: value,
                       })

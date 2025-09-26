@@ -19,7 +19,7 @@
 	src.regeneration_time = regeneration_time
 
 	var/atom/movable/living_parent = parent
-	for(var/type_path as anything in shield_overlays)
+	for(var/type_path in shield_overlays)
 		if(!ispath(type_path))
 			continue
 		var/obj/effect/overlay/new_effect = new type_path()

@@ -70,7 +70,7 @@
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 

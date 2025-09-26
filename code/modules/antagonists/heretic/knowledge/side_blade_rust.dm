@@ -79,7 +79,7 @@
 	required_atoms = list(
 		/obj/item/ammo_casing = 3,
 	)
-	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)
+	result_atoms = list(/obj/item/ammo_box/speedloader/strilka310/lionhunter)
 	cost = 0
 
 	research_tree_icon_path = 'icons/obj/weapons/guns/ammo.dmi'

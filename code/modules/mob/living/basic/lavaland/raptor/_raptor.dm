@@ -18,6 +18,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 #define HAPPINESS_BOOST_DAMPENER 0.3
 
+/// Innate raptor offsets
+#define RAPTOR_INNATE_SOURCE "raptor_innate"
+
 /mob/living/basic/raptor
 	name = "raptor"
 	desc = "A trusty, powerful steed. Taming it might prove difficult..."
@@ -151,17 +154,13 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	switch (direction)
 		if (NORTH)
-			pixel_x = -8
-			pixel_y = -5
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
 		if (SOUTH)
-			pixel_x = 0
-			pixel_y = 0
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 0, animate = FALSE)
 		if (EAST, SOUTHEAST, NORTHEAST)
-			pixel_x = -20
-			pixel_y = 0
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -20, animate = FALSE)
 		if (WEST, SOUTHWEST, NORTHWEST)
-			pixel_x = -5
-			pixel_y = 0
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -5, animate = FALSE)
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -344,3 +343,4 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	return NONE
 
 #undef HAPPINESS_BOOST_DAMPENER
+#undef RAPTOR_INNATE_SOURCE

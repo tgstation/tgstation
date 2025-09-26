@@ -6,7 +6,7 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"tgui": "workspace:*",
-		"tgui-core": "^4.2.3"
+		"tgui-core": "^5.3.1"
 	},
 	"private": true
 }

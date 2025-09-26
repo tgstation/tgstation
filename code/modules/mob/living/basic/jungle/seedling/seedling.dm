@@ -19,8 +19,8 @@
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
-	pixel_y = -14
-	base_pixel_y = -14
+	pixel_z = -14
+	base_pixel_z = -14
 	pixel_x = -14
 	base_pixel_x = -14
 	response_harm_continuous = "strikes"

@@ -419,7 +419,7 @@ Versioning
 /datum/controller/subsystem/blackbox/proc/ReportRoundstartManifest(list/characters)
 	var/list/query_rows = list()
 	var/list/special_columns = list("server_ip" = "INET_ATON(?)")
-	for(var/mob_ckey as anything in characters)
+	for(var/mob_ckey in characters)
 		var/mob/living/new_character = characters[mob_ckey]
 		query_rows += list(list(
 			"server_ip" = world.internet_address || 0,

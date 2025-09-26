@@ -221,7 +221,7 @@
 		sec_briefcase.contents += new /obj/item/stack/spacecash/c1000
 	sec_briefcase.contents += new /obj/item/gun/energy/recharge/ebow
 	sec_briefcase.contents += new /obj/item/gun/ballistic/revolver/mateba
-	sec_briefcase.contents += new /obj/item/ammo_box/a357
+	sec_briefcase.contents += new /obj/item/ammo_box/speedloader/c357
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4
 
 	var/obj/item/modular_computer/pda/heads/pda = H.belt
@@ -247,7 +247,7 @@
 	head = /obj/item/clothing/head/hats/centhat
 	mask = /obj/item/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/combat/swat
-	l_pocket = /obj/item/ammo_box/a357
+	l_pocket = /obj/item/ammo_box/speedloader/c357
 	r_pocket = /obj/item/lighter
 
 /datum/outfit/centcom/commander/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)

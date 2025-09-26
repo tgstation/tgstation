@@ -690,7 +690,7 @@
 	talk_tuah(pick(hurt_lines))
 
 /datum/brain_trauma/special/axedoration/proc/talk_tuah(sent_message = "Hello World.")
-	owner.Hear(null, GLOB.bridge_axe, owner.get_selected_language(), sent_message)
+	owner.Hear(GLOB.bridge_axe, owner.get_selected_language(), sent_message)
 
 /datum/brain_trauma/special/axedoration/proc/get_axe_location()
 	if(!GLOB.bridge_axe)

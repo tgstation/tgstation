@@ -44,7 +44,8 @@
 		return
 	move_delay = TRUE
 	var/oldloc = loc
-	try_step_multiz(direction);
+	try_step_multiz(direction)
+	user.setDir(dir)
 	if(oldloc != loc)
 		addtimer(CALLBACK(src, PROC_REF(ResetMoveDelay)), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else

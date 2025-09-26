@@ -391,7 +391,7 @@
 	data["enemy_mp"] = enemy_mp
 
 	data["equipped_gear"] = list()
-	for(var/gear_slot as anything in equipped_gear)
+	for(var/gear_slot in equipped_gear)
 		var/datum/battle_arcade_gear/user_gear = equipped_gear[gear_slot]
 		if(!istype(user_gear))
 			continue

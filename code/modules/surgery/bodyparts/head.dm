@@ -210,7 +210,7 @@
 	. = ..()
 	AddElement(/datum/element/toy_talk)
 
-/obj/item/bodypart/head/get_voice()
+/obj/item/bodypart/head/get_voice(add_id_name)
 	return "The head of [real_name]"
 
 /obj/item/bodypart/head/update_bodypart_damage_state()

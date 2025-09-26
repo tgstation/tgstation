@@ -590,7 +590,7 @@
  * Returns BLOOD_FLOW_STEADY if we're not bleeding or there's no change (like piercing), BLOOD_FLOW_DECREASING if we're clotting (non-critical slashes, gauzed, coagulant, etc), BLOOD_FLOW_INCREASING if we're opening up (crit slashes/heparin/nitrous oxide)
  */
 /datum/wound/proc/get_bleed_rate_of_change()
-	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+	if(blood_flow && HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
 	return BLOOD_FLOW_STEADY
 
@@ -725,7 +725,7 @@
 	// fleshy burns will look for flesh then bone
 	// dislocations will look for flesh, then bone, then metal
 	var/file = default_scar_file
-	for (var/biotype as anything in pregen_data.scar_priorities)
+	for (var/biotype in pregen_data.scar_priorities)
 		if (scarred_limb.biological_state & text2num(biotype))
 			file = GLOB.biotypes_to_scar_file[biotype]
 			break

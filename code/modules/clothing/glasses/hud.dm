@@ -42,13 +42,13 @@
 /obj/item/clothing/glasses/hud/proc/toggle_hud_display(mob/living/carbon/eye_owner)
 	if(display_active)
 		display_active = FALSE
-		for(var/hud_trait as anything in clothing_traits)
+		for(var/hud_trait in clothing_traits)
 			REMOVE_CLOTHING_TRAIT(eye_owner, hud_trait)
 		balloon_alert(eye_owner, "hud disabled")
 		return
 
 	display_active = TRUE
-	for(var/hud_trait as anything in clothing_traits)
+	for(var/hud_trait in clothing_traits)
 		ADD_CLOTHING_TRAIT(eye_owner, hud_trait)
 	balloon_alert(eye_owner, "hud enabled")
 

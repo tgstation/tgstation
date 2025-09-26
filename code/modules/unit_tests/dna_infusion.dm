@@ -3,7 +3,7 @@
 
 /datum/unit_test/valid_dna_infusion/Run()
 	for(var/datum/infuser_entry/infuser_entry as anything in flatten_list(GLOB.infuser_entries))
-		for(var/input_type as anything in infuser_entry.input_obj_or_mob)
+		for(var/input_type in infuser_entry.input_obj_or_mob)
 			if(ispath(input_type, /mob/living))
 				continue
 			var/atom/movable/movable = allocate(input_type)

@@ -409,7 +409,8 @@
 	animate(board, pixel_z = 6, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	board.unbuckle_mob(rider)
-	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider), 0.5 SECONDS)  // so the board can still handle "picking it up"
+	rider.Immobilize(0.5 SECONDS)
+	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider, TRUE), 0.5 SECONDS)  // so the board can still handle "picking it up"
 
 
 
