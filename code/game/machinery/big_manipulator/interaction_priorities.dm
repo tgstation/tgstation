@@ -1,38 +1,39 @@
-/// Prioritizes the type of atom that the manipulator interact with.
+// Prioritizes the type of atom that the manipulator interact with. Interaction lists get built on the points themselves.
+
 /datum/manipulator_priority
-	/// Name that user will see in ui.
+	/// The name of teh priority for the UI display.
 	var/name
-	/// What type carries this priority.
-	var/what_type
-	/// Order of priority.
+	/// Which typepath does this priority handle.
+	var/atom_typepath
+	/// Priority index.
 	var/number
 
-/datum/manipulator_priority/for_drop/on_floor
+/datum/manipulator_priority/drop/on_floor
 	name = "DROP ON FLOOR"
-	what_type = /turf
+	atom_typepath = /turf
 	number = 1
 
-/datum/manipulator_priority/for_drop/in_storage
+/datum/manipulator_priority/drop/in_storage
 	name = "DROP IN STORAGE"
-	what_type = /obj/item/storage
+	atom_typepath = /obj/item/storage
 	number = 2
 
-/datum/manipulator_priority/for_use/on_living
+/datum/manipulator_priority/interact/with_living
 	name = "USE ON LIVING"
-	what_type = /mob/living
+	atom_typepath = /mob/living
 	number = 1
 
-/datum/manipulator_priority/for_use/on_structure
+/datum/manipulator_priority/interact/with_structure
 	name = "USE ON STRUCTURE"
-	what_type = /obj/structure
+	atom_typepath = /obj/structure
 	number = 2
 
-/datum/manipulator_priority/for_use/on_machinery
+/datum/manipulator_priority/interact/with_machinery
 	name = "USE ON MACHINERY"
-	what_type = /obj/machinery
+	atom_typepath = /obj/machinery
 	number = 3
 
-/datum/manipulator_priority/for_use/on_items
+/datum/manipulator_priority/interact/with_items
 	name = "USE ON ITEM"
-	what_type = /obj/item
+	atom_typepath = /obj/item
 	number = 4

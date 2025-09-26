@@ -831,9 +831,9 @@
 	if(current_task == CURRENT_TASK_STOPPING)
 		return
 
-	end_current_task() // End any previous task first (momentarily sets IDLE)
+	end_current_task() // ends any previous task first (momentarily sets IDLE)
 	current_task_start_time = world.time
-	current_task_duration = duration / 10 // Duration is in deciseconds for TGUI
+	current_task_duration = duration / 10 // the duration is in deciseconds for TGUI
 	current_task = task_type
 	SStgui.update_uis(src)
 

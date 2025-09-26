@@ -62,12 +62,12 @@
 
 /// Finds the type priority of the interaction point.
 /datum/interaction_point/proc/find_type_priority()
-	for(var/datum/manipulator_priority/take_type in interaction_priorities)
-		if(take_type.what_type == /turf)
+	for(var/datum/manipulator_priority/each_priority in interaction_priorities)
+		if(each_priority.atom_typepath == /turf)
 			return interaction_turf
 
 		for(var/type_in_priority in interaction_turf.contents)
-			if(!istype(type_in_priority, take_type.what_type))
+			if(!istype(type_in_priority, each_priority.atom_typepath))
 				continue
 
 			if(isliving(type_in_priority))
@@ -193,15 +193,15 @@
 	switch(interaction_mode)
 		if(INTERACT_DROP)
 			priorities_to_set = list(
-				new /datum/manipulator_priority/for_drop/in_storage,
-				new /datum/manipulator_priority/for_drop/on_floor,
+				new /datum/manipulator_priority/drop/in_storage,
+				new /datum/manipulator_priority/drop/on_floor,
 			)
 		if(INTERACT_USE)
 			priorities_to_set = list(
-				new /datum/manipulator_priority/for_use/on_living,
-				new /datum/manipulator_priority/for_use/on_structure,
-				new /datum/manipulator_priority/for_use/on_machinery,
-				new /datum/manipulator_priority/for_use/on_items,
+				new /datum/manipulator_priority/interact/with_living,
+				new /datum/manipulator_priority/interact/with_structure,
+				new /datum/manipulator_priority/interact/with_machinery,
+				new /datum/manipulator_priority/interact/with_items,
 			)
 
 	for(var/datum/manipulator_priority/priority in priorities_to_set)

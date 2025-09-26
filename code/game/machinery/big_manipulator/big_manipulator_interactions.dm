@@ -184,8 +184,7 @@
 		complete_stopping_task()
 		return FALSE
 
-	start_task(CURRENT_TASK_IDLE, CYCLE_SKIP_TIMEOUT)
-	schedule_next_cycle()
+	addtimer(CALLBACK(src, PROC_REF(schedule_next_cycle)), CYCLE_SKIP_TIMEOUT)
 	return FALSE
 
 /// Updates the round robin index for the specified transfer type.
@@ -410,6 +409,7 @@
 	monkey_resolve.combat_mode = FALSE
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
+	held_item.forceMove(src)
 
 	check_for_cycle_end_drop(destination_point, TRUE)
 
