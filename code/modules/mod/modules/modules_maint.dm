@@ -315,22 +315,18 @@
 	var/step_count = 0
 	/// If you use the module on a planetary turf, you fly up. To the sky.
 	var/you_fucked_up = FALSE
-	/// Flag to prevent infinite loops during Z-movement
-	var/processing_z_move = FALSE
-	/// Timestamp of last Z-movement
-	var/last_z_move_time = 0
 
 /obj/item/mod/module/atrocinator/on_activation(mob/activator)
-	// Prevent activation while carrying someone to avoid lag issues
+	// Auto-unbuckle anyone being carried to avoid lag issues
 	if(length(mod.wearer.buckled_mobs))
-		balloon_alert(activator, "can't activate while carrying someone!")
-		return MOD_CANCEL_ACTIVATE
+		balloon_alert(activator, "dumping carried people!")
+		mod.wearer.unbuckle_all_mobs()
 
 	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
-	RegisterSignal(mod.wearer, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_someone_buckled))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_someone_buckled))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 	passtable_on(mod.wearer, REF(src))
 	check_upstairs() //todo at some point flip your screen around
@@ -347,7 +343,7 @@
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_SET_BUCKLED)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 	passtable_off(mod.wearer, REF(src))
@@ -362,7 +358,9 @@
 		return
 
 	// Prevent infinite loops when being fireman carried - just don't trigger at all
+	// This should theoretically never happen due to our other protections, so stack trace if it does
 	if(mod.wearer.buckled)
+		stack_trace("Atrocinator user is buckled despite protections - this shouldn't happen!")
 		return
 
 	var/turf/open/current_turf = get_turf(mod.wearer)
@@ -403,6 +401,7 @@
 /obj/item/mod/module/atrocinator/proc/on_someone_buckled(datum/source, mob/living/buckled_mob, mob/living/buckler)
 	SIGNAL_HANDLER
 	if(buckled_mob) // Someone is being buckled to the wearer
+		balloon_alert(buckler, "they're/you're upside down!")
 		balloon_alert(mod.wearer, "atrocinator interference!")
 		return COMPONENT_BLOCK_BUCKLE
 
