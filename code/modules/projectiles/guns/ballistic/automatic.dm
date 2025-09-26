@@ -390,6 +390,22 @@
 /obj/item/gun/ballistic/automatic/battle_rifle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
+	AddComponent(/datum/component/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
+		<br>\
+		The acceleration rail built into the barrel assembly boosts fired projectiles to higher velocities than unassisted bullets, \
+		allowing even less powerful cartridges, such as the venerable .38 Special, to put out <b>significant amounts of stopping power</b>. \
+		Even though the chambering makes this more of a pistol-caliber carbine than a battle rifle, countless arguments in both the marketing office \
+		and the corporate boardroom about the name meant that something had to give; in this case, the slightly misleading designation.<br>\
+		<br>\
+		It's hard to cover up everything about its troubled development, though.<br>\
+		<br>\
+		In a sour twist of irony for Nanotrasen's historical issues with ballistics-based security weapons, the BR-38 has one significant flaw. \
+		It is possible for the weapons system to suffer from unintended discombulations due to closed heat distribution systems, should the weapon be tampered with. \
+		Nanotrasen's weapons R&D teams are still working on this issue, while also trying to work out why the weapon's onboard computation systems \
+		suffer from so many calculation errors, before moving onto a full commercial rollout." \
+	)
 	register_context()
 
 /obj/item/gun/ballistic/automatic/battle_rifle/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -407,22 +423,7 @@
 		. += span_notice("[src] is in the process of system degradation. It is currently at stage [degradation_stage] of [degradation_stage_max]. Use a multitool on [src] to recalibrate. Alternatively, insert it into a weapon recharger.")
 	. += span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src].")
 
-/obj/item/gun/ballistic/automatic/battle_rifle/examine_more(mob/user)
-	. = ..()
 
-	. += "<i>The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
-		<br>\
-		The acceleration rail built into the barrel assembly assists fired projectiles to higher velocities than unassisted bullets, \
-		allowing even less powerful cartridges, such as the venerable .38 Special, to put out <b>significant amounts of stopping power</b>. \
-		Even though the chambering makes this more of a pistol-caliber carbine than a battle rifle, countless arguments in both the marketing office \
-		and the corporate boardroom about the name meant that something had to give; in this case, the slightly misleading designation.<br>\
-		<br>\
-		It's hard to cover up everything about its troubled development, though.<br>\
-		<br>\
-		In a sour twist of irony for Nanotrasen's historical issues with ballistics-based security weapons, the BR-38 has one significant flaw. \
-		It is possible for the weapons system to suffer from unintended discombulations due to closed heat distribution systems, should the weapon be tampered with. \
-		Nanotrasen's weapons R&D teams are still working on this issue, while also trying to work out why the weapon's onboard computation systems \
-		suffer from so many calculation errors, before moving onto a full commercial rollout.</i>"
 
 /obj/item/gun/ballistic/automatic/battle_rifle/update_icon_state()
 	. = ..()
@@ -531,6 +532,7 @@
 /// proc to handle our detonation
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/fucking_explodes_you()
 	explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+
 //component for seclight attachment
 /obj/item/gun/ballistic/automatic/battle_rifle/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \

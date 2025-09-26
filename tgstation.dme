@@ -1156,6 +1156,7 @@
 #include "code\datums\components\energized.dm"
 #include "code\datums\components\engraved.dm"
 #include "code\datums\components\evolutionary_leap.dm"
+#include "code\datums\components\examine_lore.dm"
 #include "code\datums\components\explodable.dm"
 #include "code\datums\components\explode_on_attack.dm"
 #include "code\datums\components\face_decal.dm"
