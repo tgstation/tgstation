@@ -395,7 +395,7 @@
 		lore = "The BR-38 is Nanotrasen's latest foray into entirely in-house, standard-issue-ready, accelerator-assisted ballistic firearms.<br>\
 		<br>\
 		The acceleration rail built into the barrel assembly boosts fired projectiles to higher velocities than unassisted bullets, \
-		allowing even less powerful cartridges, such as the venerable .38 Special, to put out <b>significant amounts of stopping power</b>. \
+		allowing even less powerful cartridges, such as the venerable .38 Special, to have improved ballistic performance and stopping power. \
 		Even though the chambering makes this more of a pistol-caliber carbine than a battle rifle, countless arguments in both the marketing office \
 		and the corporate boardroom about the name meant that something had to give; in this case, the slightly misleading designation.<br>\
 		<br>\

@@ -6,7 +6,7 @@
 	/// Our lore. In order to match descriptions on items, this should be considered to be pre-italicized.
 	var/lore
 
-/datum/component/examine_lore/Initialize(var/lore_hint, var/lore)
+/datum/component/examine_lore/Initialize(lore_hint, lore)
 	src.lore_hint = lore_hint
 	src.lore = lore
 
