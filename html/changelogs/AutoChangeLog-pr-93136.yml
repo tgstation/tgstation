@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "The icebox sec entrance door controlling buttons are now usable."
