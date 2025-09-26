@@ -784,7 +784,8 @@
 	if (!cell)
 		return
 	if (!(. & EMP_PROTECT_SELF))
-		deductcharge(STANDARD_CELL_CHARGE / severity)
+		cell.emp_act(severity)
+
 	if (cell.charge >= cell_hit_cost)
 		var/scramble_time
 		scramble_mode()

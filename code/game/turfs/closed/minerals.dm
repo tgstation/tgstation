@@ -32,9 +32,11 @@
 	var/obj/item/boulder/spawned_boulder = null
 	/// How much ore we spawn when we're mining a mineralType.
 	var/mineralAmt = 3
-	///Holder for the image we display when we're pinged by a mining scanner
+	/// The icon of the image we display when we're pinged by a mining scanner, to be overridden if you want to use an alternate file for a subtype.
+	var/scan_icon = 'icons/effects/ore_visuals.dmi'
+	/// Placeholder for the icon_state of the image we display when we're pinged by a mining scanner
 	var/scan_state = ""
-	///If true, this turf will not call AfterChange during change_turf calls.
+	/// If true, this turf will not call AfterChange during change_turf calls.
 	var/defer_change = FALSE
 	/// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
