@@ -52,10 +52,6 @@
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
-"cj" = (
-/obj/structure/transit_tube/crossing,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain/protected_space)
 "ct" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -111,6 +107,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/virtual_domain)
+"cW" = (
+/obj/structure/sign/poster/contraband/syndicate_pistol,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain)
 "cZ" = (
 /obj/structure/table/reinforced,
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
@@ -120,10 +120,6 @@
 "da" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
-/area/virtual_domain)
-"dd" = (
-/obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "di" = (
 /obj/machinery/power/terminal{
@@ -153,6 +149,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
+"ep" = (
+/obj/structure/sign/warning/vacuum/external,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain)
 "eB" = (
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
@@ -173,6 +173,15 @@
 /obj/structure/transit_tube/crossing,
 /turf/open/space/basic,
 /area/virtual_domain/protected_space)
+"ff" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4;
+	name = "Syndicate Ship Turret";
+	on = 0;
+	shot_delay = 10
+	},
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/area/virtual_domain)
 "fG" = (
 /obj/structure/toilet{
 	dir = 1
@@ -206,10 +215,6 @@
 /obj/item/paper/fluff/ruins/forgottenship/missionobj,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
-"hA" = (
-/obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain)
 "hD" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium,
@@ -222,10 +227,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
-"iL" = (
-/obj/structure/sign/departments/cargo,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain/protected_space)
 "iU" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -375,10 +376,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
-"nU" = (
-/obj/structure/sign/poster/contraband/syndicate_pistol,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain)
 "og" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup,
@@ -432,13 +429,14 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plastic,
 /area/virtual_domain)
+"qo" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
 "qx" = (
 /turf/open/space/basic,
 /area/space/virtual_domain)
-"qU" = (
-/obj/structure/sign/poster/contraband/c20r,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain/protected_space)
 "qY" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/landmark/bitrunning/cache_spawn,
@@ -450,9 +448,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/virtual_domain)
-"ru" = (
-/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "rH" = (
 /obj/machinery/airalarm/directional/north,
@@ -525,6 +520,10 @@
 "sM" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"sN" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain)
 "tv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -590,6 +589,15 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain/protected_space)
+"wZ" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 4;
+	name = "Syndicate Ship Turret";
+	on = 0;
+	shot_delay = 10
+	},
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain)
 "xJ" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -602,9 +610,10 @@
 /obj/item/ammo_box/c9mm,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
-"xS" = (
-/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
-/area/virtual_domain)
+"yi" = (
+/obj/structure/transit_tube/crossing,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain/protected_space)
 "yl" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Captain's Room"
@@ -616,6 +625,9 @@
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain)
+"yv" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/virtual_domain)
 "yJ" = (
 /obj/structure/table/reinforced,
@@ -631,11 +643,6 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/virtual_domain)
-"yT" = (
-/obj/item/ai_module/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
 "yV" = (
 /obj/structure/table/reinforced,
@@ -657,13 +664,14 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
-"zN" = (
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain/protected_space)
 "Aa" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
+"Bd" = (
+/obj/structure/sign/poster/contraband/c20r,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain/protected_space)
 "Bm" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/syndicate,
@@ -749,6 +757,9 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
+"DU" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/area/virtual_domain)
 "EB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -799,6 +810,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
+"Hg" = (
+/obj/structure/sign/poster/contraband/tools,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain/protected_space)
 "Hq" = (
 /turf/closed/indestructible/binary,
 /area/virtual_domain/fullbright)
@@ -831,15 +846,6 @@
 	},
 /obj/effect/landmark/bitrunning/mob_segment,
 /turf/open/floor/mineral/plastitanium/red,
-/area/virtual_domain)
-"Ig" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	name = "Syndicate Ship Turret";
-	on = 0;
-	shot_delay = 10
-	},
-/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/virtual_domain)
 "Im" = (
 /obj/structure/table/reinforced,
@@ -1006,6 +1012,10 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain)
+"Ph" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain/protected_space)
 "PR" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -1092,6 +1102,9 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/virtual_domain)
+"Sr" = (
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain/protected_space)
 "Sv" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1106,35 +1119,22 @@
 /obj/machinery/vending/medical/syndicate/cybersun,
 /turf/open/floor/plastic,
 /area/virtual_domain)
+"Tt" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
+/area/virtual_domain)
 "TB" = (
 /turf/closed/indestructible/syndicate,
 /area/virtual_domain/protected_space)
-"UQ" = (
-/obj/structure/sign/poster/contraband/syndicate_recruitment,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain)
 "Vg" = (
 /turf/open/space/basic,
 /area/virtual_domain/protected_space)
-"Vk" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 4;
-	name = "Syndicate Ship Turret";
-	on = 0;
-	shot_delay = 10
-	},
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain)
 "Vq" = (
 /obj/structure/transit_tube/station/dispenser/reverse{
 	dir = 8
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
-"Wd" = (
-/obj/structure/sign/poster/contraband/tools,
-/turf/closed/wall/r_wall/plastitanium/syndicate,
-/area/virtual_domain/protected_space)
 "Wy" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -1925,21 +1925,21 @@ qx
 qx
 qx
 qx
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 qx
 qx
 qx
@@ -1982,8 +1982,8 @@ qx
 qx
 qx
 qx
-Vk
-ru
+wZ
+yv
 Sv
 vD
 uP
@@ -1997,8 +1997,8 @@ Io
 uP
 vD
 cc
-ru
-Vk
+yv
+wZ
 qx
 qx
 qx
@@ -2040,7 +2040,7 @@ qx
 qx
 qx
 qx
-ru
+yv
 Io
 uP
 uP
@@ -2056,7 +2056,7 @@ uP
 QX
 uP
 Io
-hA
+Tt
 qx
 qx
 qx
@@ -2098,23 +2098,23 @@ qx
 qx
 qx
 qx
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 IV
-ru
-ru
-ru
+yv
+yv
+yv
 IV
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
 qx
 qx
 qx
@@ -2156,23 +2156,23 @@ qx
 qx
 qx
 qx
-ru
-ru
+yv
+yv
 vp
-ru
+yv
 Ia
 Ci
-ru
+yv
 Sq
 di
 WR
-ru
+yv
 yV
 Gn
 uP
 Mc
 uP
-ru
+yv
 qx
 qx
 qx
@@ -2214,23 +2214,23 @@ qx
 qx
 qx
 qx
-ru
+yv
 og
 Jg
-ru
+yv
 bh
 cR
-ru
+yv
 Qi
 sz
 Kz
-ru
+yv
 Mc
 uP
 uP
 uP
 rP
-ru
+yv
 qx
 qx
 qx
@@ -2272,7 +2272,7 @@ qx
 qx
 qx
 qx
-ru
+yv
 Kz
 Kz
 yl
@@ -2288,7 +2288,7 @@ uP
 Io
 sL
 hy
-ru
+yv
 qx
 qx
 qx
@@ -2330,10 +2330,10 @@ qx
 qx
 qx
 qx
-ru
+yv
 CR
 Kz
-ru
+yv
 bh
 bh
 Yk
@@ -2346,7 +2346,7 @@ uP
 QX
 sL
 Im
-ru
+yv
 qx
 qx
 qx
@@ -2388,23 +2388,23 @@ qx
 qx
 qx
 qx
-ru
-yT
+yv
+qo
 Kz
-ru
+yv
 Yu
 IC
-ru
+yv
 mD
 JN
 MR
-ru
+yv
 Sd
 uP
 uP
 uP
 gD
-ru
+yv
 qx
 qx
 qx
@@ -2446,23 +2446,23 @@ qx
 qx
 qx
 qx
-Ig
-ru
+ff
+yv
 Lo
-ru
+yv
 tv
 hD
-nU
+cW
 wb
 EB
 pl
-ru
+yv
 hD
 Gn
 uP
 Mc
-ru
-Ig
+yv
+ff
 qx
 qx
 qx
@@ -2505,21 +2505,21 @@ qx
 qx
 qx
 qx
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 cy
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 qx
 qx
 qx
@@ -2563,21 +2563,21 @@ qx
 qx
 qx
 qx
-ru
+yv
 Za
 Yi
 Zb
 SX
-ru
+yv
 uP
 yR
 uP
-ru
+yv
 YV
 Sz
 jJ
 fG
-ru
+yv
 qx
 qx
 qx
@@ -2621,21 +2621,21 @@ qx
 qx
 qx
 qx
-ru
+yv
 qf
 Zb
 ip
 da
-ru
+yv
 Ra
 Sc
 uP
-ru
+yv
 JP
 qY
-ru
-ru
-ru
+yv
+yv
+yv
 qx
 qx
 qx
@@ -2644,12 +2644,12 @@ qx
 nB
 nB
 we
-zN
-zN
+Sr
+Sr
 dp
 sg
-zN
-zN
+Sr
+Sr
 nn
 nn
 nn
@@ -2679,7 +2679,7 @@ qx
 qx
 qx
 qx
-ru
+yv
 aq
 cB
 Zb
@@ -2693,7 +2693,7 @@ Sz
 Sz
 jJ
 pU
-ru
+yv
 qx
 qx
 qx
@@ -2702,12 +2702,12 @@ qx
 qx
 nB
 nB
-qU
+Bd
 mL
 dp
 dp
 li
-cj
+yi
 Lk
 Lk
 fd
@@ -2736,23 +2736,23 @@ qx
 qx
 qx
 qx
-Vk
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+wZ
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 kh
-ru
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 qx
 qx
 qx
@@ -2760,12 +2760,12 @@ qx
 qx
 nB
 nB
-zN
+Sr
 eB
 dp
 dp
 dp
-zN
+Sr
 nn
 Vg
 Vg
@@ -2794,10 +2794,10 @@ qx
 qx
 qx
 qx
-ru
+yv
 jl
 rm
-ru
+yv
 nk
 oM
 oM
@@ -2807,10 +2807,10 @@ oM
 oM
 oM
 uP
-ru
+yv
 uP
 Qg
-ru
+yv
 qx
 qx
 qx
@@ -2818,12 +2818,12 @@ qx
 qx
 qx
 nB
-zN
+Sr
 wL
 LB
 dp
 mA
-zN
+Sr
 yZ
 nB
 nB
@@ -2852,10 +2852,10 @@ qx
 qx
 qx
 qx
-ru
+yv
 uP
 dw
-ru
+yv
 rH
 uP
 JA
@@ -2865,10 +2865,10 @@ JA
 JA
 oM
 uP
-ru
+yv
 fJ
 Qg
-ru
+yv
 qx
 qx
 qx
@@ -2876,12 +2876,12 @@ qx
 qx
 qx
 qx
-Wd
+Hg
 OH
 LB
 dp
 RU
-zN
+Sr
 we
 nB
 nB
@@ -2939,7 +2939,7 @@ LB
 LB
 dp
 RU
-zN
+Sr
 nB
 nB
 qx
@@ -2968,10 +2968,10 @@ qx
 qx
 qx
 qx
-ru
+yv
 uP
 uP
-dd
+ep
 uP
 uP
 uP
@@ -2981,10 +2981,10 @@ uP
 uP
 uP
 uP
-dd
+ep
 uP
 Qg
-ru
+yv
 qx
 qx
 qx
@@ -2992,12 +2992,12 @@ qx
 qx
 qx
 qx
-iL
+Ph
 cZ
 dp
 dp
 RU
-zN
+Sr
 nB
 nB
 qx
@@ -3026,10 +3026,10 @@ qx
 qx
 qx
 qx
-ru
+yv
 aO
 uP
-ru
+yv
 XS
 uP
 uP
@@ -3039,10 +3039,10 @@ uP
 uP
 uP
 Cf
-ru
+yv
 uP
 Fp
-ru
+yv
 qx
 qx
 qx
@@ -3050,12 +3050,12 @@ qx
 qx
 qx
 nB
-zN
-zN
+Sr
+Sr
 Dj
 QF
-zN
-zN
+Sr
+Sr
 nB
 nB
 qx
@@ -3084,10 +3084,10 @@ qx
 qx
 qx
 qx
-Ig
-ru
+ff
+yv
 hD
-ru
+yv
 zi
 uP
 uP
@@ -3097,10 +3097,10 @@ Cn
 uP
 uP
 uP
-ru
+yv
 hD
-ru
-xS
+yv
+DU
 qx
 qx
 qx
@@ -3109,10 +3109,10 @@ qx
 nB
 nB
 nB
-zN
-zN
-zN
-zN
+Sr
+Sr
+Sr
+Sr
 nB
 nB
 we
@@ -3143,21 +3143,21 @@ qx
 qx
 qx
 qx
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 HU
-ru
-ru
-ru
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
+yv
+yv
+yv
 qx
 qx
 qx
@@ -3203,7 +3203,7 @@ qx
 qx
 qx
 qx
-UQ
+sN
 rM
 xJ
 Kz
@@ -3213,7 +3213,7 @@ Kz
 Kz
 ct
 sH
-ru
+yv
 qx
 qx
 qx
@@ -3258,10 +3258,10 @@ qx
 qx
 qx
 qx
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
 Kz
 Kz
 Kz
@@ -3271,10 +3271,10 @@ Kz
 Kz
 Kz
 Kz
-ru
-ru
-ru
-ru
+yv
+yv
+yv
+yv
 qx
 qx
 qx
@@ -3316,10 +3316,10 @@ qx
 qx
 qx
 qx
-ru
+yv
 ln
 Kz
-ru
+yv
 iB
 Kz
 Kz
@@ -3329,10 +3329,10 @@ Kz
 Kz
 Kz
 nG
-ru
+yv
 cw
 cw
-ru
+yv
 qx
 qx
 qx
@@ -3374,7 +3374,7 @@ qx
 qx
 qx
 qx
-ru
+yv
 Kz
 dz
 sq
@@ -3390,7 +3390,7 @@ Kz
 ja
 Kz
 Jg
-ru
+yv
 qx
 qx
 qx
@@ -3432,10 +3432,10 @@ qx
 qx
 qx
 qx
-Ig
-ru
+ff
+yv
 Kz
-ru
+yv
 Kz
 Kz
 Kz
@@ -3445,10 +3445,10 @@ kI
 Kz
 Kz
 Kz
-ru
+yv
 Mm
-ru
-Ig
+yv
+ff
 qx
 qx
 qx
@@ -3491,9 +3491,9 @@ qx
 qx
 qx
 qx
-ru
-ru
-ru
+yv
+yv
+yv
 Kz
 Kz
 Kz
@@ -3503,9 +3503,9 @@ Kz
 Kz
 Kz
 dz
-ru
-ru
-ru
+yv
+yv
+yv
 qx
 qx
 qx
@@ -3550,8 +3550,8 @@ qx
 qx
 qx
 qx
-ru
-ru
+yv
+yv
 vp
 vp
 pH
@@ -3561,8 +3561,8 @@ vp
 vp
 vp
 vp
-ru
-ru
+yv
+yv
 qx
 qx
 qx
@@ -3609,7 +3609,7 @@ qx
 qx
 qx
 qx
-Ig
+ff
 hg
 hg
 hg
@@ -3619,7 +3619,7 @@ hg
 hg
 hg
 hg
-Ig
+ff
 qx
 qx
 qx

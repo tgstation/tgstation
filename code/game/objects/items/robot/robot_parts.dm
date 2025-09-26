@@ -283,11 +283,9 @@
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), user)
 			if(!O)
 				return
-			if(M.laws && M.laws.id != DEFAULT_AI_LAWID)
+			if(M.laws)
 				aisync = FALSE
-				lawsync = FALSE
-				O.laws = M.laws
-				M.laws.associate(O)
+				O.laws = M.laws.copy_lawset()
 
 			O.SetInvisibility(INVISIBILITY_NONE)
 			//Transfer debug settings to new mob
