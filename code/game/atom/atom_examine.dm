@@ -100,8 +100,6 @@
 
 	if(flags_1 & HOLOGRAM_1)
 		.["holographic"] = "It looks like a hologram."
-	if(flags_1 & IS_PLAYER_COLORABLE_1) // GAGs support for greyscale
-		.["recolorable"] = "It has a variety of colors that you can select from."
 
 	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_TAGS, user, .)
 
