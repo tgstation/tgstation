@@ -160,7 +160,7 @@
 			"This body is a merciless and unforgiving prison!!",
 			"YA-HONK!!!",
 		),
-		BB_EMOTE_HEAR = list("honks!", "contemplates it's existence."),
+		BB_EMOTE_HEAR = list("honks!", "contemplates its existence."),
 		BB_EMOTE_SEE = list("sweats.", "jiggles."),
 		BB_SPEAK_CHANCE = 5,
 	)
@@ -565,7 +565,7 @@
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK!!", "Honk!", "YA-HONK!!!"),
-		BB_EMOTE_SEE = list("bites into the banana!", "plucks a banana off it's head!", "photosynthesizes!"),
+		BB_EMOTE_SEE = list("bites into the banana!", "plucks a banana off its head!", "photosynthesizes!"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'),
 	)
 
