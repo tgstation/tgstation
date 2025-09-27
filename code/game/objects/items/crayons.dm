@@ -695,31 +695,30 @@
 	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
 	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
 
+/*
 	var/mutable_appearance/appearance_copied = copy_appearance_filter_overlays(pwned_human.appearance)
+	appearance_copied.layer = FLOAT_LAYER
+	appearance_copied.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER|PIXEL_SCALE
+	appearance_copied.color = paint_color
+*/
 
 	chalk_line.appearance = copy_appearance_filter_overlays(pwned_human.appearance)
 	chalk_line.layer = FLOAT_LAYER
 	chalk_line.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER|PIXEL_SCALE
-	chalk_line.color = rgb(0,0,0,255)
-
+//	chalk_line.color = rgb(0,0,0,255)
+	chalk_line.add_filter("batong_outline", 1, outline_filter(1, COLOR_WHITE))
 	chalk_line.add_filter("alpha_mask", 1, alpha_mask_filter(
 		x = chalk_line.pixel_x,
 		y = chalk_line.pixel_y,
-		icon = appearance_copied,
+		icon = center_image(getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE), \
+			x_dimension = ICON_SIZE_X, y_dimension = ICON_SIZE_Y),
 		flags = MASK_INVERSE,
 	))
-
-	appearance_copied.layer = FLOAT_LAYER
-	appearance_copied.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER|PIXEL_SCALE
-	appearance_copied.color = paint_color
-
 /*
 	chalk_line.render_source = "Outline[REF(pwned_human)]"
 	appearance_copied.render_target = chalk_line.render_source
-*/
-	appearance_copied.add_filter("batong_outline", 1, outline_filter(1, COLOR_RED))
-
 	chalk_line.add_overlay(appearance_copied)
+*/
 
 /*
 	chalk_line.appearance = copy_appearance_filter_overlays(pwned_human.appearance)
