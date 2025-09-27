@@ -3795,8 +3795,9 @@
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
 "bit" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/abandoned)
 "bix" = (
@@ -7873,8 +7874,11 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
-	pixel_x = 11;
 	pixel_y = 5
+	},
+/obj/item/screwdriver{
+	pixel_x = 1;
+	pixel_y = -2
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
@@ -9700,6 +9704,11 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
+"cOA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/textured_large,
+/area/station/medical/abandoned)
 "cOS" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/camera/directional/north{
@@ -27383,16 +27392,6 @@
 "hSk" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/medical)
-"hSu" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron/textured_large,
-/area/station/medical/abandoned)
 "hSv" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
@@ -28079,6 +28078,9 @@
 "ibJ" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
 /turf/open/floor/iron/textured_large,
 /area/station/medical/abandoned)
 "ibK" = (
@@ -43878,6 +43880,7 @@
 	},
 /obj/effect/landmark/start/depsec/medical,
 /obj/machinery/light/floor,
+/obj/machinery/computer/security/telescreen/med_sec/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "mFZ" = (
@@ -46034,10 +46037,6 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/depsec/medical,
-/obj/machinery/computer/security/telescreen/med_sec/directional/north{
-	pixel_x = -5;
-	pixel_y = 35
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "nns" = (
@@ -61785,6 +61784,15 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
+"rLQ" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/stairs/medium{
+	dir = 4
+	},
+/area/station/medical/abandoned)
 "rMc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76362,6 +76370,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
+"vZA" = (
+/obj/machinery/camera/autoname/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/textured_large,
+/area/station/medical/abandoned)
 "vZD" = (
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/machinery/door/airlock/medical/glass{
@@ -111019,7 +111034,7 @@ nCc
 hqz
 pgk
 ieD
-ieD
+rLQ
 lIr
 lIr
 lIr
@@ -111532,8 +111547,8 @@ riD
 riD
 riD
 ibJ
-hSu
-tNd
+iVi
+vZA
 lIr
 qXz
 sTT
@@ -174499,7 +174514,7 @@ hqz
 hqz
 umE
 plA
-pWF
+cOA
 hqz
 uIO
 uIO
