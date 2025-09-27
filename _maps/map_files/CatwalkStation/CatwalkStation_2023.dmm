@@ -5325,6 +5325,7 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/surgery)
 "bFb" = (
@@ -10544,6 +10545,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "dcE" = (
@@ -21914,6 +21916,7 @@
 "gpx" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/stripes/red/box,
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/pharmacy)
 "gpI" = (
@@ -29677,7 +29680,6 @@
 /area/station/maintenance/starboard/lesser)
 "iBk" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/light_switch/directional/east,
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/wood,
@@ -57740,6 +57742,7 @@
 	pixel_x = 2;
 	pixel_y = 4
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "qFr" = (
@@ -60431,6 +60434,7 @@
 	pixel_y = 10;
 	pixel_x = -1
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "rtx" = (
@@ -72183,6 +72187,7 @@
 	color = "#52B4E9"
 	},
 /obj/structure/reagent_dispensers/plumbed/storage,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "uQH" = (
