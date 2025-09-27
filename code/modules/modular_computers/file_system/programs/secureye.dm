@@ -69,7 +69,7 @@
 	)
 	spying = TRUE
 
-/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
