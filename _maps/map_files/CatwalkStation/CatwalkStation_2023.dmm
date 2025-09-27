@@ -46622,7 +46622,6 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/door/window/right/directional/west{
 	name = "First Aid Supplies";
