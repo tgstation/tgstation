@@ -252,7 +252,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 /obj/machinery/shower/proc/on_exited(datum/source, atom/movable/exiter)
 	SIGNAL_HANDLER
 
-	if(!isliving(exiter))
+	if(!iscarbon(exiter))
 		return
 
 	var/obj/machinery/shower/locate_new_shower = locate() in get_turf(exiter)
