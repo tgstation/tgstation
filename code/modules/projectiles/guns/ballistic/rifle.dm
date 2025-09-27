@@ -77,7 +77,7 @@
 	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
-	AddComponent(/datum/component/bayonet_attachable, offset_x = 32, offset_y = 12)
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin")
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
