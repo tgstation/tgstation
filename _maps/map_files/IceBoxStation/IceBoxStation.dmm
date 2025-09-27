@@ -37468,6 +37468,10 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/station/science/ordnance/bomb/planet)
+"kEa" = (
+/obj/vehicle/ridden/golfcart/loaded,
+/turf/open/floor/iron/smooth_large,
+/area/station/cargo/warehouse)
 "kEj" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
@@ -37811,6 +37815,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "kIL" = (
@@ -39659,6 +39664,8 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/obj/effect/spawner/random/maintenance/no_decals/two,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "ljB" = (
@@ -41854,6 +41861,14 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
+"lOX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paper/crumpled{
+	default_raw_text = "We finally got that mecha we asked for. Although it's rusted, badly beaten it's still something. Thank you Nanotrasen!!";
+	name = "note to nanotrasen"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/station/cargo/warehouse)
 "lPb" = (
 /obj/structure/railing/corner,
 /obj/structure/railing/corner{
@@ -61716,7 +61731,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/storage/box/lights/mixed{
-	pixel_y = 5
+	pixel_y = 9;
+	pixel_x = -5
+	},
+/obj/item/key/golfcart{
+	pixel_x = 9;
+	pixel_y = -4
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
@@ -65281,11 +65301,6 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "spV" = (
-/obj/effect/spawner/random/trash/bin,
-/obj/item/paper/crumpled{
-	default_raw_text = "We finally got that mecha we asked for. Although it's rusted, badly beaten it's still something. Thank you Nanotrasen!!";
-	name = "note to nanotrasen"
-	},
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
@@ -68558,8 +68573,7 @@
 "tlA" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/closet_empty/crate,
-/obj/effect/spawner/random/maintenance/no_decals/two,
+/obj/effect/spawner/random/trash/bin,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/warehouse)
 "tlE" = (
@@ -172424,7 +172438,7 @@ jpS
 qSl
 kuC
 spV
-cwS
+kEa
 rpP
 jpe
 oXo
@@ -172679,7 +172693,7 @@ gjq
 gjq
 aEM
 xHO
-fPB
+lOX
 piV
 aOE
 liB
@@ -173196,7 +173210,7 @@ dPG
 fPB
 xvX
 fPB
-piV
+xvX
 fPB
 piV
 rRn
