@@ -839,3 +839,20 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	else
 		. = invoked_callback.Invoke()
 	usr = temp
+
+/**
+ * Iterates over all mobs that can see the passed movable and adds specific mood events to them based on their personalities.
+ *
+ * * source: String source for the mood event
+ * * personality_to_mood: A list mapping personality types to mood event types. Example: list(/datum/personality/chill = /datum/mood_event/chill_guy)
+ * * range: The range in which to check for viewers. Default is view range.
+ * * additional args may be supplied to pass into the mood event constructor.
+ */
+/proc/add_personality_mood_to_viewers(atom/movable/source, mood_key, list/personality_to_mood, range, ...)
+	for(var/mob/living/nearby in viewers(range, source))
+		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
+			continue
+		for(var/personality in personality_to_mood)
+			if(HAS_PERSONALITY(nearby, personality))
+				nearby.add_mood_event(arglist( list("[mood_key]_[personality]", personality_to_mood[personality]) + args.Copy(4) ))
+				break

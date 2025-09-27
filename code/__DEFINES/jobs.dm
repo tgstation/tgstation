@@ -285,3 +285,5 @@ DEFINE_BITFIELD(job_flags, list(
 
 /// Mind traits that should be shared by every head of staff. has to be this way cause byond lists lol
 #define HEAD_OF_STAFF_MIND_TRAITS TRAIT_FAST_TYING, TRAIT_HIGH_VALUE_RANSOM
+#define MEDICAL_MIND_TRAITS TRAIT_DESENSITIZED
+#define SECURITY_MIND_TRAITS TRAIT_DESENSITIZED
