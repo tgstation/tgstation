@@ -17261,14 +17261,6 @@
 "fdd" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/eva)
-"fdf" = (
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/dark_blue,
-/obj/machinery/bluespace_vendor/directional/north,
-/turf/open/floor/iron/white,
-/area/station/hallway/secondary/entry)
 "fdg" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
@@ -31181,7 +31173,6 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/bluespace_vendor/directional/north,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
@@ -46469,7 +46460,6 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Dormitories - Lower Entrance"
 	},
-/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "ntx" = (
@@ -47622,7 +47612,6 @@
 /area/station/maintenance/port)
 "nJl" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "nJB" = (
@@ -52389,7 +52378,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "pdr" = (
-/obj/machinery/bluespace_vendor/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -56069,7 +56057,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
-/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "qhP" = (
@@ -58528,7 +58515,6 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "qTm" = (
@@ -58550,13 +58536,6 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"qTF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/bluespace_sender,
-/turf/open/floor/engine/hull/reinforced/air,
-/area/station/engineering/atmos/project)
 "qTG" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/ferny/style_random,
@@ -63807,7 +63786,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
-/obj/machinery/bluespace_vendor/directional/north,
 /obj/machinery/light/directional/east,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron,
@@ -82186,10 +82164,6 @@
 "xTD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/bluespace_vendor/directional/north{
-	desc = "It years for just one more sell.";
-	name = "Last of Its Kind"
 	},
 /obj/effect/turf_decal/arrows{
 	dir = 1
@@ -115432,7 +115406,7 @@ hDg
 pYI
 hDg
 hDg
-fdf
+nZF
 aWH
 xsh
 nZF
@@ -193212,7 +193186,7 @@ ijs
 lIw
 ijs
 ijs
-qTF
+jcP
 qRp
 qRp
 smD

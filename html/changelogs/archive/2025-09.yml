@@ -638,3 +638,33 @@
   necromanceranne:
   - balance: Being frail or being more resistant to wounding is now more consistent
       about how it hinders or benefits you.
+2025-09-26:
+  DaCoolBoss:
+  - bugfix: Luxury Shuttle windows now allow some projectiles to pass.
+  timothymtorres:
+  - qol: Climbable objects now show up as an examine tag.
+2025-09-27:
+  Aliceee2ch:
+  - bugfix: Cell charger now drops cell that it had inside after you destroy it
+  Cameron-The-Raven:
+  - bugfix: Omens properly transfer their damage modifier when multiple are applied.
+  DaCoolBoss:
+  - bugfix: Summon Guns event will no longer spawn guns with restricted firing pins.
+  - bugfix: Summon Guns event will now only spawn guns that are intended to harm people
+      (except the medbeam)
+  - balance: Added more guns to the Summon Guns event.
+  Melbert:
+  - rscdel: Bluespace Gas Vendors and the accompanying Bluespace Gas Sender have been
+      removed
+  - qol: Adds hotkey to close all open uis, bound to "home" by default
+  SmArtKar:
+  - bugfix: Fixed Select Equipment admin verb opening on a blank tab
+  lelandkemble:
+  - bugfix: The icebox sec entrance door controlling buttons are now usable.
+  - map: increases holopad coverage on wawastation
+  timothymtorres:
+  - qol: 'Add several new examine categories for objects descs that include: bomb-proof,
+      flammable, holograhic, crush-proof, and conductive. Also use hyphens for multi-word
+      examine tags.'
+  - bugfix: Fixes custom materials not appearing for things like structures when examined.
+  - bugfix: Fix custom materials on wood tables and racks
