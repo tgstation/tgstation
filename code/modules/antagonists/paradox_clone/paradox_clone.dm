@@ -50,9 +50,8 @@
 	//dont want anyone noticing there's two now
 	var/mob/living/carbon/human/clone_human = owner.current
 	var/obj/item/clothing/under/sensor_clothes = clone_human.w_uniform
-	if(sensor_clothes)
-		sensor_clothes.sensor_mode = SENSOR_OFF
-		clone_human.update_suit_sensors()
+	if(istype(sensor_clothes))
+		sensor_clothes.set_sensor_mode(SENSOR_OFF)
 
 	// Perform a quick copy of existing memories.
 	// This may result in some minutely imperfect memories, but it'll do

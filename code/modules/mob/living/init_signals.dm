@@ -70,6 +70,10 @@
 
 	RegisterSignal(src, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, PROC_REF(edit_immerse_overlay))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_BASIC_HEALTH_HUD_VISIBLE), PROC_REF(add_to_basic_health_hud))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_BASIC_HEALTH_HUD_VISIBLE), PROC_REF(remove_from_basic_health_hud))
+
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -297,3 +301,15 @@
 /mob/living/proc/on_hearing_regain()
 	SIGNAL_HANDLER
 	refresh_looping_ambience()
+
+/// When gaining [TRAIT_BASIC_HEALTH_HUD_VISIBLE], add to the basic health hud
+/mob/living/proc/add_to_basic_health_hud(datum/source)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/data/human/medical/basic/hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+	hud.add_atom_to_hud(src)
+
+/// When losing [TRAIT_BASIC_HEALTH_HUD_VISIBLE], remove from the basic health hud
+/mob/living/proc/remove_from_basic_health_hud(datum/source)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/data/human/medical/basic/hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+	hud.remove_atom_from_hud(src)
