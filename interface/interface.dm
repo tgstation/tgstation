@@ -1,9 +1,7 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
-	set name = "wiki"
-	set desc = "Brings you to the Wiki"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, wiki, "wiki", \
+	"Brings you to the Wiki", \
+	TRUE, "")
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(!wikiurl)
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
@@ -21,43 +19,28 @@
 		output += "?title=Special%3ASearch&profile=default&search=[query]"
 	DIRECT_OUTPUT(src, link(output))
 
-/client/verb/forum()
-	set name = "forum"
-	set desc = "Visit the forum."
-	set hidden = TRUE
-
+DEFINE_VERB(/client, forum, "forum", "Visit the forum.", TRUE, "")
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(!forumurl)
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(forumurl))
 
-/client/verb/rules()
-	set name = "rules"
-	set desc = "Show Server Rules."
-	set hidden = TRUE
-
+DEFINE_VERB(/client, rules, "rules", "Show Server Rules.", TRUE, "")
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(!rulesurl)
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(rulesurl))
 
-/client/verb/github()
-	set name = "github"
-	set desc = "Visit Github"
-	set hidden = TRUE
-
+DEFINE_VERB(/client, github, "github", "Visit Github", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
-/client/verb/reportissue()
-	set name = "report-issue"
-	set desc = "Report an issue"
-
+DEFINE_VERB(/client, reportissue, "report-issue", "Report an issue", TRUE, "")
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
@@ -98,10 +81,7 @@
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
-
+DEFINE_VERB(/client, changelog, "Changelog", "", FALSE, "OOC")
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
 
@@ -111,10 +91,7 @@
 		prefs.save_preferences()
 		winset(src, "infobuttons.changelog", "font-style=;")
 
-/client/verb/hotkeys_help()
-	set name = "Hotkeys Help"
-	set category = "OOC"
-
+DEFINE_VERB(/client, hotkeys_help, "Hotkeys Help", "", FALSE, "OOC")
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 

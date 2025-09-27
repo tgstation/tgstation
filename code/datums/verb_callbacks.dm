@@ -26,4 +26,8 @@
 	usr = temp
 #endif
 
+/datum/callback/verb_callback/list_args
 
+/datum/callback/verb_callback/list_args/New(thingtocall, proctocall, arguments)
+	. = ..()
+	src.arguments = arguments

@@ -58,9 +58,7 @@
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
 
-/obj/item/watertank/verb/toggle_mister_verb()
-	set name = "Toggle Mister"
-	set category = "Object"
+DEFINE_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", "", FALSE, "Object")
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()

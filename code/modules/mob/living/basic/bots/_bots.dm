@@ -710,7 +710,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
 	return TRUE
 
-/mob/living/basic/bot/ghost()
+/mob/living/basic/bot/ghost_yourself()
 	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
 		return ..()
 	if(paicard && (!client || stat == DEAD))

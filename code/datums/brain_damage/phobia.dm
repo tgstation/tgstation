@@ -154,7 +154,7 @@
 
 	if(reason)
 		owner.face_atom(reason)
-		owner._pointed(reason)
+		owner.do_pointed(reason)
 	owner.apply_status_effect(/datum/status_effect/stacking/phobia_reaction, 1, mood_event_type)
 
 // Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.

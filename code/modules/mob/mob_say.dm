@@ -1,31 +1,28 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-/mob/verb/say_verb(message as text)
-	set name = "Say"
-	set category = "IC"
-	set instant = TRUE
-
+DEFINE_VERBLIKE(verb, /mob, say_verb, "Say", "", FALSE, "IC", /* instant = */ TRUE, /* context_menu = */ TRUE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
-	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
-	if(message)
+	// If we're being called off something else, we should be allowed to requeue if we're gonna lag to shit
+	// This does risk double queuing, need to work out how to fix that
+	#warn above, need a way to tell that we are currently executing queued verbs (and THIS queued verb)
+	if(VERB_JUST_FIRED())
+		say(message)
+	else
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
-///Whisper verb
-/mob/verb/whisper_verb(message as text)
-	set name = "Whisper"
-	set category = "IC"
-	set instant = TRUE
-
+///like say(), but you always whisper it (yes it's silly)
+DEFINE_VERBLIKE(verb, /mob, whisper_verb, "Whisper", "", FALSE, "IC", /* instant = */ TRUE, /* context_menu = */ TRUE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	if(message)
+	if(VERB_JUST_FIRED())
+		whisper(message)
+	else
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, whisper), message), SSspeech_controller)
 
 /**
@@ -39,18 +36,17 @@
 	say(message, language = language)
 
 ///The me emote verb
-/mob/verb/me_verb(message as text)
-	set name = "Me"
-	set category = "IC"
-	set desc = "Perform a custom emote. Leave blank to pick between an audible or a visible emote (Defaults to visible)."
-
+DEFINE_VERBLIKE(verb, /mob, me_verb, "Me", "Perform a custom emote. Leave blank to pick between an audible or a visible emote (Defaults to visible).", FALSE, "IC", /* instant = */ TRUE, /* context_menu = */ TRUE, SSspeech_controller, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(VERB_JUST_FIRED())
+		emote("me", EMOTE_VISIBLE|EMOTE_AUDIBLE, message, TRUE)
+	else
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", EMOTE_VISIBLE|EMOTE_AUDIBLE, message, TRUE), SSspeech_controller)
 
-	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", EMOTE_VISIBLE|EMOTE_AUDIBLE, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	var/list/filter_result

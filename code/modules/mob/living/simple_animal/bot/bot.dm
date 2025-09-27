@@ -1090,7 +1090,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	log_combat(user, paicard.pai, "uploaded to [initial(src.name)],")
 	return TRUE
 
-/mob/living/simple_animal/bot/ghost()
+/mob/living/simple_animal/bot/ghost_yourself()
 	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.
 		return ..()
 	if(paicard && (!client || stat == DEAD))

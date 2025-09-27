@@ -150,9 +150,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x540")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-/client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Godmode"
+DEFINE_PROC_VERB(/client, cmd_admin_godmode, "Godmode", "", FALSE, "Admin.Game", mob/mob in GLOB.mob_list)
 	if(!check_rights(R_ADMIN))
 		return
 
