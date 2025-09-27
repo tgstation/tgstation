@@ -24882,7 +24882,6 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -30810,6 +30809,20 @@
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
+"iQp" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/arrow_ccw{
+	dir = 4
+	},
+/obj/structure/chair{
+	dir = 4;
+	pixel_y = -2
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "iQw" = (
 /obj/structure/railing{
 	dir = 6
@@ -115893,7 +115906,7 @@ uFo
 lkC
 fBQ
 qsa
-hSe
+iQp
 eGX
 qWB
 hSe
