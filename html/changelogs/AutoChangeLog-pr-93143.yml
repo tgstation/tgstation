@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "Objects that are EMP-proof will now have it appear as a examine tag desc"
