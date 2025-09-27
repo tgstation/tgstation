@@ -66,7 +66,7 @@
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slime/slimefelenid
-	results = list(/datum/reagent/mutationtoxin/felenid = 1)
+    results = list(/datum/reagent/mutationtoxin/felinid = 1)
 	required_reagents = list(/datum/reagent/consumable/milk = 1)
 	required_container = /obj/item/slime_extract/green
 //Metal
