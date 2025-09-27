@@ -48280,8 +48280,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "nLq" = (
-/obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/blue/half,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "nLC" = (
