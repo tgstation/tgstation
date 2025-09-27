@@ -44156,9 +44156,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/periodic_table/directional/west{
-	pixel_y = 5
-	},
+/obj/structure/sign/poster/official/periodic_table/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "mDd" = (
