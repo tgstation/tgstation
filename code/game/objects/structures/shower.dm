@@ -307,7 +307,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-		for(var/mob/living/showerer in loc)
+		for(var/mob/living/carbon/showerer in loc)
 			showerer.remove_status_effect(/datum/status_effect/washing_regen)
 	return TRUE
 
