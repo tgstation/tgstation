@@ -101,82 +101,122 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
 	storage_type = /datum/storage/bag/ore
-	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	/// If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
-	var/mob/listeningTo
-	///Cooldown on balloon alerts when picking ore
+	/// Mob we're currently tracking
+	var/mob/listening_to = null
+	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
+	var/dropping_ores = FALSE
+	/// Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
+
+/obj/item/storage/bag/ore/Destroy(force)
+	listening_to = null
+	return ..()
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
-	if(listeningTo == user)
+	if (listening_to)
 		return
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
-	listeningTo = user
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_moved))
+	if (isturf(user.loc))
+		RegisterSignal(user.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
+		RegisterSignal(user.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	listening_to = user
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
-	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-		listeningTo = null
+	if(!listening_to)
+		return
+	UnregisterSignal(listening_to, COMSIG_MOVABLE_MOVED)
+	if (listening_to.loc)
+		UnregisterSignal(listening_to.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	listening_to = null
+
+// Ensure we don't suck up ores that we've just dropped off
+/obj/item/storage/bag/ore/attack_self(mob/user, modifiers)
+	dropping_ores = TRUE
+	. = ..()
+	dropping_ores = FALSE
 
 /obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/boulder))
 		to_chat(user, span_warning("You can't fit [tool] into [src]. \
 			Perhaps you should break it down first, or find an ore box."))
 		return ITEM_INTERACT_BLOCKING
-
 	return NONE
 
-/obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
+/obj/item/storage/bag/ore/proc/on_user_moved(mob/living/user, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
-	var/show_message = FALSE
-	var/obj/structure/ore_box/box
-	var/turf/tile = get_turf(user)
+	if(old_loc)
+		UnregisterSignal(old_loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
+	var/turf/tile = get_turf(user)
 	if(!isturf(tile))
 		return
 
+	RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
+	RegisterSignal(tile, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	var/obj/structure/ore_box/box = null
 	if(istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
 
-	if(atom_storage)
-		for(var/thing in tile)
-			if(!is_type_in_typecache(thing, atom_storage.can_hold))
-				continue
-			if(box)
-				user.transferItemToLoc(thing, box)
-				show_message = TRUE
-			else if(atom_storage.attempt_insert(thing, user))
-				show_message = TRUE
-			else
-				if(!spam_protection)
-					balloon_alert(user, "bag full!")
-					spam_protection = TRUE
-					continue
-	if(show_message)
-		playsound(user, SFX_RUSTLE, 50, TRUE)
-		if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
-			return
+	var/show_message = FALSE
+	for(var/atom/thing as anything in tile)
+		if(is_type_in_typecache(thing, atom_storage.can_hold))
+			show_message ||= pickup_ore(thing, user, box)
 
-		COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
-		if (box)
-			balloon_alert(user, "scoops ore into box")
-			user.visible_message(
-				span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."),
-				ignored_mobs = user
-			)
-		else
-			balloon_alert(user, "scoops ore into bag")
-			user.visible_message(
-				span_notice("[user] scoops up the ores beneath [user.p_them()]."),
-				ignored_mobs = user
-			)
+	if (!show_message)
+		spam_protection = FALSE
+		return
+
+	playsound(user, SFX_RUSTLE, 50, TRUE)
+	if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
+		return
 
 	spam_protection = FALSE
+	COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
+
+	if (box)
+		balloon_alert(user, "scoops ore into box")
+		user.visible_message(
+			span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."),
+			ignored_mobs = user
+		)
+		return
+
+	balloon_alert(user, "scoops ore into bag")
+	user.visible_message(
+		span_notice("[user] scoops up the ores beneath [user.p_them()]."),
+		ignored_mobs = user
+	)
+
+/obj/item/storage/bag/ore/proc/pickup_ore(obj/item/ore, mob/user, obj/structure/ore_box/box)
+	if (!box && istype(user.pulling, /obj/structure/ore_box))
+		box = user.pulling
+
+	if (box)
+		user.transferItemToLoc(ore, box)
+		return TRUE
+
+	if (atom_storage.attempt_insert(ore, user))
+		return TRUE
+
+	if (!spam_protection)
+		balloon_alert(user, "bag full!")
+		spam_protection = TRUE
+	return FALSE
+
+/obj/item/storage/bag/ore/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
+	SIGNAL_HANDLER
+	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores)
+		pickup_ore(arrived, listening_to)
+
+/obj/item/storage/bag/ore/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
+	SIGNAL_HANDLER
+	if(is_type_in_list(new_atom, atom_storage.can_hold))
+		pickup_ore(new_atom, listening_to)
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
