@@ -5,7 +5,7 @@
 #define HALF_SHEET_MATERIAL_AMOUNT (SHEET_MATERIAL_AMOUNT / 2)
 /// The amount of materials used in the smallest of objects, like pens and screwdrivers. 10 units.
 #define SMALL_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT / 5)
-/// The amount of material that goes into a coin, which determines the value of the coin.
+/// The amount of material that goes into a coin, which determines the value of the coin. 20 units.
 #define COIN_MATERIAL_AMOUNT (HALF_SHEET_MATERIAL_AMOUNT * 0.4)
 
 //Cable related values
