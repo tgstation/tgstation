@@ -16208,6 +16208,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "eND" = (
@@ -18501,6 +18502,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs)
 "fvj" = (
@@ -21630,6 +21632,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/geneticist,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "gmX" = (
@@ -29540,6 +29543,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/roboticist,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "iAr" = (
@@ -42416,6 +42420,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "mik" = (
@@ -43860,6 +43865,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/depsec/medical,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "mFZ" = (
@@ -45460,6 +45466,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/machinery/button/silent_alarm/north,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "nfM" = (
@@ -49779,6 +49786,13 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/security/interrogation)
+"oqv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/button/silent_alarm/west,
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "oqw" = (
 /turf/open/floor/plating,
 /area/station/construction/storage_wing)
@@ -51701,6 +51715,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/chemist,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "oTQ" = (
@@ -66384,6 +66399,7 @@
 /obj/effect/landmark/start/bartender,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/button/silent_alarm/east,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "tna" = (
@@ -66773,6 +66789,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/wood,
 /area/station/engineering/lobby)
 "tuw" = (
@@ -67558,6 +67575,7 @@
 	pixel_y = 8
 	},
 /obj/effect/landmark/start/head_of_personnel,
+/obj/machinery/button/silent_alarm/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "tGs" = (
@@ -117942,7 +117960,7 @@ fLr
 gNZ
 sfM
 guk
-wmR
+oqv
 quJ
 quJ
 vCB

@@ -58,6 +58,11 @@
 	var/unflip_table_sound = 'sound/items/trayhit/trayhit2.ogg'
 	/// What sound does the table make when we flip the table?
 	var/flipped_table_sound = 'sound/items/trayhit/trayhit1.ogg'
+	/// If there is a silent alarm attached to the table
+	var/silent_alarm_rigged
+	/// Direction of silent alarm that is attached to the table
+	var/silent_alarm_direction
+	COOLDOWN_DECLARE(tripped_alarm)
 
 /obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -211,6 +216,8 @@
 	. = ..()
 	if(is_flipped)
 		. += span_notice("It's been flipped on its side!")
+	if(silent_alarm_rigged && (is_flipped || silent_alarm_direction == get_dir(user, src)))
+		. += span_notice("There is a silent alarm rigged under this table.")
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
@@ -351,6 +358,14 @@
 
 	if(is_flipped)
 		return .
+
+	if(istype(tool, /obj/item/wallframe))
+		var/obj/item/wallframe/frame = tool
+		if(frame.tableframe)
+			if(frame.try_build(get_turf(src), user))
+				frame.attach(src, user)
+				return TRUE
+			return FALSE
 
 	if(istype(tool, /obj/item/toy/cards/deck))
 		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
