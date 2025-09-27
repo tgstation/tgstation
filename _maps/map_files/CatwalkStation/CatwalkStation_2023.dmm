@@ -4143,10 +4143,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
-"bnp" = (
-/obj/machinery/light_switch/directional/west,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "bnO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
@@ -10996,7 +10992,6 @@
 /area/station/engineering/main)
 "djf" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/medbay/central)
 "djt" = (
@@ -22628,6 +22623,7 @@
 	req_access = list("medical")
 	},
 /obj/structure/table/reinforced/rglass,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "gBf" = (
@@ -23037,6 +23033,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "gGO" = (
@@ -24200,12 +24197,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/station/command/heads_quarters/captain/private)
-"gZt" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/medical/medbay/central)
 "gZu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/textured_large,
@@ -26302,7 +26293,6 @@
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
@@ -33524,7 +33514,7 @@
 	name = "Chemistry Shutters"
 	},
 /obj/machinery/door/firedoor,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "jDe" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -36680,7 +36670,6 @@
 	req_access = list("medical")
 	},
 /obj/structure/table/reinforced/rglass,
-/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/storage)
 "kwW" = (
@@ -43008,7 +42997,6 @@
 /area/station/science/ordnance/storage)
 "mrE" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical/storage)
 "mrM" = (
@@ -46207,12 +46195,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
-"noT" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "noU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/turf_decal/siding/red{
@@ -52124,7 +52106,6 @@
 	name = "Medical Cold Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54120,10 +54101,6 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"pED" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/medical/medbay/central)
 "pEG" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -66146,10 +66123,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"tey" = (
-/obj/structure/cable,
-/turf/closed/wall,
-/area/station/medical/storage)
 "teA" = (
 /obj/structure/railing,
 /turf/open/openspace,
@@ -72925,7 +72898,6 @@
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 2
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/mail_sorting/science/robotics,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
@@ -83471,7 +83443,6 @@
 /area/station/maintenance/starboard/lesser)
 "yfv" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/wrench/medical,
 /obj/structure/table/reinforced/rglass,
@@ -111239,7 +111210,7 @@ vOg
 vOg
 dXD
 vOg
-noT
+uJi
 vvi
 uJi
 uJi
@@ -114336,7 +114307,7 @@ mCM
 qqD
 wQc
 ugq
-bnp
+fQp
 bZC
 vyV
 vSW
@@ -180099,7 +180070,7 @@ rpB
 mJl
 mJl
 mJl
-tey
+xUJ
 aBy
 gAZ
 yfv
@@ -180870,7 +180841,7 @@ cvP
 pkx
 dUb
 dfn
-gZt
+djf
 nRE
 unv
 nRE
@@ -181127,14 +181098,14 @@ cvP
 dfn
 dUb
 dUb
-pED
-pED
+pEO
+pEO
 djf
 djf
 djf
-pED
+pEO
 djf
-pED
+pEO
 vRy
 sOV
 avE
@@ -181391,9 +181362,9 @@ afR
 afR
 afR
 afR
-pED
-pED
-pED
+pEO
+pEO
+pEO
 avE
 avE
 avE
