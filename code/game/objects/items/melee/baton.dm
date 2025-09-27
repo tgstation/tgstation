@@ -776,9 +776,8 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	var/mob/thrower = throwingdatum?.get_thrower()
-	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom) && istype(thrower))
-		finalize_baton_attack(hit_atom, thrower)
+	if(!. && active && prob(throw_stun_chance) && hit_atom)
+		finalize_baton_attack(hit_atom, throwingdatum?.get_thrower())
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()

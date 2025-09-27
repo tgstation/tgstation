@@ -277,7 +277,7 @@
 
 /datum/status_effect/heretic_passive/flesh/heretic_level_upgrade()
 	. = ..()
-	RegisterSignal(owner, COMSIG_FOOD_BIT, PROC_REF(on_eat))
+	RegisterSignal(owner, COMSIG_LIVING_EAT_FOOD, PROC_REF(on_eat))
 	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
 	if(!ishuman(owner))
 		return
@@ -339,7 +339,7 @@
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
 	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), REF(src))
-	UnregisterSignal(owner, list(COMSIG_FOOD_BIT, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
+	UnregisterSignal(owner, list(COMSIG_LIVING_EAT_FOOD, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/heretic = owner
