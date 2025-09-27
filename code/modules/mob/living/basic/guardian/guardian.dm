@@ -89,8 +89,7 @@
 	GLOB.parasites += src
 	src.theme = theme
 	theme?.apply(src)
-	var/list/death_loot = string_list(list(/obj/item/stack/sheet/mineral/wood))
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/guardian/phase/out)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/basic_inhands)
 	// life link

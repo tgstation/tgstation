@@ -124,7 +124,7 @@
 	icon_state = "blobpod_independent"
 	//we hate gold cores
 	gold_core_spawnable = NO_SPAWN
-	loot = list(/obj/item/food/spore_sack/independent)
+	loot = /obj/item/food/spore_sack/independent
 
 /mob/living/basic/blob_minion/spore/independent/Initialize(mapload)
 	. = ..()

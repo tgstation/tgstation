@@ -150,7 +150,7 @@
 	denied_type = /obj/item/crusher_trophy/wendigo_horn
 
 /obj/item/crusher_trophy/wendigo_horn/effect_desc()
-	return "melee hits inflict twice as much damage"
+	return "melee hits to inflict twice as much damage"
 
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
