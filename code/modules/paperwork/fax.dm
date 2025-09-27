@@ -404,6 +404,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
 	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
+	SEND_SIGNAL(src, COMSIG_FAX_MESSAGE_RECEIVED, sender_name)
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.
