@@ -539,7 +539,7 @@ Behavior that's still missing from this component that original food items had t
 			if(effect?.can_consume(eater))
 				effect.on_consumption(eater, owner, effect_stack_amount)
 
-	if(fraction > 1) //don't bother if the item is about to be deleted anyway...
+	if(fraction >= 1) //don't bother if the item is about to be deleted anyway...
 		return
 
 	if(is_stack) //stacks use up sheets, which recalulates the materials already.
