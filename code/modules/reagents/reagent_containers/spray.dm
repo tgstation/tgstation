@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -257,7 +257,7 @@
 	list_reagents = list(/datum/reagent/lube/superlube = 30)
 
 /obj/item/reagent_containers/spray/waterflower/cyborg
-	reagent_flags = NONE
+	initial_reagent_flags = NONE
 	volume = 100
 	list_reagents = list(/datum/reagent/water = 100)
 	var/generate_amount = 5
@@ -342,7 +342,7 @@
 	inhand_icon_state = "chemsprayer_janitor"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	reagent_flags = NONE
+	initial_reagent_flags = NONE
 	list_reagents = list(/datum/reagent/space_cleaner = 1000)
 	volume = 1000
 	amount_per_transfer_from_this = 5
@@ -374,7 +374,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	reagent_flags = NONE
+	initial_reagent_flags = NONE
 	list_reagents = list(/datum/reagent/confetti = 15)
 	volume = 15
 	amount_per_transfer_from_this = 5

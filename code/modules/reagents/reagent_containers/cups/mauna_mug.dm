@@ -4,7 +4,7 @@
 	icon = 'icons/obj/devices/mauna_mug.dmi'
 	icon_state = "maunamug"
 	base_icon_state = "maunamug"
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
 	fill_icon_thresholds = list(25)
 	var/obj/item/stock_parts/power_store/cell

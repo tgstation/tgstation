@@ -4,7 +4,7 @@
 	icon = 'icons/obj/medical/bloodpack.dmi'
 	icon_state = "chempack"
 	volume = 100
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER
 	obj_flags = UNIQUE_RENAME
 	resistance_flags = ACID_PROOF
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)

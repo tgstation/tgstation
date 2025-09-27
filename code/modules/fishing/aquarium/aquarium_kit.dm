@@ -8,7 +8,7 @@
 	volume = 5
 	amount_per_transfer_from_this = 2.5
 	has_variable_transfer_amount = FALSE
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	reagent_container_liquid_sound = null
 	list_reagents = list(/obj/item/fish::food = 2.5) //Default fish diet
 	gulp_size = 1

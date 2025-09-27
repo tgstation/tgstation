@@ -3,7 +3,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	reagent_flags = OPENCONTAINER | DUNKABLE
+	initial_reagent_flags = OPENCONTAINER | DUNKABLE
 	resistance_flags = ACID_PROOF
 	icon_state = "bottle"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
@@ -231,7 +231,7 @@
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 1.5)
-	reagent_flags = OPENCONTAINER | NO_REACT
+	initial_reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
 
@@ -371,11 +371,11 @@
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
 			reagents.expose(user, TOUCH)
 			reagents.clear_reagents()
-		reagents.flags = NONE
+		update_container_flags(NONE)
 
 /obj/item/reagent_containers/cup/bucket/dropped(mob/user)
 	. = ..()
-	reagents.flags = initial(reagent_flags)
+	reset_container_flags()
 
 /obj/item/reagent_containers/cup/bucket/equip_to_best_slot(mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
@@ -404,7 +404,7 @@
 	volume = 100
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER
 	var/obj/item/grinded
 
 /obj/item/reagent_containers/cup/mortar/click_alt(mob/user)

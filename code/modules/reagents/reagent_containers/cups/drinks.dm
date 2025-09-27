@@ -240,6 +240,7 @@
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
 	. = ..()
 	if(start_capped)
+		// this is not done via initial_reagent_flags because it represents state
 		update_container_flags(SEALED_CONTAINER | TRANSPARENT)
 		update_appearance()
 

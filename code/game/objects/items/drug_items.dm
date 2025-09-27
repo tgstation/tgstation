@@ -41,7 +41,7 @@
 	icon_state = "blastoff_ampoule"
 	base_icon_state = "blastoff_ampoule"
 	volume = 20
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	list_reagents = list(/datum/reagent/drug/blastoff = 10)
 	reagent_consumption_method = INHALE
 	consumption_sound = 'sound/effects/spray2.ogg'
@@ -58,7 +58,7 @@
 /obj/item/reagent_containers/cup/blastoff_ampoule/attack_self(mob/user)
 	if(!user.can_perform_action(src, NEED_DEXTERITY) || is_open_container())
 		return ..()
-	update_container_flags(reagent_flags | OPENCONTAINER)
+	add_container_flags(OPENCONTAINER)
 	playsound(src, 'sound/items/ampoule_snap.ogg', 40)
 	update_appearance()
 

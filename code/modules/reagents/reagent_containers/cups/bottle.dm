@@ -503,6 +503,7 @@
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/Initialize(mapload)
 	. = ..()
 	register_context()
+	// this is not done via initial_reagent_flags because it represents state
 	update_container_flags(SEALED_CONTAINER | TRANSPARENT)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)

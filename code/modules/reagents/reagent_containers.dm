@@ -13,8 +13,8 @@
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
-	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
-	VAR_PROTECTED/reagent_flags
+	/// The base reagent flags that our reagent datum takes on when created
+	var/initial_reagent_flags = NONE
 	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
 	/// The purity of the spawned reagents in list_reagents. Default purity if `null`
@@ -75,7 +75,7 @@
 		volume = vol
 	if(!force)
 		item_flags |= NOBLUDGEON
-	create_reagents(volume, reagent_flags)
+	create_reagents(volume, initial_reagent_flags)
 	if(spawned_disease)
 		var/datum/disease/F = new spawned_disease()
 		var/list/data = list("viruses"= list(F))
@@ -141,7 +141,7 @@
 
 /// Tries to splash the target, called when right-clicking with a reagent container.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
-	if (!is_open_container() || (reagent_flags & NO_SPLASH))
+	if (!is_open_container() || (reagents.flags & NO_SPLASH))
 		return FALSE
 
 	if (!reagents?.total_volume)
@@ -195,13 +195,17 @@
 		return FALSE
 	return TRUE
 
-/// Toggle certain flags on the reagent container
+/// Sets reagent flags to the passed flags outright
 /obj/item/reagent_containers/proc/update_container_flags(new_flags)
 	reagents.flags = new_flags
 
+/// Adds the passed flags to the current reagent flags
+/obj/item/reagent_containers/proc/add_container_flags(new_flags)
+	reagents.flags |= new_flags
+
 /// Resets to base flags
 /obj/item/reagent_containers/proc/reset_container_flags()
-	reagents.flags = reagent_flags
+	reagents.flags = initial_reagent_flags
 
 /*
  * On accidental consumption, transfer a portion of the reagents to the eater and the item it's in, then continue to the base proc (to deal with shattering glass containers)
@@ -231,7 +235,7 @@
  * * throwingdatum - The throwingdatum behind the throw if the
  */
 /obj/item/reagent_containers/proc/splash_reagents(atom/target, mob/splasher, was_thrown = FALSE, allow_closed_splash = FALSE)
-	if(!reagents || !reagents.total_volume || (!is_open_container() && !allow_closed_splash) || (reagent_flags & NO_SPLASH))
+	if(!reagents || !reagents.total_volume || (!is_open_container() && !allow_closed_splash) || (reagents.flags & NO_SPLASH))
 		return
 
 	if(ismob(target) && target.reagents)

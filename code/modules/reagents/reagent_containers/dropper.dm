@@ -8,7 +8,7 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
 
 /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
