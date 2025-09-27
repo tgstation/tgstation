@@ -7,6 +7,7 @@
 	worn_icon_state = "utility"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
+	abstract_type = /obj/item/storage/belt
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
@@ -56,7 +57,7 @@
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver, src)
 	SSwardrobe.provide_type(/obj/item/wrench, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool/hugetank, src)
 	SSwardrobe.provide_type(/obj/item/crowbar, src)
 	SSwardrobe.provide_type(/obj/item/wirecutters, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
@@ -66,7 +67,7 @@
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
 	to_preload += /obj/item/screwdriver
 	to_preload += /obj/item/wrench
-	to_preload += /obj/item/weldingtool
+	to_preload += /obj/item/weldingtool/hugetank
 	to_preload += /obj/item/crowbar
 	to_preload += /obj/item/wirecutters
 	to_preload += /obj/item/multitool

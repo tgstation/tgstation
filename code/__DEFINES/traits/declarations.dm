@@ -250,6 +250,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
+/// Mobs with this trait do not apply a damage cap to their potential considered wounding damage, resulting in extremely high wounding effects.
+#define TRAIT_BLOODY_MESS "bloody_mess"
 /// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
 #define TRAIT_EASYBLEED "easybleed"
 /// Mob recovers from addictions at an accelerated rate
@@ -416,6 +418,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SURGEON "surgeon"
 #define TRAIT_STRONG_GRABBER "strong_grabber"
 #define TRAIT_SOOTHED_THROAT "soothed-throat"
+#define TRAIT_SOOTHED_HEADACHE "soothed-headache"
 #define TRAIT_BOOZE_SLIDER "booze-slider"
 /// We place people into a fireman carry quicker than standard
 #define TRAIT_QUICK_CARRY "quick-carry"
@@ -509,7 +512,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents a mob from being unbuckled, currently only used to prevent people from falling over on the tram
 #define TRAIT_CANNOT_BE_UNBUCKLED "cannot_be_unbuckled"
 /// from heparin and nitrous oxide, makes open bleeding wounds rapidly spill more blood
-#define TRAIT_BLOODY_MESS "bloody_mess"
+#define TRAIT_BLOOD_FOUNTAIN "bloody_fountain"
 /// from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 #define TRAIT_COAGULATING "coagulating"
 /// From anti-convulsant medication against seizures.
@@ -619,7 +622,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLIND_TOOL "blind_tool"
 
 /// The person with this trait always appears as 'unknown'.
-#define TRAIT_UNKNOWN "unknown"
+#define TRAIT_UNKNOWN_APPEARANCE "unknown_appearance"
+/// The person with this trait always talks as 'unknown'
+#define TRAIT_UNKNOWN_VOICE "unknown_voice"
+/// Spoken voice always matches any worn ID. If no worn ID, defaults to actual name.
+#define TRAIT_VOICE_MATCHES_ID "voice_matches_id"
 
 /// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
 #define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
@@ -724,7 +731,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGICALLY_PHASED "magically_phased"
 
 //SKILLS
-#define TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE "underwater_basketweaving"
 #define TRAIT_WINE_TASTER "wine_taster"
 #define TRAIT_BONSAI "bonsai"
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
@@ -862,6 +868,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FOOD_CHEF_MADE "food_made_by_chef"
 /// This atom has a quality_food_ingredient element attached
 #define TRAIT_QUALITY_FOOD_INGREDIENT "quality_food_ingredient"
+/// This (edible) atom won't inherit the item of the item it was processed from in the form "a slice of [name]"
+#define TRAIT_FOOD_DONT_INHERIT_NAME_FROM_PROCESSED "food_dont_inherit_name_from_processed"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
 /// Can't be catched when thrown
@@ -1184,11 +1192,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ELEVATING_OBJECT "elevating_object"
 /// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
 #define TRAIT_ELEVATED_TURF "elevated_turf"
-/**
- * With this, the immerse overlay will give the atom its own submersion visual overlay
- * instead of one that's also shared with other movables, thus making editing its appearance possible.
- */
-#define TRAIT_UNIQUE_IMMERSE "unique_immerse"
 
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"

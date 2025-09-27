@@ -158,7 +158,7 @@
 	if (!length(suggested_wounding_types))
 		return FALSE
 
-	for (var/iter_wounding_type as anything in suggested_wounding_types)
+	for (var/iter_wounding_type in suggested_wounding_types)
 		if (!(iter_wounding_type in required_wounding_types))
 			if (match_all_wounding_types)
 				return FALSE

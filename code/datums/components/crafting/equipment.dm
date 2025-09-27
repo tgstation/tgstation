@@ -279,7 +279,7 @@
 	time = 1 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/leather = 4,
-		/obj/item/stack/sheet/cardboard = 4
+		/obj/item/stack/sheet/mineral/wood = 1,
 	)
 	category = CAT_EQUIPMENT
 	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)

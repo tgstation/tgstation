@@ -1375,7 +1375,6 @@
 /area/ruin/space/has_grav/dangerous_research/lab)
 "rA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "asrc_b";
 	dir = 8
 	},
 /turf/open/floor/engine/air,
@@ -1644,8 +1643,8 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/ammo_box/c38,
-/obj/item/ammo_box/c38,
+/obj/item/ammo_box/speedloader/c38,
+/obj/item/ammo_box/speedloader/c38,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
@@ -3667,7 +3666,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/ammo_box/c38,
+/obj/item/ammo_box/speedloader/c38,
 /obj/effect/turf_decal/tile/dark_red/anticorner,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
@@ -3719,7 +3718,6 @@
 /area/ruin/space/has_grav/dangerous_research)
 "Xb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "asrc_a";
 	dir = 8
 	},
 /turf/open/floor/engine/airless,

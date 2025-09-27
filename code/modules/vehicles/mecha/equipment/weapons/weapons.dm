@@ -1,5 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
+	abstract_type = /obj/item/mecha_parts/mecha_equipment/weapon
 	range = MECHA_RANGED
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/vehicles/mecha/weapdestr.ogg'

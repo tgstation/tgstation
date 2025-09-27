@@ -15,7 +15,6 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()
@@ -2953,7 +2952,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
 /mob/living/proc/compare_fitness(mob/living/scouter)
-	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return span_warning("It's impossible to tell whether this person lifts.")
 
 	var/our_fitness_level = calculate_fitness()

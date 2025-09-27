@@ -8,6 +8,7 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	abstract_type = /obj/item/food
 	obj_flags = UNIQUE_RENAME
 	grind_results = list()
 	material_flags = MATERIAL_NO_EDIBILITY
