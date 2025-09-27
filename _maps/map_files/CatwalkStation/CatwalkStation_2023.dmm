@@ -1109,14 +1109,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"are" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/medical)
 "ars" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2362,6 +2354,11 @@
 "aLd" = (
 /turf/open/floor/glass/airless,
 /area/station/maintenance/starboard/lesser)
+"aLg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron/textured_large,
+/area/station/medical/virology)
 "aLl" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -2829,6 +2826,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/mess,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "aSW" = (
@@ -3643,10 +3641,10 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "bfw" = (
@@ -3943,6 +3941,7 @@
 	},
 /obj/effect/landmark/blobstart,
 /obj/machinery/light/floor,
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "bkO" = (
@@ -7239,7 +7238,6 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/effect/decal/cleanable/greenglow,
 /obj/structure/showcase/machinery/oldpod{
 	desc = "An old NT branded sleeper, decommissioned after the lead acetate incident. None of the functional machinery remains inside.";
 	name = "decommissioned sleeper"
@@ -12698,6 +12696,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/machinery/holopad,
 /turf/open/openspace,
 /area/station/medical/medbay/central)
 "dKv" = (
@@ -19293,7 +19292,7 @@
 	name = "Abandoned Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/iron/freezer,
+/turf/open/floor/iron/textured_large,
 /area/station/maintenance/department/medical)
 "fFm" = (
 /obj/effect/turf_decal/siding/blue{
@@ -19774,6 +19773,7 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "fNB" = (
@@ -20895,6 +20895,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/virology)
 "gck" = (
@@ -24722,7 +24723,6 @@
 	name = "decommissioned sleeper"
 	},
 /obj/item/surgicaldrill,
-/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "hhL" = (
@@ -29205,8 +29205,8 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/greenglow,
 /obj/effect/landmark/event_spawn,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "itI" = (
@@ -32298,6 +32298,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/holopad,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "jna" = (
@@ -33663,7 +33664,6 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/holopad,
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=2";
 	location = "Medical"
@@ -33737,7 +33737,6 @@
 	dir = 4;
 	name = "decommissioned sleeper"
 	},
-/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "jFH" = (
@@ -36305,6 +36304,14 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
+"ksZ" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/station/maintenance/department/medical)
 "ktd" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/wood,
@@ -38599,6 +38606,7 @@
 /obj/machinery/door/airlock/virology/glass{
 	name = "Entrance to Malpractice Tower"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/virology)
 "lce" = (
@@ -50963,16 +50971,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"oGj" = (
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white,
-/area/station/maintenance/department/medical)
 "oGu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -53092,6 +53090,11 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/openspace,
 /area/station/hallway/primary/central)
+"pky" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/textured_large,
+/area/station/medical/abandoned)
 "pkz" = (
 /obj/machinery/dna_infuser,
 /obj/effect/turf_decal/tile/dark_green/fourcorners,
@@ -55804,6 +55807,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "qbZ" = (
@@ -56562,6 +56568,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/pizzaslice/moldy/bacteria,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "qmI" = (
@@ -59274,7 +59281,6 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/holopad,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "rbE" = (
@@ -62194,13 +62200,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
-"rSj" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/holopad{
-	pixel_y = 6
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/medical/pharmacy)
 "rSu" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -72574,6 +72573,7 @@
 	icon_state = "scanner";
 	name = "decommissioned cloning scanner"
 	},
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "uVN" = (
@@ -73161,9 +73161,6 @@
 "veT" = (
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
@@ -74578,7 +74575,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "vzO" = (
@@ -77212,6 +77208,9 @@
 /area/station/maintenance/solars/port/aft)
 "wlq" = (
 /obj/structure/sign/poster/official/periodic_table/directional/north,
+/obj/machinery/holopad{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "wlF" = (
@@ -82422,6 +82421,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/medical)
 "xQK" = (
@@ -107410,7 +107410,7 @@ uIO
 eeH
 uIO
 uIO
-lIr
+uIO
 uYP
 bPC
 ecL
@@ -107668,7 +107668,7 @@ rYd
 jrv
 jFG
 uIO
-lIr
+uIO
 xXW
 iDq
 lIr
@@ -108434,7 +108434,7 @@ nDe
 uIO
 coI
 eKW
-oGj
+rYd
 bkD
 veT
 aSK
@@ -108693,8 +108693,8 @@ uVL
 svx
 lXG
 qfE
-are
-rYd
+cVe
+ksZ
 opJ
 uIO
 wuN
@@ -115370,7 +115370,7 @@ sTB
 tYE
 oYy
 tzS
-rSj
+tzS
 tzS
 taS
 rxx
@@ -175505,7 +175505,7 @@ xyz
 xyz
 paY
 xyz
-dSS
+aLg
 gch
 iwS
 iwS
@@ -175764,7 +175764,7 @@ kUq
 kUq
 kUq
 kUq
-pWF
+pky
 plA
 pfp
 nfR
