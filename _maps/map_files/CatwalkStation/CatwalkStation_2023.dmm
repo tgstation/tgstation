@@ -31611,23 +31611,23 @@
 	id = "MedbayExit";
 	name = "Exit Door";
 	req_access = list("medical");
-	pixel_y = 35;
-	pixel_x = -10;
+	pixel_y = 39;
+	pixel_x = -6;
 	normaldoorcontrol = 1
 	},
 /obj/machinery/button/door/directional/north{
 	id = "MedbayFoyer";
 	name = "Entrance Door";
 	req_access = list("medical");
-	pixel_y = 35;
-	normaldoorcontrol = 1
+	pixel_y = 39;
+	normaldoorcontrol = 1;
+	pixel_x = 6
 	},
 /obj/machinery/button/door/directional/north{
 	id = "medbay-office";
 	name = "Medbay Lockdown";
 	req_access = list("medical");
-	pixel_x = 10;
-	pixel_y = 35
+	pixel_y = 30
 	},
 /turf/closed/wall,
 /area/station/medical/cryo)
@@ -37708,6 +37708,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "kOm" = (
@@ -43320,13 +43322,11 @@
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "mvz" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
 /obj/machinery/requests_console/auto_name/directional/south,
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/structure/table/reinforced/rglass,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "mvH" = (
@@ -43335,8 +43335,7 @@
 /area/station/service/library)
 "mwd" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room";
-	id = "med_tc"
+	name = "Patient Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/machinery/door/firedoor,
