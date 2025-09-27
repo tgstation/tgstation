@@ -8823,6 +8823,7 @@
 	pixel_x = 8;
 	pixel_y = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "cBY" = (
@@ -18969,9 +18970,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "fzr" = (
-/obj/machinery/camera/autoname/directional/west,
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/item/screwdriver,
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/cmo)
 "fzv" = (
@@ -37376,14 +37378,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "kFO" = (
-/obj/machinery/door/airlock/command{
-	name = "CMO Bedroom"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/cmo,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command{
+	name = "Chief Medical Officer's Quarters"
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "kFP" = (
@@ -43441,6 +43444,7 @@
 /obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/iron/white,
 /area/station/medical/patients_rooms/room_a)
 "mwh" = (
@@ -77967,6 +77971,7 @@
 	name = "CMO Backdoor"
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "wuG" = (
@@ -81453,12 +81458,6 @@
 "xyz" = (
 /turf/open/openspace,
 /area/station/medical/virology)
-"xyC" = (
-/obj/effect/mapping_helpers/airlock/unres,
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/curtain/cloth,
-/turf/open/floor/plating,
-/area/station/medical/patients_rooms/room_a)
 "xyF" = (
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
@@ -178736,7 +178735,7 @@ pQK
 sOa
 phy
 feE
-xyC
+str
 kWF
 oZN
 jIJ
