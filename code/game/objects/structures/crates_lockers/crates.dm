@@ -26,19 +26,22 @@
 	/// The time spent to climb this crate.
 	var/crate_climb_time = 2 SECONDS
 	/// The reference of the manifest paper attached to the cargo crate.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
+	var/datum/weakref/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.
 	var/lid_icon_state
 	/// Controls the X value of the lid, allowing left and right pixel movement.
-	var/lid_x = 0
+	var/lid_w = 0
 	/// Controls the Y value of the lid, allowing up and down pixel movement.
-	var/lid_y = 0
+	var/lid_z = 0
+	var/weld_w = 0
+	var/weld_z = 0
 
 /obj/structure/closet/crate/Initialize(mapload)
 	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0) //add element in closed state before parent init opens it(if it does)
 	if(elevation)
+		AddComponent(/datum/component/climb_walkable)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
 	. = ..()
 
@@ -64,7 +67,7 @@
 	AddComponent(/datum/component/soapbox)
 
 /obj/structure/closet/crate/Destroy()
-	QDEL_NULL(manifest)
+	manifest = null
 	return ..()
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
@@ -95,12 +98,15 @@
 			. += "securecrateg"
 
 	if(welded)
-		. += icon_welded
+		var/mutable_appearance/weld_overlay = mutable_appearance(icon, "welded")
+		weld_overlay.pixel_w = weld_w
+		weld_overlay.pixel_z = weld_z
+		. += weld_overlay
 
 	if(opened && lid_icon_state)
 		var/mutable_appearance/lid = mutable_appearance(icon = lid_icon, icon_state = lid_icon_state)
-		lid.pixel_x = lid_x
-		lid.pixel_y = lid_y
+		lid.pixel_w = lid_w
+		lid.pixel_z = lid_z
 		lid.layer = layer
 		. += lid
 
@@ -108,8 +114,7 @@
 	. = ..()
 	if(.)
 		return
-	if(manifest)
-		tear_manifest(user)
+	tear_manifest(user)
 
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
@@ -120,11 +125,8 @@
 			RemoveElement(/datum/element/elevation, pixel_shift = elevation)
 		if(elevation_open)
 			AddElement(/datum/element/elevation, pixel_shift = elevation_open)
-	if(!QDELETED(manifest))
-		playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
-		manifest.forceMove(get_turf(src))
-		manifest = null
-		update_appearance()
+
+	tear_manifest()
 
 /obj/structure/closet/crate/after_close(mob/living/user)
 	. = ..()
@@ -147,12 +149,17 @@
 
 ///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	to_chat(user, span_notice("You tear the manifest off of [src]."))
+	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = manifest?.resolve()
+	if(QDELETED(our_manifest))
+		manifest = null
+		return
+	if(user)
+		to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
-	manifest.forceMove(loc)
+	our_manifest.forceMove(drop_location(src))
 	if(ishuman(user))
-		user.put_in_hands(manifest)
+		user.put_in_hands(our_manifest)
 	manifest = null
 	update_appearance()
 
@@ -185,6 +192,7 @@
 	base_icon_state = "trashcart"
 	can_install_electronics = FALSE
 	paint_jobs = null
+	weld_z = 5
 
 /obj/structure/closet/crate/trashcart/laundry
 	name = "laundry cart"
@@ -279,6 +287,7 @@
 	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
+	new /obj/item/paper/fluff/jobs/medical/blood_types(src)
 
 /obj/structure/closet/crate/freezer/surplus_limbs
 	name = "surplus prosthetic limbs"
@@ -466,3 +475,27 @@
 
 /obj/structure/closet/crate/add_to_roundstart_list()
 	return
+
+/obj/structure/closet/crate/glitter
+	name = "pink crate"
+	desc = "A glittery pink crate."
+	icon_state = "pink"
+	base_icon_state = "pink"
+	var/glitter_prob = 25
+	var/glitter_color = "#ff8080"
+
+/obj/structure/closet/crate/glitter/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	var/turf/old_turf = get_turf(old_loc)
+	if(!old_turf)
+		return
+	if(prob(glitter_prob))
+		old_turf.spawn_glitter(list("[glitter_color]" = 100))
+
+/obj/structure/closet/crate/glitter/lavender
+	name = "lavender crate"
+	desc = "A glittery purple... no, lavender crate."
+	icon_state = "lavender"
+	base_icon_state = "lavender"
+	glitter_color = "#db80ff"

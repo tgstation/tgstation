@@ -36,7 +36,7 @@
 	else
 		team_color = pick(COLOR_CULT_RED, COLOR_GREEN)
 
-	user.add_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
+	user.add_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOOD_FOUNTAIN), REF(src))
 	to_chat(user, span_alert("Your heart takes on a strange yet soothing irregular rhythm, and your blood feels significantly less viscous than it used to be. You're not sure if that's a good thing."))
 	component = user.AddComponent( \
 		/datum/component/aura_healing, \
@@ -65,7 +65,7 @@
 			spell_action.cooldown_time *= 2
 			active = FALSE
 	QDEL_NULL(component)
-	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOODY_MESS), REF(src))
+	user.remove_traits(list(TRAIT_MANSUS_TOUCHED, TRAIT_BLOOD_FOUNTAIN), REF(src))
 
 	// If boosted enable is set, to prevent false dropped() calls from repeatedly nuking the max spells.
 	var/datum/action/innate/cult/blood_magic/magic_holder = locate() in user.actions
@@ -157,24 +157,28 @@
 	// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
 
-/obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, params)
+/obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/carbon/human/hit = target
 	if(!IS_HERETIC_OR_MONSTER(user))
 		user.balloon_alert(user, "you feel a presence watching you")
 		user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
+		user.mob_mood.adjust_sanity(-50)
 		return
+
 	if(hit.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return
+
 	if(!hit.mob_mood)
 		return
-	if(hit.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
+
+	if(hit.mob_mood.sanity_level > SANITY_LEVEL_UNSTABLE)
 		user.balloon_alert(user, "their mind is too strong!")
 		hit.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
-	else
-		user.balloon_alert(user, "their mind bends to see the truth!")
-		hit.apply_status_effect(/datum/status_effect/moon_converted)
-		user.log_message("made [target] insane.", LOG_GAME)
-		hit.log_message("was driven insane by [user]")
+		hit.mob_mood.adjust_sanity(-sanity_damage)
+		return ..()
+
+	user.balloon_alert(user, "their mind bends to see the truth!")
+	hit.apply_status_effect(/datum/status_effect/moon_converted)
+	user.log_message("made [target] insane.", LOG_GAME)
+	hit.log_message("was driven insane by [user]")
 	. = ..()

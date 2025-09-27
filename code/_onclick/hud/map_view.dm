@@ -28,8 +28,30 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	assigned_map = map_key
 	set_position(1, 1)
 
-/atom/movable/screen/map_view/proc/display_to(mob/show_to)
-	show_to.client.register_map_obj(src)
+/**
+ * Generates and displays the map view to a client
+ * Make sure you at least try to pass tgui_window if map view needed on UI,
+ * so it will wait a signal from TGUI, which tells windows is fully visible.
+ *
+ * If you use map view not in TGUI, just call it as usualy.
+ * If UI needs planes, call display_to_client.
+ *
+ * * show_to - Mob which needs map view
+ * * window - Optional. TGUI window which needs map view
+ */
+/atom/movable/screen/map_view/proc/display_to(mob/show_to, datum/tgui_window/window)
+	if(window && !window.visible)
+		RegisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE, PROC_REF(display_on_ui_visible))
+	else
+		display_to_client(show_to.client)
+
+/atom/movable/screen/map_view/proc/display_on_ui_visible(datum/tgui_window/window, client/show_to)
+	SIGNAL_HANDLER
+	display_to_client(show_to)
+	UnregisterSignal(window, COMSIG_TGUI_WINDOW_VISIBLE)
+
+/atom/movable/screen/map_view/proc/display_to_client(client/show_to)
+	show_to.register_map_obj(src)
 	// We need to add planesmasters to the popup, otherwise
 	// blending fucks up massively. Any planesmaster on the main screen does
 	// NOT apply to map popups. If there's ever a way to make planesmasters
@@ -37,7 +59,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	// We lazy load this because there's no point creating all these if none's gonna see em
 
 	// Store this info in a client -> hud pattern, so ghosts closing the window nukes the right group
-	var/datum/weakref/client_ref = WEAKREF(show_to.client)
+	var/datum/weakref/client_ref = WEAKREF(show_to)
 
 	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
 	var/datum/hud/our_hud = hud_ref?.resolve()
@@ -46,8 +68,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 	// Generate a new plane group for this case
 	var/datum/plane_master_group/popup/pop_planes = new(PLANE_GROUP_POPUP_WINDOW(src), assigned_map)
-	viewers_to_huds[client_ref] = WEAKREF(show_to.hud_used)
-	pop_planes.attach_to(show_to.hud_used)
+	viewers_to_huds[client_ref] = WEAKREF(show_to.mob.hud_used)
+	pop_planes.attach_to(show_to.mob.hud_used)
 
 	return pop_planes
 

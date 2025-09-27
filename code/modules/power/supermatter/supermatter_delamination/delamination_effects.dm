@@ -1,3 +1,5 @@
+#define DELAM_MAX_DEVASTATION 17.5
+
 // These are supposed to be discrete effects so we can tell at a glance what does each override
 // of [/datum/sm_delam/proc/delaminate] does.
 // Please keep them discrete and give them proper, descriptive function names.
@@ -25,7 +27,8 @@
 			continue
 
 		//Hilariously enough, running into a closet should make you get hit the hardest.
-		var/hallucination_amount = max(100 SECONDS, min(600 SECONDS, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1))))
+		//duration between min and max, calculated by distance from the supermatter and size of the delam explosion
+		var/hallucination_amount = LERP(DETONATION_HALLUCINATION_MIN, DETONATION_HALLUCINATION_MAX, 1 - get_dist(victim, sm) / 128) * LERP(0.75, 1.25, calculate_explosion(sm) * 0.5 / DELAM_MAX_DEVASTATION)
 		victim.adjust_hallucinations(hallucination_amount)
 
 	for(var/mob/victim as anything in GLOB.player_list)
@@ -75,19 +78,19 @@
 
 /// Explodes
 /datum/sm_delam/proc/effect_explosion(obj/machinery/power/supermatter_crystal/sm)
-	var/explosion_power = sm.explosion_power
-	var/power_scaling = sm.gas_heat_power_generation
 	var/turf/sm_turf = get_turf(sm)
-	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(origin = sm_turf,
-		devastation_range = explosion_power * max(power_scaling, 0.205) * 0.5,
-		heavy_impact_range = explosion_power * max(power_scaling, 0.205) + 2,
-		light_impact_range = explosion_power * max(power_scaling, 0.205) + 4,
-		flash_range = explosion_power * max(power_scaling, 0.205) + 6,
+		devastation_range = calculate_explosion(sm) * 0.5, // max 17.5
+		heavy_impact_range = calculate_explosion(sm) + 2, // max 37
+		light_impact_range = calculate_explosion(sm) + 4, // max 39
+		flash_range = calculate_explosion(sm) + 6, //max 41
 		adminlog = TRUE,
 		ignorecap = TRUE
 	)
 	return TRUE
+
+/datum/sm_delam/proc/calculate_explosion(obj/machinery/power/supermatter_crystal/sm)
+	return sm.explosion_power * max(sm.gas_heat_power_generation, 0.205)
 
 /// Spawns a scrung and eat the SM.
 /datum/sm_delam/proc/effect_singulo(obj/machinery/power/supermatter_crystal/sm)
@@ -228,3 +231,5 @@
 			spawn_location = pick_n_take(possible_spawns)
 		while(get_dist(spawn_location, avoid) < 30)
 		new /obj/crystal_mass(get_turf(spawn_location))
+
+#undef DELAM_MAX_DEVASTATION

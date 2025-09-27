@@ -11,7 +11,6 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
 	key_type = /obj/item/oar
-	var/allowed_turf = /turf/open/lava
 
 /obj/vehicle/ridden/lavaboat/Initialize(mapload)
 	. = ..()
@@ -34,14 +33,14 @@
 	name = "Goliath Bone Oar"
 	result = /obj/item/oar
 	reqs = list(/obj/item/stack/sheet/bone = 2)
-	time = 15
+	time = 1.5 SECONDS
 	category = CAT_TOOLS
 
 /datum/crafting_recipe/boat
 	name = "Goliath Hide Boat"
 	result = /obj/vehicle/ridden/lavaboat
 	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
-	time = 50
+	time = 5 SECONDS
 	category = CAT_TOOLS
 
 /obj/vehicle/ridden/lavaboat/plasma

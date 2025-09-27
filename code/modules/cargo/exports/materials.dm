@@ -108,7 +108,11 @@
 	cost = CARGO_CRATE_VALUE * 0.8
 	message = "cm3 of bluespace crystals"
 	material_id = /datum/material/bluespace
-	export_types = list(/obj/item/stack/sheet/bluespace_crystal, /obj/item/stack/ore) //For whatever reason, bluespace crystals are not a mineral
+	export_types = list(
+		/obj/item/stack/sheet/bluespace_crystal,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/stock_block,
+	) //For whatever reason, bluespace crystals are not a mineral
 
 /datum/export/material/market/iron
 	cost = CARGO_CRATE_VALUE * 0.015
@@ -119,7 +123,8 @@
 		/obj/item/stack/tile/iron,
 		/obj/item/stack/rods,
 		/obj/item/stack/ore,
-		/obj/item/coin
+		/obj/item/coin,
+		/obj/item/stock_block,
 	)
 
 /datum/export/material/market/glass
@@ -129,7 +134,8 @@
 	export_types = list(
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/ore,
-		/obj/item/shard
+		/obj/item/shard,
+		/obj/item/stock_block,
 	)
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)

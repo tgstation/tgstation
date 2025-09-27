@@ -10,6 +10,7 @@
 		return
 	if(!linked_bug)
 		user.audible_message(span_warning("[src] lets off a shrill beep!"))
+		return
 	if(cool_guy.screen_maps["spypopup_map"]) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good.
 		return
 	cool_guy.setup_popup("spypopup", 3, 3, 2, "S.P.Y")
@@ -21,6 +22,7 @@
 /obj/item/clothing/glasses/sunglasses/spy/proc/on_screen_clear(client/source, window)
 	SIGNAL_HANDLER
 	linked_bug.cam_screen.hide_from_client(source)
+	UnregisterSignal(source, COMSIG_POPUP_CLEARED)
 
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
@@ -33,10 +35,6 @@
 
 /obj/item/clothing/glasses/sunglasses/spy/ui_action_click(mob/user)
 	show_to_user(user)
-
-/obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()
 	if(linked_bug)
@@ -80,11 +78,6 @@
 	for(var/turf/visible_turf in view(cam_range, get_turf(src)))//fuck you usr
 		cam_screen.vis_contents += visible_turf
 
-//it needs to be linked, hence a kit.
-/obj/item/storage/box/rxglasses/spyglasskit
-	name = "spyglass kit"
-	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."
-
 /obj/item/paper/fluff/nerddocs
 	name = "Espionage For Dummies"
 	color = COLOR_YELLOW
@@ -100,9 +93,3 @@ My SpySpeks <small>tm</small> Make a shrill beep while attempting to use!
 A shrill beep coming from your SpySpeks means that they can't connect to the included ProfitProtektor <small>tm</small>, please make sure your ProfitProtektor is still active, and functional!
 	"}
 
-/obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
-	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
-	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
-	newbug.linked_glasses = newglasses
-	newglasses.linked_bug = newbug
-	new /obj/item/paper/fluff/nerddocs(src)

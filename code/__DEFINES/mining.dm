@@ -18,6 +18,14 @@
 /// Small vents, giving small boulders.
 #define SMALL_VENT_TYPE "small"
 
+//gibtonite strength
+/// Gibtonite was deactivated right before it could explode
+#define GIBTONITE_QUALITY_HIGH 3
+/// Gibtonite was deactivated a few seconds before it could explode
+#define GIBTONITE_QUALITY_MEDIUM 2
+/// Gibtonite was deactivated right after it was struck.
+#define GIBTONITE_QUALITY_LOW 1
+
 // Timers for the ore vents to perform wave defense.
 /// Duration for wave defense for a small vent.
 #define WAVE_DURATION_SMALL 60 SECONDS
@@ -58,6 +66,14 @@
 #define ORE_WALL_LOW 2
 /// The amount of ore that is mined from a wall that is VENT_PROX_FAR tiles to a vent.
 #define ORE_WALL_FAR 1
+
+/// Lifetime of a boulder platform in seconds when spawned in lava/plasma.
+#define PLATFORM_LIFE_DEFAULT 10 SECONDS
+
+#define PLATFORM_LIFE_GULAG 1 SECONDS
+#define PLATFORM_LIFE_SMALL 20 SECONDS
+#define PLATFORM_LIFE_MEDIUM 45 SECONDS
+#define PLATFORM_LIFE_LARGE 90 SECONDS
 
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100

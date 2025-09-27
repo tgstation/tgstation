@@ -6,6 +6,7 @@
 /obj/item/food/cheese
 	name = "the concept of cheese"
 	desc = "This probably shouldn't exist."
+	abstract_type = /obj/item/food/cheese
 	tastes = list("cheese" = 1)
 	food_reagents = list(/datum/reagent/consumable/nutriment/fat = 3)
 	foodtypes = DAIRY
@@ -35,6 +36,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_1
+
+/obj/item/food/cheese/wedge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
@@ -94,7 +99,6 @@
 		/datum/reagent/consumable/cream = 1,
 	)
 	tastes = list("cream" = 1, "cheese" = 1)
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -109,7 +113,6 @@
 	name = "cheese curds"
 	desc = "Not to be mistaken for curd cheese. Tasty deep fried."
 	icon_state = "cheese_curds"
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -123,7 +126,6 @@
 	desc = "Firm aged cheese, similar in texture to firm tofu. Due to its lack of moisture it's particularly useful for cooking with, as it doesn't melt easily."
 	icon_state = "firm_cheese"
 	tastes = list("aged cheese" = 1)
-	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -136,10 +138,13 @@
 	desc = "A slice of firm cheese. Perfect for grilling or making into delicious pesto."
 	icon_state = "firm_cheese_slice"
 	tastes = list("aged cheese" = 1)
-	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/cheese/firm_cheese_slice/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/firm_cheese_slice/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
@@ -149,7 +154,6 @@
 	desc = "Delicious, creamy, and cheesy, all in one simple package."
 	icon_state = "mozzarella"
 	tastes = list("mozzarella" = 1)
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 10
 	crafting_complexity = FOOD_COMPLEXITY_2

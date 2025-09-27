@@ -61,6 +61,12 @@
 	database_id = BOSS_MEDAL_WENDIGO
 	icon_state = "wendigo"
 
+/datum/award/achievement/boss/thething_kill
+	name = "Thing Killer"
+	desc = "Thank goodness it was not infectious. Probably."
+	database_id = BOSS_MEDAL_THETHING
+	icon_state = "thething"
+
 /datum/award/achievement/boss/blood_miner_crusher
 	name = "Blood-Drunk Miner Crusher"
 	desc = "I guess he couldn't handle his drink that well."
@@ -108,6 +114,12 @@
 	desc = "You've now ruined years of mythical storytelling."
 	database_id = BOSS_MEDAL_WENDIGO_CRUSHER
 	icon_state = "wendigo"
+
+/datum/award/achievement/boss/thething_crusher
+	name = "Thing Crusher"
+	desc = "MacReady would be proud."
+	database_id = BOSS_MEDAL_THETHING_CRUSHER
+	icon_state = "thething"
 
 //should be removed soon
 /datum/award/achievement/boss/king_goat_kill

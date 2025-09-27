@@ -46,9 +46,7 @@
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
 	if(start)
-		//We're registering here because I need to check whether we start active or not, and this is just easier
-		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
-		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
+		enable()
 
 /datum/component/plumbing/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(disable))
@@ -60,7 +58,7 @@
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
-	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
+	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER))
 	REMOVE_TRAIT(parent, TRAIT_UNDERFLOOR, REF(src))
 
 /datum/component/plumbing/Destroy()
@@ -188,8 +186,8 @@
 			overlay.dir = direction
 
 		overlay.color = color
-		overlay.pixel_x = duct_x
-		overlay.pixel_y = duct_y
+		overlay.pixel_w = duct_x
+		overlay.pixel_z = duct_y
 
 		overlays += overlay
 
@@ -198,8 +196,8 @@
 			var/image/edge_overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "edge-extension", layer = duct_layer)
 			edge_overlay.dir = parent_movable.dir
 			edge_overlay.color = color
-			edge_overlay.pixel_x = -parent_movable.pixel_x - parent_movable.pixel_w
-			edge_overlay.pixel_y = -parent_movable.pixel_y - parent_movable.pixel_z
+			edge_overlay.pixel_w = -parent_movable.pixel_x - parent_movable.pixel_w
+			edge_overlay.pixel_z = -parent_movable.pixel_y - parent_movable.pixel_z
 			overlays += edge_overlay
 			// only show extension for the first pipe. This means we'll only reflect that color.
 			extension_handled = TRUE
@@ -233,10 +231,8 @@
 			duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
-/datum/component/plumbing/proc/enable(obj/object, datum/component/component)
-	SIGNAL_HANDLER
-	if(active || (component && component != src))
-		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
+/datum/component/plumbing/proc/enable()
+	if(active)
 		return
 
 	update_dir()

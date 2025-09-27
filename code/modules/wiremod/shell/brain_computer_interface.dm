@@ -250,7 +250,7 @@
 
 	return ..()
 
-/datum/action/innate/bci_charge_action/Trigger(trigger_flags)
+/datum/action/innate/bci_charge_action/Trigger(mob/clicker, trigger_flags)
 	var/obj/item/stock_parts/power_store/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
@@ -357,7 +357,7 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	var/obj/item/organ/cyberimp/bci/new_bci = weapon
 	if (istype(new_bci))
 		if (!(locate(/obj/item/integrated_circuit) in new_bci))
@@ -379,7 +379,7 @@
 
 	return ..()
 
-/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

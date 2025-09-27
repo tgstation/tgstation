@@ -35,6 +35,7 @@
 				"restricted_roles" = item.restricted_roles,
 				"restricted_species" = item.restricted_species,
 				"progression_minimum" = item.progression_minimum,
+				"population_minimum" = item.population_minimum,
 				"cost_override_string" = item.cost_override_string,
 				"lock_other_purchases" = item.lock_other_purchases
 			))

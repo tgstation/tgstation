@@ -17,6 +17,7 @@
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
+	add_usb_port = FALSE
 	///Area that the eyeobj will be constrained to. If null, eyeobj will be able to build and move anywhere.
 	var/area/allowed_area
 	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.
@@ -64,10 +65,10 @@
 	eyeobj = new /mob/eye/camera/remote/base_construction(spawn_spot, src)
 	return TRUE
 
-/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, params)
+/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	//If we have an internal RCD, we can refill it by slapping the console with some materials
 	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
-		internal_rcd.attackby(W, user, params)
+		internal_rcd.attackby(W, user, modifiers)
 	else
 		return ..()
 

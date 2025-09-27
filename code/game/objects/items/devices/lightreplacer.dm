@@ -72,15 +72,11 @@
 	// target not in range
 	if(interacting_with.z != user.z)
 		return NONE
-	// target not in view
-	if(!(interacting_with in view(7, get_turf(user))))
-		user.balloon_alert(user, "out of range!")
-		return ITEM_INTERACT_BLOCKING
 
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
 
-/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, params)
+/obj/item/lightreplacer/attackby(obj/item/insert, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(uses >= max_uses)
 		user.balloon_alert(user, "already full!")
@@ -321,11 +317,7 @@
 
 	return TRUE
 
-/obj/item/lightreplacer/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
-/obj/item/lightreplacer/cyborg/advanced
+/obj/item/lightreplacer/advanced
 	name = "high capacity light replacer"
 	desc = "A higher capacity light replacer. Refill with broken or working lightbulbs, or sheets of glass."
 	icon_state = "lightreplacer_high"

@@ -7,7 +7,7 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -44,16 +44,16 @@ export const Adminhelp = (props) => {
             <TextArea
               autoFocus
               height="100%"
-              value={ahelpMessage}
+              fluid
               placeholder="Admin help"
-              onChange={(e, value) => setAhelpMessage(value)}
+              onChange={setAhelpMessage}
             />
           </Stack.Item>
           {urgentAhelpEnabled && adminCount <= 0 && (
             <Stack.Item>
               <NoticeBox info>
                 {urgentAhelpPromptMessage}
-                {(currentlyInputting && (
+                {currentlyInputting ? (
                   <Box
                     mt={1}
                     width="100%"
@@ -68,15 +68,15 @@ export const Adminhelp = (props) => {
                       placeholder="Confirmation Prompt"
                       autoFocus
                       fluid
-                      onChange={(e, value) => {
+                      onChange={(value) => {
                         if (value === confirmationText) {
                           setRequestForAdmin(true);
+                          setCurrentlyInputting(false);
                         }
-                        setCurrentlyInputting(false);
                       }}
                     />
                   </Box>
-                )) || (
+                ) : (
                   <Button
                     mt={1}
                     onClick={() => {
@@ -107,7 +107,6 @@ export const Adminhelp = (props) => {
             <Button
               color="good"
               fluid
-              content="Submit"
               textAlign="center"
               onClick={() =>
                 act('ahelp', {
@@ -115,7 +114,9 @@ export const Adminhelp = (props) => {
                   message: ahelpMessage,
                 })
               }
-            />
+            >
+              Submit
+            </Button>
           </Stack.Item>
         </Stack>
       </Window.Content>

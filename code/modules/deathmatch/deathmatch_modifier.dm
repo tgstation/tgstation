@@ -64,18 +64,25 @@
 /datum/deathmatch_modifier/health
 	name = "Double-Health"
 	description = "Doubles your starting health"
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/triple)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health/half, /datum/deathmatch_modifier/health/triple)
 	var/multiplier = 2
 
 /datum/deathmatch_modifier/health/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	player.maxHealth *= multiplier
 	player.health *= multiplier
 
+/datum/deathmatch_modifier/health/half
+	name = "Half-Health"
+	description = "It's your funeral"
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/triple)
+	multiplier = 0.5
+
 /datum/deathmatch_modifier/health/triple
 	name = "Triple-Health"
 	description = "When \"Double-Health\" isn't enough..."
 	multiplier = 3
-	blacklisted_modifiers = list(/datum/deathmatch_modifier/health)
+	blacklisted_modifiers = list(/datum/deathmatch_modifier/health, /datum/deathmatch_modifier/health/half)
+
 
 /datum/deathmatch_modifier/tenacity
 	name = "Tenacity"
@@ -590,7 +597,7 @@
 	. = ..()
 
 	var/datum/martial_art/picked_art_path = pick_weight(weighted_martial_arts)
-	var/datum/martial_art/instantiated_art = new picked_art_path()
+	var/datum/martial_art/instantiated_art = new picked_art_path(player)
 
 	if (istype(instantiated_art, /datum/martial_art/boxing))
 		player.mind.adjust_experience(/datum/skill/athletics, SKILL_EXP_LEGENDARY)

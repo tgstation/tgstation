@@ -2,14 +2,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, dna.species.gib_anim)
 
-/mob/living/carbon/human/spawn_gibs(drop_bitflags=NONE)
-	if(flags_1 & HOLOGRAM_1)
-		return
-	if(drop_bitflags & DROP_BODYPARTS)
-		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
-	else
-		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
-
 /mob/living/carbon/human/spawn_dust(just_ash)
 	if(just_ash)
 		return ..()
@@ -42,12 +34,13 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 			investigate_log("has died at [loc_name(src)].<br>\
 				BRUTE: [src.getBruteLoss()] BURN: [src.getFireLoss()] TOX: [src.getToxLoss()] OXY: [src.getOxyLoss()] STAM: [src.getStaminaLoss()]<br>\
 				<b>Brain damage</b>: [src.get_organ_loss(ORGAN_SLOT_BRAIN) || "0"]<br>\
-				<b>Blood volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
+				<b>[get_bloodtype()?.get_blood_name() || "Blood"] volume</b>: [src.blood_volume]cl ([round((src.blood_volume / BLOOD_VOLUME_NORMAL) * 100, 0.1)]%)<br>\
 				<b>Reagents</b>:<br>[reagents_readout()]", INVESTIGATE_DEATHS)
-	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. If you do not wish to be brought back, use the \"Do Not Resuscitate\" verb in the ghost tab."))
+	to_chat(src, span_warning("You have died. Barring complete bodyloss, you can in most cases be revived by other players. \
+		If you do not wish to be brought back, use the \"Do Not Resuscitate\" button at the bottom of your screen."))
 
 /mob/living/carbon/human/proc/reagents_readout()
-	var/readout = "Blood:"
+	var/readout = "[get_bloodtype()?.get_blood_name() || "Blood"]stream:"
 	for(var/datum/reagent/reagent in reagents?.reagent_list)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 

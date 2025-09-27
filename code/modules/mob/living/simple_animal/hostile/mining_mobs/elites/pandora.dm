@@ -36,6 +36,7 @@
 	speed = 3
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON
+	mob_biotypes = MOB_ROBOTIC|MOB_MINING
 	death_sound = 'sound/effects/magic/repulse.ogg'
 	death_message = "'s lights flicker, before its top part falls down."
 	loot_drop = /obj/item/clothing/accessory/pandora_hope
@@ -46,7 +47,7 @@
 								/datum/action/innate/elite_attack/aoe_squares)
 
 	var/sing_shot_length = 8
-	var/cooldown_time = 20
+	var/cooldown_time = 2 SECONDS
 
 /datum/action/innate/elite_attack/singular_shot
 	name = "Singular Shot"
@@ -145,14 +146,14 @@
 		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
 	for(var/t in RANGE_TURFS(1, source))
 		new /obj/effect/temp_visual/hierophant/blast/damaging/pandora(t, src)
-	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	animate(src, alpha = 0, time = 2, easing = SINE_EASING|EASE_OUT) //fade out
 	visible_message(span_hierophant_warning("[src] fades out!"))
 	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	addtimer(CALLBACK(src, PROC_REF(pandora_teleport_3), T), 0.2 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport_3(turf/T)
 	forceMove(T)
-	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
+	animate(src, alpha = 255, time = 2, easing = CIRCULAR_EASING|EASE_IN) //fade IN
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	visible_message(span_hierophant_warning("[src] fades in!"))
 

@@ -2,7 +2,7 @@
 /// Mostly just does something spooky when it is removed
 /datum/element/corrupted_organ
 
-/datum/element/corrupted_organ/Attach(obj/item/organ/target)
+/datum/element/corrupted_organ/Attach(obj/item/organ/target, add_color = TRUE)
 	. = ..()
 	if (!istype(target) || (target.organ_flags & ORGAN_EXTERNAL))
 		return ELEMENT_INCOMPATIBLE
@@ -10,7 +10,8 @@
 	RegisterSignal(target, COMSIG_ORGAN_SURGICALLY_REMOVED, PROC_REF(on_removed))
 
 	var/atom/atom_parent = target
-	atom_parent.color = COLOR_VOID_PURPLE
+	if(add_color)
+		atom_parent.add_atom_colour(COLOR_VOID_PURPLE, FIXED_COLOUR_PRIORITY)
 
 	atom_parent.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
@@ -59,7 +60,7 @@
 /obj/effect/temp_visual/curse_blast/Initialize(mapload)
 	. = ..()
 	animate(src, transform = matrix() * 0.2, time = 0, flags = ANIMATION_PARALLEL)
-	animate(transform = matrix() * 2, time = duration, easing = EASE_IN)
+	animate(transform = matrix() * 2, time = duration, easing = QUAD_EASING|EASE_IN)
 
 	animate(src, alpha = 255, time = 0, flags = ANIMATION_PARALLEL)
 	animate(alpha = 255, time = 0.2 SECONDS)

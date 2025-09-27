@@ -1,15 +1,12 @@
 /datum/antagonist/paradox_clone
 	name = "\improper Paradox Clone"
 	roundend_category = "Paradox Clone"
-	job_rank = ROLE_PARADOX_CLONE
+	pref_flag = ROLE_PARADOX_CLONE
 	antagpanel_category = ANTAG_GROUP_PARADOX
 	antag_hud_name = "paradox_clone"
 	show_to_ghosts = TRUE
 	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
-
-	///Weakref to the mind of the original, the clone's target.
-	var/datum/weakref/original_ref
 
 /datum/antagonist/paradox_clone/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
@@ -28,38 +25,27 @@
 
 	return clone_icon
 
-/datum/antagonist/paradox_clone/on_gain()
-	owner.special_role = ROLE_PARADOX_CLONE
-	return ..()
+/datum/antagonist/paradox_clone/proc/setup_clone(datum/mind/original_mind)
+	if(isnull(original_mind))
+		CRASH("Tried to set up a paradox clone without an original mind!")
 
-/datum/antagonist/paradox_clone/on_removal()
-	//don't null it if we got a different one added on top, somehow.
-	if(owner.special_role == ROLE_PARADOX_CLONE)
-		owner.special_role = null
-	original_ref = null
-	return ..()
-
-/datum/antagonist/paradox_clone/Destroy()
-	original_ref = null
-	return ..()
-
-/datum/antagonist/paradox_clone/proc/setup_clone()
-	var/datum/mind/original_mind = original_ref?.resolve()
-
-	var/datum/objective/assassinate/paradox_clone/kill = new
+	var/datum/objective/accept_no_substitutes/kill = new()
 	kill.owner = owner
-	kill.target = original_mind
-	kill.update_explanation_text()
+	kill.set_target_name(original_mind.name || "Unknown")
 	objectives += kill
+
+	var/datum/objective/paradox_clone_replace/replace = new()
+	replace.owner = owner
+	replace.name_and_job = "[original_mind.name], the [original_mind.assigned_role.title]"
+	replace.update_explanation_text()
+	objectives += replace
 
 	owner.set_assigned_role(SSjob.get_job_type(/datum/job/paradox_clone))
 
 	//clone doesnt show up on message lists
 	var/obj/item/modular_computer/pda/messenger = locate() in owner.current
-	if(messenger)
-		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
-		if(message_app)
-			message_app.invisible = TRUE
+	var/datum/computer_file/program/messenger/message_app = locate() in messenger?.stored_files
+	message_app?.invisible = TRUE
 
 	//dont want anyone noticing there's two now
 	var/mob/living/carbon/human/clone_human = owner.current
@@ -75,26 +61,23 @@
 /datum/antagonist/paradox_clone/roundend_report_header()
 	return span_header("A paradox clone appeared on the station!<br>")
 
+/datum/objective/paradox_clone_replace
+	name = "clone replace"
+	/// Name and job of the original to replace
+	var/name_and_job
+
+/datum/objective/paradox_clone_replace/update_explanation_text()
+	explanation_text = "Take [name_and_job || "someone's"]'s place. Avoid collateral damage - remember, your mission is to blend in!"
+
+/datum/objective/paradox_clone_replace/check_completion()
+	return completed || considered_alive(owner)
+
 /datum/outfit/paradox_clone
 	name = "Paradox Clone (Preview only)"
 
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/soft/purple
-
-/**
- * Paradox clone assassinate objective
- * Similar to the original, but with a different flavortext.
- */
-/datum/objective/assassinate/paradox_clone
-	name = "clone assassinate"
-
-/datum/objective/assassinate/paradox_clone/update_explanation_text()
-	. = ..()
-	if(!target?.current)
-		explanation_text = "Free Objective"
-		CRASH("WARNING! [ADMIN_LOOKUPFLW(owner)] paradox clone objectives forged without an original!")
-	explanation_text = "Murder and replace [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]. Remember, your mission is to blend in, do not kill anyone else unless you have to!"
 
 ///Static bluespace stream used in its ghost poll icon.
 /obj/effect/bluespace_stream

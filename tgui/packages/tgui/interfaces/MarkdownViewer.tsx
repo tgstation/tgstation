@@ -29,12 +29,12 @@ type MarkdownRendererProps = {
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
   let { content, sanitize } = props;
 
-  content = marked(content);
+  content = marked(content, { async: false });
   if (sanitize) {
     content = sanitizeText(content, /* advHtml = */ false);
   }
 
-  // eslint-disable-next-line react/no-danger
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
   return <div dangerouslySetInnerHTML={{ __html: content }} />;
 };
 

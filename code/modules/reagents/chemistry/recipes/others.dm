@@ -59,9 +59,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/plasma(location)
+	new /obj/item/stack/sheet/mineral/plasma(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
@@ -70,9 +68,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/gold(location)
+	new /obj/item/stack/sheet/mineral/gold(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
@@ -81,9 +77,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/uranium(location)
+	new /obj/item/stack/sheet/mineral/uranium(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/capsaicincondensation
 	results = list(/datum/reagent/consumable/condensedcapsaicin = 5)
@@ -138,7 +132,6 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/food/meat/slab/meatproduct(location)
-	return
 
 /datum/chemical_reaction/carbondioxide
 	results = list(/datum/reagent/carbondioxide = 3)
@@ -544,6 +537,7 @@
 /datum/chemical_reaction/colorful_reagent
 	results = list(/datum/reagent/colorful_reagent = 5)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1, /datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/triple_citrus = 1)
+	reaction_flags = REACTION_CLEAR_INVERSE
 
 /datum/chemical_reaction/life
 	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
@@ -609,17 +603,36 @@
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
-	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!.")
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/mob/living/carbon/M = holder.my_atom
-	var/location = get_turf(M)
-	if(iscarbon(M))
-		if(ismonkey(M))
-			M.gib(DROP_ALL_REMAINS)
+	var/mob/living/carbon/maybe_monkey = holder.my_atom
+	var/location = maybe_monkey.drop_location()
+	if(iscarbon(maybe_monkey))
+		if(ismonkey(maybe_monkey))
+			maybe_monkey.gib(DROP_ALL_REMAINS)
+			to_chat(maybe_monkey, span_danger("You body is torn to shreds as a monkey bursts out of you!"))
 		else
-			M.vomit(VOMIT_CATEGORY_BLOOD)
+			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
+			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
 	new /mob/living/carbon/human/species/monkey(location, TRUE)
+
+/datum/chemical_reaction/angry_monkey
+	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
+	reaction_flags = REACTION_INSTANT
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a pissed off monkey!")
+
+/datum/chemical_reaction/angry_monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/mob/living/carbon/maybe_monkey = holder.my_atom
+	var/location = maybe_monkey.drop_location()
+	if(iscarbon(maybe_monkey))
+		if(ismonkey(maybe_monkey))
+			maybe_monkey.gib(DROP_ALL_REMAINS)
+			to_chat(maybe_monkey, span_danger("You body is torn to shreds as a pissed off monkey bursts out of you!"))
+		else
+			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
+			to_chat(maybe_monkey, span_danger("You vomit out blood, making you feel grossly monkeyish."))
+	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
 
 //water electrolysis
 /datum/chemical_reaction/electrolysis
@@ -728,15 +741,18 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/plastic_polymers
+	results = list(/datum/reagent/plastic_polymers = 10)
 	required_reagents = list(/datum/reagent/fuel/oil = 5, /datum/reagent/toxin/acid = 2, /datum/reagent/ash = 3)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+/datum/chemical_reaction/plastic_polymer_hardening
+	required_reagents = list(/datum/reagent/plastic_polymers = 10)
 	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
-/datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/plastic(location)
+/datum/chemical_reaction/plastic_polymer_hardening/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	new /obj/item/stack/sheet/plastic(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/pax
 	results = list(/datum/reagent/pax = 3)
@@ -774,11 +790,25 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/datum/reagent/metalgen/MM = holder.has_reagent(/datum/reagent/metalgen)
-	for(var/datum/reagent/R in holder.reagent_list)
-		if(R.material && R.volume >= 40)
-			MM.data["material"] = R.material
-			holder.remove_reagent(R.type, 40)
+	var/datum/reagent/metalgen/metalgen = holder.has_reagent(/datum/reagent/metalgen)
+	for (var/datum/reagent/metal in holder.reagent_list)
+		if (!metal.material || metal.volume < 40)
+			continue
+
+		metalgen.data["material"] = metal.material
+		holder.remove_reagent(metal.type, 40)
+		var/atom/container = holder.my_atom
+		var/area/container_area = get_area(container)
+		var/blame_msg = "with no known fingerprints"
+		var/lastkey = container.fingerprintslast
+		if (lastkey)
+			var/mob/scapegoat = get_mob_by_key(lastkey)
+			blame_msg = "last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
+
+		if(!istype(container, /obj/machinery/plumbing) && !(container_area?.area_flags & QUIET_LOGS))
+			message_admins("[metalgen.volume]u of Metalgen have been imprinted with [metal.material::name] in [container] at [ADMIN_VERBOSEJMP(container)] [blame_msg]")
+		log_game("[metalgen.volume]u of Metalgen have been imprinted with [metal.material::name] in [container] at [AREACOORD(container)] [blame_msg]")
+		break
 
 /datum/chemical_reaction/gravitum
 	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
@@ -836,9 +866,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/silver_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/mineral/silver(location)
+	new /obj/item/stack/sheet/mineral/silver(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/bone_gel
 	required_reagents = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
@@ -849,9 +877,7 @@
 	mix_message = "The solution clarifies, leaving an ashy gel."
 
 /datum/chemical_reaction/bone_gel/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/bone_gel/one(location)
+	new /obj/item/stack/medical/bone_gel/one(get_turf(holder.my_atom), round(created_volume))
 
 ////Ice and water
 
@@ -1011,9 +1037,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/hauntium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/hauntium(location)
+	new /obj/item/stack/sheet/hauntium(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/fish_hallucinogen_degradation
 	results = list(/datum/reagent/consumable/nutriment/protein = 0.1)
@@ -1027,3 +1051,41 @@
 	thermic_constant = 80
 	H_ion_release = 2
 	reaction_tags = REACTION_TAG_EASY
+
+/datum/chemical_reaction/glitter
+	results = list(/datum/reagent/glitter = 1)
+	required_reagents = list(/datum/reagent/plastic_polymers = 1, /datum/reagent/aluminium = 1)
+	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/glitter_pigmentation
+	results = list(/datum/reagent/glitter = 1)
+	required_reagents = list(/datum/reagent/glitter = 1, /datum/reagent/acetone = 1)
+	mix_message = "the glitter rapidly changes colour!"
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
+/datum/chemical_reaction/glitter_pigmentation/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	. = ..()
+
+	var/excluded_volume = 0
+	var/accumulated_color
+
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(is_type_in_list(reagent, required_reagents))
+			excluded_volume += reagent.volume
+
+	for(var/datum/reagent/reagent in holder.reagent_list)
+		if(!is_type_in_list(reagent, required_reagents))
+
+			if(accumulated_color)
+				accumulated_color = BlendRGB(reagent.color, accumulated_color, (reagent.volume/(holder.total_volume-excluded_volume)))
+			else
+				accumulated_color = reagent.color
+
+	var/datum/reagent/glitter/glitter = locate(/datum/reagent/glitter) in holder.reagent_list
+
+	glitter.data["colors"] = list("[accumulated_color]" = 100)
+	glitter.color = accumulated_color
+
+

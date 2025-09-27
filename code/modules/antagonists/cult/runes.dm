@@ -306,6 +306,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
 	var/mob/living/carbon/human/human_convertee = convertee
 
+	if(istype(human_convertee)) //remove the slurring/stuttering/silence before the april fools punch line reference
+		human_convertee.uncuff()
+		human_convertee.remove_status_effect(/datum/status_effect/silenced)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
+
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
 		if(istype(human_convertee))
@@ -316,7 +322,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		convertee.Unconscious(10 SECONDS)
 
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	convertee.mind.special_role = ROLE_CULTIST
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
 	to_chat(convertee, span_cult_bold_italic("Your blood pulses. Your head throbs. The world goes red. \
@@ -325,10 +330,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	to_chat(convertee, span_cult_bold_italic("Assist your new compatriots in their dark dealings. \
 		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back."))
 
-	if(istype(human_convertee))
-		human_convertee.uncuff()
-		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
-		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
 		convertee.name = convertee.real_name
@@ -405,29 +406,36 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /// Tries to convert a null rod over the rune to a cult sword
 /obj/effect/rune/convert/proc/try_spawn_sword()
-	for(var/obj/item/nullrod/rod in loc)
-		if(rod.anchored || (rod.resistance_flags & INDESTRUCTIBLE))
+	for(var/obj/item/potential_rod in loc)
+		if(!HAS_TRAIT(potential_rod, TRAIT_NULLROD_ITEM))
 			continue
 
-		var/num_slain = LAZYLEN(rod.cultists_slain)
-		var/displayed_message = "[rod] glows an unholy red and begins to transform..."
-		if(GET_ATOM_BLOOD_DNA_LENGTH(rod))
-			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [rod]!"
+		if(potential_rod.anchored || (potential_rod.resistance_flags & INDESTRUCTIBLE))
+			continue
 
-		rod.visible_message(span_cult_italic(displayed_message))
+		var/num_slain = 0
+		if (istype(potential_rod, /obj/item/nullrod))
+			var/obj/item/nullrod/actual_rod = potential_rod
+			num_slain = LAZYLEN(actual_rod.cultists_slain)
+
+		var/displayed_message = "[potential_rod] glows an unholy red and begins to transform..."
+		if(num_slain && GET_ATOM_BLOOD_DNA_LENGTH(potential_rod))
+			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [potential_rod]!"
+
+		potential_rod.visible_message(span_cult_italic(displayed_message))
 		switch(num_slain)
 			if(0)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/dagger)
+				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade/dagger)
 			if(1)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade)
+				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade)
 			else
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/halberd)
+				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade/halberd)
 		return TRUE
 
 	return FALSE
 
 /// Does an animation of a null rod transforming into a cult sword
-/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/nullrod/former_rod, new_blade_typepath)
+/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/former_rod, new_blade_typepath)
 	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
 	former_rod.anchored = TRUE
 	former_rod.Shake()
@@ -769,7 +777,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = chosen_one.key
+			mob_to_revive.PossessByPlayer(chosen_one.key)
 		else
 			fail_invoke()
 			return
@@ -965,10 +973,6 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/ghost_limit = 3
 	var/ghosts = 0
 
-/obj/effect/rune/manifest/Initialize(mapload)
-	. = ..()
-
-
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
 		to_chat(user, span_cult_italic("You must be standing on [src]!"))
@@ -1033,7 +1037,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				old_mind = ghost_to_spawn.mind, \
 				old_body = ghost_to_spawn.mind.current, \
 			)
-		new_human.key = ghost_to_spawn.key
+		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
 		to_chat(new_human, span_cult_italic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
@@ -1060,6 +1064,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
 						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
 		var/mob/dead/observer/G = affecting.ghostize(TRUE)
+		ADD_TRAIT(G, TRAIT_NO_OBSERVE, CULT_TRAIT)
 		var/datum/action/innate/cult/comm/spirit/CM = new
 		var/datum/action/innate/cult/ghostmark/GM = new
 		G.name = "Dark Spirit of [G.name]"
@@ -1198,7 +1203,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				force_event_async(/datum/round_event_control/meteor_wave, "an apocalypse rune")
 
 			if(51 to 60)
-				force_event_async(/datum/round_event_control/spider_infestation, "an apocalypse rune")
+				SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/spiders)
 
 			if(61 to 70)
 				force_event_async(/datum/round_event_control/anomaly/anomaly_flux, "an apocalypse rune")

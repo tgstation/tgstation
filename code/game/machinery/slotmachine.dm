@@ -8,8 +8,8 @@
 #define SMALL_PRIZE 400
 #define BIG_PRIZE 1000
 #define JACKPOT 10000
-#define SPIN_TIME 65 //As always, deciseconds.
-#define REEL_DEACTIVATE_DELAY 7
+#define SPIN_TIME 36 //As always, deciseconds.
+#define REEL_DEACTIVATE_DELAY 4
 #define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2
@@ -99,7 +99,7 @@
 		var/obj/item/coin/inserted_coin = inserted
 		if(paymode == COIN)
 			if(prob(2))
-				if(!user.transferItemToLoc(inserted_coin, drop_location(), silent = FALSE))
+				if(!user.transfer_item_to_turf(inserted_coin, drop_location(), silent = FALSE))
 					return ITEM_INTERACT_BLOCKING
 				inserted_coin.throw_at(user, 3, 10)
 				if(prob(10))

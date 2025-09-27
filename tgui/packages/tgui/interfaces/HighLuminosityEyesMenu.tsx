@@ -6,7 +6,7 @@ import {
   NumberInput,
   Section,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -50,7 +50,7 @@ const LightColorDisplay = (props) => {
         value={lightColor}
         width={6}
         maxLength={7}
-        onChange={(_, value) =>
+        onBlur={(value) =>
           act('enter_color', {
             new_color: value,
             to_update: ToUpdate.LightColor,
@@ -78,13 +78,14 @@ const RangeDisplay = (props) => {
       />
       <NumberInput
         animated
+        tickWhileDragging
         width="35px"
         step={1}
         stepPixelSize={5}
         value={range}
         minValue={0}
         maxValue={5}
-        onDrag={(value) =>
+        onChange={(value) =>
           act('set_range', {
             new_range: value,
           })
@@ -126,7 +127,7 @@ const EyeColorDisplay = (props) => {
               value={eyeColor.left}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.LeftEye,
@@ -154,7 +155,7 @@ const EyeColorDisplay = (props) => {
               value={eyeColor.right}
               width={6}
               maxLength={7}
-              onChange={(_, value) =>
+              onBlur={(value) =>
                 act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.RightEye,

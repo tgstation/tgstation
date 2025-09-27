@@ -50,7 +50,13 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
-
+	//component for seclight attachment
+/obj/item/gun/ballistic/shotgun/riot/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 20, \
+		overlay_y = 11)
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
@@ -62,17 +68,30 @@
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	inhand_icon_state = "shotgun_combat"
-	fire_delay = 5
+	projectile_damage_multiplier = 1.5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
-
+//component for seclight attachment
+/obj/item/gun/ballistic/shotgun/automatic/combat/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 20, \
+		overlay_y = 11)
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
-	name = "compact shotgun"
-	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	name = "compact combat shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity, but more easily carried."
 	icon_state = "cshotgunc"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
 	w_class = WEIGHT_CLASS_BULKY
-
+	weapon_weight = WEAPON_MEDIUM
+//component for seclight attachment
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact/add_seclight_point()
+	AddComponent(/datum/component/seclite_attachable, \
+		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay = "flight", \
+		overlay_x = 16, \
+		overlay_y = 11)
 //Dual Feed Shotgun
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube
@@ -159,7 +178,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m12g
 	can_suppress = FALSE
 	burst_size = 2
-	fire_delay = 1
+	burst_delay = 1
 	pin = /obj/item/firing_pin/implant/pindicate
 	fire_sound = 'sound/items/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list(/datum/action/item_action/toggle_firemode)

@@ -27,11 +27,20 @@
  * Intento
  */
 /obj/item/toy
+	abstract_type = /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
 	worn_icon_state = "nothing"
+
+	/// Can this toy be placed on the floor?
+	var/floor_placeable = FALSE
+
+/obj/item/toy/Initialize(mapload)
+	. = ..()
+	if(floor_placeable)
+		AddElement(/datum/element/floor_placeable)
 
 /*
  * Balloons
@@ -67,7 +76,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/waterballoon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/reagent_containers/cup))
 		if(I.reagents)
 			if(I.reagents.total_volume <= 0)
@@ -156,7 +165,7 @@
 	)
 
 
-/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/item/toy/balloon/long/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/toy/balloon/long) || !HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
 		return ..()
 
@@ -179,7 +188,7 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/ammo_casing/foam_dart) && ismonkey(user))
 		pop_balloon(monkey_pop = TRUE)
 	else
@@ -288,10 +297,12 @@
 	inhand_icon_state = "balloon"
 	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
+	abstract_type = /obj/item/toy/balloon_animal
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 5
 	force = 0
+	floor_placeable = TRUE
 
 /obj/item/toy/balloon_animal/guy
 	name = "balloon guy"
@@ -502,7 +513,7 @@
 	. = ..()
 	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
-/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
+/obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
@@ -539,6 +550,9 @@
 		span_danger("You fire [src] at [interacting_with]!"), \
 		span_hear("You hear a gunshot!"))
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/ammo
+	abstract_type = /obj/item/toy/ammo
 
 /obj/item/toy/ammo/gun
 	name = "capgun ammo"
@@ -653,7 +667,7 @@
 
 
 // Copied from /obj/item/melee/energy/sword/attackby
-/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
+/obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/toy/sword))
 		var/obj/item/toy/sword/attatched_sword = weapon
 		if(HAS_TRAIT(weapon, TRAIT_NODROP))
@@ -696,7 +710,7 @@
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/items/weapons/smash.ogg'
@@ -868,6 +882,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "owlprize"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
@@ -967,6 +982,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -1011,6 +1027,7 @@
 	icon_state = "minimeteor"
 	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 
 /obj/item/toy/minimeteor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
@@ -1037,6 +1054,7 @@
 	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 
 /obj/item/toy/redbutton/attack_self(mob/user)
@@ -1146,6 +1164,7 @@
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
@@ -1170,8 +1189,8 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_mouse"
 	w_class = WEIGHT_CLASS_SMALL
-	var/cooldown = 0
 	resistance_flags = FLAMMABLE
+	floor_placeable = TRUE
 
 
 /*
@@ -1181,10 +1200,11 @@
 	name = "\improper Non-Specific Action Figure action figure"
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "nuketoy"
+	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/figure/Initialize(mapload)
 	. = ..()
@@ -1417,6 +1437,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "puppet"
 	inhand_icon_state = "puppet"
+	floor_placeable = TRUE
 	var/doll_name = "Dummy"
 
 //Add changing looks when i feel suicidal about making 20 inhands for these.
@@ -1432,7 +1453,7 @@
 	. = ..()
 	AddElement(/datum/element/toy_talk)
 
-/obj/item/toy/dummy/GetVoice()
+/obj/item/toy/dummy/get_voice(add_id_name)
 	return doll_name
 
 /obj/item/toy/seashell
@@ -1440,6 +1461,7 @@
 	desc = "May you always have a shell in your pocket and sand in your shoes. Whatever that's supposed to mean."
 	icon = 'icons/obj/fluff/beach.dmi'
 	icon_state = "shell1"
+	floor_placeable = TRUE
 	var/static/list/possible_colors = list("" = 2, COLOR_PURPLE_GRAY = 1, COLOR_OLIVE = 1, COLOR_PALE_BLUE_GRAY = 1, COLOR_RED_GRAY = 1)
 
 /obj/item/toy/seashell/Initialize(mapload)
@@ -1532,14 +1554,6 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	item_flags = NO_PIXEL_RANDOM_DROP
-
-/obj/item/storage/box/heretic_box
-	name = "box of pierced realities"
-	desc = "A box containing toys resembling pierced realities."
-
-/obj/item/storage/box/heretic_box/PopulateContents()
-	for(var/i in 1 to rand(1,4))
-		new /obj/item/toy/reality_pierce(src)
 
 /obj/item/toy/foamfinger
 	name = "foam finger"

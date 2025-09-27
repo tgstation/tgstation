@@ -248,8 +248,7 @@
 /// Checks a bunch of stuff to see if we can heal the patient, including can_heal
 /// Gives a feedback if we can't ultimatly heal the patient (unless silent is TRUE)
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
-	if(!(healed_zone in GLOB.all_body_zones))
-		stack_trace("Invalid zone ([healed_zone || "null"]) passed to try_heal_checks.")
+	if(!(healed_zone in patient.get_all_limbs()))
 		healed_zone = BODY_ZONE_CHEST
 
 	if(!can_heal(patient, user, healed_zone, silent))
@@ -274,7 +273,7 @@
 
 		var/datum/wound/burn/flesh/any_burn_wound = locate() in affecting.wounds
 		var/can_heal_burn_wounds = (flesh_regeneration || sanitization) && any_burn_wound?.can_be_ointmented_or_meshed()
-		var/can_suture_bleeding = stop_bleeding && affecting.get_modified_bleed_rate() > 0
+		var/can_suture_bleeding = stop_bleeding && affecting.cached_bleed_rate > 0
 		var/brute_to_heal = heal_brute && affecting.brute_dam > 0
 		var/burn_to_heal = heal_burn && affecting.burn_dam > 0
 
@@ -393,6 +392,10 @@
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
 
+/obj/item/stack/medical/gauze/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	register_context()
+
 /obj/item/stack/medical/gauze/Destroy(force)
 	. = ..()
 
@@ -406,6 +409,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Apply Gauze"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/stack/medical/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item))
+		return
+	if(held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness())
+		context[SCREENTIP_CONTEXT_LMB] = "Shred Into Cloth"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
@@ -475,12 +486,15 @@
 		)
 		if(heal_end_sound)
 			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+
+	if(limb.cached_bleed_rate)
+		add_mob_blood(patient)
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
 
-/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
+/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")
@@ -544,14 +558,6 @@
 	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
 	heal_end_sound = SFX_SUTURE_END
 
-/obj/item/stack/medical/suture/emergency
-	name = "emergency suture"
-	desc = "A value pack of cheap sutures, not very good at repairing damage, but still decent at stopping bleeding."
-	heal_brute = 5
-	amount = 5
-	max_amount = 5
-	merge_type = /obj/item/stack/medical/suture/emergency
-
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
@@ -599,8 +605,11 @@
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3
-	pickup_sound = SFX_CLOTH_PICKUP
-	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = SFX_REGEN_MESH_PICKUP
+	drop_sound = SFX_REGEN_MESH_DROP
+	heal_begin_sound = SFX_REGEN_MESH_BEGIN
+	heal_continuous_sound = SFX_REGEN_MESH_CONTINUOUS
+	heal_end_sound = SFX_REGEN_MESH_END
 
 	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
@@ -729,7 +738,7 @@
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
-	for(var/zone in GLOB.all_body_zones)
+	for(var/zone in patient.get_all_limbs())
 		patient.apply_damage(60, BRUTE, zone)
 	use(1)
 	return BRUTELOSS

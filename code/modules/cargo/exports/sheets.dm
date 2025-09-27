@@ -119,7 +119,7 @@
 
 /datum/export/stack/pizza
 	cost = CARGO_CRATE_VALUE * 0.06
-	unit_name = "of sheetza"
+	unit_name = "of sheet pizza"
 	export_types = list(/obj/item/stack/sheet/pizza)
 
 /datum/export/stack/meat

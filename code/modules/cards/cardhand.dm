@@ -19,12 +19,21 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
+	. += span_notice("There are [count_cards()] cards.")
+	var/broadcast_check = FALSE
 	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
-		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
+		if(user.is_holding(src) || card.flipped)
+			. += span_notice("The hand contains a: [card.cardname]")
+			if(!card.flipped)
+				broadcast_check = TRUE
+		else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
 			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
+	if(broadcast_check)
+		user.visible_message(span_notice("[user] checks [user.p_their()] cards."))
+
 
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item, /obj/item/toy/cards/deck))
@@ -69,31 +78,33 @@
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	return isliving(user) && !user.incapacitated
 
-/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params, flip_card = FALSE)
+/obj/item/toy/cards/cardhand/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/toy/singlecard/card
+	if(istype(tool, /obj/item/toy/singlecard))
+		card = tool
 
-	if(istype(weapon, /obj/item/toy/singlecard))
-		card = weapon
-
-	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
+	if(istype(tool, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = tool
 		if(!HAS_TRAIT(dealer_deck, TRAIT_WIELDED)) // recycle cardhand into deck (if unwielded)
-			dealer_deck.insert(src)
-			user.balloon_alert_to_viewers("puts card in deck")
-			return
+			if(dealer_deck.insert(src))
+				user.balloon_alert_to_viewers("puts card in deck")
+				return ITEM_INTERACT_SUCCESS
+
+			to_chat(user, span_warning("\The [dealer_deck] is stacked too high!"))
+			return ITEM_INTERACT_BLOCKING
+
 		card = dealer_deck.draw(user)
 
-	if(card)
-		if(flip_card)
+	if(!card)
+		return NONE
+
+	if(insert(card))
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			card.Flip()
-		insert(card)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
-
-/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, params)
-	attackby(weapon, user, params, flip_card = TRUE)
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	to_chat(user, span_warning("You can't hold any more cards in your hand!"))
+	return ITEM_INTERACT_BLOCKING
 
 #define CARDS_MAX_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand
 #define CARDS_PIXEL_X_OFFSET -5 // start out displaying the 1st card -5 pixels left

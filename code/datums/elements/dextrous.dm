@@ -4,15 +4,19 @@
  */
 /datum/element/dextrous
 
-/datum/element/dextrous/Attach(datum/target, hands_count = 2, hud_type = /datum/hud/dextrous)
+/datum/element/dextrous/Attach(datum/target, hands_count = 2, hud_type = /datum/hud/dextrous, can_throw = FALSE)
 	. = ..()
 	if (!isliving(target) || iscarbon(target))
 		return ELEMENT_INCOMPATIBLE // Incompatible with the carbon typepath because that already has its own hand handling and doesn't need hand holding
 
 	var/mob/living/mob_parent = target
 	set_available_hands(mob_parent, hands_count)
-	mob_parent.set_hud_used(new hud_type(target))
-	mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
+	if(can_throw)
+		ADD_TRAIT(target, TRAIT_CAN_THROW_ITEMS, REF(src)) // need to add before hud setup
+	mob_parent.hud_type = hud_type
+	if (mob_parent.hud_used)
+		mob_parent.set_hud_used(new hud_type(target))
+		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	ADD_TRAIT(target, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_hand_clicked))
@@ -23,8 +27,10 @@
 	var/mob/living/mob_parent = source
 	set_available_hands(mob_parent, initial(mob_parent.default_num_hands))
 	var/initial_hud = initial(mob_parent.hud_type)
-	mob_parent.set_hud_used(new initial_hud(source))
-	mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
+	mob_parent.hud_type = initial_hud
+	if (mob_parent.hud_used)
+		mob_parent.set_hud_used(new initial_hud(source))
+		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	REMOVE_TRAIT(source, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	UnregisterSignal(source, list(
 		COMSIG_ATOM_EXAMINE,

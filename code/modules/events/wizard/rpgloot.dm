@@ -35,7 +35,7 @@
 	return ..()
 
 
-/obj/item/upgradescroll/pre_attack(obj/item/target, mob/living/user)
+/obj/item/upgradescroll/pre_attack(obj/item/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(. || !istype(target) || !user.combat_mode)
 		return

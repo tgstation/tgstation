@@ -12,18 +12,27 @@
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
+	embed_type = /datum/embedding/syringe
 	/// Flags used by the injection
 	var/inject_flags = NONE
+	/// Icon and states used when inserted into toy darts
+	var/dart_insert_icon = 'icons/obj/weapons/guns/toy.dmi'
+	var/dart_insert_casing_icon_state = "overlay_syringe"
+	var/dart_insert_projectile_icon_state = "overlay_syringe_proj"
 
 /obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
-	return
+	AddComponent(/datum/component/dart_insert, \
+		dart_insert_icon, \
+		dart_insert_casing_icon_state, \
+		dart_insert_icon, \
+		dart_insert_projectile_icon_state, \
+		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
+	)
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
@@ -55,7 +64,7 @@
 		to_chat(user, span_warning("You cannot directly fill [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target.reagents.total_volume >= target.reagents.maximum_volume)
+	if(target.reagents.holder_full())
 		to_chat(user, span_notice("[target] is full."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -70,7 +79,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents.total_volume)
 				return ITEM_INTERACT_BLOCKING
-			if(living_target.reagents.total_volume >= living_target.reagents.maximum_volume)
+			if(living_target.reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 			living_target.visible_message(
 				span_danger("[user] injects [living_target] with the syringe!"),
@@ -97,7 +106,7 @@
 
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW, user)
 
-	if(reagents.total_volume >= reagents.maximum_volume)
+	if(reagents.holder_full())
 		to_chat(user, span_notice("[src] is full."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -111,7 +120,7 @@
 			)
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target, extra_checks = CALLBACK(src, PROC_REF(try_syringe), living_target, user)))
 				return ITEM_INTERACT_BLOCKING
-			if(reagents.total_volume >= reagents.maximum_volume)
+			if(reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 		if(living_target.transfer_blood_to(src, drawn_amount))
 			user.visible_message(span_notice("[user] takes a blood sample from [living_target]."))
@@ -170,6 +179,67 @@
 	if(!reagents?.total_volume)
 		return 0
 	return clamp(round((reagents.total_volume / volume * 15), 5), 1, 15)
+
+/obj/item/reagent_containers/syringe/proc/get_dart_var_modifiers(obj/projectile/projectile)
+	var/datum/embedding/embed_data = get_embed().create_copy()
+	embed_data.rip_time += projectile.get_embed()?.rip_time
+	return list(
+		"damage" = max(6, volume / 5), // Scales with size?
+		"speed" = max(0, throw_speed - 3),
+		"embedding" = embed_data,
+		"armour_penetration" = armour_penetration,
+		"wound_bonus" = wound_bonus,
+		"exposed_wound_bonus" = exposed_wound_bonus,
+		"demolition_mod" = demolition_mod,
+	)
+
+/datum/embedding/syringe
+	embed_chance = 85
+	fall_chance = 2
+	jostle_chance = 2
+	pain_stam_pct = 0.75
+	pain_mult = 3
+	jostle_pain_mult = 3
+	rip_time = 0.5 SECONDS
+	/// How much reagents are transferred per second
+	var/transfer_per_second = 1.5
+
+/datum/embedding/syringe/process_effect(seconds_per_tick)
+	var/obj/item/reagent_containers/syringe = parent
+	if (!istype(syringe))
+		syringe = locate() in parent
+		if (!istype(syringe) && isammocasing(parent))
+			var/obj/item/ammo_casing/casing = parent
+			syringe = locate() in casing.loaded_projectile
+		if (!istype(syringe))
+			return
+
+	if (!IS_ORGANIC_LIMB(owner_limb))
+		return
+
+	if (!owner.reagents || !syringe.reagents.total_volume)
+		return
+
+	// Only show message at a small chance, otherwise this'll get spammy
+	syringe.reagents.trans_to(owner, transfer_per_second * seconds_per_tick, methods = INJECT, show_message = SPT_PROB(15, seconds_per_tick))
+
+// For syringe guns, syringe itself becomes the shrapnel
+/datum/embedding/syringe/setup_shrapnel(obj/projectile/source, mob/living/carbon/victim)
+	if (!istype(source, /obj/projectile/bullet/dart/syringe))
+		return ..()
+	var/obj/projectile/bullet/dart/syringe/syringe_dart = source
+	var/obj/item/reagent_containers/syringe/syringe = syringe_dart.inner_syringe
+	if (!syringe)
+		return ..()
+	syringe_dart.inner_syringe = null
+	source.set_embed(null, dont_delete = TRUE)
+	register_on(syringe)
+	syringe.set_embed(src)
+
+/datum/embedding/syringe/fall_out()
+	. = ..()
+	// Nothing should modify this directly (hopefully), and this makes sure that ones fired from a syringe gun don't have 100% embedding later down the line
+	embed_chance = initial(embed_chance)
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
@@ -249,6 +319,8 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10, 20, 30, 40, 50, 60)
 	volume = 60
+	dart_insert_casing_icon_state = "overlay_syringe_bluespace"
+	dart_insert_projectile_icon_state = "overlay_syringe_bluespace_proj"
 
 /obj/item/reagent_containers/syringe/piercing
 	name = "piercing syringe"
@@ -259,6 +331,16 @@
 	volume = 10
 	possible_transfer_amounts = list(5, 10)
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
+	armour_penetration = 40
+	dart_insert_casing_icon_state = "overlay_syringe_piercing"
+	dart_insert_projectile_icon_state = "overlay_syringe_piercing_proj"
+	embed_type = /datum/embedding/syringe/piercing
+
+/datum/embedding/syringe/piercing
+	embed_chance = 100
+	fall_chance = 1.5
+	pain_stam_pct = 0.6
+	transfer_per_second = 1
 
 /obj/item/reagent_containers/syringe/crude
 	name = "crude syringe"
@@ -267,11 +349,24 @@
 	base_icon_state = "crude"
 	possible_transfer_amounts = list(1,5)
 	volume = 5
+	dart_insert_casing_icon_state = "overlay_syringe_crude"
+	dart_insert_projectile_icon_state = "overlay_syringe_crude_proj"
+	embed_type = /datum/embedding/syringe/crude
+
+/datum/embedding/syringe/crude
+	embed_chance = 75
+	fall_chance = 3.5
+	jostle_chance = 4
+	pain_stam_pct = 0.5
+	pain_mult = 5
+	jostle_pain_mult = 5
+	rip_time = 1 SECONDS
+	transfer_per_second = 0.5
 
 /obj/item/reagent_containers/syringe/crude/update_reagent_overlay()
 	return
 
-	// Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
+// Used by monkeys from the elemental plane of bananas. Reagents come from bungo pit, death berries, destroying angel, jupiter cups, and jumping beans.
 /obj/item/reagent_containers/syringe/crude/tribal
 	name = "tribal syringe"
 	desc = "A crudely made syringe. Smells like bananas."

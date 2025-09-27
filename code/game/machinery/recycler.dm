@@ -66,7 +66,6 @@
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
 /obj/machinery/recycler/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
@@ -76,16 +75,15 @@
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
-		return
+/obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_pry_open(tool, close_after_pry = TRUE))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	if(default_pry_open(I, close_after_pry = TRUE))
-		return
-
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+/obj/machinery/recycler/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/recycler/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -102,8 +100,17 @@
 	var/is_powered = !(machine_stat & (BROKEN|NOPOWER))
 	if(safety_mode)
 		is_powered = FALSE
-	icon_state = icon_name + "[is_powered]" + "[(bloody ? "bld" : "")]" // add the blood tag at the end
+	icon_state = icon_name + "[is_powered]"
 	return ..()
+
+/obj/machinery/recycler/update_overlays()
+	. = ..()
+	if(!bloody || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
+		return
+
+	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", appearance_flags = RESET_COLOR|KEEP_APART)
+	blood_overlay.color = get_blood_dna_color()
+	. += blood_overlay
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -149,7 +156,7 @@
 			continue
 
 		if (thing.resistance_flags & INDESTRUCTIBLE)
-			if (!isturf(thing.loc) && !isliving(thing.loc))
+			if (!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
 				thing.forceMove(loc)
 			not_eaten += 1
 			continue
@@ -171,6 +178,14 @@
 				not_eaten += 1
 				continue
 
+		// Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
+		// unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
+		if (iscloset(thing))
+			var/obj/structure/closet/as_closet = thing
+			if (as_closet.secure && as_closet.locked)
+				not_eaten += 1
+				continue
+
 		if (istype(thing, /obj/item/organ/brain) || istype(thing, /obj/item/dullahan_relay))
 			living_detected = TRUE
 
@@ -185,11 +200,17 @@
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
-				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
-					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
-						break
-					crush_living(CRUNCH)
-					use_energy(active_power_usage)
+				if(!isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					continue
+
+				var/mob/living/living_mob = CRUNCH
+				if(living_mob.incorporeal_move)
+					continue
+
+				if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
+					break
+				crush_living(CRUNCH)
+				use_energy(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
@@ -202,7 +223,17 @@
 	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+		var/full_power_usage = TRUE
+		var/obj/nom_obj = nom[i]
+		if (isitem(nom_obj))
+			// Whether or not items consume full power depends on if they produced a material when recycled.
+			full_power_usage = recycle_item(nom_obj)
+		else
+			// When a non-item is eaten, we deconstruct it with dismantled = FALSE so that
+			// it and its contents aren't just deleted. These always consume full power.
+			nom_obj.deconstruct(FALSE)
+		use_energy(active_power_usage / (full_power_usage ? 1 : 2))
+
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
@@ -235,26 +266,26 @@
 	safety_mode = FALSE
 	update_appearance()
 
-/obj/machinery/recycler/proc/crush_living(mob/living/L)
-	L.forceMove(loc)
+/obj/machinery/recycler/proc/crush_living(mob/living/living_mob)
+	living_mob.forceMove(loc)
 
-	if(issilicon(L))
+	if(issilicon(living_mob))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	if(iscarbon(L))
-		if(L.stat == CONSCIOUS)
-			L.say("ARRRRRRRRRRRGH!!!", forced="recycler grinding")
-		add_mob_blood(L)
+	if(iscarbon(living_mob))
+		if(living_mob.stat == CONSCIOUS)
+			living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
 
-	if(!bloody && !issilicon(L))
+	if(!issilicon(living_mob))
+		add_mob_blood(living_mob)
 		bloody = TRUE
-		update_appearance()
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
-	L.Unconscious(100)
-	L.adjustBruteLoss(crush_damage)
+	living_mob.Unconscious(100)
+	living_mob.adjustBruteLoss(crush_damage)
+	update_appearance()
 
 /obj/machinery/recycler/on_deconstruction(disassembled)
 	safety_mode = TRUE

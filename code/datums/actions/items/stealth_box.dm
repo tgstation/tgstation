@@ -12,7 +12,7 @@
 	COOLDOWN_DECLARE(box_cooldown)
 
 ///Handles opening and closing the box.
-/datum/action/item_action/agent_box/Trigger(trigger_flags)
+/datum/action/item_action/agent_box/do_effect(trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -20,13 +20,13 @@
 		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		if(box.open())
 			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		return
+		return FALSE
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
 		to_chat(owner, span_warning("You need more space to activate this implant!"))
-		return
+		return FALSE
 	if(!COOLDOWN_FINISHED(src, box_cooldown))
-		return
+		return FALSE
 	COOLDOWN_START(src, box_cooldown, 10 SECONDS)
 	var/box = new boxtype(owner.drop_location())
 	owner.forceMove(box)

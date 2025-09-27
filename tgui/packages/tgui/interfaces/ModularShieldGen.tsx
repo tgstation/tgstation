@@ -6,7 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -92,7 +92,7 @@ export const ModularShieldGen = (props) => {
               <LabeledList>
                 <LabeledList.Item label="Set Radius">
                   <NumberInput
-                    disabled={active}
+                    disabled={!!active}
                     fluid
                     step={1}
                     value={current_radius}

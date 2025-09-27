@@ -53,7 +53,7 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, params)
+/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
@@ -99,6 +99,7 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
+	spawn_blacklisted = TRUE
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
@@ -135,7 +136,9 @@
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
-	..()
+	. = ..()
+	if(!.)
+		return
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)

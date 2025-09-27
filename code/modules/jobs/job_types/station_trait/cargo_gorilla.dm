@@ -16,7 +16,7 @@
 	)
 	rpg_title = "Beast of Burden"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_TRAIT_JOB_FLAGS | JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK
+	job_flags = STATION_TRAIT_JOB_FLAGS | JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK |JOB_ANTAG_BLACKLISTED
 
 /datum/job/cargo_gorilla/get_roundstart_spawn_point()
 	if (length(GLOB.gorilla_start))
@@ -34,7 +34,7 @@
 	. = ..()
 	// Gorilla with a wage, what's he buyin?
 	var/datum/bank_account/bank_account = new(spawned.real_name, src)
-	bank_account.payday(STARTING_PAYCHECKS, TRUE)
+	bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
 	bank_account.replaceable = FALSE
 	spawned.add_mob_memory(/datum/memory/key/account, remembered_id = bank_account.account_id)
 
@@ -47,4 +47,4 @@
 
 	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))
 	to_chat(spawned, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
-	spawned.mind.special_role = "Cargorilla"
+	LAZYADD(spawned.mind.special_roles, "Cargorilla")

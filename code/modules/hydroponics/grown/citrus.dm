@@ -1,11 +1,12 @@
 // Citrus - base type
 /obj/item/food/grown/citrus
-	seed = /obj/item/seeds/lime
 	name = "citrus"
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
+	abstract_type = /obj/item/food/grown/citrus
 	foodtypes = FRUIT
 	wine_power = 30
+	seed = /obj/item/seeds/lime
 
 // Lime
 /obj/item/seeds/lime
@@ -55,7 +56,7 @@
 	name = "orange"
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
-	foodtypes = ORANGES
+	foodtypes = ORANGES | FRUIT
 	juice_typepath = /datum/reagent/consumable/orangejuice
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
 

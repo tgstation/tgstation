@@ -44,6 +44,7 @@
 /// Marksman Shot
 /obj/projectile/bullet/marksman
 	name = "marksman nanoshot"
+	icon_state = null
 	hitscan = TRUE
 	damage = 30
 	tracer_type = /obj/effect/projectile/tracer/solar

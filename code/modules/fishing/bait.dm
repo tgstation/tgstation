@@ -62,8 +62,8 @@
 	uses_left = 12
 
 /obj/item/fishing_lure
-	name = "artificial minnow"
-	desc = "A fishing lure that may attract small fish. Too tiny, too large, or too picky prey won't be interested in it, though."
+	name = "fishing lure"
+	desc = "It's just that, a plastic piece of fishing equipment, yet fish yearn with every last molecule of their bodies to take a bite of it."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "minnow"
 	w_class = WEIGHT_CLASS_SMALL
@@ -89,11 +89,6 @@
 
 ///Called for every fish subtype by the fishing subsystem when initializing, to populate the list of fish that can be catched with this lure.
 /obj/item/fishing_lure/proc/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
-	var/intermediate_size = FISH_SIZE_SMALL_MAX + (FISH_SIZE_NORMAL_MAX - FISH_SIZE_SMALL_MAX)
-	if(!ISINRANGE(fish.size, FISH_SIZE_TINY_MAX * 0.5, intermediate_size))
-		return FALSE
-	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish.fish_traits))
-		return FALSE
 	return TRUE
 
 /obj/item/fishing_lure/examine(mob/user)
@@ -130,6 +125,19 @@
 	else if(fish in SSfishing.lure_catchables[type])
 		multiplier += 10
 	return multiplier
+
+/obj/item/fishing_lure/minnow
+	name = "artificial minnow"
+	desc = "A fishing lure that may attract small fish. Too tiny, too large, or too picky prey won't be interested in it, though."
+	icon_state = "minnow"
+
+/obj/item/fishing_lure/minnow/is_catchable_fish(obj/item/fish/fish, list/fish_properties)
+	var/intermediate_size = FISH_SIZE_SMALL_MAX + (FISH_SIZE_NORMAL_MAX - FISH_SIZE_SMALL_MAX)
+	if(!ISINRANGE(fish.size, FISH_SIZE_TINY_MAX * 0.5, intermediate_size))
+		return FALSE
+	if(length(list(/datum/fish_trait/vegan, /datum/fish_trait/picky_eater, /datum/fish_trait/nocturnal, /datum/fish_trait/heavy) & fish.fish_traits))
+		return FALSE
+	return TRUE
 
 /obj/item/fishing_lure/plug
 	name = "artificial plug lure"

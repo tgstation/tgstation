@@ -70,7 +70,7 @@
 	if(defense_mode)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, M, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
 		if(action)
-			INVOKE_ASYNC(action, TYPE_PROC_REF(/datum/action, Trigger), FALSE)
+			INVOKE_ASYNC(action, TYPE_PROC_REF(/datum/action, Trigger), null, NONE, FALSE)
 	return ..()
 
 ///Relays the signal from the action button to the shield, and creates a new shield if the old one is MIA.
@@ -124,10 +124,10 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	else
 		. = ..()
 
-/obj/vehicle/sealed/mecha/durand/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/vehicle/sealed/mecha/durand/attackby(obj/item/W as obj, mob/user as mob, list/modifiers, list/attack_modifiers)
 	if(defense_check(user.loc))
 		log_message("Attack absorbed by defense field. Attacker - [user], with [W]", LOG_MECHA, color="orange")
-		shield.attackby(W, user, params)
+		shield.attackby(W, user, modifiers)
 	else
 		. = ..()
 
@@ -142,7 +142,7 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
 	button_icon_state = "mech_defense_mode_off"
 
-/datum/action/vehicle/sealed/mecha/mech_defense_mode/Trigger(trigger_flags, forced_state = FALSE)
+/datum/action/vehicle/sealed/mecha/mech_defense_mode/Trigger(mob/clicker, trigger_flags, forced_state = FALSE)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))

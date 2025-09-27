@@ -8,6 +8,7 @@
 	name = "projectile"
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bullet"
+	abstract_type = /obj/projectile
 	density = FALSE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -149,6 +150,9 @@
 	var/datum/point/last_point
 	/// Next forceMove will not create tracer end/start effects
 	var/free_hitscan_forceMove = FALSE
+	// Used to prevent duplicate effects during lag chunking
+	/// If a hitscan muzzle effect has been created for this "path", reset during forceMoves.
+	var/spawned_muzzle = FALSE
 
 	/// Hitscan tracer effect left behind the projectile
 	var/tracer_type
@@ -259,7 +263,7 @@
 	var/damage_falloff_tile
 	/// How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
 	var/stamina_falloff_tile
-	/// How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	/// How much we want to drop both wound_bonus and exposed_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	/// How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
@@ -298,7 +302,7 @@
 	pixels_moved_last_tile -= ICON_SIZE_ALL
 	if(wound_falloff_tile && wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
-		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+		exposed_wound_bonus = max(0, exposed_wound_bonus + wound_falloff_tile)
 	if(embed_falloff_tile && get_embed())
 		embed_data.embed_chance += embed_falloff_tile
 	if(damage_falloff_tile && damage >= 0)
@@ -493,8 +497,12 @@
 		return
 
 	last_impact_turf = get_turf(target)
+
+	// If our target has TRAIT_DESIGNATED_TARGET, treat accuracy_falloff as 0
+	var/effective_accuracy = HAS_TRAIT(target, TRAIT_DESIGNATED_TARGET) ? 0 : accuracy_falloff
+
 	// Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
-	def_zone = ran_zone(def_zone, clamp(accurate_range - (accuracy_falloff * get_dist(last_impact_turf, starting)), 5, 100))
+	def_zone = ran_zone(def_zone, clamp(accurate_range - (effective_accuracy * get_dist(last_impact_turf, starting)), 5, 100))
 	var/impact_result = process_hit_loop(select_target(last_impact_turf, target))
 	if (impact_result == PROJECTILE_IMPACT_PASSED)
 		return
@@ -996,7 +1004,8 @@
 				moving_turfs = FALSE
 			// If we've impacted something, we need to animate our movement until the actual hit
 			// Otherwise the projectile visually disappears slightly before the actual impact
-			if (deletion_queued)
+			// Not if we're hitscan, however, microop time!
+			if (deletion_queued && !hitscan)
 				// distance_to_move is how much we have to step to get to the next turf, hypotenuse is how much we need
 				// to move in the next turf to get from entry to impact position
 				delete_distance = distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2)
@@ -1013,6 +1022,10 @@
 				delete_distance = distance_to_move - (ICON_SIZE_ALL - pixels_moved_last_tile)
 
 		if (deletion_queued)
+			// Hitscans don't need to wait before deleting
+			if (hitscan)
+				return movements_done
+
 			// We moved to the next turf first, then impacted something
 			// This means that we need to offset our visual position back to the previous turf, then figure out
 			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anyways)
@@ -1089,8 +1102,18 @@
 
 	while (isturf(loc) && !QDELETED(src))
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		if (TICK_CHECK || paused || QDELETED(src))
+
+		if (QDELETED(src))
 			return
+
+		if (!TICK_CHECK && !paused)
+			continue
+
+		create_hitscan_point()
+		// Create tracers if we get timestopped or lagchunk so there aren't weird delays
+		generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
+		record_hitscan_start(offset = FALSE)
+		return
 
 /// Creates (or wipes clean) list of tracer keypoints and creates a first point.
 /obj/projectile/proc/record_hitscan_start(offset = TRUE)
@@ -1125,15 +1148,16 @@
 	if (isnull(movement_vector) || free_hitscan_forceMove)
 		return
 	// Create firing VFX and start a new chain because we most likely got teleported
-	generate_hitscan_tracers(impact = FALSE)
+	generate_hitscan_tracers(impact_point = FALSE)
 	original_angle = angle
+	spawned_muzzle = FALSE
 	record_hitscan_start(offset = FALSE)
 
-/obj/projectile/proc/generate_hitscan_tracers(impact = TRUE)
+/obj/projectile/proc/generate_hitscan_tracers(impact_point = TRUE, impact_visual = TRUE)
 	if (!length(beam_points))
 		return
 
-	if (impact)
+	if (impact_point)
 		create_hitscan_point(impact = TRUE)
 
 	if (tracer_type)
@@ -1143,7 +1167,8 @@
 		for (var/beam_point in beam_points)
 			generate_tracer(beam_point, passed_turfs)
 
-	if (muzzle_type)
+	if (muzzle_type && !spawned_muzzle)
+		spawned_muzzle = TRUE
 		var/datum/point/start_point = beam_points[1]
 		var/atom/movable/muzzle_effect = new muzzle_type(loc)
 		start_point.move_atom_to_src(muzzle_effect)
@@ -1154,7 +1179,7 @@
 		muzzle_effect.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override || color)
 		QDEL_IN(muzzle_effect, PROJECTILE_TRACER_DURATION)
 
-	if (impact_type)
+	if (impact_type && impact_visual)
 		var/atom/movable/impact_effect = new impact_type(loc)
 		last_point.move_atom_to_src(impact_effect)
 		var/matrix/matrix = new
@@ -1246,6 +1271,11 @@
 				break
 			source_loc = new_loc
 		pixel_y = pixel_y % (ICON_SIZE_X / 2)
+
+	// We've got moved by turf offsets
+	if (starting != source_loc)
+		starting = source_loc
+		forceMove(source_loc)
 
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
@@ -1383,7 +1413,7 @@
 	if (embed_data)
 		return embed_data
 	if (embed_type)
-		embed_data = new embed_type(src)
+		embed_data = new embed_type()
 	return embed_data
 
 /// Sets our embedding datum to a different one. Can also take types

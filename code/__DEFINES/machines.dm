@@ -55,6 +55,9 @@
 /// We are getting this door open if it has not been physically held shut somehow. Play a special sound to signify this level of opening.
 #define BYPASS_DOOR_CHECKS 2
 
+/// Damage dealth to an airlock when prie
+#define AIRLOCK_PRY_DAMAGE 25
+
 //used in design to specify which machine can build it
 //Note: More than one of these can be added to a design but imprinter and lathe designs are incompatible.
 #define IMPRINTER (1<<0) //For circuits. Uses glass/chemicals.

@@ -1,8 +1,3 @@
-
-#define GIBTONITE_QUALITY_HIGH 3
-#define GIBTONITE_QUALITY_MEDIUM 2
-#define GIBTONITE_QUALITY_LOW 1
-
 #define ORESTACK_OVERLAYS_MAX 10
 
 /**********************Mineral ores**************************/
@@ -41,12 +36,20 @@
 	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-			newore.pixel_x = rand(-8,8)
-			newore.pixel_y = rand(-8,8)
+			newore.pixel_w = rand(-8,8)
+			newore.pixel_z = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
 
 	if(stack_overlays)
 		. += stack_overlays
+
+/**
+ * Called when the ore is collected by an ore redemption machine. returns the ore itself.
+ * Normally, ores without a refined type aren't collected by the orm.
+ * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
+ */
+/obj/item/stack/ore/proc/on_orm_collection()
+	return isnull(refined_type) ? null : src
 
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -82,7 +85,7 @@
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
-	scan_state = "rock_Uranium"
+	scan_state = "rock_uranium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/uranium
 
@@ -94,7 +97,7 @@
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
-	scan_state = "rock_Iron"
+	scan_state = "rock_iron"
 	spreadChance = 20
 	merge_type = /obj/item/stack/ore/iron
 
@@ -103,7 +106,8 @@
 	icon_state = "glass"
 	singular_name = "sand pile"
 	points = 1
-	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/sand
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
@@ -118,6 +122,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	AddComponent(/datum/component/storm_hating)
+
+/obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
+	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount, merge = FALSE) //The newly spawned glass should not merge with other stacks on the turf, else it could cause issues.
+	qdel(src)
+	return glass
 
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
@@ -143,6 +152,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 	return FALSE
 
+/obj/item/stack/ore/glass/thirty
+	amount = 30
+
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
@@ -158,7 +170,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
-	scan_state = "rock_Plasma"
+	scan_state = "rock_plasma"
 	spreadChance = 8
 	merge_type = /obj/item/stack/ore/plasma
 
@@ -174,7 +186,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 3
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
-	scan_state = "rock_Silver"
+	scan_state = "rock_silver"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/silver
 
@@ -186,7 +198,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 5
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
-	scan_state = "rock_Gold"
+	scan_state = "rock_gold"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/gold
 
@@ -198,7 +210,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
 /obj/item/stack/ore/diamond/five
@@ -212,7 +224,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
 	merge_type = /obj/item/stack/ore/bananium
 
 /obj/item/stack/ore/titanium
@@ -223,7 +235,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/titanium
 
@@ -285,7 +297,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/IsSpecialAssembly()
 	return TRUE
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
+/obj/item/gibtonite/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/assembly_holder) && !rig)
 		var/obj/item/assembly_holder/holder = I
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
@@ -297,7 +309,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		holder.master = src
 		holder.on_attach()
 		rig_overlay = holder
-		rig_overlay.pixel_y -= 5
+		rig_overlay.pixel_z -= 5
 		add_overlay(rig_overlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(igniter_prime))
 		log_bomber(user, "attached [holder] to ", src)
@@ -477,7 +489,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	. += span_info("It's worth [value] credit\s.")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, params)
+/obj/item/coin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
@@ -665,7 +677,4 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-#undef GIBTONITE_QUALITY_HIGH
-#undef GIBTONITE_QUALITY_LOW
-#undef GIBTONITE_QUALITY_MEDIUM
 #undef ORESTACK_OVERLAYS_MAX

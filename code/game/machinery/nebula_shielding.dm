@@ -109,7 +109,7 @@
 	if(isopenturf(turf))
 		turf.atmos_spawn_air("[GAS_TRITIUM]=1;[TURF_TEMPERATURE(T20C)]")
 
-/obj/machinery/nebula_shielding/radiation/attackby(obj/item/item, mob/user, params)
+/obj/machinery/nebula_shielding/radiation/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, initial(icon_state) + "_open", initial(icon_state), item))
 		return
 

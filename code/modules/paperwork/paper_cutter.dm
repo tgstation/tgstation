@@ -110,7 +110,7 @@
 	blade_secured = !blade_secured
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
+/obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(inserted_item, /obj/item/paper))
 		if(is_type_in_list(inserted_item, list(
 				/obj/item/paper/fake_report,

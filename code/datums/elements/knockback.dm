@@ -30,7 +30,7 @@
 	return ..()
 
 /// triggered after an item attacks something
-/datum/element/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, click_parameters)
+/datum/element/knockback/proc/item_afterattack(obj/item/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	do_knockback(target, user, get_dir(source, target))

@@ -1,9 +1,10 @@
 /obj/item/clothing/gloves/color
+	abstract_type = /obj/item/clothing/gloves/color
 	dying_key = DYE_REGISTRY_GLOVES
 	greyscale_colors = null
 
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
+	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
@@ -81,11 +82,15 @@
 /obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
 	SIGNAL_HANDLER
 
+	. = NONE
+
 	charges_remaining--
 	if(charges_remaining <= 0)
 		var/turf/location = get_turf(src)
 		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
 		qdel(src)
+
+	. |= COMPONENT_CLEANED
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
@@ -136,7 +141,7 @@
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 
 /obj/item/clothing/gloves/chief_engineer
-	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
+	desc = "These gloves provide excellent heat and electric insulation."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
 	inhand_icon_state = null

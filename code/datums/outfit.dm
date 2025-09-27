@@ -213,7 +213,7 @@
 			if(id_trim)
 				if(!SSid_access.apply_trim_to_card(id_card, id_trim))
 					WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
-				user.sec_hud_set_ID()
+				user.update_ID_card()
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)
@@ -257,7 +257,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BACKPACK)
+					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 
 		if(belt_contents)
 			for(var/path in belt_contents)
@@ -265,7 +265,7 @@
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					EQUIP_OUTFIT_ITEM(path, ITEM_SLOT_BELTPACK)
+					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BELT, indirect_action = TRUE, del_on_fail = TRUE)
 
 	post_equip(user, visuals_only)
 

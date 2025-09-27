@@ -62,7 +62,7 @@
 
 /datum/brain_trauma/magic/antimagic/on_gain()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/magic/antimagic/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)

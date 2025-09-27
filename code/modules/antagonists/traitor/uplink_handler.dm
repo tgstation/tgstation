@@ -51,6 +51,10 @@
 /datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
 	return has_progression && progression_points < to_purchase.progression_minimum
 
+/// Checks if there are enough joined players to purchase an item
+/datum/uplink_handler/proc/not_enough_population(datum/uplink_item/to_purchase)
+	return length(GLOB.joined_player_list) < to_purchase.population_minimum
+
 /// Checks for uplink flags as well as items restricted to roles and species
 /datum/uplink_handler/proc/check_if_restricted(datum/uplink_item/to_purchase)
 	if(!to_purchase.can_be_bought(src))
@@ -80,9 +84,15 @@
 	if(!check_if_restricted(to_purchase))
 		return FALSE
 
+	if(not_enough_reputation(to_purchase) || not_enough_population(to_purchase))
+		return FALSE
+
+	if(telecrystals < to_purchase.cost)
+		return FALSE
+
 	var/current_stock = item_stock[to_purchase.stock_key]
 	var/stock = current_stock != null ? current_stock : INFINITY
-	if(telecrystals < to_purchase.cost || stock <= 0 || not_enough_reputation(to_purchase))
+	if(stock <= 0)
 		return FALSE
 
 	return TRUE

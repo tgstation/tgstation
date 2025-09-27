@@ -37,10 +37,12 @@
 	var/special_pod
 	/// Was this spawned through an admin proc?
 	var/admin_spawned = FALSE
-	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
+	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the crate price min doesn't apply
 	var/goody = FALSE
 	/// Can coupons target this pack? If so, how rarely?
 	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
+	/// Is this supply pack considered unpredictable for the purposes of testing unit testing? Examples include the stock market, or miner supply crates. If true, exempts from unit testing
+	var/test_ignored = FALSE
 
 /datum/supply_pack/New()
 	id = type
@@ -59,6 +61,12 @@
 
 	return data
 
+/**
+ * Proc that takes a given supply_pack, and attempts to create a crate containing the pack's contents as determined by fill()
+ *
+ * @ atom/A: The location or turf that the pack is being generated onto. Cargo shuttle provides an empty turf, other generate()s call this either null or otherwise.
+ * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
+ */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
@@ -121,6 +129,7 @@
 	hidden = TRUE
 	crate_name = "shaft mining delivery crate"
 	access = ACCESS_MINING
+	test_ignored = TRUE
 
 /datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
@@ -140,24 +149,26 @@
 	src.cost = cost
 	src.contains = contains
 
-/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+///Alters material amrkey & adjust order quantities if they exceed whats on the market
+/datum/supply_pack/custom/minerals/proc/adjust_market()
+	. = list()
 	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
-		var/material_type = initial(possible_stack.material_type)
+		var/material_type = possible_stack.material_type
 		//in case we ordered more than what's in the market at the time due to market fluctuations
 		//we find the min of what was ordered & what's actually available in the market at this point of time
 		var/market_quantity = SSstock_market.materials_quantity[material_type]
-		var/available_quantity = min(contains[possible_stack], market_quantity)
-		if(!available_quantity)
-			continue
+		var/available_quantity = contains[possible_stack]
+		if(available_quantity > market_quantity)
+			var/message = "[possible_stack::singular_name]: requested=[available_quantity] sheets, available=[market_quantity] sheets, adjusted=[market_quantity - available_quantity] sheets."
+			available_quantity = market_quantity
+			if(!available_quantity)
+				. += "[possible_stack::singular_name]: order cancelled due to insufficient sheets in the market."
+				contains -= possible_stack
+				continue
+			. += message
 
-		//spawn the ordered stack inside the crate
-		var/sheets_to_spawn = available_quantity
-		while(sheets_to_spawn)
-			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
-			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
-			if(admin_spawned)
-				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
-			sheets_to_spawn -= spawn_quantity
+		//adjust the order based ont the available quantity
+		contains[possible_stack] = available_quantity
 
 		//Prices go up as material quantity becomes scarce
 		var/fraction = available_quantity
@@ -167,3 +178,14 @@
 
 		//We decrease the quantity only after adjusting our prices for accurate values
 		SSstock_market.adjust_material_quantity(material_type, -available_quantity)
+
+/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
+		//spawn the ordered stack inside the crate
+		var/sheets_to_spawn = contains[possible_stack]
+		while(sheets_to_spawn)
+			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
+			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
+			if(admin_spawned)
+				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
+			sheets_to_spawn -= spawn_quantity

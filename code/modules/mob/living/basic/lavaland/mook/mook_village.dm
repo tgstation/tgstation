@@ -16,8 +16,8 @@
 	for(var/obj/item/stack/ore/ore_item in contents)
 		var/image/ore_icon = image(icon = initial(ore_item.icon), icon_state = initial(ore_item.icon_state), layer = LOW_ITEM_LAYER)
 		ore_icon.transform = ore_icon.transform.Scale(0.6, 0.6)
-		ore_icon.pixel_x = rand(9, 17)
-		ore_icon.pixel_y = rand(2, 4)
+		ore_icon.pixel_w = rand(9, 17)
+		ore_icon.pixel_z = rand(2, 4)
 		. += ore_icon
 
 /obj/effect/landmark/mook_village

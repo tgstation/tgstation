@@ -41,7 +41,7 @@
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
+/obj/machinery/cell_charger/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stock_parts/power_store/cell) && !panel_open)
 		if(machine_stat & BROKEN)
 			to_chat(user, span_warning("[src] is broken!"))
@@ -75,6 +75,11 @@
 /obj/machinery/cell_charger/on_deconstruction(disassembled)
 	if(charging)
 		charging.forceMove(drop_location())
+
+/obj/machinery/cell_charger/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == charging)
+		charging = null
 
 /obj/machinery/cell_charger/Destroy()
 	QDEL_NULL(charging)

@@ -65,9 +65,9 @@
 /area/virtual_domain/fullbright)
 "cb" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "cv" = (
@@ -127,7 +127,7 @@
 /area/virtual_domain/fullbright)
 "fc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/happy,
+/obj/item/reagent_containers/applicator/pill/happy,
 /obj/item/toy/figure/bartender{
 	pixel_x = -8;
 	pixel_y = -1
@@ -173,7 +173,7 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/barman_recipes,
 /obj/item/reagent_containers/cup/glass/shaker,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
@@ -417,9 +417,9 @@
 /area/virtual_domain/fullbright)
 "vN" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "vT" = (
@@ -496,9 +496,9 @@
 /area/virtual_domain/fullbright)
 "ya" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "yi" = (
@@ -648,7 +648,7 @@
 /area/virtual_domain/fullbright)
 "CA" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "CO" = (
@@ -875,7 +875,7 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/virtual_domain/fullbright)
 "OE" = (
-/obj/effect/mob_spawn/ghost_role/human/beach{
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -906,7 +906,7 @@
 /area/virtual_domain/fullbright)
 "Pg" = (
 /obj/structure/sign/poster/official/high_class_martini/directional/west,
-/obj/effect/mob_spawn/ghost_role/human/bartender{
+/obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1116,7 +1116,7 @@
 /area/virtual_domain/fullbright)
 "Zt" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)

@@ -16,24 +16,25 @@
 
 	return ..()
 
-/datum/action/item_action/cult_dagger/Trigger(trigger_flags)
-	if(target in owner.held_items)
-		var/obj/item/target_item = target
-		target_item.attack_self(owner)
-		return
+/datum/action/item_action/cult_dagger/do_effect(trigger_flags)
+	if(!isliving(owner))
+		to_chat(owner, span_warning("You lack the necessary living force for this action."))
+		return FALSE
+
 	var/obj/item/target_item = target
+	var/mob/living/living_owner = owner
+	if(target in owner.held_items)
+		target_item.attack_self(owner)
+		return TRUE
+
 	if(owner.can_equip(target_item, ITEM_SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(target_item)
 		owner.put_in_hands(target_item)
 		target_item.attack_self(owner)
-		return
+		return TRUE
 
-	if(!isliving(owner))
-		to_chat(owner, span_warning("You lack the necessary living force for this action."))
-		return
-
-	var/mob/living/living_owner = owner
 	if (living_owner.usable_hands <= 0)
 		to_chat(living_owner, span_warning("You don't have any usable hands!"))
 	else
 		to_chat(living_owner, span_warning("Your hands are full!"))
+	return FALSE

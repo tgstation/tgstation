@@ -8,14 +8,27 @@
 	bonus_activate_text = null
 	bonus_deactivate_text = null
 
-/datum/status_effect/organ_set_bonus/fly/enable_bonus()
+/datum/status_effect/organ_set_bonus/fly/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	if(!. || !ishuman(owner))
 		return
 	var/mob/living/carbon/human/new_fly = owner
 	if(isflyperson(new_fly))
 		return
-	//okay you NEED to be a fly
+	// This is ugly as sin, but we're called before the organ finishes inserting into the bodypart
+	// so if we swap species directly the bodypart will be replaced and we'll be gone
+	// so we need to delay species change until we're fully inserted
+	RegisterSignal(inserted_organ, COMSIG_ORGAN_BODYPART_INSERTED, PROC_REF(flyify))
+
+/datum/status_effect/organ_set_bonus/fly/proc/flyify(obj/item/organ/source, obj/item/bodypart/limb, movement_flags)
+	SIGNAL_HANDLER
+	var/mob/living/carbon/human/new_fly = owner
+	// just in case?
+	if(isflyperson(new_fly))
+		return
+	// needs to be done before the species is set
+	UnregisterSignal(source, COMSIG_ORGAN_BODYPART_INSERTED)
+	// okay you NEED to be a fly
 	to_chat(new_fly, span_danger("Too much fly DNA! Your skin begins to discolor into a horrible black as you become more fly than person!"))
 	new_fly.set_species(/datum/species/fly)
 
@@ -23,11 +36,11 @@
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 	eye_icon_state = "flyeyes"
-	icon_state = "eyeballs-fly"
+	icon_state = "eyes_fly"
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	native_fov = NONE //flies can see all around themselves.
 	blink_animation = FALSE
-	iris_overlays = FALSE
+	iris_overlay = null
 
 /obj/item/organ/eyes/fly/Initialize(mapload)
 	. = ..()

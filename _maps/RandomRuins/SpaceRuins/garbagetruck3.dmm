@@ -314,7 +314,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /obj/item/toy/brokenradio,
 /obj/effect/spawner/random/engineering/tool,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "rq" = (
@@ -503,7 +503,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zz" = (
 /obj/item/cigbutt/cigarbutt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/closet/crate/trashcart,
 /obj/item/storage/bag/trash,
@@ -648,7 +648,7 @@
 "Hn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/item/pen,
 /obj/item/stock_parts/subspace/analyzer,
 /turf/open/floor/plating/dumpsterair,
@@ -707,7 +707,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "JR" = (
 /obj/effect/decal/cleanable/ash,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /mob/living/basic/trooper/russian,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -783,7 +783,7 @@
 "Ol" = (
 /obj/item/plate_shard,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Pz" = (

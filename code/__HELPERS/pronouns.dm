@@ -57,6 +57,9 @@
 /datum/proc/p_es(temp_gender)
 	return "es"
 
+/datum/proc/p_themselves(temp_gender)
+	return "itself"
+
 /datum/proc/plural_s(pluralize)
 	switch(copytext_char(pluralize, -2))
 		if ("ss")
@@ -85,7 +88,7 @@
 			return
 		gender = targeted_gender
 	else
-		gender = targeted_atom.gender
+		gender = targeted_atom.get_visible_gender()
 	///The pronouns are ordered by their length to avoid %PRONOUN_Theyve being translated to "Heve" instead of "He's", for example
 	var/regex/pronoun_regex = regex("%PRONOUN(_(theirs|Theirs|theyve|Theyve|theyre|Theyre|their|Their|they|They|them|Them|have|were|are|do|es|s))")
 	while(pronoun_regex.Find(target_string))
@@ -177,6 +180,19 @@
 		temp_gender = gender
 	if(temp_gender != PLURAL && temp_gender != NEUTER)
 		return "es"
+
+/client/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
 
 //mobs(and atoms but atoms don't really matter write your own proc overrides) also have gender!
 /mob/p_they(temp_gender)
@@ -271,75 +287,180 @@
 	if(temp_gender != PLURAL)
 		return "es"
 
+/mob/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
+
+//Pronoun procs for objects
+/atom/p_they(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "she"
+		if(MALE)
+			return "he"
+		if(PLURAL)
+			return "they"
+		else
+			return "it"
+
+/atom/p_their(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "her"
+		if(MALE)
+			return "his"
+		if(PLURAL)
+			return "their"
+		else
+			return "its"
+
+/atom/p_theirs(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "hers"
+		if(MALE)
+			return "his"
+		if(PLURAL)
+			return "theirs"
+		else
+			return "its"
+
+/atom/p_them(capitalized, temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "her"
+		if(MALE)
+			return "him"
+		if(PLURAL)
+			return "them"
+		else
+			return "it"
+
+/atom/p_have(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "have"
+	return "has"
+
+/atom/p_are(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "are"
+	return "is"
+
+/atom/p_were(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "were"
+	return "was"
+
+/atom/p_do(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender == PLURAL)
+		return "do"
+	return "does"
+
+/atom/p_s(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender != PLURAL)
+		return "s"
+
+/atom/p_es(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	if(temp_gender != PLURAL)
+		return "es"
+
+/atom/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
+
+/// Reports what gender this atom appears to be
+/atom/proc/get_visible_gender()
+	return gender
+
+/mob/living/carbon/human/get_visible_gender()
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
+		return PLURAL
+	// If both face and uniform are hidden, can't assess gender
+	if(obscured_slots & (HIDEFACE|HIDEJUMPSUIT) == (HIDEFACE|HIDEJUMPSUIT))
+		return PLURAL
+	return gender
+
 //humans need special handling, because they can have their gender hidden
 /mob/living/carbon/human/p_they(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_their(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_theirs(capitalized, temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_them(capitalized, temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_have(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_are(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_were(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_do(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_s(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 /mob/living/carbon/human/p_es(temp_gender)
-	var/obscured = check_obscured_slots()
-	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
-		temp_gender = PLURAL
+	temp_gender ||= get_visible_gender()
+	return ..()
+
+/mob/living/carbon/human/p_themselves(temp_gender)
+	temp_gender ||= get_visible_gender()
 	return ..()
 
 //clothing need special handling due to pairs of items, ie gloves vs a singular glove, shoes, ect.
@@ -411,6 +532,19 @@
 	if(temp_gender != PLURAL)
 		return "es"
 
+/obj/item/clothing/p_themselves(temp_gender)
+	if(!temp_gender)
+		temp_gender = gender
+	switch(temp_gender)
+		if(FEMALE)
+			return "herself"
+		if(MALE)
+			return "himself"
+		if(PLURAL)
+			return "themselves"
+		else
+			return "itself"
+
 /datum/mind/p_they(temp_gender)
 	return current?.p_they(temp_gender) || ..()
 
@@ -440,3 +574,6 @@
 
 /datum/mind/p_es(temp_gender)
 	return current?.p_es(temp_gender) || ..()
+
+/datum/mind/p_themselves(temp_gender)
+	return current?.p_themselves(temp_gender) || ..()

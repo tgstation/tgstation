@@ -7,11 +7,18 @@
 	allowed_instrument_ids = "piano"
 	var/circuit_type = /obj/item/circuit_component/synth
 	var/shell_capacity = SHELL_CAPACITY_SMALL
+	/// Can a mouse play this instrument?
+	var/mouse_playable = TRUE
 
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
 	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
 	AddComponent(/datum/component/shell, list(new circuit_type), shell_capacity)
+
+/obj/item/instrument/piano_synth/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if (!mouse_playable || !ismouse(user))
+		return ..()
+	song.ui_interact(user)
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"
@@ -32,6 +39,7 @@
 	instrument_range = 1
 	circuit_type = /obj/item/circuit_component/synth/headphones
 	shell_capacity = SHELL_CAPACITY_TINY
+	mouse_playable = FALSE
 
 /obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
@@ -55,7 +63,7 @@
 	worn_icon = 'icons/mob/clothing/ears.dmi'
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_EARS
-	strip_delay = 100 //air pods don't fall out
+	strip_delay = 10 SECONDS //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
 	custom_premium_price = PAYCHECK_CREW * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
@@ -136,6 +144,8 @@
 	SIGNAL_HANDLER
 	is_playing.set_output(TRUE)
 	started_playing.set_output(COMPONENT_SIGNAL)
+	if (beats_per_min.value)
+		synth.song.set_bpm(beats_per_min.value)
 
 /obj/item/circuit_component/synth/proc/continue_if_autoplaying(datum/source, atom/music_player)
 	SIGNAL_HANDLER
@@ -157,7 +167,8 @@
 	synth.song.set_repeats(repetitions.value)
 
 /obj/item/circuit_component/synth/proc/set_bpm()
-	synth.song.sanitize_tempo(BPM_TO_TEMPO_SETTING(beats_per_min.value))
+	if (beats_per_min.value)
+		synth.song.set_bpm(beats_per_min.value)
 
 /obj/item/circuit_component/synth/proc/set_instrument()
 	synth.song.set_instrument(selected_instrument.value)

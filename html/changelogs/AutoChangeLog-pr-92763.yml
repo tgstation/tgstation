@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Reagent containers like cups, beakers, bottles, syringes, droppers, condiments packs, and iv bags have been refactored. Report any oddities, particularly involved in transferring reagents from one to another."

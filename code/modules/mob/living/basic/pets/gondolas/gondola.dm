@@ -57,11 +57,11 @@
 	//Offset the face to match the Gondola's height.
 	switch(height)
 		if("gondola_body_medium")
-			eyes_overlay.pixel_y = -4
-			moustache_overlay.pixel_y = -4
+			eyes_overlay.pixel_z = -4
+			moustache_overlay.pixel_z = -4
 		if("gondola_body_short")
-			eyes_overlay.pixel_y = -8
-			moustache_overlay.pixel_y = -8
+			eyes_overlay.pixel_z = -8
+			moustache_overlay.pixel_z = -8
 
 	cut_overlays(TRUE)
 	add_overlay(body_overlay)
@@ -73,7 +73,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 

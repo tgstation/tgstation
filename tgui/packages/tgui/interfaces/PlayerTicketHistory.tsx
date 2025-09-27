@@ -170,9 +170,7 @@ const Cache = (props: CacheProps) => {
         Query and cache:&nbsp;
         <Input
           value={props.cacheInput}
-          onChange={(_: any, value: string) =>
-            props.setCacheInput(value.toLowerCase())
-          }
+          onBlur={(value) => props.setCacheInput(value.toLowerCase())}
         />
         <NumberInput
           step={1}

@@ -91,7 +91,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	armor_type = /datum/armor/captain_gloves
 	resistance_flags = NONE
 	clothing_traits = list(TRAIT_FAST_CUFFING)
@@ -140,7 +140,7 @@
 	greyscale_colors = "#15191a"
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
 
-/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add)
+/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	return FALSE
 
 /obj/item/clothing/gloves/tinkerer
@@ -148,7 +148,7 @@
 	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
 	inhand_icon_state = "greyscale_gloves"
 	icon_state = "clockwork_gauntlets"
-	greyscale_colors = "#db6f05"
+	greyscale_colors = "#996e23"
 	siemens_coefficient = 0.8
 	armor_type = /datum/armor/tinker_gloves
 	clothing_traits = list(TRAIT_QUICK_BUILD)
@@ -169,7 +169,7 @@
 	resistance_flags = FIRE_PROOF
 	siemens_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_CHUNKYFINGERS)
-	clothing_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL|STOPSPRESSUREDAMAGE
 
 /obj/item/clothing/gloves/atmos/Initialize(mapload)
 	. = ..()

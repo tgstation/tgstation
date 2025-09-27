@@ -1,0 +1,13 @@
+directory = "_maps/shuttles/emergency_scrapheap/"
+
+[rooms.shuttle]
+modules = ["classic1.dmm", "classic2.dmm"]
+
+[rooms.classic_fore]
+modules = ["classic_fore1.dmm", "classic_fore2.dmm", "classic_fore3.dmm"]
+
+[rooms.classic_aft]
+modules = ["classic_aft1.dmm", "classic_aft2.dmm", "classic_aft3.dmm"]
+
+[rooms.classic_starboard]
+modules = ["classic_starboard1.dmm", "classic_starboard2.dmm"]

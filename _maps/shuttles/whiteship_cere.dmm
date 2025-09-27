@@ -4,7 +4,7 @@
 /area/template_noop)
 "af" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -19,7 +19,7 @@
 /area/shuttle/abandoned/cargo)
 "am" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -97,7 +97,7 @@
 /area/shuttle/abandoned/crew)
 "aN" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
@@ -462,7 +462,7 @@
 /area/shuttle/abandoned/cargo)
 "su" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,

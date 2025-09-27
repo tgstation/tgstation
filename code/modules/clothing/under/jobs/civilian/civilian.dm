@@ -3,6 +3,7 @@
 /obj/item/clothing/under/rank/civilian
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
+	abstract_type = /obj/item/clothing/under/rank/civilian
 
 /obj/item/clothing/under/rank/civilian/purple_bartender
 	desc = "It looks like it has lots of flair!"
@@ -113,6 +114,7 @@
 	desc = "Slick threads."
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
+	abstract_type = /obj/item/clothing/under/rank/civilian/lawyer
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color, dye_key_override)
@@ -180,9 +182,10 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	name = "blue buttondown suit"
-	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	icon_state = "buttondown_slacks"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/bluesuit"
+	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
 	greyscale_config_worn = /datum/greyscale_config/buttondown_slacks/worn
 	greyscale_colors = "#EEEEEE#CBDBFC#17171B#2B65A8"
@@ -191,7 +194,9 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
 	name = "blue buttondown suitskirt"
-	icon_state = "buttondown_skirt"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt"
+	post_init_icon_state = "buttondown_skirt"
 	greyscale_config = /datum/greyscale_config/buttondown_skirt
 	greyscale_config_worn = /datum/greyscale_config/buttondown_skirt/worn
 	body_parts_covered = CHEST|GROIN|ARMS

@@ -8,7 +8,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -28,19 +28,12 @@ type Data = {
   name: string;
   isdryer: BooleanLike;
   drying: BooleanLike;
-  default_list_view: BooleanLike;
 };
 
 export const SmartVend = (props) => {
   const { act, data } = useBackend<Data>();
   const [searchText, setSearchText] = useState('');
-  const [displayMode, setDisplayMode] = useState(
-    getLayoutState() === LAYOUT.Default
-      ? data.default_list_view
-        ? LAYOUT.List
-        : LAYOUT.Grid
-      : getLayoutState(),
-  );
+  const [displayMode, setDisplayMode] = useState(getLayoutState());
   const search = createSearch(searchText, (item: Item) => item.name);
   const contents =
     searchText.length > 0
@@ -69,9 +62,10 @@ export const SmartVend = (props) => {
                   <Stack.Item>
                     <Input
                       autoFocus
-                      placeholder={'Search...'}
+                      placeholder="Search..."
                       value={searchText}
-                      onInput={(e, value) => setSearchText(value)}
+                      onChange={setSearchText}
+                      expensive
                     />
                   </Stack.Item>
                   <LayoutToggle state={displayMode} setState={setDisplayMode} />

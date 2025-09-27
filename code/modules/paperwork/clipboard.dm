@@ -113,7 +113,7 @@
 		return TRUE
 	. = ..()
 
-/obj/item/clipboard/attackby(obj/item/weapon, mob/user, params)
+/obj/item/clipboard/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/paper))
 		//Add paper into the clipboard
 		if(!user.transferItemToLoc(weapon, src))

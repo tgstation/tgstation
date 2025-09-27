@@ -30,6 +30,8 @@
 	var/printing_total
 	/// The time it takes to print a container
 	var/printing_speed = 0.75 SECONDS
+	/// Amount of layers which printed pills will be coated in
+	var/pill_layers = 3
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -37,6 +39,7 @@
 	printable_containers = load_printable_containers()
 	default_container = printable_containers[printable_containers[1]][1]
 	selected_container = default_container
+	pill_layers = /obj/item/reagent_containers/applicator/pill::layers_remaining
 
 	register_context()
 
@@ -257,6 +260,7 @@
 	var/list/data = list()
 
 	data["maxPrintable"] = MAX_CONTAINER_PRINT_AMOUNT
+	data["maxPillDuration"] = PILL_MAX_PRINTABLE_LAYERS
 	data["categories"] = list()
 	for(var/category in printable_containers)
 		//make the category
@@ -287,6 +291,7 @@
 	.["isPrinting"] = is_printing
 	.["printingProgress"] = printing_progress
 	.["printingTotal"] = printing_total
+	.["selectedPillDuration"] = pill_layers
 
 	//contents of source beaker
 	var/list/beaker_data = null
@@ -356,6 +361,11 @@
 	//selected container
 	.["selectedContainerRef"] = REF(selected_container)
 	.["selectedContainerVolume"] = initial(selected_container.volume)
+
+	for (var/category in printable_containers)
+		if (selected_container in printable_containers[category])
+			.["selectedContainerCategory"] = category
+			break
 
 /**
  * Transfers a single reagent between buffer & beaker
@@ -448,6 +458,10 @@
 			update_appearance(UPDATE_OVERLAYS)
 			return TRUE
 
+		if ("setPillDuration")
+			pill_layers = clamp(params["duration"], 0, PILL_MAX_PRINTABLE_LAYERS)
+			return TRUE
+
 		if("selectContainer")
 			var/obj/item/reagent_containers/target = locate(params["ref"])
 
@@ -493,7 +507,7 @@
 			var/datum/reagent/master_reagent = reagents.get_master_reagent()
 			if(selected_container == default_container) // Tubes and bottles gain reagent name
 				item_name_default = "[master_reagent.name] [item_name_default]"
-			if(!(initial(selected_container.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
+			if(!(initial(selected_container.initial_reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
 				item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
 			var/item_name = tgui_input_text(
 				usr,
@@ -543,6 +557,9 @@
 	item.name = item_name
 	item.reagents.clear_reagents()
 	reagents.trans_to(item, volume_in_each, transferred_by = user)
+	if (istype(item, /obj/item/reagent_containers/applicator/pill))
+		var/obj/item/reagent_containers/applicator/pill/pill = item
+		pill.layers_remaining = pill_layers
 	printing_progress++
 	update_appearance(UPDATE_OVERLAYS)
 

@@ -35,7 +35,7 @@
 	. += use_gender
 	. += draw_color
 
-/datum/bodypart_overlay/simple/body_marking/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/simple/body_marking/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	return icon_state != SPRITE_ACCESSORY_NONE
 
 /datum/bodypart_overlay/simple/body_marking/get_image(layer, obj/item/bodypart/limb)
@@ -43,13 +43,13 @@
 	return mutable_appearance(icon, gender_string + icon_state + "_" + limb.body_zone, layer = layer)
 
 /datum/bodypart_overlay/simple/body_marking/moth
-	dna_feature_key = "moth_markings"
+	dna_feature_key = FEATURE_MOTH_MARKINGS
 
 /datum/bodypart_overlay/simple/body_marking/moth/get_accessory(name)
 	return SSaccessories.moth_markings_list[name]
 
 /datum/bodypart_overlay/simple/body_marking/lizard
-	dna_feature_key = "lizard_markings"
+	dna_feature_key = FEATURE_LIZARD_MARKINGS
 	applies_to = list(/obj/item/bodypart/chest)
 
 /datum/bodypart_overlay/simple/body_marking/lizard/get_accessory(name)

@@ -46,7 +46,7 @@
 	remove_from_dart(holder_casing, holder_projectile)
 	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
 
-/datum/component/dart_insert/proc/on_preattack(datum/source, atom/target, mob/user, params)
+/datum/component/dart_insert/proc/on_preattack(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/obj/item/ammo_casing/foam_dart/dart = target
 	if(!istype(dart))
@@ -81,7 +81,7 @@
 	RegisterSignal(dart_projectile, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_projectile_update_overlays))
 	RegisterSignals(dart_projectile, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED), PROC_REF(on_spawn_drop))
 	apply_var_modifiers(dart_projectile)
-	dart.harmful = dart_projectile.damage > 0 || dart_projectile.wound_bonus > 0 || dart_projectile.bare_wound_bonus > 0
+	dart.harmful = dart_projectile.damage > 0 || dart_projectile.wound_bonus > 0 || dart_projectile.exposed_wound_bonus > 0
 	SEND_SIGNAL(parent, COMSIG_DART_INSERT_ADDED, dart)
 	dart.update_appearance()
 	dart_projectile.update_appearance()
@@ -99,7 +99,7 @@
 		remove_var_modifiers(projectile)
 		UnregisterSignal(projectile, list(COMSIG_PROJECTILE_ON_SPAWN_DROP, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, COMSIG_ATOM_UPDATE_OVERLAYS))
 		if(dart?.loaded_projectile == projectile)
-			dart.harmful = projectile.damage > 0 || projectile.wound_bonus > 0 || projectile.bare_wound_bonus > 0
+			dart.harmful = projectile.damage > 0 || projectile.wound_bonus > 0 || projectile.exposed_wound_bonus > 0
 		projectile.update_appearance()
 	SEND_SIGNAL(parent, COMSIG_DART_INSERT_REMOVED, dart, projectile, user)
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
@@ -133,12 +133,14 @@
 	new_overlays += mutable_appearance(projectile_overlay_icon, projectile_overlay_icon_state)
 
 /datum/component/dart_insert/proc/apply_var_modifiers(obj/projectile/projectile)
-	var_modifiers = istype(modifier_getter) ? modifier_getter.Invoke(projectile) : list()
+	if (!modifier_getter)
+		return
+	var_modifiers = modifier_getter.Invoke(projectile)
 	projectile.damage += var_modifiers["damage"]
 	projectile.speed += var_modifiers["speed"]
 	projectile.armour_penetration += var_modifiers["armour_penetration"]
 	projectile.wound_bonus += var_modifiers["wound_bonus"]
-	projectile.bare_wound_bonus += var_modifiers["bare_wound_bonus"]
+	projectile.exposed_wound_bonus += var_modifiers["exposed_wound_bonus"]
 	projectile.demolition_mod += var_modifiers["demolition_mod"]
 	if(var_modifiers["embedding"])
 		projectile.set_embed(var_modifiers["embedding"])
@@ -148,7 +150,7 @@
 	projectile.speed -= var_modifiers["speed"]
 	projectile.armour_penetration -= var_modifiers["armour_penetration"]
 	projectile.wound_bonus -= var_modifiers["wound_bonus"]
-	projectile.bare_wound_bonus -= var_modifiers["bare_wound_bonus"]
+	projectile.exposed_wound_bonus -= var_modifiers["exposed_wound_bonus"]
 	projectile.demolition_mod -= var_modifiers["demolition_mod"]
 	if(var_modifiers["embedding"])
 		projectile.set_embed(initial(projectile.embed_type))

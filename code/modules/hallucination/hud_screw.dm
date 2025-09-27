@@ -2,6 +2,7 @@
 /datum/hallucination/screwy_hud
 	abstract_hallucination_parent = /datum/hallucination/screwy_hud
 	random_hallucination_weight = 4
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// The type of hud we give to the hallucinator
 	var/screwy_hud_type = SCREWYHUD_NONE

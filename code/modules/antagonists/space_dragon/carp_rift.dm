@@ -265,7 +265,7 @@
 
 	if(!is_listed)
 		ckey_list += user.ckey
-	newcarp.key = user.key
+	newcarp.PossessByPlayer(user.key)
 	newcarp.set_name()
 	var/datum/antagonist/space_carp/carp_antag = new(src)
 	newcarp.mind.add_antag_datum(carp_antag)
@@ -277,6 +277,21 @@
 		set_light_color(LIGHT_COLOR_BLUE)
 		update_light()
 	return TRUE
+
+/obj/structure/carp_rift/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(HAS_TRAIT(attacking_item, TRAIT_TELEKINESIS_CONTROLLED))
+		if(user)
+			to_chat(user, span_warning("The gravitational field of [src] interferes with the telekenetic control of [user], nullifying the hit!"))
+		return FALSE
+	. = ..()
+
+/obj/structure/carp_rift/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(HAS_TRAIT(hit_by, TRAIT_TELEKINESIS_CONTROLLED))
+		var/mob/thrower = throwingdatum.thrower.resolve()
+		if(thrower && ismob(thrower))
+			to_chat(thrower, span_warning("The gravitational field of [src] interferes with the telekenetic control of [hit_by], nullifying the hit!"))
+		return
+	. = ..()
 
 #undef CHARGE_ONGOING
 #undef CHARGE_FINALWARNING

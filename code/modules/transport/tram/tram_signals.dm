@@ -118,7 +118,7 @@
 	SStransport.crossing_signals -= src
 	. = ..()
 
-/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -180,7 +180,7 @@
 	find_uplink()
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(weapon.tool_behaviour == TOOL_WRENCH && panel_open)
@@ -519,7 +519,7 @@
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
 
-/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!user.combat_mode)
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 			return
@@ -658,9 +658,14 @@
 	var/list/obj/machinery/transport/guideway_sensor/sensor_candidates = list()
 
 	for(var/obj/machinery/transport/guideway_sensor/sensor in SStransport.sensors)
-		if(sensor.z == src.z)
-			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
-				sensor_candidates += sensor
+		if(sensor.z != src.z)
+			continue
+		if(sensor.x != src.x && !(sensor.dir & (NORTH|SOUTH)))
+			continue
+		if(sensor.y != src.y && !(sensor.dir & (EAST|WEST)))
+			continue
+
+		sensor_candidates += sensor
 
 	var/obj/machinery/transport/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/transport/guideway_sensor, sensor_candidates, src)
 	var/sensor_distance = get_dist(src, selected_sensor)

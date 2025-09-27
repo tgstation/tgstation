@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import {
   Box,
   Button,
@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
@@ -20,7 +20,7 @@ import {
   calculateProgression,
   dangerLevelsTooltip,
 } from './calculateDangerLevel';
-import { GenericUplink, Item } from './GenericUplink';
+import { GenericUplink, type Item } from './GenericUplink';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
 type UplinkItem = {
@@ -38,6 +38,7 @@ type UplinkItem = {
   restricted_roles: string;
   restricted_species: string;
   progression_minimum: number;
+  population_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
   ref?: string;
@@ -46,9 +47,8 @@ type UplinkItem = {
 type UplinkData = {
   telecrystals: number;
   progression_points: number;
+  joined_population?: number;
   lockable: BooleanLike;
-  current_expected_progression: number;
-  progression_scaling_deviance: number;
   current_progression_scaling: number;
   uplink_flag: number;
   assigned_role: string;
@@ -93,7 +93,7 @@ type ItemExtraData = Item & {
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
 
-export class Uplink extends Component<{}, UplinkState> {
+export class Uplink extends Component<any, UplinkState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -146,10 +146,8 @@ export class Uplink extends Component<{}, UplinkState> {
       ) {
         return false;
       }
-      {
-        if (value.purchasable_from & uplinkFlag) {
-          return true;
-        }
+      if (value.purchasable_from & uplinkFlag) {
+        return true;
       }
       return false;
     });
@@ -175,11 +173,10 @@ export class Uplink extends Component<{}, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      joined_population,
       primary_objectives,
       can_renegotiate,
       has_progression,
-      current_expected_progression,
-      progression_scaling_deviance,
       current_progression_scaling,
       extra_purchasable,
       extra_purchasable_stock,
@@ -202,6 +199,8 @@ export class Uplink extends Component<{}, UplinkState> {
       const item = itemsToAdd[i];
       const hasEnoughProgression =
         progression_points >= item.progression_minimum;
+      const hasEnoughPop =
+        !joined_population || joined_population >= item.population_minimum;
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
@@ -245,8 +244,14 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
+        population_tooltip:
+          'This item is not cleared for operations performed against stations crewed by fewer than ' +
+          item.population_minimum +
+          ' people.',
+        insufficient_population: !hasEnoughPop,
         disabled:
           !canBuy ||
+          !hasEnoughPop ||
           (has_progression && !hasEnoughProgression) ||
           (item.lock_other_purchases && purchased_items > 0),
         extraData: {
@@ -256,17 +261,7 @@ export class Uplink extends Component<{}, UplinkState> {
         },
       });
     }
-    // Get the difference between the current progression and
-    // expected progression
-    let progressionPercentage =
-      current_expected_progression - progression_points;
-    // Clamp it down between 0 and 2
-    progressionPercentage = Math.min(
-      Math.max(progressionPercentage / progression_scaling_deviance, -1),
-      1,
-    );
-    // Round it and convert it into a percentage
-    progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
+
     return (
       <Window width={700} height={600} theme="syndicate">
         <Window.Content>
@@ -292,29 +287,6 @@ export class Uplink extends Component<{}, UplinkState> {
                                 </Box>
                                 &nbsp;every minute
                               </Box>
-                              {Math.abs(progressionPercentage) > 0 && (
-                                <Box mt={0.5}>
-                                  Because your threat level is
-                                  {progressionPercentage < 0
-                                    ? ' ahead '
-                                    : ' behind '}
-                                  of where it should be, you are getting
-                                  <Box
-                                    as="span"
-                                    color={
-                                      progressionPercentage < 0
-                                        ? 'red'
-                                        : 'green'
-                                    }
-                                    ml={1}
-                                    mr={1}
-                                  >
-                                    {progressionPercentage}%
-                                  </Box>
-                                  {progressionPercentage < 0 ? 'less' : 'more'}{' '}
-                                  threat every minute
-                                </Box>
-                              )}
                               {dangerLevelsTooltip}
                             </Box>
                           </Box>

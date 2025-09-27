@@ -14,7 +14,6 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.33
-	req_access = list(ACCESS_CARGO)
 	circuit = /obj/item/circuitboard/machine/mailsorter
 
 	var/light_mask = "mailsorter-light-mask"
@@ -101,9 +100,6 @@
 	return is_type_in_list(weapon, accepted_items)
 
 /obj/machinery/mailsorter/interact(mob/user)
-	if (!allowed(user))
-		to_chat(user, span_warning("Access denied."))
-		return
 	if (currentstate != STATE_IDLE)
 		return
 	if (length(mail_list) == 0)
@@ -282,17 +278,17 @@
 		var/image/mail_output = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_[output_dir]")
 		switch(output_dir)
 			if(NORTH)
-				mail_output.pixel_y = 32
+				mail_output.pixel_z = 32
 			if(SOUTH)
-				mail_output.pixel_y = -32
+				mail_output.pixel_z = -32
 			if(EAST)
-				mail_output.pixel_x = 32
+				mail_output.pixel_w = 32
 			if(WEST)
-				mail_output.pixel_x = -32
+				mail_output.pixel_w = -32
 		mail_output.color = COLOR_CRAYON_ORANGE
 		var/mutable_appearance/light_out = emissive_appearance(mail_output.icon, mail_output.icon_state, offset_spokesman = src, alpha = mail_output.alpha)
-		light_out.pixel_y = mail_output.pixel_y
-		light_out.pixel_x = mail_output.pixel_x
+		light_out.pixel_z = mail_output.pixel_z
+		light_out.pixel_w = mail_output.pixel_w
 		. += mail_output
 		. += light_out
 		. += mutable_appearance(base_icon_state, currentstate)

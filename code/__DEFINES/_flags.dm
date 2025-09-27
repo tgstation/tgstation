@@ -58,6 +58,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<17)
 /// This atom always returns its turf in get_turf_pixel instead of the turf from its offsets
 #define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
+/// This atom does not need to generate its own preview icon for GAGS
+#define NO_NEW_GAGS_PREVIEW_1 (1<<19)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -192,9 +194,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PHASING (1<<4)
 /// The mob is walking on the ceiling. Or is generally just, upside down.
 #define UPSIDE_DOWN (1<<5)
-
 /// Combination flag for movetypes which, for all intents and purposes, mean the mob is not touching the ground
 #define MOVETYPES_NOT_TOUCHING_GROUND (FLYING|FLOATING|UPSIDE_DOWN)
+/// Trait source for stuff movetypes applies
+#define SOURCE_MOVETYPES "movetypes"
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF (1<<0)
@@ -214,6 +217,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FREEZE_PROOF (1<<7)
 /// can't be shuttle crushed.
 #define SHUTTLE_CRUSH_PROOF (1<<8)
+/// can't be destroyed by bombs
+#define BOMB_PROOF (1<<9)
 
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)

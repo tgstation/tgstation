@@ -96,7 +96,7 @@ effective or pretty fucking useless.
 		addtimer(VARSET_CALLBACK(src, used, FALSE), cooldown)
 		addtimer(VARSET_CALLBACK(src, icon_state, "health"), cooldown)
 		to_chat(user, span_warning("Successfully irradiated [interacting_with]."))
-		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (wavelength+(intensity*4))*5)
+		addtimer(CALLBACK(src, PROC_REF(radiation_aftereffect), interacting_with, intensity), (intensity+(wavelength*4))*5)
 		return . | ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_warning("The radioactive microlaser is still recharging."))
@@ -234,15 +234,12 @@ effective or pretty fucking useless.
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/datum/action/item_action/stealth_mode/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/item_action/stealth_mode/do_effect(trigger_flags)
 	if(stealth_engaged)
 		stealth_off()
 	else
 		stealth_on()
+	return TRUE
 
 /datum/action/item_action/stealth_mode/proc/stealth_on()
 	animate(owner, alpha = get_alpha(), time = 0.5 SECONDS)
@@ -311,9 +308,6 @@ effective or pretty fucking useless.
 	attack_verb_simple = list("whip", "lash", "discipline")
 	actions_types = list(/datum/action/item_action/stealth_mode)
 
-/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	return slot & slot_flags
-
 /obj/item/shadowcloak/weaker
 	name = "stealth belt"
 	desc = "Makes you nigh-invisible to the naked eye for a short period of time. \
@@ -333,7 +327,14 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
+
+	/// The range of devices to disable while active
 	var/range = 12
+
+	/// The range of the disruptor wave, disabling radios
+	var/disruptor_range = 7
+
+	/// The delay between using the disruptor wave
 	var/jam_cooldown_duration = 15 SECONDS
 	COOLDOWN_DECLARE(jam_cooldown)
 
@@ -354,7 +355,7 @@ effective or pretty fucking useless.
 
 	user.balloon_alert(user, "disruptor wave released!")
 	to_chat(user, span_notice("You release a disruptor wave, disabling all nearby radio devices."))
-	for (var/atom/potential_owner in view(7, user))
+	for (var/atom/potential_owner in view(disruptor_range, user))
 		disable_radios_on(potential_owner, ignore_syndie = TRUE)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
@@ -378,7 +379,7 @@ effective or pretty fucking useless.
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return
 
-	if (!(interacting_with in view(7, user)))
+	if (!(interacting_with in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
 		return
 
@@ -398,57 +399,15 @@ effective or pretty fucking useless.
 	GLOB.active_jammers -= src
 	return ..()
 
-/obj/item/storage/toolbox/emergency/turret
-	desc = "You feel a strange urge to hit this with a wrench."
+/obj/item/jammer/makeshift
+	name = "makeshift radio jammer"
+	desc = "A jury-rigged device that disrupts nearby radio communication. Its crude construction provides a significantly smaller area of effect compared to its Syndicate counterpart."
+	range = 5
+	disruptor_range = 3
 
-/obj/item/storage/toolbox/emergency/turret/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench/combat(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/analyzer(src)
-	new /obj/item/wirecutters(src)
-
-/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/wrench/combat))
-		return NONE
-	if(!user.combat_mode)
-		return NONE
-	if(!tool.toolspeed)
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "constructing...")
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
-		return ITEM_INTERACT_BLOCKING
-
-	balloon_alert(user, "constructed!")
-	user.visible_message(
-		span_danger("[user] bashes [src] with [tool]!"),
-		span_danger("You bash [src] with [tool]!"),
-		null,
-		COMBAT_MESSAGE_RANGE,
-	)
-
-	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
-	set_faction(turret, user)
-	turret.toolbox = src
-	forceMove(turret)
-	return ITEM_INTERACT_SUCCESS
-
-
-/obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
-	turret.faction = list("[REF(user)]")
-
-/obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
-	turret.faction = list(ROLE_SYNDICATE)
-
-/obj/machinery/porta_turret/syndicate/toolbox
-	icon_state = "toolbox_off"
-	base_icon_state = "toolbox"
-
-/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+/obj/item/jammer/makeshift/Initialize(mapload)
 	. = ..()
-	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	integrity_failure = 0
@@ -458,8 +417,14 @@ effective or pretty fucking useless.
 	lethal_projectile = /obj/projectile/bullet/toolbox_turret
 	subsystem_type = /datum/controller/subsystem/processing/projectiles
 	ignore_faction = TRUE
+	icon_state = "toolbox_off"
+	base_icon_state = "toolbox"
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
@@ -476,7 +441,7 @@ effective or pretty fucking useless.
 
 	return TRUE
 
-/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/wrench/combat))
 		return ..()
 
@@ -536,3 +501,98 @@ effective or pretty fucking useless.
 /obj/projectile/bullet/toolbox_turret
 	damage = 10
 	speed = 1.6
+
+/// Flashbang disguised as a pen
+/obj/item/pen/penbang
+	degrees = 90
+
+/obj/item/pen/penbang/on_transform(obj/item/source, mob/user, active)
+	. = ..()
+	var/det_time = 1 SECONDS + (4 SECONDS * (degrees / 90))
+	if(user)
+		to_chat(user, span_warning("You prime the penbang! [capitalize(DisplayTimeText(det_time))]!"))
+		log_bomber(user, "has primed a", src, "(penbang) for detonation")
+	addtimer(CALLBACK(src, PROC_REF(detonate), user), det_time)
+
+/obj/item/pen/penbang/proc/detonate(mob/user)
+	var/obj/item/grenade/flashbang/bang = new(get_turf(src))
+	bang.detonate()
+	qdel(src)
+
+/// A camera disguised as a flash
+/obj/item/camera/flash
+	/// The flash we use to flash people with
+	var/obj/item/assembly/flash/handheld/internal_flash
+
+/obj/item/camera/flash/Initialize(mapload)
+	. = ..()
+	internal_flash = new(src)
+
+/obj/item/camera/flash/Destroy()
+	QDEL_NULL(internal_flash)
+	return ..()
+
+/obj/item/camera/flash/Exited(atom/movable/gone, direction)
+	. = ..()
+	// i guess this is a normal camera now. shouldn't happen, though
+	if(gone == internal_flash)
+		internal_flash = null
+
+/obj/item/camera/flash/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	return ..()
+
+/obj/item/camera/flash/attack(mob/living/M, mob/user)
+	return internal_flash?.attack(M, user)
+
+/// Jackboots with a dagger embedded into them - changes your kicks to be stab attacks, potetnially causing bleeding
+/obj/item/clothing/shoes/jackboots/dagger
+	/// List of bodyparts modified by the dagger
+	var/list/modified_bodyparts = list()
+
+/obj/item/clothing/shoes/jackboots/dagger/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_FEET) || !istype(user))
+		modified_bodyparts += user.get_bodypart(BODY_ZONE_L_LEG)
+		modified_bodyparts += user.get_bodypart(BODY_ZONE_R_LEG)
+		for(var/obj/item/bodypart/bodypart in modified_bodyparts)
+			bodypart.unarmed_sharpness |= SHARP_EDGED
+			bodypart.unarmed_attack_effect = ATTACK_EFFECT_SLASH
+			RegisterSignals(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
+		RegisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(modify_legs))
+
+/obj/item/clothing/shoes/jackboots/dagger/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_CARBON_POST_ATTACH_LIMB)
+	for(var/obj/item/bodypart/bodypart in modified_bodyparts)
+		clear_modification(bodypart)
+
+/obj/item/clothing/shoes/jackboots/dagger/handle_deconstruct(disassembled)
+	. = ..()
+	new /obj/item/switchblade/extended(drop_location())
+
+/obj/item/clothing/shoes/jackboots/dagger/proc/clear_modification(obj/item/bodypart/bodypart, ...)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING))
+	bodypart.unarmed_sharpness = initial(bodypart.unarmed_sharpness)
+	bodypart.unarmed_attack_effect = initial(bodypart.unarmed_attack_effect)
+	modified_bodyparts -= bodypart
+
+/obj/item/clothing/shoes/jackboots/dagger/proc/modify_legs(datum/source, obj/item/bodypart/bodypart, ...)
+	SIGNAL_HANDLER
+
+	if(bodypart in modified_bodyparts)
+		return
+	if(!istype(bodypart, /obj/item/bodypart/leg))
+		return
+
+	modified_bodyparts += bodypart
+	bodypart.unarmed_sharpness |= SHARP_EDGED
+	RegisterSignal(bodypart, list(COMSIG_BODYPART_REMOVED, COMSIG_QDELETING), PROC_REF(clear_modification))
+
+/obj/item/clothing/shoes/jackboots/dagger/examine_more(mob/user)
+	. = ..()
+	. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")

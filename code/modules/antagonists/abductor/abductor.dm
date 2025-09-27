@@ -2,7 +2,7 @@
 	name = "\improper Abductor"
 	roundend_category = "abductors"
 	antagpanel_category = ANTAG_GROUP_ABDUCTORS
-	job_rank = ROLE_ABDUCTOR
+	pref_flag = ROLE_ABDUCTOR
 	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
@@ -71,7 +71,6 @@
 
 /datum/antagonist/abductor/on_gain()
 	owner.set_assigned_role(SSjob.get_job_type(role_job))
-	owner.special_role = ROLE_ABDUCTOR
 	objectives += team.objectives
 	finalize_abductor()
 	// We don't want abductors to be converted by other antagonists
@@ -79,7 +78,6 @@
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
-	owner.special_role = null
 	owner.remove_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
 	return ..()
 
@@ -98,6 +96,14 @@
 
 	new_abductor.real_name = "[team.name] [sub_role]"
 	new_abductor.equipOutfit(outfit)
+
+	// If we have a team skincolor, apply it here. Applied by admins or 2% chance of natural occurance
+	if(!isnull(team.team_skincolor))
+		for(var/obj/item/bodypart/part as anything in new_abductor.bodyparts)
+			part.should_draw_greyscale = TRUE
+			part.add_color_override(team.team_skincolor, LIMB_COLOR_AYYLMAO)
+
+		new_abductor.update_body_parts(update_limb_data = TRUE)
 
 	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
@@ -119,9 +125,17 @@
 	var/list/current_teams = list()
 	for(var/datum/team/abductor_team/T in GLOB.antagonist_teams)
 		current_teams[T.name] = T
-	var/choice = input(admin,"Add to which team ?") as null|anything in (current_teams + "new team")
+	var/choice = tgui_input_list(admin,"Add to which team ?", "Abductor Teams", current_teams + "new team")
 	if (choice == "new team")
 		team = new
+		if(tgui_alert(admin, "Use a Custom Skin Color?", "Alien Spraypainter", list("Yes", "No")) == "Yes")
+			// Keep in mind the darker colors don't look all that great, but it's easier to just reference an existing color list than make a new one
+			var/colorchoice = tgui_input_list(admin, "Select Which Color?", "Alien Spraypainter", GLOB.color_list_ethereal + "Custom Color")
+			if(colorchoice == "Custom Color")
+				colorchoice = input(admin, "Pick new color", "Alien Spraypainter", COLOR_WHITE) as color|null
+			else
+				colorchoice = GLOB.color_list_ethereal[colorchoice]
+			team.team_skincolor = colorchoice
 	else if(choice in current_teams)
 		team = current_teams[choice]
 	else
@@ -152,12 +166,17 @@
 	var/static/team_count = 1
 	///List of all brainwashed victims' minds
 	var/list/datum/mind/abductees = list()
+	/// If we will recolor these aliens, this value gets changed. Has a really small chance to occur naturally, but admins can change this to anything they want.
+	var/team_skincolor = null
 
 /datum/team/abductor_team/New()
 	..()
 	team_number = team_count++
 	name = "Mothership [pick(GLOB.greek_letters)]" //TODO Ensure unique and actual alieny names
 	add_objective(new /datum/objective/experiment)
+	// Some aliens can be green as a treat
+	if(prob(check_holidays(APRIL_FOOLS) ? 50 : 2) && isnull(team_skincolor))
+		team_skincolor = COLOR_EMERALD
 
 /datum/team/abductor_team/roundend_report()
 	var/list/result = list()

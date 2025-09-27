@@ -11,19 +11,16 @@
 		if(tick_speed == INFINITY)
 			TEST_FAIL("Status effect [checking] has tick_interval set to INFINITY, this is not how you prevent ticks - use tick_interval = STATUS_EFFECT_NO_TICK instead.")
 			continue
-		if(tick_speed == 0)
-			TEST_FAIL("Status effect [checking] has tick_interval set to 0, this is not how you prevent ticks - use tick_interval = STATUS_EFFECT_NO_TICK instead.")
-			continue
 		switch(initial(checking.processing_speed))
 			if(STATUS_EFFECT_FAST_PROCESS)
-				if(tick_speed < SSfastprocess.wait)
+				if(tick_speed < SSfastprocess.wait && tick_speed != STATUS_EFFECT_AUTO_TICK)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSfastprocess can tick ([SSfastprocess.wait]).")
 			if(STATUS_EFFECT_NORMAL_PROCESS)
-				if(tick_speed < SSprocessing.wait)
+				if(tick_speed < SSprocessing.wait && tick_speed != STATUS_EFFECT_AUTO_TICK)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSprocessing can tick ([SSprocessing.wait]).")
 			if(STATUS_EFFECT_PRIORITY)
 				var/priority_wait = world.tick_lag * SSpriority_effects.wait // SSpriority_effects has the SS_TICKER flag, so its wait is in ticks, so we have to convert it to deciseconds.
-				if(tick_speed < priority_wait)
+				if(tick_speed < priority_wait && tick_speed != STATUS_EFFECT_AUTO_TICK)
 					TEST_FAIL("Status effect [checking] has tick_interval set to [tick_speed], which is faster than SSpriority_effects can tick ([priority_wait]).")
 			else
 				TEST_FAIL("Invalid processing speed for status effect [checking] : [initial(checking.processing_speed)]")

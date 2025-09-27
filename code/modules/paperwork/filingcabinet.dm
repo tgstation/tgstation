@@ -27,7 +27,7 @@
 	desc = "A small cabinet with drawers. This one has wheels!"
 	anchored = FALSE
 
-/obj/structure/filingcabinet/filingcabinet //not changing the path to avoid unnecessary map issues, but please don't name stuff like this in the future -Pete
+/obj/structure/filingcabinet/white
 	icon_state = "tallcabinet"
 
 /obj/structure/filingcabinet/Initialize(mapload)
@@ -42,8 +42,7 @@
 	for(var/obj/item/obj in src)
 		obj.forceMove(loc)
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
-	var/list/modifiers = params2list(params)
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
 		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
 		if(P.use_tool(src, user, 20, volume=50))

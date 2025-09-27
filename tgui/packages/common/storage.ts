@@ -8,19 +8,8 @@
 
 export const IMPL_MEMORY = 0;
 export const IMPL_HUB_STORAGE = 1;
-export const IMPL_INDEXED_DB = 2;
 
-type StorageImplementation =
-  | typeof IMPL_MEMORY
-  | typeof IMPL_HUB_STORAGE
-  | typeof IMPL_INDEXED_DB;
-
-const INDEXED_DB_VERSION = 1;
-const INDEXED_DB_NAME = 'tgui';
-const INDEXED_DB_STORE_NAME = 'storage-v1';
-
-const READ_ONLY = 'readonly';
-const READ_WRITE = 'readwrite';
+type StorageImplementation = typeof IMPL_MEMORY | typeof IMPL_HUB_STORAGE;
 
 type StorageBackend = {
   impl: StorageImplementation;
@@ -41,13 +30,6 @@ const testGeneric = (testFn: () => boolean) => (): boolean => {
 const testHubStorage = testGeneric(
   () => window.hubStorage && !!window.hubStorage.getItem,
 );
-
-// TODO: Remove with 516
-// prettier-ignore
-const testIndexedDb = testGeneric(() => (
-  (window.indexedDB || window.msIndexedDB)
-  && !!(window.IDBTransaction || window.msIDBTransaction)
-));
 
 class MemoryBackend implements StorageBackend {
   private store: Record<string, any>;
@@ -103,69 +85,6 @@ class HubStorageBackend implements StorageBackend {
   }
 }
 
-class IndexedDbBackend implements StorageBackend {
-  public impl: StorageImplementation;
-  public dbPromise: Promise<IDBDatabase>;
-
-  constructor() {
-    this.impl = IMPL_INDEXED_DB;
-    this.dbPromise = new Promise((resolve, reject) => {
-      const indexedDB = window.indexedDB || window.msIndexedDB;
-      const req = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
-      req.onupgradeneeded = () => {
-        try {
-          req.result.createObjectStore(INDEXED_DB_STORE_NAME);
-        } catch (err) {
-          reject(
-            new Error(
-              'Failed to upgrade IDB: ' +
-                (err instanceof Error ? err.message : String(err)),
-            ),
-          );
-        }
-      };
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => {
-        reject(new Error('Failed to open IDB: ' + req.error));
-      };
-    });
-  }
-
-  private async getStore(mode: IDBTransactionMode): Promise<IDBObjectStore> {
-    const db = await this.dbPromise;
-    return db
-      .transaction(INDEXED_DB_STORE_NAME, mode)
-      .objectStore(INDEXED_DB_STORE_NAME);
-  }
-
-  async get(key: string): Promise<any> {
-    const store = await this.getStore(READ_ONLY);
-    return new Promise((resolve, reject) => {
-      const req = store.get(key);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-  }
-
-  async set(key: string, value: any): Promise<void> {
-    // NOTE: We deliberately make this operation transactionless
-    const store = await this.getStore(READ_WRITE);
-    store.put(value, key);
-  }
-
-  async remove(key: string): Promise<void> {
-    // NOTE: We deliberately make this operation transactionless
-    const store = await this.getStore(READ_WRITE);
-    store.delete(key);
-  }
-
-  async clear(): Promise<void> {
-    // NOTE: We deliberately make this operation transactionless
-    const store = await this.getStore(READ_WRITE);
-    store.clear();
-  }
-}
-
 /**
  * Web Storage Proxy object, which selects the best backend available
  * depending on the environment.
@@ -176,20 +95,14 @@ class StorageProxy implements StorageBackend {
 
   constructor() {
     this.backendPromise = (async () => {
-      if (!Byond.TRIDENT && testHubStorage()) {
+      if (testHubStorage()) {
         return new HubStorageBackend();
       }
-      // TODO: Remove with 516
-      if (testIndexedDb()) {
-        try {
-          const backend = new IndexedDbBackend();
-          await backend.dbPromise;
-          return backend;
-        } catch {}
-      }
+
       console.warn(
         'No supported storage backend found. Using in-memory storage.',
       );
+
       return new MemoryBackend();
     })();
   }

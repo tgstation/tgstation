@@ -139,16 +139,15 @@
 /datum/component/style/proc/add_action(action, amount)
 	if(length(actions) > 9)
 		actions.Cut(1, 2)
+	var/action_id = 0
 	if(length(actions))
 		var/last_action = actions[length(actions)]
 		if(action == actions[last_action])
 			amount *= 0.5
-	var/id
-	while(!id || (id in actions))
-		id = "action[rand(1, 1000)]"
-	actions[id] = action
+		action_id = text2num(last_action) + 1
+	actions["[action_id]"] = action
 	change_points(amount)
-	addtimer(CALLBACK(src, PROC_REF(remove_action), id), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_action), action_id), 10 SECONDS)
 
 /datum/component/style/proc/remove_action(action_id)
 	actions -= action_id
@@ -197,7 +196,7 @@
 
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
-	meter.maptext_y = 94 - 12 * length(actions)
+	meter.maptext_y = initial(meter.maptext_y) - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
 
 /datum/component/style/proc/update_meter(new_rank, go_back)
@@ -293,7 +292,7 @@
 			return "#364866"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
-/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, click_parameters)
+/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
 
 	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
@@ -341,7 +340,7 @@
 
 	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked) ? 1.5 : 1))
 
-/datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, give_exp)
+/datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, exp_multiplier)
 	SIGNAL_HANDLER
 
 	if(istype(rock, /turf/closed/mineral/gibtonite))
@@ -360,11 +359,11 @@
 				return
 
 	if(rock.mineralType)
-		if(give_exp)
+		if(exp_multiplier)
 			add_action(ACTION_ORE_MINED, 40)
 		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
-	else if(give_exp)
+	else if(exp_multiplier)
 		add_action(ACTION_ROCK_MINED, 25)
 
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)

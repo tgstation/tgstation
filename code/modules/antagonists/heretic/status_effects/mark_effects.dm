@@ -31,6 +31,10 @@
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+// We WANT to call on_remove when replaced, else effects might not be cleaned up in the case where a mark is applied while a different mark is active.
+/datum/status_effect/eldritch/be_replaced()
+	qdel(src)
+
 /**
  * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
  *
@@ -168,7 +172,7 @@
 
 	return COMPONENT_CANCEL_THROW
 
-/// Signal proc for [COMSIG_MOVABLE_TELEPORTED] that blocks any teleports from our locked area.
+/// Signal proc for [COMSIG_MOVABLE_TELEPORTING] that blocks any teleports from our locked area.
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
@@ -178,7 +182,7 @@
 	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
 	source.Stun(1 SECONDS)
-	return COMPONENT_BLOCK_TELEPORT
+	return TRUE
 
 /// Signal proc for [COMSIG_MOVABLE_MOVED] that blocks any movement out of our locked area
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)

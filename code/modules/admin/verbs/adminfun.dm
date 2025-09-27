@@ -76,6 +76,18 @@ ADMIN_VERB(gib_self, R_ADMIN, "Gibself", "Give yourself the same treatment you g
 	if (istype(ourself))
 		ourself.gib()
 
+ADMIN_VERB(dust_self, R_ADMIN, "Dustself", "Give yourself the same treatment you give others.", ADMIN_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+	log_admin("[key_name(user)] used dustself.")
+	message_admins(span_adminnotice("[key_name_admin(user)] used dustself."))
+	BLACKBOX_LOG_ADMIN_VERB("Dust Self")
+
+	var/mob/living/ourself = user.mob
+	if (istype(ourself))
+		ourself.dust(just_ash = FALSE, drop_items = FALSE, force = TRUE)
+
 ADMIN_VERB(everyone_random, R_SERVER, "Make Everyone Random", "Make everyone have a random appearance.", ADMIN_CATEGORY_FUN)
 	if(SSticker.HasRoundStarted())
 		to_chat(user, "Nope you can't do this, the game's already started. This only works before rounds!", confidential = TRUE)
@@ -164,7 +176,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 	var/configuration_success = smite.configure(user)
 	if (configuration_success == FALSE)
 		return
-	smite.effect(user, target)
+	smite.do_effect(user, target)
 
 /// "Turns" people into objects. Really, we just add them to the contents of the item.
 /proc/objectify(atom/movable/target, path_or_instance)

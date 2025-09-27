@@ -30,7 +30,7 @@
 	/// The owner of the dampener
 	var/mob/living/silicon/robot/host = null
 	/// The field
-	var/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/dampening_field
+	var/datum/proximity_monitor/advanced/bubble/projectile_dampener/peaceborg/dampening_field
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
 	/// Energy cost per tracked projectile per second
@@ -110,11 +110,11 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/equipped()
 	host = loc
 	return ..()
 
-/obj/item/borg/projectile_dampen/equipped()
+/obj/item/borg/projectile_dampen/dropped()
 	host = loc
 	return ..()
 
@@ -128,7 +128,7 @@
 
 /obj/item/borg/projectile_dampen/proc/process_usage(seconds_per_tick)
 	var/usage = 0
-	for(var/projectile as anything in tracked_bullet_cost)
+	for(var/projectile in tracked_bullet_cost)
 		usage += projectile_tick_speed_ecost * seconds_per_tick
 		usage += tracked_bullet_cost[projectile] * projectile_damage_tick_ecost_coefficient * seconds_per_tick
 	energy = clamp(energy - usage, 0, maxenergy)
@@ -173,6 +173,10 @@
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
 
+/obj/item/borg/cyborg_omnitool/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/borg/cyborg_omnitool/Destroy(force)
 	for(var/obj/item/tool_path as anything in atoms)
 		var/obj/item/tool = atoms[tool_path]
@@ -181,6 +185,30 @@
 	atoms.Cut()
 
 	return ..()
+
+/obj/item/borg/cyborg_omnitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!issilicon(user))
+		return
+	var/mob/living/silicon/robot/as_cyborg = user
+	if (!(src in as_cyborg.held_items))
+		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/**
+ * Sets the new internal tool to be used
+ * Arguments
+ *
+ * * obj/item/ref - typepath for the new internal omnitool
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	for(var/obj/item/internal_tool as anything in omni_toolkit)
+		if(internal_tool == tool)
+			reference = internal_tool
+			tool_behaviour = initial(internal_tool.tool_behaviour)
+			break
 
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
 	. = list()
@@ -209,27 +237,39 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
-	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	//the internal tool is considered part of the tool itself, so don't let it be dropped.
+	tool.item_flags |= ABSTRACT
+	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
 	atoms[reference] = tool
 	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
 	//build the radial menu options
 	var/list/radial_menu_options = list()
+	var/list/tool_map = list()
 	for(var/obj/item as anything in omni_toolkit)
-		radial_menu_options[initial(item.name)] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
+		var/tool_name = initial(item.name)
+		radial_menu_options[tool_name] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
+		tool_map[tool_name] = item
 
 	//assign the new tool behaviour
-	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	var/internal_tool_name = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	if(!internal_tool_name)
+		return
 
 	//set the reference & update icons
-	for(var/obj/item/tool as anything in omni_toolkit)
-		if(initial(tool.name) == toolkit_menu)
-			reference = tool
-			tool_behaviour = initial(tool.tool_behaviour)
-			update_appearance(UPDATE_ICON_STATE)
-			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
-			break
+	set_internal_tool(tool_map[internal_tool_name])
+	update_appearance(UPDATE_ICON_STATE)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
+
+/obj/item/borg/cyborg_omnitool/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
+		return ..()
+	var/mob/living/silicon/robot/user = usr
+	if (!(src in user.held_items))
+		attack_self(user)
+	return ..()
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)

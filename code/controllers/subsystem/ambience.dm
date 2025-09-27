@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(ambience)
 	var/volume_modifier = client.prefs.read_preference(/datum/preference/numeric/volume/sound_ship_ambience_volume)
 
 	if(!sound_to_use || !(client.prefs.read_preference(/datum/preference/numeric/volume/sound_ship_ambience_volume)))
-		SEND_SOUND(src, sound(null, repeat = 0, volume = volume_modifier, wait = 0, channel = CHANNEL_BUZZ))
+		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return
 
@@ -136,4 +136,4 @@ SUBSYSTEM_DEF(ambience)
 			return
 
 		client.current_ambient_sound = sound_to_use
-		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol, channel = CHANNEL_BUZZ))
+		SEND_SOUND(src, sound(my_area.ambient_buzz, repeat = 1, wait = 0, volume = my_area.ambient_buzz_vol * (volume_modifier / 100), channel = CHANNEL_BUZZ))

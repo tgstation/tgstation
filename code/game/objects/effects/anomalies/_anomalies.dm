@@ -75,8 +75,10 @@
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect(seconds_per_tick)
+#ifndef UNIT_TESTS // These might move away during a CI run and cause a flaky mapping nearstation errors
 	if(SPT_PROB(move_chance, seconds_per_tick))
 		move_anomaly()
+#endif
 
 /// Move in a direction
 /obj/effect/anomaly/proc/move_anomaly()

@@ -11,10 +11,10 @@
 	integrity_failure = 0.3
 
 	//This is the area where fish can swim
-	var/aquarium_zone_min_px = 2
-	var/aquarium_zone_max_px = 31
-	var/aquarium_zone_min_py = 10
-	var/aquarium_zone_max_py = 28
+	var/aquarium_zone_min_pw = 2
+	var/aquarium_zone_max_pw = 31
+	var/aquarium_zone_min_pz = 10
+	var/aquarium_zone_max_pz = 28
 
 	/// Default beauty of the aquarium, without anything inside it
 	var/default_beauty = 150
@@ -22,9 +22,12 @@
 	///Tracks the fluid type of our aquarium component. Used for the icon suffix of some overlays and splashing water when broken.
 	var/fluid_type = AQUARIUM_FLUID_FRESHWATER
 
+	///The initial mode for the aquarium component
+	var/init_mode = AQUARIUM_MODE_AUTO
+
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/aquarium, aquarium_zone_min_px, aquarium_zone_max_px, aquarium_zone_min_py, aquarium_zone_max_py, default_beauty)
+	AddComponent(/datum/component/aquarium, aquarium_zone_min_pw, aquarium_zone_max_pw, aquarium_zone_min_pz, aquarium_zone_max_pz, default_beauty, init_mode = init_mode)
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
 	update_appearance()
@@ -100,11 +103,10 @@
 
 /obj/structure/aquarium/prefilled
 	anchored = TRUE
+	init_mode = AQUARIUM_MODE_SAFE
 
 /obj/structure/aquarium/prefilled/Initialize(mapload)
 	. = ..()
-
-	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT) //start with safe mode on
 
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)
@@ -151,6 +153,9 @@
 	///The reagent capacity of this fish tank
 	var/reagent_size = 4
 
+	///The initial mode for the aquarium component
+	var/init_mode = AQUARIUM_MODE_AUTO
+
 /obj/item/fish_tank/Initialize(mapload)
 	. = ..()
 	update_appearance()
@@ -164,6 +169,7 @@
 		reagents_size = src.reagent_size,\
 		min_fluid_temp = src.min_fluid_temp,\
 		max_fluid_temp = src.max_fluid_temp,\
+		init_mode = init_mode,\
 	)
 	AddComponent(/datum/component/plumbing/aquarium, start = anchored)
 	RegisterSignal(src, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_aquarium_liquid_changed))
@@ -244,11 +250,10 @@
 
 ///The lawyer's own pet goldfish's fish tank. It used to be an aquarium, but now it can be held and carried around.
 /obj/item/fish_tank/lawyer
+	init_mode = AQUARIUM_MODE_SAFE
 
 /obj/item/fish_tank/lawyer/Initialize(mapload)
 	. = ..()
-
-	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT) //start with safe mode on
 
 	new /obj/item/aquarium_prop/sand(src)
 	new /obj/item/aquarium_prop/seaweed(src)

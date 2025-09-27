@@ -21,13 +21,7 @@
 /obj/item/storage/box/debugtools
 	name = "box of debug tools"
 	icon_state = "syndiebox"
-
-/obj/item/storage/box/debugtools/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_slots = 99
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.max_total_storage = 99
+	storage_type = /datum/storage/box/debug
 
 /obj/item/storage/box/debugtools/PopulateContents()
 	var/static/items_inside = list(
@@ -45,9 +39,10 @@
 		/obj/item/storage/bag/sheetsnatcher/debug=1,
 		/obj/item/uplink/debug=1,
 		/obj/item/uplink/nuclear/debug=1,
-		/obj/item/clothing/ears/earmuffs/debug = 1,
+		/obj/item/clothing/ears/earmuffs/debug=1,
+		/obj/item/gps/visible_debug=1,
 		)
-	generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/plastic
 	name = "plastic box"

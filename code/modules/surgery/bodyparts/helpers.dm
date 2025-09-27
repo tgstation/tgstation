@@ -11,6 +11,15 @@
 		if(bodypart.body_zone == zone)
 			return bodypart
 
+///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.
+/mob/living/carbon/proc/should_have_limb(zone)
+	if(!zone || !dna)
+		return TRUE
+	var/datum/species/carbon_species = dna.species
+	if(zone in carbon_species.bodypart_overrides)
+		return TRUE
+	return FALSE
+
 /// Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
@@ -28,6 +37,24 @@
 
 	new_limb.try_attach_limb(src, special = special)
 	return old_limb // can be null
+
+/// Replaces the chosen limb(zone) to the original one
+/mob/living/carbon/proc/reset_to_original_bodypart(limb_zone)
+	if (!(limb_zone in GLOB.all_body_zones))
+		stack_trace("Invalid zone [limb_zone] provided to reset_to_original_bodypart()")
+		return
+
+	// find old limb to del it first
+	var/obj/item/bodypart/old_limb = get_bodypart(limb_zone)
+	if(old_limb)
+		old_limb.drop_limb(special = TRUE)
+		qdel(old_limb)
+
+	// mаke and attach the original limb
+	var/obj/item/bodypart/original_limb = newBodyPart(limb_zone)
+	original_limb.try_attach_limb(src, TRUE)
+	original_limb.update_limb(is_creating = TRUE)
+	regenerate_icons()
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i)
@@ -90,10 +117,25 @@
 /mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
+/// Returns the bodypart holding the passed item
+/mob/living/carbon/proc/get_hand_of_item(obj/item/I)
+	return get_bodypart(get_hand_zone_of_item(I))
 
-/mob/living/carbon/proc/get_missing_limbs()
+///Returns a list of all limbs this mob should have.
+/mob/living/proc/get_all_limbs() as /list
 	RETURN_TYPE(/list)
-	var/list/full = GLOB.all_body_zones.Copy()
+	return GLOB.all_body_zones.Copy()
+
+///Returns a list of all limbs this mob should have.
+/mob/living/carbon/get_all_limbs()
+	if(dna)
+		return dna.species.bodypart_overrides.Copy()
+	return ..()
+
+///Returns a list of all missing limbs this mob should have on them, but don't.
+/mob/living/carbon/proc/get_missing_limbs() as /list
+	RETURN_TYPE(/list)
+	var/list/full = get_all_limbs()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -110,7 +152,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = GLOB.all_body_zones.Copy()
+	var/list/full = get_all_limbs()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -142,7 +184,7 @@
 /mob/living/carbon/proc/has_embedded_objects(include_harmless = FALSE)
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		for(var/obj/item/embedded as anything in bodypart.embedded_objects)
-			if(!include_harmless && embedded.get_embed().is_harmless())
+			if(!include_harmless && embedded.get_embed().is_harmless(consider_stamina = TRUE))
 				continue
 			return TRUE
 
@@ -151,6 +193,8 @@
 // FUCK YOU AUGMENT CODE - With love, Kapu
 /mob/living/carbon/proc/newBodyPart(zone)
 	var/path = dna.species.bodypart_overrides[zone]
+	if(isnull(path))
+		return null
 	var/obj/item/bodypart/new_bodypart = new path()
 	return new_bodypart
 

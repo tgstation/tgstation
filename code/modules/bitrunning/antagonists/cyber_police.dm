@@ -11,7 +11,7 @@
 
 	convert_agent()
 
-	var/datum/martial_art/the_sleeping_carp/carp = new()
+	var/datum/martial_art/the_sleeping_carp/carp = new(src)
 	carp.teach(owner.current)
 
 /datum/outfit/cyber_police
@@ -37,4 +37,3 @@
 		officer_uniform.has_sensor = NO_SENSORS
 		officer_uniform.sensor_mode = SENSOR_OFF
 		user.update_suit_sensors()
-

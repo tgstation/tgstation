@@ -13,7 +13,7 @@
 			from other identification cards. In addition, they can be forged to display a new assignment, name and trim. \
 			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
 			with these cards."
-	item = /obj/item/card/id/advanced/chameleon
+	item = /obj/item/card/id/advanced/chameleon/elite
 	cost = 2
 
 /datum/uplink_item/stealthy_tools/ai_detector
@@ -62,7 +62,7 @@
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	cost = 4
+	cost = 2
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/emplight/New()
@@ -71,10 +71,10 @@
 		cost *= 3
 
 /datum/uplink_item/stealthy_tools/mulligan
-	name = "Mulligan"
-	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
-			and appearance."
-	item = /obj/item/reagent_containers/syringe/mulligan
+	name = "Mulligan Kit"
+	desc = "Screwed up and have security on your tail? This handy syringe and set of documents will give you a completely new identity \
+			and appearance, intercepting Nanotrasen communications to announce you as a freshly recruited Assistant."
+	item = /obj/item/storage/box/syndie_kit/mulligan
 	cost = 4
 	surplus = 30
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS)
@@ -83,7 +83,7 @@
 	name = "Radio Jammer"
 	desc = "This device will disrupt any nearby outgoing radio communication when activated. Does not affect binary chat."
 	item = /obj/item/jammer
-	cost = 5
+	cost = 1
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"

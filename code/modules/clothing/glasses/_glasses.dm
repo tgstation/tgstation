@@ -4,10 +4,11 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/glasses_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
+	abstract_type = /obj/item/clothing/glasses
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_EYES
-	strip_delay = 20
-	equip_delay_other = 25
+	strip_delay = 2 SECONDS
+	equip_delay_other = 2.5 SECONDS
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	gender = PLURAL
@@ -30,7 +31,7 @@
 /obj/item/clothing/glasses/Initialize(mapload)
 	. = ..()
 	if(glass_colour_type)
-		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, forced = forced_glass_color)
+		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
 
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -64,10 +65,10 @@
 
 /obj/item/clothing/glasses/proc/change_glass_color(new_color_type)
 	if(glass_colour_type)
-		RemoveElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, forced = forced_glass_color)
+		RemoveElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
 	glass_colour_type = new_color_type
 	if(glass_colour_type)
-		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, forced = forced_glass_color)
+		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
@@ -95,7 +96,6 @@
 	color_cutoffs = list(10, 35, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
-	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/meson/night/update_icon_state()
 	. = ..()
@@ -130,10 +130,6 @@
 	fire = 80
 	acid = 100
 
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return 1
-
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
@@ -147,7 +143,6 @@
 	color_cutoffs = list(30, 5, 15)
 	glass_colour_type = /datum/client_colour/glass_colour/lightpurple
 	actions_types = list(/datum/action/item_action/toggle_nv)
-	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/science/night/update_icon_state()
 	. = ..()
@@ -164,15 +159,10 @@
 	color_cutoffs = list(10, 25, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
-	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/night/update_icon_state()
 	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
-
-/obj/item/clothing/glasses/night/colorless
-	desc = parent_type::desc + " Now with 50% less green!"
-	forced_glass_color = FALSE
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -259,6 +249,7 @@
 	inhand_icon_state = "headset" // lol
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
@@ -446,7 +437,7 @@
 /obj/item/clothing/glasses/sunglasses/noir
 	name = "noir glasses"
 	desc = "A pair of sleek, futuristic glasses that allow the wearer to see the world in a different light."
-	glass_colour_type = /datum/client_colour/monochrome
+	glass_colour_type = /datum/client_colour/monochrome/glasses
 	forced_glass_color =  TRUE
 
 ///Syndicate item that upgrades the flash protection of your eyes.

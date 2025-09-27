@@ -1,6 +1,6 @@
 /// A list of all of the `/obj/machinery/telecomms` (and subtypes) machines
 /// that exist in the world currently.
-GLOBAL_LIST_EMPTY(telecomms_list)
+GLOBAL_LIST_EMPTY(telecomm_machines)
 
 /**
  * The basic telecomms machinery type, implementing all of the logic that's
@@ -61,12 +61,14 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 	// Loop through all linked machines and send the signal or copy.
 
+	var/list/connected_zs = SSmapping.get_connected_levels(get_turf(src))
 	for(var/obj/machinery/telecomms/filtered_machine in links_by_telecomms_type?[filter])
 		if(!filtered_machine.on)
 			continue
 		if(amount && send_count >= amount)
 			break
-		if(z != filtered_machine.loc.z && !long_range_link && !filtered_machine.long_range_link)
+		var/turf/filtered_home = get_turf(filtered_machine)
+		if(!(filtered_home.z in connected_zs) && !long_range_link && !filtered_machine.long_range_link)
 			continue
 
 		send_count++
@@ -101,35 +103,29 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
-	GLOB.telecomms_list += src
+	GLOB.telecomm_machines += src
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/post_machine_initialize()
 	. = ..()
-	for(var/obj/machinery/telecomms/telecomms_machine in GLOB.telecomms_list)
-		if (long_range_link || IN_GIVEN_RANGE(src, telecomms_machine, 20))
-			add_automatic_link(telecomms_machine)
+	var/list/connected_zs = SSmapping.get_connected_levels(get_turf(src))
+	for(var/obj/machinery/telecomms/telecomms_machine as anything in GLOB.telecomm_machines)
+		if(telecomms_machine == src)
+			continue
+		var/turf/their_home = get_turf(telecomms_machine)
+		if (!(long_range_link && telecomms_machine.long_range_link) && !(GET_CARDINAL_DIST(src, telecomms_machine) <= 20 || (their_home.z in connected_zs)))
+			continue
+		if(!length(telecomms_machine.autolinkers & autolinkers))
+			continue
+		add_new_link(telecomms_machine)
 
 /obj/machinery/telecomms/Destroy()
-	GLOB.telecomms_list -= src
-	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
+	GLOB.telecomm_machines -= src
+	for(var/obj/machinery/telecomms/comm as anything in GLOB.telecomm_machines)
 		remove_link(comm)
 	links = list()
 	return ..()
-
-/// Handles the automatic linking of another machine to this one.
-/obj/machinery/telecomms/proc/add_automatic_link(obj/machinery/telecomms/machine_to_link)
-	var/turf/position = get_turf(src)
-	var/turf/T_position = get_turf(machine_to_link)
-	if((position.z != T_position.z) && !(long_range_link && machine_to_link.long_range_link))
-		return
-	if(src == machine_to_link)
-		return
-	for(var/autolinker_id in autolinkers)
-		if(autolinker_id in machine_to_link.autolinkers)
-			add_new_link(machine_to_link)
-			return
 
 /obj/machinery/telecomms/update_icon_state()
 	icon_state = "[initial(icon_state)][panel_open ? "_o" : null][on ? null : "_off"]"

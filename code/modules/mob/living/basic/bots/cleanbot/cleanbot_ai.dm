@@ -14,6 +14,7 @@
 		BB_FRIENDLY_MESSAGE = "empathetically acknowledges your hardwork and tough circumstances",
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/pet_planning/cleanbot,
 		/datum/ai_planning_subtree/cleaning_subtree,
@@ -37,7 +38,6 @@
 		BB_CLEANABLE_DRAWINGS = CLEANBOT_CLEAN_DRAWINGS,
 		BB_HUNTABLE_TRASH = CLEANBOT_CLEAN_TRASH,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -145,13 +145,10 @@
 		controller.clear_blackboard_key(target_key)
 		return
 	var/list/speech_list = controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]
-	if(!length(speech_list))
-		return
-	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(living_pawn)) // pawn can be null at this point
-		controller.clear_blackboard_key(target_key)
-		return
-	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
+	if(length(speech_list))
+		var/mob/living/living_pawn = controller.pawn
+		if(!QDELETED(living_pawn)) // pawn can be null at this point
+			living_pawn.say(pick(speech_list), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area

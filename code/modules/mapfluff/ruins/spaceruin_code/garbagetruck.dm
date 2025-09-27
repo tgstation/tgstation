@@ -18,7 +18,7 @@
 	. = ..()
 	icon_state = "[base_icon_state][used ? "-used" : ""]"
 
-/obj/item/eyesnatcher/attack(mob/living/carbon/human/target, mob/living/user, params)
+/obj/item/eyesnatcher/attack(mob/living/carbon/human/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(used || !istype(target) || !target.Adjacent(user)) //Works only once, no TK use
 		return ..()
 
@@ -72,7 +72,7 @@
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
 	notify_ghosts(
-		"[target] has just had their eyes snatched!",
+		"[target.real_name] has just had their eyes snatched!",
 		source = target,
 		header = "Ouch!",
 	)

@@ -3,6 +3,22 @@
 	Piercing wounds
 */
 /datum/wound/pierce
+	undiagnosed_name = "Puncture"
+	threshold_penalty = 5
+
+/datum/wound/pierce/get_self_check_description(self_aware)
+	if(!limb.can_bleed())
+		return ..()
+
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return span_danger("It's leaking blood from a small [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_MODERATE)
+			return span_warning("It's leaking blood from a [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_SEVERE)
+			return span_boldwarning("It's leaking blood from a serious [LOWER_TEXT(undiagnosed_name || name)]!")
+		if(WOUND_SEVERITY_CRITICAL)
+			return span_boldwarning("It's leaking blood from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
@@ -72,7 +88,7 @@
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
-	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+	if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
@@ -91,9 +107,9 @@
 			if(QDELETED(src))
 				return
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(victim, span_notice("You feel the [LOWER_TEXT(name)] in your [limb.plaintext_zone] firming up from the cold!"))
+				to_chat(victim, span_notice("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
-		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	//gauze always reduces blood flow, even for non bleeders
@@ -193,7 +209,7 @@
 	clot_rate = 0.03
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
-	threshold_penalty = 20
+	series_threshold_penalty = 20
 	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scar_keyword = "piercemoderate"
 
@@ -216,6 +232,23 @@
 	if (isprojectile(damage_source))
 		return 0
 	return weight
+
+/datum/wound/pierce/bleed/moderate/needle_fail //for blood testamajig
+	name = "Pinprick Pierce"
+	desc = "Patient's skin has been deeply pierced, causing mild bleeding."
+	treat_text_short = "Apply bandaging or suturing."
+	examine_desc = "has a small red pinprick, gently bleeding"
+	initial_flow = 0.5 //very minor, mostly there as fluff and "dont do that idiot" reminder
+	gauzed_clot_rate = 0.1
+	clot_rate = 0.03 // will close quickly on its own
+	internal_bleeding_chance = 0
+	internal_bleeding_coefficient = 1
+	threshold_penalty = 5
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/pinprick
+	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/needle_fail
+	can_be_randomly_generated = FALSE
+	abstract = FALSE
 
 /datum/wound/pierce/bleed/moderate/projectile
 	name = "Minor Skin Penetration"
@@ -255,7 +288,7 @@
 	clot_rate = 0.02
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
-	threshold_penalty = 35
+	series_threshold_penalty = 35
 	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scar_keyword = "piercesevere"
 
@@ -334,6 +367,24 @@
 		return FALSE
 	return ..()
 
+/datum/wound/pierce/bleed/severe/magicalearpain //what happens if you try to listen to the heartbeat of a corrupt heart while not a heretic
+	name = "Bleeding Ears"
+	desc = "Patient's ears are bleeding heavily as blood seeps through the inner flesh of the ear through some unknown means."
+	examine_desc = "is covered in blood, black-purple fluid flowing from its ears"
+	occur_text = "is soaked as two spurts of black liquid spray from its ears"
+	internal_bleeding_chance = 0 // just your ears
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/magicalearpain
+	wound_path_to_generate = /datum/wound/pierce/bleed/severe/magicalearpain
+	viable_zones = list(BODY_ZONE_HEAD)
+	can_be_randomly_generated = FALSE
+
+/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing)
+	var/obj/item/organ/ears/ears = locate() in limb
+	if (!istype(ears))
+		return FALSE
+	. = ..()
+
 /datum/wound/pierce/bleed/critical
 	name = "Ruptured Cavity"
 	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
@@ -349,7 +400,7 @@
 	gauzed_clot_rate = 0.4
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
-	threshold_penalty = 50
+	threshold_penalty = 15
 	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scar_keyword = "piercecritical"
 	wound_flags = (ACCEPTS_GAUZE | MANGLES_EXTERIOR | CAN_BE_GRASPED)

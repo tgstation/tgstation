@@ -12,7 +12,7 @@
 	maxHealth = 150
 	health = 150
 	obj_damage = 15
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
+	mob_biotypes = MOB_ORGANIC|MOB_CRUSTACEAN|MOB_AQUATIC|MOB_MINING
 	melee_damage_lower = 15
 	melee_damage_upper = 19
 	attack_verb_continuous = "snips"
@@ -42,6 +42,7 @@
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
@@ -58,10 +59,16 @@
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, charge)
 	var/static/list/fishable_turfs = typecacheof(list(/turf/open/lava))
 	ai_controller.set_blackboard_key(BB_FISHABLE_LIST, fishable_turfs)
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/basic/mining/lobstrosity/Destroy()
 	QDEL_NULL(charge)
 	return ..()
+
+/mob/living/basic/mining/lobstrosity/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /mob/living/basic/mining/lobstrosity/ranged_secondary_attack(atom/atom_target, modifiers)
 	charge.Trigger(target = atom_target)
@@ -75,12 +82,12 @@
 		/datum/pet_command/move,
 		/datum/pet_command/attack,
 		charge_command,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/fish,
 	)
 	AddComponent(/datum/component/happiness)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	ai_controller.ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_controller.ai_traits |= STOP_MOVING_WHEN_PULLED
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

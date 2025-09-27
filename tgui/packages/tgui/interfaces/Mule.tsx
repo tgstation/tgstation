@@ -6,7 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -156,7 +156,7 @@ export const Mule = (props) => {
 
   return (
     <Window width={350} height={500}>
-      <Window.Content>
+      <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <Section
           title="Status"

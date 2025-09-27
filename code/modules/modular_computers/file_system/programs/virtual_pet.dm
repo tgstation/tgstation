@@ -175,10 +175,12 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/proc/post_cleaned(mob/source, mob/user)
 	SIGNAL_HANDLER
 
+	. = NONE
 	source.spin(spintime = 2 SECONDS, speed = 1) //celebrate!
 	happiness = min(happiness + PET_CLEAN_BONUS, max_happiness)
 	COOLDOWN_START(src, on_clean_cooldown, 1 MINUTES)
 	START_PROCESSING(SSprocessing, src)
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 ///manage the pet's hat offsets when he changes direction
 /datum/computer_file/program/virtual_pet/proc/on_change_dir(datum/source, old_dir, new_dir)
@@ -214,18 +216,19 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 /datum/computer_file/program/virtual_pet/proc/alter_profile_picture()
 	var/image/pet_preview = image(icon = 'icons/ui/virtualpet/pet_state.dmi', icon_state = "pet_preview")
-	if(LAZYACCESS(pet.atom_colours, FIXED_COLOUR_PRIORITY))
-		pet_preview.color = pet.atom_colours[FIXED_COLOUR_PRIORITY]
+	if(pet.cached_color_filter)
+		pet_preview.color = apply_matrix_to_color(COLOR_WHITE, pet.cached_color_filter["color"], pet.cached_color_filter["space"] || COLORSPACE_RGB)
+	else if (pet.color)
+		pet_preview.color = pet.color
 
 	if(length(selected_hat))
 		var/mutable_appearance/our_selected_hat = selected_hat["appearance"]
-		var/mutable_appearance/hat_preview = mutable_appearance(our_selected_hat.icon, our_selected_hat.icon_state)
-		hat_preview.pixel_y = -9 + selected_hat["worn_offset"]
+		var/mutable_appearance/hat_preview = mutable_appearance(our_selected_hat.icon, our_selected_hat.icon_state, appearance_flags = RESET_COLOR|KEEP_APART)
+		hat_preview.pixel_z = -9 + selected_hat["worn_offset"]
 		var/list/spec_hat = special_hat_placement[selected_hat["type"]]?["south"]
 		if(spec_hat)
 			hat_preview.pixel_w += spec_hat[1]
 			hat_preview.pixel_z += spec_hat[2]
-		hat_preview.appearance_flags = RESET_COLOR
 		pet_preview.add_overlay(hat_preview)
 
 	profile_picture = getFlatIcon(pet_preview, no_anim = TRUE)
@@ -431,7 +434,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/ui_static_data(mob/user)
 	var/list/data = list()
 	data["pet_state_icons"] = list()
-	for(var/list_index as anything in pet_state_icons)
+	for(var/list_index in pet_state_icons)
 		var/list/sprite_location = pet_state_icons[list_index]
 		data["pet_state_icons"] += list(list(
 			"name" = list_index,
@@ -443,7 +446,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		"hat_name" = "none",
 	))
 
-	for(var/type_index as anything in hat_selections)
+	for(var/type_index in hat_selections)
 		if(level >= hat_selections[type_index])
 			var/obj/item/hat = type_index
 			var/hat_name = initial(hat.name)
@@ -504,7 +507,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 				else
 					selected_hat["type"] = chosen_type
 					var/state_to_use = initial(chosen_type.worn_icon_state) || initial(chosen_type.icon_state)
-					var/mutable_appearance/selected_hat_appearance = mutable_appearance(initial(chosen_type.worn_icon), state_to_use, appearance_flags = RESET_COLOR)
+					var/mutable_appearance/selected_hat_appearance = mutable_appearance(initial(chosen_type.worn_icon), state_to_use, appearance_flags = RESET_COLOR|KEEP_APART)
 					selected_hat["worn_offset"] = initial(chosen_type.worn_y_offset)
 					var/list/scale_list = special_hat_placement[chosen_type]?["scale"]
 					if(scale_list)
@@ -584,7 +587,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	announce_global_updates(message = "has found a chocolate at [selected_area.name]")
 	selected_area = null
 	var/obj/item/food/virtual_chocolate/chocolate = new(get_turf(computer))
-	chocolate.AddElement(/datum/element/temporary_atom, life_time = 30 SECONDS) //we cant maintain its existence for too long!
+	chocolate.fade_into_nothing(life_time = 30 SECONDS) //we cant maintain its existence for too long!
 
 /datum/computer_file/program/virtual_pet/proc/recall_pet(mob/living/friend)
 	animate(pet, transform = matrix().Scale(0.3, 0.3), time = 1.5 SECONDS)

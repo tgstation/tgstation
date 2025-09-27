@@ -18,6 +18,12 @@
 	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \
 	WILDCARD_NAME_PRV_COMMAND = list(limit = 1, usage = list()) \
 )
+/// The Platinum card, an in between of silver and gold, which can have infinite common but is still limited in command
+#define WILDCARD_LIMIT_PLATINUM list( \
+	WILDCARD_NAME_COMMON = list(limit = -1, usage = list()), \
+	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \
+	WILDCARD_NAME_PRV_COMMAND = list(limit = 1, usage = list()) \
+)
 /// Wildcard slot define for Captain gold cards. Can hold infinite of any Captain level wildcard.
 #define WILDCARD_LIMIT_GOLD list(WILDCARD_NAME_CAPTAIN = list(limit = -1, usage = list()))
 /// Wildcard slot define for select Syndicate-affiliated cards. Can hold infinite of any Syndicate level wildcard. Syndicate includes all station accesses.
@@ -28,7 +34,7 @@
 #define WILDCARD_LIMIT_CENTCOM list(WILDCARD_NAME_CENTCOM = list(limit = -1, usage = list()))
 /// Wildcard slot define for Prisoner orange cards. No wildcard slots.
 #define WILDCARD_LIMIT_PRISONER list()
-/// Wildcard slot define for Chameleon/Agent ID grey cards. Can hold 6 common, 2 command and 1 captain access.
+/// Wildcard slot define for the cargo variant of agent ID. Can hold 6 common, 2 command and 1 captain access.
 #define WILDCARD_LIMIT_CHAMELEON list( \
 	WILDCARD_NAME_COMMON = list(limit = 6, usage = list()), \
 	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \

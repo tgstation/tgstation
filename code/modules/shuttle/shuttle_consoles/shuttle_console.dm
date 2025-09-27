@@ -28,6 +28,10 @@
 	var/locked = FALSE
 	/// List of head revs who have already clicked through the warning about not using the console
 	var/static/list/dumb_rev_heads = list()
+	///the remote control device linked
+	var/datum/weakref/remote_ref
+	///may this console be remote controlled?
+	var/may_be_remote_controlled = FALSE
 	/// Authorization request cooldown to prevent request spam to admin staff
 	COOLDOWN_DECLARE(request_cooldown)
 
@@ -99,6 +103,9 @@
 	if(!length(data["locations"]))
 		data["locked"] = TRUE
 		data["status"] = "Locked"
+	if(!mobile_docking_port.canMove())
+		data["locked"] = TRUE
+		data["status"] = "Immobile"
 	return data
 
 /**
@@ -239,6 +246,7 @@
 		possible_destinations = replacetext(replacetextEx(possible_destinations, "[shuttleId]_custom", ""), ";;", ";")
 	shuttleId = port.shuttle_id
 	possible_destinations += ";[port.shuttle_id]_custom"
+	return TRUE
 
 #undef SHUTTLE_CONSOLE_ACCESSDENIED
 #undef SHUTTLE_CONSOLE_ENDGAME

@@ -100,7 +100,7 @@
 			var/datum/track/new_track = new()
 			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
 			var/list/track_data = splittext(track_file, "+")
-			if(length(track_data) != 3)
+			if(length(track_data) < 3)
 				continue
 			new_track.song_name = track_data[1]
 			new_track.song_length = text2num(track_data[2])
@@ -215,9 +215,9 @@
 		RegisterSignal(new_listener, COMSIG_MOB_LOGIN, PROC_REF(listener_login))
 		return
 
-	RegisterSignal(new_listener, COMSIG_MOVABLE_MOVED, PROC_REF(listener_moved))
+	RegisterSignals(new_listener, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_JUKEBOX_PREFERENCE_APPLIED), PROC_REF(listener_moved))
 	RegisterSignals(new_listener, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deaf))
-	var/pref_volume = new_listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
+	var/pref_volume = new_listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_jukebox)
 	if(HAS_TRAIT(new_listener, TRAIT_DEAF) || !pref_volume)
 		listeners[new_listener] |= SOUND_MUTE
 
@@ -280,7 +280,7 @@
 
 	if((reason & MUTE_DEAF) && HAS_TRAIT(listener, TRAIT_DEAF))
 		return FALSE
-	var/pref_volume = listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
+	var/pref_volume = listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_jukebox)
 	if((reason & MUTE_PREF) && !pref_volume)
 		return FALSE
 
@@ -309,6 +309,7 @@
 		COMSIG_MOB_LOGIN,
 		COMSIG_QDELETING,
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOB_JUKEBOX_PREFERENCE_APPLIED,
 		SIGNAL_ADDTRAIT(TRAIT_DEAF),
 		SIGNAL_REMOVETRAIT(TRAIT_DEAF),
 	))
@@ -341,6 +342,13 @@
 
 		active_song_sound.x = new_x
 		active_song_sound.z = new_z
+
+		var/pref_volume = listener.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_jukebox)
+		if(!pref_volume)
+			listeners[listener] |= SOUND_MUTE
+		else
+			unmute_listener(listener, MUTE_PREF)
+			active_song_sound.volume = volume * (pref_volume/100)
 
 	SEND_SOUND(listener, active_song_sound)
 

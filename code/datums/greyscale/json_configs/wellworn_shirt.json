@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "worn_clean",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"wornout_shirt": [
@@ -12,7 +12,7 @@
 			"type": "icon_state",
 			"icon_state": "worn_out",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"messyworn_shirt": [
@@ -20,7 +20,7 @@
 			"type": "icon_state",
 			"icon_state": "worn_messy",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

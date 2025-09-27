@@ -167,7 +167,7 @@
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
 
-	var/datum/martial_art/plasma_fist/martial = usr.mind.martial_art
+	var/datum/martial_art/plasma_fist/martial = GET_ACTIVE_MARTIAL_ART(src)
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
 	to_chat(usr, "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back.")
 	to_chat(usr, "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them.")

@@ -16,6 +16,8 @@
 	drop_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_pickup1.ogg'
 	tac_reloads = FALSE
+	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	var/need_bolt_lock_to_interact = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
@@ -27,6 +29,13 @@
 		return
 	drop_bolt(user)
 
+
+/obj/item/gun/ballistic/rifle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(need_bolt_lock_to_interact && !bolt_locked && !istype(tool, /obj/item/knife))
+		balloon_alert(user, "bolt closed!")
+		return
+
+	return ..()
 
 /obj/item/gun/ballistic/rifle/can_shoot()
 	if (bolt_locked)
@@ -58,6 +67,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_be_sawn_off = TRUE
 	weapon_weight = WEAPON_HEAVY
+	need_bolt_lock_to_interact = TRUE
 	var/jamming_chance = 20
 	var/unjam_chance = 10
 	var/jamming_increment = 5
@@ -97,13 +107,6 @@
 			jamming_chance = clamp (jamming_chance, 0, 100)
 	return ..()
 
-/obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
-	if(!bolt_locked && !istype(item, /obj/item/knife))
-		balloon_alert(user, "bolt closed!")
-		return
-
-	. = ..()
-
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
 	if(chambered?.loaded_projectile)
@@ -134,6 +137,8 @@
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Cutting the weapon down seems to have not helped with the moisture problem."
 	icon_state = "sakhno_tactifucked"
+	inhand_icon_state = "slopno"
+	worn_icon_state = "slopno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
@@ -328,7 +333,7 @@
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate
 	burst_size = 3 //but it empties the entire magazine when it fires
-	fire_delay = 0.3 // and by empties, I mean it does it all at once
+	burst_delay = 0.3 // and by empties, I mean it does it all at once
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
@@ -366,7 +371,7 @@
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	icon_state = "enchanted_rifle"
-	inhand_icon_state = "sakhno"
+	inhand_icon_state = "enchanted"
 	worn_icon_state = "enchanted_rifle"
 	slot_flags = ITEM_SLOT_BACK
 	var/guns_left = 30
@@ -406,7 +411,7 @@
 	name = "anti-materiel sniper rifle"
 	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
 		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
-		It is also able to be suppressed....somehow."
+		It is also able to be suppressed... somehow."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "sniper"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -442,7 +447,7 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
-/obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
+/obj/item/gun/ballistic/rifle/sniper_rifle/reset_fire_cd()
 	. = ..()
 	if(suppressed)
 		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
@@ -452,6 +457,65 @@
 /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
 	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
 		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
-		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
+		It is also able to be suppressed... somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
 		Who knows what that might mean."
 	pin = /obj/item/firing_pin/implant/pindicate
+
+// SKS semi-automatic rifle //
+
+/obj/item/gun/ballistic/rifle/sks
+	name = "\improper Sakhno SKS semi-automatic rifle"
+	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. Produced to celebrate the \
+		establishment of the Third Soviet Union in the Spinward Sector. In the wake of the union's collapse, these weapons now hold a \
+		unique place in history amongst the populace of the sector. However, they are strangely rarer than the Sakhno M2442 Army. \
+		Frontier settlers are known for owning one of these for hunting purposes. Or fighting off annoying tax collectors."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "sks"
+	worn_icon_state = "sks"
+	inhand_icon_state = "sks"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/sks
+	need_bolt_lock_to_interact = TRUE
+	semi_auto = TRUE
+	slot_flags = ITEM_SLOT_BACK
+	projectile_damage_multiplier = 0.5
+
+	SET_BASE_PIXEL(-8, 0)
+
+/obj/item/gun/ballistic/rifle/sks/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 38, offset_y = 12)
+
+/obj/item/gun/ballistic/rifle/sks/chekhov
+	name = "\improper Chekhov's SKS semi-automatic rifle"
+	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. The name \
+		'Chekhov' is engraved in the side of the stock. You feel like this had some kind of significance at one point, \
+		but you cannot be sure as to what that might have been. Or whether that true meaning has yet to reveal itself."
+
+/obj/item/gun/ballistic/rifle/sks/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/sks/empty
+
+// lahti-l39 anti material rifle //
+
+/obj/item/gun/ballistic/automatic/lahti
+	name = "\improper Lahti L-39"
+	desc = "The Lahti L-39, now manufactured in space with better materials making it more portable and reliable- still loaded in the same massive cartridge, \
+		this thing was made to go through a tank and come out the other end- imagine what it could do to an exosuit, there's also a completely useless sight which is totally obstructed by the magazine."
+	icon = 'icons/obj/weapons/guns/lahtil39.dmi'
+	icon_state = "lahtil"
+	inhand_icon_state = "sniper"
+	worn_icon_state = "sniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
+	mag_display = FALSE
+	recoil = 15
+	w_class = WEIGHT_CLASS_BULKY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/lahtimagazine
+	fire_delay = 8 SECONDS
+	slowdown = 2
+	burst_size = 1
+	slot_flags = ITEM_SLOT_BACK
+	actions_types = list()
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3

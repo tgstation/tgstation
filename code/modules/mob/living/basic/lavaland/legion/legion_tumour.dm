@@ -60,7 +60,7 @@
 	. = ..()
 	owner.log_message("has received [src] which will eventually turn them into a Legion.", LOG_VICTIM)
 
-/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, params)
+/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (try_apply(target, user))
 		qdel(src)
 		return
@@ -72,7 +72,7 @@
 		return FALSE
 
 	if (target.stat <= SOFT_CRIT && !(organ_flags & ORGAN_FAILING))
-		target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
+		target.add_mood_event("legion_core", /datum/mood_event/healsbadman)
 		target.apply_status_effect(applied_status)
 
 		if (target != user)
@@ -86,7 +86,7 @@
 
 	log_combat(user, target, "used a Legion Tumour on", src, "as they are in crit, this will turn them into a Legion.")
 	target.visible_message(span_boldwarning("[user] splatters [target] with [src]... and it springs into horrible life!"))
-	var/mob/living/basic/legion_brood/skull = new(target.loc)
+	var/mob/living/basic/mining/legion_brood/skull = new(target.loc)
 	skull.melee_attack(target)
 	return TRUE
 
@@ -125,7 +125,7 @@
 				if (prob(50))
 					var/turf/check_turf = get_step(owner.loc, owner.dir)
 					var/atom/land_turf = (check_turf.is_blocked_turf()) ? owner.loc : check_turf
-					var/mob/living/basic/legion_brood/child = new(land_turf)
+					var/mob/living/basic/mining/legion_brood/child = new(land_turf)
 					child.assign_creator(owner, copy_full_faction = FALSE)
 
 			if(SPT_PROB(3, seconds_per_tick))
@@ -164,3 +164,7 @@
 	to_chat(finder, span_notice("Its pulsing tendrils reach all throughout the body."))
 	if(prob(stage * 2))
 		infest()
+
+/obj/item/organ/legion_tumour/feel_for_damage(self_aware)
+	// keep stealthy for now, revisit later
+	return ""

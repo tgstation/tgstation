@@ -39,7 +39,7 @@
 
 /datum/computer_file/program/science/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 // heavy data from this proc should be moved to static data when possible
@@ -111,7 +111,7 @@
 			if(computer.obj_flags & EMAGGED)
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
-			if(lock_access in computer?.computer_id_slot?.access)
+			if(lock_access in computer?.stored_id?.access)
 				locked = !locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
@@ -167,7 +167,7 @@
 
 	// Build design cache
 	var/design_cache = list()
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 	for (var/design_id in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_id] || SSresearch.error_design

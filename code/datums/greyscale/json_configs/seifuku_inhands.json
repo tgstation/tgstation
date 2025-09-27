@@ -1,0 +1,22 @@
+{
+	"seifuku": [
+		{
+			"type": "icon_state",
+			"icon_state": "seifuku_ribbon",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seifuku_skirt",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "seifuku_shirt",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}

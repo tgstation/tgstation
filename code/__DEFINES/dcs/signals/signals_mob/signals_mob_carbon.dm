@@ -23,11 +23,11 @@
 ///from base of /obj/item/bodypart/proc/can_attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_ATTEMPT_CARBON_ATTACH_LIMB "attempt_carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
-///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special, lazy)
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
-/// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special)
+/// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special, lazy)
 #define COMSIG_BODYPART_ATTACHED "bodypart_attached"
-///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special, lazy)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
 #define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"
@@ -66,13 +66,6 @@
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
 ///from /item/organ/proc/Remove() (/obj/item/organ/)
 #define COMSIG_CARBON_LOSE_ORGAN "carbon_lose_organ"
-///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
-#define COMSIG_CARBON_EQUIP_HAT "carbon_equip_hat"
-///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
-#define COMSIG_CARBON_UNEQUIP_HAT "carbon_unequip_hat"
-///from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
-#define COMSIG_CARBON_UNEQUIP_SHOECOVER "carbon_unequip_shoecover"
-#define COMSIG_CARBON_EQUIP_SHOECOVER "carbon_equip_shoecover"
 ///Called when someone attempts to cuff a carbon
 #define COMSIG_CARBON_CUFF_ATTEMPTED "carbon_attempt_cuff"
 	#define COMSIG_CARBON_CUFF_PREVENT (1<<0)
@@ -84,8 +77,10 @@
 #define COMSIG_CARBON_GAIN_ADDICTION "carbon_gain_addiction"
 ///Called when a carbon is no longer addicted (source = what addiction datum was lost, addicted_mind = mind of the freed carbon)
 #define COMSIG_CARBON_LOSE_ADDICTION "carbon_lose_addiction"
-///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added) - this is before on_gain()
+///Called when a carbon gets a brain trauma (source = carbon, trauma = what trauma was added, resilience = the resilience of the trauma given, if set differently from the default) - this is before on_gain()
 #define COMSIG_CARBON_GAIN_TRAUMA "carbon_gain_trauma"
+	/// Return if you want to prevent the carbon from gaining the brain trauma.
+	#define COMSIG_CARBON_BLOCK_TRAUMA (1 << 0)
 ///Called when a carbon loses a brain trauma (source = carbon, trauma = what trauma was removed)
 #define COMSIG_CARBON_LOSE_TRAUMA "carbon_lose_trauma"
 ///Called when a carbon's health hud is updated. (source = carbon, shown_health_amount)
@@ -112,6 +107,8 @@
 #define COMSIG_CARBON_APPLY_OVERLAY "carbon_apply_overlay"
 ///Called from remove_overlay(cache_index, overlay)
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
+///Called when a carbon checks their mood
+#define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
 
 // /mob/living/carbon/human signals
 
@@ -149,9 +146,6 @@
 ///from base of /mob/living/carbon/regenerate_limbs(): (excluded_limbs)
 #define COMSIG_CARBON_REGENERATE_LIMBS "living_regen_limbs"
 
-///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
-#define COMSIG_CARBON_ITEM_GIVEN "carbon_item_given"
-
 /// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
 #define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
 	/// Return to prevent all default blood handling
@@ -173,3 +167,18 @@
 #define COMSIG_MUTATION_GAINED "mutation_gained"
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
+
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+#define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+#define COMSIG_HUMAN_PUNCHED "human_punched"
+
+/// Called at the very end of human character setup
+/// At this point all quirks are assigned and the mob has a mind / client
+#define COMSIG_HUMAN_CHARACTER_SETUP_FINISHED "human_character_setup_finished"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
+
+//from base of [/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob]: (seconds_per_tick)
+#define COMSIG_CARBON_EXPOSED_TO_SMOKE "carbon_exposed_to_smoke"

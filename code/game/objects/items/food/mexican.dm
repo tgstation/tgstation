@@ -26,7 +26,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("torilla" = 2, "beans" = 3)
-	foodtypes = GRAIN
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -42,7 +42,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("torilla" = 2, "beans" = 3, "cheese" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -58,10 +58,11 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("torilla" = 2, "meat" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = VEGETABLES|GRAIN|MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/fuegoburrito
 	name = "fuego plasma burrito"
@@ -75,7 +76,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("torilla" = 2, "beans" = 3, "hot peppers" = 1)
-	foodtypes = GRAIN
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -122,7 +123,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("nachos" = 2, "hot pepper" = 1)
-	foodtypes = VEGETABLES | FRIED | DAIRY
+	foodtypes = VEGETABLES|FRIED|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -142,6 +143,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/taco/plain
 	name = "plain taco"
@@ -164,6 +166,7 @@
 	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
 	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/enchiladas
 	name = "enchiladas"
@@ -178,9 +181,10 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/stuffedlegion
 	name = "stuffed legion"
@@ -198,6 +202,7 @@
 	venue_value = FOOD_PRICE_LEGENDARY
 	crafting_complexity = FOOD_COMPLEXITY_5
 	crafted_food_buff = /datum/status_effect/food/trait/ashstorm_immune
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/chipsandsalsa
 	name = "chips and salsa"
@@ -211,7 +216,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("peppers" = 1, "salsa" = 3, "tortilla chips" = 1, "onion" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -229,6 +234,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/vegetarian_chimichanga
 	name = "vegetarian chimichanga"
@@ -257,7 +263,7 @@
 
 /obj/item/food/hard_taco_shell/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/hard_taco_shell/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/hard_taco_shell/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 
 // empty taco shell for custom tacos
 /obj/item/food/hard_taco_shell/empty
@@ -279,9 +285,10 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("crunchy taco shell" = 1, "cabbage" = 3, "tomatoes" = 1, "ground meat" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | MEAT | DAIRY
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/plain_hard_shell_taco
 	name = "plain hard-shell taco"
@@ -294,9 +301,10 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("crunchy taco shell" = 1, "ground meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = MEAT|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/refried_beans
 	name = "refried beans"
@@ -325,7 +333,7 @@
 	)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 

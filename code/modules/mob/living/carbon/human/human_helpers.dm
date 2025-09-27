@@ -8,7 +8,7 @@
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
 	var/obj/item/card/id/id = get_idcard(hand_first)
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return if_no_id
 	if(id)
 		. = id.assignment
@@ -25,7 +25,7 @@
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
 	var/obj/item/card/id/id = get_idcard(FALSE)
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return if_no_id
 	if(id)
 		return id.registered_name
@@ -34,7 +34,12 @@
 		return pda.saved_identification
 	return if_no_id
 
-//repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
+/// Used to update our name based on whether our face is obscured/disfigured
+/mob/living/carbon/human/proc/update_visible_name()
+	SIGNAL_HANDLER
+	name = get_visible_name()
+
+/// Combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
 /mob/living/carbon/human/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
 	var/list/identity = list(null, null, null)
 	SEND_SIGNAL(src, COMSIG_HUMAN_GET_VISIBLE_NAME, identity)
@@ -43,72 +48,66 @@
 	var/force_set = LAZYACCESS(identity, VISIBLE_NAME_FORCED)
 	if(force_set) // our name is overriden by something
 		return signal_face // no need to null-check, because force_set will always set a signal_face
-	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
-	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
-	if(force_real_name)
-		var/fake_name
-		if (face_name && face_name != real_name)
-			fake_name = face_name
-		if(add_id_name && id_name && id_name != real_name)
-			if (!isnull(fake_name) && id_name != face_name)
-				fake_name = "[fake_name]/[id_name]"
-			else
-				fake_name = id_name
-		if (HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || (!face_name && !id_name))
-			fake_name = "Unknown"
-		return "[real_name][fake_name ? " (as [fake_name])" : ""]"
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
-		return "Unknown"
-	if(face_name)
-		if(add_id_name && id_name && (id_name != face_name))
-			return "[face_name] (as [id_name])"
-		return face_name
-	if(id_name)
-		return id_name
-	return "Unknown"
 
-/// Returns "Unknown" if facially disfigured and real_name if not.
-/// Useful for setting name when Fluacided or when updating a human's name variable
+	var/face_name = isnull(signal_face) ? get_face_name("") : signal_face
+	var/id_name = isnull(signal_id) ? get_id_name("",  honorifics = TRUE) : signal_id
+
+	// We need to account for real name
+	if(force_real_name)
+		var/disguse_name = get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
+		return "[real_name][disguse_name == real_name ? "" : " (as [disguse_name])"]"
+
+	// We're just some unknown guy
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
+		return "Unknown"
+
+	// We have a face and an ID
+	if(face_name && id_name)
+		var/normal_id_name = get_id_name("") // need to check base ID name to avoid "John (as Captain John)"
+		if(normal_id_name == face_name)
+			return id_name // (this turns "John" into "Captain John")
+		if(add_id_name)
+			return "[face_name] (as [id_name])"
+
+	// Just go down the list of stuff we recorded
+	return face_name || id_name || "Unknown"
+
+/**
+ * Gets what the face of this mob looks like
+ *
+ * * if_no_face - What to return if we have no face or our face is obscured/disfigured
+ */
 /mob/living/carbon/proc/get_face_name(if_no_face = "Unknown")
 	return real_name
 
 /mob/living/carbon/human/get_face_name(if_no_face = "Unknown")
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return if_no_face //We're Unknown, no face information for you
-	for(var/obj/item/worn_item in get_equipped_items())
-		if(!(worn_item.flags_inv & HIDEFACE))
-			continue
+	if(obscured_slots & HIDEFACE)
 		return if_no_face
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
-	if(isnull(head) || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (head.brutestate + head.burnstate) > 2 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if(isnull(head) || !real_name || HAS_TRAIT(src, TRAIT_DISFIGURED) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
-//gets name from ID or PDA itself, ID inside PDA doesn't matter
-//Useful when player is being seen by other mobs
-/mob/living/carbon/proc/get_id_name(if_no_id = "Unknown")
+/**
+ * Gets whatever name is in our ID or PDA
+ *
+ * * if_no_id - What to return if we have no ID or PDA
+ * * honorifics - Whether to include honorifics in the returned name (if the found ID has any set)
+ */
+/mob/living/carbon/proc/get_id_name(if_no_id = "Unknown", honorifics = FALSE)
 	return
 
-/mob/living/carbon/human/get_id_name(if_no_id = "Unknown")
-	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/pda = wear_id
-	var/obj/item/card/id/id = wear_id
-	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
-		. = if_no_id //You get NOTHING, no id name, good day sir
+/mob/living/carbon/human/get_id_name(if_no_id = "Unknown", honorifics = FALSE)
+	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		var/list/identity = list(null, null, null)
 		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
-		if(identity[VISIBLE_NAME_FORCED])
-			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
-			return
-	if(istype(wallet))
-		id = wallet.front_id
-	if(istype(id))
-		. = id.registered_name
-	else if(istype(pda) && pda.computer_id_slot)
-		. = pda.computer_id_slot.registered_name
-	if(!.)
-		. = if_no_id //to prevent null-names making the mob unclickable
-	return
+		return identity[VISIBLE_NAME_FORCED] ? identity[VISIBLE_NAME_FACE] : if_no_id
+
+	// either results in an ID card, a generic card, or null
+	var/obj/item/card/id = wear_id?.GetID() || astype(wear_id, /obj/item/card)
+	return id?.get_displayed_name(honorifics) || if_no_id
 
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
 	. = ..()
@@ -300,17 +299,14 @@
 	clone.age = age
 	clone.voice = voice
 	clone.pitch = pitch
-	dna.transfer_identity(clone, transfer_SE = TRUE, transfer_species = TRUE)
+	dna.copy_dna(clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
 
 	clone.dress_up_as_job(SSjob.get_job(job))
 
 	for(var/datum/quirk/original_quircks as anything in quirks)
-		clone.add_quirk(original_quircks.type, override_client = client)
-	for(var/datum/mutation/human/mutations in dna.mutations)
-		clone.dna.add_mutation(mutations, MUT_NORMAL)
+		clone.add_quirk(original_quircks.type, override_client = client, announce = FALSE)
 
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-	clone.domutcheck()
 
 	return clone
 
@@ -370,3 +366,17 @@
 	user.visible_message(span_notice("[user] fixes some of the [message] [src]'s [affecting.name]."), \
 		span_notice("You fix some of the [message] [src == user ? "your" : "[src]'s"] [affecting.name]."))
 	return TRUE
+
+/// Sets both mob's and eye organ's eye color values
+/// If color_right is not passed, its assumed to be the same as color_left
+/mob/living/carbon/human/proc/set_eye_color(color_left, color_right)
+	if (!color_right)
+		color_right = color_left
+	eye_color_left = color_left
+	eye_color_right = color_right
+	// Doesn't assign eye color if they already have one from their type
+	var/obj/item/organ/eyes/eyes = get_organ_by_type(/obj/item/organ/eyes)
+	if (istype(eyes) && !initial(eyes.eye_color_left) && !initial(eyes.eye_color_right))
+		eyes.eye_color_left = color_left
+		eyes.eye_color_right = color_right
+		eyes.refresh(src, FALSE)

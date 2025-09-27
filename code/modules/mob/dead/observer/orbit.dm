@@ -38,7 +38,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			user.reset_perspective(null)
 			user.orbiting_ref = ref
 			if (auto_observe)
-				user.do_observe(poi)
+				if (poi != user)
+					user.do_observe(poi)
 			return TRUE
 		if ("refresh")
 			ui.send_full_update()
@@ -80,6 +81,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if(number_of_orbiters)
 			serialized["orbiters"] = number_of_orbiters
 
+		if (is_admin)
+			serialized["ckey"] = mob_poi.ckey
+
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
 
@@ -101,9 +105,6 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
-
-		if (is_admin)
-			serialized["ckey"] = mob_poi.ckey
 
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)
@@ -146,6 +147,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		"ghosts" = ghosts,
 		"misc" = misc,
 		"npcs" = npcs,
+		"can_observe" = !HAS_TRAIT(user, TRAIT_NO_OBSERVE),
 	)
 
 

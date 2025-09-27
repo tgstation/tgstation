@@ -15,6 +15,7 @@
 		"plasmaman_tank_belt",
 		"plasmarefiller",
 		"extinguisher",
+		"pocketfireextinguisher",
 		"gas_filter",
 		"plasmaman_gas_filter",
 		"analyzer",
@@ -40,6 +41,7 @@
 		"turbine_stator",
 		"atmos_thermal",
 		"pneumatic_seal",
+		"large_welding_tool",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	experiments_to_unlock = list(
@@ -61,6 +63,7 @@
 		"pacman",
 		"mech_generator",
 		"plasmacutter",
+		"diode_disk_incendiary",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/gaseous/plasma = TECHWEB_TIER_2_POINTS)

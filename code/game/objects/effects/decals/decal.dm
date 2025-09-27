@@ -2,6 +2,7 @@
 	name = "decal"
 	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
+	abstract_type = /obj/effect/decal
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -15,6 +16,8 @@
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_CHANGE = PROC_REF(on_decal_move),
 	)
+	while(isopenspaceturf(loc) && can_z_move(DOWN, z_move_flags = ZMOVE_ALLOW_ANCHORED))
+		zMove(DOWN, z_move_flags = ZMOVE_ALLOW_ANCHORED)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/decal/blob_act(obj/structure/blob/B)

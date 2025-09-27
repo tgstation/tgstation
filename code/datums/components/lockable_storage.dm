@@ -37,7 +37,7 @@
 
 	src.lock_code = lock_code
 	if(!isnull(lock_code))
-		atom_parent.atom_storage.locked = STORAGE_FULLY_LOCKED
+		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	src.can_hack_open = can_hack_open
 
 	atom_parent.update_appearance()
@@ -88,7 +88,10 @@
 /datum/component/lockable_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Open storage"
+		if(source in user.held_items)
+			context[SCREENTIP_CONTEXT_LMB] = "Open storage"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_RMB] = "Open storage"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(can_hack_open)
@@ -208,9 +211,7 @@
 			//you can't lock it if it's already locked or lacks a lock code.
 			if(source.atom_storage.locked || isnull(lock_code))
 				return TRUE
-			source.atom_storage.locked = STORAGE_FULLY_LOCKED
-			source.atom_storage.hide_contents(usr)
-			source.update_appearance(UPDATE_ICON)
+			source.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 			return TRUE
 		//setting a password & unlocking
 		if("E")
@@ -225,9 +226,8 @@
 			if(numeric_input != lock_code)
 				return TRUE
 			var/atom/source = parent
-			source.atom_storage.locked = STORAGE_NOT_LOCKED
+			source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
 			numeric_input = ""
-			source.update_appearance(UPDATE_ICON)
 			return TRUE
 		//putting digits in.
 		if("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")

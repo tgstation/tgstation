@@ -29,19 +29,19 @@
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
-		/obj/item/ammo_box/c38 = 20,
-		/obj/item/ammo_box/c38/dumdum = 5,
-		/obj/item/ammo_box/c38/hotshot = 5,
-		/obj/item/ammo_box/c38/iceblox = 5,
-		/obj/item/ammo_box/c38/match = 5,
-		/obj/item/ammo_box/c38/trac = 5,
+		/obj/item/ammo_box/speedloader/c38 = 20,
+		/obj/item/ammo_box/speedloader/c38/dumdum = 5,
+		/obj/item/ammo_box/speedloader/c38/hotshot = 5,
+		/obj/item/ammo_box/speedloader/c38/iceblox = 5,
+		/obj/item/ammo_box/speedloader/c38/match = 5,
+		/obj/item/ammo_box/speedloader/c38/trac = 5,
 		/obj/item/card/id/advanced/plainclothes = 5,
 		/obj/item/storage/belt/holster/detective/full = 1,
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
-	job_flags = STATION_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 	job_tone = "objection"
 
@@ -54,7 +54,7 @@
 
 	id_trim = /datum/id_trim/job/detective
 	uniform = /obj/item/clothing/under/rank/security/detective
-	suit = /obj/item/clothing/suit/jacket/det_suit
+	suit = /obj/item/clothing/suit/toggle/jacket/det_trench
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
 		/obj/item/melee/baton = 1,

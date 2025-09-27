@@ -2517,7 +2517,7 @@
 	pixel_x = -4;
 	pixel_y = 0
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 10;
 	pixel_y = 17
 	},
@@ -3107,7 +3107,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/burgundy,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Ig" = (
 /obj/structure/sign/warning/no_smoking/circle/directional/north,
 /turf/open/floor/iron/grimy,

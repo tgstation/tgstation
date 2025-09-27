@@ -51,6 +51,7 @@
 
 /mob/eye/camera/remote/proc/assign_user(mob/living/new_user)
 	var/mob/living/old_user = user_ref?.resolve()
+	SEND_SIGNAL(src, COMSIG_REMOTE_CAMERA_ASSIGN_USER, new_user, old_user)
 	if(old_user)
 		old_user.remote_control = null
 		old_user.reset_perspective(null)
@@ -59,6 +60,7 @@
 		var/client/old_user_client = GetViewerClient()
 		if(user_image && old_user_client)
 			old_user_client.images -= user_image
+		clear_camera_chunks()
 
 	user_ref = WEAKREF(new_user) //The user_ref can still be null!
 
@@ -70,6 +72,8 @@
 		var/client/new_user_client = GetViewerClient()
 		if(user_image && new_user_client)
 			new_user_client.images += user_image
+		if(use_visibility)
+			update_visibility()
 
 /**
  * Sets the camera's user image to this icon and state.
@@ -121,10 +125,36 @@
 	for(var/i = 0; i < max(sprint, initial); i += 20)
 		var/turf/step = get_turf(get_step_multiz(src, direction))
 		if(step)
-			setLoc(step)
+			if(!(ISINRANGE_EX(step.x, TRANSITIONEDGE, world.maxx - TRANSITIONEDGE) && ISINRANGE_EX(step.y, TRANSITIONEDGE, world.maxy - TRANSITIONEDGE)))
+				transition_step(step, direction)
+			else
+				setLoc(step)
 
 	last_moved = world.timeofday + wait_time
 	if(acceleration)
 		sprint = min(sprint + momentum, max_sprint)
 	else
 		sprint = initial
+
+/mob/eye/camera/remote/proc/transition_step(turf/destination, direction)
+	var/datum/space_level/from = SSmapping.get_level(destination.z)
+	var/datum/space_level/into = from.neigbours["[direction]"]
+	if(into && allow_z_transition(from, into))
+		var/dest_x = destination.x
+		var/dest_y = destination.y
+		switch(direction)
+			if(NORTH)
+				dest_y = 1+TRANSITIONEDGE
+			if(SOUTH)
+				dest_y = world.maxy-TRANSITIONEDGE
+			if(EAST)
+				dest_x = 1+TRANSITIONEDGE
+			if(WEST)
+				dest_x = world.maxx-TRANSITIONEDGE
+		var/turf/new_destination = locate(dest_x, dest_y, into.z_value)
+		setLoc(new_destination || destination)
+	else
+		setLoc(destination)
+
+/mob/eye/camera/remote/proc/allow_z_transition(datum/space_level/from, datum/space_level/into)
+	return from == into

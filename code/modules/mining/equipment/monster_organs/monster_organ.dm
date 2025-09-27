@@ -61,6 +61,7 @@
 /obj/item/organ/monster_core/Initialize(mapload)
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
+	AddElement(/datum/element/above_mob_drop)
 
 /obj/item/organ/monster_core/examine(mob/user)
 	. = ..()
@@ -207,6 +208,9 @@
 /obj/item/organ/monster_core/proc/on_triggered_internal()
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Someone forgot to make their organ do something when you implant it.")
+
+/obj/item/organ/monster_core/feel_for_damage(self_aware)
+	return ""
 
 /**
  * Boilerplate to set the name and icon of the cooldown action.

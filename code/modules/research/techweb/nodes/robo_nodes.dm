@@ -4,8 +4,8 @@
 	display_name = "Robotics"
 	description = "Programmable machines that make our lives lazier."
 	design_ids = list(
-		"mechfab",
 		"botnavbeacon",
+		"mechfab",
 		"paicard",
 	)
 
@@ -15,10 +15,10 @@
 	description = "Adapted arcade machines to covertly harness gamers' skills in controlling real drones for practical purposes."
 	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
-		"exoscanner_console",
-		"exoscanner",
 		"exodrone_console",
 		"exodrone_launcher",
+		"exoscanner",
+		"exoscanner_console",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 
@@ -29,26 +29,26 @@
 	description = "Exploration of AI systems, more intelligent than the entire crew put together."
 	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
-		"aiupload",
+		"aicore",
 		"aifixer",
+		"aiupload",
+		"asimov_module",
+		"borg_ai_control",
+		"corporate_module",
+		"default_module",
+		"drone_module",
+		"freeform_module",
 		"intellicard",
 		"mecha_tracking_ai_control",
-		"borg_ai_control",
-		"aicore",
-		"reset_module",
-		"asimov_module",
-		"default_module",
 		"nutimov_module",
-		"paladin_module",
-		"robocop_module",
-		"corporate_module",
-		"drone_module",
 		"oxygen_module",
-		"safeguard_module",
+		"paladin_module",
 		"protectstation_module",
 		"quarantine_module",
-		"freeform_module",
 		"remove_module",
+		"reset_module",
+		"robocop_module",
+		"safeguard_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -58,11 +58,11 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI))
 		design_ids -= list(
 			"aicore",
+			"aifixer",
+			"aiupload",
 			"borg_ai_control",
 			"intellicard",
 			"mecha_tracking_ai_control",
-			"aifixer",
-			"aiupload",
 		)
 	else if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] *= 3
@@ -73,29 +73,29 @@
 	description = "Delving into sophisticated AI directives, with hopes that they won't lead to humanity's extinction."
 	prereq_ids = list(TECHWEB_NODE_AI)
 	design_ids = list(
-		"asimovpp_module",
-		"paladin_devotion_module",
-		"dungeon_master_module",
-		"painter_module",
-		"ten_commandments_module",
-		"hippocratic_module",
-		"maintain_module",
-		"liveandletlive_module",
-		"reporter_module",
-		"yesman_module",
-		"hulkamania_module",
-		"peacekeeper_module",
-		"overlord_module",
-		"tyrant_module",
+		"ai_power_upgrade",
 		"antimov_module",
+		"asimovpp_module",
 		"balance_module",
-		"thermurderdynamic_module",
 		"damaged_module",
-		"thinkermov_module",
+		"dungeon_master_module",
 		"freeformcore_module",
+		"hippocratic_module",
+		"hulkamania_module",
+		"liveandletlive_module",
+		"maintain_module",
 		"onehuman_module",
+		"overlord_module",
+		"painter_module",
+		"paladin_devotion_module",
+		"peacekeeper_module",
 		"purge_module",
-		"ai_power_upgrade"
+		"reporter_module",
+		"ten_commandments_module",
+		"thermurderdynamic_module",
+		"thinkermov_module",
+		"tyrant_module",
+		"yesman_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_COMMAND)

@@ -21,7 +21,7 @@
 
 /datum/crafting_recipe/receiver
 	name = "Modular Rifle Receiver"
-	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER, TOOL_SAW)
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
@@ -418,6 +418,17 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
+/datum/crafting_recipe/ashenbow
+	name = "Ashen Bow"
+	result = /obj/item/gun/ballistic/bow/ashenbow
+	reqs = list(
+		/obj/item/stack/sheet/bone = 6,
+		/obj/item/stack/sheet/sinew = 3,
+		/obj/item/stack/sheet/leather = 1,
+	)
+	time = 30 SECONDS
+	category = CAT_WEAPON_RANGED
+
 /datum/crafting_recipe/photoncannon
 	name = "Photon Cannon"
 	result = /obj/item/gun/energy/photon
@@ -430,7 +441,7 @@
 
 /datum/crafting_recipe/sks
 	name = "Sakhno SKS semi-automatic rifle"
-	result = /obj/item/gun/ballistic/automatic/sks/empty
+	result = /obj/item/gun/ballistic/rifle/sks/empty
 	reqs = list(
 		/obj/item/weaponcrafting/stock = 1,
 		/obj/item/weaponcrafting/receiver = 1,
@@ -439,3 +450,18 @@
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/dimensional_bombcore
+	name = "Multi-Dimensional Payload"
+	result = /obj/item/bombcore/dimensional
+	reqs = list(
+		/obj/item/gibtonite = 1,
+		/obj/item/grenade/chem_grenade = 2,
+		/obj/item/assembly/signaler/anomaly/dimensional = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 12 SECONDS
+	category = CAT_WEAPON_RANGED
+	steps = list(
+		"use high quality gibtonite and advanced release or large grenades for better yield",
+	)

@@ -24,6 +24,12 @@
 		b = REF(b)
 	return sorttext("[a]", "[b]")
 
+/proc/cmp_list_len_asc(list/a, list/b)
+	return length(a) - length(b)
+
+/proc/cmp_list_len_dsc(list/a, list/b)
+	return length(b) - length(a)
+
 /proc/cmp_name_asc(atom/a, atom/b)
 	return sorttext(b.name, a.name)
 
@@ -65,7 +71,10 @@
 	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
+	return a.init_order - b.init_order
+
+/proc/cmp_subsystem_init_stage(datum/controller/subsystem/a, datum/controller/subsystem/b)
+	return initial(a.init_stage) - initial(b.init_stage)
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return sorttext(b.name, a.name)
@@ -143,12 +152,6 @@
 
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
-
-/proc/cmp_pdaname_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
-	return sorttext(B?.computer?.saved_identification, A?.computer?.saved_identification)
-
-/proc/cmp_pdajob_asc(datum/computer_file/program/messenger/A, datum/computer_file/program/messenger/B)
-	return sorttext(B?.computer?.saved_job, A?.computer?.saved_job)
 
 /proc/cmp_num_string_asc(A, B)
 	return text2num(A) - text2num(B)
@@ -231,3 +234,7 @@
 /// Orders cameras by their `c_tag` ascending
 /proc/cmp_camera_ctag_asc(obj/machinery/camera/a, obj/machinery/camera/b)
 	return sorttext(b.c_tag, a.c_tag)
+
+/// Sorts client colors based on their priority
+/proc/cmp_client_colours(datum/client_colour/first_color, datum/client_colour/second_color)
+	return second_color.priority - first_color.priority

@@ -218,7 +218,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "ea" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
@@ -940,7 +940,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/dorms)
 "pl" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/qm)
 "pm" = (

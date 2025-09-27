@@ -121,6 +121,10 @@
 /// log emotes
 /datum/config_entry/flag/log_emote
 
+/// log ghost polling
+/datum/config_entry/flag/log_ghost_poll
+	default = TRUE
+
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
@@ -220,7 +224,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/ticklag/TL = config.entries_by_type[/datum/config_entry/number/ticklag]
 		if(!TL.sync_validate)
-			TL.ValidateAndSet(10 / config_entry_value)
+			TL.ValidateAndSet("[10 / config_entry_value]")
 		sync_validate = FALSE
 
 /datum/config_entry/number/ticklag
@@ -238,7 +242,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/fps/FPS = config.entries_by_type[/datum/config_entry/number/fps]
 		if(!FPS.sync_validate)
-			FPS.ValidateAndSet(10 / config_entry_value)
+			FPS.ValidateAndSet("[10 / config_entry_value]")
 		sync_validate = FALSE
 
 /datum/config_entry/flag/allow_holidays
@@ -318,7 +322,7 @@
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	default = "http://tgstation13.org/wiki"
+	default = "https://wiki.tgstation13.org"
 
 /datum/config_entry/string/forumurl
 	default = "http://tgstation13.org/phpBB/index.php"
@@ -630,16 +634,17 @@
 	default = -1
 	min_val = 0
 
-/datum/config_entry/string/default_view
-	default = "15x15"
-
-/datum/config_entry/string/default_view_square
-	default = "15x15"
-
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
 
+/datum/config_entry/number/roundstart_logout_report_time_average
+	default = 10 MINUTES
+	min_val = 0
+
+/datum/config_entry/number/roundstart_logout_report_time_variance
+	default = 3 MINUTES
+	min_val = 0
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles
 
@@ -702,6 +707,9 @@
 /datum/config_entry/string/adminhelp_ahelp_link
 
 /datum/config_entry/flag/cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/smart_cache_assets
 	default = TRUE
 
 /datum/config_entry/flag/save_spritesheets
@@ -772,3 +780,16 @@
 /// If admins with +DEBUG can queue byond-tracy to run the next round.
 /datum/config_entry/flag/allow_tracy_queue
 	protection = CONFIG_ENTRY_LOCKED
+
+/**
+ * Tgui ui_act payloads larger than 2kb are split into chunks a maximum of 1kb in size.
+ * This flag represents the maximum chunk count the server is willing to receive.
+ */
+/datum/config_entry/number/tgui_max_chunk_count
+	default = 32
+
+// If set, enables the "Link forum account" OOC verb
+/datum/config_entry/string/forum_link_uri
+
+/datum/config_entry/flag/generate_assets_in_init
+	default = FALSE

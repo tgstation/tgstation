@@ -6,10 +6,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 
-/datum/action/item_action/berserk_mode/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return FALSE
+/datum/action/item_action/berserk_mode/do_effect(trigger_flags)
 	var/obj/item/clothing/head/hooded/berserker/berserk = target
 	berserk.berserk_mode(owner)
 	return TRUE

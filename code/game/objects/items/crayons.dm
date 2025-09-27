@@ -218,7 +218,12 @@
 
 	refill()
 	if(edible)
-		AddComponent(/datum/component/edible, bite_consumption = reagents.total_volume / (charges_left / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
+		AddComponentFrom(
+			SOURCE_EDIBLE_INNATE, \
+			/datum/component/edible, \
+			bite_consumption = reagents.total_volume / (charges_left / 5), \
+			after_eat = CALLBACK(src, PROC_REF(after_eat)), \
+		)
 
 /// Used for edible component to reduce charges_left on bite.
 /obj/item/toy/crayon/proc/after_eat(mob/user)
@@ -316,7 +321,7 @@
 		ui = new(user, src, "Crayon", name)
 		ui.open()
 
-/obj/item/toy/crayon/proc/staticDrawables()
+/obj/item/toy/crayon/proc/staticDrawables(is_literate_user)
 	. = list()
 
 	var/list/g_items = list()
@@ -352,20 +357,23 @@
 	var/list/rand_items = list()
 	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
+		if(!is_literate_user) // no spelling allowed
+			if(i == RANDOM_LETTER || i == RANDOM_NUMBER || i == RANDOM_PUNCTUATION)
+				continue
 		rand_items += list(list("item" = i))
 
+/obj/item/toy/crayon/ui_data(mob/user)
+	var/list/crayon_drawables
+	var/is_literate_user = user.is_literate()
 
-/obj/item/toy/crayon/ui_data()
-	var/static/list/crayon_drawables
-
-	if (!crayon_drawables)
-		crayon_drawables = staticDrawables()
+	if(!crayon_drawables)
+		crayon_drawables = staticDrawables(is_literate_user)
 
 	. = list()
 	.["drawables"] = crayon_drawables
 	.["selected_stencil"] = drawtype
 	.["text_buffer"] = text_buffer
-
+	.["is_literate_user"] = is_literate_user
 	.["has_cap"] = has_cap
 	.["is_capped"] = is_capped
 	.["can_change_colour"] = can_change_colour
@@ -475,7 +483,7 @@
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
-	if(ascii && is_alpha(drawing))
+	if(ascii && is_lowercase_character(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
 		temp = "number"
@@ -520,7 +528,7 @@
 	if(istagger)
 		wait_time *= 0.5
 
-	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4))
+	if(!instant && !do_after(user, wait_time, target = target, max_interact_count = 4, extra_checks = CALLBACK(src, PROC_REF(adjacency_check), user, target)))
 		return ITEM_INTERACT_BLOCKING
 
 	if(!use_charges(user, cost))
@@ -576,6 +584,13 @@
 			reagents.expose(draw_turf, methods = TOUCH, volume_modifier = volume_multiplier)
 	check_empty(user)
 	return ITEM_INTERACT_SUCCESS
+
+///Checks if the user is still adjacent to the target (used for do_after extra_checks)
+/obj/item/toy/crayon/proc/adjacency_check(mob/user, atom/target)
+	if(!user.Adjacent(target))
+		user.balloon_alert(user, "moved too far away!")
+		return FALSE
+	return TRUE
 
 /obj/item/toy/crayon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!check_allowed_items(interacting_with))
@@ -717,17 +732,7 @@
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
-
-/obj/item/storage/crayons/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(
-		can_hold_list = /obj/item/toy/crayon,
-		cant_hold_list = list(
-			/obj/item/toy/crayon/spraycan,
-			/obj/item/toy/crayon/mime,
-			/obj/item/toy/crayon/rainbow,
-		),
-	)
+	storage_type = /datum/storage/crayons
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -752,7 +757,7 @@
 	if(flags_1 & HOLOGRAM_1)
 		return
 
-	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
+	var/obj/item/stack/sheet/cardboard/cardboard = new (user.drop_location())
 	to_chat(user, span_notice("You fold the [src] into cardboard."))
 	user.put_in_active_hand(cardboard)
 	qdel(src)

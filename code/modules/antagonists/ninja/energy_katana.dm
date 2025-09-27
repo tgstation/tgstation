@@ -35,6 +35,7 @@
 	sharpness = SHARP_EDGED
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	item_flags = NEEDS_PERMIT
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/action/innate/dash/ninja/jaunt
 
@@ -46,8 +47,10 @@
 	spark_system.attach(src)
 
 /obj/item/energy_katana/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!interacting_with.density)
-		jaunt?.teleport(user, interacting_with)
+	if(isliving(interacting_with))
+		jaunt.attack_teleport(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(jaunt.teleport(user, interacting_with))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -78,3 +81,15 @@
 
 /datum/action/innate/dash/ninja/HideFrom(mob/viewer)
 	return
+
+/// Teleports to a tile adjacent to a mob, then attacks it
+/datum/action/innate/dash/ninja/proc/attack_teleport(mob/living/user, mob/living/stabbing)
+	var/list/turf/line = get_line(user, stabbing)
+	var/obj/item/sword = target
+	if(length(line) <= 1 || !teleport(user, line[length(line) - 1])) // teleports to the second last turf, should be adjacent to the target
+		return
+	if(!user.CanReach(stabbing, target))
+		return
+	sword.melee_attack_chain(user, stabbing)
+	if(prob(5) && check_holidays(APRIL_FOOLS))
+		user.say("Heh, nothin' personnel kid!", forced = "*teleports behind you**")

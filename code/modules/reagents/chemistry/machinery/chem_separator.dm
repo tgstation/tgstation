@@ -42,7 +42,7 @@
 /obj/structure/chem_separator/atom_deconstruct(disassembled)
 	var/atom/drop = drop_location()
 
-	new /obj/item/stack/sheet/mineral/wood(drop, 1)
+	new /obj/item/stack/sheet/mineral/wood(drop)
 
 	new /obj/item/thermometer(drop)
 
@@ -120,7 +120,7 @@
 	if(condenser_installed)
 		. += span_notice("The in-built condenser can facilitate faster cooling but consumes fuel.")
 	else
-		. += span_notice("You could install a [EXAMINE_HINT("condenser")] for fater cooling.")
+		. += span_notice("You could install a [EXAMINE_HINT("condenser")] for faster cooling.")
 
 	. += span_notice("You can [EXAMINE_HINT("examine more")] to see reagent boiling points & fuel properties.")
 	. += span_notice("The whole aparatus can be [EXAMINE_HINT("pried")] apart.")

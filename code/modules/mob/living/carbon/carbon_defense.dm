@@ -289,6 +289,23 @@
 	else
 		Knockdown(stun_duration)
 
+/// When another mob touches us, they may messy us up.
+/mob/living/carbon/proc/share_blood_on_touch(mob/living/carbon/human/who_touched_us)
+	return
+
+/mob/living/carbon/human/share_blood_on_touch(mob/living/carbon/human/who_touched_us, messy_slots = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+	if(!istype(who_touched_us) || !messy_slots)
+		return
+
+	for(var/obj/item/thing as anything in who_touched_us.get_equipped_items())
+		if((thing.body_parts_covered & HANDS) && prob(GET_ATOM_BLOOD_DNA_LENGTH(thing) * 25))
+			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(thing), messy_slots)
+			return
+
+	if(prob(blood_in_hands * GET_ATOM_BLOOD_DNA_LENGTH(who_touched_us) * 10))
+		add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(who_touched_us), messy_slots)
+		who_touched_us.blood_in_hands -= 1
+
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper, force_friendly)
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
@@ -315,6 +332,7 @@
 		to_chat(helper, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
 		to_chat(src, span_notice("[helper] gives you a pat on the head to make you feel better! "))
 
+		share_blood_on_touch(helper, ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
@@ -351,6 +369,7 @@
 			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
 			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
+		share_blood_on_touch(helper, ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_GLOVES)
 		// Warm them up with hugs
 		share_bodytemperature(helper)
 
@@ -433,6 +452,9 @@
 	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+		return FLASH_COMPLETED
+
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
@@ -486,28 +508,29 @@
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
-	if(effect_amount > 0)
-		if(stun_pwr)
-			Paralyze((stun_pwr*effect_amount)*0.1)
-			Knockdown(stun_pwr*effect_amount)
+	if(effect_amount <= 0)
+		return FALSE
 
-		if(ears && (deafen_pwr || damage_pwr))
-			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = deafen_pwr * effect_amount
-			ears.adjustEarDamage(ear_damage,deaf)
+	if(stun_pwr)
+		Paralyze((stun_pwr*effect_amount)*0.1)
+		Knockdown(stun_pwr*effect_amount)
 
-			if(ears.damage >= 15)
-				to_chat(src, span_warning("Your ears start to ring badly!"))
-				if(prob(ears.damage - 5))
-					to_chat(src, span_userdanger("You can't hear anything!"))
-					// Makes you deaf, enough that you need a proper source of healing, it won't self heal
-					// you need earmuffs, inacusiate, or replacement
-					ears.set_organ_damage(ears.maxHealth)
-			else if(ears.damage >= 5)
-				to_chat(src, span_warning("Your ears start to ring!"))
-			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
-		return effect_amount //how soundbanged we are
+	if(ears && (deafen_pwr || damage_pwr))
+		var/ear_damage = damage_pwr * effect_amount
+		var/deaf = deafen_pwr * effect_amount
+		ears.adjustEarDamage(ear_damage,deaf)
 
+		. = effect_amount //how soundbanged we are
+		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
+
+		if(ears.damage < 5)
+			return
+		if(ears.damage >= 15 && prob(ears.damage - 5))
+			to_chat(src, span_userdanger("You can't hear anything!"))
+			// Makes you deaf, enough that you need a proper source of healing, it won't self heal
+			// you need earmuffs, inacusiate, or replacement
+			ears.set_organ_damage(ears.maxHealth)
+		to_chat(src, span_warning("Your ears start to ring[ears.damage >= 15 ? " badly!":"!"]"))
 
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
@@ -579,7 +602,7 @@
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
@@ -595,7 +618,7 @@
 
 /// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
 /obj/item/bodypart/proc/can_be_grasped()
-	if (get_modified_bleed_rate())
+	if (cached_bleed_rate)
 		return TRUE
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
@@ -648,7 +671,7 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
@@ -676,6 +699,7 @@
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)
+		new_organ.organ_flags |= ORGAN_MUTANT
 
 	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
 	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
@@ -702,7 +726,7 @@
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts
 
-	var/list/organs = subtypesof(/obj/item/organ) + subtypesof(/obj/item/organ)
+	var/list/organs = subtypesof(/obj/item/organ)
 	for(var/obj/item/organ/organ_type as anything in organs)
 		if(!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(initial(organ_type.organ_flags) & ORGAN_ROBOTIC))
 			continue

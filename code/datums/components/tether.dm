@@ -15,14 +15,19 @@
 	var/datum/beam/tether_beam
 	/// Tether module if we were created by one
 	var/obj/item/mod/module/tether/parent_module
-	/// Source, if any, for TRAIT_TETHER_ATTACHED we add
+	/// Ref of source, if any, for TRAIT_TETHER_ATTACHED we add
 	var/tether_trait_source
 	/// If TRUE, only add TRAIT_TETHER_ATTACHED to our parent
 	var/no_target_trait
+	/// Are we currently attempting to forcefully shorten the tether?
+	var/force_moving_target = FALSE
 
 /datum/component/tether/Initialize(atom/tether_target, max_dist = 7, tether_name, atom/embed_target = null, start_distance = null, \
 	parent_module = null, tether_trait_source = null, no_target_trait = FALSE)
 	if(!ismovable(parent) || !istype(tether_target) || !tether_target.loc)
+		return COMPONENT_INCOMPATIBLE
+	if(isatom(tether_trait_source))
+		stack_trace("Tried to add a [src.type] with a tether_trait_source that is a hard ref! Use REF() first before passing!")
 		return COMPONENT_INCOMPATIBLE
 
 	src.tether_target = tether_target
@@ -68,22 +73,22 @@
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED))
 	if (!isnull(tether_trait_source))
 		REMOVE_TRAIT(parent, TRAIT_TETHER_ATTACHED, tether_trait_source)
-	if (!QDELETED(tether_target))
-		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
-		if (!isnull(tether_trait_source) && !no_target_trait)
-			REMOVE_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
-		SEND_SIGNAL(tether_target, COMSIG_ATOM_TETHER_SNAPPED, tether_trait_source)
 	if (!QDELETED(tether_beam))
 		UnregisterSignal(tether_beam.visuals, list(COMSIG_CLICK, COMSIG_QDELETING))
 		qdel(tether_beam)
 	if (!QDELETED(embed_target))
 		UnregisterSignal(embed_target, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_QDELETING))
+	if (!QDELETED(tether_target))
+		UnregisterSignal(tether_target, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+		if (!isnull(tether_trait_source) && !no_target_trait)
+			REMOVE_TRAIT(tether_target, TRAIT_TETHER_ATTACHED, tether_trait_source)
+		SEND_SIGNAL(tether_target, COMSIG_ATOM_TETHER_SNAPPED, tether_trait_source)
 	SEND_SIGNAL(parent, COMSIG_ATOM_TETHER_SNAPPED, tether_trait_source)
 
 /datum/component/tether/proc/check_tether(atom/source, new_loc)
 	SIGNAL_HANDLER
 
-	if (check_snap())
+	if (check_snap(is_moving = TRUE))
 		return
 
 	if (!isturf(new_loc))
@@ -93,49 +98,161 @@
 	// If this was called, we know its a movable
 	var/atom/movable/movable_source = source
 	var/atom/movable/anchor = (source == tether_target ? parent : tether_target)
-	if (get_dist(anchor, new_loc) > cur_dist)
-		if (!istype(anchor) || anchor.anchored || !(!anchor.anchored && anchor.move_resist <= movable_source.move_force && anchor.Move(get_step_towards(anchor, new_loc))))
+
+	// Ignore distance limitations if we're attempting to move the other part of the tether
+	if (get_dist(anchor, new_loc) > cur_dist && !force_moving_target)
+		if (!istype(anchor) || anchor.anchored || anchor.move_resist > movable_source.move_force)
 			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-	var/atom/blocker
-	var/anchor_dir = get_dir(source, anchor)
-	for (var/turf/line_turf in get_line(anchor, new_loc))
-		if (line_turf.density && line_turf != anchor.loc && line_turf != source.loc)
-			blocker = line_turf
-			break
-		if (line_turf == anchor.loc || line_turf == source.loc)
-			for (var/atom/in_turf in line_turf)
-				if ((in_turf.flags_1 & ON_BORDER_1) && (in_turf.dir & anchor_dir))
-					blocker = in_turf
-					break
-		else
-			for (var/atom/in_turf in line_turf)
-				if (in_turf.density && in_turf != source && in_turf != tether_target)
-					blocker = in_turf
-					break
+		force_moving_target = TRUE
+		if (!try_adjust_position(anchor, new_loc, source))
+			force_moving_target = FALSE
+			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-		if (!isnull(blocker))
-			break
+		force_moving_target = FALSE
 
+	var/atom/blocker = check_line(anchor, new_loc, list(source))
 	if (blocker)
-		to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
-		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+		if (!istype(anchor) || anchor.anchored || anchor.move_resist > movable_source.move_force)
+			to_chat(source, span_warning("[tether_name] runs out of slack and prevents you from moving!"))
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
-	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source))
+		// If the tether would snag on something when we move, see if we could move to the side to get LOS back
+		if (!try_adjust_position(anchor, new_loc, source))
+			to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source) || force_moving_target)
 		return
 
 	var/datum/drift_handler/handler = movable_source.drift_handler
-	if (isnull(handler))
-		return
-	handler.remove_angle_force(get_angle(anchor, source))
+	if (handler)
+		handler.remove_angle_force(get_angle(anchor, source))
 
-/datum/component/tether/proc/check_snap()
+/// Try adjust the anchor's position to move closer to the target or regain LOS
+/// true_source is an optional argument in case we're looking for a LOS/closer turf to a new location rather than the actual owner, and need to ignore them
+/datum/component/tether/proc/try_adjust_position(atom/movable/anchor, atom/target, atom/true_source)
+	if (!istype(anchor) || anchor.anchored)
+		return FALSE
+
+	if (anchor.x == target.x && anchor.y == target.y)
+		return TRUE
+
+	var/datum/can_pass_info/pass_info = new(no_id = TRUE)
+	pass_info.pass_flags = anchor.pass_flags
+	pass_info.movement_type = anchor.movement_type
+	if (isliving(anchor))
+		var/mob/living/living_anchor = anchor
+		pass_info.is_living = TRUE
+		pass_info.mob_size = living_anchor.mob_size
+		pass_info.incorporeal_move = living_anchor.incorporeal_move
+		pass_info.is_bot = isbot(living_anchor)
+
+	var/list/pass_turfs = list()
+	var/turf/anchor_turf = get_turf(anchor)
+
+	var/primary_cardinal = null
+	if (abs(anchor.x - target.x) > abs(anchor.y - target.y))
+		primary_cardinal = anchor.x > target.x ? WEST : EAST
+	else
+		primary_cardinal = anchor.y > target.y ? SOUTH : NORTH
+
+	var/anchor_dir = get_dir(anchor, target)
+	if (primary_cardinal == anchor_dir)
+		pass_turfs += get_step(anchor, primary_cardinal)
+	else if (get_dist(anchor, get_step(target, REVERSE_DIR(primary_cardinal))) >= get_dist(anchor, get_step(target, REVERSE_DIR(anchor_dir))))
+		pass_turfs += get_step(anchor, anchor_dir)
+		pass_turfs += get_step(anchor, primary_cardinal)
+	else
+		pass_turfs += get_step(anchor, primary_cardinal)
+		pass_turfs += get_step(anchor, anchor_dir)
+
+	// Make a list of secondary dirs to try and sidestep into if we cannot go in our main direction
+	var/list/match_dirs = null
+	if (primary_cardinal == NORTH || primary_cardinal == SOUTH)
+		match_dirs = list(EAST, WEST)
+	else
+		match_dirs = list(NORTH, SOUTH)
+
+	for (var/match_dir in match_dirs)
+		if ((match_dir & primary_cardinal) != anchor_dir)
+			pass_turfs += get_step(anchor, match_dir | primary_cardinal)
+
+	for (var/match_dir in match_dirs)
+		pass_turfs += get_step(anchor, match_dir)
+
+	// The final list is something like (direct path, main cardinal, diagonals to main cardinal, 90* dirs to the main cardinal)
+	// Whichever one we manage to move onto first is our pick
+
+	var/list/turf_cache = list()
+	for (var/turf/pass_turf in pass_turfs) // keep the typecheck in case we accidentally go out of map bounds
+		if (pass_turf.density || get_dist(pass_turf, target) > cur_dist)
+			continue
+		if (anchor_turf.LinkBlockedWithAccess(pass_turf, pass_info))
+			continue
+		if (check_line(pass_turf, target, list(anchor, true_source), turf_cache))
+			continue
+		if (anchor.Move(pass_turf))
+			return TRUE
+	return FALSE
+
+/// Check LOS availibility of a tile, returns a blocking atom, if any
+/// turf_cache could be used to reduce the amount of calculations if multiple lines are cast and expected to have multiple shared turfs
+/// by sharing located results
+/datum/component/tether/proc/check_line(atom/start, atom/end, list/to_ignore, list/turf_cache = list())
+	var/turf/start_loc = get_turf(start)
+	var/turf/end_loc = get_turf(end)
+	var/start_dir = get_dir(start_loc, end_loc)
+	var/end_dir = REVERSE_DIR(start_dir)
+	var/list/turf/turf_line = get_line(start_loc, end_loc)
+	for (var/turf/line_turf in turf_line)
+		if (turf_cache[line_turf])
+			return turf_cache[line_turf]
+
+		if (line_turf.density && line_turf != start_loc && line_turf != end_loc)
+			turf_cache[line_turf] = line_turf
+			return line_turf
+
+		if (line_turf == start_loc)
+			for (var/atom/in_turf in line_turf)
+				if (in_turf.density && (in_turf.flags_1 & ON_BORDER_1) && (in_turf.dir & start_dir) && in_turf != start && !(in_turf in to_ignore))
+					turf_cache[line_turf] = in_turf
+					return in_turf
+			continue
+
+		if (line_turf == end_loc)
+			for (var/atom/in_turf in line_turf)
+				if (in_turf.density && (in_turf.flags_1 & ON_BORDER_1) && (in_turf.dir & end_dir) && in_turf != end && !(in_turf in to_ignore))
+					turf_cache[line_turf] = in_turf
+					return in_turf
+			continue
+
+		for (var/atom/in_turf in line_turf)
+			if (!in_turf.density || (in_turf in to_ignore))
+				continue
+			if ((in_turf.flags_1 & ON_BORDER_1))
+				// If the tether is in a straight line, we can ignore border objects parallel to us
+				if (!(in_turf.dir & start_dir) && !(in_turf.dir & end_dir))
+					continue
+				// Also ignore objects that we don't intersect with
+				if (!(get_step(in_turf, in_turf.dir) in turf_line))
+					continue
+
+			turf_cache[line_turf] = in_turf
+			return in_turf
+
+		turf_cache[line_turf] = null
+
+/datum/component/tether/proc/check_snap(atom/movable/source, atom/old_loc, dir, forced, list/old_locs, is_moving = FALSE)
 	SIGNAL_HANDLER
 
 	var/atom/atom_target = parent
 	// Something broke us out, snap the tether
 	if (get_dist(atom_target, tether_target) > cur_dist + 1 || !isturf(atom_target.loc) || !isturf(tether_target.loc) || atom_target.z != tether_target.z)
+		snap()
+	else if (!is_moving && check_line(atom_target, tether_target) && !(try_adjust_position(atom_target, tether_target) || try_adjust_position(tether_target, atom_target)))
 		snap()
 
 /datum/component/tether/proc/snap()

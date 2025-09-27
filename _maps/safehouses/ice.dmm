@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "c" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -23,12 +23,12 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "g" = (
 /obj/effect/spawner/structure/window/ice,
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "i" = (
 /turf/closed/wall/ice,
@@ -90,12 +90,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/vending/coffee,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "z" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "A" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -106,11 +106,11 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "B" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "C" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -161,7 +161,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/freezer,
 /obj/structure/fans/tiny,
-/turf/open/floor/plating/snowed,
+/turf/open/floor/plating/snowed/standard_air,
 /area/virtual_domain/safehouse)
 "S" = (
 /obj/effect/turf_decal/weather/snow/corner{

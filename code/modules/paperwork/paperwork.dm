@@ -39,7 +39,7 @@
 
 	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 
-/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return
@@ -97,7 +97,7 @@
  * Adds the stamp overlay and sets "stamped" to true
  *
  * Adds the stamp overlay to a piece of paperwork, and sets "stamped" to true.
- * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
+ * Handled as a proc so that an object may be marked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
 	stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', stamp_icon)
@@ -138,7 +138,7 @@
 /obj/item/paperwork/security/Initialize(mapload)
 	. = ..()
 
-	detailed_desc += span_info(" The stack of documents are related to a civil case being processed by a neighboring installation.")
+	detailed_desc += span_info(" The stack of documents is related to a civil case being processed by a neighboring installation.")
 	detailed_desc += span_info(" The document requests that you review a conduct report submitted by the lawyer of the station.")
 	detailed_desc += span_info(" The case file details accusations against the station's security department, including misconduct, harassment, an-")
 	detailed_desc += span_info(" What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")
@@ -164,7 +164,7 @@
 /obj/item/paperwork/medical/Initialize(mapload)
 	. = ..()
 
-	detailed_desc += span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
+	detailed_desc += span_info(" The stack of documents appears to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
 	detailed_desc += span_info(" Skipping to the end of the report reveals that the specimen was the station bartender's pet monkey.")
 	detailed_desc += span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to its mutated form.")
 	detailed_desc += span_info(" Regardless, the autopsy results look like they could be useful. You should probably stamp this.")
@@ -234,7 +234,7 @@
 	else
 		. += span_notice("These appear to just be a photocopy of the original documents.")
 
-/obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
 		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
 		stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
@@ -255,7 +255,7 @@
 /obj/item/paperwork/ancient/Initialize(mapload)
 	. = ..()
 
-	detailed_desc = span_notice("It's impossible to really tell how old these are or what they're for, but Central Command might appreciate them anyways.")
+	detailed_desc = span_notice("It's impossible to really tell how old these are or what they're for, but Central Command might appreciate them anyway.")
 
 	var/static/list/paperwork_to_use //Make the ancient paperwork function like one of the main types
 	if(!paperwork_to_use)

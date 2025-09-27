@@ -73,7 +73,6 @@
 		"comp_soundemitter",
 		"comp_species",
 		"comp_speech",
-		"comp_speech",
 		"comp_split",
 		"comp_string_contains",
 		"comp_tempsensor",

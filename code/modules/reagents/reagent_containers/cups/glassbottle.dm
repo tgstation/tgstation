@@ -25,7 +25,7 @@
 	age_restricted = TRUE // wrryy can't set an init value to see if drink_type contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
-	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
+	tool_behaviour = TOOL_ROLLINGPIN // Glass bottles can be used as rolling pins when empty
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
 	/// A contained piece of paper, a photo, or space cash, that we can use as a message or gift to future spessmen.
 	var/obj/item/message_in_a_bottle
@@ -51,6 +51,13 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
+/obj/item/reagent_containers/cup/glass/bottle/on_reagent_change(datum/reagents/holder, ...)
+	. = ..()
+	if(!reagents?.total_volume)
+		tool_behaviour = TOOL_ROLLINGPIN // Glass bottles can be used as rolling pins when empty
+	else
+		tool_behaviour = null
+
 /obj/item/reagent_containers/cup/glass/bottle/Exited(atom/movable/gone, atom/newloc)
 	if(gone == message_in_a_bottle)
 		message_in_a_bottle = null
@@ -58,12 +65,9 @@
 			update_icon(UPDATE_OVERLAYS)
 	return ..()
 
-/obj/item/reagent_containers/cup/glass/bottle/CheckParts(list/parts_list)
+/obj/item/reagent_containers/cup/glass/bottle/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
-	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
-	if(bottle.message_in_a_bottle)
-		message_in_a_bottle = bottle.message_in_a_bottle
-		bottle.message_in_a_bottle.forceMove(src)
+	message_in_a_bottle?.forceMove(drop_location())
 
 /obj/item/reagent_containers/cup/glass/bottle/examine(mob/user)
 	. = ..()
@@ -122,12 +126,12 @@
 	volume = 50
 	custom_price = PAYCHECK_CREW * 0.9
 
-/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE, break_top)
-	if(bartender_check(target) && ranged)
-		return
-	SplashReagents(target, ranged, override_spillable = TRUE)
+/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
+	if(bartender_check(target, thrower) && throwingdatum)
+		return FALSE
+	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/broken = new(drop_location())
-	if(!ranged && thrower)
+	if(!throwingdatum && thrower)
 		thrower.put_in_hands(broken)
 	broken.mimic_broken(src, target, break_top)
 	broken.inhand_icon_state = broken_inhand_icon_state
@@ -136,69 +140,43 @@
 
 	qdel(src)
 	target.Bumped(broken)
+	return TRUE
 
-/obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/living/user, atom/target)
-
-	if(!target || !isliving(target))
-		return ..()
-
+/obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/user, atom/target)
 	if(!isGlass)
 		return ..()
+	return FALSE // instead of splashing, hit them with the bottle!
 
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
+/obj/item/reagent_containers/cup/glass/bottle/afterattack(atom/target, mob/user, list/modifiers)
+	if(!isGlass)
+		return
 
-	var/mob/living/living_target = target
-	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
+	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
 
-	var/armor_block = 0 //Get the target's armor values for normal attack damage.
-	var/knockdown_effectiveness = 0 //The more force the bottle has, the longer the duration.
+	// An attack that targets the head of a living mob will attempt to knock them down
+	if(head_hitter)
+		var/mob/living/living_target = target
+		var/knockdown_effectiveness = 0
+		if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
+			knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
+		if(prob(knockdown_effectiveness))
+			living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
 
-	//Calculating duration and calculating damage.
-	if(ishuman(target))
-
-		var/mob/living/carbon/human/H = target
-		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, MELEE, "", "", armour_penetration) // For normal attack damage
-
-		//If they have a hat/helmet and the user is targeting their head.
-		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
-			headarmor = H.head.get_armor_rating(MELEE)
-		//Calculate the knockdown duration for the target.
-		knockdown_effectiveness = (bottle_knockdown_duration - headarmor) + force
+	// Displays a custom message which follows the attack
+	if(target == user)
+		target.visible_message(
+			span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
+			span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
+		)
 
 	else
-		//Only humans can have armor, right?
-		armor_block = living_target.run_armor_check(affecting, MELEE)
-		if(affecting == BODY_ZONE_HEAD)
-			knockdown_effectiveness = bottle_knockdown_duration + force
-	//Apply the damage!
-	armor_block = min(90,armor_block)
-	living_target.apply_damage(force, BRUTE, affecting, armor_block)
+		target.visible_message(
+			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
+			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
+		)
 
-	// You are going to knock someone down for longer if they are not wearing a helmet.
-	var/head_attack_message = ""
-	if(affecting == BODY_ZONE_HEAD && iscarbon(target) && !HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
-		head_attack_message = " on the head"
-		if(knockdown_effectiveness && prob(knockdown_effectiveness))
-			living_target.apply_effect(min(knockdown_effectiveness, 200) , EFFECT_KNOCKDOWN)
-
-	//Display an attack message.
-	if(target != user)
-		target.visible_message(span_danger("[user] hits [target][head_attack_message] with a bottle of [src.name]!"), \
-				span_userdanger("[user] hits you [head_attack_message] with a bottle of [src.name]!"))
-	else
-		target.visible_message(span_danger("[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!"), \
-				span_userdanger("You hit yourself with a bottle of [src.name][head_attack_message]!"))
-
-	//Attack logs
-	log_combat(user, target, "attacked", src)
-
-	//Finally, smash the bottle. This kills (del) the bottle.
+	// Finally, smash the bottle. This kills (del) the bottle and also does all the logging for us
 	smash(target, user)
-
-	return TRUE
 
 /*
  * Proc to make the bottle spill some of its contents out in a froth geyser of varying intensity/height
@@ -228,8 +206,8 @@
 			intensity_state = "high"
 	///The froth fountain that we are sticking onto the bottle
 	var/mutable_appearance/froth = mutable_appearance('icons/obj/drinks/drink_effects.dmi', "froth_bottle_[intensity_state]")
-	froth.pixel_x = offset_x
-	froth.pixel_y = offset_y
+	froth.pixel_w = offset_x
+	froth.pixel_z = offset_y
 	add_overlay(froth)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), froth), 2 SECONDS)
 
@@ -625,7 +603,7 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
 	drink_type = ALCOHOL
 	//allows for single unit dispensing
-	possible_transfer_amounts = list(1, 2, 3, 4, 5) 
+	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	amount_per_transfer_from_this = 5
 
 /obj/item/reagent_containers/cup/glass/bottle/curacao
@@ -675,8 +653,7 @@
 	desc = "Finely sourced from only the most pretentious French vineyards."
 	icon_state = "champagne_bottle"
 	base_icon_state = "champagne_bottle"
-	reagent_flags = TRANSPARENT
-	spillable = FALSE
+	initial_reagent_flags = TRANSPARENT
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
 	drink_type = ALCOHOL
 	///Used for sabrage; increases the chance of success per 1 force of the attacking sharp item
@@ -691,33 +668,34 @@
 	sabrage_success_percentile = 0 //force of the sharp item used to sabrage will not increase success chance
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/attack_self(mob/user)
-	if(spillable)
+	if(is_open_container())
 		return ..()
 	balloon_alert(user, "fiddling with cork...")
 	if(do_after(user, 1 SECONDS, src))
 		return pop_cork(user, sabrage = FALSE, froth_severity = pick(0, 1))
 
-/obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/item/reagent_containers/cup/glass/bottle/champagne/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(is_open_container())
+		return NONE
 
-	if(spillable)
-		return
+	if(tool.get_sharpness() != SHARP_EDGED)
+		return NONE
 
-	if(attacking_item.get_sharpness() != SHARP_EDGED)
-		return
-
-	if(attacking_item != user.get_active_held_item()) //no TK allowed
+	if(tool != user.get_active_held_item()) //no TK allowed
 		to_chat(user, span_userdanger("Such a feat is beyond your skills of telekinesis!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(attacking_item.force < 5)
+	if(tool.force < 5)
 		balloon_alert(user, "not strong enough!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	playsound(user, 'sound/items/unsheath.ogg', 25, TRUE)
 	balloon_alert(user, "preparing to swing...")
 	if(!do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	//The bonus to success chance that the user gets for being a command role
 	var/obj/item/organ/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -726,7 +704,7 @@
 	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
 	var/skillchip_bonus = HAS_TRAIT(user, TRAIT_SABRAGE_PRO) ? 35 : 0
 	//calculate success chance. example: captain's sabre - 15 force = 75% chance
-	var/sabrage_chance = (attacking_item.force * sabrage_success_percentile) + command_bonus + skillchip_bonus
+	var/sabrage_chance = (tool.force * sabrage_success_percentile) + command_bonus + skillchip_bonus
 
 	if(prob(sabrage_chance))
 		///Severity of the resulting froth to pass to make_froth()
@@ -741,18 +719,18 @@
 					severity_to_pass = 2
 				if(67 to 99)
 					severity_to_pass = 1
-		return pop_cork(user, sabrage = TRUE, froth_severity = severity_to_pass)
-	else //you dun goofed
-		user.visible_message(
-			span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"),
-			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"),
-			)
-		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-		return smash(target = user, ranged = FALSE, break_top = TRUE)
+		return pop_cork(user, sabrage = TRUE, froth_severity = severity_to_pass) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	user.visible_message(
+		span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"),
+		span_danger("You fail your stunt and cut [src] in half, spilling it over you!"),
+		)
+	user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
+	return smash(target = user, break_top = TRUE) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
-	if(spillable)
+	if(is_open_container())
 		if(sabraged)
 			icon_state = "[base_icon_state]_sabrage"
 		else
@@ -779,9 +757,8 @@
 				continue
 			stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
 
-	reagents.flags |= OPENCONTAINER
+	add_container_flags(OPENCONTAINER)
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
-	spillable = TRUE
 	update_appearance()
 	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
 	///Type of cork to fire away
@@ -791,6 +768,7 @@
 	popped_cork.firer = user
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
+	return TRUE
 
 /obj/projectile/bullet/champagne_cork
 	name = "champagne cork"
@@ -916,21 +894,21 @@
 		/datum/reagent/toxin/spore_burning,
 	)
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/CheckParts(list/parts_list)
-	. = ..()
-	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in contents
+/obj/item/reagent_containers/cup/glass/bottle/molotov/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/reagent_containers/cup/glass/bottle/bottle = locate() in components
 	if(!bottle)
-		return
+		return ..()
 	icon_state = bottle.icon_state
-	bottle.reagents.copy_to(src, 100)
+	bottle.reagents.trans_to(src, 100, copy_only = TRUE)
 	if(istype(bottle, /obj/item/reagent_containers/cup/glass/bottle/juice))
 		desc += " You're not sure if making this out of a carton was the brightest idea."
 		isGlass = FALSE
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = FALSE)
 	..(hit_atom, throwingdatum, do_splash = FALSE)
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	var/firestarter = 0
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
 		for(var/accelerant_type in accelerants)
@@ -942,15 +920,17 @@
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.get_temperature() && !active)
-		active = TRUE
-		log_bomber(user, "has primed a", src, "for detonation")
+/obj/item/reagent_containers/cup/glass/bottle/molotov/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	if(!item.get_temperature() || active)
+		return NONE
+	active = TRUE
+	log_bomber(user, "has primed a", src, "for detonation")
 
-		to_chat(user, span_info("You light [src] on fire."))
-		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
-		if(!isGlass)
-			addtimer(CALLBACK(src, PROC_REF(explode)), 5 SECONDS)
+	to_chat(user, span_info("You light [src] on fire."))
+	add_overlay(custom_fire_overlay() || GLOB.fire_overlay)
+	if(!isGlass)
+		addtimer(CALLBACK(src, PROC_REF(explode)), 5 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/proc/explode()
 	if(!active)
@@ -960,7 +940,7 @@
 		for(var/i in 1 to 2)
 			if(istype(target, /obj/item/storage))
 				target = target.loc
-		SplashReagents(target, override_spillable = TRUE)
+		splash_reagents(target, allow_closed_splash = TRUE)
 		target.fire_act()
 	qdel(src)
 
@@ -970,7 +950,7 @@
 			to_chat(user, span_danger("The flame's spread too far on it!"))
 			return
 		to_chat(user, span_info("You snuff out the flame on [src]."))
-		cut_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
+		cut_overlay(custom_fire_overlay() || GLOB.fire_overlay)
 		active = FALSE
 		return
 	return ..()

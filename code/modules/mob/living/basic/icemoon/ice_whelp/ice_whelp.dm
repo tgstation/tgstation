@@ -5,7 +5,6 @@
 	icon_state = "ice_whelp"
 	icon_living = "ice_whelp"
 	icon_dead = "ice_whelp_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(
 		/obj/item/stack/ore/diamond = 3,
@@ -37,22 +36,18 @@
 	ai_controller = /datum/ai_controller/basic_controller/ice_whelp
 	///how much we will heal when cannibalizing a target
 	var/heal_on_cannibalize = 5
+	var/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption = BB_WHELP_WIDESPREAD_FIRE,
+	)
 
 /mob/living/basic/mining/ice_whelp/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
-	AddComponent(/datum/component/basic_mob_ability_telegraph)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
-
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
-	)
-
 	grant_actions_by_list(innate_actions)
-
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, ai_controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE])
 
 /mob/living/basic/mining/ice_whelp/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -93,3 +88,16 @@
 		return
 	target.gib(DROP_ALL_REMAINS)
 	adjustBruteLoss(-1 * heal_on_cannibalize)
+
+///Ash whelp, the "lava" variant of ice whelps.
+/mob/living/basic/mining/ice_whelp/ash
+	name = "ash whelp"
+	desc = "The offspring of an ash drake, weak in comparison but still terrifying."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "ash_whelp"
+	icon_living = "ash_whelp"
+	icon_dead = "ash_whelp_dead"
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/fire = BB_WHELP_WIDESPREAD_FIRE,
+	)

@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import {
   Button,
   Collapsible,
@@ -8,7 +8,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -23,6 +23,7 @@ type Material = {
   threshold: number;
   color: string;
   requested: number;
+  elastic: number;
 };
 
 type Data = {
@@ -82,6 +83,7 @@ export const MatMarket = (props) => {
               next cargo shipment.
               <br /> <br />
               Material purchases are subject to a <i>static sale value</i>,
+              {formatMoney(CARGO_CRATE_VALUE)},
               independent of their purchase price as per nanotrasen insider
               trading regulations.
               <br /> <br />
@@ -117,7 +119,7 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {sortBy(materials, (tempmat: Material) => tempmat.rarity).map(
+        {sortBy(materials, [(tempmat: Material) => tempmat.rarity]).map(
           (material, i) => (
             <Section key={i}>
               <Stack fill>
@@ -130,6 +132,19 @@ export const MatMarket = (props) => {
                       pr="3%"
                     >
                       {toTitleCase(material.name)}
+                    </Stack.Item>
+                    <Stack.Item
+                      width="10%"
+                      pr="2%"
+                      textColor={
+                        material.elastic < 33
+                          ? 'red'
+                          : material.elastic < 66
+                            ? 'orange'
+                            : 'green'
+                      }
+                    >
+                      Elasticity: <b>{Math.round(material.elastic)}</b>%
                     </Stack.Item>
 
                     <Stack.Item width="15%" pr="2%">

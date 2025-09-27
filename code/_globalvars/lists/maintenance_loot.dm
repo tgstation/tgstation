@@ -51,13 +51,12 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 1,
 
 		/obj/item/airlock_painter = 1,
-		/obj/item/airlock_painter/decal = 1,
-		/obj/item/airlock_painter/decal/tile = 1,
+		/obj/item/airlock_painter/decal = 2,
 		/obj/item/clothing/mask/breath = 1,
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance/achievement = 1,
+		/obj/item/reagent_containers/applicator/pill/maintenance/achievement = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -130,7 +129,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/lead_pipe = 1,
 		/obj/item/reagent_containers/cup/beaker = 1,
 		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
-		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/stock_parts/power_store/cell/lead = 1,
@@ -203,7 +202,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/beacon = 1,
 		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
 		/obj/item/plaque = 1,
-		/obj/item/seeds/kronkus = 1,
+		/obj/item/seeds/kronkus = 3,
 		/obj/item/seeds/odious_puffball = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/stock_parts/power_store/cell/high = 1,
@@ -219,22 +218,28 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/mesh = 1,
 			/obj/item/stack/medical/suture = 1,
 			/obj/item/stack/medical/bandage = 1,
-			) = 1,
+			) = 4,
 		list(//medical chems
 			/obj/item/reagent_containers/cup/bottle/multiver = 1,
 			/obj/item/reagent_containers/hypospray/medipen = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
-			) = 1,
+			) = 4,
 		list(//drinks
 			/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
 			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
 			/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
-			) = 1,
+			) = 4,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,
 			/obj/item/watertank = 1,
 			/obj/item/watertank/janitor = 1,
-			) = 1,
+			) = 4,
+		list(//other chems
+			/obj/item/reagent_containers/cup/jerrycan/oil = 2, //Not the most exciting reagent, but a staple. And you get a cool can for your pyrotechnics.
+			/obj/item/reagent_containers/cup/jerrycan/space_cleaner = 2, //If you can't find the janitor, the medbay might also appreciate some readymade cleaner.
+			/obj/item/reagent_containers/cup/jerrycan/sus = 1, //what assitant wouldn't like a vibrant jug o' phlog?
+			/obj/item/reagent_containers/cup/jerrycan/diethylamine = 1, //Im sure the botanist would appreciate it, but it is also really cool for maintenance science projects.
+			) = 2,
 		) = 8,
 
 	list(//food
@@ -254,6 +259,10 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/food/ready_donk/mac_n_cheese = 1,
 			) = 1,
 		/obj/item/food/monkeycube = 1,
+		) = 8,
+
+	list(//Donk Co. 'Donk Spike' flechette shells, these things show up everywhere in donkpocket boxes
+		/obj/item/storage/box/donkpockets/donkpocketshell = 1,
 		) = 8,
 
 	list(//computer disks
@@ -401,6 +410,9 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	GLOB.rarity_loot = maint_rarity_weight,
 	GLOB.oddity_loot = maint_oddity_weight,
 	))
+
+//Loot pool that is copied from maint loot but doesn't get changed due to holidays
+GLOBAL_LIST_INIT(dumpster_loot, GLOB.maintenance_loot.Copy())
 
 GLOBAL_LIST_INIT(ratking_trash, list(//Garbage: used by the regal rat mob when spawning garbage.
 			/obj/item/cigbutt,

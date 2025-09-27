@@ -38,16 +38,13 @@ Slimecrossing Armor
 	icon = 'icons/obj/science/slimecrossing.dmi'
 	icon_state = "prismglasses"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
+
 	forced_glass_color = TRUE
 	var/glasses_color = COLOR_WHITE
 
 /obj/item/clothing/glasses/prism_glasses/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, glasses_color, forced_glass_color)
-
-/obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return TRUE
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, glasses_color, forced_glass_color)
 
 /obj/structure/light_prism
 	name = "light prism"
@@ -74,25 +71,21 @@ Slimecrossing Armor
 	button_icon = 'icons/obj/science/slimecrossing.dmi'
 	button_icon_state = "prismcolor"
 
-/datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return
+/datum/action/item_action/change_prism_colour/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
 	if(!new_color)
 		return
-	RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, glasses.glasses_color, glasses.forced_glass_color)
+	RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, glasses.glasses_color, glasses.forced_glass_color)
 	glasses.glasses_color = new_color
-	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, new_color, glasses.forced_glass_color)
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, new_color, glasses.forced_glass_color)
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"
 	button_icon = 'icons/obj/science/slimecrossing.dmi'
 	button_icon_state = "lightprism"
 
-/datum/action/item_action/place_light_prism/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return
+/datum/action/item_action/place_light_prism/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
 		to_chat(owner, span_warning("There isn't enough ambient energy to fabricate another light prism here."))

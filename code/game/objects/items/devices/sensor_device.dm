@@ -2,7 +2,7 @@
 	name = "handheld crew monitor" //Thanks to Gun Hog for the name!
 	desc = "A miniature machine that tracks suit sensors across the station."
 	icon = 'icons/obj/devices/scanner.dmi'
-	icon_state = "scanner"
+	icon_state = "crew_monitor"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

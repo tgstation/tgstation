@@ -331,6 +331,7 @@
 			also give them a bit of sentience though."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/reagent_containers/syringe/spider_extract
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 10
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
 	surplus = 10
@@ -396,3 +397,10 @@
 	progression_minimum = 30 MINUTES
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY
 
+/datum/uplink_item/role_restricted/concussivedisk
+	name = "Hyperconcussive Diode Disk"
+	desc = "A diode configuration disk that allows an emitter to shoot potent explosive lasers. \
+	Please note that this will halve the fire-rate of the emitter."
+	item = /obj/item/emitter_disk/blast
+	cost = 5
+	restricted_roles = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)

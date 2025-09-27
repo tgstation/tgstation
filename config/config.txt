@@ -103,6 +103,16 @@ ALLOW_ADMIN_ASAYCOLOR
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
 
+## Request Emergency Temporary Access - RETA System
+## Enables temporary department access when Requests Console emergency calls are made
+RETA_ENABLED
+
+## Duration in deciseconds for how long temporary access lasts (default: 3000 = 5 minutes)
+RETA_DURATION_DS 3000
+
+## Cooldown in deciseconds between RETA calls from the same origin to the same target department (default: 150 = 15 seconds)
+RETA_DEPT_COOLDOWN_DS 150
+
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
@@ -139,8 +149,9 @@ RESPAWN_DELAY 0
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
 
-## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
-GUEST_BAN
+## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
+## You probably want this enabled for a production server.
+#GUEST_BAN
 
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
@@ -188,10 +199,10 @@ IPINTEL_REJECT_BAD
 # FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+# WIKIURL http://tgstation13.org/wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+# RULESURL http://tgstation13.org/wiki/Rules
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
@@ -459,10 +470,15 @@ MINUTE_CLICK_LIMIT 400
 BASE_MC_TICK_RATE 1
 
 ##High population MC tick rate
-##	Byond rounds timer values UP, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
+##	Byond rounds timer values DOWN, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
 ##	will make it run every 2 byond ticks, but will also double the effect of anti-lag heuristics. You can instead set it to something like
-##	1.1 to make it run every 2 byond ticks, but only increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.
+##	1.1 to make it run every 1 byond ticks, but will increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.
 ##	(As an aside, you could in theory also reduce the effect of anti-lag heuristics in the base tick rate by setting it to something like 0.5)
+##
+##	Note: The reason to set this at/above 2 would be to carve out more time for sleeping procs and muck with scheduling the mc.
+##	Basically if set to 2 one tick will be dominated by sleeping procs, and the other has... a chance of being dominated by the mc (a low chance but yaknow)
+##	This is largely deprecated behavior, we have systems that do this automatically and more effectively. I'm keeping this here because of the heuristics stuff
+##	since I have a weaker grasp on that, but it should basically never be set above 2 (guarantees skipped ticks and horrible gameplay)
 HIGH_POP_MC_TICK_RATE 1.1
 
 ##Engage high pop mode if player count raises above this (Player in this context means any connected user. Lobby, ghost or in-game all count)
@@ -476,20 +492,6 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 
 ## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
 #ROUNDS_UNTIL_HARD_RESTART 10
-
-
-##Default view size, in tiles.
-##	By default, this is 15x15, which gets simplified to 7 by byond
-##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
-##  Setting this to something different from DEFAULT_VIEW_SQUARE will enable widescreen toggles
-##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
-DEFAULT_VIEW 19x15
-
-##Default view size, in tiles. Should *always* be square.
-## The alternative square viewport size if you're using a widescreen view size
-## You probably shouldn't ever be changing this, but it's here if you want to.
-DEFAULT_VIEW_SQUARE 15x15
-
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
@@ -564,6 +566,14 @@ MOTD motd.txt
 ## but enabled on production (the default).
 CACHE_ASSETS 0
 
+## Enables 'smart' asset caching, for assets that support it.
+## This is a type of asset cache that automatically invalidates itself based on inputs to the asset generation.
+## The cache is stored in `data/spritesheets/smart_cache/`.
+## It lowers the generation cost and is safe to enable on development and production.
+## This cache is only cleared by the game or manually, but it shouldn't affect the results.
+## This setting is independent of `CACHE_ASSETS`, they do not affect each other whatsoever.
+SMART_CACHE_ASSETS
+
 ## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
 ## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
 ## Will only seek to waste disk space if ran on production.
@@ -605,6 +615,9 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## The maximum number of concurrent tts http requests that can be made by the server at once.
 #TTS_MAX_CONCURRENT_REQUESTS 4
 
+## The number of seconds before tts https requests timeout (0 for infinite not recommended)
+#TTS_HTTP_TIMEOUT_SECONDS 30
+
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale
 #TTS_VOICE_BLACKLIST Papyrus Undertale
@@ -627,3 +640,14 @@ UPLOAD_LIMIT_ADMIN 5242880
 
 ## Uncomment to allow admins with +DEBUG to queue the next round to run the byond-tracy profiler.
 #ALLOW_TRACY_QUEUE
+
+## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
+## This config option limits the maximum chunk count for which the server will accept a payload, default is 32
+TGUI_MAX_CHUNK_COUNT 32
+
+## Uncomment and replace with the URL where users can verify their byond accounts
+#FORUM_LINK_URI
+
+## While this is uncommented, server initialization will include some asset generation usually useful for development.
+## It increases initialization time significantly so you'll want to disable this in live environments.
+GENERATE_ASSETS_IN_INIT

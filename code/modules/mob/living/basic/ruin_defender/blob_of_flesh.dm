@@ -18,6 +18,7 @@
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "fleshblob"
 	icon_living = "fleshblob"
+	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	mob_size = MOB_SIZE_LARGE
 	gender = NEUTER
 	basic_mob_flags = DEL_ON_DEATH
@@ -42,7 +43,7 @@
 	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
 	AddComponent(\
 		/datum/component/blood_walk, \
-		blood_type = /obj/effect/decal/cleanable/blood/trails, \
+		blood_type = /obj/effect/decal/cleanable/blood/trail_holder, \
 		target_dir_change = TRUE,\
 	)
 

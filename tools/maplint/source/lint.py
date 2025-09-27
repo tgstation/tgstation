@@ -45,6 +45,7 @@ class AtomNeighbor:
     identical: bool = False
     typepath: Optional[TypepathExtra] = None
     pattern: Optional[re.Pattern] = None
+    ignore: list[TypepathExtra] = []
 
     def __init__(self, typepath, data = {}):
         if typepath.upper() != typepath:
@@ -61,6 +62,11 @@ class AtomNeighbor:
 
         if "pattern" in data:
             self.pattern = re.compile(data.pop("pattern"))
+
+        if "ignore" in data:
+            ignore_data = data.pop("ignore")
+            expect(isinstance(ignore_data, list), "ignore must be a list of typepaths.")
+            self.ignore = [TypepathExtra(tp) for tp in ignore_data]
 
         expect(len(data) == 0, f"Unknown key in banned neighbor: {', '.join(data.keys())}.")
 
@@ -229,8 +235,8 @@ class WhenCondition(ConditionalRule):
                 # If something is a float (number), check it as an int and a float
                 # Hack for integer value parsing
                 if var_edits[var_name] % 1 == 0:
-                    return str(int(var_edits[var_name])).strip() != expected_value.strip()
-            return str(var_edits[var_name]).strip() != expected_value.strip()
+                    return str(int(var_edits[var_name])).strip() != unexpected_value.strip()
+            return str(var_edits[var_name]).strip() != unexpected_value.strip()
 
         elif self.match_like is not None:
             var_name = self.match_like.group(1)
@@ -303,10 +309,16 @@ class Rules:
     banned_neighbors: list[AtomNeighbor] = []
     banned_variables: bool | list[BannedVariable] = []
     required_neighbors: list[AtomNeighbor] = []
+    ignored_neighbors: list[AtomNeighbor] = []
     when: Optional[When] = None
 
     def __init__(self, data):
         expect(isinstance(data, dict), "Lint rules must be a dictionary.")
+
+        if "ignore" in data:
+            ignored_neighbors_data = data.pop("ignore")
+            expect(isinstance(ignored_neighbors_data, list), "'ignore' must be a list of typepaths.")
+            self.ignored_neighbors = [TypepathExtra(tp) for tp in ignored_neighbors_data]
 
         if "banned" in data:
             self.banned = data.pop("banned")
@@ -361,6 +373,14 @@ class Rules:
             failures.append(fail_content(identified, f"Typepath {identified.path} is banned{when_text}."))
 
         for banned_neighbor in self.banned_neighbors:
+            ignored = False
+            for neighbor in contents[:identified_index] + contents[identified_index + 1:]:
+                if any(ignore.matches_path(neighbor.path) for ignore in self.ignored_neighbors):
+                    ignored = True
+                    break
+            if ignored:
+                continue
+
             for neighbor in contents[:identified_index] + contents[identified_index + 1:]:
                 if not banned_neighbor.matches(identified, neighbor):
                     continue

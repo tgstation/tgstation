@@ -5,6 +5,7 @@
 /obj/item/construction
 	name = "not for ingame use"
 	desc = "A device used to rapidly build and deconstruct. Reload with iron, plasteel, glass or compressed matter cartridges."
+	abstract_type = /obj/item/construction
 	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
@@ -30,7 +31,7 @@
 	/// amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	var/ammo_sections = 10
 	/// bitflags for upgrades
-	var/upgrade = NONE
+	var/construction_upgrades = NONE
 	/// bitflags for banned upgrades
 	var/banned_upgrades = NONE
 	/// remote connection to the silo
@@ -49,7 +50,7 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
+	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 		silo_mats = AddComponent(/datum/component/remote_materials, mapload, FALSE)
 	update_appearance()
 
@@ -80,7 +81,7 @@
 /obj/item/construction/examine(mob/user)
 	. = ..()
 	. += "It currently holds [get_matter(user)]/[max_matter] matter-units."
-	if(upgrade & RCD_UPGRADE_SILO_LINK)
+	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		var/iron = get_silo_iron()
 		if(iron)
@@ -113,13 +114,13 @@
 
 /// Installs an upgrade into the RCD checking if it is already installed, or if it is a banned upgrade
 /obj/item/construction/proc/install_upgrade(obj/item/rcd_upgrade/design_disk, mob/user)
-	if(design_disk.upgrade & upgrade)
+	if(design_disk.upgrade & construction_upgrades)
 		balloon_alert(user, "already installed!")
 		return FALSE
 	if(design_disk.upgrade & banned_upgrades)
 		balloon_alert(user, "cannot install upgrade!")
 		return FALSE
-	upgrade |= design_disk.upgrade
+	construction_upgrades |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, FALSE, FALSE)
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -190,10 +191,6 @@
 		update_appearance()
 		return TRUE
 	else
-		if(silo_mats.on_hold())
-			if(user)
-				balloon_alert(user, "silo on hold!")
-			return FALSE
 		if(!silo_mats.mat_container)
 			if(user)
 				balloon_alert(user, "no silo detected!")
@@ -203,20 +200,20 @@
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
-		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "build", name = "consume")
+		silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
 		return TRUE
 
 /obj/item/construction/ui_static_data(mob/user)
 	. = list()
 
-	.["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
+	.["silo_upgraded"] = !!(construction_upgrades & RCD_UPGRADE_SILO_LINK)
 
 ///shared data for rcd,rld & plumbing
 /obj/item/construction/ui_data(mob/user)
 	var/list/data = list()
 
 	//matter in the rcd
-	var/total_matter = ((upgrade & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : get_matter(user)
+	var/total_matter = ((construction_upgrades & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : get_matter(user)
 	if(!total_matter)
 		total_matter = 0
 	data["matterLeft"] = total_matter
@@ -244,7 +241,7 @@
 	if(.)
 		return
 
-	if(action == "toggle_silo" && (upgrade & RCD_UPGRADE_SILO_LINK))
+	if(action == "toggle_silo" && (construction_upgrades & RCD_UPGRADE_SILO_LINK))
 		toggle_silo(ui.user)
 		return TRUE
 
@@ -265,9 +262,7 @@
 		else
 			. = matter >= amount
 	else
-		if(silo_mats.on_hold())
-			if(user)
-				balloon_alert(user, "silo on hold!")
+		if(!silo_mats.can_use_resource(user_data = ID_DATA(user)))
 			return FALSE
 		. = silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT)
 	if(!. && user)

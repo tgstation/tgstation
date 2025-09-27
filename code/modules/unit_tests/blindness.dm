@@ -27,7 +27,7 @@
 	// Have to do a transfer here so we don't get a blindfold
 	var/datum/quirk/item_quirk/blindness/quirk = allocate(/datum/quirk/item_quirk/blindness)
 	quirk.add_to_holder(dummy, quirk_transfer = TRUE)
-	dummy.dna.add_mutation(/datum/mutation/human/blind)
+	dummy.dna.add_mutation(/datum/mutation/blind, "TEST")
 
 	// Remove the blindfold. We should remain blinded
 	QDEL_NULL(blindfold)
@@ -36,7 +36,7 @@
 	dummy.remove_quirk(/datum/quirk/item_quirk/blindness)
 	check_if_blind(dummy, status_message = "after removing their quirk BUT still being blinded")
 	// Remove the mutation, this should unblind us
-	dummy.dna.remove_mutation(/datum/mutation/human/blind)
+	dummy.dna.remove_mutation(/datum/mutation/blind, "TEST")
 	check_if_not_blind(dummy, status_message = "after removing their blind mutation and having no sources of blindness left")
 
 	// Temp blindness
@@ -52,14 +52,14 @@
 	// Check for the status effect, duh
 	TEST_ASSERT(dummy.is_blind(), "Dummy, [status_message], did not have the blind status effect.")
 	// Being more technical, we need to check for client color and screen overlays
-	TEST_ASSERT(HAS_CLIENT_COLOR(dummy, /datum/client_colour/monochrome/blind), "Dummy, [status_message], did not have the monochrome client color.")
+	TEST_ASSERT(HAS_CLIENT_COLOR(dummy, /datum/client_colour/monochrome), "Dummy, [status_message], did not have the monochrome client color.")
 	TEST_ASSERT(HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/blind), "Dummy, [status_message], did not have a blind screen overlay in their list of screens.")
 
 /datum/unit_test/blindness/proc/check_if_not_blind(mob/living/carbon/human/dummy, status_message = "after being cured of blindness")
 	// Check for no status effect
 	TEST_ASSERT(!dummy.is_blind(), "Dummy, [status_message], still had the blindness status effect.")
 	// Check that the client color and screen overlay are gone
-	TEST_ASSERT(!HAS_CLIENT_COLOR(dummy, /datum/client_colour/monochrome/blind), "Dummy, [status_message], still had the monochrome client color.")
+	TEST_ASSERT(!HAS_CLIENT_COLOR(dummy, /datum/client_colour/monochrome), "Dummy, [status_message], still had the monochrome client color.")
 	TEST_ASSERT(!HAS_SCREEN_OVERLAY(dummy, /atom/movable/screen/fullscreen/blind), "Dummy, [status_message], still had the blind sceen overlay.")
 
 /**

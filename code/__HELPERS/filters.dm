@@ -22,6 +22,14 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"size" = 1
 		)
 	),
+	"bloom" = list(
+		"defaults" = list(
+			"threshold" = COLOR_BLACK,
+			"size" = 1,
+			"offset" = 0,
+			"alpha" = 255
+		)
+	),
 	// Not implemented, but if this isn't uncommented some windows will just error
 	// Needs either a proper matrix editor, or just a hook to our existing one
 	// Issue is filterrific assumes variables will have the same value type if they share the same name, which this violates
@@ -200,6 +208,17 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(size))
 		.["size"] = size
 
+/proc/bloom_filter(threshold, size, offset, alpha)
+	. = list("type" = "bloom")
+	if(!isnull(threshold))
+		.["threshold"] = threshold
+	if(!isnull(size))
+		.["size"] = size
+	if(!isnull(offset))
+		.["offset"] = offset
+	if(!isnull(alpha))
+		.["alpha"] = alpha
+
 /proc/layering_filter(icon, render_source, x, y, flags, color, transform, blend_mode)
 	. = list("type" = "layer")
 	if(!isnull(icon))
@@ -313,6 +332,8 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
 /proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
+	if(QDELETED(in_atom))
+		return
 	var/filter
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")

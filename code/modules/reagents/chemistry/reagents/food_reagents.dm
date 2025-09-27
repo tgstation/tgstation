@@ -95,9 +95,9 @@
 
 	data = counterlist_normalise(supplied_data)
 
-/datum/reagent/consumable/nutriment/on_merge(list/newdata, newvolume)
+/datum/reagent/consumable/nutriment/on_merge(list/mix_data, amount)
 	. = ..()
-	if(!islist(newdata) || !newdata.len)
+	if(!islist(mix_data) || !mix_data.len)
 		return
 
 	// data for nutriment is one or more (flavour -> ratio)
@@ -109,8 +109,8 @@
 
 	counterlist_scale(taste_amounts, volume)
 
-	var/list/other_taste_amounts = newdata.Copy()
-	counterlist_scale(other_taste_amounts, newvolume)
+	var/list/other_taste_amounts = mix_data.Copy()
+	counterlist_scale(other_taste_amounts, amount)
 
 	counterlist_combine(taste_amounts, other_taste_amounts)
 
@@ -172,7 +172,7 @@
 
 	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
 	exposed_obj.AddElement(/datum/element/fried_item, volume SECONDS)
-	exposed_obj.reagents.add_reagent(src.type, reac_volume, reagtemp = holder.chem_temp)
+	exposed_obj.reagents.add_reagent(type, reac_volume, data, holder.chem_temp)
 
 /datum/reagent/consumable/nutriment/fat/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
@@ -183,16 +183,17 @@
 	if(methods & TOUCH)
 		burn_damage *= max(1 - touch_protection, 0)
 	var/FryLoss = round(min(38, burn_damage * reac_volume))
-	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
-		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
-		span_userdanger("You're covered in boiling oil!"))
-		if(FryLoss)
-			exposed_mob.emote("scream")
-		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
+	if(HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
+		return
+
+	exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
+	span_userdanger("You're covered in boiling oil!"))
 	if(FryLoss)
+		exposed_mob.emote("scream")
 		exposed_mob.adjustFireLoss(FryLoss)
+	playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+	ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 2 SECONDS)
 
 /datum/reagent/consumable/nutriment/fat/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -834,7 +835,7 @@
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = max(0.6, surgery.speed_modifier)
+		surgery.speed_modifier = min(0.4, surgery.speed_modifier)
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"

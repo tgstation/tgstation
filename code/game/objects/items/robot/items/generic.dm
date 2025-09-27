@@ -11,6 +11,7 @@
 
 /obj/item/borg
 	icon = 'icons/mob/silicon/robot_items.dmi'
+	abstract_type = /obj/item/borg
 
 /// Cost to use the stun arm
 #define CYBORG_STUN_CHARGE_COST (0.2 * STANDARD_CELL_CHARGE)
@@ -96,7 +97,7 @@
 		if(HUG_MODE_CRUSH)
 			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
 
-/obj/item/borg/cyborghug/attack(mob/living/attacked_mob, mob/living/silicon/robot/user, params)
+/obj/item/borg/cyborghug/attack(mob/living/attacked_mob, mob/living/silicon/robot/user, list/modifiers, list/attack_modifiers)
 	if(attacked_mob == user)
 		return
 	if(attacked_mob.health < 0)
@@ -104,7 +105,6 @@
 	switch(mode)
 		if(HUG_MODE_NICE)
 			if(isanimal_or_basicmob(attacked_mob))
-				var/list/modifiers = params2list(params)
 				if (!user.combat_mode && !LAZYACCESS(modifiers, RIGHT_CLICK))
 					attacked_mob.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
 				return
@@ -401,6 +401,37 @@
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)
+
+/obj/item/shield_module
+	name = "Shield Activator"
+	icon = 'icons/mob/silicon/robot_items.dmi'
+	icon_state = "module_miner"
+	var/active = FALSE
+	var/mutable_appearance/shield_overlay
+
+/obj/item/shield_module/Initialize(mapload)
+	. = ..()
+	shield_overlay = mutable_appearance('icons/mob/effects/durand_shield.dmi', "borg_shield")
+
+/obj/item/shield_module/attack_self(mob/living/silicon/borg)
+	active = !active
+	if(active)
+		playsound(src, 'sound/vehicles/mecha/mech_shield_raise.ogg', 50, FALSE)
+		RegisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_shield_overlay_update), override = TRUE)
+	else
+		playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+		UnregisterSignal(borg, COMSIG_ATOM_UPDATE_OVERLAYS)
+	borg.update_appearance()
+
+/obj/item/shield_module/cyborg_unequip(mob/living/silicon/robot/borg)
+	active = FALSE
+	playsound(src, 'sound/vehicles/mecha/mech_shield_drop.ogg', 50, FALSE)
+	borg.cut_overlay(shield_overlay)
+
+/obj/item/shield_module/proc/on_shield_overlay_update(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	if(active)
+		overlays += shield_overlay
 
 #undef HUG_MODE_NICE
 #undef HUG_MODE_HUG

@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			data["x"] = disk_turf.x
 			data["y"] = disk_turf.y
 			data["z"] = disk_turf.z
-		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living, TRUE)
 		if(outer != nuke_disk)
 			if(isliving(outer))
 				var/mob/living/disk_holder = outer
@@ -158,8 +158,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
 	var/list/file_data = list()
 	var/pos = 1
-	for(var/V in GLOB.news_network.network_channels)
-		var/datum/feed_channel/channel = V
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		if(!istype(channel))
 			stack_trace("Non-channel in newscaster channel list")
 			continue
@@ -224,7 +223,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
-		C?.playtitlemusic(40)
+		if(COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
+			C?.playtitlemusic(volume_multiplier = 0.5)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
@@ -340,6 +340,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -357,15 +358,9 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 
-	parts += "[FOURSPACES]Threat level: [SSdynamic.threat_level]"
-	parts += "[FOURSPACES]Threat left: [SSdynamic.mid_round_budget]"
-	if(SSdynamic.roundend_threat_log.len)
-		parts += "[FOURSPACES]Threat edits:"
-		for(var/entry as anything in SSdynamic.roundend_threat_log)
-			parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
-	parts += "[FOURSPACES]Executed rules:"
-	for(var/datum/dynamic_ruleset/rule in SSdynamic.executed_rules)
-		parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
+	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
+	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
+		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b> ([rule.config_tag])"
 
 	return parts.Join("<br>")
 
@@ -531,18 +526,25 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "The [venue] served [venue.customers_served] customer\s and made [venue.total_income] credits.<br>"
 	parts += "In total, they earned [tourist_income] credits[tourist_income ? "!" : "..."]<br>"
 	log_econ("Roundend service income: [tourist_income] credits.")
+
+	// Award service achievements based on tourist income
+	switch(tourist_income)
+		if(1 to 2000)
+			award_service(/datum/award/achievement/jobs/service_bad)
+		if(2001 to 4999)
+			award_service(/datum/award/achievement/jobs/service_okay)
+		if(5000 to INFINITY)
+			award_service(/datum/award/achievement/jobs/service_good)
+
 	switch(tourist_income)
 		if(0)
 			parts += "[span_redtext("Service did not earn any credits...")]<br>"
 		if(1 to 2000)
 			parts += "[span_redtext("Centcom is displeased. Come on service, surely you can do better than that.")]<br>"
-			award_service(/datum/award/achievement/jobs/service_bad)
 		if(2001 to 4999)
 			parts += "[span_greentext("Centcom is satisfied with service's job today.")]<br>"
-			award_service(/datum/award/achievement/jobs/service_okay)
 		else
 			parts += "<span class='reallybig greentext'>Centcom is incredibly impressed with service today! What a team!</span><br>"
-			award_service(/datum/award/achievement/jobs/service_good)
 
 	parts += "<b>General Statistics:</b><br>"
 	parts += "There were [station_vault] credits collected by crew this shift.<br>"
@@ -553,7 +555,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
-	return parts
+	return parts.Join()
 
 /**
  * Awards the service department an achievement and updates the chef and bartender's highscore for tourists served.
@@ -661,7 +663,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 /datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
 	var/datum/action/report/R = new
-	C.player_details.player_actions += R
+	C.persistent_client.player_actions += R
 	R.Grant(C.mob)
 	to_chat(C,span_infoplain("<a href='byond://?src=[REF(R)];report=1'>Show roundend report again</a>"))
 
@@ -670,7 +672,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	button_icon_state = "round_end"
 	show_to_observers = FALSE
 
-/datum/action/report/Trigger(trigger_flags)
+/datum/action/report/Trigger(mob/clicker, trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 

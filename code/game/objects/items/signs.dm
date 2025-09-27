@@ -30,7 +30,7 @@
 		name = "[label] sign"
 		desc = "It reads: [label]"
 
-/obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
+/obj/item/picket_sign/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(W))
 		retext(user, W)
 	else
@@ -62,16 +62,17 @@
 /datum/action/item_action/nano_picket_sign
 	name = "Retext Nano Picket Sign"
 
-/datum/action/item_action/nano_picket_sign/Trigger(trigger_flags)
+/datum/action/item_action/nano_picket_sign/do_effect(trigger_flags)
 	if(!istype(target, /obj/item/picket_sign))
-		return
+		return FALSE
 	var/obj/item/picket_sign/sign = target
 	sign.retext(owner)
+	return TRUE
 
 /datum/crafting_recipe/picket_sign
 	name = "Picket Sign"
 	result = /obj/item/picket_sign
 	reqs = list(/obj/item/stack/rods = 1,
 				/obj/item/stack/sheet/cardboard = 2)
-	time = 80
+	time = 8 SECONDS
 	category = CAT_ENTERTAINMENT

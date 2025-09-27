@@ -406,7 +406,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	return data
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/bibles))
+	return list(get_asset_datum(/datum/asset/spritesheet_batched/bibles))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/load_nearby_books()
 	for(var/datum/book_info/book as anything in SSlibrary.get_area_books(get_area(src)))
@@ -507,12 +507,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 				return
 			if(!GLOB.news_network)
 				say("No news network found on station. Aborting.")
-			var/channelexists = FALSE
-			for(var/datum/feed_channel/feed in GLOB.news_network.network_channels)
-				if(feed.channel_name == LIBRARY_NEWSFEED)
-					channelexists = TRUE
-					break
-			if(!channelexists)
+			var/datum/feed_channel/library_channel = GLOB.news_network.network_channels_by_name[LIBRARY_NEWSFEED]
+			if(isnull(library_channel))
 				GLOB.news_network.create_feed_channel(LIBRARY_NEWSFEED, "Library", "The official station book club!", null)
 
 			var/obj/machinery/libraryscanner/scan = get_scanner()
@@ -545,7 +541,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			set_screen_state(MIN_LIBRARY)
 			return TRUE
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(weapon, /obj/item/barcodescanner))
 		return ..()
 	var/obj/item/barcodescanner/scanner = weapon
@@ -711,7 +707,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	cache = null
 	return ..()
 
-/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, params)
+/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(hitby, /obj/item/book))
 		user.transferItemToLoc(hitby, src)
 		if(held_book)
@@ -792,7 +788,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, params)
+/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(hitby, /obj/item/paper))
 		prebind_book(user, hitby)
 		return TRUE

@@ -4,9 +4,9 @@
 2. [Introduction](#introduction)
 3. [Getting Started](#getting-started)
 4. [Meet the Team](#meet-the-team)
-	1. [Headcoder](#headcoder)
-	2. [Maintainers](#maintainers)
-	3. [Issue Managers](#issue-managers)
+   1. [Headcoder](#headcoder)
+   2. [Maintainers](#maintainers)
+   3. [Issue Managers](#issue-managers)
 5. [Development Guides](#development-guides)
 6. [Pull Request Process](#pull-request-process)
 7. [Good Boy Points](#good-boy-points)
@@ -35,7 +35,7 @@ First things first, we want to make it clear how you can contribute (if you've n
 If you want to contribute the first thing you'll need to do is [set up Git](https://hackmd.io/@tgstation/HJ8OdjNBc) so you can download the source code.
 After setting it up, optionally navigate your git commandline to the project folder and run the command: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
-We have a [list of guides on the wiki](http://www.tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
+We have a [list of guides on the wiki](http://tgstation13.org/wiki/Guides#Development_and_Contribution_Guides) that will help you get started contributing to /tg/station with Git and Dream Maker. For beginners, it is recommended you work on small projects like bugfixes at first. If you need help learning to program in BYOND, check out this [repository of resources](http://www.byond.com/developer/articles/resources).
 
 There is an open list of approachable issues for [your inspiration here](https://github.com/tgstation/tgstation/issues?q=is%3Aopen+is%3Aissue+label%3A%22Good+First+Issue%22).
 
@@ -63,7 +63,7 @@ These are the few directives we have for project maintainers.
   - Emergency fixes.
     - Try to get secondary maintainer approval before merging if you are able to.
   - PRs with empty commits intended to generate a changelog.
-- Do not merge PRs that contain content from the [banned content list](./CONTRIBUTING.md#banned-content).
+- Do not merge PRs that contain content from the [banned content list](/CONTRIBUTING.md#banned-content).
 - Do not close PRs purely for breaking a template if the same information is contained without it.
 
 These are not steadfast rules as maintainers are expected to use their best judgement when operating.
@@ -80,15 +80,17 @@ Issue Managers help out the project by labelling bug reports and PRs and closing
 This should help you understand what you can and can't do with your newfound github permissions.
 
 Things you **CAN** do:
-* Label issues appropriately
-* Close issues when appropriate
-* Label PRs, unless you are goofball.
+
+- Label issues appropriately
+- Close issues when appropriate
+- Label PRs, unless you are goofball.
 
 Things you **CAN'T** do:
-* [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
-* Close issues purely for breaking a template if the same information is contained without it.
 
-For more information reference the [Issue Manager Guide](./guides/ISSUE_MANAGER.md).
+- [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+- Close issues purely for breaking a template if the same information is contained without it.
+
+For more information reference the [Issue Manager Guide](/.github/guides/ISSUE_MANAGER.md)
 
 </details>
 
@@ -98,64 +100,69 @@ Our team is entirely voluntary, as such we extend our thanks to maintainers, iss
 
 ## Development Guides
 
-#### Writing readable code 
-[Style guide](./guides/STYLE.md)
+#### Writing readable code
 
-#### Writing sane code 
-[Code standards](./guides/STANDARDS.md)
+[Style guide](/.github/guides/STYLE.md)
 
-#### Writing understandable code 
-[Autodocumenting code](./guides/AUTODOC.md)
+#### Writing sane code
+
+[Code standards](/.github/guides/STANDARDS.md)
+
+#### Writing understandable code
+
+[Autodocumenting code](/.github/guides/AUTODOC.md)
 
 #### Misc
 
-- [AI Datums](../code/datums/ai/learn_ai.md)
-- [Embedding TGUI Components in Chat](../tgui/docs/chat-embedded-components.md)
-- [Hard Deletes](./guides/HARDDELETES.md)
-- [MC Tab Guide](./guides/MC_tab.md)
-- [Policy Configuration System](./guides/POLICYCONFIG.md)
-- [Quickly setting up a development database with ezdb](./guides/EZDB.md)
-- [Required Tests (Continuous Integration)](./guides/CI.md)
-- [Splitting up pull requests, aka atomization](./guides/ATOMIZATION.md)
-- [UI Development](../tgui/README.md)
-- [Visual Effects and Systems](./guides/VISUALS.md)
+- [AI Datums](/code/datums/ai/learn_ai.md)
+- [Embedding TGUI Components in Chat](/tgui/docs/chat-embedded-components.md)
+- [Hard Deletes](/.github/guides/HARDDELETES.md)
+- [MC Tab Guide](/.github/guides/MC_tab.md)
+- [Policy Configuration System](/.github/guides/POLICYCONFIG.md)
+- [Quickly setting up a development database with ezdb](/.github/guides/EZDB.md)
+- [Required Tests (Continuous Integration)](/.github/guides/CI.md)
+- [Splitting up pull requests, aka atomization](/.github/guides/ATOMIZATION.md)
+- [UI Development](/.github/tgui/README.md)
+- [Visual Effects and Systems](/.github/guides/VISUALS.md)
 
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.
 
-* Make sure your pull request complies to the requirements outlined here
+- Make sure your pull request complies to the requirements outlined here
 
-* You are expected to have tested your pull requests if it is anything that would warrant testing. Text only changes, single number balance changes, and similar generally don't need testing, but anything else does. This means by extension web edits are disallowed for larger changes.
+- You are expected to have tested your pull requests if it is anything that would warrant testing. Text only changes, single number balance changes, and similar generally don't need testing, but anything else does. This means by extension web edits are disallowed for larger changes.
 
-* You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you must provide proof by way of profiling that your changes are faster.
+- You are going to be expected to document all your changes in the pull request. Failing to do so will mean delaying it as we will have to question why you made the change. On the other hand, you can speed up the process by making the pull request readable and easy to understand, with diagrams or before/after data. Should you be optimizing a routine you must provide proof by way of profiling that your changes are faster.
 
-* We ask that you use the changelog system to document your player facing changes, which prevents our players from being caught unaware by said changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
+- We ask that you use the changelog system to document your player facing changes, which prevents our players from being caught unaware by said changes - you can find more information about this [on this wiki page](http://tgstation13.org/wiki/Guide_to_Changelogs).
 
-* If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
+- If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
-* If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
+- If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
-* If your pull request is not finished, you may open it as a draft for potential review. If you open it as a full-fledged PR make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
+- If your pull request is not finished, you may open it as a draft for potential review. If you open it as a full-fledged PR make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
 
-* While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
+- While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality _before_ you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
-* After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
+- After leaving reviews on an open pull request, maintainers may convert it to a draft. Once you have addressed all their comments to the best of your ability, feel free to mark the pull as `Ready for Review` again.
 
 ## Justifying Your Changes
 
-You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement. 
+You must explain why you are submitting the pull request in the "Why It's Good For The Game" section of your pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting your pull request wholesale, or requiring that you fix it before your pull request is merged. A reasonable justification for your changes is a requirement.
 
 Your "Why It's Good For The Game" section must make a good faith and reasonable attempt to:
-* Assert and argue that the current state of affairs in the game is not good, and needs changing.
-* Assert and argue that your pull request will either fix or help fix the problems you described.
-* Assert and argue that any downsides introduced by your solution as a matter of design, if any, are worth it, and why they are worth it.
+
+- Assert and argue that the current state of affairs in the game is not good, and needs changing.
+- Assert and argue that your pull request will either fix or help fix the problems you described.
+- Assert and argue that any downsides introduced by your solution as a matter of design, if any, are worth it, and why they are worth it.
 
 More controversial changes have higher standards for justification to be considered reasonable. A bugfix for example does not typically require any effort at all in justification as its value to the game is usually self evident, however a major feature overhaul or balance change may require significant explanation to adequately justify its supposed benefit to the game.
 
 This is still a requirement if your pull request is supported and/or requested by maintainers before it is opened. This is still a requirement if your pull request is supported and/or requested by head coders before it is opened. The purpose of arguing for your changes is not to convince just the maintainer team of its merits, it is to document the "why" behind your changes to the game to a necessary level of detail. The reason behind a change must exist as it is the purpose of this codebase to improve the game, thus said reasoning must be adequately stated and explained.
 
 This is also still a requirement if your pull request has a corresponding design document that justifies your changes inside it. You must always properly justify changes (those that actually need justification) within the pull request, even if you also do it elsewhere. This is to ensure that:
+
 1. All reviewers can easily see the reasoning behind your changes on the pull request itself, no reliance on other sites required.
 2. The actual, manifested implementation of the idea behind the design document is being justified after said implementation is actually realized. This is in contrast to any reasoning put on the design document itself, which very well may have been made before any work was done on it, possibly even by an author different from the author of the pull request. Any idea in the design document may have had compromises put into it due to complications not seen in the original vision, thus the current state of the implementation (the pull request as it stands) must be defended, explained, and ultimately justified in and of itself. Of course, you should still list the design document the pull request is implementing, and may even use arguments from the design document if said arguments are applicable to the current reality of your proposed changes.
 
@@ -171,7 +178,7 @@ Negative GBP increases the likelihood of a maintainer closing your PR. With that
 
 There is no benefit to having a higher positive GBP score, since GBP only comes into consideration when it is negative.
 
-You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml). 
+You can see each tag and their GBP values [Here](https://github.com/tgstation/tgstation/blob/master/.github/gbp.toml).
 
 ## Porting features/sprites/sounds/tools from other codebases
 
@@ -180,14 +187,17 @@ If you are porting features/tools from other codebases, you must give them credi
 Regarding sprites & sounds, you must credit the artist and possibly the codebase. All /tg/station assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
 
 ## Banned content
+
 Do not add any of the following in a Pull Request or risk getting the PR closed:
-* National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
-* Code which violates GitHub's [terms of service](https://github.com/site/terms).
+
+- National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
+- Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
+- Code which violates GitHub's [terms of service](https://github.com/site/terms).
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
 ## A word on Git
+
 This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
 
 Unless overridden or a non standard git binary is used the line ending settings should be applied to your clone automatically.
@@ -198,6 +208,6 @@ Github actions that require additional configuration are disabled on the reposit
 
 ## Using the Maintainer Role Ping in Discord
 
-This role `@Maintainer` is pingable as a compromise reached with the server host MrStonedOne over the auto-stale system we presently have in the codebase. It should be used only to ping Maintainers when your PR has had the "Stale" label applied. Using it before then can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
+When your PR is labeled as "Stale", you are permitted to ping the `@Maintainer` role on the /tg/station Discord. Using this ping for anything else can be met with escalating timeouts and referral to /tg/station's Discord moderators for further infractions.
 
 Feel free to engage and obtain general feedback in the Coding General channel without the role ping before your PR goes stale to build interest and get reviews.

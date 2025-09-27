@@ -19,7 +19,7 @@
 	var/list/voted //List of ID's that already voted.
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
-/obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/votebox/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I,/obj/item/card/id))
 		if(!owner)
 			register_owner(I,user)

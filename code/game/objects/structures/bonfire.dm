@@ -39,7 +39,7 @@
 	QDEL_NULL(burning_loop)
 	. = ..()
 
-/obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)
+/obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/rods = used_item
 		var/choice = tgui_alert(user, "What would you like to construct?", "Bonfire", list("Stake","Grill"))
@@ -52,7 +52,7 @@
 				buckle_requires_restraints = TRUE
 				to_chat(user, span_notice("You add a rod to \the [src]."))
 				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "bonfire_rod")
-				rod_underlay.pixel_y = 16
+				rod_underlay.pixel_z = 16
 				underlays += rod_underlay
 			if("Grill")
 				grill = TRUE
@@ -68,7 +68,6 @@
 		if(!user.combat_mode && !(used_item.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(used_item))
 				used_item.forceMove(get_turf(src))
-				var/list/modifiers = params2list(params)
 				//Center the icon where the user clicked.
 				if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 					return
@@ -91,7 +90,7 @@
 			bonfire_log.pixel_x += rand(1,4)
 			bonfire_log.pixel_y += rand(1,4)
 		if(can_buckle || grill)
-			new /obj/item/stack/rods(loc, 1)
+			new /obj/item/stack/rods(loc)
 		qdel(src)
 		return
 

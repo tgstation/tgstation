@@ -1,6 +1,6 @@
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { VIEWMODE } from './constants';
+import type { VIEWMODE } from './constants';
 
 export type Antagonist = Observable & {
   antag: string;
@@ -20,6 +20,7 @@ export type OrbitData = {
   misc: Observable[];
   npcs: Observable[];
   orbiting: Observable | null;
+  can_observe: BooleanLike;
 };
 
 export type Observable = {

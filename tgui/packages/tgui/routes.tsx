@@ -32,16 +32,16 @@ const routingError =
   };
 
 // Displays an empty Window with scrollable content
-const SuspendedWindow = () => {
+function SuspendedWindow() {
   return (
     <Window>
       <Window.Content scrollable />
     </Window>
   );
-};
+}
 
 // Displays a loading screen with a spinning icon
-const RefreshingWindow = () => {
+function RefreshingWindow() {
   return (
     <Window title="Loading">
       <Window.Content>
@@ -49,10 +49,10 @@ const RefreshingWindow = () => {
       </Window.Content>
     </Window>
   );
-};
+}
 
 // Get the component for the current route
-export const getRoutedComponent = () => {
+export function getRoutedComponent() {
   const { suspended, config } = useBackend();
   const { kitchenSink = false } = useDebug();
 
@@ -62,6 +62,7 @@ export const getRoutedComponent = () => {
   if (config?.refreshing) {
     return RefreshingWindow;
   }
+
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
     if (kitchenSink) {
@@ -76,6 +77,7 @@ export const getRoutedComponent = () => {
     (name: string) => `./${name}/index.tsx`,
     (name: string) => `./${name}/index.jsx`,
   ];
+
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
     const interfacePathBuilder = interfacePathBuilders.shift()!;
@@ -88,12 +90,15 @@ export const getRoutedComponent = () => {
       }
     }
   }
+
   if (!esModule) {
     return routingError('notFound', name);
   }
+
   const Component = esModule[name];
   if (!Component) {
     return routingError('missingExport', name);
   }
+
   return Component;
-};
+}

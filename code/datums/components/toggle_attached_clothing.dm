@@ -48,7 +48,7 @@
 	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (!deployable_type || !equipped_slot)
-		return COMPONENT_INCOMPATIBLE // Not strictly true but INITIALIZE_HINT_QDEL doesn't work from components
+		return COMPONENT_REDUNDANT
 	src.deployable_type = deployable_type
 	src.equipped_slot = equipped_slot
 	src.destroy_on_removal = destroy_on_removal
@@ -70,7 +70,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(remove_deployable))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, PROC_REF(on_parent_equipped_outfit))
 	if (down_overlay_state_suffix)
-		var/overlay_state = "[initial(clothing_parent.icon_state)][down_overlay_state_suffix]"
+		var/overlay_state = "[initial(clothing_parent.post_init_icon_state) || initial(clothing_parent.icon_state)][down_overlay_state_suffix]"
 		undeployed_overlay = mutable_appearance(initial(clothing_parent.worn_icon), overlay_state, -SUIT_LAYER)
 		RegisterSignal(parent, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(on_checked_overlays))
 		clothing_parent.update_slot_icon()
@@ -137,7 +137,7 @@
 	currently_deployed = TRUE
 	on_deployed?.Invoke(deployable)
 	if (parent_icon_state_suffix)
-		parent_gear.icon_state = "[initial(parent_gear.icon_state)][parent_icon_state_suffix]"
+		parent_gear.icon_state = "[initial(parent_gear.post_init_icon_state) || initial(parent_gear.icon_state)][parent_icon_state_suffix]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()
 	wearer.update_mob_action_buttons()
@@ -201,7 +201,7 @@
 	if(destroy_on_removal)
 		QDEL_NULL(deployable)
 	if(parent_icon_state_suffix)
-		parent_gear.icon_state = "[initial(parent_gear.icon_state)]"
+		parent_gear.icon_state = "[initial(parent_gear.post_init_icon_state) || initial(parent_gear.icon_state)]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()
 	parent_gear.update_item_action_buttons()

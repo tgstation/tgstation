@@ -103,7 +103,7 @@
 /area/ruin/syndielab)
 "cP" = (
 /obj/effect/mapping_helpers/bombable_wall,
-/turf/closed/wall/r_wall/syndicate/nodiagonal{
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{
 	desc = "An ominous looking wall. It has extra insulation to keep the heat in.";
 	name = "plastitanium wall"
 	},
@@ -245,9 +245,6 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/syndielab)
-"oA" = (
-/turf/open/floor/iron/dark/textured,
-/area/ruin/syndielab)
 "oY" = (
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/effect/mapping_helpers/apc/full_charge,
@@ -326,7 +323,7 @@
 /area/ruin/syndielab)
 "tb" = (
 /obj/machinery/light/warm/directional/north,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
 /obj/structure/cable/layer1,
 /turf/open/floor/iron/dark/textured,
@@ -461,7 +458,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndielab)
 "AR" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal{
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{
 	desc = "An ominous looking wall. It has extra insulation to keep the heat in.";
 	name = "plastitanium wall"
 	},
@@ -675,8 +672,7 @@
 	},
 /obj/structure/flora/bush,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/oxygen_output{
-	dir = 1;
-	chamber_id = "syndielab_biodome"
+	dir = 1
 	},
 /turf/open/floor/grass{
 	initial_gas_mix = "o2=1000;n2=1100;TEMP=280"
@@ -812,10 +808,10 @@
 /area/ruin/syndielab)
 "Wo" = (
 /obj/structure/table/wood,
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_y = 6
 	},
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -1082,7 +1078,7 @@ Xt
 Xt
 AR
 Jc
-oA
+ey
 FJ
 AR
 qC

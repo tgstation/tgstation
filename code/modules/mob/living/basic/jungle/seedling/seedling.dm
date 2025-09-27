@@ -19,8 +19,8 @@
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	maxHealth = 100
 	health = 100
-	pixel_y = -14
-	base_pixel_y = -14
+	pixel_z = -14
+	base_pixel_z = -14
 	pixel_x = -14
 	base_pixel_x = -14
 	response_harm_continuous = "strikes"
@@ -52,7 +52,7 @@
 	var/list/seedling_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 	)
 
 /mob/living/basic/seedling/Initialize(mapload)
@@ -138,7 +138,7 @@
 	combatant_state = state
 	update_appearance()
 
-/mob/living/basic/seedling/attackby(obj/item/can, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/seedling/attackby(obj/item/can, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(istype(can, /obj/item/reagent_containers/cup/watering_can) && isnull(held_can))
 		can.forceMove(src)
 		return
@@ -213,7 +213,7 @@
 	seedling_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/attack,
 		/datum/pet_command/use_ability/solarbeam,
 		/datum/pet_command/use_ability/rapidseeds,

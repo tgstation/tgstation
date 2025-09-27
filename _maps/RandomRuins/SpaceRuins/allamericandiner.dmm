@@ -136,6 +136,19 @@
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
+"ga" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/rag{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/space/has_grav/allamericandiner)
 "gl" = (
 /obj/structure/chair/sofa/left/maroon{
 	dir = 4
@@ -282,11 +295,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
-"ob" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "og" = (
@@ -471,19 +479,6 @@
 /obj/item/chair/plastic,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"wI" = (
-/obj/structure/table/reinforced,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/allamericandiner)
 "wJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
@@ -492,6 +487,10 @@
 	pixel_y = -5
 	},
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
+"wW" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "xa" = (
 /obj/effect/turf_decal/bot,
@@ -1371,12 +1370,12 @@ oN
 oN
 EK
 EK
-ob
+wW
 EK
 EK
-ob
+wW
 EK
-ob
+wW
 EK
 EK
 EK
@@ -1453,7 +1452,7 @@ db
 vp
 fL
 fL
-ob
+wW
 SU
 SU
 SU
@@ -1564,7 +1563,7 @@ FB
 PW
 fL
 fL
-ob
+wW
 SU
 SU
 SU
@@ -1818,12 +1817,12 @@ zw
 jZ
 Qn
 Fr
-wI
+ga
 rG
 PW
 yl
 yl
-ob
+wW
 SU
 SU
 SU
@@ -1934,7 +1933,7 @@ Ka
 PW
 fL
 fL
-ob
+wW
 SU
 SU
 SU

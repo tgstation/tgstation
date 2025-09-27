@@ -32,6 +32,10 @@
 #define CRAFT_TRANSFERS_REAGENTS (1<<7)
 /// Crafting clears all reagents present in the finished product
 #define CRAFT_CLEARS_REAGENTS (1<<8)
+/// For the crafting unit test, ensures that the custom materials of an item are the same when crafted and spawned.
+#define CRAFT_ENFORCE_MATERIALS_PARITY (1<<9)
+/// Exclusive to the personal_crafting component, skips the time spent crafting the recipe.
+#define CRAFT_IGNORE_DO_AFTER (1<<10)
 
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list

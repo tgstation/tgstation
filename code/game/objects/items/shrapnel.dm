@@ -47,6 +47,7 @@
 	embed_chance = 70
 	ignore_throwspeed_threshold = TRUE
 	fall_chance = 1
+	stealthy_embed = TRUE
 
 /obj/projectile/bullet/shrapnel/short_range
 	range = 5
@@ -92,7 +93,7 @@
 	pain_stam_pct = 0.7
 	pain_mult = 3
 	jostle_pain_mult = 3
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
@@ -110,7 +111,7 @@
 	stamina = 8
 	sharpness = SHARP_EDGED
 	wound_bonus = 5
-	bare_wound_bonus = 5
+	exposed_wound_bonus = 5
 	ricochets_max = 2
 	ricochet_chance = 140
 	shrapnel_type = /obj/item/shrapnel/capmine
@@ -126,10 +127,9 @@
 	pain_stam_pct = 0.7
 	pain_mult = 5
 	jostle_pain_mult = 6
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
-

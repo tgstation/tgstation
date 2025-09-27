@@ -29,9 +29,12 @@
 	lighting_cutoff_blue = 50
 
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	var/static/list/migo_sounds
 	/// Odds migo will dodge
 	var/dodge_prob = 10
+	/// Are we dodging an attack during this move?
+	var/dodging = FALSE
 
 /mob/living/basic/migo/Initialize(mapload)
 	. = ..()
@@ -67,7 +70,7 @@
 		make_migo_sound()
 
 /mob/living/basic/migo/Move(atom/newloc, dir, step_x, step_y)
-	if(!ckey && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
+	if(!dodging && !ckey && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
 		return dodge(newloc, dir)
 	else
 		return ..()
@@ -76,9 +79,11 @@
 	//Assuming we move towards the target we want to swerve toward them to get closer
 	var/cdir = turn(move_direction, 45)
 	var/ccdir = turn(move_direction, -45)
+	dodging = TRUE
 	. = Move(get_step(loc,pick(cdir, ccdir)))
 	if(!.)//Can't dodge there so we just carry on
 		. = Move(moving_to, move_direction)
+	dodging = FALSE
 
 /// The special hatsune miku themed mi-go.
 /mob/living/basic/migo/hatsune

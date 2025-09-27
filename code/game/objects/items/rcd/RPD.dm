@@ -122,10 +122,6 @@
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
 
-/obj/item/pipe_dispenser/cyborg_unequip(mob/user)
-	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
-	return ..()
-
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
@@ -148,7 +144,7 @@
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/pipes),
+		get_asset_datum(/datum/asset/spritesheet_batched/pipes),
 	)
 
 /obj/item/pipe_dispenser/ui_interact(mob/user, datum/tgui/ui)

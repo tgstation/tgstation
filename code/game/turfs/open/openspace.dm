@@ -110,10 +110,10 @@
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 
-/turf/open/openspace/proc/CanBuildHere()
+/turf/open/openspace/CanBuildHere()
 	return can_build_on
 
-/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, params)
+/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	..()
 	if(!CanBuildHere())
 		return
@@ -132,9 +132,6 @@
 	return ..()
 
 /turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
@@ -210,3 +207,6 @@
 
 /turf/open/openspace/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+
+/turf/open/openspace/coldroom
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS

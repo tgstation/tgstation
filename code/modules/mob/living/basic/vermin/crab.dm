@@ -9,6 +9,7 @@
 	speak_emote = list("clicks")
 	melee_damage_lower = 2
 	melee_damage_upper = 2
+	mob_biotypes = MOB_ORGANIC|MOB_CRUSTACEAN|MOB_AQUATIC
 	butcher_results = list(/obj/item/food/meat/slab/rawcrab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -29,7 +30,7 @@
 
 /mob/living/basic/crab/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	AddElement(/datum/element/sideway_movement)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)
 	AddElement(/datum/element/ai_retaliate)
@@ -83,10 +84,11 @@
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/simple_find_target,

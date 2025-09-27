@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import {
   Button,
   Icon,
-  Input,
   NoticeBox,
   RestrictedInput,
   Section,
@@ -11,7 +11,7 @@ import {
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
-import { CargoData } from './types';
+import type { CargoData } from './types';
 
 export function CargoCart(props) {
   const { act, data } = useBackend<CargoData>();
@@ -20,14 +20,14 @@ export function CargoCart(props) {
   const sendable = !!away && !!docked;
 
   return (
-    <Stack fill vertical>
+    <Stack fill vertical g={0}>
       <Stack.Item grow>
         <Section fill scrollable>
           <CheckoutItems />
         </Section>
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
-        <Stack.Item m={0}>
+        <Stack.Item>
           <Section textAlign="right">
             <Stack fill align="center">
               <Stack.Item grow>
@@ -58,6 +58,8 @@ export function CargoCart(props) {
 function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
   const { amount_by_name = {}, can_send, cart = [], max_order } = data;
+
+  const [isValid, setIsValid] = useState(true);
 
   if (cart.length === 0) {
     return <NoticeBox>Nothing in cart</NoticeBox>;
@@ -94,12 +96,14 @@ function CheckoutItems(props) {
                   minValue={0}
                   maxValue={max_order}
                   value={entry.amount}
-                  onEnter={(e, value) =>
+                  onEnter={(value) =>
+                    isValid &&
                     act('modify', {
                       order_name: entry.object,
                       amount: value,
                     })
                   }
+                  onValidationChange={setIsValid}
                 />
                 <Button
                   icon="plus"
@@ -110,7 +114,7 @@ function CheckoutItems(props) {
                 />
               </>
             ) : (
-              <Input width="40px" value={entry.amount} disabled />
+              <RestrictedInput width="40px" value={entry.amount} disabled />
             )}
           </Table.Cell>
 

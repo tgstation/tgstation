@@ -1,4 +1,0 @@
-bloop.ogg by my man Tim Khan
-(https://freesound.org/people/tim.kahn/sounds/130377/)
-
-prompt.ogg by Flleeppyy (https://github.com/Flleeppyy), originally for https://github.com/Monkestation/Monkestation2.0/pull/2621

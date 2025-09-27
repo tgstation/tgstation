@@ -25,6 +25,8 @@
 	anchored = TRUE
 	integrity_failure = 0.5
 	max_integrity = 200
+	///Can this mirror be removed from walls with tools?
+	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
 
 	///Flags this race must have to be selectable with this type of mirror.
@@ -70,6 +72,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	register_context()
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
@@ -90,6 +93,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return TRUE //no tele-grooming (if nonmagical)
 
 	return display_radial_menu(user)
+
+/obj/structure/mirror/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!deconstructable)
+		balloon_alert(user, "magic prevents detaching!")
+		return NONE
+	user.visible_message(span_notice("[user] starts detaching [src]..."), span_notice("You start detaching [src]..."))
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 3 SECONDS))
+		user.visible_message(span_notice("[user] detaches [src]!"), span_notice("You detach [src] from the wall."))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/structure/mirror/atom_deconstruct()
+	new /obj/item/wallframe/mirror(loc, 1)
 
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
 	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
@@ -180,15 +199,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
 		if(new_s_tone)
 			race_changer.skin_tone = new_s_tone
-			race_changer.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
+			race_changer.dna.update_ui_block(/datum/dna_block/identity/skin_tone)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
-		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features["mcolor"]) as color|null
+		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features[FEATURE_MUTANT_COLOR]) as color|null
 		if(new_mutantcolor)
 			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
 
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
-				race_changer.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-				race_changer.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+				race_changer.dna.features[FEATURE_MUTANT_COLOR] = sanitize_hexcolor(new_mutantcolor)
+				race_changer.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 				return TRUE
@@ -222,7 +241,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	if(chosen_physique && chosen_physique != "Wizards Don't Need Gender")
 		sexy.physique = (chosen_physique == "Warlock Physique") ? MALE : FEMALE
 
-	sexy.dna.update_ui_block(DNA_GENDER_BLOCK)
+	sexy.dna.update_ui_block(/datum/dna_block/identity/gender)
 	sexy.update_body(is_creating = TRUE) // or else physique won't change properly
 	sexy.update_mutations_overlay() //(hulk male/female)
 	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
@@ -231,26 +250,37 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
 	if(isnull(new_eye_color))
 		return TRUE
-	user.eye_color_left = sanitize_hexcolor(new_eye_color)
-	user.eye_color_right = sanitize_hexcolor(new_eye_color)
-	user.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
-	user.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
+	user.set_eye_color(sanitize_hexcolor(new_eye_color))
+	user.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
 	user.update_body()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
+
+/obj/structure/mirror/examine(mob/user)
+	. = ..()
+	if(deconstructable)
+		. += span_notice("It's mounted to the wall with a couple of <b>bolts</b>.")
 
 /obj/structure/mirror/examine_status(mob/living/carbon/human/user)
 	if(broken)
 		return list()// no message spam
 	return ..()
 
-/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
-	if(broken || !istype(user) || !I.force)
-		return ..()
-
+/obj/structure/mirror/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(broken) // breaking a mirror truly gets you bad luck!
-		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
-		user.AddComponent(/datum/component/omen, incidents_left = 7)
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Open Customize Radial"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH && deconstructable)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(broken || . <= 0) // breaking a mirror truly gets you bad luck!
+		return
+	to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
+	user.AddComponent(/datum/component/omen, incidents_left = 7)
 
 /obj/structure/mirror/bullet_act(obj/projectile/proj)
 	if(broken || !isliving(proj.firer) || !proj.damage)
@@ -323,6 +353,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
+	deconstructable = FALSE
 
 /obj/structure/mirror/magic/Initialize(mapload)
 	. = ..()
@@ -351,12 +382,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	if(new_hair_color)
 		user.set_haircolor(sanitize_hexcolor(new_hair_color))
-		user.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
+		user.dna.update_ui_block(/datum/dna_block/identity/hair_color)
 	if(user.physique == MALE)
 		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
 		if(new_face_color)
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
-			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
+			user.dna.update_ui_block(/datum/dna_block/identity/facial_color)
 
 /obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
 	. = ..()

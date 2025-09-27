@@ -30,8 +30,8 @@
 	if(isnull(underlay_tile))
 		return
 	var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
-	underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
-	underlay.pixel_y = undertile_pixel_y
+	underlay.pixel_w = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
+	underlay.pixel_z = undertile_pixel_y
 	SET_PLANE(underlay, underlay_plane || plane, src)
 	underlays += underlay
 
@@ -82,7 +82,7 @@
 	// We can walk infront of the bottom cliff turf, so check that here
 	if(!iscliffturf(get_step(src, fall_direction)) && !(get_dir(arrived, src) & fall_direction))
 		return FALSE
-	
+
 	// gravity
 	// marked in UNLINT due to a spacemandmm bug: https://github.com/SpaceManiac/SpacemanDMM/issues/382 (REMOVE ONCE FIXED!)
 	if(UNLINT(!arrived.has_gravity(src)))

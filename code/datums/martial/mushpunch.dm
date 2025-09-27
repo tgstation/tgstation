@@ -47,7 +47,7 @@
 	to_chat(user, span_spiderbroodmother("You devour [src], \
 		and a confluence of skill and power from the mushroom enhances your punches! \
 		You do need a short moment to charge these powerful punches."))
-	var/datum/martial_art/mushpunch/mush = new()
+	var/datum/martial_art/mushpunch/mush = new(user)
 	mush.teach(user)
 	visible_message(
 		span_warning("[user] devours [src]."),

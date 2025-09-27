@@ -5,16 +5,16 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { AccessConfig, Region } from './common/AccessConfig';
+import { AccessConfig, type Region } from './common/AccessConfig';
 
 type Data = {
   accesses: string[];
   oneAccess: BooleanLike;
-  passedCycleId: number;
+  passedCycleId: string;
   passedName: string;
   regions: Region[];
   shell: BooleanLike;
@@ -118,7 +118,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedName}
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('passedName', {
                     passedName: value,
                   })
@@ -130,7 +130,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedCycleId}
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('passedCycleId', {
                     passedCycleId: value,
                   })

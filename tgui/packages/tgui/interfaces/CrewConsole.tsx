@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -133,7 +133,6 @@ type CrewSensor = {
   brutedam: number;
   area: string | undefined;
   health: number;
-  can_track: BooleanLike;
   ref: string;
 };
 
@@ -186,9 +185,8 @@ const CrewTable = () => {
           </Button>
           <Input
             placeholder="Search for name..."
-            onInput={(e) =>
-              setSearchQuery((e.target as HTMLTextAreaElement).value)
-            }
+            onChange={setSearchQuery}
+            value={searchQuery}
           />
         </>
       }
@@ -235,7 +233,6 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
     burndam,
     brutedam,
     area,
-    can_track,
   } = sensor_data;
 
   return (
@@ -290,7 +287,6 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
       {!!link_allowed && (
         <Table.Cell collapsing>
           <Button
-            disabled={!can_track}
             onClick={() =>
               act('select_person', {
                 name: name,

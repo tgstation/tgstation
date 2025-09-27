@@ -47,6 +47,8 @@
 	var/list/color = rgb2num(HTMLstring)
 	return rgb(255 - color[1], 255 - color[2], 255 - color[3])
 
+#define TEMP_COLOR_SOURCE "temp_flash"
+
 ///Flash a color on the passed mob
 /proc/flash_color(mob_or_client, flash_color=COLOR_CULT_RED, flash_time=20)
 	var/mob/flashed_mob
@@ -60,11 +62,13 @@
 		return
 
 	var/datum/client_colour/temp/temp_color = new(flashed_mob)
-	temp_color.colour = flash_color
+	temp_color.color = flash_color
 	temp_color.fade_in = flash_time * 0.25
 	temp_color.fade_out = flash_time * 0.25
 	QDEL_IN(temp_color, (flash_time * 0.5) + 1)
-	flashed_mob.add_client_colour(temp_color)
+	flashed_mob.add_client_colour(temp_color, TEMP_COLOR_SOURCE)
+
+#undef TEMP_COLOR_SOURCE
 
 /// Blends together two colors (passed as 3 or 4 length lists) using the screen blend mode
 /// Much like multiply, screen effects the brightness of the resulting color
@@ -169,11 +173,10 @@
 		saturation = min(saturation, 1 - added_saturation)
 
 	var/list/new_matrix = list(
-		0, 0, 0, 0, // Ignore original hue
-		0, saturation, 0, 0, // Multiply the saturation by ours
-		0, 0, 1 - deducted_light, 0, // If we're highly saturated then remove a bit of lightness to keep some color in
-		0, 0, 0, 1, // Preserve alpha
-		hue, added_saturation, 0, 0, // And apply our preferred hue and some saturation if we're oversaturated
+		0, 0, 0, // Ignore original hue
+		0, saturation, 0, // Multiply the saturation by ours
+		0, 0, 1 - deducted_light, // If we're highly saturated then remove a bit of lightness to keep some color in
+		hue, added_saturation, 0, // And apply our preferred hue and some saturation if we're oversaturated
 	)
 	return color_matrix_filter(new_matrix, FILTER_COLOR_HSL)
 

@@ -144,7 +144,7 @@
 		for(var/turf/turf_to_clear in underbelly)
 			if(ismineralturf(turf_to_clear))
 				var/turf/closed/mineral/rock_to_clear = turf_to_clear
-				rock_to_clear.gets_drilled(give_exp = FALSE)
+				rock_to_clear.gets_drilled()
 		for(var/turf/turf_to_quake in edges)
 			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
 		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)

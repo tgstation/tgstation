@@ -11,12 +11,14 @@
 	var/fade_out_time = 0.3 SECONDS
 	/// Are images static? If yes, spawns them on the turf and makes them not change location. Otherwise they change location and pixel shift with the original.
 	var/images_are_static = TRUE
+	/// Does this echolocation cause us to go blind?
+	var/blinding = TRUE
 	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
 	var/echo_group = null
 	/// This trait blocks us from receiving echolocation.
 	var/blocking_trait
 	/// Ref of the client color we give to the echolocator.
-	var/client_color
+	var/client_colour
 	/// Associative list of receivers to lists of atoms they are rendering (those atoms are associated to data of the image and time they were rendered at).
 	var/list/receivers = list()
 	/// All the saved appearances, keyed by icon-icon_state.
@@ -32,7 +34,7 @@
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path)
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path, blinding)
 	. = ..()
 	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
@@ -51,25 +53,29 @@
 		src.fade_in_time = fade_in_time
 	if(!isnull(fade_out_time))
 		src.fade_out_time = fade_out_time
+	if(!isnull(blinding))
+		src.blinding = blinding
 	if(!isnull(images_are_static))
 		src.images_are_static = images_are_static
 	if(!isnull(blocking_trait))
 		src.blocking_trait = blocking_trait
-	if(ispath(color_path))
-		client_color = echolocator.add_client_colour(color_path)
 	src.echo_group = echo_group || REF(src)
-	echolocator.add_traits(list(TRAIT_ECHOLOCATION_RECEIVER, TRAIT_TRUE_NIGHT_VISION), echo_group) //so they see all the tiles they echolocated, even if they are in the dark
-	echolocator.become_blind(ECHOLOCATION_TRAIT)
-	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
+	if(ispath(color_path))
+		client_colour = echolocator.add_client_colour(color_path, src.echo_group)
+	echolocator.add_traits(list(TRAIT_ECHOLOCATION_RECEIVER, TRAIT_TRUE_NIGHT_VISION), src.echo_group) //so they see all the tiles they echolocated, even if they are in the dark
+	if(blinding)
+		echolocator.become_blind(ECHOLOCATION_TRAIT)
+		echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/echolocation/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	var/mob/living/echolocator = parent
-	QDEL_NULL(client_color)
+	QDEL_NULL(client_colour)
 	echolocator.remove_traits(list(TRAIT_ECHOLOCATION_RECEIVER, TRAIT_TRUE_NIGHT_VISION), echo_group)
-	echolocator.cure_blind(ECHOLOCATION_TRAIT)
-	echolocator.clear_fullscreen("echo")
+	if(blinding)
+		echolocator.cure_blind(ECHOLOCATION_TRAIT)
+		echolocator.clear_fullscreen("echo")
 	for(var/mob/living/echolocate_receiver as anything in receivers)
 		if(!echolocate_receiver.client)
 			continue
@@ -94,11 +100,19 @@
 		real_echo_range += 2
 	var/list/filtered = list()
 	var/list/seen = dview(real_echo_range, get_turf(echolocator.client?.eye || echolocator), invis_flags = echolocator.see_invisible)
-	for(var/atom/seen_atom as anything in seen)
-		if(!seen_atom.alpha)
-			continue
-		if(allowed_paths[seen_atom.type])
-			filtered += seen_atom
+	if(blinding)
+		for(var/atom/seen_atom as anything in seen)
+			if(!seen_atom.alpha)
+				continue
+			if(allowed_paths[seen_atom.type])
+				filtered += seen_atom
+	else
+		var/list/ranged_atoms = range(real_echo_range, get_turf(echolocator.client?.eye || echolocator))
+		for(var/atom/possible_atom as anything in ranged_atoms)
+			if(!possible_atom.alpha)
+				continue
+			if(allowed_paths[possible_atom.type])
+				filtered += possible_atom
 	if(!length(filtered))
 		return
 	var/current_time = "[world.time]"

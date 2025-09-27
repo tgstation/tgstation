@@ -95,7 +95,7 @@
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting."
 	dispense_type = list(/obj/effect/mob_spawn/ghost_role/drone/syndrone)
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
-	cooldownTime = 100
+	cooldownTime = 10 SECONDS
 	end_create_message = "dispenses a suspicious drone shell."
 	starting_amount = SHEET_MATERIAL_AMOUNT * 12.5
 
@@ -126,7 +126,7 @@
 	iron_cost = SHEET_MATERIAL_AMOUNT * 5
 	glass_cost = SHEET_MATERIAL_AMOUNT * 2.5
 	starting_amount = 0
-	cooldownTime = 600
+	cooldownTime = 60 SECONDS
 
 /obj/machinery/drone_dispenser/classic
 	name = "classic drone shell dispenser"
@@ -148,7 +148,7 @@
 	iron_cost = 0
 	glass_cost = 0
 	energy_used = 0
-	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
+	cooldownTime = 1 SECONDS //Only 1 second - hivebots are extremely weak
 	dispense_type = list(/mob/living/basic/hivebot)
 	begin_create_message = "closes and begins fabricating something within."
 	end_create_message = "slams open, revealing a hivebot!"
@@ -212,7 +212,7 @@
 			if(energy_used)
 				use_energy(energy_used)
 
-			for(var/spawnable_item as anything in dispense_type)
+			for(var/spawnable_item in dispense_type)
 				var/atom/spawned_atom = new spawnable_item(loc)
 				spawned_atom.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
@@ -237,7 +237,7 @@
 /obj/machinery/drone_dispenser/proc/count_shells()
 	. = 0
 	for(var/actual_shell in loc)
-		for(var/potential_item as anything in dispense_type)
+		for(var/potential_item in dispense_type)
 			if(istype(actual_shell, potential_item))
 				.++
 
@@ -254,36 +254,35 @@
 	icon_state = icon_on
 	return ..()
 
-/obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		materials.retrieve_all()
-		I.play_tool_sound(src)
-		to_chat(user, span_notice("You retrieve the materials from [src]."))
+/obj/machinery/drone_dispenser/crowbar_act(mob/living/user, obj/item/tool)
+	materials.retrieve_all()
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You retrieve the materials from [src]."))
+	return ITEM_INTERACT_SUCCESS
 
-	else if(I.tool_behaviour == TOOL_WELDER)
-		if(!(machine_stat & BROKEN))
-			to_chat(user, span_warning("[src] doesn't need repairs."))
-			return
+/obj/machinery/drone_dispenser/welder_act(mob/living/user, obj/item/tool)
+	if(!(machine_stat & BROKEN))
+		to_chat(user, span_warning("[src] doesn't need repairs."))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!I.tool_start_check(user, amount=1))
-			return
+	if(!tool.tool_start_check(user, amount=1))
+		return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(
-			span_notice("[user] begins patching up [src] with [I]."),
-			span_notice("You begin restoring the damage to [src]..."))
+	user.visible_message(
+		span_notice("[user] begins patching up [src] with [tool]."),
+		span_notice("You begin restoring the damage to [src]..."))
 
-		if(!I.use_tool(src, user, 40, volume=50))
-			return
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
 
-		user.visible_message(
-			span_notice("[user] fixes [src]!"),
-			span_notice("You restore [src] to operation."))
+	user.visible_message(
+		span_notice("[user] fixes [src]!"),
+		span_notice("You restore [src] to operation."))
 
-		set_machine_stat(machine_stat & ~BROKEN)
-		atom_integrity = max_integrity
-		update_appearance()
-	else
-		return ..()
+	set_machine_stat(machine_stat & ~BROKEN)
+	atom_integrity = max_integrity
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/drone_dispenser/atom_break(damage_flag)
 	. = ..()

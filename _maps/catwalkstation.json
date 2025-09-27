@@ -1,0 +1,23 @@
+{
+	"version": 1,
+	"map_name": "Catwalk Station",
+	"map_path": "map_files/CatwalkStation",
+	"map_file": "CatwalkStation_2023.dmm",
+	"shuttles": {
+		"emergency": "emergency_catwalk",
+		"ferry": "ferry_fancy",
+		"cargo": "cargo_catwalk",
+		"whiteship": "whiteship_meta"
+	},
+	"traits": [
+		{
+			"Up": true,
+			"Linkage": "Cross"
+		},
+		{
+			"Down": true,
+			"Baseturf": "/turf/open/openspace/airless",
+			"Linkage": "Cross"
+		}
+	]
+}

@@ -47,11 +47,6 @@ type ByondType = {
   IS_BYOND: boolean;
 
   /**
-   * Version of Trident engine of Internet Explorer. Null if N/A.
-   */
-  TRIDENT: number | null;
-
-  /**
    * Version of Blink engine of WebView2. Null if N/A.
    */
   BLINK: number | null;
@@ -178,6 +173,11 @@ type ByondType = {
    * Maps icons to their ref
    */
   iconRefMap: Record<string, string>;
+
+  /**
+   * Downloads a blob, platform-agnostic
+   */
+  saveBlob(blob: Blob, filename: string, ext: string): void;
 };
 
 /**

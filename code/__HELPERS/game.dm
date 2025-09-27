@@ -1,6 +1,3 @@
-///Time before being allowed to select a new cult leader again
-#define CULT_POLL_WAIT (240 SECONDS)
-
 /// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
 #define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
 
@@ -153,8 +150,8 @@
 	return
 
 ///Get active players who are playing in the round
-/proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
-	var/active_players = 0
+/proc/get_active_player_list(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
+	var/list/active_players = list()
 	for(var/mob/player_mob as anything in GLOB.player_list)
 		if(!player_mob?.client)
 			continue
@@ -170,8 +167,12 @@
 			var/mob/dead/observer/ghost_player = player_mob
 			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
-		active_players++
+		active_players += player_mob
 	return active_players
+
+///Counts active players who are playing in the round
+/proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
+	return length(get_active_player_list(alive_check, afk_check, human_check))
 
 ///Uses stripped down and bastardized code from respawn character
 /proc/make_body(mob/dead/observer/ghost_player)
@@ -184,7 +185,7 @@
 
 	ghost_player.client.prefs.safe_transfer_prefs_to(new_character)
 	new_character.dna.update_dna_identity()
-	new_character.key = ghost_player.key
+	new_character.PossessByPlayer(ghost_player.ckey)
 
 	return new_character
 
@@ -204,7 +205,14 @@
 		return
 	winset(flashed_client, "mainwindow", "flash=5")
 
-///Recursively checks if an item is inside a given type/atom, even through layers of storage. Returns the atom if it finds it.
+/**
+ * Recursively checks if an item is inside a given type/atom, even through layers of storage.
+ * Returns the atom if it finds it.
+ *
+ * Arguments
+ * * atom/movable/target - the atom whos loc we are checking for
+ * * type - the location(typepath or solid atom) the target maybe stored in
+ */
 /proc/recursive_loc_check(atom/movable/target, type)
 	var/atom/atom_to_find = null
 
@@ -230,11 +238,12 @@
 	return atom_to_find
 
 ///Send a message in common radio when a player arrives
-/proc/announce_arrival(mob/living/carbon/human/character, rank)
+/proc/announce_arrival(mob/living/carbon/human/character, rank, announce_to_ghosts = TRUE)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
-	var/area/player_area = get_area(character)
-	deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if (announce_to_ghosts)
+		var/area/player_area = get_area(character)
+		deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(character.mind && (character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		aas_config_announce(/datum/aas_config_entry/arrival, list("PERSON" = character.real_name,"RANK" = rank))
 

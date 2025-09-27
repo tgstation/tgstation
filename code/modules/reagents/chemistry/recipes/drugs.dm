@@ -77,10 +77,51 @@
 	e.start(holder.my_atom)
 	holder.clear_reagents()
 
+/datum/chemical_reaction/meth_crystal //Since the meth is a cooled pharmaceutical solvent, this precipitates it into a solid.
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/toxin/acid = 2)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+/datum/chemical_reaction/meth_crystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+
+	// Calculate purity ignoring sulfuric acid
+	var/total_nonacid = 0
+	var/meth_amt_in_mix = 0
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(istype(R, /datum/reagent/toxin/acid))
+			continue // acid doesn't count against purity
+		total_nonacid += R.volume
+		if(istype(R, /datum/reagent/drug/methamphetamine))
+			meth_amt_in_mix += R.volume
+
+	var/purity = (total_nonacid > 0) ? (meth_amt_in_mix / total_nonacid) : 0.5 //All this tints the crystal above blue purity.
+
+	for(var/i in 1 to round(created_volume, CHEMICAL_VOLUME_ROUNDING))
+		var/obj/item/food/drug/meth_crystal/new_crystal = new(location)
+		new_crystal.pixel_x = rand(-6, 6)
+		new_crystal.pixel_y = rand(-6, 6)
+
+		var/effective_purity = 0
+		if(purity > 0.9)
+			effective_purity = (purity - 0.9) / 0.1
+
+		new_crystal.color = BlendRGB("#FAFAFA", "#78C8FA", effective_purity)
+
+		if(new_crystal.reagents)
+			new_crystal.reagents.clear_reagents()
+			var/meth_amt = 10
+			new_crystal.reagents.add_reagent(/datum/reagent/drug/methamphetamine, meth_amt)
+			var/imp_amt = round(meth_amt * (1 - purity) * 0.25, 0.1)
+			if(imp_amt > 0)
+				new_crystal.reagents.add_reagent(/datum/reagent/consumable/failed_reaction, imp_amt)
+
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)
 	required_reagents = list(/datum/reagent/toxin/bad_food = 1, /datum/reagent/saltpetre = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/consumable/enzyme = 1, /datum/reagent/consumable/tea = 1, /datum/reagent/mercury = 1)
 	required_temp = 374
+	reaction_flags = REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/aranesp
@@ -92,6 +133,7 @@
 	results = list(/datum/reagent/drug/happiness = 4)
 	required_reagents = list(/datum/reagent/nitrous_oxide = 2, /datum/reagent/medicine/epinephrine = 1, /datum/reagent/consumable/ethanol = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
+	reaction_flags = REACTION_CLEAR_INVERSE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
 
 /datum/chemical_reaction/pumpup
@@ -123,7 +165,7 @@
 
 //These drug item reactions should probably be converted to fermichem in the future.
 /datum/chemical_reaction/moon_rock //botany is real easy so it requires a lot of kronkus_extract, make it cheaper if it doesnt get made.
-	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 10, /datum/reagent/ammonia = 5)
+	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 5, /datum/reagent/ammonia = 3)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
@@ -134,6 +176,9 @@
 		var/obj/item/food/drug/moon_rock/new_rock = new(location)
 		new_rock.pixel_x = rand(-6, 6)
 		new_rock.pixel_y = rand(-6, 6)
+
+/datum/chemical_reaction/moon_rock/draintek
+	required_reagents = list(/datum/reagent/kronkus_extract = 15, /datum/reagent/fuel = 5, /datum/reagent/lye = 3)
 
 /datum/chemical_reaction/blastoff_ampoule
 	required_reagents = list(/datum/reagent/silver = 10, /datum/reagent/toxin/cyanide = 10, /datum/reagent/lye = 5)

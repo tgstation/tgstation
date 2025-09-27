@@ -3,8 +3,8 @@
 	name = "\improper Repairbot"
 	desc = "I can fix it!"
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "repairbot_base"
-	base_icon_state = "repairbot_base"
+	icon_state = "repairbot1"
+	base_icon_state = "repairbot"
 	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = BELOW_MOB_LAYER
 	anchored = FALSE
@@ -95,10 +95,10 @@
 	START_PROCESSING(SSobj, src)
 
 /mob/living/basic/bot/repairbot/proc/set_color(new_color)
-	add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
 	toolbox_color = new_color
+	update_appearance()
 
-/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(!istype(potential_stack, /obj/item/stack))
 		return ..()
 	attempt_merge(potential_stack, user)
@@ -110,7 +110,10 @@
 			continue
 		var/obj/item/stack/our_sheet = locate(content) in src
 		if(isnull(our_sheet))
-			potential_stack.forceMove(src)
+			if(!user.transferItemToLoc(potential_stack, src))
+				user.balloon_alert(user, "stuck to your hand!")
+				return
+			balloon_alert(user, "inserted")
 			return
 		if(our_sheet.amount >= our_sheet.max_amount)
 			user?.balloon_alert(user, "full!")
@@ -118,9 +121,9 @@
 		if(!our_sheet.can_merge(potential_stack))
 			user?.balloon_alert(user, "not suitable!")
 			return
-		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
+		var/atom/movable/to_move = potential_stack.split_stack(min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
 		to_move.forceMove(src)
-		balloon_alert(src, "inserted")
+		balloon_alert(user, "inserted")
 		return
 
 /mob/living/basic/bot/repairbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -258,21 +261,19 @@
 
 /mob/living/basic/bot/repairbot/update_overlays()
 	. = ..()
-	. += mutable_appearance(icon, "repairbot[bot_mode_flags & BOT_MODE_ON]", appearance_flags = RESET_COLOR)
+	var/mutable_appearance/our_box = mutable_appearance(icon, "repairbot_box", BELOW_MOB_LAYER - 0.02)
+	our_box.color = toolbox_color
+	. += our_box
 	if(our_glass)
-		var/mutable_appearance/glass =  mutable_appearance(icon, "repairbot_glass_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR)
-		glass.pixel_x = -6
-		glass.pixel_y = -5
+		var/mutable_appearance/glass =  mutable_appearance(icon, "repairbot_glass_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR|KEEP_APART)
+		glass.pixel_w = -6
+		glass.pixel_z = -5
 		. += glass
 	if(our_iron)
-		var/mutable_appearance/iron =  mutable_appearance(icon, "repairbot_iron_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR)
-		iron.pixel_y = -5
-		iron.pixel_x = 7
+		var/mutable_appearance/iron =  mutable_appearance(icon, "repairbot_iron_overlay", BELOW_MOB_LAYER - 0.02, appearance_flags = RESET_COLOR|KEEP_APART)
+		iron.pixel_w = 7
+		iron.pixel_z = -5
 		. += iron
-
-/mob/living/basic/bot/repairbot/update_icon_state()
-	. = ..()
-	icon_state = base_icon_state
 
 /mob/living/basic/bot/repairbot/generate_speak_list()
 	return neutral_voicelines + emagged_voicelines
@@ -353,7 +354,8 @@
 /mob/living/basic/bot/repairbot/mob_pickup(mob/living/user)
 	var/obj/item/carried_repairbot/carried = new(get_turf(src))
 	carried.set_bot(src)
-	carried.add_atom_colour(toolbox_color, FIXED_COLOUR_PRIORITY)
+	if(carried.icon_state == "toolbox_default")
+		carried.add_atom_colour(toolbox_color, FIXED_COLOUR_PRIORITY)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(carried)
 
@@ -369,6 +371,7 @@
 
 /obj/item/carried_repairbot/proc/set_bot(mob/living/basic/bot/repairbot/repairbot)
 	var/obj/item/bot_toolbox = repairbot.toolbox
+	name = repairbot.name
 	icon = bot_toolbox::icon
 	icon_state = bot_toolbox::icon_state
 	lefthand_file = bot_toolbox::lefthand_file

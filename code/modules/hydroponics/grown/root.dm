@@ -25,7 +25,7 @@
 	juice_typepath = /datum/reagent/consumable/carrotjuice
 	wine_power = 30
 
-/obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
 		return ..()
 
@@ -64,7 +64,7 @@
 	juice_typepath = /datum/reagent/consumable/parsnipjuice
 	wine_power = 35
 
-/obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/parsnip/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
 		return ..()
 
@@ -110,7 +110,7 @@
 	tastes = list("sweet dirt" = 1)
 	distill_reagent = /datum/reagent/consumable/rootbeer
 
-/obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/cahnroot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())
 		return ..()
 

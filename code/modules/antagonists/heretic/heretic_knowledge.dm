@@ -163,21 +163,6 @@
 		if(isliving(sacrificed))
 			continue
 
-		if(isstack(sacrificed))
-			var/obj/item/stack/sac_stack = sacrificed
-			var/how_much_to_use = 0
-			for(var/requirement in required_atoms)
-				// If it's not requirement type and type is not a list, skip over this check
-				if(!istype(sacrificed, requirement) && !islist(requirement))
-					continue
-				// If requirement *is* a list and the stack *is* in the list, skip over this check
-				if(islist(requirement) && !is_type_in_list(sacrificed, requirement))
-					continue
-				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
-				break
-			sac_stack.use(how_much_to_use)
-			continue
-
 		selected_atoms -= sacrificed
 		qdel(sacrificed)
 
@@ -424,13 +409,14 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = chosen_one.key
+	summoned.PossessByPlayer(chosen_one.key)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
+	ADD_TRAIT(heretic_monster, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
@@ -528,7 +514,7 @@
 	to_chat(user, span_boldnotice("[name] completed!"))
 	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
-	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
+	log_heretic_knowledge("[key_name(user)] completed a [name] at [gameTimestamp()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
 	return TRUE
 
@@ -557,7 +543,7 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(our_heretic.researched_knowledge))
 		total_points += knowledge.cost
 
-	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \
+	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [gameTimestamp()]. \
 		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)")
 
@@ -604,9 +590,9 @@
 		human_user.physiology.burn_mod *= 0.5
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, GLOB.heretic_research_tree[type][HKT_ROUTE])
-	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
+	log_heretic_knowledge("[key_name(user)] completed their final ritual at [gameTimestamp()].")
 	notify_ghosts(
-		"[user] has completed an ascension ritual!",
+		"[user.real_name] has completed an ascension ritual!",
 		source = user,
 		header = "A Heretic is Ascending!",
 	)

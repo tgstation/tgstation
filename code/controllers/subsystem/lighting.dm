@@ -1,7 +1,10 @@
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+	)
 	wait = 2
-	init_order = INIT_ORDER_LIGHTING
 	flags = SS_TICKER
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
@@ -13,7 +16,7 @@ SUBSYSTEM_DEF(lighting)
 #endif
 
 /datum/controller/subsystem/lighting/stat_entry(msg)
-	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
+	msg = "\n  Sources:[length(sources_queue)]|Corners:[length(corners_queue)]|Objects:[length(objects_queue)]"
 	return ..()
 
 

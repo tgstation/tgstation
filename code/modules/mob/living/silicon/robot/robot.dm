@@ -21,10 +21,6 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	robot_modules_background = new()
-	robot_modules_background.icon_state = "block"
-	SET_PLANE_EXPLICIT(robot_modules_background, HUD_PLANE, src)
-
 	inv1 = new /atom/movable/screen/robot/module1()
 	inv2 = new /atom/movable/screen/robot/module2()
 	inv3 = new /atom/movable/screen/robot/module3()
@@ -47,20 +43,21 @@
 			lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
-		builtInCamera = new (src)
+		builtInCamera = new(src)
 		builtInCamera.c_tag = real_name
-		builtInCamera.network = list(CAMERANET_NETWORK_SS13)
-		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
-			builtInCamera.camera_enabled = 0
+			builtInCamera.camera_enabled = FALSE
 	update_icons()
 	. = ..()
+
+	LoadComponent(/datum/component/bloodysoles/bot)
 
 	//If this body is meant to be a borg controlled by the AI player
 	if(shell)
 		var/obj/item/borg/upgrade/ai/board = new(src)
 		make_shell(board)
 		add_to_upgrades(board)
+		ADD_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, INNATE_TRAIT)
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
@@ -75,6 +72,9 @@
 			mmi.brainmob.container = mmi
 			mmi.update_appearance()
 		setup_default_name()
+
+		if(mmi.brainmob)
+			gender = mmi.brainmob.gender
 
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
@@ -312,6 +312,12 @@
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
+	var/obj/item/shield_module/shield_module = locate(/obj/item/shield_module) in src
+	if(shield_module && shield_module.active)
+		add_overlay(shield_module.shield_overlay)
+	else if (shield_module && !shield_module.active)
+		cut_overlay(shield_module.shield_overlay)
+
 	if(opened)
 		if(wiresexposed)
 			add_overlay("ov-opencover +w")
@@ -358,14 +364,14 @@
 
 	return ..()
 
-/mob/living/silicon/robot/proc/self_destruct(mob/usr)
+/mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
-	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
-	usr.log_message("detonated [key_name(src)]!", LOG_ATTACK)
-	log_message("was detonated by [key_name(usr)]!", LOG_ATTACK, log_globally = FALSE)
+	message_admins(span_notice("[ADMIN_LOOKUPFLW(user)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
+	user.log_message("detonated [key_name(src)]!", LOG_ATTACK)
+	log_message("was detonated by [key_name(user)]!", LOG_ATTACK, log_globally = FALSE)
 
-	log_combat(usr, src, "detonated cyborg")
-	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
+	log_combat(user, src, "detonated cyborg")
+	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(user)].")
 	if(connected_ai)
 		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
 
@@ -723,14 +729,10 @@
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	drop_all_held_items()
-	shown_robot_modules = FALSE
 
 	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
 		for(var/obj/item in bag)
 			item.forceMove(drop_location())
-
-	if(hud_used)
-		hud_used.update_robot_modules_display()
 
 	if (hasExpanded)
 		hasExpanded = FALSE
@@ -888,6 +890,8 @@
 		builtInCamera.c_tag = real_name //update the camera name too
 	mainframe = AI
 	deployed = TRUE
+	if(AI.client)
+		set_gender(AI.client)
 	set_connected_ai(mainframe)
 	mainframe.connected_robots |= src
 	lawupdate = TRUE
@@ -896,9 +900,10 @@
 		if((AI.radio.special_channels & RADIO_SPECIAL_SYNDIE))
 			radio.make_syndie()
 		radio.subspace_transmission = TRUE
+		radio.command = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
-			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.radiochannels[chan])
+			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.default_radio_channels[chan])
 
 	diag_hud_set_aishell()
 	undeployment_action.Grant(src)
@@ -909,7 +914,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/undeployment/Trigger(trigger_flags)
+/datum/action/innate/undeployment/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return FALSE
 	var/mob/living/silicon/robot/shell_to_disconnect = owner
@@ -928,6 +933,7 @@
 	deployed = FALSE
 	mainframe.deployed_shell = null
 	undeployment_action.Remove(src)
+	REMOVE_TRAIT(src, TRAIT_LOUD_BINARY, REF(mainframe))
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
 	if(!QDELETED(builtInCamera))
@@ -1031,10 +1037,7 @@
 
 /mob/living/silicon/robot/get_exp_list(minutes)
 	. = ..()
-
-	var/datum/job/cyborg/cyborg_job_ref = SSjob.get_job_type(/datum/job/cyborg)
-
-	.[cyborg_job_ref.title] = minutes
+	.[/datum/job/cyborg::title] = minutes
 
 /mob/living/silicon/robot/proc/untip_roleplay()
 	to_chat(src, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
@@ -1047,7 +1050,7 @@
 			'icons/mob/effects/onfire.dmi',
 			fire_icon,
 			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR,
+			appearance_flags = RESET_COLOR|KEEP_APART,
 		)
 		GLOB.fire_appearances[fire_icon] = new_fire_overlay
 

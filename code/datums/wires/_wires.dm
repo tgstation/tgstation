@@ -57,6 +57,27 @@
 	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
 	var/list/studied_photos
 
+	/// Assoc list of possible wire colors -> their greyscale variants
+	var/static/list/default_possible_colors = list(
+		"blue" = "dim grey",
+		"brown" = "dim grey",
+		"crimson" = "grey",
+		"cyan" = "light grey",
+		"gold" = "grey",
+		"green" = "grey",
+		"grey" = "grey",
+		"lime" = "light grey",
+		"magenta" = "grey",
+		"orange" = "grey",
+		"pink" = "grey",
+		"purple" = "grey",
+		"red" = "grey",
+		"silver" = "light grey",
+		"violet" = "grey",
+		"white" = "white",
+		"yellow" = "light grey",
+	)
+
 /datum/wires/New(atom/holder)
 	..()
 	if(!istype(holder, holder_type))
@@ -88,6 +109,7 @@
 	LAZYCLEARLIST(assemblies)
 	return ..()
 
+/// Adds a number of wires which do absolutely nothing.
 /datum/wires/proc/add_duds(duds)
 	while(duds)
 		var/dud = WIRE_DUD_PREFIX + "[--duds]"
@@ -102,30 +124,15 @@
 	qdel(src)
 
 /datum/wires/proc/randomize()
-	var/static/list/possible_colors = list(
-	"blue",
-	"brown",
-	"crimson",
-	"cyan",
-	"gold",
-	"green",
-	"grey",
-	"lime",
-	"magenta",
-	"orange",
-	"pink",
-	"purple",
-	"red",
-	"silver",
-	"violet",
-	"white",
-	"yellow",
-	)
+	if(length(wires) > length(default_possible_colors))
+		stack_trace("Wire type [type] has more wires than possible colors, consider adding more colors or removing wires.")
 
-	var/list/my_possible_colors = possible_colors.Copy()
+	var/list/possible_colors = default_possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(my_possible_colors)] = wire
+		if(!length(possible_colors))
+			possible_colors = default_possible_colors.Copy()
+		colors[pick_n_take(possible_colors)] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()
@@ -169,7 +176,7 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire, source)
+/datum/wires/proc/cut(wire, mob/living/source)
 	if(is_cut(wire))
 		cut_wires -= wire
 		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
@@ -179,7 +186,7 @@
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE, source = source)
 
-/datum/wires/proc/cut_color(color, source)
+/datum/wires/proc/cut_color(color, mob/living/source)
 	cut(get_wire(color), source)
 
 /datum/wires/proc/cut_random(source)
@@ -189,7 +196,7 @@
 	for(var/wire in wires)
 		cut(wire, source)
 
-/datum/wires/proc/pulse(wire, user, force=FALSE)
+/datum/wires/proc/pulse(wire, mob/living/user, force=FALSE)
 	if(!force && is_cut(wire))
 		return
 	SEND_SIGNAL(src, COMSIG_PULSE_WIRE, wire, user)
@@ -241,21 +248,22 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE, source = null)
+/datum/wires/proc/on_cut(wire, mend = FALSE, mob/living/source = null)
 	return
 
-/datum/wires/proc/on_pulse(wire, user)
+/datum/wires/proc/on_pulse(wire, mob/living/user)
 	return
 // End Overridable Procs
 
 /datum/wires/proc/interact(mob/user)
 	if(!interactable(user))
-		return
+		return FALSE
 	ui_interact(user)
 	for(var/A in assemblies)
 		var/obj/item/I = assemblies[A]
 		if(istype(I) && I.on_found(user))
-			return
+			break
+	return TRUE
 
 /**
  * Checks whether wire assignments should be revealed.
@@ -349,10 +357,12 @@
 	var/list/data = list()
 	var/list/payload = list()
 	var/reveal_wires = can_reveal_wires(user)
+	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
 
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
+			"shownColor" = colorblind ? default_possible_colors[color] : color,
 			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)

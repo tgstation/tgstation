@@ -16,7 +16,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 13
+	speech_probability_rate = 6
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null
@@ -67,7 +67,7 @@
 		if(mind)
 			mind.transfer_to(specter)
 		else
-			specter.key = key
+			specter.PossessByPlayer(key)
 	return ..()
 
 /mob/living/basic/parrot/poly/get_static_list_of_phrases() // there's only one poly, so there should only be one ongoing list of phrases. i guess

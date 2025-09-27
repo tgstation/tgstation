@@ -77,6 +77,7 @@
 #define COLOR_LIGHT_YELLOW "#FFFEE0"
 
 #define COLOR_OLIVE "#808000"
+#define COLOR_OLIVE_GREEN "#677714"
 #define COLOR_ASSISTANT_OLIVE "#828163"
 #define COLOR_VIBRANT_LIME "#00FF00"
 #define COLOR_SERVICE_LIME "#58C800"
@@ -112,8 +113,9 @@
 #define COLOR_MODERATE_BLUE "#555CC2"
 #define COLOR_TRAM_BLUE "#6160A8"
 #define COLOR_TRAM_LIGHT_BLUE "#A8A7DA"
-#define COLOR_AMETHYST "#822BFF"
+#define COLOR_AMETHYST "#822bff"
 #define COLOR_BLUE_LIGHT "#33CCFF"
+#define COLOR_BLUE_VERY_LIGHT "#ccecff"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
 
@@ -122,6 +124,7 @@
 #define COLOR_SCIENCE_PINK "#C96DBF"
 #define COLOR_MOSTLY_PURE_PINK "#E4005B"
 #define COLOR_ADMIN_PINK "#D100D1"
+#define COLOR_TONGUE_PINK "#ff6ea0"
 #define COLOR_BLUSH_PINK "#DE5D83"
 #define COLOR_FADED_PINK "#ff80d5"
 #define COLOR_MAGENTA "#FF00FF"
@@ -130,7 +133,7 @@
 #define COLOR_VIOLET "#B900F7"
 #define COLOR_VOID_PURPLE "#53277E"
 #define COLOR_STRONG_VIOLET "#6927C5"
-#define COLOR_DARK_PURPLE "#551A8B"
+#define COLOR_DARK_PURPLE "#551a8b"
 
 #define COLOR_ORANGE "#FF9900"
 #define COLOR_IRISH_ORANGE "#FF883E"
@@ -215,6 +218,14 @@
 #define COLOR_SAMPLE_GREEN "#98b944"
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
+
+///Colors for blood greyscale sprites
+#define BLOOD_COLOR_RED "#AA1010"
+#define BLOOD_COLOR_LIZARD "#035A00"
+#define BLOOD_COLOR_XENO "#96BB00"
+#define BLOOD_COLOR_OIL "#2C2C2C"
+#define BLOOD_COLOR_BLACK "#1F1A00"
+#define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
@@ -443,6 +454,7 @@
 #define COLOR_AMMO_DUMDUM "#ffe601"
 #define COLOR_AMMO_HOTSHOT "#ff7b00"
 #define COLOR_AMMO_ICEBLOX "#0de3ff"
+#define COLOR_AMMO_HELLFIRE "#f60021"
 
 // defines for other ammo type colors (should this be merged with above?)
 #define COLOR_AMMO_INCENDIARY "#f4001f"
@@ -486,5 +498,21 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define EYE_COLOR_ATOM_COLOR_PRIORITY 2
 #define EYE_COLOR_SPECIES_PRIORITY 10
 #define EYE_COLOR_WEED_PRIORITY 20
-#define EYE_COLOR_LUMINESCENT_PRIORITY 30
-#define EYE_COLOR_CULT_PRIORITY 40
+#define EYE_COLOR_HUD_PRIORITY 30
+#define EYE_COLOR_LUMINESCENT_PRIORITY 40
+#define EYE_COLOR_CULT_PRIORITY 50
+
+// Client color priorities
+
+#define CLIENT_COLOR_GLASSES_PRIORITY 1 // Lowest there is, used by glasses
+#define CLIENT_COLOR_HELMET_PRIORITY 2 // Same but for helmets
+#define CLIENT_COLOR_ORGAN_PRIORITY 3 // For heads and organs
+#define CLIENT_COLOR_FILTER_PRIORITY 4 // Filters which should go ontop of previous ones
+#define CLIENT_COLOR_TEMPORARY_PRIORITY 5 // Temporary flashing effects
+#define CLIENT_COLOR_IMPORTANT_PRIORITY 6 // Gameplay important hints signifying antag status or near-death, should be always shown
+#define CLIENT_COLOR_OVERRIDE_PRIORITY 7 // For effects that are meant to mask all others for technical reasons
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072

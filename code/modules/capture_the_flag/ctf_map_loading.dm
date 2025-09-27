@@ -67,30 +67,30 @@ GLOBAL_DATUM(ctf_spawner, /obj/effect/landmark/ctf)
 /datum/map_template/ctf/classic
 	name = "Classic"
 	description = "The original CTF map."
-	mappath = "_maps/map_files/CTF/classic.dmm"
+	mappath = "_maps/minigame/CTF/classic.dmm"
 
 /datum/map_template/ctf/four_side
 	name = "Four Side"
 	description = "A CTF map created to demonstrate 4 team CTF, features a single centred flag rather than one per team."
-	mappath = "_maps/map_files/CTF/fourSide.dmm"
+	mappath = "_maps/minigame/CTF/fourSide.dmm"
 
 /datum/map_template/ctf/downtown
 	name = "Downtown"
 	description = "A CTF map that takes place in a terrestrial city."
-	mappath = "_maps/map_files/CTF/downtown.dmm"
+	mappath = "_maps/minigame/CTF/downtown.dmm"
 
 /datum/map_template/ctf/limbo
 	name = "Limbo"
 	description = "A KOTH map that takes place in a wizard den with looping hallways"
-	mappath = "_maps/map_files/CTF/limbo.dmm"
+	mappath = "_maps/minigame/CTF/limbo.dmm"
 	points_to_win = 180
 
 /datum/map_template/ctf/cruiser
 	name = "Crusier"
 	description = "A CTF map that takes place across multiple space ships, one carrying a powerful device that can accelerate those who obtain it"
-	mappath = "_maps/map_files/CTF/cruiser.dmm"
+	mappath = "_maps/minigame/CTF/cruiser.dmm"
 
 /datum/map_template/ctf/turbine
 	name = "Turbine"
 	description = "A CTF map that takes place in a familiar facility. Don't try to hold out mid- There's no sentries in this version."
-	mappath = "_maps/map_files/CTF/turbine.dmm"
+	mappath = "_maps/minigame/CTF/turbine.dmm"

@@ -112,13 +112,13 @@
 
 	for(var/trait_type in fishie.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
-		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.diff_traits_inheritability))
+		fish_traits += list(list("trait_name" = trait.name, "trait_desc" = trait.catalog_description, "trait_inherit" = trait.inheritability))
 
 	data["fish_list"] += list(list(
 		"fish_name" = fishie.name,
 		"fish_icon" = fishie.icon,
 		"fish_icon_state" = fishie.base_icon_state,
-		"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.health/initial(fishie.health)),
+		"fish_health" = fishie.status == FISH_DEAD ? 0 : PERCENT(fishie.get_health_percentage()),
 		"fish_size" = fishie.size,
 		"fish_weight" = fishie.weight,
 		"fish_food" = fishie.food.name,

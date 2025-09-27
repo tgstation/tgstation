@@ -15,7 +15,7 @@
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/mute/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -29,13 +29,13 @@
 	lose_text = span_notice("You suddenly remember how languages work.")
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, source = LANGUAGE_APHASIA)
 	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	if(!QDELING(owner))
-		owner.remove_blocked_language(subtypesof(/datum/language), LANGUAGE_APHASIA)
+		owner.remove_blocked_language(subtypesof(/datum/language), source = LANGUAGE_APHASIA)
 		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
 	..()
@@ -49,7 +49,7 @@
 
 /datum/brain_trauma/severe/blindness/on_gain()
 	owner.become_blind(TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
 	owner.cure_blind(TRAUMA_TRAIT)
@@ -104,7 +104,7 @@
 	lose_text = span_notice("You can feel [subject] again!")
 
 /datum/brain_trauma/severe/paralysis/on_gain()
-	..()
+	. = ..()
 	for(var/X in paralysis_traits)
 		ADD_TRAIT(owner, X, TRAUMA_TRAIT)
 
@@ -136,107 +136,83 @@
 	scan_desc = "traumatic narcolepsy"
 	gain_text = span_warning("You have a constant feeling of drowsiness...")
 	lose_text = span_notice("You feel awake and aware again.")
+	/// Odds seconds_per_tick the user falls asleep
+	var/sleep_chance = 1
+	/// Odds seconds_per_tick the user falls asleep while running
+	var/sleep_chance_running = 2
+	/// Odds seconds_per_tick the user falls asleep while drowsy
+	var/sleep_chance_drowsy = 3
+	/// Time values for how long the user will stay drowsy
+	var/drowsy_time_minimum = 20 SECONDS
+	var/drowsy_time_maximum = 30 SECONDS
+	/// Time values for how long the user will stay asleep
+	var/sleep_time_minimum = 6 SECONDS
+	var/sleep_time_maximum = 6 SECONDS
 
 /datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
 	if(owner.IsSleeping())
 		return
 
-	var/sleep_chance = 1
+	/// If any of these are in the user's blood, return early
+	var/static/list/immunity_medicine = list(
+		/datum/reagent/medicine/modafinil,
+		/datum/reagent/medicine/synaptizine,
+	) //don't add too many, as most stimulant reagents already have a drowsy-removing effect
+	for(var/medicine in immunity_medicine)
+		if(owner.reagents.has_reagent(medicine))
+			return
+
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
+	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
+	var/final_sleep_chance = sleep_chance
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance += 2
+		final_sleep_chance += sleep_chance_running
 	if(drowsy)
-		sleep_chance += 3
+		final_sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
+	if(caffeinated)
+		final_sleep_chance *= 0.5 //make it harder to fall asleep on caffeine
 
-	if(SPT_PROB(0.5 * sleep_chance, seconds_per_tick))
-		to_chat(owner, span_warning("You fall asleep."))
-		owner.Sleeping(6 SECONDS)
+	if(!SPT_PROB(final_sleep_chance, seconds_per_tick))
+		return
 
-	else if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
+	//if not drowsy, don't fall asleep but make them drowsy
+	if(!drowsy)
 		to_chat(owner, span_warning("You feel tired..."))
-		owner.adjust_drowsiness(20 SECONDS)
+		owner.adjust_drowsiness(rand(drowsy_time_minimum, drowsy_time_maximum))
+		if(prob(50))
+			owner.emote("yawn")
+		else if(prob(33)) //rarest message is a custom emote
+			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
+	//drowsy, so fall asleep. you've had your chance to remedy it
+	else
+		to_chat(owner, span_warning("You fall asleep."))
+		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
+		if(prob(50) && owner.IsSleeping())
+			owner.emote("snore")
+
+/datum/brain_trauma/severe/narcolepsy/permanent
+	scan_desc = "chronic narcolepsy" //less odds to fall asleep than parent, but sleeps for longer
+	sleep_chance = 0.333
+	sleep_chance_running = 0.333
+	sleep_chance_drowsy = 1
+	sleep_time_minimum = 20 SECONDS
+	sleep_time_maximum = 30 SECONDS
 
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
-	gain_text = ""
+	gain_text = span_warning("You feel really lonely...")
 	lose_text = span_notice("You feel like you could be safe on your own.")
 	var/stress = 0
 
 /datum/brain_trauma/severe/monophobia/on_gain()
-	..()
-	if(check_alone())
-		to_chat(owner, span_warning("You feel really lonely..."))
-	else
-		to_chat(owner, span_notice("You feel safe, as long as you have people around you."))
+	. = ..()
+	owner.AddComponentFrom(REF(src), /datum/component/fearful, list(/datum/terror_handler/vomiting, /datum/terror_handler/simple_source/monophobia))
 
-/datum/brain_trauma/severe/monophobia/on_life(seconds_per_tick, times_fired)
-	..()
-	if(check_alone())
-		stress = min(stress + 0.5, 100)
-		if(stress > 10 && SPT_PROB(2.5, seconds_per_tick))
-			stress_reaction()
-	else
-		stress = max(stress - (2 * seconds_per_tick), 0)
-
-/datum/brain_trauma/severe/monophobia/proc/check_alone()
-	var/check_radius = 7
-	if(owner.is_blind())
-		check_radius = 1
-	for(var/mob/M in oview(owner, check_radius))
-		if(!isliving(M)) //ghosts ain't people
-			continue
-		if(istype(M, /mob/living/basic/pet) || M.ckey)
-			return FALSE
-	return TRUE
-
-/datum/brain_trauma/severe/monophobia/proc/stress_reaction()
-	if(owner.stat != CONSCIOUS)
-		return
-
-	var/high_stress = (stress > 60) //things get psychosomatic from here on
-	switch(rand(1, 6))
-		if(1)
-			if(high_stress)
-				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
-			else
-				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 5 SECONDS) //blood vomit if high stress
-		if(2)
-			if(high_stress)
-				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
-				owner.adjustStaminaLoss(50)
-			else
-				to_chat(owner, span_warning("You can't stop shaking..."))
-
-			owner.adjust_dizzy(40 SECONDS)
-			owner.adjust_confusion(20 SECONDS)
-			owner.set_jitter_if_lower(40 SECONDS)
-
-		if(3, 4)
-			if(high_stress)
-				to_chat(owner, span_warning("You're going mad with loneliness!"))
-				owner.adjust_hallucinations(60 SECONDS)
-			else
-				to_chat(owner, span_warning("You feel really lonely..."))
-
-		if(5)
-			if(high_stress)
-				if(prob(15) && ishuman(owner))
-					var/mob/living/carbon/human/H = owner
-					H.set_heartattack(TRUE)
-					to_chat(H, span_userdanger("You feel a stabbing pain in your heart!"))
-				else
-					to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
-					owner.adjustOxyLoss(8)
-			else
-				to_chat(owner, span_warning("Your heart skips a beat."))
-				owner.adjustOxyLoss(8)
-
-		else
-			//No effect
-			return
+/datum/brain_trauma/severe/monophobia/on_lose(silent)
+	. = ..()
+	owner.RemoveComponentSource(REF(src), /datum/component/fearful)
 
 /datum/brain_trauma/severe/discoordination
 	name = "Discoordination"
@@ -262,7 +238,7 @@
 
 /datum/brain_trauma/severe/pacifism/on_gain()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
@@ -325,116 +301,11 @@
 
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/dyslexia/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()
-
-/*
- * Brain traumas that eldritch paintings apply
- * This one is for "The Sister and He Who Wept" or /obj/structure/sign/painting/eldritch
- */
-/datum/brain_trauma/severe/weeping
-	name = "Psychotic Depression"
-	desc = "Patient is suffering from severe depressive episodes. Patient sometimes hallucinates during these episodes."
-	scan_desc = "depression"
-	gain_text = span_warning("The weeping... It haunts my mind...")
-	lose_text = span_notice("Your fixation ends. You feel significantly less stressed.")
-	random_gain = FALSE
-	/// Our cooldown declare for causing hallucinations
-	COOLDOWN_DECLARE(weeping_hallucinations)
-
-/datum/brain_trauma/severe/weeping/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
-		return
-	// If they have examined a painting recently
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
-	if(!COOLDOWN_FINISHED(src, weeping_hallucinations))
-		return
-	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping brain trauma")
-	owner.add_mood_event("eldritch_weeping", /datum/mood_event/eldritch_painting/weeping)
-	COOLDOWN_START(src, weeping_hallucinations, 10 SECONDS)
-	return ..()
-
-//This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
-/datum/brain_trauma/severe/flesh_desire
-	name = "Bean's Disorder"
-	desc = "Patient has a fixation on consuming raw flesh, particularly that of the same species. Patient also suffers from psychosomatic hunger pangs."
-	scan_desc = "moderate eating disorder"
-	gain_text = span_warning("You feel a hunger, for organs and raw meat...")
-	lose_text = span_notice("Your appetite returns to normal.")
-	random_gain = FALSE
-	/// How much faster we loose hunger
-	var/hunger_rate = 15
-
-/datum/brain_trauma/severe/flesh_desire/on_gain()
-	// Allows them to eat faster, mainly for flavor
-	ADD_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	ADD_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	return ..()
-
-/datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
-	// Causes them to need to eat at 10x the normal rate
-	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You **NEED** to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
-	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
-
-/datum/brain_trauma/severe/flesh_desire/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_VORACIOUS, REF(src))
-	REMOVE_TRAIT(owner, TRAIT_FLESH_DESIRE, REF(src))
-	return ..()
-
-// This one is for "Lady out of gates" or /obj/item/wallframe/painting/eldritch/beauty
-/datum/brain_trauma/severe/eldritch_beauty
-	name = "Obsessive Perfectionism"
-	desc = "Patient is fixated on the perceived 'imperfection' of objects around them. Patient is agitated by the feeling of clothing on their body."
-	scan_desc = "obsessive personality disorder"
-	gain_text = span_warning("It's all *imperfect*! I can't stand any of it touching me!")
-	lose_text = span_notice("Your mind calms.")
-	random_gain = FALSE
-	/// How much damage we deal with each scratch
-	var/scratch_damage = 0.5
-
-/datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	if(owner.incapacitated)
-		return
-
-	// Scratching code
-	var/obj/item/bodypart/bodypart = owner.get_bodypart(owner.get_random_valid_zone(even_weights = TRUE))
-	if(!bodypart || !IS_ORGANIC_LIMB(bodypart) || (bodypart.bodypart_flags & BODYPART_PSEUDOPART))
-		return
-	if(!ishuman(owner))
-		return
-	// Jumpsuits ruin the "perfection" of the body
-	var/mob/living/carbon/human/scratcher = owner
-	if(!length(scratcher.get_clothing_on_part(bodypart)))
-		return
-
-	owner.apply_damage(scratch_damage, BRUTE, bodypart)
-	if(SPT_PROB(33, seconds_per_tick))
-		to_chat(owner, span_notice("You scratch furiously at your clothed [bodypart.plaintext_zone]!"))
-
-// This one is for "Climb over the rusted mountain" or /obj/structure/sign/painting/eldritch/rust
-/datum/brain_trauma/severe/rusting
-	name = "Intermittent Psychic Manifestation Syndrome"
-	desc = "Patient suffers from a rare psychic disorder, and may manifest or amplify psychic phenomena in the area. Patient has no control over these phenomena."
-	scan_desc = "dangerous psi-wave activity"
-	gain_text = span_warning("Climb the rust. Master entropy.")
-	lose_text = span_notice("You feel like you just woke up from a bad dream.")
-	random_gain = FALSE
-
-/datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
-	var/atom/tile = get_turf(owner)
-	// Examining a painting should stop this effect to give counterplay
-	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
-		return
-
-	if(SPT_PROB(50, seconds_per_tick))
-		to_chat(owner, span_notice("You feel the decay..."))
-		tile.rust_heretic_act()
 
 /datum/brain_trauma/severe/kleptomaniac
 	name = "Kleptomania"

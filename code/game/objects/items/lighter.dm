@@ -63,7 +63,7 @@
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
 	playsound(victim, SFX_RICOCHET, 100, TRUE)
-	new /obj/effect/decal/cleanable/oil(get_turf(src))
+	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	qdel(src)
@@ -192,7 +192,7 @@
 	)
 	user.add_mood_event("burnt_thumb", /datum/mood_event/burnt_thumb)
 
-/obj/item/lighter/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/lighter/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(lit)
 		use(0.5)
 		if(target_mob.ignite_mob())

@@ -53,7 +53,7 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/poster/attackby(obj/item/I, mob/user, params)
+/obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))
 		return ..()
 
@@ -172,7 +172,7 @@
 	desc = holi_data.poster_desc
 	icon_state = holi_data.poster_icon
 
-/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, params)
+/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(tool.tool_behaviour == TOOL_WIRECUTTER)
 		tool.play_tool_sound(src, 100)
 		if(ruined)
@@ -214,10 +214,15 @@
 /obj/structure/sign/poster/proc/roll_and_drop(atom/location, mob/user)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/rolled_poster = new poster_item_type(location, src) // /obj/structure/sign/poster/wanted/roll_and_drop() has some snowflake handling due to icon memes, if you make a major change to this, don't forget to update it too. <3
+	var/obj/item/poster/rolled_poster = return_to_poster_item(location, src)
 	if(!user?.put_in_hands(rolled_poster))
 		forceMove(rolled_poster)
 	return rolled_poster
+
+
+/// Re-creates the poster item from the poster structure
+/obj/structure/sign/poster/proc/return_to_poster_item(atom/location)
+	return new poster_item_type(location, src)
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/closed/proc/place_poster(obj/item/poster/rolled_poster, mob/user)

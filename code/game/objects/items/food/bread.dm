@@ -4,6 +4,7 @@
 	name = "bread?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
+	abstract_type = /obj/item/food/bread
 	max_volume = 80
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
@@ -29,6 +30,7 @@
 	name = "breadslice?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
+	abstract_type = /obj/item/food/breadslice
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
@@ -50,10 +52,9 @@
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/breadslice/plain
 	crafting_complexity = FOOD_COMPLEXITY_1
-
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/breadslice/plain
 	name = "bread slice"
@@ -67,7 +68,7 @@
 
 /obj/item/food/breadslice/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/plain/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/griddle_toast, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -103,8 +104,9 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 		/datum/reagent/consumable/nutriment/protein = 12,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	tastes = list("bread" = 10, "meat" = 10)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/breadslice/meat
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -118,8 +120,9 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 2.4,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/sausage
@@ -135,6 +138,7 @@
 	foodtypes = GRAIN | MEAT
 	slice_type = /obj/item/food/breadslice/sausage
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"
@@ -145,6 +149,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 2.4,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2.5)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -153,13 +158,14 @@
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 		/datum/reagent/consumable/nutriment/protein = 15,
 	)
 	tastes = list("bread" = 10, "acid" = 10)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | MEAT | DAIRY
 	slice_type = /obj/item/food/breadslice/xenomeat
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -172,14 +178,16 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 3,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 10, "acid" = 10)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/spidermeat
 	name = "spider meat loaf"
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/toxin = 15,
@@ -187,7 +195,7 @@
 		/datum/reagent/consumable/nutriment/protein = 12,
 	)
 	tastes = list("bread" = 10, "cobwebs" = 5)
-	foodtypes = GRAIN | MEAT | TOXIC
+	foodtypes = GRAIN|MEAT|DAIRY|TOXIC
 	slice_type = /obj/item/food/breadslice/spidermeat
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -201,8 +209,9 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 10, "cobwebs" = 5)
-	foodtypes = GRAIN | MEAT | TOXIC
+	foodtypes = GRAIN|MEAT|DAIRY|TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/banana
@@ -214,7 +223,7 @@
 		/datum/reagent/consumable/banana = 20,
 	)
 	tastes = list("bread" = 10) // bananjuice will also flavour
-	foodtypes = GRAIN | FRUIT
+	foodtypes = GRAIN | FRUIT | MEAT
 	slice_type = /obj/item/food/breadslice/banana
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -227,7 +236,7 @@
 		/datum/reagent/consumable/banana = 4,
 	)
 	tastes = list("bread" = 10)
-	foodtypes = GRAIN | FRUIT
+	foodtypes = GRAIN | FRUIT | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/tofu
@@ -240,7 +249,7 @@
 		/datum/reagent/consumable/nutriment/protein = 10,
 	)
 	tastes = list("bread" = 10, "tofu" = 10)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | DAIRY
 	venue_value = FOOD_PRICE_TRASH
 	slice_type = /obj/item/food/breadslice/tofu
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -255,7 +264,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("bread" = 10, "tofu" = 10)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/creamcheese
@@ -294,7 +303,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 	)
 	tastes = list("bread" = 10, "silence" = 10)
-	foodtypes = GRAIN | FRUIT
+	foodtypes = GRAIN | FRUIT | VEGETABLES
 	slice_type = /obj/item/food/breadslice/mimana
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -309,7 +318,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("bread" = 10, "silence" = 10)
-	foodtypes = GRAIN | FRUIT
+	foodtypes = GRAIN | FRUIT | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/bread/empty
@@ -327,7 +336,7 @@
 
 /obj/item/food/breadslice/empty/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/baguette
 	name = "baguette"
@@ -449,7 +458,7 @@
 	)
 	bite_consumption = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
-	foodtypes = GRAIN
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -463,7 +472,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("butter" = 1, "biscuit" = 1)
-	foodtypes = GRAIN | BREAKFAST
+	foodtypes = GRAIN | BREAKFAST | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -498,7 +507,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("raw egg" = 2, "soaked bread" = 1)
-	foodtypes = GRAIN | RAW | BREAKFAST
+	foodtypes = GRAIN | RAW | BREAKFAST | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -515,7 +524,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("french toast" = 1, "syrup" = 1, "golden deliciousness" = 1)
-	foodtypes = GRAIN | BREAKFAST
+	foodtypes = GRAIN | BREAKFAST | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 

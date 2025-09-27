@@ -29,7 +29,7 @@
 /area/shuttle/abandoned/cargo)
 "cD" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -118,7 +118,7 @@
 	},
 /obj/machinery/light/cold/no_nightlight/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/item/bot_assembly/cleanbot,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -194,7 +194,7 @@
 /area/shuttle/abandoned/bar)
 "iI" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast Door"
 	},
@@ -395,7 +395,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "ry" = (
@@ -435,7 +435,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
@@ -634,7 +634,7 @@
 /area/shuttle/abandoned/bar)
 "FW" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -642,7 +642,7 @@
 /area/shuttle/abandoned/crew)
 "Gj" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -775,7 +775,7 @@
 /area/shuttle/abandoned/engine)
 "Kx" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -823,7 +823,7 @@
 /area/shuttle/abandoned/engine)
 "LK" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -984,8 +984,8 @@
 /area/shuttle/abandoned/crew)
 "RI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "RN" = (
@@ -1157,7 +1157,7 @@
 /area/shuttle/abandoned/engine)
 "YN" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},

@@ -45,6 +45,14 @@
 
 /// Override to define loot blacklist behavior
 /obj/effect/spawner/proc/can_spawn(atom/loot)
+	if(!ispath(loot))
+		// Means its something evil like /obj/item/stack/sheet/mineral/diamond{amount = 15}
+		// (modified instances?) which is not a path and cannot be checked as one
+		return TRUE
+	if(loot.abstract_type == loot)
+		return FALSE
+	if(loot.spawn_blacklisted)
+		return FALSE
 	return TRUE
 
 /obj/effect/list_container
@@ -87,3 +95,7 @@
 /obj/effect/abstract/marker/intercom
 	name = "intercom range marker"
 	color = COLOR_YELLOW
+
+/obj/effect/abstract/marker/powernet
+	name = "powernet run marker"
+	var/powernet_owner

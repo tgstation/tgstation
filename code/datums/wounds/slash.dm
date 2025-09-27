@@ -5,7 +5,22 @@
 
 /datum/wound/slash
 	name = "Slashing (Cut) Wound"
+	undiagnosed_name = "Cut"
 	sound_effect = 'sound/items/weapons/slice.ogg'
+
+/datum/wound/slash/get_self_check_description(self_aware)
+	if(!limb.can_bleed())
+		return ..()
+
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return span_danger("It's leaking blood from a small [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_MODERATE)
+			return span_warning("It's leaking blood from a [LOWER_TEXT(undiagnosed_name || name)].")
+		if(WOUND_SEVERITY_SEVERE)
+			return span_boldwarning("It's leaking blood from a serious [LOWER_TEXT(undiagnosed_name || name)]!")
+		if(WOUND_SEVERITY_CRITICAL)
+			return span_boldwarning("It's leaking blood from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE
@@ -17,6 +32,7 @@
 
 /datum/wound/slash/flesh
 	name = "Slashing (Cut) Flesh Wound"
+	threshold_penalty = 5
 	processes = TRUE
 	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
@@ -122,7 +138,7 @@
 	//basically if a species doesn't bleed, the wound is stagnant and will not heal on its own (nor get worse)
 	if(!limb.can_bleed())
 		return BLOOD_FLOW_STEADY
-	if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+	if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 		return BLOOD_FLOW_INCREASING
 	if(limb.current_gauze || clot_rate > 0)
 		return BLOOD_FLOW_DECREASING
@@ -140,7 +156,7 @@
 			if(QDELETED(src))
 				return
 
-		if(HAS_TRAIT(victim, TRAIT_BLOODY_MESS))
+		if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 			adjust_blood_flow(0.25) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
 
 	if(limb.current_gauze)
@@ -293,7 +309,7 @@
 	initial_flow = 2
 	minimum_flow = 0.5
 	clot_rate = 0.05
-	threshold_penalty = 10
+	series_threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/slash/flesh/moderate
 	scar_keyword = "slashmoderate"
 
@@ -325,7 +341,7 @@
 	initial_flow = 3.25
 	minimum_flow = 2.75
 	clot_rate = 0.03
-	threshold_penalty = 25
+	series_threshold_penalty = 25
 	demotes_to = /datum/wound/slash/flesh/moderate
 	status_effect_type = /datum/status_effect/wound/slash/flesh/severe
 	scar_keyword = "slashsevere"
@@ -358,7 +374,7 @@
 	initial_flow = 4
 	minimum_flow = 3.85
 	clot_rate = -0.015 // critical cuts actively get worse instead of better
-	threshold_penalty = 40
+	threshold_penalty = 15
 	demotes_to = /datum/wound/slash/flesh/severe
 	status_effect_type = /datum/status_effect/wound/slash/flesh/critical
 	scar_keyword = "slashcritical"

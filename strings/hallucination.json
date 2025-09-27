@@ -1,9 +1,10 @@
 {
 	"suspicion": [
-		"@pick(add_name)i'm watching you...",
 		"@pick(add_name)i know what you're doing",
+		"@pick(add_name)i'm watching you...",
 		"@pick(add_name)what are you hiding?",
-		"I saw that"
+		"I saw that",
+		"I'm watching you"
 	],
 
 	"conversation": [
@@ -22,14 +23,7 @@
 		"Yup"
 	],
 
-	"greetings": [
-		"",
-		"Hello ",
-		"Hey, ",
-		"Hi ",
-		"It's ",
-		"Wait, "
-	],
+	"greetings": ["", "Hello ", "Hey, ", "Hi ", "It's ", "Wait, "],
 
 	"getout": [
 		"@pick(add_name)fuck off",
@@ -56,11 +50,7 @@
 		"What was that?"
 	],
 
-	"add_name": [
-		"",
-		"%TARGETNAME% ",
-		"%TARGETNAME%, "
-	],
+	"add_name": ["", "%TARGETNAME% ", "%TARGETNAME%, "],
 
 	"doubt": [
 		"@pick(add_name)hold on",
@@ -163,7 +153,7 @@
 		"the wizard"
 	],
 
-	"contraband" : [
+	"contraband": [
 		"a bomb",
 		"a syndibomb",
 		"a ttv",
@@ -325,5 +315,4 @@
 		"Surprise",
 		"Time"
 	]
-
 }

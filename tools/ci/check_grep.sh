@@ -211,6 +211,27 @@ if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS'
 	st=1
 fi;
 
+part "forceMove sanity"
+if $grep 'forceMove\(\s*(\w+\(\)|\w+)\s*,\s*(\w+\(\)|\w+)\s*\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: forceMove() call with two arguments - this is not how forceMove() is invoked! It's x.forceMove(y), not forceMove(x, y).${NC}"
+	st=1
+fi;
+
+part "as anything on typeless loops"
+if $grep 'var/[^/]+ as anything' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'as anything' used in a typeless for loop. This doesn't do anything and should be removed.${NC}"
+    st=1
+fi;
+
+part "as anything on internal functions"
+if $grep 'var\/(turf|mob|obj|atom\/movable).+ as anything in o?(view|range|hearers)\(' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'as anything' typed for loop over an internal function. These functions have some internal optimization that relies on the loop not having 'as anything' in it.${NC}"
+    st=1
+fi;
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
@@ -238,6 +259,14 @@ if ls _maps/*.json | $grep "[A-Z]"; then
     echo -e "${RED}ERROR: Uppercase in a map .JSON file detected, these must be all lowercase.${NC}"
     st=1
 fi;
+
+part "Ineffective easing flags in animate()"
+if $grep 'easing\w*=\w*(EASE_IN|EASE_OUT|\(EASE_IN\w*\|\w*EASE_OUT\))' $code_files; then
+    echo
+    echo -e "${RED}ERROR: 'animate' was called with an easing argument and the default, LINEAR_EASING curve. This doesn't do anything and should be adjusted.${NC}"
+    st=1
+fi;
+
 part "map json sanity"
 for json in _maps/*.json
 do

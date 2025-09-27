@@ -146,7 +146,7 @@
 /area/shuttle/abandoned/bridge)
 "dx" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -288,7 +288,7 @@
 /area/shuttle/abandoned/bridge)
 "sw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},

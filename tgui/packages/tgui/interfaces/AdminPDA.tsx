@@ -7,7 +7,7 @@ import {
   Section,
   TextArea,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -116,22 +116,10 @@ function SenderInfo(props: SenderInfoProps) {
   return (
     <Section title="From Who?" textAlign="center">
       <Box fontSize="14px">
-        <Input
-          placeholder="Sender name..."
-          fluid
-          onChange={(e, value) => {
-            setName(value);
-          }}
-        />
+        <Input placeholder="Sender name..." fluid onChange={setName} />
       </Box>
       <Box fontSize="14px" pt="10px">
-        <Input
-          placeholder="Sender's job..."
-          fluid
-          onChange={(e, value) => {
-            setJob(value);
-          }}
-        />
+        <Input placeholder="Sender's job..." fluid onChange={setJob} />
       </Box>
     </Section>
   );
@@ -151,7 +139,7 @@ function getErrorText(
   message: string,
   target: boolean,
 ) {
-  let reasonList: string[] = [];
+  const reasonList: string[] = [];
   if (!target) reasonList.push('target');
   if (!name) reasonList.push('name');
   if (!job) reasonList.push('job');
@@ -177,12 +165,11 @@ function MessageInput(props: MessageInputProps) {
     <Section title="Message" textAlign="center">
       <Box>
         <TextArea
+          fluid
           placeholder="Type the message you want to send..."
           height="200px"
           mb={1}
-          onInput={(e, value) => {
-            setMessageText(value);
-          }}
+          onChange={setMessageText}
         />
       </Box>
       <Box>

@@ -15,7 +15,18 @@
 	icon_state = "mat_market"
 	base_icon_state = "mat_market"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
-
+	light_power = 3
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	/// What items can be converted into a stock block? Must be a stack subtype based on current implementation.
+	var/static/list/exportable_material_items = list(
+		/obj/item/stack/sheet/iron, //God why are we like this
+		/obj/item/stack/sheet/glass, //No really, God why are we like this
+		/obj/item/stack/sheet/mineral,
+		/obj/item/stack/tile/mineral,
+		/obj/item/stack/ore,
+		/obj/item/stack/sheet/bluespace_crystal,
+		/obj/item/stack/rods
+	)
 	/// Are we ordering sheets from our own card balance or the cargo budget?
 	var/ordering_private = TRUE
 
@@ -95,6 +106,7 @@
 	var/sheet_to_buy
 	var/requested_amount
 	var/minimum_value_threshold = 0
+	var/elastic_mult = 1
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
@@ -132,7 +144,11 @@
 		else
 			minimum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
 
-		//send data
+		//Pulling elastic modifier into data.
+		for(var/datum/export/material/market/export_est in GLOB.exports_list)
+			if(export_est.material_id == traded_mat)
+				elastic_mult = (export_est.cost / export_est.init_cost) * 100
+
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
@@ -141,7 +157,8 @@
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
-			"requested" = requested_amount
+			"requested" = requested_amount,
+			"elastic" = elastic_mult,
 			))
 
 	//get account balance

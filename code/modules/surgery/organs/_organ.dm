@@ -1,6 +1,7 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/medical/organs/organs.dmi'
+	abstract_type = /obj/item/organ
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	/// The mob that owns this organ.
@@ -8,7 +9,7 @@
 	/// Reference to the limb we're inside of
 	var/obj/item/bodypart/bodypart_owner
 	/// The cached info about the blood this organ belongs to
-	var/list/blood_dna_info = list("Synthetic DNA" = "O+") // not every organ spawns inside a person
+	var/list/blood_dna_info // not every organ spawns inside a person
 	/// The body zone this organ is supposed to inhabit.
 	var/zone = BODY_ZONE_CHEST
 	/**
@@ -66,6 +67,14 @@
 	var/list/organ_effects
 	/// String displayed when the organ has decayed.
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
+	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
+	var/list/valid_zones = null
+	/// The cell line we can spawn on us
+	var/cell_line = null
+	/// The minimum cells we can spawn
+	var/cells_minimum = 0
+	/// The maximum cells we can spawn
+	var/cells_maximum = 0
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -75,8 +84,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
+	blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 	if(organ_flags & ORGAN_EDIBLE)
-		AddComponent(/datum/component/edible,\
+		AddComponentFrom(
+			SOURCE_EDIBLE_INNATE, \
+			/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\
@@ -85,6 +97,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
+
+	if(cell_line && (organ_flags & ORGAN_ORGANIC))
+		AddElement(/datum/element/swabable, cell_line, cell_line_amount = rand(cells_minimum, cells_maximum))
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
@@ -132,7 +148,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/wash(clean_types)
 	. = ..()
-
+	if(!.)
+		return
 	// always add the original dna to the organ after it's washed
 	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
@@ -196,11 +213,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Returns a line to be displayed regarding valid insertion zones
 /obj/item/organ/proc/zones_tip()
-	return span_notice("It should be inserted in the [parse_zone(zone)].")
+	if (!valid_zones)
+		return span_notice("It should be inserted in the [parse_zone(zone)].")
+
+	var/list/fit_zones = list()
+	for (var/valid_zone in valid_zones)
+		fit_zones += parse_zone(valid_zone)
+	return span_notice("It should be inserted in the [english_list(fit_zones, and_text = " or ")].")
 
 ///Used as callbacks by object pooling
 /obj/item/organ/proc/exit_wardrobe()
 	START_PROCESSING(SSobj, src)
+	bodypart_overlay?.imprint_on_next_insertion = TRUE
 
 //See above
 /obj/item/organ/proc/enter_wardrobe()
@@ -274,15 +298,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  *
  * * regenerate_existing - if TRUE, existing organs will be deleted and replaced with new ones
  */
-/mob/living/carbon/proc/regenerate_organs(regenerate_existing = FALSE)
 
+/mob/living/carbon/proc/regenerate_organs(remove_hazardous = FALSE)
 	// Delegate to species if possible.
 	if(dna?.species)
-		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
-
-		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 		for(var/obj/item/organ/organ as anything in organs)
+			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
+				qdel(organ)
+				continue
+			// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 			organ.set_organ_damage(0)
+
+		dna.species.regenerate_organs(src, replace_current = FALSE)
 		set_heartattack(FALSE)
 
 		// Ears have aditional vаr "deaf", need to update it too
@@ -298,6 +325,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		lungs = new()
 		lungs.Insert(src)
 	lungs.set_organ_damage(0)
+	lungs.received_pressure_mult = lungs::received_pressure_mult
 
 	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(heart)
@@ -368,28 +396,28 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		replacement.set_organ_damage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
-/obj/item/organ/proc/get_status_text(advanced, add_tooltips)
+/obj/item/organ/proc/get_status_text(advanced, add_tooltips, colored = TRUE)
 	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
-		return conditional_tooltip("<font color='#cc3333'>Harmful Foreign Body</font>", "Remove surgically.", add_tooltips)
+		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]Harmful Foreign Body[colored ? "</font>" : ""]", "Remove surgically.", add_tooltips)
 
 	if(organ_flags & ORGAN_EMP)
-		return conditional_tooltip("<font color='#cc3333'>EMP-Derived Failure</font>", "Repair or replace surgically.", add_tooltips)
+		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]EMP-Derived Failure[colored ? "</font>" : ""]", "Repair or replace surgically.", add_tooltips)
 
 	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
 		tech_text = "[round((damage / maxHealth) * 100, 1)]% damaged"
 
 	if(organ_flags & ORGAN_FAILING)
-		return conditional_tooltip("<font color='#cc3333'>[tech_text || "Non-Functional"]</font>", "Repair or replace surgically.", add_tooltips)
+		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""][tech_text || "Non-Functional"][colored ? "</font>" : ""]", "Repair or replace surgically.", add_tooltips)
 
 	if(damage > high_threshold)
-		return conditional_tooltip("<font color='#ff9933'>[tech_text || "Severely Damaged"]</font>", "[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", add_tooltips && owner.stat != DEAD)
+		return conditional_tooltip("[colored ? "<font color='#ff9933'>" : ""][tech_text || "Severely Damaged"][colored ? "</font>" : ""]", "[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", add_tooltips && owner.stat != DEAD)
 
 	if(damage > low_threshold)
-		return conditional_tooltip("<font color='#ffcc33'>[tech_text || "Mildly Damaged"] </font>", "[healing_factor ? "Treat with rest." : "Use specialty medication."]", add_tooltips && owner.stat != DEAD)
+		return conditional_tooltip("[colored ? "<font color='#ffcc33'>" : ""][tech_text || "Mildly Damaged"][colored ? "</font>" : ""]", "[healing_factor ? "Treat with rest." : "Use specialty medication."]", add_tooltips && owner.stat != DEAD)
 
 	if(tech_text)
-		return "<font color='#33cc33'>[tech_text]</font>"
+		return "[colored ? "<font color='#33cc33'>" : ""][tech_text][colored ? "</font>" : ""]"
 
 	return ""
 
@@ -401,6 +429,28 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)
 	return
+
+/**
+ * Used when a mob is examining themselves / their limbs
+ *
+ * Reports how they feel based on how the status of this organ
+ *
+ * It should be formatted as an extension of the limb:
+ * Input is something like "Your chest is bruised. It is bleeding.",
+ * you would add something like "It hurts a little, and your stomach cramps."
+ *
+ * * self_aware - if TRUE, the examiner is more aware of themselves and thus may get more detailed information
+ *
+ * Return a string, to be concatenated with other organ / limb status strings. Include spans and punctuation.
+ */
+/obj/item/organ/proc/feel_for_damage(self_aware)
+	if(organ_flags & ORGAN_EXTERNAL)
+		return ""
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		return span_warning("[self_aware ? "[capitalize(slot)]" : "It"] feels a bit off.")
+	return span_boldwarning("[self_aware ? "[capitalize(slot)]" : "It"] feels terrible!")
 
 /// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)

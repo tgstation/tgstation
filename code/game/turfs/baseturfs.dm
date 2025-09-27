@@ -68,7 +68,7 @@
 
 // Copy an existing turf and put it on top
 // Returns the new turf
-/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom=1, depth=INFINITY, copy_air = FALSE)
+/turf/proc/CopyOnTop(turf/copytarget, ignore_bottom = 1, depth = INFINITY, copy_air = FALSE, flags = null)
 	var/list/new_baseturfs = list()
 	new_baseturfs += baseturfs
 	new_baseturfs += type
@@ -85,9 +85,9 @@
 			target_baseturfs -= new_baseturfs & GLOB.blacklisted_automated_baseturfs
 			new_baseturfs += target_baseturfs
 
-	var/turf/newT = copytarget.copyTurf(src, copy_air)
-	newT.baseturfs = baseturfs_string_list(new_baseturfs, newT)
-	return newT
+	var/turf/new_turf = copytarget.copyTurf(src, copy_air, flags)
+	new_turf.baseturfs = baseturfs_string_list(new_baseturfs, new_turf)
+	return new_turf
 
 /// Tries to find the given type in baseturfs.
 /// If found, returns how deep it is for use in other baseturf procs, or null if it cannot be found.
@@ -171,3 +171,13 @@
 	var/floor_position = baseturfs.Find(floor)
 	if(floor_position != 0)
 		insert_baseturf(floor_position + 1, roof)
+
+/// Places a baseturf below a searched for baseturf.
+/turf/proc/stack_below_baseturf(search_type, stack_type)
+	if(!islist(baseturfs))
+		baseturfs = list(baseturfs)
+	var/search_position = baseturfs.Find(search_type)
+	if(search_position != 0)
+		insert_baseturf(search_position, stack_type)
+	else if(type == search_type)
+		insert_baseturf(turf_type = stack_type)

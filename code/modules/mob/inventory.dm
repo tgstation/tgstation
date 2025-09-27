@@ -82,6 +82,14 @@
 /mob/proc/get_held_index_of_item(obj/item/I)
 	return held_items.Find(I)
 
+/// Returns what body zone is holding the passed item
+/mob/proc/get_hand_zone_of_item(obj/item/I)
+	var/hand_index = get_held_index_of_item(I)
+	if(!hand_index)
+		return null
+	if(IS_RIGHT_INDEX(hand_index))
+		return BODY_ZONE_R_ARM
+	return BODY_ZONE_L_ARM
 
 ///Find number of held items, multihand compatible
 /mob/proc/get_num_held_items()
@@ -172,7 +180,7 @@
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
-	if(!I.on_equipped(src, ITEM_SLOT_HANDS, initial = visuals_only))
+	if(!has_equipped(I, ITEM_SLOT_HANDS, initial = visuals_only))
 		return FALSE
 	update_held_items()
 	I.pixel_x = I.base_pixel_x
@@ -287,10 +295,7 @@
 				location = turf
 				break
 
-	I.forceMove(location)
-	I.layer = initial(I.layer)
-	SET_PLANE_EXPLICIT(I, initial(I.plane), location)
-	I.dropped(src)
+	transferItemToLoc(I, location, force = TRUE, silent = TRUE, animated = !ignore_animation)
 	return FALSE
 
 /// Returns true if a mob is holding something
@@ -334,66 +339,105 @@
  * * If it was, returns the item.
  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
-/mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
-	if (isnull(I))
+/mob/proc/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE)
+	if(isnull(to_drop))
 		return
 
+	var/x_offset = rand(-6, 6)
+	var/y_offset = rand(-6, 6)
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
-	var/try_uneqip = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
-
-	if(!try_uneqip || !I) //ensure the item exists and that it was dropped properly.
+	if(!transfer_item_to_turf(to_drop, drop_location(), x_offset, y_offset, force, silent, invdrop))
 		return
 
-	if(!(I.item_flags & NO_PIXEL_RANDOM_DROP))
-		I.pixel_x = I.base_pixel_x + rand(-6, 6)
-		I.pixel_y = I.base_pixel_y + rand(-6, 6)
-	I.do_drop_animation(src)
-	return I
+	return to_drop
+
+/// Unequips and transfers an item to a given turf, if possible.
+/mob/proc/transfer_item_to_turf(
+	obj/item/to_transfer,
+	turf/new_loc,
+	x_offset = 0,
+	y_offset = 0,
+	force = FALSE,
+	silent = FALSE,
+	drop_item_inventory = TRUE,
+)
+	if(!doUnEquip(to_transfer, force, new_loc, no_move = FALSE, invdrop = drop_item_inventory, silent = silent))
+		return FALSE
+	if(QDELETED(to_transfer)) // Some items may get deleted upon getting unequipped.
+		return FALSE
+	to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
+	to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
+	to_transfer.do_drop_animation(src)
+	return TRUE
 
 //for when the item will be immediately placed in a loc other than the ground
-/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE, animated = null)
 	. = doUnEquip(I, force, newloc, FALSE, silent = silent)
-	I.do_drop_animation(src)
+	//This proc wears a lot of hats for moving items around in different ways,
+	//so we assume unhandled cases for checking to animate can safely be handled
+	//with the same logic we handle animating putting items in container (container on your person isn't animated)
+	if(isnull(animated))
+		//if the item's ultimate location is us, we don't animate putting it wherever
+		animated = !(get(newloc, /mob) == src)
+	if(animated)
+		I.do_pickup_animation(newloc, src)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC, newloc is for signal handling checks only which hints where you want to move the object after removal
 //item MUST BE FORCEMOVE'D OR QDEL'D
-/mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE, atom/newloc = src)
-	return doUnEquip(I, force, newloc, TRUE, idrop, silent = TRUE)
 
-//DO NOT CALL THIS PROC
-//use one of the above 3 helper procs
-//you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
-													//Use no_move if the item is just gonna be immediately moved afterward
-													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
+/mob/proc/temporarilyRemoveItemFromInventory(obj/item/item_dropping, force = FALSE, idrop = TRUE, atom/newloc = src)
+	return doUnEquip(item_dropping, force, newloc, TRUE, idrop, silent = TRUE)
+
+/**
+ * ## doUnEquip
+ * First and most importantly, DO NOT CALL THIS PROC
+ * Use one of the above 4 helper procs instead!!
+ * you may override it, but do not modify the args.
+ * Returns TRUE if it managed to unequip, FALSE if it can't.
+ * Args:
+ * item_dropping - The item that we're unequipping.
+ * force - overrides TRAIT_NODROP for things like wizarditis and admin undress.
+ * newloc - The location we're dropping the item into, this could be a turf, storage, mob, etc.
+ * no_move - if the item is just gonna be immediately moved afterward
+ * invdrop - Arg passed to signals, prevents stuff in pockets dropping. Only set to false if it's going to immediately be replaced
+ * silent - Arg passed to dropped() and signals, muting things like drop sound.
+ */
+/mob/proc/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE)
 	PROTECTED_PROC(TRUE)
-	if(!I) //If there's nothing to drop, the drop is automatically successful. If(unEquip) should generally be used to check for TRAIT_NODROP.
+	if(!item_dropping) //If there's nothing to drop, the drop is automatically successful. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
-	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
+	if(HAS_TRAIT(item_dropping, TRAIT_NODROP) && !force)
 		return FALSE
 
-	if((SEND_SIGNAL(I, COMSIG_ITEM_PRE_UNEQUIP, force, newloc, no_move, invdrop, silent) & COMPONENT_ITEM_BLOCK_UNEQUIP) && !force)
+	if((SEND_SIGNAL(item_dropping, COMSIG_ITEM_PRE_UNEQUIP, force, newloc, no_move, invdrop, silent) & COMPONENT_ITEM_BLOCK_UNEQUIP) && !force)
 		return FALSE
 
-	var/hand_index = get_held_index_of_item(I)
+	var/hand_index = get_held_index_of_item(item_dropping)
 	if(hand_index)
 		held_items[hand_index] = null
 		update_held_items()
-	if(I)
-		if(client)
-			client.screen -= I
-		I.layer = initial(I.layer)
-		SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
-		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
-			if (isnull(newloc))
-				I.moveToNullspace()
-			else
-				I.forceMove(newloc)
-		I.dropped(src, silent)
-	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
-	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
+
+	if(!item_dropping)
+		return FALSE
+
+	client?.screen -= item_dropping
+
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= item_dropping
+
+	item_dropping.layer = initial(item_dropping.layer)
+	SET_PLANE_EXPLICIT(item_dropping, initial(item_dropping.plane), newloc)
+	item_dropping.appearance_flags &= ~NO_CLIENT_COLOR
+	if(!no_move && !(item_dropping.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
+		if (isnull(newloc))
+			item_dropping.moveToNullspace()
+		else
+			item_dropping.forceMove(newloc)
+
+	has_unequipped(item_dropping, silent)
+	SEND_SIGNAL(item_dropping, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
+	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, item_dropping, force, newloc, no_move, invdrop, silent)
 	return TRUE
 
 /**
@@ -468,6 +512,17 @@
 /mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	return
 
+/// This proc is called after an item has been successfully handled and equipped to a slot.
+/mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	return item.on_equipped(src, slot, initial)
+
+/// This proc is called after an item has been removed from a mob but before it has been officially deslotted.
+/mob/proc/has_unequipped(obj/item/item, silent = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	item.dropped(src, silent)
+	return TRUE
+
 /**
  * Equip an item to the slot or delete
  *
@@ -525,22 +580,42 @@
 	if(user.active_storage?.attempt_insert(src, user, messages = FALSE))
 		return TRUE
 
-	var/list/obj/item/possible = list(
-		user.get_inactive_held_item(),
-		user.get_item_by_slot(ITEM_SLOT_BELT),
-		user.get_item_by_slot(ITEM_SLOT_DEX_STORAGE),
-		user.get_item_by_slot(ITEM_SLOT_BACK),
+	var/static/list/equip_priorities = list(
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_BACK,
+		ITEM_SLOT_DEX_STORAGE,
+		ITEM_SLOT_OCLOTHING,
+		ITEM_SLOT_ICLOTHING,
 	)
-	for(var/thing in possible)
-		if(isnull(thing))
-			continue
-		var/obj/item/gear = thing
-		if(gear.atom_storage?.attempt_insert(src, user, messages = FALSE))
+
+	var/list/possible_storages = user.held_items.Copy()
+	var/obj/item/active_held = user.get_active_held_item()
+	possible_storages -= active_held
+	if(active_held != src)
+		// If something else is equipping us, just in case, do it into the held item
+		possible_storages.Insert(1, active_held)
+
+	for(var/slot in equip_priorities)
+		possible_storages += user.get_item_by_slot(slot)
+
+	for(var/obj/item/gear as anything in possible_storages)
+		if(gear?.atom_storage?.attempt_insert(src, user, messages = FALSE))
 			return TRUE
 
 	to_chat(user, span_warning("You are unable to equip that!"))
 	return FALSE
 
+/// Attempts to put an item into storage located in a given slot
+/// indirect_action - ignore "soft-locked" storages that can be easily opened
+/// del_on_fail - delete the item upon failure
+/mob/proc/equip_to_storage(obj/item/item, slot, indirect_action = FALSE, del_on_fail = FALSE, initial = FALSE)
+	var/obj/item/worn_item = get_item_by_slot(slot)
+	if (worn_item?.atom_storage?.attempt_insert(item, src, override = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED, messages = FALSE))
+		return TRUE
+
+	if (del_on_fail)
+		qdel(item)
+	return FALSE
 
 /mob/verb/quick_equip()
 	set name = "quick-equip"
@@ -560,9 +635,6 @@
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
 	return ITEM_SLOT_BACK
-
-/mob/proc/getBeltSlot()
-	return ITEM_SLOT_BELT
 
 //Inventory.dm is -kind of- an ok place for this I guess
 
@@ -612,3 +684,19 @@
 			. += item
 		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
 			qdel(item)
+
+/**
+ * Iterates over all contents of the mob to find all items with a cell (or loose cells)
+ * Useful instead of iterating contents for cells, as it recurses storage and avoids returning abstract cells (like Ethereals)
+ *
+ * * max_percent: The maximum charge percent (0.0-1.0) the cell can have to be included in the results
+ *
+ * Returns an assoc list of item - its cell
+ */
+/mob/living/proc/get_all_cells(max_percent = 1.0)
+	var/list/cell_items = list()
+	for(var/obj/item/stored in get_all_gear())
+		var/obj/item/stock_parts/power_store/stored_cell = stored.get_cell()
+		if(stored_cell && stored_cell.charge <= (stored_cell.maxcharge * max_percent))
+			cell_items[stored] = stored_cell
+	return cell_items

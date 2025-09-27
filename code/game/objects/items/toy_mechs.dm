@@ -19,6 +19,7 @@
 	verb_exclaim = "beeps"
 	verb_yell = "beeps"
 	w_class = WEIGHT_CLASS_SMALL
+	floor_placeable = TRUE
 	/// Timer when it'll be off cooldown
 	var/timer = 0
 	/// Cooldown between play sessions
@@ -99,7 +100,7 @@
 		if(attacker_controller.incapacitated)
 			return FALSE
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
-		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/telekinesis)))
 			attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [attacker], ending the battle."), \
 								span_notice("You separate from [attacker], ending the battle."))
 			return FALSE
@@ -108,13 +109,13 @@
 		if(opponent)
 			if(opponent.incapacitated)
 				return FALSE
-			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/human/telekinesis)))
+			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/telekinesis)))
 				opponent.visible_message(span_notice("[opponent.name] separates from [src], ending the battle."), \
 							span_notice("You separate from [src], ending the battle."))
 				return FALSE
 		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
 		else
-			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/telekinesis)))
 				attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [src] and [attacker], ending the battle."), \
 									span_notice("You separate [attacker] and [src], ending the battle."))
 				return FALSE

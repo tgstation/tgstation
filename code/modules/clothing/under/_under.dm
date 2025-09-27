@@ -4,6 +4,7 @@
 	worn_icon = 'icons/mob/clothing/under/default.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	abstract_type = /obj/item/clothing/under
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
 	interaction_flags_click = NEED_DEXTERITY
@@ -100,12 +101,18 @@
 
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 	if(accessory_overlay)
 		. += accessory_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/under/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+	. = ..()
+	if (isinhands)
+		return
+	var/blood_overlay = get_blood_overlay("uniform")
+	if (blood_overlay)
+		. += blood_overlay
+
+/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(repair_sensors(attacking_item, user))
 		return TRUE
 
@@ -283,14 +290,12 @@
 
 	LAZYADD(attached_accessories, accessory)
 	accessory.forceMove(src)
+
 	// Allow for accessories to react to the acccessory list now
 	accessory.successful_attach(src)
 
 	if(user && attach_message)
 		balloon_alert(user, "accessory attached")
-
-	if(isnull(accessory_overlay))
-		create_accessory_overlay()
 
 	update_appearance()
 	return TRUE
@@ -308,34 +313,25 @@
 		popped_accessory.balloon_alert(user, "accessory removed")
 
 /// Removes the passed accesory from our accessories list
-/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed)
-	if(removed == attached_accessories[1])
-		accessory_overlay = null
+/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed, update = TRUE)
+
 
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
+
 	removed.detach(src)
 
-	if(isnull(accessory_overlay) && LAZYLEN(attached_accessories))
-		create_accessory_overlay()
+	if(update)
+		update_accessory_overlay()
 
-	update_appearance()
-
-/// Handles creating the worn overlay mutable appearance
-/// Only the first accessory attached is displayed (currently)
-/obj/item/clothing/under/proc/create_accessory_overlay()
-	var/obj/item/clothing/accessory/prime_accessory = attached_accessories[1]
-	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, prime_accessory.icon_state)
-	accessory_overlay.alpha = prime_accessory.alpha
-	accessory_overlay.color = prime_accessory.color
-
-/// Updates the accessory's worn overlay mutable appearance
+/// Handles creating, updating and cutting the worn overlay mutable appearance.
 /obj/item/clothing/under/proc/update_accessory_overlay()
-	if(isnull(accessory_overlay))
+	if(!length(attached_accessories))
+		accessory_overlay = null
 		return
-
-	cut_overlay(accessory_overlay)
-	create_accessory_overlay()
+	accessory_overlay = mutable_appearance()
+	for(var/obj/item/clothing/accessory/accessory as anything in attached_accessories)
+		accessory_overlay.overlays += accessory.generate_accessory_overlay(src)
 	update_appearance() // so we update the suit inventory overlay too
 
 /obj/item/clothing/under/Exited(atom/movable/gone, direction)
@@ -347,8 +343,9 @@
 /// Helper to remove all attachments to the passed location
 /obj/item/clothing/under/proc/dump_attachments(atom/drop_to = drop_location())
 	for(var/obj/item/clothing/accessory/worn_accessory as anything in attached_accessories)
-		remove_accessory(worn_accessory)
+		remove_accessory(worn_accessory, update = FALSE)
 		worn_accessory.forceMove(drop_to)
+	update_accessory_overlay()
 
 /obj/item/clothing/under/atom_destruction(damage_flag)
 	dump_attachments()
@@ -525,4 +522,5 @@
 	return ..()
 
 /obj/item/clothing/under/rank
+	abstract_type = /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER

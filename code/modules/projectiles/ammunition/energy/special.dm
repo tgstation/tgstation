@@ -50,24 +50,24 @@
 	select_name = "goddamn meteor"
 	newtonian_force = 3
 
-/obj/item/ammo_casing/energy/net
-	projectile_type = /obj/projectile/energy/net
-	select_name = "netting"
-	pellets = 6
-	variance = 40
+/obj/item/ammo_casing/energy/scatter
+	projectile_type = /obj/projectile/beam/disabler/scatter
+	select_name = "scatter"
+	pellets = 10
+	variance = 10
 	harmful = FALSE
 
-/obj/item/ammo_casing/energy/trap
-	projectile_type = /obj/projectile/energy/trap
+/obj/item/ammo_casing/energy/snare
+	projectile_type = /obj/projectile/energy/snare
 	select_name = "snare"
 	harmful = FALSE
 
 /obj/item/ammo_casing/energy/tesla_cannon
-	fire_sound = 'sound/effects/magic/lightningshock.ogg'
+	fire_sound = null
 	e_cost = LASER_SHOTS(33, STANDARD_CELL_CHARGE)
 	select_name = "shock"
 	projectile_type = /obj/projectile/energy/tesla_cannon
-	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	firing_effect_type = null
 
 /obj/item/ammo_casing/energy/shrink
 	projectile_type = /obj/projectile/magic/shrink/alien

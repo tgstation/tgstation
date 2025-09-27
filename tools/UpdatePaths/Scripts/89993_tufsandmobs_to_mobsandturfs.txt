@@ -1,0 +1,3 @@
+#comment This repaths AOE Offensive Mining modkit from being a child of the turf aoe mining kit to the mob aoe mining kit
+
+/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs : /obj/item/borg/upgrade/modkit/aoe/mobs/andturfs{@OLD}

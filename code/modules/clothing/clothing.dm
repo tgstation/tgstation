@@ -1,5 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
+	abstract_type = /obj/item/clothing
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	integrity_failure = 0.4
@@ -18,6 +19,10 @@
 	var/visor_toggle_down_sound = null
 	///Sound this item makes when its visor is flipped up
 	var/visor_toggle_up_sound = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -81,6 +86,7 @@
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
+	spawn_blacklisted = TRUE
 	bite_consumption = 1
 	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
 	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
@@ -94,7 +100,7 @@
 
 /obj/item/food/clothing/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
@@ -103,14 +109,14 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/living/target, mob/living/user, params)
+/obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(isnull(moth_snack))
 		create_moth_snack()
-	moth_snack.attack(target, user, params)
+	moth_snack.attack(target, user, modifiers)
 
 /// Creates a food object in null space which we can eat and imagine we're eating this pair of shoes
 /obj/item/clothing/proc/create_moth_snack()
@@ -360,9 +366,9 @@
 	if (clothing_flags & CASTING_CLOTHES)
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-		.["pressureproof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
+		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
 	if(flags_cover & PEPPERPROOF)
-		.["pepperproof"] = "Protects the wearer from the effects of pepperspray."
+		.["pepper-proof"] = "Protects the wearer from the effects of pepperspray."
 	if (heat_protection || cold_protection)
 		var/heat_desc
 		var/cold_desc
@@ -540,7 +546,13 @@ BLIND     // can't see anything
 
 	visor_toggling()
 
-	to_chat(user, span_notice("You push [src] [up ? "out of the way" : "back into place"]."))
+	var/message
+	if(up)
+		message = src.alt_toggle_message || "You push [src] out of the way."
+	else
+		message = src.toggle_message || "You push [src] back into place."
+
+	to_chat(user, span_notice("[message]"))
 
 	//play sounds when toggling the visor up or down (if there is any)
 	if(visor_toggle_up_sound && up)
@@ -553,12 +565,12 @@ BLIND     // can't see anything
 	if(user.is_holding(src))
 		user.update_held_items()
 		return TRUE
-	if(up)
-		user.update_obscured_slots(visor_flags_inv)
 	user.update_clothing(slot_flags)
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
+	if(up)
+		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
 	if((visor_flags & (MASKINTERNALS|HEADINTERNALS)) && carbon_user.invalid_internals())
@@ -628,3 +640,23 @@ BLIND     // can't see anything
 /obj/item/clothing/remove_fantasy_bonuses(bonus)
 	set_armor(get_armor().generate_new_with_modifiers(list(ARMOR_ALL = -bonus)))
 	return ..()
+
+/// Returns a list of overlays with our blood, if we're bloodied
+/obj/item/clothing/proc/get_blood_overlay(blood_state)
+	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
+		return
+
+	var/mutable_appearance/blood_overlay = null
+	if(clothing_flags & LARGE_WORN_ICON)
+		blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "[blood_state]blood_large")
+	else
+		blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_state]blood")
+
+	blood_overlay.color = get_blood_dna_color()
+
+	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
+	if (emissive_alpha)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha, effect_type = EMISSIVE_NO_BLOOM)
+		blood_overlay.overlays += emissive_overlay
+
+	return blood_overlay

@@ -5,7 +5,7 @@
 	icon_state = "bileworm"
 	icon_living = "bileworm"
 	icon_dead = "bileworm_dead"
-	mob_biotypes = MOB_BUG
+	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	maxHealth = 100
 	health = 100
 	verb_say = "spittles"
@@ -57,3 +57,9 @@
 		/datum/action/cooldown/mob_cooldown/resurface = BB_BILEWORM_RESURFACE,
 	)
 	grant_actions_by_list(other_innate_actions)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/bileworm/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src)

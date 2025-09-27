@@ -61,7 +61,7 @@
 	. = ..()
 	if(open)
 		var/mutable_appearance/door_overlay = mutable_appearance(icon, "[base_icon_state]_lid_open")
-		door_overlay.pixel_y = OVEN_LID_Y_OFFSET
+		door_overlay.pixel_z = OVEN_LID_Y_OFFSET
 		. += door_overlay
 	else
 		. += mutable_appearance(icon, "[base_icon_state]_lid_closed")
@@ -102,7 +102,7 @@
 	update_appearance()
 	use_energy(active_power_usage)
 
-/obj/machinery/oven/attackby(obj/item/item, mob/user, params)
+/obj/machinery/oven/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!open || used_tray || !istype(item, /obj/item/plate/oven_tray))
 		return ..()
 
@@ -270,6 +270,9 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plate/oven_tray/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	if(isnull(item.atom_storage))
 		return NONE
 

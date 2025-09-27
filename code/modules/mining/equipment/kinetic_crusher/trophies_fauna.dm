@@ -10,6 +10,7 @@
 	denied_type = /obj/item/crusher_trophy/watcher_wing
 	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
+	wildhunter_drop = /obj/item/stack/sheet/sinew
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
@@ -33,6 +34,7 @@
 	icon_state = "magma_wing"
 	gender = NEUTER
 	bonus_value = 5
+	wildhunter_drop = /obj/item/stack/sheet/sinew
 
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
@@ -50,6 +52,7 @@
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
 	bonus_value = 8
+	wildhunter_drop = /obj/item/stack/sheet/sinew
 
 //legion
 /obj/item/crusher_trophy/legion_skull
@@ -58,6 +61,7 @@
 	icon_state = "legion_skull"
 	denied_type = /obj/item/crusher_trophy/legion_skull
 	bonus_value = 3
+	wildhunter_drop = /obj/item/organ/monster_core/regenerative_core/legion // if you killed blood drunk you can afford stabilizer potions sooo....
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
@@ -80,6 +84,7 @@
 	denied_type = /obj/item/crusher_trophy/goliath_tentacle
 	bonus_value = 2
 	trophy_id = TROPHY_GOLIATH_TENTACLE
+	wildhunter_drop = /obj/item/stack/sheet/animalhide/goliath_hide
 	/// Your missing health is multiplied by this value to find the bonus damage
 	var/missing_health_ratio = 0.1
 	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
@@ -98,7 +103,7 @@
 	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
 	missing_health *= bonus_value //multiply the remaining amount by bonus_value
 	if(missing_health > 0)
-		target.adjustBruteLoss(missing_health) //and do that much damage
+		return missing_health //and do that much damage
 
 // Lobstrosity - Rebukes targets, increasing their click cooldown.
 /obj/item/crusher_trophy/lobster_claw
@@ -108,9 +113,10 @@
 	denied_type = /obj/item/crusher_trophy/lobster_claw
 	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1
+	wildhunter_drop = /obj/item/organ/monster_core/rush_gland
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
-	return "mark detonation to briefly rebuke the target for [bonus_value] seconds"
+	return "mark detonation to briefly rebuke the target for [bonus_value] second[bonus_value > 1 ? "s" : ""]"
 
 /obj/item/crusher_trophy/lobster_claw/on_mark_detonation(mob/living/target, mob/living/user)
 	. = ..()
@@ -123,6 +129,7 @@
 	desc = "A fang from a brimdemon's corpse."
 	denied_type = /obj/item/crusher_trophy/brimdemon_fang
 	trophy_id = TROPHY_BRIMDEMON_FANG
+	wildhunter_drop = /obj/item/organ/monster_core/brimdust_sac
 	/// Cartoon punching vfx
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
@@ -131,7 +138,7 @@
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	. = ..()
-	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
+	target.loc.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
 
 // Bileworm
@@ -141,6 +148,7 @@
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
+	wildhunter_drop = /obj/item/stack/sheet/animalhide/bileworm
 	///item ability that handles the effect
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 
@@ -171,19 +179,35 @@
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_projectile_hit_mineral(turf/closed/mineral, mob/living/user)
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, mineral) - mineral)
-		mineral_turf.gets_drilled(user, TRUE)
+		mineral_turf.gets_drilled(user, 1)
 
 //yes this is a /mob_cooldown subtype being added to an item. I can't recommend you do what I'm doing
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet
 	check_flags = NONE
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
-	projectile_type = /obj/projectile/bileworm_acid
+	projectile_type = /obj/projectile/bileworm_acid/crusher
 	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()
 	return ..()
+
+/obj/projectile/bileworm_acid/crusher
+	damage_type = BRUTE // Otherwise the mobs take heavily reduced damage
+
+/obj/projectile/bileworm_acid/crusher/prehit_pierce(atom/target)
+	if (!isliving(target))
+		return ..()
+	var/mob/living/as_living = target
+	// Only hit hostile things, or mining mobs if we have no firer (somehow)
+	if (firer)
+		if (firer.faction_check_atom(as_living))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
+		return ..()
+	if (as_living.mob_biotypes & MOB_MINING)
+		return ..()
+	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 // demonic watcher
 /obj/item/crusher_trophy/ice_demon_cube
@@ -237,7 +261,7 @@
 	. = ..()
 	user.apply_status_effect(/datum/status_effect/speed_boost, 1 SECONDS)
 
-// Polar bear
+// Polar bear - If you're hurt, you attack twice when you detonate a mark
 /obj/item/crusher_trophy/bear_paw
 	name = "polar bear paw"
 	desc = "It's a polar bear paw."
@@ -252,7 +276,21 @@
 	. = ..()
 	if(user.health / user.maxHealth > 0.5)
 		return
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
-		return
-	I.melee_attack_chain(user, target, null)
+	var/obj/item/weapon = user.get_active_held_item()
+	if(weapon)
+		addtimer(CALLBACK(weapon, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target), 0.1 SECONDS)
+
+// Raptor - Your shots now go through your allied mobs. You monster.
+/obj/item/crusher_trophy/raptor_feather
+	name = "raptor feather"
+	desc = "A feather of an innocent raptor. You'd go to hell for this one, if you weren't already mining in it."
+	icon_state = "raptor_feather"
+	denied_type = /obj/item/crusher_trophy/raptor_feather
+	trophy_id = TROPHY_RAPTOR_FEATHER
+	wildhunter_drop = /obj/item/food/meat/slab/chicken
+
+/obj/item/crusher_trophy/raptor_feather/effect_desc()
+	return "your shots to go through your allies"
+
+/obj/item/crusher_trophy/raptor_feather/on_projectile_fire(obj/projectile/destabilizer/marker, mob/living/user)
+	marker.ignore_allies = TRUE

@@ -2,8 +2,9 @@ import { Box, NoticeBox, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { PageSelect, SearchAndDisplay } from '../LibraryConsole';
-import { LibraryAdminData } from './types';
+import { PageSelect } from '../LibraryConsole/components/PageSelect';
+import { SearchAndDisplay } from '../LibraryConsole/components/Search';
+import type { LibraryAdminData } from './types';
 
 export function BookListing(props) {
   const { act, data } = useBackend<LibraryAdminData>();

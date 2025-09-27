@@ -5,7 +5,7 @@ import { useBackend } from '../../backend';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import { isJobCkeyOrNameMatch, sortByOrbiters } from './helpers';
-import { OrbitData } from './types';
+import type { OrbitData } from './types';
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
 export function OrbitSearchBar(props) {
@@ -71,9 +71,10 @@ export function OrbitSearchBar(props) {
             autoFocus
             fluid
             onEnter={orbitMostRelevant}
-            onInput={(event, value) => setSearchQuery(value)}
+            onChange={setSearchQuery}
             placeholder="Search..."
             value={searchQuery}
+            expensive
           />
         </Stack.Item>
         <Stack.Divider />
@@ -86,16 +87,18 @@ export function OrbitSearchBar(props) {
             tooltipPosition="bottom-start"
           />
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            color={autoObserve ? 'good' : 'transparent'}
-            icon={autoObserve ? 'toggle-on' : 'toggle-off'}
-            onClick={() => setAutoObserve(!autoObserve)}
-            tooltip={`Toggle Auto-Observe. When active, you'll
+        {!!data.can_observe && (
+          <Stack.Item>
+            <Button
+              color={autoObserve ? 'good' : 'transparent'}
+              icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+              onClick={() => setAutoObserve(!autoObserve)}
+              tooltip={`Toggle Auto-Observe. When active, you'll
             see the UI / full inventory of whoever you're orbiting. Neat!`}
-            tooltipPosition="bottom-start"
-          />
-        </Stack.Item>
+              tooltipPosition="bottom-start"
+            />
+          </Stack.Item>
+        )}
         <Stack.Item>
           <Button
             color="transparent"

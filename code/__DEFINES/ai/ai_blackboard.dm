@@ -19,6 +19,14 @@
 ///can this mob heal?
 #define BB_BASIC_MOB_HEALER "BB_basic_mob_healer"
 
+//stealing
+///chance we steal something
+#define BB_STEAL_CHANCE "steal_chance"
+///chance we develop a guilty concious and leave our stolen item behind
+#define BB_GUILTY_CONSCIOUS_CHANCE "guilty_concious_rate"
+///the item we will steal
+#define BB_ITEM_TO_STEAL "item_to_steal"
+
 ///the owner we will try to play with
 #define BB_OWNER_TARGET "BB_owner_target"
 ///the list of interactions we can have with the owner
@@ -61,7 +69,13 @@
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 ///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
+
 ///Basic Mob Keys
+
+/// How long to wait before attacking a target in range
+#define BB_BASIC_MOB_MELEE_DELAY "BB_basic_melee_delay"
+/// Key used to store the time we can actually attack
+#define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
 
 ///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
@@ -157,8 +171,8 @@
 
 ///Mob the MOD is trying to attach to
 #define BB_MOD_TARGET "BB_mod_target"
-///The implant the AI was created from
-#define BB_MOD_IMPLANT "BB_mod_implant"
+///The module the AI was created from
+#define BB_MOD_MODULE "BB_mod_module"
 ///Range for a MOD AI controller.
 #define MOD_AI_RANGE 200
 

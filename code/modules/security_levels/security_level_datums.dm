@@ -9,6 +9,8 @@
 /datum/security_level
 	/// The name of this security level.
 	var/name = "not set"
+	/// A three-letter shortform of the security level.
+	var/name_shortform = "not set"
 	/// The color of our announcement divider.
 	var/announcement_color = "default"
 	/// The numerical level of this security level, see defines for more information.
@@ -33,6 +35,8 @@
 	var/lowering_to_configuration_key
 	/// Our configuration key for elevating to text, if set, will override the default elevating to announcement.
 	var/elevating_to_configuration_key
+	/// if TRUE, stops mail shipments from being sent during this security level
+	var/disables_mail = FALSE
 
 /datum/security_level/New()
 	. = ..()
@@ -48,6 +52,7 @@
  */
 /datum/security_level/green
 	name = "green"
+	name_shortform = "GRN"
 	announcement_color = "green"
 	sound = 'sound/announcer/notice/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
@@ -63,6 +68,7 @@
  */
 /datum/security_level/blue
 	name = "blue"
+	name_shortform = "BLU"
 	announcement_color = "blue"
 	sound = 'sound/announcer/notice/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
@@ -79,6 +85,7 @@
  */
 /datum/security_level/red
 	name = "red"
+	name_shortform = "RED"
 	announcement_color = "red"
 	sound = 'sound/announcer/notice/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
@@ -87,7 +94,7 @@
 	lowering_to_configuration_key = /datum/config_entry/string/alert_red_downto
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
 	shuttle_call_time_mod = ALERT_COEFF_RED
-
+	disables_mail = TRUE
 /**
  * DELTA
  *
@@ -95,6 +102,7 @@
  */
 /datum/security_level/delta
 	name = "delta"
+	name_shortform = "Δ"
 	announcement_color = "purple"
 	sound = 'sound/announcer/alarm/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
@@ -102,3 +110,4 @@
 	fire_alarm_light_color = LIGHT_COLOR_INTENSE_RED
 	elevating_to_configuration_key = /datum/config_entry/string/alert_delta
 	shuttle_call_time_mod = ALERT_COEFF_DELTA
+	disables_mail = TRUE

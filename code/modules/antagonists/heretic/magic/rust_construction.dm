@@ -10,6 +10,7 @@
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 8 SECONDS
 
+	// Both of these are changed in before_cast
 	invocation = "Someone raises a wall of rust."
 	invocation_self_message = "You raise a wall of rust."
 	invocation_type = INVOCATION_EMOTE

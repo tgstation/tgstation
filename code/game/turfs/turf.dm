@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
+	abstract_type = /turf
 	datum_flags = DF_STATIC_OBJECT
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
@@ -244,6 +245,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	old_area.turfs_to_uncontain_by_zlevel[z] += src
 	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
+	SEND_SIGNAL(src, COMSIG_TURF_AREA_CHANGED, old_area)
+	SEND_SIGNAL(new_area, COMSIG_AREA_TURF_ADDED, src, old_area)
+	SEND_SIGNAL(old_area, COMSIG_AREA_TURF_REMOVED, src, new_area)
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
@@ -351,9 +355,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	// So it doesn't trigger other zFall calls. Cleared on zMove.
 	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
-
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)
+
 	return TRUE
 
 ///Called each time the target falls down a z level possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
@@ -392,7 +396,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			C.wiringGuiUpdate(user)
 		C.is_empty(user)
 
-/turf/attackby(obj/item/C, mob/user, params)
+/turf/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
 	if(..())
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
@@ -513,6 +517,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		qdel(L)
 
 /turf/proc/Bless()
+	if(locate(/obj/effect/blessing) in src)
+		return
 	new /obj/effect/blessing(src)
 
 //////////////////////////////
@@ -536,7 +542,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		for(var/obj/on_top in contents) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(on_top, TRAIT_T_RAY_VISIBLE))
+			if(HAS_TRAIT(on_top, TRAIT_UNDERFLOOR))
 				on_top.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -592,7 +598,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
-	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|KEEP_APART
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
@@ -709,7 +715,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	for(var/atom/movable/to_clean as anything in src)
 		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
-			to_clean.wash(clean_types)
+			. |= to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density
@@ -790,9 +796,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /**
- * the following are some hacky fishing-related optimizations to shave off
+ * the following are some fishing-related optimizations to shave off as much
  * time we spend implementing the fishing as possible, even if that means
- * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
+ * hackier code, because we've hundreds of turfs like lava, water etc every round,
  */
 /turf/proc/add_lazy_fishing(fish_source_path)
 	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
@@ -816,7 +822,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
-	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, fish_source)
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[fish_source])
 	remove_lazy_fishing()
 	return spot.handle_cast(arglist(args))
 
@@ -826,7 +832,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	GLOB.preset_fish_sources[fish_source].readd_fish(fish, releaser)
+	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
 
 /turf/examine(mob/user)
 	. = ..()

@@ -111,14 +111,13 @@
 	mutation_target.gib(DROP_ALL_REMAINS)
 
 	var/datum/mind/ghost_mind = ghost.mind
-	new_mob.key = ghost.key
+	new_mob.PossessByPlayer(ghost.key)
 
 	if(ghost_mind)
 		new_mob.AddComponent(/datum/component/temporary_body, ghost_mind, ghost_mind.current, TRUE)
 
 	var/datum/mind/antag_mind = new_mob.mind
 	antag_mind.add_antag_datum(chosen_role)
-	antag_mind.special_role = ROLE_GLITCH
 	antag_mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
 	playsound(new_mob, 'sound/effects/magic/ethereal_exit.ogg', 50, vary = TRUE)

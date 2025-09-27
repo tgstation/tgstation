@@ -15,6 +15,7 @@
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	abstract_type = /obj/item/stack
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
@@ -47,7 +48,7 @@
 	/// Does this stack require a unique girder in order to make a wall?
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
-	var/obj/structure/table/tableVariant
+	var/obj/structure/table/table_type
 	/// What typepath stairs do we create from this stack
 	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
@@ -72,9 +73,11 @@
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
 
-/obj/item/stack/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
-	if(new_amount != null)
-		amount = new_amount
+/obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
+	amount = new_amount
+	if(amount <= 0)
+		stack_trace("invalid amount [amount]!")
+		return INITIALIZE_HINT_QDEL
 	while(amount > max_amount)
 		amount -= max_amount
 		new type(loc, max_amount, FALSE, mat_override, mat_amt)
@@ -83,21 +86,15 @@
 
 	. = ..()
 
+	if(merge)
+		. = INITIALIZE_HINT_LATELOAD
+
 	var/materials_mult = amount
 	if(LAZYLEN(mat_override))
 		materials_mult *= mat_amt
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
 		initialize_materials(mats_per_unit, materials_mult)
-
-	if(merge)
-		for(var/obj/item/stack/item_stack in loc)
-			if(item_stack == src)
-				continue
-			if(can_merge(item_stack))
-				INVOKE_ASYNC(src, PROC_REF(merge_without_del), item_stack)
-				if(is_zero_amount(delete_if_zero = FALSE))
-					return INITIALIZE_HINT_QDEL
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
@@ -111,18 +108,49 @@
 
 	update_weight()
 	update_appearance()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_movable_entered_occupied_turf),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
 		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
+
+/obj/item/stack/LateInitialize()
+	merge_with_loc()
+
+/obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
+		merge_with_loc()
 
 ///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
 	if(length(mats_per_unit))
 		set_custom_materials(mats_per_unit, amount)
+
+/obj/item/stack/proc/find_other_stack(list/already_found)
+	if(QDELETED(src) || isnull(loc))
+		return
+	for(var/obj/item/stack/item_stack in loc)
+		if(item_stack == src || QDELING(item_stack) || (item_stack.amount >= item_stack.max_amount))
+			continue
+		if(!(item_stack.flags_1 & INITIALIZED_1))
+			continue
+		var/stack_ref = REF(item_stack)
+		if(already_found[stack_ref])
+			continue
+		if(can_merge(item_stack))
+			already_found[stack_ref] = TRUE
+			return item_stack
+
+/// Tries to merge the stack with everything on the same tile.
+/obj/item/stack/proc/merge_with_loc()
+	var/list/already_found = list() // change to alist whenever dreamchecker and such finally supports that
+	var/obj/item/other_stack = find_other_stack(already_found)
+	var/sanity = max_amount // just in case
+	while(other_stack && sanity > 0)
+		sanity--
+		if(merge(other_stack))
+			return FALSE
+		other_stack = find_other_stack(already_found)
+	return TRUE
 
 /obj/item/stack/apply_material_effects(list/materials)
 	. = ..()
@@ -214,6 +242,12 @@
 		. = round(source?.energy / cost)
 	else
 		. = (amount)
+
+/// Gets the table type we make, accounting for potential exceptions.
+/obj/item/stack/proc/get_table_type()
+	if(ispath(table_type, /obj/structure/table/greyscale) && isnull(material_type))
+		return // This table type breaks without a material type.
+	return table_type
 
 /**
  * Builds all recipes in a given recipe list and returns an association list containing them
@@ -653,17 +687,6 @@
 	. = merge_without_del(target_stack, limit)
 	is_zero_amount(delete_if_zero = TRUE)
 
-/// Signal handler for connect_loc element. Called when a movable enters the turf we're currently occupying. Merges if possible.
-/obj/item/stack/proc/on_movable_entered_occupied_turf(datum/source, atom/movable/arrived)
-	SIGNAL_HANDLER
-
-	// Edge case. This signal will also be sent when src has entered the turf. Don't want to merge with ourselves.
-	if(arrived == src)
-		return
-
-	if(!arrived.throwing && can_merge(arrived))
-		INVOKE_ASYNC(src, PROC_REF(merge), arrived)
-
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting, inhand = TRUE))
 		merge(hitting)
@@ -674,7 +697,7 @@
 	if(user.get_inactive_held_item() == src)
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		return split_stack(user, 1)
+		return split_n_take(user, 1)
 	else
 		. = ..()
 
@@ -691,32 +714,43 @@
 	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
 	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	split_stack(user, stackmaterial)
+	split_n_take(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/** Splits the stack into two stacks.
+/** Splits the stack into two stacks, returns the new stack.
  *
  * Arguments:
- * - [user][/mob]: The mob splitting the stack.
  * - amount: The number of units to split from this stack.
  */
-/obj/item/stack/proc/split_stack(mob/user, amount)
+/obj/item/stack/proc/split_stack(amount)
 	if(!use(amount, TRUE, FALSE))
 		return null
-	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE, mats_per_unit)
-	. = F
-	F.copy_evidences(src)
+	var/obj/item/stack/new_stack = new type(null, amount, FALSE, mats_per_unit)
+	new_stack.copy_evidences(src)
 	loc.atom_storage?.refresh_views()
-	if(user)
-		if(!user.put_in_hands(F, merge_stacks = FALSE))
-			F.forceMove(user.drop_location())
-		add_fingerprint(user)
-		F.add_fingerprint(user)
-
 	is_zero_amount(delete_if_zero = TRUE)
+	return new_stack
 
-/obj/item/stack/attackby(obj/item/W, mob/user, params)
+/**
+ * Splits amount items from stack, attempts to place new stack in user's hands.
+ * Returns the new stack.
+ * Arguments:
+ * * [user][/mob] - Mob performing the split, non-nullable
+ * * amount - Number of units to split from this stack
+ */
+/obj/item/stack/proc/split_n_take(mob/user, amount)
+	if(!user)
+		return null
+	add_fingerprint(user)
+	var/obj/item/stack/new_stack = split_stack(amount)
+	if(isnull(new_stack))
+		return null
+	new_stack.add_fingerprint(user)
+	user.put_in_hands(new_stack, merge_stacks = FALSE)
+	return new_stack
+
+/obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))

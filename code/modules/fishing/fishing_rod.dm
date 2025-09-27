@@ -432,12 +432,15 @@
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
+	// Inside of storages, or camera weirdness
+	if(target.z != user.z || !(target in view(user.client?.view || world.view, user)))
+		return
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 	// skip firing a projectile if the target is adjacent and can be reached (no order windows in the way),
 	// otherwise it may end up hitting other things on its turf, which is problematic
 	// especially for entities with the profound fisher component, which should only work on
 	// proper fishing spots.
-	if(user.CanReach(target, src))
+	if(target.Adjacent(user, null, null, 0))
 		hook_hit(target, user)
 		return
 	casting = TRUE
@@ -483,15 +486,13 @@
 	var/line_color = line?.line_color || default_line_color
 	/// Line part by the rod.
 	if(reel_overlay)
-		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-		reel_appearance.appearance_flags = RESET_COLOR
+		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay, appearance_flags = RESET_COLOR|KEEP_APART)
 		reel_appearance.color = line_color
 		. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
-		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
-		line_overlay.appearance_flags = RESET_COLOR
+		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 		line_overlay.color = line_color
 		. += line_overlay
 		. += hook?.rod_overlay_icon_state || "hook_overlay"
@@ -512,19 +513,17 @@
 /obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = list()
 	var/line_color = line?.line_color || default_line_color
-	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay")
-	reel_overlay.appearance_flags |= RESET_COLOR
+	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 	reel_overlay.color = line_color
 	. += reel_overlay
 	/// if we don't have anything hooked show the dangling hook & line
 	if(isinhands && !fishing_line)
-		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay")
-		line_overlay.appearance_flags |= RESET_COLOR
+		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 		line_overlay.color = line_color
 		. += line_overlay
 		. += mutable_appearance(icon_file, "hook_overlay")
 
-/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(slot_check(attacking_item,ROD_SLOT_LINE))
 		use_slot(ROD_SLOT_LINE, user, attacking_item)
 		SStgui.update_uis(src)

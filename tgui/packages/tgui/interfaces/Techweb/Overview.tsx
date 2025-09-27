@@ -1,6 +1,6 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
-import { Flex, Input, Tabs, VirtualList } from 'tgui-core/components';
+import { Flex, Input, Section, Tabs, VirtualList } from 'tgui-core/components';
 
 import { useRemappedBackend } from './helpers';
 import { TechNode } from './nodes/TechNode';
@@ -37,7 +37,7 @@ export function TechwebOverview(props) {
       tabIndex < 2
         ? nodes.filter((x) => x.tier === tabIndex)
         : nodes.filter((x) => x.tier >= tabIndex),
-      (x) => node_cache[x.id].name,
+      [(x) => node_cache[x.id].name],
     );
   }
 
@@ -79,18 +79,21 @@ export function TechwebOverview(props) {
           <Flex.Item align="center">
             <Input
               value={searchText}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={setSearchText}
               placeholder="Search..."
+              expensive
             />
           </Flex.Item>
         </Flex>
       </Flex.Item>
       <Flex.Item className="Techweb__OverviewNodes" height="100%">
-        <VirtualList key={tabIndex + searchText}>
-          {displayedNodes.map((n) => (
-            <TechNode node={n} key={n.id} />
-          ))}
-        </VirtualList>
+        <Section fill scrollable>
+          <VirtualList>
+            {displayedNodes.map((n) => (
+              <TechNode node={n} key={n.id} />
+            ))}
+          </VirtualList>
+        </Section>
       </Flex.Item>
     </Flex>
   );

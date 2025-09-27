@@ -42,7 +42,7 @@
 	jostle_pain_mult = 5
 	pain_stam_pct = 0.4
 	pain_mult = 3
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
@@ -156,11 +156,7 @@
 	if(!length(target_sword.current_runes))
 		return FALSE
 
-/datum/action/item_action/rune_shatter/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/item_action/rune_shatter/do_effect(trigger_flags)
 	owner.playsound_local(get_turf(owner), 'sound/effects/magic/blind.ogg', 50, TRUE)
 	var/obj/item/melee/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
@@ -193,13 +189,14 @@
 		return
 	return ..()
 
-/obj/structure/trap/eldritch/attacked_by(obj/item/weapon, mob/living/user)
-	if(istype(weapon, /obj/item/melee/rune_carver) || istype(weapon, /obj/item/nullrod))
+/obj/structure/trap/eldritch/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/melee/rune_carver) || HAS_TRAIT(tool, TRAIT_NULLROD_ITEM))
 		loc.balloon_alert(user, "carving dispelled")
 		playsound(src, 'sound/items/sheath.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		qdel(src)
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/trap/eldritch/alert
 	name = "alert carving"

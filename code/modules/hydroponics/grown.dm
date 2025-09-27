@@ -11,10 +11,11 @@
 
 // Base type. Subtypes are found in /grown dir. Lavaland-based subtypes can be found in mining/ash_flora.dm
 /obj/item/food/grown
+	name = "fresh produce" // so recipe text doesn't say 'snack'
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "berrypile"
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
-	name = "fresh produce" // so recipe text doesn't say 'snack'
+	abstract_type = /obj/item/food/grown
 	max_volume = PLANT_REAGENT_VOLUME
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
@@ -150,6 +151,21 @@
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 
 	return reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
+/obj/item/food/grown/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//if we attack with paper and the grown is a mushroom, create a spore print.
+	if(istype(tool, /obj/item/paper) && seed?.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		qdel(tool)
+		seed.name = "[LOWER_TEXT(seed.plantname)] spore print"
+		seed.desc = "A dusting of [LOWER_TEXT(seed.plantname)] spores have been deposited in a beautiful pattern on the surface of the paper. "
+		seed.icon_state = "spore_print[pick(1,2,3)]"
+		seed.forceMove(drop_location())
+		playsound(user, 'sound/items/paper_flip.ogg', 20)
+		seed = null
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	else
+		return ..()
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER
 #undef BITE_SIZE_VOLUME_MULTIPLIER

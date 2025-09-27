@@ -118,12 +118,14 @@
 
 /datum/sparring_match/proc/thrown_interference(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(isitem(thrown_movable))
-		var/mob/living/honorbound = source
-		var/obj/item/thrown_item = thrown_movable
-		var/mob/thrown_by = thrown_item.thrownby?.resolve()
-		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
-			INVOKE_ASYNC(src, PROC_REF(flub), thrown_by)
+
+	if(!isitem(thrown_movable))
+		return
+	var/mob/living/honorbound = source
+	var/obj/item/thrown_item = thrown_movable
+	var/mob/thrown_by = throwingdatum?.get_thrower()
+	if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
+		INVOKE_ASYNC(src, PROC_REF(flub), thrown_by)
 
 /datum/sparring_match/proc/projectile_interference(datum/participant, obj/projectile/proj)
 	SIGNAL_HANDLER
@@ -285,7 +287,7 @@
 				to_chat(loser, span_userdanger("[GLOB.deity] is enraged by your lackluster sparring record!"))
 				lightningbolt(loser)
 				loser.add_mood_event("sparring", /datum/mood_event/banished)
-				loser.mind.holy_role = NONE
+				loser.mind.set_holy_role(NONE)
 				to_chat(loser, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		if(STAKES_MONEY_MATCH)
 			to_chat(loser, span_userdanger("You've lost all your money to [winner]!"))

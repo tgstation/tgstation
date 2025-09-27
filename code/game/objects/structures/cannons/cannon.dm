@@ -22,6 +22,7 @@
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()
@@ -53,7 +54,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)
+/obj/structure/cannon/attackby(obj/item/used_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(charge_ignited)
 		balloon_alert(user, "it's gonna fire!")
 		return
@@ -83,9 +84,9 @@
 
 	else if(is_reagent_container(used_item))
 		var/obj/item/reagent_containers/powder_keg = used_item
-		if(!(powder_keg.reagent_flags & OPENCONTAINER))
+		if(!powder_keg.is_open_container())
 			return ..()
-		if(istype(powder_keg, /obj/item/reagent_containers/cup/rag))
+		if(istype(powder_keg, /obj/item/rag))
 			return ..()
 
 		if(!powder_keg.reagents.total_volume)

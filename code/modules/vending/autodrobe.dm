@@ -96,10 +96,10 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 GLOBAL_LIST_INIT(autodrobe_fancy_items, list(
 	/obj/item/clothing/under/rank/captain/suit = 1,
 	/obj/item/clothing/under/rank/captain/suit/skirt = 1,
-	/obj/item/clothing/under/costume/schoolgirl = 3,
-	/obj/item/clothing/under/costume/schoolgirl/red = 3,
-	/obj/item/clothing/under/costume/schoolgirl/green = 3,
-	/obj/item/clothing/under/costume/schoolgirl/orange = 3,
+	/obj/item/clothing/under/costume/seifuku = 3,
+	/obj/item/clothing/under/costume/seifuku/red = 3,
+	/obj/item/clothing/under/costume/seifuku/teal = 3,
+	/obj/item/clothing/under/costume/seifuku/tan = 3,
 	/obj/item/clothing/under/dress/skirt = 3,
 	/obj/item/clothing/neck/tie = 3,
 	/obj/item/clothing/head/hats/tophat = 3,
@@ -144,10 +144,8 @@ GLOBAL_LIST_INIT(autodrobe_service_items, list(
 	/obj/item/clothing/under/suit/waiter = 4,
 	/obj/item/clothing/suit/apron = 3,
 	/obj/item/clothing/suit/apron/overalls = 3,
-	/obj/item/clothing/head/costume/maidheadband = 3,
+	/obj/item/clothing/head/costume/maid_headband = 3,
 	/obj/item/clothing/under/costume/maid = 3,
-	/obj/item/clothing/gloves/maid = 3,
-	/obj/item/clothing/neck/maid = 3,
 	/obj/item/clothing/under/rank/civilian/janitor/maid = 3,
 	/obj/item/clothing/accessory/maidapron = 3,
 ))
@@ -156,7 +154,7 @@ GLOBAL_LIST_INIT(autodrobe_other_items, list(
 	/obj/item/clothing/head/wig/random = 6,
 	/obj/item/clothing/head/flatcap = 3,
 	/obj/item/clothing/suit/jacket/miljacket = 3,
-	/obj/item/clothing/shoes/jackboots = 3,
+	/obj/item/clothing/shoes/workboots/black = 3,
 	/obj/item/clothing/mask/fakemoustache = 3,
 	/obj/item/clothing/glasses/cold= 3,
 	/obj/item/clothing/glasses/heat= 3,
@@ -236,6 +234,7 @@ GLOBAL_VAR_INIT(all_autodrobe_items, (autodrobe_costumes_items +\
 	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "theater-light-mask"
+	allow_custom = TRUE
 
 /obj/machinery/vending/autodrobe/Initialize(mapload)
 	product_categories = list(

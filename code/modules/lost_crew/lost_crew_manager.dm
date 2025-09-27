@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	/// How long after successful revival we check to see if theyre still alive, and give rewards
 	var/succes_check_time = 3 MINUTES
 	/// How much the revived crew start with on their cards
-	var/starting_funds = 100
+	var/starting_funds = 200
 
 /**
  * Creates a body with random background and injuries
@@ -148,9 +148,8 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	if(!atom_storage.locked)
 		return
 
-	atom_storage.locked = STORAGE_NOT_LOCKED
+	atom_storage.set_locked(STORAGE_NOT_LOCKED)
 	balloon_alert(user, "unlocked")
-	update_appearance()
 
 /obj/item/storage/lockbox/mind/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(broken || user.mind != mind)

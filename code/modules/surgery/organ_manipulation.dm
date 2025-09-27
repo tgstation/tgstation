@@ -91,7 +91,7 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
-		/datum/surgery_step/manipulate_organs/internal,
+		/datum/surgery_step/manipulate_organs/any,
 		/datum/surgery_step/close,
 	)
 
@@ -316,6 +316,13 @@
 ///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
 /datum/surgery_step/manipulate_organs/proc/can_use_organ(obj/item/organ/organ)
 	return FALSE
+
+/datum/surgery_step/manipulate_organs/any
+	time = 6.4 SECONDS
+	name = "manipulate organs (hemostat/organ)"
+
+/datum/surgery_step/manipulate_organs/any/can_use_organ(obj/item/organ/organ)
+	return TRUE
 
 ///Surgery step for internal organs, like hearts and brains
 /datum/surgery_step/manipulate_organs/internal

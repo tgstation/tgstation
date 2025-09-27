@@ -8,6 +8,7 @@
 	cost = CARGO_CRATE_VALUE * 1.8
 	contains = list(/obj/item/rcl,
 					/obj/item/storage/toolbox/artistic,
+					/obj/item/storage/toolbox/crafter,
 					/obj/item/toy/crayon/spraycan = 3,
 					/obj/item/storage/crayons,
 					/obj/item/toy/crayon/white,
@@ -178,7 +179,7 @@
 /datum/supply_pack/misc/candles_bulk
 	name = "Candle Box Crate"
 	desc = "Keep your local chapel lit with three candle boxes!"
-	cost = CARGO_CRATE_VALUE * 1.5
+	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/fancy/candle_box = 3)
 	crate_name = "candle box crate"
 
@@ -214,6 +215,7 @@
 	contains = list()
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate
+	test_ignored = TRUE
 	///Total TC worth of contained uplink items
 	var/crate_value = 30
 	///What uplink the contents are pulled from
@@ -255,3 +257,17 @@
 		/obj/item/hatchet/cutterblade = 1,
 	)
 	crate_name = "paper cutters crate"
+
+/datum/supply_pack/misc/water_cooler
+	name = "Liquid Cooler - Water"
+	desc = "A liquid cooler, stocked with the freshest water in all the Periphery. Perfect for wasting time at the office!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/water = 1)
+	crate_name = "water cooler crate"
+
+/datum/supply_pack/misc/punch_cooler
+	name = "Liquid Cooler - Fruit Punch"
+	desc = "A liquid cooler, stocked with exotic fruit punch that can heal injuries! Be sure to remain near the liquid cooler while drinking, for your own health and safety. Seriously, do NOT drink this stuff away from the cooler."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
+	crate_name = "punch cooler crate"
