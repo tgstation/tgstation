@@ -651,8 +651,6 @@
 
 /// Returns a large (due to cropping) icon of this job's sechud icon state.
 /datum/job/proc/get_lobby_icon() as /icon
-	RETURN_TYPE(/icon)
-
 	var/datum/outfit/job_outfit = outfit
 	if(!job_outfit || !job_outfit::id_trim)
 		CRASH("[src.type] has no job outfit but isn't overwriting get_lobby_icon().")
@@ -661,6 +659,4 @@
 	if(!icon_state || icon_state == SECHUD_UNKNOWN)
 		CRASH("[src.type] has no job icon state.")
 
-	var/icon/sechud_icon = icon('icons/mob/huds/hud.dmi', icon_state)
-	sechud_icon.Crop(1, 17, 8, 24)
-	return sechud_icon
+	return icon('icons/mob/huds/hud.dmi', icon_state)

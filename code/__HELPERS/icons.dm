@@ -1373,23 +1373,23 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 /// Returns the (isolated) security HUD icon for the given job.
 /proc/get_job_hud_icon(datum/job/job) as /icon
-	RETURN_TYPE(/icon)
-	var/static/list/icon_cache = list()
-
+	var/static/alist/icon_cache = alist()
 	if(isnull(job))
 		return
+
 	if(!is_job(job))
 		if(ispath(job, /datum/job))
-			SSjob.get_job_type(job)
+			job = SSjob.get_job_type(job)
 		else if(istext(job))
-			SSjob.get_job(job)
+			job = SSjob.get_job(job)
 		if(isnull(job))
 			return null
 
 	//add it to the cache if it isn't already
 	var/job_type = job.type
 	if(!icon_cache[job_type])
-		var/datum/job/job_instance = locate(job_type) in SSjob.all_occupations
-		icon_cache[job_type] = job_instance.get_lobby_icon()
+		var/icon/sechud_icon = job.get_lobby_icon()
+		sechud_icon.Crop(1, 17, 8, 24)
+		icon_cache[job_type] = sechud_icon
 
 	return icon(icon_cache[job_type])
