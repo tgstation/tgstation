@@ -16,7 +16,7 @@
 	var/flash_range = 2 //this is roughly the size of a brig cell.
 
 	/// How strong Paralyze()'d targets are when flashed.
-	var/strength = 10 SECONDS
+	var/strength = 5 SECONDS
 
 	COOLDOWN_DECLARE(flash_cooldown)
 	/// Duration of time between flashes.
@@ -120,7 +120,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		if (get_dist(src, living_mob) > flash_range)
 			continue
 
-		if(bulb.flash_mob(living_mob, extra_log =  "by [src]"))
+		if(bulb.flash_mob(living_mob, confusion_duration = strength * 2, extra_log =  "by [src]"))
 			living_mob.Paralyze(strength)
 			flashed = TRUE
 
@@ -160,7 +160,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	icon = 'icons/obj/machines/sec.dmi'
 	icon_state = "pflash1-p"
 	base_icon_state = "pflash"
-	strength = 8 SECONDS
+	strength = 4 SECONDS
 	anchored = FALSE
 	density = TRUE
 	///Proximity monitor associated with this atom, needed for proximity checks.

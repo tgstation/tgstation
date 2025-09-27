@@ -295,3 +295,6 @@
 	if(built_in_camera?.can_use())
 		return TRUE
 	return ..()
+
+/mob/living/basic/drone/hypnosis_vulnerable()
+	return FALSE //It obeys its laws
