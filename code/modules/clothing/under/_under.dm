@@ -58,6 +58,19 @@
 	register_context()
 	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
 
+/obj/item/clothing/under/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	var/obj/item/clothing/under/any_original = locate() in components
+	if(!any_original)
+		has_sensor = NO_SENSORS
+		return
+	has_sensor = any_original.has_sensor
+	sensor_mode = any_original.sensor_mode
+
+/obj/item/clothing/under/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	. = ..()
+	dump_attachments()
+
 /obj/item/clothing/under/setup_reskinning()
 	if(!check_setup_reskinning())
 		return
@@ -70,7 +83,7 @@
 
 	var/changed = FALSE
 
-	if((isnull(held_item) || held_item == src) && has_sensor == HAS_SENSORS)
+	if(has_sensor == HAS_SENSORS && (isnull(held_item) || held_item == src))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Set suit sensors to tracking"
 		changed = TRUE
@@ -83,12 +96,16 @@
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove accessory"
 		changed = TRUE
 
-	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
+	if(has_sensor == BROKEN_SENSORS && istype(held_item, /obj/item/stack/cable_coil))
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
 		changed = TRUE
 
 	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
 		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
+		changed = TRUE
+
+	if(has_sensor == NO_SENSORS && (istype(held_item, /obj/item/radio) && !istype(held_item, /obj/item/radio/headset)))
+		context[SCREENTIP_CONTEXT_LMB] = "Install suit sensors"
 		changed = TRUE
 
 	return changed ? CONTEXTUAL_SCREENTIP_SET : .
@@ -112,12 +129,27 @@
 	if (blood_overlay)
 		. += blood_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(repair_sensors(attacking_item, user))
-		return TRUE
+/obj/item/clothing/under/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/cable_coil))
+		if(!repair_sensors(user))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/cabling = tool
+		cabling.use(1)
+		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/clothing/accessory))
-		return attach_accessory(attacking_item, user)
+	if(istype(tool, /obj/item/clothing/accessory))
+		return attach_accessory(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	if(has_sensor == NO_SENSORS && (istype(tool, /obj/item/radio) && !istype(tool, /obj/item/radio/headset)))
+		balloon_alert(user, "installing sensors...")
+		if(!do_after(user, 5 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		has_sensor = HAS_SENSORS
+		qdel(tool)
+		balloon_alert(user, "sensors installed")
+		playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
@@ -142,7 +174,7 @@
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
 		break_sensors()
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
-		repair_sensors(cable_required = FALSE)
+		repair_sensors()
 	update_appearance()
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
@@ -181,23 +213,12 @@
 /**
  * Repair the suit sensors and update the mob's status on the global sensor list.
  * Can be called either through player action such as repairing with coil, or as part of a general fixing proc
- *
- * Arguments:
- * * attacking_item - the item being used for the repair, if any
- * * user - mob that's doing the repair
- * * cable_required - set to FALSE to bypass consuming cable coil
  */
-/obj/item/clothing/under/proc/repair_sensors(obj/item/attacking_item, mob/user, cable_required = TRUE)
+/obj/item/clothing/under/proc/repair_sensors(mob/user)
 	if(has_sensor != BROKEN_SENSORS)
-		return
-
-	if(cable_required)
-		if(!istype(attacking_item, /obj/item/stack/cable_coil))
-			return
-		var/obj/item/stack/cable_coil/cabling = attacking_item
-		if(!cabling.use(1))
-			return
-		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
+		if(user)
+			balloon_alert(user, "sensors [has_sensor == NO_SENSORS ? "missing" : "not broken"]!")
+		return FALSE
 
 	playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	has_sensor = HAS_SENSORS
@@ -371,6 +392,9 @@
 				. += "Its vital tracker appears to be enabled."
 			if(SENSOR_COORDS)
 				. += "Its vital tracker and tracking beacon appear to be enabled."
+	else
+		. += span_small(span_tooltip("You can always use a station-bounced radio to install them", "It isn't equipped with medical sensors."))
+
 	if(LAZYLEN(attached_accessories))
 		var/list/accessories = list_accessories_with_icon(user)
 		. += "It has [english_list(accessories)] attached."
