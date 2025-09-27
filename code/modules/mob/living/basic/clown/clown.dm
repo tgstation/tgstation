@@ -378,7 +378,7 @@
 
 /mob/living/basic/clown/mutant/glutton
 	name = "banana glutton"
-	desc = "Something that was once a Clown."
+	desc = "Something that was once a clown."
 	icon_state = "glutton"
 	icon_living = "glutton"
 	health = 200
