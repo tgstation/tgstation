@@ -175,6 +175,8 @@
 	var/play_click = round(sqrt(max_ammo * 2)) > current_ammo
 	if(suppressed)
 		playsound(src, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		if(istype(suppressed, /obj/item/suppressor/bikehorn))
+			playsound(src, 'sound/items/bikehorn.ogg', fire_sound_volume, vary_fire_sound)
 		if(play_click && click_on_low_ammo)
 			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', suppressed_volume, vary_fire_sound, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0, frequency = click_frequency_to_use)
 	else
@@ -223,12 +225,16 @@
 			. += "[icon_state]_bolt"
 
 	if(suppressed && can_unsuppress) // if it can't be unsuppressed, we assume the suppressor is integrated into the gun itself and don't generate an overlay
-		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
-		if(suppressor_x_offset)
-			MA.pixel_w = suppressor_x_offset
-		if(suppressor_y_offset)
-			MA.pixel_z = suppressor_y_offset
-		. += MA
+		var/list/suppressor_overlays = list()
+		if(istype(suppressed, /obj/item/suppressor/bikehorn))
+			suppressor_overlays += mutable_appearance(icon, "bikehorn_suppressor")
+		suppressor_overlays += mutable_appearance(icon, "[icon_state]_suppressor")
+		for(var/mutable_appearance/suppressor_overlay as anything in suppressor_overlays)
+			if(suppressor_x_offset)
+				suppressor_overlay.pixel_w = suppressor_x_offset
+			if(suppressor_y_offset)
+				suppressor_overlay.pixel_z = suppressor_y_offset
+			. += suppressor_overlay
 
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"

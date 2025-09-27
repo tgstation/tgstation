@@ -284,3 +284,7 @@
 
 /obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
 	REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
+
+/obj/item/suppressor/bikehorn
+	name = "bikehorn suppressor"
+	desc = ""
