@@ -7,6 +7,7 @@
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = null
+	abstract_type = /obj/item/clothing/head/collectable
 
 /obj/item/clothing/head/collectable/Initialize(mapload)
 	. = ..()

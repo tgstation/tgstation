@@ -91,6 +91,8 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/proc/on_shuttle_expanded(obj/docking_port/mobile/source, list/turfs)
 	SIGNAL_HANDLER
 	recalculate_eye_view(source)
+	var/list/bounds = shuttle_port.return_coords(eyeobj.x - x_offset, eyeobj.y - y_offset, eyeobj.dir)
+	var/list/overlappers = SSshuttle.get_dock_overlap(bounds[1], bounds[2], bounds[3], bounds[4], eyeobj.z)
 	if(my_port)
 		var/here_x = source.x
 		var/here_y = source.y
@@ -122,7 +124,7 @@
 						target_x += offset_y
 						target_y -= offset_x
 				checked_turf = locate(target_x, target_y, target_z)
-			if(checkLandingTurf(checked_turf) != SHUTTLE_DOCKER_LANDING_CLEAR)
+			if(checkLandingTurf(checked_turf, overlappers) != SHUTTLE_DOCKER_LANDING_CLEAR)
 				if(docked)
 					my_port.unregister()
 					my_port.delete_after = TRUE

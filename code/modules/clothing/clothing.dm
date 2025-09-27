@@ -1,5 +1,6 @@
 /obj/item/clothing
 	name = "clothing"
+	abstract_type = /obj/item/clothing
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	integrity_failure = 0.4
@@ -85,6 +86,7 @@
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"
+	spawn_blacklisted = TRUE
 	bite_consumption = 1
 	// sigh, ok, so it's not ACTUALLY infinite nutrition. this is so you can eat clothes more than...once.
 	// bite_consumption limits how much you actually get, and the take_damage in after eat makes sure you can't abuse this.
@@ -364,9 +366,9 @@
 	if (clothing_flags & CASTING_CLOTHES)
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-		.["pressureproof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
+		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
 	if(flags_cover & PEPPERPROOF)
-		.["pepperproof"] = "Protects the wearer from the effects of pepperspray."
+		.["pepper-proof"] = "Protects the wearer from the effects of pepperspray."
 	if (heat_protection || cold_protection)
 		var/heat_desc
 		var/cold_desc

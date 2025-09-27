@@ -117,7 +117,7 @@
 /obj/item/mod/control/proc/delete_link_visual(mob/living/old_user)
 	return delete_link_visual_generic(mod_link, old_user)
 
-/obj/item/mod/control/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
+/obj/item/mod/control/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(speaker != wearer && speaker != ai_assistant)
 		return
@@ -296,7 +296,7 @@
 		old_user.update_worn_neck()
 	return delete_link_visual_generic(mod_link, old_user)
 
-/obj/item/clothing/neck/link_scryer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
+/obj/item/clothing/neck/link_scryer/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(speaker != loc)
 		return

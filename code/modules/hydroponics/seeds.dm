@@ -6,6 +6,7 @@
 	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"
+	abstract_type = /obj/item/seeds
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	/// Name of plant when planted.
@@ -63,8 +64,6 @@
 	var/graft_gene
 	///Determines if the plant should be allowed to mutate early at 30+ instability.
 	var/seed_flags = MUTATE_EARLY
-	///Determines if the plant has been sliced with a sharp tool to extract substances like saps.
-	var/extracted = 0
 
 /obj/item/seeds/Initialize(mapload, nogenes = FALSE)
 	. = ..()
@@ -660,3 +659,11 @@
 			plant_overlay.icon_state = "[icon_grow][t_growthstate]"
 	plant_overlay.pixel_z = plant_icon_offset
 	return plant_overlay
+
+/// Called when the seed is set in a tray
+/obj/item/seeds/proc/on_planted(obj/machinery/hydroponics/parent)
+	return
+
+/// Called when the seed is removed from a tray - possibly from being harvested, possibly from being uprooted
+/obj/item/seeds/proc/on_unplanted(obj/machinery/hydroponics/parent)
+	return

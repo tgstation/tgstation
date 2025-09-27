@@ -1,6 +1,7 @@
 /obj/item/food/bowled
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/food/soupsalad.dmi'
+	abstract_type = /obj/item/food/bowled
 	bite_consumption = 5
 	max_volume = 80
 	foodtypes = NONE
@@ -24,7 +25,7 @@
 		desc = "A wish come true!"
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 9)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 1)
-		
+
 /obj/item/food/bowled/mammi
 	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."

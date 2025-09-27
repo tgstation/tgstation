@@ -2,6 +2,7 @@
 	name = "generic drug"
 	desc = "I am error"
 	icon = 'icons/obj/medical/drugs.dmi'
+	abstract_type = /obj/item/food/drug
 	foodtypes = GROSS
 	food_flags = FOOD_FINGER_FOOD
 	max_volume = 50
