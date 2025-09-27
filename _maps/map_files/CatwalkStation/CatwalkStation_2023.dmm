@@ -44156,7 +44156,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner{
 	dir = 8
 	},
-/obj/structure/sign/poster/official/periodic_table/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "mDd" = (
@@ -77938,6 +77937,7 @@
 "wlq" = (
 /obj/effect/turf_decal/stripes/red/box,
 /obj/structure/ladder,
+/obj/structure/sign/warning/chem_diamond/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "wlF" = (
@@ -84620,7 +84620,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 1
 	},
-/obj/structure/sign/warning/chem_diamond/directional/east,
 /obj/structure/table,
 /obj/item/stack/sheet/mineral/plasma{
 	pixel_y = 5
@@ -84628,6 +84627,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	pixel_x = 2
 	},
+/obj/structure/sign/poster/official/periodic_table/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "ykm" = (
