@@ -81,7 +81,7 @@
 		return // No change
 	var/atom/movable/speaker = parent
 	var/msg = get_warning_message()
-	var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/weather, speaker)
+	var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/weather, speaker, list(RADIO_CHANNEL_SUPPLY))
 	// Active AAS will override default announcement lines
 	if (aas)
 		msg = aas.compile_config_message(/datum/aas_config_entry/weather, list(), !is_weather_dangerous ? 4 : warning_level + 1)
@@ -188,6 +188,14 @@
 		"Safe" = "No risk expected from incoming weather front.",
 	)
 
+/datum/aas_config_entry/weather/act_up()
+	. = ..()
+	if (.)
+		return
+
+	// 10% chance to turn off weather broadcast entirely
+	if (prob(10))
+		enabled = FALSE
 
 #undef WEATHER_ALERT_CLEAR
 #undef WEATHER_ALERT_INCOMING
