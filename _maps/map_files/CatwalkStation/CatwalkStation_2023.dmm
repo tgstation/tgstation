@@ -13452,15 +13452,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"dWc" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "cmoprivacy";
-	name = "Privacy Shutter"
-	},
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/cmo)
 "dWg" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
@@ -15317,6 +15308,15 @@
 "evO" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/lesser)
+"evV" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "cmoprivacy";
+	name = "Privacy Shutter"
+	},
+/obj/structure/cable,
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/command/heads_quarters/cmo)
 "ewf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -17051,12 +17051,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"eWo" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/cable,
-/obj/structure/curtain,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/cmo)
 "eWq" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -58139,6 +58133,7 @@
 /area/station/maintenance/starboard/lesser)
 "qIp" = (
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/kirbyplants/organic/plant9,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "qIz" = (
@@ -65129,6 +65124,7 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "sKF" = (
 /obj/machinery/status_display/ai/directional/west,
+/obj/item/kirbyplants/organic/plant9,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "sKH" = (
@@ -74047,9 +74043,12 @@
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "voU" = (
-/obj/structure/curtain,
-/obj/effect/spawner/structure/window,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "cmoprivacy";
+	name = "Privacy Shutter"
+	},
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "voV" = (
@@ -179868,9 +179867,9 @@ mOx
 xUJ
 rBd
 avE
-dWc
+voU
 xdg
-eWo
+voU
 voU
 pEO
 nRE
@@ -181668,8 +181667,8 @@ pEO
 pEO
 avE
 avE
-xxz
-xxz
+evV
+evV
 wuF
 avE
 xxz
