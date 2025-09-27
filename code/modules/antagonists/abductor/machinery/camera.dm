@@ -72,7 +72,7 @@
 
 	use_delay = (world.time + abductor_pad_cooldown)
 
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+	if(SScameras.is_visible_by_cameras(remote_eye.loc))
 		P.PadToLoc(remote_eye.loc)
 
 /datum/action/innate/teleport_out
@@ -116,7 +116,7 @@
 
 	use_delay = (world.time + teleport_self_cooldown)
 
-	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
+	if(SScameras.is_visible_by_cameras(remote_eye.loc))
 		P.MobToLoc(remote_eye.loc,C)
 
 /datum/action/innate/vest_mode_swap
