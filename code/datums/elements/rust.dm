@@ -36,7 +36,7 @@
 /datum/element/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 
-	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off.")
+	examine_text += span_notice("[source] is very rusty, you could probably <i>burn</i> or <i>scrape</i> it off, hell maybe even pour some <i>space cola</i> on it to remove the rust.")
 
 /datum/element/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
@@ -115,6 +115,10 @@
 /datum/element/rust/heretic/proc/on_entered(turf/source, atom/movable/entered, ...)
 	SIGNAL_HANDLER
 
+	if(ismecha(entered))
+		var/obj/vehicle/sealed/mecha/victim = entered
+		victim.take_damage(20, armour_penetration = 100)
+		return
 	if(!isliving(entered))
 		return
 	var/mob/living/victim = entered
