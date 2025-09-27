@@ -157,7 +157,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	department,
 	distribution,
 )
-	var/obj/machinery/announcement_system/announcement_system = get_announcement_system(/datum/aas_config_entry/announce_officer)
+	var/obj/machinery/announcement_system/announcement_system = get_announcement_system(/datum/aas_config_entry/announce_officer, null, list(RADIO_CHANNEL_SECURITY))
 	if (isnull(announcement_system))
 		return
 
