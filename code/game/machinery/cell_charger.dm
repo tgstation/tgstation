@@ -85,9 +85,9 @@
 	QDEL_NULL(charging)
 	return ..()
 
-/obj/machinery/cell_charger/proc/removecell()
-	charging.update_appearance()
+/obj/machinery/cell_charger/proc/removecell(obj/item/stock_parts/power_store/cell/cell)
 	charging = null
+	cell.update_appearance()
 	update_appearance()
 
 /obj/machinery/cell_charger/attack_hand(mob/user, list/modifiers)
@@ -97,22 +97,21 @@
 	if(!charging)
 		return
 
-	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
-
 	user.visible_message(span_notice("[user] removes [charging] from [src]."), span_notice("You remove [charging] from [src]."))
-
-	removecell()
+	var/obj/item/stock_parts/power_store/cell/cell = charging
+	user.put_in_hands(charging)
+	removecell(cell)
 
 
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
 		return
 
-	charging.forceMove(loc)
+	var/obj/item/stock_parts/power_store/cell/cell = charging
 	to_chat(user, span_notice("You telekinetically remove [charging] from [src]."))
-
-	removecell()
+	charging.forceMove(loc)
+	removecell(cell)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
