@@ -341,16 +341,16 @@
 		battery = battery - 50
 		to_chat(src, span_notice("You route power from your backup battery to move the bolts."))
 	flip_anchored()
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
 
 /mob/living/silicon/ai/proc/flip_anchored()
-	if(is_anchored)
-		is_anchored = !is_anchored
+	if(anchored)
+		set_anchored(FALSE)
 		move_resist = MOVE_FORCE_NORMAL
 		status_flags |= CANPUSH //we want the core to be push-able when un-anchored
 		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	else
-		is_anchored = !is_anchored
+		set_anchored(TRUE)
 		move_resist = MOVE_FORCE_OVERPOWERING
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
