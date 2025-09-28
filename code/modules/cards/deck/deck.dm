@@ -16,8 +16,6 @@
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
-	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
-	var/is_standard_deck = TRUE
 	/// The amount of cards to spawn in the deck (optional)
 	var/decksize = 54
 	/// The description of the cardgame that is played with this deck (used for memories)
@@ -33,16 +31,18 @@
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
-	// Can't hold more cards than we spawn with
-	card_limit = decksize
 	AddElement(/datum/element/drag_pickup)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cards/cardflip.ogg')
 	register_context()
 
-	if(!is_standard_deck)
-		return
+	initialize_cards()
 
-	// generate a normal playing card deck
+	if(length(initial_cards))
+		card_limit = length(initial_cards)
+
+/// Generates the cards in this deck. If not overridden, generates a standard 52-card deck (and 2 jokers).
+/obj/item/toy/cards/deck/proc/initialize_cards()
+	SHOULD_CALL_PARENT(FALSE) // you should be overriding this for subtypes, probably
 	initial_cards += "Joker Clown"
 	initial_cards += "Joker Mime"
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
@@ -239,11 +239,13 @@
 	desc = "A clear plastic card dispenser for holding a large amount of cards. For better or for worse, \
 		the dispenser is designed to prevent a haphazard scattering of cards if thrown."
 	icon_state = "deckshoe_empty" // woe, codersprites upon thee
-	card_limit = 416 // 8 decks of 52 cards. if... you somehow need to do that much card gaming.
+	card_limit = 432 // 8 decks of 54 cards. if... you somehow need to do that much card gaming.
 	can_play_52_card_pickup = FALSE
-	is_standard_deck = FALSE // does not generate cards on its own
 	deck_base_icon = "deckshoe"
 	deckstyle = "" // no deck style because it wouldn't matter
+
+/obj/item/toy/cards/deck/cardshoe/initialize_cards()
+	return
 
 #undef DECK_SHUFFLE_TIME
 #undef DECK_SYNDIE_SHUFFLE_TIME
