@@ -867,7 +867,8 @@
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
 	user.vis_contents -= rust_overlay
 	rusted = FALSE
-	armor_type = /datum/armor/eldritch_armor/rust
+	set_armor(/datum/armor/eldritch_armor/rust)
+
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
 	cut_overlay(object_overlay)
 	QDEL_NULL(rust_overlay)
@@ -904,7 +905,8 @@
 
 	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		armor_type = /datum/armor/eldritch_armor/rust/on_rust
+		set_armor(/datum/armor/eldritch_armor/rust/on_rust)
+
 		ADD_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		COOLDOWN_RESET(src, rust_grace_period)
 		if(rusted) // Already rusted, don't update overlay
@@ -924,7 +926,7 @@
 		// *Actually* remove the effects after our grace period expires.
 		// Keep in mind since we call updates `on_move` this means you can technically stand still to keep the benefits.
 		COOLDOWN_RESET(src, rust_grace_period)
-		armor_type = /datum/armor/eldritch_armor/rust
+		set_armor(/datum/armor/eldritch_armor/rust)
 		REMOVE_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		rusted = FALSE
 		update_rust()
@@ -977,9 +979,9 @@
 
 	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		armor_type = /datum/armor/eldritch_armor/rust/on_rust
+		set_armor(/datum/armor/eldritch_armor/rust/on_rust)
 	else
-		armor_type = initial(armor_type)
+		set_armor(/datum/armor/eldritch_armor/rust)
 
 /datum/armor/eldritch_armor/rust
 	melee = 30
