@@ -137,7 +137,7 @@ CREATE TABLE `SS13_connection_log` (
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
   `round_id` int(11) unsigned NOT NULL,
-  `ckey` varchar(45) DEFAULT NULL,
+  `ckey` varchar(32) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)

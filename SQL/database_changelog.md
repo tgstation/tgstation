@@ -19,10 +19,17 @@ In any query remember to add a prefix to the table names if you use one.
 ---
 
 Version 5.33, 28 September 2025, by Atlanta-Ned
-Modify manifest ckey column to be consistent with other ckey columns
+Modifies manifest ckey column to be consistent with other ckey columns
 
 ```sql
 ALTER TABLE manifest
+	MODIFY ckey VARCHAR(32) NOT NULL;
+```
+
+The prefixed connection log SQL schema also specified a `varchar(45)` ckey column. This SQL will modify that:
+
+```sql
+ALTER TABLE connection_log
 	MODIFY ckey VARCHAR(32) NOT NULL;
 ```
 
