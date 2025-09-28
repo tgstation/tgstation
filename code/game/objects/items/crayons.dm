@@ -615,7 +615,7 @@
 		return NONE
 
 	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
-	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.")
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.", outline_strength)
 	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
 	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
 	chalk_line.create_outline(pwned_human, add_mouse_opacity = TRUE)
