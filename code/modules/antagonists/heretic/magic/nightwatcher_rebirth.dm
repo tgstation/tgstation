@@ -10,7 +10,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
-	aoe_radius = 7
+	aoe_radius = 14
 
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER."
 	invocation_type = INVOCATION_WHISPER
@@ -27,9 +27,7 @@
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/cast(mob/living/carbon/human/cast_on)
 	cast_on.extinguish_mob()
-	. = ..()
-	if(victims_counter > 1)
-
+	return ..()
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/get_things_to_cast_on(atom/center)
 	victims_counter = 0
