@@ -226,9 +226,13 @@
 		living_user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		living_user.mob_mood.adjust_sanity(-50)
 		return FALSE
+	if(!isliving(target))
+		return FALSE
+	var/mob/living/living_target = target
 
 	if(!ishuman(target))
-		return FALSE
+		living_target.adjustFireLoss(30)
+		return TRUE
 	var/mob/living/carbon/human/human_target = target
 	if(IS_HERETIC_OR_MONSTER(human_target))
 		living_user.balloon_alert(living_user, "resists effects!")
