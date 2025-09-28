@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed cell chargers runtiming and not updating their visuals when a cell is taken out"
