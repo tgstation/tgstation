@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "fixed mapped in quantum pads runtiming when trying to link with eachother"

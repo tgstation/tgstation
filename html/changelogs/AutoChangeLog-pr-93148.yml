@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "airlocks affected by dimensional anomalies retain their access, as well as access-adjacent attributes such as emergency access and unrestricted sides."
