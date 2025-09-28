@@ -359,6 +359,11 @@
 	mood_change = -3
 	timeout = 90 SECONDS
 
+/datum/mood_event/tailpulled
+	description = "Someone tugged on my tail."
+	mood_change = -1
+	timeout = 60 SECONDS
+
 /datum/mood_event/tail_lost
 	description = "My tail!! Why?!"
 	mood_change = -8
