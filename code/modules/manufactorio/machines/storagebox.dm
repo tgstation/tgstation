@@ -98,11 +98,3 @@
 	dump_inventory_contents()
 	return ..()
 
-/obj/machinery/power/manufacturing/storagebox/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	if(user.combat_mode)
-		return
-	balloon_alert(user, "dumping..")
-	if(!do_after(user, 1.25 SECONDS, src))
-		return
-	dump_inventory_contents()
