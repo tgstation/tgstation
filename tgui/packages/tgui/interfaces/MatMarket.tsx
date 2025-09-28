@@ -1,5 +1,6 @@
 import { sortBy } from 'es-toolkit';
 import {
+  Box,
   Button,
   Collapsible,
   Modal,
@@ -23,7 +24,7 @@ type Material = {
   threshold: number;
   color: string;
   requested: number;
-  elastic: number;
+  sale_value: number;
 };
 
 type Data = {
@@ -56,7 +57,7 @@ export const MatMarket = (props) => {
   const multiplier = orderingPrive ? 1.1 : 1;
 
   return (
-    <Window width={1110} height={600}>
+    <Window width={990} height={600}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
@@ -123,7 +124,7 @@ export const MatMarket = (props) => {
           (material, i) => (
             <Section key={i}>
               <Stack fill>
-                <Stack.Item width="75%">
+                <Stack.Item width="82%">
                   <Stack>
                     <Stack.Item
                       textColor={material.color ? material.color : 'white'}
@@ -133,22 +134,17 @@ export const MatMarket = (props) => {
                     >
                       {toTitleCase(material.name)}
                     </Stack.Item>
-                    <Stack.Item
-                      width="10%"
-                      pr="2%"
-                      textColor={
-                        material.elastic < 33
-                          ? 'red'
-                          : material.elastic < 66
-                            ? 'orange'
-                            : 'green'
-                      }
-                    >
-                      Elasticity: <b>{Math.round(material.elastic)}</b>%
-                    </Stack.Item>
-
                     <Stack.Item width="15%" pr="2%">
-                      Trading at <b>{formatMoney(material.price)}</b> cr.
+                      Trading at <br />
+                      <CostText
+                        price={material.price}
+                        threshold={material.threshold}
+                        saleValue={material.sale_value}
+                      />
+                    </Stack.Item>
+                    <Stack.Item width="15%" pr="2%">
+                      Static sale value <br />
+                      {formatMoney(material.sale_value)} cr.
                     </Stack.Item>
                     {material.price < material.threshold ? (
                       <Stack.Item width="33%" ml={2} textColor="grey">
@@ -157,9 +153,16 @@ export const MatMarket = (props) => {
                       </Stack.Item>
                     ) : (
                       <Stack.Item width="33%" ml={2}>
-                        <b>{material.quantity || 'Zero'}</b> sheets of{' '}
-                        <b>{material.name}</b> trading.{' '}
-                        {material.requested || 'Zero'} sheets ordered.
+                        <Box textColor={material.quantity === 0 ? 'grey' : 'white'}>
+                          <b>{material.quantity || 'Zero'}</b> sheets of{' '}
+                          <b>{material.name}</b> trading.{' '}
+                        </Box>
+                        <Box
+                          bold={!!material.requested}
+                          textColor={material.requested > 0 ? 'lightblue' : 'white'}
+                        >
+                          {material.requested || 'Zero'} sheets ordered.
+                        </Box>
                       </Stack.Item>
                     )}
 
@@ -180,9 +183,11 @@ export const MatMarket = (props) => {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
+                    height="100%"
+                    verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
-                      material.price <= material.threshold ||
+                      material.price < material.threshold ||
                       creditBalance - total_order_cost <
                         material.price * multiplier ||
                       material.requested + 1 > material.quantity
@@ -198,9 +203,11 @@ export const MatMarket = (props) => {
                     Buy 1
                   </Button>
                   <Button
+                    height="100%"
+                    verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
-                      material.price <= material.threshold ||
+                      material.price < material.threshold ||
                       creditBalance - total_order_cost <
                         material.price * 5 * multiplier ||
                       material.requested + 5 > material.quantity
@@ -216,9 +223,11 @@ export const MatMarket = (props) => {
                     5
                   </Button>
                   <Button
+                    height="100%"
+                    verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
-                      material.price <= material.threshold ||
+                      material.price < material.threshold ||
                       creditBalance - total_order_cost <
                         material.price * 10 * multiplier ||
                       material.requested + 10 > material.quantity
@@ -234,9 +243,11 @@ export const MatMarket = (props) => {
                     10
                   </Button>
                   <Button
+                    height="100%"
+                    verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
-                      material.price <= material.threshold ||
+                      material.price < material.threshold ||
                       creditBalance - total_order_cost <
                         material.price * 25 * multiplier ||
                       material.requested + 25 > material.quantity
@@ -252,9 +263,11 @@ export const MatMarket = (props) => {
                     25
                   </Button>
                   <Button
+                    height="100%"
+                    verticalAlignContent="middle"
                     disabled={
                       catastrophe === 1 ||
-                      material.price <= material.threshold ||
+                      material.price < material.threshold ||
                       creditBalance - total_order_cost <
                         material.price * 50 * multiplier ||
                       material.requested + 50 > material.quantity
@@ -270,9 +283,6 @@ export const MatMarket = (props) => {
                     50
                   </Button>
                 </Stack.Item>
-                {material.requested > 0 && (
-                  <Stack.Item ml={2}>x {material.requested}</Stack.Item>
-                )}
               </Stack>
             </Section>
           ),
@@ -295,3 +305,18 @@ const MarketCrashModal = (props) => {
     </Modal>
   );
 };
+
+type CostSelectProps = {
+  price: number;
+  threshold: number;
+  saleValue: number;
+};
+
+function CostText(props: CostSelectProps) {
+  const { price, threshold, saleValue } = props;
+  return (
+    <Box textColor={price < threshold ? 'grey' : (saleValue < price ? 'white' : 'green')}>
+      {formatMoney(price)} cr.
+    </Box>
+  );
+}
