@@ -10,7 +10,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
-	aoe_radius = 14
+	aoe_radius = 7
 
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER."
 	invocation_type = INVOCATION_WHISPER
@@ -27,7 +27,9 @@
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/cast(mob/living/carbon/human/cast_on)
 	cast_on.extinguish_mob()
-	return ..()
+	. = ..()
+	if(victims_counter > 1)
+
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/get_things_to_cast_on(atom/center)
 	victims_counter = 0
@@ -58,11 +60,11 @@
 
 	// Heal the caster for every victim damaged
 	var/need_mob_update = FALSE
-	need_mob_update += caster.adjustBruteLoss(-20, updating_health = FALSE)
-	need_mob_update += caster.adjustFireLoss(-20, updating_health = FALSE)
-	need_mob_update += caster.adjustToxLoss(-20, updating_health = FALSE, forced = TRUE)
-	need_mob_update += caster.adjustOxyLoss(-20, updating_health = FALSE)
-	need_mob_update += caster.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	need_mob_update += caster.adjustBruteLoss(-10, updating_health = FALSE)
+	need_mob_update += caster.adjustFireLoss(-10, updating_health = FALSE)
+	need_mob_update += caster.adjustToxLoss(-10, updating_health = FALSE, forced = TRUE)
+	need_mob_update += caster.adjustOxyLoss(-10, updating_health = FALSE)
+	need_mob_update += caster.adjustStaminaLoss(-10, updating_stamina = FALSE)
 	if(need_mob_update)
 		caster.updatehealth()
 
