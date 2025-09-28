@@ -203,41 +203,24 @@ GLOBAL_LIST(heretic_paths)
 		knowledge_tier4 = list(heretic_path.knowledge_tier4)
 
 	for(var/t1_knowledge in knowledge_tier1)
-		// heretic_research_tree[t1_knowledge][HKT_ROUTE] = heretic_path.route
-		// heretic_research_tree[t1_knowledge][HKT_UI_BGR] = heretic_path.ui_bgr
 		heretic_research_tree[t1_knowledge][HKT_DEPTH] = HKT_DEPTH_TIER_1
 		for(var/tier_two_knowledge in knowledge_tier2)
 			heretic_research_tree[t1_knowledge][HKT_NEXT] += heretic_research_tree[tier_two_knowledge][HKT_ID]
 
 	for(var/t2_knowledge in knowledge_tier2)
-		// heretic_research_tree[t2_knowledge][HKT_ROUTE] = heretic_path.route
-		// heretic_research_tree[t2_knowledge][HKT_UI_BGR] = heretic_path.ui_bgr
 		heretic_research_tree[t2_knowledge][HKT_DEPTH] = HKT_DEPTH_TIER_2
 		heretic_research_tree[t2_knowledge][HKT_NEXT] += heretic_research_tree[heretic_path.robes][HKT_ID]
 
 	for(var/t3_knowledge in knowledge_tier3)
-		// heretic_research_tree[t3_knowledge][HKT_ROUTE] = heretic_path.route
-		// heretic_research_tree[t3_knowledge][HKT_UI_BGR] = heretic_path.ui_bgr
 		heretic_research_tree[t3_knowledge][HKT_DEPTH] = HKT_DEPTH_TIER_3
 		heretic_research_tree[t3_knowledge][HKT_NEXT] += heretic_research_tree[heretic_path.blade][HKT_ID]
 		heretic_research_tree[heretic_path.robes][HKT_NEXT] += heretic_research_tree[t3_knowledge][HKT_ID]
 
 	for(var/t4_knowledge in knowledge_tier4)
-		// heretic_research_tree[t4_knowledge][HKT_ROUTE] = heretic_path.route
-		// heretic_research_tree[t4_knowledge][HKT_UI_BGR] = heretic_path.ui_bgr
 		heretic_research_tree[t4_knowledge][HKT_DEPTH] = HKT_DEPTH_TIER_4
 		heretic_research_tree[heretic_path.blade][HKT_NEXT] += heretic_research_tree[t4_knowledge][HKT_ID]
 		heretic_research_tree[t4_knowledge][HKT_NEXT] += heretic_research_tree[heretic_path.ascension][HKT_ID]
 
-	//route stuff
-	// heretic_research_tree[heretic_path.robes][HKT_ROUTE] = heretic_path.route
-	// heretic_research_tree[heretic_path.blade][HKT_ROUTE] = heretic_path.route
-	// heretic_research_tree[heretic_path.ascension][HKT_ROUTE] = heretic_path.route
-
-	// heretic_research_tree[heretic_path.start][HKT_UI_BGR] = heretic_path.ui_bgr
-	// heretic_research_tree[heretic_path.robes][HKT_UI_BGR] = heretic_path.ui_bgr
-	// heretic_research_tree[heretic_path.blade][HKT_UI_BGR] = heretic_path.ui_bgr
-	// heretic_research_tree[heretic_path.ascension][HKT_UI_BGR] = heretic_path.ui_bgr
 	//depth stuff
 	heretic_research_tree[heretic_path.robes][HKT_DEPTH] = HKT_DEPTH_ROBES
 	heretic_research_tree[heretic_path.blade][HKT_DEPTH] = HKT_DEPTH_ARMOR
@@ -267,7 +250,7 @@ GLOBAL_LIST(heretic_paths)
 		knowledge_tier1,
 		knowledge_tier2,
 		knowledge_tier3,
-		knowledge_tier4
+		knowledge_tier4,
 	)
 
 	// Every path can have a guaranteed option that will show up in the first 3 drafts (Otherwise we just run as normal)
@@ -278,7 +261,7 @@ GLOBAL_LIST(heretic_paths)
 	var/list/guaranteed_drafts = list(
 		guaranteed_draft_t1,
 		guaranteed_draft_t2,
-		guaranteed_draft_t3
+		guaranteed_draft_t3,
 	)
 
 	var/list/shop_unlock_order = list(
@@ -286,7 +269,7 @@ GLOBAL_LIST(heretic_paths)
 		knowledge_tier2,
 		heretic_path.robes,
 		knowledge_tier3,
-		knowledge_tier4
+		knowledge_tier4,
 	)
 
 	var/list/draft_ineligible = path_knowledges.Copy()
@@ -313,24 +296,24 @@ GLOBAL_LIST(heretic_paths)
 			"parent_knowledge" = knowledge_tier1,
 			"guaranteed_knowledge" = guaranteed_draft_t1,
 			"probabilities" = list("1" = 50, "2" = 50, "3" = 0, "4" = 0, "5" = 0),
-			HKT_DEPTH = HKT_DEPTH_DRAFT_1
+			HKT_DEPTH = HKT_DEPTH_DRAFT_1,
 		),
 		list(
 			"parent_knowledge" = knowledge_tier2,
 			"guaranteed_knowledge" = guaranteed_draft_t2,
 			"probabilities" = list("1" = 50, "2" = 25, "3" = 25, "4" = 0, "5" = 0),
-			HKT_DEPTH = HKT_DEPTH_DRAFT_2
+			HKT_DEPTH = HKT_DEPTH_DRAFT_2,
 		),
 		list(
 			"parent_knowledge" = knowledge_tier3,
 			"guaranteed_knowledge" = guaranteed_draft_t3,
 			"probabilities" = list("1" = 20, "2" = 20, "3" = 20, "4" = 20, "5" = 20),
-			HKT_DEPTH = HKT_DEPTH_DRAFT_3
+			HKT_DEPTH = HKT_DEPTH_DRAFT_3,
 		),
 		list(
 			"parent_knowledge" = knowledge_tier4,
 			"probabilities" = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 100),
-			HKT_DEPTH = HKT_DEPTH_DRAFT_4
+			HKT_DEPTH = HKT_DEPTH_DRAFT_4,
 		)
 	)
 	/// generate 3 drafts for each draft tier, while banning you from picking multiple drafts
@@ -366,7 +349,7 @@ GLOBAL_LIST(heretic_paths)
 				null,
 				HERETIC_KNOWLEDGE_DRAFT,
 				depth,
-				0
+				0,
 			)
 			final_draft[selected_knowledge][HKT_PURCHASED_DEPTH] = selected_knowledge::drafting_tier
 			var/draft_id = get_knowledge_id(selected_knowledge, HERETIC_KNOWLEDGE_DRAFT)
@@ -388,7 +371,7 @@ GLOBAL_LIST(heretic_paths)
 				null,
 				HERETIC_KNOWLEDGE_SHOP,
 				drafting_tier,
-				shop_costs[drafting_tier]
+				shop_costs[drafting_tier],
 			)
 			var/shop_id = get_knowledge_id(knowledge_type, HERETIC_KNOWLEDGE_SHOP)
 			heretic_research_tree[unlocked_by][HKT_NEXT] |= shop_id
