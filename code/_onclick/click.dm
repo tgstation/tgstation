@@ -247,7 +247,7 @@
 
 	var/turf/current_turf = get_turf(reacher)
 
-	for(var/i in 1 to reach_length)
+	for(var/i in 1 to (reach_length - 1))
 		var/direction = get_dir(current_turf, src)
 		if(!direction)
 			return FALSE
@@ -262,7 +262,7 @@
 			if(thing.density)
 				return FALSE
 
-		if(current_turf.Adjacent(src))
+		if(turf_to_check.Adjacent(src))
 			return TRUE
 
 		current_turf = turf_to_check
