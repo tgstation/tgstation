@@ -37,7 +37,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/medicine/omnizine = 5,
+		/datum/reagent/medicine/omnizine = /obj/item/food/donkpocket::omnizine_to_add,
 	)
 	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
