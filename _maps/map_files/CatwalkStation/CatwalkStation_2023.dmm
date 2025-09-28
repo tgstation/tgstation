@@ -11730,11 +11730,11 @@
 /turf/open/floor/grass,
 /area/station/hallway/primary/central)
 "dwi" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs)
 "dwl" = (
@@ -52786,9 +52786,11 @@
 /turf/open/floor/wood,
 /area/station/service/chapel)
 "phP" = (
-/obj/structure/closet/secure_closet/security,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
+	},
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs)
@@ -78892,8 +78894,8 @@
 /area/station/engineering/storage)
 "wTj" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/table/reinforced,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/closet/secure_closet/security,
 /turf/open/openspace,
 /area/station/security/checkpoint/customs)
 "wTk" = (
