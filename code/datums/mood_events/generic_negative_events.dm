@@ -1,4 +1,4 @@
-/datum/mood_event/handcuffed
+mood_event/table/add_effects/datum/mood_event/handcuffed
 	description = "I guess my antics have finally caught up with me."
 	mood_change = -1
 
@@ -105,13 +105,6 @@
 	description = "Someone threw me on a table!"
 	mood_change = -2
 	timeout = 2 MINUTES
-
-/datum/mood_event/table/add_effects()
-	if(isfelinid(owner)) //Holy snowflake batman!
-		var/mob/living/carbon/human/feline = owner
-		feline.wag_tail(3 SECONDS)
-		description = "They want to play on the table!"
-		mood_change = 2
 
 /datum/mood_event/table_limbsmash
 	description = "That fucking table, man that hurts..."
