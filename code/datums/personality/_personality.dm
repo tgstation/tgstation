@@ -37,9 +37,6 @@
 	stack_trace("qdel called on a personality singleton!")
 	return QDEL_HINT_LETMELIVE
 
-/// Trait source for personality traits
-#define PERSONALITY_TRAIT "personality_trait"
-
 /**
  * Called when applying this personality to a mob.
  *
@@ -70,8 +67,7 @@
 	if(processes)
 		SSpersonalities.processing_personalities[src] -= who
 
-#undef PERSONALITY_TRAIT
-
 /// Called every SSpersonality tick if `processes` is TRUE
 /datum/personality/proc/on_tick(mob/living/subject, seconds_per_tick)
+	SSpersonalities.processing_personalities -= src // don't keep ticking
 	CRASH("Personality [type] processed but did not override on_tick().")

@@ -818,11 +818,13 @@
 		if(other_effect.moodlet_type == moodlet_type)
 			return FALSE
 
+	owner.become_area_sensitive("[id]_[moodlet_type]")
 	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
 	return TRUE
 
 /datum/status_effect/moodlet_in_area/on_remove()
 	UnregisterSignal(owner, COMSIG_ENTER_AREA)
+	owner.lose_area_sensitivity("[id]_[moodlet_type]")
 	owner.clear_mood_event("[id]_[moodlet_type]")
 
 /datum/status_effect/moodlet_in_area/proc/check_area(datum/source, area/new_area)
