@@ -615,12 +615,13 @@
 		return NONE
 
 	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
-	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped outline of a body.")
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.")
 	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
 	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
 
 	chalk_line.icon = null
 	chalk_line.icon_state = null
+	chalk_line.mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 	chalk_line.cut_overlays()
 	var/mob/living/carbon/human/human_target = interacting_with
@@ -632,8 +633,7 @@
 	chalk_line.add_filter("alpha_mask", 2, alpha_mask_filter(
 		x = chalk_line.pixel_x,
 		y = chalk_line.pixel_y,
-		icon = center_image(getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE), \
-			x_dimension = ICON_SIZE_X, y_dimension = ICON_SIZE_Y),
+		icon = getIconMask(pwned_human.appearance),//getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE)
 		flags = MASK_INVERSE,
 	))
 	return ITEM_INTERACT_SUCCESS
