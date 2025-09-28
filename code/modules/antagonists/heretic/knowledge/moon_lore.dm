@@ -282,7 +282,7 @@
 		if(carbon_view.has_status_effect(/datum/status_effect/confusion))
 			to_chat(carbon_view, span_big(span_hypnophrase("YOUR HEAD RATTLES WITH A THOUSAND VOICES JOINED IN A MADDENING CACOPHONY OF SOUND AND MUSIC. EVERY FIBER OF YOUR BEING SAYS 'RUN'.")))
 		carbon_view.adjust_confusion(2 SECONDS)
-		carbon_view.mob_mood.adjust_sanity(-25)
+		carbon_view.mob_mood.adjust_sanity(-20)
 
 		if(carbon_sanity >= 10)
 			return
