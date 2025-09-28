@@ -44,6 +44,8 @@
 	var/crayon_color = "red"
 	/// Current paint colour
 	var/paint_color = COLOR_RED
+	///How strong the outline should be when drawing around something.
+	var/outline_strength = 0.5
 
 	/// Contains chosen symbol to draw
 	var/drawtype
@@ -598,7 +600,43 @@
 
 	if(can_use_on(interacting_with, user, modifiers))
 		return use_on(interacting_with, user, modifiers)
-	return NONE
+
+	if(!ishuman(interacting_with) || user.combat_mode)
+		return NONE
+
+	var/mob/living/carbon/human/pwned_human = interacting_with
+	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		return NONE
+
+	interacting_with.balloon_alert(user, "drawing outline...")
+	if(!do_after(user, DRAW_TIME, target = pwned_human))
+		return NONE
+	if(!use_charges(user, 1))
+		return NONE
+
+	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped outline of a body.")
+	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
+	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
+
+	chalk_line.icon = null
+	chalk_line.icon_state = null
+
+	chalk_line.cut_overlays()
+	var/mob/living/carbon/human/human_target = interacting_with
+	chalk_line.add_overlay(human_target.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER, WOUND_LAYER, HALO_LAYER)))
+	chalk_line.transform = pwned_human.transform
+	chalk_line.dir = pwned_human.dir
+
+	chalk_line.add_filter("batong_outline", 1, outline_filter(outline_strength, paint_color))
+	chalk_line.add_filter("alpha_mask", 2, alpha_mask_filter(
+		x = chalk_line.pixel_x,
+		y = chalk_line.pixel_y,
+		icon = center_image(getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE), \
+			x_dimension = ICON_SIZE_X, y_dimension = ICON_SIZE_Y),
+		flags = MASK_INVERSE,
+	))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
@@ -672,69 +710,7 @@
 	crayon_color = "white"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5,  /datum/reagent/colorful_reagent/powder/white/crayon = 1.5)
 	dye_color = DYE_WHITE
-
-/obj/item/toy/crayon/white/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	/// Wherein, we draw a chalk body outline vaguely around the dead or "dead" mob
-	if(!ishuman(interacting_with) || user.combat_mode)
-		return ..()
-
-	var/mob/living/carbon/human/pwned_human = interacting_with
-
-	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
-		return ..()
-
-	interacting_with.balloon_alert(user, "drawing outline...")
-	if(!do_after(user, DRAW_TIME, target = pwned_human))
-		return NONE
-	if(!use_charges(user, 1))
-		return NONE
-
-	var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
-	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
-	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
-	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
-	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
-
-/*
-	var/mutable_appearance/appearance_copied = copy_appearance_filter_overlays(pwned_human.appearance)
-	appearance_copied.layer = FLOAT_LAYER
-	appearance_copied.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER|PIXEL_SCALE
-	appearance_copied.color = paint_color
-*/
-
-	chalk_line.appearance = copy_appearance_filter_overlays(pwned_human.appearance)
-	chalk_line.layer = FLOAT_LAYER
-	chalk_line.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER|PIXEL_SCALE
-//	chalk_line.color = rgb(0,0,0,255)
-	chalk_line.add_filter("batong_outline", 1, outline_filter(1, COLOR_WHITE))
-	chalk_line.add_filter("alpha_mask", 1, alpha_mask_filter(
-		x = chalk_line.pixel_x,
-		y = chalk_line.pixel_y,
-		icon = center_image(getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE), \
-			x_dimension = ICON_SIZE_X, y_dimension = ICON_SIZE_Y),
-		flags = MASK_INVERSE,
-	))
-/*
-	chalk_line.render_source = "Outline[REF(pwned_human)]"
-	appearance_copied.render_target = chalk_line.render_source
-	chalk_line.add_overlay(appearance_copied)
-*/
-
-/*
-	chalk_line.appearance = copy_appearance_filter_overlays(pwned_human.appearance)
-	chalk_line.layer = FLOAT_LAYER
-	chalk_line.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_TOGETHER|PIXEL_SCALE
-	chalk_line.color = rgb(0,0,0,255)
-
-	chalk_line.add_filter("batong_outline", 1, outline_filter(1, COLOR_RED))
-	chalk_line.add_filter("alpha_mask", 2, alpha_mask_filter(
-		x = chalk_line.pixel_x,
-		y = chalk_line.pixel_y,
-		icon = icon(pwned_human),
-		flags = MASK_INVERSE,
-	))
-*/
-	return ITEM_INTERACT_SUCCESS
+	outline_strength = 1
 
 /obj/item/toy/crayon/mime
 	name = "mime crayon"
