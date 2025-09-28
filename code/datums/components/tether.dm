@@ -286,7 +286,7 @@
 /datum/component/tether/proc/process_beam_click(atom/source, atom/location, params, mob/user)
 	var/turf/nearest_turf
 	for (var/turf/line_turf in get_line(get_turf(parent), get_turf(tether_target)))
-		if (user.CanReach(line_turf))
+		if (line_turf.IsReachableBy(user))
 			nearest_turf = line_turf
 			break
 

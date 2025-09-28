@@ -53,7 +53,6 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(homan, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
 	RegisterSignal(homan, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(homan, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 
@@ -61,7 +60,7 @@
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(homan, list(COMSIG_ATOM_CANREACH, COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
+	UnregisterSignal(homan, list(COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
 
 /// signal sent when prompting if an item can be equipped
 /datum/mutation/elastic_arms/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/pick_item)
@@ -109,4 +108,4 @@
 		if(thing.density)
 			return
 
-	return COMPONENT_ALLOW_REACH
+	return

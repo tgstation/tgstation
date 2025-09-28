@@ -141,7 +141,7 @@
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill
 	griddled_objects += item_to_grill
-	item_to_grill.flags_1 |= IS_ONTOP_1
+	ADD_TRAIT(item_to_grill, TRAIT_SKIP_BASIC_REACH_CHECK, ref(src))
 	item_to_grill.vis_flags |= VIS_INHERIT_PLANE
 
 	SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_PLACED, user)
@@ -155,7 +155,7 @@
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/ungrill)
 	SIGNAL_HANDLER
-	ungrill.flags_1 &= ~IS_ONTOP_1
+	REMOVE_TRAIT(ungrill, TRAIT_SKIP_BASIC_REACH_CHECK, ref(src))
 	ungrill.vis_flags &= ~VIS_INHERIT_PLANE
 	griddled_objects -= ungrill
 	vis_contents -= ungrill

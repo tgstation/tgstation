@@ -37,7 +37,7 @@
 	examine_list["climbable"] = "It looks like it can be climbed on."
 
 /datum/element/climbable/proc/can_climb(atom/source, mob/user)
-	if (!user.CanReach(source))
+	if (!source.IsReachableBy(user))
 		return FALSE
 	var/dir_step = get_dir(user, source.loc)
 	//To jump over a railing you have to be standing next to it, not far behind it.

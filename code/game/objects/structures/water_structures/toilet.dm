@@ -165,7 +165,7 @@
 			grabbed_mob.adjustBruteLoss(5)
 		return
 
-	if(cistern_open && !cover_open && user.CanReach(src))
+	if(cistern_open && !cover_open && IsReachableBy(user))
 		if(!LAZYLEN(cistern_items))
 			to_chat(user, span_notice("The cistern is empty."))
 			return

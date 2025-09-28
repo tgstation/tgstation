@@ -616,7 +616,7 @@
 	if(!isclosedturf(pointed))
 		return
 	var/mob/living/basic/basic_parent = parent
-	if(!basic_parent.CanReach(pointed))
+	if(!pointed.IsReachableBy(basic_parent))
 		return
 	basic_parent.melee_attack(pointed)
 

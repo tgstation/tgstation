@@ -113,7 +113,7 @@
 		mounted_fish.forceMove(loc)
 	fish.forceMove(src)
 	vis_contents += fish
-	fish.flags_1 |= IS_ONTOP_1
+	ADD_TRAIT(fish, TRAIT_SKIP_BASIC_REACH_CHECK, ref(src))
 	fish.vis_flags |= (VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 	fish.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	fish.obj_flags &= ~UNIQUE_RENAME
@@ -195,7 +195,7 @@
 	if(!QDELETED(mounted_fish) && (!persistence_loaded_fish || roll_for_safe_removal()))
 		rotate_fish(0, dir)
 		UnregisterSignal(mounted_fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW))
-		mounted_fish.flags_1 &= ~IS_ONTOP_1
+		REMOVE_TRAIT(mounted_fish, TRAIT_SKIP_BASIC_REACH_CHECK, ref(src))
 		mounted_fish.vis_flags &= ~(VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
 		mounted_fish.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 		mounted_fish.obj_flags |= UNIQUE_RENAME

@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	update_icon_state()
 	presented_item = new(src)
 	presented_item.vis_flags = VIS_INHERIT_PLANE
-	presented_item.flags_1 |= IS_ONTOP_1
+	ADD_TRAIT(presented_item, TRAIT_SKIP_BASIC_REACH_CHECK, ref(src))
 	vis_contents += presented_item
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)

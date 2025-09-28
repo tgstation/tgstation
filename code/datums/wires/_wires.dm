@@ -24,7 +24,7 @@
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
-	if(!user.CanReach(src))
+	if(!IsReachableBy(user))
 		return WIRE_INTERACTION_FAIL
 	INVOKE_ASYNC(wires, TYPE_PROC_REF(/datum/wires, interact), user)
 	return WIRE_INTERACTION_BLOCK
