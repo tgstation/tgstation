@@ -610,9 +610,9 @@
 
 	interacting_with.balloon_alert(user, "drawing outline...")
 	if(!do_after(user, DRAW_TIME, target = pwned_human))
-		return NONE
+		return ITEM_INTERACT_FAILURE
 	if(!use_charges(user, 1))
-		return NONE
+		return ITEM_INTERACT_FAILURE
 
 	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
 	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.", outline_strength)
