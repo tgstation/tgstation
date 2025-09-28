@@ -23,7 +23,7 @@
 	/// The upper end for how long it takes to bake
 	var/baking_time_long = 30 SECONDS
 	/// The amount of omnizine added when it's cooked.
-	var/omnizine_to_add = 6
+	var/omnizine_to_add = 5
 
 /obj/item/food/donkpocket/make_bakeable()
 	AddComponent(/datum/component/bakeable, warm_type, rand(baking_time_short, baking_time_long), positive_result, TRUE, list(/datum/reagent/medicine/omnizine = omnizine_to_add))
@@ -37,7 +37,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
 		/datum/reagent/consumable/nutriment/protein = 2,
-		/datum/reagent/medicine/omnizine = 6,
+		/datum/reagent/medicine/omnizine = 5,
 	)
 	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
