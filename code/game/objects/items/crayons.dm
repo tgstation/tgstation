@@ -629,11 +629,10 @@
 	chalk_line.transform = pwned_human.transform
 	chalk_line.dir = pwned_human.dir
 
+	var/icon/image_filter = getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE)
 	chalk_line.add_filter("batong_outline", 1, outline_filter(outline_strength, paint_color))
 	chalk_line.add_filter("alpha_mask", 2, alpha_mask_filter(
-		x = chalk_line.pixel_x,
-		y = chalk_line.pixel_y,
-		icon = getIconMask(pwned_human.appearance),//getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE)
+		icon = image_filter,
 		flags = MASK_INVERSE,
 	))
 	return ITEM_INTERACT_SUCCESS
