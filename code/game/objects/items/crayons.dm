@@ -618,23 +618,7 @@
 	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.")
 	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
 	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
-
-	chalk_line.icon = null
-	chalk_line.icon_state = null
-	chalk_line.mouse_opacity = MOUSE_OPACITY_OPAQUE
-
-	chalk_line.cut_overlays()
-	var/mob/living/carbon/human/human_target = interacting_with
-	chalk_line.add_overlay(human_target.get_overlays_copy(list(HANDS_LAYER, HANDCUFF_LAYER, LEGCUFF_LAYER, WOUND_LAYER, HALO_LAYER)))
-	chalk_line.transform = pwned_human.transform
-	chalk_line.dir = pwned_human.dir
-
-	var/icon/image_filter = getFlatIcon(pwned_human.appearance, defdir = pwned_human.dir, no_anim = TRUE)
-	chalk_line.add_filter("batong_outline", 1, outline_filter(outline_strength, paint_color))
-	chalk_line.add_filter("alpha_mask", 2, alpha_mask_filter(
-		icon = image_filter,
-		flags = MASK_INVERSE,
-	))
+	chalk_line.create_outline(pwned_human, add_mouse_opacity = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/get_writing_implement_details()
