@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - rscdel: "You can no longer obtain an emagged fishing portal board from treasure chests. You can still, however, emag fishing portals."
+  - balance: "Monocloning Jumpercable fish have had their export values decreased. Their cloning capacity and electrical output remain the same."

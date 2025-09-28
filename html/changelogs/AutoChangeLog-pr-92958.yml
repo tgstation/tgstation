@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - balance: "Some sturdy objects that you cannot just grab drag around, like mechs, are more resilient against being thrown around by weaker explosions."
-  - bugfix: "Some things, like bolted AIs, aren't thrown around by explosions at all."
