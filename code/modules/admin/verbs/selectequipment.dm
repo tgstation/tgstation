@@ -88,7 +88,7 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 
 /datum/select_equipment/proc/make_outfit_entries(category="General", list/outfit_list)
 	var/list/entries = list()
-	for(var/path as anything in outfit_list)
+	for(var/path in outfit_list)
 		var/datum/outfit/outfit = path
 		entries += list(outfit_entry(category, path, initial(outfit.name)))
 	return entries

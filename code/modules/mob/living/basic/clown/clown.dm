@@ -1,6 +1,6 @@
 /mob/living/basic/clown
 	name = "Clown"
-	desc = "A denizen of clown planet."
+	desc = "A denizen of Clown Planet."
 	icon = 'icons/mob/simple/clown_mobs.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
@@ -32,8 +32,8 @@
 	var/list/loot = list(/obj/effect/mob_spawn/corpse/human/clown)
 	///blackboard emote list
 	var/list/emotes = list(
-		BB_EMOTE_SAY = list("HONK", "Honk!", "Welcome to clown planet!"),
-		BB_EMOTE_HEAR = list("honks", "squeaks"),
+		BB_EMOTE_SAY = list("HONK!!", "Honk!", "Welcome to Clown Planet!"),
+		BB_EMOTE_HEAR = list("honks!", "squeaks!"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'), //WE LOVE TO PARTY
 		BB_SPEAK_CHANCE = 5,
 	)
@@ -72,7 +72,7 @@
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"
-	desc = "A puddle of lube brought to life by the honkmother."
+	desc = "A puddle of lube brought to life by the Honkmother."
 	icon_state = "lube"
 	icon_living = "lube"
 	maxHealth = 50
@@ -84,8 +84,8 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SLIME
 	damage_coeff = list(BRUTE = 0.25, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	emotes = list(
-		BB_EMOTE_SAY = list("HONK", "Honk!", "Welcome to clown planet!"),
-		BB_EMOTE_HEAR = list("bubbles", "oozes"),
+		BB_EMOTE_SAY = list("HONK!!", "Honk!", "Welcome to Clown Planet!"),
+		BB_EMOTE_HEAR = list("bubbles.", "oozes."),
 	)
 	waddles = FALSE
 	loot = list(
@@ -152,16 +152,16 @@
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list(
-			"HONK",
+			"HONK!!",
 			"Honk!",
-			"I didn't ask for this",
-			"I feel constant and horrible pain",
-			"I was born out of mirthful pranking but I live in suffering",
-			"This body is a merciless and unforgiving prison",
+			"I didn't ask for this...",
+			"I feel constant and horrible pain!!",
+			"I was born out of mirthful pranking but I live in suffering!!",
+			"This body is a merciless and unforgiving prison!!",
 			"YA-HONK!!!",
 		),
-		BB_EMOTE_HEAR = list("honks", "contemplates its existence"),
-		BB_EMOTE_SEE = list("sweats", "jiggles"),
+		BB_EMOTE_HEAR = list("honks!", "contemplates its existence."),
+		BB_EMOTE_SEE = list("sweats.", "jiggles."),
 		BB_SPEAK_CHANCE = 5,
 	)
 
@@ -196,7 +196,7 @@
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("YA-HONK!!!"),
-		BB_EMOTE_HEAR = list("honks", "squeaks"),
+		BB_EMOTE_HEAR = list("honks!", "squeaks!"),
 		BB_SPEAK_CHANCE = 60,
 	)
 
@@ -234,9 +234,9 @@
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("HONK", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!"),
-		BB_EMOTE_HEAR = list("honks", "grunts"),
-		BB_EMOTE_SEE = list("sweats"),
+		BB_EMOTE_SAY = list("HONK!!", "Honk!", "HAUAUANK!!!", "GUUURRRRAAAHHH!!!"),
+		BB_EMOTE_HEAR = list("honks!", "grunts!"),
+		BB_EMOTE_SEE = list("sweats!"),
 		BB_SPEAK_CHANCE = 5,
 	)
 
@@ -265,8 +265,8 @@
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("HONK", "Honk!", "Bruh", "cheeaaaahhh?"),
-		BB_EMOTE_SEE = list("asserts his dominance", "emasculates everyone implicitly"),
+		BB_EMOTE_SAY = list("HONK!!", "Honk!", "Bruh.", "cheeaaaahhh?"),
+		BB_EMOTE_SEE = list("asserts his dominance!", "emasculates everyone implicitly!"),
 		BB_SPEAK_CHANCE = 5,
 	)
 
@@ -292,8 +292,8 @@
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("honk"),
-		BB_EMOTE_SEE = list("squirms", "writhes"),
+		BB_EMOTE_SAY = list("honk!"),
+		BB_EMOTE_SEE = list("squirms!", "writhes!"),
 	)
 
 /mob/living/basic/clown/clownhulk/honkmunculus/Initialize(mapload)
@@ -333,9 +333,9 @@
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("HONK!!!", "The Honkmother is merciful, so I must act out her wrath.", "parce mihi ad beatus honkmother placet mihi ut peccata committere,", "DIE!!!"),
-		BB_EMOTE_HEAR = list("honks", "grunts"),
-		BB_EMOTE_SEE = list("sweats"),
+		BB_EMOTE_SAY = list("HONK!!!", "The Honkmother is merciful, so I must act out her wrath.", "Parce mihi ad beatus honkmother placet mihi ut peccata committere.", "DIE!!!"),
+		BB_EMOTE_HEAR = list("honks!", "grunts!"),
+		BB_EMOTE_SEE = list("sweats!"),
 		BB_SPEAK_CHANCE = 5,
 	)
 
@@ -370,15 +370,15 @@
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("aaaaaahhhhuuhhhuhhhaaaaa", "AAAaaauuuaaAAAaauuhhh", "huuuuuh... hhhhuuuooooonnnnkk", "HuaUAAAnKKKK"),
-		BB_EMOTE_SEE = list("squirms", "writhes", "pulsates", "froths", "oozes"),
+		BB_EMOTE_SAY = list("aaaaaahhhhuuhhhuhhhaaaaa...", "AAAaaauuuaaAAAaauuhhh!!", "huuuuuh... hhhhuuuooooonnnnkk...", "HuaUAAAnKKKK!!"),
+		BB_EMOTE_SEE = list("squirms!", "writhes!", "pulsates!", "froths!", "oozes!"),
 		BB_SPEAK_CHANCE = 10,
 	)
 
 
 /mob/living/basic/clown/mutant/glutton
 	name = "banana glutton"
-	desc = "Something that was once a clown"
+	desc = "Something that was once a clown."
 	icon_state = "glutton"
 	icon_living = "glutton"
 	health = 200
@@ -401,8 +401,8 @@
 		/obj/effect/spawner/random/chance_for_freedom,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!"),
-		BB_EMOTE_SEE = list("jiggles", "wobbles"),
+		BB_EMOTE_SAY = list("hey, buddy!", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!"),
+		BB_EMOTE_SEE = list("jiggles!", "wobbles!"),
 	)
 	death_sound = 'sound/misc/sadtrombone.ogg'
 	waddles = FALSE
@@ -564,8 +564,8 @@
 		/obj/effect/spawner/random/peel_or_nana,
 	)
 	emotes = list(
-		BB_EMOTE_SAY = list("HONK", "Honk!", "YA-HONK!!!"),
-		BB_EMOTE_SEE = list("bites into the banana", "plucks a banana off its head", "photosynthesizes"),
+		BB_EMOTE_SAY = list("HONK!!", "Honk!", "YA-HONK!!!"),
+		BB_EMOTE_SEE = list("bites into the banana!", "plucks a banana off its head!", "photosynthesizes!"),
 		BB_EMOTE_SOUND = list('sound/items/bikehorn.ogg'),
 	)
 
