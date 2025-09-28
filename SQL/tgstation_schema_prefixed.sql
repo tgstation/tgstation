@@ -304,7 +304,7 @@ CREATE TABLE `SS13_manifest` (
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) NOT NULL,
   `round_id` int(11) NOT NULL,
-  `ckey` text NOT NULL,
+  `ckey` varchar(32) NOT NULL,
   `character_name` text NOT NULL,
   `job` text NOT NULL,
   `special` text DEFAULT NULL,
