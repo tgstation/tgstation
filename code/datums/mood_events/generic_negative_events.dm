@@ -1,4 +1,4 @@
-mood_event/table/add_effects/datum/mood_event/handcuffed
+/datum/mood_event/handcuffed
 	description = "I guess my antics have finally caught up with me."
 	mood_change = -1
 
