@@ -238,7 +238,8 @@
 		living_user.balloon_alert(living_user, "resists effects!")
 		return FALSE
 	if(human_target.has_status_effect(/datum/status_effect/moon_slept) || human_target.has_status_effect(/datum/status_effect/moon_converted))
-		human_target.balloon_alert(living_user, "already affected!")
+		human_target.balloon_alert(living_user, "already affected, causing damage!")
+		human_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25)
 		return FALSE
 	if(human_target.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return FALSE
