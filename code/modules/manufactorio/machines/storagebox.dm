@@ -10,12 +10,12 @@
 	COOLDOWN_DECLARE(process_speed)
 
 
-/obj/machinery/power/manufacturing/silobox/Initialize(mapload)
+/obj/machinery/power/manufacturing/storagebox/Initialize(mapload)
 	. = ..()
 	rmat = AddComponent(/datum/component/remote_materials, mapload)
 
 
-/obj/machinery/power/manufacturing/silobox/attack_hand(mob/user, list/modifiers)
+/obj/machinery/power/manufacturing/storagebox/attack_hand(mob/user, list/modifiers)
 	if(modifiers && modifiers.Find(RIGHT_CLICK)) // Right-click to select material
 		var/list/materials = rmat?.mat_container?.materials
 		if (!materials || !length(materials))
@@ -51,13 +51,13 @@
 
 
 
-/obj/machinery/power/manufacturing/silobox/process()
+/obj/machinery/power/manufacturing/storagebox/process()
 	if(!check_factors())
 		return
 
 	rmat.eject_sheets(selected_material, 5, src.loc, SILICON_OVERRIDE)
 
-/obj/machinery/power/manufacturing/silobox/proc/check_factors()
+/obj/machinery/power/manufacturing/storagebox/proc/check_factors()
 
 
 	if(!COOLDOWN_FINISHED(src, process_speed))
