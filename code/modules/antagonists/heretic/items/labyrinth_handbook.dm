@@ -50,7 +50,7 @@
 	if(!IS_HERETIC_OR_MONSTER(user))
 		return
 	. += span_hypnophrase("Materializes a barrier upon any tile in sight, which only you can pass through. Lasts 8 seconds.")
-	. += span_notice("It has <b>[charges]</b> charges remaining.")
+	. += span_notice("It has <b>[charges]</b> charge\s remaining.")
 
 /obj/item/heretic_labyrinth_handbook/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
