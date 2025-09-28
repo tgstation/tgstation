@@ -163,7 +163,7 @@
 			UnarmedAttack(item_atom, TRUE, modifiers)
 
 	//Standard reach turf to turf or reaching inside storage
-	if(A.IsReachableBy(src, W))
+	if(A.IsReachableBy(src, W?.reach))
 		if(W)
 			W.melee_attack_chain(src, A, modifiers)
 		else
@@ -204,11 +204,11 @@
  *
  * Args:
  * * user: The movable trying to reach us.
- * * tool: An optional item being used.
+ * * reacher_range: How far the reacher can reach.
  * * depth: How deep nested inside of an atom contents stack an object can be.
  * * direct_access: Do not override. Used for recursion.
  */
-/atom/proc/IsReachableBy(atom/movable/user, obj/item/tool, depth = INFINITY, direct_access = user.DirectAccess())
+/atom/proc/IsReachableBy(atom/movable/user, reacher_range = 1, depth = INFINITY, direct_access = user.DirectAccess())
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(isnull(user))
@@ -217,57 +217,55 @@
 	if(src in direct_access)
 		return TRUE
 
-	if(isturf(loc) || isturf(src) || HAS_TRAIT(src, TRAIT_SKIP_BASIC_REACH_CHECK))
-		if(CheckReachableAdjacency(user, tool))
+	// This is a micro-opt, if any turf ever returns false from IsContainedAtomAccessible, change this.
+	if(isturf(loc) || isturf(src))
+		if(CheckReachableAdjacency(user, reacher_range))
 			return TRUE
 
 	depth--
+
 	if(depth <= 0)
 		return FALSE
 
 	if(isnull(loc) || isarea(loc) || !loc.IsContainedAtomAccessible(src, user))
 		return FALSE
 
-	return loc.IsReachableBy(user, tool, depth, direct_access)
+	return loc.IsReachableBy(user, reacher_range, depth, direct_access)
 
-/// Checks if a reacher is adjacent to us.
-/atom/proc/CheckReachableAdjacency(atom/movable/reacher, obj/item/tool)
+/atom/proc/CheckReachableAdjacency(atom/movable/reacher, reacher_range)
 	if(reacher.Adjacent(src))
 		return TRUE
-	if(tool && CheckToolReach(reacher, src, tool.reach))
-		return TRUE
-	if(!isliving(reacher))
+
+	if(isliving(reacher))
+		var/mob/living/living_reacher = reacher
+		if(living_reacher.reach_length > reacher_range)
+			reacher_range = living_reacher.reach_length
+
+	return (reacher_range > 1) && RangedReachCheck(reacher, src, reacher_range)
+
+/// Called by IsReachableBy() to check for ranged reaches.
+/proc/RangedReachCheck(atom/movable/here, atom/movable/there, reach)
+	if(!here || !there)
 		return FALSE
 
-	var/mob/living/living_reacher = reacher
-	var/reach_length = living_reacher.reach_length
-
-	if(reach_length < 2)
+	if(reach <= 1)
 		return FALSE
 
-	var/turf/current_turf = get_turf(reacher)
+	// Prevent infinite loop.
+	if(istype(here, /obj/effect/abstract/reach_checker))
+		return FALSE
 
-	for(var/i in 1 to (reach_length - 1))
-		var/direction = get_dir(current_turf, src)
-		if(!direction)
-			return FALSE
-		var/turf/open/turf_to_check = get_step(current_turf, direction)
+	var/obj/effect/abstract/reach_checker/dummy = new(get_turf(here))
+	for(var/i in 1 to reach) //Limit it to that many tries
+		var/turf/T = get_step(dummy, get_dir(dummy, there))
+		if(there.IsReachableBy(dummy))
+			. = TRUE
+			break
 
-		// Make sure it's an open turf we're trying to pass over.
-		if(!istype(turf_to_check))
-			return FALSE
+		if(!dummy.Move(T)) //we're blocked!
+			break
 
-		// Check if there's something dense inbetween, then allow it.
-		for(var/atom/thing in turf_to_check)
-			if(thing.density)
-				return FALSE
-
-		if(turf_to_check.Adjacent(src))
-			return TRUE
-
-		current_turf = turf_to_check
-
-	return FALSE
+	qdel(dummy)
 
 /// Returns TRUE if an atom contained within our contents is reachable.
 /atom/proc/IsContainedAtomAccessible(atom/contained, atom/movable/user)

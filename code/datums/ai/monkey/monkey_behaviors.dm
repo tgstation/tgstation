@@ -195,7 +195,7 @@
 
 	//look for any potential weapons we're holding
 	var/obj/item/potential_weapon = locate() in living_pawn.held_items
-	if(!target.IsReachableBy(living_pawn, potential_weapon))
+	if(!target.IsReachableBy(living_pawn, potential_weapon?.reach))
 		return FALSE
 
 	if(isnull(potential_weapon))
