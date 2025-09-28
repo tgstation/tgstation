@@ -9,6 +9,7 @@
 	var/do_icon_rotate = TRUE
 	var/rotation = 0
 	var/paint_colour = COLOR_WHITE
+	///Used by `create_outline` to determine how strong (how wide) the outline itself will be.
 	var/color_strength
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null, desc_override = null, color_strength)
