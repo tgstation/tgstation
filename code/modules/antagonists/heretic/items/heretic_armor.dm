@@ -529,8 +529,6 @@
 	var/atom/movable/screen/moon_health/health_hud
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
-	/// Boolean, if the robes are worn by a non-heretic, we will kill them
-	var/brain_poison = FALSE
 	//---- Messages that get sent when someone wearing the moon robes is attacked
 	/// Visible message that nearby people see
 	var/static/list/visible_message_list = list(
@@ -574,23 +572,9 @@
 		RegisterSignal(human_user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 		signal_registered += COMSIG_MOB_HUD_CREATED
 
-	// Gives the traits and effects
 	human_user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-	RegisterSignal(human_user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
-	signal_registered += COMSIG_LIVING_CHECK_BLOCK
-
-	var/list/damage_signals = list(
-		COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
-		COMSIG_LIVING_ADJUST_BURN_DAMAGE,
-		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
-		COMSIG_LIVING_ADJUST_TOX_DAMAGE,
-		COMSIG_LIVING_ADJUST_STAMINA_DAMAGE
-	)
-	RegisterSignals(human_user, damage_signals, PROC_REF(on_damage_adjust))
-	signal_registered += damage_signals
-
-	RegisterSignal(human_user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
-	signal_registered += COMSIG_MOB_AFTER_APPLY_DAMAGE
+	RegisterSignal(human_user, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_apply_modifiers))
+	signal_registered += COMSIG_MOB_APPLY_DAMAGE_MODIFIERS
 
 	RegisterSignal(human_user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	signal_registered += COMSIG_LIVING_DEATH
@@ -606,7 +590,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/dropped(mob/living/user)
 	. = ..()
-	if(. || !ishuman(user))
+	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/wearer = user
 	UnregisterSignal(wearer, signal_registered)
@@ -618,15 +602,21 @@
 	braindead = FALSE
 	if(health_hud in user.hud_used.infodisplay)
 		on_hud_remove(user)
-	brain_poison = FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/robes_side_effect(mob/living/user)
 	. = ..()
-	brain_poison = TRUE // This will rapidly kill you in /process()
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/victim = user
-	victim?.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10) // Give them a jumpstart so they can't undo
+	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10) // Give them a jumpstart so they can't undo
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_apply_modifiers(mob/living/user, damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
+	SIGNAL_HANDLER
+	if(braindead)
+		return
+	damage_mods += 0
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
+	check_braindeath(user)
 
 /// Gives the health HUD to the wearer
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
@@ -651,6 +641,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_remove(mob/living/carbon/human/wearer)
 	var/datum/hud/original_hud = wearer.hud_used
 	original_hud.infodisplay -= health_hud
+	QDEL_NULL(health_hud)
 	// Restore the old health elements
 	var/atom/movable/screen/stamina/stamina_hud = new(null, original_hud)
 	var/atom/movable/screen/healths/old_health_hud = new(null, original_hud)
@@ -679,20 +670,6 @@
 		return FALSE
 	return ..()
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/block_checked(mob/living/carbon/human/wearer, attacker, damage, attack_text, attack_type, armour_penetration, damage_type)
-	SIGNAL_HANDLER
-	if(!ishuman(wearer))
-		return
-	if(damage <= 0)
-		return SUCCESSFUL_BLOCK
-
-	// Any hit you block (AKA Attacks) will do 15% more damage
-	damage *= damage_modifier
-
-	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage)
-	check_braindeath(wearer)
-	return SUCCESSFUL_BLOCK
-
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/item_attack_response(mob/living/victim, obj/item/weapon, mob/living/attacker)
 	SIGNAL_HANDLER
 	var/visible_message = pick(visible_message_list)
@@ -706,48 +683,12 @@
 	victim.visible_message(span_danger(visible_message), span_userdanger(self_message), span_danger(blind_message))
 	return SIGNAL_MESSAGE_MODIFIED
 
-/**
- * Handles anything that calls 'adjustBruteLoss()` or any of the other damage types.
- * Negates the damage and applies it as brain damage instead
- * Healing won't be negated
- */
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_damage_adjust(mob/living/carbon/human/wearer, type, amount, forced)
-	SIGNAL_HANDLER
-	if(amount < 0)
-		return
-	if(!ishuman(wearer))
-		return
-	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
-	check_braindeath(wearer)
-	return COMPONENT_IGNORE_CHANGE
-
-/// Handles anything that calls `apply_damage()`, calculates the damage taken and converts it to brain damage
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_take_damage(mob/living/carbon/human/wearer, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
-	SIGNAL_HANDLER
-	if(!ishuman(wearer))
-		return
-	var/total_damage
-	total_damage += wearer.getBruteLoss()
-	total_damage += wearer.getFireLoss()
-	total_damage += wearer.getToxLoss()
-	total_damage += wearer.getOxyLoss()
-	total_damage += wearer.getStaminaLoss()
-	if(!total_damage)
-		return
-	wearer.setBruteLoss(0, forced = TRUE)
-	wearer.setFireLoss(0, forced = TRUE)
-	wearer.setToxLoss(0, forced = TRUE)
-	wearer.setOxyLoss(0, forced = TRUE)
-	wearer.setStaminaLoss(0, forced = TRUE)
-	// Convert all damage to brain damage, good luck
-	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, total_damage)
-	check_braindeath(wearer)
-
 /// Once you reach this point you're completely brain dead, so lets play our effects before you eat shit
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/kill_wearer(mob/living/carbon/human/wearer)
 	if(IS_HERETIC(wearer))
 		var/datum/action/cooldown/spell/aoe/moon_ringleader/temp_spell = new(wearer)
 		temp_spell.cast(wearer)
+		qdel(temp_spell)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	wearer.death()
@@ -771,7 +712,7 @@
 	var/mob/living/carbon/human/wearer = loc
 	if(!istype(wearer) || wearer.wear_suit != src || wearer.stat == DEAD)
 		return ..()
-	if(brain_poison)
+	if(!IS_HERETIC_OR_MONSTER(wearer))
 		wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 	var/brain_damage = wearer.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/emote_rng = 0
@@ -803,13 +744,14 @@
 
 /// Checks if you are brain dead, starts the dying process once you've reached it
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/check_braindeath(mob/living/carbon/human/wearer)
-	if(braindead || wearer.get_organ_loss(ORGAN_SLOT_BRAIN) < 200)
+	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(braindead || our_brain.damage < our_brain.maxHealth)
 		return
 
 	braindead = TRUE
 	wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
 	playsound(wearer, 'sound/effects/pope_entry.ogg', 50)
-	to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
+	to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you.")))
 	addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
@@ -843,7 +785,8 @@
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return INITIALIZE_HINT_QDEL
-	RegisterSignal(our_brain, COMSIG_ORGAN_PRE_ADJUST_DAMAGE, PROC_REF(update_health))
+	update_health(our_brain)
+	RegisterSignal(our_brain, COMSIG_ORGAN_ADJUST_DAMAGE, PROC_REF(update_health))
 
 /// Changes the icon based on the brain health of the wearer
 /atom/movable/screen/moon_health/proc/update_health(obj/item/organ/brain, damage_amount, maximum, required_organ_flag)

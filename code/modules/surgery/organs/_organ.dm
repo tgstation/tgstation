@@ -243,13 +243,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE) //use for damaging effects
 	if(!damage_amount) //Micro-optimization.
 		return FALSE
-	SEND_SIGNAL(src, COMSIG_ORGAN_PRE_ADJUST_DAMAGE, damage_amount, maximum, required_organ_flag)
 	maximum = clamp(maximum, 0, maxHealth) // the logical max is, our max
 	if(maximum < damage)
 		return FALSE
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
 		return FALSE
 	damage = clamp(damage + damage_amount, 0, maximum)
+	SEND_SIGNAL(src, COMSIG_ORGAN_ADJUST_DAMAGE, damage_amount, maximum, required_organ_flag)
 	. = (prev_damage - damage) // return net damage
 	var/message = check_damage_thresholds(owner)
 	prev_damage = damage
