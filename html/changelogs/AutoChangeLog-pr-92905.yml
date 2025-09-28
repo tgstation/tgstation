@@ -1,0 +1,8 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - rscadd: "Added poker chips."
+  - balance: " The roulette machine now stylishly pays out poker chips instead of coins."
+  - balance: "Coins can be redeemed for mats and ground for reagents."
+  - balance: "The money bag can hold vastly more money and now also precious gems and metals."
+  - bugfix: "Fixed the roulette wheel result overlay lingering and obscuring the next roll."
