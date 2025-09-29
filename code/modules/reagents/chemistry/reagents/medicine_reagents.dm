@@ -566,6 +566,87 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/albuterol
+	name = "Albuterol"
+	description = "A potent bronchodilator capable of increasing the amount of gas inhaled by the lungs. Is highly effective at shutting down asthma attacks, \
+		but only when inhaled. Overdose causes over-dilation, resulting in reduced lung function. "
+	taste_description = "bitter and salty air"
+	overdose_threshold = 30
+	color = "#8df5f0"
+	metabolization_rate = REAGENTS_METABOLISM
+	ph = 4
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/inhaler_canister
+
+	/// The decrement we will apply to the received_pressure_mult of our targets lungs.
+	var/pressure_mult_increment = 0.4
+	/// After this many cycles of overdose, we activate secondary effects.
+	var/secondary_overdose_effect_cycle_threshold = 40
+	/// We stop increasing stamina damage once we reach this number.
+	var/maximum_od_stamina_damage = 80
+
+/datum/reagent/medicine/albuterol/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		return
+
+	// has additional effects on asthma, but that's handled in the quirk
+
+	RegisterSignal(affected_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(holder_lost_organ))
+	RegisterSignal(affected_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(holder_gained_organ))
+	var/mob/living/carbon/carbon_mob = affected_mob
+	var/obj/item/organ/lungs/holder_lungs = carbon_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	holder_lungs?.adjust_received_pressure_mult(pressure_mult_increment)
+
+/datum/reagent/medicine/albuterol/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		return
+
+	UnregisterSignal(affected_mob, list(COMSIG_CARBON_LOSE_ORGAN, COMSIG_CARBON_GAIN_ORGAN))
+	var/mob/living/carbon/carbon_mob = affected_mob
+	var/obj/item/organ/lungs/holder_lungs = carbon_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+	holder_lungs?.adjust_received_pressure_mult(-pressure_mult_increment)
+
+/datum/reagent/medicine/albuterol/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+
+	if (!iscarbon(affected_mob))
+		return
+
+	var/mob/living/carbon/carbon_mob = affected_mob
+	if (SPT_PROB(25, seconds_per_tick))
+		carbon_mob.adjust_jitter_up_to(2 SECONDS, 20 SECONDS)
+	if (SPT_PROB(35, seconds_per_tick))
+		if (prob(60))
+			carbon_mob.losebreath += 1
+			to_chat(affected_mob, span_danger("Your diaphram spasms and you find yourself unable to breathe!"))
+		else
+			carbon_mob.breathe(seconds_per_tick, times_fired)
+			to_chat(affected_mob, span_danger("Your diaphram spasms and you unintentionally take a breath!"))
+
+	if (current_cycle > secondary_overdose_effect_cycle_threshold)
+		if (SPT_PROB(30, seconds_per_tick))
+			carbon_mob.adjust_eye_blur_up_to(6 SECONDS, 30 SECONDS)
+		if (carbon_mob.getStaminaLoss() < maximum_od_stamina_damage)
+			carbon_mob.adjustStaminaLoss(seconds_per_tick)
+
+/datum/reagent/medicine/albuterol/proc/holder_lost_organ(datum/source, obj/item/organ/lost)
+	SIGNAL_HANDLER
+
+	if (istype(lost, /obj/item/organ/lungs))
+		var/obj/item/organ/lungs/holder_lungs = lost
+		holder_lungs.adjust_received_pressure_mult(-pressure_mult_increment)
+
+/datum/reagent/medicine/albuterol/proc/holder_gained_organ(datum/source, obj/item/organ/gained)
+	SIGNAL_HANDLER
+
+	if (istype(gained, /obj/item/organ/lungs))
+		var/obj/item/organ/lungs/holder_lungs = gained
+		holder_lungs.adjust_received_pressure_mult(pressure_mult_increment)
+
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	description = "Increases resistance to batons and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing."
@@ -637,6 +718,7 @@
 	name = "Morphine"
 	description = "A painkiller that allows the patient to move at full speed even when injured. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	color = "#A9FBFB"
+	taste_description = "a perfumy, bitter vanilla"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	ph = 8.96

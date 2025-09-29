@@ -781,7 +781,7 @@
 	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
-	control_disabled = TRUE //Can't control things remotely if you're stuck in a card!
+	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
 	radio_enabled = FALSE //No talking on the built-in radio for you either!
 	forceMove(card)
 	card.AI = src
@@ -804,20 +804,20 @@
 	var/list/viewscale = getviewsize(client.view)
 	return get_dist(src, A) <= max(viewscale[1]*0.5,viewscale[2]*0.5)
 
-/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/mob/living/silicon/ai/proc/relay_speech(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	var/raw_translation = translate_language(speaker, message_language, raw_message, spans, message_mods)
 	var/atom/movable/source = speaker.GetSource() || speaker // is the speaker virtual/radio
 	var/treated_message = source.generate_messagepart(raw_translation, spans, message_mods)
 
 	var/start = "Relayed Speech: "
-	var/namepart
-	var/list/stored_name = list(null)
-	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, FALSE)
-	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
+	var/namepart = speaker.get_message_voice()
 	var/hrefpart = "<a href='byond://?src=[REF(src)];track=[html_encode(namepart)]'>"
 	var/jobpart = "Unknown"
 
-	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN)) //don't fetch the speaker's job in case they have something that conseals their identity completely
+	// if voice is concealed, job is concealed
+	// on the other hand we don't care about TRAIT_UNKNOWN_APPEARANCE
+	// (AI can associate voice -> name -> crew record -> job)
+	if(!HAS_TRAIT(speaker, TRAIT_UNKNOWN_VOICE))
 		if (isliving(speaker))
 			var/mob/living/living_speaker = speaker
 			if(living_speaker.job)
@@ -1092,11 +1092,14 @@
 	. = ..()
 	.[/datum/job/ai::title] = minutes
 
-/mob/living/silicon/ai/GetVoice()
-	. = ..()
-	if(ai_voicechanger && ai_voicechanger.changing_voice)
+/mob/living/silicon/ai/get_voice(add_id_name)
+	if(ai_voicechanger?.changing_voice)
 		return ai_voicechanger.say_name
-	return
+	return ..()
+
+/mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
+	src.control_disabled = control_disabled
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

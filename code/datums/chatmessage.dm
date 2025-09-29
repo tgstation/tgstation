@@ -161,7 +161,7 @@
 		if(HAS_TRAIT(target, TRAIT_SIGN_LANG))
 			chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for signers too
 		else
-			chat_color_name_to_use = target.GetVoice() // for everything else, use the target's voice name
+			chat_color_name_to_use = target.get_voice() // for everything else, use the target's voice name
 
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != chat_color_name_to_use)

@@ -256,6 +256,10 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"Gv" = (
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/floor/grass,
+/area/station/asteroid)
 "GE" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
@@ -1082,7 +1086,7 @@ GE
 vg
 ci
 rO
-rO
+Gv
 rO
 rO
 Cp

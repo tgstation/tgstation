@@ -65,16 +65,15 @@
 	#define COMSIG_MOVABLE_CANCEL_HEARING (1<<0)
 ///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
-	#define HEARING_MESSAGE 1
-	#define HEARING_SPEAKER 2
-	#define HEARING_LANGUAGE 3
-	#define HEARING_RAW_MESSAGE 4
-	#define HEARING_RADIO_FREQ 5
-	#define HEARING_RADIO_FREQ_NAME 6
-	#define HEARING_RADIO_FREQ_COLOR 7
-	#define HEARING_SPANS 8
-	#define HEARING_MESSAGE_MODE 9
-	#define HEARING_RANGE 10
+	#define HEARING_SPEAKER 1
+	#define HEARING_LANGUAGE 2
+	#define HEARING_RAW_MESSAGE 3
+	#define HEARING_RADIO_FREQ 4
+	#define HEARING_RADIO_FREQ_NAME 5
+	#define HEARING_RADIO_FREQ_COLOR 6
+	#define HEARING_SPANS 7
+	#define HEARING_MESSAGE_MODE 8
+	#define HEARING_RANGE 9
 
 ///called when space wind can't move a movable. (pressure_difference, pressure_direction)
 #define COMSIG_MOVABLE_RESISTED_SPACEWIND "movable_resisted_wind"
@@ -116,12 +115,7 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
 
-/// Sent from /atom/movable/proc/compose_message() after the name part: (list/stored_name, visible_name)
-#define COMSIG_MOVABLE_MESSAGE_GET_NAME_PART "movable_message_get_name_part"
-	///The index of the name part
-	#define NAME_PART_INDEX 1
-
-/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+/// From /datum/element/immerse/proc/add_immerse_overlay(): (atom/movable/immerse_mask/effect_relay)
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"
