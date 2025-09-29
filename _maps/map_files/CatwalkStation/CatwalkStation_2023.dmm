@@ -4517,7 +4517,7 @@
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1;
-	pixel_y = 6
+	pixel_y = 3
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
@@ -6150,7 +6150,7 @@
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder{
 	pixel_x = -6;
-	pixel_y = 9
+	pixel_y = 6
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
@@ -9792,7 +9792,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/mail_sorting/service/theater,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "cQP" = (
@@ -11381,7 +11380,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/barman_recipes{
 	pixel_x = -4;
-	pixel_y = 7
+	pixel_y = 5
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
@@ -29615,9 +29614,8 @@
 /turf/open/floor/engine/hull/air,
 /area/station/maintenance/starboard/aft)
 "izF" = (
-/obj/machinery/disposal/bin,
 /obj/machinery/firealarm/directional/south,
-/obj/structure/disposalpipe/trunk{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -62907,6 +62905,10 @@
 "scE" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/light_switch/directional/south,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "scH" = (
@@ -69064,7 +69066,7 @@
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 1;
-	pixel_y = 6
+	pixel_y = 3
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
@@ -71712,10 +71714,6 @@
 /obj/effect/landmark/start/bartender,
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 4
-	},
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_x = -4;
-	pixel_y = -4
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
@@ -77685,6 +77683,9 @@
 "woT" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/item/kirbyplants/random,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "woV" = (
