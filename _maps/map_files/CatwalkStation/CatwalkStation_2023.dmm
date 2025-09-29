@@ -78174,6 +78174,14 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"wAB" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/door/airlock{
+	name = "Kitchen"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/turf/open/floor/iron/kitchen,
+/area/station/service/kitchen)
 "wAO" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/storage/toolbox/mechanical/old,
@@ -178191,10 +178199,10 @@ uZu
 bOk
 aLa
 bOk
-dBm
-dBm
-dBm
-dBm
+hRX
+wAB
+hRX
+hRX
 hRX
 dEN
 kSZ
