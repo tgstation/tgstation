@@ -1143,3 +1143,123 @@
 	shoes = /obj/item/clothing/shoes/bronze
 	l_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named // they used to turn their dmg into tox with a spell. close enough
 	r_pocket = /obj/item/reagent_containers/cup/beaker/synthflesh/named
+
+//syndicate spaceman
+
+/datum/outfit/deathmatch_loadout/syndicate_spaceman
+	name = "DM: Syndicate Spaceman"
+	display_name = "Syndicate Spaceman"
+	desc = "A syndicate operative suited up for some space reconnaissance."
+
+	uniform = /obj/item/clothing/under/syndicate
+	belt = /obj/item/storage/belt/military
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	internals_slot = ITEM_SLOT_RPOCKET
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/tank/jetpack/oxygen/harness
+	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
+
+/datum/outfit/deathmatch_loadout/syndicate_spaceman/pre_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+	if(user.jumpsuit_style == PREF_SKIRT)
+		uniform = /obj/item/clothing/under/syndicate/skirt
+
+	switch(pick(list("red", "green", "dgreen", "blue", "orange", "black")))
+		if("green")
+			head = /obj/item/clothing/head/helmet/space/syndicate/green
+			suit = /obj/item/clothing/suit/space/syndicate/green
+		if("dgreen")
+			head = /obj/item/clothing/head/helmet/space/syndicate/green/dark
+			suit = /obj/item/clothing/suit/space/syndicate/green/dark
+		if("blue")
+			head = /obj/item/clothing/head/helmet/space/syndicate/blue
+			suit = /obj/item/clothing/suit/space/syndicate/blue
+		if("red")
+			head = /obj/item/clothing/head/helmet/space/syndicate
+			suit = /obj/item/clothing/suit/space/syndicate
+		if("orange")
+			head = /obj/item/clothing/head/helmet/space/syndicate/orange
+			suit = /obj/item/clothing/suit/space/syndicate/orange
+		if("black")
+			head = /obj/item/clothing/head/helmet/space/syndicate/black
+			suit = /obj/item/clothing/suit/space/syndicate/black
+
+/datum/outfit/deathmatch_loadout/syndicate_spaceman/post_equip(mob/living/carbon/human/syndicate_spaceman, visuals_only)
+	. = ..()
+	var/obj/item/card/id/id_card = syndicate_spaceman.get_item_by_slot(ITEM_SLOT_ID)
+	var/obj/item/storage/belt/belt = syndicate_spaceman.get_item_by_slot(ITEM_SLOT_BELT)
+	if(belt)
+		new /obj/item/knife/combat/survival(belt)
+	if(id_card)
+		SSid_access.apply_trim_to_card(id_card, /datum/id_trim/syndicom/crew)
+		id_card.registered_name = syndicate_spaceman.real_name
+		id_card.update_label()
+		id_card.update_appearance()
+
+//cargo spaceman
+
+/datum/outfit/deathmatch_loadout/cargo_spaceman
+	name = "DM: Spaceman"
+	display_name = "Spaceman"
+	desc = "A spaceman from spacestation 13 equipped for space."
+
+	uniform = /obj/item/clothing/under/rank/cargo/tech
+	belt = /obj/item/storage/belt/utility/full
+	suit =  /obj/item/clothing/suit/space
+	head = /obj/item/clothing/head/helmet/space
+	internals_slot = ITEM_SLOT_SUITSTORE
+	suit_store = /obj/item/tank/internals/oxygen/yellow
+	shoes = /obj/item/clothing/shoes/sneakers
+	gloves = /obj/item/clothing/gloves/fingerless
+	back = /obj/item/gun/ballistic/rifle/boltaction
+	id = /obj/item/card/id/advanced
+
+/datum/outfit/deathmatch_loadout/cargo_spaceman/pre_equip(mob/living/carbon/human/cargo_spaceman, visualsOnly = FALSE)
+	if(cargo_spaceman.jumpsuit_style == PREF_SKIRT)
+		uniform = /obj/item/clothing/under/rank/cargo/tech/skirt
+
+/datum/outfit/deathmatch_loadout/cargo_spaceman/post_equip(mob/living/carbon/human/cargo_spaceman, visuals_only)
+	. = ..()
+	var/obj/item/card/id/id_card = cargo_spaceman.get_item_by_slot(ITEM_SLOT_ID)
+	if(id_card)
+		SSid_access.apply_trim_to_card(id_card, /datum/id_trim/job/cargo_technician)
+		id_card.registered_name = cargo_spaceman.real_name
+		id_card.update_label()
+		id_card.update_appearance()
+
+//spacetider
+
+/datum/outfit/deathmatch_loadout/spacetider
+	name = "DM: Assistant (Spaceworthy)"
+	display_name = "Assistant (Spaceworthy)"
+	desc = "A spacetiding assistant."
+
+	uniform = /obj/item/clothing/under/color/grey
+	mask = /obj/item/clothing/mask/breath
+	belt = /obj/item/gun/energy/disabler/smoothbore
+	suit = /obj/item/clothing/suit/utility/fire/firefighter
+	head = /obj/item/clothing/head/utility/hardhat/red
+	r_pocket = /obj/item/reagent_containers/cup/glass/coffee
+	l_pocket = /obj/item/knife
+	internals_slot = ITEM_SLOT_SUITSTORE
+	suit_store = /obj/item/tank/internals/oxygen/red
+	shoes = /obj/item/clothing/shoes/sneakers
+	gloves = /obj/item/clothing/gloves/color/grey/protects_cold
+	back = /obj/item/gun/energy/laser/musket
+	id = /obj/item/card/id/advanced
+
+/datum/outfit/deathmatch_loadout/spacetider/pre_equip(mob/living/carbon/human/spacetider, visualsOnly = FALSE)
+	if(spacetider.jumpsuit_style == PREF_SKIRT)
+		uniform = /obj/item/clothing/under/color/jumpskirt/grey
+
+/datum/outfit/deathmatch_loadout/spacetider/post_equip(mob/living/carbon/human/spacetider, visuals_only)
+	. = ..()
+	spacetider.reagents.add_reagent(/datum/reagent/consumable/coffee, 30) //pre prime the coffee
+	var/obj/item/card/id/id_card = spacetider.get_item_by_slot(ITEM_SLOT_ID)
+	if(!id_card)
+		return
+	SSid_access.apply_trim_to_card(id_card, /datum/id_trim/job/assistant)
+	id_card.registered_name = spacetider.real_name
+	id_card.update_label()
+	id_card.update_appearance()
