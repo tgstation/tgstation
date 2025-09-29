@@ -250,7 +250,7 @@
 
 	data["knowledge_tiers"] = tree_data
 	var/list/shop = heretic_shops[HERETIC_KNOWLEDGE_SHOP]
-	for(var/knowledge_path as anything in shop)
+	for(var/knowledge_path in shop)
 		var/list/knowledge_info = shop[knowledge_path]
 		if(!(knowledge_info[HKT_ID] in researchable_knowledges))
 			continue

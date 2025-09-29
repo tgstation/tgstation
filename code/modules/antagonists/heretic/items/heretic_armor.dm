@@ -738,7 +738,7 @@
 			emote_list = list("laugh", "smile", "cough", "gasp", "scream")
 	if(!prob(emote_rng))
 		return
-	for(var/perform as anything in emote_list)
+	for(var/perform in emote_list)
 		wearer.emote("[perform]")
 	check_braindeath(wearer)
 
