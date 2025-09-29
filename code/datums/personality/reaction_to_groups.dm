@@ -5,6 +5,7 @@
 	pos_gameplay_desc = "Likes being in the library"
 	// neg_gameplay_desc = "Dislikes large groups"
 	personality_trait = TRAIT_INTROVERT
+	groups = list(PERSONALITY_GROUP_INTERACTION)
 
 /datum/personality/extrovert
 	savefile_key = "extrovert"
@@ -13,6 +14,7 @@
 	pos_gameplay_desc = "Likes being in the bar"
 	// neg_gameplay_desc = "Dislikes being alone"
 	personality_trait = TRAIT_EXTROVERT
+	groups = list(PERSONALITY_GROUP_INTERACTION, PERSONALITY_GROUP_OTHERS)
 
 /datum/personality/paranoid
 	savefile_key = "paranoid"
@@ -21,6 +23,7 @@
 	pos_gameplay_desc = "Likes being alone or in moderately-sized groups"
 	neg_gameplay_desc = "Stressed when with one other person, or in large groups"
 	processes = TRUE
+	groups = list(PERSONALITY_GROUP_PEOPLE_FEAR)
 
 /datum/personality/paranoid/remove_from_mob(mob/living/who)
 	. = ..()

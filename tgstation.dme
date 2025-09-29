@@ -1806,6 +1806,7 @@
 #include "code\datums\mutations\void_magnet.dm"
 #include "code\datums\mutations\webbing.dm"
 #include "code\datums\personality\_personality.dm"
+#include "code\datums\personality\_personality_groups.dm"
 #include "code\datums\personality\personality_preference.dm"
 #include "code\datums\personality\reaction_generic.dm"
 #include "code\datums\personality\reaction_to_animals.dm"

@@ -1,4 +1,5 @@
 /datum/personality/department
+	groups = list(PERSONALITY_GROUP_DEPARTMENT)
 	/// List of areas this personality applies to
 	var/list/applicable_areas
 

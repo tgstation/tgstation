@@ -106,6 +106,7 @@ export type Personality = {
   neg_gameplay_description: string | null;
   neut_gameplay_description: string | null;
   path: typePath;
+  groups: string[] | null;
 };
 
 export enum RandomSetting {
@@ -211,7 +212,7 @@ export type ServerData = {
   quirks: QuirkInfo;
   personality: {
     personalities: Personality[];
-    personality_incompatibilities: string[][];
+    personality_incompatibilities: Record<string, string[]>;
   };
   random: {
     randomizable: string[];

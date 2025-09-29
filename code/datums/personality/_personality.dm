@@ -28,6 +28,9 @@
 	/// Required: The key to use when saving this personality to a savefile.
 	/// Don't change it once it's set unless you want to write migration code
 	var/savefile_key
+	/// What groups does this personality belong to?
+	/// Personalities in the same group are mutually exclusive.
+	var/list/groups
 	/// Does this personality need to process every tick?
 	/// If true, you'll need to override on_tick() with logic
 	var/processes = FALSE

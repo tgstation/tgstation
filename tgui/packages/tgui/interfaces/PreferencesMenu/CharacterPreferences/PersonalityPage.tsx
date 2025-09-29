@@ -23,7 +23,7 @@ type ButtonData = {
 
 function getButtonColors(
   selected: boolean | undefined,
-  invalid: boolean | string | undefined,
+  invalid: boolean | string | null | undefined,
   disabled: boolean | undefined,
 ): ButtonData {
   if (invalid) {
@@ -57,7 +57,7 @@ function getButtonColors(
 type ButtonProps = {
   personality: Personality;
   selected?: boolean;
-  invalid?: string | false;
+  invalid?: string | null;
   disabled?: boolean;
   onClick: () => void;
 };
@@ -171,31 +171,29 @@ function sortPersonalities(
 }
 
 // Checks if the passed personality is incompatible with the selected personalities
-// Returns the name of the incompatible personality or false if there is no incompatibility
+// Returns the name of the incompatible personality or null if there is no incompatibility
 function isIncompatible(
   personality: Personality,
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
-  personalityIncompatibilities: string[][],
-): string | false {
-  if (!selectedPersonalities) return false;
-  for (const incompabibility of personalityIncompatibilities) {
-    if (!incompabibility.includes(personality.path)) {
-      continue;
-    }
-    for (const selected of selectedPersonalities) {
-      if (selected === personality.path) {
-        continue;
-      }
-      if (incompabibility.includes(selected)) {
+  personalityIncompatibilities: Record<string, string[]>,
+): string | null {
+  if (!selectedPersonalities || !personality.groups) return null;
+  // personalityIncompatibilities is keyed by group -
+  // where value is a list of incompatible personality typePaths
+  for (const group of personality.groups) {
+    for (const selectedTypePath of selectedPersonalities) {
+      if (selectedTypePath === personality.path) continue;
+      if (personalityIncompatibilities[group].includes(selectedTypePath)) {
         return (
-          getPersonalityName(allPersonalities, selected) ||
-          'Unknown (This is a bug)'
+          getPersonalityName(allPersonalities, selectedTypePath) ||
+          'an unknown personality'
         );
       }
     }
   }
-  return false;
+
+  return null;
 }
 
 // Checks if the passed personality is disabled

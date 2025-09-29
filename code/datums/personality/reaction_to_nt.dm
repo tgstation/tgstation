@@ -1,4 +1,5 @@
 /datum/personality/nt
+	groups = list(PERSONALITY_GROUP_NT)
 	processes = TRUE
 	/// What mood event to apply when seeing NT propaganda
 	var/mood_event_type

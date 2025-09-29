@@ -42,6 +42,7 @@
 	desc = "I don't really feel like working today."
 	pos_gameplay_desc = "Happy in the bar or recreation areas"
 	mood_event_type = /datum/mood_event/slacking_off_lazy
+	groups = list(PERSONALITY_GROUP_INTERACTION, PERSONALITY_GROUP_WORK, PERSONALITY_GROUP_ATHLETICS)
 
 /datum/personality/slacking/diligent
 	savefile_key = "diligent"
@@ -50,6 +51,7 @@
 	pos_gameplay_desc = "Happy when in their department"
 	neg_gameplay_desc = "Unhappy when slacking off in the bar or recreation areas"
 	mood_event_type = /datum/mood_event/slacking_off_diligent
+	groups = list(PERSONALITY_GROUP_INTERACTION)
 
 /datum/personality/slacking/diligent/apply_to_mob(mob/living/who)
 	. = ..()
@@ -74,6 +76,7 @@
 	name = "Industrious"
 	desc = "Everyone needs to be working - otherwise we're all wasting our time."
 	neg_gameplay_desc = "Dislikes playing games"
+	groups = list(PERSONALITY_GROUP_WORK)
 
 /datum/personality/athletic
 	savefile_key = "athletic"
@@ -81,18 +84,21 @@
 	desc = "Can't just sit around all day! Have to keep moving."
 	pos_gameplay_desc = "Likes exercising"
 	neg_gameplay_desc = "Dislikes being lazy"
+	groups = list(PERSONALITY_GROUP_ATHLETICS)
 
 /datum/personality/erudite
 	savefile_key = "erudite"
 	name = "Erudite"
 	desc = "Knowledge is power. Especially this deep in space."
 	pos_gameplay_desc = "Likes reading books"
+	groups = list(PERSONALITY_GROUP_READING)
 
 /datum/personality/uneducated
 	savefile_key = "uneducated"
 	name = "Uneducated"
 	desc = "I don't care much for books - I already know everything I need to know."
 	neg_gameplay_desc = "Dislikes reading books"
+	groups = list(PERSONALITY_GROUP_READING)
 
 /datum/personality/spiritual
 	savefile_key = "spiritual"

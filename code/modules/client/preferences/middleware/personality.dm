@@ -39,9 +39,10 @@
 			"neut_gameplay_description" = personality.neut_gameplay_desc,
 			"name" = personality.name,
 			"path" = personality_type,
+			"groups" = personality.groups,
 		))
 
-	data["personality_incompatibilities"] = SSpersonalities.incompatibilities
+	data["personality_incompatibilities"] = SSpersonalities.incompatibilities_by_group
 
 	return data
 

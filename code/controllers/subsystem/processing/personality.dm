@@ -8,21 +8,21 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 	VAR_FINAL/list/datum/personality/personalities_by_type
 	/// All personality singletons indexed by their savefile key
 	VAR_FINAL/list/datum/personality/personalities_by_key
-	/// List of lists of incompatible personality types.
-	VAR_FINAL/list/incompatibilities
-
+	/// Assoc list of personality group to list of personality typepaths in that group
+	VAR_FINAL/list/incompatibilities_by_group
 	/// For personalities which process, this tracks all mobs we need to process for
-	var/list/processing_personalities = list()
+	VAR_FINAL/list/processing_personalities
 
 /datum/controller/subsystem/processing/personalities/Initialize()
 	init_personalities()
-	init_incompatibilities()
 	return SS_INIT_SUCCESS
 
 /// Initialized personality singletons
 /datum/controller/subsystem/processing/personalities/proc/init_personalities()
 	personalities_by_type = list()
 	personalities_by_key = list()
+	incompatibilities_by_group = list()
+	processing_personalities = list()
 	for(var/datum/personality/personality_type as anything in typesof(/datum/personality))
 		var/personality_key = personality_type::savefile_key
 		if(isnull(personality_key))
@@ -38,110 +38,28 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 		var/datum/personality/personality = new personality_type()
 		personalities_by_type[personality_type] = personality
 		personalities_by_key[personality.savefile_key] = personality
-
-/// Initializes the incompatibility list
-/datum/controller/subsystem/processing/personalities/proc/init_incompatibilities()
-	incompatibilities = list(
-		list(
-			/datum/personality/callous,
-			/datum/personality/compassionate,
-		),
-		list(
-			/datum/personality/department/analytical,
-			/datum/personality/department/impulsive,
-		),
-		list(
-			/datum/personality/introvert,
-			/datum/personality/extrovert,
-		),
-		list(
-			/datum/personality/teetotal,
-			/datum/personality/bibulous,
-		),
-		list(
-			/datum/personality/gourmand,
-			/datum/personality/ascetic,
-		),
-		list(
-			/datum/personality/nt/loyalist,
-			/datum/personality/nt/disillusioned,
-		),
-		list(
-			/datum/personality/hopeful,
-			/datum/personality/pessimistic,
-		),
-		list(
-			/datum/personality/compassionate,
-			/datum/personality/misanthropic,
-		),
-		list(
-			/datum/personality/misanthropic,
-			/datum/personality/extrovert,
-			/datum/personality/empathetic,
-		),
-		list(
-			/datum/personality/brave,
-			/datum/personality/cowardly,
-		),
-		list(
-			/datum/personality/brave,
-			/datum/personality/paranoid,
-		),
-		list(
-			/datum/personality/slacking/lazy,
-			/datum/personality/slacking/diligent,
-		),
-		list(
-			/datum/personality/slacking/lazy,
-			/datum/personality/athletic,
-		),
-		list(
-			/datum/personality/brooding,
-			/datum/personality/resilient,
-		),
-		list(
-			/datum/personality/slacking/lazy,
-			/datum/personality/industrious,
-		),
-		list(
-			/datum/personality/creative,
-			/datum/personality/unimaginative,
-		),
-		list(
-			/datum/personality/hopeful,
-			/datum/personality/pessimistic,
-		),
-		list(
-			/datum/personality/erudite,
-			/datum/personality/uneducated,
-		),
-		list(
-			/datum/personality/apathetic,
-			/datum/personality/sensitive,
-		),
-		list(
-			/datum/personality/animal_friend,
-			/datum/personality/animal_disliker,
-			/datum/personality/cat_fan,
-			/datum/personality/dog_fan,
-		),
-	)
+		for(var/group in personality.groups)
+			incompatibilities_by_group[group] ||= list()
+			incompatibilities_by_group[group] += personality_type
 
 /// Helper to check if the new personality type is incompatible with the passed list of personality types
 /datum/controller/subsystem/processing/personalities/proc/is_incompatible(list/personality_types, new_personality_type)
-	if(!length(incompatibilities))
+	if(!length(incompatibilities_by_group))
 		stack_trace("Checking personality incompatibilities before the incompatibility list was initialized?")
 		return FALSE
-	if(length(personality_types) <= 1)
+	if(length(personality_types))
+		// No incompatibilities possible with no personalities
 		return FALSE
-	for(var/incompatibility in incompatibilities)
-		if(!(new_personality_type in incompatibility))
-			continue
-		for(var/contrasting_type in personality_types)
-			if(contrasting_type == new_personality_type) // You're not incompatible with yourself
-				continue
-			if(contrasting_type in incompatibility)
-				return TRUE
+	var/datum/personality/new_personality = personalities_by_type[new_personality_type]
+	if(!length(new_personality.groups))
+		// No groups, so no incompatibilities
+		return FALSE
+
+	// Filters all incompatibily groups against the new personality's groups
+	for(var/group, incompatibility_list in incompatibilities_by_group & new_personality.groups)
+		// Then checks if any personality type in the list is also in the group
+		if(length(incompatibility_list & personality_types))
+			return TRUE
 	return FALSE
 
 /// Helper to select a random list of personalities, respecting incompatibilities. REturns a list of typepaths

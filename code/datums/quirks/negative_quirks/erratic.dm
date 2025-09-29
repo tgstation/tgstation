@@ -32,7 +32,9 @@
 		return
 
 	COOLDOWN_START(src, randomize_cooldown, rand(6, 12) MINUTES)
+	randomize_personalities()
 
+/datum/quirk/erratic/proc/randomize_personalities()
 	random_index += 1
 	if(random_index % 2 == 0)
 		random_index = 0

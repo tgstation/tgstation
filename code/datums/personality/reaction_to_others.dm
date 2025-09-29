@@ -4,6 +4,7 @@
 	desc = "I don't care much about what happens to other people."
 	pos_gameplay_desc = "Does not mind seeing death"
 	neg_gameplay_desc = "Prefers not to help people"
+	groups = list(PERSONALITY_GROUP_DEATH)
 
 /datum/personality/compassionate
 	savefile_key = "compassionate"
@@ -11,6 +12,7 @@
 	desc = "I like giving a hand to those in need."
 	pos_gameplay_desc = "Likes helping people"
 	neg_gameplay_desc = "Seeing death affects your mood more"
+	groups = list(PERSONALITY_GROUP_DEATH, PERSONALITY_GROUP_MISANTHROPY)
 
 /datum/personality/empathetic
 	savefile_key = "empathetic"
@@ -18,6 +20,7 @@
 	desc = "Other people's feelings are important to me."
 	pos_gameplay_desc = "Likes seeing other people happy"
 	neg_gameplay_desc = "Dislikes seeing other people sad"
+	groups = list(PERSONALITY_GROUP_OTHERS)
 
 /datum/personality/misanthropic
 	savefile_key = "misanthropic"
@@ -25,6 +28,7 @@
 	desc = "We should have never entered the stars."
 	pos_gameplay_desc = "Likes seeing other people sad"
 	neg_gameplay_desc = "Dislikes seeing other people happy"
+	groups = list(PERSONALITY_GROUP_OTHERS, PERSONALITY_GROUP_MISANTHROPY)
 
 /datum/personality/aloof
 	savefile_key = "aloof"
