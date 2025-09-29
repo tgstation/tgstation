@@ -194,7 +194,7 @@
 	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
 		last_bumpmine_tick = world.time
 		var/turf/closed/mineral/rock = bumped_into
-		rock.attackby(src, bumper, exp_multiplier = exp_multiplier)
+		INVOKE_ASYNC(rock, TYPE_PROC_REF(/atom, attackby), src, bumper, null, null, exp_multiplier)
 		return
 
 	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
