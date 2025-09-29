@@ -7249,7 +7249,7 @@
 /area/station/maintenance/port/aft)
 "cfp" = (
 /obj/machinery/button/door/directional/east{
-	id = "actualcommissarydoor";
+	id = "commissarydoor";
 	name = "Commissary Door Lock";
 	normaldoorcontrol = 1;
 	pixel_x = 23;
@@ -7277,9 +7277,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "actualcommissaryshutter";
 	name = "Commissary Shutters";
-	normaldoorcontrol = 1;
-	pixel_x = 34;
-	specialfunctions = 4
+	pixel_x = 34
 	},
 /obj/machinery/light/dim/directional/south,
 /turf/open/floor/iron/dark,
@@ -10845,6 +10843,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
 "dhx" = (
@@ -59913,7 +59912,6 @@
 /area/station/science/xenobiology/hallway)
 "rkK" = (
 /obj/structure/table/reinforced,
-/obj/item/paper/guides/jobs/hydroponics,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
@@ -59922,6 +59920,14 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hydropony_shutters";
 	name = "Hydropony's Shutters"
+	},
+/obj/item/paper{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -73129,7 +73135,6 @@
 "vcR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
 "vcT" = (
@@ -80899,6 +80904,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/poster/random/directional/north,
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 2
+	},
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "xqd" = (
