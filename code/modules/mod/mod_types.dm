@@ -130,6 +130,7 @@
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/gps,
 		/obj/item/mod/module/orebag,
+		/obj/item/mod/module/clamp,
 		/obj/item/mod/module/drill,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/mouthhole,
