@@ -779,7 +779,7 @@
 
 /atom/movable/screen/moon_health/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	if(isnull(hud_owner || !ishuman(hud_owner.mymob)))
+	if(isnull(hud_owner) || !ishuman(hud_owner.mymob))
 		return INITIALIZE_HINT_QDEL
 	var/mob/living/carbon/human/wearer = hud_owner.mymob
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
