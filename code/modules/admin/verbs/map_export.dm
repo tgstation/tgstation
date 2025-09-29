@@ -103,13 +103,6 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	. += NAMEOF(src, anchored)
 	return .
 
-/turf/open/get_save_vars()
-	. = ..()
-	var/datum/gas_mixture/turf_gasmix = return_air()
-	initial_gas_mix = turf_gasmix.to_string()
-	. += NAMEOF(src, initial_gas_mix)
-	return .
-
 /obj/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, req_access)
@@ -140,6 +133,27 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	. = ..()
 	. += NAMEOF(src, piping_layer)
 	. += NAMEOF(src, pipe_color)
+	return .
+
+/**
+ * A procedure for saving variables of an object with a custom value that will override the default value when the object is serialized via map export.
+ *
+ * IMPORTANT: Always use NAMEOF(src, varname) for the keys to ensure compile-time checking.
+ *
+ * Examples:
+ * - Saving a /datum/ reference to a savable id_tag
+ * - Saving a computed value based on multiple variables
+ * - Saving a non-serializable value to a serializable format
+ *
+ * Returns: A named list of variables with their custom values that will be serialized
+ */
+/atom/proc/get_custom_save_vars()
+	return list()
+
+/turf/open/get_custom_save_vars()
+	. = ..()
+	var/datum/gas_mixture/turf_gasmix = return_air()
+	.[NAMEOF(src, initial_gas_mix)] = turf_gasmix.to_string()
 	return .
 
 GLOBAL_LIST_INIT(save_file_chars, list(
@@ -359,9 +373,25 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
 	var/list/vars_to_save = object.get_save_vars()
+	var/list/custom_vars = object.get_custom_save_vars()
+	// Tracks variables handled by get_custom_save_vars() This ensures the default variable saving loop
+	// correctly skips these names. A separate list is necessary because custom_vars can contain null or FALSE values.
+	var/list/custom_var_names = list()
+
+	for(var/variable in custom_vars)
+		CHECK_TICK
+		var/custom_value = custom_vars[variable]
+		var/text_value = tgm_encode(custom_value)
+		if(!text_value)
+			continue
+		data_to_add += "[variable] = [text_value]"
+		custom_var_names[variable] = TRUE
 
 	for(var/variable in vars_to_save)
 		CHECK_TICK
+		if(custom_var_names[variable]) // skip variables that use custom serialization
+			continue
+
 		var/value = object.vars[variable]
 		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
@@ -391,3 +421,4 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		calculated = (calculated % length) + 1
 		output += pull_from[calculated]
 	return output.Join()
+
