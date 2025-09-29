@@ -17759,6 +17759,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
+"ffh" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/arrows/red{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "ffL" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -29260,6 +29272,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
+	},
+/obj/effect/turf_decal/arrows/red{
+	pixel_y = 15
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -53036,6 +53051,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"rDu" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "rDI" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 1
@@ -55793,8 +55814,9 @@
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "sAc" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "sAd" = (
@@ -62908,11 +62930,12 @@
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "uUs" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
 	},
 /obj/structure/sign/clock/directional/north,
+/obj/structure/closet/secure_closet/security/engine,
+/obj/item/clothing/mask/whistle,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "uUB" = (
@@ -70068,11 +70091,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "xzn" = (
-/obj/structure/closet/secure_closet/security/engine,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/item/clothing/mask/whistle,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
@@ -188178,8 +188199,8 @@ noI
 kOf
 aDN
 wzg
-tiM
-qSm
+ffh
+qFH
 tIk
 aGb
 aGb
@@ -188950,7 +188971,7 @@ fam
 aDN
 wzg
 tiM
-qFH
+rDu
 nQq
 qSm
 sJx

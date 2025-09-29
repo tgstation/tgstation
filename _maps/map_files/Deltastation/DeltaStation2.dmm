@@ -29618,12 +29618,10 @@
 "hmS" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/item/crowbar,
-/obj/item/restraints/handcuffs,
-/obj/machinery/recharger,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "hmU" = (
@@ -70057,7 +70055,6 @@
 /obj/machinery/firealarm/directional/north{
 	pixel_x = 4
 	},
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
@@ -70065,6 +70062,10 @@
 	pixel_y = 27;
 	pixel_x = -6
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/item/restraints/handcuffs,
+/obj/item/crowbar,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "rsa" = (
@@ -90649,7 +90650,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "wru" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

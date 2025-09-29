@@ -692,3 +692,36 @@
   - spellcheck: Clown mods are now properly capitalised.
   timothymtorres:
   - qol: Objects that are EMP-proof will now have it appear as a examine tag desc
+2025-09-29:
+  ArcaneMusic:
+  - rscdel: You can no longer obtain an emagged fishing portal board from treasure
+      chests. You can still, however, emag fishing portals.
+  - balance: Monocloning Jumpercable fish have had their export values decreased.
+      Their cloning capacity and electrical output remain the same.
+  Ghommie:
+  - balance: airlocks affected by dimensional anomalies retain their access, as well
+      as access-adjacent attributes such as emergency access and unrestricted sides.
+  Kashargul:
+  - bugfix: keycombo modal only allowing an input on the first opening
+  Krysonism:
+  - rscadd: Added poker chips.
+  - balance: ' The roulette machine now stylishly pays out poker chips instead of
+      coins.'
+  - balance: Coins can be redeemed for mats and ground for reagents.
+  - balance: The money bag can hold vastly more money and now also precious gems and
+      metals.
+  - bugfix: Fixed the roulette wheel result overlay lingering and obscuring the next
+      roll.
+  Melbert:
+  - balance: Reinforced floors will stop light and heavy explosions from affecting
+      objects beneath the floor, ie cabling and piping
+  - balance: Explosions affecting floors are no longer blocked by *any structure*,
+      such as posters. Only dense structures block them.
+  - balance: Machines can now block explosions from affecting floors, much like structures
+  Paxilmaniac:
+  - image: adds new sprites for bayonets on bolt action rifles
+  SmArtKar:
+  - bugfix: Fixed cell chargers runtiming and not updating their visuals when a cell
+      is taken out
+  timothymtorres:
+  - bugfix: Fix shower causing mood and status effects to non-carbon mobs
