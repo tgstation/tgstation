@@ -98,7 +98,7 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 2 SECONDS
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	body_parts_covered = HANDS|ARMS
