@@ -11,7 +11,7 @@ export type LogEntry = {
 
 export type DataEntry = {
   category: string;
-  data: Record<string, string | string[]>;
+  data: Record<string, string>;
 };
 
 export type ForensicScannerCategory = {
