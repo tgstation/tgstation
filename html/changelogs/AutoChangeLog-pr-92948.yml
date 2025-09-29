@@ -1,0 +1,10 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Mining MODsuit has gained a magnetic harness for all of your crusher stowing needs."
+  - balance: "Magnetic harnesses now take only 0.5 seconds to pick up your gun, and can pick up crushers."
+  - balance: "Mining MODsuit has regained it small slowdown, and lost 10 melee armor."
+  - balance: "Mining drill MODule is no longer instant (outside of the sphere mode of a mining MOD)"
+  - balance: "The mining sphere MODule now can break rocks when rolling into them, gives 20 melee and bomb armor when active, and has a shorter bomb cooldown, but bombs themselves have reduced damage and mining AOE."
+  - balance: "Mining sphere MODule now requires an upgrade in form of two pieces of bileworm skin to be able to traverse lava, as opposed to being able to do so innately."
+  - bugfix: "Fixed MODsuit ore bag sometimes breaking permanently when depositing ores into the ORM."

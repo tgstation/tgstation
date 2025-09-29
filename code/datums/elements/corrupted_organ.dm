@@ -60,7 +60,7 @@
 /obj/effect/temp_visual/curse_blast/Initialize(mapload)
 	. = ..()
 	animate(src, transform = matrix() * 0.2, time = 0, flags = ANIMATION_PARALLEL)
-	animate(transform = matrix() * 2, time = duration, easing = EASE_IN)
+	animate(transform = matrix() * 2, time = duration, easing = QUAD_EASING|EASE_IN)
 
 	animate(src, alpha = 255, time = 0, flags = ANIMATION_PARALLEL)
 	animate(alpha = 255, time = 0.2 SECONDS)

@@ -1,0 +1,10 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Concussive gauntlets grant hunter boxing, much like punching mitts."
+  - balance: "Punching mitts are now an option from the mining voucher, and can be bought in the mining vendor for 1000 points."
+  - balance: "Consolidates mining loot into random spawners instead of switch cases."
+  - balance: "Demonic portals drop locked chests rather than just flat out the loot."
+  - balance: "Removes the ship in a bottle, transference potion, adamantine extract, clown hulk mob and ice boots from the possible demonic portal spawn list. Ship in a bottle still exists for necropolis tendril spawns."
+  - balance: "Removes the cursed katana from the necropolis tendril spawn list."
+  - balance: "In instances where you would spawn a design disk for a modkit, you instead... just get the modkit. No middle manning with science."
