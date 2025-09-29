@@ -15,25 +15,37 @@
 	var/name
 	/// Required: Description of the personality.
 	/// Phrased to be "In character" - i.e. "I like to help people!"
-	/// Rather than OOC- i.e. "When helping people, I get a positive moodlet."
+	/// Rather than OOC 0 i.e. "When helping people, I get a positive moodlet."
 	var/desc
-	/// Optional: What positive effects this personality has on gameplay.
+	/// Optional: Short blurb on what positive effects this personality has on gameplay, for ui
 	var/pos_gameplay_desc
-	/// Optional: What negative effects this personality has on gameplay.
+	/// Optional: Short blurb on what negative effects this personality has on gameplay, for ui
 	var/neg_gameplay_desc
-	/// Optional: What neutral effects this personality has on gameplay.
+	/// Optional: Short blurb on what neutral effects this personality has on gameplay, for ui
 	var/neut_gameplay_desc
 	/// Easy way to apply a trait as a part of a personality.
 	var/personality_trait
 	/// Required: The key to use when saving this personality to a savefile.
 	/// Don't change it once it's set unless you want to write migration code
 	var/savefile_key
-	/// Does this process?
+	/// Does this personality need to process every tick?
+	/// If true, you'll need to override on_tick() with logic
 	var/processes = FALSE
+
+/datum/personality/New()
+	. = ..()
+	if(processes)
+		SSpersonalities.processing_personalities[src] = list()
+		START_PROCESSING(SSpersonalities, src)
 
 /datum/personality/Destroy(force)
 	if(force)
+		STOP_PROCESSING(SSpersonalities, src)
+		SSpersonalities.processing_personalities -= src
+		SSpersonalities.personalities_by_type -= type
+		SSpersonalities.personalities_by_key -= savefile_key
 		return ..()
+
 	stack_trace("qdel called on a personality singleton!")
 	return QDEL_HINT_LETMELIVE
 
@@ -67,7 +79,19 @@
 	if(processes)
 		SSpersonalities.processing_personalities[src] -= who
 
-/// Called every SSpersonality tick if `processes` is TRUE
+/datum/personality/process(seconds_per_tick)
+	for(var/mob/living/subject as anything in SSpersonalities.processing_personalities[src])
+		if(subject.stat >= UNCONSCIOUS || HAS_TRAIT(subject, TRAIT_NO_TRANSFORM))
+			continue
+		if(on_tick(subject, seconds_per_tick) != PROCESS_KILL)
+			continue
+		stack_trace("Personality [type] processed but did not override on_tick().")
+		SSpersonalities.processing_personalities -= src // stop tracking if we're done processing
+		return PROCESS_KILL
+
+	return null
+
+/// Called every SSpersonality tick if `processes` is TRUE.
+/// Don't call parent if you override this, that's for error checking
 /datum/personality/proc/on_tick(mob/living/subject, seconds_per_tick)
-	SSpersonalities.processing_personalities -= src // don't keep ticking
-	CRASH("Personality [type] processed but did not override on_tick().")
+	return PROCESS_KILL

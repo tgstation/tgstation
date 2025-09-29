@@ -1,50 +1,46 @@
-SUBSYSTEM_DEF(personalities)
+PROCESSING_SUBSYSTEM_DEF(personalities)
 	name = "Personalities"
-	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
+	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING
 	wait = 3 SECONDS
 
 	/// All personality singletons indexed by their type
-	VAR_FINAL/list/personalities_by_type
+	VAR_FINAL/list/datum/personality/personalities_by_type
 	/// All personality singletons indexed by their savefile key
-	VAR_FINAL/list/personalities_by_key
+	VAR_FINAL/list/datum/personality/personalities_by_key
 	/// List of lists of incompatible personality types.
 	VAR_FINAL/list/incompatibilities
 
 	/// For personalities which process, this tracks all mobs we need to process for
 	var/list/processing_personalities = list()
 
-/datum/controller/subsystem/personalities/Initialize()
+/datum/controller/subsystem/processing/personalities/Initialize()
 	init_personalities()
 	init_incompatibilities()
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/personalities/fire(resumed)
-	var/seconds_per_tick = wait / (1 SECONDS)
-	for(var/datum/personality/personality as anything in processing_personalities)
-		for(var/mob/living/target  as anything in processing_personalities[personality])
-			if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_NO_TRANSFORM))
-				continue
-			personality.on_tick(target, seconds_per_tick)
-
-/datum/controller/subsystem/personalities/proc/init_personalities()
+/// Initialized personality singletons
+/datum/controller/subsystem/processing/personalities/proc/init_personalities()
 	personalities_by_type = list()
 	personalities_by_key = list()
-	for(var/personality_type in typesof(/datum/personality))
-		var/datum/personality/personality = new personality_type()
-		if(isnull(personality.savefile_key))
-			// No key = abstract = ignore
+	for(var/datum/personality/personality_type as anything in typesof(/datum/personality))
+		var/personality_key = personality_type::savefile_key
+		if(isnull(personality_key))
+			// Abstract personality, ignore
 			continue
-		if(personalities_by_key[personality.savefile_key])
-			stack_trace("Personality save key collision! key: [personality.savefile_key] - new: [personality_type] - old: [personalities_by_key[personality.savefile_key]]")
+		if(personalities_by_key[personality_key])
+			stack_trace("Personality save key collision! \
+				key: [personality_key] - \
+				new: [personality_type::name] - \
+				old: [personalities_by_key[personality_key].name]")
 			continue
 
+		var/datum/personality/personality = new personality_type()
 		personalities_by_type[personality_type] = personality
 		personalities_by_key[personality.savefile_key] = personality
-		if(personality.processes)
-			processing_personalities[personality] = list()
 
-/datum/controller/subsystem/personalities/proc/init_incompatibilities()
+/// Initializes the incompatibility list
+/datum/controller/subsystem/processing/personalities/proc/init_incompatibilities()
 	incompatibilities = list(
 		list(
 			/datum/personality/callous,
@@ -132,8 +128,11 @@ SUBSYSTEM_DEF(personalities)
 	)
 
 /// Helper to check if the new personality type is incompatible with the passed list of personality types
-/datum/controller/subsystem/personalities/proc/is_incompatible(list/personality_types, new_personality_type)
-	if(!LAZYLEN(personality_types))
+/datum/controller/subsystem/processing/personalities/proc/is_incompatible(list/personality_types, new_personality_type)
+	if(!length(incompatibilities))
+		stack_trace("Checking personality incompatibilities before the incompatibility list was initialized?")
+		return FALSE
+	if(length(personality_types) <= 1)
 		return FALSE
 	for(var/incompatibility in incompatibilities)
 		if(!(new_personality_type in incompatibility))
@@ -146,7 +145,7 @@ SUBSYSTEM_DEF(personalities)
 	return FALSE
 
 /// Helper to select a random list of personalities, respecting incompatibilities. REturns a list of typepaths
-/datum/controller/subsystem/personalities/proc/select_random_personalities(lower_end = 1, upper_end = CONFIG_GET(number/max_personalities))
+/datum/controller/subsystem/processing/personalities/proc/select_random_personalities(lower_end = 1, upper_end = CONFIG_GET(number/max_personalities))
 	var/list/personality_pool = personalities_by_type.Copy()
 	var/list/selected_personalities = list()
 	var/num = rand(lower_end, upper_end)
