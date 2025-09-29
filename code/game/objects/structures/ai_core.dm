@@ -8,6 +8,7 @@
 	icon_state = "0"
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
 	var/state = EMPTY_CORE
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit

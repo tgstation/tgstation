@@ -186,6 +186,7 @@
 /obj/projectile/bullet/arrow/ashen
 	name = "ashen arrow"
 	icon_state = "ashen_arrow_projectile"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
 
 /obj/projectile/bullet/arrow/ashen/Initialize(mapload)
 	. = ..()

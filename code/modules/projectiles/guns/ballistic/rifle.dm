@@ -356,6 +356,13 @@
 	worn_icon_state = "regal_pipegun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 2
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9.15,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT *8,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+	)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
 	name = "regal pipe pistol"

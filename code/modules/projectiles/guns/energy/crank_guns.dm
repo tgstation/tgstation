@@ -35,6 +35,13 @@
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "las_musket_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/musket/prime)
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.4,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.35,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2,
+	)
 
 
 /obj/item/gun/energy/disabler/smoothbore
@@ -81,6 +88,12 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore/prime)
 	charge_sections = 2
 	spread = 0 //could be like 5, but having just very tiny spread kinda feels like bullshit
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.25,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5.2)
 
 //Inferno and Cryo Pistols
 

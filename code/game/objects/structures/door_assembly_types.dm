@@ -122,6 +122,7 @@
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
 	material_amt = 4
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/structure/door_assembly/door_assembly_vault
 	name = "vault door assembly"
@@ -132,6 +133,7 @@
 	noglass = TRUE
 	material_type = /obj/item/stack/sheet/plasteel
 	material_amt = 6
+	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 6)
 
 /obj/structure/door_assembly/door_assembly_shuttle
 	name = "shuttle airlock assembly"

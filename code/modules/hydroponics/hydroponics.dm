@@ -1180,6 +1180,7 @@
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
 	maxnutri = 15
+	custom_materials = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/machinery/hydroponics/soil/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	return NONE

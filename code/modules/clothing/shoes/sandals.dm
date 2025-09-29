@@ -3,7 +3,7 @@
 	name = "sandals"
 	icon_state = "wizard"
 	inhand_icon_state = "wizshoe"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	strip_delay = 0.5 SECONDS
 	equip_delay_other = 5 SECONDS

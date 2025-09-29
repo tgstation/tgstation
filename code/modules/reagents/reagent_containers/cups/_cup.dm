@@ -457,6 +457,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/mortar
 	name = "mortar"
