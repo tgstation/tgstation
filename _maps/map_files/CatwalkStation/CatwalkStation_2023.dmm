@@ -14343,7 +14343,10 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Blue Base"
 	},
-/turf/open/floor/light/colour_cycle,
+/turf/open/floor/light{
+	name = "Blue Base Floor";
+	light_power = 3
+	},
 /area/station/maintenance/hallway/abandoned_recreation)
 "egX" = (
 /obj/structure/disposalpipe/segment{
@@ -24590,7 +24593,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/eighties,
+/turf/open/floor/light{
+	name = "Blue Base Floor";
+	light_power = 3
+	},
 /area/station/maintenance/hallway/abandoned_recreation)
 "hei" = (
 /obj/structure/chair{
@@ -25501,6 +25507,7 @@
 	name = "psychology shutters control";
 	pixel_x = -6
 	},
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood/large,
 /area/station/medical/psychology)
 "hsR" = (
@@ -34282,9 +34289,6 @@
 /turf/open/openspace,
 /area/station/commons/vacant_room/office)
 "jML" = (
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
-	},
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -42681,7 +42685,12 @@
 /obj/item/banner/red{
 	inspiration_available = 0
 	},
-/turf/open/floor/eighties,
+/turf/open/floor/light{
+	name = "Red Base Floor";
+	light_power = 3;
+	icon_state = "light_on-2";
+	light_system = 2
+	},
 /area/station/maintenance/hallway/abandoned_recreation)
 "mke" = (
 /obj/structure/table,
@@ -48578,12 +48587,6 @@
 "nVE" = (
 /turf/closed/wall/r_wall,
 /area/station/service/abandoned_gambling_den)
-"nVT" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "nWe" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter/welded{
@@ -65796,7 +65799,10 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Blue Base"
 	},
-/turf/open/floor/light/colour_cycle,
+/turf/open/floor/light{
+	name = "Blue Base Floor";
+	light_power = 3
+	},
 /area/station/maintenance/hallway/abandoned_recreation)
 "sXL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66428,7 +66434,12 @@
 	name = "Laser Tag"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
-/turf/open/floor/wood,
+/turf/open/floor/light{
+	name = "Red Base Floor";
+	light_power = 3;
+	icon_state = "light_on-2";
+	light_system = 2
+	},
 /area/station/maintenance/hallway/abandoned_recreation)
 "tid" = (
 /obj/structure/transit_tube/junction{
@@ -70053,7 +70064,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "ulM" = (
-/obj/machinery/light/small/directional/south,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -75035,7 +75045,12 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Red Base"
 	},
-/turf/open/floor/light/colour_cycle,
+/turf/open/floor/light{
+	name = "Red Base Floor";
+	light_power = 3;
+	icon_state = "light_on-2";
+	light_system = 2
+	},
 /area/station/maintenance/hallway/abandoned_recreation)
 "vCP" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -77209,7 +77224,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "wiF" = (
-/obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/spawner/random/structure/crate_abandoned,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -170411,7 +170425,7 @@ nlm
 nlm
 bOk
 wiF
-nVT
+uCF
 jML
 tUX
 eAV
