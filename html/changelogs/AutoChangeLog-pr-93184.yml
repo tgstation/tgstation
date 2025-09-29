@@ -1,0 +1,4 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - bugfix: "the dye spray can dye the external body parts again"
