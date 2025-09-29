@@ -114,6 +114,10 @@
 	fire = 100
 	acid = 30
 
+/obj/item/clothing/gloves/gauntlets/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/boxing/hunter)
+
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
 	if(!(slot & ITEM_SLOT_GLOVES))
