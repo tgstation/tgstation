@@ -19,7 +19,6 @@
 			as well as causing significant demoralization amongst Nanotrasen crew."
 	item = /obj/item/mod/control/pre_equipped/infiltrator
 	cost = 6
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
