@@ -131,7 +131,7 @@
 /obj/effect/temp_visual/rising_rocket/Initialize(mapload)
 	. = ..()
 	playsound(src, 'sound/items/weapons/minebot_rocket.ogg', 100, FALSE)
-	animate(src, pixel_y = base_pixel_y + 500, time = duration, easing = EASE_IN)
+	animate(src, pixel_y = base_pixel_y + 500, time = duration, easing = QUAD_EASING|EASE_IN)
 
 /obj/effect/temp_visual/falling_rocket
 	name = "Missile"

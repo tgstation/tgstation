@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "Climbable objects now show up as an examine tag."
