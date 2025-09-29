@@ -184,7 +184,7 @@
 		alert_loc.balloon_alert(user, repeating ? "all used up!" : "treated [parse_zone(healed_zone)]")
 		if(heal_end_sound)
 			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
-			return
+		return
 	if(heal_continuous_sound && (continuous || !silent))
 		playsound(patient, heal_continuous_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	log_combat(user, patient, "healed", src)
