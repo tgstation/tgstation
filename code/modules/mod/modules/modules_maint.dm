@@ -319,7 +319,7 @@
 /obj/item/mod/module/atrocinator/on_activation(mob/activator)
 	// Auto-unbuckle anyone being carried to avoid lag issues
 	if(length(mod.wearer.buckled_mobs))
-		balloon_alert(activator, "dumping carried people!")
+		mod.wearer.visible_message("As [mod.wearer] flips, [mod.wearer.buckled_mobs[1]] flies off of [mod.wearer.p_their()] back!")
 		mod.wearer.unbuckle_all_mobs()
 
 	playsound(src, 'sound/effects/curse/curseattack.ogg', 50)
@@ -357,10 +357,14 @@
 	if(you_fucked_up || mod.wearer.has_gravity() > NEGATIVE_GRAVITY)
 		return
 
-	// Prevent infinite loops when being fireman carried - just don't trigger at all
-	// This should theoretically never happen due to our other protections, so stack trace if it does
+	// Prevent infinite loops when being fireman carried - Stack trace if it does
 	if(mod.wearer.buckled)
 		stack_trace("Atrocinator user is buckled despite protections - this shouldn't happen!")
+		return
+
+	// Prevent infinite loops when carrying someone - Stack trace if it does
+	if(length(mod.wearer.buckled_mobs))
+		stack_trace("Atrocinator user is carrying someone despite protections - this shouldn't happen!")
 		return
 
 	var/turf/open/current_turf = get_turf(mod.wearer)
@@ -400,10 +404,10 @@
 /// Prevent someone from being buckled to the wearer while atrocinator is active
 /obj/item/mod/module/atrocinator/proc/on_someone_buckled(datum/source, mob/living/buckled_mob, mob/living/buckler)
 	SIGNAL_HANDLER
-	if(buckled_mob) // Someone is being buckled to the wearer
-		balloon_alert(buckler, "they're/you're upside down!")
-		balloon_alert(mod.wearer, "atrocinator interference!")
-		return COMPONENT_BLOCK_BUCKLE
+	balloon_alert(buckler, "[buckler == mod.wearer ? "you're" : "they're"] upside down!")
+	return COMPONENT_BLOCK_BUCKLE
+
+
 
 /obj/item/mod/module/recycler/donk/safe
 	name = "MOD foam dart recycler module"
