@@ -306,18 +306,27 @@ SUBSYSTEM_DEF(persistence)
 
 	if(persistent_save_flags["objects"])
 		flags |= SAVE_OBJECTS
-	if(persistent_save_flags["mobs"])
-		flags |= SAVE_MOBS
-	if(persistent_save_flags["turfs"])
-		flags |= SAVE_TURFS
-	if(persistent_save_flags["areas"])
-		flags |= SAVE_AREAS
-	if(persistent_save_flags["space"])
-		flags |= SAVE_SPACE
+	if(persistent_save_flags["objects_variables"])
+		flags |= SAVE_OBJECTS_VARIABLES
 	if(persistent_save_flags["object_properties"])
 		flags |= SAVE_OBJECT_PROPERTIES
-	if(persistent_save_flags["atmos"])
-		flags |= SAVE_ATMOS
+
+	if(persistent_save_flags["mobs"])
+		flags |= SAVE_MOBS
+
+	if(persistent_save_flags["turfs"])
+		flags |= SAVE_TURFS
+	if(persistent_save_flags["turfs_atmos"])
+		flags |= SAVE_TURFS_ATMOS
+	if(persistent_save_flags["turfs_space"])
+		flags |= SAVE_TURFS_SPACE
+
+	if(persistent_save_flags["areas"])
+		flags |= SAVE_AREAS
+	if(persistent_save_flags["areas_default_shuttles"])
+		flags |= SAVE_AREAS_DEFAULT_SHUTTLES
+	if(persistent_save_flags["areas_custom_shuttles"])
+		flags |= SAVE_AREAS_CUSTOM_SHUTTLES
 
 	return flags
 

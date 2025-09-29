@@ -1,3 +1,7 @@
+###########################################
+##    P  E  R  S  I  S  T  E  N  C  E    ##
+###########################################
+
 ## These are for reference and can help you configure the save and load settings
 ##
 ## Save File Size:
@@ -30,6 +34,10 @@ PERSISTENT_AUTOSAVE_PERIOD 4
 ## Set to -1 to never delete any autosaves
 PERSISTENT_MAX_AUTOSAVES -1
 
+##########################
+##   Z - L E V E L S    ##
+##########################
+
 ## Include specific z levels when saving and loading determined by ZTRAIT
 ## CentCom and Transit/Reserved z-levels can be saved but are never loaded
 ## It is recommended to disable them to avoid saving unnecessary data
@@ -51,20 +59,48 @@ PERSISTENT_USE_STATIC_MAP_GRID
 ## Note on template_noop when loading maps:
 ## These placeholders are automatically replaced with the world's default turf or area from `\code\world.dm`
 ## The current world defaults are turf = /turf/open/space/basic and area = /area/space
-##
+
+##########################
+##    O B J E C T S     ##
+##########################
+
 ## Save and load objects and their properties.
 PERSISTENT_SAVE_FLAGS objects
+## Save and load objects variables
+PERSISTENT_SAVE_FLAGS objects_variables
+## Save and load objects custom properties from obj.on_object_saved().
+PERSISTENT_SAVE_FLAGS object_properties
+
+##########################
+##       M O B S        ##
+##########################
+
 ## Save and load mobs, excluding mob/living/carbon.
 PERSISTENT_SAVE_FLAGS mobs
-## Save and load turf types. When disabled, this will save turfs as /turf/template_noop
+
+##########################
+##      T U R F S       ##
+##########################
+
+## Save and load turf types. When disabled, saves turfs as /turf/template_noop
 PERSISTENT_SAVE_FLAGS turfs
-## Save and load area types. When disabled, this will save areas as /area/template_noop
-PERSISTENT_SAVE_FLAGS areas
-## Save and load space turfs. When disabled, this will skip saving objects, mobs, and
+## Save and load turf atmospheric properties (gases, temperature, etc.)
+PERSISTENT_SAVE_FLAGS turfs_atmos
+## Save and load space turfs. When disabled, skips saving objects, mobs, and
 ## areas that are on space turfs. The space turf and area are saved as /template_noop
-PERSISTENT_SAVE_FLAGS space
-## Save and load custom object properties from obj.on_object_saved().
-PERSISTENT_SAVE_FLAGS object_properties
-## Save and load atmospheric properties (gases, temperature, etc.) for turfs.
-PERSISTENT_SAVE_FLAGS atmos
+PERSISTENT_SAVE_FLAGS turfs_space
+
+##########################
+##      A R E A S       ##
+##########################
+
+## Save and load area types. When disabled, saves areas as /area/template_noop
+PERSISTENT_SAVE_FLAGS areas
+## Save and load default shuttle area types like arrivals, cargo, mining, whiteship, etc.
+## When disabled, saves default shuttle areas as /area/template_noop
+PERSISTENT_SAVE_FLAGS areas_default_shuttles
+## Save and load custom shuttle area types from player made shuttles.
+## When disabled, saves custom shuttle areas as /area/template_noop
+PERSISTENT_SAVE_FLAGS areas_custom_shuttles
+
 
