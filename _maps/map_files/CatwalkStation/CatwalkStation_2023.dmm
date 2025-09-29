@@ -48010,16 +48010,10 @@
 /area/station/service/chapel)
 "nOt" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Hydroponics"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /obj/effect/turf_decal/tile/green/full,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hydropony_shutters";
-	name = "Hydropony's Shutters"
-	},
+/obj/machinery/door/airlock/hydroponics,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "nOw" = (
@@ -63453,16 +63447,10 @@
 /turf/open/space/openspace,
 /area/space/nearstation)
 "slN" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "hydropony_shutters";
-	name = "Hydroponics Shutters"
-	},
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Hydroponics"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
+/obj/machinery/door/airlock/hydroponics,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "slP" = (
@@ -72458,11 +72446,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Hydroponics"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/service/hydroponics,
 /obj/effect/turf_decal/tile/green/full,
+/obj/machinery/door/airlock/hydroponics,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "uSg" = (
