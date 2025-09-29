@@ -12180,7 +12180,6 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "dnT" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -29764,6 +29763,10 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/structure/cable,
+/obj/item/crowbar{
+	pixel_y = 3;
+	pixel_x = 15
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/auxiliary)
 "isC" = (
@@ -48091,7 +48094,6 @@
 	},
 /area/station/security/brig)
 "nEV" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/light/directional/north,
@@ -48552,6 +48554,7 @@
 /obj/machinery/firealarm/directional/south{
 	pixel_x = 4
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/auxiliary)
 "nLE" = (
@@ -50729,11 +50732,11 @@
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
 "opS" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/auxiliary)
 "opU" = (
@@ -59033,13 +59036,20 @@
 /area/station/service/chapel/office)
 "qEK" = (
 /obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/pen{
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/pen,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/structure/cable,
+/obj/item/radio/off{
+	pixel_y = 4;
+	pixel_x = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/auxiliary)
 "qEM" = (
@@ -61763,17 +61773,15 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "rqi" = (
-/obj/item/crowbar{
-	pixel_y = 3
-	},
 /obj/item/assembly/flash/handheld{
 	pixel_x = -19;
 	pixel_y = 3
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/item/radio/off{
-	pixel_y = 6
+/obj/machinery/fax{
+	fax_name = "Custom's Fax Machine";
+	name = "Custom's Fax Machine"
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/auxiliary)
@@ -65577,7 +65585,6 @@
 	},
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/light/directional/west,
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
