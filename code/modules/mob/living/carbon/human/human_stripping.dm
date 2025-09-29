@@ -133,11 +133,15 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	for(var/obj/item/clothing/accessory/jumpsuit_accessory as anything in jumpsuit.attached_accessories)
 		if(!istype(jumpsuit_accessory))
 			continue
-		LAZYADDASSOC(accessory_choices, jumpsuit_accessory.name, jumpsuit_accessory)
+		accessory_choices[jumpsuit_accessory.name] += jumpsuit_accessory
 
 	var/chosen_accessory_name = tgui_input_list(user, "Select which accessory to strip", "Select Accessory", accessory_choices)
-	var/obj/item/clothing/accessory/chosen_accessory = LAZYACCESS(accessory_choices, chosen_accessory_name)
-	if(!chosen_accessory)
+	var/obj/item/clothing/accessory/chosen_accessory = accessory_choices[chosen_accessory_name]
+	if(isnull(chosen_accessory))
+		return
+
+	if(!user.Adjacent(source))
+		source.balloon_alert(user, "can't reach!")
 		return
 
 	to_chat(source, span_notice("[user] is trying to take [chosen_accessory] off of [jumpsuit]!"))
@@ -147,14 +151,13 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 	to_chat(source, span_notice("[user] has taken [chosen_accessory] off of [jumpsuit]."))
 	jumpsuit.remove_accessory(chosen_accessory)
-	chosen_accessory.forceMove(get_turf(jumpsuit))
+	chosen_accessory.forceMove(jumpsuit.drop_location())
 
 	if(!ismob(source))
 		return
 
 	var/mob/mob_source = source
 	mob_source.update_worn_undersuit()
-	mob_source.update_body()
 
 /datum/strippable_item/mob_item_slot/suit
 	key = STRIPPABLE_ITEM_SUIT
