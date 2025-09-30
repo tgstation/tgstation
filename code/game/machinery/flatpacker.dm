@@ -373,7 +373,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.retrieve_sheets(amount, material)
+			materials.retrieve_stack(amount, material)
 			return TRUE
 
 /**
