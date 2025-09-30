@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Locked reflector boxes no longer repeat \"can't rotate\" forever"

@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Shivs cannot be erroneously crafted via crafting menu anymore. That'd cause you to get a generic glass shiv if you were to use sturdier shards like plasma or titanium."
-  - rscdel: "Removed the recipe for cable handcuffs from the crafting menu."

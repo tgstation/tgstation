@@ -115,7 +115,7 @@
 	#define MOVABLE_SAY_QUOTE_MESSAGE_SPANS 2
 	#define MOVABLE_SAY_QUOTE_MESSAGE_MODS 3
 
-/// From /datum/element/immerse/proc/add_submerge_overlay(): (visual_overlay)
+/// From /datum/element/immerse/proc/add_immerse_overlay(): (atom/movable/immerse_mask/effect_relay)
 #define COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY "movable_edit_unique_submerge_overlay"
 /// From base of area/Exited(): (area/left, direction)
 #define COMSIG_MOVABLE_EXITED_AREA "movable_exited_area"

@@ -344,7 +344,7 @@
 	data["selected_root"] = root_category
 
 	data["categories"] = list()
-	for(var/sub_category as anything in GLOB.rcd_designs[root_category])
+	for(var/sub_category in GLOB.rcd_designs[root_category])
 		var/list/target_category =  GLOB.rcd_designs[root_category][sub_category]
 		if(!length(target_category))
 			continue
@@ -529,15 +529,10 @@
 /obj/item/construction/rcd/ce
 	name = "professional RCD"
 	desc = "A higher-end model of the rapid construction device, prefitted with improved cooling and disruption prevention. Provided to the chief engineer."
+	icon_state = "cercd"
+	inhand_icon_state = "cercd"
 	construction_upgrades = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 	matter = 160
-	color = list(
-		0.3, 0.3, 0.7, 0.0,
-		1.0, 1.0, 0.2, 0.0,
-		-0.2, 0.0, 1.0, 0.0,
-		0.0, 0.0, 0.0, 1.0,
-		0.0, 0.0, 0.0, 0.0,
-	)
 
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"

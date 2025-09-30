@@ -466,15 +466,6 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
-/obj/item/circuitboard/machine/bluespace_sender
-	name = "Bluespace Sender"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/atmospherics/components/unary/bluespace_sender
-	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 5)
-
 //Generic
 /obj/item/circuitboard/machine/component_printer
 	name = "\improper Component Printer"
