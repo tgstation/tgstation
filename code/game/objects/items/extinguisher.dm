@@ -207,7 +207,6 @@
 	)
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
-	max_water = 150
 
 /obj/item/extinguisher/advanced/empty
 	starting_water = FALSE
