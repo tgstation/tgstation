@@ -1055,7 +1055,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	is_using |= to_show
 
+	to_show.hud_used.open_containers |= storage_interfaces[to_show].list_ui_elements()
 	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
+	to_show.hud_used.open_containers |= real_location.contents
 	to_show.client.screen |= real_location.contents
 
 	return TRUE
@@ -1080,7 +1082,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	is_using -= to_hide
 
 	if(to_hide.client)
+		to_hide.hud_used.open_containers -= storage_interfaces[to_hide].list_ui_elements()
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.hud_used.open_containers -=  real_location.contents
 		to_hide.client.screen -= real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
