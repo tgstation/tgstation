@@ -23,15 +23,16 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = BLOBMOB_CLOUD_NONE
-	var/list/loot = list(/obj/item/food/spore_sack)
+	var/loot = /obj/item/food/spore_sack
 
 /mob/living/basic/blob_minion/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
 	AddComponent(/datum/component/blob_minion, on_strain_changed = CALLBACK(src, PROC_REF(on_strain_updated)), new_death_cloud_size = death_cloud_size)
 
-	if(length(loot))
-		loot = string_list(loot)
+	if(loot)
+		if (islist(loot))
+			loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
 
 /// Called when our blob overmind changes their variant, update some of our mob properties
