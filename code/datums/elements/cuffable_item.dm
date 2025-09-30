@@ -19,9 +19,9 @@
 /datum/element/cuffable_item/proc/on_examine_more(obj/item/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(length(living_owner.held_items) < 0 || isrobot(user) || source.anchored)
+	if(length(user.held_items) < 0 || iscyborg(user) || source.anchored)
 		return
-	examine_list += span_smallnotice("You could bind [target.p_they()] to your wrist with a pair of handcuffs...")
+	examine_list += span_smallnotice("You could bind [source.p_they()] to your wrist with a pair of handcuffs...")
 
 /datum/element/cuffable_item/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
@@ -31,7 +31,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/cuffable_item/proc/item_interaction(obj/item/source, mob/user, obj/item/tool, modifiers)
-	if(!istype(tool, /obj/item/restraints/handcuffs) || isrobot(user) || source.anchored)
+	if(!istype(tool, /obj/item/restraints/handcuffs) || iscyborg(user) || source.anchored)
 		return NONE
 
 	if(HAS_TRAIT_FROM(source, TRAIT_NODROP, WIP_CUFFABLE_ITEM_TRAIT))
