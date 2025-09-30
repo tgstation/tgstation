@@ -90,7 +90,7 @@ function ForensicLog(props: ForensicLogProps) {
   );
 }
 
-type logFormatter = {
+type LogFormatter = {
   log: Record<string, string>;
   iconName: string;
   iconColor: string;
