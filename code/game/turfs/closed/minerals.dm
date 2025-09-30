@@ -302,8 +302,10 @@
 
 	. = ..()
 	var/dynamic_prob = mineralChance
+	var/ore_amount = rand(1,5)
 	if(proximity_based)
 		dynamic_prob = proximity_ore_chance() // We assign the chance of ore spawning based on probability.
+		ore_amount = scale_ore_to_vent()
 	if (prob(dynamic_prob))
 		var/list/spawn_chance_list = mineral_chances_by_type[type]
 		if (isnull(spawn_chance_list))
@@ -320,7 +322,7 @@
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
 				M.turf_type = src.turf_type
-				M.mineralAmt = scale_ore_to_vent()
+				M.mineralAmt = ore_amount
 				GLOB.post_ore_random["[M.mineralAmt]"] += 1
 				src = M
 				M.levelupdate()
@@ -331,8 +333,11 @@
 		else
 			Change_Ore(path, FALSE)
 			Spread_Vein(path)
-			mineralAmt = scale_ore_to_vent()
+			mineralAmt = ore_amount
 			GLOB.post_ore_manual["[mineralAmt]"] += 1
+
+	if(mineralType && !mineralAmt)
+		stack_trace("Mineral turf with mineralAmt being zero initialized at [src.x], [src.y], [src.z] ([get_area(src)])")
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"

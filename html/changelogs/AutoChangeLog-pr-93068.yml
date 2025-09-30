@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed megafauna kills not being counted if you lost LoS to the boss when it died, or if you fought it in a mech."
+  - code_imp: "Cleaned up mob drops code"
+  - spellcheck: "Fixed a missing \"to\" in wendigo crusher trophy"
+  - refactor: "Unified megafauna, basicmob boss and normal mob crusher drops and achievement code"
