@@ -81,6 +81,8 @@
 	//They aren't given a c_tag so they don't show up in camera consoles
 	builtInCamera = new(src)
 
+	create_station_alerts()
+
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
@@ -95,10 +97,8 @@
 			if(!McMobby.binarycheck())
 				continue
 			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
-	return INITIALIZE_HINT_LATELOAD
 
-/mob/living/silicon/ai/LateInitialize()
-	. = ..()
+/mob/living/silicon/ai/proc/create_station_alerts()
 	var/static/list/alert_areas
 	if(isnull(alert_areas))
 		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))

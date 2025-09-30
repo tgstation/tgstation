@@ -76,6 +76,8 @@
 		if(mmi.brainmob)
 			gender = mmi.brainmob.gender
 
+	create_station_alerts()
+
 	aicamera = new/obj/item/camera/siliconcam/robot_camera(src)
 	toner = tonermax
 	diag_hud_set_borgcell()
@@ -83,10 +85,8 @@
 
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
 	log_current_laws()
-	return INITIALIZE_HINT_LATELOAD
 
-/mob/living/silicon/robot/LateInitialize()
-	. = ..()
+/mob/living/silicon/robot/proc/create_station_alerts()
 	var/static/list/alert_areas
 	if(isnull(alert_areas))
 		alert_areas = (GLOB.the_station_areas + typesof(/area/mine))
