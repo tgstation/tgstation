@@ -1,4 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - bugfix: "containers no longer close unexpectedly when the HUD refreshes (e.g., when lying down/getting up)"
