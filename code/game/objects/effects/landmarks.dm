@@ -568,7 +568,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		if(closet.opened)
 			continue
 		joining_mob.forceMove(closet)
-		make_hungover(joining_mob)
 		return
 
 //Landmark that creates destinations for the navigate verb to path to
