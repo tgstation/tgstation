@@ -107,7 +107,7 @@
 	if(antimagic_flags & MAGIC_RESISTANCE_MIND)
 		examine_list["telepathy-proof"] = "It appears to be insulated against telepathic or mental influence."
 	if(antimagic_flags & MAGIC_RESISTANCE_HOLY)
-		examine_list["blessed"] = "It is protected by a ward against unholy and dark forms of magic."
+		examine_list["blessed"] = "It is protected by a divine shield against unholy and dark forms of magic."
 
 /datum/component/anti_magic/proc/on_equip(atom/movable/source, mob/equipper, slot)
 	SIGNAL_HANDLER
