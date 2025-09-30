@@ -123,7 +123,7 @@
 	/// Flag - Traits that share an ID cannot be placed on the same plant.
 	var/trait_ids
 	/// Flag - Modifications made to the final product.
-	var/trait_flags = TRAIT_SHOW_EXAMINE
+	var/trait_flags = NONE
 	/// A blacklist of seeds that a trait cannot be attached to.
 	var/list/obj/item/seeds/seed_blacklist
 
@@ -375,6 +375,7 @@
 	icon = FA_ICON_LIGHTBULB
 	rate = 0.03
 	description = "It emits a soft glow."
+	trait_flags = TRAIT_SHOW_EXAMINE
 	trait_ids = GLOW_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The color of our bioluminescence.
@@ -403,6 +404,7 @@
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = COLOR_BIOLUMINESCENCE_SHADOW
+	description = "It absorbs light around it."
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/seed)
 	return -max(seed.potency*(rate*0.2), 0.2)
@@ -518,7 +520,7 @@
 	description = "The reagent volume is doubled, halving the plant yield instead."
 	icon = FA_ICON_FLASK_VIAL
 	rate = 2
-	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD
+	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/maxchem/on_new_plant(obj/item/our_plant, newloc)
@@ -914,7 +916,7 @@
 	description = "It consumes nutriments to heat up other reagents, halving the yield."
 	icon = FA_ICON_TEMPERATURE_ARROW_UP
 	trait_ids = TEMP_CHANGE_ID
-	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD
+	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /**
@@ -926,7 +928,7 @@
 	description = "It consumes nutriments to cool down other reagents, halving the yield."
 	icon = FA_ICON_TEMPERATURE_ARROW_DOWN
 	trait_ids = TEMP_CHANGE_ID
-	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD
+	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /// Prevents species mutation, while still allowing wild mutation harvest and Floral Somatoray species mutation.  Trait acts as a tag for hydroponics.dm to recognise.
