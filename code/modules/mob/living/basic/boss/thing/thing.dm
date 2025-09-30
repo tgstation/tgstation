@@ -21,12 +21,8 @@
 	speed = 3.5 //dont make this any faster PLEASE
 	gps_name = "L-4 Biohazard Beacon"
 	ai_controller = /datum/ai_controller/basic_controller/thing_boss
-	loot = list(/obj/item/keycard/thing_boss)
-	crusher_loot = list(/obj/item/keycard/thing_boss, /obj/item/crusher_trophy/flesh_glob)
+	crusher_loot = /obj/item/crusher_trophy/flesh_glob
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	achievement_type = /datum/award/achievement/boss/thething_kill
-	crusher_achievement_type = /datum/award/achievement/boss/thething_crusher
-	score_achievement_type = /datum/award/score/thething_score
 	/// Current phase of the boss fight
 	var/phase = 1
 	/// Time the Thing will be invulnerable between phases
@@ -45,6 +41,15 @@
 
 /mob/living/basic/boss/thing/Initialize(mapload)
 	. = ..()
+	var/static/list/achievements = list(
+		/datum/award/achievement/boss/boss_killer,
+		/datum/award/achievement/boss/thething_kill,
+		/datum/award/score/boss_score,
+		/datum/award/score/thething_score,
+		)
+	AddElement(/datum/element/kill_achievement, achievements, /datum/award/achievement/boss/thething_crusher, /datum/memory/megafauna_slayer)
+	AddElement(/datum/element/death_drops, /obj/item/keycard/thing_boss, FALSE)
+
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/the_thing/decimate = BB_THETHING_DECIMATE,
 		/datum/action/cooldown/mob_cooldown/charge/the_thing = BB_THETHING_CHARGE,
@@ -57,12 +62,13 @@
 	AddElement(/datum/element/relay_attackers) // used to immediately aggro if shot from outside aggro range
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(immediate_aggro))
 	maploaded = mapload
-	if(maploaded)
-		spawn_loc = loc
-		RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_gained))
-		RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_lost))
-		SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
-		return INITIALIZE_HINT_LATELOAD
+	if(!maploaded)
+		return
+	spawn_loc = loc
+	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_gained))
+	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_lost))
+	SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
+	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/basic/boss/thing/LateInitialize()
 	SSqueuelinks.pop_link(RUIN_QUEUE)
@@ -183,9 +189,9 @@
 	spawn_loc = null
 	return ..()
 
-/mob/living/basic/boss/thing/with_ruin_loot
-	loot = list(/obj/item/organ/brain/cybernetic/ai) // the only, relevant main loot of the ruin, but if admin spawned the keycard is useless
-	crusher_loot = list(/obj/item/organ/brain/cybernetic/ai, /obj/item/crusher_trophy/flesh_glob)
+/mob/living/basic/boss/thing/with_ruin_loot/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/death_drops, /obj/item/organ/brain/cybernetic/ai, FALSE)
 
 // special stuff for our ruin to make a cooler bossfight
 

@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "Fixed an edge case of mineral turfs being generated with 0 amount of ore in it."

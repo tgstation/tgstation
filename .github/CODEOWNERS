@@ -82,6 +82,10 @@
 
 /code/modules/hydroponics/ @MrMelbert
 
+# necromanceranne
+
+/code/modules/uplink/ @necromanceranne
+
 # ninjanomnom
 
 /code/controllers/subsystem/dcs.dm @ninjanomnom
