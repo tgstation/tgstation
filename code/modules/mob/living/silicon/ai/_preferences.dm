@@ -22,7 +22,6 @@ GLOBAL_LIST_INIT(ai_status_display_emotes, list(
 // Mapping from AI core display options to new status display icon states
 // This allows AI status displays to show the same choice as AI core displays
 GLOBAL_LIST_INIT(ai_core_to_status_display_mapping, list(
-	":thinking:" = "ai_status_thinking",
 	"Alien" = "ai_status_alien",
 	"Angel" = "ai_status_angel",
 	"Banned" = "ai_status_banned",
@@ -42,11 +41,10 @@ GLOBAL_LIST_INIT(ai_core_to_status_display_mapping, list(
 	"Heartline" = "ai_status_heartline",
 	"Helios" = "ai_status_helios",
 	"House" = "ai_status_house",
-	"Inverted" = "ai_status_inverted",
 	"Matrix" = "ai_status_matrix",
 	"Monochrome" = "ai_status_monochrome",
 	"Murica" = "ai_status_murica",
-	"Nanotrasen" = "ai_status_nanotrasen",
+	"NanoTrasen" = "ai_status_nanotrasen",
 	"Not Malf" = "ai_status_not_malf",
 	"President" = "ai_status_president",
 	"Rainbow" = "ai_status_rainbow",
@@ -56,7 +54,6 @@ GLOBAL_LIST_INIT(ai_core_to_status_display_mapping, list(
 	"Syndicat Meow" = "ai_status_syndicat_meow",
 	"Text" = "ai_status_text",
 	"Too Deep" = "ai_status_too_deep",
-	"Triumvirate-M" = "ai_status_triumvirate_m",
 	"Triumvirate" = "ai_status_triumvirate",
 	"Weird" = "ai_status_weird",
 ))
