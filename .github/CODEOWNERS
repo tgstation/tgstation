@@ -160,6 +160,10 @@
 
 # CONTRIBUTORS
 
+# grungussuss
+
+/sound/ @grungussuss
+
 # Jordie0608
 
 /code/controllers/subsystem/dbcore.dm @Jordie0608
@@ -171,6 +175,10 @@
 /code/modules/surgery/organs/ @Kapu1178
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
 /code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
+
+# loganuk
+
+/_maps/map_files/CatwalkStation/ @loganuk
 
 # NamelessFairy
 
@@ -184,13 +192,6 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
-# grungussuss
-
-/sound/ @grungussuss
-
-# loganuk
-
-/_maps/map_files/CatwalkStation/ @loganuk
 
 # MULTIPLE OWNERS
 
