@@ -98,7 +98,7 @@
 /datum/component/anti_magic/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(antimagic_flags == (MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND|MAGIC_RESISTANCE_HOLY))
+	if(antimagic_flags == ALL_MAGIC_RESISTANCE)
 		examine_list["magic-proof"] = "It is thoroughly shielded against all known forms of magic."
 		return
 
