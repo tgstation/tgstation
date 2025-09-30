@@ -1,0 +1,4 @@
+author: "carpotoxin"
+delete-after: True
+changes:
+  - rscadd: "Adds a button to the strip-menu to remove somebody's uniform accessories"
