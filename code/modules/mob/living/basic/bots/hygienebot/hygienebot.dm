@@ -21,7 +21,7 @@
 	additional_access = /datum/id_trim/job/janitor
 	hackables = "cleaning service protocols"
 	ai_controller = /datum/ai_controller/basic_controller/bot/hygienebot
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 
 	///are we currently washing someone?

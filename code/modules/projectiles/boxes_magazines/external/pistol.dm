@@ -105,7 +105,7 @@
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE
 	custom_materials = list(
-	/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 10,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 10,
 		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 10,
