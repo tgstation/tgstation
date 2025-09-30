@@ -10828,10 +10828,6 @@
 "ddj" = (
 /obj/machinery/firealarm/directional/north,
 /obj/structure/filingcabinet/medical,
-/obj/item/toy/figure/paramedic{
-	pixel_y = 16;
-	pixel_x = -1
-	},
 /turf/open/floor/engine/hull/air,
 /area/station/medical/medbay/central)
 "ddr" = (
@@ -12191,10 +12187,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/janitor)
-"dyn" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/glass/reinforced,
-/area/station/medical/chemistry)
 "dyr" = (
 /obj/effect/turf_decal/tile/dark_blue,
 /obj/structure/cable,
@@ -13780,6 +13772,7 @@
 /obj/machinery/light/floor{
 	color = "#66ccff"
 	},
+/obj/item/wrench/medical,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "dYl" = (
@@ -16107,7 +16100,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/effect/mapping_helpers/airlock_note_placer{
-	note_info = "Chem is not your personal war zone!  If you want to make something that goes boom, take it to the new Special Projects room up the ladder where the walls are meant to survive it even if you do not.";
+	note_info = "Chemistry is not a battlefield. If you intend to mix anything volatile, take it up the ladder to the Controlled Hazard Chamber.";
 	note_name = "Projects"
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -21209,15 +21202,8 @@
 /area/station/commons/dorms)
 "fZt" = (
 /obj/machinery/keycard_auth/wall_mounted/directional/north{
-	pixel_x = -6;
-	pixel_y = 30
-	},
-/obj/machinery/button/door/directional/north{
-	id = "medbay-office";
-	name = "Medbay Lockdown";
-	req_access = list("medical");
-	pixel_x = 10;
-	pixel_y = 25
+	pixel_y = 28;
+	pixel_x = null
 	},
 /obj/structure/table/wood,
 /obj/item/folder/white{
@@ -25800,16 +25786,6 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
-"hnC" = (
-/obj/machinery/button/door/directional/north{
-	id = "cmoprivacy";
-	name = "CMO Privacy Shutters";
-	req_access = list("cmo");
-	pixel_x = 10;
-	pixel_y = 3
-	},
-/turf/closed/wall,
-/area/station/command/heads_quarters/cmo)
 "hnF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/cable,
@@ -26182,7 +26158,10 @@
 /turf/closed/wall,
 /area/station/hallway/primary/central)
 "hsX" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_heater/withbuffer,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -27816,7 +27795,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
-/turf/open/floor/plating,
+/turf/open/floor/wood/large,
 /area/station/command/heads_quarters/cmo)
 "hOZ" = (
 /obj/structure/chair/sofa/bench/right{
@@ -32603,10 +32582,31 @@
 /area/station/maintenance/port/greater)
 "jhL" = (
 /obj/machinery/airalarm/directional/south,
-/obj/structure/table,
 /obj/machinery/camera/autoname/directional/east,
-/obj/item/toy/plush/lizard_plushie/green,
+/obj/item/toy/plush/lizard_plushie/green{
+	name = "Endures-The-Blast";
+	pixel_y = 10;
+	pixel_x = -8
+	},
 /obj/structure/sign/warning/explosives/directional/east,
+/obj/structure/closet/crate/robust{
+	name = "Risk Management Supply Crate";
+	anchored = 1
+	},
+/obj/item/clothing/suit/utility/bomb_suit/white{
+	pixel_x = 5;
+	pixel_y = 5;
+	name = "Personal Liability Mitigation Suit"
+	},
+/obj/item/clothing/head/utility/bomb_hood/white{
+	pixel_x = -7;
+	pixel_y = -2;
+	name = "Cranial Hazard Guard"
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 5;
+	name = "Controlled Atmosphere Mask"
+	},
 /turf/open/floor/engine,
 /area/station/medical/chemistry)
 "jhM" = (
@@ -33868,23 +33868,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "jzJ" = (
-/obj/structure/table/reinforced/plasmarglass,
-/obj/machinery/reagentgrinder{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 12
-	},
-/obj/item/pen{
-	pixel_x = 6;
-	pixel_y = 12
-	},
-/obj/item/folder/white{
-	pixel_x = 6
-	},
 /obj/structure/sign/warning/no_smoking/directional/west,
+/obj/machinery/chem_dispenser,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/engine,
 /area/station/medical/chemistry)
 "jzM" = (
@@ -36502,6 +36490,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "klx" = (
@@ -37498,7 +37487,7 @@
 "kxz" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/highsecurity{
-	name = "Special Projects"
+	name = "Controlled Hazard Chamber"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
 /obj/effect/turf_decal/stripes/end{
@@ -37506,7 +37495,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/mapping_helpers/airlock_note_placer{
-	note_info = "Ask the AI or CMO to unlock this room. Chem is not your personal war zone!  If you want to make something that goes boom, take it this new Special Projects room where the walls are meant to survive it even if you do not.";
+	note_info = "Access with authorization only. The Controlled Hazard Chamber is designed to withstand incidents you cannot. Essential safety equipment has been provided to ensure your work may continue without compromising station integrity";
 	note_name = "Projects"
 	},
 /turf/open/floor/engine,
@@ -40804,9 +40793,9 @@
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
 "luo" = (
-/obj/structure/tank_holder/extinguisher,
 /obj/machinery/firealarm/directional/north,
 /obj/structure/sign/poster/official/safety_internals/directional/east,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/engine,
 /area/station/medical/chemistry)
 "luw" = (
@@ -40881,6 +40870,10 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"lvz" = (
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/glass/reinforced,
+/area/station/medical/chemistry)
 "lvE" = (
 /obj/machinery/roulette,
 /turf/open/floor/carpet/royalblack,
@@ -41832,16 +41825,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "lIy" = (
-/obj/machinery/camera/autoname/directional/east{
-	network = list("ss13","medbay");
-	c_tag = "Medbay - Upper Plumbing Area East"
-	},
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/button/door/directional/east{
-	id = "chem_lockdown";
-	name = "chemistry lockdown control";
-	req_access = list("pharmacy")
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/glass/reinforced,
 /area/station/medical/chemistry)
 "lIA" = (
@@ -53786,13 +53771,15 @@
 /obj/effect/turf_decal/weather/snow,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/clothing/glasses/cold,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "pdm" = (
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/engine,
 /area/station/medical/chemistry)
 "pdt" = (
@@ -56216,8 +56203,26 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/aft)
 "pOY" = (
-/obj/machinery/chem_heater/withbuffer,
 /obj/structure/sign/warning/gas_mask/directional/west,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/machinery/reagentgrinder{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/folder/white{
+	pixel_x = 6
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/engine,
 /area/station/medical/chemistry)
 "pPf" = (
@@ -59140,6 +59145,9 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/toy/figure/paramedic{
+	pixel_x = null
+	},
 /turf/open/floor/glass,
 /area/station/medical/medbay/central)
 "qHB" = (
@@ -60832,8 +60840,8 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "rgf" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/structure/cable,
+/obj/structure/filingcabinet/medical,
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/cmo)
 "rgg" = (
@@ -61044,6 +61052,9 @@
 "rjW" = (
 /obj/machinery/chem_master,
 /obj/structure/sign/warning/secure_area/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/medical/chemistry)
 "rki" = (
@@ -62105,12 +62116,6 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/obj/structure/rack,
-/obj/item/toy/snowball,
-/obj/item/clothing/glasses/cold,
-/obj/item/wrench/medical,
-/obj/item/food/popsicle/creamsicle_berry,
-/obj/item/tank/internals/anesthetic,
 /obj/effect/turf_decal/weather/snow,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/tlv_cold_room,
@@ -62118,6 +62123,7 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/cold_temp/directional/east,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/medical/coldroom)
 "rAK" = (
@@ -63110,6 +63116,7 @@
 	dir = 4;
 	pixel_y = -2
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/glass,
 /area/station/medical/medbay/central)
 "rOG" = (
@@ -68220,6 +68227,14 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"txD" = (
+/obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical{
+	name = "Chemistry"
+	},
+/turf/open/floor/plating,
+/area/station/medical/chemistry)
 "txJ" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -69750,6 +69765,18 @@
 /obj/structure/chair/comfy{
 	dir = 8
 	},
+/obj/machinery/button/door/directional/west{
+	id = "cmoprivacy";
+	name = "CMO Office Privacy";
+	req_access = list("cmo");
+	pixel_y = -2
+	},
+/obj/machinery/button/door/directional/west{
+	id = "medbay-office";
+	name = "Medbay Lockdown";
+	req_access = list("medical");
+	pixel_y = 8
+	},
 /turf/open/floor/holofloor/dark,
 /area/station/command/heads_quarters/cmo)
 "tTq" = (
@@ -69904,6 +69931,14 @@
 /obj/structure/sign/poster/contraband/random/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"tVs" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/plumbed/storage,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/medical/chemistry)
 "tVI" = (
 /obj/structure/cable,
 /obj/effect/spawner/random/maintenance,
@@ -78532,7 +78567,6 @@
 	dir = 1
 	},
 /obj/machinery/vending/wardrobe/chem_wardrobe,
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "wkt" = (
@@ -181625,7 +181659,7 @@ czW
 xvn
 kFK
 jKX
-eFo
+lvz
 eFo
 eFo
 hmz
@@ -182387,7 +182421,7 @@ nRE
 unv
 lDT
 uvm
-hnC
+czW
 fZt
 tTn
 lgy
@@ -182406,7 +182440,7 @@ eFo
 eFo
 eFo
 hmz
-eZB
+tVs
 fQp
 qZQ
 qSE
@@ -182655,7 +182689,7 @@ dPY
 jKX
 lIy
 eFo
-dyn
+eFo
 hmz
 tRz
 pFO
@@ -182912,7 +182946,7 @@ gsD
 jKX
 qbU
 lwe
-qbU
+txD
 lwe
 qbU
 lwe
