@@ -2430,7 +2430,7 @@
 "aSQ" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law{
-	pixel_x = -3;
+	pixel_x = -7;
 	pixel_y = 5
 	},
 /obj/machinery/light_switch/directional/north,
@@ -2438,6 +2438,10 @@
 	dir = 1
 	},
 /obj/machinery/light/small/directional/west,
+/obj/machinery/recharger{
+	pixel_y = 6;
+	pixel_x = 6
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "aST" = (
@@ -40736,6 +40740,9 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/item/radio,
+/obj/item/crowbar,
+/obj/item/assembly/flash,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "oay" = (
@@ -62307,10 +62314,8 @@
 "vrP" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "vsG" = (
@@ -62379,7 +62384,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "vtn" = (
-/obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
@@ -62387,6 +62391,7 @@
 	department = "Security";
 	name = "Security Requests Console"
 	},
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
 "vtp" = (
@@ -63929,12 +63934,15 @@
 /area/station/command/bridge)
 "vSs" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/closet,
-/obj/item/crowbar,
-/obj/item/assembly/flash/handheld,
-/obj/item/radio,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
+	},
+/obj/item/toy/figure/ian{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 2
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
