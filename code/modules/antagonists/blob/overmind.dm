@@ -176,14 +176,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 
 		// Set status displays to biohazard alert - critical level
-		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-		if(frequency)
-			var/datum/signal/biohazard_signal = new
-			biohazard_signal.data["command"] = "alert"
-			biohazard_signal.data["picture_state"] = "biohazard"
-			biohazard_signal.data["emergency_override"] = TRUE
-			var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-			frequency.post_signal(virtual_speaker, biohazard_signal)
+		send_status_display_biohazard_alert()
 
 		max_blob_points = INFINITY
 		blob_points = INFINITY
@@ -199,14 +192,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
 		// Set status displays to biohazard alert
-		var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-		if(frequency)
-			var/datum/signal/biohazard_signal = new
-			biohazard_signal.data["command"] = "alert"
-			biohazard_signal.data["picture_state"] = "biohazard"
-			biohazard_signal.data["emergency_override"] = TRUE
-			var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-			frequency.post_signal(virtual_speaker, biohazard_signal)
+		send_status_display_biohazard_alert()
 
 		has_announced = TRUE
 
@@ -222,14 +208,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /// Clear biohazard emergency display when blob is defeated
 /mob/eye/blob/proc/clear_biohazard_display()
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(frequency)
-		var/datum/signal/clear_signal = new
-		clear_signal.data["command"] = "clear_emergency"
-		clear_signal.data["emergency_override"] = FALSE
-
-		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-		frequency.post_signal(virtual_speaker, clear_signal)
+	clear_status_display_biohazard()
 
 /mob/eye/blob/proc/victory()
 	// Set victory flags immediately

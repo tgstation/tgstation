@@ -393,6 +393,8 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	var/revert_priority = DISPLAY_PRIORITY_LOGO
 	/// Keeps track of what someone manually set so we can go back to it later
 	var/list/manual_display_state
+	/// List of active emergency types - tracks what emergencies are currently happening
+	var/list/active_emergencies = list()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
@@ -528,6 +530,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			var/picture_state = signal.data["picture_state"]
 			var/priority = DISPLAY_PRIORITY_MESSAGE
 			var/is_emergency = signal.data["emergency_override"]
+			var/emergency_type = signal.data["emergency_type"]
 
 			// Check if this is just setting the logo back to default
 			if(picture_state == "default")
@@ -536,31 +539,44 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 				set_display_with_priority(SD_PICTURE, DISPLAY_PRIORITY_LOGO, picture_state = picture_state, force_override = TRUE)
 			// Automated emergency alerts use temporary high priority to interrupt even shuttle displays
 			else if(is_emergency)
+				// Track this emergency type
+				if(emergency_type && !(emergency_type in active_emergencies))
+					active_emergencies |= emergency_type
 				show_temporary_display(SD_PICTURE, DISPLAY_PRIORITY_EMERGENCY_TEMP, picture_state = picture_state)
 			else
 				// Manual alerts can override existing displays
 				set_display_with_priority(SD_PICTURE, priority, picture_state = picture_state, force_override = TRUE)
 		if("clear_emergency")
-			// Clear emergency displays - if we're showing a temporary emergency, just cancel the timer
-			if(current_priority == DISPLAY_PRIORITY_EMERGENCY_TEMP && alert_display_timer)
-				deltimer(alert_display_timer)
-				alert_display_timer = null
-				revert_from_alert_display()
-			// Otherwise clear persistent emergency displays by reverting to highest priority
-			else if(current_priority >= DISPLAY_PRIORITY_EMERGENCY)
-				var/list/target_display = get_highest_priority_display()
-				current_mode = target_display["mode"]
-				current_priority = target_display["priority"]
+			var/emergency_type = signal.data["emergency_type"]
 
-				switch(current_mode)
-					if(SD_EMERGENCY)
-						set_messages("", "")
-					if(SD_PICTURE)
-						set_picture(target_display["picture"])
-					if(SD_MESSAGE)
-						set_messages(target_display["message1"] || "", target_display["message2"] || "")
-					else
-						update_appearance()
+			// Clear specific emergency type or all if no type specified
+			if(emergency_type)
+				active_emergencies -= emergency_type
+			else
+				active_emergencies.Cut()  // Clear all emergencies
+
+			// Only revert display if no more emergencies are active
+			if(!length(active_emergencies))
+				// Clear emergency displays - if we're showing a temporary emergency, just cancel the timer
+				if(current_priority == DISPLAY_PRIORITY_EMERGENCY_TEMP && alert_display_timer)
+					deltimer(alert_display_timer)
+					alert_display_timer = null
+					revert_from_alert_display()
+				// Otherwise clear persistent emergency displays by reverting to highest priority
+				else if(current_priority >= DISPLAY_PRIORITY_EMERGENCY)
+					var/list/target_display = get_highest_priority_display()
+					current_mode = target_display["mode"]
+					current_priority = target_display["priority"]
+
+					switch(current_mode)
+						if(SD_EMERGENCY)
+							set_messages("", "")
+						if(SD_PICTURE)
+							set_picture(target_display["picture"])
+						if(SD_MESSAGE)
+							set_messages(target_display["message1"] || "", target_display["message2"] || "")
+						else
+							update_appearance()
 		if("greenscreen")
 			var/datum/weakref/display_ref = signal.data["display"]
 			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
@@ -1146,3 +1162,52 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 	else
 		. += "camera_on"
 		. += emissive_appearance(icon, "camera_emissive", src, alpha = src.alpha)
+
+/// Send an emergency alert signal to all status displays
+/// alert_type: The picture state to display ("biohazard", "lockdown", "radiation", etc.)
+/proc/send_status_display_alert(alert_type)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/alert_signal = new
+		alert_signal.data["command"] = "alert"
+		alert_signal.data["picture_state"] = alert_type
+		alert_signal.data["emergency_override"] = TRUE
+		alert_signal.data["emergency_type"] = alert_type  // Track specific emergency type
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, alert_signal)
+
+/// Clear a specific emergency type from status displays
+/// emergency_type: The specific type to clear ("biohazard", "lockdown", "radiation", etc.)
+/// If emergency_type is null, clears ALL emergencies
+/proc/clear_status_display_emergency(emergency_type = null)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/clear_signal = new
+		clear_signal.data["command"] = "clear_emergency"
+		clear_signal.data["emergency_override"] = FALSE
+		if(emergency_type)
+			clear_signal.data["emergency_type"] = emergency_type
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, clear_signal)
+
+/// Send a biohazard alert signal to all status displays
+/proc/send_status_display_biohazard_alert()
+	send_status_display_alert("biohazard")
+
+/// Send a lockdown alert signal to all status displays
+/proc/send_status_display_lockdown_alert()
+	send_status_display_alert("lockdown")
+
+/// Send a radiation alert signal to all status displays
+/proc/send_status_display_radiation_alert()
+	send_status_display_alert("radiation")
+
+/// Clear specific emergency types
+/proc/clear_status_display_biohazard()
+	clear_status_display_emergency("biohazard")
+
+/proc/clear_status_display_lockdown()
+	clear_status_display_emergency("lockdown")
+
+/proc/clear_status_display_radiation()
+	clear_status_display_emergency("radiation")

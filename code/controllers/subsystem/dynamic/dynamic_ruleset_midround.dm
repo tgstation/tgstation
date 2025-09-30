@@ -408,14 +408,7 @@
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
 	// Set status displays to biohazard alert even for false alarm
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(frequency)
-		var/datum/signal/biohazard_signal = new
-		biohazard_signal.data["command"] = "alert"
-		biohazard_signal.data["picture_state"] = "biohazard"
-		biohazard_signal.data["emergency_override"] = TRUE
-		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-		frequency.post_signal(virtual_speaker, biohazard_signal)
+	send_status_display_biohazard_alert()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"

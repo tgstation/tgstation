@@ -123,14 +123,7 @@
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
 	// Set status displays to biohazard alert
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(frequency)
-		var/datum/signal/biohazard_signal = new
-		biohazard_signal.data["command"] = "alert"
-		biohazard_signal.data["picture_state"] = "biohazard"
-		biohazard_signal.data["emergency_override"] = TRUE
-		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-		frequency.post_signal(virtual_speaker, biohazard_signal)
+	send_status_display_biohazard_alert()
 
 /datum/round_event/disease_outbreak/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
