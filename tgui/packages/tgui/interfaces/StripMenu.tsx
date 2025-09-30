@@ -78,6 +78,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     icon: 'microchip',
     text: 'Adjust sensors',
   },
+
+  strip_accessory: {
+    icon: 'ribbon',
+    text: 'Strip accessory',
+  },
 };
 
 const SLOTS: Record<
@@ -328,6 +333,7 @@ export const StripMenu = (props) => {
                             zIndex: '2',
                             left: `${idx === 0 ? '0' : undefined}`,
                             right: `${idx === 1 ? '0' : undefined}`,
+                            top: `${idx === 2 ? '0' : undefined}`,
                             bottom: '0',
                             padding: '0',
                             textAlign: 'center',
