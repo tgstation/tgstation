@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "You can use crayons to make chalk outlines, not just white ones."
+  - qol: "Chalk outlines are now properly outlines of the body you're outlining."

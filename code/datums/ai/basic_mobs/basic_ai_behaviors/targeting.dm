@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
-	for(var/maybe_target as anything in found)
+	for(var/maybe_target in found)
 		if(maybe_target == pawn)
 			continue
 		if(!is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob, /obj/machinery/
 /datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
-	for(var/maybe_target as anything in found)
+	for(var/maybe_target in found)
 		if(maybe_target == pawn)
 			continue
 		// Need to better handle viewers here
