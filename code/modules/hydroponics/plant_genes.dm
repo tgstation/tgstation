@@ -856,9 +856,10 @@
  */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
-	description = "It will watch after you."
+	description = "It watches after you."
 	icon = FA_ICON_EYE
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	trait_flags = TRAIT_SHOW_EXAMINE
 	/// Our googly eyes appearance.
 	var/mutable_appearance/googly
 
