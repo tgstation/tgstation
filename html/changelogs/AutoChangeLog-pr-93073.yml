@@ -1,0 +1,6 @@
+author: "FeudeyTF"
+delete-after: True
+changes:
+  - qol: "Moved paginating buttons of newspaper in top"
+  - qol: "Changed maximum article length to 1024"
+  - bugfix: "Fixed the deletion of articles in the newspaper after the article was released in the channel"
