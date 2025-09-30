@@ -26,9 +26,6 @@
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
 	///spell to summon clones
 	var/datum/action/cooldown/spell/pointed/wizard_mimic/mimic
-	///the loot we will drop
-	var/static/list/dropped_loot = list(/obj/effect/temp_visual/paperwiz_dying)
-
 
 /mob/living/basic/paper_wizard/Initialize(mapload)
 	. = ..()
@@ -46,7 +43,7 @@
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/paper_wizard/proc/grant_loot()
-	AddElement(/datum/element/death_drops, dropped_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/paperwiz_dying)
 
 /datum/ai_controller/basic_controller/paper_wizard
 	blackboard = list(
