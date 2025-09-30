@@ -1,0 +1,12 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - map: "CATWALK - Kitchen now has more space and a downstairs serving area, also shutters for chef sanity"
+  - map: "CATWALK - Bar now has more space & can now serve coffee"
+  - map: "CATWALK - Community Centre/Library has had a re-design, now includes a theatre!"
+  - map: "CATWALK - Public walkway linking Library/Psych/Kitchen/Botany with better stairwells"
+  - map: "CATWALK - Laser tag arena now open to all, Red versus Blue, Cameras kept out of it so the AI does not panic"
+  - map: "CATWALK - Botany made more prominent and easier to find"
+  - map: "CATWALK - Central APC for hallways re-located to be easier to find and fix"
+  - map: "CATWALK - Psychologist office made smaller but now has windows/curtains and shutters"
+  - map: "CATWALK - Reinforced windows for service swapped out for standard"
