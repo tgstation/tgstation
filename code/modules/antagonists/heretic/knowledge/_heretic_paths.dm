@@ -135,8 +135,8 @@ GLOBAL_LIST(heretic_paths)
 
 /proc/generate_global_heretic_tree()
 	var/heretic_research_tree = list()
-	for(var/datum/heretic_knowledge_tree_column/heretic_route as anything in subtypesof(/datum/heretic_knowledge_tree_column))
-		heretic_route = new()
+	for(var/heretic_path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
+		var/datum/heretic_knowledge_tree_column/heretic_route = new heretic_path()
 		heretic_research_tree[heretic_route.route] = generate_heretic_path(heretic_route)
 		qdel(heretic_route)
 	return heretic_research_tree
