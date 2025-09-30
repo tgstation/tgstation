@@ -51,7 +51,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(is_explosion_shielded(severity))
 		return FALSE
 
 	if(target)
@@ -86,9 +86,13 @@
 
 	return FALSE
 
-/turf/open/floor/is_shielded()
-	for(var/obj/structure/A in contents)
-		return 1
+/turf/open/floor/is_explosion_shielded(severity)
+	if(severity >= EXPLODE_DEVASTATE)
+		return FALSE
+	for(var/obj/blocker in src)
+		if(blocker.density)
+			return TRUE
+	return FALSE
 
 /turf/open/floor/blob_act(obj/structure/blob/B)
 	return

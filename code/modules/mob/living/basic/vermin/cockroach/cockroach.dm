@@ -38,8 +38,6 @@
 	var/minion_path = /mob/living/basic/cockroach/sewer
 	/// Command list given to minionised cockroaches
 	var/list/minion_commands
-	/// Cockroach death drops
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/insectguts)
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	var/turf/our_turf = get_turf(src)
@@ -50,7 +48,7 @@
 		minimum_survivable_temperature = 140 // 40kelvin below icebox temp
 		add_atom_colour("#66ccff", FIXED_COLOUR_PRIORITY)
 	. = ..()
-	AddElement(/datum/element/death_drops, death_drops)
+	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddComponent( \
 		/datum/component/squashable, \
@@ -99,12 +97,10 @@
 	icon_dead = "bloodroach_no_animation"
 	health = 3
 	maxHealth = 3 // Wow!!
-	var/static/list/blood_drops = list(/obj/effect/decal/cleanable/blood/gibs/old)
 
 /mob/living/basic/cockroach/bloodroach/Initialize(mapload)
 	. = ..()
-	// Overriding the static drops of parent
-	AddElement(/datum/element/death_drops, blood_drops)
+	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/blood/gibs/old)
 
 /mob/living/basic/cockroach/bloodroach/death(gibbed)
 	if(HAS_TRAIT(src, TRAIT_BUGKILLER_DEATH))

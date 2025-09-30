@@ -1,4 +1,0 @@
-author: "Cameron-The-Raven"
-delete-after: True
-changes:
-  - bugfix: "Omens properly transfer their damage modifier when multiple are applied."

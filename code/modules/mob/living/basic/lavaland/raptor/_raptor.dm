@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/green/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/proficient_miner)
+	AddComponent(/datum/component/proficient_miner)
 
 /mob/living/basic/raptor/white
 	name = "white raptor"

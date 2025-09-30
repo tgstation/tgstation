@@ -1,0 +1,6 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - rscadd: "Status displays now show logo at round start - Status displays now change more often for alerts and other key events"
+  - bugfix: "Blob non blocking cleanup - Should have no change in player experience"
+  - image: "Replaces bright blue NT logo with the more subtle slightly animated sprite from AI core, fits nicer."

@@ -54,6 +54,9 @@
 	else if(istype(weapon, /obj/item/coin))
 		var/obj/item/coin/inserted_coin = weapon
 		value = inserted_coin.value
+	else if(istype(weapon, /obj/item/poker_chip))
+		var/obj/item/poker_chip/inserted_chip = weapon
+		value = inserted_chip.get_item_credit_value()
 	if(value)
 		if(synced_bank_account)
 			synced_bank_account.adjust_money(value)

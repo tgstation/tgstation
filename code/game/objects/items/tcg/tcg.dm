@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	else
 		ntransform.TurnTo(UNTAPPED_ANGLE , TAPPED_ANGLE)
 	tapped = !tapped
-	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
+	animate(src, transform = ntransform, time = 2, easing = SINE_EASING)
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
 	to_chat(user, span_notice("You turn the card over."))

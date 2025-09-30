@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 
 	return PROCESS_KILL
 
-/// Update the display and, if necessary, re-enable processing.
+/// Updates the display and starts it processing again if needed
 /obj/machinery/status_display/proc/update()
 	if (process(SSMACHINES_DT) != PROCESS_KILL)
 		START_PROCESSING(SSmachines, src)
@@ -376,10 +376,25 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 
 /// Evac display which shows shuttle timer or message set by Command.
 /obj/machinery/status_display/evac
-	current_mode = SD_EMERGENCY
+	current_mode = SD_PICTURE
+	current_picture = "default"  // Show the logo when we start round
 	var/frequency = FREQ_STATUS_DISPLAYS
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
+	/// What mode we should go back to when the alert timer runs out
+	var/revert_mode = SD_PICTURE
+	/// What picture we should show when reverting back
+	var/revert_picture = "default"
+	/// Timer for switching back to normal after showing alerts
+	var/alert_display_timer
+	/// How important our current display is (bigger number = more important)
+	var/current_priority = DISPLAY_PRIORITY_LOGO
+	/// What priority level we should go back to after alerts
+	var/revert_priority = DISPLAY_PRIORITY_LOGO
+	/// Keeps track of what someone manually set so we can go back to it later
+	var/list/manual_display_state
+	/// List of active emergency types - tracks what emergencies are currently happening
+	var/list/active_emergencies = list()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
@@ -397,6 +412,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
 	UnregisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED)
+	// Clean up our timer so we don't have ghost timers floating around
+	if(alert_display_timer)
+		deltimer(alert_display_timer)
+		alert_display_timer = null
 	return ..()
 
 /obj/machinery/status_display/evac/process()
@@ -410,32 +429,154 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		set_picture("ai_friend")
 		return PROCESS_KILL
 
-	switch(current_mode)
-		if(SD_BLANK, SD_MESSAGE, SD_GREENSCREEN)
-			return PROCESS_KILL
+	// Figure out what we should be showing right now
+	var/list/target_display = get_highest_priority_display()
+	var/target_priority = target_display["priority"]
 
-		if(SD_EMERGENCY)
+	// Don't mess with more important stuff that's already showing
+	if(target_priority <= current_priority)
+		// Keep the shuttle timer updating if that's what we're showing
+		if(current_mode == SD_EMERGENCY)
 			return display_shuttle_status(SSshuttle.emergency)
+		return PROCESS_KILL
 
+	// Switch to whatever should have priority right now
+	switch(target_display["mode"])
+		if(SD_EMERGENCY)
+			set_display_with_priority(SD_EMERGENCY, target_priority)
+			return display_shuttle_status(SSshuttle.emergency)
 		if(SD_PICTURE)
-			set_picture(last_picture)
+			set_display_with_priority(SD_PICTURE, target_priority, picture_state = target_display["picture"])
 			return PROCESS_KILL
+		else
+			return PROCESS_KILL
+
+/// Figures out what we should be showing based on what's happening on the station
+/// Returns a list with the mode, priority, and other details
+/obj/machinery/status_display/evac/proc/get_highest_priority_display()
+	// Shuttle stuff gets top priority - but only when it's actually doing something
+	if(SSshuttle?.emergency)
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_CALL, SHUTTLE_DOCKED, SHUTTLE_ESCAPE)
+				return list("mode" = SD_EMERGENCY, "priority" = DISPLAY_PRIORITY_SHUTTLE)
+			// Don't bother showing shuttle status when it's just sitting there
+
+	// Check if someone manually set something from the bridge
+	if(manual_display_state && manual_display_state["priority"] >= DISPLAY_PRIORITY_MESSAGE)
+		return manual_display_state.Copy()
+
+	// Nothing special happening, just show the logo
+	return list("mode" = SD_PICTURE, "priority" = DISPLAY_PRIORITY_LOGO, "picture" = "default")
+
+/// Tries to change what the display is showing, but respects priority levels
+/// Returns TRUE if we actually changed it, FALSE if something more important was already showing
+/obj/machinery/status_display/evac/proc/set_display_with_priority(new_mode, priority, picture_state = null, message1 = null, message2 = null, force_override = FALSE)
+	// Allow manual overrides to always work (except when temporary alerts are showing)
+	if(!force_override && priority < current_priority && current_priority != DISPLAY_PRIORITY_ALERT_TEMP)
+		return FALSE
+
+	// Cancel alert timer if we're changing to a different display type
+	if(alert_display_timer && priority != DISPLAY_PRIORITY_ALERT_TEMP)
+		deltimer(alert_display_timer)
+		alert_display_timer = null
+
+	current_mode = new_mode
+	current_priority = priority
+
+	// Store manually set displays (not temporary alerts, automated shuttle, or logo defaults)
+	// Logo selections shouldn't be treated as manual overrides since logo is the default anyway
+	var/is_logo_default = (new_mode == SD_PICTURE && (picture_state == "default" || picture_state == null))
+	if(priority >= DISPLAY_PRIORITY_MESSAGE && priority != DISPLAY_PRIORITY_ALERT_TEMP && priority != DISPLAY_PRIORITY_SHUTTLE && !is_logo_default)
+		manual_display_state = list(
+			"mode" = new_mode,
+			"priority" = priority,
+			"picture" = picture_state,
+			"message1" = message1,
+			"message2" = message2
+		)
+	else if(is_logo_default)
+		// Clear manual display state when logo is selected
+		manual_display_state = null
+
+	switch(new_mode)
+		if(SD_BLANK)
+			update_appearance()
+		if(SD_EMERGENCY)
+			set_messages("", "")
+		if(SD_MESSAGE)
+			set_messages(message1 || "", message2 || "")
+		if(SD_PICTURE)
+			last_picture = picture_state
+			set_picture(picture_state)
+		if(SD_GREENSCREEN)
+			update_appearance()
+
+	// Start processing to watch for higher priority displays (like shuttle calls)
+	update()
+
+	return TRUE
 
 /obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
 		if("blank")
-			current_mode = SD_BLANK
-			update_appearance()
+			set_display_with_priority(SD_BLANK, DISPLAY_PRIORITY_MESSAGE, force_override = TRUE)
 		if("shuttle")
-			current_mode = SD_EMERGENCY
-			set_messages("", "")
+			set_display_with_priority(SD_EMERGENCY, DISPLAY_PRIORITY_SHUTTLE, force_override = TRUE)
+			// Start processing to keep shuttle timer updated and handle priority changes
+			update()
 		if("message")
-			current_mode = SD_MESSAGE
-			set_messages(signal.data["top_text"] || "", signal.data["bottom_text"] || "")
+			set_display_with_priority(SD_MESSAGE, DISPLAY_PRIORITY_MESSAGE, message1 = signal.data["top_text"], message2 = signal.data["bottom_text"], force_override = TRUE)
 		if("alert")
-			current_mode = SD_PICTURE
-			last_picture = signal.data["picture_state"]
-			set_picture(last_picture)
+			var/picture_state = signal.data["picture_state"]
+			var/priority = DISPLAY_PRIORITY_MESSAGE
+			var/is_emergency = signal.data["emergency_override"]
+			var/emergency_type = signal.data["emergency_type"]
+
+			// Check if this is just setting the logo back to default
+			if(picture_state == "default")
+				// Clear any manual display state and reset to logo priority
+				manual_display_state = null
+				set_display_with_priority(SD_PICTURE, DISPLAY_PRIORITY_LOGO, picture_state = picture_state, force_override = TRUE)
+			// Automated emergency alerts use temporary high priority to interrupt even shuttle displays
+			else if(is_emergency)
+				// Track this emergency type
+				if(emergency_type && !(emergency_type in active_emergencies))
+					active_emergencies |= emergency_type
+				show_temporary_display(SD_PICTURE, DISPLAY_PRIORITY_EMERGENCY_TEMP, picture_state = picture_state)
+			else
+				// Manual alerts can override existing displays
+				set_display_with_priority(SD_PICTURE, priority, picture_state = picture_state, force_override = TRUE)
+		if("clear_emergency")
+			var/emergency_type = signal.data["emergency_type"]
+
+			// Clear specific emergency type or all if no type specified
+			if(emergency_type)
+				active_emergencies -= emergency_type
+			else
+				active_emergencies.Cut()  // Clear all emergencies
+
+			// Only revert display if no more emergencies are active
+			if(!length(active_emergencies))
+				// Clear emergency displays - if we're showing a temporary emergency, just cancel the timer
+				if(current_priority == DISPLAY_PRIORITY_EMERGENCY_TEMP && alert_display_timer)
+					deltimer(alert_display_timer)
+					alert_display_timer = null
+					revert_from_alert_display()
+				// Otherwise clear persistent emergency displays by reverting to highest priority
+				else if(current_priority >= DISPLAY_PRIORITY_EMERGENCY)
+					var/list/target_display = get_highest_priority_display()
+					current_mode = target_display["mode"]
+					current_priority = target_display["priority"]
+
+					switch(current_mode)
+						if(SD_EMERGENCY)
+							set_messages("", "")
+						if(SD_PICTURE)
+							set_picture(target_display["picture"])
+						if(SD_MESSAGE)
+							set_messages(target_display["message1"] || "", target_display["message2"] || "")
+						else
+							update_appearance()
 		if("greenscreen")
 			var/datum/weakref/display_ref = signal.data["display"]
 			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
@@ -448,8 +589,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 					speakers.special_channels |= RADIO_SPECIAL_CENTCOM
 					speakers.set_frequency(FREQ_STATUS_DISPLAYS)
 				LAZYOR(active_displays, new_display)
-			current_mode = SD_GREENSCREEN
-			update_appearance()
+			set_display_with_priority(SD_GREENSCREEN, DISPLAY_PRIORITY_MESSAGE, force_override = TRUE)
 		if("friendcomputer")
 			friendc = !friendc
 	update()
@@ -460,17 +600,67 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		update_appearance()
 		update()
 
-/// Signal handler for [COMSIG_SECURITY_LEVEL_CHANGED] - Autoupdates our display to show current alert level.
-/// Changes only when we are in 'alert' mode ([SD_PICTURE] and one of the alert's icon state already set)
+/// Gets called when security changes the alert level - shows it for 30 seconds then goes back to normal
 /obj/machinery/status_display/evac/proc/on_sec_level_change(datum/source, new_level)
 	SIGNAL_HANDLER
-	if(current_mode != SD_PICTURE)
-		return
-	if(!(current_picture in SSsecurity_level.alert_level_icons))
+
+	// Get the alert level icon
+	var/datum/security_level/alert_level = SSsecurity_level.available_levels[SSsecurity_level.number_level_to_text(new_level)]
+
+	// Show as temporary alert (can be overridden by emergency temps)
+	show_temporary_display(SD_PICTURE, DISPLAY_PRIORITY_ALERT_TEMP, picture_state = alert_level.status_display_icon_state)
+
+/// Shows a temporary display for 30 seconds then reverts to previous display
+/// Can interrupt lower priority displays but respects higher priority temporary displays
+/obj/machinery/status_display/evac/proc/show_temporary_display(temp_mode, temp_priority, picture_state = null, message1 = null, message2 = null)
+	// Don't interrupt higher priority temporary displays
+	if(alert_display_timer && current_priority >= temp_priority)
 		return
 
-	var/datum/security_level/alert_level = SSsecurity_level.available_levels[SSsecurity_level.number_level_to_text(new_level)]
-	set_picture(alert_level.status_display_icon_state)
+	// Remember what we were showing before (unless we're already doing a lower priority alert)
+	if(!alert_display_timer || current_priority < temp_priority)
+		revert_mode = current_mode
+		revert_picture = current_picture
+		revert_priority = current_priority
+
+	// Cancel any existing timer
+	if(alert_display_timer)
+		deltimer(alert_display_timer)
+		alert_display_timer = null
+
+	// Show the temporary display
+	current_mode = temp_mode
+	current_priority = temp_priority
+
+	switch(temp_mode)
+		if(SD_PICTURE)
+			set_picture(picture_state)
+		if(SD_MESSAGE)
+			set_messages(message1 || "", message2 || "")
+		else
+			update_appearance()
+
+	// Go back to what we were showing after 30 seconds
+	alert_display_timer = addtimer(CALLBACK(src, PROC_REF(revert_from_alert_display)), 30 SECONDS, TIMER_STOPPABLE)
+
+/// Goes back to showing whatever we were displaying before the alert level interrupt
+/obj/machinery/status_display/evac/proc/revert_from_alert_display()
+	alert_display_timer = null
+
+	// Figure out what we should be showing now
+	var/list/target_display = get_highest_priority_display()
+	current_mode = target_display["mode"]
+	current_priority = target_display["priority"]
+
+	switch(current_mode)
+		if(SD_EMERGENCY)
+			set_messages("", "")
+		if(SD_PICTURE)
+			set_picture(target_display["picture"])
+		if(SD_MESSAGE)
+			set_messages(target_display["message1"] || "", target_display["message2"] || "")
+		else
+			update_appearance()
 
 /// Supply display which shows the status of the supply shuttle.
 /obj/machinery/status_display/supply
@@ -972,3 +1162,52 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 	else
 		. += "camera_on"
 		. += emissive_appearance(icon, "camera_emissive", src, alpha = src.alpha)
+
+/// Send an emergency alert signal to all status displays
+/// alert_type: The picture state to display ("biohazard", "lockdown", "radiation", etc.)
+/proc/send_status_display_alert(alert_type)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/alert_signal = new
+		alert_signal.data["command"] = "alert"
+		alert_signal.data["picture_state"] = alert_type
+		alert_signal.data["emergency_override"] = TRUE
+		alert_signal.data["emergency_type"] = alert_type  // Track specific emergency type
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, alert_signal)
+
+/// Clear a specific emergency type from status displays
+/// emergency_type: The specific type to clear ("biohazard", "lockdown", "radiation", etc.)
+/// If emergency_type is null, clears ALL emergencies
+/proc/clear_status_display_emergency(emergency_type = null)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+	if(frequency)
+		var/datum/signal/clear_signal = new
+		clear_signal.data["command"] = "clear_emergency"
+		clear_signal.data["emergency_override"] = FALSE
+		if(emergency_type)
+			clear_signal.data["emergency_type"] = emergency_type
+		var/atom/movable/virtualspeaker/virtual_speaker = new(null)
+		frequency.post_signal(virtual_speaker, clear_signal)
+
+/// Send a biohazard alert signal to all status displays
+/proc/send_status_display_biohazard_alert()
+	send_status_display_alert("biohazard")
+
+/// Send a lockdown alert signal to all status displays
+/proc/send_status_display_lockdown_alert()
+	send_status_display_alert("lockdown")
+
+/// Send a radiation alert signal to all status displays
+/proc/send_status_display_radiation_alert()
+	send_status_display_alert("radiation")
+
+/// Clear specific emergency types
+/proc/clear_status_display_biohazard()
+	clear_status_display_emergency("biohazard")
+
+/proc/clear_status_display_lockdown()
+	clear_status_display_emergency("lockdown")
+
+/proc/clear_status_display_radiation()
+	clear_status_display_emergency("radiation")

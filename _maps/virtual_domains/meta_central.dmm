@@ -6007,7 +6007,6 @@
 /area/virtual_domain)
 "YB" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/bluespace_vendor/directional/east,
 /obj/structure/frame/machine/secured,
 /turf/open/floor/iron,
 /area/virtual_domain)

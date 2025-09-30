@@ -44,7 +44,7 @@
 /mob/living/basic/living_limb_flesh/Initialize(mapload, obj/item/bodypart/limb)
 	. = ..()
 	AddComponent(/datum/component/swarming, max_x = 8, max_y = 8)
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
 	if(!isnull(limb))
 		register_to_limb(limb)
 

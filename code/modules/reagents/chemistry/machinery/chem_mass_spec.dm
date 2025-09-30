@@ -33,8 +33,6 @@
 /obj/machinery/chem_mass_spec/Initialize(mapload)
 	. = ..()
 
-	ADD_TRAIT(src, TRAIT_DO_NOT_SPLASH, INNATE_TRAIT)
-
 	if(mapload)
 		beaker2 = new /obj/item/reagent_containers/cup/beaker/large(src)
 

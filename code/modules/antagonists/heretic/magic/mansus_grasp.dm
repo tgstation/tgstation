@@ -54,7 +54,7 @@
 
 		var/old_color = carbon_hit.color
 		carbon_hit.color = COLOR_CULT_RED
-		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = EASE_IN)
+		animate(carbon_hit, color = old_color, time = 4 SECONDS, easing = SINE_EASING|EASE_IN)
 		carbon_hit.mob_light(range = 1.5, power = 2.5, color = COLOR_CULT_RED, duration = 0.5 SECONDS)
 		playsound(carbon_hit, 'sound/effects/magic/curse.ogg', 50, TRUE)
 

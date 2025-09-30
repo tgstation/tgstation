@@ -175,32 +175,35 @@
 					cyborg.cell.use(charge_cost)
 					stored_reagents.add_reagent(reagent_to_regen, 5, reagtemp = dispensed_temperature, no_react = TRUE)
 
-/obj/item/reagent_containers/borghypo/attack(mob/living/carbon/injectee, mob/user)
-	if(!istype(injectee))
-		return
+/obj/item/reagent_containers/borghypo/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iscarbon(interacting_with))
+		return NONE
+	var/mob/living/carbon/injectee = interacting_with
 	if(!selected_reagent)
 		balloon_alert(user, "no reagent selected!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!stored_reagents.has_reagent(selected_reagent.type, amount_per_transfer_from_this))
 		balloon_alert(user, "not enough [selected_reagent.name]!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
-		// This is the in-between where we're storing the reagent we're going to inject the injectee with
-		// because we cannot specify a singular reagent to transfer in trans_to
-		var/datum/reagents/hypospray_injector = new()
-		stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
-		hypospray_injector.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
-
-		to_chat(injectee, span_warning("You feel a tiny prick!"))
-		to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
-
-		if(injectee.reagents)
-			hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
-			balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
-			log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
-	else
+	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
 		balloon_alert(user, "[injectee.parse_zone_with_bodypart(user.zone_selected)] is blocked!")
+		return ITEM_INTERACT_BLOCKING
+
+	// This is the in-between where we're storing the reagent we're going to inject the injectee with
+	// because we cannot specify a singular reagent to transfer in trans_to
+	var/datum/reagents/hypospray_injector = new()
+	stored_reagents.remove_reagent(selected_reagent.type, amount_per_transfer_from_this)
+	hypospray_injector.add_reagent(selected_reagent.type, amount_per_transfer_from_this, reagtemp = dispensed_temperature, no_react = TRUE)
+
+	to_chat(injectee, span_warning("You feel a tiny prick!"))
+	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
+
+	if(injectee.reagents)
+		hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
+		balloon_alert(user, "[amount_per_transfer_from_this] unit\s injected")
+		log_combat(user, injectee, "injected", src, "(CHEMICALS: [selected_reagent])")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/borghypo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -394,9 +397,6 @@
 			data["apparatusHasItem"] = !isnull(beverage_apparatus.stored)
 	return data
 
-/obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
-	return //Can't inject stuff with a shaker, can we? //not with that attitude
-
 /obj/item/reagent_containers/borghypo/borgshaker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())
 		return NONE
@@ -455,9 +455,6 @@
 	data["reagents"] = condiments
 	data["selectedReagent"] = selected_reagent?.name
 	return data
-
-/obj/item/reagent_containers/borghypo/condiment_synthesizer/attack(mob/M, mob/user)
-	return
 
 /obj/item/reagent_containers/borghypo/condiment_synthesizer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!interacting_with.is_refillable())

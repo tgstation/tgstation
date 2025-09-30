@@ -69,7 +69,7 @@
 
 /obj/item/fish/jumpercable/get_export_price(price, elasticity_percent)
 	//without this, they'd sell for over 6000 each, minimum. That's a lot for a fish that requires no maintance nor partner to farm.
-	return ..() * 0.4
+	return ..() * 0.04
 
 /obj/item/fish/jumpercable/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] hooks both ends of [src] to their chest! It looks like [user.p_theyre()] trying to commit suicide!"))

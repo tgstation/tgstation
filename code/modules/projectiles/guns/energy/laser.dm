@@ -60,6 +60,9 @@
 	spread = 14
 	pin = /obj/item/firing_pin/implant/pindicate
 
+/obj/item/gun/energy/laser/carbine/cybersun/unrestricted
+	pin = /obj/item/firing_pin
+
 /obj/item/gun/energy/laser/carbine/practice
 	name = "practice laser carbine"
 	desc = "A modified version of the laser carbine, this one fires even less concentrated energy bolts designed for target practice."

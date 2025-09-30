@@ -74,19 +74,10 @@
 	mutant.domutcheck()
 
 /datum/weather/rad_storm/proc/status_alarm(active) //Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
-	if(!frequency)
-		return
-
-	var/datum/signal/signal = new
 	if (active)
-		signal.data["command"] = "alert"
-		signal.data["picture_state"] = "radiation"
+		send_status_display_radiation_alert()
 	else
-		signal.data["command"] = "shuttle"
-
-	var/atom/movable/virtualspeaker/virtual_speaker = new(null)
-	frequency.post_signal(virtual_speaker, signal)
+		clear_status_display_radiation()
 
 /// Used by the radioactive nebula when the station doesnt have enough shielding
 /datum/weather/rad_storm/nebula
