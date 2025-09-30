@@ -240,6 +240,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_CONTENTS (1<<1)
 ///EMP will protect the wires.
 #define EMP_PROTECT_WIRES (1<<2)
+///Don't indicate EMP protection in examine text.
+#define EMP_NO_EXAMINE (1<<3)
 
 ///Protects against all EMP types.
 #define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)
