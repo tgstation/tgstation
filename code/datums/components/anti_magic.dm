@@ -53,7 +53,7 @@
 	if(isitem(movable))
 		RegisterSignal(movable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(movable, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-		RegisterSignals(movable, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
+		RegisterSignal(movable, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
 		RegisterSignals(movable, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM), PROC_REF(on_attack))
 		compatible = TRUE
 	else if(ismob(movable))
