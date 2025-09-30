@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(ai_core_to_status_display_mapping, list(
 	"Matrix" = "ai_status_matrix",
 	"Monochrome" = "ai_status_monochrome",
 	"Murica" = "ai_status_murica",
-	"NanoTrasen" = "ai_status_nanotrasen",
+	"Nanotrasen" = "ai_status_nanotrasen",
 	"Not Malf" = "ai_status_not_malf",
 	"President" = "ai_status_president",
 	"Rainbow" = "ai_status_rainbow",
