@@ -640,6 +640,7 @@
 	icon = FA_ICON_SYRINGE
 	trait_ids = REAGENT_TRANSFER_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/stinging/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -876,6 +877,7 @@
 	icon = FA_ICON_BANDAGE
 	trait_ids = THROW_IMPACT_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/sticky/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
