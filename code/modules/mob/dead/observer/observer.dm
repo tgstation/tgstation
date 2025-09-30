@@ -146,7 +146,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	show_data_huds()
 
 	SSpoints_of_interest.make_point_of_interest(src)
-	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
+	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_GOOD_HEARING, INNATE_TRAIT)
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
