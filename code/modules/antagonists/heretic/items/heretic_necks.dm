@@ -161,6 +161,7 @@
 		'sound/items/sitcom_laugh/SitcomLaugh3.ogg',
 	)
 	var/valid_weapon_type = /obj/item/melee/sickly_blade
+	var/sanity_threshold = SANITY_LEVEL_INSANE
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/examine(mob/user)
 	. = ..()
@@ -245,7 +246,7 @@
 		return FALSE
 	if(!human_target.mob_mood)
 		return FALSE
-	if(human_target.mob_mood.sanity_level < SANITY_LEVEL_UNSTABLE)
+	if(human_target.mob_mood.sanity_level < sanity_threshold)
 		human_target.balloon_alert(living_user, "their mind is too strong!")
 		human_target.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		human_target.mob_mood.adjust_sanity(-sanity_damage)
