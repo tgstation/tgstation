@@ -6,8 +6,7 @@
 	var/needs_discovery = FALSE // Only for undiscovered species
 	var/static/list/discovered_plants = list()
 
-/datum/export/seed/get_cost(obj/O)
-	var/obj/item/seeds/S = O
+/datum/export/seed/get_base_cost(obj/item/seeds/S)
 	if(!needs_discovery && (S.type in discovered_plants))
 		return 0
 	if(needs_discovery && !(S.type in discovered_plants))
@@ -27,12 +26,5 @@
 	export_types = list(/obj/item/seeds)
 	needs_discovery = TRUE // Only for already discovered species
 
-/datum/export/seed/potency/get_cost(obj/O)
-	var/obj/item/seeds/S = O
-	var/cost = ..()
-	if(!cost)
-		return 0
-
-	var/potDiff = (S.potency - discovered_plants[S.type])
-
-	return round(..() * potDiff)
+/datum/export/seed/potency/get_base_cost(obj/item/seeds/S)
+	return round(..() * S.potency - discovered_plants[S.type])

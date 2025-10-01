@@ -1477,7 +1477,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 #define FISH_PRICE_SOFT_CAP_EXPONENT 0.86
 
 ///Returns the price of this fish, for the fish export.
-/obj/item/fish/proc/get_export_price(price, elasticity_percent)
+/obj/item/fish/proc/get_export_price(price)
 	var/size_weight_exponentation = (size * weight * FISH_PRICE_MULTIPLIER)^FISH_PRICE_CURVE_EXPONENT
 	var/raw_price = price + size_weight_exponentation
 	if(raw_price >= FISH_PRICE_SOFT_CAP_THRESHOLD + 1)
@@ -1485,7 +1485,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		raw_price = FISH_PRICE_SOFT_CAP_THRESHOLD + soft_cap
 	if(HAS_TRAIT(src, TRAIT_FISH_LOW_PRICE)) //Avoid printing money by simply ordering fish and sending it back.
 		raw_price *= 0.05
-	return raw_price * elasticity_percent
+	return raw_price
 
 #undef FISH_PRICE_MULTIPLIER
 #undef FISH_PRICE_CURVE_EXPONENT

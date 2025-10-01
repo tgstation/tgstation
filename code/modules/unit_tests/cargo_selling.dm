@@ -18,6 +18,18 @@
 	export_types = list(/obj/item/cargo_unit_test_content)
 
 /datum/unit_test/cargo_selling/Run()
+	for(var/datum/export/subtype as anything in subtypesof(/datum/export))
+		if(subtype::abstract_type == subtype)
+			continue
+		if(subtype::cost <= 0)
+			TEST_FAIL("[subtype] has invalid cost [subtype:cost]")
+			return
+		var/datum/export/sell = new subtype
+		if(!length(sell.export_types))
+			TEST_FAIL("[subtype] has no export types")
+			return
+		GLOB.exports_list += sell
+
 	var/obj/item/cargo_unit_test_container/box = allocate(/obj/item/cargo_unit_test_container)
 	var/obj/item/cargo_unit_test_container/box_skip_content = allocate(/obj/item/cargo_unit_test_container)
 

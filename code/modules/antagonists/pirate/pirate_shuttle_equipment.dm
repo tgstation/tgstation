@@ -421,8 +421,7 @@
 	if(head_mobs.len)
 		return pick(head_mobs)
 
-/datum/export/pirate/ransom/get_cost(atom/movable/exported_item)
-	var/mob/living/carbon/human/ransomee = exported_item
+/datum/export/pirate/ransom/get_base_cost(mob/living/carbon/human/ransomee)
 	if(ransomee.stat != CONSCIOUS || !ransomee.mind || HAS_TRAIT(ransomee.mind, TRAIT_HAS_BEEN_KIDNAPPED)) //mint condition only
 		return 0
 	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
@@ -475,15 +474,16 @@
 	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_cost(obj/exported_item)
-	var/obj/item/stack/spacecash/cash = exported_item
-	return cash.value * cash.amount
+/datum/export/pirate/cash/get_amount(obj/item/stack/spacecash/cash)
+	return cash.amount
+
+/datum/export/pirate/cash/get_base_cost(obj/item/stack/spacecash/cash)
+	return cash.value
 
 /datum/export/pirate/holochip
 	cost = 1
 	unit_name = "holochip"
 	export_types = list(/obj/item/holochip)
 
-/datum/export/pirate/holochip/get_cost(atom/movable/exported_item)
-	var/obj/item/holochip/chip = exported_item
+/datum/export/pirate/holochip/get_base_cost(obj/item/holochip/chip)
 	return chip.credits

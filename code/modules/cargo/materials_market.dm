@@ -60,25 +60,20 @@
 		if(machine_stat & NOPOWER)
 			balloon_alert(user, "no power!")
 			return FALSE
-		var/material_to_export
+
+		var/price = 0
 		var/obj/item/stack/exportable = markable_object
+		var/datum/material/material_to_export = null
 		for(var/datum/material/mat as anything in SSstock_market.materials_prices)
 			if(exportable.has_material_type(mat))
 				material_to_export = mat
 				break //This is only for trading non-alloys, so we can break here
 
-
-		var/datum/export_report/report = export_item_and_contents(exportable, apply_elastic = FALSE, dry_run = TRUE) // We'll apply elastic price reduction when fully sold.
-		var/price = 0
-		var/amount = 0
-		for(var/exported_datum in report.total_amount)
-			price += report.total_value[exported_datum]
-			amount += report.total_amount[exported_datum]
-
-		if(amount <= 1)
-			balloon_alert(user, "stack too small!")
+		if(!material_to_export)
+			balloon_alert(user, "not a valid market material")
 			return FALSE
 
+		price = SSstock_market.materials_prices[material_to_export]
 		if(price <= 0)
 			balloon_alert(user, "not valuable enough to sell!")
 			return FALSE
@@ -87,8 +82,8 @@
 		var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 		new_block.export_value = price
 		new_block.export_mat = material_to_export
-		new_block.quantity = amount / SHEET_MATERIAL_AMOUNT
-		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value] cr! Sell it before it becomes liquid!"))
+		new_block.quantity = exportable.amount
+		to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * new_block.quantity] cr! Sell it before it becomes liquid!"))
 		playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 		return TRUE
 	return ..()
@@ -192,7 +187,7 @@
 		//Pulling elastic modifier into data.
 		for(var/datum/export/material/market/export_est in GLOB.exports_list)
 			if(export_est.material_id == traded_mat)
-				elastic_mult = (export_est.cost / export_est.init_cost) * 100
+				elastic_mult = export_est.k_elasticity * 100
 
 		material_data += list(list(
 			"name" = initial(traded_mat.name),
@@ -381,7 +376,7 @@
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] is worth [export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
+	. += span_notice("\The [src] is worth [quantity * export_value] cr, from selling [quantity] sheets of [initial(export_mat?.name)].")
 	if(fluid)
 		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
 	else

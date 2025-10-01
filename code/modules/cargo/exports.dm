@@ -100,18 +100,24 @@ Then the player gets the profit from selling his own wasted time.
 	return sold
 
 /datum/export
+	abstract_type = /datum/export
+
 	/// Unit name. Only used in "Received [total_amount] [name]s [message]."
 	var/unit_name = ""
 	/// Message appended to the sale report
 	var/message = ""
-	/// Cost of item, in cargo credits. Must not allow for infinite price dupes, see above.
+
+	///Price per unit of an exported item
 	var/cost = 1
 	/// whether this export can have a negative impact on the cargo budget or not
 	var/allow_negative_cost = FALSE
-	/// coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
-	var/k_elasticity = 1/30
-	/// Coefficient used in the recovery of elastic price calculation. See Process, this value and k_elasticity are multiplied together to form the exponent that returns the price to normal.
-	var/k_recovery_elasticity = 1/30
+	///The percentage of an items real price that is earned when selling that item on cargo
+	var/k_elasticity = 1
+	///The percentage decrease on this exports elasticity per unit of item sold
+	var/k_hit_percentile = 0.02
+	///Time taken for this exports elasticity to reach back to 100%
+	var/k_recovery_time = 5 MINUTES
+
 	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
 	var/amount_report_multiplier = 1
 	/// Type of the exported object. If none, the export datum is considered base type.
@@ -125,45 +131,54 @@ Then the player gets the profit from selling his own wasted time.
 	/// Export market that this export applies to. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, etc.
 	var/sales_market = EXPORT_MARKET_STATION
 
-	/// cost includes elasticity, this does not.
-	var/init_cost
-
-
-
 /datum/export/New()
 	..()
-	SSprocessing.processing += src
-	init_cost = cost
 	export_types = typecacheof(export_types, only_root_path = !include_subtypes, ignore_root_path = FALSE)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()
-	SSprocessing.processing -= src
 	return ..()
 
 /datum/export/process()
-	cost *= NUM_E**(k_elasticity * k_recovery_elasticity)
-	// A little note here based on the standard values for k_recovery_elasticity: 1/30 will result in a price that started at 20% to go back to 100% in around 20 minutes, ramping up over time.
-	if(cost > init_cost)
-		cost = init_cost
+	k_elasticity += SSprocessing.wait / k_recovery_time
+	if(k_elasticity >= 1)
+		k_elasticity = 1
+		return PROCESS_KILL
 
-/// Checks the cost. 0 cost items are skipped in export.
-/datum/export/proc/get_cost(obj/exported_item, apply_elastic = TRUE)
-	var/amount = get_amount(exported_item)
-	if(apply_elastic)
-		if(k_elasticity != 0)
-			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount))) //anti-derivative of the marginal cost function
-		else
-			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
-	else
-		return round(init_cost * amount)
+/**
+ * Returns the cost of 1 unit of the exported item
+ *
+ * Arguments
+ * * obj/exported_item - the item we whos base cost we are trying to compute
+*/
+/datum/export/proc/get_base_cost(obj/exported_item)
+	return cost
 
 /*
-* Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
-* Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
+ * Returns the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
+ * Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
+ *
+ * Arguments
+ * * obj/exported_item - the amount of units in this exported item
 */
 /datum/export/proc/get_amount(obj/exported_item)
 	return 1
+
+
+/**
+ * Returns the cost of the xported item i.e. amount * base cost * elasticity if TRUE
+ *
+ * Arguments
+ * * obj/exported_item - the item we are trying to export
+ * * apply_elastic - should we use elasticity
+*/
+/datum/export/proc/get_cost(obj/exported_item, apply_elastic = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/total = get_base_cost(exported_item) * get_amount(exported_item)
+	if(apply_elastic)
+		total *= k_elasticity
+	return ROUND_UP(total)
 
 /// Checks if the item is fit for export datum.
 /datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE, export_markets)
@@ -208,8 +223,11 @@ Then the player gets the profit from selling his own wasted time.
 		report.total_amount[src] += export_amount * amount_report_multiplier
 
 	if(!dry_run)
-		if(apply_elastic)
-			cost *= NUM_E**(-1 * k_elasticity * export_amount) //marginal cost modifier
+		if(apply_elastic && k_elasticity > 0)
+			k_elasticity -= export_amount * k_hit_percentile
+			if(k_elasticity < 0)
+				k_elasticity = 0
+			SSprocessing.processing |= src
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[sold_item.type]", "[export_value]"))
 	return EXPORT_SOLD
 
@@ -246,7 +264,7 @@ GLOBAL_LIST_EMPTY(exports_list)
 
 /// Called when the global exports_list is empty, and sets it up.
 /proc/setupExports()
-	for(var/subtype in subtypesof(/datum/export))
-		var/datum/export/export_datum = new subtype
-		if(export_datum.export_types && export_datum.export_types.len) // Exports without a type are invalid/base types
-			GLOB.exports_list += export_datum
+	for(var/datum/export/subtype as anything in subtypesof(/datum/export))
+		if(subtype::abstract_type == subtype)
+			continue
+		GLOB.exports_list += new subtype

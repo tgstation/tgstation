@@ -38,12 +38,11 @@
 
 /datum/export/large/reagent_dispenser
 	cost = CARGO_CRATE_VALUE * 0.5 // +0-400 depending on amount of reagents left
+	///cost for an full holder of reagents
 	var/contents_cost = CARGO_CRATE_VALUE * 0.8
 
-/datum/export/large/reagent_dispenser/get_cost(obj/structure/reagent_dispensers/dispenser)
-	var/ratio = dispenser.reagents.total_volume / dispenser.reagents.maximum_volume
-
-	return ..() + round(contents_cost * ratio)
+/datum/export/large/reagent_dispenser/get_base_cost(obj/structure/reagent_dispensers/dispenser)
+	return ..() + round(contents_cost * (dispenser.reagents.total_volume / dispenser.reagents.maximum_volume))
 
 /datum/export/large/reagent_dispenser/water
 	unit_name = "watertank"
@@ -99,30 +98,25 @@
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 
-/**
- * Gas canister exports.
- * I'm going to put a quick aside here as this has been a pain to balance for several years now, and I'd like to at least break how to keep gas exports tame.
- * So: Gasses are sold in canisters below, which have a variable amount of maximum pressure before they start to break. The largest of which is 9.2e13 kPa.
- * This means we can determine a theoretical maximum value for gas sale prices using the ideal gas laws, as we know we have a minimum gas temperature of 2.7 kelvin.
- *
- * Additional note on base value. Gasses are soft capped to limit how much they're worth at large quantities, and time and time again players will find new ways to break your gasses.
- * so please, *PLEASE* try not to go too much further past 10.
+///Maximum number of credits you can earn from selling your gas canister cause its theoritically infinite
+#define MAX_GAS_CREDITS 15000
 
- * * AUTHORS NOTE: This means the theoretical, insane madman number of moles of a single gas in a can sits at a horrifying 4,098,150,709.4 moles.
- * * Use this as you will, and when someone makes a quinquadrillion credits using gas exports, use these metrics as a way to balance the bejesus out of them.
- * * For more information, see code\modules\atmospherics\machinery\portable\canister.dm.
+ /**
+ * Maximum pressure a canister can withstand is 9.2e13 kPa at a minimum of 2.7K which would contain a horrifying 4,098,150,709.4 moles.
+ * We don't want players making that much credits so we limit the total amount earned to MAX_GAS_CREDITS
  */
 /datum/export/large/gas_canister
 	cost = CARGO_CRATE_VALUE * 0.05 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
-	k_elasticity = 0.00033
 
-/datum/export/large/gas_canister/get_cost(obj/machinery/portable_atmospherics/canister/canister)
-	var/worth = cost
+/datum/export/large/gas_canister/get_base_cost(obj/machinery/portable_atmospherics/canister/canister)
 	var/datum/gas_mixture/canister_mix = canister.return_air()
+	if(!canister_mix.total_moles())
+		return 0
 	var/canister_gas = canister_mix.gases
-	var/list/gases_to_check = list(
+
+	var/static/list/gases_to_check = list(
 		/datum/gas/bz,
 		/datum/gas/nitrium,
 		/datum/gas/hypernoblium,
@@ -139,14 +133,18 @@
 		/datum/gas/halon,
 	)
 
+	var/worth = cost
 	for(var/gasID in gases_to_check)
 		canister_mix.assert_gas(gasID)
 		if(canister_gas[gasID][MOLES] > 0)
 			worth += get_gas_value(gasID, canister_gas[gasID][MOLES])
+			if(worth > MAX_GAS_CREDITS)
+				worth = MAX_GAS_CREDITS
+				break
 
-	canister_mix.garbage_collect()
 	return worth
 
 /datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
-	var/baseValue = initial(gasType.base_value)
-	return round((baseValue/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * moles)))
+	return ROUND_UP(initial(gasType.base_value) * moles)
+
+#undef MAX_GAS_CREDITS
