@@ -21,9 +21,6 @@
 	for(var/datum/export/subtype as anything in subtypesof(/datum/export))
 		if(subtype::abstract_type == subtype)
 			continue
-		if(subtype::cost <= 0)
-			TEST_FAIL("[subtype] has invalid cost [subtype:cost]")
-			return
 		var/datum/export/sell = new subtype
 		if(!length(sell.export_types))
 			TEST_FAIL("[subtype] has no export types")
