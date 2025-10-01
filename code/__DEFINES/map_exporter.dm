@@ -1,6 +1,6 @@
 /// Save objects types
 #define SAVE_OBJECTS (1 << 1)
-/// Save objects variables from obj.get_save_vars()
+/// Save objects variables from obj.get_save_vars() and obj.get_custom_save_vars()
 #define SAVE_OBJECTS_VARIABLES (1 << 2)
 /// Save objects custom properties from obj.on_object_saved()
 #define SAVE_OBJECTS_PROPERTIES (1 << 3)
