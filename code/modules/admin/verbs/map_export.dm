@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					place = /turf/template_noop
 					location = /area/template_noop
 				//Ignore things in space, must be a space turf
-				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_SPACE))
+				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_TURFS_SPACE))
 					place = /turf/template_noop
 					location = /area/template_noop
 					pull_from = null
@@ -266,19 +266,6 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					var/area/place_area = get_area(pull_from)
 					location = place_area.type
 					place = pull_from.type
-
-/*
-				//====Saving shuttles only / non shuttles only====
-				var/is_shuttle_area = ispath(location, /area/shuttle)
-				var/is_custom_shuttle_area = ispath(location, /area/shuttle/custom)
-				if(!(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES) && is_shuttle_area && !is_custom_shuttle_area)
-					place = /turf/template_noop
-					location = /area/template_noop
-
-					// we do want to save the shuttle docking ports so arrivals/cargo/mining shuttles don't break
-					/obj/docking_port/stationary/get_save_vars()
-					pull_from = null
-*/
 
 				//====Saving holodeck areas====
 				// All hologram objects get skipped and floor tiles get replaced with empty plating
@@ -297,19 +284,31 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				//Add objects to the header file
 				var/empty = TRUE
 
-
-				//====Saving shuttles only / non shuttles only====
+				//====Saving Shuttles==========
 				var/is_shuttle_area = ispath(location, /area/shuttle)
 				var/is_custom_shuttle_area = ispath(location, /area/shuttle/custom)
-				if(!(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES) && is_shuttle_area && !is_custom_shuttle_area)
+				var/skip_nonshuttle_area = (shuttle_area_flag == SAVE_SHUTTLES_ONLY) && !is_shuttle_area
+				if(skip_nonshuttle_area)
 					place = /turf/template_noop
 					location = /area/template_noop
-					// save the shuttle docking ports so arrivals/cargo/mining/etc. shuttles don't break
-					var//obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
-					if(shuttle_port)
-						var/metadata = generate_tgm_metadata(shuttle_port)
-						current_header += "[empty ? "" : ",\n"][shuttle_port.type][metadata]"
-						empty = FALSE
+					pull_from = null
+
+				var/skip_shuttle_area
+				if(is_custom_shuttle_area)
+					skip_shuttle_area = !(save_flag & SAVE_AREAS_CUSTOM_SHUTTLES)
+				else if(is_shuttle_area)
+					skip_shuttle_area = !(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES)
+
+				if(skip_shuttle_area)
+					place = /turf/template_noop
+					location = /area/template_noop
+
+					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
+						var/obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
+						if(shuttle_port)
+							var/metadata = generate_tgm_metadata(shuttle_port)
+							current_header += "[empty ? "" : ",\n"][shuttle_port.type][metadata]"
+							empty = FALSE
 
 					pull_from = null
 
@@ -325,14 +324,14 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 							continue
 
 						var/metadata
-						if(save_flag & SAVE_OBJECT_VARIABLES)
+						if(save_flag & SAVE_OBJECTS_VARIABLES)
 							metadata = generate_tgm_metadata(thing)
 
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
-						if(save_flag & SAVE_OBJECT_PROPERTIES)
+						if(save_flag & SAVE_OBJECTS_PROPERTIES)
 							var/custom_data = thing.on_object_saved()
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 				//====SAVING MOBS====
@@ -346,7 +345,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						empty = FALSE
 				current_header += "[empty ? "" : ",\n"][place]"
 				//====SAVING ATMOS====
-				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS))
+				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
 					var/turf/open/atmos_turf = pull_from
 					// Optimiziations that skip saving atmospheric data for turfs that don't need it
 					// - Space: Gas is constantly purged, and temperature is immutable
