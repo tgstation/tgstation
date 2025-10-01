@@ -113,6 +113,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/voidwalker
 	name = "Cosmic Dash"
+	background_icon_state = "bg_void"
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "dash"
 	charge_past = 0
