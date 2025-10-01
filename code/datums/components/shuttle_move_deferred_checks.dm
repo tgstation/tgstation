@@ -38,8 +38,11 @@
 	if(!istype(movable))
 		return
 	targets -= movable
+	var/had_moving_targets = length(moving_targets)
 	moving_targets -= movable
 	UnregisterSignal(movable, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, COMSIG_QDELETING))
+	if(had_moving_targets && !length(moving_targets) && length(targets))
+		call_check()
 	return ..()
 
 /datum/component/shuttle_move_deferred_checks/proc/call_check()
