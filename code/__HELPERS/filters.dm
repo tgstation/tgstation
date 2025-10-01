@@ -30,6 +30,8 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"alpha" = 255
 		)
 	),
+	// Not fully implemented, but if this isn't uncommented some windows will just error
+	// Needs either a proper matrix editor, or just a hook to our existing one
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
