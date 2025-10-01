@@ -173,6 +173,7 @@
 	. = ..()
 	if(cell_type)
 		.[NAMEOF(src, start_charge)] = cell.charge / cell.maxcharge
+	return .
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
