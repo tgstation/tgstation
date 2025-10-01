@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(persistence)
 	if(persistent_save_flags["objects_variables"])
 		flags |= SAVE_OBJECTS_VARIABLES
 	if(persistent_save_flags["object_properties"])
-		flags |= SAVE_OBJECT_PROPERTIES
+		flags |= SAVE_OBJECTS_PROPERTIES
 
 	if(persistent_save_flags["mobs"])
 		flags |= SAVE_MOBS
