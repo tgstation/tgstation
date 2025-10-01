@@ -101,10 +101,10 @@
 ///Maximum number of credits you can earn from selling your gas canister cause its theoritically infinite
 #define MAX_GAS_CREDITS 15000
 
- /**
+/**
  * Maximum pressure a canister can withstand is 9.2e13 kPa at a minimum of 2.7K which would contain a horrifying 4,098,150,709.4 moles.
  * We don't want players making that much credits so we limit the total amount earned to MAX_GAS_CREDITS
- */
+*/
 /datum/export/large/gas_canister
 	cost = CARGO_CRATE_VALUE * 0.05 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
