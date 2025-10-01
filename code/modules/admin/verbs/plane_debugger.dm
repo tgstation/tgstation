@@ -154,8 +154,7 @@
 			this_relay["blend_mode"] = GLOB.blend_names["[relay.blend_mode]"]
 			relays += list(this_relay)
 
-		for (var/filter_id in plane.filter_data)
-			var/list/filter = plane.filter_data[filter_id]
+		for (var/list/filter in plane.filter_data)
 			if(!filter["render_source"])
 				continue
 
