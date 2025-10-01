@@ -468,7 +468,7 @@
 /area/shuttle/escape)
 "ca" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/vending/wallmed/directional/south{
+/obj/machinery/wall_healer/free/directional/south{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,

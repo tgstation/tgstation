@@ -18,8 +18,8 @@
 	. = ..()
 	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
-/obj/item/mod/module/gps/on_use()
-	attack_self(mod.wearer)
+/obj/item/mod/module/gps/on_use(mob/activator)
+	attack_self(mod.wearer) // todo: refactor to make compatable with pAIs.  Maybe ui_interact(activator)
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
@@ -40,8 +40,19 @@
 	var/load_time = 3 SECONDS
 	/// The max amount of crates you can carry.
 	var/max_crates = 3
+	/// Disallow mobs larger than this size in containers
+	var/max_mob_size = MOB_SIZE_SMALL
+	/// Items that allowed to be picked up by this module
+	var/list/accepted_items
 	/// The crates stored in the module.
 	var/list/stored_crates = list()
+
+/obj/item/mod/module/clamp/Initialize(mapload)
+	. = ..()
+	accepted_items = typecacheof(list(
+		/obj/structure/closet/crate,
+		/obj/item/delivery/big
+	))
 
 /obj/item/mod/module/clamp/on_select_use(atom/target)
 	. = ..()
@@ -49,7 +60,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/item/delivery/big))
+	if(is_type_in_typecache(target, accepted_items))
 		var/atom/movable/picked_crate = target
 		if(!check_crate_pickup(picked_crate))
 			return
@@ -92,7 +103,7 @@
 		balloon_alert(mod.wearer, "too many crates!")
 		return FALSE
 	for(var/mob/living/mob in target.get_all_contents())
-		if(mob.mob_size < MOB_SIZE_HUMAN)
+		if(mob.mob_size <= max_mob_size)
 			continue
 		balloon_alert(mod.wearer, "crate too heavy!")
 		return FALSE
@@ -113,55 +124,110 @@
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
 	name = "MOD drill module"
-	desc = "An integrated drill, typically extending over the user's hand. While useful for drilling through rock, \
-		your drill is surely the one that both pierces and creates the heavens."
+	desc = "An arm-mounted drill, typically extending over the user's hand. While useful for drilling through rock, \
+		your drill is surely the one that both pierces and creates the heavens. Integrates with mining MODs' sphere \
+		transformation module, changing it from a mere traversal tool to high-powered excavation unit."
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
-	cooldown_time = 0.5 SECONDS
+	cooldown_time = 0.2 SECONDS
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
+	toolspeed = 0.25
+	/// Are we currently in passive sphere mode?
+	var/ballin = FALSE
+	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
+	var/last_bumpmine_tick = -1
+	/// Mining skill experience multiplier for bumpmining
+	var/exp_multiplier = 1
+	/// Cooldown on gibtonite detonation warnings
+	COOLDOWN_DECLARE(gibtonite_warning_cd)
 
-/obj/item/mod/module/drill/on_activation()
+/obj/item/mod/module/drill/on_install()
+	. = ..()
+	RegisterSignal(mod, COMSIG_MOD_MODULE_ACTIVATED, PROC_REF(on_module_activated))
+	RegisterSignal(mod, COMSIG_MOD_MODULE_DEACTIVATED, PROC_REF(on_module_deactivated))
+
+/obj/item/mod/module/drill/on_uninstall(deleting)
+	. = ..()
+	UnregisterSignal(mod, list(COMSIG_MOD_MODULE_ACTIVATED, COMSIG_MOD_MODULE_DEACTIVATED))
+	toolspeed = initial(toolspeed)
+	use_energy_cost = initial(use_energy_cost)
+	exp_multiplier = initial(exp_multiplier)
+	ballin = FALSE
+
+/obj/item/mod/module/drill/on_activation(mob/activator)
+	if (ballin)
+		return
+	tool_behaviour = TOOL_MINING
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, PROC_REF(bump_mine))
 
-/obj/item/mod/module/drill/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/drill/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
+	if (ballin)
+		return
+	tool_behaviour = NONE
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP)
 
 /obj/item/mod/module/drill/on_select_use(atom/target)
 	. = ..()
-	if(!.)
+	if(!. || !mod.wearer.Adjacent(target))
 		return
-	if(!mod.wearer.Adjacent(target))
+
+	if(!ismineralturf(target) || !isasteroidturf(target))
 		return
-	if(ismineralturf(target))
-		var/turf/closed/mineral/mineral_turf = target
-		mineral_turf.gets_drilled(mod.wearer)
-		drain_power(use_energy_cost)
-	else if(isasteroidturf(target))
-		var/turf/open/misc/asteroid/sand_turf = target
-		if(!sand_turf.can_dig(mod.wearer))
-			return
-		sand_turf.getDug()
-		drain_power(use_energy_cost)
+
+	if(drain_power(use_energy_cost))
+		target.attackby(src, mod.wearer)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
-	if(!ismineralturf(bumped_into) || !drain_power(use_energy_cost))
-		return
-	var/turf/closed/mineral/mineral_turf = bumped_into
-	var/turf/closed/mineral/gibtonite/giberal_turf = mineral_turf
-	if(istype(giberal_turf) && giberal_turf.stage != GIBTONITE_UNSTRUCK)
-		playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-		to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected! Drills disabled."))
-		on_deactivation()
-		return
-	mineral_turf.gets_drilled(mod.wearer)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-///Ore Bag - Lets you pick up ores and drop them from the suit.
+	if (world.time == last_bumpmine_tick)
+		return
+
+	if (!ismineralturf(bumped_into) || !drain_power(use_energy_cost))
+		return
+
+	var/turf/closed/mineral/gibtonite/giberal_turf = bumped_into
+	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
+		last_bumpmine_tick = world.time
+		var/turf/closed/mineral/rock = bumped_into
+		INVOKE_ASYNC(rock, TYPE_PROC_REF(/atom, attackby), src, bumper, null, null, exp_multiplier)
+		return
+
+	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
+		return
+
+	COOLDOWN_START(src, gibtonite_warning_cd, 3 SECONDS)
+	playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected!"))
+
+/obj/item/mod/module/drill/proc/on_module_activated(datum/source, obj/item/mod/module/module)
+	SIGNAL_HANDLER
+	if (!istype(module, /obj/item/mod/module/sphere_transform))
+		return
+	// In sphere mode we get instamine and halved power drain
+	toolspeed = 0
+	use_energy_cost *= 0.5
+	exp_multiplier *= 0.2
+	if (!active)
+		on_activation()
+	ballin = TRUE
+
+/obj/item/mod/module/drill/proc/on_module_deactivated(datum/source, obj/item/mod/module/module)
+	SIGNAL_HANDLER
+	if (!istype(module, /obj/item/mod/module/sphere_transform))
+		return
+	toolspeed = initial(toolspeed)
+	use_energy_cost *= 2
+	exp_multiplier /= 2
+	ballin = FALSE
+	if (!active)
+		on_deactivation()
+
+/// Ore Bag - Lets you pick up ores and drop them from the suit.
 /obj/item/mod/module/orebag
 	name = "MOD ore bag module"
 	desc = "An integrated ore storage system installed into the suit, \
@@ -175,8 +241,6 @@
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
-	/// The ores stored in the bag.
-	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_equip()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(ore_pickup))
@@ -192,20 +256,17 @@
 		playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
-	for(var/obj/item/stack/stored_ore as anything in ores)
+	for(var/obj/item/stack/ore/stored_ore as anything in src)
 		if(!ore.can_merge(stored_ore))
 			continue
 		ore.merge(stored_ore)
 		if(QDELETED(ore))
 			return
-		break
 	ore.forceMove(src)
-	ores += ore
 
-/obj/item/mod/module/orebag/on_use()
-	for(var/obj/item/ore as anything in ores)
-		ore.forceMove(drop_location())
-		ores -= ore
+/obj/item/mod/module/orebag/on_use(mob/activator)
+	for(var/obj/item/ore as anything in src)
+		ore.forceMove(mod.drop_location())
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/hydraulic
@@ -333,7 +394,7 @@
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, PROC_REF(check_locker), locker))
 
-/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/magnet/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(istype(mod.wearer.pulling, /obj/structure/closet))
 		mod.wearer.stop_pulling()
 
@@ -343,13 +404,13 @@
 	if(!locker.Adjacent(mod.wearer) || !isturf(locker.loc) || !isturf(mod.wearer.loc))
 		return
 	mod.wearer.start_pulling(locker)
-	locker.strong_grab = TRUE
+	ADD_TRAIT(locker, TRAIT_STRONGPULL, REF(mod.wearer))
 	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(on_stop_pull))
 
 /obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/closet/locker, atom/movable/last_puller)
 	SIGNAL_HANDLER
 
-	locker.strong_grab = FALSE
+	REMOVE_TRAIT(locker, TRAIT_STRONGPULL, REF(mod.wearer))
 	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
 
 /obj/item/mod/module/ash_accretion
@@ -376,11 +437,11 @@
 	var/static/list/keep_turfs
 
 /datum/armor/mod_ash_accretion
-	melee = 4
+	melee = 3 // 50 armor when fully covered in ash, equal to two plates on an explorer suit
 	bullet = 1
 	laser = 2
 	energy = 2
-	bomb = 4
+	bomb = 3
 
 /obj/item/mod/module/ash_accretion/Initialize(mapload)
 	. = ..()
@@ -434,32 +495,44 @@
 /obj/item/mod/module/ash_accretion/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	if(!isturf(mod.wearer.loc)) //dont lose ash from going in a locker
 		return
-	if(traveled_tiles) //leave ash every tile
-		new /obj/effect/temp_visual/light_ash(get_turf(src))
+
 	if(is_type_in_typecache(mod.wearer.loc, accretion_turfs))
 		if(traveled_tiles >= max_traveled_tiles)
 			return
+
 		traveled_tiles++
 		for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 			part.set_armor(part.get_armor().add_other_armor(armor_mod))
-		if(traveled_tiles >= max_traveled_tiles)
-			balloon_alert(mod.wearer, "fully ash covered")
-			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
-			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
-			playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
-			mod.update_speed()
-	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
-		return
-	else
-		if(traveled_tiles <= 0)
+
+		if(traveled_tiles < max_traveled_tiles)
 			return
-		traveled_tiles--
-		if(traveled_tiles == max_traveled_tiles - 1) // Just lost our speed buff
-			mod.update_speed()
-		for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
-			part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
-		if(traveled_tiles <= 0)
-			balloon_alert(mod.wearer, "ran out of ash!")
+
+		balloon_alert(mod.wearer, "fully ash covered")
+		var/cur_color = mod.wearer.color
+		mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) // Make them super light
+		animate(mod.wearer, 1 SECONDS, color = cur_color, flags = ANIMATION_PARALLEL)
+		playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
+		mod.update_speed()
+		return
+
+	if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
+		return
+
+	if(traveled_tiles) //leave ash every tile
+		new /obj/effect/temp_visual/light_ash(get_turf(src))
+
+	if(traveled_tiles <= 0)
+		return
+
+	traveled_tiles--
+	if(traveled_tiles == max_traveled_tiles - 1) // Just lost our speed buff
+		mod.update_speed()
+
+	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
+		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
+
+	if(traveled_tiles <= 0)
+		balloon_alert(mod.wearer, "ran out of ash!")
 
 /obj/item/mod/module/sphere_transform
 	name = "MOD sphere transform module"
@@ -471,54 +544,101 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
-	cooldown_time = 1.25 SECONDS
+	cooldown_time = 1 SECONDS
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
 	/// Time it takes us to complete the animation.
 	var/animate_time = 0.25 SECONDS
+	/// Armor values when active
+	var/datum/armor/armor_mod = /datum/armor/mod_sphere_transform
 	/// List of traits to add/remove from our subject as needed.
-	var/static/list/user_traits = list(
+	var/list/user_traits = list(
 		TRAIT_FORCED_STANDING,
 		TRAIT_HANDS_BLOCKED,
-		TRAIT_LAVA_IMMUNE,
 		TRAIT_NO_SLIP_ALL,
 	)
+	/// Has the module been upgraded with bileworm hide plating?
+	var/hide_upgrade = FALSE
+	/// How much hide is required to reinforce the MOD
+	var/hide_amount = 2 // These are rather rare as of now, should be increased later once other methods of crossing lava are removed
 
-/obj/item/mod/module/sphere_transform/activate()
+/datum/armor/mod_sphere_transform
+	melee = 20 // Can get up to 70 armor when ash covered and ballin, which is as good as a HECK suit... but you can't really attack anymore
+	bomb = 20
+
+/obj/item/mod/module/sphere_transform/on_install()
+	. = ..()
+	RegisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
+
+// Isn't supposed to happen outside of deletion but just in case
+/obj/item/mod/module/sphere_transform/on_uninstall(deleting)
+	. = ..()
+	// No need to drop the hide as we're supposed to be inbuilt and unremovable
+	UnregisterSignal(mod, COMSIG_ATOM_ITEM_INTERACTION)
+
+/obj/item/mod/module/sphere_transform/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/item, modifiers)
+	SIGNAL_HANDLER
+
+	if(!istype(item, /obj/item/stack/sheet/animalhide/bileworm))
+		return NONE
+
+	if (hide_upgrade)
+		to_chat(user, span_warning("[mod] is already reinforced with bileworm skin!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/animalhide/bileworm/hide = item
+	if (!hide.use(hide_amount))
+		to_chat(user, span_warning("You need more hide to fully reinforce [mod]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	hide_upgrade = TRUE
+	overlay_state_inactive = "module_bileworm_bracing"
+	user_traits += TRAIT_LAVA_IMMUNE
+	mod.balloon_alert(user, "plating reinforced!")
+	if (active)
+		ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, REF(src))
+	update_clothing_slots()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/mod/module/sphere_transform/activate(mob/activator)
 	if(!mod.wearer.has_gravity())
-		balloon_alert(mod.wearer, "no gravity!")
+		balloon_alert(activator, "no gravity!")
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/sphere_transform/on_activation()
+/obj/item/mod/module/sphere_transform/on_activation(mob/activator)
 	playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE)
 	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
 	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
 	mod.wearer.add_offsets(REF(src), y_add = -4)
-	mod.wearer.SpinAnimation(1.5)
+	mod.wearer.SpinAnimation(1.5, tag = "sphere_transform")
 	mod.wearer.add_traits(user_traits, REF(src))
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
+	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
+		part.set_armor(part.get_armor().add_other_armor(armor_mod))
 
-/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/sphere_transform/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(!deleting)
 		playsound(src, 'sound/items/modsuit/ballin.ogg', 100, TRUE, frequency = -1)
 	mod.wearer.remove_offsets(REF(src))
 	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/datum, remove_filter), list("mod_ball", "mod_blur", "mod_outline")), animate_time)
 	mod.wearer.remove_traits(user_traits, REF(src))
 	mod.wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
-	animate(mod.wearer, time = 0)
+	animate(mod.wearer, tag = "sphere_transform")
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
+	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
+		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
 
-/obj/item/mod/module/sphere_transform/used()
+/obj/item/mod/module/sphere_transform/used(mob/activator)
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
-		balloon_alert(mod.wearer, "too much pressure!")
+		balloon_alert(activator, "too much pressure!")
 		playsound(src, 'sound/items/weapons/gun/general/dry_fire.ogg', 25, TRUE)
 		return FALSE
 	return ..()
@@ -527,7 +647,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/bomb = new /obj/projectile/bullet/mining_bomb(mod.wearer.loc)
+	var/obj/projectile/bullet/mining_bomb/bomb = new(mod.wearer.loc)
 	bomb.aim_projectile(target, mod.wearer)
 	bomb.firer = mod.wearer
 	playsound(src, 'sound/items/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
@@ -535,17 +655,13 @@
 	drain_power(use_energy_cost)
 
 /obj/item/mod/module/sphere_transform/on_active_process(seconds_per_tick)
-	animate(mod.wearer) //stop the animation
-	mod.wearer.SpinAnimation(1.5) //start it back again
 	if(!mod.wearer.has_gravity())
 		deactivate() //deactivate in no grav
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
-
-	if(!mod.wearer.stat)
-		return
-	deactivate()
+	if(mod.wearer.stat)
+		deactivate()
 
 /obj/projectile/bullet/mining_bomb
 	name = "mining bomb"
@@ -584,46 +700,32 @@
 	light_power = 1
 	light_color = COLOR_LIGHT_ORANGE
 	/// Time to prime the explosion
-	var/prime_time = 0.5 SECONDS
+	var/prime_time = 0.1 SECONDS
 	/// Time to explode from the priming
-	var/explosion_time = 1 SECONDS
+	var/explosion_time = 0.9 SECONDS // Roughly this much until the blast part of the explosion animation
 	/// Damage done on explosion.
-	var/damage = 12
+	var/damage = 7
 	/// Damage multiplier on hostile fauna.
 	var/fauna_boost = 4
-	/// Image overlaid on explosion.
-	var/static/image/explosion_image
-
-/obj/structure/mining_bomb/Initialize(mapload, atom/movable/firer)
-	. = ..()
-	generate_image()
-
-/obj/structure/mining_bomb/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	explosion_image = null
-	generate_image()
-	return ..()
-
-/obj/structure/mining_bomb/proc/generate_image()
-	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
-	explosion_image.pixel_w = -32
-	explosion_image.pixel_z = -32
-	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
 
 /obj/structure/mining_bomb/proc/prime(atom/movable/firer)
-	add_overlay(explosion_image)
+	var/mutable_appearance/explosion_image = mutable_appearance('icons/effects/96x96.dmi', "judicial_explosion", FLOAT_LAYER, src, ABOVE_GAME_PLANE)
+	explosion_image.pixel_w = -32
+	explosion_image.pixel_z = -32
+	var/turf/our_loc = get_turf(src)
+	our_loc.flick_overlay_view(explosion_image, 1.35 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(boom), firer), explosion_time)
 
 /obj/structure/mining_bomb/proc/boom(atom/movable/firer)
 	visible_message(span_danger("[src] explodes!"))
 	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
-	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
+	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 1))
 		rock.gets_drilled()
 	for(var/mob/living/victim in range(1, src))
 		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
 			continue
 		victim.apply_damage(damage * (ismining(victim) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		to_chat(victim, span_userdanger("You are hit by a mining bomb explosion!"))
 		if(!firer)
 			continue
 		if(ishostile(victim))

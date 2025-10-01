@@ -161,13 +161,17 @@
 		speak("Sold out of [item_record.name].")
 		flick(icon_deny, src)
 		return
-	if(onstation)
+	if(!all_products_free)
 		// Here we do additional handing ahead of the payment component's logic, such as age restrictions and additional logging
 		var/obj/item/card/id/card_used
 		var/mob/living/living_user
 		if(isliving(user))
 			living_user = user
 			card_used = living_user.get_idcard(TRUE)
+		if(QDELETED(card_used))
+			speak("You do not possess an ID to purchase [item_record.name].")
+			return
+
 		if(age_restrictions && item_record.age_restricted && (!card_used.registered_age || card_used.registered_age < AGE_MINOR))
 			speak("You are not of legal age to purchase [item_record.name].")
 			if(!(user in GLOB.narcd_underages))
@@ -190,7 +194,6 @@
 		purchase_message_cooldown = world.time + 5 SECONDS
 		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
 		last_shopper = REF(user)
-	use_energy(active_power_usage)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend, src)
 
@@ -226,16 +229,16 @@
 	var/obj/item/vended_item = null
 	if(dispense_returned)
 		vended_item = LAZYACCESS(item_record.returned_products, LAZYLEN(item_record.returned_products)) //first in, last out
-		if(!QDELETED(vended_item))
-			vended_item.forceMove(spawn_location)
+		vended_item.forceMove(spawn_location)
 	else if(item_record.amount)
 		vended_item = new item_record.product_path(spawn_location)
 		if(vended_item.type in contraband)
 			ADD_TRAIT(vended_item, TRAIT_CONTRABAND, INNATE_TRAIT)
 		item_record.amount--
 
-	if(!QDELETED(vended_item))
-		on_dispense(vended_item, dispense_returned)
+	on_dispense(vended_item, dispense_returned)
+	use_energy(active_power_usage)
+
 	return vended_item
 
 /**
@@ -262,23 +265,23 @@
 /obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
 	PROTECTED_PROC(TRUE)
 
-	if(QDELETED(paying_id_card)) //not available(null) or somehow is getting destroyed
-		speak("You do not possess an ID to purchase [product_to_vend.name].")
-		return FALSE
-	var/datum/bank_account/account = paying_id_card.registered_account
-	if(account.account_job && account.account_job.paycheck_department == payment_department && !discountless)
-		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
+	//returned items are free
 	if(LAZYLEN(product_to_vend.returned_products))
-		price_to_use = 0 //returned items are free
-	if(price_to_use && (attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE))
+		return TRUE
+
+	//account to use. optional cause we handle cash on hand transfers as well
+	var/datum/bank_account/account = paying_id_card.registered_account
+
+	//deduct money from person
+	if(!discountless && account.account_job?.paycheck_department == payment_department)
+		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
+	if(attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
 		flick(icon_deny,src)
 		return FALSE
-	//actual payment here
-	var/datum/bank_account/paying_id_account = SSeconomy.get_dep_account(payment_department)
-	if(paying_id_account)
-		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-		SSeconomy.track_purchase(account, price_to_use, name)
-		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+
+	//transfer money to machine
+	SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
+	log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
 	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE

@@ -40,7 +40,7 @@
 	var/playing = FALSE
 	var/locked = FALSE
 	var/drop_dir = SOUTH
-	var/static/list/coin_values = list(/obj/item/coin/diamond = 100, /obj/item/coin/gold = 25, /obj/item/coin/silver = 10, /obj/item/coin/iron = 1) //Make sure this is ordered from left to right.
+	var/static/list/coin_values = list(/obj/item/poker_chip/black = 1000, /obj/item/poker_chip/green = 250, /obj/item/poker_chip/blue = 100, /obj/item/poker_chip/red = 25, /obj/item/poker_chip/white_blue = 10, /obj/item/poker_chip/white_black = 1) //Make sure this is ordered from left to right.
 	var/list/coins_to_dispense = list()
 	var/datum/looping_sound/jackpot/jackpot_loop
 	var/on = TRUE
@@ -217,6 +217,7 @@
 	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount, "Roulette: Bet")
 
 	playing = TRUE
+	cut_overlays()
 	update_appearance()
 	set_light(0)
 
@@ -303,6 +304,13 @@
 
 	var/turf/drop_loc = get_step(loc, drop_dir)
 	var/obj/item/cash = new coin_to_drop(drop_loc)
+	//We animate the chip with a cool drop, bounce and slide effect with random offsets to fan out the chips
+	cash.pixel_y = 16
+	cash.pixel_z = 8
+	var/extra_x = rand(0, 8)
+	var/extra_y = round(extra_x * 0.7)
+	animate(cash, 250 MILLISECONDS, pixel_z = 0, easing = BOUNCE_EASING | EASE_OUT) //fall to the ground
+	animate(300 MILLISECONDS, pixel_y = rand(-6, 6) + extra_y, pixel_x = rand(0 + extra_x, 8 + extra_x) * pick(1, -1), flags = ANIMATION_PARALLEL) //midnight shitcode instead of proper maths
 	playsound(cash, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(drop_coin)), 3) //Recursion time

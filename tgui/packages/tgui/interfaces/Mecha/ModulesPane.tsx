@@ -652,6 +652,7 @@ const SnowflakeRadio = (props) => {
       <LabeledList.Item label="Frequency">
         <NumberInput
           animated
+          tickWhileDragging
           unit="kHz"
           step={0.2}
           stepPixelSize={10}
@@ -659,7 +660,7 @@ const SnowflakeRadio = (props) => {
           maxValue={maxFrequency / 10}
           value={frequency / 10}
           format={(value) => toFixed(value, 1)}
-          onDrag={(value) =>
+          onChange={(value) =>
             act('equip_act', {
               ref: ref,
               gear_action: 'set_frequency',
@@ -1040,7 +1041,7 @@ const SnowflakeOreScanner = (props) => {
   const { cooldown } = props.module.snowflake;
   return (
     <LabeledList.Item label="Vent Scanner">
-      <NoticeBox info={cooldown  <= 0}>
+      <NoticeBox info={cooldown <= 0}>
         {cooldown / 10 > 0 ? 'Recharging...' : 'Ready to scan vents'}
         <Button
           my={1}
@@ -1053,7 +1054,7 @@ const SnowflakeOreScanner = (props) => {
               gear_action: 'area_scan',
             })
           }
-          disabled={!(cooldown <= 0 )}
+          disabled={!(cooldown <= 0)}
         >
           Scan all nearby vents
         </Button>
