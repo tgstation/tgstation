@@ -63197,10 +63197,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
-"rYN" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "rYQ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/trash/mess,
@@ -121546,7 +121542,7 @@ heR
 fRO
 heR
 miW
-rYN
+cOu
 fRO
 fRO
 heR
@@ -122060,7 +122056,7 @@ heR
 fRO
 heR
 eHF
-rYN
+cOu
 fRO
 fRO
 heR
