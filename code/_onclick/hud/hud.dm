@@ -15,6 +15,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Glass" = 'icons/hud/screen_glass.dmi',
 	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
 	"Detective" = 'icons/hud/screen_detective.dmi',
+	"Wizard-Tower" = 'troutstation/icons/hud/screen_wizard.dmi', // Troutstation edit
 ))
 
 /proc/ui_style2icon(ui_style)
