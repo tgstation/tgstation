@@ -3118,7 +3118,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "aWc" = (
-/obj/structure/lattice,
 /obj/machinery/power/tracker,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
@@ -30220,10 +30219,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
-"iFM" = (
-/obj/structure/lattice/catwalk,
-/turf/closed/wall,
-/area/station/maintenance/solars/port/aft)
 "iFR" = (
 /obj/structure/chair{
 	dir = 8
@@ -103395,7 +103390,7 @@ dcE
 vNz
 azt
 vNz
-iFM
+fVD
 nTA
 nxa
 crs
