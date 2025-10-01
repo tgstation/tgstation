@@ -155,7 +155,7 @@
 
 /obj/machinery/power/apc/get_save_vars()
 	. = ..()
-	if(!auto_name)
+	if(auto_name)
 		. -= NAMEOF(src, name)
 	. += NAMEOF(src, opened)
 	. += NAMEOF(src, coverlocked)
