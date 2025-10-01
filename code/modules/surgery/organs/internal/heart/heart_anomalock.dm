@@ -175,6 +175,7 @@
 /obj/item/organ/heart/cybernetic/anomalock/prebuilt/Initialize(mapload)
 	. = ..()
 	core = new /obj/item/assembly/signaler/anomaly/flux(src)
+	add_organ_trait(TRAIT_SHOCKIMMUNE)
 	update_icon_state()
 
 /datum/status_effect/voltaic_overdrive
