@@ -1,16 +1,16 @@
 // Circuit boards, spare parts, etc.
 
-/datum/export/solar/assembly
+/datum/export/assembly
 	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "solar panel assembly"
 	export_types = list(/obj/item/solar_assembly)
 
-/datum/export/solar/tracker_board
+/datum/export/tracker_board
 	cost = CARGO_CRATE_VALUE * 0.5
 	unit_name = "solar tracker board"
 	export_types = list(/obj/item/electronics/tracker)
 
-/datum/export/solar/control_board
+/datum/export/control_board
 	cost = CARGO_CRATE_VALUE * 0.75
 	unit_name = "solar panel control board"
 	export_types = list(/obj/item/circuitboard/computer/solar_control)

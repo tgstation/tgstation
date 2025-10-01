@@ -1,6 +1,7 @@
 //Tendril chest artifacts and ruin loot.
 //Consumable or one-use items like the magic D20 and gluttony's blessing are omitted
 /datum/export/lavaland
+	abstract_type = /datum/export/lavaland
 	unit_name = "lava planet artifact"
 	/// Prefix to add to our unit name after generation
 	var/prefix = null

@@ -1,4 +1,5 @@
 /datum/export/stack
+	abstract_type = /datum/export/stack
 	unit_name = "sheet"
 
 /datum/export/stack/get_amount(obj/O)

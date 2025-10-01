@@ -2,6 +2,7 @@
 #define CLIENT_ORGAN_MULT 10
 
 /datum/export/organ
+	abstract_type = /datum/export/organ
 	include_subtypes = FALSE //CentCom doesn't need organs from non-humans.
 
 /datum/export/organ/get_base_cost(obj/exported_item)
