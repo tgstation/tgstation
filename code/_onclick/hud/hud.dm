@@ -235,6 +235,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	floor_change = null
 	hand_slots.Cut()
 
+	QDEL_LIST(open_containers)
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
