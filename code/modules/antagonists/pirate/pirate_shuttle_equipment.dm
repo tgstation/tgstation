@@ -402,6 +402,7 @@
 	deltimer(sending_timer)
 
 /datum/export/pirate
+	abstract_type = /datum/export/pirate
 	sales_market = EXPORT_MARKET_PIRACY
 
 /// Attempts to find the thing on station
