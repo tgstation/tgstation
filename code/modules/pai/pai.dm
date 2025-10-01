@@ -217,15 +217,22 @@
 		pai_card.set_personality(src)
 	card = pai_card
 	forceMove(pai_card)
-	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
+	toggle_leash()
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	update_appearance(UPDATE_DESC)
-
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
+
+/mob/living/silicon/pai/proc/toggle_leash()
+	if(isnull(card))
+		return
+	if(leash)
+		QDEL_NULL(leash)
+	else
+		leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 
 /mob/living/silicon/pai/create_modularInterface()
 	if(!modularInterface)
