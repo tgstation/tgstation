@@ -1,0 +1,4 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - bugfix: "Washing machine can dye clothes again"
