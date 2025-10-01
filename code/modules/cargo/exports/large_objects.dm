@@ -37,6 +37,7 @@
 	export_types = list(/obj/structure/closet/crate/coffin)
 
 /datum/export/reagent_dispenser
+	abstract_type = /datum/export/reagent_dispenser
 	cost = CARGO_CRATE_VALUE * 0.5 // +0-400 depending on amount of reagents left
 	///cost for an full holder of reagents
 	var/contents_cost = CARGO_CRATE_VALUE * 0.8
