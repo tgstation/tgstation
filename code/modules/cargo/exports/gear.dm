@@ -14,12 +14,12 @@
 	export_types = list(/obj/item/shield/riot)
 
 
-/datum/export/mask/breath
+/datum/export/breath_mask
 	cost = CARGO_CRATE_VALUE * 0.01
 	unit_name = "breath mask"
 	export_types = list(/obj/item/clothing/mask/breath)
 
-/datum/export/mask/gas
+/datum/export/gas_mask
 	cost = CARGO_CRATE_VALUE * 0.05
 	unit_name = "gas mask"
 	export_types = list(/obj/item/clothing/mask/gas)
