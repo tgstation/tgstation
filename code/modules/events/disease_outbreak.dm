@@ -122,6 +122,9 @@
 		illness_type = initial(fake_virus.name)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
+	// Set status displays to biohazard alert
+	send_status_display_biohazard_alert()
+
 /datum/round_event/disease_outbreak/setup()
 	announce_when = ADV_ANNOUNCE_DELAY
 

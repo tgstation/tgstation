@@ -1568,6 +1568,7 @@
 #include "code\datums\elements\inverted_movement.dm"
 #include "code\datums\elements\item_fov.dm"
 #include "code\datums\elements\item_scaling.dm"
+#include "code\datums\elements\kill_achievement.dm"
 #include "code\datums\elements\kneecapping.dm"
 #include "code\datums\elements\kneejerk.dm"
 #include "code\datums\elements\knockback.dm"
