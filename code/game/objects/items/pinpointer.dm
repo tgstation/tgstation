@@ -201,8 +201,6 @@
 	shuttleport = SSshuttle.getShuttle("huntership")
 
 /obj/item/pinpointer/shuttle/scan_for_target()
-    if(!shuttleport)
-        shuttleport = SSshuttle.getShuttle("huntership")
 	if(!shuttleport)
 		shuttleport = SSshuttle.getShuttle("huntership")
 	target = shuttleport
