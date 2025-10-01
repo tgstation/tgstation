@@ -16,7 +16,7 @@
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
 /datum/export/crate/wooden
-	cost = CARGO_CRATE_VALUE/5
+	cost = CARGO_CRATE_VALUE / 5
 	unit_name = "large wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
