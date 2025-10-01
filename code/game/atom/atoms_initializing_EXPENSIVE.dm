@@ -42,8 +42,8 @@
 	else if(!(A.flags_1 & INITIALIZED_1))
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
-        if(CONFIG_GET(flag/persistent_save_enabled) && arguments[1]) // mapload
-            A.PersistentInitialize()
+		if(arguments[1]) // mapload
+			persistent_loaders += A
 
 		SEND_SIGNAL(A, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ATOM_AFTER_POST_INIT, A)
@@ -187,5 +187,4 @@
  */
 /atom/proc/PersistentInitialize()
 	set waitfor = FALSE
-    SHOULD_CALL_PARENT(FALSE)
-	stack_trace("[src] ([type]) called PersistentInitialize but has nothing on it!")
+	SHOULD_CALL_PARENT(FALSE)

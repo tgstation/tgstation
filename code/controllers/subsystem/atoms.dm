@@ -14,6 +14,7 @@ SUBSYSTEM_DEF(atoms)
 	var/base_initialized
 
 	var/list/late_loaders = list()
+	var/list/persistent_loaders = list()
 
 	var/list/BadInitializeCalls = list()
 
@@ -65,6 +66,17 @@ SUBSYSTEM_DEF(atoms)
 			A.LateInitialize()
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
+
+	if(persistent_loaders.len)
+		if(CONFIG_GET(flag/persistent_save_enabled))
+			for(var/I in 1 to persistent_loaders.len)
+				var/atom/A = persistent_loaders[I]
+				//I hate that we need this
+				if(QDELETED(A))
+					continue
+				A.PersistentInitialize()
+			testing("Late initialized [persistent_loaders.len] atoms")
+		persistent_loaders.Cut()
 
 	if (created_atoms)
 		atoms_to_return += created_atoms
