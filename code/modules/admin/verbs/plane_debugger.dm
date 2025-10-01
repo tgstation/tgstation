@@ -159,8 +159,7 @@
 				continue
 
 			var/list/filter_info = filter.Copy()
-			filter_info["name"] = filter_id
-			filter_info["our_ref"] = "[plane.plane]-[filter_id]"
+			filter_info["our_ref"] = "[plane.plane]-[filter_info["name"]]"
 			filters += list(filter_info)
 
 		this_plane["relays"] = relays

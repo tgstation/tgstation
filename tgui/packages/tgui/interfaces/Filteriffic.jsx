@@ -219,6 +219,7 @@ const FilterDataEntry = (props) => {
     radius: 'int',
     falloff: 'float',
     density: 'int',
+    alpha: 'int',
     threshold: { rays: 'float', bloom: 'color' },
     factor: 'float',
     repeat: 'int',
@@ -229,7 +230,7 @@ const FilterDataEntry = (props) => {
 
   let filterInputType = filterEntryMap[name];
   // i hate javascript, this checks if its a dict
-  if (filterInputType.constructor === Object) {
+  if (filterInputType !== undefined && filterInputType.constructor === Object) {
     filterInputType = filterInputType[filterType] || filterInputType.default;
   }
 
