@@ -1,4 +1,4 @@
-/datum/export/large/crate
+/datum/export/crate
 	cost = CARGO_CRATE_VALUE
 	k_elasticity = 0
 	unit_name = "crate"
@@ -10,90 +10,90 @@
 		/obj/structure/closet/crate/wooden,
 		)
 
-/datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
+/datum/export/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
 	if(. && notes)
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
-/datum/export/large/crate/wooden
+/datum/export/crate/wooden
 	cost = CARGO_CRATE_VALUE/5
 	unit_name = "large wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
 
-/datum/export/large/crate/wooden/ore
+/datum/export/crate/wooden/ore
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
 
-/datum/export/large/crate/wood
+/datum/export/crate/wood
 	cost = CARGO_CRATE_VALUE * 0.48
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/wooden)
 	exclude_types = list()
 
-/datum/export/large/crate/coffin
+/datum/export/crate/coffin
 	cost = CARGO_CRATE_VALUE/2 //50 wooden crates cost 800 credits, and you can make 10 coffins in seconds with those planks. Each coffin selling for 100 means you can make a net gain of 200 credits for wasting your time making coffins.
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
 
-/datum/export/large/reagent_dispenser
+/datum/export/reagent_dispenser
 	cost = CARGO_CRATE_VALUE * 0.5 // +0-400 depending on amount of reagents left
 	///cost for an full holder of reagents
 	var/contents_cost = CARGO_CRATE_VALUE * 0.8
 
-/datum/export/large/reagent_dispenser/get_base_cost(obj/structure/reagent_dispensers/dispenser)
+/datum/export/reagent_dispenser/get_base_cost(obj/structure/reagent_dispensers/dispenser)
 	return ..() + round(contents_cost * (dispenser.reagents.total_volume / dispenser.reagents.maximum_volume))
 
-/datum/export/large/reagent_dispenser/water
+/datum/export/reagent_dispenser/water
 	unit_name = "watertank"
 	export_types = list(/obj/structure/reagent_dispensers/watertank)
 	contents_cost = CARGO_CRATE_VALUE * 0.4
 
-/datum/export/large/reagent_dispenser/fuel
+/datum/export/reagent_dispenser/fuel
 	unit_name = "fueltank"
 	export_types = list(/obj/structure/reagent_dispensers/fueltank)
 
-/datum/export/large/reagent_dispenser/beer
+/datum/export/reagent_dispenser/beer
 	unit_name = "beer keg"
 	contents_cost = CARGO_CRATE_VALUE * 3.5
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
-/datum/export/large/pipedispenser
+/datum/export/pipedispenser
 	cost = CARGO_CRATE_VALUE * 2.5
 	unit_name = "pipe dispenser"
 	export_types = list(/obj/machinery/pipedispenser)
 
-/datum/export/large/emitter
+/datum/export/emitter
 	cost = CARGO_CRATE_VALUE * 2.75
 	unit_name = "emitter"
 	export_types = list(/obj/machinery/power/emitter)
 
-/datum/export/large/field_generator
+/datum/export/field_generator
 	cost = CARGO_CRATE_VALUE * 2.75
 	unit_name = "field generator"
 	export_types = list(/obj/machinery/field/generator)
 
-/datum/export/large/tesla_coil
+/datum/export/tesla_coil
 	cost = CARGO_CRATE_VALUE * 2.25
 	unit_name = "tesla coil"
 	export_types = list(/obj/machinery/power/energy_accumulator/tesla_coil)
 
-/datum/export/large/supermatter
+/datum/export/supermatter
 	cost = CARGO_CRATE_VALUE * 16
 	unit_name = "supermatter shard"
 	export_types = list(/obj/machinery/power/supermatter_crystal/shard)
 
-/datum/export/large/grounding_rod
+/datum/export/grounding_rod
 	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "grounding rod"
 	export_types = list(/obj/machinery/power/energy_accumulator/grounding_rod)
 
-/datum/export/large/iv
+/datum/export/iv
 	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "iv drip"
 	export_types = list(/obj/machinery/iv_drip)
 
-/datum/export/large/barrier
+/datum/export/barrier
 	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
@@ -105,12 +105,12 @@
  * Maximum pressure a canister can withstand is 9.2e13 kPa at a minimum of 2.7K which would contain a horrifying 4,098,150,709.4 moles.
  * We don't want players making that much credits so we limit the total amount earned to MAX_GAS_CREDITS
 */
-/datum/export/large/gas_canister
+/datum/export/gas_canister
 	cost = CARGO_CRATE_VALUE * 0.05 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
 
-/datum/export/large/gas_canister/get_base_cost(obj/machinery/portable_atmospherics/canister/canister)
+/datum/export/gas_canister/get_base_cost(obj/machinery/portable_atmospherics/canister/canister)
 	var/datum/gas_mixture/canister_mix = canister.return_air()
 	if(!canister_mix.total_moles())
 		return 0
@@ -144,7 +144,7 @@
 
 	return worth
 
-/datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
+/datum/export/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
 	return ROUND_UP(initial(gasType.base_value) * moles)
 
 #undef MAX_GAS_CREDITS
