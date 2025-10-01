@@ -23,7 +23,7 @@
 ## To enable map saving and loading that persists between rounds, uncomment this flag
 ## This will load the most recent saved map(s) in the _maps/persistence folder if available
 ## Save folders in the persistence directory are formatted as year-month-day_UTF_hour.minute.second
-#PERSISTENT_SAVE_ENABLED
+PERSISTENT_SAVE_ENABLED
 
 ## The period of time in hours between map autosaves for persistence
 ## Set to -1 to only allow saving when the server reboots
@@ -69,7 +69,7 @@ PERSISTENT_SAVE_FLAGS objects
 ## Save and load objects variables
 PERSISTENT_SAVE_FLAGS objects_variables
 ## Save and load objects custom properties from obj.on_object_saved().
-PERSISTENT_SAVE_FLAGS object_properties
+PERSISTENT_SAVE_FLAGS objects_properties
 
 ##########################
 ##       M O B S        ##
@@ -98,7 +98,7 @@ PERSISTENT_SAVE_FLAGS turfs_space
 PERSISTENT_SAVE_FLAGS areas
 ## Save and load default shuttle area types like arrivals, cargo, mining, whiteship, etc.
 ## When disabled, saves default shuttle areas as /area/template_noop
-PERSISTENT_SAVE_FLAGS areas_default_shuttles
+#PERSISTENT_SAVE_FLAGS areas_default_shuttles
 ## Save and load custom shuttle area types from player made shuttles.
 ## When disabled, saves custom shuttle areas as /area/template_noop
 PERSISTENT_SAVE_FLAGS areas_custom_shuttles
