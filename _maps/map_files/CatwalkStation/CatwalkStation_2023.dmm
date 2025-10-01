@@ -3120,6 +3120,7 @@
 "aWc" = (
 /obj/structure/lattice,
 /obj/machinery/power/tracker,
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "aWk" = (
@@ -10807,6 +10808,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/station/hallway/primary/central)
+"dfq" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/openspace,
+/area/station/solars/starboard/fore)
 "dft" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/cigarette,
@@ -11288,8 +11293,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dod" = (
-/obj/structure/cable,
 /obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/space/openspace,
 /area/space/nearstation)
 "dol" = (
@@ -12333,10 +12338,6 @@
 /obj/structure/lattice,
 /turf/open/space/openspace,
 /area/space/nearstation)
-"dDO" = (
-/obj/structure/ladder,
-/turf/open/floor/glass/reinforced,
-/area/station/solars/starboard/fore)
 "dDS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13287,20 +13288,8 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/ordnance)
 "dSy" = (
-/obj/structure/cable,
-/obj/structure/closet/crate/engineering/electrical,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/stack/cable_coil,
-/turf/open/floor/glass/reinforced,
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/plating,
 /area/station/solars/starboard/fore)
 "dSA" = (
 /obj/structure/railing{
@@ -13310,8 +13299,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "dSG" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "dSS" = (
@@ -15432,6 +15421,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"evL" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/space/basic,
+/area/station/maintenance/solars/port/aft)
 "evO" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/lesser)
@@ -16193,7 +16188,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "eHF" = (
-/turf/open/floor/iron/solarpanel/airless,
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "eHO" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -16503,11 +16500,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
-"eMh" = (
-/obj/machinery/power/smes,
-/obj/structure/cable,
-/turf/open/floor/glass/reinforced,
-/area/station/maintenance/solars/port/aft)
 "eMi" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Arrivals Lounge"
@@ -20012,24 +20004,8 @@
 /area/station/commons/toilet/restrooms)
 "fLD" = (
 /obj/machinery/light/small/directional/east,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/stack/sheet/glass/fifty,
-/obj/structure/closet/crate/engineering/electrical,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/glass/reinforced,
 /area/station/solars/starboard/fore)
 "fLX" = (
@@ -22627,13 +22603,6 @@
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"guF" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/solars/port/aft)
 "guO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -25119,6 +25088,11 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
+"hhy" = (
+/obj/structure/lattice/catwalk,
+/obj/item/stack/cable_coil,
+/turf/open/space/basic,
+/area/station/solars/starboard/fore)
 "hhz" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -26129,12 +26103,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"hxa" = (
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space/openspace,
-/area/space/nearstation)
 "hxd" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -30254,9 +30222,7 @@
 /area/station/hallway/secondary/service)
 "iFM" = (
 /obj/structure/lattice/catwalk,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/space/basic,
+/turf/closed/wall,
 /area/station/maintenance/solars/port/aft)
 "iFR" = (
 /obj/structure/chair{
@@ -33372,11 +33338,6 @@
 /obj/structure/cable,
 /turf/open/openspace,
 /area/station/hallway/primary/central)
-"jyP" = (
-/obj/structure/lattice/catwalk,
-/obj/item/stack/cable_coil/thirty,
-/turf/open/space/basic,
-/area/space/nearstation)
 "jyT" = (
 /obj/structure/chair/stool/bar/directional/north,
 /obj/effect/turf_decal/siding/wood,
@@ -34157,6 +34118,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"jJv" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/solars/port/aft)
 "jJC" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -35393,6 +35361,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/textured_large,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"kdA" = (
+/obj/structure/cable,
+/obj/machinery/power/smes,
+/turf/open/floor/glass/reinforced,
+/area/station/maintenance/solars/port/aft)
 "kdC" = (
 /obj/structure/fake_stairs/directional/east{
 	name = "stairs"
@@ -36249,6 +36222,7 @@
 "kpJ" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/tracker,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/station/solars/port/aft)
 "kpS" = (
@@ -39344,6 +39318,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
+"lhT" = (
+/obj/structure/ladder,
+/turf/open/floor/plating,
+/area/station/solars/starboard/fore)
 "lhY" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/conveyor{
@@ -39966,25 +39944,7 @@
 /turf/open/floor/glass,
 /area/station/maintenance/starboard/lesser)
 "lrW" = (
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/solar_assembly,
-/obj/item/stack/sheet/glass/fifty,
-/obj/structure/closet/crate/engineering/electrical,
-/turf/open/floor/glass/reinforced,
+/turf/closed/wall,
 /area/station/solars/starboard/fore)
 "lse" = (
 /obj/structure/cable,
@@ -45843,6 +45803,7 @@
 "nem" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/tracker,
+/obj/structure/cable,
 /turf/open/space/basic,
 /area/station/solars/starboard/fore)
 "nen" = (
@@ -46068,12 +46029,6 @@
 	dir = 4
 	},
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"nhh" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/space/openspace,
-/area/station/solars/starboard/fore)
 "nhj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -46400,7 +46355,6 @@
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
 "nmF" = (
-/obj/structure/cable,
 /obj/structure/rack,
 /obj/item/circuitboard/computer/apc_control{
 	pixel_x = 2;
@@ -54346,6 +54300,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/fore)
+"pxm" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/space/openspace,
+/area/space/nearstation)
 "pxr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -63242,6 +63202,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"rYN" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
 "rYQ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/spawner/random/trash/mess,
@@ -64783,7 +64747,25 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/xenobiology)
 "sxx" = (
-/obj/structure/cable/multilayer/multiz,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/solar_assembly,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/cable_coil,
+/obj/structure/closet/crate/engineering/electrical,
 /turf/open/floor/glass/reinforced,
 /area/station/solars/starboard/fore)
 "sxT" = (
@@ -77686,7 +77668,6 @@
 /turf/open/floor/wood/tile,
 /area/station/security/detectives_office/private_investigators_office)
 "wlg" = (
-/obj/structure/cable,
 /obj/structure/table,
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
@@ -81631,6 +81612,7 @@
 /area/station/ai_monitored/command/storage/eva)
 "xvQ" = (
 /obj/structure/chair/office,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "xwg" = (
@@ -102386,9 +102368,9 @@ bWY
 azt
 azt
 azt
-azt
-azt
-azt
+twz
+twz
+twz
 azt
 vNz
 azt
@@ -102644,7 +102626,7 @@ azt
 vNz
 dcE
 dcE
-azt
+rNc
 dcE
 bWY
 bWY
@@ -102901,7 +102883,7 @@ azt
 vNz
 dcE
 dcE
-azt
+twz
 dcE
 heR
 dcE
@@ -103153,14 +103135,14 @@ bWY
 bWY
 xbF
 bWY
+twz
+azt
+twz
+bWY
 bWY
 azt
-bWY
-bWY
-bWY
-rNc
-bWY
-bWY
+twz
+twz
 vNz
 azt
 dcE
@@ -103924,10 +103906,10 @@ bWY
 bWY
 xbF
 bWY
-bWY
+twz
 azt
-bWY
-fVD
+twz
+evL
 nTA
 jgu
 okc
@@ -120284,10 +120266,10 @@ dcE
 dcE
 dcE
 dcE
-eHF
+fRO
 dcE
 dcE
-eHF
+fRO
 heR
 bPW
 nIH
@@ -120541,10 +120523,10 @@ dcE
 dcE
 dcE
 dcE
-eHF
+gMc
 heR
 heR
-eHF
+gMc
 heR
 bPW
 ixf
@@ -120798,10 +120780,10 @@ dcE
 dcE
 dcE
 heR
-eHF
+fRO
 heR
-eHF
-eHF
+gMc
+fRO
 heR
 ixf
 brQ
@@ -121052,12 +121034,12 @@ dcE
 dcE
 dcE
 dcE
+fRO
+gMc
+gMc
+gMc
 dcE
-dcE
-eHF
-eHF
-dcE
-eHF
+fRO
 cOu
 cOu
 ixf
@@ -121309,12 +121291,12 @@ dcE
 dcE
 dcE
 dcE
-dcE
+gMc
 heR
-eHF
+fRO
 cOu
 cOu
-eHF
+gMc
 heR
 heR
 ixf
@@ -121564,14 +121546,14 @@ dcE
 dcE
 dcE
 dcE
-dcE
-eHF
-eHF
 heR
-eHF
-dcE
-dcE
-dcE
+heR
+fRO
+heR
+miW
+rYN
+fRO
+fRO
 heR
 dcE
 ixf
@@ -121821,12 +121803,12 @@ dcE
 dcE
 dcE
 aWc
+qir
 cOu
 cOu
 cOu
-cOu
-cOu
-miW
+qir
+hhy
 cOu
 cOu
 cOu
@@ -122078,14 +122060,14 @@ dcE
 dcE
 dcE
 dcE
-dcE
-eHF
-eHF
+heR
+heR
+fRO
 heR
 eHF
-dcE
-dcE
-dcE
+rYN
+fRO
+fRO
 heR
 dcE
 ixf
@@ -122337,12 +122319,12 @@ dcE
 dcE
 dcE
 dcE
-dcE
+gMc
 heR
-eHF
+fRO
 cOu
 cOu
-eHF
+gMc
 heR
 heR
 ixf
@@ -122594,12 +122576,12 @@ dcE
 dcE
 dcE
 dcE
+fRO
+gMc
+gMc
+gMc
 dcE
-dcE
-eHF
-eHF
-dcE
-eHF
+fRO
 cOu
 cOu
 ixf
@@ -122854,10 +122836,10 @@ dcE
 dcE
 dcE
 heR
-eHF
+fRO
 heR
-eHF
-eHF
+gMc
+fRO
 heR
 ixf
 brQ
@@ -123111,10 +123093,10 @@ dcE
 dcE
 dcE
 dcE
-eHF
+gMc
 heR
 heR
-eHF
+gMc
 heR
 bPW
 ixf
@@ -123368,10 +123350,10 @@ dcE
 dcE
 dcE
 dcE
-eHF
+fRO
 dcE
 dcE
-eHF
+fRO
 heR
 bPW
 vEU
@@ -127616,7 +127598,7 @@ cOu
 qir
 cOu
 qir
-fUi
+cOu
 qir
 cOu
 qir
@@ -128133,7 +128115,7 @@ dcE
 cOu
 cOu
 dcE
-cOu
+fUi
 cOu
 dcE
 qir
@@ -129670,18 +129652,18 @@ qir
 qir
 qir
 qir
-cOu
-cOu
 fUi
+cOu
+cOu
 qir
 qir
 cOu
 qir
 cOu
 cOu
-cOu
-cOu
-cOu
+qir
+qir
+qir
 nem
 cbc
 dcE
@@ -131214,7 +131196,7 @@ dcE
 cOu
 dcE
 dcE
-bWY
+fUi
 dcE
 dcE
 cOu
@@ -132755,7 +132737,7 @@ bWY
 bWY
 bWY
 bWY
-jyP
+bWY
 bWY
 bWY
 bWY
@@ -168692,7 +168674,7 @@ nlm
 nlm
 nlm
 qCR
-qwn
+qCR
 qwn
 qwn
 qwn
@@ -168948,9 +168930,9 @@ nlm
 nlm
 nlm
 nlm
-hxa
-eMh
-guF
+xrx
+cgK
+jBW
 dSG
 nmF
 wua
@@ -169205,7 +169187,7 @@ nlm
 nlm
 nlm
 nlm
-dod
+xrx
 cgK
 kfT
 xvQ
@@ -169463,8 +169445,8 @@ nlm
 nlm
 nlm
 dod
-cgK
-jBW
+kdA
+jJv
 cHv
 wlg
 xAQ
@@ -169719,8 +169701,8 @@ nlm
 nlm
 nlm
 nlm
-dod
-jMU
+xrx
+pxm
 qhs
 qhs
 qhs
@@ -187104,10 +187086,10 @@ nlm
 nlm
 nlm
 gMO
-vEX
+lhT
 wux
 nNC
-wua
+xBd
 nlm
 dDL
 ixf
@@ -187362,11 +187344,11 @@ nlm
 nlm
 gMO
 sxx
-dDO
+vEX
 nRP
 xBd
 tSA
-nhh
+tSA
 bPW
 rNe
 rNe
@@ -187621,7 +187603,7 @@ gMO
 dSy
 fLD
 lrW
-wua
+dfq
 nlm
 tSA
 ixf
@@ -187877,7 +187859,7 @@ nlm
 nlm
 vlH
 vlH
-vlH
+qCR
 nlm
 nlm
 tSA
