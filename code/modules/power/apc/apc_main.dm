@@ -162,16 +162,17 @@
 	. += NAMEOF(src, lighting)
 	. += NAMEOF(src, equipment)
 	. += NAMEOF(src, environ)
-
 	. += NAMEOF(src, cell_type)
-	if(cell_type)
-		start_charge = cell.charge / cell.maxcharge // only used in Initialize() so direct edit is fine
-		. += NAMEOF(src, start_charge)
 
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	//. += NAMEOF(src, shorted)
 	//. += NAMEOF(src, locked)
 	return .
+
+/obj/machinery/power/apc/get_custom_save_vars()
+	. = ..()
+	if(cell_type)
+		.[NAMEOF(src, start_charge)] = cell.charge / cell.maxcharge
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()

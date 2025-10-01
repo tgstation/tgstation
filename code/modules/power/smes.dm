@@ -142,10 +142,12 @@
 
 /obj/machinery/power/smes/get_save_vars()
 	. = ..()
-	charge = total_charge()
-	. += NAMEOF(src, charge)
 	. += NAMEOF(src, input_level)
 	. += NAMEOF(src, output_level)
+
+/obj/machinery/power/smes/get_custom_save_vars()
+	. = ..()
+	.[NAMEOF(src, charge)] = total_charge()
 
 /// Returns the total charge of this smes
 /obj/machinery/power/smes/proc/total_charge()
