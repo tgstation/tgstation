@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes:
+  - bugfix: "flashes added to assemblies will no longer show up invisible"

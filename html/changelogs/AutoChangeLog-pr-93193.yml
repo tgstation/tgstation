@@ -1,0 +1,4 @@
+author: "mskinner5278"
+delete-after: True
+changes:
+  - bugfix: "fixed error during hyper-noblium formation reaction when bz is not present"
