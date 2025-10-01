@@ -75,15 +75,13 @@
 			var/target_path = text2path(params["path"])
 			if(!target_path)
 				return
-			var/list/filters_to_copy = target.filter_cache
 			var/list/filter_data_to_copy = target.filter_data
 			var/count = 0
 			for(var/atom/thing_at as anything in world.contents)
 				if(!istype(thing_at, target_path))
 					continue
-				thing_at.filter_cache = filters_to_copy.Copy()
 				thing_at.filter_data = filter_data_to_copy.Copy()
-				thing_at.filters = thing_at.filter_cache
+				thing_at.update_filters()
 				count += 1
 			message_admins("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
 			log_admin("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
