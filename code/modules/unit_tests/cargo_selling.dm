@@ -24,7 +24,8 @@
 		var/datum/export/sell = new subtype
 		if(!length(sell.export_types))
 			TEST_FAIL("[subtype] has no export types")
-			return
+			qdel(sell)
+			continue
 		GLOB.exports_list += sell
 
 	var/obj/item/cargo_unit_test_container/box = allocate(/obj/item/cargo_unit_test_container)
