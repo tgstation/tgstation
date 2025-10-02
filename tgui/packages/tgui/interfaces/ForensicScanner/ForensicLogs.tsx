@@ -90,13 +90,13 @@ function ForensicLog(props: ForensicLogProps) {
   );
 }
 
-type LogFormatter = {
+type LogFormatterProprs = {
   log: Record<string, string>;
   iconName: string;
   iconColor: string;
 };
 
-function DefaultLogFormatter(props: logFormatter) {
+function DefaultLogFormatter(props: LogFormatterProprs) {
   const { log, iconName, iconColor } = props;
   return (
     <>
@@ -110,7 +110,7 @@ function DefaultLogFormatter(props: logFormatter) {
   );
 }
 
-function BloodLogFormatter(props: logFormatter) {
+function BloodLogFormatter(props: LogFormatterProprs) {
   const { log, iconName, iconColor } = props;
   return (
     <>
@@ -124,7 +124,7 @@ function BloodLogFormatter(props: logFormatter) {
   );
 }
 
-function PrintsLogFormatter(props: logFormatter) {
+function PrintsLogFormatter(props: LogFormatterProprs) {
   const { log, iconName, iconColor } = props;
   return (
     <>
@@ -138,7 +138,7 @@ function PrintsLogFormatter(props: logFormatter) {
   );
 }
 
-function ReagentsLogFormatter(props: logFormatter) {
+function ReagentsLogFormatter(props: LogFormatterProprs) {
   const { log, iconName, iconColor } = props;
   return (
     <LabeledList>
@@ -159,7 +159,7 @@ function ReagentsLogFormatter(props: logFormatter) {
   );
 }
 
-function IdAccessLogFormatter(props: logFormatter) {
+function IdAccessLogFormatter(props: LogFormatterProprs) {
   const { log, iconName, iconColor } = props;
   return (
     <LabeledList>
