@@ -23,7 +23,7 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 	personalities_by_key = list()
 	incompatibilities_by_group = list()
 	processing_personalities = list()
-	for(var/datum/personality/personality_type as anything in typesof(/datum/personality))
+	for(var/datum/personality/personality_type as anything in subtypesof(/datum/personality))
 		var/personality_key = personality_type::savefile_key
 		if(isnull(personality_key))
 			// Abstract personality, ignore
