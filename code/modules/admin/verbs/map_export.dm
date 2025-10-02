@@ -62,7 +62,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 		var/datum/material/material_datum = each
 		while(amount > 0)
 			var/obj/item/stack/stack = material_datum.sheet_type
-			var/amount_var = NAMEOF_TYPEPATH(stack, amount) // double check this
+			var/amount_var = NAMEOF_TYPEPATH(stack, amount)
 			var/amount_in_stack = max(1, min(50, amount))
 			amount -= amount_in_stack
 			data += "[data ? ",\n" : ""][stack.type]{\n\t[amount_var] = [amount_in_stack]\n\t}"
