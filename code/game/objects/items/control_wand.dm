@@ -222,7 +222,7 @@
 			if (airlock.isElectrified())
 				interacting_with.balloon_alert(user, "already electrified!")
 			else
-				airlock.set_electrified(30, user)
+				airlock.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, user)
 
 		if (WAND_DEPOWER)
 			if (!istype(airlock))
