@@ -172,7 +172,7 @@
 /obj/machinery/power/apc/get_custom_save_vars()
 	. = ..()
 	if(cell_type)
-		.[NAMEOF(src, start_charge)] = cell.charge / cell.maxcharge
+		.[NAMEOF(src, start_charge)] = round((cell.charge / cell.maxcharge * 100))
 	return .
 
 /obj/machinery/power/apc/Initialize(mapload, ndir)
