@@ -22,7 +22,7 @@
 		if(subtype::abstract_type == subtype)
 			continue
 		if(subtype::k_recovery_time < SSprocessing.wait)
-			TEST_FAIL("[subtype] should have k_recovery time higher than [SSprocessing.wait]")
+			TEST_FAIL("[subtype] should have k_recovery time >= [SSprocessing.wait]")
 		var/datum/export/sell = new subtype
 		if(!length(sell.export_types))
 			TEST_FAIL("[subtype] has no export types")
