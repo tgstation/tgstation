@@ -66,6 +66,29 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 			data += "[data ? ",\n" : ""][material_datum.sheet_type]{\n\tamount = [amount_in_stack]\n\t}"
 	return data
 
+/obj/machinery/ore_silo/PersistentInitialize()
+	. = ..()
+	var/datum/component/material_container/silo_container = materials
+
+	// transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
+	top_level:
+		for(var/obj/item/stack/target_stack in loc)
+			var/total_amount = 0
+			for(var/mat_type, per_unit_amount in target_stack.mats_per_unit)
+				if(!silo_container.can_hold_material(mat_type))
+					continue top_level
+				total_amount += (per_unit_amount * target_stack.amount)
+
+			if(!silo_container.has_space(total_amount))
+				continue top_level
+
+			// yes, a double loop is really neccessary
+			for(var/mat_type, per_unit_amount in target_stack.mats_per_unit)
+				silo_container.materials[mat_type] += (per_unit_amount * target_stack.amount)
+
+			qdel(target_stack)
+
+
 /**Map exporter
 * Inputting a list of turfs into convert_map_to_tgm() will output a string
 * with the turfs and their objects / areas on said turf into the TGM mapping format
@@ -300,8 +323,24 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					skip_shuttle_area = !(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES)
 
 				if(skip_shuttle_area)
-					place = /turf/template_noop
-					location = /area/template_noop
+/*
+					We need to use shuttle code to get the baseturfs and areas
+
+					// it might be a good idea to use template_noop for multi-z maps
+					//pull_from = bottom_turf
+
+					var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
+					//var/area/underlying_area = shuttle.underlying_areas_by_turf[oldT]
+					place = pull_from.CopyOnTop(src, 1, shuttle_depth, TRUE, ignore_area_change ? CHANGETURF_NO_AREA_CHANGE : NONE) // Don't automatically change space area to nearspace if we'll override it later
+
+					if(istype(place, /turf/open/space))
+						place = /turf/open/space/basic
+*/
+
+					// hardcoding these for now
+					place = /turf/open/space/basic // /turf/template_noop
+					location = /area/space // /area/template_noop
+
 
 					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
 						var/obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
