@@ -9,7 +9,6 @@ import {
   Section,
   Stack,
   Tabs,
-  TextArea,
   Tooltip,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
@@ -29,7 +28,6 @@ export function CargoCatalog(props: Props) {
 
   const supplies = Object.values(data.supplies);
   const [showContents, setShowContents] = useState('');
-  const [showRequest, setShowRequest] = useState('');
   const [searchText, setSearchText] = useSharedState('search_text', '');
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
     'supply',
@@ -61,13 +59,6 @@ export function CargoCatalog(props: Props) {
           packs={packs}
           name={showContents}
           closeContents={setShowContents}
-        />
-      )}
-      {showRequest && (
-        <RequestPackInfo
-          packs={packs}
-          name={showRequest}
-          closeRequests={setShowRequest}
         />
       )}
       <Stack fill g={0}>
@@ -339,66 +330,6 @@ function CatalogPackInfo(props: CatalogContentsProps) {
                 </Stack.Item>
               </Stack>
             )}
-          </Section>
-        </Stack.Item>
-      </Stack>
-    </Modal>
-  );
-}
-
-type RequestContentsProps = {
-  name: string;
-  closeRequests: Dispatch<SetStateAction<string>>;
-  packs: SupplyCategory['packs'];
-};
-
-function RequestPackInfo(props: RequestContentsProps) {
-  const { name, packs, closeRequests } = props;
-  const pack = packs.find((pack) => pack.name === name);
-  const contains = pack?.contains;
-
-  return (
-    <Modal p={1} width="50vw" height="50vh">
-      <Stack fill vertical>
-        <Stack.Item>
-          <Section
-            fill
-            title={`Request: ${name}`}
-            buttons={
-              <Button
-                icon="close"
-                color="bad"
-                onClick={() => closeRequests('')}
-              />
-            }
-          >
-            <Stack vertical>
-              <Stack.Item mb={2}>
-                <BlockQuote>
-                  {pack?.desc || 'No description available.'}
-                </BlockQuote>
-              </Stack.Item>
-              <Stack.Item mb={2}>
-                <TextArea
-                  expensive
-                  height="150px"
-                  width="200px"
-                  onChange={(value) =>
-                    act('requestText', {
-                      requesttext: value,
-                    })
-                  }
-                />
-              </Stack.Item>
-              <Stack.Item>
-                <Section title="Choose budget">
-                  <Stack justify="space-between">
-                    <Button color="primary">Cargo budget</Button>
-                    <Button color="secondary">My department's budget</Button>
-                  </Stack>
-                </Section>
-              </Stack.Item>
-            </Stack>
           </Section>
         </Stack.Item>
       </Stack>
