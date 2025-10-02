@@ -21,12 +21,12 @@
 	for(var/datum/export/subtype as anything in subtypesof(/datum/export))
 		if(subtype::abstract_type == subtype)
 			continue
+		if(subtype::k_recovery_time < SSprocessing.wait)
+			TEST_FAIL("[subtype] should a k_recovery time higher than [SSprocessing.wait]")
 		var/datum/export/sell = new subtype
 		if(!length(sell.export_types))
 			TEST_FAIL("[subtype] has no export types")
-			qdel(sell)
-			continue
-		GLOB.exports_list += sell
+		qdel(sell)
 
 	var/obj/item/cargo_unit_test_container/box = allocate(/obj/item/cargo_unit_test_container)
 	var/obj/item/cargo_unit_test_container/box_skip_content = allocate(/obj/item/cargo_unit_test_container)

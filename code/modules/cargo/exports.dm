@@ -30,14 +30,6 @@ Then the player gets the profit from selling his own wasted time.
 	///set to false if any objects in a dry run were unscannable
 	var/all_contents_scannable = TRUE
 
-/// Makes sure the exports list is populated and that the report isn't null.
-/proc/init_export(datum/export_report/external_report)
-	if(!length(GLOB.exports_list))
-		setupExports()
-	if(isnull(external_report))
-		external_report = new
-	return external_report
-
 /*
 	* Handles exporting a movable atom and its contents
 	* Arguments:
@@ -52,7 +44,8 @@ Then the player gets the profit from selling his own wasted time.
 	if(!islist(export_markets))
 		export_markets = list(export_markets)
 
-	external_report = init_export(external_report)
+	if(!external_report)
+		external_report = new
 
 	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
 
@@ -73,7 +66,8 @@ Then the player gets the profit from selling his own wasted time.
 
 /// It works like export_item_and_contents(), however it ignores the contents. Meaning only `exported_atom` will be valued.
 /proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets = list(EXPORT_MARKET_STATION))
-	external_report = init_export(external_report)
+	if(!external_report)
+		external_report = new
 
 	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report, export_markets)
 	if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
@@ -114,9 +108,9 @@ Then the player gets the profit from selling his own wasted time.
 	///The percentage of an items real price that is earned when selling that item on cargo
 	var/k_elasticity = 1
 	///The percentage decrease on this exports elasticity per unit of item sold
-	var/k_hit_percentile = 0.02
+	var/k_hit_percentile = 0.05
 	///Time taken for this exports elasticity to reach back to 100%
-	var/k_recovery_time = 5 MINUTES
+	var/k_recovery_time = 10 MINUTES
 
 	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
 	var/amount_report_multiplier = 1
@@ -139,8 +133,8 @@ Then the player gets the profit from selling his own wasted time.
 /datum/export/Destroy()
 	return ..()
 
-/datum/export/process()
-	k_elasticity += SSprocessing.wait / k_recovery_time
+/datum/export/process(seconds_per_tick)
+	k_elasticity += (seconds_per_tick / k_recovery_time)
 	if(k_elasticity >= 1)
 		k_elasticity = 1
 		return PROCESS_KILL
@@ -260,11 +254,3 @@ Then the player gets the profit from selling his own wasted time.
 	msg += "."
 	return msg
 
-GLOBAL_LIST_EMPTY(exports_list)
-
-/// Called when the global exports_list is empty, and sets it up.
-/proc/setupExports()
-	for(var/datum/export/subtype as anything in subtypesof(/datum/export))
-		if(subtype::abstract_type == subtype)
-			continue
-		GLOB.exports_list += new subtype

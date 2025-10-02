@@ -143,8 +143,6 @@
 
 /// Looks across the station for items that are pirate specific exports
 /obj/machinery/loot_locator/proc/find_random_loot()
-	if(!GLOB.exports_list.len)
-		setupExports()
 	var/list/possible_loot = list()
 	for(var/datum/export/pirate/possible_export in GLOB.exports_list)
 		possible_loot += possible_export
