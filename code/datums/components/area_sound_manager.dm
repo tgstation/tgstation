@@ -7,8 +7,8 @@
 	var/datum/looping_sound/our_loop
 	///A list of "acceptable" z levels to be on. If you leave this, we're gonna delete ourselves
 	var/list/accepted_zs
-	///The timer id of our current start delay, if it exists
-	var/timerid
+	/// World.time when we are allowed to start another sound loop
+	VAR_PRIVATE/next_loop_time
 
 /datum/component/area_sound_manager/Initialize(area_loop_pairs, change_on, remove_on, acceptable_zs)
 	if(!ismovable(parent))
@@ -56,15 +56,12 @@
 	change_the_track()
 
 /datum/component/area_sound_manager/proc/change_the_track(skip_start = FALSE)
-	var/time_remaining = 0
+	var/existing_loop_id = our_loop?.timer_id
+	if(existing_loop_id)
+		// Time left will sometimes return negative values, just ignore them and start a new sound loop now
+		next_loop_time = world.time + max(timeleft(existing_loop_id, SSsound_loops) || 0, 0)
 
-	if(our_loop)
-		var/our_id = our_loop.timer_id || timerid
-		if(our_id)
-			time_remaining = timeleft(our_id, SSsound_loops) || 0
-			//Time left will sometimes return negative values, just ignore them and start a new sound loop now
-			time_remaining = max(time_remaining, 0)
-		QDEL_NULL(our_loop)
+	QDEL_NULL(our_loop)
 
 	var/area/our_area = get_area(parent)
 	var/new_loop_type = area_to_looping_type[our_area]
@@ -73,14 +70,12 @@
 
 	our_loop = new new_loop_type(parent, FALSE, TRUE, skip_start)
 
-	//If we're still playing, wait a bit before changing the sound so we don't double up
-	if(time_remaining)
-		timerid = addtimer(CALLBACK(src, PROC_REF(start_looping_sound)), time_remaining, TIMER_UNIQUE | TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_NO_HASH_WAIT | TIMER_DELETE_ME, SSsound_loops)
+	// We're not ready to start another loop, wait before changing the sound so we don't double up
+	if(next_loop_time > world.time)
+		addtimer(CALLBACK(src, PROC_REF(start_looping_sound)), next_loop_time - world.time, TIMER_UNIQUE | TIMER_CLIENT_TIME | TIMER_NO_HASH_WAIT | TIMER_DELETE_ME, SSsound_loops)
 		return
-	timerid = null
-	our_loop.start()
+
+	start_looping_sound()
 
 /datum/component/area_sound_manager/proc/start_looping_sound()
-	timerid = null
-	if(our_loop)
-		our_loop.start()
+	our_loop?.start()

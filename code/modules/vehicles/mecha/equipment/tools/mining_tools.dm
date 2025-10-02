@@ -262,9 +262,8 @@
 				return FALSE
 			COOLDOWN_START(src, area_scan_cooldown, 15 SECONDS)
 			for(var/mob/living/driver in chassis.return_drivers())
-				for(var/obj/structure/ore_vent/vent as anything in range(5, chassis))
-					if(istype(vent, /obj/structure/ore_vent))
-						vent.scan_and_confirm(driver, TRUE)
+				for(var/obj/structure/ore_vent/vent in range(5, chassis))
+					vent.scan_and_confirm(driver, TRUE)
 			return TRUE
 
 #undef DRILL_BASIC

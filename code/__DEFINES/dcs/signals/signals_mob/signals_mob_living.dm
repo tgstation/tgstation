@@ -351,4 +351,12 @@
 #define COMSIG_LIVING_GHOSTROLE_INFO "living_ghostrole_info"
 
 ///from mob/living/befriend()
-#define COMSIG_LIVING_MADE_NEW_FRIEND "made_new_friend"
+#define COMSIG_LIVING_MADE_NEW_FRIEND "living_made_new_friend"
+
+/// From /mob/living/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
+#define COMSIG_LIVING_UPDATE_OFFSETS "living_update_offsets"
+
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
+	/// Prevent loot from being dropped
+	#define COMPONENT_NO_LOOT_DROP (1<<0)

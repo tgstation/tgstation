@@ -235,7 +235,7 @@
 		inserted_board = attacking_item
 
 		//compute the needed mats from its stock parts
-		for(var/type as anything in inserted_board.req_components)
+		for(var/type in inserted_board.req_components)
 			//these don't count to the final cost as they have to inserted manually
 			if(type in inserted_board.flatpack_components)
 				continue
