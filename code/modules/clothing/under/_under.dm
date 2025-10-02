@@ -438,7 +438,7 @@
 			balloon_alert(toggler, "sensors shorted!")
 			return FALSE
 		if(NO_SENSORS)
-			balloon_alert(toggler, "no sensors to ajdust!")
+			balloon_alert(toggler, "no sensors to adjust!")
 			return FALSE
 
 	return TRUE
