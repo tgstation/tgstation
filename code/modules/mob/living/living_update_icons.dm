@@ -51,7 +51,7 @@
 	//if true, we want to avoid any animation time, it'll tween and not rotate at all otherwise.
 	var/is_opposite_angle = REVERSE_ANGLE(lying_angle) == lying_prev
 	var/animate_time = is_opposite_angle ? 0 : UPDATE_TRANSFORM_ANIMATION_TIME
-	animate(src, transform = ntransform, time = animate_time, dir = final_dir, easing = (EASE_IN|EASE_OUT))
+	animate(src, transform = ntransform, time = animate_time, dir = final_dir, easing = SINE_EASING)
 	for (var/hud_key in hud_list)
 		var/image/hud_image = hud_list[hud_key]
 		if (istype(hud_image))

@@ -98,3 +98,13 @@
 	set_items = list(
 		/obj/item/storage/backpack/duffelbag/mining_conscript,
 	)
+
+/datum/voucher_set/mining/punching_mitts
+	name = "Punching Mitts"
+	description = "Contains a pair of punching mitts for turning the local wilderness into the local gravel pit with your BARE HANDS."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "punch_mitts"
+	set_items = list(
+		/obj/item/clothing/gloves/fingerless/punch_mitts,
+		/obj/item/clothing/head/cowboy,
+	)
