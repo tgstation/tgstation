@@ -632,10 +632,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/datum/mood_event/event = GLOB.food_quality_events[food_quality]
-	event = new event.type
-	event.timeout *= timeout_mod
-	gourmand.add_mood_event("quality_food", event)
+	gourmand.add_mood_event("quality_food", /datum/mood_event/food, food_quality, timeout_mod)
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
