@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up wound code, should hopefully run a bit faster now."
