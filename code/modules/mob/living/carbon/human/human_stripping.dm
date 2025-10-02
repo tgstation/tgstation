@@ -118,15 +118,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit.name]'s sensor."))
-	if(!do_after(user, jumpsuit.strip_delay * 0.5, source)) // takes the same amount of time as adjusting it
+	if(!do_after(user, jumpsuit.strip_delay * 0.5, source) || !jumpsuit.set_sensor_mode(new_mode)) // takes the same amount of time as adjusting it
 		source.balloon_alert(user, "failed!")
 		return
 	source.balloon_alert(user, "changed sensors")
-	jumpsuit.sensor_mode = new_mode
 	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit.name]'s sensor."))
-	if(ishuman(source))
-		var/mob/living/carbon/human/humano = source
-		humano.update_suit_sensors()
 
 /datum/strippable_item/mob_item_slot/jumpsuit/proc/do_strip_accessory(atom/source, mob/user, obj/item/clothing/under/jumpsuit)
 	var/list/accessory_choices = list()

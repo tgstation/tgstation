@@ -879,7 +879,6 @@
 	},
 /obj/item/coin/gold,
 /obj/item/vending_refill/donksnackvendor,
-/obj/item/circuitboard/machine/vending/donksnackvendor,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "hL" = (
@@ -4345,10 +4344,6 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "LI" = (
-/obj/item/circuitboard/machine/vending/donksofttoyvendor{
-	pixel_y = -2;
-	pixel_x = -6
-	},
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
