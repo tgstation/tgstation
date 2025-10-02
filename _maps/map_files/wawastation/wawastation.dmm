@@ -2207,7 +2207,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/aisat/uppersouth)
 "aKj" = (
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
@@ -35349,7 +35349,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "mio" = (
-/obj/machinery/computer/station_alert/station_only,
+/obj/machinery/computer/station_alert,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/upper)
 "mit" = (
@@ -46231,7 +46231,7 @@
 /turf/open/misc/asteroid,
 /area/station/hallway/primary/starboard)
 "pVC" = (
-/obj/machinery/computer/station_alert/station_only,
+/obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,

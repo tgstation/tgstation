@@ -266,7 +266,7 @@ GLOBAL_VAR(department_cd_override)
 	return FALSE
 
 /datum/aas_config_entry/department_orders
-	name = "Departmental Order Announcement"
+	name = "Departmental: Order Announcement"
 	announcement_lines_map = list(
 		"Order Placed" = "A department order has been placed by %PERSON for %ORDER.",
 		"Cooldown Reset" = "Department order cooldown has expired! A new order may now be placed!",

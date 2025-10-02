@@ -27114,7 +27114,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/work)
 "hFJ" = (
-/obj/machinery/computer/station_alert/station_only,
+/obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/computer/security/telescreen/engine/directional/north,
 /turf/open/floor/iron/dark,
@@ -59111,7 +59111,7 @@
 /area/station/science/explab)
 "qFu" = (
 /obj/machinery/airalarm/directional/west,
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -60495,7 +60495,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "qXF" = (
-/obj/machinery/computer/station_alert/station_only,
+/obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -72157,7 +72157,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/processing)
 "unG" = (
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -75453,7 +75453,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vnt" = (
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 8
 	},
 /obj/machinery/button/door/directional/south{

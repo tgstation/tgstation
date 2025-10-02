@@ -306,6 +306,9 @@
 	for(var/datum/quirk/original_quircks as anything in quirks)
 		clone.add_quirk(original_quircks.type, override_client = client, announce = FALSE)
 
+	for(var/personality_type in personalities)
+		clone.add_personality(personality_type)
+
 	clone.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 
 	return clone

@@ -230,32 +230,38 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	use_energy(active_power_usage)
 
 /obj/item/proc/dye_item(dye_color, dye_key_override)
-	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
-	if(undyeable)
-		return FALSE
-	if(!dye_key_selector)
+	var/dye_key_selector = dye_key_override || dying_key
+	if(undyeable || !dye_key_selector)
 		return FALSE
 	if(!GLOB.dye_registry[dye_key_selector])
-		log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
+		log_runtime("Item [type] just tried to be dyed with an invalid registry key: [dye_key_selector]")
 		return FALSE
 	var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
 	if(!target_type)
 		return FALSE
-	if(initial(target_type.greyscale_config) && initial(target_type.greyscale_colors))
-		set_greyscale(
-			colors=initial(target_type.greyscale_colors),
-			new_config=initial(target_type.greyscale_config),
-			new_worn_config=initial(target_type.greyscale_config_worn),
-			new_inhand_left=initial(target_type.greyscale_config_inhand_left),
-			new_inhand_right=initial(target_type.greyscale_config_inhand_right)
-		)
+
+	if(initial(target_type.greyscale_config) || initial(target_type.greyscale_colors))
+		var/list/new_greyscale_args = list()
+
+		if(initial(target_type.greyscale_config))
+			new_greyscale_args["new_config"] = initial(target_type.greyscale_config)
+		if(initial(target_type.greyscale_config_worn))
+			new_greyscale_args["new_worn_config"] = initial(target_type.greyscale_config_worn)
+		if(initial(target_type.greyscale_config_inhand_left))
+			new_greyscale_args["new_inhand_left"] = initial(target_type.greyscale_config_inhand_left)
+		if(initial(target_type.greyscale_config_inhand_right))
+			new_greyscale_args["new_inhand_right"] = initial(target_type.greyscale_config_inhand_right)
+
+		if(new_greyscale_args.len)
+			new_greyscale_args["colors"] = initial(target_type.greyscale_colors) || COLOR_WHITE
+			set_greyscale(arglist(new_greyscale_args))
 	else
 		icon = initial(target_type.icon)
 		lefthand_file = initial(target_type.lefthand_file)
 		righthand_file = initial(target_type.righthand_file)
 		worn_icon = initial(target_type.worn_icon)
 
-	icon_state = initial(target_type.icon_state)
+	icon_state = initial(target_type.post_init_icon_state) || initial(target_type.icon_state)
 	inhand_icon_state = initial(target_type.inhand_icon_state)
 	worn_icon_state = initial(target_type.worn_icon_state)
 	inhand_x_dimension = initial(target_type.inhand_x_dimension)

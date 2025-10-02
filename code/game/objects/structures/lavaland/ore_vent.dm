@@ -237,13 +237,34 @@
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
 	add_shared_particles(/particles/smoke/ash)
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
-		for(var/turf/closed/mineral/rock in oview(i))
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
-				new /obj/effect/decal/cleanable/rubble(rock)
-			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user)
+		for(var/turf/rock in oview(i))
+
+			if(istype(rock, /turf/closed/mineral)) //Solid wall checks: Mine out the wall, but start skipping more as we move farther away.
+				if(prob(50 + (i * 8)))
+					continue
+				var/turf/closed/mineral/drillable = rock
+				drillable.gets_drilled(user)
 				if(prob(50))
-					new /obj/effect/decal/cleanable/rubble(rock)
+					new /obj/effect/decal/cleanable/rubble(rock) // Only throw rubble when we actually mine something, and not all the time.
+				continue //skip the rest of the checks
+
+			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // Open rock floors: make rubble decals occasionally.
+				new /obj/effect/decal/cleanable/rubble(rock)
+				continue
+
+			if(istype(rock, /turf/open/lava)) // Lava turfs, skip as we get farther away, otherwise produce a boulder and make it a platform, lasting the whole wave.
+				if(prob(30 + (i * 8))) // We want to skip these less than the mining walls, since lava is more common to deal with.
+					continue
+
+				var/obj/item/boulder/produced = produce_boulder(FALSE)
+				var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
+
+				if(!platform || !QDELETED(produced))
+					qdel(produced)
+					continue
+				platform.alpha = 0
+				platform.pixel_z = -16
+				animate(platform, alpha = 255, time = 2 SECONDS, pixel_z = 0, easing = QUAD_EASING|EASE_OUT)
 		sleep(0.6 SECONDS)
 	return TRUE
 

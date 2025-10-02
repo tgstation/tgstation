@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Cyborgs and AIs will now see alerts of the whole station rather than solely the Z level they were spawned on."
+  - bugfix: "Cyborgs and AIs will no longer get alerts about Thunderdome."
