@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(lag_switch)
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
 	/// List of measures that toggle automatically
-	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML, DISABLE_PARALLAX, DISABLE_FOOTSTEPS)
+	var/list/auto_measures = list(DISABLE_GHOST_ZOOM_TRAY, DISABLE_RUNECHAT, DISABLE_USR_ICON2HTML, DISABLE_PARALLAX, DISABLE_FOOTSTEPS, DISABLE_REQUEST_INTERNET_SOUND)
 	/// Timer ID for the automatic veto period
 	var/veto_timer_id
 	/// Cooldown between say verb uses when slowmode is enabled
@@ -95,6 +95,7 @@ SUBSYSTEM_DEF(lag_switch)
 			else
 				GLOB.keyloop_list |= GLOB.player_list
 				deadchat_broadcast("Observer freelook has been re-enabled. Enjoy your wooshing.", message_type = DEADCHAT_ANNOUNCEMENT)
+
 		if(DISABLE_GHOST_ZOOM_TRAY)
 			if(state) // if enabling make sure current ghosts are updated
 				for(var/mob/dead/observer/ghost in GLOB.dead_mob_list)
@@ -102,6 +103,7 @@ SUBSYSTEM_DEF(lag_switch)
 						continue
 					if(!ghost.client.holder && ghost.client.view_size.getView() != ghost.client.view_size.default)
 						ghost.client.view_size.resetToDefault()
+
 		if(SLOWMODE_SAY)
 			if(state)
 				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been enabled with [slowmode_cooldown/10] seconds between messages."))
@@ -109,8 +111,10 @@ SUBSYSTEM_DEF(lag_switch)
 				for(var/client/C as anything in GLOB.clients)
 					COOLDOWN_RESET(C, say_slowmode)
 				to_chat(world, span_boldannounce("Slowmode for IC/dead chat has been disabled by an admin."))
+
 		if(DISABLE_NON_OBSJOBS)
 			world.update_status()
+
 		if(DISABLE_PARALLAX)
 			if (state)
 				to_chat(world, span_boldannounce("Parallax has been disabled for performance concerns."))
@@ -119,11 +123,18 @@ SUBSYSTEM_DEF(lag_switch)
 
 			for (var/mob/mob as anything in GLOB.mob_list)
 				mob.hud_used?.update_parallax_pref()
-		if (DISABLE_FOOTSTEPS)
-			if (state)
+
+		if(DISABLE_FOOTSTEPS)
+			if(state)
 				to_chat(world, span_boldannounce("Footstep sounds have been disabled for performance concerns."))
 			else
 				to_chat(world, span_boldannounce("Footstep sounds have been re-enabled."))
+
+		if(DISABLE_REQUEST_INTERNET_SOUND)
+			if(state)
+				to_chat(world, span_boldannounce("Requesting Internet sounds has been disabled for performance concerns."))
+			else
+				to_chat(world, span_boldannounce("Requesting Internet sounds has been been re-enabled."))
 
 	return TRUE
 

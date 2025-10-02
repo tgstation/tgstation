@@ -16,5 +16,7 @@
 #define DISABLE_PARALLAX 7
 /// Disables footsteps, TRAIT_BYPASS_MEASURES exempted
 #define DISABLE_FOOTSTEPS 8
+/// Disables the "Request Internet sound" verb
+#define DISABLE_REQUEST_INTERNET_SOUND 9
 
-#define MEASURES_AMOUNT 8 // The total number of switches defined above
+#define MEASURES_AMOUNT 9 // The total number of switches defined above

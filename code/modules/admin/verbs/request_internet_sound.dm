@@ -2,11 +2,11 @@
 	set category = "OOC"
 	set name = "Request Internet Sound"
 
-	if(GLOB.say_disabled) //This is here to try to identify lag problems
-		to_chat(usr, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
+	if(SSlag_switch.measures[DISABLE_REQUEST_INTERNET_SOUND])
+		to_chat(usr, span_danger("Internet sound requests are temporarily disabled."), confidential = TRUE)
 		return
 
-	if (!CONFIG_GET(flag/request_internet_sound))
+	if(!CONFIG_GET(flag/request_internet_sound))
 		to_chat(usr, span_danger("This server has disabled internet sound requests."), confidential = TRUE)
 		return
 
@@ -24,7 +24,7 @@
 	if(credit == "Cancel" || isnull(credit))
 		return
 
-	else if (credit == "Yes")
+	else if(credit == "Yes")
 		credit = "[usr.ckey] requested this track."
 	else
 		credit = "Someone requested this track."
