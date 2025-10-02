@@ -7090,7 +7090,7 @@
 /turf/open/floor/wood,
 /area/station/service/theater)
 "bKo" = (
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/south,
@@ -8774,7 +8774,7 @@
 /area/station/ai_monitored/turret_protected/ai_upload)
 "cfx" = (
 /obj/structure/cable,
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -38738,7 +38738,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "jAY" = (
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot/left,
@@ -45717,7 +45717,7 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -57143,7 +57143,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
 "oiO" = (
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -89693,7 +89693,7 @@
 /area/station/commons/dorms)
 "wgF" = (
 /obj/structure/cable,
-/obj/machinery/computer/station_alert/station_only{
+/obj/machinery/computer/station_alert{
 	dir = 1
 	},
 /obj/machinery/status_display/ai/directional/south,
