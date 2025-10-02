@@ -36,6 +36,7 @@
 
 /datum/action/changeling/headcrab/proc/gibbing(mob/living/user)
 	if(QDELETED(user))
+		active = FALSE
 		return
 	gore_explosion(user)
 
@@ -119,6 +120,7 @@
 /// Completes the destruction of the walls after a 1-second delay for more drama
 /datum/action/changeling/headcrab/proc/finalize_destruction(list/affected_walls, mob/living/user, atom/user_prev_loc)
 	if(QDELETED(user) || (user.loc != user_prev_loc))
+		active = FALSE
 		return
 	for(var/turf/closed/wall/wall in affected_walls)
 		if(QDELETED(wall))
