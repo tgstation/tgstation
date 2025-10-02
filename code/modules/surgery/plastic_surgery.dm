@@ -90,7 +90,7 @@
 			var/obj/item/offhand = user.get_inactive_held_item()
 			if(istype(offhand, /obj/item/photo) && istype(surgery, /datum/surgery/plastic_surgery/advanced))
 				var/obj/item/photo/disguises = offhand
-				for(var/namelist as anything in disguises.picture?.names_seen)
+				for(var/namelist in disguises.picture?.names_seen)
 					names += namelist
 			else
 				to_chat(user, span_warning("You have no picture to base the appearance on, reverting to random appearances."))

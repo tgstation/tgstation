@@ -37,7 +37,6 @@
 		),
 	)
 
-	for(var/icon_file as anything in essentials)
-		for(var/icon_state as anything in essentials[icon_file])
+	for(var/icon_file in essentials)
+		for(var/icon_state in essentials[icon_file])
 			insert_icon(icon_state, uni_icon(icon_file, icon_state))
-
