@@ -90,6 +90,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 
 			qdel(target_stack)
 
+/*
 /obj/item/card/id/on_object_saved()
 	var/data
 	if(!registered_account)
@@ -102,7 +103,6 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	data += "[data ? ",\n" : ""][/obj/item/holochip::type]{\n\t[credits_var] = [balance]\n\t}"
 	return data
 
-/*
 /obj/item/card/id/PersistentInitialize()
 	. = ..()
 
@@ -112,7 +112,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 			continue
 		registered_account.adjust_money(credits)
 		qdel(money)
-*/
+
 
 /obj/machinery/light/get_save_vars()
 	. = ..()
@@ -127,6 +127,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	. += NAMEOF(src, stage)
 	. += NAMEOF(src, fixture_type)
 	return .
+*/
 
 /**Map exporter
 * Inputting a list of turfs into convert_map_to_tgm() will output a string
