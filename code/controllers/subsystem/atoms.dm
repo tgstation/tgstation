@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(atoms)
 				if(QDELETED(A))
 					continue
 				A.PersistentInitialize()
-			testing("Late initialized [persistent_loaders.len] atoms")
+			testing("Persistent initialized [persistent_loaders.len] atoms")
 		persistent_loaders.Cut()
 
 	if (created_atoms)
