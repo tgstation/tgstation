@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Clowns and mimes are innate clown and mime fans. They don't get the free pin, but if they somehow acquire one they'll get the same moodlet applied as real clown and mime fans."
+  - refactor: "Refactored huds slightly, report any sticky or missing huds"
+  - refactor: "Refactored suit sensors slightly, report any weird reports"

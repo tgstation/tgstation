@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - bugfix: "Decal painter now pulls alpha value from neutral decal."

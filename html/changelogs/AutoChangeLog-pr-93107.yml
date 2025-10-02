@@ -1,0 +1,6 @@
+author: "SmArtKar, Absolucy"
+delete-after: True
+changes:
+  - qol: "Mining bags and ore bag MODules now scoop up ores that move or spawn underneath you"
+  - refactor: "Refactored the recycler MODule to fit our code standards"
+  - sound: "Ore bag MODule no longer spams ore pickup sounds when you pick up multiple ores on the same tile"

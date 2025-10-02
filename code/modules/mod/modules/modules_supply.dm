@@ -241,19 +241,36 @@
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
+	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
+	var/dropping_ores = FALSE
 
 /obj/item/mod/module/orebag/on_equip()
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(ore_pickup))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+	if (mod.wearer.loc)
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
 
 /obj/item/mod/module/orebag/on_unequip()
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	if (mod.wearer.loc)
+		UnregisterSignal(mod.wearer.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
-/obj/item/mod/module/orebag/proc/ore_pickup(atom/movable/source, atom/old_loc, dir, forced)
+/obj/item/mod/module/orebag/proc/on_wearer_moved(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
+	if(old_loc)
+		UnregisterSignal(old_loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
+	if(mod.wearer.loc)
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+
+	var/ore_found = FALSE
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
+		ore_found = TRUE
 		INVOKE_ASYNC(src, PROC_REF(move_ore), ore)
-		playsound(src, SFX_RUSTLE, 50, TRUE)
+
+	if (ore_found)
+		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/ore/stored_ore as anything in src)
@@ -265,9 +282,23 @@
 	ore.forceMove(src)
 
 /obj/item/mod/module/orebag/on_use(mob/activator)
+	dropping_ores = TRUE
 	for(var/obj/item/ore as anything in src)
 		ore.forceMove(mod.drop_location())
+	dropping_ores = FALSE
 	drain_power(use_energy_cost)
+
+/obj/item/mod/module/orebag/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
+	SIGNAL_HANDLER
+	if(istype(arrived, /obj/item/stack/ore) && !dropping_ores)
+		INVOKE_ASYNC(src, PROC_REF(move_ore), arrived)
+		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
+
+/obj/item/mod/module/orebag/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
+	SIGNAL_HANDLER
+	if(is_type_in_list(new_atom, /obj/item/stack/ore))
+		INVOKE_ASYNC(src, PROC_REF(move_ore), new_atom)
+		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/hydraulic
 	name = "MOD loader hydraulic arms module"
