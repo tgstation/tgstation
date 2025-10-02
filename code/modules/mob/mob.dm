@@ -1706,9 +1706,3 @@
 			continue
 		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
 		datahud.show_to(src)
-
-/mob/proc/tests()
-	ADD_TRAIT(src, TRAIT_BLOCK_SECHUD, INNATE_TRAIT)
-
-/mob/proc/untests()
-	REMOVE_TRAIT(src, TRAIT_BLOCK_SECHUD, INNATE_TRAIT)
