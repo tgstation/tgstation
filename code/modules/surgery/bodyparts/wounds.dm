@@ -104,9 +104,7 @@
 
 	for (var/datum/wound/wound_type as anything in possible_wounds)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
-		for (var/datum/wound/other_path as anything in possible_wounds)
-			if (other_path == wound_type)
-				continue
+		for (var/datum/wound/other_path as anything in (possible_wounds - wound_type))
 
 			if (pregen_data.competition_mode == WOUND_COMPETITION_OVERPOWER_LESSERS)
 				if (initial(wound_type.severity) > initial(other_path.severity))
