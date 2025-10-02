@@ -97,10 +97,10 @@ PERSISTENT_SAVE_FLAGS turfs_space
 ## Save and load area types. When disabled, saves areas as /area/template_noop
 PERSISTENT_SAVE_FLAGS areas
 ## Save and load default shuttle area types like arrivals, cargo, mining, whiteship, etc.
-## When disabled, saves default shuttle areas as /area/template_noop
+## When disabled, saves default shuttle areas & turfs as the baseturfs underneath (usually space)
 #PERSISTENT_SAVE_FLAGS areas_default_shuttles
 ## Save and load custom shuttle area types from player made shuttles.
-## When disabled, saves custom shuttle areas as /area/template_noop
+## When disabled, saves custom shuttle areas as the baseturfs underneath (usually space)
 PERSISTENT_SAVE_FLAGS areas_custom_shuttles
 
 
