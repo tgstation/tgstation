@@ -244,7 +244,7 @@
 	When members of the security department read this poster they'll feel better!"
 	icon_state = "security_logo"
 
-/obj/item/poster/quirk/secuirty_logo
+/obj/item/poster/quirk/security_logo
 	poster_type = /obj/structure/sign/poster/quirk/security_slogan
 	quirk_poster_department = ACCOUNT_SEC
 

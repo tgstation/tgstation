@@ -1,6 +1,0 @@
-author: "DaCoolBoss"
-delete-after: True
-changes:
-  - bugfix: "Summon Guns event will no longer spawn guns with restricted firing pins."
-  - bugfix: "Summon Guns event will now only spawn guns that are intended to harm people (except the medbeam)"
-  - balance: "Added more guns to the Summon Guns event."
