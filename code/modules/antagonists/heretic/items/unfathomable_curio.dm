@@ -67,7 +67,7 @@
 	to_chat(wearer, span_warning("Laughter echoes in your mind...."))
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
 	wearer.dropItemToGround(src, TRUE)
-	wearer.gain_trauma(pick(brain_traumas) ,TRAUMA_RESILIENCE_ABSOLUTE)
+	wearer.gain_trauma(pick(brain_traumas), TRAUMA_RESILIENCE_MAGIC)
 
 /obj/item/storage/belt/unfathomable_curio/examine(mob/living/carbon/user)
 	. = ..()

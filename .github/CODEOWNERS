@@ -225,6 +225,8 @@
 /tools/build/ @scriptis @stylemistake
 /tools/tgs_scripts/ @Cyberboss @scriptis
 
+/code/modules/antagonists/heretic @Xander3359 @EnterTheJake
+
 # Host Hell
 
 /code/controllers/configuration/entries @scriptis

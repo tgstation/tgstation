@@ -16,6 +16,8 @@
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
 /// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
 #define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
+/// Called when a organ's damage is adjusted apply_organ_damage (damage_amount, maximum, required_organ_flag)
+#define COMSIG_ORGAN_ADJUST_DAMAGE "organ_adjust_damage"
 
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
