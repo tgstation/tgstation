@@ -30,8 +30,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system/Initialize(mapload)
 	config_entries = init_subtypes(/datum/aas_config_entry, list())
-	radio = new radio_type(src)
 	. = ..()
+	radio = new radio_type(src)
 	GLOB.announcement_systems += src
 	update_appearance()
 
@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if (!source_turf)
 		return TRUE
 	// Keep updated with broadcasting.dm (/datum/signal/subspace/vocal/New)
-	// TODO think about adding relay support. Maybe implementing /datum/signal/aas_event or something similar.
+	// FFF (For Future Feature): think about adding radio relay support. Maybe implementing /datum/signal/subspace/aas_event or something similar.
 	return z in SSmapping.get_connected_levels(source_turf)
 
 /// Compiles the announcement message with the provided variables. Announcement line is optional.

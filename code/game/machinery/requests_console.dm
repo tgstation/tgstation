@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 			// Check if user can call this emergency (prevent self-calls) RETA
 			var/user_dept = reta_get_user_department(usr)
-			if(user_dept == target_dept)
+			if(user_dept == target_dept && !isAdminGhostAI(usr))
 				to_chat(usr, span_alert("You cannot call your own department for emergency assistance."))
 				return
 
@@ -203,12 +203,25 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 			// Enhanced announcement with caller info
 			var/caller_info = ""
-			if(usr)
-				var/caller_name = usr.real_name || "Unknown"
-				var/caller_title = "Unknown Position"
-				if(usr?.mind?.assigned_role)
-					caller_title = usr.mind.assigned_role.title
-				caller_info = "(Called by [caller_name], [caller_title])"
+			// Aghosts have no IDs, but they hold authorithy so instead calling them Unknowns just drop caller info completely
+			if(usr && isliving(usr))
+				caller_info = "(Identification not provided)"
+				var/mob/living/caller_mob = usr
+				var/obj/item/card/id/ID = caller_mob.get_idcard()
+				if(ID)
+					caller_info = "(Called by [ID.registered_name], [ID.assignment])"
+				// Centcom still refuses to provide IDs to their silicons
+				else if (issilicon(caller_mob))
+					caller_info = "(Called by [caller_mob.name], [caller_mob.job])"
+					// Cyborgs do not have their job var set, and this is wrong
+					if(iscyborg(caller_mob) && caller_mob?.mind?.assigned_role)
+						caller_info = "(Called by [caller_mob.name], [caller_mob.mind.assigned_role.title])"
+
+				// If someone swiped their ID before
+				else if (message_verified_by)
+					caller_info = "(Last authentication: [message_verified_by])"
+					message_stamped_by = ""
+					message_verified_by = ""
 
 			// Grant RETA if conditions are met
 			if(origin_dept && target_dept && CONFIG_GET(flag/reta_enabled))
@@ -225,11 +238,11 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 				switch(emergency_type)
 					if(REQ_EMERGENCY_SECURITY)
-						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department, "CALLER" = caller_info), src, list(RADIO_CHANNEL_SECURITY), "Security")
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department, "CALLER" = caller_info, "RETARESPONDERS" = granted_count), src, list(RADIO_CHANNEL_SECURITY), "Security")
 					if(REQ_EMERGENCY_ENGINEERING)
-						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department, "CALLER" = caller_info), src, list(RADIO_CHANNEL_ENGINEERING), "Engineering")
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department, "CALLER" = caller_info, "RETARESPONDERS" = granted_count), src, list(RADIO_CHANNEL_ENGINEERING), "Engineering")
 					if(REQ_EMERGENCY_MEDICAL)
-						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department, "CALLER" = caller_info), src, list(RADIO_CHANNEL_MEDICAL), "Medical")
+						aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department, "CALLER" = caller_info, "RETARESPONDERS" = granted_count), src, list(RADIO_CHANNEL_MEDICAL), "Medical")
 
 				// Send confirmation to the calling department about the RETA activation
 				var/list/target_channels = list()
@@ -251,7 +264,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 					if("Mining")
 						target_channels += RADIO_CHANNEL_SUPPLY
 
-				aas_config_announce(/datum/aas_config_entry/rc_reta_announcement, list("GRANTEE" = target_dept, "CALLER" = caller_info), src, target_channels)
+				// Do not announce if RETA failed to activate
+				if (granted_count)
+					aas_config_announce(/datum/aas_config_entry/rc_reta_announcement, list("GRANTEE" = target_dept, "CALLER" = caller_info), src, target_channels)
 				// Log RETA activity
 				log_game("RETA: [origin_dept] called [target_dept] emergency, granted access to [granted_count] responder IDs for [duration_ds/10] seconds")
 
@@ -551,24 +566,41 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	if(CONFIG_GET(flag/reta_enabled))
 		// Non sec/engi/med personnel may be called by CC or AI (I hope) for anomaly removal and etc. Mostly admin triggered calls
 		announcement_lines_map = list(
-			"Security" = "SECURITY EMERGENCY in %LOCATION %CALLER - RETA door access granted to responders!!!",
-			"Engineering" = "ENGINEERING EMERGENCY in %LOCATION %CALLER - RETA door access granted to responders!!!",
-			"Medical" = "MEDICAL EMERGENCY in %LOCATION %CALLER - RETA door access granted to responders!!!",
-			"Science" = "Science personnel was requested in %LOCATION %CALLER - RETA door access granted to responders.",
-			"Service" = "Service personnel was requested in %LOCATION %CALLER - RETA door access granted to responders.",
-			"Command" = "Command personnel was requested in %LOCATION %CALLER - RETA door access granted to responders.",
-			"Cargo" = "Cargo personnel was requested in %LOCATION %CALLER - RETA door access granted to responders.",
-			"Mining" = "Miners were requested in %LOCATION %CALLER - RETA door access granted to responders.",
+			"RETA Granted" = "- RETA door access granted to responders",
+			"RETA Failed" = "- no RETA access provided",
+			"Security" = "SECURITY EMERGENCY in %LOCATION %CALLER %RETA!!!",
+			"Engineering" = "ENGINEERING EMERGENCY in %LOCATION %CALLER %RETA!!!",
+			"Medical" = "MEDICAL EMERGENCY in %LOCATION %CALLER, %RETA!!!",
+			"Science" = "Science personnel was requested in %LOCATION %CALLER %RETA.",
+			"Service" = "Service personnel was requested in %LOCATION %CALLER %RETA.",
+			"Command" = "Command personnel was requested in %LOCATION %CALLER %RETA.",
+			"Cargo" = "Cargo personnel was requested in %LOCATION %CALLER %RETA.",
+			"Mining" = "Miners were requested in %LOCATION %CALLER %RETA.",
+		)
+		vars_and_tooltips_map = list(
+			"LOCATION" = "will be replaced with the department name",
+			"CALLER" = "with caller name and job if applicable",
+			"RETA" = "with RETA Granted or RETA Failed lines depending on RETA system report",
 		)
 
 /datum/aas_config_entry/rc_emergency/compile_announce(list/variables_map, announcement_line)
 	if (!variables_map["CALLER"])
 		variables_map["CALLER"] = "(Caller placeholder)"
-	var/list/exploded_string = splittext_char(..(), "(Caller placeholder)")
+
+	variables_map["RETA"] = variables_map["RETARESPONDERS"] ? announcement_lines_map["RETA Granted"] : announcement_lines_map["RETA Failed"]
+	. = ..()
+	// In case - someone expands RETA departments, but forgets to add announcement lines for them
+	if (!announcement_lines_map[announcement_line])
+		. = "ERROR: UNKNOWN DEPARTMENT \[[announcement_line]\] CALLED IN [variables_map["LOCATION"] || "\[NO DATA\]"] [variables_map["CALLER"]]. PLEASE REPORT THIS TO NT TECH SUPPORT."
+
+	var/list/exploded_string = splittext_char(., "(Caller placeholder)")
+	var/list/trimed_message = list()
 	for (var/line in exploded_string)
 		line = trim(line)
+		if (line)
+			trimed_message += line
 	// Rebuild the string without empty lines
-	. = exploded_string.Join(" ")
+	. = trimed_message.Join(" ")
 
 /datum/aas_config_entry/rc_reta_announcement
 	name = "RC Alert: RETA Granted"
@@ -593,10 +625,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	if (!variables_map["CALLER"])
 		variables_map["CALLER"] = "(Caller placeholder)"
 	var/list/exploded_string = splittext_char(..(), "(Caller placeholder)")
+	var/list/trimed_message = list()
 	for (var/line in exploded_string)
 		line = trim(line)
+		if (line)
+			trimed_message += line
 	// Rebuild the string without empty lines
-	. = exploded_string.Join(" ")
+	. = trimed_message.Join(" ")
 
 /datum/aas_config_entry/rc_new_message
 	name = "RC Alert: New Message"

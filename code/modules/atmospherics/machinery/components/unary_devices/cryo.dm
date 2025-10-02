@@ -681,10 +681,13 @@
 /datum/aas_config_entry/medical_cryo_announcements/compile_announce(list/variables_map, announcement_line)
 	variables_map["AUTOEJECTING"] = variables_map["EJECTING"] ? announcement_lines_map["Autoejecting"] : ""
 	var/list/exploded_string = splittext_char(..(), "\[NO DATA\]")
+	var/list/trimed_message = list()
 	for (var/line in exploded_string)
 		line = trim(line)
+		if (line)
+			trimed_message += line
 	// Rebuild the string without empty lines
-	. = exploded_string.Join(" ")
+	. = trimed_message.Join(" ")
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
