@@ -18,6 +18,10 @@
 		ui = new(user, src, "AiCoreDisplayPicker")
 		ui.open()
 
+/datum/ai_core_display_picker/ui_close(mob/user)
+	if(ai_user)
+		ai_user.core_display_picker = null
+
 // No assets needed for DMIcon system
 
 /datum/ai_core_display_picker/ui_data(mob/user)
@@ -70,5 +74,4 @@
 			if(chosen_option && (chosen_option in GLOB.ai_core_display_screens))
 				ai_user.display_icon_override = chosen_option
 				ai_user.set_core_display_icon(chosen_option)
-				to_chat(ai_user, span_notice("AI Core display set to: [chosen_option]"))
 				return TRUE

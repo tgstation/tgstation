@@ -26,6 +26,10 @@
 		ui = new(user, src, "AiStatusDisplayPicker")
 		ui.open()
 
+/datum/ai_status_display_picker/ui_close(mob/user)
+	if(ai_user)
+		ai_user.status_display_picker = null
+
 // No assets needed for DMIcon system
 
 /datum/ai_status_display_picker/ui_static_data(mob/user)
@@ -112,7 +116,6 @@
 			if(!found_emote)
 				ai_user.apply_emote_display(selected_option)
 
-			to_chat(ai_user, span_notice("Status display set to: [selected_option]"))
 			return TRUE
 
 	return FALSE

@@ -211,16 +211,22 @@
 		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
 		return
 
-	var/datum/ai_core_display_picker/picker = new(src)
-	picker.ui_interact(src)
+	if(!core_display_picker)
+		core_display_picker = new(src)
+	core_display_picker.ui_interact(src)
 
 /mob/living/silicon/ai/verb/pick_status_display()
 	set category = "AI Commands"
 	set name = "Set AI Status Display"
 	set desc = "Choose what appears on status displays around the station"
 
-	var/datum/ai_status_display_picker/picker = new(src)
-	picker.ui_interact(src)
+	if(incapacitated)
+		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
+		return
+
+	if(!status_display_picker)
+		status_display_picker = new(src)
+	status_display_picker.ui_interact(src)
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()

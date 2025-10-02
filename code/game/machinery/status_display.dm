@@ -754,8 +754,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 		return
 
 	// Open the TGUI interface for selecting status display options
-	var/datum/ai_status_display_picker/picker = new(user, src)
-	picker.ui_interact(user)
+	if(!user.status_display_picker)
+		user.status_display_picker = new(user, src)
+	user.status_display_picker.ui_interact(user)
 
 /obj/machinery/status_display/ai/process()
 	if(machine_stat & NOPOWER)
