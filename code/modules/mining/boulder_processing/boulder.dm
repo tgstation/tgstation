@@ -114,7 +114,7 @@
 /obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(interacting_with, /turf/open/lava))
-		if(!create_platform(interacting_with, user, interacting_with))
+		if(!create_platform(interacting_with, user, null))
 			return ITEM_INTERACT_BLOCKING
 		return ITEM_INTERACT_SUCCESS
 
@@ -124,17 +124,23 @@
 		if(!create_platform(target, thrower))
 			return FALSE
 
-/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user)
+/obj/item/boulder/proc/create_platform(atom/interacting_with, mob/living/user, timer_override = null)
 	if(locate(/obj/structure/lattice/catwalk/boulder, interacting_with))
-		to_chat(user, span_warning("There is already a boulder platform here!"))
-		return FALSE
+		if(user)
+			to_chat(user, span_warning("There is already a boulder platform here!"))
+		return null
+
+	var/active_platform_lifespan = platform_lifespan //Default to the assigned value.
+	if(timer_override)
+		active_platform_lifespan = timer_override
 
 	var/obj/structure/lattice/catwalk/boulder/platform = new(interacting_with)
-	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), platform_lifespan)
+	addtimer(CALLBACK(platform, TYPE_PROC_REF(/obj/structure/lattice/catwalk/boulder, pre_self_destruct)), active_platform_lifespan)
 	// See Lattice.dm for more info
 	visible_message(span_notice("\The [src] floats on \the [interacting_with], forming a temporary platform!"))
 	qdel(src)
-	return TRUE
+	return platform
+
 /**
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
  * @param obj/item/weapon The weapon that is being used to process the boulder, that we pull toolspeed from. If null, we use the override_speed_multiplier instead.

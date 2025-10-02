@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - balance: "Ore vents spawn a ring of boulder platforms around themselves in nearby lava when starting wave defense."
