@@ -90,6 +90,43 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 
 			qdel(target_stack)
 
+/obj/item/card/id/on_object_saved()
+	var/data
+	if(!registered_account)
+		return
+	if(registered_account.account_balance <= 0)
+		return
+
+	var/credits_var = NAMEOF_TYPEPATH(/obj/item/holochip, credits)
+	var/balance = registered_account.account_balance
+	data += "[data ? ",\n" : ""][/obj/item/holochip::type]{\n\t[credits_var] = [balance]\n\t}"
+	return data
+
+/*
+/obj/item/card/id/PersistentInitialize()
+	. = ..()
+
+	for(var/obj/item/holochip/money in loc)
+		var/credits = money.get_item_credit_value()
+		if(!credits)
+			continue
+		registered_account.adjust_money(credits)
+		qdel(money)
+*/
+
+/obj/machinery/light/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state) // the tube changes color depending on low power, which we don't want to track
+
+	. += NAMEOF(src, has_mock_cell)
+	. += NAMEOF(src, status)
+	return .
+
+/obj/structure/light_construct/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, stage)
+	. += NAMEOF(src, fixture_type)
+	return .
 
 /**Map exporter
 * Inputting a list of turfs into convert_map_to_tgm() will output a string
@@ -395,8 +432,8 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
 					var/turf/atmos_turf = pull_from
-						var/metadata = generate_tgm_metadata(atmos_turf)
-						current_header += "[metadata]"
+					var/metadata = generate_tgm_metadata(atmos_turf)
+					current_header += "[metadata]"
 				current_header += ",\n[location])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
