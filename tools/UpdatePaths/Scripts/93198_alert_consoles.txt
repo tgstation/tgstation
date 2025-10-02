@@ -1,0 +1,1 @@
+/obj/machinery/computer/station_alert/station_only : /obj/machinery/computer/station_alert{@OLD}

@@ -38,3 +38,23 @@
   - map: CATWALK - Psychologist office made smaller but now has windows/curtains and
       shutters
   - map: CATWALK - Reinforced windows for service swapped out for standard
+2025-10-02:
+  Hatterhat:
+  - bugfix: Nanotrasen has released a firmware patch for their mining MODs that readds
+      the default hydraulic clamp to the suit's default pinned modules.
+  Pepsilawn:
+  - bugfix: flashes added to assemblies will no longer show up invisible
+  Pik1ta:
+  - bugfix: Bounty hunter pinpointer can locate their shuttle again
+  SmArtKar:
+  - bugfix: Fixed filteriffic runtiming when editing filters, and claiming that bloom
+      threshold is a number
+  - admin: Filteriffic got a few new options (you should still avoid using it)
+  - bugfix: Aheals now cure appendicitis
+  Xander3359:
+  - bugfix: Fixed the pre-built (admin spawn) voltaic combat heart not having shock
+      immunity
+  mskinner5278:
+  - bugfix: fixed error during hyper-noblium formation reaction when bz is not present
+  paganiy:
+  - bugfix: Washing machine can dye clothes again

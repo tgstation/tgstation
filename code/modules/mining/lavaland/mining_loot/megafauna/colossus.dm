@@ -373,7 +373,7 @@
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 		RegisterSignal(holder_animal, COMSIG_LIVING_DEATH, PROC_REF(on_holder_animal_death))
-	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

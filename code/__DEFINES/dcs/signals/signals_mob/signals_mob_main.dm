@@ -82,6 +82,8 @@
 
 ///signal sent when a mob has their holy role set. Sent to the mob having their role changed.
 #define COMSIG_MOB_MIND_SET_HOLY_ROLE "mob_mind_set_holy_role"
+///signal sent when a mob has their job role set. Sent to the mob having their role changed.
+#define COMSIG_MOB_MIND_SET_ROLE "mob_mind_set_role"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"

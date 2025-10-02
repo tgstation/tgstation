@@ -1,0 +1,6 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - rscadd: "Nearly all notable vendors are now constructable if you have the canister.\nadd Added refill canisters for syndiesmokes, liberation station, magivend, bombuddy 3000, shambler's juice and syndichem."
+  - rscadd: "Random vending refill canisters now have a chance to spawn in maint."
+  - image: "Robco Toolmaker and Centdrobe canisters have new sprites."
