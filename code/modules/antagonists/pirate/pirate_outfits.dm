@@ -25,10 +25,9 @@
 		outfit_id.update_icon()
 
 	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
-	if(pirate_uniform)
-		pirate_uniform.has_sensor = NO_SENSORS
-		pirate_uniform.sensor_mode = SENSOR_OFF
-		equipped.update_suit_sensors()
+	if(istype(pirate_uniform))
+		pirate_uniform.set_has_sensor(NO_SENSORS)
+		pirate_uniform.set_sensor_mode(SENSOR_OFF)
 
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"

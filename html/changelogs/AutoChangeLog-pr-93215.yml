@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "You can once again make sand walls."
+  - bugfix: "Deconstructing an autolathe with sand in it should now drop sand."
