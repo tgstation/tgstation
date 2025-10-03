@@ -10,20 +10,7 @@
 
 /obj/item/ai_module/law/core/full/custom
 	name = "Default Core AI Module"
-
-// this lawset uses the config for the server to add custom AI laws (defaults to asimov)
-/obj/item/ai_module/law/core/full/custom/Initialize(mapload)
-	. = ..()
-	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
-		if(!line)
-			continue
-		if(findtextEx(line,"#",1,2))
-			continue
-
-		laws += line
-
-	if(!laws.len)
-		return INITIALIZE_HINT_QDEL
+	law_id = "config_custom"
 
 /obj/item/ai_module/law/core/full/asimov
 	name = "'Asimov' Core AI Module"

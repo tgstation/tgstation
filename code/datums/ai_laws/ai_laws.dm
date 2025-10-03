@@ -165,9 +165,10 @@ GLOBAL_VAR(round_default_lawset)
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
+	id = "config_custom"
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
-	..()
+	. = ..()
 	for(var/line in world.file2list("[global.config.directory]/silicon_laws.txt"))
 		if(!line)
 			continue
@@ -175,6 +176,7 @@ GLOBAL_VAR(round_default_lawset)
 			continue
 
 		add_inherent_law(line)
+
 	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
 		log_silicon("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
 		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")

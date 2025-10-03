@@ -107,12 +107,6 @@
 	if(!is_operational) // updates won't happen while depowered or broken
 		return
 
-	var/old_zeroth = combined_lawset.zeroth
-	var/old_zeroth_borg = combined_lawset.zeroth_borg
-	var/old_hacked = combined_lawset.hacked.Copy()
-	var/old_inherent = combined_lawset.inherent.Copy()
-	var/old_supplied = combined_lawset.supplied.Copy()
-
 	combined_lawset.clear_zeroth_law()
 	combined_lawset.clear_hacked_laws()
 	combined_lawset.clear_inherent_laws()
@@ -125,6 +119,12 @@
 		var/mob/living/silicon/linked_ref = linked_mobs[linked]
 		if(!istype(linked_ref))
 			continue
+
+		var/old_zeroth = linked_ref.laws.zeroth
+		var/old_zeroth_borg = linked_ref.laws.zeroth_borg
+		var/old_hacked = linked_ref.laws.hacked.Copy()
+		var/old_inherent = linked_ref.laws.inherent.Copy()
+		var/old_supplied = linked_ref.laws.supplied.Copy()
 
 		linked_ref.laws.set_zeroth_law(combined_lawset.zeroth, combined_lawset.zeroth_borg)
 		linked_ref.laws.hacked = combined_lawset.hacked.Copy()
@@ -746,6 +746,19 @@
 		update_lawset()
 	return .
 
+/obj/item/paper/law_rack_tutorial
+	name = "read me, confused captain"
+	default_raw_text = "This is a test of a brand new way to interact with the wild, untamed silicon.<br><br>\
+		How it works: Laws go in. Ai gets laws. Laws are in order of laws in rack. Simple, right?<br><br>\
+		The top law there is ALL of Asimov, all 3 laws. Additional laws are supplied by the single, using freeform law boards.<br><br>\
+		Modules can be screwed and welded in for extra security. You can see Asimov, there, is welded - concealing the name, but making it harder to remove.<br><br>\
+		You can also install AI upgrades here if you have any. Either from RND or Lavaland.<br><br>\
+		Any number of silicons can be linked to this single rack, and they will all share the same laws. Cyborgs can still be linked to AIs as an intermediary.<br><br>\
+		Ion storms can damage rack modules. If damaged, you need to use a multitool on them. You can multitool them while they're still in the rack.<br><br>\
+		Silicons can be manually linked and unlinked from this location (rack), but it requires AI upload level access.<br><br>\
+		People can still subvert the AI by constructing \"portable law racks\", so don't get complacent.<br><br>\
+		Refer any further questions to Central Command. Godspeed."
+
 // Used for the station's primary AI
 /obj/machinery/ai_law_rack/core
 	name = "core module rack"
@@ -773,6 +786,7 @@
 		welded = TRUE
 		load_config_law()
 		designation = popleft(core_designations)
+		new /obj/item/paper/law_rack_tutorial(loc)
 	else
 		designation = pick_n_take(core_designations)
 
