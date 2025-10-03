@@ -14,7 +14,8 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 	VAR_FINAL/list/processing_personalities
 
 /datum/controller/subsystem/processing/personalities/Initialize()
-	init_personalities()
+	if(!length(personalities_by_type))
+		init_personalities()
 	return SS_INIT_SUCCESS
 
 /// Initialized personality singletons
