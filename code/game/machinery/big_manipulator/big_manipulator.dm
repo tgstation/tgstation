@@ -19,7 +19,7 @@
 	var/min_speed_multiplier =  MIN_SPEED_MULTIPLIER_TIER_1
 	var/max_speed_multiplier =  MAX_SPEED_MULTIPLIER_TIER_1
 
-	/// The current task of the manipulator.
+	/// The current task.
 	var/current_task = CURRENT_TASK_NONE
 	var/current_task_start_time = 0
 	var/current_task_duration = 0
