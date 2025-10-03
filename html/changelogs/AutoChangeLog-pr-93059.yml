@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "When a mind reader examines a mob, they'll get a glimpse into what that mob is currently typing, before they even send the message."
+  - qol: "Mind Reader now groups up all the information it gives you in a box"
+  - admin: "Mind Reader now logs everything the reader gleamed from the read-ee"
