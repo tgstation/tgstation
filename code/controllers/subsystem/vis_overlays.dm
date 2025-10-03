@@ -52,42 +52,10 @@ SUBSYSTEM_DEF(vis_overlays)
 		thing.managed_vis_overlays += overlay
 	return overlay
 
-/// same as add_vis_overlay but accepts an image instead of icon and iconstate
-/datum/controller/subsystem/vis_overlays/proc/add_vis_overlay_image(atom/movable/thing, image/image_overlay, layer, plane, dir, alpha = 255, add_appearance_flags = NONE, unique = FALSE)
-	var/obj/effect/overlay/vis/overlay
-	if(!unique)
-		. = "[image_overlay]|[layer]|[plane]|[dir]|[alpha]|[add_appearance_flags]"
-		overlay = vis_overlay_cache[.]
-		if(!overlay)
-			overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
-			vis_overlay_cache[.] = overlay
-		else
-			overlay.unused = 0
-	else
-		overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
-		overlay.cache_expiration = -1
-		var/cache_id = "[text_ref(overlay)]@{[world.time]}"
-		vis_overlay_cache[cache_id] = overlay
-		. = overlay
-	thing.vis_contents += overlay
-
-	if(!isatom(thing)) // Automatic rotation is not supported on non atoms
-		return overlay
-
-	if(!thing.managed_vis_overlays)
-		thing.managed_vis_overlays = list(overlay)
-	else
-		thing.managed_vis_overlays += overlay
-	return overlay
-
-/// creates an effect object that displays the overlay, if image_overlay is passed, icon and iconstate are ignored.
-/datum/controller/subsystem/vis_overlays/proc/_create_new_vis_overlay(image/image_overlay, icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
+/datum/controller/subsystem/vis_overlays/proc/_create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 	var/obj/effect/overlay/vis/overlay = new
-	if(image_overlay)
-		overlay.appearance = image_overlay.appearance
-	else
-		overlay.icon = icon
-		overlay.icon_state = iconstate
+	overlay.icon = icon
+	overlay.icon_state = iconstate
 	overlay.layer = layer
 	overlay.plane = plane
 	overlay.dir = dir

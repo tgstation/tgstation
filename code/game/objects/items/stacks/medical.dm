@@ -137,6 +137,7 @@
 			self_delay * (auto_change_zone ? 1 : 0.9),
 			patient,
 			extra_checks = CALLBACK(src, PROC_REF(can_heal), patient, user, healed_zone),
+			used_item = src,
 		))
 			return
 		if(!auto_change_zone)
@@ -156,6 +157,7 @@
 			other_delay * (auto_change_zone ? 1 : 0.9),
 			patient,
 			extra_checks = CALLBACK(src, PROC_REF(can_heal), patient, user, healed_zone),
+			used_item = src,
 		))
 			return
 		if(!auto_change_zone)
@@ -475,7 +477,7 @@
 			)
 	playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
-	if(!do_after(user, treatment_delay, target = patient))
+	if(!do_after(user, treatment_delay, target = patient, used_item = src))
 		return
 
 	if(!silent)
