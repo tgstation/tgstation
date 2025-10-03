@@ -48,3 +48,6 @@
 			. += span_deadsay("[p_They()] look[p_s()] like its system is corrupted and requires a reset.")
 
 	. += ..()
+
+/mob/living/silicon/robot/examine_descriptor(mob/user)
+	return "cyborg"

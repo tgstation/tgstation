@@ -277,7 +277,7 @@
 /datum/wound_pregen_data/flesh_burn
 	abstract = TRUE
 
-	required_wounding_types = list(WOUND_BURN)
+	required_wounding_type = WOUND_BURN
 	required_limb_biostate = BIO_FLESH
 
 	wound_series = WOUND_SERIES_FLESH_BURN_BASIC

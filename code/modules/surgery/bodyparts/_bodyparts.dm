@@ -666,20 +666,34 @@
 /obj/item/bodypart/proc/update_wound_theory()
 	// We put this here so we dont increase init time by doing this all at once on initialization
 	// Effectively, we "lazy load"
-	if (isnull(any_existing_wound_can_mangle_our_interior) || isnull(any_existing_wound_can_mangle_our_exterior))
-		any_existing_wound_can_mangle_our_interior = FALSE
-		any_existing_wound_can_mangle_our_exterior = FALSE
-		for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
-			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
-			if (!pregen_data.can_be_applied_to(src, random_roll = TRUE)) // we only consider randoms because non-randoms are usually really specific
-				continue
-			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_EXTERIOR)
-				any_existing_wound_can_mangle_our_exterior = TRUE
-			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_INTERIOR)
-				any_existing_wound_can_mangle_our_interior = TRUE
+	if (!isnull(any_existing_wound_can_mangle_our_interior) && !isnull(any_existing_wound_can_mangle_our_exterior))
+		return
 
-			if (any_existing_wound_can_mangle_our_interior && any_existing_wound_can_mangle_our_exterior)
-				break
+	any_existing_wound_can_mangle_our_interior = FALSE
+	any_existing_wound_can_mangle_our_exterior = FALSE
+
+	if (!is_woundable())
+		return
+
+	for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+		/// We only consider randoms because non-randoms are usually really specific
+		if (!pregen_data.can_be_applied_to(src, random_roll = TRUE, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE))
+			continue
+		if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_EXTERIOR)
+			any_existing_wound_can_mangle_our_exterior = TRUE
+		if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_INTERIOR)
+			any_existing_wound_can_mangle_our_interior = TRUE
+		if (any_existing_wound_can_mangle_our_interior && any_existing_wound_can_mangle_our_exterior)
+			break
+
+/// Check if a bodypart can be wounded
+/obj/item/bodypart/proc/is_woundable()
+	if (!owner)
+		return FALSE
+	if (HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED) || HAS_TRAIT(owner, TRAIT_GODMODE))
+		return FALSE
+	return TRUE
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
@@ -1142,23 +1156,22 @@
 	// For some reason this was applied as an overlay on the aux image and limb image before.
 	// I am very sure that this is unnecessary, and i need to treat it as part of the return list
 	// to be able to mask it proper in case this limb is a leg.
-	if(!is_husked)
-		var/atom/location = loc || owner || src
-		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
-			. += limb_em_block
+	var/atom/location = loc || owner || src
+	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
+		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
+		. += limb_em_block
 
-			if(aux_zone)
-				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
-				. += aux_em_block
+		if(aux_zone)
+			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
+			. += aux_em_block
 
-		if(is_emissive)
-			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
-			. += limb_em
+	if(!is_husked && is_emissive)
+		var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
+		. += limb_em
 
-			if(aux_zone)
-				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
-				. += aux_em
+		if(aux_zone)
+			var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
+			. += aux_em
 	//EMISSIVE CODE END
 
 	//No need to handle leg layering if dropped, we only face south anyways

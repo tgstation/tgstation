@@ -47,6 +47,7 @@
 		return
 	ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	owner.med_hud_set_status()
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fully_heal))
 	if(isnull(owner.client))
 		return
 	notify_ghosts(
@@ -90,14 +91,29 @@
 
 /obj/item/organ/appendix/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_LIVING_POST_FULLY_HEAL)
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 
 /obj/item/organ/appendix/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	if(inflamation_stage)
-		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
-		organ_owner.med_hud_set_status()
+	if(!inflamation_stage)
+		return
+	ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+	organ_owner.med_hud_set_status()
+	RegisterSignal(organ_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_fully_heal))
+
+/obj/item/organ/appendix/proc/on_fully_heal(datum/source, heal_flags)
+	SIGNAL_HANDLER
+
+	if (!(heal_flags & HEAL_ORGANS))
+		return
+
+	inflamation_stage = 0
+	update_appearance()
+	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
+	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
+	owner.med_hud_set_status()
 
 /obj/item/organ/appendix/get_status_text(advanced, add_tooltips, colored)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)

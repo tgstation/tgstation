@@ -512,6 +512,8 @@ Behavior that's still missing from this component that original food items had t
 
 	checkLiked(fraction, eater)
 
+	check_materials(eater, fraction)
+
 	if(!owner.reagents.total_volume)
 		On_Consume(eater, feeder)
 
@@ -526,6 +528,29 @@ Behavior that's still missing from this component that original food items had t
 			stomach.after_eat(owner)
 
 	return TRUE
+
+///Perform operations based on materials and/or if the parent object is a stack.
+/datum/component/edible/proc/check_materials(mob/living/carbon/eater, fraction)
+	var/atom/owner = parent
+	var/is_stack = isstack(owner)
+
+	//food may also apply golem buffs if it contains certain materials and the mob has the required trait
+	if(owner.custom_materials && HAS_TRAIT(eater, TRAIT_ROCK_EATER))
+		for(var/datum/material/material as anything in owner.custom_materials)
+			var/effect_stack_amount = (owner.custom_materials[material] * fraction) / SHEET_MATERIAL_AMOUNT
+			var/datum/golem_food_buff/effect
+			effect = GLOB.golem_stack_food_directory[material.sheet_type || material.ore_type]
+			if(effect?.can_consume(eater))
+				effect.on_consumption(eater, owner, effect_stack_amount)
+
+	if(fraction >= 1) //don't bother if the item is about to be deleted anyway...
+		return
+
+	if(is_stack) //stacks use up sheets, which recalulates the materials already.
+		var/obj/item/stack/stack = owner
+		stack.use(CEILING(stack.amount * fraction, 1))
+	else if(owner.custom_materials)
+		owner.set_custom_materials(owner.custom_materials, 1 - fraction)
 
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/carbon/eater, mob/living/feeder)
@@ -607,10 +632,7 @@ Behavior that's still missing from this component that original food items had t
 
 	var/atom/owner = parent
 	var/timeout_mod = owner.reagents.get_average_purity(/datum/reagent/consumable) * 2 // mood event duration is 100% at average purity of 50%
-	var/datum/mood_event/event = GLOB.food_quality_events[food_quality]
-	event = new event.type
-	event.timeout *= timeout_mod
-	gourmand.add_mood_event("quality_food", event)
+	gourmand.add_mood_event("quality_food", /datum/mood_event/food, food_quality, timeout_mod)
 	gourmand.adjust_disgust(-5 + -2 * food_quality * fraction)
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
