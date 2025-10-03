@@ -19,11 +19,14 @@
 		ECHOLOCATION_TRAIT, // Breaks the UI badly
 		UNCONSCIOUS_TRAIT, // Duh
 	)
+	/// Tracks if we've applied blindness - To prevent duplicates
+	var/currently_blind = FALSE
 
 /datum/status_effect/grouped/blindness/on_apply()
 	if (!CAN_BE_BLIND(owner))
 		return FALSE
 
+	currently_blind = FALSE
 	RegisterSignals(owner, update_signals, PROC_REF(update_blindness))
 	update_blindness()
 	return ..()
@@ -40,28 +43,39 @@
 		qdel(src)
 		return
 
+	var/should_be_blind = FALSE
+
 	if (!HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
+		should_be_blind = TRUE
+	else
+		for (var/blocker in blocking_sources)
+			if (owner.is_blind_from(blocker))
+				should_be_blind = TRUE
+				break
+
+	if(should_be_blind)
 		make_blind()
-		return
-
-	for (var/blocker in blocking_sources)
-		if (owner.is_blind_from(blocker))
-			make_blind()
-			return
-
-	make_unblind()
+	else
+		make_unblind()
 
 /datum/status_effect/grouped/blindness/proc/make_blind()
+	if(currently_blind)
+		return
+	currently_blind = TRUE
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/blind)
-	// You are blind - at most, able to make out shapes near you
-	owner.add_client_colour(/datum/client_colour/monochrome, REF(src))
+	// Apply colorblind filter - force=TRUE prevents conflicts with fade animations
+	owner.add_client_colour(/datum/client_colour/monochrome, REF(src), force = TRUE)
 
 /datum/status_effect/grouped/blindness/proc/make_unblind()
+	if(!currently_blind)
+		return
+	currently_blind = FALSE
 	owner.clear_fullscreen(id)
 	owner.remove_client_colour(REF(src))
 
 /datum/status_effect/grouped/blindness/on_remove()
 	make_unblind()
+	currently_blind = FALSE
 	UnregisterSignal(owner, update_signals)
 	return ..()
 
