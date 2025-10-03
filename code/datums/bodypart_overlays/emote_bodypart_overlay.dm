@@ -44,6 +44,8 @@
 	var/obj/item/bodypart/bodypart = src.get_bodypart(overlay.attached_body_zone)
 	if(!bodypart)
 		return null
+	if(locate(overlay_typepath) in bodypart.bodypart_overlays)
+		return null
 	bodypart.add_bodypart_overlay(overlay)
 	return overlay
 
