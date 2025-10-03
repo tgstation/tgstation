@@ -72,8 +72,7 @@
 
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
-	var/static/list/stickman_drops = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
-	AddElement(/datum/element/death_drops, stickman_drops)
+	AddElement(/datum/element/death_drops, /obj/item/gun/ballistic/automatic/pistol/stickman)
 	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/c9mm, projectile_sound = 'sound/misc/bang.ogg', cooldown_time = 5 SECONDS)
 
 /datum/ai_controller/basic_controller/stickman/ranged

@@ -86,7 +86,7 @@
 
 	// Construct the signals
 	LAZYINITLIST(repair_signals)
-	for(var/tool_method as anything in methods_to_fix)
+	for(var/tool_method in methods_to_fix)
 		repair_signals += COMSIG_ATOM_TOOL_ACT(how_do_we_fix_it[tool_method])
 
 	// Register signals to make it fixable
@@ -100,7 +100,7 @@
 /obj/machinery/transport/examine(mob/user)
 	. = ..()
 	if(methods_to_fix)
-		for(var/tool_method as anything in methods_to_fix)
+		for(var/tool_method in methods_to_fix)
 			. += span_warning("It needs someone to [EXAMINE_HINT(tool_method)].")
 	if(panel_open)
 		. += span_notice("It can be deconstructed with a [EXAMINE_HINT("crowbar.")]")

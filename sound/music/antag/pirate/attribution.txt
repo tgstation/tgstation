@@ -1,0 +1,4 @@
+- files: ["pirate_start.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Made by @MIXnikita#1474 (Discord) for SS14"
+  original PR: space-wizards/space-station-14#25153

@@ -46,7 +46,7 @@
 	if(src.luck_mod > luck_mod)
 		src.luck_mod += luck_mod * 0.5
 	if(src.damage_mod > damage_mod)
-		src.luck_mod += luck_mod * 0.5
+		src.damage_mod += damage_mod * 0.5
 	// This means that if you had a strong temporary omen and it was replaced by a weaker but permanent omen, the latter is made worse.
 	// Feature!
 

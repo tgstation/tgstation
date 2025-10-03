@@ -684,3 +684,19 @@
 			. += item
 		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
 			qdel(item)
+
+/**
+ * Iterates over all contents of the mob to find all items with a cell (or loose cells)
+ * Useful instead of iterating contents for cells, as it recurses storage and avoids returning abstract cells (like Ethereals)
+ *
+ * * max_percent: The maximum charge percent (0.0-1.0) the cell can have to be included in the results
+ *
+ * Returns an assoc list of item - its cell
+ */
+/mob/living/proc/get_all_cells(max_percent = 1.0)
+	var/list/cell_items = list()
+	for(var/obj/item/stored in get_all_gear())
+		var/obj/item/stock_parts/power_store/stored_cell = stored.get_cell()
+		if(stored_cell && stored_cell.charge <= (stored_cell.maxcharge * max_percent))
+			cell_items[stored] = stored_cell
+	return cell_items

@@ -81,6 +81,7 @@
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
 	find_and_hang_on_wall()
+	AddElement(/datum/element/beauty, 200)
 
 /obj/machinery/digital_clock/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)

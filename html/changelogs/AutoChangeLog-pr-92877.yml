@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "Boulders from ore-vents can now be used on lava tiles, to create a temporary bridge to cross. Just don't be standing on it when it sinks back into the lava!"
-  - map: "Re-added the gulag boulder-vent to the lavaland gulag."
-  - bugfix: "Lava tiles will now properly burn its contents when a catwalk or similar crossing disappears above itself."

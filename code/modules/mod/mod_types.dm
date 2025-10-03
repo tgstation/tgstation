@@ -132,11 +132,13 @@
 		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/clamp,
 		/obj/item/mod/module/drill,
+		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/mouthhole,
 	)
 	default_pins = list(
 		/obj/item/mod/module/gps,
 		/obj/item/mod/module/drill,
+		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/sphere_transform,
 	)
 
@@ -409,13 +411,12 @@
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/dispenser/ninja,
 		/obj/item/mod/module/dna_lock/reinforced,
-		/obj/item/mod/module/emp_shield/pulse,
+		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/quick_cuff,
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,
 		/obj/item/mod/module/dispenser/ninja,
-		/obj/item/mod/module/emp_shield/pulse,
 		/obj/item/mod/module/weapon_recall,
 		/obj/item/mod/module/adrenaline_boost,
 		/obj/item/mod/module/energy_net,
