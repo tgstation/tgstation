@@ -370,24 +370,18 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					skip_shuttle_area = !(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES)
 
 				if(skip_shuttle_area)
-/*
-					We need to use shuttle code to get the baseturfs and areas
+					var/shuttle_depth = pull_from.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
+					var/obj/docking_port/mobile/shuttle = SSshuttle.get_containing_shuttle(pull_from)
 
-					// it might be a good idea to use template_noop for multi-z maps
-					//pull_from = bottom_turf
+					// save turf underneath shuttle
+					saved_turf =	shuttle_depth ? pull_from.baseturf_at_depth(shuttle_depth + 1) : /turf/template_noop
 
-					var/shuttle_depth = depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
-					//var/area/underlying_area = shuttle.underlying_areas_by_turf[oldT]
-					place = pull_from.CopyOnTop(src, 1, shuttle_depth, TRUE, ignore_area_change ? CHANGETURF_NO_AREA_CHANGE : NONE) // Don't automatically change space area to nearspace if we'll override it later
-
-					if(istype(place, /turf/open/space))
-						place = /turf/open/space/basic
-*/
-
-					// hardcoding these for now
-					place = /turf/open/space/basic // /turf/template_noop
-					location = /area/space // /area/template_noop
-
+					// save area underneath shuttle
+					if(shuttle)
+						var/area/area_underneath_shuttle = shuttle.underlying_areas_by_turf[pull_from]
+						saved_area = area_underneath_shuttle.type || SHUTTLE_DEFAULT_UNDERLYING_AREA
+					else
+						saved_area = /area/template_noop
 
 					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
 						var/obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
@@ -397,6 +391,11 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 							empty = FALSE
 
 					pull_from = null
+
+				// always replace [/turf/open/space] with [/turf/open/space/basic] since it speeds up the maploader
+				// [/turf/open/space] is created naturally when shuttles are moving or turf gets destroyed leading to space
+				if(saved_turf.type == /turf/open/space)
+					saved_turf = /turf/open/space/basic
 
 				//====SAVING OBJECTS====
 				if(save_flag & SAVE_OBJECTS)
