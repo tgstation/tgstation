@@ -805,13 +805,14 @@
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
  */
-/obj/machinery/hydroponics/proc/plantdies()
+/obj/machinery/hydroponics/proc/plantdies(update_icon = TRUE)
 	set_plant_health(0, update_icon = FALSE, forced = TRUE)
 	set_plant_status(HYDROTRAY_PLANT_DEAD)
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
-	update_appearance()
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_PLANT_DEATH)
+	if(update_icon)
+		update_appearance()
 
 /**
  * Plant Cross-Pollination.
@@ -1039,11 +1040,7 @@
 			span_notice("You start digging out [src]'s plants..."))
 		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
 			user.visible_message(span_notice("[user] digs out the plants in [src]!"), span_notice("You dig out all of [src]'s plants!"))
-			if(myseed) //Could be that they're just using it as a de-weeder
-				set_plant_health(0, update_icon = FALSE, forced = TRUE)
-				lastproduce = 0
-				set_seed(null)
-			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
+			remove_plant()
 			return
 	else if(istype(O, /obj/item/gun/energy/floragun))
 		var/obj/item/gun/energy/floragun/flowergun = O
@@ -1193,6 +1190,16 @@
 	set_plant_health(myseed.endurance)
 	lastcycle = world.time
 
+/// Clears the plant from the tray, killing it in the process, optionally clearing weeds as well.
+/obj/machinery/hydroponics/proc/remove_plant(clear_weeds = TRUE)
+	if(!myseed)
+		return
+	plantdies(FALSE)
+	if(clear_weeds)
+		set_weedlevel(0, FALSE)
+	if(self_sustaining) //No reason to pay for an empty tray.
+		set_self_sustaining(FALSE)
+	set_seed(null)
 
 ///The usb port circuit
 

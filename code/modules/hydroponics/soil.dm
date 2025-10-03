@@ -37,7 +37,7 @@
 	balloon_alert(user, "digging up soil...")
 	if(weapon.use_tool(src, user, 3 SECONDS, volume=50))
 		balloon_alert(user, "bagged")
-		new sack_type(loc, src)
+		new sack_type(loc, src) //The bag handles sucking up the soil, stopping processing and setting relevants stats.
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -143,6 +143,7 @@
 
 	if(outside_soil)
 		stored_soil = outside_soil
+		stored_soil.remove_plant()
 		stored_soil.forceMove(src)
 		STOP_PROCESSING(SSmachines, stored_soil)
 		animate(src, 100 MILLISECONDS, pixel_z = 4, easing = QUAD_EASING | EASE_OUT)
@@ -150,7 +151,7 @@
 		animate(time = 250 MILLISECONDS, pixel_x = rand(-6, 6), pixel_y = rand(-4, 4), flags = ANIMATION_PARALLEL)
 
 /obj/item/soil_sack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isopenturf(interacting_with))
+	if(!isopenturf(interacting_with) || isgroundlessturf(interacting_with))
 		return ..()
 
 	if(locate(/obj/machinery/hydroponics/soil) in interacting_with)
@@ -174,13 +175,21 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
+///Remove slowdown and add block chance when wielded.
 /obj/item/soil_sack/proc/on_wield()
 	slowdown = 0
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
 	block_chance = 25
 	inhand_icon_state = "[base_icon_state]_w"
 
+///Reapply slowdown and remove block chance when unwielded.
 /obj/item/soil_sack/proc/on_unwield()
 	slowdown = initial(slowdown)
+	if(ismob(loc))
+		var/mob/wearer = loc
+		wearer.update_equipment_speed_mods()
 	block_chance = initial(block_chance)
 	inhand_icon_state = base_icon_state
 
