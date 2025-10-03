@@ -20,6 +20,9 @@
 	if(!LAZYLEN(input))
 		return null
 
+	if(!SSpersonalities.initialized)
+		SSpersonalities.init_personalities()
+
 	var/list/input_sanitized
 	for(var/personality_key in input)
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
