@@ -108,7 +108,7 @@ Then the player gets the profit from selling his own wasted time.
 	///The percentage of an items real price that is earned when selling that item on cargo
 	var/k_elasticity = 1
 	///The percentage decrease on this exports elasticity per unit of item sold
-	var/k_hit_percentile = 0.05
+	var/k_hit_percentile = 0.07
 	///Time taken for this exports elasticity to reach back to 100%
 	var/k_recovery_time = 10 MINUTES
 
