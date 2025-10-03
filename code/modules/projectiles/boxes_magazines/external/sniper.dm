@@ -42,3 +42,14 @@
 	desc = parent_type::desc + " Loaded with extremely fast marksman rounds, able to pretty much instantly hit their targets."
 	base_icon_state = "marksman"
 	ammo_type = /obj/item/ammo_casing/p50/marksman
+
+// Lahti-L39 Magazine //
+
+/obj/item/ammo_box/magazine/lahtimagazine
+	name = "\improper Lahti sniper rounds (20x138mm)"
+	desc = "A 20x138mm magazine suitable ammo for anti kaiju-rifles."
+	icon_state = ".50mag"
+	base_icon_state = ".50mag"
+	ammo_type = /obj/item/ammo_casing/mm20x138
+	max_ammo = 9
+	caliber = CALIBER_50BMG

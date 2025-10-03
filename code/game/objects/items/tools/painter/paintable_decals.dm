@@ -170,7 +170,7 @@
 	category = "Tiles"
 	default_alpha = /obj/effect/turf_decal/tile::alpha
 	possible_colors = list(
-		"Neutral" = /obj/effect/turf_decal/tile/neutral::color,
+		"Neutral" = "#d4d4d432", // very lazy way to do transparent decal, should be remade in future
 		"White" = "#FFFFFF",
 		"Dark" = /obj/effect/turf_decal/tile/dark::color,
 		"Bar Burgundy" = /obj/effect/turf_decal/tile/bar::color,

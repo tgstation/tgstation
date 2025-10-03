@@ -1676,6 +1676,13 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
+"jn" = (
+/obj/structure/ore_vent/starter_resources{
+	icon_state = "ore_vent_active"
+	},
+/obj/effect/landmark/mining_center,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "jq" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -7520,12 +7527,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
-"Qq" = (
-/obj/structure/ore_vent/starter_resources{
-	icon_state = "ore_vent_active"
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
 "Qw" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
@@ -46962,7 +46963,7 @@ aj
 aj
 aj
 Ep
-Qq
+jn
 fx
 aj
 oA

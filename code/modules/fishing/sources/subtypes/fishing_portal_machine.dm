@@ -205,7 +205,7 @@
 	var/static/list/weighted_traits
 	if(!weighted_traits)
 		weighted_traits = list()
-		for(var/trait_type as anything in GLOB.fish_traits)
+		for(var/trait_type in GLOB.fish_traits)
 			var/datum/fish_trait/trait = GLOB.fish_traits[trait_type]
 			weighted_traits[trait.type] = round(trait.inheritability**2/100)
 
