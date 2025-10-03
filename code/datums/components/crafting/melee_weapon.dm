@@ -48,7 +48,8 @@
 		/obj/item/claymore/highlander,
 		/obj/item/claymore/weak,
 		/obj/item/claymore/weak/ceremonial,
-		/obj/item/claymore/highlander/robot)
+		/obj/item/claymore/highlander/robot
+	)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
