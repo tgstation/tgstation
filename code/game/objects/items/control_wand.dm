@@ -33,6 +33,7 @@
 		/area/station/ai_monitored/turret_protected/ai_upload_foyer,	// but sometimes mappers might misconfig
 		/area/station/ai_monitored/turret_protected/ai_upload,			// their doors with our several dozen access helpers
 	)
+	COOLDOWN_DECLARE(shock_cooldown)
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -219,10 +220,14 @@
 			if (!istype(airlock))
 				interacting_with.balloon_alert(user, "only airlocks!")
 				return ITEM_INTERACT_BLOCKING
+			if (!COOLDOWN_FINISHED(src, shock_cooldown))
+				interacting_with.balloon_alert(user, "shock pulse resetting!")
+				return ITEM_INTERACT_BLOCKING
 			if (airlock.isElectrified())
 				interacting_with.balloon_alert(user, "already electrified!")
 			else
 				airlock.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, user)
+				COOLDOWN_START(src, shock_cooldown, 10 SECONDS)
 
 		if (WAND_DEPOWER)
 			if (!istype(airlock))
