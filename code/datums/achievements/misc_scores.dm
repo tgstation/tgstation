@@ -129,3 +129,17 @@
 			"width" = ICON_SIZE_X * 1.5,
 		))
 	return data
+
+/datum/award/score/progress/pda_themes/validate_entries(list/entries, list/validated_entries)
+	. = ..()
+	var/static/theme_ids
+	if(!theme_ids)
+		theme_ids = list()
+		for(var/datum/computer_file/program/maintenance/theme/theme as anything in typesof(/datum/computer_file/program/maintenance/theme))
+			if(theme::abstract_type != theme)
+				theme_ids[theme::theme_id] = TRUE
+
+	for(var/id in validated_entries)
+		if(!theme_ids[id])
+			validated_entries -= id
+			. = FALSE
