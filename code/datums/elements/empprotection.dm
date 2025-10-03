@@ -18,10 +18,26 @@
 /datum/element/empprotection/proc/getEmpFlags(datum/source, severity)
 	SIGNAL_HANDLER
 
-	return flags
+	return (flags & EMP_PROTECT_ALL)
 
 /datum/element/empprotection/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(flags)
-		examine_list["EMP-proof"] = "It is shielded against electromagnetic pulses."
+	if(flags & EMP_NO_EXAMINE)
+		return
+
+	if(flags & EMP_PROTECT_ALL == EMP_PROTECT_ALL)
+		examine_list["EMP proof"] = "[source.p_They()] [source.p_are()] unaffected by electromagnetic pulses, and shields [source.p_their()] contents and wiring from them."
+		return
+
+	if(flags & EMP_PROTECT_SELF)
+		examine_list["EMP resilient"] = "[source.p_They()] [source.p_are()] unaffected by electromagnetic pulses."
+
+	if(flags & (EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES) == (EMP_PROTECT_CONTENTS|EMP_PROTECT_WIRES))
+		examine_list["EMP blocking"] = "[source.p_They()] protects [source.p_their()] wiring and contents from electromagnetic pulses."
+
+	else if(flags & EMP_PROTECT_CONTENTS)
+		examine_list["EMP blocking"] = "[source.p_They()] protects [source.p_their()] contents from electromagnetic pulses."
+
+	else if(flags & EMP_PROTECT_WIRES)
+		examine_list["EMP blocking"] = "[source.p_They()] protects [source.p_their()] wiring from electromagnetic pulses."

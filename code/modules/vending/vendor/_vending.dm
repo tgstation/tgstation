@@ -72,7 +72,7 @@
 	///Icon for the maintenance panel overlay
 	var/panel_type = "panel1"
 	///Whether this vendor can be selected when building a custom vending machine
-	var/allow_custom = FALSE
+	var/allow_custom = TRUE
 
 	/**
 	  * List of products this machine sells

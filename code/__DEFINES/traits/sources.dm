@@ -26,6 +26,8 @@
 #define JOB_TRAIT "job"
 /// Any traits granted by quirks.
 #define QUIRK_TRAIT "quirk_trait"
+/// Trait source for personality traits
+#define PERSONALITY_TRAIT "personality_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
 /// Any traits given through a smite.

@@ -6,7 +6,6 @@
 	icon_state = "snackdonk"
 	panel_type = "panel18"
 	light_mask = "donksoft-light-mask"
-	circuit = /obj/item/circuitboard/machine/vending/donksnackvendor
 	products = list(
 		/obj/item/food/donkpocket = 6,
 		/obj/item/food/donkpocket/berry = 6,

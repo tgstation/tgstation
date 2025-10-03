@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed filteriffic runtiming when editing filters, and claiming that bloom threshold is a number"
-  - admin: "Filteriffic got a few new options (you should still avoid using it)"

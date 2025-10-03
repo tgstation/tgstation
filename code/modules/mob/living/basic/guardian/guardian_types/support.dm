@@ -27,8 +27,7 @@
 		after_healed = CALLBACK(src, PROC_REF(after_healed)),\
 	)
 
-	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.show_to(src)
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 	var/datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/teleport = new(src)
 	teleport.Grant(src)

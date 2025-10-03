@@ -18,7 +18,6 @@
 	payment_department = NO_FREEBIES
 	light_color = COLOR_PALE_ORANGE
 	initial_language_holder = /datum/language_holder/spinwarder
-	allow_custom = TRUE
 
 /obj/item/vending_refill/sovietsoda
 	machine_name = "BODA"

@@ -563,14 +563,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "hangover_spawn_closet"
 
 /obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
+	. = ..()
 	for(var/obj/structure/closet/closet in get_turf(src))
 		if(closet.opened)
 			continue
 		joining_mob.forceMove(closet)
-		make_hungover(joining_mob)
 		return
-
-	return ..() //Call parent as fallback
 
 //Landmark that creates destinations for the navigate verb to path to
 /obj/effect/landmark/navigate_destination

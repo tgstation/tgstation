@@ -347,7 +347,7 @@
 		var/nag_message = "[src] is unsent in [get_area(src)]."
 
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
-		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src)
+		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src, list(RADIO_CHANNEL_SUPPLY))
 		if (aas)
 			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value), "Regular Message")
 			if (speed_bonus)

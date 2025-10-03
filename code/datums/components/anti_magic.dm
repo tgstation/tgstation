@@ -45,7 +45,6 @@
 		datum/callback/check_blocking,
 	)
 
-
 	var/atom/movable/movable = parent
 	if(!istype(movable))
 		return COMPONENT_INCOMPATIBLE
@@ -54,6 +53,7 @@
 	if(isitem(movable))
 		RegisterSignal(movable, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(movable, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignal(movable, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
 		RegisterSignals(movable, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_ATOM), PROC_REF(on_attack))
 		compatible = TRUE
 	else if(ismob(movable))
@@ -94,6 +94,20 @@
 /datum/component/anti_magic/proc/on_unbuckle(atom/movable/source, mob/living/bucklee)
 	SIGNAL_HANDLER
 	unregister_antimagic_signals(bucklee)
+
+/datum/component/anti_magic/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(antimagic_flags == ALL_MAGIC_RESISTANCE)
+		examine_list["magic-proof"] = "It is thoroughly shielded against all known forms of magic."
+		return
+
+	if(antimagic_flags & MAGIC_RESISTANCE)
+		examine_list["warded"] = "It possesses a general resistance to regular spells and magic."
+	if(antimagic_flags & MAGIC_RESISTANCE_MIND)
+		examine_list["telepathy-proof"] = "It appears to be insulated against telepathic or mental influence."
+	if(antimagic_flags & MAGIC_RESISTANCE_HOLY)
+		examine_list["blessed"] = "It is protected by a divine shield against unholy and dark forms of magic."
 
 /datum/component/anti_magic/proc/on_equip(atom/movable/source, mob/equipper, slot)
 	SIGNAL_HANDLER

@@ -212,63 +212,63 @@
 				electronics = null
 				ae.forceMove(src.loc)
 
-	else if(istype(W, /obj/item/stack/sheet) && (!glass || !mineral))
-		var/obj/item/stack/sheet/G = W
-		if(G)
-			if(G.get_amount() >= 1)
-				if(!noglass)
-					if(!glass)
-						if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-							playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
-							user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
-												span_notice("You start to install [G.name] into the airlock assembly..."))
-							if(do_after(user, 4 SECONDS, target = src))
-								if(G.get_amount() < 1 || glass)
-									return
-								if(G.type == /obj/item/stack/sheet/rglass)
-									to_chat(user, span_notice("You install [G.name] windows into the airlock assembly."))
-									heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
-									name = "near finished heat-proofed window airlock assembly"
-								else
-									to_chat(user, span_notice("You install regular glass windows into the airlock assembly."))
-									name = "near finished window airlock assembly"
-								G.use(1)
-								glass = TRUE
-					if(!nomineral && !mineral)
-						if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
-							var/M = G.sheettype
-							var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
-							if(!ispath(mineralassembly))
-								to_chat(user, span_warning("You cannot add [G] to [src]!"))
-								return
-							if(G.get_amount() >= 2)
-								playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
-								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
-									span_notice("You start to install [G.name] into the airlock assembly..."))
-								if(do_after(user, 4 SECONDS, target = src))
-									if(G.get_amount() < 2 || mineral)
-										return
-									to_chat(user, span_notice("You install [M] plating into the airlock assembly."))
-									G.use(2)
-									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
-
-									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
-										var/obj/item/stack/sheet/dropped_glass
-										if(heat_proof_finished)
-											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
-											heat_proof_finished = FALSE
-										else
-											dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
-										glass = FALSE
-										to_chat(user, span_notice("As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame."))
-
-									transfer_assembly_vars(src, MA, TRUE)
-							else
-								to_chat(user, span_warning("You need at least two sheets add a mineral cover!"))
-					else
-						to_chat(user, span_warning("You cannot add [G] to [src]!"))
+	else if(istype(W, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/sheet = W
+		if(!glass && (istype(sheet, /obj/item/stack/sheet/rglass) || istype(sheet, /obj/item/stack/sheet/glass)))
+			if(noglass)
+				to_chat(user, span_warning("You cannot add [sheet] to [src]!"))
+				return
+			playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
+			user.visible_message(span_notice("[user] adds [sheet.name] to the airlock assembly."), \
+								span_notice("You start to install [sheet.name] into the airlock assembly..."))
+			if(do_after(user, 4 SECONDS, target = src))
+				if(sheet.get_amount() < 1 || glass)
+					return
+				if(sheet.type == /obj/item/stack/sheet/rglass)
+					to_chat(user, span_notice("You install [sheet.name] windows into the airlock assembly."))
+					heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
+					name = "near finished heat-proofed window airlock assembly"
 				else
-					to_chat(user, span_warning("You cannot add [G] to [src]!"))
+					to_chat(user, span_notice("You install regular glass windows into the airlock assembly."))
+					name = "near finished window airlock assembly"
+				sheet.use(1)
+				glass = TRUE
+			return
+
+		if(istype(sheet, /obj/item/stack/sheet/mineral) && sheet.construction_path_type)
+			if(nomineral || mineral)
+				to_chat(user, span_warning("You cannot add [sheet] to [src]!"))
+				return
+
+			var/M = sheet.construction_path_type
+			var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
+			if(!ispath(mineralassembly))
+				to_chat(user, span_warning("You cannot add [sheet] to [src]!"))
+				return
+			if(sheet.get_amount() < 2)
+				to_chat(user, span_warning("You need at least two sheets add a mineral cover!"))
+				return
+
+			playsound(src, 'sound/items/tools/crowbar.ogg', 100, TRUE)
+			user.visible_message(span_notice("[user] adds [sheet.name] to the airlock assembly."), \
+				span_notice("You start to install [sheet.name] into the airlock assembly..."))
+			if(!do_after(user, 4 SECONDS, target = src) || sheet.get_amount() < 2 || mineral)
+				return
+			to_chat(user, span_notice("You install [M] plating into the airlock assembly."))
+			sheet.use(2)
+			var/obj/structure/door_assembly/MA = new mineralassembly(loc)
+
+			if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
+				var/obj/item/stack/sheet/dropped_glass
+				if(heat_proof_finished)
+					dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
+					heat_proof_finished = FALSE
+				else
+					dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
+				glass = FALSE
+				to_chat(user, span_notice("As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame."))
+
+			transfer_assembly_vars(src, MA, TRUE)
 
 	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message(span_notice("[user] finishes the airlock."), \

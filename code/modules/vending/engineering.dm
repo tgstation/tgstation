@@ -35,8 +35,7 @@
 	extra_price = PAYCHECK_COMMAND * 1.5
 	payment_department = ACCOUNT_ENG
 	light_mask = "engi-light-mask"
-	allow_custom = TRUE
 
 /obj/item/vending_refill/engineering
 	machine_name = "Robco Tool Maker"
-	icon_state = "refill_engi"
+	icon_state = "refill_roroco"

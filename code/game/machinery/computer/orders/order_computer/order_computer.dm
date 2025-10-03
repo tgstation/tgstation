@@ -235,7 +235,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	return
 
 /datum/aas_config_entry/order_console
-	name = "Local Ordering Console Announcements"
+	name = "Cargo Alert: Local Ordering Console Announcements"
 	announcement_lines_map = list()
 	general_tooltip = "Used to make announces, when consoles listed here placing new order"
 

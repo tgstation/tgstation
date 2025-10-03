@@ -27,7 +27,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_MED
 
-	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS, MEDICAL_MIND_TRAITS)
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER

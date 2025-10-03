@@ -179,7 +179,7 @@
 
 /// Called before being fully removed (before on_remove)
 /// Returning FALSE will cancel removal
-/datum/status_effect/proc/before_remove()
+/datum/status_effect/proc/before_remove(...)
 	return TRUE
 
 /// Called when a status effect of status_type STATUS_EFFECT_REFRESH

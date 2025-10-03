@@ -19,7 +19,7 @@
 	radio_key = /obj/item/encryptionkey/headset_med
 	radio_channel = RADIO_CHANNEL_MEDICAL
 	bot_type = MED_BOT
-	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
+	data_hud_type = TRAIT_MEDICAL_HUD
 	hackables = "health processor circuits"
 	possessed_message = "You are a medbot! Ensure good health among the crew to the best of your ability!"
 

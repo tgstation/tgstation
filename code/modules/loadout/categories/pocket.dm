@@ -352,3 +352,7 @@
 	UnregisterSignal(source, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
 	var/datum/record/crew/record = find_record(source.real_name)
 	record?.medical_notes += new /datum/medical_note("Central Command", "Patient is a registered brain donor for Robotics research.", null)
+
+/datum/loadout_item/pocket_items/candles
+	name = "Box of Candles"
+	item_path = /obj/item/storage/fancy/candle_box

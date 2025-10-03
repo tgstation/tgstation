@@ -801,3 +801,53 @@
 	id = "divine_spotlight"
 
 #undef BEAM_ALPHA
+
+/datum/status_effect/moodlet_in_area
+	id = "moodlet_in_area"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	/// Moodlet to apply while in the area
+	VAR_PRIVATE/moodlet_type
+	/// Typecache of areas that will trigger the moodlet while in them
+	VAR_PRIVATE/list/allowed_areas
+	/// Optional callback to run when checking if the moodlet should be applied. Should return TRUE to apply, FALSE to not.
+	VAR_PRIVATE/datum/callback/special_check
+
+/datum/status_effect/moodlet_in_area/on_creation(mob/living/new_owner, moodlet_type, list/allowed_areas, datum/callback/special_check)
+	src.moodlet_type = moodlet_type
+	src.allowed_areas = typecacheof(allowed_areas)
+	src.special_check = special_check
+	return ..()
+
+/datum/status_effect/moodlet_in_area/before_remove(moodlet_type, ...)
+	return moodlet_type == src.moodlet_type
+
+/datum/status_effect/moodlet_in_area/on_apply()
+	if(!length(allowed_areas))
+		return FALSE
+
+	for(var/datum/status_effect/moodlet_in_area/other_effect in owner.status_effects)
+		if(other_effect.moodlet_type == moodlet_type)
+			return FALSE
+
+	owner.become_area_sensitive("[id]_[moodlet_type]")
+	RegisterSignal(owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
+	return TRUE
+
+/datum/status_effect/moodlet_in_area/on_remove()
+	UnregisterSignal(owner, COMSIG_ENTER_AREA)
+	owner.lose_area_sensitivity("[id]_[moodlet_type]")
+	owner.clear_mood_event("[id]_[moodlet_type]")
+
+/datum/status_effect/moodlet_in_area/proc/check_area(datum/source, area/new_area)
+	SIGNAL_HANDLER
+
+	if(special_check && !special_check.Invoke(owner, new_area))
+		return
+
+	if(is_type_in_typecache(new_area, allowed_areas))
+		owner.add_mood_event("[id]_[moodlet_type]", moodlet_type)
+	else
+		owner.clear_mood_event("[id]_[moodlet_type]")
