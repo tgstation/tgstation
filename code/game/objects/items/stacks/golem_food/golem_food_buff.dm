@@ -17,15 +17,15 @@
 	return !existing || istype(existing, status_effect)
 
 /// Called when someone actually eats this
-/datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed)
+/datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
 	if (!HAS_TRAIT(consumer, TRAIT_ROCK_METAMORPHIC))
 		return
-	apply_effects(consumer, consumed)
+	apply_effects(consumer, consumed, multiplier)
 
 /// Apply our desired effects to the eater
-/datum/golem_food_buff/proc/apply_effects(mob/living/carbon/consumer, atom/movable/consumed)
+/datum/golem_food_buff/proc/apply_effects(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
 	if (status_effect)
-		consumer.apply_status_effect(status_effect)
+		consumer.apply_status_effect(status_effect, multiplier)
 
 /// Can eat at any time, but isn't very nutritious
 /datum/golem_food_buff/glass
@@ -42,10 +42,10 @@
 	/// Order in which to heal damage types
 	var/list/damage_heal_order = list(BRUTE, BURN, TOX, OXY)
 
-/datum/golem_food_buff/iron/apply_effects(mob/living/carbon/consumer, atom/movable/consumed)
+/datum/golem_food_buff/iron/apply_effects(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
 	if (consumer.health == consumer.maxHealth)
 		return
-	consumer.heal_ordered_damage(healed_amount, damage_heal_order)
+	consumer.heal_ordered_damage(healed_amount * multiplier, damage_heal_order)
 	new /obj/effect/temp_visual/heal(get_turf(consumer), COLOR_HEALING_CYAN)
 
 /datum/golem_food_buff/uranium
@@ -90,7 +90,7 @@
 	exclusive = FALSE
 	added_info = "After consumption, you can launch this mineral like a rocket. It's a little hard to keep down."
 
-/datum/golem_food_buff/gibtonite/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed)
+/datum/golem_food_buff/gibtonite/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed, multiplier = 1)
 	var/obj/item/gibtonite_hand/new_hand = new(null, /* held_gibtonite = */ consumed)
 
 	if(consumer.put_in_hands(new_hand))
@@ -108,10 +108,14 @@
 	exclusive = FALSE
 	added_info = "After consumption, you can use the stored power to teleport yourself."
 
-/datum/golem_food_buff/bluespace/apply_effects(mob/living/carbon/human/consumer, obj/item/stack/consumed)
+/datum/golem_food_buff/bluespace/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed, multiplier = 1)
+	if(multiplier <= 0.2)
+		return
 	var/obj/item/bluespace_finger/new_hand = new
-	if (consumed.amount == 1)
-		consumer.dropItemToGround(consumed)
+	if (isstack(consumed))
+		var/obj/item/stack/stack = consumed
+		if(stack.amount == 1)
+			consumer.dropItemToGround(stack)
 	if (consumer.put_in_hands(new_hand, del_on_fail = TRUE))
 		return
 	consumer.balloon_alert(consumer, "no free hands!")

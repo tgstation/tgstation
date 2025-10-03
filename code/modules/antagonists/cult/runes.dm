@@ -1151,14 +1151,13 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	empulse(T, 0.42*(intensity), 1)
 
 	var/list/images = list()
-	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
 		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				sec_hud.hide_from(M)
-				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(hudFix), M), duration)
+				ADD_TRAIT(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT)
+				addtimer(TRAIT_CALLBACK_REMOVE(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT), duration)
 			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
@@ -1235,13 +1234,3 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
 		sleep(19 SECONDS)
-
-
-
-/proc/hudFix(mob/living/carbon/human/target)
-	if(!target || !target.client)
-		return
-	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(O, /obj/item/clothing/glasses/hud/security))
-		var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		sec_hud.show_to(target)

@@ -449,7 +449,7 @@
 /datum/fish_source/unit_test_all_fish
 
 /datum/fish_source/unit_test_all_fish/New()
-	for(var/fish_type as anything in subtypesof(/obj/item/fish))
+	for(var/fish_type in subtypesof(/obj/item/fish))
 		fish_table[fish_type] = 10
 	return ..()
 

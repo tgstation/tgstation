@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "ore vents have unique distribution of at most 4 minerals without rare ones being repeated"
-  - bugfix: "ore vents should no longer be produce 0 material boulders"
