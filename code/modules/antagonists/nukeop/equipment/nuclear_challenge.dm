@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 	var/datum/techweb/station_techweb = locate(/datum/techweb/science) in SSresearch.techwebs
 	if(station_techweb)
-		var/obj/machinery/announcement_system/announcement_system = get_announcement_system()
+		var/obj/machinery/announcement_system/announcement_system = get_announcement_system(null, null, list(RADIO_CHANNEL_SCIENCE))
 		if (!isnull(announcement_system))
 			announcement_system.broadcast("Additional research data received from Nanotrasen R&D Division following the emergency protocol.", list(RADIO_CHANNEL_SCIENCE), TRUE)
 		station_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS * 3))
