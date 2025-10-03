@@ -83158,7 +83158,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "xXL" = (
-/obj/structure/cable,
 /obj/effect/landmark/start/bartender,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
