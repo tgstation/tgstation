@@ -30,8 +30,6 @@
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	interaction_flags_machine = INTERACT_MACHINE_OFFLINE
 	anchored = FALSE
-	// Anyone can link a rack to an AI but only people with access can UNLINK it
-	req_one_access =  list(ACCESS_AI_UPLOAD)
 
 	/// How many slots for laws
 	var/law_slots = 5
@@ -770,6 +768,8 @@
 	law_slots = 10
 	max_slot_overlays = 10
 	first_slot_offset = 34
+	// Anyone can link a rack to an AI but only people with access can UNLINK it
+	req_one_access =  list(ACCESS_AI_UPLOAD)
 	/// List of law racks which are linked to this law rack, contributing to our lawset
 	VAR_FINAL/list/obj/machinery/ai_law_rack/linked_racks
 	/// Designations for the core law rack, used to name it
