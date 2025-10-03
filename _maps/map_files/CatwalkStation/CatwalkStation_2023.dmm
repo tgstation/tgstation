@@ -83157,15 +83157,6 @@
 /obj/structure/broken_flooring/singular/always_floorplane/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"xXL" = (
-/obj/effect/landmark/start/bartender,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/turf_decal/tile/dark_green{
-	dir = 4
-	},
-/turf/open/floor/iron/checker,
-/area/station/service/bar)
 "xXU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -109864,7 +109855,7 @@ own
 wku
 anF
 lXV
-xXL
+jBp
 lOS
 azv
 euY
