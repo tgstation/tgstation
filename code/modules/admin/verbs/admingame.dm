@@ -413,7 +413,6 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls
 	dat += "Disable examine icons: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
 	dat += "Disable parallax: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
 	dat += "Disable footsteps: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
-	dat += "Disable \"Request Internet sound\" verb: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_REQUEST_INTERNET_SOUND]'><b>[SSlag_switch.measures[DISABLE_REQUEST_INTERNET_SOUND] ? "On" : "Off"]</b></a><br />"
 	dat += "</body></html>"
 	user << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
 
