@@ -319,33 +319,33 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
 				//====Get turfs Data====
-				var/turf/place
-				var/area/location
+				var/turf/saved_turf
+				var/area/saved_area
 				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
 				//If there is nothing there, save as a noop (For odd shapes)
 				if(isnull(pull_from))
-					place = /turf/template_noop
-					location = /area/template_noop
+					saved_turf = /turf/template_noop
+					saved_area = /area/template_noop
 				//Ignore things in space, must be a space turf
 				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_TURFS_SPACE))
-					place = /turf/template_noop
-					location = /area/template_noop
+					saved_turf = /turf/template_noop
+					saved_area = /area/template_noop
 					pull_from = null
 				//Stuff to add
 				else
 					var/area/place_area = get_area(pull_from)
-					location = place_area.type
-					place = pull_from.type
+					saved_area = place_area.type
+					saved_turf = pull_from.type
 
 				//====Saving holodeck areas====
 				// All hologram objects get skipped and floor tiles get replaced with empty plating
-				if(ispath(location, /area/station/holodeck) && istype(place, /turf/open/floor/holofloor))
-					place = /turf/open/floor/holofloor/plating
+				if(ispath(saved_area, /area/station/holodeck) && istype(saved_turf, /turf/open/floor/holofloor))
+					saved_turf = /turf/open/floor/holofloor/plating
 				//====For toggling not saving areas and turfs====
 				if(!(save_flag & SAVE_AREAS))
-					location = /area/template_noop
+					saved_area = /area/template_noop
 				if(!(save_flag & SAVE_TURFS))
-					place = /turf/template_noop
+					saved_turf = /turf/template_noop
 				//====Generate Header Character====
 				// Info that describes this turf and all its contents
 				// Unique, will be checked for existing later
@@ -355,12 +355,12 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				var/empty = TRUE
 
 				//====Saving Shuttles==========
-				var/is_shuttle_area = ispath(location, /area/shuttle)
-				var/is_custom_shuttle_area = ispath(location, /area/shuttle/custom)
+				var/is_shuttle_area = ispath(saved_area, /area/shuttle)
+				var/is_custom_shuttle_area = ispath(saved_area, /area/shuttle/custom)
 				var/skip_nonshuttle_area = (shuttle_area_flag == SAVE_SHUTTLES_ONLY) && !is_shuttle_area
 				if(skip_nonshuttle_area)
-					place = /turf/template_noop
-					location = /area/template_noop
+					saved_turf = /turf/template_noop
+					saved_area = /area/template_noop
 					pull_from = null
 
 				var/skip_shuttle_area
@@ -428,13 +428,14 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
-				current_header += "[empty ? "" : ",\n"][place]"
+				current_header += "[empty ? "" : ",\n"][saved_turf]"
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
-					var/turf/atmos_turf = pull_from
-					var/metadata = generate_tgm_metadata(atmos_turf)
-					current_header += "[metadata]"
-				current_header += ",\n[location])\n"
+					var/turf/open/atmos_turf = pull_from
+					if(isopenturf(atmos_turf))
+						var/metadata = generate_tgm_metadata(atmos_turf)
+						current_header += "[metadata]"
+				current_header += ",\n[saved_area])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
 				// If we already know this header just use its key, otherwise we gotta make a new one
