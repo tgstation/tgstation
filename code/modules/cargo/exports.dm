@@ -134,7 +134,7 @@ Then the player gets the profit from selling his own wasted time.
 	return ..()
 
 /datum/export/process(seconds_per_tick)
-	k_elasticity += (seconds_per_tick / k_recovery_time)
+	k_elasticity += seconds_per_tick / k_recovery_time
 	if(k_elasticity >= 1)
 		k_elasticity = 1
 		return PROCESS_KILL

@@ -17,21 +17,18 @@
 // But it has no material_id, so any applies_to check will return false, and these types reduce amount of copypasta a lot
 
 /datum/export/material/get_amount(obj/O)
-	if(!material_id)
-		return 0
 	if(!isitem(O))
 		return 0
 
 	var/obj/item/I = O
 	var/list/mat_comp = I.get_material_composition()
 	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
-	if(isnull(mat_comp[mat_ref]))
+	var/amount = mat_comp[mat_ref]
+	if(!amount)
 		return 0
 
-	var/amount = mat_comp[mat_ref]
 	if(istype(I, /obj/item/stack/ore))
 		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
-
 	return round(amount / SHEET_MATERIAL_AMOUNT)
 
 // Materials. Static materials exist as parent types, while materials subject to the stock market have a fluid cost as determined by material/market types
@@ -39,7 +36,6 @@
 
 /datum/export/material/plasma
 	cost = CARGO_CRATE_VALUE * 0.4
-	k_elasticity = 0
 	material_id = /datum/material/plasma
 	message = "cm3 of plasma"
 
@@ -88,43 +84,10 @@
 		/obj/item/stack/tile/mineral,
 		/obj/item/stack/ore,
 		/obj/item/coin,
-		/obj/item/stock_block,
 	)
 
-/datum/export/material/market/applies_to(obj/exported_obj, apply_elastic)
-	if(istype(exported_obj, /obj/item/stock_block))
-		var/obj/item/stock_block/block = exported_obj
-		if(!block.export_mat)
-			return FALSE
-		if(block.export_mat != material_id)
-			return FALSE
-		return TRUE
-	return ..()
-
-/datum/export/material/market/get_amount(obj/exported_obj)
-	if(istype(exported_obj, /obj/item/stock_block))
-		var/obj/item/stock_block/block = exported_obj
-		return block.quantity
-	return ..()
-
 /datum/export/material/market/get_base_cost(obj/exported_obj)
-	var/obj/item/exported_item = exported_obj
-
-	var/obj/item/stock_block/block
-	if(istype(exported_item, /obj/item/stock_block))
-		block = exported_item
-		if(block.export_mat != material_id)
-			return 0
-
-	var/material_value = 0
-	if(block)
-		if(block.fluid)
-			material_value = SSstock_market.materials_prices[block.export_mat]
-		else
-			material_value = block.export_value
-	else
-		material_value = SSstock_market.materials_prices[material_id]
-	return ..() * material_value // Cost in this case is only serving as the elastic modifier, where material value is the raw value of the sheets sold.
+	return ..() * SSstock_market.materials_prices[material_id]
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
 	. = ..()
@@ -165,7 +128,6 @@
 	export_types = list(
 		/obj/item/stack/sheet/bluespace_crystal,
 		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stock_block,
 	) //For whatever reason, bluespace crystals are not a mineral
 
 /datum/export/material/market/iron
@@ -177,7 +139,6 @@
 		/obj/item/stack/rods,
 		/obj/item/stack/ore,
 		/obj/item/coin,
-		/obj/item/stock_block,
 	)
 
 /datum/export/material/market/glass
@@ -187,5 +148,34 @@
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/ore,
 		/obj/item/shard,
-		/obj/item/stock_block,
 	)
+
+/datum/export/material/market/stock_block
+	amount_report_multiplier = 1
+	k_hit_percentile = 0.1 //10% hit per block stock which is synomonous to an full stack of sheets
+	message = ""
+	unit_name = "stock block"
+	export_types = list(/obj/item/stock_block)
+
+/datum/export/material/market/stock_block/get_amount(obj/item/stock_block/block)
+	return block.export_value ? 1 : sheets(block)
+
+/**
+ * Returns number of sheets in this stock block
+ *
+ * Arguments
+ * * obj/item/stock_block/block - the block we are checking for sheets
+*/
+/datum/export/material/market/stock_block/proc/sheets(obj/item/stock_block/block)
+	PRIVATE_PROC(TRUE)
+
+	return block.custom_materials[block.custom_materials[1]] / SHEET_MATERIAL_AMOUNT
+
+/datum/export/material/market/stock_block/get_base_cost(obj/item/stock_block/block)
+
+	return (block.fluid ? SSstock_market.materials_prices[block.custom_materials[1].type] : block.export_value) * sheets(block)
+
+/datum/export/material/market/stock_block/sell_object(obj/item/stock_block/block, datum/export_report/report, dry_run, apply_elastic)
+	material_id = block.custom_materials[1].type
+
+	return ..()
