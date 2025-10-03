@@ -31,7 +31,7 @@
 	if(!istype(new_area, /area/station/service))
 		return TRUE
 	// Service workers don't slack in service
-	if(who.mind?.assigned_role.departments_bitflags & DEPARTMENT_SERVICE)
+	if(who.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SERVICE)
 		return FALSE
 
 	return TRUE
