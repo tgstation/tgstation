@@ -210,6 +210,11 @@
 /datum/client_colour/monochrome/glasses
 	priority = CLIENT_COLOR_GLASSES_PRIORITY
 
+/// Instant version of monochrome for blindness
+/datum/client_colour/monochrome/blindness
+	fade_in = 0
+	fade_out = 0
+
 /datum/client_colour/bloodlust
 	priority = CLIENT_COLOR_IMPORTANT_PRIORITY
 	color = list(0,0,0,0,0,0,0,0,0,1,0,0) // pure red

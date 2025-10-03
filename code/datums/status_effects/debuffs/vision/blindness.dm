@@ -63,8 +63,8 @@
 		return
 	currently_blind = TRUE
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/blind)
-	// Apply colorblind filter - force=TRUE prevents conflicts with fade animations
-	owner.add_client_colour(/datum/client_colour/monochrome, REF(src), force = TRUE)
+	// Apply instant colorblind filter to prevent animation conflicts
+	owner.add_client_colour(/datum/client_colour/monochrome/blindness, REF(src))
 
 /datum/status_effect/grouped/blindness/proc/make_unblind()
 	if(!currently_blind)
