@@ -85,6 +85,9 @@
 	if(living_cast_on.stat == DEAD)
 		to_chat(owner, span_warning("[cast_on] is dead!"))
 		return FALSE
+	if(living_cast_on.mob_biotypes & MOB_ROBOTIC)
+		to_chat(owner, span_warning("[cast_on] is robotic, you can't read [cast_on.p_their()] mind!"))
+		return FALSE
 
 	return TRUE
 
@@ -138,9 +141,7 @@
 	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
 
 /datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
-	if(examined.stat >= UNCONSCIOUS)
-		return
-	if(examined.mob_biotypes & (MOB_UNDEAD|MOB_SPIRIT|MOB_MINERAL|MOB_ROBOTIC))
+	if(examined.stat >= UNCONSCIOUS || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
 		return
 
 	var/antimagic = examined.can_block_magic(antimagic_flags, charge_cost = 0)
