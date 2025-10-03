@@ -403,7 +403,6 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls
 	dat += "Slowmode Cooldown (toggle On/Off below): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=SLOWCOOL'><b>[SSlag_switch.slowmode_cooldown/10] seconds</b></a><br/>"
 	dat += "<br/><b>SET ALL MEASURES: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=ALL_ON'>ON</a> | <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=ALL_OFF'>OFF</a></b><br/>"
 	dat += "<br/>Disable ghosts zoom and t-ray verbs (except staff): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_GHOST_ZOOM_TRAY]'><b>[SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] ? "On" : "Off"]</b></a><br/>"
-	dat += "Disable \"Request Internet sound\" verb: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_REQUEST_INTERNET_SOUND]'><b>[SSlag_switch.measures[DISABLE_REQUEST_INTERNET_SOUND] ? "On" : "Off"]</b></a><br />"
 	dat += "Disable late joining: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_NON_OBSJOBS]'><b>[SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "On" : "Off"]</b></a><br/>"
 	dat += "<br/>============! MAD GHOSTS ZONE !============<br/>"
 	dat += "Disable deadmob keyLoop (except staff, informs dchat): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_DEAD_KEYLOOP]'><b>[SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] ? "On" : "Off"]</b></a><br/>"
@@ -414,6 +413,7 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls
 	dat += "Disable examine icons: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
 	dat += "Disable parallax: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
 	dat += "Disable footsteps: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
+	dat += "Disable \"Request Internet sound\" verb: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_REQUEST_INTERNET_SOUND]'><b>[SSlag_switch.measures[DISABLE_REQUEST_INTERNET_SOUND] ? "On" : "Off"]</b></a><br />"
 	dat += "</body></html>"
 	user << browse(dat.Join(), "window=lag_switch_panel;size=420x480")
 
