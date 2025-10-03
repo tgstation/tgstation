@@ -14,12 +14,14 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 	VAR_FINAL/list/processing_personalities
 
 /datum/controller/subsystem/processing/personalities/Initialize()
-	if(!length(personalities_by_type))
-		init_personalities()
+	init_personalities()
 	return SS_INIT_SUCCESS
 
 /// Initialized personality singletons
 /datum/controller/subsystem/processing/personalities/proc/init_personalities()
+	if(length(personalities_by_type))
+		return // Already initialized
+
 	personalities_by_type = list()
 	personalities_by_key = list()
 	incompatibilities_by_group = list()
