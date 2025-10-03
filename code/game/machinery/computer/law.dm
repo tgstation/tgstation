@@ -174,7 +174,7 @@
 		return FALSE
 	if(iscyborg(new_bot))
 		var/mob/living/silicon/robot/new_borg = new_bot
-		if(new_borg.scrambledcodes || new_borg.emagged || new_bot.shell)
+		if(new_borg.scrambledcodes || new_borg.emagged || new_borg.shell)
 			return FALSE
 		return TRUE
 	if(isAI(new_bot))
