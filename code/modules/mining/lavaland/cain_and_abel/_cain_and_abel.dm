@@ -13,6 +13,7 @@
 	attack_verb_simple = list("attack", "saw", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	force = 15
 	attack_speed = 6
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	actions_types = list(/datum/action/cooldown/dagger_swing)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_SMALL

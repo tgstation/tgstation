@@ -4,8 +4,7 @@
 	icon = 'icons/obj/devices/mauna_mug.dmi'
 	icon_state = "maunamug"
 	base_icon_state = "maunamug"
-	spillable = TRUE
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
 	fill_icon_thresholds = list(25)
 	var/obj/item/stock_parts/power_store/cell
@@ -73,21 +72,21 @@
 	to_chat(user, span_notice("You screw the battery case on [src] [open ? "open" : "closed"] ."))
 	update_appearance()
 
-/obj/item/reagent_containers/cup/maunamug/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	add_fingerprint(user)
-	if(!istype(I, /obj/item/stock_parts/power_store/cell))
+/obj/item/reagent_containers/cup/maunamug/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
 		return ..()
 	if(!open)
 		to_chat(user, span_warning("The battery case must be open to insert a power cell!"))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	if(cell)
 		to_chat(user, span_warning("There is already a power cell inside!"))
-		return FALSE
-	else if(!user.transferItemToLoc(I, src))
-		return
-	cell = I
+		return ITEM_INTERACT_BLOCKING
+	else if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	cell = tool
 	user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/maunamug/attack_hand(mob/living/user, list/modifiers)
 	if(cell && open)
