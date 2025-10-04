@@ -31,7 +31,7 @@
 	if(!istype(new_area, /area/station/service))
 		return TRUE
 	// Service workers don't slack in service
-	if(who.mind?.assigned_role.departments_bitflags & DEPARTMENT_SERVICE)
+	if(who.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SERVICE)
 		return FALSE
 
 	return TRUE
@@ -42,7 +42,7 @@
 	desc = "I don't really feel like working today."
 	pos_gameplay_desc = "Happy in the bar or recreation areas"
 	mood_event_type = /datum/mood_event/slacking_off_lazy
-	groups = list(PERSONALITY_GROUP_INTERACTION, PERSONALITY_GROUP_WORK, PERSONALITY_GROUP_ATHLETICS)
+	groups = list(PERSONALITY_GROUP_RECREATION, PERSONALITY_GROUP_WORK, PERSONALITY_GROUP_ATHLETICS)
 
 /datum/personality/slacking/diligent
 	savefile_key = "diligent"
@@ -51,7 +51,7 @@
 	pos_gameplay_desc = "Happy when in their department"
 	neg_gameplay_desc = "Unhappy when slacking off in the bar or recreation areas"
 	mood_event_type = /datum/mood_event/slacking_off_diligent
-	groups = list(PERSONALITY_GROUP_INTERACTION)
+	groups = list(PERSONALITY_GROUP_RECREATION)
 
 /datum/personality/slacking/diligent/apply_to_mob(mob/living/who)
 	. = ..()
