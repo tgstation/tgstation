@@ -16,6 +16,27 @@
 // Yes, it's a base type containing export_types.
 // But it has no material_id, so any applies_to check will return false, and these types reduce amount of copypasta a lot
 
+/datum/export/material/New()
+	var/list/temp_exports = export_types.Copy()
+	export_types = null
+	. = ..()
+	export_types = init_export_types(temp_exports)
+
+/**
+ * Inits an list of exports for this type. For performance this usually returns a static list
+ *
+ * Arguments
+ * * export_data - exports whos type cache we are trying to create
+*/
+/datum/export/material/proc/init_export_types(export_data)
+	PROTECTED_PROC(TRUE)
+
+	var/static/list/shared_exports = null
+	if(isnull(shared_exports))
+		shared_exports = typecacheof(export_data, only_root_path = !include_subtypes)
+
+	return shared_exports
+
 /datum/export/material/get_amount(obj/O)
 	if(!isitem(O))
 		return 0
@@ -44,7 +65,7 @@
 	material_id = /datum/material/bananium
 	message = "cm3 of bananium"
 
-/datum/export/material/diamond
+/datum/export/material/adamantine
 	cost = CARGO_CRATE_VALUE
 	material_id = /datum/material/adamantine
 	message = "cm3 of adamantine"
@@ -70,21 +91,21 @@
 	material_id = /datum/material/hot_ice
 	export_types = /obj/item/stack/sheet/hot_ice
 
+/datum/export/material/hot_ice/init_export_types(export_data)
+	return typecacheof(export_data, only_root_path = !include_subtypes)
+
 /datum/export/material/metal_hydrogen
 	cost = CARGO_CRATE_VALUE * 1.05
 	message = "cm3 of metallic hydrogen"
 	material_id = /datum/material/metalhydrogen
 	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen
 
+/datum/export/material/metal_hydrogen/init_export_types(export_data)
+	return typecacheof(export_data, only_root_path = !include_subtypes)
+
 /datum/export/material/market
 	abstract_type = /datum/export/material/market
 	cost = 1
-	export_types = list(
-		/obj/item/stack/sheet/mineral,
-		/obj/item/stack/tile/mineral,
-		/obj/item/stack/ore,
-		/obj/item/coin,
-	)
 
 /datum/export/material/market/get_base_cost(obj/exported_obj)
 	return ..() * SSstock_market.materials_prices[material_id]
@@ -128,7 +149,10 @@
 	export_types = list(
 		/obj/item/stack/sheet/bluespace_crystal,
 		/obj/item/stack/ore/bluespace_crystal,
-	) //For whatever reason, bluespace crystals are not a mineral
+	)
+
+/datum/export/material/market/bscrystal/init_export_types(export_data)
+	return typecacheof(export_data, only_root_path = !include_subtypes)
 
 /datum/export/material/market/iron
 	message = "cm3 of iron"
@@ -141,6 +165,9 @@
 		/obj/item/coin,
 	)
 
+/datum/export/material/market/iron/init_export_types(export_data)
+	return typecacheof(export_data, only_root_path = !include_subtypes)
+
 /datum/export/material/market/glass
 	message = "cm3 of glass"
 	material_id = /datum/material/glass
@@ -150,12 +177,18 @@
 		/obj/item/shard,
 	)
 
+/datum/export/material/market/glass/init_export_types(export_data)
+	return typecacheof(export_data, only_root_path = !include_subtypes)
+
 /datum/export/material/market/stock_block
 	amount_report_multiplier = 1
 	k_hit_percentile = 0.1 //10% hit per block stock which is synomonous to an full stack of sheets
 	message = ""
 	unit_name = "stock block"
 	export_types = list(/obj/item/stock_block)
+
+/datum/export/material/market/stock_block/init_export_types(export_data)
+	return typecacheof(export_data, only_root_path = !include_subtypes)
 
 /datum/export/material/market/stock_block/get_amount(obj/item/stock_block/block)
 	return block.export_value ? 1 : sheets(block)

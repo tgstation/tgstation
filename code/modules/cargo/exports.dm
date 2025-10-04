@@ -127,7 +127,7 @@ Then the player gets the profit from selling his own wasted time.
 
 /datum/export/New()
 	..()
-	export_types = typecacheof(export_types, only_root_path = !include_subtypes, ignore_root_path = FALSE)
+	export_types = typecacheof(export_types, only_root_path = !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()
