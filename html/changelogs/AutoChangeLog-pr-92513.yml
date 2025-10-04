@@ -1,0 +1,10 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - rscadd: "Added 4 new types of soil"
+  - rscadd: "Added soils sacks to the nutrimax"
+  - rscadd: "Added soil sack crates to cargo."
+  - balance: "Soil now has higher armor values."
+  - balance: "Rice now gets more weeds if grown in soil."
+  - balance: "Carrots, potatoes, beets and their mutations now get reduced yield and potency if grown hydroponically."
+  - bugfix: "Weed overgrowth no longer instantly sets yield to 3."

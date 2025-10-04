@@ -22,6 +22,7 @@
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()
@@ -83,7 +84,7 @@
 
 	else if(is_reagent_container(used_item))
 		var/obj/item/reagent_containers/powder_keg = used_item
-		if(!(powder_keg.reagent_flags & OPENCONTAINER))
+		if(!powder_keg.is_open_container())
 			return ..()
 		if(istype(powder_keg, /obj/item/rag))
 			return ..()

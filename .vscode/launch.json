@@ -18,6 +18,13 @@
 		{
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamSeeker (absolute minimum)",
+			"preLaunchTask": "Build All (absolute minimum)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamSeeker (testing)",
 			"preLaunchTask": "Build All (testing)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}"

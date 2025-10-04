@@ -102,6 +102,3 @@
 		/obj/item/ammo_box/speedloader/c357 = 2,
 		/obj/item/gun/ballistic/revolver/cowboy/nuclear = 1,
 	), src)
-
-
-

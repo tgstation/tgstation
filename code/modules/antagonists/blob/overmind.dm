@@ -4,6 +4,14 @@ GLOBAL_LIST_EMPTY(blob_cores)
 GLOBAL_LIST_EMPTY(overminds)
 GLOBAL_LIST_EMPTY(blob_nodes)
 
+/// Clean up blob references after overmind is destroyed - called asynchronously to avoid blocking Destroy()
+/proc/cleanup_overmind_blobs(mob/eye/blob/dead_overmind)
+	// Clear overmind reference from global blobs
+	for(var/obj/structure/blob/blob_structure as anything in GLOB.blobs)
+		if(blob_structure && blob_structure.overmind == dead_overmind)
+			blob_structure.overmind = null
+			blob_structure.update_appearance() //reset anything that was ours
+
 
 /mob/eye/blob
 	name = "Blob Overmind"
@@ -157,11 +165,19 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			// If we get here, it means yes: the blob is kill
 			SSticker.news_report = BLOB_DESTROYED
+
+			// Clear the biohazard emergency display when blob is defeated - async to avoid blocking
+			INVOKE_ASYNC(src, PROC_REF(clear_biohazard_display))
+
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
+
+		// Set status displays to biohazard alert - critical level
+		send_status_display_biohazard_alert()
+
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, PROC_REF(victory)), 45 SECONDS)
@@ -174,6 +190,10 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
 		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+
+		// Set status displays to biohazard alert
+		send_status_display_biohazard_alert()
+
 		has_announced = TRUE
 
 /// Create a blob spore and link it to us
@@ -186,7 +206,26 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
 
+/// Clear biohazard emergency display when blob is defeated
+/mob/eye/blob/proc/clear_biohazard_display()
+	clear_status_display_biohazard()
+
 /mob/eye/blob/proc/victory()
+	// Set victory flags immediately
+	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
+	if(B)
+		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
+		if(main_objective)
+			main_objective.completed = TRUE
+
+	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
+	SSticker.news_report = BLOB_WIN
+	SSticker.force_ending = FORCE_END_ROUND
+
+	// Handle the heavy victory operations asynchronously
+	INVOKE_ASYNC(src, PROC_REF(victory_sequence))
+
+/mob/eye/blob/proc/victory_sequence()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)
 	sleep(10 SECONDS)
 	for(var/mob/living/live_guy as anything in GLOB.mob_living_list)
@@ -222,25 +261,11 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		check_area.SetInvisibility(INVISIBILITY_NONE)
 		check_area.blend_mode = 0
 
-	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
-	if(B)
-		var/datum/objective/blob_takeover/main_objective = locate() in B.objectives
-		if(main_objective)
-			main_objective.completed = TRUE
-	to_chat(world, span_blobannounce("[real_name] consumed the station in an unstoppable tide!"))
-	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = FORCE_END_ROUND
-
 /mob/eye/blob/Destroy()
 	QDEL_NULL(blobstrain)
 	QDEL_NULL(blob_power_hud)
-	for(var/BL in GLOB.blobs)
-		var/obj/structure/blob/B = BL
-		if(B && B.overmind == src)
-			B.overmind = null
-			B.update_appearance() //reset anything that was ours
-	for(var/obj/structure/blob/blob_structure as anything in all_blobs)
-		blob_structure.overmind = null
+
+	// Clear references immediately without iterating to avoid blocking
 	all_blobs = null
 	resource_blobs = null
 	factory_blobs = null
@@ -252,6 +277,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs -= src
+
+	// Handle blob cleanup asynchronously to avoid blocking Destroy()
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(cleanup_overmind_blobs), src)
 
 	return ..()
 
