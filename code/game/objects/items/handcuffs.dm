@@ -55,8 +55,6 @@
 
 	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
-	///Multiplier for handcuff time
-	var/handcuff_time_mod = 1
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/items/weapons/handcuffs.ogg'
 	///Sound that plays when restrain is successful
@@ -90,9 +88,7 @@
 		victim.balloon_alert(user, "can't be handcuffed!")
 		return
 
-	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
-		to_chat(user, span_warning("Uh... how do those things work?!"))
-		apply_cuffs(user, user)
+	if(handcuffs_clumsiness_check(user))
 		return
 
 	if(!isnull(victim.handcuffed))
@@ -114,12 +110,7 @@
 	playsound(loc, cuffsound, 30, TRUE, -2)
 	log_combat(user, victim, "attempted to handcuff")
 
-	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
-		handcuff_time_mod = 0.75
-	else
-		handcuff_time_mod = 1
-
-	if(!do_after(user, handcuff_time * handcuff_time_mod, victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
+	if(!do_after(user, get_handcuff_time(user), victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
 		victim.balloon_alert(user, "failed to handcuff!")
 		to_chat(user, span_warning("You fail to handcuff [victim]!"))
 		log_combat(user, victim, "failed to handcuff")
@@ -136,7 +127,16 @@
 	log_combat(user, victim, "successfully handcuffed")
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
+///Return the amount of time the user would spend cuffing someone or something
+/obj/item/restraints/handcuffs/proc/get_handcuff_time(mob/user)
+	return handcuff_time * (HAS_TRAIT(user, TRAIT_FAST_CUFFING) ? 0.75 : 1)
 
+/obj/item/restraints/handcuffs/proc/handcuffs_clumsiness_check(mob/user)
+	if(!iscarbon(user) || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50)) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
+		return FALSE
+	to_chat(user, span_warning("Uh... how do those things work?!"))
+	apply_cuffs(user, user)
+	return TRUE
 /**
  * When called, this instantly puts handcuffs on someone (if actually possible)
  *
