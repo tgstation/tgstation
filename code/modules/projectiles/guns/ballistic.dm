@@ -536,7 +536,7 @@
 			balloon_alert(user, "not in hand!")
 			return ITEM_INTERACT_FAILURE
 
-		if(suppressor)
+		if(suppressed)
 			balloon_alert(user, "already has a suppressor!")
 			return ITEM_INTERACT_FAILURE
 
