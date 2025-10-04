@@ -24,7 +24,8 @@
 	icon = 'icons/obj/machines/atmospherics/unary_devices.dmi'
 	icon_state = "airlock_pump"
 	pipe_state = "airlock_pump"
-	use_power = ACTIVE_POWER_USE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	can_unwrench = TRUE
 	welded = FALSE
@@ -291,6 +292,7 @@
 	if(on || !cycling_set_up || airlocks_animating || !powered())
 		return FALSE
 
+	update_use_power(ACTIVE_POWER_USE)
 	pump_direction = cycle_direction
 
 	for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
@@ -342,6 +344,7 @@
 	if(!on)
 		return FALSE
 	set_on(FALSE)
+	update_use_power(IDLE_POWER_USE)
 
 	// In case we can open both sides safe_dock will do it for us
 	// it also handles its own messages. If we can't - procceed
