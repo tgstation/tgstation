@@ -1199,6 +1199,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This item is currently under the control of telekinesis
 #define TRAIT_TELEKINESIS_CONTROLLED "telekinesis_controlled"
 
+///From the cuffed_item status effect
+#define CUFFED_ITEM_TRAIT "cuffed_item_trait"
+
 /// changelings with this trait can no longer talk over the hivemind
 #define TRAIT_CHANGELING_HIVEMIND_MUTE "ling_mute"
 /// This guy is a hulk! (Bulky and green, lacks tact)

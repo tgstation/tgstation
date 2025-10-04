@@ -154,6 +154,19 @@
 ///from base of datum/storage/handle_exit(): (datum/storage/storage)
 #define COMSIG_ITEM_UNSTORED "item_unstored"
 
+/**
+ * From base of datum/strippable_item/get_alternate_actions(): (atom/owner, mob/user, list/alt_actions)
+ * As a side note, make sure the strippable item datum (the slot) in question doesn't have too many alternate actions already,
+ * as only up to three are supported at a time (as of september 2025), though, so far only the jumpsuit slot uses all three slots.
+ *
+ * Also make sure to code the alt action and add it to the StripMenu.tsx interface
+ */
+#define COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS "item_get_strippable_alt_actions"
+
+/// From base of datum/strippable_item/perform_alternate_action(): (atom/owner, mob/user, action_key)
+#define COMSIG_ITEM_STRIPPABLE_ALT_ACTION "item_strippable_alt_action"
+	#define COMPONENT_ALT_ACTION_DONE (1<<0)
+
 ///from base of obj/item/apply_fantasy_bonuses(): (bonus)
 #define COMSIG_ITEM_APPLY_FANTASY_BONUSES "item_apply_fantasy_bonuses"
 ///from base of obj/item/remove_fantasy_bonuses(): (bonus)

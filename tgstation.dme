@@ -1957,6 +1957,7 @@
 #include "code\datums\status_effects\_status_effect_helpers.dm"
 #include "code\datums\status_effects\agent_pinpointer.dm"
 #include "code\datums\status_effects\buffs.dm"
+#include "code\datums\status_effects\cuffed_item.dm"
 #include "code\datums\status_effects\death_sound.dm"
 #include "code\datums\status_effects\drug_effects.dm"
 #include "code\datums\status_effects\gas.dm"

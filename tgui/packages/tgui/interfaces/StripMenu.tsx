@@ -59,6 +59,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     text: 'Unknot',
   },
 
+  remove_item_cuffs: {
+    icon: 'handcuffs',
+    text: 'Remove Handcuffs',
+  },
+ 
   enable_internals: {
     icon: 'tg-air-tank',
     text: 'Enable internals',
