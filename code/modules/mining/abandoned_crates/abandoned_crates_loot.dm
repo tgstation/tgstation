@@ -1,5 +1,5 @@
 /**
- * # Abandoned Crate Loot Spawner
+ * Abandoned Crate Loot Spawner
  *
  * Base spawner for generating loot contents in abandoned crates
  */
