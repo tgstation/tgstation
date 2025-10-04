@@ -135,4 +135,5 @@
 	TEST_ASSERT_NOTNULL(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), "Felinid with NONE ears set had NO ears on species gain.")
 
 	var/mob/living/carbon/human/anime_dummy = allocate(/mob/living/carbon/human/consistent)
+	anime_dummy.set_species(/datum/species/human/felinid)
 	TEST_ASSERT(istype(anime_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with default ears set did not have cat ears on species gain.")
