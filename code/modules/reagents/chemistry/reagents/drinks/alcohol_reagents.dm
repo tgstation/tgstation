@@ -2153,9 +2153,10 @@
 	taste_description = "simpler times"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/human/metabolizer, seconds_per_tick, times_fired)
+/datum/reagent/consumable/ethanol/old_timer/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(SPT_PROB(10, seconds_per_tick) && istype(metabolizer))
+	if(SPT_PROB(10, seconds_per_tick) && ishuman(drinker))
+		var/mob/living/carbon/human/metabolizer = drinker
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
 			metabolizer.set_facial_haircolor("#cccccc", update = FALSE)
