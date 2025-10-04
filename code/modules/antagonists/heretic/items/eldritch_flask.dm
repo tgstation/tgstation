@@ -26,11 +26,12 @@
 		return NONE
 	if(!isliving(target))
 		return NONE
+	user.changeNext_move(CLICK_CD_MELEE)
 	var/mob/living/living_target = target
+	if(living_target == user)
+		return ITEM_INTERACT_BLOCKING
 	if(reagents.total_volume >= reagents.maximum_volume)
 		to_chat(user, span_notice("[src] is full."))
-		return ITEM_INTERACT_BLOCKING
-	if(living_target == user)
 		return ITEM_INTERACT_BLOCKING
 	if(living_target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 		to_chat(user, span_warning("You are unable to draw any blood from [living_target]!"))
