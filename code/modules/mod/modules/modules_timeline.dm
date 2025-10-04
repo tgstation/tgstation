@@ -401,15 +401,15 @@
 			timetokill += seconds_per_tick
 
 
-/obj/structure/chrono_field/bullet_act(obj/projectile/projectile)
-	if(istype(projectile, /obj/projectile/energy/chrono_beam))
-		var/obj/projectile/energy/chrono_beam/beam = projectile
-		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
-		if(linked_tem && istype(linked_tem))
-			linked_tem.field_connect(src)
-		return BULLET_ACT_HIT
+/obj/structure/chrono_field/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if(!istype(hitting_projectile, /obj/projectile/energy/chrono_beam))
+		return ..()
 
-	return ..()
+	var/obj/projectile/energy/chrono_beam/beam = hitting_projectile
+	var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
+	if(linked_tem && istype(linked_tem))
+		linked_tem.field_connect(src)
+	return BULLET_ACT_HIT
 
 /obj/structure/chrono_field/assume_air()
 	return FALSE

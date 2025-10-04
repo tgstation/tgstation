@@ -37,9 +37,9 @@
 	r_hand = /obj/item/knife/combat/survival
 	var/projectile_deflect_chance = 0
 
-/mob/living/basic/trooper/syndicate/melee/bullet_act(obj/projectile/projectile)
+/mob/living/basic/trooper/syndicate/melee/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(prob(projectile_deflect_chance))
-		visible_message(span_danger("[src] blocks [projectile] with its shield!"))
+		visible_message(span_danger("[src] blocks [hitting_projectile] with its shield!"))
 		return BULLET_ACT_BLOCK
 	return ..()
 

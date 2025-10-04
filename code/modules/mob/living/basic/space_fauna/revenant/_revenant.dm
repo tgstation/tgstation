@@ -299,7 +299,7 @@
 /mob/living/basic/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
-/mob/living/basic/revenant/bullet_act()
+/mob/living/basic/revenant/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(!HAS_TRAIT(src, TRAIT_REVENANT_REVEALED) || dormant)
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
