@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Plasma flower MOD core grass trails no longer appear in front of the user rather than behind them"
