@@ -128,8 +128,8 @@
 
 /datum/armor/cultrobes_hardened
 	melee = 50
-	bullet = 40
-	laser = 50
+	bullet = 25
+	laser = 30
 	energy = 60
 	bomb = 50
 	bio = 100

@@ -7,7 +7,7 @@
 	light_power = 2
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
 	/// Length of the cooldown between uses.
-	var/use_cooldown_duration = 5 MINUTES
+	var/use_cooldown_duration = 3 MINUTES
 	/// If provided, a bonus tip displayed to cultists on examined.
 	var/cult_examine_tip
 	/// The cooldown for when items can be dispensed.
