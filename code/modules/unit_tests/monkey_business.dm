@@ -14,7 +14,7 @@
 	var/monkey_weapon_index = 1 // which weapon to give the next angry monkey
 	var/list/monkey_weapon_list = list(
 		/obj/item/knife/shiv,
-		/obj/item/gun/ballistic/pistol,
+		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/energy/laser,
 		/obj/item/melee/baseball_bat,
 		/obj/item/melee/baton,
