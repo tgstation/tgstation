@@ -483,13 +483,17 @@
 #define COMSIG_ITEM_ATTACK_SELF_SECONDARY "item_attack_self_secondary"
 ///from base of obj/item/attack_atom(): (/atom, /mob, list/modifiers)
 #define COMSIG_ITEM_ATTACK_ATOM "item_attack_atom"
-///from base of obj/item/pre_attack(): (atom/target, mob/user, list/modifiers)
+///from base of obj/item/pre_attack(): (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"
+///from base of obj/item/pre_attack(): (obj/item/weapon, atom/target, list/modifiers, list/attack_modifiers)
+#define COMSIG_USER_PRE_ITEM_ATTACK "user_pre_item_attack"
 /// From base of [/obj/item/proc/pre_attack_secondary()]: (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_PRE_ATTACK_SECONDARY "item_pre_attack_secondary"
 	#define COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN (1<<0)
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
+///from base of obj/item/pre_attack_secondary(): (obj/item/weapon, atom/target, list/modifiers, list/attack_modifiers)
+#define COMSIG_USER_PRE_ITEM_ATTACK_SECONDARY "user_pre_item_attack_secondary"
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, list/modifiers, list/attack_modifiers)
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
 ///from base of [obj/item/attack()]: (atom/target, mob/user, proximity_flag, list/modifiers)
