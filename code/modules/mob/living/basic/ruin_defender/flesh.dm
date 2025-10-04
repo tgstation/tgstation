@@ -85,7 +85,7 @@
 	for(var/atom/movable/movable in orange(victim, 1))
 		if(movable == victim)
 			continue
-		if(!victim.CanReach(movable) || movable.invisibility > victim.see_invisible)
+		if(!movable.IsReachableBy(victim) || movable.invisibility > victim.see_invisible)
 			continue
 		candidates += movable
 	if(!length(candidates))

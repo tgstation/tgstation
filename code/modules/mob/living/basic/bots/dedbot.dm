@@ -109,7 +109,7 @@
 
 /datum/action/cooldown/mob_cooldown/exenterate/proc/slash_em(atom/caster)
 	for(var/mob/living/victim in range(ability_range, caster))
-		if(faction_check(victim.faction, immune_factions) && owner.CanReach(victim))
+		if(faction_check(victim.faction, immune_factions) && victim.IsReachableBy(owner))
 			continue
 		to_chat(caster, span_warning("You slice [victim]!"))
 		to_chat(victim, span_warning("You are cut by [caster]'s blades!"))

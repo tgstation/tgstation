@@ -203,7 +203,7 @@
 		return
 	new_name = apply_text_macros(new_name)
 	var/obj/item/hitting_implement = (locate(/obj/item/reagent_containers/cup/glass/bottle) in user.held_items) || user.get_item_for_held_index(hand)
-	if(!user.CanReach(attacked, hitting_implement))
+	if(!attacked.IsReachableBy(user, hitting_implement.reach))
 		user.balloon_alert(user, "out of range!")
 		return
 	var/obj/item/reagent_containers/cup/glass/bottle/bottle = hitting_implement

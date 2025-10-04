@@ -46,6 +46,9 @@
 		remove_shared_particles(particle_type)
 	return ..()
 
+/obj/machinery/oven/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || istype(contained, /obj/item/plate/oven_tray)
+
 /// Used to determine if the oven appears active and cooking, or offline.
 /obj/machinery/oven/proc/appears_active()
 	return !open && length(used_tray?.contents) && !(machine_stat & (BROKEN|NOPOWER))
@@ -127,7 +130,6 @@
 	if(!open)
 		oven_tray.vis_flags |= VIS_HIDE
 	vis_contents += oven_tray
-	oven_tray.flags_1 |= IS_ONTOP_1
 	oven_tray.vis_flags |= VIS_INHERIT_PLANE
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
@@ -144,7 +146,6 @@
 
 /obj/machinery/oven/proc/tray_removed_from_oven(obj/item/oven_tray)
 	SIGNAL_HANDLER
-	oven_tray.flags_1 &= ~IS_ONTOP_1
 	oven_tray.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= oven_tray
 	used_tray = null
