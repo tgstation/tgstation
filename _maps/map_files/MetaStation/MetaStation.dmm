@@ -12965,6 +12965,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
+"ewX" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/station/security/prison/visit)
 "exB" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/brown/filled/warning,
@@ -15961,7 +15969,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
-/area/station/security/prison)
+/area/station/security/prison/visit)
 "fBc" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -17073,7 +17081,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
-/area/station/security/prison)
+/area/station/security/prison/visit)
 "fYb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -21879,7 +21887,7 @@
 "hDE" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /turf/closed/wall,
-/area/station/security/prison)
+/area/station/security/prison/visit)
 "hEc" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -94226,7 +94234,7 @@ mQr
 qgz
 fAP
 lQp
-lQp
+ewX
 lQp
 uGp
 ryL
@@ -94481,7 +94489,7 @@ ncv
 cez
 mQr
 iem
-iUv
+uza
 rXR
 rXR
 uza
