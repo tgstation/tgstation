@@ -149,3 +149,15 @@
   - map: Replace snow cabin gateway geothermal generator with real turbine
   vinylspiders:
   - qol: improves admin logging of forced dynamic events.
+2025-10-04:
+  ArcaneMusic:
+  - balance: Ore vents on lavaland/icebox now scale their size, and therefore difficulty,
+      based on their distance from the mining station.
+  Melbert:
+  - rscadd: When a mind reader examines a mob, they'll get a glimpse into what that
+      mob is currently typing, before they even send the message.
+  - qol: Mind Reader now groups up all the information it gives you in a box
+  - admin: Mind Reader now logs everything the reader gleamed from the read-ee
+  Y0SH1M4S73R:
+  - bugfix: Snapping USB cables by dragging the attached objects too far away from
+      each other will no longer crash the server.
