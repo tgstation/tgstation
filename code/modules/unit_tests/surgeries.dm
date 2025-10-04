@@ -137,7 +137,7 @@
 
 /datum/unit_test/prosthetic_item/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
-	var/obj/item/claymore/sword = allocate(/obj/item/claymore/sword)
+	var/obj/item/claymore/sword = allocate(/obj/item/claymore)
 
 	patient.make_item_prosthetic(sword)
 
