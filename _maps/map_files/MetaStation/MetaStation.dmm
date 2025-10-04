@@ -4750,10 +4750,6 @@
 	},
 /turf/open/floor/grass,
 /area/station/science/research)
-"bHi" = (
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
-/turf/open/space/basic,
-/area/space)
 "bHr" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -76849,7 +76845,7 @@ aaa
 aaa
 aaa
 aaa
-bHi
+aaa
 aaa
 aaa
 aaa
