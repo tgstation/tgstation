@@ -100,12 +100,36 @@
 		return FALSE
 	return ..()
 
+/datum/emote/living/carbon/mchitter
+	key = "mchitter"
+	key_third_person = "chitters"
+	message = "chitters!"
+	sound = 'sound/mobs/humanoids/moth/moth_chitter.ogg'
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/mchitter/can_run_emote(mob/living/carbon/user, status_check, intentional, params)
+	if(!ismoth(user) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
+		return FALSE
+	return ..()
+
 /datum/emote/living/carbon/moan
 	key = "moan"
 	key_third_person = "moans"
 	message = "moans!"
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/msqueak
+	key = "msqueak"
+	key_third_person = "squeaks"
+	message = "squeaks!"
+	sound = 'sound/mobs/humanoids/moth/moth_squeak.ogg'
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+
+/datum/emote/living/carbon/msqueak/can_run_emote(mob/living/carbon/user, status_check, intentional, params)
+	if(!ismoth(user) || HAS_MIND_TRAIT(user, TRAIT_MIMING))
+		return FALSE
+	return ..()
 
 /datum/emote/living/carbon/noogie
 	key = "noogie"
