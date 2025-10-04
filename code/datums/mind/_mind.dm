@@ -493,6 +493,8 @@
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
+	if(!isnull(current))
+		SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_ROLE, new_role)
 
 ///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
 /datum/mind/proc/set_holy_role(new_holy_role)
@@ -531,3 +533,13 @@
 
 /mob/dead/observer/sync_mind()
 	return
+
+/// Iterates over this mind's assigned role's departments and returns a list of their primary work areas.
+/datum/mind/proc/get_work_areas()
+	var/list/work_areas = list()
+	for(var/department in assigned_role.departments_list)
+		var/datum/job_department/dep = SSjob.joinable_departments_by_type[department]
+		if(dep.primary_work_area)
+			work_areas += dep.primary_work_area
+
+	return work_areas

@@ -219,6 +219,9 @@
 	stack_trace("Invalid mode passed to host scan: [mode || "null"]")
 	return FALSE
 
+/// Huds from PAI software
+#define PAI_HUD_TRAIT "pai_hud"
+
 /**
  * Proc that toggles any active huds based on the option.
  *
@@ -227,18 +230,16 @@
 /mob/living/silicon/pai/proc/toggle_hud(mode)
 	if(isnull(mode))
 		return FALSE
-	var/datum/atom_hud/hud
-	var/hud_on
 	if(mode == PAI_TOGGLE_MEDICAL_HUD)
-		hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-		medHUD = !medHUD
-		hud_on = medHUD
+		if(HAS_TRAIT_FROM(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT)
+		else
+			ADD_TRAIT(src, TRAIT_MEDICAL_HUD, PAI_HUD_TRAIT)
 	if(mode == PAI_TOGGLE_SECURITY_HUD)
-		hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		secHUD = !secHUD
-		hud_on = secHUD
-	if(hud_on)
-		hud.show_to(src)
-	else
-		hud.hide_from(src)
+		if(HAS_TRAIT_FROM(src, TRAIT_SECURITY_HUD, PAI_HUD_TRAIT))
+			REMOVE_TRAIT(src, TRAIT_SECURITY_HUD, PAI_HUD_TRAIT)
+		else
+			ADD_TRAIT(src, TRAIT_SECURITY_HUD, PAI_HUD_TRAIT)
 	return TRUE
+
+#undef PAI_HUD_TRAIT

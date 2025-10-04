@@ -195,10 +195,10 @@
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
-	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES|EMP_NO_EXAMINE)
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/detach(atom/moveto)
-	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES|EMP_NO_EXAMINE)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/clandestine

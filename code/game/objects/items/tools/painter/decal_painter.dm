@@ -156,3 +156,6 @@
 	else if(cyborg.cell.charge <= 0)
 		balloon_alert(user, "not enough energy!")
 		return
+
+/obj/item/airlock_painter/decal/cyborg/click_alt(mob/user)
+	return CLICK_ACTION_BLOCKING

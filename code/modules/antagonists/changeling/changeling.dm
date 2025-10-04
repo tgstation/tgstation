@@ -6,7 +6,7 @@
 	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	pref_flag = ROLE_CHANGELING
-	antag_moodlet = /datum/mood_event/focused
+	antag_moodlet = /datum/mood_event/ling
 	antag_hud_name = "changeling"
 	hijack_speed = 0.5
 	ui_name = "AntagInfoChangeling"

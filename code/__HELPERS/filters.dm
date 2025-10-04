@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"y" = 0,
 			"icon" = ICON_NOT_SET,
 			"render_source" = "",
-			"flags" = 0
+			"flags" = NONE
 		),
 		"flags" = list(
 			"MASK_INVERSE" = MASK_INVERSE,
@@ -30,14 +30,20 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"alpha" = 255
 		)
 	),
-	// Not implemented, but if this isn't uncommented some windows will just error
+	// Not fully implemented, but if this isn't uncommented some windows will just error
 	// Needs either a proper matrix editor, or just a hook to our existing one
-	// Issue is filterrific assumes variables will have the same value type if they share the same name, which this violates
-	// Gotta refactor this sometime
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
 			"space" = FILTER_COLOR_RGB
+		),
+		"options" = list(
+			"space" = list(
+				"FILTER_COLOR_RGB" = FILTER_COLOR_RGB,
+				"FILTER_COLOR_HSV" = FILTER_COLOR_HSV,
+				"FILTER_COLOR_HSL" = FILTER_COLOR_HSL,
+				"FILTER_COLOR_HCY" = FILTER_COLOR_HCY
+			)
 		)
 	),
 	"displace" = list(
@@ -46,7 +52,11 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"y" = 0,
 			"size" = null,
 			"icon" = ICON_NOT_SET,
-			"render_source" = ""
+			"render_source" = "",
+			"flags" = NONE
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY
 		)
 	),
 	"drop_shadow" = list(
@@ -70,10 +80,24 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"icon" = ICON_NOT_SET,
 			"render_source" = "",
 			"flags" = FILTER_OVERLAY,
-			"color" = "",
+			"color" = COLOR_WHITE,
 			"transform" = null,
 			"blend_mode" = BLEND_DEFAULT
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY,
+		),
+		"options" = list(
+			"blend_mode" = list(
+				"BLEND_DEFAULT" = BLEND_DEFAULT,
+				"BLEND_OVERLAY" = BLEND_OVERLAY,
+				"BLEND_ADD" = BLEND_ADD,
+				"BLEND_SUBTRACT" = BLEND_SUBTRACT,
+				"BLEND_MULTIPLY" = BLEND_MULTIPLY,
+				"BLEND_INSET_OVERLAY" = BLEND_INSET_OVERLAY
+			)
 		)
+
 	),
 	"motion_blur" = list(
 		"defaults" = list(

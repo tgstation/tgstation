@@ -21,6 +21,15 @@
 #define CARNIVORY_POTENCY_MIN 30
 /// Fungle megabolism plants have a min yield of 1.
 #define FUNGAL_METAB_YIELD_MIN 1
+/// Semiaquatic plants gets 50% more weeds in soil.
+#define SEMIAQUATIC_SOIL_WEED_MALUS 1.5
+/// Soil loving plants get worse yield when grown in a medium that isn't soil.
+#define SOIL_LOVER_HYDRO_YIELD_MALUS 0.7
+/// Upper bound of produce size mod for soil lowers grown without soil.
+#define SOIL_LOVER_HYDRO_POTENCY_MAX 0.8
+/// Lower bound of produce size mod for soil lowers grown without soil
+#define SOIL_LOVER_HYDRO_POTENCY_MIN 0.5
+
 
 /// -- Hydroponics tray defines. --
 ///  Base amount of nutrients a tray can old.
@@ -91,3 +100,29 @@
 
 /// Used as a baseline plant rarity for more uncommon plants, usually requiring mutation
 #define PLANT_MODERATELY_RARE 20
+
+/// How much water drain is reduced for trays with the SUPERWATER modifier such as superabsorbent hydrogel beads.
+#define SUPER_WATER_MODIFIER 0.5
+// How much faster our mushrooms mature on a good mushroom growing soil such as korta coir.
+#define FAST_MUSH_MODIFIER 1.4
+// How many grafts we harvest from one plant if planted in a tray with the MULTI_GRAFT flag.
+#define MULTI_GRAFT_MAX_COUNT 3
+
+/// TRAY BITFLAGS
+
+/// For watery trays, capable of growing aquatic plants.
+#define HYDROPONIC (1 << 0)
+/// For soil type trays that provide structure for soil loving plants.
+#define SOIL (1 << 1)
+/// Allows you to take up to 3 grafts from the same plant.
+#define MULTIGRAFT (1 << 2)
+/// Allows you to plant grafts into this tray to propagate them vegetativley.
+#define GRAFT_MEDIUM (1 << 3)
+/// Musrooms mature faster in this type of tray.
+#define FAST_MUSHROOMS (1 << 4)
+/// Extra slimy worms can be created by composting greens in this soil.
+#define WORM_HABITAT (1 << 5)
+/// Water drains at a slower rate from this soil.
+#define SUPERWATER (1 << 6)
+/// If this tray runs out of nutrients, add a little nitrogen from the breakdown of natural fertilizers or nitrogen fixating bacteria.
+#define SLOW_RELEASE (1 << 7)
