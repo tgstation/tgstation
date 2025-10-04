@@ -137,6 +137,9 @@
  * Returns the created pseudopart
  */
 /mob/living/carbon/proc/make_item_prosthetic(obj/item/some_thing, target_zone = BODY_ZONE_R_ARM, fall_prob = 0)
+	if(HAS_TRAIT_FROM(some_thing, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
+		CRASH("make_item_prosthetic given an item that is already a prosthetic limb!")
+
 	var/obj/item/bodypart/existing = get_bodypart(target_zone)
 	existing?.drop_limb(special = TRUE)
 

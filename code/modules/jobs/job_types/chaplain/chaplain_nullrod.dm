@@ -459,13 +459,14 @@
 /obj/item/nullrod/chainsaw/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
 	if(!iscarbon(picker))
 		return
+	to_chat(picker, span_warning("[src] takes the place of your arm!"))
 	var/obj/item/bodypart/active = picker.get_active_hand()
 	var/mob/living/carbon/new_hero = picker
 	new_hero.make_item_prosthetic(src, active.body_zone)
 
 /obj/item/nullrod/chainsaw/equipped(mob/living/carbon/user, slot, initial)
 	. = ..()
-	if(!iscarbon(user))
+	if(!iscarbon(user) || HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
 		return
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
