@@ -42,10 +42,6 @@
 	/// List of dropoff points.
 	var/list/dropoff_points = list()
 
-	/// History of accessed pickup points for round-robin tasking.
-	var/roundrobin_history_pickup = 1
-	/// History of accessed dropoff points for round-robin tasking.
-	var/roundrobin_history_dropoff = 1
 	/// Which tasking scenario we use for pickup points?
 	var/pickup_tasking = TASKING_ROUND_ROBIN
 	/// Which tasking scenario we use for dropoff points?
@@ -53,6 +49,11 @@
 
 	/// List of all HUD icons resembling interaction points.
 	var/list/hud_points = list()
+
+	/// Pickup strategy for tasking.
+	var/datum/tasking_strategy/pickup_strategy
+	/// Dropoff strategy for tasking.
+	var/datum/tasking_strategy/dropoff_strategy
 
 /obj/machinery/big_manipulator/proc/update_hud()
   LAZYCLEARLIST(hud_points)
@@ -161,6 +162,7 @@
 		diag_hud.add_atom_to_hud(src)
 
 	update_hud()
+	update_strategies()
 
 /// Checks the component tiers, adjusting the properties of the manipulator.
 /obj/machinery/big_manipulator/proc/process_upgrades()
@@ -353,8 +355,8 @@
 
 	return null
 
-/// Removes an invalid interaction point from the manipulator
-/obj/machinery/big_manipulator/proc/remove_invalid_point(datum/interaction_point/point) // TODO
+/// Removes an invalid interaction point from the lists.
+/obj/machinery/big_manipulator/proc/remove_invalid_point(datum/interaction_point/point)
 	if(!point)
 		return
 
@@ -490,7 +492,7 @@
 		id_lock = null
 	else
 		id_lock = WEAKREF(clicked_by_this_id)
-	balloon_alert(user, "successfully [id_lock ? "" : "un"]locked")
+	balloon_alert(user, "successfully [id_lock ? "locked" : "unlocked"]")
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
@@ -533,7 +535,7 @@
 		on = new_power_state
 		cycle_timer_running = FALSE
 		// Set stopping task instead of ending current task immediately
-		if(current_task != CURRENT_TASK_NONE || current_task != CURRENT_TASK_STOPPING)
+		if(current_task != CURRENT_TASK_NONE && current_task != CURRENT_TASK_STOPPING)
 			start_task(CURRENT_TASK_STOPPING, 0)
 			// Schedule automatic completion of stopping task
 			addtimer(CALLBACK(src, PROC_REF(complete_stopping_task)), 1 SECONDS)
@@ -605,9 +607,9 @@
 	data["active"] = on
 	data["current_task"] = current_task
 	data["current_task_duration"] = current_task_duration
-	data["speed_multiplier"] = speed_multiplier // TODO: ui fix
-	data["min_speed_multiplier"] = min_speed_multiplier // TODO: ui fix
-	data["max_speed_multiplier"] = max_speed_multiplier // TODO: ui fix
+	data["speed_multiplier"] = speed_multiplier
+	data["min_speed_multiplier"] = min_speed_multiplier
+	data["max_speed_multiplier"] = max_speed_multiplier
 	data["manipulator_position"] = "[x],[y]"
 	data["pickup_tasking"] = pickup_tasking
 	data["dropoff_tasking"] = dropoff_tasking
@@ -704,8 +706,10 @@
 			if(new_schedule in list("Round Robin", "Strict Robin", "Prefer First"))
 				if(is_pickup)
 					pickup_tasking = new_schedule
+					update_strategies()
 				else
 					dropoff_tasking = new_schedule
+					update_strategies()
 				SStgui.update_uis(src)
 			return TRUE
 
@@ -868,10 +872,10 @@
 /// Cycles the given value in the given list. Retuns the next value in the list, or the first one if the list isn't long enough.
 /obj/machinery/big_manipulator/proc/cycle_value(current_value, list/possible_values)
 	var/current_index = possible_values.Find(current_value)
-	if(current_index == null)
+	if(current_index == 0)
 		return possible_values[1]
 
-	var/next_index = (current_index % possible_values.len) + 1
+	var/next_index = (current_index % length(possible_values)) + 1
 	return possible_values[next_index]
 
 /// Begins a new task with the specified type and duration
@@ -905,3 +909,18 @@
 	for(var/image/hud_image in hud_points)
 		qdel(hud_image)
 	hud_points.Cut()
+
+/obj/machinery/big_manipulator/proc/update_strategies()
+	pickup_strategy = create_strategy(pickup_tasking)
+	dropoff_strategy = create_strategy(dropoff_tasking)
+
+/obj/machinery/big_manipulator/proc/create_strategy(tasking_mode)
+	switch(tasking_mode)
+		if(TASKING_PREFER_FIRST)
+			return new /datum/tasking_strategy/prefer_first()
+		if(TASKING_ROUND_ROBIN)
+			return new /datum/tasking_strategy/round_robin()
+		if(TASKING_STRICT_ROBIN)
+			return new /datum/tasking_strategy/strict_robin()
+	return new /datum/tasking_strategy/prefer_first()
+
