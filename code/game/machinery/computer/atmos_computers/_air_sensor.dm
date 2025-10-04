@@ -167,7 +167,7 @@
 	desc = "A device designed to detect gases and their concentration in an area."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "gsensor0"
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT + SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 /obj/item/air_sensor/Initialize(mapload, inlet, outlet)
 	. = ..()

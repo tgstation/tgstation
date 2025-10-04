@@ -5,6 +5,7 @@
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	///List of sounds that can be played when punched.
 	var/static/list/hit_sounds = list(
 		'sound/items/weapons/genhit1.ogg',

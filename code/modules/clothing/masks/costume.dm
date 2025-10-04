@@ -77,3 +77,4 @@
 	greyscale_config = /datum/greyscale_config/rebellion_mask
 	greyscale_config_worn = /datum/greyscale_config/rebellion_mask/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)

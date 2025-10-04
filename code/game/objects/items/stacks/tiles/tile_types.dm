@@ -1079,6 +1079,7 @@
 		/obj/item/stack/tile/circuit/green,
 		/obj/item/stack/tile/circuit/red,
 	)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05)
 
 /obj/item/stack/tile/circuit/green
 	name = "green circuit tile"
@@ -1257,7 +1258,7 @@
 	desc = "Flooring that shows its contents underneath. Engineers love it!"
 	icon_state = "maint_catwalk"
 	inhand_icon_state = "tile-catwalk"
-	mats_per_unit = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 0.8)
 	turf_type = /turf/open/floor/catwalk_floor
 	merge_type = /obj/item/stack/tile/catwalk_tile //Just to be cleaner, these all stack with each other
 	tile_reskin_types = list(

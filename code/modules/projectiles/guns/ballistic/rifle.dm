@@ -217,6 +217,7 @@
 	fire_sound = 'sound/items/xbow_lock.ogg'
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.2)
 	var/draw_time = 3 SECONDS
 	SET_BASE_PIXEL(0, 0)
 
@@ -298,6 +299,7 @@
 	inhand_icon_state = "pipegun"
 	worn_icon_state = "pipegun"
 	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 
 	projectile_damage_multiplier = 1.35
@@ -332,6 +334,7 @@
 	icon_state = "pipepistol"
 	inhand_icon_state = "pipepistol"
 	worn_icon_state = "gun"
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.50
 	spread = 15 //kinda inaccurate
@@ -356,6 +359,13 @@
 	worn_icon_state = "regal_pipegun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 2
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9.15,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT *8,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+	)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
 	name = "regal pipe pistol"
@@ -481,6 +491,7 @@
 	semi_auto = TRUE
 	slot_flags = ITEM_SLOT_BACK
 	projectile_damage_multiplier = 0.5
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.5, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
 
 	SET_BASE_PIXEL(-8, 0)
 
