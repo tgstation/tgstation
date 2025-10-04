@@ -4707,7 +4707,7 @@
 	name = "Security E.V.A. Storage"
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -4750,6 +4750,10 @@
 	},
 /turf/open/floor/grass,
 /area/station/science/research)
+"bHi" = (
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/turf/open/space/basic,
+/area/space)
 "bHr" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -76845,7 +76849,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bHi
 aaa
 aaa
 aaa

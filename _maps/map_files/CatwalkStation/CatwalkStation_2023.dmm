@@ -42025,7 +42025,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Security Maintenance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/station/security/eva)
 "mat" = (
@@ -57089,7 +57089,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/eva)
