@@ -466,15 +466,6 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
-/obj/item/circuitboard/machine/bluespace_sender
-	name = "Bluespace Sender"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/atmospherics/components/unary/bluespace_sender
-	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 5)
-
 //Generic
 /obj/item/circuitboard/machine/component_printer
 	name = "\improper Component Printer"
@@ -668,7 +659,7 @@
 	if(!valid_vendor_names_paths)
 		valid_vendor_names_paths = list()
 		for(var/obj/machinery/vending/vendor_type as anything in subtypesof(/obj/machinery/vending))
-			if(vendor_type::allow_custom)
+			if(vendor_type::allow_custom && vendor_type::refill_canister)
 				valid_vendor_names_paths[vendor_type::name] = vendor_type
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
@@ -696,27 +687,6 @@
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
 	set_type(machine.type)
 	return ..()
-
-/obj/item/circuitboard/machine/vending/donksofttoyvendor
-	name = "Donksoft Toy Vendor"
-	build_path = /obj/machinery/vending/donksofttoyvendor
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksoft = 1)
-
-/obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
-	name = "Syndicate Donksoft Toy Vendor"
-	build_path = /obj/machinery/vending/toyliberationstation
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksoft = 1)
-
-/obj/item/circuitboard/machine/vending/donksnackvendor
-	name = "Donk Co Snack Vendor"
-	build_path = /obj/machinery/vending/donksnack
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksnackvendor = 1)
 
 /obj/item/circuitboard/machine/bountypad
 	name = "Civilian Bounty Pad"

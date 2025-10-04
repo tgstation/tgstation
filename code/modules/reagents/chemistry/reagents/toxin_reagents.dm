@@ -259,25 +259,38 @@
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
+/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
+	if(!isliving(exposed_mob) || !(methods & (INGEST|INHALE)))
+		return
+
+	LAZYINITLIST(data)
+	data["method"] |= methods
+
+	//the stomach handles INGEST via on_mob_metabolize() we only deal with INHALE
+	//also means vapour works much faster which is realistic
+	if(methods & INHALE)
+		zombify(exposed_mob)
+/**
+ * Does the fake death & oxy loss on the mob
+ *
+ * Arguments
+ * * mob/living/holder_mob - the mob we are zombifying
+*/
+/datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
+	PRIVATE_PROC(TRUE)
+
 	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.fakedeath(type)
 
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
+	. = ..()
+	zombify(holder_mob)
+
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.cure_fakedeath(type)
-
-/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
-	. = ..()
-	if(!(methods & (INGEST|INHALE)))
-		return
-
-	var/datum/reagent/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-	if(zombiepowder)
-		LAZYINITLIST(zombiepowder.data)
-		zombiepowder.data["method"] |= (INGEST|INHALE)
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1042,7 +1055,7 @@
 	toxpwr = 0
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	metabolized_traits = list(TRAIT_BLOODY_MESS)
+	metabolized_traits = list(TRAIT_BLOOD_FOUNTAIN)
 
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(holder.has_reagent(/datum/reagent/medicine/coagulant)) //Directly purges coagulants from the system. Get rid of the heparin BEFORE attempting to use coagulants.

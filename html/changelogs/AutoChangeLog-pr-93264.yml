@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Equipping clothes adds you to suit sensors correctly if your clothes are unlaundered"

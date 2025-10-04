@@ -9,7 +9,6 @@
 	payment_department = NO_FREEBIES
 	light_mask = "custom-light-mask"
 	panel_type = "panel20"
-	allow_custom = TRUE
 	refill_canister = /obj/item/vending_refill/custom
 	fish_source_path = /datum/fish_source/vending/custom
 
@@ -289,7 +288,7 @@
 		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!id_card || !id_card.registered_account || !id_card.registered_account.account_job)
+	if(QDELETED(id_card))
 		balloon_alert(user, "no card found!")
 		flick(icon_deny, src)
 		return

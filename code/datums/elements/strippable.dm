@@ -262,10 +262,10 @@
 		return STRIPPABLE_OBSCURING_NONE
 
 	var/mob/living/carbon/carbon_source = source
-	if (carbon_source.check_obscured_slots() & item_slot)
+	if (hidden_slots_to_inventory_slots(carbon_source.obscured_slots) & item_slot)
 		return STRIPPABLE_OBSCURING_COMPLETELY
 
-	if (carbon_source.check_covered_slots() & item_slot)
+	if (hidden_slots_to_inventory_slots(carbon_source.covered_slots) & item_slot)
 		return STRIPPABLE_OBSCURING_INACCESSIBLE
 
 	return STRIPPABLE_OBSCURING_NONE
@@ -377,8 +377,8 @@
 		result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_actions(owner, user)
 		var/static/list/already_cried = list()
-		if(length(result["alternate"]) > 2 && !(type in already_cried))
-			stack_trace("Too many alternate actions for [type]! Only two are supported at the moment! This will look bad!")
+		if(length(result["alternate"]) > 3 && !(type in already_cried))
+			stack_trace("Too many alternate actions for [type]! Only three are supported at the moment! This will look bad!")
 			already_cried += type
 
 		items[strippable_key] = result

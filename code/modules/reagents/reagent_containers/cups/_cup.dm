@@ -1,10 +1,10 @@
 /obj/item/reagent_containers/cup
 	name = "open container"
+	abstract_type = /obj/item/reagent_containers/cup
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	reagent_flags = OPENCONTAINER | DUNKABLE
-	spillable = TRUE
+	initial_reagent_flags = OPENCONTAINER | DUNKABLE
 	resistance_flags = ACID_PROOF
 	icon_state = "bottle"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
@@ -65,152 +65,90 @@
 			gourmand.adjust_disgust(-5 + -2.5 * fraction)
 			gourmand.add_mood_event("fav_food", /datum/mood_event/favorite_food)
 
-/obj/item/reagent_containers/cup/attack(mob/living/target_mob, mob/living/user, obj/target)
+/obj/item/reagent_containers/cup/proc/try_drink(mob/living/target_mob, mob/living/user)
 	if(!canconsume(target_mob, user))
-		return
-
-	if(!spillable)
-		return
-
-	if(!reagents || !reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
-		return
-
-	if(!istype(target_mob))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(target_mob != user)
-		target_mob.visible_message(span_danger("[user] attempts to feed [target_mob] something from [src]."), \
-					span_userdanger("[user] attempts to feed you something from [src]."))
+		target_mob.visible_message(
+			span_danger("[user] attempts to feed [target_mob] something from [src]."),
+			span_userdanger("[user] attempts to feed you something from [src]."),
+		)
 		if(!do_after(user, 3 SECONDS, target_mob))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!reagents || !reagents.total_volume)
-			return // The drink might be empty after the delay, such as by spam-feeding
-		target_mob.visible_message(span_danger("[user] feeds [target_mob] something from [src]."), \
-					span_userdanger("[user] feeds you something from [src]."))
+			return ITEM_INTERACT_BLOCKING // The drink might be empty after the delay, such as by spam-feeding
+		target_mob.visible_message(
+			span_danger("[user] feeds [target_mob] something from [src]."),
+			span_userdanger("[user] feeds you something from [src]."),
+		)
 		log_combat(user, target_mob, "fed", reagents.get_reagent_log_string())
 	else
 		to_chat(user, span_notice("You swallow a gulp of [src]."))
 
+	. = ITEM_INTERACT_SUCCESS
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = reagent_consumption_method)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc, consumption_sound, rand(10,50), TRUE)
 	if(!iscarbon(target_mob))
-		return
+		return .
 	var/mob/living/carbon/carbon_drinker = target_mob
 	var/list/diseases = carbon_drinker.get_static_viruses()
 	if(!LAZYLEN(diseases))
-		return
+		return .
 	var/list/datum/disease/diseases_to_add = list()
 	for(var/datum/disease/malady as anything in diseases)
 		if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
 			diseases_to_add += malady
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
+	return .
 
 /obj/item/reagent_containers/cup/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	if(!check_allowed_items(target, target_self = TRUE))
-		return NONE
-	if(!spillable)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!is_open_container())
 		return NONE
 
 	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
-		if(!reagents.total_volume)
-			to_chat(user, span_warning("[src] is empty!"))
-			return ITEM_INTERACT_BLOCKING
-
-		if(target.reagents.holder_full())
-			to_chat(user, span_warning("[target] is full."))
-			return ITEM_INTERACT_BLOCKING
-
-		var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
-		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
-		target.update_appearance()
-		return ITEM_INTERACT_SUCCESS
+		return try_refill(target, user)
 
 	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
-		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty and can't be refilled!"))
-			return ITEM_INTERACT_BLOCKING
+		return try_drain(target, user)
 
-		if(reagents.holder_full())
-			to_chat(user, span_warning("[src] is full."))
-			return ITEM_INTERACT_BLOCKING
-
-		var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
-		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
-		target.update_appearance()
-		return ITEM_INTERACT_SUCCESS
+	if(isliving(target))
+		return try_drink(target, user)
 
 	return NONE
 
 /obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
-	if(user.combat_mode)
-		return NONE
-	if(!check_allowed_items(target, target_self = TRUE))
-		return NONE
-	if(!spillable)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!is_open_container())
 		return NONE
 
 	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
-		if(!target.reagents.total_volume)
-			to_chat(user, span_warning("[target] is empty!"))
-			return ITEM_INTERACT_BLOCKING
-
-		if(reagents.holder_full())
-			to_chat(user, span_warning("[src] is full."))
-			return ITEM_INTERACT_BLOCKING
-
-		var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
-		SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
-		target.update_appearance()
-		return ITEM_INTERACT_SUCCESS
+		return try_drain(target, user)
 
 	return NONE
 
-/obj/item/reagent_containers/cup/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/hotness = attacking_item.get_temperature()
-	if(hotness && reagents)
-		reagents.expose_temperature(hotness)
-		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
-		return TRUE
-
-	//Cooling method
-	if(istype(attacking_item, /obj/item/extinguisher))
-		var/obj/item/extinguisher/extinguisher = attacking_item
-		if(extinguisher.safety)
-			return TRUE
-		if (extinguisher.reagents.total_volume < 1)
-			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return TRUE
-		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
-		reagents.expose_temperature(cooling)
-		to_chat(user, span_notice("You cool \the [src] with the [attacking_item]!"))
-		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
-		extinguisher.reagents.remove_all(1)
-		return TRUE
-
-	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
-		var/obj/item/food/egg/attacking_egg = attacking_item
-		if(!reagents)
-			return TRUE
+/obj/item/reagent_containers/cup/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_open_container())
+		return NONE
+	if(istype(tool, /obj/item/food/egg)) //breaking eggs
 		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
-		else
-			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
-			qdel(attacking_egg)
-		return TRUE
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You break [tool] in [src]."))
+		tool.reagents.trans_to(src, tool.reagents.total_volume, transferred_by = user)
+		qdel(tool)
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /*
  * On accidental consumption, make sure the container is partially glass, and continue to the reagent_container proc
@@ -294,7 +232,7 @@
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 1.5)
-	reagent_flags = OPENCONTAINER | NO_REACT
+	initial_reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
 
@@ -409,21 +347,21 @@
 	melee = 10
 	acid = 50
 
-/obj/item/reagent_containers/cup/bucket/attackby(obj/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/mop))
+/obj/item/reagent_containers/cup/bucket/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mop))
 		if(reagents.total_volume < 1)
 			user.balloon_alert(user, "empty!")
-		else
-			reagents.trans_to(O, 5, transferred_by = user)
-			user.balloon_alert(user, "doused [O]")
-			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		return
-	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
-		to_chat(user, span_notice("You add [O] to [src]."))
-		qdel(O)
+			return ITEM_INTERACT_BLOCKING
+		reagents.trans_to(tool, 5, transferred_by = user)
+		user.balloon_alert(user, "doused [tool]")
+		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
+		return ITEM_INTERACT_SUCCESS
+	if(isprox(tool)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
+		to_chat(user, span_notice("You add [tool] to [src]."))
+		qdel(tool)
 		var/obj/item/bot_assembly/cleanbot/new_cleanbot_ass = new(null, src)
 		user.put_in_hands(new_cleanbot_ass)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 
@@ -434,11 +372,11 @@
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
 			reagents.expose(user, TOUCH)
 			reagents.clear_reagents()
-		reagents.flags = NONE
+		update_container_flags(NONE)
 
 /obj/item/reagent_containers/cup/bucket/dropped(mob/user)
 	. = ..()
-	reagents.flags = initial(reagent_flags)
+	reset_container_flags()
 
 /obj/item/reagent_containers/cup/bucket/equip_to_best_slot(mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
@@ -467,8 +405,7 @@
 	volume = 100
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
-	reagent_flags = OPENCONTAINER
-	spillable = TRUE
+	initial_reagent_flags = OPENCONTAINER
 	var/obj/item/grinded
 
 /obj/item/reagent_containers/cup/mortar/click_alt(mob/user)
@@ -479,43 +416,45 @@
 	balloon_alert(user, "ejected")
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/reagent_containers/cup/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
-	..()
-	if(istype(I,/obj/item/pestle))
-		if(grinded)
-			if(user.getStaminaLoss() > 50)
-				to_chat(user, span_warning("You are too tired to work!"))
-				return
-			var/list/choose_options = list(
-				"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
-				"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
-			)
-			var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
-			if(grinded && in_range(src, user) && user.is_holding(I) && picked_option)
-				to_chat(user, span_notice("You start grinding..."))
-				if(do_after(user, 2.5 SECONDS, target = src))
-					user.adjustStaminaLoss(40)
-					switch(picked_option)
-						if("Juice")
-							return juice_item(grinded, user)
-						if("Grind")
-							return grind_item(grinded, user)
-						else
-							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
-							return
-			return
-		else
+/obj/item/reagent_containers/cup/mortar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(istype(tool, /obj/item/pestle))
+		if(!grinded)
 			to_chat(user, span_warning("There is nothing to grind!"))
-			return
+			return ITEM_INTERACT_BLOCKING
+		if(user.getStaminaLoss() > 50)
+			to_chat(user, span_warning("You are too tired to work!"))
+			return ITEM_INTERACT_BLOCKING
+		var/list/choose_options = list(
+			"Grind" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind"),
+			"Juice" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_juice")
+		)
+		var/picked_option = show_radial_menu(user, src, choose_options, radius = 38, require_near = TRUE)
+		if(!grinded || !in_range(src, user) || !user.is_holding(tool) || !picked_option)
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You start grinding..."))
+		if(!do_after(user, 2.5 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		user.adjustStaminaLoss(40)
+		switch(picked_option)
+			if("Juice")
+				return juice_item(grinded, user) ? ITEM_INTERACT_BLOCKING : ITEM_INTERACT_SUCCESS
+			if("Grind")
+				return grind_item(grinded, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
+		return ITEM_INTERACT_BLOCKING
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
-		return
-	if(!I.blend_requirements(src))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.blend_requirements(src))
 		to_chat(user, span_warning("Cannot grind this!"))
-		return
-	if(length(I.grind_results) || I.reagents?.total_volume)
-		I.forceMove(src)
-		grinded = I
+		return ITEM_INTERACT_BLOCKING
+	if((length(tool.grind_results) || tool.reagents?.total_volume) && user.transferItemToLoc(tool, src))
+		grinded = tool
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/reagent_containers/cup/mortar/blended(obj/item/blended_item, grinded)
 	src.grinded = null

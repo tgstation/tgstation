@@ -55,6 +55,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		actions += "adjust_sensor"
 	if(jumpsuit.can_adjust)
 		actions += "adjust_jumpsuit"
+	if(length(jumpsuit.attached_accessories))
+		actions += "strip_accessory"
 
 	return actions
 
@@ -70,6 +72,8 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 			do_adjust_jumpsuit(source, user, jumpsuit)
 		if("adjust_sensor")
 			do_adjust_sensor(source, user, jumpsuit)
+		if("strip_accessory")
+			do_strip_accessory(source, user, jumpsuit)
 		else
 			stack_trace("Unknown action key: [action_key] for [type]")
 
@@ -114,15 +118,43 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	to_chat(source, span_notice("[user] is trying to adjust your [jumpsuit.name]'s sensor."))
-	if(!do_after(user, jumpsuit.strip_delay * 0.5, source)) // takes the same amount of time as adjusting it
+	if(!do_after(user, jumpsuit.strip_delay * 0.5, source) || !jumpsuit.set_sensor_mode(new_mode)) // takes the same amount of time as adjusting it
 		source.balloon_alert(user, "failed!")
 		return
 	source.balloon_alert(user, "changed sensors")
-	jumpsuit.sensor_mode = new_mode
 	to_chat(source, span_notice("[user] successfully adjusted your [jumpsuit.name]'s sensor."))
-	if(ishuman(source))
-		var/mob/living/carbon/human/humano = source
-		humano.update_suit_sensors()
+
+/datum/strippable_item/mob_item_slot/jumpsuit/proc/do_strip_accessory(atom/source, mob/user, obj/item/clothing/under/jumpsuit)
+	var/list/accessory_choices = list()
+	for(var/obj/item/clothing/accessory/jumpsuit_accessory as anything in jumpsuit.attached_accessories)
+		if(!istype(jumpsuit_accessory))
+			continue
+		accessory_choices[jumpsuit_accessory.name] += jumpsuit_accessory
+
+	var/chosen_accessory_name = tgui_input_list(user, "Select which accessory to strip", "Select Accessory", accessory_choices)
+	var/obj/item/clothing/accessory/chosen_accessory = accessory_choices[chosen_accessory_name]
+	if(isnull(chosen_accessory))
+		return
+
+	if(!user.Adjacent(source))
+		source.balloon_alert(user, "can't reach!")
+		return
+
+	to_chat(source, span_notice("[user] is trying to take [chosen_accessory] off of [jumpsuit]!"))
+	if(!do_after(user, chosen_accessory.strip_delay, source))
+		source.balloon_alert(user, "failed!")
+		return
+
+	to_chat(source, span_notice("[user] has taken [chosen_accessory] off of [jumpsuit]."))
+	jumpsuit.remove_accessory(chosen_accessory)
+	jumpsuit.update_appearance()
+	chosen_accessory.forceMove(jumpsuit.drop_location())
+
+	if(!ismob(source))
+		return
+
+	var/mob/mob_source = source
+	mob_source.update_worn_undersuit()
 
 /datum/strippable_item/mob_item_slot/suit
 	key = STRIPPABLE_ITEM_SUIT

@@ -70,14 +70,14 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 	switch(action)
 		if("set_num_players")
 			var/old_num = num_players
-			num_players = text2num(params["num_players"])
+			num_players = max(text2num(params["num_players"]), 1)
 			if(old_num != num_players)
 				update_reports()
 			return TRUE
 
 		if("set_tier")
 			var/old_tier = tier
-			tier = text2num(params["tier"])
+			tier = max(text2num(params["tier"]), 1)
 			if(old_tier != tier)
 				update_reports()
 			return TRUE
