@@ -1,0 +1,4 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - bugfix: "Fixes endless Neurine trauma farming & adds unit test to keep it safe"
