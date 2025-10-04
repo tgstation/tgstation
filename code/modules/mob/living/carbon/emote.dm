@@ -101,7 +101,7 @@
 	return ..()
 
 /datum/emote/living/carbon/mchitter
-	key = "mchitter"
+	key = "chitter"
 	key_third_person = "chitters"
 	message = "chitters!"
 	message_mime = "chitters silently?"
@@ -121,7 +121,7 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/msqueak
-	key = "msqueak"
+	key = "squeak"
 	key_third_person = "squeaks"
 	message = "squeaks!"
 	message_mime = "squeaks silently?"
