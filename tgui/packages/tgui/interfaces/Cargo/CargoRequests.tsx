@@ -19,6 +19,7 @@ export function CargoRequests(props) {
             <Table.Cell>Object</Table.Cell>
             <Table.Cell>Orderer</Table.Cell>
             <Table.Cell>Reason</Table.Cell>
+            <Table.Cell>Account</Table.Cell>
             <Table.Cell>Cost</Table.Cell>
             {(!requestonly || !!can_send) && !!can_approve_requests && (
               <Table.Cell>Actions</Table.Cell>
@@ -34,6 +35,9 @@ export function CargoRequests(props) {
               </Table.Cell>
               <Table.Cell color="lightgray" width="25%">
                 <i>{decodeHtmlEntities(request.reason)}</i>
+              </Table.Cell>
+              <Table.Cell collapsing>
+                {request.account}
               </Table.Cell>
               <Table.Cell collapsing color="gold">
                 {formatMoney(request.cost)} cr
