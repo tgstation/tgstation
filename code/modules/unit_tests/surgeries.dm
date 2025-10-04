@@ -139,7 +139,7 @@
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/claymore/sword = allocate(/obj/item/claymore/sword)
 
-	patient.make_item_prosthetic(sword, BODY_ZONE_R_ARM)
+	patient.make_item_prosthetic(sword)
 
 	TEST_ASSERT(HAS_TRAIT_FROM(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Prosthetic item attachment failed! Item does not have the nodrop trait")
 
