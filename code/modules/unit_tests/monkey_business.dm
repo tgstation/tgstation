@@ -30,11 +30,10 @@
 		if(monkey_id % monkey_angry_nth == 0) // BLOOD FOR THE BLOOD GODS
 			var/obj/next_weapon = monkey_weapon_list[monkey_weapon_index]
 			monkey_weapon_index = (monkey_weapon_index % length(monkey_weapon_list)) + 1
-			if(ispath(next_weapon, /obj/item/gun))
-				monkey.ai_controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
-
 			monkey.put_in_active_hand(new next_weapon())
 			new /datum/ai_controller/monkey/angry(monkey)
+			if(ispath(next_weapon, /obj/item/gun))
+				monkey.ai_controller.set_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 		else
 			new /datum/ai_controller/monkey(monkey)
 		monkey.ai_controller.set_blackboard_key(BB_MONKEY_TARGET_MONKEYS, TRUE)
