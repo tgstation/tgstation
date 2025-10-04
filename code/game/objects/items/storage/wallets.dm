@@ -26,12 +26,10 @@
 	LAZYCLEARLIST(combined_access)
 
 	front_id = null
-	var/is_magnetic_found = FALSE
 	for(var/obj/item/card/id/id_card in contents)
 		// Certain IDs can forcibly jump to the front so they can disguise other cards in wallets. Chameleon/Agent ID cards are an example of this.
-		if(!is_magnetic_found && HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
+		if(HAS_TRAIT(id_card, TRAIT_MAGNETIC_ID_CARD))
 			front_id = id_card
-			is_magnetic_found = TRUE
 
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
