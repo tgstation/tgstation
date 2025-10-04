@@ -270,7 +270,8 @@
 
 			var/cost = SSstock_market.materials_prices[material_bought] * quantity
 
-			var/list/things_to_order = list(sheet_to_buy = quantity)
+			var/list/things_to_order = list()
+			things_to_order[sheet_to_buy] = quantity
 
 			// We want to count how many stacks of all sheets we're ordering to make sure they don't exceed the limit of 10
 			// If we already have a custom order on SSshuttle, we should add the things to order to that order
