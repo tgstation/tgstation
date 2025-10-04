@@ -45,7 +45,6 @@
 		/obj/effect/spawner/abandoned_crate/bananium = 2,
 		/obj/item/toy/plush/beeplushie = 2,
 		/obj/item/defibrillator/compact = 2,
-		/obj/item/spess_knife = 2,
 		/obj/effect/spawner/abandoned_crate/weed = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
 		/obj/item/melee/energy/sword/bananium = 1,
