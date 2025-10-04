@@ -338,8 +338,8 @@
 		var/list/filter_info = filter_data[index]
 		if (filter_info["name"] != name)
 			continue
-		filter_data -= filter_info
-		filter_cache -= filter_cache[index]
+		filter_data.Cut(index, index + 1)
+		filter_cache.Cut(index, index + 1)
 		break
 
 	BINARY_INSERT_DEFINE(list(copied_parameters), filter_data, SORT_VAR_NO_TYPE, copied_parameters, SORT_PRIORITY_INDEX, COMPARE_KEY)
