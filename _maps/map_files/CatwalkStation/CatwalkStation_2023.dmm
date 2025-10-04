@@ -17431,10 +17431,13 @@
 /turf/open/floor/glass,
 /area/station/science/zoo)
 "fei" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/door/airlock/research/glass{
-	name = "Slime Euthanization Chamber"
+/obj/machinery/door/airlock/research{
+	glass = 1;
+	name = "Slime Euthanization Chamber";
+	opacity = 0
 	},
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "feA" = (
