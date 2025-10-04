@@ -161,6 +161,7 @@
 			var/obj/item/stack/stack_result = result
 			mult = 1 / stack_result.amount
 		var/what_it_should_be = result.transcribe_materials_list(mult)
+		var/what_it_is = copycat.transcribe_materials_list(mult)
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
 			what_it_should_be += " (you can round a bit for values above 100)"
@@ -172,7 +173,7 @@
 		else
 			add_info = "set the requirements_mats_blacklist variable of [recipe.type] or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it"
 
-		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be]. \
+		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be] (current value: [what_it_is]). \
 			Otherwise [add_info]")
 
 	delete_components(spawned_components)
