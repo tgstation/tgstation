@@ -228,6 +228,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 /obj/item/stack/sheet/mineral/gold/fifty
 	amount = 50
 
+
 /*
  * Silver
  */
