@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "New examine tags for the antimagic component to give players specific feedback on an item's magical resistance."

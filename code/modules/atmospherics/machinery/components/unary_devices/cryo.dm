@@ -20,6 +20,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
+	vis_flags = VIS_INHERIT_PLANE
 	/// The current occupant being presented
 	var/mob/living/occupant
 

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Colorblindness and eye blur from welding should no longer be permanent"
