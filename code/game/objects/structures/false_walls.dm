@@ -37,6 +37,9 @@
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
+
+/obj/structure/falsewall/PersistentInitialize()
+	. = ..()
 	update_appearance()
 
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
