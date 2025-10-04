@@ -134,7 +134,6 @@
 	current_wisps += new_wisp
 	user.vis_contents += new_wisp
 	RegisterSignal(new_wisp, COMSIG_QDELETING, PROC_REF(on_wisp_delete))
-	var/wisp_spots = list()
 	for (var/wisp_index in 1 to length(current_wisps))
 		var/obj/effect/overlay/blood_wisp/wisp = current_wisps[wisp_index]
 		var/spawn_index = floor(length(animation_steps) / length(current_wisps) * wisp_index)
