@@ -36,6 +36,7 @@ type Pai = {
   name: string;
   transmit: BooleanLike;
   receive: BooleanLike;
+  leashed: BooleanLike;
   range: number;
 };
 
@@ -162,6 +163,7 @@ const PaiOptions = (props) => {
       name,
       transmit,
       receive,
+      leashed,
       range,
     },
   } = data;
@@ -192,6 +194,15 @@ const PaiOptions = (props) => {
             selected={can_holo}
           >
             Toggle
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Leash">
+          <Button
+            icon={leashed ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_leash')}
+            selected={leashed}
+          >
+            {leashed ? 'Unleash' : 'Leash'}
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Holoform Range">
