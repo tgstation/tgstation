@@ -28,8 +28,9 @@
 		return NONE
 
 	var/obj/renamed_obj = interacting_with
+	var/obj/item/tool = source
 
-	if(!(renamed_obj.obj_flags & UNIQUE_RENAME))
+	if(!(renamed_obj.obj_flags & UNIQUE_RENAME) || !user.can_write(tool))
 		return NONE
 	INVOKE_ASYNC(src, PROC_REF(async_rename), user, renamed_obj, !(renamed_obj.obj_flags & RENAME_NO_DESC))
 	return ITEM_INTERACT_SUCCESS
