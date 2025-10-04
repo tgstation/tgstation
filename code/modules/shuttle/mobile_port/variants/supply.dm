@@ -282,9 +282,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	var/presale_points = cargo_budget.account_balance
 
-	if(!GLOB.exports_list.len) // No exports list? Generate it!
-		setupExports()
-
 	var/msg = ""
 
 	var/datum/export_report/report = new
