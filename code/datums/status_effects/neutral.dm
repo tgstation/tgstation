@@ -265,7 +265,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/taker)
 	SIGNAL_HANDLER
-	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
+	if(owner.CanReach(taker) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
 		return
 
 	to_chat(taker, span_warning("You moved out of range of [owner]!"))
@@ -276,7 +276,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/checking_taker as anything in possible_takers)
-		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
+		if(!istype(checking_taker) || (!owner.CanReach(checking_taker) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
 /// We lost the item, give it up
