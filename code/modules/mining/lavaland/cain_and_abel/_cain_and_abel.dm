@@ -32,8 +32,6 @@
 	var/damage_boost = 1.15
 	/// Animation positions used by wisps
 	var/static/list/animation_steps
-	/// Spawn positions from wisps
-	var/static/list/spawn_positions
 	/// What throw mode we're using
 	var/throw_mode = THROW_MODE_CRYSTALS
 	/// Flames we have up!
@@ -48,19 +46,12 @@
 		return
 
 	animation_steps = list(
-		new /datum/abel_wisp_frame(-14, -2, MOB_LAYER, EASE_OUT, EASE_IN),
-		new /datum/abel_wisp_frame(0, -6, ABOVE_MOB_LAYER, EASE_IN, EASE_OUT),
-		new /datum/abel_wisp_frame(14, -2, MOB_LAYER, EASE_OUT, EASE_IN),
-		new /datum/abel_wisp_frame(0, 2, BELOW_MOB_LAYER, EASE_IN, EASE_OUT),
-	)
-
-	spawn_positions = list(
-		new /datum/abel_wisp_frame(-14, -2, MOB_LAYER, smooth_to = 1),
-		new /datum/abel_wisp_frame(-5, -5, ABOVE_MOB_LAYER, smooth_to = 2, smooth_delay = 0.2 SECONDS),
-		new /datum/abel_wisp_frame(5, -5, ABOVE_MOB_LAYER, smooth_to = 3, smooth_delay = 0.4 SECONDS),
-		new /datum/abel_wisp_frame(14, -2, MOB_LAYER, smooth_to = 3),
-		new /datum/abel_wisp_frame(5, 1, BELOW_MOB_LAYER, smooth_to = 4, smooth_delay = 0.2 SECONDS),
-		new /datum/abel_wisp_frame(-5, 1, BELOW_MOB_LAYER, smooth_to = 1, smooth_delay = 0.4 SECONDS),
+		new /datum/abel_wisp_frame(-18, -2, MOB_LAYER, EASE_OUT, EASE_IN),
+		new /datum/abel_wisp_frame(-6, -6, ABOVE_MOB_LAYER, EASE_IN, EASE_OUT),
+		new /datum/abel_wisp_frame(6, -6, ABOVE_MOB_LAYER, EASE_IN, EASE_OUT),
+		new /datum/abel_wisp_frame(18, -2, MOB_LAYER, EASE_OUT, EASE_IN),
+		new /datum/abel_wisp_frame(6, 2, BELOW_MOB_LAYER, EASE_IN, EASE_OUT),
+		new /datum/abel_wisp_frame(-6, 2, BELOW_MOB_LAYER, EASE_IN, EASE_OUT),
 	)
 
 /obj/item/cain_and_abel/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -144,57 +135,36 @@
 	user.vis_contents += new_wisp
 	RegisterSignal(new_wisp, COMSIG_QDELETING, PROC_REF(on_wisp_delete))
 	var/wisp_spots = list()
-	for (var/index in 1 to length(current_wisps))
-		animate_wisp(index, current_wisps[index], wisp_spots)
+	for (var/wisp_index in 1 to length(current_wisps))
+		var/obj/effect/overlay/blood_wisp/wisp = current_wisps[wisp_index]
+		var/spawn_index = floor(length(animation_steps) / length(current_wisps) * wisp_index)
+		var/datum/abel_wisp_frame/spawn_position = animation_steps[spawn_index]
 
-/obj/item/cain_and_abel/proc/animate_wisp(wisp_index, obj/effect/overlay/blood_wisp/wisp, list/wisp_spots)
-	var/spawn_index = round(length(spawn_positions) / length(current_wisps) * wisp_index, 1)
-	// Ensure no two wisps overlap
-	while (wisp_spots["[spawn_index]"])
-		spawn_index = spawn_index % length(spawn_positions) + 1
-	wisp_spots["[spawn_index]"] = TRUE
-	var/datum/abel_wisp_frame/spawn_position = spawn_positions[spawn_index]
-	var/datum/abel_wisp_frame/target_position = animation_steps[spawn_position.smooth_to]
+		// Latest added wisp is teleported to its spawn position, others animate from their current position
+		if (wisp_index == length(current_wisps))
+			wisp.pixel_w = spawn_position.x
+			wisp.pixel_z = spawn_position.y
+			wisp.layer = spawn_position.layer
+		else
+			animate(wisp, tag = "wisp_anim_x")
+			animate(wisp, tag = "wisp_anim_y")
 
-	// Latest added wisp is teleported to its spawn position, others animate from their current position
-	if (wisp_index == length(current_wisps))
-		wisp.pixel_w = spawn_position.x
-		wisp.pixel_z = spawn_position.y
-		wisp.layer = spawn_position.layer
-	else
-		animate(wisp, tag = "wisp_anim_x")
-		animate(wisp, tag = "wisp_anim_y")
+		var/start_index = spawn_index % length(animation_steps) + 1
+		var/datum/abel_wisp_frame/position = animation_steps[start_index]
+		animate(wisp, pixel_w = position.x, layer = position.layer, time = 0.6 SECONDS, loop = -1, tag = "wisp_anim_x")
+		// We need to animate x and y coordinates separately as they have different easing steps
+		for (var/frame_index in 1 to length(animation_steps) - 1)
+			// Get actual index starting from our *next* animation step, not initial position
+			var/anim_index = (start_index + frame_index - 1) % length(animation_steps) + 1
+			position = animation_steps[anim_index]
+			animate(time = 0.6 SECONDS, pixel_w = position.x, layer = position.layer, easing = SINE_EASING | position.x_easing)
 
-	if (!target_position.smooth_delay)
-		run_wisp_anim(spawn_position.smooth_to, wisp_index)
-		return
-
-	animate(wisp, time = target_position.smooth_delay, pixel_w = target_position.x, layer = target_position.layer, easing = SINE_EASING | target_position.x_easing, tag = "wisp_anim_x")
-	animate(wisp, time = target_position.smooth_delay, pixel_z = target_position.y, easing = SINE_EASING | target_position.y_easing, tag = "wisp_anim_y")
-	addtimer(CALLBACK(src, PROC_REF(run_wisp_anim), spawn_position.smooth_to, wisp_index), target_position.smooth_delay)
-
-/obj/item/cain_and_abel/proc/run_wisp_anim(start_index, wisp_index)
-	// Ensure we haven't gotten rid of that wisp yet
-	if (length(current_wisps) < wisp_index)
-		return
-
-	start_index = start_index % length(animation_steps) + 1
-	var/obj/effect/overlay/blood_wisp/wisp = current_wisps[wisp_index]
-	var/datum/abel_wisp_frame/position = animation_steps[start_index]
-	animate(wisp, pixel_w = position.x, layer = position.layer, time = 0.6 SECONDS, loop = -1, tag = "wisp_anim_x")
-	// We need to animate x and y coordinates separately as they have different easing steps
-	for (var/frame_index in 1 to length(animation_steps) - 1)
-		// Get actual index starting from our *next* animation step, not initial position
-		var/anim_index = (start_index + frame_index - 1) % length(animation_steps) + 1
-		position = animation_steps[anim_index]
-		animate(time = 0.6 SECONDS, pixel_w = position.x, layer = position.layer, easing = SINE_EASING | position.x_easing)
-
-	animate(wisp, time = 0.6 SECONDS, pixel_z = position.y, loop = -1, tag = "wisp_anim_y")
-	for (var/frame_index in 1 to length(animation_steps) - 1)
-		// Get actual index starting from our *next* animation step, not initial position
-		var/anim_index = (start_index + frame_index - 1) % length(animation_steps) + 1
-		position = animation_steps[anim_index]
-		animate(time = 0.6 SECONDS, pixel_z = position.y, easing = SINE_EASING | position.y_easing)
+		animate(wisp, time = 0.6 SECONDS, pixel_z = position.y, loop = -1, tag = "wisp_anim_y")
+		for (var/frame_index in 1 to length(animation_steps) - 1)
+			// Get actual index starting from our *next* animation step, not initial position
+			var/anim_index = (start_index + frame_index - 1) % length(animation_steps) + 1
+			position = animation_steps[anim_index]
+			animate(time = 0.6 SECONDS, pixel_z = position.y, easing = SINE_EASING | position.y_easing)
 
 /obj/item/cain_and_abel/proc/on_wisp_delete(datum/source)
 	SIGNAL_HANDLER
@@ -219,15 +189,11 @@
 	var/layer = MOB_LAYER
 	var/x_easing = NONE
 	var/y_easing = NONE
-	var/smooth_to = 0
-	var/smooth_delay = 0
 
-/datum/abel_wisp_frame/New(x, y, layer, x_easing, y_easing, smooth_to, smooth_delay)
+/datum/abel_wisp_frame/New(x, y, layer, x_easing, y_easing)
 	. = ..()
 	src.x = x
 	src.y = y
 	src.layer = layer
 	src.x_easing = x_easing
 	src.y_easing = y_easing
-	src.smooth_to = smooth_to
-	src.smooth_delay = smooth_delay
