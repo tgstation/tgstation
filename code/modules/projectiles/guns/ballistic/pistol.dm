@@ -65,7 +65,7 @@
 	for an underbarrel-mounted disruptor, similar in operation to the standalone SC/FISHER. Chambered in 10mm."
 	desc_controls = "Right-click to use the underbarrel disruptor. Two shots maximum between self-charges."
 	icon_state = "pistol_evil_fisher"
-	suppressed = TRUE
+	suppressed = SUPPRESSED_QUIET
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	var/obj/item/gun/energy/recharge/fisher/underbarrel
