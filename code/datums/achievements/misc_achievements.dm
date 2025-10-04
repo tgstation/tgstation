@@ -244,3 +244,9 @@
 	desc = "Nutritionists often recommend a balanced and varied diet. However that clearly isn't the case for some creatures."
 	database_id = MEDAL_SHARKDRAGON
 	icon_state = "dragon_plus_fish"
+
+/datum/award/achievement/misc/finger_on_the_eject_button
+	name = "Finger on the Eject Button"
+	desc = "When the going gets rough, you always have a little trap door out of here!"
+	database_id = MEDAL_QUITTER
+	icon_state = "default"

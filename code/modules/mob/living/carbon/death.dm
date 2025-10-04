@@ -90,6 +90,8 @@
 	var/obj/item/organ/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(userbrain)
 		userbrain.suicided = suicide_state
+	if(ROUND_TIME < 10 MINUTES)
+		src.client?.give_award(/datum/award/finger_on_the_eject_button, src)
 
 /mob/living/carbon/can_suicide()
 	if(!..())
