@@ -2840,7 +2840,7 @@
 /area/station/hallway/primary/central)
 "aUB" = (
 /obj/structure/closet/wardrobe/black,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -8725,7 +8725,7 @@
 "des" = (
 /obj/structure/closet/lasertag/blue,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "deY" = (
@@ -12657,7 +12657,7 @@
 /area/station/maintenance/solars/port/aft)
 "euF" = (
 /obj/structure/closet/wardrobe/white,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -13267,7 +13267,7 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/structure/window/spawner/directional/east,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "eEG" = (
@@ -14884,7 +14884,7 @@
 /area/space/nearstation)
 "flH" = (
 /obj/structure/closet/boxinggloves,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation)
 "flN" = (
@@ -17445,7 +17445,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "gdf" = (
@@ -18068,7 +18068,7 @@
 "gpR" = (
 /obj/machinery/light/dim/directional/south,
 /obj/structure/closet/emcloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/textured,
 /area/station/hallway/primary/central)
 "gpV" = (
@@ -21434,7 +21434,7 @@
 /obj/structure/closet/masks,
 /obj/structure/window/spawner/directional/west,
 /obj/machinery/light/directional/north,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "huj" = (
@@ -26196,7 +26196,7 @@
 /area/station/science/xenobiology)
 "jgB" = (
 /obj/structure/closet/emcloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/hallway/primary/central)
@@ -39900,7 +39900,7 @@
 /area/station/science/xenobiology)
 "nLb" = (
 /obj/structure/closet/wardrobe/grey,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -42704,7 +42704,7 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/east,
 /obj/machinery/camera/autoname/directional/north,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "oOe" = (
@@ -45691,7 +45691,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/south,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "pMG" = (
@@ -54974,7 +54974,7 @@
 /area/station/science/genetics)
 "sPi" = (
 /obj/structure/closet/firecloset,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/textured,
 /area/station/hallway/primary/central)
 "sPv" = (
@@ -55504,7 +55504,7 @@
 /area/station/service/bar)
 "sYu" = (
 /obj/structure/closet/crate/wooden/toy,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
@@ -57440,7 +57440,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "tGR" = (
@@ -58661,7 +58661,7 @@
 /obj/structure/closet/lasertag/red,
 /obj/structure/window/spawner/directional/east,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "ubV" = (
@@ -62687,7 +62687,7 @@
 /area/station/commons/locker)
 "vAE" = (
 /obj/structure/closet/wardrobe/green,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
@@ -62740,7 +62740,7 @@
 	dir = 1
 	},
 /obj/structure/closet/boxinggloves,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "vCy" = (
@@ -65860,7 +65860,7 @@
 /area/station/science/lobby)
 "wED" = (
 /obj/structure/closet/masks,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white/textured_large,
 /area/station/commons/fitness/recreation)
 "wEF" = (
@@ -70128,7 +70128,7 @@
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "yeS" = (
 /obj/structure/closet/crate/grave,
-/obj/effect/landmark/start/hangover/closet,
+/obj/effect/landmark/start/hangover,
 /turf/open/misc/asteroid,
 /area/station/asteroid)
 "yfl" = (
