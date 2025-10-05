@@ -152,7 +152,7 @@
 
 /obj/item/gun/energy/recharge/fisher/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/examine_lore, \
+	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The SC/FISHER is an illegally-modified kinetic accelerator that's been cut down and refit into a miniature energy gun chassis, \
 			optimized for temporary, but effective, electronic warfare.<br>\
