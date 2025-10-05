@@ -24,23 +24,24 @@
 		/obj/item/lighter = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 1,
 		/obj/item/cigarette/rollie = 3
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/diamonds
 	loot = list(
 		/obj/item/stack/ore/diamond = 10
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/posters
 	loot = list(
 		/obj/item/poster/random_contraband = 5
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/boda
 	loot = list(
 		/obj/item/vending_refill/sovietsoda = 1,
 		/obj/item/circuitboard/machine/vendor = 1
-	)
+		)
+
 /obj/effect/spawner/abandoned_crate/boda/Initialize(mapload)
 	. = ..()
 
@@ -50,7 +51,7 @@
 /obj/effect/spawner/abandoned_crate/snappop
 	loot = list(
 		/obj/item/toy/snappop/phoenix = 5
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/mecha
 	loot = list()
@@ -66,24 +67,24 @@
 		/obj/item/borg/upgrade/modkit/aoe/mobs = 1,
 		/obj/item/clothing/suit/space = 1,
 		/obj/item/clothing/head/helmet/space = 1
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/kitty
 	loot = list(
 		/obj/item/clothing/head/costume/kitty = 5,
 		/obj/item/clothing/neck/petcollar = 5
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/fursuit
 	loot = list(
 		/obj/item/clothing/suit/costume/wellworn_shirt/graphic/ian = 1,
 		/obj/item/clothing/suit/hooded/ian_costume = 1
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/gibtonite
 	loot = list(
 		/obj/item/gibtonite = 1,
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/gibtonite/Initialize(mapload)
 	. = ..()
@@ -95,12 +96,12 @@
 /obj/effect/spawner/abandoned_crate/bluespace_crystal
 	loot = list(
 		/obj/item/stack/ore/bluespace_crystal = 5
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/bananium
 	loot = list(
 		/obj/item/stack/sheet/mineral/bananium = 10
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/weed
 	loot = list()
@@ -119,12 +120,12 @@
 /obj/effect/spawner/abandoned_crate/bloodroaches
 	loot = list(
 		/mob/living/basic/cockroach/bloodroach = 30
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/mimic
 	loot = list(
 		/mob/living/basic/mimic/crate = 1
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/mimic/Initialize(mapload)
 	. = ..()
@@ -137,7 +138,7 @@
 	loot = list(
 		/obj/item/banhammer = 1,
 		/obj/effect/mine/sound/bwoink = 3
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/bwoink/Initialize(mapload)
 	. = ..()
@@ -154,9 +155,9 @@
 		/obj/item/gun/ballistic/automatic/toy = 1,
 		/obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted = 1,
 		/obj/item/ammo_box/foambox = 1
-	)
+		)
 
 /obj/effect/spawner/abandoned_crate/bees
 	loot = list(
 		/mob/living/basic/bee/toxin = 3
-	)
+		)
