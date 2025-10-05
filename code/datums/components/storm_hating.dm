@@ -9,6 +9,9 @@
 		/datum/weather/void_storm,
 	)
 
+	/// Does this element delete itself if someone logs in?
+	var/clears_on_login = TRUE
+
 /datum/component/storm_hating/Initialize()
 	. = ..()
 	if (!isatom(parent))
@@ -19,6 +22,7 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(on_area_entered))
 	RegisterSignal(parent, COMSIG_EXIT_AREA, PROC_REF(on_area_exited))
+	RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 /datum/component/storm_hating/UnregisterFromParent()
 	. = ..()
@@ -45,4 +49,10 @@
 	if (!isturf(parent_atom.loc))
 		return
 	parent_atom.fade_into_nothing(life_time = 3 SECONDS, fade_time = 2 SECONDS)
+	qdel(src)
+
+/datum/component/storm_hating/proc/on_login(datum/source)
+	SIGNAL_HANDLER
+	if(!clears_on_login)
+		return
 	qdel(src)
