@@ -1,3 +1,27 @@
+/obj/machinery/big_manipulator/proc/on_turf_atom_entered(turf/t, atom/movable/a, datum/interaction_point/point)
+	SIGNAL_HANDLER
+	check_triggered_point(point)
+
+/obj/machinery/big_manipulator/proc/on_turf_atom_exited(turf/t, atom/movable/a, datum/interaction_point/point)
+	SIGNAL_HANDLER
+	check_triggered_point(point)
+
+/// Re-scans the points after something has changed.
+/obj/machinery/big_manipulator/proc/check_triggered_point(datum/interaction_point/point)
+	if(!on && current_task != CURRENT_TASK_IDLE) // if the manipulator is already busy, it will manually run the check once it finishes
+		return
+
+	var/transfer_type = (point in pickup_points ? TRANSFER_TYPE_PICKUP : TRANSFER_TYPE_DROPOFF)
+
+	if(transfer_type == TRANSFER_TYPE_PICKUP)
+		if(find_pickup_candidate_for_pickup_point(point))
+			run_pickup_phase()
+	else
+		if(held_object?.resolve())
+			run_dropoff_phase()
+		else
+			run_pickup_phase()
+
 /// Selects which atom to pick up from this point for interaction with available dropoff points based on the dropoff points.
 /obj/machinery/big_manipulator/proc/find_pickup_candidate_for_pickup_point(datum/interaction_point/pickup_point)
 	if(!pickup_point)
@@ -70,7 +94,7 @@
 		return
 
 	// Allow scheduling if manipulator is idle, none, or if we have a held object (need to drop it off)
-	if(current_task != CURRENT_TASK_IDLE && current_task != CURRENT_TASK_NONE && !held_object)
+	if(current_task != CURRENT_TASK_NONE && !held_object)
 		return
 
 	cycle_timer_running = TRUE
@@ -78,16 +102,6 @@
 		run_dropoff_phase()
 	else
 		run_pickup_phase()
-
-/// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
-/obj/machinery/big_manipulator/proc/handle_no_work_available()
-	// If we're stopping, don't schedule next cycle
-	if(current_task == CURRENT_TASK_STOPPING)
-		complete_stopping_task()
-		return FALSE
-
-	addtimer(CALLBACK(src, PROC_REF(schedule_next_cycle)), CYCLE_SKIP_TIMEOUT)
-	return FALSE
 
 /obj/machinery/big_manipulator/proc/check_pickup_availability(datum/interaction_point/point, atom/movable/target, transfer_type)
 	if(!point)
@@ -108,7 +122,7 @@
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
-	if(!on)
+	if(!on || current_task != CURRENT_TASK_IDLE)
 		return
 
 	cycle_timer_running = FALSE
@@ -116,7 +130,7 @@
 	var/datum/interaction_point/origin_point = find_next_point(TRANSFER_TYPE_PICKUP)
 
 	if(!origin_point)
-		return handle_no_work_available()
+		return
 
 	rotate_to_point(origin_point, PROC_REF(try_interact_with_origin_point), CURRENT_TASK_MOVING_PICKUP)
 	return TRUE
@@ -129,18 +143,18 @@
 		return
 
 	if(!origin_point.interaction_turf)
-		return handle_no_work_available()
+		return
 
 	var/atom/movable/selected = find_pickup_candidate_for_pickup_point(origin_point) // find a suitable item that matches available destinations
 	if(!selected)
-		return handle_no_work_available()
+		return
 
 	if(selected.anchored || HAS_TRAIT(selected, TRAIT_NODROP))
-		return handle_no_work_available()
+		return
 
 	var/obj/item/selected_item = selected
 	if(selected_item.item_flags & (ABSTRACT|DROPDEL))
-		return handle_no_work_available()
+		return
 
 	start_task(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
 	interact_with_origin_point(selected, hand_is_empty)
@@ -164,7 +178,7 @@
 	cycle_timer_running = FALSE
 
 	if(!destination_point)
-		return handle_no_work_available()
+		return
 
 	rotate_to_point(destination_point, PROC_REF(try_interact_with_destination_point), CURRENT_TASK_MOVING_DROPOFF)
 	return TRUE
@@ -403,7 +417,5 @@
 	if(current_task == CURRENT_TASK_STOPPING)
 		complete_stopping_task()
 		return
-
-	current_task = CURRENT_TASK_IDLE
 
 	schedule_next_cycle()
