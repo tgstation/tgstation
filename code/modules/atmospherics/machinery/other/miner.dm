@@ -12,6 +12,9 @@
 	icon_state = "miner"
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.25
+	initialize_directions = NONE
 	var/spawn_id = null
 	var/spawn_temp = T20C
 	/// Moles of gas to spawn per second
@@ -26,9 +29,6 @@
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
-	initialize_directions = NONE
 
 /obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
