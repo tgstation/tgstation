@@ -55,4 +55,3 @@
 	l_hand = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/head/qm
-	palette = COLOR_CARGO_BROWN

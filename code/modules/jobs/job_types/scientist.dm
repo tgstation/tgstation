@@ -52,7 +52,6 @@
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 	messenger = /obj/item/storage/backpack/messenger/science
-	palette = COLOR_SCIENCE_PINK
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()

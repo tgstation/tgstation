@@ -77,8 +77,6 @@
 	implants = list(/obj/item/implant/sad_trombone)
 	skillchips = list(/obj/item/skillchip/job/clown)
 
-	palette = COLOR_PINK
-
 /datum/outfit/job/clown/mod
 	name = "Clown (MODsuit)"
 

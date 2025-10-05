@@ -83,8 +83,6 @@
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-	palette = COLOR_MEDICAL_BLUE
-
 /datum/outfit/job/cmo/mod
 	name = "Chief Medical Officer (MODsuit)"
 

@@ -58,8 +58,6 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 
-	palette = COLOR_ENGINEERING_ORANGE
-
 /datum/outfit/job/atmos/mod
 	name = "Atmospheric Technician (MODsuit)"
 

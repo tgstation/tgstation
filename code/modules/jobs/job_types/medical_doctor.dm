@@ -62,8 +62,6 @@
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-	palette = COLOR_MEDICAL_BLUE
-
 /datum/outfit/job/doctor/mod
 	name = "Medical Doctor (MODsuit)"
 

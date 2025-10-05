@@ -79,8 +79,6 @@
 
 	skillchips = list(/obj/item/skillchip/job/detectives_taste)
 
-	palette = COLOR_DRIED_TAN
-
 /datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visuals_only = FALSE)
 	. = ..()
 	if (human.age < AGE_MINOR)

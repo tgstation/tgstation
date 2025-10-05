@@ -80,8 +80,6 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
-	palette = COLOR_SECURITY_RED
-
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"
 

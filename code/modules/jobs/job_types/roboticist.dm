@@ -57,8 +57,6 @@
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/roboticist)
 
-	palette = "#303030"
-
 /datum/outfit/job/roboticist/mod
 	name = "Roboticist (MODsuit)"
 	suit_store = /obj/item/tank/internals/oxygen

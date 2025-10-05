@@ -156,8 +156,17 @@
 #define SPRITE_ACCESSORY_NONE "None"
 
 // Loadout
-/// Used to make something not recolorable even if it's capable
-#define DONT_GREYSCALE -1
+/// When equipped, applies a job specific palette to the item. Only applicable to GAGS items.
+#define LOADOUT_FLAG_JOB_GREYSCALING (1<<0)
+/// Prevents GAGS items from being player customizable.
+#define LOADOUT_FLAG_BLOCK_GREYSCALING (1<<1)
+/// Allows the item to be greyscaled by the player, if it's a GAGS item. Automatically set if the item is innately recolorable.
+#define LOADOUT_FLAG_GREYSCALING_ALLOWED (1<<2)
+/// Allows the item to be renamed by the player.
+#define LOADOUT_FLAG_ALLOW_NAMING (1<<3)
+/// Allows the item to be reskinned by the player. Only applicable to items with unique_reskin defined.
+#define LOADOUT_FLAG_ALLOW_RESKIN (1<<4)
+
 // Loadout item info keys
 // Changing these will break existing loadouts
 /// Tracks GAGS color information

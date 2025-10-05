@@ -19,10 +19,15 @@
 /datum/loadout_item/suit/coverall
 	name = "Coverall"
 	item_path = /obj/item/clothing/suit/apron/overalls
-	can_be_greyscale = DONT_GREYSCALE
-
-/datum/loadout_item/suit/coverall/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
-	. = ..()
-	if(!outfit.palette)
-		return
-	equipped_item.set_greyscale(outfit.palette)
+	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING
+	job_greyscale_palettes = list(
+		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,
+		/datum/job/captain = "#336699",
+		/datum/job/head_of_personnel = "#336699",
+		/datum/job/head_of_security = "#303030",
+		/datum/job/paramedic = "#28324b",
+		/datum/job/prisoner = "#ff8b00",
+		/datum/job_department/engineering = "#ff6600",
+		/datum/job_department/science = "#800080",
+		/datum/job_department/security = "#a53228",
+	)

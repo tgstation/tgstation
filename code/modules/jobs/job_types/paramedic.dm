@@ -68,5 +68,3 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	pda_slot = ITEM_SLOT_LPOCKET
-
-	palette = COLOR_MEDICAL_BLUE

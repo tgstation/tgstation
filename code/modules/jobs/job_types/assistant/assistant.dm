@@ -55,7 +55,6 @@ Assistant
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 	belt = /obj/item/modular_computer/pda/assistant
-	palette = "#616161"
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
 	..()

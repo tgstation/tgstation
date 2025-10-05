@@ -66,8 +66,6 @@
 	box = /obj/item/storage/box/survival/hug/black
 	chameleon_extras = /obj/item/stamp/mime
 
-	palette = "#303030"
-
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
 

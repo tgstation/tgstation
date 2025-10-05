@@ -41,7 +41,7 @@
 /datum/loadout_item/pocket_items/plush
 	group = "Plushies"
 	abstract_type = /datum/loadout_item/pocket_items/plush
-	can_be_named = TRUE
+	loadout_flags = LOADOUT_FLAG_ALLOW_NAMING
 
 /datum/loadout_item/pocket_items/plush/bee
 	name = "Plush (Bee)"
@@ -57,7 +57,7 @@
 
 /datum/loadout_item/pocket_items/plush/lizard_random
 	name = "Plush (Lizard, Random)"
-	can_be_greyscale = DONT_GREYSCALE
+	loadout_flags = parent_type::loadout_flags | LOADOUT_FLAG_BLOCK_GREYSCALING
 	ui_icon = 'icons/obj/fluff/previews.dmi'
 	ui_icon_state = "plushie_lizard_random"
 	item_path = /obj/item/toy/plush/lizard_plushie
@@ -318,13 +318,7 @@
 /datum/loadout_item/pocket_items/borg_me_dogtag
 	item_path = /obj/item/clothing/accessory/dogtag/borg_ready
 
-/datum/loadout_item/pocket_items/borg_me_dogtag/on_equip_item(
-	obj/item/equipped_item,
-	datum/preferences/preference_source,
-	list/preference_list,
-	mob/living/carbon/human/equipper,
-	visuals_only = FALSE,
-)
+/datum/loadout_item/pocket_items/borg_me_dogtag/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only)
 	// We're hooking this datum to add an extra bit of flavor to the dogtag - a pregenerated medical record
 	if(!visuals_only && !isdummy(equipper))
 		RegisterSignal(equipper, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(apply_after_setup), override = TRUE)

@@ -79,7 +79,6 @@
 
 	chameleon_extras = /obj/item/stamp/head/rd
 	skillchips = list(/obj/item/skillchip/research_director, /obj/item/skillchip/job/roboticist)
-	palette = COLOR_SCIENCE_PINK
 
 /datum/outfit/job/rd/mod
 	name = "Research Director (MODsuit)"

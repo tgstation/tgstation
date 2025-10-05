@@ -46,8 +46,6 @@
 
 	chameleon_extras = /obj/item/stamp/law
 
-	palette = COLOR_NAVY
-
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	if(visuals_only)
 		return ..()

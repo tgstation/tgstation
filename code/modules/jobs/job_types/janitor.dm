@@ -43,8 +43,6 @@
 	skillchips = list(/obj/item/skillchip/job/janitor)
 	backpack_contents = list(/obj/item/access_key)
 
-	palette = "#cc33ff"
-
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/human_equipper, visuals_only)
 	. = ..()
 	if(check_holidays(GARBAGEDAY))

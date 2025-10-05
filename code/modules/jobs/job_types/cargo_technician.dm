@@ -50,8 +50,6 @@
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/universal_scanner
 
-	palette = COLOR_CARGO_BROWN
-
 /datum/outfit/job/cargo_tech/mod
 	name = "Cargo Technician (MODsuit)"
 

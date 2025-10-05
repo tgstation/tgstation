@@ -60,4 +60,3 @@
 
 	pda_slot = ITEM_SLOT_BELT
 	skillchips = list(/obj/item/skillchip/job/psychology)
-	palette = "#303030"
