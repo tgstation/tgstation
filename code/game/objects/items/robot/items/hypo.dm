@@ -198,6 +198,7 @@
 
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
 	to_chat(user, span_notice("You inject [injectee] with the injector ([selected_reagent.name])."))
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(injectee.reagents)
 		hypospray_injector.trans_to(injectee, amount_per_transfer_from_this, transferred_by = user, methods = INJECT)
