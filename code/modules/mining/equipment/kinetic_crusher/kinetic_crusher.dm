@@ -208,6 +208,14 @@
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
 	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
 
+/obj/item/kinetic_crusher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/item/crusher_trophy))
+		return NONE
+	var/obj/item/crusher_trophy/new_trophy = interacting_with
+	if(new_trophy.add_to(src, user))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
 /obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		balloon_alert(user, "wield it first!")
