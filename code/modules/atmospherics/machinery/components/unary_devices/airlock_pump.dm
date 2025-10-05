@@ -123,7 +123,10 @@
 	. = ..()
 	if(mapload)
 		can_unwrench = FALSE
-
+	var/datum/gas_mixture/distro_air = airs[1]
+	var/datum/gas_mixture/waste_air = airs[2]
+	distro_air.volume = 1000
+	waste_air.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/post_machine_initialize()
 	. = ..()
@@ -154,14 +157,6 @@
 			tile_air_pressure = max(0, local_turf.return_air().return_pressure())
 		on_dock_request(tile_air_pressure)
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
-	. = ..()
-	var/datum/gas_mixture/distro_air = airs[1]
-	var/datum/gas_mixture/waste_air = airs[2]
-	distro_air.volume = 1000
-	waste_air.volume = 1000
-
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/on_deconstruction(disassembled)
 	. = ..()
 	if(cycling_set_up)
@@ -177,6 +172,12 @@
 		to_chat(user, span_warning("You cannot unwrench [src], wait for the cycle completion!"))
 		return FALSE
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/set_on(active)
+	. = ..()
+	if(active)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
@@ -292,7 +293,6 @@
 	if(on || !cycling_set_up || airlocks_animating || !powered())
 		return FALSE
 
-	update_use_power(ACTIVE_POWER_USE)
 	pump_direction = cycle_direction
 
 	for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
@@ -338,13 +338,11 @@
 
 	return TRUE
 
-
 ///Complete/Abort cycle with the passed message
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null, unbolt_only = FALSE)
 	if(!on)
 		return FALSE
 	set_on(FALSE)
-	update_use_power(IDLE_POWER_USE)
 
 	// In case we can open both sides safe_dock will do it for us
 	// it also handles its own messages. If we can't - procceed
