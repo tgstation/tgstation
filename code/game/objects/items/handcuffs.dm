@@ -59,10 +59,11 @@
 	var/cuffsound = 'sound/items/weapons/handcuffs.ogg'
 	///Sound that plays when restrain is successful
 	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
-	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
-	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
 	var/restraint_strength = HANDCUFFS_TYPE_STRONG
+
+	/// Is this pair of cuff being actually used?
+	var/used = FALSE
 
 /obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -77,7 +78,7 @@
 	acid = 50
 
 /obj/item/restraints/handcuffs/attack(mob/living/target_mob, mob/living/user)
-	if(!iscarbon(target_mob))
+	if(!iscarbon(target_mob) || used)
 		return
 
 	attempt_to_cuff(target_mob, user)
@@ -153,15 +154,23 @@
 		return
 
 	var/obj/item/restraints/handcuffs/cuffs = src
-	if(trashtype)
-		cuffs = new trashtype()
-	else if(dispense)
+	if(dispense)
 		cuffs = new type()
 
 	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	if(trashtype && !dispense)
+	if(!dispense)
 		qdel(src)
+
+/obj/item/restraints/handcuffs/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_HANDCUFFED)
+		RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_uncuffed)) //Make sure zipties are no longer usable the next time someone removes them
+
+/obj/item/restraints/handcuffs/proc/on_uncuffed(datum/source, mob/living/wearer)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
 
 /**
  * # Alien handcuffs
@@ -342,9 +351,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	custom_materials = null
 	breakouttime = 45 SECONDS
-	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	color = null
 	cable_color = null
+
+/obj/item/restraints/handcuffs/cable/zipties/on_uncuffed(datum/source, mob/living/wearer)
+	. = ..()
+	desc = "A pair of broken zipties."
+	icon_state = "cuff_used"
+	used = TRUE
 
 /**
  * # Used zipties
@@ -354,9 +368,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
-
-/obj/item/restraints/handcuffs/cable/zipties/used/attack()
-	return
+	used = TRUE
 
 /**
  * # Fake Zipties
@@ -372,6 +384,21 @@
 /obj/item/restraints/handcuffs/cable/zipties/fake/used
 	desc = "A pair of broken fake zipties."
 	icon_state = "cuff_used"
+	used = TRUE
+
+///handcuffs applied by cult magic and heretics sacrifice
+/obj/item/restraints/handcuffs/cult
+	name = "shadow shackles"
+	desc = "Shackles that bind the wrists with sinister magic."
+	breakouttime = 45 SECONDS
+	icon_state = "cult_shackles"
+	flags_1 = NONE
+
+/obj/item/restraints/handcuffs/cult/on_uncuffed(datum/source, mob/user)
+	. = ..()
+	user.visible_message(span_danger("[user]'s shackles shatter in a discharge of dark magic!"), span_userdanger("Your [src] shatters in a discharge of dark magic!"))
+	qdel(src)
+
 
 /**
  * # Generic leg cuffs

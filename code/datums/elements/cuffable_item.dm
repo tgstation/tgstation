@@ -7,7 +7,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
-	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(item_interaction))
+	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(item_interaction))
 
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -24,7 +24,10 @@
 /datum/element/cuffable_item/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 
-	if (istype(held_item, /obj/item/restraints/handcuffs))
+	if (!istype(held_item, /obj/item/restraints/handcuffs))
+		return NONE
+	var/obj/item/restraints/handcuffs/cuffs = held_item
+	if(!cuffs.used)
 		context[SCREENTIP_CONTEXT_RMB] = "Cuff to your wrist"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -35,11 +38,13 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, source))
 		return ITEM_INTERACT_BLOCKING
 
+	var/obj/item/restraints/handcuffs/cuffs = tool
+	if(cuffs.used)
+		return ITEM_INTERACT_BLOCKING
+
 	if(HAS_TRAIT_FROM(source, TRAIT_NODROP, CUFFED_ITEM_TRAIT))
 		to_chat(user, span_warning("[source] is already cuffed to your wrist!"))
 		return ITEM_INTERACT_BLOCKING
-
-	var/obj/item/restraints/handcuffs/cuffs = tool
 
 	if(cuffs.handcuffs_clumsiness_check(user))
 		return ITEM_INTERACT_BLOCKING

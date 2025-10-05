@@ -9,7 +9,8 @@
 /datum/status_effect/cuffed_item/on_creation(mob/living/new_owner, obj/item/cuffed, obj/item/restraints/handcuffs/cuffs)
 	src.cuffed = cuffed
 	src.cuffs = cuffs
-	return ..()
+	. = ..() //throws the alert and all
+	linked_alert.update_appearance(UPDATE_OVERLAYS)
 
 /datum/status_effect/cuffed_item/on_apply()
 	if(HAS_TRAIT_FROM(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT))
@@ -43,6 +44,7 @@
 	REMOVE_TRAIT(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT)
 	cuffed = null
 
+	cuffs.on_uncuffed(user = owner)
 	if(!QDELETED(owner) && cuffs.loc == owner && !(cuffs in owner.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)))
 		cuffs.forceMove(owner.drop_location())
 	cuffs = null
@@ -56,7 +58,7 @@
 	SIGNAL_HANDLER
 
 	if(user == owner)
-		examine_texts += span_notice("[item.p_Theyre()] cuffed to you by \a [cuffs]. You can <a href='byond://?src=[REF(item)];remove_cuffs_item=1'>remove them.</a>.")
+		examine_texts += span_notice("[item.p_Theyre()] cuffed to you by \a [cuffs]. You can <a href='byond://?src=[REF(item)];remove_cuffs_item=1'>remove them</a>.")
 
 /// This mainly exists as a fallback in the rare case the alert icon is not reachable (too many alerts?). You should be somewhat able to examine items while blind so all good.
 /datum/status_effect/cuffed_item/proc/topic_handler(atom/source, user, href_list)
@@ -98,19 +100,19 @@
 		owner.balloon_alert("interrupted!")
 		return FALSE
 
+	if(user != owner)
+		owner.visible_message(span_notice("[user] removes [cuffs] binding [cuffed] to [owner]"), span_warning("[user] removes [cuffs] binding [cuffed] to you."))
+
 	var/obj/item/restraints/handcuffs/ref_cuffs = cuffs
 	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
 	user.put_in_hands(ref_cuffs)
 	owner.balloon_alert(user, "cuffs removed from item")
 
-	if(user != owner)
-		owner.visible_message(span_notice("[user] removes [cuffs] binding [cuffed] to [owner]"), span_warning("[user] removes [cuffs] binding [cuffed] to you."))
-
 	return TRUE
 
 /datum/status_effect/cuffed_item/proc/on_item_update_appearance(datum/source)
 	SIGNAL_HANDLER
-	linked_alert.update_overlays()
+	linked_alert.update_appearance(UPDATE_OVERLAYS)
 
 /atom/movable/screen/alert/status_effect/cuffed_item
 	name = "Cuffed Item"
@@ -118,6 +120,7 @@
 	icon_state = "template"
 	use_user_hud_icon = TRUE
 	clickable_glow = TRUE
+	click_master = FALSE
 
 /atom/movable/screen/alert/status_effect/cuffed_item/update_overlays()
 	. = ..()
@@ -125,7 +128,9 @@
 		return
 	var/datum/status_effect/cuffed_item/effect = attached_effect
 	. += add_atom_icon(effect.cuffed)
-	. += add_atom_icon(effect.cuffs)
+	var/mutable_appearance/cuffs_appearance = add_atom_icon(effect.cuffs)
+	cuffs_appearance.transform *= 0.8
+	. += cuffs_appearance
 
 /atom/movable/screen/alert/status_effect/cuffed_item/Click(location, control, params)
 	. = ..()

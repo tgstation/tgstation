@@ -133,8 +133,6 @@
 
 /atom/movable/screen/alert/update_overlays()
 	. = ..()
-	if(!master_ref)
-		return
 	var/atom/our_master = master_ref?.resolve()
 	if(!istype(our_master) || QDELETED(our_master))
 		return
