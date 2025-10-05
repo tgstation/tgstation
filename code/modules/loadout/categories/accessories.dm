@@ -61,7 +61,7 @@
 		return .
 	var/obj/item/clothing/accessory/accessory_item = equipped_item
 	accessory_item.above_suit = !!item_details[INFO_LAYER]
-	return . | (ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+	return . | ITEM_SLOT_OCLOTHING | ITEM_SLOT_ICLOTHING
 
 /datum/loadout_item/accessory/maid_apron
 	name = "Maid Apron"
