@@ -21,6 +21,7 @@
 	item_path = /obj/item/clothing/suit/apron/overalls
 	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING
 	job_greyscale_palettes = list(
+		/datum/job/assistant = "#303030",
 		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,
 		/datum/job/captain = "#336699",
 		/datum/job/head_of_personnel = "#336699",

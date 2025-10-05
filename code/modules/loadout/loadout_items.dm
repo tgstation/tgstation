@@ -106,36 +106,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		return FALSE
 	return TRUE
 
-/// Default job gags colors for one color gags items
-/datum/loadout_item/proc/default_one_color_job_palette()
-	return list(
-		/datum/job/assistant = /obj/item/clothing/under/color/grey::greyscale_colors,
-		/datum/job/bitrunner = "#303030",
-		/datum/job/botanist = "#33cc33",
-		/datum/job/chemist = "#ff6600",
-		/datum/job/chief_engineer = "#d0d0d0",
-		/datum/job/chief_medical_officer = "#009999"
-		/datum/job/clown = "#ffbeff",
-		/datum/job/cook = "#d0d0d0",
-		/datum/job/coroner = "#303030",
-		/datum/job/curator = COLOR_DRIED_TAN,
-		/datum/job/detective = COLOR_DRIED_TAN,
-		/datum/job/geneticist = COLOR_BLUE_GRAY,
-		/datum/job/janitor = /obj/item/clothing/gloves/color/purple::greyscale_colors,
-		/datum/job/lawyer = "#003399",
-		/datum/job/prisoner = COLOR_PRISONER_ORANGE,
-		/datum/job/psychologist = COLOR_DRIED_TAN,
-		/datum/job/roboticist = "#303030",
-		/datum/job/shaft_miner = COLOR_DARK_BROWN,
-		/datum/job_department/command = COLOR_COMMAND_BLUE,
-		/datum/job_department/engineering = COLOR_ENGINEERING_ORANGE,
-		/datum/job_department/medical = COLOR_MEDICAL_BLUE,
-		/datum/job_department/security = COLOR_SECURITY_RED,
-		/datum/job_department/science = COLOR_SCIENCE_PINK,
-		/datum/job_department/cargo = COLOR_CARGO_BROWN,
-		/datum/job = "#303030", // default for any job not listed above
-	)
-
 /**
  * Takes in an action from a loadout manager and applies it
  *
@@ -423,3 +393,33 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		))
 
 	return reskins
+
+/// Default job gags colors for one color gags items
+/datum/loadout_item/proc/default_one_color_job_palette()
+	return list(
+		/datum/job/assistant = /obj/item/clothing/under/color/grey::greyscale_colors,
+		/datum/job/bitrunner = "#303030",
+		/datum/job/botanist = "#33cc33",
+		/datum/job/chemist = "#ff6600",
+		/datum/job/chief_engineer = "#d0d0d0",
+		/datum/job/chief_medical_officer = "#009999"
+		/datum/job/clown = "#ffbeff",
+		/datum/job/cook = "#d0d0d0",
+		/datum/job/coroner = "#303030",
+		/datum/job/curator = COLOR_DRIED_TAN,
+		/datum/job/detective = COLOR_DRIED_TAN,
+		/datum/job/geneticist = COLOR_BLUE_GRAY,
+		/datum/job/janitor = /obj/item/clothing/gloves/color/purple::greyscale_colors,
+		/datum/job/lawyer = "#003399",
+		/datum/job/prisoner = COLOR_PRISONER_ORANGE,
+		/datum/job/psychologist = COLOR_DRIED_TAN,
+		/datum/job/roboticist = "#303030",
+		/datum/job/shaft_miner = COLOR_DARK_BROWN,
+		/datum/job_department/command = COLOR_COMMAND_BLUE,
+		/datum/job_department/engineering = COLOR_ENGINEERING_ORANGE,
+		/datum/job_department/medical = COLOR_MEDICAL_BLUE,
+		/datum/job_department/security = COLOR_SECURITY_RED,
+		/datum/job_department/science = COLOR_SCIENCE_PINK,
+		/datum/job_department/cargo = COLOR_CARGO_BROWN,
+		/datum/job = "#303030", // default for any job not listed above
+	)
