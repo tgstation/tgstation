@@ -137,8 +137,10 @@
 /// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
 /obj/item/gun/energy/recharge/fisher
 	name = "\improper SC/FISHER disruptor"
-	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything except light fixtures and cameras. \
-	Can fire twice before requiring a recharge, with bolts passing through machinery, but demands precision."
+	desc = "A self-recharging, integrally suppressed, modified kinetic accelerator that does no damage, \
+		but disrupts electronics like lights, APCs, and security cameras. \
+		Can fire twice before requiring a recharge. \
+		Bolts can be fired around machinery, but the precise nature of shooting light fixtures demands a skillful hand."
 	icon_state = "fisher"
 	base_icon_state = "fisher"
 	dry_fire_sound_volume = 10
@@ -148,13 +150,24 @@
 	recharge_time = 1.2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/fisher)
 
-/obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
+/obj/item/gun/energy/recharge/fisher/Initialize(mapload)
 	. = ..()
-	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, \
-	with its pressure chamber attenuated to launch kinetic bolts that <b>temporarily disrupt flashlights, cameras, and certain other electronics</b>. \
-	This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
-	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources.<br>\
-	Caveat emptor.")
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "The SC/FISHER is an illegally-modified kinetic accelerator that's been cut down and refit into a miniature energy gun chassis, \
+			optimized for temporary, but effective, electronic warfare.<br>\
+			<br>\
+			The reengineered kinetic accelerator central to the SC/FISHER's functionality has been modified for its kinetic bolts to \
+			<b>temporarily disrupt flashlights, cameras, APCs, and pAI speech modules</b>, in return for dealing no damage. \
+			This effect works longer against targets struck with the SC/FISHER either in melee or by having it thrown at them, but \
+			you probably shouldn't be throwing it at people.<br>\
+			<br>\
+			While some would argue that sacrificing damage for a light-disrupting, fixture-breaking gimmick \
+			makes the SC/FISHER a dead-end in equipment development, others argue that it is both amusing and tactically sound \
+			to be able to shoot at light sources and pesky pAIs to disrupt their function.<br>\
+			<br>\
+			Caveat emptor." \
+	)
 
 /obj/item/gun/energy/recharge/fisher/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
