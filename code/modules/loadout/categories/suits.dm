@@ -11,7 +11,18 @@
 	if(outfit.suit)
 		LAZYADD(outfit.backpack_contents, outfit.suit)
 	if(outfit.suit_store)
-		LAZYADD(outfit.backpack_contents, outfit.suit_store)
+		if(outfit.suit_store::w_class <= WEIGHT_CLASS_NORMAL)
+			LAZYADD(outfit.backpack_contents, outfit.suit_store)
+		else if((!outfit.belt || (outfit.belt::w_class <= WEIGHT_CLASS_NORMAL)) && (outfit.suit_store::slot_flags & ITEM_SLOT_BELT))
+			if(outfit.belt)
+				LAZYADD(outfit.backpack_contents, outfit.belt)
+			outfit.belt = outfit.suit_store
+		else if(!outfit.r_hand)
+			outfit.r_hand = outfit.suit_store
+		else if(!outfit.l_hand)
+			outfit.l_hand = outfit.suit_store
+		// no else condition - if every check failed, we just nuke whatever was there
+		// which is fine, suitstore generally contains replaceable items like pens, tanks, or weapons
 		outfit.suit_store = null
 
 	outfit.suit = item_path
@@ -23,11 +34,12 @@
 	job_greyscale_palettes = list(
 		/datum/job/assistant = "#303030",
 		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,
-		/datum/job/captain = "#336699",
-		/datum/job/head_of_personnel = "#336699",
+		/datum/job/captain = "#3c5a96",
+		/datum/job/head_of_personnel = "#3c6487",
 		/datum/job/head_of_security = "#303030",
 		/datum/job/paramedic = "#28324b",
 		/datum/job/prisoner = "#ff8b00",
+		/datum/job_department/cargo = "#824b32",
 		/datum/job_department/engineering = "#ff6600",
 		/datum/job_department/science = "#800080",
 		/datum/job_department/security = "#a53228",

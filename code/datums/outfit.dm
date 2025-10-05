@@ -27,17 +27,17 @@
 	var/obj/item/uniform = null
 
 	/// Type path of item to go in suit slot
-	var/suit = null
+	var/obj/item/suit = null
 
 	/**
 	  * Type path of item to go in suit storage slot
 	  *
 	  * (make sure it's valid for that suit)
 	  */
-	var/suit_store = null
+	var/obj/item/suit_store = null
 
 	/// Type path of item to go in back slot
-	var/back = null
+	var/obj/item/back = null
 
 	/**
 	  * list of items that should go in the backpack of the user
@@ -47,7 +47,7 @@
 	var/list/backpack_contents = null
 
 	/// Type path of item to go in belt slot
-	var/belt = null
+	var/obj/item/belt = null
 
 	/**
 	  * list of items that should go in the belt of the user

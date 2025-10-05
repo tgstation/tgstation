@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		/datum/job/botanist = "#33cc33",
 		/datum/job/chemist = "#ff6600",
 		/datum/job/chief_engineer = "#d0d0d0",
-		/datum/job/chief_medical_officer = "#009999"
+		/datum/job/chief_medical_officer = "#009999",
 		/datum/job/clown = "#ffbeff",
 		/datum/job/cook = "#d0d0d0",
 		/datum/job/coroner = "#303030",
