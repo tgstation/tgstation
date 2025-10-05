@@ -330,6 +330,10 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
+/obj/item/reagent_containers/cup/bucket/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /datum/armor/cup_bucket
 	melee = 10
 	fire = 75
