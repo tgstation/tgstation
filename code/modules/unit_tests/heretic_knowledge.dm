@@ -7,9 +7,12 @@
 //  */
 /datum/unit_test/heretic_knowledge
 
+TEST_FOCUS(/datum/unit_test/heretic_knowledge)
+
 /datum/unit_test/heretic_knowledge/Run()
 	if(!GLOB.heretic_paths)
 		GLOB.heretic_paths = generate_global_heretic_tree()
+	log_test(GLOB.heretic_paths)
 	// First, we get a list of all knowledge types
 	// EXCLUDING all abstract types
 	var/list/all_possible_knowledge = typesof(/datum/heretic_knowledge)
@@ -31,6 +34,7 @@
 			if(new_id in all_possible_ids)
 				TEST_FAIL("Heretic Knowledge: Duplicate knowledge ID [new_id] found for [knowledge_type] in category [category]! ID's are created by combining the typepath and category, something fucked up!")
 			all_possible_ids |= new_id
+			log_test("all_possible_ids [new_id]")
 
 	// Now, let's build a list of all researchable knowledge
 	// from the ground up. We start with all starting knowledge,
@@ -49,6 +53,8 @@
 				continue
 			var/list/next_knowledge = knowledge_data[HKT_NEXT]
 			list_to_check |= next_knowledge
+			log_test("next_knowledge [next_knowledge]")
+
 
 
 	// We now have a list that SHOULD contain all knowledges with a path set (list_to_check).
