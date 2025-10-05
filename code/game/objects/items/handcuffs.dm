@@ -159,7 +159,7 @@
 
 	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	if(!dispense)
+	if(dispense)
 		qdel(src)
 
 /obj/item/restraints/handcuffs/equipped(mob/living/user, slot)
