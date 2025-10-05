@@ -1,9 +1,18 @@
-///The status effect given by the cuffable_item
+/**
+ * The status effect given by the cuffable_item.
+ * It basically binds an item to your arm, basically making it undroppable until the cuffs or item are removed, usually done by one of:
+ * - clicking the status alert
+ * - using the topic hyperlink
+ * - strip menu for others
+ * - alternatively, dismemberment or destroying the item
+ */
 /datum/status_effect/cuffed_item
 	id = "cuffed_item"
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = /atom/movable/screen/alert/status_effect/cuffed_item
+	///Reference to the item stuck into the player's hand
 	var/obj/item/cuffed
+	///Reference to the pair of handcuffs used to bind the item
 	var/obj/item/restraints/handcuffs/cuffs
 
 /datum/status_effect/cuffed_item/on_creation(mob/living/new_owner, obj/item/cuffed, obj/item/restraints/handcuffs/cuffs)
@@ -49,11 +58,12 @@
 		cuffs.forceMove(owner.drop_location())
 	cuffs = null
 
+///What happens if one of the items is moved away from the mob
 /datum/status_effect/cuffed_item/proc/on_displaced(datum/source)
 	SIGNAL_HANDLER
 	qdel(src)
 
-///Tell the player that the item is stuck to your hands someway. Also as another way to trigger the try_remove_cuffs proc.
+///Tell the player that the item is stuck to their hands someway. Also another way to trigger the try_remove_cuffs proc.
 /datum/status_effect/cuffed_item/proc/cuffed_reminder(obj/item/item, mob/user, list/examine_texts)
 	SIGNAL_HANDLER
 
@@ -81,6 +91,7 @@
 	INVOKE_ASYNC(src, PROC_REF(try_remove_cuffs), user)
 	return COMPONENT_ALT_ACTION_DONE
 
+///The main proc responsible for attempting to remove the hancfuss.
 /datum/status_effect/cuffed_item/proc/try_remove_cuffs(mob/living/user)
 
 	var/interaction_key = REF(src)
@@ -110,10 +121,12 @@
 
 	return TRUE
 
+///Whenever the appearance of one of either cuffed or cuffs is updated, update the alert appearance
 /datum/status_effect/cuffed_item/proc/on_item_update_appearance(datum/source)
 	SIGNAL_HANDLER
 	linked_alert.update_appearance(UPDATE_OVERLAYS)
 
+///The status alert linked to the cuffed_item status effect
 /atom/movable/screen/alert/status_effect/cuffed_item
 	name = "Cuffed Item"
 	desc = "You've an item firmly cuffed to your arm. You probably won't be accidentally dropping it somewhere anytime soon."

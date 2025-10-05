@@ -138,6 +138,7 @@
 		return
 	. += add_atom_icon(our_master)
 
+///Returns a copy of the appearance of the atom, with its base pixel coordinates. Useful for overlays
 /atom/movable/screen/alert/proc/add_atom_icon(atom/atom)
 	var/mutable_appearance/atom_appearance = new(atom)
 	atom_appearance.appearance_flags = KEEP_TOGETHER
