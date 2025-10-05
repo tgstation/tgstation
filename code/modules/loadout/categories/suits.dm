@@ -27,8 +27,8 @@
 
 	outfit.suit = item_path
 
-/datum/loadout_item/suit/coverall
-	name = "Coverall"
+/datum/loadout_item/suit/overall
+	name = "Overall"
 	item_path = /obj/item/clothing/suit/apron/overalls
 	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING
 	job_greyscale_palettes = list(

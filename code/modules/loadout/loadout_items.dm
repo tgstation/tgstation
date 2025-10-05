@@ -217,6 +217,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], loadout)
 	return TRUE // always update UI
 
+/// When passed an outfit, attempts to select a job-appropriate color from job_greyscale_palettes
 /datum/loadout_item/proc/get_job_color(datum/outfit/base_outfit)
 	if(!istype(base_outfit, /datum/outfit/job))
 		return job_greyscale_palettes[/datum/job] // default color
