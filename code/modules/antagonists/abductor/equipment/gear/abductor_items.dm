@@ -484,7 +484,7 @@ Return to step 11 of normal process."}
 	breakouttime = 45 SECONDS
 	flags_1 = NONE
 
-/obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/user)
+/obj/item/restraints/handcuffs/energy/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
 	user.visible_message(span_danger("[user]'s [name] breaks in a discharge of energy!"), span_userdanger("[user]'s [name] breaks in a discharge of energy!"))
 	var/datum/effect_system/spark_spread/sparks = new

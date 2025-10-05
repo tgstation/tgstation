@@ -53,7 +53,7 @@
 	REMOVE_TRAIT(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT)
 	cuffed = null
 
-	cuffs.on_uncuffed(user = owner)
+	cuffs.on_uncuffed(wearer = owner)
 	if(!QDELETED(owner) && cuffs.loc == owner && !(cuffs in owner.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)))
 		cuffs.forceMove(owner.drop_location())
 	cuffs = null
