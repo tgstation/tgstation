@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Arrivals won't lose power on roundstart anymore."
+  - qol: "Ghost roles with gas miners will now suddenly have a lot more available power."
