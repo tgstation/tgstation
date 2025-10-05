@@ -173,8 +173,10 @@
 
 /obj/item/clothing/under/dropped(mob/living/user)
 	. = ..()
-	update_wearer_status()
-	GLOB.suit_sensors_list -= user
+	// this check is here because it seems entirely possible to drop something as a part of an equip step
+	// so you would equip a jumpsuit -> add to sensor list -> drop some other jumpsuit -> remove from sensor list when that would be inappropriate
+	if(user.get_item_by_slot(ITEM_SLOT_ICLOTHING) == src)
+		GLOB.suit_sensors_list -= user
 
 // Start suit sensor handling
 
