@@ -300,9 +300,9 @@
 		return FALSE //we do not have bastards in our toyshop
 
 	// Ask the RNG if it looks more like mommy or daddy.
-	var/list/offspring_types = pick(offspring_type , daddy.offspring_type)
+	var/offspring_type = pick(offspring_type , daddy.offspring_type)
 
-	plush_child = new offspring_types(get_turf(loc))
+	plush_child = new offspring_type(get_turf(loc))
 	plush_child.make_young(src, daddy)
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
