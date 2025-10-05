@@ -36,20 +36,19 @@
 	smashes_walls = FALSE
 	melee_attack_cooldown = 2 SECONDS
 
-/mob/living/basic/construct/juggernaut/bullet_act(obj/projectile/bullet)
-	if(!istype(bullet, /obj/projectile/energy) && !istype(bullet, /obj/projectile/beam))
+/mob/living/basic/construct/juggernaut/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if(!istype(hitting_projectile, /obj/projectile/energy) && !istype(hitting_projectile, /obj/projectile/beam))
 		return ..()
-	if(!prob(40 - round(bullet.damage / 3))) // reflect chance
+	if(!prob(40 - round(hitting_projectile.damage / 3))) // reflect chance
 		return ..()
 
-	apply_damage(bullet.damage * 0.5, bullet.damage_type)
+	apply_damage(hitting_projectile.damage * 0.5, hitting_projectile.damage_type)
 	visible_message(
-		span_danger("\The [bullet] is reflected by [src]'s armored shell!"),
-		span_userdanger("\The [bullet] is reflected by your armored shell!"),
+		span_danger("\The [hitting_projectile] is reflected by [src]'s armored shell!"),
+		span_userdanger("\The [hitting_projectile] is reflected by your armored shell!"),
 	)
 
-	bullet.reflect(src)
-
+	hitting_projectile.reflect(src)
 	return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 // Alternate juggernaut themes

@@ -201,7 +201,7 @@
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
-/obj/machinery/modular_computer/bullet_act(obj/projectile/proj)
-	return cpu?.projectile_hit(proj) || ..()
+/obj/machinery/modular_computer/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	return cpu?.projectile_hit(hitting_projectile, def_zone, piercing_hit, blocked) || ..()
 
 #undef CPU_INTERACTABLE
