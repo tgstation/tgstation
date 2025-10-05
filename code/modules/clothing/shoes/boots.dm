@@ -184,6 +184,11 @@
 	icon_state = "aerostatic_boots"
 	inhand_icon_state = null
 
+/obj/item/clothing/shoes/kim/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/shoes)
+	AddElement(/datum/element/ignites_matches)
+
 /obj/item/clothing/shoes/pirate
 	name = "pirate boots"
 	desc = "Yarr."
