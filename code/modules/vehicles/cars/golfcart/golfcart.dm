@@ -461,7 +461,9 @@
 			behind = get_step(src, turn(dir, 180))
 	update_appearance(UPDATE_ICON)
 	child.move_from_parent(behind)
-	if (perform_extra_step || old_loc.z != loc.z)
+	// working theory is that somehow the cart can't move onto stairs -> perform_extra_step is true but loc is never set to newloc
+	if ((perform_extra_step && loc.z != old_loc.z) || loc.z < old_loc.z)
+		// this should be called when descending Z levels, or when going up stairs
 		if (!Move(get_step(src, dir), dir, glide_size_override, update_dir))
 			return
 		fake_glide(dir)
