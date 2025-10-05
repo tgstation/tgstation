@@ -69,7 +69,7 @@
 
 /obj/item/fish/jumpercable/get_export_price(price, elasticity_percent)
 	//without this, they'd sell for over 6000 each, minimum. That's a lot for a fish that requires no maintance nor partner to farm.
-	return ..() * 0.4
+	return ..() * 0.04
 
 /obj/item/fish/jumpercable/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] hooks both ends of [src] to their chest! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -104,7 +104,7 @@
 	average_weight = 2500
 	breeding_timeout = 4.25 MINUTES
 	feeding_frequency = 3 MINUTES
-	health = 180
+	max_integrity = 360
 	beauty = FISH_BEAUTY_GREAT
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
@@ -236,7 +236,7 @@
 	average_weight = 3000
 	breeding_timeout = 5 MINUTES
 	feeding_frequency = 4 MINUTES
-	health = 180
+	max_integrity = 360
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	beauty = FISH_BEAUTY_GREAT
 	fishing_difficulty_modifier = 20

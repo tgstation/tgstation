@@ -11,7 +11,7 @@
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR
@@ -99,20 +99,26 @@
 	name = "press helmet"
 	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
 	icon_state = "helmet_press"
+	base_icon_state = "helmet_press"
 	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 
+/obj/item/clothing/head/helmet/press/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
+
 /obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "helmetalt"
+	base_icon_state = "helmetalt"
 	inhand_icon_state = "helmet"
 	armor_type = /datum/armor/helmet_alt
 	dog_fashion = null
@@ -213,28 +219,31 @@
 /obj/item/clothing/head/helmet/toggleable
 	visor_vars_to_toggle = NONE
 	dog_fashion = null
-	///chat message when the visor is toggled down.
-	var/toggle_message
-	///chat message when the visor is toggled up.
-	var/alt_toggle_message
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
 	adjust_visor(user)
 
 /obj/item/clothing/head/helmet/toggleable/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][up ? "up" : ""]"
+	base_icon_state = "[initial(base_icon_state)]"
+	var/datum/component/seclite_attachable/light = GetComponent(/datum/component/seclite_attachable)
+	if(up)
+		base_icon_state += "up"
+	light?.on_update_icon_state(src)
+	if(!light)
+		icon_state = base_icon_state
 
 /obj/item/clothing/head/helmet/toggleable/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
+	base_icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
+	toggle_message = "You pull the visor down"
+	alt_toggle_message = "You push the visor up"
 	armor_type = /datum/armor/toggleable_riot
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE|HIDESNOUT
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -246,6 +255,10 @@
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	visor_toggle_up_sound = SFX_VISOR_UP
 	visor_toggle_down_sound = SFX_VISOR_DOWN
+
+/obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
 	. = ..()
@@ -279,6 +292,7 @@
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
 	icon_state = "justice"
+	base_icon_state = "justice"
 	inhand_icon_state = "justice_helmet"
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
@@ -319,6 +333,7 @@
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
 	icon_state = "justice2"
+	base_icon_state = "justice2"
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
@@ -331,7 +346,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	clothing_flags = STOPSPRESSUREDAMAGE | STACKABLE_HELMET_EXEMPT
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
@@ -359,6 +374,7 @@
 	name = "\improper SWAT helmet"
 	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
+	base_icon_state = "swat"
 	inhand_icon_state = "swat_helmet"
 	clothing_flags = STACKABLE_HELMET_EXEMPT
 	cold_protection = HEAD
@@ -367,6 +383,9 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/obj/item/clothing/head/helmet/swat/nanotrasen/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -379,7 +398,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 
 /datum/armor/helmet_thunderdome
@@ -410,7 +429,7 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "roman"
 	inhand_icon_state = "roman_helmet"
-	strip_delay = 100
+	strip_delay = 10 SECONDS
 	dog_fashion = null
 
 /datum/armor/helmet_roman
@@ -483,7 +502,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 	clothing_traits = list(TRAIT_HEAD_INJURY_BLOCKED)
 
@@ -523,7 +542,7 @@
 	inhand_icon_state = "durathread_helmet"
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/helmet_durathread
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 
 /datum/armor/helmet_durathread
 	melee = 20
@@ -610,7 +629,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_FLASH
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	dog_fashion = null
 	armor_type = /datum/armor/helmet_military
 	sound_vary = TRUE
@@ -710,7 +729,7 @@
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_OCLOTHING, \
 		charges = 1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(decay)) \
 	)
 

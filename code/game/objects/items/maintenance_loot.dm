@@ -11,6 +11,7 @@
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	//wow, lore
 	desc = "A hefty lead pipe.\nLead is an uncommon sight in this sector after being phased out due to employee health concerns. \
 	\nThose of a more cynical disposition have claimed that the NT lead ban is a scheme to prevent diversion to Syndicate ammunition factories."
@@ -38,6 +39,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	maxcharge = STANDARD_CELL_CHARGE * 60 // initial charge reduced on init
 	chargerate = STANDARD_CELL_RATE * 0.3 //charging is about 70% less efficient than lithium batteries.
+	emp_damage_modifier = 4 // 15 shots.
 	charge_light_type = null
 	connector_type = "leadacid"
 	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)

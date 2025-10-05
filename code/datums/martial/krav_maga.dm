@@ -24,7 +24,7 @@
 	button_icon_state = "neckchop"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/neck_chop/Trigger(trigger_flags)
+/datum/action/neck_chop/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -43,7 +43,7 @@
 	button_icon_state = "legsweep"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/leg_sweep/Trigger(trigger_flags)
+/datum/action/leg_sweep/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -62,7 +62,7 @@
 	button_icon_state = "lungpunch"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
 
-/datum/action/lung_punch/Trigger(trigger_flags)
+/datum/action/lung_punch/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -214,6 +214,7 @@
 //Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
+	abstract_type = /obj/item/clothing/gloves/krav_maga
 	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/krav_maga/Initialize(mapload)
@@ -237,7 +238,7 @@
 	icon_state = "black"
 	greyscale_colors = "#2f2e31"
 	siemens_coefficient = 0
-	strip_delay = 80
+	strip_delay = 8 SECONDS
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS

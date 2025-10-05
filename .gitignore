@@ -2,6 +2,8 @@
 
 # Local overrides--you can use this to change the config for your dev environment (like setting up SQL) without worrying about committing it
 /config/dev_overrides.txt
+/config/dev_preferences.json
+/config/dev_preferences.json.updatebac
 
 #Ignore everything in datafolder and subdirectories
 /data/**/*

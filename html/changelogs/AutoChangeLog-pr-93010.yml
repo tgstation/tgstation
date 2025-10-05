@@ -1,0 +1,6 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - rscadd: "Card shoes are now stocked in Good Clean Fun vendors, featuring a whopping 416 card (or 8 52-card decks) capacity. These, however, will not spill their contents when thrown at people."
+  - bugfix: "Attempting to insert cards from a deck into a full hand no longer makes a card cease to exist in the eyes of the deck."
+  - bugfix: "Card decks now set their maximum capacities based on how many cards are in them when initialized."

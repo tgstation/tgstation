@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Image, Section } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -40,24 +40,7 @@ export const Newspaper = (props) => {
 
   return (
     <Window width={300} height={400}>
-      <Window.Content backgroundColor="#858387">
-        {current_page === channels.length + 1 ? (
-          <NewspaperEnding />
-        ) : current_page ? (
-          <NewspaperChannel />
-        ) : (
-          <NewspaperIntro />
-        )}
-        {!!scribble_message && (
-          <Box
-            style={{
-              borderTop: '3px dotted rgba(255, 255, 255, 0.8)',
-              borderBottom: '3px dotted rgba(255, 255, 255, 0.8)',
-            }}
-          >
-            {scribble_message}
-          </Box>
-        )}
+      <Window.Content backgroundColor="#858387" scrollable>
         <Section>
           <Button
             icon="arrow-left"
@@ -76,6 +59,23 @@ export const Newspaper = (props) => {
             Next Page
           </Button>
         </Section>
+        {current_page === channels.length + 1 ? (
+          <NewspaperEnding />
+        ) : current_page ? (
+          <NewspaperChannel />
+        ) : (
+          <NewspaperIntro />
+        )}
+        {!!scribble_message && (
+          <Box
+            style={{
+              borderTop: '3px dotted rgba(255, 255, 255, 0.8)',
+              borderBottom: '3px dotted rgba(255, 255, 255, 0.8)',
+            }}
+          >
+            {scribble_message}
+          </Box>
+        )}
       </Window.Content>
     </Window>
   );

@@ -144,6 +144,7 @@
 	display_pain(target, "You feel synthetic sensation wash from your [target.parse_zone_with_bodypart(target_zone)], which you can feel again!", TRUE)
 
 /datum/surgery_step/add_prosthetic/proc/handle_arbitrary_prosthetic(mob/user, mob/living/carbon/target, obj/item/thing_to_attach, target_zone)
+	SSblackbox.record_feedback("tally", "arbitrary_prosthetic", 1, initial(thing_to_attach.name))
 	target.make_item_prosthetic(thing_to_attach, target_zone, 80)
 	display_results(
 		user, target,

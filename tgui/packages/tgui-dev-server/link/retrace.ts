@@ -25,7 +25,7 @@ export async function loadSourceMaps(bundleDir: string): Promise<void> {
 
   // Load new sourcemaps
   const files = await resolveGlob(bundleDir, '*.map');
-  for (let file of files) {
+  for (const file of files) {
     try {
       const loc = path.resolve(bundleDir, file);
       const parsed = await Bun.file(loc).json();
@@ -84,5 +84,5 @@ export function retrace(stack: string): string | undefined {
     })
     .join('\n');
 
-  return header + '\n' + mappedStack;
+  return `${header}\n${mappedStack}`;
 }

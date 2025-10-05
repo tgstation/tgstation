@@ -407,6 +407,9 @@
 /datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
 	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
 
+	// Set status displays to biohazard alert even for false alarm
+	send_status_display_biohazard_alert()
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"
 	config_tag = "Xenomorph"
@@ -678,21 +681,28 @@
 	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
+	/// Chance of getting another clone for the price of free
+	var/bonus_clone_chance = 20
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
+	. = ..()
+	max_antag_cap += prob(bonus_clone_chance)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected()
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_execute_args()
+	return list(find_clone())
+
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
 	return // handled by assign_role() entirely
 
-/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/good_version = find_clone()
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate, mob/living/carbon/human/good_version)
 	var/mob/living/carbon/human/bad_version = good_version.make_full_human_copy(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 	candidate.transfer_to(bad_version, force_key_move = TRUE)
 
 	var/datum/antagonist/paradox_clone/antag = candidate.add_antag_datum(/datum/antagonist/paradox_clone)
-	antag.original_ref = WEAKREF(good_version.mind)
-	antag.setup_clone()
+	antag.setup_clone(good_version.mind)
 
 	playsound(bad_version, 'sound/items/weapons/zapbang.ogg', 30, TRUE)
 	bad_version.put_in_hands(new /obj/item/storage/toolbox/mechanical()) //so they dont get stuck in maints
@@ -715,11 +725,13 @@
 	name = "Voidwalker"
 	config_tag = "Voidwalker"
 	preview_antag_datum = /datum/antagonist/voidwalker
+
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
+
 	weight = 5
-	min_pop = 30 // Ensures there's a lot of people near windows
+	min_pop = 40 // Ensures there's a lot of people near windows
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	signup_atom_appearance = /obj/item/clothing/head/helmet/skull/cosmic
@@ -727,9 +739,11 @@
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/can_be_selected()
 	return ..() && !SSmapping.is_planetary() && !isnull(find_space_spawn())
 
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/create_ruleset_body()
+	return new /mob/living/basic/voidwalker
+
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/voidwalker)
-	candidate.current.set_species(/datum/species/voidwalker)
 	candidate.current.forceMove(find_space_spawn())
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
@@ -826,12 +840,12 @@
 		HUNTER_PACK_MI13,
 	)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), 10 MINUTES), 1 MINUTES)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
 	candidate.current.forceMove(team_spawn)
 	equip_fugitive(candidate.current, team)
-	if(length(selected_minds) > 1 && candidate == selected_minds[1])
+	if(candidate == selected_minds[1])
 		equip_fugitive_leader(candidate.current)
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 

@@ -23,7 +23,6 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting, ui_human_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
@@ -75,7 +74,7 @@
 	//Update med hud images...
 	..()
 	//...sec hud images...
-	sec_hud_set_ID()
+	update_ID_card()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
 	//...fan gear
@@ -106,7 +105,7 @@
 		if(!same_id || (text2num(href_list["examine_time"]) + viable_time) < world.time)
 			to_chat(viewer, span_notice("You don't have that good of a memory. Examine [p_them()] again."))
 			return
-		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+		if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 			to_chat(viewer, span_notice("You can't make out that ID anymore."))
 			return
 		if(!isobserver(viewer) && get_dist(viewer, src) > ID_EXAMINE_DISTANCE + 1) // leeway, ignored if the viewer is a ghost
@@ -589,7 +588,7 @@
  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
  */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
-	if(check_covered_slots() & ITEM_SLOT_GLOVES)
+	if(covered_slots & HIDEGLOVES)
 		return FALSE
 
 	if(gloves)
@@ -612,7 +611,7 @@
 	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		. = TRUE
 
-	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
+	if(wear_mask && !(covered_slots & HIDEMASK) && wear_mask.wash(clean_types))
 		. = TRUE
 
 /**
@@ -624,7 +623,7 @@
 		. |= COMPONENT_CLEANED
 
 	// Wash hands if exposed
-	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(check_covered_slots() & ITEM_SLOT_GLOVES))
+	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(covered_slots & HIDEGLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
 		. |= COMPONENT_CLEANED
@@ -902,7 +901,7 @@
 	var/carrydelay = 5 SECONDS //if you have latex you are faster at grabbing
 	var/skills_space
 	var/fitness_level = mind?.get_skill_level(/datum/skill/athletics) - 1
-	var/experience_reward = 5
+	var/experience_reward = ATHLETICS_SKILL_MISC_EXP
 	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
 		carrydelay -= 2 SECONDS
 		experience_reward *= 3
@@ -934,7 +933,7 @@
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
-	mind?.adjust_experience(/datum/skill/athletics, experience_reward) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
+	mind?.adjust_experience(/datum/skill/athletics, round(experience_reward/(fitness_level || 1), 1)) //Get a bit fitter every time we fireman carry successfully. Deadlift your friends for gains!
 
 	return buckle_mob(target, TRUE, TRUE, CARRIER_NEEDS_ARM)
 
@@ -1044,7 +1043,7 @@
 	if (!isnull(race))
 		dna.species = new race
 
-/mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
+/mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
 	if(use_random_name)
 		fully_replace_character_name(real_name, generate_random_mob_name())
@@ -1116,11 +1115,8 @@
 /mob/living/carbon/human/species/lizard/silverscale
 	race = /datum/species/lizard/silverscale
 
-/mob/living/carbon/human/species/spirit
-	race = /datum/species/spirit
-
 /mob/living/carbon/human/species/ghost
-	race = /datum/species/spirit/ghost
+	race = /datum/species/ghost
 
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
@@ -1157,6 +1153,3 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
-
-/mob/living/carbon/human/species/voidwalker
-	race = /datum/species/voidwalker

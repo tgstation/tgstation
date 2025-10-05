@@ -78,7 +78,7 @@
 		playsound(chassis, clampsound, 50, FALSE, -6)
 		chassis.visible_message(span_notice("[chassis] lifts [target] and starts to load it into cargo compartment."))
 		clamptarget.set_anchored(TRUE)
-		if(!do_after_cooldown(target, source))
+		if(!do_after_cooldown(target, source, flags = MECH_DO_AFTER_DIR_CHANGE_FLAG|MECH_DO_AFTER_ADJACENCY_FLAG))
 			clamptarget.set_anchored(FALSE)
 			return
 		clamptarget.set_anchored(FALSE)
@@ -391,7 +391,7 @@
 		newmech.name = markone.name
 	markone.wreckage = FALSE
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
-		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
+		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, REF(newmech))
 	qdel(markone)
 	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
 

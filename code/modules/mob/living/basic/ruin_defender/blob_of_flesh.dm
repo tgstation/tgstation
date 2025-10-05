@@ -40,7 +40,7 @@
 	. = ..()
 	grant_actions_by_list(list(/datum/action/consume/fleshblob))
 	ADD_TRAIT(src, TRAIT_STRONG_GRABBER, INNATE_TRAIT)
-	AddElement(/datum/element/death_drops, string_list(list(/obj/effect/gibspawner/generic)))
+	AddElement(/datum/element/death_drops, /obj/effect/gibspawner/generic)
 	AddComponent(\
 		/datum/component/blood_walk, \
 		blood_type = /obj/effect/decal/cleanable/blood/trail_holder, \

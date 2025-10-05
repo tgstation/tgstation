@@ -1,4 +1,5 @@
 .light:root {
+  --color-base: #ffffff;
   --scrollbar-base: #f2f2f2;
   --scrollbar-thumb: #a7a7a7;
 }
@@ -98,6 +99,21 @@ img {
   border-bottom-color: #000000;
 }
 
+.statcontent {
+  flex: 1;
+  padding: 0.75em 0.5em;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.mcstatcontent {
+  flex: 1;
+  padding: 0.75em 0.5em;
+  overflow-y: auto;
+  overflow-x: auto;
+  white-space: pre;
+}
+
 #under-menu {
   height: 0.5em;
   background-color: #eeeeee;
@@ -106,13 +122,6 @@ img {
 #under-content {
   height: calc(0.5em - 4px);
   background-color: #eeeeee;
-}
-
-#statcontent {
-  flex: 1;
-  padding: 0.75em 0.5em;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .grid-container {
@@ -196,6 +205,7 @@ img {
  * MARK: Dark theme colors
  */
 .dark:root {
+  --color-base: #151515;
   --scrollbar-base: #151515;
   --scrollbar-thumb: #363636;
 }
@@ -203,13 +213,6 @@ img {
 body.dark {
   background-color: #151515;
   color: #b2c4dd;
-  scrollbar-base-color: #1c1c1c;
-  scrollbar-face-color: #3b3b3b;
-  scrollbar-3dlight-color: #252525;
-  scrollbar-highlight-color: #252525;
-  scrollbar-track-color: #1c1c1c;
-  scrollbar-arrow-color: #929292;
-  scrollbar-shadow-color: #3b3b3b;
 }
 
 .dark a {

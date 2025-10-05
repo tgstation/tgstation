@@ -179,7 +179,7 @@
 				qdel(src)
 				return
 			if(9 to 11)
-				airlock.lights = FALSE
+				airlock.feedback = FALSE
 				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
 				airlock.locked = TRUE
 			if(12 to 15)
@@ -1094,7 +1094,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	if(locate(/obj/machinery/door/airlock) in turf)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
-			found_airlock.note = note_path
+			var/obj/item/paper/paper = new note_path(src)
+			found_airlock.note = paper
+			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
 			return

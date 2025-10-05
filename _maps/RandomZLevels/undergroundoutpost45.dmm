@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
@@ -4078,15 +4078,11 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/undergroundoutpost45/engineering)
 "pE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45air"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pF" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45air"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
@@ -4915,7 +4911,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "sr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45mix";
 	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
@@ -5086,7 +5081,6 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "te" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45mix";
 	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
@@ -5624,28 +5618,24 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vd" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45n2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "ve" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45n2";
 	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vf" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45o2";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45o2";
 	dir = 1
 	},
 /turf/open/floor/engine/o2,

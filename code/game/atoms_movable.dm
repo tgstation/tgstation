@@ -1,4 +1,5 @@
 /atom/movable
+	abstract_type = /atom/movable
 	layer = OBJ_LAYER
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
@@ -456,7 +457,7 @@
 		return FALSE
 	if((!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(direction) && destination.zPassIn(direction))) || (!(z_move_flags & ZMOVE_ALLOW_ANCHORED) && anchored))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, span_warning("You couldn't move there!"))
+			to_chat(rider || src, span_warning("You can't move there!"))
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
@@ -1573,12 +1574,12 @@
 	return get_language_holder().remove_all_partial_languages(source)
 
 /// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
-/atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
-	return get_language_holder().add_blocked_language(language, source)
+/atom/movable/proc/add_blocked_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
+	return get_language_holder().add_blocked_language(language, language_flags, source)
 
 /// Removes a language from the blocked language list.
-/atom/movable/proc/remove_blocked_language(language, source = LANGUAGE_ATOM)
-	return get_language_holder().remove_blocked_language(language, source)
+/atom/movable/proc/remove_blocked_language(language, language_flags = ALL, source = LANGUAGE_ATOM)
+	return get_language_holder().remove_blocked_language(language, language_flags, source)
 
 /// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
 /atom/movable/proc/has_language(language, flags_to_check)

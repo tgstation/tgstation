@@ -232,8 +232,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has outbombed Cuban Pete and been awarded a bomb.")
 		user.log_message("outbombed Cuban Pete and has been awarded a bomb.", LOG_GAME)
 	else
-		visible_message(span_notice("[src] dispenses 2 tickets!"))
-		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+		victory_tickets(2,FALSE)
 	player_gold += enemy_gold_reward
 	if(user)
 		var/exp_gained = DEFAULT_EXP_GAIN * all_worlds[player_current_world]
@@ -392,7 +391,7 @@
 	data["enemy_mp"] = enemy_mp
 
 	data["equipped_gear"] = list()
-	for(var/gear_slot as anything in equipped_gear)
+	for(var/gear_slot in equipped_gear)
 		var/datum/battle_arcade_gear/user_gear = equipped_gear[gear_slot]
 		if(!istype(user_gear))
 			continue

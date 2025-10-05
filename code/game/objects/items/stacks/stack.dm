@@ -15,6 +15,7 @@
 	material_modifier = 0.05 //5%, so that a 50 sheet stack has the effect of 5k materials instead of 100k.
 	max_integrity = 100
 	item_flags = SKIP_FANTASY_ON_SPAWN
+	abstract_type = /obj/item/stack
 	/// A list to all recipies this stack item can create.
 	var/list/datum/stack_recipe/recipes
 	/// What's the name of just 1 of this stack. You have a stack of leather, but one piece of leather
@@ -44,8 +45,6 @@
 	// these amounts will be multiplied by the stack size in on_grind()
 	/// Amount of matter given back to RCDs
 	var/matter_amount = 0
-	/// Does this stack require a unique girder in order to make a wall?
-	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/table_type
 	/// What typepath stairs do we create from this stack
@@ -71,6 +70,13 @@
 	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
+
+	/// Can this stack be used for contruction of girders?
+	var/usable_for_construction = FALSE
+	/// Does this stack require a unique girder in order to make a wall?
+	var/has_unique_girder = FALSE
+	///What type of wall does this sheet spawn
+	var/walltype
 
 /obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	amount = new_amount

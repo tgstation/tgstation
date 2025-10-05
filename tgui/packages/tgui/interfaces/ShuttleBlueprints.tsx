@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -9,7 +9,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Direction } from '../constants';
@@ -147,19 +147,21 @@ const VisualizationToggle = (props: VisualizationToggleProps) => {
 
 const ProblemsTooltip = (props: ProblemsTooltipProps) => {
   const { description, problemHeader, problems, problemStrings } = props;
+
+  const problemElements: React.ReactElement[] = [];
+  for (let i = 0; i < problemStrings.length; i++) {
+    if (problems & (1 << i)) {
+      problemElements.push(<Box key={i}>{`● ${problemStrings[i]}`}</Box>);
+    }
+  }
+
   return (
     <Box>
       {description}
       {problems ? (
         <>
           <Box>{problemHeader}</Box>
-          {problemStrings.reduce(
-            (problemList, problemString, i) =>
-              problems & (1 << i)
-                ? [...problemList, <Box key={i}>{`● ${problemString}`}</Box>]
-                : problemList,
-            [],
-          )}
+          {problemElements}
         </>
       ) : undefined}
     </Box>
@@ -318,13 +320,13 @@ const ShuttleConfiguration = () => {
               tooltip={
                 onShuttle
                   ? inDefaultArea
-                    ? null
-                    : 'You can only create a new area from the default area.'
+                    ? 'Designate a room within the shuttle as its own area.'
+                    : 'You can only designate a new area from the default area.'
                   : 'You must be on the linked shuttle to do this.'
               }
               onClick={() => act('createNewArea', { name: name })}
             >
-              Create New Area
+              Designate New Area
             </Button.Confirm>
           </Stack.Item>
           <Stack.Item>
@@ -391,14 +393,14 @@ const ShuttleConfiguration = () => {
             <Stack>
               <Stack.Item>
                 <Button.Confirm
-                  disabled={!(idle && onShuttleFrame && problems) || tooLarge}
+                  disabled={!(idle && onShuttleFrame) || problems || tooLarge}
                   tooltip={
                     <ProblemsTooltip
                       description="Expand the linked shuttle with an adjacent shuttle frame."
-                      problemHeader="The following problems prevent you from expanding the shuttle with this frame."
+                      problemHeader="The following problems prevent you from expanding the shuttle."
                       problems={problems ?? 0}
                       problemStrings={[
-                        'You are not on a shuttle frame.',
+                        'You must be standing on the shuttle frame you wish to expand the shuttle with.',
                         'This frame is not adjacent to the linked shuttle.',
                         'This frame is too large.',
                         'This frame includes the APC of a custom area, but does not enclose the entire area.\
@@ -410,7 +412,7 @@ const ShuttleConfiguration = () => {
                   }
                   onClick={() => act('expandWithFrame')}
                 >
-                  Expand With Shuttle Frame
+                  Expand Shuttle With Connected Frame
                 </Button.Confirm>
               </Stack.Item>
               <Stack.Item>
@@ -453,20 +455,20 @@ const ShuttleConfiguration = () => {
           }
           onClick={() => act('releaseArea')}
         >
-          Remove Area
+          Undesignate Area
         </Button.Confirm>
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
           disabled={!idle || !isMaster}
-          tooltip={
-            'Remove all empty space from the shuttle.' + isMaster
+          tooltip={`Remove all empty space from the shuttle.${
+            isMaster
               ? idle
                 ? '\nThis will delete any areas left without any space, \
               and will decommission the shuttle entirely if there is nothing left of it.'
                 : '\nThe shuttle must be idle to do this.'
               : '\nOnly the master blueprint can do this.'
-          }
+          }`}
           onClick={() => act('cleanupEmptyTurfs')}
         >
           Clean Up Empty Space

@@ -16,6 +16,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
+	mind_traits = list(MEDICAL_MIND_TRAITS)
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
@@ -55,7 +56,7 @@
 	ears = /obj/item/radio/headset/headset_med
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/latex/nitrile
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/workboots/black
 	l_pocket = /obj/item/modular_computer/pda/medical/paramedic
 	r_pocket = /obj/item/storage/box/bandages
 

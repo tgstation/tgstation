@@ -35,7 +35,7 @@
 	button_icon = 'icons/obj/antags/eldritch.dmi'
 	button_icon_state = "crucible_soul"
 
-/datum/action/cancel_crucible_soul/Trigger(trigger_flags)
+/datum/action/cancel_crucible_soul/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -107,7 +107,7 @@
 				if(WOUND_SEVERITY_CRITICAL)
 					heal_amt = 6
 			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound.type]
-			if (pregen_data.wounding_types_valid(list(WOUND_BURN)))
+			if (pregen_data.wounding_types_valid(WOUND_BURN))
 				carbie.adjustFireLoss(-heal_amt)
 			else
 				carbie.adjustBruteLoss(-heal_amt)
@@ -345,11 +345,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
 
 /datum/status_effect/moon_grasp_hide/on_apply()
-	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_UNKNOWN_APPEARANCE, TRAIT_UNKNOWN_VOICE, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/moon_grasp_hide/on_remove()
-	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_UNKNOWN_APPEARANCE, TRAIT_UNKNOWN_VOICE, TRAIT_SILENT_FOOTSTEPS), TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/moon_grasp_hide
 	name = "Blessing of The Moon"

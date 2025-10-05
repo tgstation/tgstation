@@ -88,7 +88,6 @@
 	icon_state = "paralysis"
 
 /datum/mood_event/spacer
-	category = "spacer"
 
 /datum/mood_event/spacer/in_space
 	description = "Space is long and dark and empty, but it's my home."

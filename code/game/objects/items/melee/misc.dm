@@ -1,33 +1,7 @@
 // Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
+	abstract_type = /obj/item/melee
 	item_flags = NEEDS_PERMIT
-
-/obj/item/melee/chainofcommand
-	name = "chain of command"
-	desc = "A tool used by great men to placate the frothing masses."
-	icon = 'icons/obj/weapons/whip.dmi'
-	icon_state = "chain"
-	inhand_icon_state = "chain"
-	worn_icon_state = "whip"
-	icon_angle = -90
-	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	obj_flags = CONDUCTS_ELECTRICITY
-	slot_flags = ITEM_SLOT_BELT
-	force = 10
-	throwforce = 7
-	demolition_mod = 0.25
-	wound_bonus = 15
-	exposed_wound_bonus = 10
-	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
-	attack_verb_simple = list("flog", "whip", "lash", "discipline")
-	hitsound = 'sound/items/weapons/chainhit.ogg'
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
-
-/obj/item/melee/chainofcommand/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return OXYLOSS
 
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"

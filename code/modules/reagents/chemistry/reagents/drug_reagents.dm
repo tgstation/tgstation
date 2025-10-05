@@ -137,6 +137,7 @@
 	name = "Methamphetamine"
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	color = "#78C8FA" //best case scenario is the "default", gets muddled depending on purity
+	taste_description = "harsh, burning chemicals"
 	overdose_threshold = 20
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	ph = 5
@@ -169,7 +170,7 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.", "You understand now.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
@@ -816,11 +817,11 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	if(!kronkaine_fiend.stat)
 		kronkaine_fiend.stop_sound_channel(CHANNEL_HEARTBEAT)
 
-/datum/reagent/drug/kronkaine/on_transfer(atom/kronkaine_receptacle, methods, trans_volume)
+/datum/reagent/drug/kronkaine/expose_mob(mob/living/carbon/druggo, methods, trans_volume, show_message, touch_protection)
 	. = ..()
-	if(!iscarbon(kronkaine_receptacle))
+	if(!iscarbon(druggo))
 		return
-	var/mob/living/carbon/druggo = kronkaine_receptacle
+
 	//The drug is more effective if smoked or injected, restoring more stamina per unit.
 	var/stamina_heal_per_unit
 	if(methods & (INJECT|INHALE))
@@ -833,9 +834,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 			to_chat(druggo, span_nicegreen(pick("You feel the cowardice melt away...", "You feel unbothered by the judgements of others.", "My life feels lovely!", "You lower your snout... and suddenly feel more charitable!")))
 	else
 		stamina_heal_per_unit = 6
-	if(druggo.adjustStaminaLoss(-stamina_heal_per_unit * trans_volume))
-		return UPDATE_MOB_HEALTH
-
+	druggo.adjustStaminaLoss(-stamina_heal_per_unit * trans_volume)
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)
 	. = ..()

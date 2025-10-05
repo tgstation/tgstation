@@ -154,7 +154,7 @@
 
 ///Resume our loop after being paused by pause_loop()
 /datum/move_loop/proc/resume_loop()
-	if(!controller || (status & MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED) != (MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED))
+	if(!controller || (status & (MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED)) != (MOVELOOP_STATUS_RUNNING|MOVELOOP_STATUS_PAUSED))
 		return
 
 	timer = world.time

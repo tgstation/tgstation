@@ -76,6 +76,29 @@ SUBSYSTEM_DEF(dynamic)
 		load_config()
 	return dynamic_config
 
+/// Used to get a config entry for some variable on some typepath
+/// Can be passed a default value.
+/datum/controller/subsystem/dynamic/proc/get_config_value(datum/some_typepath, var_name, default_value)
+	var/config_tag
+	if(ispath(some_typepath, /datum/dynamic_ruleset))
+		var/datum/dynamic_ruleset/ruleset_type = some_typepath
+		config_tag = ruleset_type::config_tag
+	else if(ispath(some_typepath, /datum/dynamic_tier))
+		var/datum/dynamic_tier/tier_type = some_typepath
+		config_tag = tier_type::config_tag
+	else
+		stack_trace("Dynamic get_config_value called with invalid typepath: [some_typepath]")
+		return default_value
+
+	if(isnull(config_tag)) // Technically valid
+		return default_value
+
+	if(!length(dynamic_config))
+		load_config()
+
+	var/config_value = dynamic_config?[config_tag]?[var_name]
+	return isnull(config_value) ? default_value : config_value
+
 /**
  * Selects which rulesets are to run at roundstart, and sets them up
  *
@@ -126,7 +149,7 @@ SUBSYSTEM_DEF(dynamic)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
 		if(!ruleset.prepare_execution( num_real_players, antag_candidates ))
-			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed!")
+			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed! [ruleset.log_data]")
 			queued_rulesets -= ruleset
 			qdel(ruleset)
 			continue
@@ -180,13 +203,11 @@ SUBSYSTEM_DEF(dynamic)
 
 	var/list/tier_weighted = list()
 	for(var/datum/dynamic_tier/tier_datum as anything in subtypesof(/datum/dynamic_tier))
-		var/min_players_config = dynamic_config[tier_datum::config_tag]?[NAMEOF(tier_datum, min_pop)]
-		var/min_players = isnull(min_players_config) ? tier_datum::min_pop : min_players_config
-		if(roundstart_population < min_players)
+		var/tier_pop = GET_DYNAMIC_CONFIG(tier_datum, min_pop)
+		if(roundstart_population < tier_pop)
 			continue
 
-		var/tier_config_weight = dynamic_config[tier_datum::config_tag]?[NAMEOF(tier_datum, weight)]
-		var/tier_weight = isnull(tier_config_weight) ? tier_datum::weight : tier_config_weight
+		var/tier_weight = GET_DYNAMIC_CONFIG(tier_datum, weight)
 		if(tier_weight <= 0)
 			continue
 
@@ -260,6 +281,12 @@ SUBSYSTEM_DEF(dynamic)
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset
 			break
+		if(current_tier.tier != DYNAMIC_TIER_HIGH && (picked_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
+			for(var/datum/dynamic_ruleset/roundstart/high_impact_ruleset as anything in rulesets_weighted)
+				if(!(high_impact_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
+					continue
+				total_weight -= rulesets_weighted[high_impact_ruleset]
+				rulesets_weighted -= high_impact_ruleset
 		if(!picked_ruleset.repeatable)
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset
@@ -284,7 +311,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	for(var/datum/dynamic_tier/tier_datum as anything in subtypesof(/datum/dynamic_tier))
 		if(tier_datum::tier == shown_tier)
-			return tier_datum::advisory_report
+			return GET_DYNAMIC_CONFIG(tier_datum, advisory_report)
 
 	return null
 
@@ -341,7 +368,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates()))
-		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
+		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed! [picked_ruleset.log_data]")
 		QDEL_LIST(rulesets_weighted)
 		return FALSE
 	// Run the thing
@@ -403,8 +430,8 @@ SUBSYSTEM_DEF(dynamic)
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates()))
 		if(alert_admins_on_fail)
-			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
-		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
+			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
+		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
 		qdel(running)
 		return FALSE
 
@@ -466,7 +493,7 @@ SUBSYSTEM_DEF(dynamic)
 		return FALSE
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution(player_count, list(latejoiner)))
-		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased.")
+		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased. [picked_ruleset.log_data]")
 		QDEL_LIST(rulesets_weighted)
 		failed_latejoins++
 		return FALSE

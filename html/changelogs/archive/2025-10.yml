@@ -1,0 +1,202 @@
+2025-10-01:
+  Iajret:
+  - bugfix: Fixed an edge case of mineral turfs being generated with 0 amount of ore
+      in it.
+  JohnFulpWillard:
+  - qol: You can use crayons to make chalk outlines, not just white ones.
+  - qol: Chalk outlines are now properly outlines of the body you're outlining.
+  Pik1ta:
+  - rscadd: Added new sound to pirate crew
+  SmArtKar:
+  - bugfix: Husks no longer glow in space.
+  - bugfix: Fixed megafauna kills not being counted if you lost LoS to the boss when
+      it died, or if you fought it in a mech.
+  - code_imp: Cleaned up mob drops code
+  - spellcheck: Fixed a missing "to" in wendigo crusher trophy
+  - refactor: Unified megafauna, basicmob boss and normal mob crusher drops and achievement
+      code
+  carpotoxin:
+  - rscadd: Adds a button to the strip-menu to remove somebody's uniform accessories
+  grungussuss:
+  - balance: fire extinguishers now hold 100 units of water.
+  loganuk:
+  - rscadd: Status displays now show logo at round start - Status displays now change
+      more often for alerts and other key events
+  - bugfix: Blob non blocking cleanup - Should have no change in player experience
+  - image: Replaces bright blue NT logo with the more subtle slightly animated sprite
+      from AI core, fits nicer.
+  - map: CATWALK - Kitchen now has more space and a downstairs serving area, also
+      shutters for chef sanity
+  - map: CATWALK - Bar now has more space & can now serve coffee
+  - map: CATWALK - Community Centre/Library has had a re-design, now includes a theatre!
+  - map: CATWALK - Public walkway linking Library/Psych/Kitchen/Botany with better
+      stairwells
+  - map: CATWALK - Laser tag arena now open to all, Red versus Blue, Cameras kept
+      out of it so the AI does not panic
+  - map: CATWALK - Botany made more prominent and easier to find
+  - map: CATWALK - Central APC for hallways re-located to be easier to find and fix
+  - map: CATWALK - Psychologist office made smaller but now has windows/curtains and
+      shutters
+  - map: CATWALK - Reinforced windows for service swapped out for standard
+2025-10-02:
+  Hatterhat:
+  - bugfix: Nanotrasen has released a firmware patch for their mining MODs that readds
+      the default hydraulic clamp to the suit's default pinned modules.
+  Pepsilawn:
+  - bugfix: flashes added to assemblies will no longer show up invisible
+  Pik1ta:
+  - bugfix: Bounty hunter pinpointer can locate their shuttle again
+  SmArtKar:
+  - bugfix: Fixed filteriffic runtiming when editing filters, and claiming that bloom
+      threshold is a number
+  - admin: Filteriffic got a few new options (you should still avoid using it)
+  - bugfix: Aheals now cure appendicitis
+  Xander3359:
+  - bugfix: Fixed the pre-built (admin spawn) voltaic combat heart not having shock
+      immunity
+  mskinner5278:
+  - bugfix: fixed error during hyper-noblium formation reaction when bz is not present
+  paganiy:
+  - bugfix: Washing machine can dye clothes again
+2025-10-03:
+  Absolucy, JohnFulpWillard:
+  - image: The Lobby TV now shows an icon of the overflow job.
+  Aliceee2ch:
+  - bugfix: Decal painter now pulls alpha value from neutral decal.
+  ArcaneMusic:
+  - balance: Ore vents spawn a ring of boulder platforms around themselves in nearby
+      lava when starting wave defense.
+  Archemagus:
+  - code_imp: Little AAS code cleanup. Added full RETA support. Grouped configs for
+      search purposes.
+  Ben10Omintrix:
+  - balance: scythe mobs are no longer damaged by lava
+  - balance: the cain and abel are fire and lava proof
+  Ghommie:
+  - bugfix: You can once again make sand walls.
+  - bugfix: Deconstructing an autolathe with sand in it should now drop sand.
+  - rscadd: Things that are edible may also count as golem food if the materials they're
+      made of allow it.
+  JohnFulpWillard:
+  - bugfix: Cyborgs and AIs will now see alerts of the whole station rather than solely
+      the Z level they were spawned on.
+  - bugfix: Cyborgs and AIs will no longer get alerts about Thunderdome.
+  Krysonism:
+  - rscadd: 'Nearly all notable vendors are now constructable if you have the canister.
+
+      add Added refill canisters for syndiesmokes, liberation station, magivend, bombuddy
+      3000, shambler''s juice and syndichem.'
+  - rscadd: Random vending refill canisters now have a chance to spawn in maint.
+  - image: Robco Toolmaker and Centdrobe canisters have new sprites.
+  Melbert:
+  - rscdel: A bunch of botany genes no longer indicate their presence on examine
+  - rscadd: Personality is now available in character preferences! Choose how your
+      character reacts to the whims and woes of the station.
+  - rscdel: 'Several quirks are now personalities: Extrovert, Introvert, Bad Touch,
+      Apathetic, Snob, and Spiritual.'
+  - rscadd: As Spiritual has been removed, Candle Boxes have been added to the loadout.
+  - rscadd: You're now afforded 2 free quirks points when selecting a quirk loadout.
+  - rscadd: 'New negative quirk: Erratic. Randomizes your personality throughout the
+      round.'
+  - rscadd: Spacemen now get upset at seeing their fellow crewmembers or pets die.
+      Unless your personality says you don't, of course.
+  - balance: Antag moodlets have been strengthened a bit to compensate for the murder
+      they have to partake in.
+  - balance: Certain jobs and antags are now "desensitized" to death, meaning they
+      receive a weaker penalty for seeing someone die.
+  - rscadd: Many moodlets have been added, some depending on your personality.
+  - balance: Some pre-existing moodlets will now no longer apply - or will apply in
+      greater strength - depending on your personality.
+  - balance: Mood bonus from really good meals have been reduced slightly.
+  - qol: Rat infusion joke voicelines aren't guaranteed to be spoken, unless it's
+      April Fools or the squeaker is Whimsical.
+  - refactor: Mood events were refactored a lot. Report any oddities.
+  - bugfix: EMP proof objects now specify what they protect rather than only implying
+      it's 100% emp proof
+  - bugfix: Some objects meant to stealthily be emp proof no longer broadcast they
+      are emp proof on examine
+  - qol: Clowns and mimes are innate clown and mime fans. They don't get the free
+      pin, but if they somehow acquire one they'll get the same moodlet applied as
+      real clown and mime fans.
+  - refactor: Refactored huds slightly, report any sticky or missing huds
+  - refactor: Refactored suit sensors slightly, report any weird reports
+  Pickle-Coding:
+  - bugfix: Fixes cryo grenades being able to cool the air below 2.7 Kelvin.
+  SmArtKar:
+  - bugfix: Fixed harddels and UI-breaking runtimes from open_containers
+  - code_imp: Cleaned up wound code, should hopefully run a bit faster now.
+  - bugfix: Fixed some Filterrific functions not working
+  - bugfix: Fixed harmless runtimes when a flying object tried to cross lava
+  SmArtKar, Absolucy:
+  - qol: Mining bags and ore bag MODules now scoop up ores that move or spawn underneath
+      you
+  - refactor: Refactored the recycler MODule to fit our code standards
+  - sound: Ore bag MODule no longer spams ore pickup sounds when you pick up multiple
+      ores on the same tile
+  Xander3359:
+  - qol: Microwave context shows that you can right click to dump a storage into it
+  ell_good:
+  - image: Update voidwalker actions sprites
+  loganuk:
+  - bugfix: Atrocinator modsuit module no longer lets you do a firemans carry to prevent
+      lag spikes
+  theselfish:
+  - spellcheck: You can no longer 'ajdust' your sensors. Adjusting hasn't changed,
+      though.
+  timothymtorres:
+  - qol: New examine tags for the antimagic component to give players specific feedback
+      on an item's magical resistance.
+  - map: Replace snow cabin gateway geothermal generator with real turbine
+  vinylspiders:
+  - qol: improves admin logging of forced dynamic events.
+2025-10-04:
+  ArcaneMusic:
+  - balance: Ore vents on lavaland/icebox now scale their size, and therefore difficulty,
+      based on their distance from the mining station.
+  Melbert:
+  - rscadd: When a mind reader examines a mob, they'll get a glimpse into what that
+      mob is currently typing, before they even send the message.
+  - qol: Mind Reader now groups up all the information it gives you in a box
+  - admin: Mind Reader now logs everything the reader gleamed from the read-ee
+  Y0SH1M4S73R:
+  - bugfix: Snapping USB cables by dragging the attached objects too far away from
+      each other will no longer crash the server.
+2025-10-05:
+  ArcaneMusic:
+  - bugfix: Sheets removed from the protolathe/techfab will properly remove the correct
+      quantity and merge into the right material.
+  JohnFulpWillard:
+  - bugfix: Latejoiners are buckled in to their chairs & Hangover station trait now
+      kicks their effects in again.
+  Krysonism:
+  - rscadd: Added 4 new types of soil
+  - rscadd: Added soils sacks to the nutrimax
+  - rscadd: Added soil sack crates to cargo.
+  - balance: Soil now has higher armor values.
+  - balance: Rice now gets more weeds if grown in soil.
+  - balance: Carrots, potatoes, beets and their mutations now get reduced yield and
+      potency if grown hydroponically.
+  - bugfix: Weed overgrowth no longer instantly sets yield to 3.
+  Melbert:
+  - bugfix: Emotes with visuals can no longer cause errors if spammed to an extreme
+      degree
+  - bugfix: Fixed personality wiping
+  - bugfix: Equipping clothes adds you to suit sensors correctly if your clothes are
+      unlaundered
+  - bugfix: Latejoin officers no longer teleport
+  - bugfix: Multi-z map cryo no longer makes locked fighting game characters
+  - bugfix: Lazy/Diligent is not incompatible with Introvert/lazy
+  SmArtKar:
+  - bugfix: Plasma flower MOD core grass trails no longer appear in front of the user
+      rather than behind them
+  - bugfix: Fixed hierophant staff refusing to be put into backpacks
+  - bugfix: Colorblindness and eye blur from welding should no longer be permanent
+  loganuk:
+  - bugfix: Fixes endless Neurine trauma farming & adds unit test to keep it safe
+  paganiy:
+  - bugfix: fixed cycler shotgun double ammo consumption
+  - bugfix: fixed racking action on the cycler shotgun
+  - bugfix: bounty hunter cycler shotgun now properly fires incendiary rounds from
+      secondary tube
+  timothymtorres:
+  - bugfix: Fix shuttle movement spamming nearstation areas on space turfs
