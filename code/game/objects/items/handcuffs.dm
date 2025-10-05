@@ -396,7 +396,7 @@
 
 /obj/item/restraints/handcuffs/cult/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
-	user.visible_message(span_danger("[user]'s shackles shatter in a discharge of dark magic!"), span_userdanger("Your [src] shatters in a discharge of dark magic!"))
+	wearer.visible_message(span_danger("[wearer]'s shackles shatter in a discharge of dark magic!"), span_userdanger("Your [src] shatters in a discharge of dark magic!"))
 	qdel(src)
 
 
