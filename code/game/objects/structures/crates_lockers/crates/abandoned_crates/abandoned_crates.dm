@@ -34,8 +34,7 @@
 			/obj/effect/spawner/abandoned_crate/pay_day = 1,
 			/obj/item/melee/skateboard/hoverboard = 1,
 			/obj/item/implanter/sad_trombone = 1,
-			/obj/structure/closet/crate = 1,
-			) = 35, // sum of weights inside list
+			) = 34, // sum of weights inside list
 
 		list( // Weapons & Combat
 			/obj/item/melee/baton = 2,
@@ -90,6 +89,10 @@
 			/obj/effect/spawner/abandoned_crate/mimic = 1,
 			/obj/effect/spawner/abandoned_crate/bees = 1,
 			) = 4,
+
+		list( // Misc
+			/obj/structure/closet/crate = 1, //crate inside crate
+			) = 1,
 		)
 
 /obj/structure/closet/crate/secure/loot/Initialize(mapload)
