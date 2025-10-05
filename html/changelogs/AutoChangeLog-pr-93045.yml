@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "More types of garbage (empty lighters, empty cigarette packs, empty food, etc.) have been added to the trash spawner."
+  - qol: "Paper plane added to the paper spawner, which is now used in the trash spawner."
