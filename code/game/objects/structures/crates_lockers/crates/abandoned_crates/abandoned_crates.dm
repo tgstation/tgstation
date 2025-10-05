@@ -16,7 +16,7 @@
 
 	divable = FALSE // Stop people from "diving into" the crate accidentally, and then detonating it.
 
-	/// Possible crate's loot selected by weighted list: [typepath] = probability %
+	/// Possible loot from the crate, selected according to a weighted list: [typepath] = probability %
 	var/list/possible_loot = list(
 		list( // Toys & Entertainment
 			/obj/item/melee/skateboard/pro = 5,
