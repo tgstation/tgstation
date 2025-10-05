@@ -30,6 +30,9 @@
 /// Checks that nightvision eyes have a full set of color lists
 /datum/unit_test/focus_only/nightvision_color_cutoffs
 
+/// Ensures that items that got the nullrod_core element with the chaptain_spawnable arg can be selected by the chaplain
+/datum/unit_test/focus_only/nullrod_variants
+
 /// Checks that no light shares a tile/pixel offsets with another
 /datum/unit_test/focus_only/stacked_lights
 
