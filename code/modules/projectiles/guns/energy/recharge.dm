@@ -106,7 +106,7 @@
 	no_charge_state = "crossbow_empty"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
-	suppressed = TRUE
+	suppressed = SUPPRESSED_QUIET
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	recharge_time = 2 SECONDS
 	holds_charge = TRUE
@@ -131,7 +131,7 @@
 	no_charge_state = "crossbowlarge_empty"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
-	suppressed = null
+	suppressed = SUPPRESSED_NONE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 
 /// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
@@ -146,7 +146,7 @@
 	dry_fire_sound_volume = 10
 	w_class = WEIGHT_CLASS_SMALL
 	holds_charge = TRUE
-	suppressed = TRUE
+	suppressed = SUPPRESSED_QUIET
 	recharge_time = 1.2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/fisher)
 
