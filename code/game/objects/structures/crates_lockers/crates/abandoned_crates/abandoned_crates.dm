@@ -91,7 +91,7 @@
 			) = 4,
 
 		list( // Misc
-			/obj/structure/closet/crate = 1, //crate inside crate
+			/obj/effect/spawner/random/structure/closet_empty/crate = 1, //crate with crate
 			) = 1,
 		)
 
