@@ -17,7 +17,7 @@
 			for(var/i in 1 to loot[atom])
 				new atom(loc)
 
-/obj/effect/spawner/abandoned_crate/alcohol
+/obj/effect/spawner/abandoned_crate/booze
 	loot = list(
 		/obj/item/reagent_containers/cup/glass/bottle/rum = 1,
 		/obj/item/reagent_containers/cup/glass/bottle/whiskey = 2,

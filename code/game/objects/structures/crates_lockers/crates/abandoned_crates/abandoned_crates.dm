@@ -34,13 +34,15 @@
 			/obj/effect/spawner/abandoned_crate/pay_day = 1,
 			/obj/item/melee/skateboard/hoverboard = 1,
 			/obj/item/implanter/sad_trombone = 1,
-			),
+			/obj/structure/closet/crate = 1,
+			) = 35, // sum of weights inside list
 
 		list( // Weapons & Combat
 			/obj/item/melee/baton = 2,
+			/obj/item/clothing/gloves/boxing/evil = 1,
 			/obj/item/melee/energy/sword/bananium = 1,
 			/obj/item/katana = 1,
-			),
+			) = 5,
 
 		list( // Clothing
 			/obj/item/storage/box/syndie_kit/chameleon/broken = 5,
@@ -48,46 +50,46 @@
 			/obj/effect/spawner/abandoned_crate/kitty = 2,
 			/obj/effect/spawner/abandoned_crate/space_suit = 2,
 			/obj/effect/spawner/abandoned_crate/fursuit = 2,
-			),
+			) = 13,
 
 		list( // Tools & Equipment
 			/obj/item/modular_computer/pda/clear = 5,
 			/obj/item/defibrillator/compact = 2,
-			),
+			) = 7,
 
 		list( // Materials
 			/obj/effect/spawner/abandoned_crate/diamonds = 5,
 			/obj/effect/spawner/abandoned_crate/bluespace_crystal = 2,
 			/obj/effect/spawner/abandoned_crate/bananium = 2,
-			),
+			) = 9,
 
-		list( // Botany
+		list( // Seed & Plants
 			/obj/item/seeds/firelemon = 5,
 			/obj/effect/spawner/abandoned_crate/weed = 1,
-			),
+			) = 6,
 
 		list( // Consumables
-			/obj/effect/spawner/abandoned_crate/alcohol = 5,
+			/obj/effect/spawner/abandoned_crate/booze = 5,
 			/obj/effect/spawner/abandoned_crate/boda = 5,
 			/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
-			),
+			) = 11,
 
 		list( // Mobs
 			/mob/living/basic/bot/honkbot = 5,
 			/mob/living/basic/pet/gondola = 2,
 			/obj/effect/spawner/abandoned_crate/bloodroaches = 1,
-			),
+			) = 8,
 
 		list( // Medical & Science
 			/obj/item/dnainjector/xraymut = 1,
 			/obj/item/dnainjector/wackymut = 1,
-			),
+			) = 2,
 
 		list( // Dangerous
 			/obj/effect/spawner/abandoned_crate/gibtonite = 2,
 			/obj/effect/spawner/abandoned_crate/mimic = 1,
 			/obj/effect/spawner/abandoned_crate/bees = 1,
-			),
+			) = 4,
 		)
 
 /obj/structure/closet/crate/secure/loot/Initialize(mapload)
