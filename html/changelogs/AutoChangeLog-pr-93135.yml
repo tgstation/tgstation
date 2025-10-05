@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "The extended lore bits for the Iaito surplus energy sword and the BR-38 battle rifle have been moved to being examined closely, and their descriptions have been rewritten to be a bit more apt."
+  - code_imp: "The lore descriptions for the SC/FISHER and Ansem/SC are now tied to the examine_lore component."

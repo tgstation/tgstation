@@ -24,7 +24,8 @@
 	icon = 'icons/obj/machines/atmospherics/unary_devices.dmi'
 	icon_state = "airlock_pump"
 	pipe_state = "airlock_pump"
-	use_power = ACTIVE_POWER_USE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	can_unwrench = TRUE
 	welded = FALSE
@@ -122,7 +123,10 @@
 	. = ..()
 	if(mapload)
 		can_unwrench = FALSE
-
+	var/datum/gas_mixture/distro_air = airs[1]
+	var/datum/gas_mixture/waste_air = airs[2]
+	distro_air.volume = 1000
+	waste_air.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/post_machine_initialize()
 	. = ..()
@@ -153,14 +157,6 @@
 			tile_air_pressure = max(0, local_turf.return_air().return_pressure())
 		on_dock_request(tile_air_pressure)
 
-/obj/machinery/atmospherics/components/unary/airlock_pump/Initialize(mapload)
-	. = ..()
-	var/datum/gas_mixture/distro_air = airs[1]
-	var/datum/gas_mixture/waste_air = airs[2]
-	distro_air.volume = 1000
-	waste_air.volume = 1000
-
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/on_deconstruction(disassembled)
 	. = ..()
 	if(cycling_set_up)
@@ -176,6 +172,12 @@
 		to_chat(user, span_warning("You cannot unwrench [src], wait for the cycle completion!"))
 		return FALSE
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/set_on(active)
+	. = ..()
+	if(active)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/process_atmos()
 	if(!on)
@@ -335,7 +337,6 @@
 			source_airlock.say("Decompressing airlock.")
 
 	return TRUE
-
 
 ///Complete/Abort cycle with the passed message
 /obj/machinery/atmospherics/components/unary/airlock_pump/proc/stop_cycle(message = null, unbolt_only = FALSE)
