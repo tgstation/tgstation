@@ -1,12 +1,11 @@
 /datum/antagonist/ashwalker
 	name = "\improper Ash Walker"
-	job_rank = ROLE_LAVALAND
+	pref_flag = ROLE_LAVALAND
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
-	prevent_roundtype_conversion = FALSE
 	antagpanel_category = ANTAG_GROUP_ASHWALKERS
 	suicide_cry = "I HAVE NO IDEA WHAT THIS THING DOES!!"
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	var/datum/team/ashwalkers/ashie_team
 
 /datum/antagonist/ashwalker/create_team(datum/team/ashwalkers/ashwalker_team)

@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile
+	abstract_type = /mob/living/simple_animal/hostile
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
@@ -48,7 +49,7 @@
 	///What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown = 0
 	///How long, in deciseconds, the cooldown of ranged attacks is
-	var/ranged_cooldown_time = 30
+	var/ranged_cooldown_time = 3 SECONDS
 	///if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/ranged_ignores_vision = FALSE
 	///Should the ranged mob check for friendlies when shooting
@@ -71,7 +72,7 @@
 	///Timer for regaining our old search_objects value after being attacked
 	var/search_objects_timer_id
 	///The delay between being attacked and gaining our old search_objects value back
-	var/search_objects_regain_time = 30
+	var/search_objects_regain_time = 3 SECONDS
 	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
 	var/list/wanted_objects = list()
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
@@ -90,7 +91,7 @@
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
-	var/lose_patience_timeout = 300
+	var/lose_patience_timeout = 30 SECONDS
 
 /mob/living/simple_animal/hostile/Initialize(mapload)
 	. = ..()

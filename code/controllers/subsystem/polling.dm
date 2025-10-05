@@ -63,7 +63,11 @@ SUBSYSTEM_DEF(polling)
 		question = "Do you want to play as [span_notice(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
-	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [DisplayTimeText(poll_time)] seconds")
+	log_ghost_poll("Candidate poll started.", data = list(
+		"role name" = role_name_text,
+		"poll question" = question,
+		"poll duration" = DisplayTimeText(poll_time),
+	))
 
 	// Start firing
 	total_polls++
@@ -285,11 +289,10 @@ SUBSYSTEM_DEF(polling)
 	if(the_ignore_category)
 		if(potential_candidate.ckey in GLOB.poll_ignore[the_ignore_category])
 			return FALSE
-	if(role)
+	if(role && potential_candidate.client)
 		if(!(role in potential_candidate.client.prefs.be_special))
 			return FALSE
-		var/required_time = GLOB.special_roles[role] || 0
-		if(potential_candidate.client && potential_candidate.client.get_remaining_days(required_time) > 0)
+		if(potential_candidate.client.get_days_to_play_antag(role) > 0)
 			return FALSE
 
 	if(check_jobban)
@@ -303,7 +306,14 @@ SUBSYSTEM_DEF(polling)
 	// Trim players who aren't eligible anymore
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
-	log_game("Candidate poll [finishing_poll.role ? "for [finishing_poll.role]" : "\"[finishing_poll.question]\""] finished. [length_pre_trim] players signed up, [length(finishing_poll.signed_up)] after trimming")
+
+	log_ghost_poll("Candidate poll completed.", data = list(
+		"role name" = finishing_poll.role,
+		"poll question" = finishing_poll.question,
+		"signed up count" = length_pre_trim,
+		"trimmed candidate count" = length(finishing_poll.signed_up)
+	))
+
 	finishing_poll.finished = TRUE
 
 	// Take care of updating the remaining screen alerts if a similar poll is found, or deleting them.
@@ -318,7 +328,7 @@ SUBSYSTEM_DEF(polling)
 	QDEL_IN(finishing_poll, 0.5 SECONDS)
 
 /datum/controller/subsystem/polling/stat_entry(msg)
-	msg += "Active: [length(currently_polling)] | Total: [total_polls]"
+	msg = "\n  Active: [length(currently_polling)] | Total: [total_polls]"
 	var/datum/candidate_poll/soonest_to_complete = get_next_poll_to_finish()
 	if(soonest_to_complete)
 		msg += " | Next: [DisplayTimeText(soonest_to_complete.time_left())] ([length(soonest_to_complete.signed_up)] candidates)"

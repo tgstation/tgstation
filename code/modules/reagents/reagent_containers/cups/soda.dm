@@ -11,8 +11,8 @@
 	icon = 'icons/obj/drinks/soda.dmi'
 	icon_state = "cola"
 	icon_state_preview = "cola"
-	reagent_flags = NONE
-	spillable = FALSE
+	abstract_type = /obj/item/reagent_containers/cup/soda_cans
+	initial_reagent_flags = NONE
 	custom_price = PAYCHECK_CREW * 0.9
 	obj_flags = CAN_BE_HIT
 	possible_transfer_amounts = list(5, 10, 15, 25, 30)
@@ -63,17 +63,24 @@
 	sleep(2 SECONDS) //dramatic pause
 	return TOXLOSS
 
-/obj/item/reagent_containers/cup/soda_cans/attack(mob/M, mob/living/user)
-	if(iscarbon(M) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
-		if(M == user)
-			user.visible_message(span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"), span_notice("You crush the can of [src] on your forehead."))
+/obj/item/reagent_containers/cup/soda_cans/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(iscarbon(target) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
+		if(target == user)
+			user.visible_message(
+				span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"),
+				span_notice("You crush the can of [src] on your forehead."),
+			)
 		else
-			user.visible_message(span_warning("[user] crushes the can of [src] on [M]'s forehead!"), span_notice("You crush the can of [src] on [M]'s forehead."))
-		playsound(M,'sound/items/weapons/pierce.ogg', rand(10,50), TRUE)
-		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(M.loc)
+			user.visible_message(
+				span_warning("[user] crushes the can of [src] on [target]'s forehead!"),
+				span_notice("You crush the can of [src] on [target]'s forehead."),
+			)
+		playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
 		crushed_can.icon_state = icon_state
 		qdel(src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
 
 /obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/proj)
@@ -95,9 +102,8 @@
 		return
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
-	reagents.flags |= OPENCONTAINER
+	add_container_flags(OPENCONTAINER)
 	playsound(src, SFX_CAN_OPEN, 50, TRUE)
-	spillable = TRUE
 	throwforce = 0
 
 /**
@@ -121,15 +127,14 @@
 	playsound(src, 'sound/items/can/can_pop.ogg', 80, TRUE)
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
-	spillable = TRUE
-	reagents.flags |= OPENCONTAINER
+	add_container_flags(OPENCONTAINER)
 	reagents.expose(target, TOUCH)
 	reagents.clear_reagents()
 	throwforce = 0
 
 /obj/item/reagent_containers/cup/soda_cans/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(. || spillable || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
+	if(. || is_open_container() || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
 		return
 
 	fizziness += SODA_FIZZINESS_THROWN

@@ -6,7 +6,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
@@ -51,8 +51,7 @@ export const NtosRadarContent = (props) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          backgroundImage:
-            'url("' + resolveAsset('ntosradarbackground.png') + '")',
+          backgroundImage: `url("${resolveAsset('ntosradarbackground.png')}")`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           top: '20px',
@@ -148,8 +147,8 @@ const TargetDisplay = (props) => {
       position="absolute"
       size={2}
       color={target.color}
-      top={target.locy * 10 + 19 + 'px'}
-      left={target.locx * 10 + 16 + 'px'}
+      top={`${target.locy * 10 + 19}px`}
+      left={`${target.locx * 10 + 16}px`}
     />
   );
 };

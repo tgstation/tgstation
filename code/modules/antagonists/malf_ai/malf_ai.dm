@@ -5,7 +5,7 @@
 	name = "\improper Malfunctioning AI"
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
-	job_rank = ROLE_MALF
+	pref_flag = ROLE_MALF
 	antag_hud_name = "traitor"
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
@@ -32,7 +32,6 @@
 		stack_trace("Attempted to give malf AI antag datum to \[[owner]\], who did not meet the requirements.")
 		return ..()
 
-	owner.special_role = job_rank
 	if(give_objectives)
 		forge_ai_objectives()
 	if(!employer)
@@ -58,7 +57,6 @@
 		malf_ai.remove_malf_abilities()
 		QDEL_NULL(malf_ai.malf_picker)
 
-	owner.special_role = null
 	UnregisterSignal(owner, COMSIG_SILICON_AI_CORE_STATUS)
 	return ..()
 
@@ -170,6 +168,7 @@
 	var/list/data = list()
 	data["processingTime"] = malf_ai.malf_picker.processing_time
 	data["compactMode"] = module_picker_compactmode
+	data["hackedAPCs"] = malf_ai.hacked_apcs.len
 	return data
 
 /datum/antagonist/malf_ai/ui_static_data(mob/living/silicon/ai/malf_ai)
@@ -201,6 +200,7 @@
 					"name" = mod.name,
 					"cost" = mod.cost,
 					"desc" = mod.description,
+					"minimum_apcs" = mod.minimum_apcs,
 				))
 			data["categories"] += list(cat)
 

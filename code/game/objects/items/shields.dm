@@ -5,6 +5,7 @@
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	abstract_type = /obj/item/shield
 	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK
 	force = 10
@@ -44,12 +45,16 @@
 	AddElement(/datum/element/disarm_attack)
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	var/effective_block_chance = final_block_chance
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
+		effective_block_chance += 30
 	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
+		effective_block_chance = 100
+	if(attack_type == OVERWHELMING_ATTACK)
+		effective_block_chance -= 25
+	final_block_chance = clamp(effective_block_chance, 0, 100)
 	. = ..()
 	if(.)
 		on_shield_block(owner, hitby, attack_text, damage, attack_type, damage_type)
@@ -336,12 +341,16 @@
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return FALSE
 
+	var/effective_block_chance = final_block_chance
+	if(attack_type == OVERWHELMING_ATTACK)
+		effective_block_chance -= 25
+
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/our_projectile = hitby
 
 		if(our_projectile.reflectable) //We handle this via IsReflect() instead.
-			final_block_chance = 0
-
+			effective_block_chance = 0
+	final_block_chance = clamp(effective_block_chance, 0, 100)
 	return ..()
 
 /obj/item/shield/energy/IsReflect()

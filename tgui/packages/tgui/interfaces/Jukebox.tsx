@@ -1,4 +1,4 @@
-import { sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import {
   Box,
   Button,
@@ -8,7 +8,7 @@ import {
   LabeledList,
   Section,
 } from 'tgui-core/components';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -31,7 +31,7 @@ export const Jukebox = () => {
   const { act, data } = useBackend<Data>();
   const { active, looping, track_selected, volume, songs } = data;
 
-  const songs_sorted: Song[] = sortBy(songs, (song: Song) => song.name);
+  const songs_sorted: Song[] = sortBy(songs, [(song: Song) => song.name]);
   const song_selected: Song | undefined = songs.find(
     (song) => song.name === track_selected,
   );

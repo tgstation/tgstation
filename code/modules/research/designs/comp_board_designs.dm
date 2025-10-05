@@ -392,9 +392,9 @@
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/accounting
 	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RECORDS
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
 	)
-	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/shuttle
 	category = list("Computer Boards", "Shuttle Machinery")
@@ -411,3 +411,13 @@
 	desc = "Allows for the construction of circuit boards used to build a console that enables the targetting of custom flight locations"
 	id = "shuttle_docker"
 	build_path = /obj/item/circuitboard/computer/shuttle/docker
+
+/datum/design/board/quantum_console
+	name = "Quantum Console Board"
+	desc = "Allows for the construction of circuit boards used to build a Quantum Console."
+	id = "quantum_console"
+	build_path = /obj/item/circuitboard/computer/quantum_console
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

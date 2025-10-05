@@ -70,13 +70,13 @@
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
-	if(computer_id_slot)
+	if(stored_id)
 		. += mutable_appearance(overlays_icon, "id_overlay")
 	if(light_on)
 		. += mutable_appearance(overlays_icon, "light_overlay")
@@ -205,7 +205,7 @@
 	if(from_message_menu)
 		log_bomber(null, null, target, "'s tablet exploded as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb.")
 	else
-		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
+		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber?.is_antag() ? "" : "(SENT BY NON-ANTAG)"]")
 
 	if (ismob(loc))
 		var/mob/loc_mob = loc

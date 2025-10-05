@@ -89,6 +89,15 @@
 	name = "Santa Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
+/datum/greyscale_config/ushanka
+	name = "Ushanka"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ushanka.json'
+
+/datum/greyscale_config/ushanka/worn
+	name = "Ushanka (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
 //
 // MASKS
 //
@@ -368,6 +377,26 @@
 /datum/greyscale_config/sailor_dress/worn
 	name = "Sailor Dress(Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/seifuku
+	name = "Seifuku"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku.json'
+
+/datum/greyscale_config/seifuku/worn
+	name = "Seifuku (Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_worn.json'
+
+/datum/greyscale_config/seifuku_inhands_left
+	name = "Seifuku Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_inhands.json'
+
+/datum/greyscale_config/seifuku_inhands_right
+	name = "Seifuku Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_inhands.json'
 
 // SHIRTS, PANTS AND SHORTS
 /datum/greyscale_config/slacks
@@ -859,3 +888,41 @@
 /datum/greyscale_config/fedora/worn
 	name = "Fedora (Worn)"
 	icon_file = 'icons/mob/clothing/head/hats.dmi'
+
+/datum/greyscale_config/maid
+	name = "Maid Uniform"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid/worn
+	name = "Maid Uniform(Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+
+/datum/greyscale_config/maid_inhands_left
+	name = "Maid Uniform Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_inhands_right
+	name = "Maid Uniform Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband
+	name = "Maid Headband"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband/worn
+	name = "Maid Headband(Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/maid_headband_inhands_left
+	name = "Maid Headband Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband_inhands_right
+	name = "Maid Headband Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'

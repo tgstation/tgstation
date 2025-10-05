@@ -155,8 +155,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	return BRUTELOSS
 
 /obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
 	return ..()
 
 //statistically similar to e-cutlasses
@@ -350,13 +350,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot //BLOODTHIRSTY BORGS NOW COME IN PLAID
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "claymore_cyborg"
-	var/mob/living/silicon/robot/robot
 
 /obj/item/claymore/highlander/robot/Initialize(mapload)
-	var/obj/item/robot_model/kiltkit = loc
-	robot = kiltkit.loc
 	. = ..()
-	if(!istype(robot))
+	if(!iscyborg(loc))
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
@@ -419,6 +416,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 4
 	embed_type = /datum/embedding/throwing_star
 	armour_penetration = 40
+	mob_throw_hit_sound = 'sound/items/weapons/pierce.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
@@ -837,19 +836,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("clubs", "bludgeons")
 	attack_verb_simple = list("club", "bludgeon")
 
-/obj/item/melee/chainofcommand/tailwhip
-	name = "liz o' nine tails"
-	desc = "A whip fashioned from the severed tails of lizards."
-	icon_state = "tailwhip"
-	inhand_icon_state = "tailwhip"
-	item_flags = NONE
-
-/obj/item/melee/chainofcommand/tailwhip/kitty
-	name = "cat o' nine tails"
-	desc = "A whip fashioned from the severed tails of cats."
-	icon_state = "catwhip"
-	inhand_icon_state = "catwhip"
-
 /obj/item/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a radical weapon."
@@ -919,7 +905,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 	effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/melee/skateboard/holyboard/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
 	SIGNAL_HANDLER

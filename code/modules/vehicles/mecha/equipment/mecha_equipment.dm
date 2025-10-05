@@ -5,6 +5,7 @@
 /obj/item/mecha_parts/mecha_equipment
 	name = "mecha equipment"
 	icon = 'icons/obj/devices/mecha_equipment.dmi'
+	abstract_type = /obj/item/mecha_parts/mecha_equipment
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
@@ -64,11 +65,13 @@
 		return
 	switch(action)
 		if("detach")
-			chassis.ui_selected_module_index = null
-			detach(get_turf(src))
+			if(detachable)
+				chassis.ui_selected_module_index = null
+				detach(get_turf(src))
 			. = TRUE
 		if("toggle")
-			set_active(!active)
+			if(can_be_toggled)
+				set_active(!active)
 			. = TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
@@ -126,20 +129,30 @@
  * * target: targeted atom for action activation
  * * user: occupant to display do after for
  * * interaction_key: interaction key to pass to [/proc/do_after]
+ * * flags: bitfield for different checks on do_after_checks
  */
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key, flags)
 	if(!chassis)
 		return FALSE
 	chassis.use_energy(energy_drain)
-	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target), interaction_key = interaction_key)
+	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target, flags), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
-	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target))
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay, flags)
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target, flags))
 
 /// do after checks for the mecha equipment do afters
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)
-	return chassis && (get_dir(chassis, target) & chassis.dir)
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target, flags = MECH_DO_AFTER_DIR_CHANGE_FLAG)
+	. = TRUE
+
+	if(!chassis)
+		return FALSE
+
+	if(flags & MECH_DO_AFTER_DIR_CHANGE_FLAG && !(get_dir(chassis, target) & chassis.dir))
+		return FALSE
+
+	if(flags & MECH_DO_AFTER_ADJACENCY_FLAG && !(chassis.Adjacent(target)))
+		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE, mob/user)
 	return default_can_attach(M, attach_right, user)

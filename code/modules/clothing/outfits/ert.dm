@@ -248,7 +248,7 @@
 		/obj/item/storage/box/lights/mixed = 1,
 	)
 	belt = /obj/item/storage/belt/janitor/full
-	glasses = /obj/item/clothing/glasses/night/colorless
+	glasses = /obj/item/clothing/glasses/night
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_hand = /obj/item/storage/bag/trash/bluespace
@@ -304,8 +304,8 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	l_pocket = /obj/item/ammo_box/strilka310
-	r_pocket = /obj/item/ammo_box/strilka310
+	l_pocket = /obj/item/ammo_box/speedloader/strilka310
+	r_pocket = /obj/item/ammo_box/speedloader/strilka310
 	l_hand = /obj/item/gun/ballistic/rifle/boltaction
 
 /datum/outfit/centcom/centcom_intern/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
@@ -420,7 +420,7 @@
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/storage/box/fireworks = 3,
 	)
-	belt = /obj/item/storage/belt/sabre
+	belt = /obj/item/storage/belt/sheath/sabre
 	head = /obj/item/clothing/head/hats/coordinator
 	l_pocket = /obj/item/knife/kitchen
 	l_hand = /obj/item/toy/balloon
@@ -434,7 +434,7 @@
 	back = /obj/item/mod/control/pre_equipped/apocryphal
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
-		/obj/item/ammo_box/a357 = 1,
+		/obj/item/ammo_box/speedloader/c357 = 1,
 		/obj/item/flashlight = 1,
 		/obj/item/grenade/c4/x4 = 1,
 		/obj/item/storage/box/flashbangs = 1,

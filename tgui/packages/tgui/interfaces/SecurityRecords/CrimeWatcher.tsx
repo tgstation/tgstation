@@ -18,13 +18,12 @@ import {
 } from 'tgui-core/components';
 
 import { getSecurityRecord } from './helpers';
-import { Crime, SECURETAB, SecurityRecordsData } from './types';
+import { type Crime, SECURETAB, type SecurityRecordsData } from './types';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <> </>;
-
+  if (!foundRecord) return;
   const { crimes, citations } = foundRecord;
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
     'selectedTab',
@@ -73,7 +72,7 @@ export const CrimeWatcher = (props) => {
 /** Displays the crimes and citations of a record. */
 const CrimeList = (props) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { citations, crimes } = foundRecord;
   const { tab } = props;
@@ -97,7 +96,7 @@ const CrimeList = (props) => {
 /** Displays an individual crime */
 const CrimeDisplay = ({ item }: { item: Crime }) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { crew_ref } = foundRecord;
   const { act, data } = useBackend<SecurityRecordsData>();
@@ -215,7 +214,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
 /** Writes a new crime. Reducers don't seem to work here, so... */
 const CrimeAuthor = (props) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { crew_ref } = foundRecord;
   const { act } = useBackend<SecurityRecordsData>();

@@ -452,6 +452,9 @@
 	return embeds
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
+	if(SEND_SIGNAL(src, COMSIG_MOB_FLASH_OVERRIDE_CHECK, src) & FLASH_OVERRIDDEN) //Check for behavior overrides before doing the act itself. If we have a behavior override, we handle everything there and skip the rest
+		return FLASH_COMPLETED
+
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return
@@ -505,28 +508,29 @@
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	var/effect_amount = intensity - ear_safety
-	if(effect_amount > 0)
-		if(stun_pwr)
-			Paralyze((stun_pwr*effect_amount)*0.1)
-			Knockdown(stun_pwr*effect_amount)
+	if(effect_amount <= 0)
+		return FALSE
 
-		if(ears && (deafen_pwr || damage_pwr))
-			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = deafen_pwr * effect_amount
-			ears.adjustEarDamage(ear_damage,deaf)
+	if(stun_pwr)
+		Paralyze((stun_pwr*effect_amount)*0.1)
+		Knockdown(stun_pwr*effect_amount)
 
-			if(ears.damage >= 15)
-				to_chat(src, span_warning("Your ears start to ring badly!"))
-				if(prob(ears.damage - 5))
-					to_chat(src, span_userdanger("You can't hear anything!"))
-					// Makes you deaf, enough that you need a proper source of healing, it won't self heal
-					// you need earmuffs, inacusiate, or replacement
-					ears.set_organ_damage(ears.maxHealth)
-			else if(ears.damage >= 5)
-				to_chat(src, span_warning("Your ears start to ring!"))
-			SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
-		return effect_amount //how soundbanged we are
+	if(ears && (deafen_pwr || damage_pwr))
+		var/ear_damage = damage_pwr * effect_amount
+		var/deaf = deafen_pwr * effect_amount
+		ears.adjustEarDamage(ear_damage,deaf)
 
+		. = effect_amount //how soundbanged we are
+		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
+
+		if(ears.damage < 5)
+			return
+		if(ears.damage >= 15 && prob(ears.damage - 5))
+			to_chat(src, span_userdanger("You can't hear anything!"))
+			// Makes you deaf, enough that you need a proper source of healing, it won't self heal
+			// you need earmuffs, inacusiate, or replacement
+			ears.set_organ_damage(ears.maxHealth)
+		to_chat(src, span_warning("Your ears start to ring[ears.damage >= 15 ? " badly!":"!"]"))
 
 /mob/living/carbon/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)
@@ -598,7 +602,7 @@
 		to_chat(src, span_danger("You can't grasp your [grasped_part.name] with itself!"))
 		return
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	to_chat(src, span_warning("You try grasping at your [grasped_part.name][bleeding_text]..."))
 	if(!do_after(src, 0.75 SECONDS))
@@ -614,7 +618,7 @@
 
 /// If TRUE, the owner of this bodypart can try grabbing it to slow bleeding, as well as various other effects.
 /obj/item/bodypart/proc/can_be_grasped()
-	if (get_modified_bleed_rate())
+	if (cached_bleed_rate)
 		return TRUE
 
 	for (var/datum/wound/iterated_wound as anything in wounds)
@@ -667,7 +671,7 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
 	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
-	var/bleed_rate = grasped_part.get_modified_bleed_rate()
+	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)

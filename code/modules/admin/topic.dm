@@ -49,27 +49,34 @@
 		cmd_show_exp_panel(M.client)
 
 	else if(href_list["editrightsbrowser"])
-		edit_admin_permissions(0)
+		edit_admin_permissions(PERMISSIONS_PAGE_PERMISSIONS)
 
-	else if(href_list["editrightsbrowserlog"])
-		edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
+	else if(href_list["editrightsbrowserranks"])
+		if(href_list["editrightsaddrank"])
+			add_rank()
+		else if(href_list["editrightsremoverank"])
+			remove_rank(href_list["editrightsremoverank"])
+		else if(href_list["editrightseditrank"])
+			change_rank(href_list["editrightseditrank"])
+		edit_admin_permissions(PERMISSIONS_PAGE_RANKS)
 
-	if(href_list["editrightsbrowsermanage"])
+	else if(href_list["editrightsbrowserlogging"])
+		edit_admin_permissions(PERMISSIONS_PAGE_LOGGING, href_list["editrightslogtarget"], href_list["editrightslogactor"], href_list["editrightslogoperation"], href_list["editrightslogpage"])
+
+	if(href_list["editrightsbrowserhousekeep"])
 		if(href_list["editrightschange"])
 			change_admin_rank(ckey(href_list["editrightschange"]), href_list["editrightschange"], TRUE)
 		else if(href_list["editrightsremove"])
 			remove_admin(ckey(href_list["editrightsremove"]), href_list["editrightsremove"], TRUE)
 		else if(href_list["editrightsremoverank"])
 			remove_rank(href_list["editrightsremoverank"])
-		edit_admin_permissions(2)
+		edit_admin_permissions(PERMISSIONS_PAGE_HOUSEKEEPING)
 
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
 	else if(href_list["gamemode_panel"])
-		if(!check_rights(R_ADMIN))
-			return
-		SSdynamic.admin_panel()
+		dynamic_panel(usr)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -386,122 +393,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
-
-	else if(href_list["f_dynamic_roundstart"])
-		if(!check_rights(R_ADMIN))
-			return
-		if(SSticker.HasRoundStarted())
-			return tgui_alert(usr, "The game has already started.")
-		var/roundstart_rules = list()
-		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
-			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
-			roundstart_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sort_list(roundstart_rules)
-		if (added_rule)
-			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
-			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
-			message_admins("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.", 1)
-			Game()
-
-	else if(href_list["f_dynamic_roundstart_clear"])
-		if(!check_rights(R_ADMIN))
-			return
-		GLOB.dynamic_forced_roundstart_ruleset = list()
-		Game()
-		log_admin("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.")
-		message_admins("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.", 1)
-
-	else if(href_list["f_dynamic_roundstart_remove"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/dynamic_ruleset/roundstart/rule = locate(href_list["f_dynamic_roundstart_remove"])
-		GLOB.dynamic_forced_roundstart_ruleset -= rule
-		Game()
-		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
-		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
-
-	else if (href_list["f_dynamic_ruleset_manage"])
-		if(!check_rights(R_ADMIN))
-			return
-		dynamic_ruleset_manager(usr)
-	else if (href_list["f_dynamic_ruleset_force_all_on"])
-		if(!check_rights(R_ADMIN))
-			return
-		force_all_rulesets(usr, RULESET_FORCE_ENABLED)
-	else if (href_list["f_dynamic_ruleset_force_all_off"])
-		if(!check_rights(R_ADMIN))
-			return
-		force_all_rulesets(usr, RULESET_FORCE_DISABLED)
-	else if (href_list["f_dynamic_ruleset_force_all_reset"])
-		if(!check_rights(R_ADMIN))
-			return
-		force_all_rulesets(usr, RULESET_NOT_FORCED)
-	else if (href_list["f_dynamic_ruleset_force_on"])
-		if(!check_rights(R_ADMIN))
-			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_on"]), RULESET_FORCE_ENABLED)
-	else if (href_list["f_dynamic_ruleset_force_off"])
-		if(!check_rights(R_ADMIN))
-			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_off"]), RULESET_FORCE_DISABLED)
-	else if (href_list["f_dynamic_ruleset_force_reset"])
-		if(!check_rights(R_ADMIN))
-			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_reset"]), RULESET_NOT_FORCED)
-	else if (href_list["f_inspect_ruleset"])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.debug_variables(locate(href_list["f_inspect_ruleset"]))
-
-	else if (href_list["f_dynamic_options"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return tgui_alert(usr, "The game has already started.")
-
-		dynamic_mode_options(usr)
-	else if(href_list["f_dynamic_force_extended"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
-		log_admin("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
-		message_admins("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
-		dynamic_mode_options(usr)
-
-	else if(href_list["f_dynamic_no_stacking"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
-		log_admin("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
-		message_admins("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
-		dynamic_mode_options(usr)
-	else if(href_list["f_dynamic_stacking_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
-		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
-		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
-		dynamic_mode_options(usr)
-
-	else if(href_list["f_dynamic_forced_threat"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return tgui_alert(usr, "The game has already started.")
-
-		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
-		if (new_value > 100)
-			return tgui_alert(usr, "The value must be under 100.")
-		GLOB.dynamic_forced_threat_level = new_value
-
-		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
-		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
-		dynamic_mode_options(usr)
 
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))
@@ -1100,156 +991,13 @@
 		GLOB.player_ticket_history.ui_interact(usr)
 		return
 
-	else if(href_list["create_object"])
-		if(!check_rights(R_SPAWN))
-			return
-		return create_object(usr)
-
-	else if(href_list["quick_create_object"])
-		if(!check_rights(R_SPAWN))
-			return
-		return quick_create_object(usr)
-
-	else if(href_list["create_turf"])
-		if(!check_rights(R_SPAWN))
-			return
-		return create_turf(usr)
-
-	else if(href_list["create_mob"])
-		if(!check_rights(R_SPAWN))
-			return
-		return create_mob(usr)
+	else if(href_list["spawn_panel"])
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/spawn_panel)
 
 	else if(href_list["dupe_marked_datum"])
 		if(!check_rights(R_SPAWN))
 			return
 		return duplicate_object(marked_datum, spawning_location = get_turf(usr))
-
-	else if(href_list["object_list"]) //this is the laggiest thing ever
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/atom/loc = usr.loc
-
-		var/dirty_paths
-		if (istext(href_list["object_list"]))
-			dirty_paths = list(href_list["object_list"])
-		else if (istype(href_list["object_list"], /list))
-			dirty_paths = href_list["object_list"]
-
-		var/paths = list()
-
-		for(var/dirty_path in dirty_paths)
-			var/path = text2path(dirty_path)
-			if(!path)
-				continue
-			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-				continue
-			paths += path
-
-		if(!paths)
-			tgui_alert(usr,"The path list you sent is empty.")
-			return
-
-		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
-		if(length(paths) * number > ADMIN_SPAWN_CAP)
-			tgui_alert(usr,"Select fewer object types!")
-			return
-
-		var/list/offset = splittext(href_list["offset"],",")
-		var/X = offset.len > 0 ? text2num(offset[1]) : 0
-		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
-		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
-		var/obj_dir = text2num(href_list["object_dir"])
-		if(obj_dir && !(obj_dir in list(1,2,4,8,5,6,9,10)))
-			obj_dir = null
-		var/obj_name = sanitize(href_list["object_name"])
-
-
-		var/atom/target //Where the object will be spawned
-		var/where = href_list["object_where"]
-		if (!( where in list("onfloor","frompod","inhand","inmarked") ))
-			where = "onfloor"
-
-
-		switch(where)
-			if("inhand")
-				if (!iscarbon(usr) && !iscyborg(usr))
-					to_chat(usr, "Can only spawn in hand when you're a carbon mob or cyborg.", confidential = TRUE)
-					where = "onfloor"
-				target = usr
-
-			if("onfloor", "frompod")
-				switch(href_list["offset_type"])
-					if ("absolute")
-						target = locate(0 + X,0 + Y,0 + Z)
-					if ("relative")
-						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
-			if("inmarked")
-				if(!marked_datum)
-					to_chat(usr, "You don't have any object marked. Abandoning spawn.", confidential = TRUE)
-					return
-				else if(!istype(marked_datum, /atom))
-					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.", confidential = TRUE)
-					return
-				else
-					target = marked_datum
-
-		var/obj/structure/closet/supplypod/centcompod/pod
-
-		if(target)
-			if(where == "frompod")
-				pod = new()
-
-			for (var/path in paths)
-				for (var/i = 0; i < number; i++)
-					if(path in typesof(/turf))
-						var/turf/O = target
-						var/turf/N = O.ChangeTurf(path)
-						if(N && obj_name)
-							N.name = obj_name
-					else
-						var/atom/O
-						if(where == "frompod")
-							O = new path(pod)
-						else
-							O = new path(target)
-
-						if(!QDELETED(O))
-							O.flags_1 |= ADMIN_SPAWNED_1
-							if(obj_dir)
-								O.setDir(obj_dir)
-							if(obj_name)
-								O.name = obj_name
-								if(ismob(O))
-									var/mob/M = O
-									M.real_name = obj_name
-							if(where == "inhand" && isliving(usr) && isitem(O))
-								var/mob/living/L = usr
-								var/obj/item/I = O
-								L.put_in_hands(I)
-								if(iscyborg(L))
-									var/mob/living/silicon/robot/R = L
-									if(R.model)
-										R.model.add_module(I, TRUE, TRUE)
-										R.activate_module(I)
-
-		if(pod)
-			new /obj/effect/pod_landingzone(target, pod)
-
-		if (number == 1)
-			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")
-			for(var/path in paths)
-				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created an instance of [english_list(paths)]")
-					break
-		else
-			log_admin("[key_name(usr)] created [number] instances of [english_list(paths)]")
-			for(var/path in paths)
-				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number] instances of [english_list(paths)]")
-					break
-		return
 
 	else if(href_list["check_antagonist"])
 		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_antagonists)

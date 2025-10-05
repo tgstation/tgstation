@@ -199,6 +199,16 @@
 
 //End gas alerts
 
+/atom/movable/screen/alert/bronchodilated
+	name = "Bronchodilated"
+	desc = "You feel like your lungs are larger than usual! You're taking deeper breaths!"
+	icon_state = "bronchodilated"
+
+/atom/movable/screen/alert/bronchoconstricted
+	name = "Bronchocontracted"
+	desc = "You feel like your lungs are smaller than usual! You might need a higher pressure environment/internals to breathe!"
+	icon_state = "bronchoconstricted"
+
 /atom/movable/screen/alert/gross
 	name = "Grossed out."
 	desc = "That was kind of gross..."
@@ -824,7 +834,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
 	icon_state = "template"
-	timeout = 300
+	timeout = 30 SECONDS
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/revival/Click()

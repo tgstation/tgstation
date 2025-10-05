@@ -20,7 +20,7 @@
 	antagpanel_category = "Heretic"
 	ui_name = "AntagInfoHeretic"
 	antag_moodlet = /datum/mood_event/heretics
-	job_rank = ROLE_HERETIC
+	pref_flag = ROLE_HERETIC
 	antag_hud_name = "heretic"
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
@@ -29,6 +29,7 @@
 	default_custom_objective = "Turn a department into a testament for your dark knowledge."
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
+	antag_flags = parent_type::antag_flags | ANTAG_OBSERVER_VISIBLE_PANEL
 
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
@@ -235,8 +236,8 @@
 	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
-	if(user.stat == DEAD)
-		return UI_CLOSE
+	if(isnull(owner.current) || owner.current.stat == DEAD) // If the owner is dead, we can't show the UI.
+		return UI_UPDATE
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
@@ -276,6 +277,7 @@
 		gain_knowledge(starting_knowledge)
 
 
+	ADD_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 	return ..()
 
@@ -285,6 +287,7 @@
 			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 			knowledge.on_lose(owner.current, src)
 
+	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
 

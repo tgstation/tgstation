@@ -109,15 +109,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	return ..()
 
 /obj/machinery/incident_display/process()
-	if(!isnull(configured_advert) && COOLDOWN_FINISHED(src, advert_cooldown))// time to show an advert
+	if(machine_stat & (NOPOWER|BROKEN|MAINT))
+		return
+
+	if(!isnull(configured_advert) && COOLDOWN_FINISHED(src, advert_cooldown)) // time to show an advert
 		show_advert(advert = configured_advert, duration = configured_advert_duration)
 		COOLDOWN_START(src, advert_cooldown, rand(advert_frequency - 5 SECONDS, advert_frequency + 5 SECONDS))
 		return
 
 	if(!live_display) // displaying static content, no processing required
-		return
-
-	if(machine_stat & (NOPOWER|BROKEN|MAINT))
 		return
 
 	if(COOLDOWN_FINISHED(src, active_advert)) // advert finished, revert to static content
@@ -248,6 +248,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	live_display = TRUE
 	update_appearance()
 	flick(advert, src)
+
+/obj/machinery/incident_display/on_set_machine_stat(old_value)
+	. = ..()
+	update_appearance()
 
 /obj/machinery/incident_display/update_appearance(updates = ALL)
 	. = ..()

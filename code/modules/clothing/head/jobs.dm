@@ -10,8 +10,8 @@
 	inhand_icon_state = "chefhat"
 	icon_state = "chef"
 	desc = "The commander in chef's head wear."
-	strip_delay = 10
-	equip_delay_other = 10
+	strip_delay = 1 SECONDS
+	equip_delay_other = 1 SECONDS
 	dog_fashion = /datum/dog_fashion/head/chef
 	/// The chance that the movements of a mouse inside of this hat get relayed to the human wearing the hat
 	var/mouse_control_probability = 20
@@ -47,7 +47,7 @@
 /obj/item/clothing/head/utility/chefhat/proc/get_mouse(atom/possible_mouse)
 	if (!ispickedupmob(possible_mouse))
 		return
-	var/obj/item/clothing/head/mob_holder/mousey_holder = possible_mouse
+	var/obj/item/mob_holder/mousey_holder = possible_mouse
 	return locate(/mob/living/basic) in mousey_holder.contents
 
 /// Relays emotes emoted by your boss to the hat wearer for full immersion
@@ -101,7 +101,7 @@
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_caphat
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = /datum/dog_fashion/head/captain
 
 //Captain: This is no longer space-worthy
@@ -220,12 +220,12 @@
 /// Now to solve where all these keep coming from
 /obj/item/clothing/head/fedora/det_hat/click_alt(mob/user)
 	if(!COOLDOWN_FINISHED(src, candy_cooldown))
-		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
+		to_chat(user, span_warning("A candy corn was just taken! You should wait a couple minutes, lest you burn through the stash."))
 		return CLICK_ACTION_BLOCKING
 
 	var/obj/item/food/candy_corn/sweets = new /obj/item/food/candy_corn(src)
 	user.put_in_hands(sweets)
-	to_chat(user, span_notice("You slip a candy corn from your hat."))
+	to_chat(user, span_notice("You slip a candy corn from \the [src]."))
 	COOLDOWN_START(src, candy_cooldown, CANDY_CD_TIME)
 
 	return CLICK_ACTION_SUCCESS
@@ -292,7 +292,7 @@
 		var/obj/item/found_item = items_by_regex[found_regex]
 		. += span_notice("[icon2html(found_item, user)] You can remove [found_item] by saying <b>\"[prefix] [found_phrase]\"</b>!")
 
-/obj/item/clothing/head/fedora/inspector_hat/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/item/clothing/head/fedora/inspector_hat/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || speaker != wearer) //if we are worn
@@ -398,6 +398,7 @@
 /obj/item/clothing/head/hats/hos
 	name = "generic head of security hat"
 	desc = "Please contact the Nanotrasen Costuming Department if found."
+	abstract_type = /obj/item/clothing/head/hats/hos
 	armor_type = /datum/armor/hats_hos
 	strip_delay = 8 SECONDS
 
@@ -467,7 +468,7 @@
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
 	armor_type = /datum/armor/hats_warden
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = /datum/dog_fashion/head/warden
 
 /datum/armor/hats_warden
@@ -568,7 +569,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#a52f29#F2F2F2"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 	flags_1 = NONE
 
@@ -587,7 +588,7 @@
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "/obj/item/clothing/head/beret/sec/navywarden"
 	greyscale_colors = "#638799#ebebeb"
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."

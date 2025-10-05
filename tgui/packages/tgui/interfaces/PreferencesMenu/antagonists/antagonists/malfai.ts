@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const MALF_AI_MECHANICAL_DESCRIPTION = `
     With a law zero to complete your objectives at all costs, combine your

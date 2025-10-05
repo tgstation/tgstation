@@ -70,8 +70,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/icon_broken = "sparking"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
-	var/strong_grab = FALSE
 	/// secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/secure = FALSE
 	var/can_install_electronics = TRUE
@@ -100,6 +98,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/x_shake_pixel_shift = 2
 	/// how many pixels the closet can shift on the y axes when shaking
 	var/y_shake_pixel_shift = 1
+	///Creates see through image for clients to see while inside closet
+	VAR_PRIVATE/datum/closet_see_inside/closet_see_inside
 
 /datum/armor/structure_closet
 	melee = 20
@@ -153,6 +153,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(is_station_level(z) && mapload)
 		add_to_roundstart_list()
 
+	closet_see_inside = new(src)
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload)
 		is_maploaded = TRUE
@@ -203,6 +205,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	id_card = null
 	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
+	QDEL_NULL(closet_see_inside)
 	GLOB.roundstart_station_closets -= src
 	return ..()
 
@@ -433,9 +436,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return TRUE
 	if(welded || locked)
 		return FALSE
-	if(strong_grab)
-		if(user)
-			to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
+	if(isliving(user))
+		if(!(user.mobility_flags & MOBILITY_USE))
+			return FALSE
+	if(pulledby && user && HAS_TRAIT(src, TRAIT_STRONGPULL) && user != pulledby)
+		to_chat(user, span_danger("[pulledby] has an incredibly strong grip on [src], preventing it from opening."))
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
@@ -975,7 +980,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	container_resist_act(user)
 
-
 /obj/structure/closet/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -1030,15 +1034,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user, loc_required = TRUE)
-	if(isstructure(loc))
-		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
-		var/atom/movable/AM = loc
-		AM.relay_container_resist_act(user, src)
+		var/atom/movable/movable_parent = loc
+		movable_parent.relay_container_resist_act(user, src)
 		return
 	if(!welded && !locked)
 		open()
@@ -1067,7 +1069,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			to_chat(user, span_warning("You fail to break out of [src]!"))
 
 /obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
-	container.container_resist_act(user)
+	container_resist_act(user)
 
 /// Check if someone is still resisting inside, and choose to either keep shaking or stop shaking the closet
 /obj/structure/closet/proc/check_if_shake()

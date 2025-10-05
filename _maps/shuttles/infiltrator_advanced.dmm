@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/shuttle/syndicate/bridge)
 "ab" = (
 /obj/machinery/door/poddoor/shutters{
@@ -14,7 +14,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 9
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/bridge)
 "ad" = (
 /turf/template_noop,
@@ -23,10 +23,10 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 5
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/bridge)
 "af" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/bridge)
 "ah" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
@@ -199,7 +199,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 9
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/airlock)
 "aC" = (
 /obj/structure/chair/comfy/shuttle{
@@ -212,7 +212,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 5
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/airlock)
 "aE" = (
 /obj/structure/chair/comfy/shuttle{
@@ -227,10 +227,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "aF" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/hallway)
 "aH" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/eva)
 "aI" = (
 /obj/structure/chair/comfy/shuttle{
@@ -242,7 +242,7 @@
 /area/shuttle/syndicate/airlock)
 "aJ" = (
 /obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/airlock)
 "aK" = (
 /obj/structure/chair/comfy/shuttle{
@@ -259,7 +259,7 @@
 /area/shuttle/syndicate/airlock)
 "aL" = (
 /obj/structure/sign/warning/vacuum/external,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/airlock)
 "aM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -282,7 +282,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "aO" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/airlock)
 "aP" = (
 /obj/effect/turf_decal/stripes/line{
@@ -486,7 +486,7 @@
 /area/shuttle/syndicate/airlock)
 "bn" = (
 /obj/machinery/power/shuttle_engine/heater,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/medical)
 "bo" = (
 /obj/machinery/sleeper/syndie{
@@ -631,10 +631,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "bD" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/medical)
 "bE" = (
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/armory)
 "bF" = (
 /obj/machinery/power/shuttle_engine/propulsion,
@@ -827,7 +827,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/airlock)
 "ca" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/shuttle/syndicate/airlock)
 "cb" = (
 /obj/effect/turf_decal/stripes/line{
@@ -921,7 +921,7 @@
 /area/shuttle/syndicate/medical)
 "ck" = (
 /obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/hallway)
 "cl" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -964,7 +964,7 @@
 /area/shuttle/syndicate/medical)
 "cs" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/hallway)
 "ct" = (
 /obj/structure/sign/warning/fire,
@@ -1059,7 +1059,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 6
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/medical)
 "cD" = (
 /obj/machinery/power/shuttle_engine/large,
@@ -1077,7 +1077,7 @@
 /area/shuttle/syndicate/armory)
 "cG" = (
 /obj/machinery/power/shuttle_engine/heater,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/armory)
 "cH" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -1099,7 +1099,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 10
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/armory)
 "cL" = (
 /obj/machinery/power/shuttle_engine/large,
@@ -1107,7 +1107,7 @@
 /area/shuttle/syndicate/medical)
 "cM" = (
 /obj/machinery/power/shuttle_engine/heater,
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/hallway)
 "cN" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -1162,7 +1162,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 10
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/medical)
 "cW" = (
 /obj/machinery/door/poddoor{
@@ -1196,7 +1196,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 6
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/armory)
 "da" = (
 /obj/item/sbeacondrop/bomb{
@@ -1600,7 +1600,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
 "dR" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
 /area/shuttle/syndicate/eva)
 "dS" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1807,7 +1807,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 9
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/medical)
 "eo" = (
 /obj/structure/table/reinforced,
@@ -1841,7 +1841,7 @@
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 5
 	},
-/turf/closed/wall/r_wall/syndicate,
+/turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/shuttle/syndicate/armory)
 "er" = (
 /obj/effect/turf_decal/stripes/line{

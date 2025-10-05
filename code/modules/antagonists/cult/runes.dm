@@ -322,7 +322,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		convertee.Unconscious(10 SECONDS)
 
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	convertee.mind.special_role = ROLE_CULTIST
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
 	to_chat(convertee, span_cult_bold_italic("Your blood pulses. Your head throbs. The world goes red. \
@@ -407,29 +406,36 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /// Tries to convert a null rod over the rune to a cult sword
 /obj/effect/rune/convert/proc/try_spawn_sword()
-	for(var/obj/item/nullrod/rod in loc)
-		if(rod.anchored || (rod.resistance_flags & INDESTRUCTIBLE))
+	for(var/obj/item/potential_rod in loc)
+		if(!HAS_TRAIT(potential_rod, TRAIT_NULLROD_ITEM))
 			continue
 
-		var/num_slain = LAZYLEN(rod.cultists_slain)
-		var/displayed_message = "[rod] glows an unholy red and begins to transform..."
-		if(GET_ATOM_BLOOD_DNA_LENGTH(rod))
-			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [rod]!"
+		if(potential_rod.anchored || (potential_rod.resistance_flags & INDESTRUCTIBLE))
+			continue
 
-		rod.visible_message(span_cult_italic(displayed_message))
+		var/num_slain = 0
+		if (istype(potential_rod, /obj/item/nullrod))
+			var/obj/item/nullrod/actual_rod = potential_rod
+			num_slain = LAZYLEN(actual_rod.cultists_slain)
+
+		var/displayed_message = "[potential_rod] glows an unholy red and begins to transform..."
+		if(num_slain && GET_ATOM_BLOOD_DNA_LENGTH(potential_rod))
+			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [potential_rod]!"
+
+		potential_rod.visible_message(span_cult_italic(displayed_message))
 		switch(num_slain)
 			if(0)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/dagger)
+				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade/dagger)
 			if(1)
-				animate_spawn_sword(rod, /obj/item/melee/cultblade)
+				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade)
 			else
-				animate_spawn_sword(rod, /obj/item/melee/cultblade/halberd)
+				animate_spawn_sword(potential_rod, /obj/item/melee/cultblade/halberd)
 		return TRUE
 
 	return FALSE
 
 /// Does an animation of a null rod transforming into a cult sword
-/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/nullrod/former_rod, new_blade_typepath)
+/obj/effect/rune/convert/proc/animate_spawn_sword(obj/item/former_rod, new_blade_typepath)
 	playsound(src, 'sound/effects/magic.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.66)
 	former_rod.anchored = TRUE
 	former_rod.Shake()
@@ -1145,14 +1151,13 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	empulse(T, 0.42*(intensity), 1)
 
 	var/list/images = list()
-	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/mob/living/M in GLOB.alive_mob_list)
 		if(!is_valid_z_level(T, get_turf(M)))
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				sec_hud.hide_from(M)
-				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(hudFix), M), duration)
+				ADD_TRAIT(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT)
+				addtimer(TRAIT_CALLBACK_REMOVE(M, TRAIT_BLOCK_SECHUD, CULT_TRAIT), duration)
 			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
@@ -1197,7 +1202,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				force_event_async(/datum/round_event_control/meteor_wave, "an apocalypse rune")
 
 			if(51 to 60)
-				force_event_async(/datum/round_event_control/spider_infestation, "an apocalypse rune")
+				SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/spiders)
 
 			if(61 to 70)
 				force_event_async(/datum/round_event_control/anomaly/anomaly_flux, "an apocalypse rune")
@@ -1229,13 +1234,3 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
 		sleep(19 SECONDS)
-
-
-
-/proc/hudFix(mob/living/carbon/human/target)
-	if(!target || !target.client)
-		return
-	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(O, /obj/item/clothing/glasses/hud/security))
-		var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		sec_hud.show_to(target)

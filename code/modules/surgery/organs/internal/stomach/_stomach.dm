@@ -24,6 +24,10 @@
 	//This is a reagent user and needs more then the 10u from edible component
 	reagent_vol = 1000
 
+	cell_line = CELL_LINE_ORGAN_STOMACH
+	cells_minimum = 1
+	cells_maximum = 2
+
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
 
@@ -557,5 +561,21 @@
 	desc = "A green plant-like organ that functions similarly to a human stomach."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+
+/obj/item/organ/stomach/ghost
+	name = "ghost stomach"
+	desc = "Ghosts eat plenty, you know? And it's not just your life, I swear!"
+	icon_state = "stomach-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
+/obj/item/organ/stomach/evolved
+	name = "evolved stomach"
+	desc = "It can draw nutrients from your food even harder!"
+	icon_state = "stomach-evolved"
+
+	maxHealth = 1.2 * STANDARD_ORGAN_THRESHOLD
+	disgust_metabolism = 2.5
+	metabolism_efficiency = 0.08
 
 #undef STOMACH_METABOLISM_CONSTANT

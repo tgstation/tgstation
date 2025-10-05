@@ -3,6 +3,7 @@
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
 #define MINERALS_PER_BOULDER 3
+#define MAX_MINERAL_PICK_ATTEMPTS 10
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -171,26 +172,37 @@
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(new_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(new_minerals < 1)
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
-	var/list/available_mats = difflist(first = SSore_generation.ore_vent_minerals, second = mineral_breakdown, skiprep = 1)
-	for(var/i in 1 to new_minerals)
-		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
-			// We should prevent this from happening in SSore_generation, but if not then we crash here
-			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
-		var/datum/material/new_material
-		if(map_loading)
-			if(length(available_mats))
-				new_material = pick(GLOB.ore_vent_minerals_lavaland)
-				var/datum/material/surrogate_mat = pick(SSore_generation.ore_vent_minerals)
-				available_mats -= surrogate_mat
-				SSore_generation.ore_vent_minerals -= surrogate_mat
-			else
-				new_material = pick(available_mats)
-				available_mats -= new_material
-				SSore_generation.ore_vent_minerals -= new_material
-		else
-			new_material = pick(GLOB.ore_vent_minerals_lavaland)
-		mineral_breakdown[new_material] = rand(1, 4)
 
+	//should have enough minerals for the vent during round start
+	var/list/available_minerals = SSore_generation.ore_vent_minerals
+	if(map_loading && available_minerals.len < new_minerals)
+		CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or the map config in seedRuins may not have enough resources for the mineral budget.")
+
+	var/list/datum/material/picked_minerals = list()
+	for(var/_ in 1 to new_minerals)
+		var/datum/material/mineral
+
+		//pick an unique mineral but try only MAX_MINERAL_PICK_ATTEMPTS times before giving up else we could be stuck here forever
+		var/attempts = 0
+		do
+			mineral = length(mineral_breakdown) ? pick_weight(mineral_breakdown) : null
+			if(map_loading)
+				if(!mineral || !available_minerals.Find(mineral))
+					mineral = pick(available_minerals)
+			else
+				mineral = mineral || pick_weight(GLOB.ore_vent_minerals_lavaland)
+			attempts += 1
+		while(attempts < MAX_MINERAL_PICK_ATTEMPTS && picked_minerals.Find(mineral))
+
+		//register the picked mineral, removing it from the round start available minerals if nessassary
+		if(map_loading)
+			available_minerals -= mineral
+		picked_minerals |= mineral
+
+	//assign random weights to picked minerals
+	mineral_breakdown.Cut()
+	for(var/datum/material/mineral as anything in picked_minerals)
+		mineral_breakdown[mineral] = rand(1, new_minerals)
 
 /**
  * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
@@ -201,7 +213,7 @@
  * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	return SHEET_MATERIAL_AMOUNT * round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1))
+	return SHEET_MATERIAL_AMOUNT * max(round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1)), 1)
 
 /**
  * This confirms that the user wants to start the wave defense event, and that they can start it.
@@ -225,13 +237,34 @@
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
 	add_shared_particles(/particles/smoke/ash)
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
-		for(var/turf/closed/mineral/rock in oview(i))
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
-				new /obj/effect/decal/cleanable/rubble(rock)
-			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user)
+		for(var/turf/rock in oview(i))
+
+			if(istype(rock, /turf/closed/mineral)) //Solid wall checks: Mine out the wall, but start skipping more as we move farther away.
+				if(prob(50 + (i * 8)))
+					continue
+				var/turf/closed/mineral/drillable = rock
+				drillable.gets_drilled(user)
 				if(prob(50))
-					new /obj/effect/decal/cleanable/rubble(rock)
+					new /obj/effect/decal/cleanable/rubble(rock) // Only throw rubble when we actually mine something, and not all the time.
+				continue //skip the rest of the checks
+
+			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // Open rock floors: make rubble decals occasionally.
+				new /obj/effect/decal/cleanable/rubble(rock)
+				continue
+
+			if(istype(rock, /turf/open/lava)) // Lava turfs, skip as we get farther away, otherwise produce a boulder and make it a platform, lasting the whole wave.
+				if(prob(30 + (i * 8))) // We want to skip these less than the mining walls, since lava is more common to deal with.
+					continue
+
+				var/obj/item/boulder/produced = produce_boulder(FALSE)
+				var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
+
+				if(!platform || !QDELETED(produced))
+					qdel(produced)
+					continue
+				platform.alpha = 0
+				platform.pixel_z = -16
+				animate(platform, alpha = 255, time = 2 SECONDS, pixel_z = 0, easing = QUAD_EASING|EASE_OUT)
 		sleep(0.6 SECONDS)
 	return TRUE
 
@@ -263,24 +296,20 @@
  * If the node drone is dead, the ore vent is not tapped and the wave defense can be reattempted.
  *
  * Also gives xp and mining points to all nearby miners in equal measure.
- * Arguments:
- * - force: Set to true if you want to just skip all checks and make the vent start producing boulders.
  */
-/obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source, force = FALSE)
+/obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source)
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
 	COOLDOWN_RESET(src, wave_cooldown)
 	remove_shared_particles(/particles/smoke/ash)
 
-	if(force)
-		initiate_wave_win()
-		return
-
+	//happens in COMSIG_QDELETING
 	if(QDELETED(node))
 		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
 		return
 
+	//happens in COMSIG_MOVABLE_MOVED
 	if(get_turf(node) != get_turf(src))
 		initiate_wave_loss(loss_message = "The [node] detaches from the [src], and the vent closes back up!")
 		return //Start over!
@@ -427,6 +456,15 @@
 	new_rock.boulder_size = boulder_size
 	new_rock.durability = rand(2, boulder_size) //randomize durability a bit for some flavor.
 	new_rock.boulder_string = boulder_icon_state
+
+	switch(boulder_size)
+		if(BOULDER_SIZE_SMALL)
+			new_rock.platform_lifespan = PLATFORM_LIFE_SMALL
+		if(BOULDER_SIZE_MEDIUM)
+			new_rock.platform_lifespan = PLATFORM_LIFE_MEDIUM
+		if(BOULDER_SIZE_LARGE)
+			new_rock.platform_lifespan = PLATFORM_LIFE_LARGE
+
 	new_rock.update_appearance(UPDATE_ICON_STATE)
 
 	//start the cooldown & return the boulder
@@ -467,8 +505,8 @@
 	unique_vent = TRUE
 	boulder_size = BOULDER_SIZE_SMALL
 	mineral_breakdown = list(
-		/datum/material/iron = 50,
-		/datum/material/glass = 50,
+		/datum/material/iron = 1,
+		/datum/material/glass = 1,
 	)
 
 /obj/structure/ore_vent/random
@@ -609,3 +647,4 @@
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
 #undef MINERALS_PER_BOULDER
+#undef MAX_MINERAL_PICK_ATTEMPTS

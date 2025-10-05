@@ -31,8 +31,12 @@
 		target.description = blood_type.desc
 	target.color = blood_type.get_color()
 
+
 	if (!blood_source)
+		target.material = GET_MATERIAL_REF(/datum/material/meat/blood_meat, target)
 		return
+
+	target.material = GET_MATERIAL_REF(/datum/material/meat/mob_meat, blood_source)
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -152,7 +156,7 @@
 		return
 
 	if (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
-		exposed_obj.add_blood_DNA(list(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type) = blood_type))
+		exposed_obj.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
 
 	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return

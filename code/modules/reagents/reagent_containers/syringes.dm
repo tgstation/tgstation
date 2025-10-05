@@ -12,7 +12,7 @@
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.2)
-	reagent_flags = TRANSPARENT
+	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW * 0.5
 	sharpness = SHARP_POINTY
 	embed_type = /datum/embedding/syringe
@@ -33,9 +33,6 @@
 		dart_insert_projectile_icon_state, \
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
-
-/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	return
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
@@ -67,7 +64,7 @@
 		to_chat(user, span_warning("You cannot directly fill [target]!"))
 		return ITEM_INTERACT_BLOCKING
 
-	if(target.reagents.total_volume >= target.reagents.maximum_volume)
+	if(target.reagents.holder_full())
 		to_chat(user, span_notice("[target] is full."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -82,7 +79,7 @@
 				return ITEM_INTERACT_BLOCKING
 			if(!reagents.total_volume)
 				return ITEM_INTERACT_BLOCKING
-			if(living_target.reagents.total_volume >= living_target.reagents.maximum_volume)
+			if(living_target.reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 			living_target.visible_message(
 				span_danger("[user] injects [living_target] with the syringe!"),
@@ -109,7 +106,7 @@
 
 	SEND_SIGNAL(target, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW, user)
 
-	if(reagents.total_volume >= reagents.maximum_volume)
+	if(reagents.holder_full())
 		to_chat(user, span_notice("[src] is full."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -123,7 +120,7 @@
 			)
 			if(!do_after(user, CHEM_INTERACT_DELAY(3 SECONDS, user), target, extra_checks = CALLBACK(src, PROC_REF(try_syringe), living_target, user)))
 				return ITEM_INTERACT_BLOCKING
-			if(reagents.total_volume >= reagents.maximum_volume)
+			if(reagents.holder_full())
 				return ITEM_INTERACT_BLOCKING
 		if(living_target.transfer_blood_to(src, drawn_amount))
 			user.visible_message(span_notice("[user] takes a blood sample from [living_target]."))

@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Any floor or wall. What makes up the station and the rest of the map.
 /turf
 	icon = 'icons/turf/floors.dmi'
+	abstract_type = /turf
 	datum_flags = DF_STATIC_OBJECT
 	vis_flags = VIS_INHERIT_ID // Important for interaction with and visualization of openspace.
 	luminosity = 1
@@ -354,9 +355,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	// So it doesn't trigger other zFall calls. Cleared on zMove.
 	falling.set_currently_z_moving(CURRENTLY_Z_FALLING)
-
 	falling.zMove(null, target, ZMOVE_CHECK_PULLEDBY)
 	target.zImpact(falling, levels, src)
+
 	return TRUE
 
 ///Called each time the target falls down a z level possibly making their trajectory come to a halt. see __DEFINES/movement.dm.
@@ -516,6 +517,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		qdel(L)
 
 /turf/proc/Bless()
+	if(locate(/obj/effect/blessing) in src)
+		return
 	new /obj/effect/blessing(src)
 
 //////////////////////////////
@@ -559,13 +562,14 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/break_tile()
 	return
 
-/turf/proc/is_shielded()
-	return
+/// Checks if this turf is protected from an explosion by something
+/// Return TRUE to stop the explosion from affecting this turf
+/turf/proc/is_explosion_shielded(severity)
+	return FALSE
 
 /turf/contents_explosion(severity, target)
-	for(var/thing in contents)
-		var/atom/movable/movable_thing = thing
-		if(QDELETED(movable_thing))
+	for(var/atom/movable/movable_thing as anything in src)
+		if(QDELETED(movable_thing) || !can_propagate_explosion(movable_thing, severity))
 			continue
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
@@ -574,6 +578,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 				SSexplosions.med_mov_atom += movable_thing
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += movable_thing
+
+/// Called when propagating an explosion through contents,.
+/// Return FALSE to prevent the passed object from being exploded.
+/turf/proc/can_propagate_explosion(atom/movable/some_thing, severity)
+	return TRUE
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
@@ -819,7 +828,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
-	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, fish_source)
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[fish_source])
 	remove_lazy_fishing()
 	return spot.handle_cast(arglist(args))
 

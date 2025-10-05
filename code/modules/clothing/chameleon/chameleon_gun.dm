@@ -16,7 +16,7 @@
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS|EMP_NO_EXAMINE)
 	// Init order shenanigans dictate we have to do this last so we can't just use `active_type`
 	var/datum/action/item_action/chameleon/change/gun/gun_action = locate() in actions
 	gun_action?.update_look(default_look)

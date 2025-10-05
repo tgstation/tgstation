@@ -235,10 +235,28 @@
 /obj/machinery/big_manipulator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
 		return NONE
-	if(!panel_open || !is_wire_tool(tool))
+	if(!panel_open)
 		return NONE
-	wires.interact(user)
-	return ITEM_INTERACT_SUCCESS
+
+	if(isidcard(tool))
+		var/obj/item/card/id/clicked_by_this_id = tool
+		if(!isnull(locked_by_this_id))
+			var/obj/item/card/id/resolve_id = locked_by_this_id.resolve()
+			if(clicked_by_this_id != resolve_id)
+				balloon_alert(user, "locked by another id!")
+				return ITEM_INTERACT_BLOCKING
+			locked_by_this_id = null
+			change_id_locked_status(user)
+			return ITEM_INTERACT_SUCCESS
+		locked_by_this_id = WEAKREF(clicked_by_this_id)
+		change_id_locked_status(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(is_wire_tool(tool))
+		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/big_manipulator/RefreshParts()
 	. = ..()
@@ -309,22 +327,6 @@
 		x_add = 32 + manipulator_arm.calculate_item_offset(TRUE, pixels_to_offset = 16),
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
-
-/obj/machinery/big_manipulator/attackby(obj/item/is_card, mob/user, params)
-	. = ..()
-	if(!isidcard(is_card))
-		return
-	var/obj/item/card/id/clicked_by_this_id = is_card
-	if(!isnull(locked_by_this_id))
-		var/obj/item/card/id/resolve_id = locked_by_this_id.resolve()
-		if(clicked_by_this_id != resolve_id)
-			balloon_alert(user, "locked by another id")
-			return
-		locked_by_this_id = null
-		change_id_locked_status(user)
-		return
-	locked_by_this_id = WEAKREF(clicked_by_this_id)
-	change_id_locked_status(user)
 
 /obj/machinery/big_manipulator/proc/change_id_locked_status(mob/user)
 	id_locked = !id_locked

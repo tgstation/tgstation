@@ -120,10 +120,10 @@
 	if(SSquirks?.initialized)
 		// And yes we need to clean all the quirk datums every time
 		mannequin.cleanse_quirk_datums()
-		for(var/quirk_name as anything in all_quirks)
+		for(var/quirk_name in all_quirks)
 			var/datum/quirk/quirk_type = SSquirks.quirks[quirk_name]
 			if(!(initial(quirk_type.quirk_flags) & QUIRK_CHANGES_APPEARANCE))
 				continue
-			mannequin.add_quirk(quirk_type, parent)
+			mannequin.add_quirk(quirk_type, parent, announce = FALSE)
 
 	return mannequin.appearance

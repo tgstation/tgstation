@@ -1,6 +1,7 @@
 /obj/item/organ/cyberimp/arm
 	name = "arm-mounted implant"
 	desc = "An implant that goes in your arm to improve it."
+	abstract_type = /obj/item/organ/cyberimp/arm
 	zone = BODY_ZONE_R_ARM
 	slot = ORGAN_SLOT_RIGHT_ARM_AUG
 	w_class = WEIGHT_CLASS_SMALL
@@ -578,13 +579,13 @@
 	bonus_deactivate_text = span_notice("You can no longer force open airlocks with your bare hands.")
 	required_biotype = NONE
 
-/datum/status_effect/organ_set_bonus/strongarm/enable_bonus()
+/datum/status_effect/organ_set_bonus/strongarm/enable_bonus(obj/item/organ/inserted_organ)
 	. = ..()
 	if(!.)
 		return
 	owner.AddElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
 
-/datum/status_effect/organ_set_bonus/strongarm/disable_bonus()
+/datum/status_effect/organ_set_bonus/strongarm/disable_bonus(obj/item/organ/removed_organ)
 	. = ..()
 	owner.RemoveElement(/datum/element/door_pryer, pry_time = 6 SECONDS, interaction_key = DOAFTER_SOURCE_STRONGARM_INTERACTION)
 

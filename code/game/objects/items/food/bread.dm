@@ -4,6 +4,7 @@
 	name = "bread?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
+	abstract_type = /obj/item/food/bread
 	max_volume = 80
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
@@ -29,6 +30,7 @@
 	name = "breadslice?"
 	desc = "You shouldn't see this, call the coders."
 	icon = 'icons/obj/food/burgerbread.dmi'
+	abstract_type = /obj/item/food/breadslice
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
@@ -118,6 +120,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 2.4,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -146,6 +149,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 2.4,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2.5)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -174,6 +178,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/nutriment/protein = 3,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtypes = GRAIN | MEAT | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -204,6 +209,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 5)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtypes = GRAIN|MEAT|DAIRY|TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_3

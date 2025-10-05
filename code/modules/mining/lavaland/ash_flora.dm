@@ -185,6 +185,7 @@
 	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
 	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
+	abstract_type = /obj/item/food/grown/ash_flora
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
@@ -377,7 +378,7 @@
 	name = "Mushroom Bowl"
 	result = /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_CONTAINERS
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl

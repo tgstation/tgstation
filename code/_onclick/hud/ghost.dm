@@ -29,6 +29,14 @@
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
+/atom/movable/screen/ghost/dnr
+	name = "Do Not Resuscitate"
+	icon_state = "dnr"
+
+/atom/movable/screen/ghost/dnr/Click()
+	var/mob/dead/observer/dnring = usr
+	dnring.do_not_resuscitate()
+
 /atom/movable/screen/ghost/teleport
 	name = "Teleport"
 	icon_state = "teleport"
@@ -72,6 +80,10 @@
 	using.screen_loc = ui_ghost_reenter_corpse
 	static_inventory += using
 
+	using = new /atom/movable/screen/ghost/dnr(null, src)
+	using.screen_loc = ui_dnr
+	static_inventory += using
+
 	using = new /atom/movable/screen/ghost/teleport(null, src)
 	using.screen_loc = ui_ghost_teleport
 	static_inventory += using
@@ -84,18 +96,11 @@
 	using.screen_loc = ui_ghost_minigames
 	static_inventory += using
 
-	using = new /atom/movable/screen/language_menu(null, src)
+	using = new /atom/movable/screen/language_menu/ghost(null, src)
 	using.screen_loc = ui_ghost_language_menu
-	using.icon = ui_style
 	static_inventory += using
 
-	using = new /atom/movable/screen/language_menu(null, src)
-	using.screen_loc = ui_ghost_language_menu
-	using.icon = ui_style
-	static_inventory += using
-
-	floor_change = new /atom/movable/screen/floor_changer/vertical(null, src)
-	floor_change.icon = ui_style
+	floor_change = new /atom/movable/screen/floor_changer/vertical/ghost(null, src)
 	floor_change.screen_loc = ui_ghost_floor_changer
 	static_inventory += floor_change
 
