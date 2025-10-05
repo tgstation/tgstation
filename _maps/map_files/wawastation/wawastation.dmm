@@ -4586,7 +4586,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security E.V.A. Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
