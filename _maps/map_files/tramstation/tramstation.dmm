@@ -2567,7 +2567,6 @@
 "alu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "alA" = (
@@ -3179,6 +3178,10 @@
 /obj/item/reagent_containers/cup/glass/coffee{
 	pixel_x = 5;
 	pixel_y = 7
+	},
+/obj/item/key/golfcart{
+	pixel_x = -4;
+	pixel_y = 9
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -6046,6 +6049,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"aWb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/station/cargo/warehouse)
 "aWs" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -19293,6 +19304,7 @@
 	},
 /obj/structure/sign/poster/contraband/d_day_promo/directional/east,
 /obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "fIc" = (
@@ -48632,10 +48644,10 @@
 /area/station/cargo/miningdock/cafeteria)
 "qar" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
+/obj/vehicle/ridden/golfcart/loaded,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "qas" = (
@@ -185614,7 +185626,7 @@ cDP
 cDP
 cDP
 cDP
-cDP
+aWb
 alu
 pRM
 nky
