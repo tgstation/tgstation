@@ -18,77 +18,48 @@
 
 	/// Possible crate's loot selected by weighted list: [typepath] = probability
 	var/list/possible_loot = list(
-		list( // Toys & Entertainment
-			/obj/item/melee/skateboard/pro = 5,
-			/obj/effect/spawner/abandoned_crate/snappop = 5,
-			/obj/effect/spawner/abandoned_crate/posters = 5,
-			/obj/item/toy/balloon/corgi = 2,
-			/obj/effect/spawner/abandoned_crate/mecha = 2,
-			/obj/item/toy/balloon/syndicate = 2,
-			/obj/item/toy/plush/snakeplushie = 2,
-			/obj/item/bikehorn/airhorn = 2,
-			/obj/item/toy/plush/beeplushie = 2,
-			/obj/item/toy/plush/lizard_plushie = 2,
-			/obj/item/toy/plush/nukeplushie = 1,
-			/obj/effect/spawner/abandoned_crate/bwoink = 1,
-			/obj/effect/spawner/abandoned_crate/pay_day = 1,
-			/obj/item/melee/skateboard/hoverboard = 1,
-			/obj/item/implanter/sad_trombone = 1,
-			) = 1,
-
-		list( // Weapons & Combat
-			/obj/item/melee/baton = 2,
-			/obj/item/melee/energy/sword/bananium = 1,
-			/obj/item/katana = 1,
-			) = 1,
-
-		list( // Clothing
-			/obj/item/storage/box/syndie_kit/chameleon/broken = 5,
-			/obj/item/clothing/shoes/kindle_kicks = 2,
-			/obj/effect/spawner/abandoned_crate/kitty = 2,
-			/obj/effect/spawner/abandoned_crate/space_suit = 2,
-			/obj/effect/spawner/abandoned_crate/fursuit = 2,
-			) = 1,
-
-		list( // Tools & Equipment
-			/obj/item/modular_computer/pda/clear = 5,
-			/obj/item/defibrillator/compact = 2,
-			) = 1,
-
-		list( // Materials
-			/obj/effect/spawner/abandoned_crate/diamonds = 5,
-			/obj/effect/spawner/abandoned_crate/bluespace_crystal = 2,
-			/obj/effect/spawner/abandoned_crate/bananium = 2,
-			) = 1,
-
-		list( // Botany
-			/obj/item/seeds/firelemon = 5,
-			/obj/effect/spawner/abandoned_crate/weed = 1,
-			) = 1,
-
-		list( // Consumables
-			/obj/effect/spawner/abandoned_crate/alcohol = 5,
-			/obj/effect/spawner/abandoned_crate/boda = 5,
-			/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
-			) = 1,
-
-		list( // Mobs
-			/mob/living/basic/bot/honkbot = 5,
-			/mob/living/basic/pet/gondola = 2,
-			/obj/effect/spawner/abandoned_crate/bloodroaches = 1,
-			) = 1,
-
-		list( // Medical & Science
-			/obj/item/dnainjector/xraymut = 1,
-			/obj/item/dnainjector/wackymut = 1,
-			) = 1,
-
-		list( // Dangerous
-			/obj/effect/spawner/abandoned_crate/gibtonite = 2,
-			/obj/effect/spawner/abandoned_crate/mimic = 1,
-			/obj/effect/spawner/abandoned_crate/bees = 1,
-			) = 1,
-		)
+		/obj/effect/spawner/abandoned_crate/alcohol = 5,
+		/obj/item/melee/skateboard/pro = 5,
+		/mob/living/basic/bot/honkbot = 5,
+		/obj/effect/spawner/abandoned_crate/diamonds = 5,
+		/obj/effect/spawner/abandoned_crate/posters = 5,
+		/obj/effect/spawner/abandoned_crate/boda = 5,
+		/obj/item/seeds/firelemon = 5,
+		/obj/effect/spawner/abandoned_crate/snappop = 5,
+		/obj/item/modular_computer/pda/clear = 5,
+		/obj/item/storage/box/syndie_kit/chameleon/broken = 5,
+		/obj/item/melee/baton = 2,
+		/obj/item/toy/balloon/corgi = 2,
+		/obj/effect/spawner/abandoned_crate/mecha = 2,
+		/obj/item/toy/balloon/syndicate = 2,
+		/obj/effect/spawner/abandoned_crate/space_suit = 2,
+		/obj/effect/spawner/abandoned_crate/kitty = 2,
+		/obj/item/clothing/shoes/kindle_kicks = 2,
+		/obj/effect/spawner/abandoned_crate/fursuit = 2,
+		/obj/effect/spawner/abandoned_crate/gibtonite = 2,
+		/obj/effect/spawner/abandoned_crate/bluespace_crystal = 2,
+		/obj/item/toy/plush/snakeplushie = 2,
+		/mob/living/basic/pet/gondola = 2,
+		/obj/item/bikehorn/airhorn = 2,
+		/obj/item/toy/plush/lizard_plushie = 2,
+		/obj/effect/spawner/abandoned_crate/bananium = 2,
+		/obj/item/toy/plush/beeplushie = 2,
+		/obj/item/defibrillator/compact = 2,
+		/obj/effect/spawner/abandoned_crate/weed = 1,
+		/obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1,
+		/obj/item/melee/energy/sword/bananium = 1,
+		/obj/item/dnainjector/wackymut = 1,
+		/obj/effect/spawner/abandoned_crate/bloodroaches = 1,
+		/obj/item/katana = 1,
+		/obj/item/dnainjector/xraymut = 1,
+		/obj/effect/spawner/abandoned_crate/mimic = 1,
+		/obj/item/toy/plush/nukeplushie = 1,
+		/obj/effect/spawner/abandoned_crate/bwoink = 1,
+		/obj/effect/spawner/abandoned_crate/pay_day = 1,
+		/obj/effect/spawner/abandoned_crate/bees = 1,
+		/obj/item/implanter/sad_trombone = 1,
+		/obj/item/melee/skateboard/hoverboard = 1
+	)
 
 /obj/structure/closet/crate/secure/loot/Initialize(mapload)
 	. = ..()
@@ -217,6 +188,6 @@
 		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
-	var/loot = pick_weight_recursive(possible_loot)
+	var/loot = pick_weight(possible_loot)
 	new loot(src)
 	spawned_loot = TRUE
