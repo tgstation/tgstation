@@ -150,7 +150,7 @@
 /datum/crafting_recipe/lean
 	name = "lean"
 	result = /obj/item/reagent_containers/cup/glass/colocup/lean
-	time = 6
+	time = 1 SECONDS
 	reqs = list(/obj/item/reagent_containers/cup/glass/colocup = 1,
 				/obj/item/food/gumball = 2,
 				/datum/reagent/medicine/morphine = 5,
