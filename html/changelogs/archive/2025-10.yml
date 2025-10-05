@@ -161,3 +161,42 @@
   Y0SH1M4S73R:
   - bugfix: Snapping USB cables by dragging the attached objects too far away from
       each other will no longer crash the server.
+2025-10-05:
+  ArcaneMusic:
+  - bugfix: Sheets removed from the protolathe/techfab will properly remove the correct
+      quantity and merge into the right material.
+  JohnFulpWillard:
+  - bugfix: Latejoiners are buckled in to their chairs & Hangover station trait now
+      kicks their effects in again.
+  Krysonism:
+  - rscadd: Added 4 new types of soil
+  - rscadd: Added soils sacks to the nutrimax
+  - rscadd: Added soil sack crates to cargo.
+  - balance: Soil now has higher armor values.
+  - balance: Rice now gets more weeds if grown in soil.
+  - balance: Carrots, potatoes, beets and their mutations now get reduced yield and
+      potency if grown hydroponically.
+  - bugfix: Weed overgrowth no longer instantly sets yield to 3.
+  Melbert:
+  - bugfix: Emotes with visuals can no longer cause errors if spammed to an extreme
+      degree
+  - bugfix: Fixed personality wiping
+  - bugfix: Equipping clothes adds you to suit sensors correctly if your clothes are
+      unlaundered
+  - bugfix: Latejoin officers no longer teleport
+  - bugfix: Multi-z map cryo no longer makes locked fighting game characters
+  - bugfix: Lazy/Diligent is not incompatible with Introvert/lazy
+  SmArtKar:
+  - bugfix: Plasma flower MOD core grass trails no longer appear in front of the user
+      rather than behind them
+  - bugfix: Fixed hierophant staff refusing to be put into backpacks
+  - bugfix: Colorblindness and eye blur from welding should no longer be permanent
+  loganuk:
+  - bugfix: Fixes endless Neurine trauma farming & adds unit test to keep it safe
+  paganiy:
+  - bugfix: fixed cycler shotgun double ammo consumption
+  - bugfix: fixed racking action on the cycler shotgun
+  - bugfix: bounty hunter cycler shotgun now properly fires incendiary rounds from
+      secondary tube
+  timothymtorres:
+  - bugfix: Fix shuttle movement spamming nearstation areas on space turfs

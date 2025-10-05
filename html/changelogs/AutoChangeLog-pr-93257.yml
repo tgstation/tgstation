@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Multi-z map cryo no longer makes locked fighting game characters"

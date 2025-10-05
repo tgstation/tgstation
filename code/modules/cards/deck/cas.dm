@@ -10,7 +10,6 @@
 	icon_state = "deck_white_full"
 	deckstyle = "white"
 	has_unique_card_icons = FALSE
-	is_standard_deck = FALSE
 	decksize = 150
 	can_play_52_card_pickup = FALSE
 
@@ -26,8 +25,7 @@ GLOBAL_LIST_INIT(card_decks, list(
 	white = world.file2list("strings/cas_white.txt")
 ))
 
-/obj/item/toy/cards/deck/cas/Initialize(mapload)
-	. = ..()
+/obj/item/toy/cards/deck/cas/initialize_cards()
 	var/list/cards_against_space = GLOB.card_decks[deckstyle]
 	var/list/possible_cards = cards_against_space.Copy()
 

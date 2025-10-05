@@ -113,15 +113,16 @@
 /**
  * Draws a card from the deck or hand of cards.
  *
- * Draws the top card unless a card arg is supplied then it picks that specific card
- * and returns it (the card arg is used by the radial menu for cardhands to select
- * specific cards out of the cardhand)
+ * Draws the top card, removing it from the associated card atoms list,
+ * unless a card arg is supplied; then it picks that specific card, removes it from the
+ * associated card atoms list, and returns it (the card arg is used by the radial menu for cardhands to select
+ * specific cards out of the cardhand).
  * Arguments:
  * * mob/living/user - The user drawing the card.
  * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
 **/
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
-	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
+	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY | FORBID_TELEKINESIS_REACH))
 		return
 
 	if(count_cards() == 0)
