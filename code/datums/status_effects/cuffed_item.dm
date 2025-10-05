@@ -99,7 +99,7 @@
 		return FALSE
 
 	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !user.CanReach(owner)))
-		owner.balloon_alert("can't do it right now!")
+		owner.balloon_alert(user, "can't do it right now!")
 		return FALSE
 
 	if(user != owner)
@@ -108,7 +108,7 @@
 	owner.balloon_alert(user, "removing cuffs...")
 	playsound(owner, cuffs.cuffsound, 30, TRUE, -2)
 	if(!do_after(user, cuffs.get_handcuff_time(user) * 1.5, owner, interaction_key = interaction_key) || QDELETED(src))
-		owner.balloon_alert("interrupted!")
+		owner.balloon_alert(user, "interrupted!")
 		return FALSE
 
 	if(user != owner)
