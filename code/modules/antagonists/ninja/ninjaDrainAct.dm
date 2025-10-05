@@ -306,7 +306,7 @@
 	bubble_icon = "syndibot"
 	UnlinkSelf()
 	ionpulse = TRUE
-	laws = new /datum/ai_laws/ninja_override()
+	replace_law_set(/datum/ai_laws/ninja_override)
 	model.transform_to(pick(/obj/item/robot_model/syndicate, /obj/item/robot_model/syndicate_medical, /obj/item/robot_model/saboteur))
 
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
