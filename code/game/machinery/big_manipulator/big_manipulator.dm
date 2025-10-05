@@ -1,5 +1,3 @@
-// here we fucking go...
-
 /obj/machinery/big_manipulator
 	name = "big manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
@@ -128,10 +126,6 @@
 
 	if(QDELETED(new_interaction_point)) // if something STILL somehow went wrong
 		return FALSE
-
-	if(new_interaction_point.interaction_turf)
-		RegisterSignal(new_interaction_point.interaction_turf, COMSIG_TURF_ENTERED, CALLBACK(src, PROC_REF(on_turf_atom_entered), new_interaction_point))
-		RegisterSignal(new_interaction_point.interaction_turf, COMSIG_TURF_EXITED, CALLBACK(src, PROC_REF(on_turf_atom_exited), new_interaction_point))
 
 	switch(transfer_type) // assigning to the correct list
 		if(TRANSFER_TYPE_PICKUP)
@@ -322,16 +316,10 @@
 
 	var/turf/new_turf = locate(old_turf.x + dx, old_turf.y + dy, manipulator_turf.z)
 
-	if(old_turf)
-		UnregisterSignal(old_turf, COMSIG_TURF_ENTERED, src)
-		UnregisterSignal(old_turf, COMSIG_TURF_EXITED, src)
-
 	// if manipulator is not anchored, allow points to be anywhere (even in walls) to not mess up your stuff when moving it
 	if(!anchored)
 		if(new_turf)
 			point.interaction_turf = new_turf
-			RegisterSignal(new_turf, COMSIG_TURF_ENTERED, CALLBACK(src, PROC_REF(on_turf_atom_entered), point))
-			RegisterSignal(new_turf, COMSIG_TURF_EXITED, CALLBACK(src, PROC_REF(on_turf_atom_exited), point))
 		return
 
 	if(!new_turf || isclosedturf(new_turf))
@@ -344,8 +332,6 @@
 		return
 
 	point.interaction_turf = new_turf
-	RegisterSignal(new_turf, COMSIG_TURF_ENTERED, CALLBACK(src, PROC_REF(on_turf_atom_entered), point))
-	RegisterSignal(new_turf, COMSIG_TURF_EXITED, CALLBACK(src, PROC_REF(on_turf_atom_exited), point))
 
 /// Finds a suitable turf near the given location
 /obj/machinery/big_manipulator/proc/find_suitable_turf_near(turf/center)
@@ -374,9 +360,6 @@
 	if(!point)
 		return
 
-	if(point.interaction_turf)
-		UnregisterSignal(point.interaction_turf, COMSIG_TURF_ENTERED, src)
-		UnregisterSignal(point.interaction_turf, COMSIG_TURF_EXITED, src)
 	if(point in pickup_points)
 		pickup_points -= point
 	else if(point in dropoff_points)
