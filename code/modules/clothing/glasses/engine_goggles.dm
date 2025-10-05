@@ -20,12 +20,15 @@
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	gender = PLURAL
-
 	vision_flags = NONE
 	color_cutoffs = null
-
-	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_AREA_BLUEPRINTS, MODE_AREA_BLUEPRINTS = MODE_NONE)
+	/// List of selectable modes that can be used by the goggles
+	var/list/modes = list(MODE_NONE, MODE_MESON, MODE_TRAY)
+	/// The current mode string that is selected from the modes list (used for icons)
 	var/mode = MODE_NONE
+	/// The current mode index that is selected from the modes list
+	var/mode_index = 1
+	/// The distance for how far we can see special objects (only used for pipes and wires)
 	var/range = 1
 	var/list/connection_images = list()
 
@@ -40,7 +43,8 @@
 	return ..()
 
 /obj/item/clothing/glasses/meson/engine/proc/toggle_mode(mob/user, voluntary)
-	mode = modes[mode]
+	mode_index = WRAP_UP(mode_index, modes.len)
+	mode = modes[mode_index]
 	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
 	if(connection_images.len)
 		connection_images.Cut()
