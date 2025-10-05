@@ -30,6 +30,7 @@
 	var/mode_index = 1
 	/// The distance for how far we can see special objects (only used for pipes and wires)
 	var/range = 1
+	/// A cache of tracked pipes used in MODE_PIPE_CONNECTABLE
 	var/list/connection_images = list()
 
 /obj/item/clothing/glasses/meson/engine/Initialize(mapload)
@@ -152,7 +153,7 @@
 	inhand_icon_state = "trayson-t-ray"
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
-	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_AREA_BLUEPRINTS, MODE_AREA_BLUEPRINTS = MODE_NONE) // atmos techs now finally have 4 modes on their  goggles!
+	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL) // atmos techs now finally have 3 modes on their  goggles!
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
 	. = ..()
@@ -164,8 +165,7 @@
 	icon_state = "trayson-shuttle"
 	inhand_icon_state = "trayson-shuttle"
 	desc = "Used to see the boundaries of shuttle regions."
-
-	modes = list(MODE_NONE = MODE_SHUTTLE, MODE_SHUTTLE = MODE_NONE)
+	modes = list(MODE_NONE, MODE_SHUTTLE)
 
 
 /obj/item/clothing/glasses/meson/engine/atmos_imaging
@@ -174,12 +174,17 @@
 	icon_state = "trayson-atmospheric-thermal"
 	inhand_icon_state = "trayson-meson"
 	glass_colour_type = /datum/client_colour/glass_colour/gray
-
-	modes = list(MODE_NONE = MODE_ATMOS_THERMAL, MODE_ATMOS_THERMAL = MODE_NONE)
+	modes = list(MODE_NONE, MODE_ATMOS_THERMAL)
 
 /obj/item/clothing/glasses/meson/engine/atmos_imaging/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
 	return ..()
+
+/obj/item/clothing/glasses/meson/engine/admin
+	name = "admin imaging goggles"
+	desc = "Used by Nanotrasen admins to detect blueprint areas, pipes, thermal, wiring, and pipes."
+	range = 7
+	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL, MODE_AREA_BLUEPRINTS)
 
 /proc/show_blueprints(mob/viewer, range = 7, duration = 10)
 	if(!ismob(viewer) || !viewer.client)
