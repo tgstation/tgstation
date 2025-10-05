@@ -31,6 +31,9 @@
 		return NONE
 
 	var/atom/movable/target = held_object?.resolve()
+	if(isnull(target) && transfer_type == TRANSFER_TYPE_DROPOFF)
+		return NONE
+
 	var/list/interaction_points = transfer_type == TRANSFER_TYPE_DROPOFF ? dropoff_points : pickup_points
 	if(!length(interaction_points))
 		return NONE
@@ -265,7 +268,7 @@
 		return FALSE
 
 	var/atom/drop_target = drop_endpoint
-	if(drop_target.atom_storage && (!drop_target.atom_storage.attempt_insert(actual_held_object, override = TRUE, messages = FALSE)))
+	if(drop_target.atom_storage && actual_held_object && (!drop_target.atom_storage.attempt_insert(actual_held_object, override = TRUE, messages = FALSE)))
 		actual_held_object.forceMove(drop_target.drop_location())
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return TRUE

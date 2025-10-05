@@ -700,6 +700,14 @@
 			create_new_interaction_point(null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
+		if("reset_tasking_Pickup Points")
+			pickup_strategy.current_index = 1
+			return TRUE
+
+		if("reset_tasking_Dropoff Points")
+			dropoff_strategy.current_index = 1
+			return TRUE
+
 		if("cycle_tasking_schedule")
 			var/new_schedule = params["new_schedule"]
 			var/is_pickup = params["is_pickup"]
