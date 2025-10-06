@@ -1,9 +1,9 @@
 /// Verifies that an area's perception of their "turfs" is correct, and no other area overlaps with them
 /// Quite slow, but needed
-/datum/unit_test/area_contents
+/datum/unit_test/maptest_area_contents
 	priority = TEST_LONGER
 
-/datum/unit_test/area_contents/Run()
+/datum/unit_test/maptest_area_contents/Run()
 	// First, we check that there are no entries in more then one area
 	// That or duplicate entries
 	for (var/area/area_to_test in GLOB.areas)

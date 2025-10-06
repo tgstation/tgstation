@@ -14,7 +14,11 @@ SUBSYSTEM_DEF(ticker)
 	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
 	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
+	#ifdef ABSOLUTE_MINIMUM
+	var/start_immediately = TRUE
+	#else
 	var/start_immediately = FALSE
+	#endif
 	/// Boolean to track and check if our subsystem setup is done.
 	var/setup_done = FALSE
 

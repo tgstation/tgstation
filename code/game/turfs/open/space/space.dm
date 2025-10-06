@@ -193,6 +193,9 @@ GLOBAL_LIST_EMPTY(starlight)
 	if (!. || isspaceturf(.))
 		return
 
+	if (flags & CHANGETURF_NO_AREA_CHANGE)
+		return
+
 	var/area/new_turf_area = get_area(.)
 	if (istype(new_turf_area, /area/space) && !istype(new_turf_area, /area/space/nearstation))
 		set_turf_to_area(., GLOB.areas_by_type[/area/space/nearstation])

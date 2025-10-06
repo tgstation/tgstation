@@ -5,10 +5,8 @@
 	cardgame_desc = "Wiz-Off game"
 	icon_state = "deck_wizoff_full"
 	deckstyle = "wizoff"
-	is_standard_deck = FALSE
 
-/obj/item/toy/cards/deck/wizoff/Initialize(mapload)
-	. = ..()
+/obj/item/toy/cards/deck/wizoff/initialize_cards()
 	var/card_list = strings("wizoff.json", "wizard")
 	initial_cards += new /datum/deck_card/of_type(/obj/item/toy/singlecard/wizoff_ruleset) // ruleset should be the top card
 	for(var/card in card_list)

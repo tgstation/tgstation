@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - bugfix: "Atrocinator modsuit module no longer lets you do a firemans carry to prevent lag spikes"
