@@ -746,20 +746,20 @@
 	if(!ishuman(affected_mob))
 		return ..()
 	var/mob/living/carbon/affected_human = affected_mob
-
 	if(isjellyperson(affected_human))
-		to_chat(affected_human, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
-		var/species_type = pick(subtypesof(/datum/species/jelly))
-		affected_human.set_species(species_type)
-		holder.del_reagent(type)
-		return UPDATE_MOB_HEALTH
-	if(current_cycle >= CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
 		var/datum/species/species_type = pick(subtypesof(race))
 		affected_human.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(affected_human, span_warning("You've become \a [initial(species_type.name)]!"))
+		to_chat(affected_human, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
 		return UPDATE_MOB_HEALTH
-	return ..()
+	if(current_cycle < CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
+		return ..()
+	var/datum/species/species_type = pick(subtypesof(race))
+	affected_human.set_species(species_type)
+	holder.del_reagent(type)
+	to_chat(affected_human, span_warning("You've become \a [initial(species_type.name)]!"))
+	return UPDATE_MOB_HEALTH
+
 
 /datum/reagent/mutationtoxin/golem
 	name = "Golem Mutation Toxin"
@@ -847,10 +847,8 @@
 	. = ..()
 	if(!ishuman(affected_mob))
 		return
-	var/mob/living/carbon/affected_human = affected_mob
-	if (!istype(affected_human))
-		return
-	to_chat(affected_human, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
+	var/mob/living/carbon/human/affected_human = affected_mob
+	to_chat(affected_human, span_boldwarning("You grit your teeth in pain as your body rapidly mutates!"))
 	affected_human.visible_message("<b>[affected_human]</b> suddenly transforms!")
 	randomize_human_normie(affected_human)
 
