@@ -157,7 +157,6 @@
 	visual = TRUE
 	damage_multiplier = 2
 
-	preference = "feature_human_ears"
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	dna_block = /datum/dna_block/feature/ears

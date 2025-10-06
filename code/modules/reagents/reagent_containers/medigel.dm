@@ -44,6 +44,7 @@
 		to_chat(user, span_warning("[src] is empty!"))
 		return ITEM_INTERACT_BLOCKING
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(interacting_with == user)
 		interacting_with.visible_message(span_notice("[user] attempts to [apply_method] [src] on [user.p_them()]self."))
 		if(self_delay)

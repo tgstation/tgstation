@@ -164,8 +164,10 @@
 
 	var/show_message = FALSE
 	for(var/atom/thing as anything in tile)
-		if(is_type_in_typecache(thing, atom_storage.can_hold))
-			show_message ||= pickup_ore(thing, user, box)
+		if(!is_type_in_typecache(thing, atom_storage.can_hold))
+			continue
+		if(pickup_ore(thing, user, box))
+			show_message = TRUE
 
 	if (!show_message)
 		spam_protection = FALSE
