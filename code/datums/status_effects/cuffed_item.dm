@@ -43,6 +43,10 @@
 	RegisterSignals(cuffs, list(COMSIG_ITEM_EQUIPPED, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(on_displaced))
 	RegisterSignal(cuffs, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
 
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examine_more))
+
+	owner.log_message("bound [src] to themselves with restraints", LOG_GAME)
+
 	return TRUE
 
 /datum/status_effect/cuffed_item/on_remove()
@@ -53,10 +57,17 @@
 	REMOVE_TRAIT(cuffed, TRAIT_NODROP, CUFFED_ITEM_TRAIT)
 	cuffed = null
 
-	cuffs.on_uncuffed(wearer = owner)
-	if(!QDELETED(owner) && cuffs.loc == owner && !(cuffs in owner.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)))
-		cuffs.forceMove(owner.drop_location())
+	if(!QDELETED(cuffs))
+		cuffs.on_uncuffed(wearer = owner)
+		if(!QDELETED(owner) && cuffs.loc == owner && !(cuffs in owner.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD)))
+			cuffs.forceMove(owner.drop_location())
 	cuffs = null
+
+///Called when someone examines the owner twice, so they can know if someone has a cuffed item
+/datum/status_effect/cuffed_item/proc/on_examine_more(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_warning("[cuffed.examine_title(user)] is bound to [owner.p_their()] [owner.get_held_index_name(owner.get_held_index_of_item(cuffed))] by [cuffs.examine_title(user)]")
 
 ///What happens if one of the items is moved away from the mob
 /datum/status_effect/cuffed_item/proc/on_displaced(datum/source)
@@ -113,6 +124,8 @@
 
 	if(user != owner)
 		owner.visible_message(span_notice("[user] removes [cuffs] binding [cuffed] to [owner]"), span_warning("[user] removes [cuffs] binding [cuffed] to you."))
+
+	log_combat(user, owner, "removed restraints binding [cuffed] to")
 
 	var/obj/item/restraints/handcuffs/ref_cuffs = cuffs
 	ref_cuffs.forceMove(owner.drop_location()) //This will cause the status effect to delete itself, which unsets the 'cuffs' var
