@@ -3,7 +3,6 @@
 
 ///  O R E   S I L O  ///
 
-// Save materials in silo
 /obj/machinery/ore_silo/on_object_saved()
 	var/data
 	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
@@ -18,7 +17,6 @@
 			data += "[data ? ",\n" : ""][stack.type]{\n\t[amount_var] = [amount_in_stack]\n\t}"
 	return data
 
-// Load materials into silo
 /obj/machinery/ore_silo/PersistentInitialize()
 	. = ..()
 	var/datum/component/material_container/silo_container = materials
