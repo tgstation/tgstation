@@ -148,7 +148,10 @@
 		return .
 
 	if(isnull(held_item) && Adjacent(user))
-		context[SCREENTIP_CONTEXT_LMB] = "Open"
+		if (!user.pulling)
+			context[SCREENTIP_CONTEXT_LMB] = "Open"
+		else
+			context[SCREENTIP_CONTEXT_RMB] = "Open"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/door/check_access_list(list/access_list)
@@ -311,6 +314,9 @@
 	if(isliving(user))
 		var/mob/living/living_user = user
 		if(!(living_user.mobility_flags & MOBILITY_USE))
+			return
+		if(!density && living_user.pulling && LAZYACCESS(modifiers, LEFT_CLICK)) // If the airlock is open, and left clicking on the tile while pulling a thing,
+			living_user.Move_Pulled(src) // will instead drag the living thing towards the door tile, instead of interacting with the door
 			return
 	if(try_remove_seal(user))
 		return
