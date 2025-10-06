@@ -314,6 +314,7 @@
 #include "trait_addition_and_removal.dm"
 #include "traitor.dm"
 #include "traitor_mail_content_check.dm"
+#include "trash_food.dm"
 #include "trauma_granting.dm"
 #include "turf_icons.dm"
 #include "tutorial_sanity.dm"

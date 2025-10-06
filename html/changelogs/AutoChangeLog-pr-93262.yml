@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Emotes with visuals can no longer cause errors if spammed to an extreme degree"

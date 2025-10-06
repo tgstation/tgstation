@@ -1,6 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - bugfix: "fixed cycler shotgun double ammo consumption"
-  - bugfix: "fixed racking action on the cycler shotgun"
-  - bugfix: "bounty hunter cycler shotgun now properly fires incendiary rounds from secondary tube"
