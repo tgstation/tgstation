@@ -1,0 +1,19 @@
+{
+	"version": 1,
+	"map_name": "Minimal Runtime Station",
+	"map_path": "map_files/debug",
+	"map_file": "runtimestation_minimal.dmm",
+	"space_ruin_levels": 1,
+	"ignored_unit_tests": [
+		"/datum/unit_test/cargo_dep_order_locations",
+		"/datum/unit_test/job_roundstart_spawnpoints",
+		"/datum/unit_test/required_map_items",
+		"/datum/unit_test/spy_bounty",
+		"/datum/unit_test/space_dragon_expiration",
+		"/datum/unit_test/nuke_cinematic",
+		"/datum/unit_test/atmospherics_sanity",
+		"/datum/unit_test/mapload_space_verification",
+		"/datum/unit_test/modify_fantasy_variable",
+		"/datum/unit_test/create_and_destroy"
+	]
+}

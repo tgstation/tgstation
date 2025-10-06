@@ -1,6 +1,5 @@
 //effect when we're swinging wildly around
 /obj/effect/temp_visual/dagger_slash
-	name = "Blood Wisp"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
@@ -19,10 +18,10 @@
 
 //flames we collect around our body
 /obj/effect/overlay/blood_wisp
+	name = "Blood Wisp"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
-	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE
-	layer = ABOVE_HUD_PLANE
+	vis_flags = VIS_INHERIT_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blood_wisp"
 	light_power = 2
