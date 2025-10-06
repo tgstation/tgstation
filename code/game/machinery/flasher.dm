@@ -120,7 +120,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		if (get_dist(src, living_mob) > flash_range)
 			continue
 
-		if(bulb.flash_mob(living_mob, confusion_duration = strength * 2, extra_log =  "by [src]"))
+		if(bulb.flash_mob(living_mob, confusion_duration = strength * 1.5, extra_log =  "by [src]"))
 			living_mob.Paralyze(strength)
 			flashed = TRUE
 
