@@ -81,7 +81,7 @@
 	H_ion_release = -2.5
 	rate_up_lim = 30
 	purity_min = 0.35//15% window
-	reaction_flags = REACTION_CLEAR_INVERSE | REACTION_PH_VOL_CONSTANT
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /*****BURN*****/
@@ -148,7 +148,7 @@
 	H_ion_release = 3.7
 	rate_up_lim = 50
 	purity_min = 0.15
-	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/hercuri/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
@@ -179,7 +179,7 @@
 	H_ion_release = -1
 	rate_up_lim = 50
 	purity_min = 0.25
-	reaction_flags = REACTION_PH_VOL_CONSTANT|REACTION_CLEAR_INVERSE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
 /datum/chemical_reaction/medicine/convermol/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
@@ -260,7 +260,7 @@
 	H_ion_release = -2
 	rate_up_lim = 15
 	purity_min = 0.2
-	reaction_flags = REACTION_PH_VOL_CONSTANT | REACTION_CLEAR_INVERSE
+	reaction_flags = REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_TOXIN
 
 /datum/chemical_reaction/medicine/multiver

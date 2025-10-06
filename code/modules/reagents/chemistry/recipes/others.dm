@@ -537,7 +537,6 @@
 /datum/chemical_reaction/colorful_reagent
 	results = list(/datum/reagent/colorful_reagent = 5)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/drug/space_drugs = 1, /datum/reagent/medicine/cryoxadone = 1, /datum/reagent/consumable/triple_citrus = 1)
-	reaction_flags = REACTION_CLEAR_INVERSE
 
 /datum/chemical_reaction/life
 	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/c2/synthflesh = 1, /datum/reagent/blood = 1)
