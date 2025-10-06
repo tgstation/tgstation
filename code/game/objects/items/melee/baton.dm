@@ -808,7 +808,7 @@
 /obj/item/melee/baton/security/loaded/hos
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/super
 
-//Stun Sword
+///Stun Sword
 /obj/item/melee/baton/security/stunsword
 	name = "\improper NT-20 'Excalibur' Stunsword"
 	desc = "It's a sword. It stuns. What more could you want?"
@@ -824,12 +824,12 @@
 	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
-	force = 25
+	force = 30
 	throwforce = 10
 	wound_bonus = 0
 	exposed_wound_bonus = 30
 	stun_armour_penetration = 40
-	throw_stun_chance = 50
+	throw_stun_chance = 60
 	convertible = FALSE
 	tip_changes_color = FALSE
 
