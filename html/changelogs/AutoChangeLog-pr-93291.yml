@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed a year old issue which prevented projectile hit messages from appearing if they've been shot from a gun."

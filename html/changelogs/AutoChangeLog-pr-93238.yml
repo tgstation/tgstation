@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - code_imp: "Mappers can now run just mapping unit tests - Should be 56% faster  - Should have no player impact"
