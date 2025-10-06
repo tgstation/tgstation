@@ -172,7 +172,7 @@
 			reagent_datum = list()
 		var/added_amount = add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity), reagent_added = reagent_datum)
 		var/datum/reagent/inverse_reagent = reagent_datum[reagent_datum.len]
-		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
+		if(inverse_reagent.chemical_flags)
 			inverse_reagent.name = reagent.name //Negative effects are hidden
 		return added_amount * -1
 
