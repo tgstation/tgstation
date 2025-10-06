@@ -1,5 +1,7 @@
-/// Contains important objects that should be saved
-/// Plus a few misc examples to show how stuff is utilized
+/// SERIALIZATION EXTENSIONS FOR CORE OBJECTS
+///
+/// Save and load persistence for essential machinery and items (Ore Silos, Airlocks, APCs, Atmospherics, etc.)
+/// To ensure their unique runtime state persists across round restarts
 
 ///  O R E   S I L O  ///
 
