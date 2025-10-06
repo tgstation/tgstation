@@ -17,6 +17,7 @@
 				/obj/item/toy/cards/deck/kotahi = 3,
 				/obj/item/toy/cards/deck/tarot = 3,
 				/obj/item/toy/cards/deck/wizoff = 3,
+				/obj/item/toy/cards/deck/cardshoe = 3,
 			),
 		),
 		list(
@@ -115,7 +116,6 @@
 	extra_price = PAYCHECK_COMMAND * 1.25
 	payment_department = ACCOUNT_SRV
 	light_mask = "games-light-mask"
-	allow_custom = TRUE
 
 /obj/item/vending_refill/games
 	machine_name = "\improper Good Clean Fun"

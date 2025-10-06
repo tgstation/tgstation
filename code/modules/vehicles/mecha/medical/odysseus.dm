@@ -14,15 +14,16 @@
 
 /obj/vehicle/sealed/mecha/odysseus/moved_inside(mob/living/carbon/human/human)
 	. = ..()
-	if(. && !HAS_TRAIT(human, TRAIT_MEDICAL_HUD))
-		ADD_TRAIT(human, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
+	if(!.)
+		return
+	ADD_TRAIT(human, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
 
 /obj/vehicle/sealed/mecha/odysseus/remove_occupant(mob/living/carbon/human/human)
-	if(isliving(human) && HAS_TRAIT_FROM(human, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT))
-		REMOVE_TRAIT(human, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
+	REMOVE_TRAIT(human, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
 	return ..()
 
 /obj/vehicle/sealed/mecha/odysseus/mmi_moved_inside(obj/item/mmi/MMI, mob/user)
 	. = ..()
-	if(. && !isnull(MMI.brainmob) && !HAS_TRAIT(MMI.brainmob, TRAIT_MEDICAL_HUD))
-		ADD_TRAIT(MMI.brainmob, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
+	if(!. || isnull(MMI.brainmob))
+		return
+	ADD_TRAIT(MMI.brainmob, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
