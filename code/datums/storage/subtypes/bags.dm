@@ -268,12 +268,51 @@
 /datum/storage/bag/garment
 	numerical_stacking = FALSE
 	max_total_storage = 200
-	max_slots = 15
+	max_slots = 20
 	insert_preposition = "in"
+	allow_big_nesting = TRUE
 
 /datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
-	set_holdable(/obj/item/clothing)
+	set_holdable(
+		can_hold_list = list(/obj/item/clothing, /obj/item/storage/backpack),
+		exception_hold_list = list(/obj/item/storage/backpack),
+	)
+
+/datum/storage/bag/garment/can_insert(obj/item/to_insert, mob/user, messages, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(istype(to_insert, /obj/item/storage/backpack) && length(to_insert.contents))
+		if(messages && user)
+			parent.balloon_alert(user, "can't store filled backpacks!")
+		return FALSE
+
+	return TRUE
+
+/datum/storage/bag/garment/item_init(datum/source, obj/item/inited)
+	. = ..()
+	if(!istype(inited, /obj/item/storage/backpack))
+		return
+	RegisterSignal(inited, COMSIG_ATOM_PRE_STORED_ITEM, PROC_REF(block_inner_storage))
+
+/datum/storage/bag/garment/handle_enter(datum/source, obj/item/arrived)
+	. = ..()
+	if(!istype(arrived, /obj/item/storage/backpack))
+		return
+	RegisterSignal(arrived, COMSIG_ATOM_PRE_STORED_ITEM, PROC_REF(block_inner_storage))
+
+/datum/storage/bag/garment/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+	UnregisterSignal(gone, COMSIG_ATOM_PRE_STORED_ITEM)
+
+/datum/storage/bag/garment/proc/block_inner_storage(obj/item/backpack, to_insert, user, force, messages)
+	SIGNAL_HANDLER
+
+	if(user && messages)
+		parent.balloon_alert(user, "garment bag is in the way!")
+	return BLOCK_STORAGE_INSERT
 
 ///Quiver bag
 /datum/storage/bag/quiver
