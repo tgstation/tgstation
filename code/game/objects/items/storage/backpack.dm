@@ -144,7 +144,7 @@
 	name = "chief medical officer's backpack"
 	desc = "A backpack with just enough pockets to carry the chief medical officer's equipment."
 	icon_state = "backpack-chiefmedical"
-	inhand_icon_state = "backpack-chiefmedical"
+	inhand_icon_state = "medicalpack"
 
 /obj/item/storage/backpack/coroner
 	name = "coroner backpack"
@@ -325,7 +325,7 @@
 	name = "chief medical officer's satchel"
 	desc = "A satchel with barely enough pockets to carry the chief medical officer's equipment."
 	icon_state = "satchel-chiefmedical"
-	inhand_icon_state = "satchel-chiefmedical"
+	inhand_icon_state = "satchel-med"
 
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"
@@ -436,7 +436,7 @@
 	name = "chief medical officer's messenger bag"
 	desc = "A slim messenger bag appreciated by chief medical officers for staying out of their way while working - unlike their chemists."
 	icon_state = "messenger_chiefmedical"
-	inhand_icon_state = "messenger_chiefmedical"
+	inhand_icon_state = "messenger_medical"
 
 /obj/item/storage/backpack/messenger/vir
 	name = "virologist messenger bag"

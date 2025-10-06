@@ -136,7 +136,7 @@
 	name = "chief medical officer's duffel bag"
 	desc = "A large duffel bag for handling the duties of the entire medical department at once."
 	icon_state = "duffel-chiefmedical"
-	inhand_icon_state = "duffel-chiefmedical"
+	inhand_icon_state = "duffel-med"
 
 /obj/item/storage/backpack/duffelbag/coroner
 	name = "coroner duffel bag"
