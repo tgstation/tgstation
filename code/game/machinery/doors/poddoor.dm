@@ -44,9 +44,6 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/door/poddoor/get_save_vars()
-	return ..() + NAMEOF(src, id)
-
 /obj/machinery/door/poddoor/examine(mob/user)
 	. = ..()
 	if(panel_open)

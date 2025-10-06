@@ -13,15 +13,6 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 
-/obj/structure/noticeboard/on_object_saved()
-	var/data
-
-	for(var/obj/item/paper/paper in contents)
-		var/metadata = generate_tgm_metadata(paper)
-		data += "[data ? ",\n" : ""][paper.type][metadata]"
-
-	return data
-
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()
 

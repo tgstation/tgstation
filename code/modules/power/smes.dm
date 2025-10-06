@@ -140,17 +140,6 @@
 		if(clevel > 0)
 			. += "smes-og[clevel]"
 
-/obj/machinery/power/smes/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, input_level)
-	. += NAMEOF(src, output_level)
-	return .
-
-/obj/machinery/power/smes/get_custom_save_vars()
-	. = ..()
-	.[NAMEOF(src, charge)] = total_charge()
-	return .
-
 /// Returns the total charge of this smes
 /obj/machinery/power/smes/proc/total_charge()
 	PROTECTED_PROC(TRUE)

@@ -153,28 +153,6 @@
 	fire = 90
 	acid = 50
 
-/obj/machinery/power/apc/get_save_vars()
-	. = ..()
-	if(auto_name)
-		. -= NAMEOF(src, name)
-	. += NAMEOF(src, opened)
-	. += NAMEOF(src, coverlocked)
-	. += NAMEOF(src, lighting)
-	. += NAMEOF(src, equipment)
-	. += NAMEOF(src, environ)
-	. += NAMEOF(src, cell_type)
-
-	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
-	//. += NAMEOF(src, shorted)
-	//. += NAMEOF(src, locked)
-	return .
-
-/obj/machinery/power/apc/get_custom_save_vars()
-	. = ..()
-	if(cell_type)
-		.[NAMEOF(src, start_charge)] = round((cell.charge / cell.maxcharge * 100))
-	return .
-
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
 	//APCs get added to their own processing tasks for the machines subsystem.

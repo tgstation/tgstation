@@ -37,9 +37,6 @@
 	fire = 90
 	acid = 70
 
-/obj/machinery/button/get_save_vars()
-	return ..() + NAMEOF(src, id)
-
 /**
  * INITIALIZATION
  */
