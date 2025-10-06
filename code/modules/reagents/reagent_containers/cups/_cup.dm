@@ -69,6 +69,7 @@
 	if(!canconsume(target_mob, user))
 		return ITEM_INTERACT_BLOCKING
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(target_mob != user)
 		target_mob.visible_message(
 			span_danger("[user] attempts to feed [target_mob] something from [src]."),

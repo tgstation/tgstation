@@ -1544,6 +1544,7 @@
 #include "code\datums\elements\elevation.dm"
 #include "code\datums\elements\empprotection.dm"
 #include "code\datums\elements\envenomable_casing.dm"
+#include "code\datums\elements\examine_lore.dm"
 #include "code\datums\elements\eyestab.dm"
 #include "code\datums\elements\falling_hazard.dm"
 #include "code\datums\elements\firestacker.dm"
