@@ -289,4 +289,88 @@
 	. += NAMEOF(src, stage)
 	. += NAMEOF(src, fixture_type)
 	return .
+
+
+/obj/item/paper/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, show_written_words)
+	. += NAMEOF(src, input_field_count)
+	. += NAMEOF(src, default_raw_text)
+	return .
+
+/obj/item/paper/get_custom_save_vars()
+	. = ..()
+
+	// Don't save anything if the paper is empty
+	if(is_empty())
+		return .
+
+	// Convert the paper's complex data to a serializable format
+	var/list/paper_data = convert_to_data()
+
+	if(LAZYLEN(paper_data[LIST_PAPER_RAW_TEXT_INPUT]))
+		.[NAMEOF(src, raw_text_inputs)] = paper_data[LIST_PAPER_RAW_TEXT_INPUT]
+
+	if(LAZYLEN(paper_data[LIST_PAPER_RAW_STAMP_INPUT]))
+		.[NAMEOF(src, raw_stamp_data)] = paper_data[LIST_PAPER_RAW_STAMP_INPUT]
+
+	if(LAZYLEN(paper_data[LIST_PAPER_RAW_FIELD_INPUT]))
+		.[NAMEOF(src, raw_field_input_data)] = paper_data[LIST_PAPER_RAW_FIELD_INPUT]
+
+	return .
+
+/obj/item/paper/PersistentInitialize()
+	. = ..()
+
+	// If we have saved data in list format, reconstruct the paper
+	if(islist(raw_text_inputs) || islist(raw_stamp_data) || islist(raw_field_input_data))
+		var/list/saved_data = list()
+
+		// Reconstruct the data structure expected by write_from_data
+		saved_data[LIST_PAPER_RAW_TEXT_INPUT] = islist(raw_text_inputs) ? raw_text_inputs : list()
+		saved_data[LIST_PAPER_RAW_STAMP_INPUT] = islist(raw_stamp_data) ? raw_stamp_data : list()
+		saved_data[LIST_PAPER_RAW_FIELD_INPUT] = islist(raw_field_input_data) ? raw_field_input_data : list()
+		saved_data[LIST_PAPER_COLOR] = color || COLOR_WHITE
+		saved_data[LIST_PAPER_NAME] = name
+
+		// Clear the raw lists first
+		raw_text_inputs = null
+		raw_stamp_data = null
+		raw_field_input_data = null
+
+		// Rebuild the paper from the saved data
+		write_from_data(saved_data)
+		update_appearance()
+
+/obj/item/clipboard/on_object_saved()
+	var/data
+	// Save the pen if there is one
+	if(pen)
+		var/metadata = generate_tgm_metadata(pen)
+		data += "[data ? ",\n" : ""][pen.type][metadata]"
+
+	// Save any papers attached to the clipboard
+	for(var/obj/item/paper/paper in contents)
+		var/metadata = generate_tgm_metadata(paper)
+		data += "[data ? ",\n" : ""][paper.type][metadata]"
+
+	return data
+
+/obj/item/clipboard/PersistentInitialize()
+	. = ..()
+
+	// Move any pens from the same tile into the clipboard
+	var/obj/item/pen/found_pen = locate() in loc
+	if(found_pen && !pen)
+		found_pen.forceMove(src)
+		pen = found_pen
+
+	// Move any papers from the same tile into the clipboard
+	for(var/obj/item/paper/paper in loc)
+		paper.forceMove(src)
+
+	// Update appearance once at the end after all items are collected
+	update_appearance(UPDATE_ICON)
+
+
 */
