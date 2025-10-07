@@ -329,6 +329,10 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	light_color = COLOR_RED
 
+/obj/item/melee/energy/sword/pirate/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
+
 /// Energy blades, which are effectively perma-extended energy swords
 /obj/item/melee/energy/blade
 	name = "energy blade"

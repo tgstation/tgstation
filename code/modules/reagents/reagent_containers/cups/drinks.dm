@@ -71,6 +71,10 @@
 	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 150
 
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handles
+
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
 	name = "silver cup"
 	desc = "Best loser!"
@@ -83,6 +87,9 @@
 	custom_materials = list(/datum/material/silver=SMALL_MATERIAL_AMOUNT*8)
 	volume = 100
 
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handle
 
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup
 	name = "bronze cup"
@@ -166,6 +173,10 @@
 	icon_state = "tea_empty"
 	base_icon_state = "tea"
 	inhand_icon_state = "coffee"
+
+/obj/item/reagent_containers/cup/glass/mug/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
 
 /obj/item/reagent_containers/cup/glass/mug/update_icon_state()
 	icon_state = "[base_icon_state][reagents.total_volume ? null : "_empty"]"

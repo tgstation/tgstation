@@ -55,16 +55,15 @@
 
 	///How long it takes to handcuff someone
 	var/handcuff_time = 4 SECONDS
-	///Multiplier for handcuff time
-	var/handcuff_time_mod = 1
 	///Sound that plays when starting to put handcuffs on someone
 	var/cuffsound = 'sound/items/weapons/handcuffs.ogg'
 	///Sound that plays when restrain is successful
 	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
-	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
-	var/trashtype = null
 	/// How strong the cuffs are. Weak cuffs can be broken with wirecutters or boxcutters.
 	var/restraint_strength = HANDCUFFS_TYPE_STRONG
+
+	/// Is this pair of cuff being actually used?
+	var/used = FALSE
 
 /obj/item/restraints/handcuffs/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -79,7 +78,7 @@
 	acid = 50
 
 /obj/item/restraints/handcuffs/attack(mob/living/target_mob, mob/living/user)
-	if(!iscarbon(target_mob))
+	if(!iscarbon(target_mob) || used)
 		return
 
 	attempt_to_cuff(target_mob, user)
@@ -90,9 +89,7 @@
 		victim.balloon_alert(user, "can't be handcuffed!")
 		return
 
-	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
-		to_chat(user, span_warning("Uh... how do those things work?!"))
-		apply_cuffs(user, user)
+	if(handcuffs_clumsiness_check(user))
 		return
 
 	if(!isnull(victim.handcuffed))
@@ -114,12 +111,7 @@
 	playsound(loc, cuffsound, 30, TRUE, -2)
 	log_combat(user, victim, "attempted to handcuff")
 
-	if(HAS_TRAIT(user, TRAIT_FAST_CUFFING))
-		handcuff_time_mod = 0.75
-	else
-		handcuff_time_mod = 1
-
-	if(!do_after(user, handcuff_time * handcuff_time_mod, victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
+	if(!do_after(user, get_handcuff_time(user), victim, timed_action_flags = IGNORE_SLOWDOWNS) || !victim.canBeHandcuffed())
 		victim.balloon_alert(user, "failed to handcuff!")
 		to_chat(user, span_warning("You fail to handcuff [victim]!"))
 		log_combat(user, victim, "failed to handcuff")
@@ -136,7 +128,16 @@
 	log_combat(user, victim, "successfully handcuffed")
 	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
+///Return the amount of time the user would spend cuffing someone or something
+/obj/item/restraints/handcuffs/proc/get_handcuff_time(mob/user)
+	return handcuff_time * (HAS_TRAIT(user, TRAIT_FAST_CUFFING) ? 0.75 : 1)
 
+/obj/item/restraints/handcuffs/proc/handcuffs_clumsiness_check(mob/user)
+	if(!iscarbon(user) || !HAS_TRAIT(user, TRAIT_CLUMSY) || prob(50)) //Clumsy people have a 50% chance to handcuff themselves instead of their target.
+		return FALSE
+	to_chat(user, span_warning("Uh... how do those things work?!"))
+	apply_cuffs(user, user)
+	return TRUE
 /**
  * When called, this instantly puts handcuffs on someone (if actually possible)
  *
@@ -153,15 +154,23 @@
 		return
 
 	var/obj/item/restraints/handcuffs/cuffs = src
-	if(trashtype)
-		cuffs = new trashtype()
-	else if(dispense)
+	if(dispense)
 		cuffs = new type()
 
 	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	if(trashtype && !dispense)
+	if(dispense)
 		qdel(src)
+
+/obj/item/restraints/handcuffs/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_HANDCUFFED)
+		RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_uncuffed)) //Make sure zipties are no longer usable the next time someone removes them
+
+/obj/item/restraints/handcuffs/proc/on_uncuffed(datum/source, mob/living/wearer)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
 
 /**
  * # Alien handcuffs
@@ -342,9 +351,14 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	custom_materials = null
 	breakouttime = 45 SECONDS
-	trashtype = /obj/item/restraints/handcuffs/cable/zipties/used
 	color = null
 	cable_color = null
+
+/obj/item/restraints/handcuffs/cable/zipties/on_uncuffed(datum/source, mob/living/wearer)
+	. = ..()
+	desc = "A pair of broken zipties."
+	icon_state = "cuff_used"
+	used = TRUE
 
 /**
  * # Used zipties
@@ -354,9 +368,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used
 	desc = "A pair of broken zipties."
 	icon_state = "cuff_used"
-
-/obj/item/restraints/handcuffs/cable/zipties/used/attack()
-	return
+	used = TRUE
 
 /**
  * # Fake Zipties
@@ -372,6 +384,21 @@
 /obj/item/restraints/handcuffs/cable/zipties/fake/used
 	desc = "A pair of broken fake zipties."
 	icon_state = "cuff_used"
+	used = TRUE
+
+///handcuffs applied by cult magic and heretics sacrifice
+/obj/item/restraints/handcuffs/cult
+	name = "shadow shackles"
+	desc = "Shackles that bind the wrists with sinister magic."
+	breakouttime = 45 SECONDS
+	icon_state = "cult_shackles"
+	flags_1 = NONE
+
+/obj/item/restraints/handcuffs/cult/on_uncuffed(datum/source, mob/living/wearer)
+	. = ..()
+	wearer.visible_message(span_danger("[wearer]'s shackles shatter in a discharge of dark magic!"), span_userdanger("Your [src] shatters in a discharge of dark magic!"))
+	qdel(src)
+
 
 /**
  * # Generic leg cuffs
