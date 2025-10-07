@@ -18,7 +18,7 @@
 	usr = old_usr
 
 /atom/movable/screen/alert/test_alert
-	var/datum/unit_test/linked
+	var/datum/unit_test/alerts/linked
 
 /atom/movable/screen/alert/test_alert/Click(location, control, params)
 	. = ..()
