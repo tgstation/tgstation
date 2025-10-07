@@ -42,7 +42,7 @@
 
 	for(var/client/admin_client in GLOB.admins)
 		if(get_chat_toggles(admin_client) & CHAT_PRAYER)
-			SEND_SOUND(admin_client, sound('sound/misc/asay_ping.ogg'))
+			SEND_SOUND(admin_client, sound('sound/announcer/notice/notice2.ogg'))
 			to_chat(admin_client, fieldset_block("Internet sound requested", jointext(admin_message, ""), "boxed_message"), type = MESSAGE_TYPE_PRAYER, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "music_request", 1, "Music Request") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
