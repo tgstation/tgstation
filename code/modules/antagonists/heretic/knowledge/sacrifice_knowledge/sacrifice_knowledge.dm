@@ -333,7 +333,7 @@
 	var/turf/destination = get_turf(destination_landmark)
 
 	sac_target.visible_message(span_danger("[sac_target] begins to shudder violenty as dark tendrils begin to drag them into thin air!"))
-	sac_target.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult(sac_target))
+	sac_target.equip_to_slot_or_del(new /obj/item/restraints/handcuffs/cult, ITEM_SLOT_HANDCUFFED, indirect_action = TRUE)
 	sac_target.dropItemToGround(sac_target.legcuffed, TRUE)
 
 	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)

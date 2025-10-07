@@ -67,6 +67,11 @@
 	///You can use this var to tone down the strength of the highlight for less shiny types of plastic.
 	var/highlight_strenght = 1.0
 
+/obj/item/reagent_containers/cup/jerrycan/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+	update_appearance()
+
 /obj/item/reagent_containers/cup/jerrycan/update_overlays()
 	. = ..()
 
@@ -90,10 +95,6 @@
 		. += inhand_reagent_filling
 	if(cap_type)
 		. += mutable_appearance(icon_file, "[base_icon_state]_cap_[cap_type]")
-
-/obj/item/reagent_containers/cup/jerrycan/Initialize(mapload)
-	. = ..()
-	update_appearance()
 
 /obj/item/reagent_containers/cup/jerrycan/opaque
 	fill_icon_thresholds = null

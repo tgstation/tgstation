@@ -47,6 +47,7 @@
 
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	register_context()
 

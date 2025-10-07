@@ -319,6 +319,10 @@
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
+/obj/item/nullrod/vibro/talking/chainsword/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //Thanks goodness it cannot be selected by chappies
+
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
 

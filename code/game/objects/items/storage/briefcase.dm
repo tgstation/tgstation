@@ -21,6 +21,10 @@
 	/// The path of the folder that gets spawned in New()
 	var/folder_path = /obj/item/folder
 
+/obj/item/storage/briefcase/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)
 	var/obj/item/folder/folder = new folder_path(src)
