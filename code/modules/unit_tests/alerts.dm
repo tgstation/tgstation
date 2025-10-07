@@ -11,7 +11,7 @@
 
 	var/atom/movable/screen/alert/test_alert = dummy.throw_alert(TRAIT_SOURCE_UNIT_TESTS, /atom/movable/screen/alert/test_alert)
 	test_alert.linked = src
-	test_alert.Click(dummy)
+	test_alert.Click()
 	if(!was_clicked)
 		TEST_FAIL("Screen alert was not clickable.")
 
