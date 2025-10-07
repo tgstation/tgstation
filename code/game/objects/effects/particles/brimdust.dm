@@ -5,7 +5,7 @@
 	height = 100
 	count = 1000
 	color = "#88304e"
-	spawning = 1
+	spawning = 3
 	lifespan = 0.7 SECONDS
 	fade = 1 SECONDS
 	velocity = list(0, 0)
