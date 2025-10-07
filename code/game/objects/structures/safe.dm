@@ -48,6 +48,13 @@ FLOOR SAFES
 /obj/structure/safe/Initialize(mapload)
 	. = ..()
 
+	var/static/list/tool_behaviors = list(
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Reset lock",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 	// Combination generation
 	for(var/iterating in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
@@ -73,7 +80,7 @@ FLOOR SAFES
 
 /obj/structure/safe/examine(mob/user)
 	. = ..()
-	. += span_notice("You could reconfigure the passcode with a <b>wrench</b>.")
+	. += span_notice("The locking mechanism gears are <b>wrenched</b> in place.")
 
 /obj/structure/safe/update_icon_state()
 	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
@@ -85,17 +92,17 @@ FLOOR SAFES
 		balloon_alert(user, "must be open!")
 		return ITEM_INTERACT_BLOCKING
 
-	balloon_alert(user, "reconfiguring lock...")
-	to_chat(user, span_notice("You begin reconfiguring the lock for [src]. You'll need to set [number_of_tumblers] numbers."))
+	balloon_alert(user, "resetting lock...")
+	to_chat(user, span_notice("You begin resetting the lock for [src]. You'll need to set [number_of_tumblers] numbers."))
 
 	var/list/new_tumblers = list()
 	for(var/tumbler_index in 1 to number_of_tumblers)
-		var/input_value = tgui_input_number(user, "Set tumbler #[tumbler_index] (0-99):", "Lock Configuration", 0, 99, 0)
+		var/input_value = tgui_input_number(user, "Set tumbler #[tumbler_index] (0-99):", "Set Lock", 0, 99, 0)
 		if(isnull(input_value))
-			balloon_alert(user, "configuration cancelled!")
+			balloon_alert(user, "reset cancelled!")
 			return ITEM_INTERACT_BLOCKING
 		if(!user.can_perform_action(src))
-			balloon_alert(user, "configuration interrupted!")
+			balloon_alert(user, "reset interrupted!")
 			return ITEM_INTERACT_BLOCKING
 		new_tumblers.Add(input_value)
 
@@ -105,11 +112,11 @@ FLOOR SAFES
 		current_tumbler_index = 1
 		dial = 0
 		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You successfully reconfigure the lock for [src]. The new combination is: [tumblers.Join("-")]."))
+		to_chat(user, span_notice("You successfully reset the lock for [src]. The new combination is: [tumblers.Join("-")]."))
 		balloon_alert(user, "lock set!")
 		return ITEM_INTERACT_SUCCESS
 	else
-		balloon_alert(user, "configuration interrupted!")
+		balloon_alert(user, "reset interrupted!")
 		return ITEM_INTERACT_BLOCKING
 
 /obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
