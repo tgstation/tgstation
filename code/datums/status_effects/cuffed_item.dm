@@ -109,7 +109,7 @@
 	if(LAZYACCESS(user.do_afters, interaction_key))
 		return FALSE
 
-	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !user.CanReach(owner)))
+	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !owner.IsReachableBy(user)))
 		owner.balloon_alert(user, "can't do it right now!")
 		return FALSE
 
