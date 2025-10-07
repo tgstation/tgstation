@@ -60,6 +60,7 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
 	AddComponent(/datum/component/jousting)
 	//fast and effective, but as a sword, it might damage the results.
 	AddComponent(/datum/component/butchering, \
@@ -173,6 +174,7 @@
 
 /obj/item/melee/parsnip_sabre/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
 	AddComponent(/datum/component/jousting)
 
 /obj/item/melee/parsnip_sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)

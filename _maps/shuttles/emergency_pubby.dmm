@@ -458,12 +458,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fa" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
-/obj/machinery/light/directional/east,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iy" = (

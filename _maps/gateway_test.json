@@ -8,8 +8,8 @@
 	"ignored_unit_tests": [
 		"/datum/unit_test/antag_moodlets",
 		"/datum/unit_test/cargo_dep_order_locations",
-		"/datum/unit_test/job_roundstart_spawnpoints",
-		"/datum/unit_test/required_map_items",
+		"/datum/unit_test/maptest_job_roundstart_spawnpoints",
+		"/datum/unit_test/maptest_required_map_items",
 		"/datum/unit_test/space_dragon_expiration",
 		"/datum/unit_test/spy_bounty",
 		"/datum/unit_test/traitor"

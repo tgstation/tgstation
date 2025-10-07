@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Holograms objects will fade away when affected by EMPs."

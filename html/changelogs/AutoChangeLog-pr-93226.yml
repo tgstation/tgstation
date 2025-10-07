@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "The admin debug gps is now turned off by default and toggling it will reset the affected turfs."
+  - admin: "Equipping the admin outfit will no longer automatically trigger the debug gps effect."

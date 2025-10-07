@@ -47,6 +47,7 @@
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
 	AddElement(/datum/element/toy_talk)
+	AddElement(/datum/element/cuffable_item)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
