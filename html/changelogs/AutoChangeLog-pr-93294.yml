@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - image: "Cain & Abel wisps now orbit around the user instead of being static"
-  - code_imp: "Cleaned up Cain & Abel code"
