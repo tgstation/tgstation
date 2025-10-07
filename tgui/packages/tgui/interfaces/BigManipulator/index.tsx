@@ -563,25 +563,20 @@ export const BigManipulator = () => {
     dropoff_points,
   } = data;
 
-  // Local state for ProgressBar value management
   const [progressValue, setProgressValue] = useState(0);
   const [progressKey, setProgressKey] = useState(0);
 
-  // Effect to control animation with CSS transitions
   useEffect(() => {
     const isTaskActive = current_task !== 'IDLE' && current_task !== 'NO TASK';
 
     if (isTaskActive) {
-      // Start new task - reset progress and force component recreation
       setProgressValue(0);
       setProgressKey((prev) => prev + 1);
 
-      // Use setTimeout to trigger CSS transition after component recreation
       setTimeout(() => {
         setProgressValue(100);
       }, 10);
     } else {
-      // Task completed or idle - reset progress
       setProgressValue(0);
       setProgressKey((prev) => prev + 1);
     }
@@ -682,7 +677,6 @@ export const BigManipulator = () => {
             </Box>
           </Section>
 
-          {/*
           <Section>
             <Stack>
               <Stack.Item lineHeight="1.8" grow>
@@ -710,7 +704,7 @@ export const BigManipulator = () => {
               </Stack.Item>
             </Stack>
           </Section>
-*/}
+
           <PointSection
             title="Pickup Points"
             points={pickup_points}

@@ -27,7 +27,7 @@
 
 	var/starting_index = current_index
 
-	while(current_index <= starting_index)
+	while(TRUE)
 		var/datum/interaction_point/point = points[current_index]
 
 		if(point && availability_check.Invoke(point, target, transfer_type))
@@ -35,6 +35,9 @@
 			return point
 
 		advance_index(length(points))
+
+		if(current_index == starting_index)
+			break
 
 	return null
 

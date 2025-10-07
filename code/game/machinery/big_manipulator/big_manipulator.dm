@@ -759,7 +759,12 @@
 			return TRUE
 
 		if("cycle_dropoff_point_interaction")
+			var/old_mode = target_point.interaction_mode
 			target_point.interaction_mode = cycle_value(target_point.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
+
+			if(old_mode != target_point.interaction_mode)
+				update_point_priorities(target_point)
+
 			return TRUE
 
 		if("toggle_filter_skip")
@@ -917,6 +922,24 @@
 	for(var/image/hud_image in hud_points)
 		qdel(hud_image)
 	hud_points.Cut()
+
+/obj/machinery/big_manipulator/proc/update_point_priorities(datum/interaction_point/point)
+	if(!point)
+		return
+
+	point.interaction_priorities.Cut()
+
+	switch(point.interaction_mode)
+		if(INTERACT_DROP, INTERACT_THROW)
+			point.interaction_priorities += new /datum/manipulator_priority/drop/on_floor()
+			point.interaction_priorities += new /datum/manipulator_priority/drop/in_storage()
+		if(INTERACT_USE)
+			point.interaction_priorities += new /datum/manipulator_priority/interact/with_living()
+			point.interaction_priorities += new /datum/manipulator_priority/interact/with_structure()
+			point.interaction_priorities += new /datum/manipulator_priority/interact/with_machinery()
+			point.interaction_priorities += new /datum/manipulator_priority/interact/with_items()
+
+	SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/update_strategies()
 	pickup_strategy = create_strategy(pickup_tasking)

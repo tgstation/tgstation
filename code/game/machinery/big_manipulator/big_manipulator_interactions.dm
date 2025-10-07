@@ -286,11 +286,15 @@
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	var/destination_turf = destination_point.interaction_turf
 
-	if(!obj_resolve || !monkey_resolve || !destination_turf) // if something that's supposed to be here is not here anymore
+	if(!obj_resolve || QDELETED(obj_resolve) || obj_resolve.loc != src)
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return FALSE
 
-	if(!(obj_resolve.loc == src && monkey_resolve.loc == src)) // if we don't hold the said item or the monkey isn't buckled
+	if(!monkey_resolve || !destination_turf)
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
+		return FALSE
+
+	if(!(monkey_resolve.loc == src))
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return FALSE
 
@@ -300,6 +304,8 @@
 	if(isnull(type_to_use))
 		check_for_cycle_end_drop(destination_point, FALSE)
 		return FALSE
+
+	var/original_loc = held_item.loc
 
 	monkey_resolve.put_in_active_hand(held_item)
 	if(held_item.GetComponent(/datum/component/two_handed))
@@ -313,14 +319,34 @@
 	monkey_resolve.combat_mode = FALSE
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
-	held_item.forceMove(src)
 
+	if(QDELETED(held_item) || !held_item)
+		held_object = null
+		manipulator_arm.update_claw(null)
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
+		return TRUE
+
+	if(held_item.loc != monkey_resolve && held_item.loc != original_loc)
+		held_object = null
+		manipulator_arm.update_claw(null)
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
+		return TRUE
+
+	held_item.forceMove(src)
 	check_for_cycle_end_drop(destination_point, TRUE)
 
 /// Checks what should we do with the `held_object` after `USE`-ing it.
 /obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/interaction_point/drop_point, item_used = TRUE)
 	var/obj/obj_resolve = held_object?.resolve()
 	var/turf/drop_turf = drop_point.interaction_turf
+
+	if(!obj_resolve || obj_resolve.loc != src)
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
+		return
+
+	if(QDELETED(obj_resolve))
+		finish_manipulation(TRANSFER_TYPE_DROPOFF)
+		return
 
 	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used)
 		obj_resolve.forceMove(drop_turf)
@@ -333,7 +359,10 @@
 		return
 
 	if(item_used)
-		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME)
+		if(!obj_resolve || obj_resolve.loc != src)
+			finish_manipulation(TRANSFER_TYPE_DROPOFF)
+			return
+		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME * 2)
 		return
 
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
