@@ -44,7 +44,7 @@
 	SIGNAL_HANDLER
 
 	var/atom/target = source.ai_controller?.blackboard[target_key]
-	if (QDELETED(target) || !isliving(target))
+	if (QDELETED(target))
 		return
 
 	if (!isnull(aggro_overlay) || !isnull(aggro_state))
@@ -66,9 +66,9 @@
 /datum/component/appearance_on_aggro/proc/on_icon_state_updated(mob/living/source)
 	SIGNAL_HANDLER
 	if (source.stat != DEAD)
-		source.icon_state = isliving(source.ai_controller?.blackboard[target_key]) ? aggro_state : initial(source.icon_state)
+		source.icon_state = source.ai_controller?.blackboard_key_exists(target_key) ? aggro_state : initial(source.icon_state)
 
 /datum/component/appearance_on_aggro/proc/on_overlays_updated(mob/living/basic/source, list/overlays)
 	SIGNAL_HANDLER
-	if(isliving(source.ai_controller?.blackboard[target_key]) && source.stat != DEAD)
+	if(source.ai_controller?.blackboard_key_exists(target_key) && source.stat != DEAD)
 		overlays += aggro_overlay
