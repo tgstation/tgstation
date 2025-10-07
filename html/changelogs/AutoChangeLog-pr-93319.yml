@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed certain broken icons in the outfit editor, stripping menu and multiple others"
