@@ -1,0 +1,4 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - map: "CATWALK - Xenobio slime chamber door access fixed, previously any slimes could just open it, also added air flaps."
