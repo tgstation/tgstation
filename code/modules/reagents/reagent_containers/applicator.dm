@@ -31,6 +31,7 @@
 	if(!canconsume(target_mob, user))
 		return ITEM_INTERACT_BLOCKING
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(target_mob == user)
 		target_mob.visible_message(span_notice("[user] attempts to [apply_method] [src]."))
 		if(self_delay)

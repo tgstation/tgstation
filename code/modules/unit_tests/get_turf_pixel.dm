@@ -1,8 +1,8 @@
 ///ensures that get_turf_pixel() returns turfs within the bounds of the map,
 ///even when called on a movable with its sprite out of bounds
-/datum/unit_test/get_turf_pixel
+/datum/unit_test/maptest_get_turf_pixel
 
-/datum/unit_test/get_turf_pixel/Run()
+/datum/unit_test/maptest_get_turf_pixel/Run()
 	//we need long larry to peek over the top edge of the earth
 	var/turf/north = locate(1, world.maxy, run_loc_floor_bottom_left.z)
 

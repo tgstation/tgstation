@@ -46,6 +46,7 @@
 					latches = "quad_latch" // like winning the lottery, but worse
 	update_appearance()
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+	AddElement(/datum/element/cuffable_item)
 
 /obj/item/storage/toolbox/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (user.combat_mode || !user.has_hand_for_held_index(user.get_inactive_hand_index()))

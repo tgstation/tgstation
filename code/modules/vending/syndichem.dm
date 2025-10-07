@@ -19,3 +19,8 @@
 	)
 	product_slogans = "It's not pyromania if you're getting paid!;You smell that? Plasma, son. Nothing else in the world smells like that.;I love the smell of Plasma in the morning."
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/syndichem
+
+/obj/item/vending_refill/syndichem
+	machine_name = "SyndiChem"
+	icon_state = "refill_syndichem"

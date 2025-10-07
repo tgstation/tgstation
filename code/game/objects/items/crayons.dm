@@ -44,6 +44,8 @@
 	var/crayon_color = "red"
 	/// Current paint colour
 	var/paint_color = COLOR_RED
+	///How strong the outline should be when drawing around something.
+	var/outline_strength = 0.5
 
 	/// Contains chosen symbol to draw
 	var/drawtype
@@ -598,7 +600,26 @@
 
 	if(can_use_on(interacting_with, user, modifiers))
 		return use_on(interacting_with, user, modifiers)
-	return NONE
+
+	if(!ishuman(interacting_with) || user.combat_mode)
+		return NONE
+
+	var/mob/living/carbon/human/pwned_human = interacting_with
+	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+		return NONE
+
+	interacting_with.balloon_alert(user, "drawing outline...")
+	if(!do_after(user, DRAW_TIME, target = pwned_human))
+		return ITEM_INTERACT_FAILURE
+	if(!use_charges(user, 1))
+		return ITEM_INTERACT_FAILURE
+
+	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
+	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", null, null, "A vaguely [pwned_human] shaped body outline.", outline_strength)
+	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z)
+	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w)
+	chalk_line.create_outline(pwned_human, add_mouse_opacity = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/crayon/get_writing_implement_details()
 	return list(
@@ -672,30 +693,7 @@
 	crayon_color = "white"
 	reagent_contents = list(/datum/reagent/consumable/nutriment = 0.5,  /datum/reagent/colorful_reagent/powder/white/crayon = 1.5)
 	dye_color = DYE_WHITE
-
-/obj/item/toy/crayon/white/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	/// Wherein, we draw a chalk body outline vaguely around the dead or "dead" mob
-	if(!ishuman(interacting_with) || user.combat_mode)
-		return ..()
-
-	var/mob/living/carbon/human/pwned_human = interacting_with
-
-	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
-		balloon_alert_to_viewers("FEEDING TIME")
-		return ..()
-
-	balloon_alert_to_viewers("drawing outline...")
-	if(!do_after(user, DRAW_TIME, target = pwned_human, max_interact_count = 4))
-		return NONE
-	if(!use_charges(user, 1))
-		return NONE
-
-	var/decal_rotation = GET_LYING_ANGLE(pwned_human) - 90
-	var/obj/effect/decal/cleanable/crayon/chalk_line = new(get_turf(pwned_human), paint_color, "body", "chalk outline", decal_rotation, null, "A vaguely [pwned_human] shaped outline of a body.")
-	to_chat(user, span_notice("You draw a chalk outline around [pwned_human]."))
-	chalk_line.pixel_y = (pwned_human.pixel_y + pwned_human.pixel_z) + rand(-2, 2)
-	chalk_line.pixel_x = (pwned_human.pixel_x + pwned_human.pixel_w) + rand(-1, 1)
-	return ITEM_INTERACT_SUCCESS
+	outline_strength = 1
 
 /obj/item/toy/crayon/mime
 	name = "mime crayon"

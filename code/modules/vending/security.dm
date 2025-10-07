@@ -37,7 +37,6 @@
 	default_price = PAYCHECK_CREW
 	extra_price = PAYCHECK_COMMAND * 1.5
 	payment_department = ACCOUNT_SEC
-	allow_custom = TRUE
 
 /obj/machinery/vending/security/pre_throw(obj/item/thrown_item)
 	if(isgrenade(thrown_item))

@@ -112,7 +112,7 @@
 	if (QDELETED(src))
 		return
 	. = ..()
-	if (isnull(blood_DNA_to_add))
+	if (isnull(blood_DNA_to_add) || !length(blood_DNA_to_add))
 		return .
 	if (!islist(blood_DNA_to_add))
 		CRASH("add_blood_DNA on [src] ([type]) has been passed a non-list blood_DNA_to_add ([blood_DNA_to_add])!")

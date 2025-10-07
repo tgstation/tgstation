@@ -46,8 +46,7 @@
 
 /mob/living/basic/ghost/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/ectoplasm)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/ectoplasm)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
 

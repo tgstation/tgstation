@@ -389,7 +389,7 @@
 /atom/proc/get_master_material()
 	if(!length(custom_materials))
 		return null
-	return length(custom_materials) ? GET_MATERIAL_REF(custom_materials[1]) : null
+	return GET_MATERIAL_REF(cached_materials[1]) //materials are sorted by amount, the first is always the main one
 
 /**
  * Gets the total amount of materials in this atom.

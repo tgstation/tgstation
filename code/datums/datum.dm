@@ -334,11 +334,13 @@
 	var/list/copied_parameters = params.Copy()
 	copied_parameters["name"] = name
 	copied_parameters["priority"] = priority
-	for (var/list/filter_info as anything in filter_data)
-		if (filter_info["name"] == name)
-			filter_data -= filter_info
-			filter_cache -= name
-			break
+	for (var/index in 1 to length(filter_data))
+		var/list/filter_info = filter_data[index]
+		if (filter_info["name"] != name)
+			continue
+		filter_data -= list(filter_info)
+		filter_cache -= filter_cache[index]
+		break
 
 	BINARY_INSERT_DEFINE(list(copied_parameters), filter_data, SORT_VAR_NO_TYPE, copied_parameters, SORT_PRIORITY_INDEX, COMPARE_KEY)
 
@@ -485,6 +487,12 @@
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	return atom_cast.filters[name]
+
+/// Returns filter data associated with the passed key
+/datum/proc/get_filter_data(name)
+	for (var/list/filter_info as anything in filter_data)
+		if (filter_info["name"] == name)
+			return filter_info.Copy()
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names, update = TRUE)
