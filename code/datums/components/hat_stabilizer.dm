@@ -153,7 +153,7 @@
 	if(attached_hat)
 		movable_parent.balloon_alert(user, "hat already attached!")
 		return
-	if(istype(hitting_item, /obj/item/clothing))
+	if(isclothing(hitting_item))
 		var/obj/item/clothing/hat = hitting_item
 		if(hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
 			movable_parent.balloon_alert(user, "invalid hat!")
@@ -172,12 +172,12 @@
 	if (!isnull(user))
 		movable_parent.balloon_alert(user, "hat attached")
 
-	if (!istype(parent, /obj/item/clothing))
+	if (!isclothing(parent))
 		movable_parent.update_appearance()
 		return
 
 	var/obj/item/clothing/apparel = parent
-	if(istype(attached_hat, /obj/item/clothing))
+	if(isclothing(attached_hat))
 		var/obj/item/clothing/realhat = attached_hat
 		apparel.attach_clothing_traits(realhat.clothing_traits)
 		apparel.visor_flags_cover |= realhat.visor_flags_cover
@@ -222,14 +222,14 @@
 	else
 		movable_parent.balloon_alert_to_viewers("the hat falls to the floor!")
 
-	if (!istype(parent, /obj/item/clothing))
+	if (!isclothing(parent))
 		attached_hat = null
 		movable_parent.update_appearance()
 		return
 
 	var/former_hat = attached_hat
 	var/obj/item/clothing/apparel = parent
-	if(istype(attached_hat, /obj/item/clothing))
+	if(isclothing(attached_hat))
 		var/obj/item/clothing/truehat = attached_hat
 		apparel.detach_clothing_traits(truehat.clothing_traits)
 	apparel.flags_cover = former_flags
