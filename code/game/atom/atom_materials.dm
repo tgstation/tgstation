@@ -29,9 +29,20 @@
 /atom/proc/initialize_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(multiplier != 1)
-		materials = materials.Copy() //avoid editing the list that was originally used as argument if it's ever going to be used again.
+		materials = materials.Copy() //avoid editing the original list since it may be cached somewhere (likely in the materials subsystem).
 		for(var/current_material in materials)
 			materials[current_material] *= multiplier
+
+	//Let's be sure that there are absolutely no materials in the list that aren't positive.
+	var/list/nonpos_mats
+	for(var/mat in materials)
+		if(materials[mat] <= 0)
+			LAZYADD(nonpos_mats, "[mat] = [materials[mat]]")
+			materials -= mat
+	if(length(nonpos_mats))
+		stack_trace("materials with non-positive values found in [type]: [english_list(nonpos_mats, and_text = ", ")]")
+		if(!length(materials))
+			return
 
 	sortTim(materials, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	apply_material_effects(materials)
@@ -39,6 +50,7 @@
 ///proc responsible for applying material effects when setting materials.
 /atom/proc/apply_material_effects(list/materials)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(material_flags & MATERIAL_EFFECTS)
 		var/list/material_effects = get_material_effects_list(materials)
 		finalize_material_effects(material_effects)
@@ -375,19 +387,9 @@
  * Gets the most common material in the object.
  */
 /atom/proc/get_master_material()
-	var/list/cached_materials = custom_materials
-	if(!length(cached_materials))
+	if(!length(custom_materials))
 		return null
-
-	var/most_common_material = null
-	var/max_amount = 0
-	for(var/material in cached_materials)
-		if(cached_materials[material] > max_amount)
-			most_common_material = material
-			max_amount = cached_materials[material]
-
-	if(most_common_material)
-		return GET_MATERIAL_REF(most_common_material)
+	return length(custom_materials) ? GET_MATERIAL_REF(custom_materials[1]) : null
 
 /**
  * Gets the total amount of materials in this atom.
