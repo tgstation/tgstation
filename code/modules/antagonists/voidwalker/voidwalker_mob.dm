@@ -18,13 +18,17 @@
 
 	obj_damage = 15
 
+	sharpness = SHARP_EDGED
+	wound_bonus = 10
+
 	melee_damage_lower = 12
 	melee_damage_upper = 15
 	melee_attack_cooldown = CLICK_CD_MELEE
 
-	melee_damage_type = OXY
+	melee_damage_type = BRUTE
 
 	attack_sound = 'sound/items/weapons/shrink_hit.ogg'
+
 	attack_vis_effect = ATTACK_EFFECT_VOID
 
 	faction = list(FACTION_CARP)
@@ -69,7 +73,7 @@
 	var/conversions_remaining = 2
 
 	/// Damage type we do for rightclicks
-	var/rclick_damage_type = BRUTE
+	var/rclick_damage_type = OXY
 	/// Can we speak?
 	var/can_speak = FALSE
 	/// Turf that our abilities rely on. VVing this automatically sets all the components and removes space dependency stuff if the new tile isnt space
@@ -259,7 +263,7 @@
 		CRASH("[victim] was instantly dumped after being voidwalker kidnapped due to a missing landmark!")
 	else
 		victim.heal_and_revive(90)
-		victim.adjustOxyLoss(-100, FALSE)
+		victim.adjustBruteLoss(-100, FALSE)
 
 		conversions_remaining++
 
