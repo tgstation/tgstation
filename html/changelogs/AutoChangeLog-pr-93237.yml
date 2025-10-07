@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "The tgui window for reading books is no longer compressed, and has the same dimensions as the window for reading paper."
