@@ -16420,6 +16420,10 @@
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/filled/mid_joiner,
+/obj/item/folder/white{
+	pixel_x = -1;
+	pixel_y = 3
+	},
 /obj/item/assembly/timer{
 	pixel_x = -2;
 	pixel_y = 3
@@ -31491,6 +31495,7 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/multitool,
 /obj/item/stack/cable_coil{
 	pixel_x = -12
 	},
@@ -60806,12 +60811,9 @@
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
-/obj/item/folder/white{
-	pixel_x = -1;
-	pixel_y = 3
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "rxH" = (
@@ -64663,12 +64665,13 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/item/clothing/head/utility/welding,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "sFU" = (
