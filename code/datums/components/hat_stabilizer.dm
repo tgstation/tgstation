@@ -2,7 +2,7 @@
 /datum/component/hat_stabilizer
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/// Currently "stored" hat. No armor or function will be inherited, only the icon and cover flags.
-	var/obj/item/clothing/head/attached_hat
+	var/obj/item/attached_hat
 	/// If TRUE, the hat will fall to the ground when the owner does so. It can also be shot off.
 	var/loose_hat = FALSE
 	/// Original cover flags for the helmet, before a hat is placed
@@ -147,24 +147,24 @@
 	SIGNAL_HANDLER
 
 	var/atom/movable/movable_parent = parent
-	if(!istype(hitting_item, /obj/item/clothing/head))
+	if(!(hitting_item.slot_flags & ITEM_SLOT_HEAD))
 		return
 
 	if(attached_hat)
 		movable_parent.balloon_alert(user, "hat already attached!")
 		return
+	if(istype(hitting_item, /obj/item/clothing))
+		var/obj/item/clothing/hat = hitting_item
+		if(hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
+			movable_parent.balloon_alert(user, "invalid hat!")
+			return
 
-	var/obj/item/clothing/hat = hitting_item
-	if(hat.clothing_flags & STACKABLE_HELMET_EXEMPT)
-		movable_parent.balloon_alert(user, "invalid hat!")
+	if(!user.transferItemToLoc(hitting_item, parent, force = FALSE, silent = TRUE))
 		return
 
-	if(!user.transferItemToLoc(hat, parent, force = FALSE, silent = TRUE))
-		return
+	attach_hat(hitting_item, user)
 
-	attach_hat(hat, user)
-
-/datum/component/hat_stabilizer/proc/attach_hat(obj/item/clothing/hat, mob/user)
+/datum/component/hat_stabilizer/proc/attach_hat(obj/item/hat, mob/user)
 	var/atom/movable/movable_parent = parent
 	attached_hat = hat
 	RegisterSignal(hat, COMSIG_MOVABLE_MOVED, PROC_REF(on_hat_movement))
@@ -177,11 +177,13 @@
 		return
 
 	var/obj/item/clothing/apparel = parent
-	apparel.attach_clothing_traits(attached_hat.clothing_traits)
+	if(istype(attached_hat, /obj/item/clothing))
+		var/obj/item/clothing/realhat = attached_hat
+		apparel.attach_clothing_traits(realhat.clothing_traits)
+		apparel.visor_flags_cover |= realhat.visor_flags_cover
 	former_flags = apparel.flags_cover
 	former_visor_flags = apparel.visor_flags_cover
 	apparel.flags_cover |= attached_hat.flags_cover
-	apparel.visor_flags_cover |= attached_hat.visor_flags_cover
 	apparel.update_appearance()
 
 	if (ismob(apparel.loc))
@@ -227,7 +229,9 @@
 
 	var/former_hat = attached_hat
 	var/obj/item/clothing/apparel = parent
-	apparel.detach_clothing_traits(attached_hat.clothing_traits)
+	if(istype(attached_hat, /obj/item/clothing))
+		var/obj/item/clothing/truehat = attached_hat
+		apparel.detach_clothing_traits(truehat.clothing_traits)
 	apparel.flags_cover = former_flags
 	apparel.visor_flags_cover = former_visor_flags
 	apparel.update_appearance()
