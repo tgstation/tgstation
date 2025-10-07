@@ -266,7 +266,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/tether_anchor/attack_hand_secondary(mob/user, list/modifiers)
-	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
+	if (!can_interact(user) || !IsReachableBy(user) || !isturf(loc))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
@@ -289,10 +289,10 @@
 		reset_pixel_pos = FALSE
 
 /obj/item/tether_anchor/mouse_drop_receive(atom/target, mob/user, params)
-	if (!can_interact(user) || !user.CanReach(src) || !isturf(loc))
+	if (!can_interact(user) || !IsReachableBy(user) || !isturf(loc))
 		return
 
-	if (!isliving(target) || !target.CanReach(src))
+	if (!isliving(target) || !IsReachableBy(target))
 		return
 
 	if(HAS_TRAIT_FROM(target, TRAIT_TETHER_ATTACHED, REF(src)))

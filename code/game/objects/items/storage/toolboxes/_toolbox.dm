@@ -100,7 +100,7 @@
 	picked_tool.melee_attack_chain(user, interacting_with, modifiers)
 	current_interactions -= 1
 
-	if (QDELETED(picked_tool) || picked_tool.loc != user || !user.CanReach(picked_tool))
+	if (QDELETED(picked_tool) || picked_tool.loc != user || !picked_tool.IsReachableBy(user))
 		current_interactions = 0
 		return
 
