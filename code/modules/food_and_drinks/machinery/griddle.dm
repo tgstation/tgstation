@@ -41,6 +41,9 @@
 		return
 	variant = rand(1,3)
 
+/obj/machinery/griddle/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || (contained in griddled_objects)
+
 /obj/machinery/griddle/proc/on_expose_reagent(atom/parent_atom, datum/reagent/exposing_reagent, reac_volume, methods)
 	SIGNAL_HANDLER
 
@@ -141,7 +144,6 @@
 /obj/machinery/griddle/proc/AddToGrill(obj/item/item_to_grill, mob/user)
 	vis_contents += item_to_grill
 	griddled_objects += item_to_grill
-	item_to_grill.flags_1 |= IS_ONTOP_1
 	item_to_grill.vis_flags |= VIS_INHERIT_PLANE
 
 	SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_PLACED, user)
@@ -155,7 +157,6 @@
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/ungrill)
 	SIGNAL_HANDLER
-	ungrill.flags_1 &= ~IS_ONTOP_1
 	ungrill.vis_flags &= ~VIS_INHERIT_PLANE
 	griddled_objects -= ungrill
 	vis_contents -= ungrill

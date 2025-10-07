@@ -232,7 +232,7 @@
 	/// We pick up a number of slimes equal to the rating of the matter bin
 	var/slimes_picked = 0
 	for(var/mob/living/basic/slime/slime in range(1,src))
-		if(!CanReach(slime)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
+		if(!slime.IsReachableBy(src)) //don't take slimes behind glass panes or somesuch; also makes it ignore slimes inside the processor
 			continue
 		if(slime.stat)
 			var/datum/food_processor_process/recipe = PROCESSOR_SELECT_RECIPE(slime)
