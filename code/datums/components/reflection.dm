@@ -149,7 +149,7 @@
 
 	var/atom/movable/reflection = LAZYACCESS(reflected_movables, target)
 	LAZYREMOVE(reflected_movables, target)
-	if(reflection)
+	if(!QDELETED(reflection))
 		qdel(reflection)
 	UnregisterSignal(target, check_reflect_signals)
 	UnregisterSignal(target, COMSIG_QDELETING)
