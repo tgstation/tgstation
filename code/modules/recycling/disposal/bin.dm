@@ -172,6 +172,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 	var/rat_cap = CONFIG_GET(number/ratcap)
 	if (LAZYLEN(SSmobs.cheeserats) < rat_cap && prob(33))
 		var/mob/living/basic/mouse/new_subject = new(king.drop_location())
+		ADD_TRAIT(new_subject, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 		playsound(new_subject, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', 100)
 		visible_message(span_warning("[new_subject] climbs out of [src]!"))
 
