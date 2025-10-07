@@ -13,7 +13,7 @@
 	test_alert.linked = src
 	test_alert.Click(dummy)
 	if(!was_clicked)
-		TEST_FAIL(was_clicked, "Screen alert was not clickable.")
+		TEST_FAIL("Screen alert was not clickable.")
 
 	usr = old_usr
 
