@@ -86184,6 +86184,7 @@
 /obj/effect/turf_decal/siding/yellow,
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
 /obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,

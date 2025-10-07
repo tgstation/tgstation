@@ -6616,6 +6616,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/item/multitool,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/head/utility/welding,
 /obj/machinery/light/directional/north,
@@ -10039,6 +10040,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	pixel_y = 4
 	},
+/obj/item/assembly/igniter,
 /obj/item/clothing/glasses/science,
 /obj/machinery/requests_console/directional/west{
 	name = "Pharmacy Requests Console";
