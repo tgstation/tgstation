@@ -593,9 +593,9 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "dI" = (
-/obj/effect/landmark/start,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/obj/item/clothing/glasses/hud/diagnostic,
+/turf/open/floor/plating,
+/area/station/construction)
 "dJ" = (
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
@@ -618,12 +618,9 @@
 /turf/open/floor/iron,
 /area/station/construction)
 "dN" = (
-/obj/machinery/navbeacon{
-	location = "1-Southwest";
-	codes_txt = "patrol;next_patrol=2-Northwest"
-	},
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/station/construction)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -944,6 +941,36 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"fv" = (
+/obj/structure/table,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/turf/open/floor/plating,
+/area/station/construction)
+"fA" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "fB" = (
 /obj/machinery/status_display/supply,
 /turf/closed/wall/r_wall,
@@ -1064,6 +1091,13 @@
 /obj/machinery/camera/directional/north,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"go" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "gv" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
@@ -1111,6 +1145,11 @@
 /obj/item/paper/guides/jobs/security/labor_camp,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"gY" = (
+/obj/machinery/big_manipulator,
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/plating,
+/area/station/construction)
 "hm" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -1153,6 +1192,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"iK" = (
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/turf/open/floor/plating,
+/area/station/construction)
 "jg" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L1"
@@ -1196,6 +1240,13 @@
 /obj/item/melee/energy/axe,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"jW" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating,
+/area/station/construction)
 "jZ" = (
 /obj/machinery/sleeper/syndie/fullupgrade,
 /obj/effect/turf_decal/tile/blue{
@@ -1237,6 +1288,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"lz" = (
+/obj/structure/table,
+/obj/item/knife,
+/turf/open/floor/plating,
+/area/station/construction)
 "mb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1270,6 +1326,12 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
+"nD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/big_manipulator,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "nT" = (
@@ -1394,13 +1456,30 @@
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
 "qR" = (
-/obj/effect/landmark/start,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Center"
-	},
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/obj/structure/table,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/turf/open/floor/plating,
+/area/station/construction)
 "rh" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -1535,6 +1614,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"va" = (
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/plating,
+/area/station/construction)
 "vm" = (
 /mob/living/circuit_drone,
 /turf/open/floor/iron/dark,
@@ -1649,6 +1732,12 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/station/science/explab)
+"xf" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
+/obj/structure/holosign/barrier/atmos,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "xq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -1656,6 +1745,27 @@
 /obj/structure/transit_tube/station/dispenser/reverse/flipped,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"xt" = (
+/obj/structure/table,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/obj/item/food/meat/slab,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "xv" = (
 /obj/machinery/vending/hydroseeds{
 	all_products_free = 1
@@ -2021,6 +2131,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"Gv" = (
+/obj/structure/table,
+/obj/item/knife,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "GC" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
@@ -2068,6 +2183,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"Hl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/open/floor/plating,
+/area/station/construction)
 "HW" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2546,6 +2665,10 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/station/medical/medbay)
+"Sk" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/heater,
+/turf/open/floor/plating,
+/area/station/construction)
 "SC" = (
 /obj/structure/table/reinforced,
 /obj/item/bitrunning_debug,
@@ -2618,6 +2741,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
+"Uz" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/station/construction)
 "Va" = (
 /obj/machinery/power/smes/full,
 /obj/effect/turf_decal/stripes/line{
@@ -2680,6 +2808,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"Xr" = (
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "Xy" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2737,9 +2869,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "XZ" = (
-/obj/effect/landmark/blobstart,
-/turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/obj/structure/holosign/barrier/atmos,
+/turf/open/floor/plating,
+/area/station/construction)
 "Yd" = (
 /turf/open/floor/iron,
 /area/station/cargo/bitrunning/den)
@@ -2775,6 +2907,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/medical/medbay)
+"YK" = (
+/obj/item/clothing/glasses/hud/diagnostic,
+/turf/open/floor/iron,
+/area/station/commons/storage/primary)
 "YL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6373,14 +6509,14 @@ FA
 Hb
 Es
 dn
+fv
 dn
+lz
+dI
+dI
+qR
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+lz
 dn
 dL
 cN
@@ -6465,13 +6601,13 @@ bE
 ef
 cY
 dn
+XZ
+gY
 dn
 dn
 dn
-dn
-dn
-dn
-dn
+XZ
+gY
 dn
 dn
 dL
@@ -6556,15 +6692,15 @@ QV
 bE
 cN
 bV
+XZ
+Uz
+XZ
+dN
 dn
-dn
-dn
-dn
-dn
-dn
-dn
-dn
-dn
+XZ
+Uz
+XZ
+dN
 dn
 dL
 cN
@@ -6649,15 +6785,15 @@ bE
 cN
 ZW
 dn
-dn
+jW
 dn
 dn
 Pe
 dn
+jW
 dn
 dn
-dn
-dn
+Pe
 dL
 cN
 fI
@@ -6741,13 +6877,13 @@ hp
 cN
 PB
 qf
+Hl
+Sk
 dn
 dn
-dn
-dn
-dn
-dn
-dn
+qf
+Hl
+Sk
 dn
 dn
 dZ
@@ -6832,16 +6968,16 @@ QV
 bE
 cN
 vs
+iK
+Hl
+Sk
 dn
+va
+iK
+Hl
+Sk
 dn
-dn
-dn
-dn
-dn
-dn
-dn
-dn
-dn
+va
 dL
 cN
 dd
@@ -6924,14 +7060,14 @@ QV
 bE
 cN
 yL
+iK
+Hl
+Sk
 dn
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+iK
+Hl
+Sk
 dn
 dn
 dL
@@ -7016,14 +7152,14 @@ QV
 bE
 ef
 cY
+iK
+Hl
+Sk
 dn
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+iK
+Hl
+Sk
 dn
 dn
 dL
@@ -7108,14 +7244,14 @@ QV
 bE
 ef
 cY
+iK
+Hl
+Sk
 dn
 dn
-dn
-dn
-dn
-dn
-dn
-dn
+iK
+Hl
+Sk
 dn
 dn
 dL
@@ -7576,7 +7712,7 @@ dJ
 dJ
 dJ
 dJ
-dN
+dJ
 dJ
 dJ
 cS
@@ -7664,10 +7800,10 @@ dq
 dJ
 dJ
 dJ
-dI
 dJ
 dJ
-dJ
+xf
+xt
 dJ
 dJ
 gi
@@ -7756,12 +7892,12 @@ dr
 dJ
 dJ
 dJ
-dI
 dJ
 dJ
+nD
+go
 dJ
-dJ
-dJ
+YK
 nT
 cS
 fO
@@ -7848,12 +7984,12 @@ ds
 dJ
 dJ
 dJ
-dI
 dJ
 dJ
+fA
+Gv
 dJ
-dJ
-dJ
+Xr
 jU
 cS
 fO
@@ -7940,9 +8076,9 @@ dt
 dJ
 dD
 dJ
-qR
 dJ
-XZ
+dJ
+dJ
 dJ
 dJ
 dJ
@@ -8032,7 +8168,7 @@ du
 dJ
 dJ
 dJ
-dI
+dJ
 dJ
 dJ
 dJ
@@ -8124,7 +8260,7 @@ dv
 dJ
 dJ
 dJ
-dI
+dJ
 dJ
 dJ
 dJ
@@ -8216,7 +8352,7 @@ dw
 dJ
 dJ
 dJ
-dI
+dJ
 dJ
 dJ
 dJ

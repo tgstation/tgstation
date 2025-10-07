@@ -632,6 +632,7 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
+		point_data["throw_range"] = throw_range
 
 		var/list/sorted_priorities_pick = point.get_sorted_priorities()
 		var/num_priorities_pick = length(sorted_priorities_pick)
@@ -664,6 +665,7 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
+		point_data["throw_range"] = throw_range
 
 		var/list/sorted_priorities_drop = point.get_sorted_priorities()
 		var/num_priorities_drop = length(sorted_priorities_drop)
@@ -799,8 +801,8 @@
 			target_point.overflow_status = cycle_value(target_point.overflow_status, list(POINT_OVERFLOW_ALLOWED, POINT_OVERFLOW_FILTERS, POINT_OVERFLOW_HELD, POINT_OVERFLOW_FORBIDDEN))
 			return TRUE
 
-		if("set_throw_range")
-			target_point.throw_range = clamp(text2num(value), 1, 7)
+		if("cycle_throw_range")
+			target_point.throw_range = cycle_value(target_point.throw_range, list(1, 2, 3, 4, 5, 6, 7))
 			return TRUE
 
 		if("add_atom_filter_from_held")

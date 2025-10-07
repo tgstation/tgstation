@@ -19,6 +19,7 @@ export type InteractionPoint = {
   worker_use_rmb: BooleanLike;
   worker_combat_mode: BooleanLike;
   settings_list: PrioritySettings[];
+  throw_range: number;
 };
 
 export interface ManipulatorData {

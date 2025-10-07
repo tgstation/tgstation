@@ -464,6 +464,16 @@ const PointSection = (props: {
                         }
                         tooltip="Toggle using Combat Mode for interactions"
                       />
+                      {editingPoint.mode.toUpperCase() === 'THROW' && (
+                        <ConfigRow
+                          label="Throw Range"
+                          content={`${editingPoint.throw_range} TILES`}
+                          onClick={() =>
+                            adjustPoint(editingPoint.id, 'cycle_throw_range')
+                          }
+                          tooltip="Cycle throwing range"
+                        />
+                      )}
                     </>
                   )}
                 </Table>
