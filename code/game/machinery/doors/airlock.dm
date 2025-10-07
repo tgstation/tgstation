@@ -164,7 +164,7 @@
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	return .
 
-/obj/machinery/door/airlock/Initialize(mapload, /mob/user)
+/obj/machinery/door/airlock/Initialize(mapload)
 	if(glass)
 		airlock_material = "glass"
 	. = ..()
