@@ -9,9 +9,9 @@
 	var/old_usr = usr // Click still relies on usr so let's not mess this up
 	usr = dummy
 
-	var/atom/movable/screen/alert/test_alert = dummy.throw_alert(TRAIT_SOURCE_UNIT_TESTS, /atom/movable/screen/alert/test_alert)
-	test_alert.linked = src
-	test_alert.Click()
+	var/atom/movable/screen/alert/test_alert/clickme = dummy.throw_alert(TRAIT_SOURCE_UNIT_TESTS, /atom/movable/screen/alert/test_alert)
+	clickme.linked = src
+	clickme.Click()
 	if(!was_clicked)
 		TEST_FAIL("Screen alert was not clickable.")
 
