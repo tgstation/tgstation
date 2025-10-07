@@ -8,7 +8,6 @@
 		"ai_cam_upgrade",
 		"borg_syndicate_module",
 		"donksoft_refill",
-		"donksofttoyvendor",
 		"largecrossbow",
 		"mag_autorifle",
 		"mag_autorifle_ap",

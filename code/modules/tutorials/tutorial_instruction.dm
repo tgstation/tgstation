@@ -32,6 +32,7 @@
 	maptext_y = -2
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
+	appearance_flags = parent_type::appearance_flags | KEEP_APART
 
 /atom/movable/screen/tutorial_instruction_text/Initialize(mapload, datum/hud/hud_owner, message, client/client)
 	. = ..()

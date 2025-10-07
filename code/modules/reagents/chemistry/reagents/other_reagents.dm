@@ -138,10 +138,11 @@
 	var/cool_temp = cooling_temperature
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot && !isspaceturf(exposed_turf))
+	if(hotspot && !isspaceturf(exposed_turf)) // the water evaporates in an endothermic reaction
 		if(exposed_turf.air)
 			var/datum/gas_mixture/air = exposed_turf.air
-			air.temperature = max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp),TCMB)
+			air.temperature = min(max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp), T0C), air.temperature) // the outer min temperature check is for weird phenomena like freon combustion
+			exposed_turf.temperature = clamp(min(exposed_turf.temperature-(cool_temp*1000), exposed_turf.temperature/cool_temp), T20C, exposed_turf.temperature) // turfs normally don't go below T20C so I'll just clamp it to that in case of weird phenomena.
 			air.react(src)
 			qdel(hotspot)
 
@@ -657,11 +658,12 @@
 									"Your appendages begin morphing." = MUT_MSG_EXTENDED,
 									"You feel as though you're about to change at any moment!" = MUT_MSG_ABOUT2TURN)
 
-/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	if(!(affected_mob.dna?.species) || !(affected_mob.mob_biotypes & affected_biotype))
+	var/mob/living/carbon/affected_human = affected_mob
+	if(!(affected_human.dna?.species) || !(affected_human.mob_biotypes & affected_biotype))
 		return
 
 	if(SPT_PROB(5, seconds_per_tick))
@@ -677,13 +679,13 @@
 		for(var/i in mutationtexts)
 			if(mutationtexts[i] == filter)
 				pick_ur_fav += i
-		to_chat(affected_mob, span_warning("[pick(pick_ur_fav)]"))
+		to_chat(affected_human, span_warning("[pick(pick_ur_fav)]"))
 
 	if(current_cycle >= CYCLES_TO_TURN)
 		var/datum/species/species_type = race
-		affected_mob.set_species(species_type)
+		affected_human.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(affected_mob, span_warning("You've become \a [LOWER_TEXT(initial(species_type.name))]!"))
+		to_chat(affected_human, span_warning("You've become \a [LOWER_TEXT(initial(species_type.name))]!"))
 		return
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
@@ -740,20 +742,24 @@
 	taste_description = "grandma's gelatin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
-		to_chat(affected_mob, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
-		var/species_type = pick(subtypesof(/datum/species/jelly))
-		affected_mob.set_species(species_type)
-		holder.del_reagent(type)
-		return UPDATE_MOB_HEALTH
-	if(current_cycle >= CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
+/datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!ishuman(affected_mob))
+		return ..()
+	var/mob/living/carbon/affected_human = affected_mob
+	if(isjellyperson(affected_human))
 		var/datum/species/species_type = pick(subtypesof(race))
-		affected_mob.set_species(species_type)
+		affected_human.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(affected_mob, span_warning("You've become \a [initial(species_type.name)]!"))
+		to_chat(affected_human, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
 		return UPDATE_MOB_HEALTH
-	return ..()
+	if(current_cycle < CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
+		return ..()
+	var/datum/species/species_type = pick(subtypesof(race))
+	affected_human.set_species(species_type)
+	holder.del_reagent(type)
+	to_chat(affected_human, span_warning("You've become \a [initial(species_type.name)]!"))
+	return UPDATE_MOB_HEALTH
+
 
 /datum/reagent/mutationtoxin/golem
 	name = "Golem Mutation Toxin"
@@ -837,13 +843,14 @@
 	taste_description = "slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/mulligan/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if (!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	to_chat(affected_mob, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
-	affected_mob.visible_message("<b>[affected_mob]</b> suddenly transforms!")
-	randomize_human_normie(affected_mob)
+	var/mob/living/carbon/human/affected_human = affected_mob
+	to_chat(affected_human, span_boldwarning("You grit your teeth in pain as your body rapidly mutates!"))
+	affected_human.visible_message("<b>[affected_human]</b> suddenly transforms!")
+	randomize_human_normie(affected_human)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -1562,21 +1569,21 @@
 /datum/reagent/nitrous_oxide/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
 	if(!HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //IF the mob does not have a coagulant in them, we add the blood mess trait to make the bleed quicker
-		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+		ADD_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, type)
 
 /datum/reagent/nitrous_oxide/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, type)
 
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_drowsiness(4 SECONDS * REM * seconds_per_tick)
 
-	if(!HAS_TRAIT(affected_mob, TRAIT_BLOODY_MESS) && !HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //So long as they do not have a coagulant, if they did not have the bloody mess trait, they do now
-		ADD_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+	if(!HAS_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN) && !HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //So long as they do not have a coagulant, if they did not have the bloody mess trait, they do now
+		ADD_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, type)
 
 	else if(HAS_TRAIT(affected_mob, TRAIT_COAGULATING)) //if we find they now have a coagulant, we remove the trait
-		REMOVE_TRAIT(affected_mob, TRAIT_BLOODY_MESS, type)
+		REMOVE_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, type)
 
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 2
@@ -2527,7 +2534,7 @@
 /datum/reagent/glitter
 	name = "Glitter"
 	description = "The herpes of arts and crafts."
-	data = list("colors"=list(COLOR_WHITE = 100))
+	data = list("colors" = list(COLOR_WHITE = 100))
 	color = COLOR_WHITE //pure white
 	taste_description = "plastic"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2540,6 +2547,7 @@
 
 /datum/reagent/glitter/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
+
 	if(!istype(exposed_turf))
 		return
 	exposed_turf.spawn_glitter(data["colors"])
@@ -2548,7 +2556,7 @@
 	. = ..()
 
 	if(src.data["colors"])
-		color = pick(src.data["colors"])
+		color = pick_weight(src.data["colors"])
 	else
 		color = COLOR_WHITE
 
@@ -2561,32 +2569,25 @@
 		data["colors"] = blend_weighted_lists(mix_data["colors"], data["colors"], prop_current)
 
 	if(data["colors"])
-		color = pick(data["colors"])
+		color = pick_weight(data["colors"])
 	else
 		color = COLOR_WHITE
 
 /datum/reagent/glitter/random
-	name = "Unrandomised Randomised Glitter"
-	description = "You shouldn't be seeing this, please make an issue report describing how you found it."
-
-	var/list/possible_colors = list(
-		list(COLOR_WHITE = 100),
-		list("#ff8080" = 100),
-		list("#4040ff" = 100),
-		list("#ff5555" = 34, "#55ff55" = 33, "#5555ff" = 33),
+	name = "Glitter (Random)"
+	// The weighted list of random color choices that can be chosen upon spawning
+	var/static/list/possible_colors = list(
+		COLOR_WHITE = 25,
+		"#ff8080" = 25,
+		"#4040ff" = 25,
+		"#ff5555" = 8,
+		"#55ff55" = 9,
+		"#5555ff" = 8,
 	)
 
 /datum/reagent/glitter/random/on_new(data)
-	. = ..()
-
-	var/list/color_list = pick(possible_colors)
-
-	var/datum/reagents/our_holder = src.holder
-	var/our_volume = src.volume
-	var/list/our_data = list("colors" = color_list)
-
-	our_holder.remove_reagent(/datum/reagent/glitter/random, our_volume)
-	our_holder.add_reagent(/datum/reagent/glitter, our_volume, data = our_data)
+	src.data["colors"] = possible_colors
+	return ..()
 
 /datum/reagent/confetti
 	name = "Confetti"

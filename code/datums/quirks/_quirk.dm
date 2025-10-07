@@ -80,7 +80,7 @@
 		CRASH("Attempted to add quirk to a holder when it already has a holder.")
 
 	quirk_holder = new_holder
-	quirk_holder.quirks += src
+	LAZYADD(quirk_holder.quirks, src)
 	// If we weren't passed a client source try to use a present one
 	client_source ||= quirk_holder.client
 
@@ -121,7 +121,7 @@
 	if(process_update_signals)
 		UnregisterSignal(quirk_holder, process_update_signals)
 
-	quirk_holder.quirks -= src
+	LAZYREMOVE(quirk_holder.quirks, src)
 
 	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
@@ -278,7 +278,7 @@
 	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_quirk_datums() //removes all trait datums
-	QDEL_LIST(quirks)
+	QDEL_LAZYLIST(quirks)
 
 /mob/living/proc/transfer_quirk_datums(mob/living/to_mob)
 	// We could be done before the client was moved or after the client was moved

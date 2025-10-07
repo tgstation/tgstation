@@ -1,5 +1,6 @@
 /obj/item/circuitboard/computer
 	name = "Generic"
+	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"
 
 /obj/item/circuitboard/computer/examine()
@@ -246,20 +247,6 @@
 	name = "Station Alerts"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/station_alert
-	var/station_only = FALSE
-
-/obj/item/circuitboard/computer/station_alert/station_only
-	station_only = TRUE
-
-/obj/item/circuitboard/computer/station_alert/examine(mob/user)
-	. = ..()
-	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
-	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
-
-/obj/item/circuitboard/computer/station_alert/multitool_act(mob/living/user)
-	station_only = !station_only
-	balloon_alert(user, "tracking set to [station_only ? "station" : "z-level"]")
-	return TRUE
 
 /obj/item/circuitboard/computer/turbine_computer
 	name = "Turbine Computer"
@@ -676,9 +663,9 @@
 		machine.connect_to_shuttle(TRUE, shuttle)
 
 /obj/item/circuitboard/computer/shuttle/flight_control
-	name = "Shuttle Flight Control (Computer Board)"
+	name = "Shuttle Flight Control"
 	build_path = /obj/machinery/computer/shuttle/custom_shuttle
 
 /obj/item/circuitboard/computer/shuttle/docker
-	name = "Shuttle Navigation Computer (Computer Board)"
+	name = "Shuttle Navigation Computer"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom

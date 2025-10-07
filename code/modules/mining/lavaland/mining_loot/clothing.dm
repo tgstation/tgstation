@@ -95,8 +95,8 @@
 	icon_state = "concussive_gauntlets"
 	inhand_icon_state = null
 	toolspeed = 0.1
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -114,14 +114,17 @@
 	fire = 100
 	acid = 30
 
+/obj/item/clothing/gloves/gauntlets/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/martial_art_giver, /datum/martial_art/boxing/hunter)
+
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
-	if(slot & ITEM_SLOT_GLOVES)
-		tool_behaviour = TOOL_MINING
-		RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(rocksmash))
-		RegisterSignal(user, COMSIG_MOVABLE_BUMP, PROC_REF(rocksmash))
-	else
-		stopmining(user)
+	if(!(slot & ITEM_SLOT_GLOVES))
+		return
+	tool_behaviour = TOOL_MINING
+	RegisterSignal(user, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(rocksmash))
+	RegisterSignal(user, COMSIG_MOVABLE_BUMP, PROC_REF(rocksmash))
 
 /obj/item/clothing/gloves/gauntlets/dropped(mob/user)
 	. = ..()

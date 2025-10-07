@@ -1,4 +1,29 @@
 /**
+ * Helper for logging chat messages that may or may not have a custom say verb,
+ * or be a pure radio emote outright.
+ *
+ * This proc reads the `message_mods` to determine
+ * in what ways the given message should be logged,
+ * and forwards it to other logging procs as such.
+ * Arguments:
+ * * message - The message being logged
+ * * message_mods - A list of message modifiers, i.e. whispering/singing.
+ * * tag - tag that indicates the type of text(announcement, telepathy, etc)
+ * * log_globally - boolean checking whether or not we write this log to the log file
+ * * forced_by - source that forced the dialogue if any
+ */
+/atom/proc/log_sayverb_talk(message, list/message_mods = list(), tag = null, log_globally = TRUE, forced_by = null)
+	// If it's just the custom say verb, log it to emotes.
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		log_talk(message_mods[MODE_CUSTOM_SAY_EMOTE], LOG_RADIO_EMOTE, tag, log_globally, forced_by)
+		return
+
+	if(message_mods[WHISPER_MODE])
+		log_talk(message, LOG_WHISPER, tag, log_globally, forced_by, message_mods[MODE_CUSTOM_SAY_EMOTE])
+	else
+		log_talk(message, LOG_SAY, tag, log_globally, forced_by, message_mods[MODE_CUSTOM_SAY_EMOTE])
+
+/**
  * Helper for logging chat messages or other logs with arbitrary inputs (e.g. announcements)
  *
  * This proc compiles a log string by prefixing the tag to the message

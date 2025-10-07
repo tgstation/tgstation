@@ -4,8 +4,6 @@
 
 	losebreath = 0
 	breathing_loop.stop() //This would've happened eventually but it's nice to make it stop immediatelly in this case
-	if(!gibbed)
-		add_memory_in_range(src, 7, /datum/memory/witnessed_death, protagonist = src)
 	reagents.end_metabolization(src)
 
 	. = ..()
@@ -18,7 +16,6 @@
 		BT.on_death()
 
 /mob/living/carbon/gib(drop_bitflags=NONE)
-	add_memory_in_range(src, 7, /datum/memory/witness_gib, protagonist = src)
 	if(drop_bitflags & DROP_ITEMS)
 		for(var/obj/item/W in src)
 			if(dropItemToGround(W))

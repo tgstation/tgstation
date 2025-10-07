@@ -1,6 +1,3 @@
-///Called on user, from base of /datum/strippable_item/perform_alternate_action() (atom/target, action_key)
-#define COMSIG_TRY_ALT_ACTION "try_alt_action"
-	#define COMPONENT_CANT_ALT_ACTION (1<<0)
 ///Called on /basic when updating its speed, from base of /mob/living/basic/update_basic_mob_varspeed(): ()
 #define POST_BASIC_MOB_UPDATE_VARSPEED "post_basic_mob_update_varspeed"
 ///from base of /mob/Login(): ()
@@ -82,6 +79,8 @@
 
 ///signal sent when a mob has their holy role set. Sent to the mob having their role changed.
 #define COMSIG_MOB_MIND_SET_HOLY_ROLE "mob_mind_set_holy_role"
+///signal sent when a mob has their job role set. Sent to the mob having their role changed.
+#define COMSIG_MOB_MIND_SET_ROLE "mob_mind_set_role"
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"

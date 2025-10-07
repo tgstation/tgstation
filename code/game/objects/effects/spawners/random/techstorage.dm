@@ -126,9 +126,10 @@
 /obj/effect/spawner/random/techstorage/command_all
 	name = "secure command circuit board spawner"
 	loot = list(
-		/obj/item/circuitboard/computer/crew,
-		/obj/item/circuitboard/computer/communications,
+		/obj/item/circuitboard/computer/accounting,
 		/obj/item/circuitboard/computer/bankmachine,
+		/obj/item/circuitboard/computer/communications,
+		/obj/item/circuitboard/computer/crew,
 	)
 
 /obj/effect/spawner/random/techstorage/rnd_secure_all

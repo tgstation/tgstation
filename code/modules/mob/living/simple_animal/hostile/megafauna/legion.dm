@@ -46,16 +46,14 @@
 	minimum_distance = 5
 	ranged_cooldown_time = 2 SECONDS
 	gps_name = "Echoing Signal"
-	achievement_type = /datum/award/achievement/boss/legion_kill
+	// Achievements not set as they're added only when the last skull is killed
 	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
-	score_achievement_type = /datum/award/score/legion_score
 	SET_BASE_PIXEL(-32, -16)
 	maptext_height = 96
 	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
-	elimination = TRUE
 	appearance_flags = LONG_GLIDE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/size = LEGION_LARGE
@@ -108,6 +106,15 @@
 	maxHealth = 200
 	size = LEGION_SMALL
 
+/mob/living/simple_animal/hostile/megafauna/legion/small/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/simple_animal/hostile/megafauna/legion/small/update_overlays()
+	. = ..()
+	if (stat != DEAD) // Shouldn't really happen but just in case
+		. += emissive_appearance(icon, "[icon_state]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(client)
 		return
@@ -148,7 +155,7 @@
 	var/mob/living/living_target = target
 	switch(living_target.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
-			var/mob/living/basic/legion_brood/legion = new(loc)
+			var/mob/living/basic/mining/legion_brood/legion = new(loc)
 			legion.infest(living_target)
 
 ///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.
@@ -166,7 +173,8 @@
 			break
 	if(last_legion)
 		loot = list(/obj/item/storm_staff)
-		elimination = FALSE
+		var/list/achievements = list(/datum/award/achievement/boss/boss_killer, /datum/award/score/boss_score, /datum/award/score/legion_score, /datum/award/achievement/boss/legion_kill)
+		AddElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, /datum/memory/megafauna_slayer)
 	else if(prob(20)) //20% chance for sick lootz.
 		loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		if(!true_spawn)

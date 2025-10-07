@@ -722,12 +722,7 @@
 	icon_state = "babbearfish"
 
 /datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDEEARS) || (human.wear_mask?.flags_inv & HIDEEARS))
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
 
 /obj/item/organ/ears/babbelfish/Initialize(mapload)
 	. = ..()
@@ -774,7 +769,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = null, \
 		charges = maxHealth * 0.1, \
-		drain_antimagic = CALLBACK(src, PROC_REF(on_drain_magic)), \
+		block_magic = CALLBACK(src, PROC_REF(on_drain_magic)), \
 		expiration = CALLBACK(src, PROC_REF(on_expire)), \
 	)
 

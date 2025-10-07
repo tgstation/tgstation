@@ -49,6 +49,8 @@
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
 		"med_spray_bottle",
+		"inhaler",
+		"inhaler_canister",
 		"medigel",
 		"medipen_refiller",
 		"soda_dispenser",
@@ -81,6 +83,8 @@
 		"defibmount",
 		"medicalbed_emergency",
 		"piercesyringe",
+		"diode_disk_healing",
+		"diode_disk_sanity",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/reagent/haloperidol)

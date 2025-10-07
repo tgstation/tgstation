@@ -173,6 +173,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
+/obj/item/claymore/cutlass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
+
 /obj/item/claymore/cutlass/old
 	name = "old cutlass"
 	desc = parent_type::desc + " This one seems a tad old."
@@ -416,6 +420,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 4
 	embed_type = /datum/embedding/throwing_star
 	armour_penetration = 40
+	mob_throw_hit_sound = 'sound/items/weapons/pierce.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
@@ -670,6 +676,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "thrash")
 
+/obj/item/cane/crutch/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/cane/crutch/examine(mob/user, thats)
 	. = ..()
 	// tacked on after the cane string
@@ -722,6 +732,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/cane/white/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	AddComponent( \
 		/datum/component/transforming, \
 		force_on = 7, \
@@ -833,20 +844,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 1
 	attack_verb_continuous = list("clubs", "bludgeons")
 	attack_verb_simple = list("club", "bludgeon")
-
-/obj/item/melee/chainofcommand/tailwhip
-	name = "liz o' nine tails"
-	desc = "A whip fashioned from the severed tails of lizards."
-	icon_state = "tailwhip"
-	inhand_icon_state = "tailwhip"
-	item_flags = NONE
-	can_hasten = FALSE
-
-/obj/item/melee/chainofcommand/tailwhip/kitty
-	name = "cat o' nine tails"
-	desc = "A whip fashioned from the severed tails of cats."
-	icon_state = "catwhip"
-	inhand_icon_state = "catwhip"
 
 /obj/item/melee/skateboard
 	name = "skateboard"

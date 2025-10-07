@@ -18,6 +18,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 #define HAPPINESS_BOOST_DAMPENER 0.3
 
+/// Innate raptor offsets
+#define RAPTOR_INNATE_SOURCE "raptor_innate"
+
 /mob/living/basic/raptor
 	name = "raptor"
 	desc = "A trusty, powerful steed. Taming it might prove difficult..."
@@ -56,7 +59,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/attack,
-		/datum/pet_command/follow/start_active,
+		/datum/pet_command/follow,
 		/datum/pet_command/fetch,
 	)
 	///things we inherited from our parent
@@ -146,11 +149,18 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	adjust_offsets(new_dir)
 
 /mob/living/basic/raptor/proc/adjust_offsets(direction)
-	if(!change_offsets)
+	if (!change_offsets)
 		return
-	pixel_x = (direction & EAST) ? -20 : 0
-	pixel_y = (direction & NORTH) ? -5 : 0
 
+	switch (direction)
+		if (NORTH)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
+		if (SOUTH)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 0, animate = FALSE)
+		if (EAST, SOUTHEAST, NORTHEAST)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -20, animate = FALSE)
+		if (WEST, SOUTHWEST, NORTHWEST)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -5, animate = FALSE)
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -225,6 +235,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	raptor_color = RAPTOR_RED
+	ridable_component = /datum/component/riding/creature/raptor/combat
 	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
 		This breed demonstrates higher combat capabilities than its peers and oozes ruthless aggression."
 	child_path = /mob/living/basic/raptor/baby_raptor/red
@@ -260,7 +271,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/green/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/proficient_miner)
+	AddComponent(/datum/component/proficient_miner)
 
 /mob/living/basic/raptor/white
 	name = "white raptor"
@@ -332,3 +343,4 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	return NONE
 
 #undef HAPPINESS_BOOST_DAMPENER
+#undef RAPTOR_INNATE_SOURCE

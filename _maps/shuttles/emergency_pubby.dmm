@@ -458,12 +458,10 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "fa" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted,
-/obj/machinery/light/directional/east,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iy" = (
@@ -590,7 +588,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners{

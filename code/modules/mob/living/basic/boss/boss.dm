@@ -18,28 +18,23 @@
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-	/// List of loot if not killed by crusher.
-	var/list/loot
-	/// List of loot if killed by crusher.
-	var/list/crusher_loot
-	/// Achievement given to surrounding players when the megafauna is killed
-	var/achievement_type
-	/// Crusher achievement given to players when megafauna is killed
-	var/crusher_achievement_type
-	/// Score given to players when megafauna is killed
-	var/score_achievement_type
-	/// If the megafauna was actually killed (not just dying, then transforming into another type)
-	var/elimination = FALSE
 	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
-	/// If this is a megafauna that is real (has achievements, gps signal)
-	var/true_spawn = TRUE
+	/// What crusher trophy this mob drops, if any
+	var/crusher_loot
 
 /mob/living/basic/boss/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/wall_tearer, tear_time = 1 SECONDS)
-	if(gps_name && true_spawn)
+	if(gps_name)
 		AddComponent(/datum/component/gps, gps_name)
+	if(crusher_loot)
+		AddElement(\
+			/datum/element/crusher_loot,\
+			trophy_type = crusher_loot,\
+			guaranteed_drop = 0.6,\
+			drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
+		)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_traits(list(TRAIT_NO_TELEPORT, TRAIT_MARTIAL_ARTS_IMMUNE, TRAIT_LAVA_IMMUNE,TRAIT_ASHSTORM_IMMUNE, TRAIT_NO_FLOATING_ANIM), MEGAFAUNA_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
@@ -53,50 +48,12 @@
 /mob/living/basic/boss/dust(just_ash, drop_items, force)
 	if(!force && health > 0)
 		return
-	loot.Cut()
-	crusher_loot.Cut()
 	return ..()
 
-/mob/living/basic/boss/death(gibbed, list/force_grant)
-	if(gibbed) // in case they've been force dusted
-		return ..()
-
-	if(health > 0) // prevents instakills
+/mob/living/basic/boss/death(gibbed)
+	if (health > 0 && !gibbed) // prevents instakills
 		return
-	var/datum/status_effect/crusher_damage/crusher_dmg = has_status_effect(/datum/status_effect/crusher_damage)
-	///Whether we killed the megafauna with primarily crusher damage or not
-	var/crusher_kill = (crusher_dmg && (crusher_dmg.total_damage >= floor(maxHealth * 0.6)))
-	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
-		var/tab = "megafauna_kills"
-		if(crusher_kill)
-			tab = "megafauna_kills_crusher"
-		if(!elimination) //used so the achievment only occurs for the last legion to die.
-			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
-			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
-
-	for(var/path in crusher_kill ? crusher_loot : loot) // using this instead of deathdrops and crusher_loot because we calculate differently and removing the element is ass
-		new path(drop_location())
-
 	return ..()
-
-/// Grants medals and achievements to surrounding players
-/mob/living/basic/boss/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())
-	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
-		return FALSE
-	if(!grant_achievement.len)
-		for(var/mob/living/victor in view(7,src))
-			grant_achievement += victor
-	for(var/mob/living/victor in grant_achievement)
-		if(victor.stat || !victor.client)
-			continue
-		victor.add_mob_memory(/datum/memory/megafauna_slayer, antagonist = src)
-		victor.client.give_award(/datum/award/achievement/boss/boss_killer, victor)
-		victor.client.give_award(achievement_type, victor)
-		if(crusher_kill && istype(victor.get_active_held_item(), /obj/item/kinetic_crusher))
-			victor.client.give_award(crusher_achievement_type, victor)
-		victor.client.give_award(/datum/award/score/boss_score, victor) //Score progression for bosses killed in general
-		victor.client.give_award(score_achievement_type, victor) //Score progression for specific boss killed
-	return TRUE
 
 /mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()

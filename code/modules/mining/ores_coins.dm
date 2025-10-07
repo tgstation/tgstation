@@ -43,6 +43,14 @@
 	if(stack_overlays)
 		. += stack_overlays
 
+/**
+ * Called when the ore is collected by an ore redemption machine. returns the ore itself.
+ * Normally, ores without a refined type aren't collected by the orm.
+ * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
+ */
+/obj/item/stack/ore/proc/on_orm_collection()
+	return isnull(refined_type) ? null : src
+
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
 	..()
 	if(!refined_type)
@@ -77,7 +85,7 @@
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
-	scan_state = "rock_Uranium"
+	scan_state = "rock_uranium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/uranium
 
@@ -89,7 +97,7 @@
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
-	scan_state = "rock_Iron"
+	scan_state = "rock_iron"
 	spreadChance = 20
 	merge_type = /obj/item/stack/ore/iron
 
@@ -98,11 +106,13 @@
 	icon_state = "glass"
 	singular_name = "sand pile"
 	points = 1
-	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/sand
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
 	merge_type = /obj/item/stack/ore/glass
+	usable_for_construction = TRUE
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
@@ -113,6 +123,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	AddComponent(/datum/component/storm_hating)
+
+/obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
+	//If we spawn the sheet of glass on the turf the ORM is "listening" to, it'll get redeemed before we can use it as return value and weird stuff my happen.
+	var/obj/item/stack/sheet/glass = new refined_type(null, amount)
+	qdel(src)
+	return glass
 
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
@@ -138,6 +154,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 	return FALSE
 
+/obj/item/stack/ore/glass/thirty
+	amount = 30
+
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
@@ -153,7 +172,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
-	scan_state = "rock_Plasma"
+	scan_state = "rock_plasma"
 	spreadChance = 8
 	merge_type = /obj/item/stack/ore/plasma
 
@@ -169,7 +188,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 3
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
-	scan_state = "rock_Silver"
+	scan_state = "rock_silver"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/silver
 
@@ -181,7 +200,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 5
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
-	scan_state = "rock_Gold"
+	scan_state = "rock_gold"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/gold
 
@@ -193,7 +212,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
 /obj/item/stack/ore/diamond/five
@@ -207,7 +226,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
 	merge_type = /obj/item/stack/ore/bananium
 
 /obj/item/stack/ore/titanium
@@ -218,7 +237,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
-	scan_state = "rock_Titanium"
+	scan_state = "rock_titanium"
 	spreadChance = 5
 	merge_type = /obj/item/stack/ore/titanium
 
@@ -422,7 +441,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value = 0
 	var/coinflip
-	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
 	var/override_material_worth = FALSE
 	/// The name of the heads side of the coin
@@ -466,7 +484,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else
-		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!"))
+		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!")) //Don't put it in your pocket. It's your lucky quarter.
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
@@ -531,36 +549,46 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/gold = 4)
 
 /obj/item/coin/silver
 	custom_materials = list(/datum/material/silver = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
 	custom_materials = list(/datum/material/diamond = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/plasma
 	custom_materials = list(/datum/material/plasma = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
 	custom_materials = list(/datum/material/uranium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/titanium
 	custom_materials = list(/datum/material/titanium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/flash_powder = 4)
 
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/consumable/nutriment/soup/clown_tears = 4)
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/mythril
 	custom_materials = list(/datum/material/mythril = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/medicine/omnizine/godblood = 4)
 
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/plastic_polymers = 4)
 
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/consumable/ethanol/ritual_wine = 2)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -575,11 +603,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	heads_name = "valid"
 	material_flags = NONE
 	override_material_worth = TRUE
+	grind_results = list(/datum/reagent/ants = 2, /datum/reagent/consumable/eggyolk = 2)
 
 /obj/item/coin/iron
+	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/gold/cursed = 4)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
@@ -622,6 +653,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	heads_name = "heretic"
 	has_action = TRUE
 	material_flags = NONE
+	grind_results = list(/datum/reagent/carbon = 5, /datum/reagent/toxin/plasma = 5, /datum/reagent/eldritch = 4)
 	/// The range at which airlocks are effected.
 	var/airlock_range = 5
 

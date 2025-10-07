@@ -1,6 +1,7 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/medical/organs/organs.dmi'
+	abstract_type = /obj/item/organ
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	/// The mob that owns this organ.
@@ -68,6 +69,12 @@
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
 	var/list/valid_zones = null
+	/// The cell line we can spawn on us
+	var/cell_line = null
+	/// The minimum cells we can spawn
+	var/cells_minimum = 0
+	/// The maximum cells we can spawn
+	var/cells_maximum = 0
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -90,6 +97,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
+
+	if(cell_line && (organ_flags & ORGAN_ORGANIC))
+		AddElement(/datum/element/swabable, cell_line, cell_line_amount = rand(cells_minimum, cells_maximum))
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
@@ -314,6 +325,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		lungs = new()
 		lungs.Insert(src)
 	lungs.set_organ_damage(0)
+	lungs.received_pressure_mult = lungs::received_pressure_mult
 
 	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(heart)
@@ -384,28 +396,28 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		replacement.set_organ_damage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
-/obj/item/organ/proc/get_status_text(advanced, add_tooltips)
+/obj/item/organ/proc/get_status_text(advanced, add_tooltips, colored = TRUE)
 	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
-		return conditional_tooltip("<font color='#cc3333'>Harmful Foreign Body</font>", "Remove surgically.", add_tooltips)
+		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]Harmful Foreign Body[colored ? "</font>" : ""]", "Remove surgically.", add_tooltips)
 
 	if(organ_flags & ORGAN_EMP)
-		return conditional_tooltip("<font color='#cc3333'>EMP-Derived Failure</font>", "Repair or replace surgically.", add_tooltips)
+		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]EMP-Derived Failure[colored ? "</font>" : ""]", "Repair or replace surgically.", add_tooltips)
 
 	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
 		tech_text = "[round((damage / maxHealth) * 100, 1)]% damaged"
 
 	if(organ_flags & ORGAN_FAILING)
-		return conditional_tooltip("<font color='#cc3333'>[tech_text || "Non-Functional"]</font>", "Repair or replace surgically.", add_tooltips)
+		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""][tech_text || "Non-Functional"][colored ? "</font>" : ""]", "Repair or replace surgically.", add_tooltips)
 
 	if(damage > high_threshold)
-		return conditional_tooltip("<font color='#ff9933'>[tech_text || "Severely Damaged"]</font>", "[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", add_tooltips && owner.stat != DEAD)
+		return conditional_tooltip("[colored ? "<font color='#ff9933'>" : ""][tech_text || "Severely Damaged"][colored ? "</font>" : ""]", "[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", add_tooltips && owner.stat != DEAD)
 
 	if(damage > low_threshold)
-		return conditional_tooltip("<font color='#ffcc33'>[tech_text || "Mildly Damaged"] </font>", "[healing_factor ? "Treat with rest." : "Use specialty medication."]", add_tooltips && owner.stat != DEAD)
+		return conditional_tooltip("[colored ? "<font color='#ffcc33'>" : ""][tech_text || "Mildly Damaged"][colored ? "</font>" : ""]", "[healing_factor ? "Treat with rest." : "Use specialty medication."]", add_tooltips && owner.stat != DEAD)
 
 	if(tech_text)
-		return "<font color='#33cc33'>[tech_text]</font>"
+		return "[colored ? "<font color='#33cc33'>" : ""][tech_text][colored ? "</font>" : ""]"
 
 	return ""
 

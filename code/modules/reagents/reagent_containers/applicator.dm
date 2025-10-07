@@ -2,6 +2,7 @@
 /obj/item/reagent_containers/applicator
 	name = "generic reagent applicator"
 	desc = "Report this please."
+	abstract_type = /obj/item/reagent_containers/applicator
 	has_variable_transfer_amount = FALSE
 	grind_results = list()
 	/// Action string displayed in vis_message
@@ -30,6 +31,7 @@
 	if(!canconsume(target_mob, user))
 		return ITEM_INTERACT_BLOCKING
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(target_mob == user)
 		target_mob.visible_message(span_notice("[user] attempts to [apply_method] [src]."))
 		if(self_delay)

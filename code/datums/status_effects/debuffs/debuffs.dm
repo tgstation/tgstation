@@ -313,6 +313,12 @@
 	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/his_wrath
 
+/datum/status_effect/his_wrath/on_creation(mob/living/new_owner, His, Him)
+	. = ..()
+	linked_alert.name = "[His] Wrath"
+	linked_alert.desc = "You fled from [His] Grace instead of feeding [Him], and now you suffer."
+	linked_alert.icon_state = "[LOWER_TEXT(His)]_grace"
+
 /atom/movable/screen/alert/status_effect/his_wrath
 	name = "His Wrath"
 	desc = "You fled from His Grace instead of feeding Him, and now you suffer."
@@ -397,9 +403,7 @@
 	stack_threshold = 10
 	max_stacks = 10
 	overlay_file = 'icons/effects/bleed.dmi'
-	underlay_file = 'icons/effects/bleed.dmi'
 	overlay_state = "bleed"
-	underlay_state = "bleed"
 	var/bleed_damage = 200
 
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
@@ -441,7 +445,7 @@
 	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[bleeding_thing.type]
 
-		if(pregen_data.wounding_types_valid(list(WOUND_SLASH)) && bleeding_thing.severity > WOUND_SEVERITY_MODERATE && bleeding_thing.blood_flow > 0)
+		if(pregen_data.wounding_types_valid(WOUND_SLASH) && bleeding_thing.severity > WOUND_SEVERITY_MODERATE && bleeding_thing.blood_flow > 0)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)

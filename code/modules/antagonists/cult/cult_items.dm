@@ -472,25 +472,23 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// on bound
 	if(bound)
+		remove_filter("unbound_ray", update = FALSE)
 		add_filter("bind_glow", 2, list("type" = "outline", "color" = h_color, "size" = 0.1))
-		remove_filter("unbound_ray")
-		update_filters()
-	// on unbound
-	else
-		// we re-add this every time it's picked up or dropped
-		remove_filter("unbound_ray")
-		add_filter(name = "unbound_ray", priority = 1, params = list(
-			type = "rays",
-			size = 16,
-			color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
-			density = 16,
-		))
-		// because otherwise the animations stack and it looks ridiculous
-		var/ray_filter = get_filter("unbound_ray")
-		animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
-		animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
+		return
 
-	update_filters()
+	// on unbound
+	// we re-add this every time it's picked up or dropped
+	remove_filter("bind_glow", update = FALSE)
+	add_filter(name = "unbound_ray", priority = 1, params = list(
+		type = "rays",
+		size = 16,
+		color = COLOR_HERETIC_GREEN, // the sickly green of the heretic leaking through
+		density = 16,
+	))
+	// because otherwise the animations stack and it looks ridiculous
+	var/ray_filter = get_filter("unbound_ray")
+	animate(ray_filter, offset = 100, time = 2 MINUTES, loop = -1, flags = ANIMATION_PARALLEL) // Absurdly long animate so nobody notices it hitching when it loops
+	animate(offset = 0, time = 2 MINUTES) // I sure hope duration of animate doesnt have any performance effect
 
 /obj/item/melee/cultblade/haunted/proc/start_glow_loop()
 	var/filter = get_filter("bind_glow")

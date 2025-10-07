@@ -50,6 +50,7 @@ export const ChemReactionChamber = (props) => {
                   <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
+                      tickWhileDragging
                       width="65px"
                       unit="K"
                       step={10}
@@ -57,7 +58,7 @@ export const ChemReactionChamber = (props) => {
                       value={round(targetTemp, 0.1)}
                       minValue={0}
                       maxValue={1000}
-                      onDrag={(value) =>
+                      onChange={(value) =>
                         act('temperature', {
                           target: value,
                         })
@@ -156,13 +157,14 @@ export const ChemReactionChamber = (props) => {
                   <LabeledList>
                     <LabeledList.Item label="Acidic pH limit">
                       <NumberInput
+                        tickWhileDragging
                         value={reagentAcidic}
                         minValue={0}
                         maxValue={14}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) =>
+                        onChange={(value) =>
                           act('acidic', {
                             target: value,
                           })
@@ -171,13 +173,14 @@ export const ChemReactionChamber = (props) => {
                     </LabeledList.Item>
                     <LabeledList.Item label="Alkaline pH limit">
                       <NumberInput
+                        tickWhileDragging
                         value={reagentAlkaline}
                         minValue={0}
                         maxValue={14}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) =>
+                        onChange={(value) =>
                           act('alkaline', {
                             target: value,
                           })
@@ -204,13 +207,14 @@ export const ChemReactionChamber = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <NumberInput
+                        tickWhileDragging
                         value={reagentQuantity}
                         minValue={1}
                         maxValue={100}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) => setReagentQuantity(value)}
+                        onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
                     </Stack.Item>

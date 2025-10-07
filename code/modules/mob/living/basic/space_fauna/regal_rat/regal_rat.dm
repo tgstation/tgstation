@@ -216,7 +216,7 @@
  * * atom/lean_target - the target we try to add the spit to
  */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
-	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
+	if(isnull(target.reagents) || !target.is_injectable(src, /*allowmobs = */TRUE))
 		return FALSE
 
 	visible_message(
