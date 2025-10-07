@@ -576,11 +576,10 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check && is_zero_amount(delete_if_zero = TRUE))
-		return TRUE
-	update_custom_materials()
-	update_appearance()
-	update_weight()
+	if(!is_zero_amount(delete_if_zero = check))
+		update_custom_materials()
+		update_appearance()
+		update_weight()
 	return TRUE
 
 /obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)

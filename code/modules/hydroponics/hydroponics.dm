@@ -1189,7 +1189,6 @@
 	set_seed(young_plant)
 	set_plant_health(myseed.endurance)
 	lastcycle = world.time
-	custom_materials = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 3)
 
 /// Clears the plant from the tray, killing it in the process, optionally clearing weeds as well.
 /obj/machinery/hydroponics/proc/remove_plant(clear_weeds = TRUE)
