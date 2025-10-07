@@ -165,6 +165,9 @@
 /datum/movespeed_modifier/goliath_mount
 	multiplicative_slowdown = -26
 
+/datum/movespeed_modifier/goldgrub_mount
+	multiplicative_slowdown = -3
+
 /datum/movespeed_modifier/settler
 	multiplicative_slowdown = 0.2
 	blacklisted_movetypes = FLOATING|FLYING

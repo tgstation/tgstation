@@ -2419,6 +2419,7 @@
 #include "code\game\objects\effects\effect_system\fluid_spread\effects_smoke.dm"
 #include "code\game\objects\effects\landmarks\atmospherics_sanity_landmarks.dm"
 #include "code\game\objects\effects\particles\acid.dm"
+#include "code\game\objects\effects\particles\brimdust.dm"
 #include "code\game\objects\effects\particles\echo.dm"
 #include "code\game\objects\effects\particles\fire.dm"
 #include "code\game\objects\effects\particles\food.dm"
