@@ -410,7 +410,6 @@
 	name = "lean"
 	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
 	icon_state = "lean"
-	inhand_icon_state = "lean"
 	list_reagents = list(/datum/reagent/consumable/lean = 20)
 	random_sprite = FALSE
 
