@@ -92,6 +92,18 @@ FLOOR SAFES
 			to_chat(user, span_warning("You can't put [attacking_item] into the safe while it is closed!"))
 			return
 
+/obj/structure/safe/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+
+	if(open)
+		var/new_combo =
+		for(var/iterating in 1 to number_of_tumblers)
+			tumblers.Add(rand(0, 99))
+		return ITEM_INTERACT_SUCCESS
+	else
+		to_chat(user, span_warning("You can't reset the safe combination while it is closed!"))
+		return ITEM_INTERACT_FAILURE
+
 /obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
 
@@ -249,6 +261,9 @@ FLOOR SAFES
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
 		balloon_alert(user, pick(sounds))
 
+/obj/structure/safe/open
+	open = TRUE
+
 //FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
@@ -259,6 +274,9 @@ FLOOR SAFES
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/undertile)
+
+/obj/structure/safe/floor/open
+	open = TRUE
 
 ///Special safe for the station's vault. Not explicitly required, but the piggy bank inside it is.
 /obj/structure/safe/vault
