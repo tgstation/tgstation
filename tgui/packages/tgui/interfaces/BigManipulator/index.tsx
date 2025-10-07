@@ -49,7 +49,6 @@ const MasterControls = () => {
     <Stack>
       <Stack.Item>Speed:</Stack.Item>
       <Stack.Item>
-        {' '}
         <Button
           icon="backward-step"
           onClick={() =>
@@ -70,7 +69,7 @@ const MasterControls = () => {
           maxValue={max_speed_multiplier}
           unit="x"
           stepPixelSize={20}
-          onDrag={(e, value) =>
+          onDrag={(value) =>
             act('adjust_interaction_speed', {
               new_speed: value,
             })
@@ -88,13 +87,13 @@ const MasterControls = () => {
         />
       </Stack.Item>
       <Stack.Item>
-        {' '}
         <Button
-          content="Drop"
           icon="eject"
           tooltip="Disengage the claws, dropping the held item"
           onClick={() => act('drop_held_atom')}
-        />
+        >
+          Drop
+        </Button>
       </Stack.Item>
     </Stack>
   );
