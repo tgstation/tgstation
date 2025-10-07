@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed orbiters like ghosts and wisps detaching when using a shuttle"

@@ -23684,7 +23684,7 @@
 /area/station/maintenance/department/science)
 "ikc" = (
 /obj/structure/closet/crate/secure/loot{
-	codelen = 2;
+	code_length = 2;
 	name = "malfunctioning abandoned crate"
 	},
 /turf/open/misc/asteroid,

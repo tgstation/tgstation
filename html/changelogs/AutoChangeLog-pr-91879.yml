@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - admin: "Add admin debug goggles that lets you see area overlays which is useful for construction projects."
-  - image: "Add icons for admin debug goggles (which is just a reskinned color version of mesons)"
-  - code_imp: "Improve meson code to be more robust"
