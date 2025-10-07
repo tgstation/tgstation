@@ -380,8 +380,7 @@
 
 		result["icon"] = icon2base64(icon(item.icon, item.icon_state))
 		result["name"] = item.name
-		var/list/alt_actions = item_data.get_alternate_actions(owner, user, item)
-		result["alternate"] = length(alt_actions) ? alt_actions : null
+		result["alternate"] = item_data.get_alternate_actions(owner, user, item) - null
 		var/static/list/already_cried = list()
 		if(length(result["alternate"]) > 3 && !(type in already_cried))
 			stack_trace("Too many alternate actions for [type]! Only three are supported at the moment! This will look bad!")
