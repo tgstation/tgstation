@@ -48,7 +48,6 @@ FLOOR SAFES
 /obj/structure/safe/Initialize(mapload)
 	. = ..()
 
-	update_appearance(UPDATE_ICON)
 	// Combination generation
 	for(var/iterating in 1 to number_of_tumblers)
 		tumblers.Add(rand(0, 99))
@@ -58,7 +57,11 @@ FLOOR SAFES
 		AddElement(/datum/element/elevation, pixel_shift = 22)
 
 	if(!mapload)
+		open = TRUE
+		locked = FALSE
 		return
+
+	update_appearance(UPDATE_ICON)
 
 	// Put as many items on our turf inside as possible
 	for(var/obj/item/inserting_item in loc)
@@ -68,10 +71,46 @@ FLOOR SAFES
 			space += inserting_item.w_class
 			inserting_item.forceMove(src)
 
+/obj/structure/safe/examine(mob/user)
+	. = ..()
+	. += span_notice("You could reconfigure the passcode with a <b>wrench</b>.")
+
 /obj/structure/safe/update_icon_state()
 	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
 	icon_state = "[initial(icon_state)][open ? null : "_locked"]"
 	return ..()
+
+/obj/structure/safe/wrench_act(mob/living/user, obj/item/tool)
+	if(!open)
+		balloon_alert(user, "must be open!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "reconfiguring lock...")
+	to_chat(user, span_notice("You begin reconfiguring the lock for [src]. You'll need to set [number_of_tumblers] numbers."))
+
+	var/list/new_tumblers = list()
+	for(var/tumbler_index in 1 to number_of_tumblers)
+		var/input_value = tgui_input_number(user, "Set tumbler #[tumbler_index] (0-99):", "Lock Configuration", 0, 99, 0)
+		if(isnull(input_value))
+			balloon_alert(user, "configuration cancelled!")
+			return ITEM_INTERACT_BLOCKING
+		if(!user.can_perform_action(src))
+			balloon_alert(user, "configuration interrupted!")
+			return ITEM_INTERACT_BLOCKING
+		new_tumblers.Add(input_value)
+
+	tool.play_tool_sound(src)
+	if(do_after(user, 3 SECONDS, target = src))
+		tumblers = new_tumblers
+		current_tumbler_index = 1
+		dial = 0
+		tool.play_tool_sound(src)
+		to_chat(user, span_notice("You successfully reconfigure the lock for [src]. The new combination is: [tumblers.Join("-")]."))
+		balloon_alert(user, "lock set!")
+		return ITEM_INTERACT_SUCCESS
+	else
+		balloon_alert(user, "configuration interrupted!")
+		return ITEM_INTERACT_BLOCKING
 
 /obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(open)
@@ -91,18 +130,6 @@ FLOOR SAFES
 		else
 			to_chat(user, span_warning("You can't put [attacking_item] into the safe while it is closed!"))
 			return
-
-/obj/structure/safe/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-
-	if(open)
-		var/new_combo =
-		for(var/iterating in 1 to number_of_tumblers)
-			tumblers.Add(rand(0, 99))
-		return ITEM_INTERACT_SUCCESS
-	else
-		to_chat(user, span_warning("You can't reset the safe combination while it is closed!"))
-		return ITEM_INTERACT_FAILURE
 
 /obj/structure/safe/blob_act(obj/structure/blob/B)
 	return
@@ -261,9 +288,6 @@ FLOOR SAFES
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
 		balloon_alert(user, pick(sounds))
 
-/obj/structure/safe/open
-	open = TRUE
-
 //FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
@@ -274,9 +298,6 @@ FLOOR SAFES
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/undertile)
-
-/obj/structure/safe/floor/open
-	open = TRUE
 
 ///Special safe for the station's vault. Not explicitly required, but the piggy bank inside it is.
 /obj/structure/safe/vault
