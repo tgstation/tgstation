@@ -164,7 +164,7 @@
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	return .
 
-/obj/machinery/door/airlock/Initialize(mapload)
+/obj/machinery/door/airlock/Initialize(mapload, /mob/user)
 	if(glass)
 		airlock_material = "glass"
 	. = ..()
@@ -185,13 +185,18 @@
 	diag_hud_set_electrified()
 
 	// Click on the floor to close airlocks
-	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(drag_check)))
 
 	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+
+// if dragging, block 'Click on the floor to close airlocks'
+/obj/machinery/door/airlock/proc/drag_check(mob/user)
+	if (user.pulling)
+		return NONE
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
