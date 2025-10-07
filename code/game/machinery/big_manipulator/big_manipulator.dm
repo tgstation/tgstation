@@ -640,6 +640,7 @@
 			var/list/entry_pick = list()
 			entry_pick["name"] = pr_pick.name
 			entry_pick["priority_width"] = (num_priorities_pick - pr_pick.number + 1)
+			entry_pick["active"] = pr_pick.active
 			settings_list_pick += list(entry_pick)
 		point_data["settings_list"] = settings_list_pick
 		pickup_points_data += list(point_data)
@@ -671,6 +672,7 @@
 			var/list/entry_drop = list()
 			entry_drop["name"] = pr_drop.name
 			entry_drop["priority_width"] = (num_priorities_drop - pr_drop.number + 1)
+			entry_drop["active"] = pr_drop.active
 			settings_list_drop += list(entry_drop)
 		point_data["settings_list"] = settings_list_drop
 		dropoff_points_data += list(point_data)
@@ -745,6 +747,20 @@
 		if("set_name")
 			target_point.name = "[value]"
 			return TRUE
+
+		if("toggle_priority")
+			var/list/priorities = target_point.interaction_priorities
+			var/datum/manipulator_priority/priority = null
+			for(var/datum/manipulator_priority/each_priority in priorities)
+				if(each_priority.number == value)
+					priority = each_priority
+					break
+
+			if(priority)
+				priority.active = !priority.active
+				return TRUE
+
+			return FALSE
 
 		if("remove_point")
 			if(value)

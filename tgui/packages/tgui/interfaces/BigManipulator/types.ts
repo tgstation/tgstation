@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 export interface PrioritySettings {
   name: string;
   priority_width: number;
+  active: BooleanLike;
 }
 
 export type InteractionPoint = {

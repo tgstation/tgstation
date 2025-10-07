@@ -63,6 +63,9 @@
 /// Finds the type priority of the interaction point.
 /datum/interaction_point/proc/find_type_priority()
 	for(var/datum/manipulator_priority/each_priority in interaction_priorities)
+		if(!each_priority.active)
+			continue
+
 		if(each_priority.atom_typepath == /turf)
 			return interaction_turf
 
@@ -76,6 +79,8 @@
 					continue
 
 			return type_in_priority
+
+	return null // all priorities on this point are disabled because whoever set em up is a dumdum
 
 /// Checks if the interaction point is available - if it has items that can be interacted with.
 /datum/interaction_point/proc/is_available(transfer_type, atom/movable/target)

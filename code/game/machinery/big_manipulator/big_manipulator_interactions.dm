@@ -11,6 +11,10 @@
 	for(var/atom/movable/candidate in pickup_turf.contents)
 		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_NODROP))
 			continue
+
+		if(!pickup_point.check_filters_for_atom(candidate))
+			continue
+
 		for(var/datum/interaction_point/dest_point in dropoff_points)
 			if(!dest_point || !dest_point.is_valid())
 				continue
@@ -111,6 +115,7 @@
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
+	balloon_alert_to_viewers("check")
 	if(!on)
 		return
 
@@ -264,7 +269,6 @@
 	var/obj/actual_held_object = held_object?.resolve()
 
 	if(isnull(drop_endpoint))
-		stack_trace("Interaction point returned no endpoints to transfer the item to.")
 		return FALSE
 
 	var/atom/drop_target = drop_endpoint

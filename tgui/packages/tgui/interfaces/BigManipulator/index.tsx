@@ -522,7 +522,15 @@ const PointSection = (props: {
                     <Icon name="hashtag" /> {index + 1}
                   </Table.Cell>
                   <Table.Cell>
-                    <Box>{setting.name}</Box>
+                    <Button.Checkbox
+                      onClick={() =>
+                        adjustPoint(editingPoint.id, 'toggle_priority', index)
+                      }
+                      checked={setting.active}
+                      fluid
+                    >
+                      {setting.name}
+                    </Button.Checkbox>
                   </Table.Cell>
                   <Table.Cell width="1em">
                     <Button
@@ -548,20 +556,8 @@ const PointSection = (props: {
 
 export const BigManipulator = () => {
   const { data, act } = useBackend<ManipulatorData>();
-  const {
-    active,
-    interaction_mode,
-    settings_list,
-    worker_interaction,
-    highest_priority,
-    throw_range,
-    item_as_filter,
-    selected_type,
-    current_task,
-    current_task_duration,
-    pickup_points,
-    dropoff_points,
-  } = data;
+  const { current_task, current_task_duration, pickup_points, dropoff_points } =
+    data;
 
   const [progressValue, setProgressValue] = useState(0);
   const [progressKey, setProgressKey] = useState(0);
@@ -677,7 +673,7 @@ export const BigManipulator = () => {
             </Box>
           </Section>
 
-          <Section>
+          {/* <Section>
             <Stack>
               <Stack.Item lineHeight="1.8" grow>
                 <Box
@@ -703,7 +699,7 @@ export const BigManipulator = () => {
                 </Button>
               </Stack.Item>
             </Stack>
-          </Section>
+          </Section> */}
 
           <PointSection
             title="Pickup Points"
