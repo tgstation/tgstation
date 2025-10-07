@@ -571,7 +571,7 @@
 	if(isnull(dead_mob))
 		return
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
-		mood_change *= 0.125
+		mood_change *= 0.25
 		timeout *= 0.2
 	if(HAS_TRAIT(owner, TRAIT_CULT_HALO) && !HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
 		// When cultists get halos, they stop caring about death
