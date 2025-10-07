@@ -149,6 +149,7 @@
 	atom_appearance.pixel_y = atom.base_pixel_y
 	atom_appearance.pixel_w = atom.base_pixel_w
 	atom_appearance.pixel_z = atom.base_pixel_z
+	strip_appearance_underlays(atom_appearance)
 	return atom_appearance
 
 /atom/movable/screen/alert/Click(location, control, params)
