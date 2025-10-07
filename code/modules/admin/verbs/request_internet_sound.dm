@@ -23,7 +23,7 @@
 	else if (credit == "Yes")
 		credit = "[usr.ckey] requested this track."
 	else
-		credit = "Someone requested this track."
+		credit = null
 
 	log_internet_request("[src.key]/([src.name]): [request_url]")
 	if(usr.client)
