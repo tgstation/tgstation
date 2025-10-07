@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "Fixes combat mode interaction with all chem machines and beakers (consistency)"
