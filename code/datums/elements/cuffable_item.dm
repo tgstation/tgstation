@@ -36,7 +36,7 @@
 /datum/element/cuffable_item/proc/item_interaction(obj/item/source, mob/living/user, obj/item/tool, modifiers)
 	SIGNAL_HANDLER
 
-	if(!istype(tool, /obj/item/restraints/handcuffs) || iscyborg(user) || source.anchored || !user.CanReach(source))
+	if(!istype(tool, /obj/item/restraints/handcuffs) || iscyborg(user) || source.anchored || !source.IsReachableBy(user))
 		return NONE
 
 	INVOKE_ASYNC(src, PROC_REF(apply_cuffs), source, user, tool)
