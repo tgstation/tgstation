@@ -387,7 +387,7 @@
  * Gets the most common material in the object.
  */
 /atom/proc/get_master_material()
-	return length(custom_materials) ? GET_MATERIAL_REF(cached_materials[1]) : null //materials are sorted by amount, the first is always the main one
+	return length(custom_materials) ? GET_MATERIAL_REF(custom_materials[1]) : null //materials are sorted by amount, the first is always the main one
 
 /**
  * Gets the total amount of materials in this atom.
