@@ -102,6 +102,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
+	if(priority > TEST_CREATE_AND_DESTROY) //I'm not using TEST_ASSERT here since these are just numbers that tell nothing useful about the problem.
+		TEST_FAIL("allocate() was called for a unit test after 'create_and_destroy' has finished. The unit test room is no longer a reliable testing ground for atoms.")
+		return null //you deserve runtime errors for it
 	var/list/arguments = args.Copy(2)
 	if(ispath(type, /atom))
 		if (!arguments.len)
@@ -209,7 +212,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	else
 
 		test.Run()
-		test.restore_atmos()
+		if(test.priority < TEST_CREATE_AND_DESTROY) //We shouldn't care about restoring atmos after create_and_destroy.
+			test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
