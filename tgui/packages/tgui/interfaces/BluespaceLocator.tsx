@@ -80,11 +80,6 @@ export const BluespaceLocator = (props) => {
     return 'green';
   };
 
-  const getSignalWidth = (distance: number) => {
-    const signalStrength = 1 - distance / trackingrange;
-    return Math.max(0, Math.min(100, signalStrength * 100));
-  };
-
   if (trackimplants.length === 0) {
     return (
       <Window width={550} height={500}>
@@ -203,18 +198,6 @@ export const BluespaceLocator = (props) => {
                   }}
                   onClick={() => setSelectedImplantName(implant.name)}
                 >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      height: '3px',
-                      width: `${getSignalWidth(implant.distance)}%`,
-                      backgroundColor: getArrowColor(implant.distance),
-                      transition: 'width 0.2s ease, background-color 0.2s ease',
-                    }}
-                  />
-
                   <Icon
                     name="user"
                     style={{
