@@ -165,15 +165,16 @@
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
-	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
-		freshly_laundered = FALSE
-		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
+	if(slot & ITEM_SLOT_ICLOTHING)
+		if(freshly_laundered)
+			freshly_laundered = FALSE
+			user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
 		update_wearer_status()
 
 /obj/item/clothing/under/dropped(mob/living/user)
 	. = ..()
-	update_wearer_status()
-	GLOB.suit_sensors_list -= user
+	if(user.get_item_by_slot(ITEM_SLOT_ICLOTHING) == src)
+		GLOB.suit_sensors_list -= user
 
 // Start suit sensor handling
 

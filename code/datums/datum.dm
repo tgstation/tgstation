@@ -338,7 +338,7 @@
 		var/list/filter_info = filter_data[index]
 		if (filter_info["name"] != name)
 			continue
-		filter_data -= filter_info
+		filter_data -= list(filter_info)
 		filter_cache -= filter_cache[index]
 		break
 

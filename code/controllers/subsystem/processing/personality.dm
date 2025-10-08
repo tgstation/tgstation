@@ -19,6 +19,9 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 
 /// Initialized personality singletons
 /datum/controller/subsystem/processing/personalities/proc/init_personalities()
+	if(length(personalities_by_type))
+		return // Already initialized
+
 	personalities_by_type = list()
 	personalities_by_key = list()
 	incompatibilities_by_group = list()
