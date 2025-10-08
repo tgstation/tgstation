@@ -1,7 +1,7 @@
 /datum/export/material
 	abstract_type = /datum/export/material
 	cost = 5 // Cost per SHEET_MATERIAL_AMOUNT, which is 100cm3 as of May 2023.
-	k_hit_percentile = 0.1 / MAX_STACK_SIZE //Meaning selling 1 full stack of materials will decrease subsequent stack cost by 10%
+	k_hit_percentile = 0.2 / MAX_STACK_SIZE //Meaning selling 1 full stack of materials will decrease subsequent sales by 20%
 	k_recovery_time = 8 MINUTES
 	message = "cm3 of developer's tears. Please, report this on github"
 	amount_report_multiplier = SHEET_MATERIAL_AMOUNT
@@ -182,7 +182,7 @@
 
 /datum/export/material/market/stock_block
 	amount_report_multiplier = 1
-	k_hit_percentile = 0.1 //10% hit per block stock which is synomonous to an full stack of sheets
+	k_hit_percentile = 0.2 //20% hit per block stock which is synomonous to an full stack of sheets
 	message = ""
 	unit_name = "stock block"
 	export_types = list(/obj/item/stock_block)
