@@ -637,7 +637,8 @@
 // if dragging, block redirect_Attack_hand_from_turf
 /obj/machinery/door/morgue/proc/drag_check(mob/user)
 	if (user.pulling)
-		return NONE
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/get_dumping_location()
 	return null
