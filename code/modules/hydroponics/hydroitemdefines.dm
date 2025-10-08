@@ -154,7 +154,7 @@
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	force = 15
+	force = 20
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3

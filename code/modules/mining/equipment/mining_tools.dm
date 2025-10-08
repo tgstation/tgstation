@@ -7,7 +7,7 @@
 	icon_angle = -45
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
-	force = 15
+	force = 20 //a tool made to dig through rocks should be able to perform well as an impromptu melee.
 	throwforce = 10
 	demolition_mod = 1.15
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -52,7 +52,7 @@
 	inhand_icon_state = "spickaxe"
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
-	force = 17
+	force = 21
 
 /obj/item/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
@@ -60,7 +60,7 @@
 	inhand_icon_state = "dpickaxe"
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
-	force = 19
+	force = 22
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
@@ -82,6 +82,7 @@
 	icon_state = "diamonddrill"
 	inhand_icon_state = "diamonddrill"
 	toolspeed = 0.2
+	force = 21
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/pickaxe/drill/jackhammer
@@ -89,6 +90,7 @@
 	icon_state = "jackhammer"
 	inhand_icon_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
+	force = 22
 	usesound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."
@@ -210,7 +212,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
-	force = 15
+	force = 17
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
 	tool_behaviour = TOOL_WRENCH
@@ -305,7 +307,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	toolspeed = 0.1
-	force = 30
+	force = 35
 	throwforce = 20
 	block_chance = 30
 	throw_range = 2

@@ -10,7 +10,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
-	force = 10
+	force = 16
 	throwforce = 7
 	demolition_mod = 0.25
 	wound_bonus = 15
