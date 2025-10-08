@@ -852,6 +852,9 @@
 		if(splatter_strength <= 0)
 			break
 		iter_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+		if(isliving(iter_atom))
+			var/mob/living/splatted = iter_atom
+			splatted.add_mood_event("splattered_with_blood", /datum/mood_event/splattered_with_blood)
 
 	splatter_strength--
 	// we used all our blood so go away

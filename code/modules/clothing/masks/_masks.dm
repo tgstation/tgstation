@@ -3,6 +3,7 @@
 	icon = 'icons/obj/clothing/masks.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
+	abstract_type = /obj/item/clothing/mask
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_MASK
 	strip_delay = 4 SECONDS

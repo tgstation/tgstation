@@ -650,7 +650,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  */
 /datum/storage/proc/remove_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force && check_adjacent)
-		if(isnull(user) || !user.CanReach(destination) || !user.CanReach(parent))
+		if(isnull(user) || !destination.IsReachableBy(user) || !parent.IsReachableBy(user))
 			return FALSE
 
 	var/list/taking = typecache_filter_list(real_location.contents, typecacheof(type))
@@ -701,9 +701,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	for(var/mob/user as anything in is_using)
-		if(user.client)
-			var/client/cuser = user.client
-			cuser.screen -= gone
+		user.hud_used?.open_containers -= gone
+		if(!user.client)
+			continue
+		var/client/cuser = user.client
+		cuser.screen -= gone
 
 	reset_item(gone)
 	refresh_views()
@@ -821,7 +823,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(locked)
 		user.balloon_alert(user, "closed!")
 		return
-	if(!user.CanReach(parent) || !user.CanReach(dest_object))
+	if(!parent.IsReachableBy(user) || !dest_object.IsReachableBy(user))
 		return
 
 	if(SEND_SIGNAL(dest_object, COMSIG_STORAGE_DUMP_CONTENT, src, user) & STORAGE_DUMP_HANDLED)
@@ -983,8 +985,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	for(var/mob/user in can_see_contents())
-		if (!user.CanReach(parent))
+		if (!can_be_reached_by(user))
 			hide_contents(user)
+
+/// Relay for parent.IsReachableBy
+/datum/storage/proc/can_be_reached_by(mob/user)
+	return parent.IsReachableBy(user)
 
 /// Close the storage UI for everyone viewing us.
 /datum/storage/proc/close_all()
@@ -1055,7 +1061,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	is_using |= to_show
 
+	to_show.hud_used.open_containers |= storage_interfaces[to_show].list_ui_elements()
 	to_show.client.screen |= storage_interfaces[to_show].list_ui_elements()
+	to_show.hud_used.open_containers |= real_location.contents
 	to_show.client.screen |= real_location.contents
 
 	return TRUE
@@ -1082,6 +1090,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(to_hide.client)
 		to_hide.client.screen -= storage_interfaces[to_hide].list_ui_elements()
 		to_hide.client.screen -= real_location.contents
+	if(to_hide.hud_used)
+		to_hide.hud_used.open_containers -= storage_interfaces[to_hide].list_ui_elements()
+		to_hide.hud_used.open_containers -=  real_location.contents
 	QDEL_NULL(storage_interfaces[to_hide])
 	storage_interfaces -= to_hide
 

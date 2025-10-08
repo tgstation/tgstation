@@ -37,7 +37,7 @@
 	to_chat(new_vampire, "[info_text]")
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
-	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
+	RegisterSignal(new_vampire, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	if(new_vampire.hud_used)
 		on_hud_created(new_vampire)
 	else
@@ -45,7 +45,7 @@
 
 /datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
 	QDEL_NULL(blood_display)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
@@ -78,11 +78,11 @@
 	blood_hud.infodisplay += blood_display
 	blood_hud.show_hud(blood_hud.hud_version)
 
-/datum/species/human/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+/datum/species/human/vampire/proc/on_attackby(mob/living/source, obj/item/attacking_item, mob/living/attacker, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
 
 	if(istype(attacking_item, /obj/item/nullrod/whip))
-		damage_mods += 2
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
 
 /datum/species/human/vampire/get_physical_attributes()
 	return "Vampires are afflicted with the Thirst, needing to sate it by draining the blood out of another living creature. However, they do not need to breathe or eat normally. \

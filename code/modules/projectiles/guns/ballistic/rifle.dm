@@ -77,7 +77,7 @@
 	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
-	AddComponent(/datum/component/bayonet_attachable, offset_x = 32, offset_y = 12)
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin")
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
@@ -137,8 +137,13 @@
 		There was probably a reason it wasn't manufactured this short to begin with. \
 		Cutting the weapon down seems to have not helped with the moisture problem."
 	icon_state = "sakhno_tactifucked"
+	inhand_icon_state = "slopno"
+	worn_icon_state = "slopno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
+
+/obj/item/gun/ballistic/rifle/boltaction/surplus/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin_surplus")
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
 	name = "\improper Sakhno-Zhihao Sporting Rifle"
@@ -369,7 +374,7 @@
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	icon_state = "enchanted_rifle"
-	inhand_icon_state = "sakhno"
+	inhand_icon_state = "enchanted"
 	worn_icon_state = "enchanted_rifle"
 	slot_flags = ITEM_SLOT_BACK
 	var/guns_left = 30
@@ -490,3 +495,30 @@
 
 /obj/item/gun/ballistic/rifle/sks/empty
 	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/sks/empty
+
+// lahti-l39 anti material rifle //
+
+/obj/item/gun/ballistic/automatic/lahti
+	name = "\improper Lahti L-39"
+	desc = "The Lahti L-39, now manufactured in space with better materials making it more portable and reliable- still loaded in the same massive cartridge, \
+		this thing was made to go through a tank and come out the other end- imagine what it could do to an exosuit, there's also a completely useless sight which is totally obstructed by the magazine."
+	icon = 'icons/obj/weapons/guns/lahtil39.dmi'
+	icon_state = "lahtil"
+	inhand_icon_state = "sniper"
+	worn_icon_state = "sniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
+	mag_display = FALSE
+	recoil = 15
+	w_class = WEIGHT_CLASS_BULKY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/lahtimagazine
+	fire_delay = 8 SECONDS
+	slowdown = 2
+	burst_size = 1
+	slot_flags = ITEM_SLOT_BACK
+	actions_types = list()
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3

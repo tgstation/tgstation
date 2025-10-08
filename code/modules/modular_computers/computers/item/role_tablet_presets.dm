@@ -394,6 +394,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
+		/datum/computer_file/program/portrait_printer,
 	)
 
 /obj/item/modular_computer/pda/curator/Initialize(mapload)

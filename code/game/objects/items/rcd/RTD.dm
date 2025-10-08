@@ -160,7 +160,7 @@
 	data["selected_root"] = root_category
 
 	data["categories"] = list()
-	for(var/sub_category as anything in GLOB.floor_designs[root_category])
+	for(var/sub_category in GLOB.floor_designs[root_category])
 		var/list/target_category =  GLOB.floor_designs[root_category][sub_category]
 
 		var/list/designs = list() //initialize all designs under this category

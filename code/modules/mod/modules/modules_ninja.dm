@@ -19,7 +19,7 @@
 	/// The alpha applied when the cloak is on.
 	var/stealth_alpha = 50
 
-/obj/item/mod/module/stealth/on_activation()
+/obj/item/mod/module/stealth/on_activation(mob/activator)
 	if(bumpoff)
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
 	RegisterSignal(mod.wearer, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
@@ -28,7 +28,7 @@
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_energy_cost)
 
-/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/stealth/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	if(bumpoff)
 		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
 	UnregisterSignal(mod.wearer, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_ITEM_ATTACK, COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
@@ -72,11 +72,11 @@
 	cooldown_time = 3 SECONDS
 
 
-/obj/item/mod/module/stealth/ninja/on_activation()
+/obj/item/mod/module/stealth/ninja/on_activation(mob/activator)
 	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 
-/obj/item/mod/module/stealth/ninja/on_deactivation(display_message = TRUE, deleting = FALSE)
+/obj/item/mod/module/stealth/ninja/on_deactivation(mob/activator, display_message = TRUE, deleting = FALSE)
 	. = ..()
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
 
@@ -287,7 +287,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	cooldown_time = 8 SECONDS
 
-/obj/item/mod/module/emp_shield/pulse/on_use()
+/obj/item/mod/module/emp_shield/pulse/on_use(mob/activator)
 	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE)
 	empulse(src, heavy_range = 4, light_range = 6)
 	drain_power(use_energy_cost)
@@ -302,6 +302,7 @@
 		and even useful information such as their overall health and wellness. This one comes with a clock that calibrates to the \
 		local system time, and an operational ID number display. The vital monitor's speaker has been removed."
 	display_time = TRUE
+	sensor_boost = FALSE
 	death_sound = null
 	death_sound_volume = null
 
@@ -419,7 +420,7 @@
 		return FALSE
 	return ..()
 
-/obj/item/mod/module/adrenaline_boost/on_use()
+/obj/item/mod/module/adrenaline_boost/on_use(mob/activator)
 	if(IS_SPACE_NINJA(mod.wearer))
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))

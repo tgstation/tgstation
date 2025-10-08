@@ -236,16 +236,22 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 // Ammo box multiload defines
 /// Ammo box does not accept multiload in or out, e.g. ammo box CANNOT transfer multiple casings in one action, either IN or OUT.
 #define AMMO_BOX_MULTILOAD_NONE	0
-/// Ammo box accepts multiload going in, e.g. ammo box can transfer multiple casings IN at once.
+/// Ammo box accepts multiload going in, e.g. a magazine being fed from a stripper clip.
 #define AMMO_BOX_MULTILOAD_IN	(1 << 0)
-/// Ammo box accepts multiload going out, e.g. ammo box can transfer multiple casings OUT at once.
+/// Ammo box can multiload going out to other ammo boxes, but not loaded magazines, e.g. an ammo box feeding into an unloaded magazine.
 #define AMMO_BOX_MULTILOAD_OUT	(1 << 1)
+/// Ammo box can multiload going out into loaded magazines, e.g. a speedloader feeding into a revolver's cylinder or a stripper clip feeding into a loaded magazine.
+#define AMMO_BOX_MULTILOAD_OUT_LOADED	(1 << 2)
 /// Ammo box accepts multiload in AND out, e.g. ammo box can transfer multiple casings IN at once *and* OUT at once.
-#define AMMO_BOX_MULTILOAD_BOTH	AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT
+/// Ammo boxes are assumed to have some variety of magazine loading assistance.
+#define AMMO_BOX_MULTILOAD_BOTH	(AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT)
+/// Ammo box can accept multiloads, AND can give multiloads to boxes that are loaded or not loaded. Individual stripper clips would count for this.
+#define AMMO_BOX_MULTILOAD_ALL	(AMMO_BOX_MULTILOAD_IN | AMMO_BOX_MULTILOAD_OUT | AMMO_BOX_MULTILOAD_OUT_LOADED)
 
 DEFINE_BITFIELD(ammo_box_multiload, list(
 	"LOAD_IN" = AMMO_BOX_MULTILOAD_IN,
 	"LOAD_OUT" = AMMO_BOX_MULTILOAD_OUT,
+	"LOAD_OUT_LOADED" = AMMO_BOX_MULTILOAD_OUT_LOADED,
 ))
 
 #define SUPPRESSED_NONE 0

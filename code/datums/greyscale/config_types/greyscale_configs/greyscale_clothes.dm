@@ -89,6 +89,15 @@
 	name = "Santa Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
+/datum/greyscale_config/ushanka
+	name = "Ushanka"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ushanka.json'
+
+/datum/greyscale_config/ushanka/worn
+	name = "Ushanka (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
 //
 // MASKS
 //

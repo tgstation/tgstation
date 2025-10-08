@@ -48,7 +48,7 @@ function check_body_for_labels(body) {
   const labels_to_add = [];
 
   // detect "fixes #1234" or "resolves #1234" in body
-  const fix_regex = /\b(?:fix(?:es|ed)?|resolve[sd]?)\s*#\d+\b/gim;
+  const fix_regex = /\b(?:fix(?:es|ed)?|resolve[sd]?)\s*(?:#\d+|https:\/\/github\.com\/\S+\/issues\/\d+)/gim;
   if (fix_regex.test(body)) {
     labels_to_add.push("Fix");
   }
@@ -194,34 +194,34 @@ export async function get_updated_label_set({ github, context }) {
 
   // Always check body/title (otherwise we can lose the changelog labels)
   if (title)
-    check_title_for_labels(title).forEach((label) =>
-      updated_labels.add(label)
-    );
+    check_title_for_labels(title).forEach((label) => updated_labels.add(label));
   if (body)
     check_body_for_labels(body).forEach((label) => updated_labels.add(label));
 
-  // Keep track of labels that were manually added by maintainers in the events.
-  // And make sure they -stay- added.
+  // Keep track of labels that were manually added/removed by maintainers in the events.
+  // And make sure they -stay- added/removed.
   try {
-    await github.paginate(
+    const events = await github.paginate(
       github.rest.issues.listEventsForTimeline,
       {
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: context.payload.pull_request.number,
         per_page: 100,
-      },
-      (response) => {
-        for (const eventData of response.data) {
-          if (
-            eventData.event === "labeled" &&
-            eventData.actor?.login !== "github-actions"
-          ) {
-            updated_labels.add(eventData.label.name);
-          }
-        }
       }
     );
+
+    for (const eventData of events) {
+      // Skip all bot actions
+      if (eventData.actor?.login === "github-actions[bot]") {
+        continue;
+      }
+      if (eventData.event === "labeled") {
+        updated_labels.add(eventData.label.name);
+      } else if (eventData.event === "unlabeled") {
+        updated_labels.delete(eventData.label.name);
+      }
+    }
   } catch (error) {
     console.error("Error fetching paginated events:", error);
   }

@@ -87,7 +87,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/C in target.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/C in target.get_all_cells())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
@@ -200,16 +200,15 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/green
 	colour = SLIME_TYPE_GREEN
-	effect_desc = "Fully heals the target and changes the spieces or color of a slime or jellyperson."
+	effect_desc = "Fully heals the target and changes the species or color of a slime or jellyperson."
 
 /obj/item/slimecross/regenerative/green/core_effect(mob/living/target, mob/user)
 	if(isslime(target))
 		target.visible_message(span_warning("The [target] suddenly changes color!"))
 		var/mob/living/basic/slime/target_slime = target
-		target_slime.random_colour()
+		target_slime.set_slime_type()
 	if(isjellyperson(target))
 		target.reagents.add_reagent(/datum/reagent/mutationtoxin/jelly,5)
-
 
 /obj/item/slimecross/regenerative/pink
 	colour = SLIME_TYPE_PINK

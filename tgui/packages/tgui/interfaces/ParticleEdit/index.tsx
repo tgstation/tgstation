@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 import {
   createContext,
   type Dispatch,

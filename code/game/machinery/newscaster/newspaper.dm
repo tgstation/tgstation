@@ -44,6 +44,8 @@
 		wield_callback = CALLBACK(src, PROC_REF(on_wielded)),\
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwielded)),\
 	)
+	AddElement(/datum/element/burn_on_item_ignition)
+	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(close_paper_ui))
 	creation_time = GLOB.news_network.last_action
 	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
 		news_content += iterated_feed_channel
@@ -54,8 +56,6 @@
 	saved_wanted_body = GLOB.news_network.wanted_issue.body
 	if(GLOB.news_network.wanted_issue.img)
 		saved_wanted_icon = GLOB.news_network.wanted_issue.img
-	AddElement(/datum/element/burn_on_item_ignition)
-	RegisterSignal(src, COMSIG_ATOM_IGNITED_BY_ITEM, PROC_REF(close_paper_ui))
 
 /obj/item/newspaper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -106,7 +106,7 @@
 			owner.update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
-	if (!user.can_write(tool))
+	if (!user.can_write(tool, TRUE))
 		return NONE
 
 	if (scribble_page == current_page)
@@ -262,8 +262,7 @@
 		channel_data["channel_messages"] = list()
 		for(var/datum/feed_message/feed_messages as anything in current_channel.messages)
 			if(feed_messages.creation_time > creation_time)
-				data["channel_has_messages"] = FALSE
-				break
+				continue
 			data["channel_has_messages"] = TRUE
 			var/has_image = FALSE
 			if(feed_messages.img)

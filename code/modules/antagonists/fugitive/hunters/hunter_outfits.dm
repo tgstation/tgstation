@@ -42,7 +42,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	head = /obj/item/clothing/head/helmet/alt
 	shoes = /obj/item/clothing/shoes/russian
-	l_pocket = /obj/item/ammo_box/strilka310
+	l_pocket = /obj/item/ammo_box/speedloader/strilka310
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	id = /obj/item/card/id/advanced/bountyhunter
 
@@ -85,8 +85,8 @@
 
 	if(istype(equip_to.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/uniform = equip_to.w_uniform
-		uniform.sensor_mode = NO_SENSORS
-		uniform.has_sensor = NO_SENSORS
+		uniform.set_sensor_mode(SENSOR_OFF)
+		uniform.set_has_sensor(NO_SENSORS)
 
 /datum/outfit/russian_hunter/leader
 	name = "Russian Hunter Leader"

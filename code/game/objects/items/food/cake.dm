@@ -1,5 +1,6 @@
 /obj/item/food/cake
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cake
 	bite_consumption = 3
 	max_volume = 80
 	food_reagents = list(
@@ -24,6 +25,7 @@
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cakeslice
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,

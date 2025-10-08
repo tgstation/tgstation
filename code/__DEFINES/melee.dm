@@ -11,6 +11,7 @@
 #define MARTIALART_SLEEPINGCARP "sleeping carp"
 #define MARTIALART_WRESTLING "wrestling"
 #define MARTIALART_JUNGLEARTS "jungle arts"
+#define MARTIALART_SPIDERSBITE "spider's bite"
 
 /// The number of hits required to crit a target
-#define HITS_TO_CRIT(damage) round(100 / damage, 0.1)
+#define HITS_TO_CRIT(damage) round(100 / (damage), 0.1)

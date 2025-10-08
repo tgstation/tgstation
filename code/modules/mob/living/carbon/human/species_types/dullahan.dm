@@ -248,10 +248,9 @@
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in detached_head
 	brain.name = "[wearer.name]'s brain"
 
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
+/obj/item/dullahan_relay/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
-	if(owner)
-		owner.Hear(message, speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range)
+	owner?.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range)
 
 ///Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)
@@ -260,7 +259,7 @@
 		hearers += owner
 
 ///Stops dullahans from gibbing when regenerating limbs
-/obj/item/dullahan_relay/proc/unlist_head(datum/source, noheal = FALSE, list/excluded_zones)
+/obj/item/dullahan_relay/proc/unlist_head(datum/source, list/excluded_zones)
 	SIGNAL_HANDLER
 	excluded_zones |= BODY_ZONE_HEAD
 

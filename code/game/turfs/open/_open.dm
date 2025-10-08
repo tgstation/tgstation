@@ -1,4 +1,5 @@
 /turf/open
+	abstract_type = /turf/open
 	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 	///negative for faster, positive for slower
@@ -135,6 +136,9 @@
 		return
 
 	if(!destination_z || !destination_x || !destination_y || arrived.pulledby || arrived.currently_z_moving)
+		return
+
+	if(SSatoms.initialized == INITIALIZATION_INNEW_MAPLOAD) // we don't want to be transitioning atoms to another z-level while we are still in mapload
 		return
 
 	var/tx = destination_x
@@ -413,7 +417,7 @@
 	for(var/mob/living/basic/slime/M in src)
 		M.apply_water()
 
-	wash(CLEAN_WASH, TRUE)
+	wash(CLEAN_WASH | CLEAN_RAD, TRUE)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, daze_amount, force_drop)
@@ -453,7 +457,6 @@
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
-	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop && iscarbon(slipper)) //carbon specific behavior that living doesn't have
 		var/mob/living/carbon/carbon = slipper
 		for(var/obj/item/item in slipper.held_items)

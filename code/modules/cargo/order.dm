@@ -204,7 +204,7 @@
 	return
 
 /datum/supply_order/proc/append_order(list/new_contents, cost_increase)
-	for(var/i as anything in new_contents)
+	for(var/i in new_contents)
 		if(pack.contains[i])
 			pack.contains[i] += new_contents[i]
 		else

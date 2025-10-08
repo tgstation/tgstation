@@ -93,7 +93,7 @@
 
 	var/lower_cd = lower_tick_interval
 	var/upper_cd = upper_tick_interval
-	if(!variable_tier)
+	if(variable_tier)
 		var/seconds_left = (duration - world.time) / 10
 		switch(seconds_left)
 			if(0 to 20)

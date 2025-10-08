@@ -30,6 +30,8 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
  * Singleton that holds all the information about each loadout items, and how to equip them.
  */
 /datum/loadout_item
+	/// The abstract parent of this loadout item, to determine which items to not instantiate
+	abstract_type = /datum/loadout_item
 	/// The category of the loadout item. Set automatically in New
 	VAR_FINAL/datum/loadout_category/category
 	/// Displayed name of the loadout item.
@@ -49,8 +51,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Whether this item can be reskinned.
 	/// Only works if the item has a "unique reskin" list set.
 	var/can_be_reskinned = FALSE
-	/// The abstract parent of this loadout item, to determine which items to not instantiate
-	var/abstract_type = /datum/loadout_item
 	/// The actual item path of the loadout item.
 	var/obj/item/item_path
 	/// Icon file (DMI) for the UI to use for preview icons.

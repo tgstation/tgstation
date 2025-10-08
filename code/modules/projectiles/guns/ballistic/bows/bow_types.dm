@@ -8,7 +8,8 @@
 /obj/item/gun/ballistic/bow/shortbow
 	name = "shortbow"
 	desc = "A simple homemade shortbow. Great for LARPing. Or poking out someones eye."
-	projectile_damage_multiplier = 0.36
+	obj_flags = UNIQUE_RENAME
+	projectile_damage_multiplier = 0.5
 
 ///chaplain's divine archer bow
 /obj/item/gun/ballistic/bow/divine
@@ -21,7 +22,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	obj_flags = UNIQUE_RENAME
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/bow/holy
-	projectile_damage_multiplier = 0.4
+	projectile_damage_multiplier = 0.6
+	projectile_speed_multiplier = 1.5
 
 /obj/item/ammo_box/magazine/internal/bow/holy
 	name = "divine bowstring"
@@ -52,3 +54,14 @@
 /obj/item/gun/ballistic/bow/divine/with_quiver/Initialize(mapload)
 	. = ..()
 	new /obj/item/storage/bag/quiver/holy(loc)
+
+/// Ashen bow, crafted from watcher sinew and animal bones.
+/obj/item/gun/ballistic/bow/ashenbow
+	name = "ashen bow"
+	desc = "A bow made from watcher sinew and bone. Seems to possess an almost eerie radiance about it."
+	inhand_icon_state = "ashenbow"
+	base_icon_state = "ashenbow"
+	worn_icon_state = "ashenbow"
+	slot_flags = ITEM_SLOT_BACK
+	obj_flags = UNIQUE_RENAME
+	projectile_damage_multiplier = 0.5

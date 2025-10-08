@@ -9,6 +9,7 @@
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
+	subsystem_type = /datum/controller/subsystem/processing/digital_clock
 
 /obj/item/wallframe/digital_clock
 	name = "digital clock frame"
@@ -79,12 +80,8 @@
 
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
-	START_PROCESSING(SSdigital_clock, src)
 	find_and_hang_on_wall()
-
-/obj/machinery/digital_clock/Destroy()
-	STOP_PROCESSING(SSdigital_clock, src)
-	return ..()
+	AddElement(/datum/element/beauty, 200)
 
 /obj/machinery/digital_clock/process(seconds_per_tick)
 	if(machine_stat & NOPOWER)

@@ -44,6 +44,7 @@
 	shaded_charge = 1
 	charge_sections = 1
 	spread = 22.5
+	obj_flags = UNIQUE_RENAME
 
 /obj/item/gun/energy/disabler/smoothbore/Initialize(mapload)
 	. = ..()

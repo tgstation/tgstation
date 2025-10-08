@@ -12,7 +12,6 @@
 		ui = new(user, src, "Vending", name)
 		ui.open()
 
-
 /**
  * Returns a list of given product records of the vendor to be used in UI.
  * arguments:
@@ -64,7 +63,6 @@
 
 /obj/machinery/vending/ui_static_data(mob/user)
 	var/list/data = list()
-	data["onstation"] = onstation
 	if(ad_list.len)
 		data["ad"] = ad_list[rand(1, ad_list.len)]
 	data["all_products_free"] = all_products_free

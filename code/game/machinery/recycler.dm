@@ -178,6 +178,14 @@
 				not_eaten += 1
 				continue
 
+		// Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
+		// unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
+		if (iscloset(thing))
+			var/obj/structure/closet/as_closet = thing
+			if (as_closet.secure && as_closet.locked)
+				not_eaten += 1
+				continue
+
 		if (istype(thing, /obj/item/organ/brain) || istype(thing, /obj/item/dullahan_relay))
 			living_detected = TRUE
 
@@ -215,7 +223,17 @@
 	for(var/i = length(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
-		use_energy(active_power_usage / (recycle_item(nom[i]) ? 1 : 2)) //recycling stuff that produces no material takes just half the power
+		var/full_power_usage = TRUE
+		var/obj/nom_obj = nom[i]
+		if (isitem(nom_obj))
+			// Whether or not items consume full power depends on if they produced a material when recycled.
+			full_power_usage = recycle_item(nom_obj)
+		else
+			// When a non-item is eaten, we deconstruct it with dismantled = FALSE so that
+			// it and its contents aren't just deleted. These always consume full power.
+			nom_obj.deconstruct(FALSE)
+		use_energy(active_power_usage / (full_power_usage ? 1 : 2))
+
 	if(nom.len && sound)
 		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)

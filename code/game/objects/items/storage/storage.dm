@@ -1,6 +1,7 @@
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/storage/storage.dmi'
+	abstract_type = /obj/item/storage
 	w_class = WEIGHT_CLASS_NORMAL
 	interaction_flags_click = ALLOW_RESTING | FORBID_TELEKINESIS_REACH
 	action_slots = ALL

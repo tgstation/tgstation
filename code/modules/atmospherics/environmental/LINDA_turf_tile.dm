@@ -385,8 +385,11 @@
 	var/atom/movable/moving_atom
 	for(var/thing in src)
 		moving_atom = thing
-		if (!moving_atom.anchored && !moving_atom.pulledby && moving_atom.last_high_pressure_movement_air_cycle < SSair.times_fired)
-			moving_atom.experience_pressure_difference(pressure_difference, pressure_direction)
+		if (moving_atom.last_high_pressure_movement_air_cycle < SSair.times_fired)
+			if (!moving_atom.anchored && !moving_atom.pulledby)
+				moving_atom.experience_pressure_difference(pressure_difference, pressure_direction)
+			else
+				SEND_SIGNAL(moving_atom, COMSIG_MOVABLE_RESISTED_SPACEWIND, pressure_difference, pressure_direction)
 
 /atom/movable
 	///How much delta pressure is needed for us to move

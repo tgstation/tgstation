@@ -11,7 +11,7 @@
 	volume = 30
 	possible_transfer_amounts = list(5)
 	resistance_flags = ACID_PROOF
-	reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	var/ignore_flags = NONE
 	var/infinite = FALSE
@@ -23,8 +23,10 @@
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/item/reagent_containers/hypospray/attack(mob/living/affected_mob, mob/user)
-	inject(affected_mob, user)
+/obj/item/reagent_containers/hypospray/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	return inject(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
@@ -40,6 +42,7 @@
 		injected += injected_reagent.name
 	var/contained = english_list(injected)
 	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(!used_up && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
@@ -122,7 +125,7 @@
 	has_variable_transfer_amount = FALSE
 	volume = 15
 	ignore_flags = 1 //so you can medipen through spacesuits
-	reagent_flags = NONE
+	initial_reagent_flags = NONE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = PAYCHECK_CREW

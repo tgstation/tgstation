@@ -15,6 +15,8 @@
 	var/poll_role = "split personality"
 	///How long do we give ghosts to respond?
 	var/poll_time = 20 SECONDS
+	///The stranger_backseat does not have temp body component so we will ghostize() on_lose
+	var/temp_component = FALSE
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/brain_owner = owner
@@ -41,7 +43,7 @@
 /// Attempts to get a ghost to play the personality
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?",
+		question = "Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice(poll_role)]?. You will be able to return to your original body after.",
 		check_jobban = ROLE_PAI,
 		poll_time = poll_time,
 		checked_target = owner,
@@ -56,10 +58,25 @@
 	if(isnull(ghost))
 		qdel(src)
 		return
+	if(ghost.mind.current)// if they previous had a body preserve them else that means they never had one or it was destroyed so assign ckey like normal
+		stranger_backseat.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = ghost.mind, \
+		old_body = ghost.mind.current, \
+		)
+		temp_component = TRUE
+
 
 	stranger_backseat.PossessByPlayer(ghost.ckey)
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
+
+	owner_backseat.AddComponent( \
+		/datum/component/temporary_body, \
+		old_mind = owner.mind, \
+		old_body = owner, \
+		perma_body_attached = TRUE, \
+	)
 
 
 /datum/brain_trauma/severe/split_personality/on_life(seconds_per_tick, times_fired)
@@ -72,72 +89,33 @@
 	..()
 
 /datum/brain_trauma/severe/split_personality/on_lose()
-	if(current_controller != OWNER) //it would be funny to cure a guy only to be left with the other personality, but it seems too cruel
-		switch_personalities(TRUE)
+	// qdel the mob with the temporary component will ensure the original mind will go back into the body and vice versa for the stranger mind
+	if(!temp_component)
+		stranger_backseat?.ghostize()
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
 	..()
 
-
+// Changes who controls the body
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities(reset_to_owner = FALSE)
 	if(QDELETED(owner) || QDELETED(stranger_backseat) || QDELETED(owner_backseat))
 		return
 
-	var/mob/living/split_personality/current_backseat
-	var/mob/living/split_personality/new_backseat
 	if(current_controller == STRANGER || reset_to_owner)
-		current_backseat = owner_backseat
-		new_backseat = stranger_backseat
+		//back seat to body and vice versa
+		stranger_backseat.PossessByPlayer(owner.ckey)
+		//logging
+		owner_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [stranger_backseat.key])", LOG_GAME)
+		owner.PossessByPlayer(owner_backseat.ckey)
+		to_chat(stranger_backseat, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
+
 	else
-		current_backseat = stranger_backseat
-		new_backseat = owner_backseat
+		owner_backseat.PossessByPlayer(owner.ckey)
+		stranger_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [owner_backseat.key])", LOG_GAME)
+		owner.PossessByPlayer(stranger_backseat.ckey)
+		to_chat(owner_backseat, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
 
-	if(!current_backseat.client) //Make sure we never switch to a logged off mob.
-		return
-
-	current_backseat.log_message("assumed control of [key_name(owner)] due to [src]. (Original owner: [current_controller == OWNER ? owner.key : current_backseat.key])", LOG_GAME)
-	to_chat(owner, span_userdanger("You feel your control being taken away... your other personality is in charge now!"))
-	to_chat(current_backseat, span_userdanger("You manage to take control of your body!"))
-
-	//Body to backseat
-
-	var/h2b_id = owner.computer_id
-	var/h2b_ip= owner.lastKnownIP
-	owner.computer_id = null
-	owner.lastKnownIP = null
-
-	new_backseat.ckey = owner.ckey
-
-	new_backseat.name = owner.name
-
-	if(owner.mind)
-		new_backseat.mind = owner.mind
-
-	if(!new_backseat.computer_id)
-		new_backseat.computer_id = h2b_id
-
-	if(!new_backseat.lastKnownIP)
-		new_backseat.lastKnownIP = h2b_ip
-
-	if(reset_to_owner && new_backseat.mind)
-		new_backseat.ghostize(FALSE)
-
-	//Backseat to body
-
-	var/s2h_id = current_backseat.computer_id
-	var/s2h_ip= current_backseat.lastKnownIP
-	current_backseat.computer_id = null
-	current_backseat.lastKnownIP = null
-
-	owner.ckey = current_backseat.ckey
-	owner.mind = current_backseat.mind
-
-	if(!owner.computer_id)
-		owner.computer_id = s2h_id
-
-	if(!owner.lastKnownIP)
-		owner.lastKnownIP = s2h_ip
-
+	to_chat(owner, span_userdanger("You manage to take control of your body!"))
 	current_controller = !current_controller
 
 
@@ -160,11 +138,6 @@
 		qdel(src) //in case trauma deletion doesn't already do it
 
 	if((body.stat == DEAD && trauma.owner_backseat == src))
-		trauma.switch_personalities()
-		qdel(trauma)
-
-	//if one of the two ghosts, the other one stays permanently
-	if(!body.client && trauma.initialized)
 		trauma.switch_personalities()
 		qdel(trauma)
 
@@ -221,7 +194,7 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind? You will be able to return to your original body after.", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
 	if(chosen_one)
 		stranger_backseat.PossessByPlayer(chosen_one.ckey)
 	else

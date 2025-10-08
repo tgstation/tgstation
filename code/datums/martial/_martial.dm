@@ -35,6 +35,15 @@
 	/// If TRUE, the user is locked to using this martial art, and can't swap to other ones they know.
 	/// If the mob has two locked martial arts, it's first come first serve.
 	var/locked_to_use = FALSE
+	/// A modifier to the effective grab state for resist grabs of users of this martial art.
+	/// IE: grab_state_modifier = 1 means passive grabs are aggro grab difficulty, and aggro grabs are neckgrab difficulty.
+	var/grab_state_modifier = 0
+	/// A modifier to the damage dealt on a failed grab resist.
+	/// IE: grab_damage_modifier = 10 means 10 more stamina damage dealt
+	var/grab_damage_modifier = 0
+	/// A modifier to the chance of escaping a grab.
+	/// IE: grab_escape_chance_modifier = -10 means 10% less chance to escape a grab
+	var/grab_escape_chance_modifier = 0
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
 	. = ..()
@@ -216,6 +225,43 @@
  */
 /datum/martial_art/proc/can_use(mob/living/martial_artist)
 	return TRUE
+
+/**
+ * Gets what limb is being used going when punching with this martial art.
+ *
+ * Override get_prefered_attacking_limb() to change the limb used.
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * A bodypart, or null if we want to use default behavior (brain determines, or active hand).
+ */
+/datum/martial_art/proc/get_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!can_use(martial_artist))
+		return null
+	var/preferred_zone = get_prefered_attacking_limb(martial_artist, target)
+	if(!preferred_zone)
+		return null
+	return martial_artist.get_bodypart(preferred_zone)
+
+/**
+ * Allows martial arts to have a say which limb the user should be striking with.
+ *
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ *
+ * Returns
+ * * A body zone, or null if we have no preference.
+ */
+/datum/martial_art/proc/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)
+	SHOULD_CALL_PARENT(FALSE)
+	PROTECTED_PROC(TRUE)
+	return null
 
 /**
  * Adds the passed element to the current streak, resetting it if the target is not the same as the last target.

@@ -89,7 +89,7 @@
 	var/list/material_map_amounts = list()
 	for(var/atom/object as anything in reccursive_contents)
 		var/list/item_materials = object.custom_materials
-		for(var/mat as anything in custom_materials)
+		for(var/mat in custom_materials)
 			var/mat_amount = 1 //no materials mean we assign this default amount
 			if(length(item_materials))
 				mat_amount = item_materials[mat] || 1 //if this object doesn't have our material type then assign a default value of 1
@@ -104,7 +104,7 @@
 				mat_list_per_item += mat_amount
 
 	//Step 3: normalize & scale material_map_amounts with material_map_sum
-	for(var/mat as anything in material_map_amounts)
+	for(var/mat in material_map_amounts)
 		var/mat_sum = material_map_sum[mat]
 		var/list/mat_per_item = material_map_amounts[mat]
 		for(var/i in 1 to mat_per_item.len)
@@ -114,7 +114,7 @@
 	var/index = 1
 	for(var/atom/object as anything in reccursive_contents)
 		var/list/final_material_list = list()
-		for(var/mat as anything in material_map_amounts)
+		for(var/mat in material_map_amounts)
 			var/list/mat_per_item = material_map_amounts[mat]
 			final_material_list[mat] = mat_per_item[index]
 		object.set_custom_materials(final_material_list, multiplier)

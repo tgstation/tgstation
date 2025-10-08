@@ -124,3 +124,37 @@
 	)
 	tastes = list("the loss of 5 TC" = 1, "eaten friend" = 1)
 	spawned_mob = /mob/living/basic/pony/dangerous
+
+/obj/item/food/monkeycube/random
+	name = "monster cube"
+	desc = "A cube that, when water is added, creates a random creature. Who knows what's inside?"
+	food_reagents = list(
+		/datum/reagent/toxin = 15,
+		/datum/reagent/medicine/strange_reagent = 1,
+	)
+
+/obj/item/food/monkeycube/random/Initialize(mapload)
+	. = ..()
+	spawned_mob = pick_weight(list(
+		/mob/living/basic/bear = 4,
+		/mob/living/basic/bear/snow = 1,
+		/mob/living/basic/blankbody = 2,
+		/mob/living/basic/blob_minion/blobbernaut = 2,
+		/mob/living/basic/blob_minion/spore = 2,
+		/mob/living/basic/carp = 4,
+		/mob/living/basic/carp/mega = 1,
+		/mob/living/basic/creature = 2,
+		/mob/living/basic/eyeball = 1,
+		/mob/living/basic/gorilla = 5,
+		/mob/living/basic/migo = 2,
+		/mob/living/basic/mining/basilisk = 5,
+		/mob/living/basic/mining/lobstrosity = 1,
+		/mob/living/basic/mining/lobstrosity/lava = 4,
+		/mob/living/basic/mining/wolf = 4,
+		/mob/living/basic/pet/cat/feral = 1,
+		/mob/living/basic/spider/giant = 5,
+		/mob/living/basic/spider/giant/hunter = 1,
+		/mob/living/basic/spider/giant/tank = 1,
+		/mob/living/basic/spider/giant/tarantula = 1,
+		/mob/living/basic/spider/giant/viper = 1,
+	))

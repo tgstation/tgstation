@@ -325,14 +325,15 @@
  *
  * * [source_reagent_typepath][/datum/reagent] - the typepath of the reagent you are trying to convert
  * * [target_reagent_typepath][/datum/reagent] - the final typepath the source_reagent_typepath will be converted into
- * * conversion_volume - how much of the reagent volume to convert. -1 for all
+ * * conversion_volume - how much of the reagent volume to convert
  * * multiplier - the multiplier applied on the source_reagent_typepath volume before converting
  * * include_source_subtypes- if TRUE will convert all subtypes of source_reagent_typepath into target_reagent_typepath as well
+ * * keep_data - works only when include_source_subtypes is FALSE. Transfers over the data of the converted reagent
  */
 /datum/reagents/proc/convert_reagent(
 	datum/reagent/source_reagent_typepath,
 	datum/reagent/target_reagent_typepath,
-	conversion_volume = -1,
+	conversion_volume = total_volume,
 	multiplier = 1,
 	include_source_subtypes = FALSE,
 	keep_data = FALSE,
@@ -343,12 +344,15 @@
 	if(!ispath(target_reagent_typepath))
 		stack_trace("invalid reagent path passed to convert reagent [target_reagent_typepath]")
 		return FALSE
+	if(conversion_volume <= 0 || conversion_volume > total_volume)
+		stack_trace("conversion volume [conversion_volume] out of bounds range is 0<value<=[total_volume]")
+		return FALSE
+	keep_data = keep_data && !include_source_subtypes
 
 	var/weighted_volume = 0
 	var/weighted_purity = 0
 	var/weighted_ph = 0
 	var/reagent_volume = 0
-	///Stores the data value of the reagent to be converted if keep_data is TRUE. Might not work well if include_source_subtypes is TRUE.
 	var/list/reagent_data
 
 	var/list/cached_reagents = reagent_list
@@ -360,30 +364,25 @@
 		else if(!istype(cached_reagent, source_reagent_typepath))
 			continue
 
-		if(conversion_volume != -1)
-			if(cached_reagent.volume > conversion_volume)
-				remove_reagent(cached_reagent.type, conversion_volume)
-				weighted_volume += conversion_volume
-				break
-
-			weighted_volume += cached_reagent.volume
-			conversion_volume -= cached_reagent.volume
-			del_reagent(cached_reagent.type)
-			continue
-
-		//compute average of everything
+		//check conversion threshold. stop if we have reached our target
 		reagent_volume = cached_reagent.volume
+		if(cached_reagent.volume > conversion_volume)
+			reagent_volume = conversion_volume
+			cached_reagent.volume -= conversion_volume
+			conversion_volume = 0
+		else
+			conversion_volume -= cached_reagent.volume
+			cached_reagent.volume = 0
+
+		//compute average of everything. preserve data if nessassary
 		weighted_purity += cached_reagent.purity * reagent_volume
 		weighted_ph += cached_reagent.ph * reagent_volume
 		weighted_volume += reagent_volume
-
-		//zero the volume out so it gets removed
-		cached_reagent.volume = 0
 		if(keep_data)
 			reagent_data = copy_data(cached_reagent)
 
-		//if we reached here means we have found our specific reagent type so break
-		if(!include_source_subtypes)
+		//stop if we found our specific reagent or reached the conversion threshold
+		if(!include_source_subtypes || !conversion_volume)
 			break
 
 	//add the new target reagent with the averaged values from the source reagents
@@ -777,10 +776,8 @@
  * * coeff - multiplier to be applied on temp diff between param temp and current temp
  */
 /datum/reagents/proc/expose_temperature(temperature, coeff = 0.02)
-	if(istype(my_atom,/obj/item/reagent_containers))
-		var/obj/item/reagent_containers/RCs = my_atom
-		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
-			return
+	if(flags & NO_REACT) //stasis holders IE cryobeaker
+		return
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)

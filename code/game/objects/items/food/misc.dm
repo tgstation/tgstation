@@ -194,7 +194,7 @@
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
-	RegisterSignals(src, list(COMSIG_ITEM_GRILLED_RESULT, COMSIG_ITEM_BAKED_RESULT, COMSIG_ITEM_MICROWAVE_COOKED_FROM), PROC_REF(convert_to_bad_food))
+	RegisterSignals(src, list(COMSIG_ITEM_GRILLED_RESULT, COMSIG_ITEM_BAKED_RESULT, COMSIG_ITEM_MICROWAVE_COOKED, COMSIG_OBJ_DECOMPOSITION_RESULT), PROC_REF(convert_to_bad_food))
 	if(stink_particles)
 		add_shared_particles(stink_particles)
 
@@ -390,7 +390,7 @@
 	to_chat(user, span_notice("You stick the rod into the stick of butter."))
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
-	if (user.CanReach(new_item))
+	if (new_item.IsReachableBy(user))
 		user.put_in_hands(new_item)
 	qdel(src)
 	return TRUE

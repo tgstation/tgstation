@@ -1,5 +1,5 @@
 /// A spooky skull which heals lavaland mobs, attacks miners, and infests their bodies
-/mob/living/basic/legion_brood
+/mob/living/basic/mining/legion_brood
 	name = "legion"
 	desc = "One of many."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
@@ -10,6 +10,7 @@
 	basic_mob_flags = DEL_ON_DEATH
 	mob_size = MOB_SIZE_SMALL
 	pass_flags = PASSTABLE | PASSMOB
+	layer = MOB_UPPER_LAYER
 	mob_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_MINING
 	faction = list(FACTION_MINING)
 	unsuitable_atmos_damage = 0
@@ -29,23 +30,39 @@
 	attack_sound = 'sound/items/weapons/pierce.ogg'
 	density = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
+	kill_count = FALSE
 	/// Reference to a guy who made us
 	var/datum/weakref/created_by
+	/// How many random icon_states we can pick from
+	var/random_states = 3
+	/// Do we have emissives?
+	var/has_emissive = TRUE
 
-/mob/living/basic/legion_brood/Initialize(mapload)
+/mob/living/basic/mining/legion_brood/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_PERMANENTLY_MORTAL), INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/swarming)
+	AddComponent(/datum/component/swarming, max_x = 12, max_y = 12)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
+	if (random_states <= 1)
+		if (has_emissive)
+			update_appearance(UPDATE_OVERLAYS)
+		return
+	icon_state = "[initial(icon_state)]_[rand(1, random_states)]"
+	icon_living = icon_state
+	icon_dead = icon_state
+	update_appearance()
 
-/mob/living/basic/legion_brood/death(gibbed)
+/mob/living/basic/mining/legion_brood/death(gibbed)
 	if (!gibbed)
 		new /obj/effect/temp_visual/despawn_effect(get_turf(src), /* copy_from = */ src)
 	return ..()
 
-/mob/living/basic/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+/mob/living/basic/mining/legion_brood/add_ranged_armour(list/vulnerable_projectiles)
+	return
+
+/mob/living/basic/mining/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if (ishuman(target) && target.stat > SOFT_CRIT)
 		infest(target)
 		return
@@ -63,7 +80,7 @@
 	return ..()
 
 /// Turn the targeted mob into one of us
-/mob/living/basic/legion_brood/proc/infest(mob/living/carbon/human/target)
+/mob/living/basic/mining/legion_brood/proc/infest(mob/living/carbon/human/target)
 	visible_message(span_warning("[name] burrows into the flesh of [target]!"))
 	var/spawn_type = get_legion_type(target)
 	var/mob/living/basic/mining/legion/new_legion = new spawn_type(loc)
@@ -72,7 +89,7 @@
 	qdel(src)
 
 /// Returns the kind of legion we make out of the target
-/mob/living/basic/legion_brood/proc/get_legion_type(mob/living/carbon/human/target)
+/mob/living/basic/mining/legion_brood/proc/get_legion_type(mob/living/carbon/human/target)
 	if (ismonkey(target))
 		return /mob/living/basic/mining/legion/monkey
 	if (HAS_TRAIT(target, TRAIT_DWARF))
@@ -80,7 +97,7 @@
 	return /mob/living/basic/mining/legion
 
 /// Sets someone as our creator, mostly so you can't use skulls to heal yourself
-/mob/living/basic/legion_brood/proc/assign_creator(mob/living/creator, copy_full_faction = TRUE)
+/mob/living/basic/mining/legion_brood/proc/assign_creator(mob/living/creator, copy_full_faction = TRUE)
 	if (copy_full_faction)
 		faction = creator.faction.Copy()
 	else
@@ -90,23 +107,26 @@
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
 
 /// Reference handling
-/mob/living/basic/legion_brood/proc/creator_destroyed()
+/mob/living/basic/mining/legion_brood/proc/creator_destroyed()
 	SIGNAL_HANDLER
 	created_by = null
 
+/mob/living/basic/mining/legion_brood/update_overlays()
+	. = ..()
+	if (has_emissive)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+
 /// Like the Legion's summoned skull but funnier (it's snow now)
-/mob/living/basic/legion_brood/snow
+/mob/living/basic/mining/legion_brood/snow
 	name = "snow legion"
 	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "snowlegion_head"
 	icon_living = "snowlegion_head"
 	icon_dead = "snowlegion_head"
+	random_states = 1
+	has_emissive = FALSE
 
-/mob/living/basic/legion_brood/snow/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
-
-/mob/living/basic/legion_brood/snow/get_legion_type(mob/living/target)
+/mob/living/basic/mining/legion_brood/snow/get_legion_type(mob/living/target)
 	if (ismonkey(target))
 		return /mob/living/basic/mining/legion/monkey/snow
 	return /mob/living/basic/mining/legion/snow

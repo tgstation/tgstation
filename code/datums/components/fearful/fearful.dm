@@ -84,7 +84,19 @@
 			overriden_handlers[override_type] = list()
 		overriden_handlers[override_type][handler_type] = TRUE
 
+/datum/component/fearful/proc/get_fear_multiplier()
+	var/multiplier = 1
+	var/mob/living/parent_mob = parent
+	if(HAS_PERSONALITY(parent_mob, /datum/personality/cowardly))
+		multiplier *= 1.25
+	if(HAS_PERSONALITY(parent_mob, /datum/personality/paranoid))
+		multiplier *= 1.10
+	if(HAS_PERSONALITY(parent_mob, /datum/personality/brave))
+		multiplier *= 0.75
+	return multiplier
+
 /datum/component/fearful/process(seconds_per_tick)
+	var/fear_modifier = get_fear_multiplier()
 	var/terror_adjustment = 0
 	var/list/tick_later = list()
 	for (var/datum/terror_handler/handler as anything in terror_handlers)
@@ -94,12 +106,12 @@
 			tick_later += handler
 			continue
 		var/adjustment = handler.tick(seconds_per_tick, terror_buildup)
-		terror_buildup = clamp(terror_buildup + adjustment, 0, TERROR_BUILDUP_MAXIMUM)
+		terror_buildup = clamp(terror_buildup + (adjustment * fear_modifier), 0, TERROR_BUILDUP_MAXIMUM)
 		terror_adjustment += adjustment
 
 	for (var/datum/terror_handler/handler as anything in tick_later)
 		var/adjustment = handler.tick(seconds_per_tick, terror_buildup)
-		terror_buildup = clamp(terror_buildup + adjustment, 0, TERROR_BUILDUP_MAXIMUM)
+		terror_buildup = clamp(terror_buildup + (adjustment * fear_modifier), 0, TERROR_BUILDUP_MAXIMUM)
 		terror_adjustment += adjustment
 
 	// If we gained terror in any way, don't tick it down
@@ -109,7 +121,7 @@
 
 	// Tick terror down while we're not being actively spooked
 	if (terror_buildup > 0)
-		terror_buildup = max(terror_buildup - TERROR_BUILDUP_PASSIVE_DECREASE, 0)
+		terror_buildup = max(terror_buildup - (TERROR_BUILDUP_PASSIVE_DECREASE * (1 / fear_modifier)) * seconds_per_tick, 0)
 	last_tick_buildup = terror_buildup
 
 /datum/component/fearful/proc/on_examine(mob/living/source, mob/user, list/examine_list)

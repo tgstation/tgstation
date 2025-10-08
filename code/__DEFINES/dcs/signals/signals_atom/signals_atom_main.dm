@@ -70,13 +70,12 @@
 #define COMSIG_ATOM_EXITED "atom_exited"
 ///from base of atom/movable/Moved(): (atom/movable/gone, direction)
 #define COMSIG_ATOM_ABSTRACT_EXITED "atom_abstract_exited"
+///from base of atom/Exited(): (atom/exited, direction)
+#define COMSIG_ATOM_EXITING "atom_exiting"
 ///from base of atom/Bumped(): (/atom/movable) (the one that gets bumped)
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
-///from internal loop in atom/movable/proc/CanReach(): (list/next)
-#define COMSIG_ATOM_CANREACH "atom_can_reach"
-	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
 ///when an atom is processed (mob/living/user, obj/item/process_item, list/atom/results)

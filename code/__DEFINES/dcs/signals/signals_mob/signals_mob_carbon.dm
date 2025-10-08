@@ -170,6 +170,8 @@
 
 /// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+#define COMSIG_HUMAN_PUNCHED "human_punched"
 
 /// Called at the very end of human character setup
 /// At this point all quirks are assigned and the mob has a mind / client
@@ -177,3 +179,6 @@
 
 /// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
 #define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
+
+//from base of [/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob]: (seconds_per_tick)
+#define COMSIG_CARBON_EXPOSED_TO_SMOKE "carbon_exposed_to_smoke"

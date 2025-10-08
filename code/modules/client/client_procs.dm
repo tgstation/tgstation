@@ -566,6 +566,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
+	view_size.apply()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 	fully_created = TRUE
@@ -596,7 +597,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client.set_client(null)
+	if(persistent_client)
+		persistent_client.set_client(null)
+	else
+		stack_trace("A client was Del()'d without a persistent_client! This should not be happening.")
 
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)

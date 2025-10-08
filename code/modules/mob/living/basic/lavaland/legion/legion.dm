@@ -27,11 +27,13 @@
 	death_message = "wails in chorus and dissolves into quivering flesh."
 	ai_controller = /datum/ai_controller/basic_controller/legion
 	/// What kind of mob do we spawn?
-	var/brood_type = /mob/living/basic/legion_brood
+	var/brood_type = /mob/living/basic/mining/legion_brood
 	/// What kind of corpse spawner do we leave behind on death?
 	var/corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested
 	/// Who is inside of us?
-	var/mob/living/stored_mob
+	var/mob/living/stored_mob = null
+	/// Do we have emissives?
+	var/has_emissive = TRUE
 
 /mob/living/basic/mining/legion/Initialize(mapload)
 	. = ..()
@@ -40,6 +42,8 @@
 	if (length(drops))
 		AddElement(/datum/element/death_drops, string_list(drops))
 	assign_abilities()
+	if (has_emissive)
+		update_appearance(UPDATE_OVERLAYS)
 
 /// Give the Legion its spells
 /mob/living/basic/mining/legion/proc/assign_abilities()
@@ -67,6 +71,11 @@
 	if (isnull(stored_mob))
 		new corpse_type(loc)
 	return ..()
+
+/mob/living/basic/mining/legion/update_overlays()
+	. = ..()
+	if (stat != DEAD && has_emissive) // Shouldn't really happen but just in case
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
@@ -110,8 +119,9 @@
 	icon_living = "snowlegion"
 	// icon_aggro = "snowlegion_alive"
 	icon_dead = "snowlegion"
-	brood_type = /mob/living/basic/legion_brood/snow
+	brood_type = /mob/living/basic/mining/legion_brood/snow
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/snow
+	has_emissive = FALSE
 
 /mob/living/basic/mining/legion/snow/Initialize(mapload)
 	. = ..()
@@ -153,6 +163,7 @@
 	obj_damage = 30
 	pixel_x = -16
 	sentience_type = SENTIENCE_BOSS
+	has_emissive = FALSE
 
 /mob/living/basic/mining/legion/large/Initialize(mapload)
 	. = ..()

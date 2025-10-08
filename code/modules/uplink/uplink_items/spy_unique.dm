@@ -155,3 +155,40 @@
 	item = /obj/item/melee/baton/nunchaku
 	cost = SPY_UPPER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+
+/datum/uplink_item/spy_unique/penbang
+	name = "Penbang"
+	desc = "A flashbang disguised as a normal pen - click and throw! Has no other warning upon being activated. \
+		Fuse duration depends on how far the cap is twisted."
+	item = /obj/item/pen/penbang
+	cost = 1
+
+/datum/uplink_item/spy_unique/cameraflash
+	name = "Camera Flash"
+	desc = "A camera with a high-powered flash. Can be used as a normal flash when in close proximity to a target."
+	item = /obj/item/camera/flash
+	cost = 1
+
+/datum/uplink_item/spy_unique/daggerboot
+	name = "Boot Dagger"
+	desc = "A pair of boots with a dagger embedded into the sole. Kicks with these will stab the target, potentially causing bleeding."
+	item = /obj/item/clothing/shoes/jackboots/dagger
+	cost = 1
+
+/datum/uplink_item/spy_unique/monster_cube_box
+	name = "Random Monster Cubes"
+	desc = "A box containing a bunch of random monster cubes. Add water and see what you get!"
+	item = /obj/item/storage/box/monkeycubes/random
+	cost = SPY_LOWER_COST_THRESHOLD // There's some really bad stuff in here but also some really mild stuff
+
+/datum/uplink_item/spy_unique/sleeping_carp
+	name = "Sleeping Carp Technique"
+	desc = "A scroll teaching you the basics of the Sleeping Carp martial art."
+	item = /datum/uplink_item/stealthy_weapons/martialarts::item
+	cost = /datum/uplink_item/stealthy_weapons/martialarts::cost
+
+/datum/uplink_item/spy_unique/spider_bite
+	name = "Spider Bite Technique"
+	desc = "A scroll teaching you the basics of the Spider Bite martial art."
+	item = /obj/item/book/granter/martial/spider_bite
+	cost = SPY_UPPER_COST_THRESHOLD // While SCarp is firmly in the upper threshold, Spider Bite can be in either middle or upper.

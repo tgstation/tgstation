@@ -1,3 +1,17 @@
+//===============================HAND INTERACTION===================================
+/obj/machinery/vending/interact(mob/user)
+	if(seconds_electrified && !(machine_stat & NOPOWER))
+		if(shock(user, 100))
+			return
+
+	if(tilted && !user.buckled)
+		to_chat(user, span_notice("You begin righting [src]."))
+		if(do_after(user, 5 SECONDS, target = src))
+			untilt(user)
+		return
+
+	return ..()
+
 //================================TOOL ACTS==============================================
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)

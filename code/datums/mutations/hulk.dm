@@ -13,7 +13,8 @@
 	var/scream_delay = 50
 	var/last_scream = 0
 	var/bodypart_color = COLOR_DARK_LIME
-	/// List of traits to add/remove when someone gets this mutation.
+	/// Determines whether or not our version of hulk breaks their arm when destroying walls.
+	var/no_recoil = TRUE
 	mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_HULK,
@@ -61,30 +62,6 @@
 /datum/mutation/hulk/proc/scream_attack(mob/living/carbon/human/source)
 	source.say("WAAAAAAAAAAAAAAGH!", forced="hulk")
 
-/**
- *Checks damage of a hulk's arm and applies bone wounds as necessary.
- *
- *Called by specific atoms being attacked, such as walls. If an atom
- *does not call this proc, than punching that atom will not cause
- *arm breaking (even if the atom deals recoil damage to hulks).
- *Arguments:
- *arg1 is the arm to evaluate damage of and possibly break.
- */
-/datum/mutation/hulk/proc/break_an_arm(obj/item/bodypart/arm)
-	var/severity
-	switch(arm.brute_dam)
-		if(45 to 50)
-			severity = WOUND_SEVERITY_CRITICAL
-		if(41 to 45)
-			severity = WOUND_SEVERITY_SEVERE
-		if(35 to 41)
-			severity = WOUND_SEVERITY_MODERATE
-
-	if (isnull(severity))
-		return
-
-	owner.cause_wound_of_type_and_severity(WOUND_BLUNT, arm, severity, wound_source = "hulk smashing")
-
 /datum/mutation/hulk/on_life(seconds_per_tick, times_fired)
 	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
@@ -123,7 +100,7 @@
 
 	if(ishuman(possible_throwable))
 		var/mob/living/carbon/human/human_throwable = possible_throwable
-		if(human_throwable.wear_suit && (human_throwable.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(human_throwable.obscured_slots & HIDEJUMPSUIT)
 			to_chat(user, span_warning("You can't reach [human_throwable]'s tail through [human_throwable.p_their()] [human_throwable.wear_suit.name]!"))
 			return
 
@@ -264,7 +241,7 @@
 	health_req = 0
 	instability = 0
 	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
-	/// List of traits to add/remove when someone gets this mutation.
+	no_recoil = FALSE
 	mutation_traits = list(
 		TRAIT_HULK,
 		TRAIT_PUSHIMMUNE,
@@ -275,7 +252,7 @@
 	name = "Hulk (Super)"
 	health_req = 0
 	instability = 0
-	/// List of traits to add/remove when someone gets this mutation.
+	no_recoil = FALSE
 	mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_HULK,
