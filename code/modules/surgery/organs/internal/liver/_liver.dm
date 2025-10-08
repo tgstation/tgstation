@@ -32,7 +32,7 @@
 	var/operated = FALSE //whether the liver's been repaired with surgery and can be fixed again or not
 	VAR_PROTECTED/metabolic_stress = 0
 	VAR_PROTECTED/max_metabolic_stress = 100
-	VAR_PROTECTED/metabolic_stress_recovery_rate = 1
+	VAR_PROTECTED/metabolic_stress_recovery_rate = 0.5
 	COOLDOWN_DECLARE(last_metabolic_stress_time)
 
 /obj/item/organ/liver/Initialize(mapload)
@@ -140,7 +140,7 @@
 
 	owner.reagents?.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
 	if(COOLDOWN_FINISHED(src, last_metabolic_stress_time))
-		metabolic_stress &&= max(metabolic_stress - metabolic_stress_recovery_rate, 0)
+		metabolic_stress &&= max(metabolic_stress - (seconds_per_tick * metabolic_stress_recovery_rate), 0)
 
 /obj/item/organ/liver/handle_failing_organs(seconds_per_tick)
 	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
@@ -232,12 +232,13 @@
 	return owner_species.mutantliver
 
 /obj/item/organ/liver/feel_for_damage(self_aware)
-	switch(metabolic_stress ? max_metabolic_stress / metabolic_stress : 0)
+	var/stress_ratio = metabolic_stress / max_metabolic_stress
+	switch(stress_ratio)
 		if(0 to 0.2)
-			if(!prob(10))
+			if(!prob(1))
 				. += span_green("You feel healthy from your dedication to clean living.")
 			else
-				. += span_green("You feel healthy from your dedication to clean living." + span_notice("No wonder you don't get invited to any parties..."))
+				. += span_green("You feel healthy from your dedication to clean living." + span_notice(" No wonder you don't get invited to any parties..."))
 		if(0.21 to 0.4)
 			. += span_notice("You feel a little worn out; a hangover from chems of various kinds, no doubt.")
 		if(0.41 to 0.6)
