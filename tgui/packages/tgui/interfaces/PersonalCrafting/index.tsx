@@ -68,17 +68,15 @@ export function PersonalCrafting(props: any) {
 
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
 
-  const getMaterialName = (atomId: string) => {
+  const getMaterialName = (atomId: string): string => {
     const idNum = Number(atomId);
-    return atom_data[idNum - 1]?.name || atomId;
+    const atom = atom_data[idNum - 1];
+    return atom?.name || atomId;
   };
 
-  const searchMaterial = createSearch(
-    searchText,
-    (material: { atom_id: string }) => {
-      return getMaterialName(material.atom_id);
-    },
-  );
+  const searchMaterial = createSearch(searchText, (material: Material) => {
+    return getMaterialName(material.atom_id);
+  });
 
   const filteredMaterials =
     searchText.length > 0 && tabMode === TABS.material
