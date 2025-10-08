@@ -368,6 +368,10 @@
 	light_color = LIGHT_COLOR_DARK_BLUE
 	duration = BLIGHTREPLACER_SPOT_LIFE
 
+/obj/effect/temp_visual/blue_firefly/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/effect/temp_visual/blue_firefly/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
