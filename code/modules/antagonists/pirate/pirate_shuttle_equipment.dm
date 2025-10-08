@@ -470,6 +470,7 @@
 
 /datum/export/pirate/cash
 	cost = 1
+	k_elasticity = 0.1 / MAX_STACK_SIZE
 	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
