@@ -33,6 +33,7 @@
 
 /datum/supply_pack/organic/randomized
 	test_ignored = TRUE
+	crate_name = "food crate"
 
 /datum/supply_pack/organic/randomized/fill(obj/structure/closet/crate/C)
 	for(var/i in 1 to 15)
@@ -56,7 +57,6 @@
 		/obj/item/food/meat/slab/human,
 		/obj/item/food/meat/slab/grassfed,
 	)
-	crate_name = "food crate"
 
 /datum/supply_pack/organic/randomized/fruits
 	name = "Fruit Crate"
@@ -70,7 +70,6 @@
 		/obj/item/food/grown/berries,
 		/obj/item/food/grown/citrus/lemon,
 	)
-	crate_name = "food crate"
 
 /datum/supply_pack/organic/randomized/vegetables
 	name = "Vegetables Crate"
@@ -87,7 +86,6 @@
 		/obj/item/food/grown/pumpkin,
 		/obj/item/food/grown/cucumber,
 	)
-	crate_name = "food crate"
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
