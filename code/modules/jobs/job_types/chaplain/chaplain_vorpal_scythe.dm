@@ -184,7 +184,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
 	var/allow_timer_set = FALSE
 
-	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our potential empowerment
+	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our current empowerment
 		allow_timer_set = TRUE
 	empowerment = potential_empowerment
 	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
