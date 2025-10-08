@@ -354,7 +354,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	worn_icon_state = "whip"
 	slot_flags = ITEM_SLOT_BELT
-	force = 16
+	force = 15
 	demolition_mod = 0.25
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("flogs", "whips", "lashes", "disciplines")
