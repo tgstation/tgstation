@@ -11,7 +11,7 @@
 
 	dummy.MouseDrop(chair)
 	if(dummy.buckled != chair)
-		TEST_FAIL("The dummy failed to buckle to the chair via mouse drop.")
+		TEST_FAIL("The dummy failed to buckle themselves to a chair via mouse drop.")
 
 	usr = old_usr
 
@@ -29,6 +29,6 @@
 
 	victim.MouseDrop(chair)
 	if(victim.buckled != chair)
-		TEST_FAIL("The victim failed to buckle to the chair via mouse drop by another.")
+		TEST_FAIL("The dummy failed to buckle the victim to a chair via mouse drop.")
 
 	usr = old_usr
