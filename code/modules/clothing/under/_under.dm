@@ -173,8 +173,8 @@
 
 /obj/item/clothing/under/dropped(mob/living/user)
 	. = ..()
-	update_wearer_status()
-	GLOB.suit_sensors_list -= user
+	if(user.get_item_by_slot(ITEM_SLOT_ICLOTHING) == src)
+		GLOB.suit_sensors_list -= user
 
 // Start suit sensor handling
 

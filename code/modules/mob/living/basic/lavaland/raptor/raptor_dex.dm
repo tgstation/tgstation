@@ -21,7 +21,7 @@
 	var/list/data = list()
 	var/mob/living/basic/raptor/my_raptor = raptor.resolve()
 
-	data["raptor_image"] = icon2base64(getFlatIcon(image(icon = my_raptor.icon, icon_state = my_raptor.icon_state)))
+	data["raptor_image"] = icon2base64(icon(icon = my_raptor.icon, icon_state = my_raptor.icon_state, frame = 1))
 	data["raptor_attack"] = my_raptor.melee_damage_lower
 	data["raptor_health"] = my_raptor.maxHealth
 	data["raptor_speed"] = my_raptor.speed
@@ -33,7 +33,7 @@
 	var/obj/effect/overlay/happiness_overlay/display = new
 	display.set_hearts(happiness_percentage)
 	display.pixel_y = ICON_SIZE_Y * 0.5
-	data["raptor_happiness"] = icon2base64(getFlatIcon(display))
+	data["raptor_happiness"] = icon2base64(getFlatIcon(display, no_anim = TRUE))
 	qdel(display)
 
 	var/datum/raptor_inheritance/inherit = my_raptor.inherited_stats
