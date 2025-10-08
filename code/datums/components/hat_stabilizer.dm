@@ -242,8 +242,8 @@
 	if (ismob(apparel.loc))
 		var/mob/wearer = apparel.loc
 		wearer.update_clothing(wearer.get_slot_by_item(apparel))
-
-	return former_hat
+	if(isnull(user))
+		return former_hat
 
 /datum/component/hat_stabilizer/proc/on_requesting_context_from_item(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
