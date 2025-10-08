@@ -176,8 +176,6 @@
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
-	force = 20
-	block_chance = 15
 	toolspeed = 0.5 //as fast as a real saw
 	menu_description = "A sharp chainsaw sword which provides a low chance of blocking incoming melee attacks. Can be used as a slower saw tool. Can be worn on the belt."
 
@@ -419,9 +417,6 @@
 	icon_state = "hammeron"
 	inhand_icon_state = "hammeron"
 	worn_icon_state = "hammeron"
-	force = 24
-	block_chance = 30
-	slowdown = 1
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
@@ -836,7 +831,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	force = 16
+	force = 12
 	wound_bonus = 10
 	exposed_wound_bonus = 30
 	slot_flags = ITEM_SLOT_BELT
@@ -894,7 +889,7 @@
 	var/sneak_attack_fail_message = FALSE
 
 	// The force our sneak attack applies. Starts as 3d6, then changed based on certain factors.
-	var/sneak_attack_dice = roll("3d6")
+	var/sneak_attack_dice = roll("4d6")
 
 	// Status effects on the target that grant us sneak attacks
 	if(living_target.is_blind())
