@@ -1,6 +1,6 @@
 // Circuit boards, spare parts, etc.
 
-/datum/export/assembly
+/datum/export/solar_assembly
 	cost = CARGO_CRATE_VALUE * 0.25
 	unit_name = "solar panel assembly"
 	export_types = list(/obj/item/solar_assembly)
