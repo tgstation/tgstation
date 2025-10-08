@@ -128,7 +128,6 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	armour_penetration = 20
 	block_chance = 30
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED

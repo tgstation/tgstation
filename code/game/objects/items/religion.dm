@@ -405,7 +405,7 @@
 /obj/item/claymore/weak
 	desc = "This one is rusted."
 	force = 30 //obtainable from the holodeck, and obtainable from the very end of the snowdin gateway, also- fishing!?
-	armour_penetration = 10
+	armour_penetration = 15
 
 /obj/item/claymore/weak/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)
