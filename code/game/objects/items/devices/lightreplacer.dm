@@ -363,6 +363,8 @@
 	name = "bluespace firefly"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bluespace_firefly"
+	light_power = 1
+	light_range = 2
 	light_color = LIGHT_COLOR_DARK_BLUE
 	duration = BLIGHTREPLACER_SPOT_LIFE
 
