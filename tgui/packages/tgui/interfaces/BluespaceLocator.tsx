@@ -59,17 +59,22 @@ export const BluespaceLocator = (props) => {
 
   useEffect(() => {
     if (selectedImplant) {
-      const targetRotation = DIRECTION_TO_ICON[selectedImplant.direction];
+      if (selectedImplant.distance === 0) {
+        setCurrentRotation(0);
+      } else {
+        const targetRotation = DIRECTION_TO_ICON[selectedImplant.direction];
 
-      let shortestRotation = targetRotation - currentRotation;
-      if (shortestRotation > 180) shortestRotation -= 360;
-      if (shortestRotation < -180) shortestRotation += 360;
+        let shortestRotation = targetRotation - currentRotation;
+        if (shortestRotation > 180) shortestRotation -= 360;
+        if (shortestRotation < -180) shortestRotation += 360;
 
-      setCurrentRotation(currentRotation + shortestRotation);
+        setCurrentRotation(currentRotation + shortestRotation);
+      }
     }
-  }, [selectedImplant?.direction]);
+  }, [selectedImplant?.direction, selectedImplant?.distance]);
 
   const getArrowColor = (distance: number) => {
+    if (distance === 0) return 'green';
     if (distance > (trackingrange * 2) / 3) return 'red';
     if (distance > (trackingrange * 1) / 3) return 'orange';
     return 'green';
@@ -138,24 +143,26 @@ export const BluespaceLocator = (props) => {
                 position: 'relative',
               }}
             >
-              <Icon
-                name="search"
-                style={{
-                  position: 'absolute',
-                  left: '1rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 1,
-                  opacity: 0.6,
-                }}
-              />
+              {!searchQuery && (
+                <Icon
+                  name="search"
+                  style={{
+                    position: 'absolute',
+                    left: '1rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    zIndex: 1,
+                    opacity: 0.6,
+                  }}
+                />
+              )}
               <Input
                 placeholder="Search targets..."
                 value={searchQuery}
                 onChange={(value) => setSearchQuery(value)}
                 width="100%"
                 style={{
-                  paddingLeft: '2rem',
+                  paddingLeft: searchQuery ? '0.5rem' : '2rem',
                 }}
               />
             </div>
@@ -273,12 +280,31 @@ export const BluespaceLocator = (props) => {
               backgroundColor: 'rgba(20, 25, 35, 0.7)',
             }}
           >
-            {selectedImplant ? (
+            {filteredImplants.length === 0 ? (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  opacity: 0.7,
+                  fontSize: '1.2rem',
+                  gap: '1rem',
+                }}
+              >
+                <Icon name="search" size={3} color="rgba(200, 200, 200, 0.5)" />
+                <div>No targets matching search criteria</div>
+              </div>
+            ) : selectedImplant ? (
               <>
                 <Icon
-                  name="arrow-up"
+                  name={
+                    selectedImplant.distance === 0 ? 'dot-circle' : 'arrow-up'
+                  }
                   size={12}
-                  rotation={currentRotation}
+                  rotation={
+                    selectedImplant.distance === 0 ? 0 : currentRotation
+                  }
                   color={getArrowColor(selectedImplant.distance)}
                   style={{
                     marginBottom: '2rem',
@@ -304,39 +330,7 @@ export const BluespaceLocator = (props) => {
                   </div>
                 </div>
               </>
-            ) : (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  opacity: 0.7,
-                  fontSize: '1.2rem',
-                  gap: '1rem',
-                }}
-              >
-                {filteredImplants.length === 0 ? (
-                  <>
-                    <Icon
-                      name="search"
-                      size={3}
-                      color="rgba(200, 200, 200, 0.5)"
-                    />
-                    <div>No targets matching search criteria</div>
-                  </>
-                ) : (
-                  <>
-                    <Icon
-                      name="mouse-pointer"
-                      size={3}
-                      color="rgba(200, 200, 200, 0.5)"
-                    />
-                    <div>Select target to track</div>
-                  </>
-                )}
-              </div>
-            )}
+            ) : null}
           </div>
         </div>
       </Window.Content>

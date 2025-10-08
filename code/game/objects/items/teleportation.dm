@@ -54,7 +54,7 @@
 		if(!implant_turf  || implant_turf.z != current_turf.z)
 			continue
 
-		var/distance = get_dist(current_turf, implant_turf)
+		var/distance = max(abs(implant_turf.x - current_turf.x), abs(implant_turf.y - current_turf.y)) // get Chebyshev distance
 		if(distance > tracking_range)
 			continue
 
