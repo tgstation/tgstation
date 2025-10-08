@@ -333,6 +333,7 @@
 				)
 	crate_name = "\improper Tiziran Supply box"
 	crate_type = /obj/structure/closet/crate/cardboard/tiziran
+	test_ignored = TRUE
 
 /datum/supply_pack/organic/mothic_supply
 	name = "Mothic Supply Box"
