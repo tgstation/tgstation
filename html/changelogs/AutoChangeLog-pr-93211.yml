@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "EMP proof objects now specify what they protect rather than only implying it's 100% emp proof"
-  - bugfix: "Some objects meant to stealthily be emp proof no longer broadcast they are emp proof on examine"

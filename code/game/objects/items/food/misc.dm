@@ -390,7 +390,7 @@
 	to_chat(user, span_notice("You stick the rod into the stick of butter."))
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
-	if (user.CanReach(new_item))
+	if (new_item.IsReachableBy(user))
 		user.put_in_hands(new_item)
 	qdel(src)
 	return TRUE

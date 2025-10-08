@@ -240,6 +240,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	throw_icon = null
 	resist_icon = null
 	QDEL_LIST(infodisplay)
+	open_containers = null
 
 	healths = null
 	stamina = null

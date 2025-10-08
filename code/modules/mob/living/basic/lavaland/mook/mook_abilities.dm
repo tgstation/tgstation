@@ -37,7 +37,7 @@
 	var/times_to_attack = 4
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/Activate(atom/target)
-	if(owner.CanReach(target))
+	if(target.IsReachableBy(owner))
 		attack_combo(target)
 		StartCooldown()
 		return TRUE
@@ -74,14 +74,14 @@
 	owner.throw_at(target = final_turf, range = 7, speed = 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(attack_combo), target))
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/attack_combo(atom/target)
-	if(!owner.CanReach(target))
+	if(!target.IsReachableBy(owner))
 		return FALSE
 
 	for(var/i in 0 to (times_to_attack - 1))
 		addtimer(CALLBACK(src, PROC_REF(attack_target), target), i * attack_interval)
 
 /datum/action/cooldown/mob_cooldown/mook_ability/mook_leap/proc/attack_target(atom/target)
-	if(!owner.CanReach(target) || owner.stat == DEAD)
+	if(!target.IsReachableBy(owner) || owner.stat == DEAD)
 		return
 	var/mob/living/basic/basic_owner = owner
 	basic_owner.melee_attack(target, ignore_cooldown = TRUE)

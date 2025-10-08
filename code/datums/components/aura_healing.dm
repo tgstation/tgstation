@@ -158,5 +158,7 @@
 /atom/movable/screen/alert/aura_healing
 	name = "Aura Healing"
 	icon_state = "template"
+	use_user_hud_icon = TRUE
+	clickable_glow = TRUE
 
 #undef HEAL_EFFECT_COOLDOWN
