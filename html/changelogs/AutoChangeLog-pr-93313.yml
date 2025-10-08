@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - image: "Updates Captain Backpack sprites"
-  - image: "Updates HoP sprites slightly to match Cap sprites"
-  - image: "HoP cloak has been simplified slightly"
