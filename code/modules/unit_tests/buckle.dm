@@ -3,6 +3,7 @@
 
 /datum/unit_test/buckling_self/Run()
 	var/mob/living/carbon/human/consistent/dummy = EASY_ALLOCATE()
+	dummy.mock_client = new()
 	var/obj/structure/chair = EASY_ALLOCATE()
 
 	var/old_usr = usr
@@ -20,6 +21,7 @@
 
 /datum/unit_test/buckling_others/Run()
 	var/mob/living/carbon/human/consistent/dummy = EASY_ALLOCATE()
+	dummy.mock_client = new()
 	var/mob/living/carbon/human/consistent/victim = EASY_ALLOCATE()
 	var/obj/structure/chair = EASY_ALLOCATE()
 
