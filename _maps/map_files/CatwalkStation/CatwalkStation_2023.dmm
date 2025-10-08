@@ -47462,6 +47462,7 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "npR" = (
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "npS" = (
@@ -49067,6 +49068,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nLC" = (
@@ -55752,7 +55754,6 @@
 /area/station/maintenance/port)
 "pIC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/holopad/secure,
 /obj/item/radio/intercom/directional/east{
 	frequency = 1447;
 	name = "ai intercom"
@@ -63310,7 +63311,6 @@
 /area/station/security/medical)
 "rQR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "rRd" = (
