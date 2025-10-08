@@ -30,6 +30,8 @@
 		/obj/item,
 		/obj/structure/closet,
 	)
+	/// What should the manipulator do when there's nothing to "USE" the held item on anymore?
+	var/use_post_interaction = POST_INTERACTION_DROP_AT_POINT
 
 /datum/interaction_point/New(turf/new_turf, list/new_filters, new_should_use_filters, new_interaction_mode, new_allowed_types, new_overflow_status)
 	if(!new_turf)
@@ -193,53 +195,46 @@
 /// Fills the interaction endpoint priority list for the current interaction mode.
 /datum/interaction_point/proc/fill_priority_list()
 	var/list/priorities_to_set = list()
-	var/priority_number = 1
+	priorities_to_set += null
+	priorities_to_set += null
+	priorities_to_set += null
+	priorities_to_set += null
 
 	switch(interaction_mode)
 		if(INTERACT_DROP)
-			priorities_to_set = list(
-				new /datum/manipulator_priority/drop/in_storage,
-				new /datum/manipulator_priority/drop/on_floor,
-			)
+			priorities_to_set[1] = new /datum/manipulator_priority/drop/in_storage
+			priorities_to_set[2] = new /datum/manipulator_priority/drop/on_floor
+
 		if(INTERACT_USE)
-			priorities_to_set = list(
-				new /datum/manipulator_priority/interact/with_living,
-				new /datum/manipulator_priority/interact/with_structure,
-				new /datum/manipulator_priority/interact/with_machinery,
-				new /datum/manipulator_priority/interact/with_items,
-			)
+			priorities_to_set[1] = new /datum/manipulator_priority/interact/with_living
+			priorities_to_set[2] = new /datum/manipulator_priority/interact/with_structure
+			priorities_to_set[3] = new /datum/manipulator_priority/interact/with_machinery
+			priorities_to_set[4] = new /datum/manipulator_priority/interact/with_items
 
-	for(var/datum/manipulator_priority/priority in priorities_to_set)
-		priority.number = priority_number++
+	return priorities_to_set
 
-	return length(priorities_to_set) ? priorities_to_set : list()
-
-/// Updates priority of a specific setting and adjusts other priorities accordingly
-/datum/interaction_point/proc/update_priority(datum/manipulator_priority/target_priority, new_priority)
-	if(!target_priority || !(target_priority in interaction_priorities))
+/// Moves the priority for a given index 1 step higher.
+/datum/interaction_point/proc/move_priority_up_by_index(index)
+	if(index == 1)
 		return FALSE
 
-	var/old_priority = target_priority.number
-	target_priority.number = new_priority
-
-	// adjusting other priorities to avoid conflicts
-	for(var/datum/manipulator_priority/other_priority in interaction_priorities)
-		if(other_priority == target_priority)
-			continue
-		if(other_priority.number == new_priority)
-			other_priority.number = old_priority
-			break
+	var/datum/manipulator_priority/target_priority = interaction_priorities[index]
+	var/datum/manipulator_priority/other_priority = interaction_priorities[index - 1] // a one step higher priority
+	interaction_priorities[index - 1] = target_priority
+	interaction_priorities[index] = other_priority
 
 	return TRUE
 
-/// Gets the current priority list sorted by priority number
-/datum/interaction_point/proc/get_sorted_priorities()
-	var/list/sorted = interaction_priorities.Copy()
-	sortTim(sorted, GLOBAL_PROC_REF(cmp_manipulator_priority))
-	return sorted
+/// Toggles the priority's `active` param. Sets to TRUE if `reset` is TRUE.
+/datum/interaction_point/proc/tick_priority_by_index(index, reset = FALSE)
+	var/datum/manipulator_priority/target_priority = interaction_priorities[index]
 
-/proc/cmp_manipulator_priority(datum/manipulator_priority/a, datum/manipulator_priority/b)
-	return a.number - b.number
+	if(reset)
+		target_priority.active = TRUE
+	else
+		target_priority.active = !target_priority.active
+
+	return TRUE
 
 /datum/interaction_point/Destroy()
 	interaction_turf = null

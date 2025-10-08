@@ -115,7 +115,6 @@
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
-	balloon_alert_to_viewers("check")
 	if(!on)
 		return
 
@@ -369,6 +368,36 @@
 		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME * 2)
 		return
 
+	// If item was NOT used and we still hold it, act according to use_post_interaction
+	switch(drop_point.use_post_interaction)
+		if(POST_INTERACTION_DROP_AT_POINT)
+			obj_resolve.forceMove(drop_turf)
+			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
+			finish_manipulation(TRANSFER_TYPE_DROPOFF)
+			return
+		if(POST_INTERACTION_DROP_AT_MACHINE)
+			obj_resolve.forceMove(src)
+			finish_manipulation(TRANSFER_TYPE_DROPOFF)
+			return
+		if(POST_INTERACTION_DROP_NEXT_FITTING)
+			// Try to find a fitting turf nearby and drop there
+			var/turf/fitting_turf = null
+			for(var/dir in list(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
+				var/turf/check = get_step(drop_turf, dir)
+				if(check && !isclosedturf(check))
+					fitting_turf = check
+					break
+			if(fitting_turf)
+				obj_resolve.forceMove(fitting_turf)
+			else
+				obj_resolve.forceMove(drop_turf)
+			finish_manipulation(TRANSFER_TYPE_DROPOFF)
+			return
+		if(POST_INTERACTION_WAIT)
+			// Continue cycle, do not drop
+			addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME * 2)
+			return
+	// Default: just finish
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
 
 /// Throws the held object in the direction of the interaction point.

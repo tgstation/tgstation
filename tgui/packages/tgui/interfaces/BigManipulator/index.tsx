@@ -474,6 +474,19 @@ const PointSection = (props: {
                           tooltip="Cycle throwing range"
                         />
                       )}
+                      {editingPoint.mode.toUpperCase() === 'USE' && (
+                        <ConfigRow
+                          label="No Uses Left"
+                          content={editingPoint.use_post_interaction}
+                          onClick={() =>
+                            adjustPoint(
+                              editingPoint.id,
+                              'ycle_post_interaction',
+                            )
+                          }
+                          tooltip="Cycle what to do when no interaction is avaliable"
+                        />
+                      )}
                     </>
                   )}
                 </Table>

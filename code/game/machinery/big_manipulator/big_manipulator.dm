@@ -634,13 +634,10 @@
 		point_data["worker_combat_mode"] = point.worker_combat_mode
 		point_data["throw_range"] = throw_range
 
-		var/list/sorted_priorities_pick = point.get_sorted_priorities()
-		var/num_priorities_pick = length(sorted_priorities_pick)
 		var/list/settings_list_pick = list()
-		for(var/datum/manipulator_priority/pr_pick in sorted_priorities_pick)
+		for(var/datum/manipulator_priority/pr_pick in point.interaction_priorities)
 			var/list/entry_pick = list()
 			entry_pick["name"] = pr_pick.name
-			entry_pick["priority_width"] = (num_priorities_pick - pr_pick.number + 1)
 			entry_pick["active"] = pr_pick.active
 			settings_list_pick += list(entry_pick)
 		point_data["settings_list"] = settings_list_pick
@@ -667,13 +664,10 @@
 		point_data["worker_combat_mode"] = point.worker_combat_mode
 		point_data["throw_range"] = throw_range
 
-		var/list/sorted_priorities_drop = point.get_sorted_priorities()
-		var/num_priorities_drop = length(sorted_priorities_drop)
 		var/list/settings_list_drop = list()
-		for(var/datum/manipulator_priority/pr_drop in sorted_priorities_drop)
+		for(var/datum/manipulator_priority/pr_drop in point.interaction_priorities)
 			var/list/entry_drop = list()
 			entry_drop["name"] = pr_drop.name
-			entry_drop["priority_width"] = (num_priorities_drop - pr_drop.number + 1)
 			entry_drop["active"] = pr_drop.active
 			settings_list_drop += list(entry_drop)
 		point_data["settings_list"] = settings_list_drop
@@ -751,18 +745,7 @@
 			return TRUE
 
 		if("toggle_priority")
-			var/list/priorities = target_point.interaction_priorities
-			var/datum/manipulator_priority/priority = null
-			for(var/datum/manipulator_priority/each_priority in priorities)
-				if(each_priority.number == value)
-					priority = each_priority
-					break
-
-			if(priority)
-				priority.active = !priority.active
-				return TRUE
-
-			return FALSE
+			return target_point.tick_priority_by_index(value)
 
 		if("remove_point")
 			if(value)
@@ -777,12 +760,8 @@
 			return TRUE
 
 		if("cycle_dropoff_point_interaction")
-			var/old_mode = target_point.interaction_mode
 			target_point.interaction_mode = cycle_value(target_point.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
-
-			if(old_mode != target_point.interaction_mode)
-				update_point_priorities(target_point)
-
+			target_point.interaction_priorities = target_point.fill_priority_list()
 			return TRUE
 
 		if("toggle_filter_skip")
@@ -831,32 +810,7 @@
 			return TRUE
 
 		if("priority_move_up")
-			var/setting_name
-			if(islist(value))
-				setting_name = value["name"]
-			else
-				setting_name = value
-			if(!setting_name)
-				return FALSE
-
-			var/datum/manipulator_priority/target_priority = null
-			for(var/datum/manipulator_priority/p in target_point.interaction_priorities)
-				if(p.name == setting_name)
-					target_priority = p
-					break
-
-			if(!target_priority)
-				return FALSE
-
-			if(target_priority.number <= 1)
-				return TRUE
-
-			var/new_number = target_priority.number - 1
-			if(target_point.update_priority(target_priority, new_number))
-				SStgui.update_uis(src)
-				return TRUE
-
-			return FALSE
+			return target_point.move_priority_up_by_index(value)
 
 		if("move_to")
 			var/button_number = text2num(value["buttonNumber"])
@@ -940,24 +894,6 @@
 	for(var/image/hud_image in hud_points)
 		qdel(hud_image)
 	hud_points.Cut()
-
-/obj/machinery/big_manipulator/proc/update_point_priorities(datum/interaction_point/point)
-	if(!point)
-		return
-
-	point.interaction_priorities.Cut()
-
-	switch(point.interaction_mode)
-		if(INTERACT_DROP, INTERACT_THROW)
-			point.interaction_priorities += new /datum/manipulator_priority/drop/on_floor()
-			point.interaction_priorities += new /datum/manipulator_priority/drop/in_storage()
-		if(INTERACT_USE)
-			point.interaction_priorities += new /datum/manipulator_priority/interact/with_living()
-			point.interaction_priorities += new /datum/manipulator_priority/interact/with_structure()
-			point.interaction_priorities += new /datum/manipulator_priority/interact/with_machinery()
-			point.interaction_priorities += new /datum/manipulator_priority/interact/with_items()
-
-	SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/update_strategies()
 	pickup_strategy = create_strategy(pickup_tasking)
