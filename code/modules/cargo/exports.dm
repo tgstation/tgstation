@@ -170,7 +170,7 @@ Then the player gets the profit from selling his own wasted time.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/total = get_base_cost(exported_item) * get_amount(exported_item)
-	if(apply_elastic)
+	if(apply_elastic && k_elasticity > 0)
 		total *= k_elasticity
 	return ROUND_UP(total)
 
