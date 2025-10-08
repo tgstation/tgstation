@@ -346,6 +346,7 @@
 	COOLDOWN_START(src, lightreplacer_spot_cooldown, BLIGHTREPLACER_SPOT_COOLDOWN)
 	lightreplacer_scan()
 
+/// Scans the area in search of fixtures with broken bulbs in the BLIGHTREPLACER_SPOT_RANGE range, and also marks them with the blue_firefly effect.
 /obj/item/lightreplacer/blue/proc/lightreplacer_scan()
 	var/turf/source_turf = get_turf(src)
 	for(var/obj/machinery/light/broken_light in dview(BLIGHTREPLACER_SPOT_RANGE, source_turf))
@@ -362,10 +363,12 @@
 	name = "bluespace firefly"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bluespace_firefly"
-	light_power = 1
-	light_range = 2
 	light_color = LIGHT_COLOR_DARK_BLUE
 	duration = BLIGHTREPLACER_SPOT_LIFE
+
+/obj/effect/temp_visual/blue_firefly/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, icon_state, src, alpha = src.alpha)
 
 #undef BLIGHTREPLACER_SPOT_COOLDOWN
 #undef BLIGHTREPLACER_SPOT_RANGE
