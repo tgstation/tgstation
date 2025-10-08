@@ -302,6 +302,7 @@
 #include "strange_reagent.dm"
 #include "strippable.dm"
 #include "stuns.dm"
+#include "style_hotswapping.dm"
 #include "subsystem_init.dm"
 #include "suit_storage_icons.dm"
 #include "surgeries.dm"

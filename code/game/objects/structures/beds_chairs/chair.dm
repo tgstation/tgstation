@@ -428,6 +428,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	// What structure type does this chair become when placed?
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
+/obj/item/chair/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src,hitsound,50,TRUE)
@@ -442,25 +446,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
-	var/turf/T = get_turf(loc)
-	if(isgroundlessturf(T))
+	var/turf/turf = user.loc
+	if(!istype(turf) || isgroundlessturf(turf))
 		to_chat(user, span_warning("You need ground to plant this on!"))
+		return
+	if(!user.dropItemToGround(src))
+		to_chat(user, span_warning("[src] is stuck to your hand!"))
 		return
 	if(flags_1 & HOLOGRAM_1)
 		to_chat(user, span_notice("You try to place down \the [src], but it fades away!"))
 		qdel(src)
 		return
 
-	for(var/obj/A in T)
-		if(istype(A, /obj/structure/chair))
+	for(var/obj/object in turf)
+		if(istype(object, /obj/structure/chair))
 			to_chat(user, span_warning("There is already a chair here!"))
 			return
-		if(A.density && !(A.flags_1 & ON_BORDER_1))
+		if(object.density && !(object.flags_1 & ON_BORDER_1))
 			to_chat(user, span_warning("There is already something here!"))
 			return
 
 	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
-	var/obj/structure/chair/chair = new origin_type(get_turf(loc))
+	var/obj/structure/chair/chair = new origin_type(turf)
 	chair.set_custom_materials(custom_materials)
 	TransferComponents(chair)
 	chair.setDir(user.dir)

@@ -241,3 +241,22 @@
       etc.) have been added to the trash spawner.
   - qol: Paper plane added to the paper spawner, which is now used in the trash spawner.
   - rscadd: Holograms objects will fade away when affected by EMPs.
+2025-10-07:
+  Ghommie:
+  - bugfix: anti, low and high, gravity fields no longer have the same particles effect.
+  Melbert:
+  - bugfix: People should disappear from sensors less often
+  - admin: Dynamic Tester differentiates lights and heavies
+  SmArtKar:
+  - image: Cain & Abel wisps now orbit around the user instead of being static
+  - code_imp: Cleaned up Cain & Abel code
+  - bugfix: Fixed some of Pubby's escape shuttle seats being incorrectly rotated and
+      having floating lights over them
+  loganuk:
+  - map: Fixes runtimestation_minimal broken unit test - Should not affect players
+      but fixes CI failures for all open PRs, going in changelog to inform contributors
+      to update from main branch.
+  paganiy:
+  - refactor: Abandoned crates refactored
+  theselfish:
+  - qol: Aerostatic Boots now have storage, as they're boots actually.
