@@ -11,7 +11,8 @@
 	if(!usr || !over)
 		return
 
-	var/proximity_check = usr.client.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
+	var/client/usrclient = GET_CLIENT(usr)
+	var/proximity_check = usrclient.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
 	if(proximity_check)
 		return proximity_check
 

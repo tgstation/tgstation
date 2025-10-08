@@ -9,7 +9,7 @@
 
 	usr = dummy // mouse drop still uses usr
 
-	dummy.base_mouse_drop_handler(chair)
+	dummy.MouseDrop(chair)
 	if(dummy.buckled != chair)
 		TEST_FAIL("The dummy failed to buckle themselves to a chair via mouse drop.")
 
@@ -27,7 +27,7 @@
 
 	usr = dummy // mouse drop still uses usr
 
-	victim.base_mouse_drop_handler(chair)
+	victim.MouseDrop(chair)
 	if(victim.buckled != chair)
 		TEST_FAIL("The dummy failed to buckle the victim to a chair via mouse drop.")
 
