@@ -9,9 +9,6 @@
 		/datum/weather/void_storm,
 	)
 
-	/// Does this element delete itself if someone logs in?
-	var/clears_on_login = TRUE
-
 /datum/component/storm_hating/Initialize()
 	. = ..()
 	if (!isatom(parent))
@@ -53,6 +50,4 @@
 
 /datum/component/storm_hating/proc/on_login(datum/source)
 	SIGNAL_HANDLER
-	if(!clears_on_login)
-		return
 	qdel(src)
