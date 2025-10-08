@@ -12,6 +12,8 @@
 	var/use_worn_icon = TRUE
 	/// Pixel z offset for the hat
 	var/pixel_z_offset
+	/// Which way a loose hat is offset
+	var/head_angle = 1
 
 /datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_z_offset = 0, loose_hat = FALSE)
 	if(!ismovable(parent))
@@ -114,7 +116,7 @@
 	if(loose_hat)
 		var/matrix/tilt_trix = matrix(worn_overlay.transform)
 		var/angle = 5
-		tilt_trix.Turn(angle * pick(1, -1))
+		tilt_trix.Turn(angle * head_angle)
 		worn_overlay.transform = tilt_trix
 	worn_overlay.pixel_z = pixel_z_offset + attached_hat.worn_y_offset
 	overlays += worn_overlay
@@ -132,7 +134,7 @@
 	if(loose_hat)
 		var/matrix/tilt_trix = matrix(worn_overlay.transform)
 		var/angle = 5
-		tilt_trix.Turn(angle * pick(1, -1))
+		tilt_trix.Turn(angle * head_angle)
 		worn_overlay.transform = tilt_trix
 	worn_overlay.pixel_z = pixel_z_offset + attached_hat.worn_y_offset
 	overlays += worn_overlay
@@ -168,6 +170,7 @@
 	var/atom/movable/movable_parent = parent
 	attached_hat = hat
 	RegisterSignal(hat, COMSIG_MOVABLE_MOVED, PROC_REF(on_hat_movement))
+	head_angle = pick(1, -1)
 
 	if (!isnull(user))
 		movable_parent.balloon_alert(user, "hat attached")
