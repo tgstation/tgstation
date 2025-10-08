@@ -181,7 +181,9 @@
 			metabolizing_out /= affected_mob.metabolism_efficiency
 		else
 			metabolizing_out *= affected_mob.metabolism_efficiency
-
+	if(!(chemical_flags & REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS))
+		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+		liver?.stressed_by_metabolization(src, metabolizing_out)
 	holder.remove_reagent(type, metabolizing_out)
 
 

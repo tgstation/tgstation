@@ -30,6 +30,10 @@
 	var/liver_resistance = LIVER_DEFAULT_TOX_RESISTANCE
 	var/filterToxins = TRUE //whether to filter toxins
 	var/operated = FALSE //whether the liver's been repaired with surgery and can be fixed again or not
+	VAR_PROTECTED/metabolic_stress = 0
+	VAR_PROTECTED/max_metabolic_stress = 100
+	VAR_PROTECTED/metabolic_stress_recovery_rate = 1
+	COOLDOWN_DECLARE(last_metabolic_stress_time)
 
 /obj/item/organ/liver/Initialize(mapload)
 	. = ..()
@@ -135,6 +139,8 @@
 		return
 
 	owner.reagents?.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
+	if(COOLDOWN_FINISHED(src, last_metabolic_stress_time))
+		metabolic_stress &&= max(metabolic_stress - metabolic_stress_recovery_rate, 0)
 
 /obj/item/organ/liver/handle_failing_organs(seconds_per_tick)
 	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
@@ -206,15 +212,47 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_They()] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
 
+/obj/item/organ/liver/proc/stressed_by_metabolization(datum/reagent/chem, units_metabolized)
+	// Made a list in this fashion to facilitate anything listening to our owner being
+	// able to modify the amount of stress induced if it doesn't cancel it outright
+	var/list/stress_amount = list(max(units_metabolized, 0.5))
+	if(SEND_SIGNAL(owner, COMSIG_LIVER_METABOLIC_STRESS, chem, stress_amount) & COMPONENT_CANCEL_METABOLIC_STRESS)
+		return
+	// Start the cooldown even if the stress was somehow reduced to 0, if it wasn't
+	// canceled
+	COOLDOWN_START(src, last_metabolic_stress_time, 30 SECONDS)
+	if(stress_amount[1] <= 0)
+		return
+	metabolic_stress = metabolic_stress += stress_amount[1]
+	if(metabolic_stress > max_metabolic_stress)
+		apply_organ_damage(metabolic_stress - max_metabolic_stress)
+		metabolic_stress = max_metabolic_stress
+
 /obj/item/organ/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver
 
 /obj/item/organ/liver/feel_for_damage(self_aware)
+	switch(metabolic_stress ? max_metabolic_stress / metabolic_stress : 0)
+		if(0 to 0.2)
+			if(!prob(10))
+				. += span_green("You feel healthy from your dedication to clean living.")
+			else
+				. += span_green("You feel healthy from your dedication to clean living." + span_notice("No wonder you don't get invited to any parties..."))
+		if(0.21 to 0.4)
+			. += span_notice("You feel a little worn out; a hangover from chems of various kinds, no doubt.")
+		if(0.41 to 0.6)
+			. += span_warning("You know how to party but you feel a little partied out. Maybe lay off the chems.")
+		if(0.61 to 0.8)
+			. += span_boldwarning("In your lucid moments between chem doses, you recognize your body's understanding that all those chems cannot be good for you.")
+		if(0.81 to 0.9)
+			. += span_boldwarning("Your chem-soaked body lances with pain in your lower abdomen; a klaxon warning to get off the chems.")
+		if(0.91 to 1)
+			. += span_userdanger("Needles of agony mark your liver's dancing steps toward its death from your latest chem dose. But maybe you could get clean?")
 	if(damage < low_threshold)
 		return
 	if(damage < high_threshold)
-		return span_warning("Your [self_aware ? "liver" : "lower abdomen"] feels sore.")
-	return span_boldwarning("Your [self_aware ? "liver" : "lower abdomen"] feels like it's on fire!")
+		. += span_warning("Your [self_aware ? "liver" : "lower abdomen"] feels sore.")
+	. += span_boldwarning("Your [self_aware ? "liver" : "lower abdomen"] feels like it's on fire!")
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/liver/alien

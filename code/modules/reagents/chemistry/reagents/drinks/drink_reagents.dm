@@ -4,7 +4,7 @@
 	color = "#E78108" // rgb: 231, 129, 8
 	taste_description = "oranges"
 	ph = 3.3
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -18,7 +18,7 @@
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "tomatoes"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -33,7 +33,7 @@
 	color = "#a6f19a" // rgb: 166, 241, 154
 	taste_description = "unbearable sourness"
 	ph = 2.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -47,7 +47,7 @@
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
 	taste_description = "carrots"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -68,7 +68,7 @@
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
 	taste_description = "berries"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/applejuice
 	name = "Apple Juice"
@@ -82,7 +82,7 @@
 	description = "A tasty juice blended from various kinds of very deadly and toxic berries."
 	color = "#792b49" // rgb: 121, 43, 73
 	taste_description = "berries"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -94,7 +94,7 @@
 	description = "Delicious juice made from watermelon."
 	color = "#af5e5e" // rgb: 175, 94, 94
 	taste_description = "juicy watermelon"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/lemonjuice
 	name = "Lemon Juice"
@@ -102,14 +102,14 @@
 	color = "#ebeb9e" // rgb: 235, 235, 158
 	taste_description = "sourness"
 	ph = 2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/banana
 	name = "Banana Juice"
 	description = "The raw essence of a banana. HONK"
 	color = "#FFFCB9" // rgb: 255, 252, 185
 	taste_description = "banana"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -122,7 +122,7 @@
 	name = "Nothing"
 	description = "Absolutely nothing."
 	taste_description = "nothing"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/glass_style/shot_glass/nothing
 	required_drink_type = /datum/reagent/consumable/nothing
@@ -141,7 +141,7 @@
 	metabolization_rate = INFINITY
 	color = "#FF4DD2"
 	taste_description = "laughter"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -154,7 +154,7 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#FF4DD2"
 	taste_description = "laughter"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -169,7 +169,7 @@
 	nutriment_factor = 2
 	color = "#E8A856" // rgb: 234, 157, 58
 	taste_description = "irish sadness"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/pickle
 	name = "Pickle Juice"
@@ -177,7 +177,7 @@
 	nutriment_factor = 2
 	color = "#cde65e" // rgb: 205, 230, 94
 	taste_description = "vinegar brine"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/pickle/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -191,14 +191,14 @@
 	description = "The juice of a bunch of grapes. Guaranteed non-alcoholic."
 	color = "#290029" // dark purple
 	taste_description = "grape soda"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/plumjuice
 	name = "Plum Juice"
 	description = "Refreshing and slightly acidic beverage."
 	color = "#b6062c"
 	taste_description = "plums"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/milk
 	name = "Milk"
@@ -206,7 +206,7 @@
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_description = "milk"
 	ph = 6.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/condiment/milk
 
 // Milk is good for humans, but bad for plants.
@@ -237,7 +237,7 @@
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
 	taste_description = "soy milk"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/condiment/soymilk
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -251,7 +251,7 @@
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
 	taste_description = "creamy milk"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -266,7 +266,7 @@
 	nutriment_factor = 0
 	overdose_threshold = 80
 	taste_description = "bitterness"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_STOCK
 	metabolized_traits = list(TRAIT_STIMULATED)
 
@@ -290,7 +290,7 @@
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "tart black tea"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_STOCK
 	default_container = /obj/item/reagent_containers/cup/glass/mug/tea
 	metabolized_traits = list(TRAIT_STIMULATED)
@@ -342,7 +342,7 @@
 	color = "#FFE978"
 	quality = DRINK_NICE
 	taste_description = "sunshine and summertime"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_EASY
 
 /datum/reagent/consumable/tea/arnold_palmer
@@ -352,7 +352,7 @@
 	quality = DRINK_NICE
 	nutriment_factor = 10
 	taste_description = "bitter tea"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -366,7 +366,7 @@
 	nutriment_factor = 0
 	overdose_threshold = 80
 	taste_description = "bitter coldness"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/icecoffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -387,7 +387,7 @@
 	nutriment_factor = 0
 	overdose_threshold = 80
 	taste_description = "bitter coldness and a hint of smoke"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/hot_ice_coffee/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -409,7 +409,7 @@
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
 	taste_description = "sweet tea"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -427,7 +427,7 @@
 	description = "A refreshing beverage."
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -440,7 +440,7 @@
 	color = "#53090B"
 	quality = DRINK_GOOD
 	taste_description = "fruity overlysweet cola"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.set_jitter_if_lower(12 SECONDS * REM * seconds_per_tick)
@@ -454,7 +454,7 @@
 	color = "#100800" // rgb: 16, 8, 0
 	quality = DRINK_VERYGOOD
 	taste_description = "the future"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -483,7 +483,7 @@
 	nutriment_factor = 10
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	taste_description = "a monstrous sugar rush"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	/// If we activated the effect
 	var/effect_enabled = FALSE
 
@@ -514,7 +514,7 @@
 	color = "#EEFF00" // rgb: 238, 255, 0
 	quality = DRINK_VERYGOOD
 	taste_description = "carbonated oil"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/carbon/affected_atom)
@@ -537,7 +537,7 @@
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "sweet citrus soda"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -552,7 +552,7 @@
 	description = "A delicious blend of 42 different flavours."
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "cherry soda" // FALSE ADVERTISING
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -564,7 +564,7 @@
 	description = "Tastes like a hull breach in your mouth."
 	color = COLOR_VIBRANT_LIME // rgb: 0, 255, 0
 	taste_description = "cherry soda"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/space_up/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -575,7 +575,7 @@
 	description = "A tangy substance made of 0.5% natural citrus!"
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "tangy lime and lemon soda"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/lemon_lime/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -586,7 +586,7 @@
 	description = "The only drink with the PWR that true gamers crave."
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/pwr_game/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -606,7 +606,7 @@
 	description = "~Shake me up some of that Shambler's Juice!~"
 	color = "#f00060" // rgb: 94, 0, 38
 	taste_description = "carbonated metallic soda"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -617,7 +617,7 @@
 	description = "A can of club soda. Why not make a scotch and soda?"
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "carbonated water"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 // A variety of nutrients are dissolved in club soda, without sugar.
 // These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
@@ -636,7 +636,7 @@
 	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 	color = "#0064C8" // rgb: 0, 100, 200
 	taste_description = "tart and fresh"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -650,7 +650,7 @@
 	description = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
 	color = "#762399" // rgb: 118, 35, 153
 	taste_description = "grapes and the fresh open sea"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/wellcheers/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -672,7 +672,7 @@
 	color = "#f39b03" // rgb: 243, 155, 3
 	overdose_threshold = 60
 	taste_description = "barbecue and nostalgia"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -702,7 +702,7 @@
 	description = "Frozen water, your dentist wouldn't like you chewing this."
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/ice
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -717,7 +717,7 @@
 	overdose_threshold = 80
 	quality = DRINK_NICE
 	taste_description = "creamy coffee"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_EASY
 	metabolized_traits = list(TRAIT_STIMULATED)
 
@@ -744,7 +744,7 @@
 	overdose_threshold = 80
 	quality = DRINK_NICE
 	taste_description = "bitter cream"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_EASY
 	metabolized_traits = list(TRAIT_STIMULATED)
 
@@ -770,7 +770,7 @@
 	color = "#FF8CFF" // rgb: 255, 140, 255
 	quality = DRINK_VERYGOOD
 	taste_description = "homely fruit"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -793,7 +793,7 @@
 	color = "#FF6A50"
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tangy fruit"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -806,7 +806,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8
 	taste_description = "creamy tart cherry"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/bluecherryshake
@@ -816,7 +816,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8
 	taste_description = "creamy blue cherry"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/vanillashake
 	name = "Vanilla Shake"
@@ -825,7 +825,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8
 	taste_description = "sweet creamy vanilla"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/caramelshake
@@ -835,7 +835,7 @@
 	quality = DRINK_GOOD
 	nutriment_factor = 10
 	taste_description = "sweet rich creamy caramel"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/choccyshake
@@ -845,7 +845,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8
 	taste_description = "sweet creamy chocolate"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/strawberryshake
@@ -855,7 +855,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8
 	taste_description = "sweet strawberries and milk"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/bananashake
@@ -865,7 +865,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8
 	taste_description = "thick banana"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/pumpkin_latte
@@ -876,7 +876,7 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 3
 	taste_description = "creamy pumpkin"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/pumpkin_latte/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -902,21 +902,21 @@
 	quality = DRINK_NICE
 	nutriment_factor = 3
 	taste_description = "creamy cherry"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/pumpkinjuice
 	name = "Pumpkin Juice"
 	description = "Juiced from real pumpkin."
 	color = "#FFA500"
 	taste_description = "pumpkin"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/blumpkinjuice
 	name = "Blumpkin Juice"
 	description = "Juiced from real blumpkin."
 	color = "#00BFFF"
 	taste_description = "a mouthful of pool water"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/triple_citrus
 	name = "Triple Citrus"
@@ -924,14 +924,14 @@
 	color = "#EEFF00"
 	quality = DRINK_NICE
 	taste_description = "extreme bitterness"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/grape_soda
 	name = "Grape Soda"
 	description = "Beloved by children and teetotalers."
 	color = "#E6CDFF"
 	taste_description = "grape soda"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -943,7 +943,7 @@
 	color = "#7D4E29"
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
@@ -951,7 +951,7 @@
 	nutriment_factor = 4
 	color = "#3b240e" // rgb: 59, 36, 14
 	taste_description = "creamy chocolate"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
@@ -969,7 +969,7 @@
 	color = "#57372A"
 	quality = DRINK_VERYGOOD
 	taste_description = "thick creamy chocolate"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -980,7 +980,7 @@
 	description = "Alleviates coughing symptoms one might have."
 	color = "#80AF9C"
 	taste_description = "mint"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/menthol
 
 /datum/reagent/consumable/menthol/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -992,7 +992,7 @@
 	description = "Not cherry flavored!"
 	color = "#EA1D26"
 	taste_description = "sweet pomegranates"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/grenadine/on_mob_metabolize(mob/living/drinker)
 	. = ..()
@@ -1011,14 +1011,14 @@
 	description = "Why..."
 	color = "#FFA500"
 	taste_description = "parsnip"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/pineapplejuice
 	name = "Pineapple Juice"
 	description = "Tart, tropical, and hotly debated."
 	color = "#F7D435"
 	taste_description = "pineapple"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/pineapplejuice
 
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
@@ -1026,7 +1026,7 @@
 	description = "Just peachy."
 	color = "#E78108"
 	taste_description = "peaches"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
@@ -1034,7 +1034,7 @@
 	color = "#dcb137"
 	quality = DRINK_VERYGOOD
 	taste_description = "fizzy vanilla"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1046,7 +1046,7 @@
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1058,7 +1058,7 @@
 	color = "#F43724"
 	quality = DRINK_GOOD
 	taste_description = "sweet cherry syrup and ginger spice"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	affected_mob.adjust_disgust(-3 * REM * seconds_per_tick)
@@ -1070,7 +1070,7 @@
 	color = "#e6ddc3"
 	quality = DRINK_GOOD
 	taste_description = "wonder"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	var/current_size = RESIZE_DEFAULT_SIZE
 
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -1095,21 +1095,21 @@
 	color = "#F9E43D"
 	description = "Exotic! You feel like you are on vacation already."
 	taste_description = "succulent bungo"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/prunomix
 	name = "Pruno Mixture"
 	color = "#E78108"
 	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	taste_description = "garbage"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/aloejuice
 	name = "Aloe Juice"
 	color = "#b3c5a7" // rgb: 179, 197, 167
 	description = "A healthy and refreshing juice."
 	taste_description = "vegetable"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1123,7 +1123,7 @@
 	color = "#D25B66"
 	quality = DRINK_VERYGOOD
 	taste_description = "cool refreshing watermelon"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1138,7 +1138,7 @@
 	color = "#674945" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "mushrooms"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1153,7 +1153,7 @@
 	color = "#554862" // rgb: 85, 72, 98
 	nutriment_factor = 0
 	taste_description = "fiery itchy pain"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/toechtauese_syrup
 	name = "Töchtaüse Syrup"
@@ -1161,7 +1161,7 @@
 	color = "#554862" // rgb: 85, 72, 98
 	nutriment_factor = 0
 	taste_description = "sugar, spice, and nothing nice"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/strawberry_banana
 	name = "strawberry banana smoothie"
@@ -1169,7 +1169,7 @@
 	color = "#FF9999"
 	nutriment_factor = 0
 	taste_description = "strawberry and banana"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/berry_blast
 	name = "berry blast smoothie"
@@ -1177,7 +1177,7 @@
 	color = "#A76DC5"
 	nutriment_factor = 0
 	taste_description = "mixed berry"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/funky_monkey
 	name = "funky monkey smoothie"
@@ -1185,7 +1185,7 @@
 	color = COLOR_BROWNER_BROWN
 	nutriment_factor = 0
 	taste_description = "chocolate and banana"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/green_giant
 	name = "green giant smoothie"
@@ -1193,7 +1193,7 @@
 	color = COLOR_VERY_DARK_LIME_GREEN
 	nutriment_factor = 0
 	taste_description = "green, just green"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/melon_baller
 	name = "melon baller smoothie"
@@ -1201,7 +1201,7 @@
 	color = "#D22F55"
 	nutriment_factor = 0
 	taste_description = "fresh melon"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/vanilla_dream
 	name = "vanilla dream smoothie"
@@ -1209,14 +1209,14 @@
 	color = "#FFF3DD"
 	nutriment_factor = 0
 	taste_description = "creamy vanilla"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
 	color = "#B1D861" // rgb: 177, 216, 97
 	taste_description = "light cucumber"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/cucumberlemonade
 	name = "Cucumber Lemonade"
@@ -1224,7 +1224,7 @@
 	color = "#cbe248" // rgb: 203, 226, 72
 	quality = DRINK_GOOD
 	taste_description = "citrus soda with cucumber"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	glass_price = DRINK_PRICE_HIGH
 
 /datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, seconds_per_tick, times_fired)
@@ -1239,7 +1239,7 @@
 	description = "If you think you're so hot, how about a victory drink?"
 	color = "#d4422f" // rgb: 212,66,47
 	taste_description = "sludge seeping down your throat"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/mississippi_queen/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
@@ -1257,7 +1257,7 @@
 	description = "You expected to find this in a soup, but this is fine too."
 	color = "#583d09" // rgb: 88, 61, 9
 	taste_description = "one of your 26 favorite letters"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/t_letter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -1276,28 +1276,28 @@
 	description = "A Martian-made yerba mate soda, dragged straight out of the pits of a hacking convention."
 	color = "#c4b000"
 	taste_description = "bubbly yerba mate"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/coconut_milk
 	name = "Coconut Milk"
 	description = "A versatile milk substitute that's perfect for everything from cooking to making cocktails."
 	color = "#DFDFDF"
 	taste_description = "milky coconut"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/melon_soda
 	name = "Melon Soda"
 	description = "A neon green hit of nostalgia."
 	color = "#6FEB48"
 	taste_description = "fizzy melon"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/consumable/volt_energy
 	name = "24-Volt Energy"
 	description = "An artificially coloured and flavoured electric energy drink, in lanternfruit flavour. Made for ethereals, by ethereals."
 	color = "#99E550"
 	taste_description = "sour pear"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
 /datum/reagent/consumable/volt_energy/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -1316,7 +1316,7 @@
 		It's unique recipe heals and rejuvinates the drinker, but is unsafe to consume without the support of a nearby watercooler."
 	color = "#f7b2e3"
 	taste_description = "dangerously sweet fruit"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	quality = DRINK_VERYGOOD
 
 /datum/reagent/consumable/fruit_punch/on_mob_life(mob/living/affected_mob, seconds_per_tick)
@@ -1375,7 +1375,7 @@
 	quality = DRINK_NICE
 	taste_description = "mild aromatics"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	
+
 /datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)

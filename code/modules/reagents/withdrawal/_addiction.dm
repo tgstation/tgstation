@@ -36,7 +36,16 @@
 	LAZYSET(victim_mind.active_addictions, type, 1) //Start at first cycle.
 	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_GAIN_ADDICTION, victim_mind)
 	victim_mind.current.log_message("has become addicted to [name].", LOG_GAME)
+	RegisterSignal(victim_mind.current, COMSIG_LIVER_METABOLIC_STRESS, PROC_REF(minimize_liver_stress))
 
+/// A victim's current body adapts to the stress of this drug, but if their addicted mind ends up in a
+/// different body, it won't carry the same tolerance that would minimize the liver stress, and honestly
+/// they can keep it if someone systematically becomes addicted to everything they can to minimize liver
+/// stress, rounds don't last long enough for this to be worth worrying about
+/datum/addiction/proc/minimize_liver_stress(mob/living/carbon/affected_mob, datum/reagent/chem, list/stress_amount)
+	SIGNAL_HANDLER
+	if(chem.addiction_types[type])
+		stress_amount[1] = 0.1
 
 ///Called when you lose addiction poitns somehow. Takes a mind as argument and sees if you lost the addiction
 /datum/addiction/proc/on_lose_addiction_points(datum/mind/victim_mind)

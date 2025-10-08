@@ -125,6 +125,9 @@
 /// If present, this reagent will not be affected by the mob's metabolism at all, meaning it exits at a fixed rate for all mobs.
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
 #define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
+/// Indicates that the body is able to metabolize this reagent without effort
+/// Primarily: food, water, magical bullshit, things we use as reagents we probably shouldn't
+#define REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS (1<<11)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion

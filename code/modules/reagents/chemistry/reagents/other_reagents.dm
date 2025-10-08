@@ -2,6 +2,7 @@
 	name = "Blood"
 	description  = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	color = "#C80000" // rgb: 200, 0, 0
+	chemical_flags = REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
@@ -109,7 +110,7 @@
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
 	var/cooling_temperature = 2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
 
 /datum/glass_style/shot_glass/water
@@ -293,7 +294,7 @@
 	color = "#E0E8EF" // rgb: 224, 232, 239
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_UNAFFECTED_BY_METABOLISM // Operates at fixed metabolism for balancing memes.
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS|REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS|REAGENT_UNAFFECTED_BY_METABOLISM // Operates at fixed metabolism for balancing memes.
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 	metabolized_traits = list(TRAIT_HOLY)
 
@@ -439,7 +440,7 @@
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
 	penetrates_skin = TOUCH|VAPOR
 	ph = 6.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE/REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/fuel/unholywater/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
@@ -1105,7 +1106,7 @@
 	description = "Pure iron is a metal."
 	taste_description = "iron"
 	material = /datum/material/iron
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	color = "#606060" //pure iron? let's make it violet of course
 	ph = 6
 
@@ -2896,7 +2897,7 @@
 	self_consuming = TRUE //eldritch intervention won't be limited by the lack of a liver
 	color = "#1f8016"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE|REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()

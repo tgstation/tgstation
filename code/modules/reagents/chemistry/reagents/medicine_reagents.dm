@@ -144,11 +144,29 @@
 	burning_temperature = 20 //cold burning
 	burning_volume = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/static/maximum_temperature_for_effect = T0C
+
+/datum/reagent/medicine/cryoxadone/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	RegisterSignal(affected_mob, COMSIG_LIVER_METABOLIC_STRESS, PROC_REF(prevent_liver_stress))
+
+/datum/reagent/medicine/cryoxadone/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	UnregisterSignal(affected_mob, COMSIG_LIVER_METABOLIC_STRESS)
+
+/// Cryo should not be penalized by stressing the liver of anyone who undergoes it; as a reward
+/// for the creation of autismo magnifico cryo healing mixes, they get to heal free of metabolic
+/// liver stress
+/datum/reagent/medicine/cryoxadone/proc/prevent_liver_stress(mob/living/carbon/affected_mob, datum/reagent/chem, list/stress_amount)
+	SIGNAL_HANDLER
+	if(affected_mob.bodytemperature > maximum_temperature_for_effect)
+		return NONE
+	return COMPONENT_CANCEL_METABOLIC_STRESS
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (affected_mob.bodytemperature ** 2) + 0.5)
-	if(affected_mob.bodytemperature >= T0C || !HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT))
+	if(affected_mob.bodytemperature > maximum_temperature_for_effect)
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
 	var/need_mob_update
@@ -1382,7 +1400,7 @@
 	description = "Gradually regenerates all types of damage, without harming slime anatomy."
 	color = "#CC23FF"
 	taste_description = "jelly"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
 	affected_respiration_type = ALL
 

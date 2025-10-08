@@ -17,6 +17,11 @@
 /// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
 #define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
 
+/// Called when a liver metabolizes some of a reagent that isn't part of homeostatic body functions
+/// From /obj/item/organ/liver/proc/stressed_by_metabolization(datum/reagent/chem, units_metabolized)
+#define COMSIG_LIVER_METABOLIC_STRESS "liver_metabolic_stress"
+	#define COMPONENT_CANCEL_METABOLIC_STRESS (1<<0)
+
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
 
