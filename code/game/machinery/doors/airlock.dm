@@ -196,7 +196,8 @@
 // if dragging, block 'Click on the floor to close airlocks'
 /obj/machinery/door/airlock/proc/drag_check(mob/user)
 	if (user.pulling)
-		return NONE
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
