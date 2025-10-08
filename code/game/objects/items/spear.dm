@@ -29,7 +29,7 @@
 	/// The icon prefix for this flavor of spear
 	var/icon_prefix = "spearglass"
 	/// How much damage to do unwielded
-	var/force_unwielded = 10
+	var/force_unwielded = 14
 	/// How much damage to do wielded
 	var/force_wielded = 18
 

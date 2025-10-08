@@ -414,8 +414,7 @@
 /obj/item/claymore/weak/ceremonial
 	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
 	force = 22
-	block_chance = 40
-	armour_penetration = 10
+	block_chance = 30
 
 /obj/item/claymore/weak/ceremonial/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)
