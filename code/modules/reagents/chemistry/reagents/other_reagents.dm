@@ -2852,7 +2852,7 @@
 	description = "For when you need to push on a little more. Do NOT allow near plants."
 	color = "#D2FFFA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~34 seconds
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_METABOLIZED_WITHOUT_LIVER_STRESS
 	self_consuming = TRUE
 	metabolized_traits = list(TRAIT_ANALGESIA)
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
