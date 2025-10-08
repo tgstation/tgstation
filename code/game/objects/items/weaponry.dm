@@ -1074,7 +1074,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "baseball_bat_metal"
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3.5)
 	resistance_flags = NONE
-	force = 24
+	force = 20
 	block_chance = 20
 	throwforce = 20
 	mob_thrower = TRUE
