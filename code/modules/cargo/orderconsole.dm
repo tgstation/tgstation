@@ -269,7 +269,7 @@
 
 		name = account?.account_holder
 		if(account?.account_job)
-			var/datum/bank_account/personal_department = SSeconomy.get_dep_account(account.account_job?.paycheck_department)
+			var/datum/bank_account/personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
 				var/dept_choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
 				if(!dept_choice)
@@ -308,7 +308,7 @@
 			reason = reason,
 			paying_account = account,
 			coupon = applied_coupon,
-			department_destination = reason ? 1 : 0, // Hijacking reason as a way to determine if an order's requested from at least one budget
+			department_destination = reason ? TRUE : FALSE, // Hijacking reason as a way to determine if an order's requested from at least one budget
 		)
 		working_list += order
 

@@ -165,7 +165,7 @@
 			"orderer" = order.orderer,
 			"reason" = order.reason,
 			"id" = order.id,
-			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
+			"account" = order.paying_account?.account_holder || "Cargo Department"
 		))
 	data["amount_by_name"] = amount_by_name
 
@@ -259,16 +259,15 @@
 				if(isnull(reason) || ..())
 					return
 
-			if(id_card_customer && id_card_customer?.registered_account)
-				if(id_card_customer.registered_account?.account_job) //Find a budget to pull from
-					var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
-					if(!(personal_department.account_holder == "Cargo Budget"))
-						var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
-						if(!choice)
-							return
-						if(choice != "Cargo Budget")
-							account = personal_department
-						name = id_card_customer.registered_account?.account_holder
+			if(id_card_customer?.registered_account?.account_job) //Find a budget to pull from
+				var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
+				if(!(personal_department.account_holder == "Cargo Budget"))
+					var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))
+					if(!choice)
+						return
+					if(choice != "Cargo Budget")
+						account = personal_department
+					name = id_card_customer.registered_account?.account_holder
 
 			if(pack.goody && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
