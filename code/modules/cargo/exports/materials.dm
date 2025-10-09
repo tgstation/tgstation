@@ -186,12 +186,21 @@
 	message = ""
 	unit_name = "stock block"
 	export_types = list(/obj/item/stock_block)
+	/// Has the block been sold on the market
+	VAR_PRIVATE/exported = FALSE
 
 /datum/export/material/market/stock_block/init_export_types(export_data)
 	return typecacheof(export_data, only_root_path = !include_subtypes)
 
+/datum/export/material/market/stock_block/proc/mark_exported(obj/item/stock_block/block)
+	SIGNAL_HANDLER
+
+	exported = TRUE
+
+	UnregisterSignal(block, COMSIG_ITEM_EXPORTED)
+
 /datum/export/material/market/stock_block/get_amount(obj/item/stock_block/block)
-	return block.export_value ? 1 : sheets(block)
+	return exported ? sheets(block) : 1
 
 /**
  * Returns number of sheets in this stock block
@@ -210,5 +219,8 @@
 
 /datum/export/material/market/stock_block/sell_object(obj/item/stock_block/block, datum/export_report/report, dry_run, apply_elastic)
 	material_id = block.custom_materials[1].type
+	if(!dry_run)
+		exported = FALSE
+		RegisterSignal(block, COMSIG_ITEM_EXPORTED, PROC_REF(mark_exported))
 
 	return ..()

@@ -71,6 +71,7 @@
 	var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 	new_block.export_value = price
 	new_block.set_custom_materials(materials)
+	new_block.add_atom_colour(materials[1].color, FIXED_COLOUR_PRIORITY)
 	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] cr! Sell it before it becomes liquid!"))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 	qdel(exportable)
@@ -356,12 +357,6 @@
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(value_warning)), 1.5 MINUTES, TIMER_DELETE_ME)
 	addtimer(CALLBACK(src, PROC_REF(update_value)), 3 MINUTES, TIMER_DELETE_ME)
-	RegisterSignal(src, COMSIG_ITEM_EXPORTED, PROC_REF(mark_exported))
-
-/obj/item/stock_block/proc/mark_exported()
-	SIGNAL_HANDLER
-
-	export_value = 0
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
