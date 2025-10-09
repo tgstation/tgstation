@@ -173,6 +173,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 5
 	armour_penetration = 35
 
+/obj/item/claymore/cutlass/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
+
 /obj/item/claymore/cutlass/old
 	name = "old cutlass"
 	desc = parent_type::desc + " This one seems a tad old."
@@ -672,6 +676,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("bludgeons", "whacks", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "thrash")
 
+/obj/item/cane/crutch/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/cane/crutch/examine(mob/user, thats)
 	. = ..()
 	// tacked on after the cane string
@@ -724,6 +732,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/cane/white/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	AddComponent( \
 		/datum/component/transforming, \
 		force_on = 7, \

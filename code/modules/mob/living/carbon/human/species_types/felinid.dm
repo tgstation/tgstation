@@ -24,86 +24,17 @@
 	/// Yummy!
 	species_cookie = /obj/item/food/nugget
 
-/datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load, regenerate_icons)
-	if(ishuman(carbon_being))
-		var/mob/living/carbon/human/target_human = carbon_being
-		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-			target_human.dna.features[FEATURE_TAIL] = "Cat"
-			if(target_human.dna.features[FEATURE_EARS] == "None")
-				target_human.dna.features[FEATURE_EARS] = "Cat"
-		if(target_human.dna.features[FEATURE_EARS] == "None")
-			mutantears = /obj/item/organ/ears
-		else
-			var/obj/item/organ/ears/cat/ears = new(FALSE, target_human.dna.features[FEATURE_EARS])
-			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
+/datum/species/human/felinid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
+	if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
+		if(human_who_gained_species.dna.features[FEATURE_TAIL] == SPRITE_ACCESSORY_NONE)
+			human_who_gained_species.dna.features[FEATURE_TAIL] = get_consistent_feature_entry(SSaccessories.tails_list_felinid)
+		if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
+			human_who_gained_species.dna.features[FEATURE_EARS] = get_consistent_feature_entry(SSaccessories.ears_list)
+
+	// Swapping out feline ears for normal ol' human ears if they have invisible cat ears.
+	if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
+		mutantears = /obj/item/organ/ears
 	return ..()
-
-/datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
-	var/list/features = ..()
-	features[FEATURE_EARS] = pick("None", "Cat")
-	return features
-
-/datum/species/human/felinid/get_laugh_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/laugh/womanlaugh.ogg'
-	return pick(
-		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
-		'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
-	)
-
-
-/datum/species/human/felinid/get_cough_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
-			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
-		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
-	)
-
-
-/datum/species/human/felinid/get_cry_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return pick(
-			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
-			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
-		)
-	return pick(
-		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
-		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
-		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
-	)
-
-
-/datum/species/human/felinid/get_sneeze_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
-	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
-
-/datum/species/human/felinid/get_sigh_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return SFX_FEMALE_SIGH
-	return SFX_MALE_SIGH
-
-/datum/species/human/felinid/get_sniff_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return 'sound/mobs/humanoids/human/sniff/female_sniff.ogg'
-	return 'sound/mobs/humanoids/human/sniff/male_sniff.ogg'
-
-/datum/species/human/felinid/get_snore_sound(mob/living/carbon/human/felinid)
-	if(felinid.physique == FEMALE)
-		return SFX_SNORE_FEMALE
-	return SFX_SNORE_MALE
 
 /datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'

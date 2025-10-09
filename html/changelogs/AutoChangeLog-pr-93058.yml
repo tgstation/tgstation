@@ -1,0 +1,16 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - map: "CATWALK - Atmos gas tanks are now in space rather than inside the station, widens Z1 & Z2 Atmos to suit"
+  - map: "CATWALK - Old gas tank chambers re-purposed as storage and chill area, upstairs laid out a bit, downstairs floor much neater, another ladded added to atmos"
+  - map: "CATWALK - Added air mix pump to upper level atmos for passion projects"
+  - map: "CATWALK - In SM chamber moved position of a table and rack about"
+  - map: "CATWALK - OHSA screamed that one ladder used the wrong markings at lower SM freezers, corrected"
+  - map: "CATWALK - Added 2x extra pipes to mix chamber and cobweb tweak"
+  - map: "CATWALK - Replaced a lot of plasma glass with reinforced glass at atmos"
+  - map: "CATWALK - Missing power cable upper engineering added - Good spot by Aliceee2ch"
+  - map: "CATWALK - Adds missing Pipe Scrubber machine to Turbine storage - Another Aliceee2ch spot"
+  - map: "CATWALK - New atmos lift for heavy equipment or canisters between levels"
+  - map: "CATWALK - Gravity generator can be accessed just outside engineering front door now"
+  - map: "CATWALK - Tool storage shrunk, if you want to play poker go to the bar or the library or dorms, tech storage re-organised"
+  - map: "CATWALK - Solar Arrays adjusted to actually be usable in the event of power loss"
