@@ -37,7 +37,7 @@
 	INVOKE_ASYNC(src, PROC_REF(trigger_organ_action))
 
 /**
- * Status effect: Makes you run faster and ignore speed penalties for a short duration.
+ * Status effect: Makes you run faster and ignore damage speed penalties for a short duration.
  * If you run into a wall indoors you will fall over and lose the buff.
  * If you run into someone you both fall over.
  */
