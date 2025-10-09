@@ -4,7 +4,7 @@
 /datum/unit_test/unequip_defib/Run()
 	var/mob/living/carbon/human/consistent/dummy = EASY_ALLOCATE()
 	dummy.mock_client = new()
-	dummy.hud_used = new dummy.hud_type(dummy)
+	dummy.set_hud_used(new dummy.hud_type(dummy))
 	var/obj/item/defibrillator/defib = EASY_ALLOCATE()
 	dummy.equip_to_slot(defib, ITEM_SLOT_BACK)
 
