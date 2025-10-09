@@ -67,9 +67,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		uncreatables = build_list_of_uncreatables()
 
 	allocated = new
+
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
 	run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
 
+	if(priority > TEST_CREATE_AND_DESTROY) //the create and destroy test WILL wreck havok in the unit test room. You CANNOT stop the inevitable.
+		return
+
+	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
 	TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
 
@@ -97,6 +102,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
+	if(priority > TEST_CREATE_AND_DESTROY) //I'm not using TEST_ASSERT here since these are just numbers that tell nothing useful about the problem.
+		TEST_FAIL("allocate() was called for a unit test after 'create_and_destroy' has finished. The unit test room is no longer a reliable testing ground for atoms.")
+		return null //you deserve runtime errors for it
 	var/list/arguments = args.Copy(2)
 	if(ispath(type, /atom))
 		if (!arguments.len)
@@ -204,7 +212,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	else
 
 		test.Run()
-		test.restore_atmos()
+		if(test.priority < TEST_CREATE_AND_DESTROY) //We shouldn't care about restoring atmos after create_and_destroy.
+			test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
