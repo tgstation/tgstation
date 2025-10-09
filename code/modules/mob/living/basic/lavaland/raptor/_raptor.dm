@@ -174,9 +174,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return
 
 	switch (direction)
-		if (NORTH)
+		if (NORTH, SOUTH)
 			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 0, animate = FALSE)
-		if (SOUTH, EAST, SOUTHEAST, NORTHEAST)
+		if (EAST, SOUTHEAST, NORTHEAST)
 			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
 		if (WEST, SOUTHWEST, NORTHWEST)
 			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 7, animate = FALSE)
