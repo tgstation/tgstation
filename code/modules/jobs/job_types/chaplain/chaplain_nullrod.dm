@@ -8,7 +8,7 @@
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	force = 18
+	force = 22
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
@@ -128,7 +128,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	block_chance = 30
+	block_chance = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
@@ -175,7 +175,7 @@
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = 'sound/items/weapons/chainsawhit.ogg'
 	tool_behaviour = TOOL_SAW
-	toolspeed = 1.5 //slower than a real saw
+	toolspeed = 0.5 //as fast as a real saw
 	menu_description = "A sharp chainsaw sword which provides a low chance of blocking incoming melee attacks. Can be used as a slower saw tool. Can be worn on the belt."
 
 /obj/item/nullrod/claymore/glowing
@@ -624,7 +624,7 @@
 	worn_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	force = 15
+	force = 16
 	attack_verb_continuous = list("bites", "eats", "fin slaps")
 	attack_verb_simple = list("bite", "eat", "fin slap")
 	hitsound = 'sound/items/weapons/bite.ogg'
@@ -786,7 +786,8 @@
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	armour_penetration = 10
+	throwforce = 24
+	armour_penetration = 20
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
@@ -809,8 +810,8 @@
 	force = 15
 	throw_speed = 3
 	throw_range = 7
-	throwforce = 15
-	armour_penetration = 10
+	throwforce = 24
+	armour_penetration = 20
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
@@ -887,8 +888,8 @@
 	// Did our sneak attack fail due to a special effect?
 	var/sneak_attack_fail_message = FALSE
 
-	// The force our sneak attack applies. Starts as 3d6, then changed based on certain factors.
-	var/sneak_attack_dice = roll("3d6")
+	// The force our sneak attack applies. Starts as 4d6, then changed based on certain factors.
+	var/sneak_attack_dice = roll("4d6")
 
 	// Status effects on the target that grant us sneak attacks
 	if(living_target.is_blind())
