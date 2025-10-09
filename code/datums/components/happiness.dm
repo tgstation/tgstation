@@ -108,6 +108,7 @@
 		return
 	var/y_position = source.get_cached_height() + 1
 	var/obj/effect/overlay/happiness_overlay/hearts = new
+	hearts.pixel_w -= source.base_pixel_x + source.base_pixel_w
 	hearts.pixel_y = y_position
 	hearts.set_hearts(happiness_level/maximum_happiness)
 	source.vis_contents += hearts

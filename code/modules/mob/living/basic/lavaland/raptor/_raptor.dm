@@ -1,12 +1,3 @@
-GLOBAL_LIST_INIT(raptor_growth_paths, list(
-	/mob/living/basic/raptor/baby_raptor/red = list(RAPTOR_PURPLE, RAPTOR_WHITE),
-	/mob/living/basic/raptor/baby_raptor/white = list(RAPTOR_GREEN, RAPTOR_PURPLE),
-	/mob/living/basic/raptor/baby_raptor/purple = list(RAPTOR_GREEN, RAPTOR_WHITE),
-	/mob/living/basic/raptor/baby_raptor/yellow = list(RAPTOR_GREEN, RAPTOR_RED),
-	/mob/living/basic/raptor/baby_raptor/green = list(RAPTOR_RED, RAPTOR_YELLOW),
-	/mob/living/basic/raptor/baby_raptor/blue = list(RAPTOR_RED, RAPTOR_PURPLE)
-))
-
 GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 	BB_BASIC_DEPRESSED = "Depressed",
 	BB_RAPTOR_MOTHERLY = "Motherly",
@@ -17,22 +8,34 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 GLOBAL_LIST_EMPTY(raptor_population)
 
 #define HAPPINESS_BOOST_DAMPENER 0.3
-
 /// Innate raptor offsets
 #define RAPTOR_INNATE_SOURCE "raptor_innate"
+/// How much does meal complexity affect our growth?
+#define RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR 5
+/// Base value for raptor growth from meat
+#define RAPTOR_GROWTH_BASE_MEAT 10
+/// Base value for raptor growth from ash flora
+#define RAPTOR_GROWTH_BASE_PLANT 5
+/// How much growth progress raptors need to accumulate to fully grow into an adult
+#define RAPTOR_GROWTH_REQUIRED 100
 
 /mob/living/basic/raptor
 	name = "raptor"
 	desc = "A trusty, powerful steed. Taming it might prove difficult..."
 	icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
+	icon_state = "raptor_red"
+	base_icon_state = "raptor"
+	pixel_w = -12
+	base_pixel_w = -12
 	speed = 2
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	maxHealth = 270
-	health = 270
+	maxHealth = 200
+	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	combat_mode = TRUE
 	mob_size = MOB_SIZE_LARGE
+	worn_slot_flags = ITEM_SLOT_BACK
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
 	maximum_survivable_temperature = INFINITY
@@ -45,14 +48,13 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/obj/item/food/meat/slab/chicken = 4,
 		/obj/item/stack/sheet/bone = 2,
 	)
-	ai_controller = /datum/ai_controller/basic_controller/raptor
-	///can this mob breed
+	// AI controller is set by our color
+	ai_controller = null
+	/// Can this raptor breed?
 	var/can_breed = TRUE
-	///should we change offsets on direction change?
+	/// Should we change offsets on direction change?
 	var/change_offsets = TRUE
-	///can we ride this mob
-	var/ridable_component = /datum/component/riding/creature/raptor
-	//pet commands when we tame the raptor
+	/// Pet commands when we tame the raptor
 	var/static/list/pet_commands = list(
 		/datum/pet_command/breed,
 		/datum/pet_command/idle,
@@ -62,24 +64,37 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/pet_command/follow,
 		/datum/pet_command/fetch,
 	)
-	///things we inherited from our parent
-	var/datum/raptor_inheritance/inherited_stats
-	///our color
-	var/raptor_color
-	///the description that appears in the dex
-	var/dex_description
-	///path of our child
-	var/child_path
+	/// Can we wear a collar? If so, what is our icon state prefix for it?
+	var/collar_state = "raptor"
+	/// Raptor color datum assigned to this raptor, this is a singleton
+	var/datum/raptor_color/raptor_color = null
+	/// Are we an adult, youngling or baby?
+	var/growth_stage = RAPTOR_ADULT
+	/// Our current growth progress towards the adult stage if we're a youngling
+	var/growth_progress = 0
+	/// Food types that we can consume
+	var/static/list/food_types = list(
+		/obj/item/stack/ore = 0,
+		/obj/item/food/meat = 15,
+		/obj/item/food/meat/slab = 25,
+		/obj/item/food/meat/slab/spider = -15, // Toxic meats
+		/obj/item/food/meat/slab/xeno = -15,
+		/obj/item/food/meat/steak = 50,
+		/obj/item/food/grown/ash_flora = 10,
+	)
 
-
-/mob/living/basic/raptor/Initialize(mapload)
+/mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type)
 	. = ..()
-	if(SSmapping.is_planetary())
-		change_offsets = FALSE
-		icon = 'icons/mob/simple/lavaland/raptor_icebox.dmi'
+	// First thing as to go before tameable in change_growth_stage()
+	AddElement(/datum/element/basic_eating, food_types = food_types)
+	raptor_color = GLOB.raptor_colors[color_type || raptor_color]
+	if (growth_stage == RAPTOR_ADULT)
+		raptor_color.setup_adult(src)
+	else
+		change_growth_stage(growth_stage, RAPTOR_ADULT)
 
-	AddElement(/datum/element/wears_collar)
-	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
+	raptor_color.setup_raptor(src)
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(\
 		/datum/element/crusher_loot,\
 		trophy_type = /obj/item/crusher_trophy/raptor_feather,\
@@ -87,10 +102,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		drop_immediately = FALSE,\
 	)
 
-	if(!mapload)
+	if (!mapload)
 		GLOB.raptor_population += REF(src)
-	AddComponent(/datum/component/obeys_commands, pet_commands)
 
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(\
 		/datum/element/change_force_on_death,\
 		move_resist = MOVE_RESIST_DEFAULT,\
@@ -108,19 +123,27 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		),
 		BB_SPEAK_CHANCE = 2,
 	)
-
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
+
+	/*
 	inherited_stats = new
 	inherit_properties()
-	var/list/my_food = string_list(list(/obj/item/stack/ore))
-	AddElement(/datum/element/basic_eating, food_types = my_food)
+	*/
+
+	var/static/list/preferred_foods = typecacheof(list(
+		/obj/item/food/meat,
+		/obj/item/food/grown/ash_flora,
+	)) - typecacheof(list( // Don't seek out toxic foods
+		/obj/item/food/meat/slab/spider,
+		/obj/item/food/meat/slab/xeno,
+	))
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, preferred_foods)
+	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_eat))
+
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
 
-	if(ridable_component)
-		AddElement(/datum/element/ridable, ridable_component)
-
-	if(can_breed)
+	if (can_breed)
 		add_breeding_component()
 
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
@@ -128,21 +151,19 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	adjust_offsets(dir)
 	add_happiness_component()
 
+/mob/living/basic/raptor/Destroy()
+	raptor_color = null
+	GLOB.raptor_population -= REF(src)
+	return ..()
+
+/mob/living/basic/raptor/death(gibbed)
+	. = ..()
+	GLOB.raptor_population -= REF(src)
+
 /mob/living/basic/raptor/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, buckle_mob_flags= NONE)
 	if(!iscarbon(target))
 		return
 	return ..()
-
-/mob/living/basic/raptor/proc/add_happiness_component()
-	var/static/list/percentage_callbacks = list(0, 15, 25, 35, 50, 75, 90, 100)
-	AddComponent(\
-		/datum/component/happiness,\
-		on_petted_change = 100,\
-		on_groom_change = 100,\
-		on_eat_change = 400,\
-		callback_percentages = percentage_callbacks,\
-		happiness_callback = CALLBACK(src, PROC_REF(happiness_change)),\
-	)
 
 /mob/living/basic/raptor/proc/on_dir_change(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
@@ -154,13 +175,28 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	switch (direction)
 		if (NORTH)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
-		if (SOUTH)
 			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 0, animate = FALSE)
-		if (EAST, SOUTHEAST, NORTHEAST)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -20, animate = FALSE)
+		if (SOUTH, EAST, SOUTHEAST, NORTHEAST)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
 		if (WEST, SOUTHWEST, NORTHWEST)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -5, animate = FALSE)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 7, animate = FALSE)
+
+/mob/living/basic/raptor/examine(mob/user)
+	. = ..()
+	if (stat == DEAD)
+		return
+
+	switch (health / maxHealth)
+		if (0 to 0.2)
+			. += span_italics(span_danger("[p_They()] [p_are()] gruesomly wounded, barely staying up on [p_their()] feet!"))
+		if (0.2 to 0.4)
+			. += span_boldwarning("[p_They()] [p_have()] heavy injuries and open wounds all around [p_their()] body!")
+		if (0.4 to 0.6)
+			. += span_warning("[p_They()] [p_are()] noticeably hurt, limping from [p_their()] cuts and bruises.")
+		if (0.6 to 0.8)
+			. += span_warning("[p_They()] [p_are()] visibly injured, a few bruises and cuts showing between [p_their()] feathers.")
+		if (0.8 to 0.999)
+			. += span_notice("[p_They()] [p_have()] a few minor bruises and scratches.")
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -168,9 +204,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return FALSE
 	if(!istype(target, /obj/structure/ore_container/food_trough/raptor_trough))
 		return TRUE
-
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
-
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
@@ -178,20 +212,55 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	return FALSE
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
-	if(!combat_mode && istype(target, /mob/living/basic/raptor/baby_raptor))
-		target.attack_hand(src, list(LEFT_CLICK = TRUE))
-		return
+	if(!combat_mode && istype(target, /mob/living/basic/raptor/baby))
+		return target.attack_hand(src, list(LEFT_CLICK = TRUE))
 	return ..()
 
-/mob/living/basic/raptor/death(gibbed)
-	. = ..()
-	GLOB.raptor_population -= REF(src)
+/mob/living/basic/raptor/proc/add_breeding_component()
+	var/static/list/partner_types = typecacheof(list(/mob/living/basic/raptor))
+	var/static/list/baby_types = list(/obj/item/food/egg = 1) ///raptor_egg = 1)
+	AddComponent(\
+		/datum/component/breed, \
+		can_breed_with = partner_types, \
+		baby_paths = baby_types, \
+		partner_check = CALLBACK(src, PROC_REF(partner_check)), \
+		breed_timer = 3 MINUTES, \
+	)
+		// post_birth = CALLBACK(src, PROC_REF(egg_inherit)),
+
+/mob/living/basic/raptor/proc/add_happiness_component()
+	var/static/list/percentage_callbacks = list(0, 15, 25, 35, 50, 75, 90, 100)
+	// Higher happiness cap so it decays slower, about 15 minutes from full to zero
+	AddComponent(\
+		/datum/component/happiness, \
+		maximum_happiness = 900, \
+		on_petted_change = 50, \
+		on_groom_change = 200, \
+		on_eat_change = 150, \
+		callback_percentages = percentage_callbacks,\
+		happiness_callback = CALLBACK(src, PROC_REF(happiness_change)),\
+	)
 
 /mob/living/basic/raptor/proc/happiness_change(percent_value)
+	/*
 	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
 	melee_damage_lower = initial(melee_damage_lower) + attack_boost
 	melee_damage_upper = melee_damage_lower + 5
+	*/
+	return
 
+/mob/living/basic/raptor/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	// Most colors will redirect shots to their rider as to increase their own survivability, and only tank melee attacks
+	if (raptor_color.redirect_shots && length(buckled_mobs))
+		return buckled_mobs[1].projectile_hit(hitting_projectile, def_zone, piercing_hit, blocked)
+	return ..()
+
+/mob/living/basic/raptor/proc/partner_check(mob/living/basic/raptor/partner)
+	if (!istype(partner))
+		return FALSE
+	return partner.growth_stage == RAPTOR_ADULT
+
+/*
 
 ///pass down our inheritance to the egg
 /mob/living/basic/raptor/proc/egg_inherit(obj/item/food/egg/raptor_egg/baby_egg, mob/living/basic/raptor/partner)
@@ -211,136 +280,208 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	maxHealth += inherited_stats.health_modifier
 	heal_overall_damage(maxHealth)
 
-/mob/living/basic/raptor/proc/add_breeding_component()
-	var/static/list/partner_types = typecacheof(list(/mob/living/basic/raptor))
-	var/static/list/baby_types = list(/obj/item/food/egg/raptor_egg = 1)
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/raptor)),\
-		baby_paths = baby_types,\
-		post_birth = CALLBACK(src, PROC_REF(egg_inherit)),\
-		breed_timer = 3 MINUTES,\
-	)
+*/
 
+/// Changes the raptor to a new growth stage. Only should be done forwards, or on raptor init as the first thing before everything else
+/// Sorry for the monolith, but splitting it up results in even worse looking code with a ton of duplicate calls and assignments
+/mob/living/basic/raptor/proc/change_growth_stage(new_stage, prev_stage = growth_stage)
+	if (new_stage == prev_stage)
+		return FALSE
 
-/mob/living/basic/raptor/Destroy()
-	QDEL_NULL(inherited_stats)
-	return ..()
+	if (SEND_SIGNAL(src, COMSIG_RAPTOR_GROWTH_STAGE_CHANGE, new_stage, prev_stage) & COMPONENT_CANCEL_RAPTOR_GROWTH)
+		return FALSE
+
+	growth_stage = new_stage
+
+	// Visuals
+	switch (new_stage)
+		if (RAPTOR_BABY)
+			name = "baby raptor"
+			desc = "Will this grow into something useful?"
+			icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
+			base_icon_state = "baby"
+		if (RAPTOR_YOUNG)
+			name = "raptor youngling"
+			desc = "A young raptor that can grow into a robust, trusty steed. Rather naive at such an age, it shouldn't be too hard to tame."
+			icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
+			base_icon_state = "young"
+		if (RAPTOR_ADULT)
+			name = "raptor"
+			desc = initial(desc)
+			icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
+			base_icon_state = "raptor"
+
+	can_be_held = initial(density)
+	density = initial(density)
+	move_resist = initial(move_resist)
+	can_breed = initial(can_breed)
+	change_offsets = initial(change_offsets)
+
+	if (new_stage == RAPTOR_ADULT)
+		// Adults need to be tamed with skill rather than snacks
+		qdel(GetComponent(/datum/component/tameable))
+	else // Make us teeny-tiny
+		can_be_held = TRUE
+		density = FALSE
+		can_breed = FALSE
+		move_resist = MOVE_RESIST_DEFAULT
+		change_offsets = FALSE
+
+		if (prev_stage == RAPTOR_ADULT)
+			AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, unique = TRUE)
+
+	if (change_offsets)
+		adjust_offsets(dir)
+	else
+		remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
+
+	// We assume that the raptors cannot regress in age and thus, only adults will have this applied (once)
+	if (can_breed)
+		add_breeding_component()
+
+	if (!can_be_held && istype(loc, /obj/item/mob_holder))
+		var/obj/item/mob_holder/holder = loc
+		holder.release()
+
+	if (collar_state)
+		RemoveElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
+
+	if (new_stage == RAPTOR_BABY)
+		QDEL_NULL(ai_controller)
+		ai_controller = new /datum/ai_controller/basic_controller/baby_raptor(src)
+		collar_state = null
+	else
+		collar_state = base_icon_state
+		AddElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
+		if (prev_stage == RAPTOR_BABY)
+			QDEL_NULL(ai_controller)
+			ai_controller = new raptor_color.ai_controller(src)
+
+	// And finish setup on our color's side
+	switch (new_stage)
+		if (RAPTOR_BABY)
+			raptor_color.setup_baby(src)
+		if (RAPTOR_YOUNG)
+			raptor_color.setup_young(src)
+		if (RAPTOR_ADULT)
+			raptor_color.setup_adult(src)
+	return TRUE
+
+/mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
+	SIGNAL_HANDLER
+
+	if (!istype(food, /obj/item/food))
+		return
+
+	var/obj/item/food/meal = food
+	var/is_flora = istype(meal, /obj/item/food/grown/ash_flora)
+	if (!(meal.foodtypes & (MEAT|GORE)) && !is_flora)
+		return
+
+	if (growth_stage != RAPTOR_YOUNG)
+		return
+
+	// Better meals make your raptor grow faster
+	growth_progress += meal.crafting_complexity * RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR + (is_flora ? RAPTOR_GROWTH_BASE_PLANT : RAPTOR_GROWTH_BASE_MEAT)
+	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
+		change_growth_stage(RAPTOR_ADULT)
+
+// Raptor types for mappers to use
 
 /mob/living/basic/raptor/red
-	name = "red raptor"
 	icon_state = "raptor_red"
-	icon_living = "raptor_red"
-	icon_dead = "raptor_red_dead"
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	raptor_color = RAPTOR_RED
-	ridable_component = /datum/component/riding/creature/raptor/combat
-	dex_description = "A resilient breed of raptors, battle-tested and bred for the purpose of humbling its foes in combat, \
-		This breed demonstrates higher combat capabilities than its peers and oozes ruthless aggression."
-	child_path = /mob/living/basic/raptor/baby_raptor/red
+	raptor_color = /datum/raptor_color/red
 
 /mob/living/basic/raptor/purple
-	name = "purple raptor"
 	icon_state = "raptor_purple"
-	icon_living = "raptor_purple"
-	icon_dead = "raptor_purple_dead"
-	raptor_color = RAPTOR_PURPLE
-	dex_description = "A dependable mount, bred for the purpose of long distance pilgrimages. This breed is also able to store its rider's possessions."
-	child_path = /mob/living/basic/raptor/baby_raptor/purple
-
-/mob/living/basic/raptor/purple/Initialize(mapload)
-	. = ..()
-	create_storage(
-		max_specific_storage = WEIGHT_CLASS_NORMAL,
-		max_total_storage = 10,
-		storage_type = /datum/storage/raptor_storage,
-	)
+	raptor_color = /datum/raptor_color/purple
 
 /mob/living/basic/raptor/green
-	name = "green raptor"
 	icon_state = "raptor_green"
-	icon_living = "raptor_green"
-	icon_dead = "raptor_green_dead"
-	maxHealth = 400
-	health = 400
-	raptor_color = RAPTOR_GREEN
-	dex_description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
-		this breed is able to withstand more punishment than its peers."
-	child_path = /mob/living/basic/raptor/baby_raptor/green
-
-/mob/living/basic/raptor/green/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/proficient_miner)
+	raptor_color = /datum/raptor_color/green
 
 /mob/living/basic/raptor/white
-	name = "white raptor"
 	icon_state = "raptor_white"
-	icon_living = "raptor_white"
-	icon_dead = "raptor_white_dead"
-	raptor_color = RAPTOR_WHITE
-	dex_description = "A loving sort, it cares for it peers and rushes to their aid with reckless abandon. It is able to heal any raptors' ailments."
-	child_path = /mob/living/basic/raptor/baby_raptor/white
-
-/mob/living/basic/raptor/white/Initialize(mapload)
-	. = ..()
-	AddComponent(\
-		/datum/component/healing_touch,\
-		heal_brute = melee_damage_upper,\
-		heal_burn = melee_damage_upper,\
-		heal_time = 0,\
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/raptor)),\
-	)
+	raptor_color = /datum/raptor_color/white
 
 /mob/living/basic/raptor/black
-	name = "black raptor"
 	icon_state = "raptor_black"
-	icon_living = "raptor_black"
-	icon_dead = "raptor_black_dead"
-	maxHealth = 400
-	health = 400
-	speed = 1
-	ridable_component = /datum/component/riding/creature/raptor/fast
-	melee_damage_lower = 20
-	melee_damage_upper = 25
-	raptor_color = RAPTOR_BLACK
-	dex_description = "An ultra rare breed. Due to its sparse nature, not much is known about this sort. However it is said to possess many of its peers' abilities."
-	child_path = /mob/living/basic/raptor/baby_raptor/black
+	raptor_color = /datum/raptor_color/black
 
 /mob/living/basic/raptor/yellow
-	name = "yellow raptor"
 	icon_state = "raptor_yellow"
-	icon_living = "raptor_yellow"
-	icon_dead = "raptor_yellow_dead"
-	ridable_component = /datum/component/riding/creature/raptor/fast
-	speed = 1
-	raptor_color = RAPTOR_YELLOW
-	dex_description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. It's said that a thunderclap could be heard when this breed reaches its maximum speed."
-	child_path = /mob/living/basic/raptor/baby_raptor/yellow
+	raptor_color = /datum/raptor_color/yellow
 
 /mob/living/basic/raptor/blue
-	name = "blue raptor"
 	icon_state = "raptor_blue"
-	icon_living = "raptor_blue"
-	icon_dead = "raptor_blue_dead"
-	raptor_color = RAPTOR_BLUE
-	dex_description = "Known to produce nutritous and equally delicious milk, which is also said to possess healing properties."
-	child_path = /mob/living/basic/raptor/baby_raptor/blue
+	raptor_color = /datum/raptor_color/blue
 
-/mob/living/basic/raptor/blue/Initialize(mapload)
-	. = ..()
-	AddComponent(\
-		/datum/component/udder,\
-		udder_type = /obj/item/udder/raptor,\
-	)
+/mob/living/basic/raptor/youngling
+	growth_stage = RAPTOR_YOUNG
 
-/datum/storage/raptor_storage
-	animated = FALSE
-	insert_on_attack = FALSE
+/mob/living/basic/raptor/youngling/red
+	icon_state = "young_red"
+	raptor_color = /datum/raptor_color/red
 
-/datum/storage/raptor_storage/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
-	..()
-	return NONE
+/mob/living/basic/raptor/youngling/purple
+	icon_state = "young_purple"
+	raptor_color = /datum/raptor_color/purple
+
+/mob/living/basic/raptor/youngling/green
+	icon_state = "young_green"
+	raptor_color = /datum/raptor_color/green
+
+/mob/living/basic/raptor/youngling/white
+	icon_state = "young_white"
+	raptor_color = /datum/raptor_color/white
+
+/mob/living/basic/raptor/youngling/black
+	icon_state = "young_black"
+	raptor_color = /datum/raptor_color/black
+
+/mob/living/basic/raptor/youngling/yellow
+	icon_state = "young_yellow"
+	raptor_color = /datum/raptor_color/yellow
+
+/mob/living/basic/raptor/youngling/blue
+	icon_state = "young_blue"
+	raptor_color = /datum/raptor_color/blue
+
+/mob/living/basic/raptor/baby
+	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
+	growth_stage = RAPTOR_BABY
+
+/mob/living/basic/raptor/baby/red
+	icon_state = "baby_red"
+	raptor_color = /datum/raptor_color/red
+
+/mob/living/basic/raptor/baby/purple
+	icon_state = "baby_purple"
+	raptor_color = /datum/raptor_color/purple
+
+/mob/living/basic/raptor/baby/green
+	icon_state = "baby_green"
+	raptor_color = /datum/raptor_color/green
+
+/mob/living/basic/raptor/baby/white
+	icon_state = "baby_white"
+	raptor_color = /datum/raptor_color/white
+
+/mob/living/basic/raptor/baby/black
+	icon_state = "baby_black"
+	raptor_color = /datum/raptor_color/black
+
+/mob/living/basic/raptor/baby/yellow
+	icon_state = "baby_yellow"
+	raptor_color = /datum/raptor_color/yellow
+
+/mob/living/basic/raptor/baby/blue
+	icon_state = "baby_blue"
+	raptor_color = /datum/raptor_color/blue
 
 #undef HAPPINESS_BOOST_DAMPENER
 #undef RAPTOR_INNATE_SOURCE
+#undef RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR
+#undef RAPTOR_GROWTH_BASE_MEAT
+#undef RAPTOR_GROWTH_BASE_PLANT
+#undef RAPTOR_GROWTH_REQUIRED

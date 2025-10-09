@@ -1,3 +1,4 @@
+/*
 #define RANDOM_INHERIT_AMOUNT 2
 /datum/raptor_inheritance
 	///list of traits we inherit
@@ -29,3 +30,4 @@
 	health_modifier = rand(min(father.health_modifier, mother.health_modifier), max(father.health_modifier, mother.health_modifier))
 
 #undef RANDOM_INHERIT_AMOUNT
+*/

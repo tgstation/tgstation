@@ -46,17 +46,12 @@ GLOBAL_VAR_INIT(gutlunch_count, 0)
 GLOBAL_LIST_EMPTY(customized_pets)
 
 //raptor defines
-
-#define RAPTOR_RED "Red"
-#define RAPTOR_GREEN "Green"
-#define RAPTOR_PURPLE "Purple"
-#define RAPTOR_WHITE "White"
-#define RAPTOR_YELLOW "Yellow"
-#define RAPTOR_BLACK "Black"
-#define RAPTOR_BLUE "Blue"
-
-#define RAPTOR_INHERIT_MAX_ATTACK 5
-#define RAPTOR_INHERIT_MAX_HEALTH 30
+/// Raptor chick, tiny and very frail
+#define RAPTOR_BABY "baby"
+/// Raptor youngling, cannot be ridden and has reduced stats, but can hunt by itself just fine
+#define RAPTOR_YOUNG "young"
+/// Fully grown adult raptor
+#define RAPTOR_ADULT "adult"
 
 ///this mob suffers depression
 #define BB_BASIC_DEPRESSED "basic_depressed"

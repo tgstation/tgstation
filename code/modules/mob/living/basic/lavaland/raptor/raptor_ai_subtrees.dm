@@ -23,7 +23,7 @@
 	target_key = BB_RAPTOR_BABY
 	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off/care_for_young
 	finding_behavior = /datum/ai_behavior/find_hunt_target/raptor_baby
-	hunt_targets = list(/mob/living/basic/raptor/baby_raptor)
+	hunt_targets = list(/mob/living/basic/raptor)
 	hunt_chance = 75
 	hunt_range = 9
 

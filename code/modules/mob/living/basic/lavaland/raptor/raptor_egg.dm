@@ -1,3 +1,4 @@
+/*
 /obj/item/food/egg/raptor_egg
 	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 	icon_state = "raptor_egg"
@@ -24,9 +25,9 @@
 		add_growth_component(path)
 		return
 	var/list/valid_subtypes = list()
-	var/static/list/all_subtypes = subtypesof(/mob/living/basic/raptor/baby_raptor)
+	var/static/list/all_subtypes = subtypesof(/mob/living/basic/raptor/baby)
 	for(var/path in all_subtypes)
-		var/mob/living/basic/raptor/baby_raptor/raptor_path = path
+		var/mob/living/basic/raptor/baby/raptor_path = path
 		if(!prob(initial(raptor_path.roll_rate)))
 			continue
 		valid_subtypes += raptor_path
@@ -56,3 +57,4 @@
 /obj/item/food/egg/raptor_egg/Destroy()
 	QDEL_NULL(inherited_stats)
 	return ..()
+*/

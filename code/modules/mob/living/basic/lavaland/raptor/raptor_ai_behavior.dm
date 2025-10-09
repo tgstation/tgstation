@@ -8,7 +8,10 @@
 	return (source != target && target.health < target.maxHealth)
 
 /datum/ai_behavior/find_hunt_target/raptor_baby/valid_dinner(mob/living/source, mob/living/target, radius)
-	return can_see(source, target, radius) && target.stat != DEAD
+	if (!can_see(source, target, radius) || target.stat == DEAD || !istype(target, /mob/living/basic/raptor))
+		return FALSE
+	var/mob/living/basic/raptor/raptor = target
+	return raptor.growth_stage == RAPTOR_BABY
 
 /datum/ai_behavior/hunt_target/interact_with_target/reset_target_combat_mode_off/care_for_young
 

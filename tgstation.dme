@@ -5186,6 +5186,7 @@
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_ai_behavior.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_ai_controller.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_ai_subtrees.dm"
+#include "code\modules\mob\living\basic\lavaland\raptor\raptor_color.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_dex.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_egg.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_food_trough.dm"
