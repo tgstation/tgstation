@@ -223,7 +223,7 @@
 		sig_return = SEND_SIGNAL(liver, COMSIG_METABOLIC_ORGAN_ADJUST, args)
 	if(sig_return & COMPONENT_CANCEL_METABOLIC_ADJUSTMENT)
 		return
-	var/list/args_to_pass = args.Copy(3)
+	var/list/args_to_pass = args.Copy(2)
 	. = adjustOrganLoss(arglist(args_to_pass))
 
 /**
