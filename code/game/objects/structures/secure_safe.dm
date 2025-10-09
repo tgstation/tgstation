@@ -14,6 +14,7 @@
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT*3,
 	)
 	material_flags = MATERIAL_EFFECTS
+	var/lock_code
 
 /obj/item/wallframe/secure_safe/Initialize(mapload)
 	. = ..()
@@ -27,7 +28,8 @@
 	. = ..()
 	for(var/obj/item in contents)
 		item.forceMove(attached_to)
-	/datum/component/lockable_storage/lock = attatched_to.GetComponent(/datum/component/lockable_storage)
+
+	var/datum/component/lockable_storage/lock = attached_to.GetComponent(/datum/component/lockable_storage)
 
 /datum/armor/secure_safe
 	melee = 30
@@ -67,7 +69,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
 	//this will create the storage for us.
-	AddComponent(/datum/component/lockable_storage, lock_code)
+	AddComponent(/datum/component/lockable_storage)
 
 	if(!density)
 		find_and_hang_on_wall()
@@ -80,7 +82,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		for(var/obj/item in contents)
 			item.forceMove(new_safe)
 
-		/datum/component/lockable_storage/lock = GetComponent(/datum/component/lockable_storage)
+		var/datum/component/lockable_storage/lock = GetComponent(/datum/component/lockable_storage)
 		new_safe.lock_code = lock.lock_code
 
 /obj/structure/secure_safe/proc/PopulateContents()
