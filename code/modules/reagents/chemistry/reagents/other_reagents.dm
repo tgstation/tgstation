@@ -227,9 +227,9 @@
 	affected_mob.adjust_drunk_effect(drunkness_restored * REM * seconds_per_tick) // and even sobers you up slowly!!
 	if(water_adaptation)
 		var/need_mob_update = FALSE
-		need_mob_update = affected_mob.adjustToxLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjustFireLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjustBruteLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = affected_mob.metabolic_damage_adjust(src, TOXLOSS, -0.25 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, -0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, BRUTELOSS, -0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		return need_mob_update ? UPDATE_MOB_HEALTH : .
 
 // For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
@@ -353,7 +353,7 @@
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
 				affected_mob.emote("scream")
-				need_mob_update += affected_mob.adjustFireLoss(3 * REM * seconds_per_tick, updating_health = FALSE)
+				need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, 3 * REM * seconds_per_tick, updating_health = FALSE)
 
 	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
 		if(IS_CULTIST(affected_mob))
@@ -361,7 +361,7 @@
 			affected_mob.Unconscious(10 SECONDS)
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				need_mob_update += affected_mob.adjustFireLoss(10 * REM * seconds_per_tick, updating_health = FALSE)
+				need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, 10 * REM * seconds_per_tick, updating_health = FALSE)
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
 		for(var/datum/status_effect/eldritch_painting/eldritch_curses in affected_mob.status_effects)
@@ -453,11 +453,11 @@
 	if(IS_CULTIST(affected_mob))
 		affected_mob.adjust_drowsiness(-10 SECONDS * REM * seconds_per_tick)
 		affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		need_mob_update += affected_mob.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE)
-		need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, STAMINALOSS, -10 * REM * seconds_per_tick, updating_stamina = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, TOXLOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, OXYLOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, BRUTELOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update = TRUE
 		if(ishuman(affected_mob) && affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 			affected_mob.blood_volume += 3 * REM * seconds_per_tick
@@ -472,11 +472,11 @@
 				bloodiest_wound.adjust_blood_flow(-2 * REM * seconds_per_tick)
 
 	else  // Will deal about 90 damage when 50 units are thrown
-		need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
-		need_mob_update += affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustOxyLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += affected_mob.adjustBruteLoss(1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_organ_adjust(src, ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, TOXLOSS, 1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, 1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, OXYLOSS, 1 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += affected_mob.metabolic_damage_adjust(src, BRUTELOSS, 1 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -496,9 +496,9 @@
 	affected_mob.set_fire_stacks(min(affected_mob.fire_stacks + (1.5 * seconds_per_tick), 5))
 	affected_mob.ignite_mob() //Only problem with igniting people is currently the commonly available fire suits make you immune to being on fire
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustToxLoss(0.5*seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjustFireLoss(0.5*seconds_per_tick, updating_health = FALSE) //Hence the other damages... ain't I a bastard?
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
+	need_mob_update = affected_mob.metabolic_damage_adjust(src, TOXLOSS, 0.5*seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, 0.5*seconds_per_tick, updating_health = FALSE) //Hence the other damages... ain't I a bastard?
+	affected_mob.metabolic_organ_adjust(src, ORGAN_SLOT_BRAIN, 2.5*seconds_per_tick, 150)
 	if(holder)
 		holder.remove_reagent(type, 0.5 * seconds_per_tick)
 	if(need_mob_update)
@@ -967,7 +967,7 @@
 		step(affected_mob, pick(GLOB.cardinals))
 	if(SPT_PROB(3.5, seconds_per_tick))
 		affected_mob.emote(pick("twitch","drool","moan"))
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick))
+	if(affected_mob.metabolic_organ_adjust(src, ORGAN_SLOT_BRAIN, 0.5*seconds_per_tick))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/sulfur
@@ -1033,7 +1033,7 @@
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustToxLoss(0.5*REM*seconds_per_tick, updating_health = FALSE))
+	if(affected_mob.metabolic_damage_adjust(src, TOXLOSS, 0.5*REM*seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/sodium
@@ -1145,7 +1145,7 @@
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
 		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
 			affected_mob.AddComponent(/datum/component/irradiated)
-	if(affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM, updating_health = FALSE))
+	if(affected_mob.metabolic_damage_adjust(src, TOXLOSS, tox_damage * seconds_per_tick * REM, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/uranium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
@@ -1291,7 +1291,7 @@
 	var/obj/item/organ/liver/liver = victim.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
-	if(victim.adjustToxLoss(0.5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(victim.metabolic_damage_adjust(src, TOXLOSS, 0.5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
@@ -1358,9 +1358,9 @@
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(1.665*seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjustFireLoss(1.665*seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjustToxLoss(1.665*seconds_per_tick, updating_health = FALSE)
+	need_mob_update = affected_mob.metabolic_damage_adjust(src, BRUTELOSS, 1.665*seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.metabolic_damage_adjust(src, FIRELOSS, 1.665*seconds_per_tick, updating_health = FALSE)
+	need_mob_update += affected_mob.metabolic_damage_adjust(src, TOXLOSS, 1.665*seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1410,7 +1410,7 @@
 	. = ..()
 	affected_mob.adjust_jitter(-5 SECONDS * seconds_per_tick)
 	if(SPT_PROB(55, seconds_per_tick))
-		affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
+		affected_mob.metabolic_organ_adjust(src, ORGAN_SLOT_BRAIN, 2)
 		. = TRUE
 	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.adjust_drowsiness(6 SECONDS)
@@ -1733,7 +1733,7 @@
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(tox_prob, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(1, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.metabolic_damage_adjust(src, TOXLOSS, 1, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/eznutriment
@@ -2659,7 +2659,7 @@
 	var/healthcomp = (100 - affected_mob.health) //DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	. = FALSE
 	if(affected_mob.getStaminaLoss() < (45 - healthcomp)) //At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
+		if(affected_mob.metabolic_damage_adjust(src, STAMINALOSS, 10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(16, seconds_per_tick))
 		to_chat(affected_mob, "You should sit down and take a rest...")
@@ -2864,7 +2864,7 @@
 		for(var/thing in affected_mob.all_wounds)
 			var/datum/wound/W = thing
 			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
-		affected_mob.adjustStaminaLoss(stam_crash)
+		affected_mob.metabolic_damage_adjust(src, STAMINALOSS, stam_crash)
 	affected_mob.remove_status_effect(/datum/status_effect/determined)
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
@@ -2880,7 +2880,7 @@
 		var/obj/item/bodypart/wounded_part = W.limb
 		if(wounded_part)
 			wounded_part.heal_damage(0.25 * REM * seconds_per_tick, 0.25 * REM * seconds_per_tick)
-		if(affected_mob.adjustStaminaLoss(-1 * REM * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
+		if(affected_mob.metabolic_damage_adjust(src, STAMINALOSS, -1 * REM * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
 			return UPDATE_MOB_HEALTH
 
 // unholy water, but for heretics.
@@ -2904,19 +2904,19 @@
 	if(IS_HERETIC_OR_MONSTER(drinker))
 		drinker.adjust_drowsiness(-10 * REM * seconds_per_tick)
 		drinker.AdjustAllImmobility(-40 * REM * seconds_per_tick)
-		need_mob_update += drinker.adjustStaminaLoss(-10 * REM * seconds_per_tick, updating_stamina = FALSE)
-		need_mob_update += drinker.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-		need_mob_update += drinker.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, STAMINALOSS, -10 * REM * seconds_per_tick, updating_stamina = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, TOXLOSS, -2 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, OXYLOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, BRUTELOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, FIRELOSS, -2 * REM * seconds_per_tick, updating_health = FALSE)
 		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
 			drinker.blood_volume += 3 * REM * seconds_per_tick
 	else
-		need_mob_update = drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
-		need_mob_update += drinker.adjustToxLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjustFireLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjustOxyLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjustBruteLoss(2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = drinker.metabolic_organ_adjust(src, ORGAN_SLOT_BRAIN, 3 * REM * seconds_per_tick, 150)
+		need_mob_update += drinker.metabolic_damage_adjust(src, TOXLOSS, 2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, FIRELOSS, 2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, OXYLOSS, 2 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += drinker.metabolic_damage_adjust(src, BRUTELOSS, 2 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -2975,7 +2975,7 @@
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, seconds_per_tick)
 	. = ..()
-	victim.adjustBruteLoss(max(0.1, round((ant_ticks * ant_damage),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	victim.metabolic_damage_adjust(src, BRUTELOSS, max(0.1, round((ant_ticks * ant_damage),0.1))) //Scales with time. Roughly 32 brute with 100u.
 	ant_ticks++
 	if(ant_ticks < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
 		return
@@ -3060,7 +3060,7 @@
 
 /datum/reagent/lead/on_mob_life(mob/living/carbon/victim)
 	. = ..()
-	if(victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5))
+	if(victim.metabolic_organ_adjust(src, ORGAN_SLOT_BRAIN, 0.5))
 		return UPDATE_MOB_HEALTH
 
 //The main feedstock for kronkaine production, also a shitty stamina healer.
@@ -3076,8 +3076,8 @@
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += kronkus_enjoyer.adjustStaminaLoss(-6, updating_stamina = FALSE)
+	need_mob_update = kronkus_enjoyer.metabolic_organ_adjust(src, ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += kronkus_enjoyer.metabolic_damage_adjust(src, STAMINALOSS, -6, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -3090,7 +3090,7 @@
 
 /datum/reagent/brimdust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustFireLoss((ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
+	if(affected_mob.metabolic_damage_adjust(src, FIRELOSS, (ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -3174,7 +3174,7 @@
 		affected_mob.AdjustParalyzed(-5 SECONDS * REM * seconds_per_tick)
 		affected_mob.AdjustImmobilized(-5 SECONDS * REM * seconds_per_tick)
 	else
-		if(affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, REM * seconds_per_tick)) //1 heart damage per tick
+		if(affected_mob.metabolic_organ_adjust(src, ORGAN_SLOT_HEART, REM * seconds_per_tick)) //1 heart damage per tick
 			. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.emote(pick("twitch","choke","shiver","gag"))
@@ -3244,7 +3244,7 @@
 		added_light = TRUE
 
 	if (SPT_PROB(8, seconds_per_tick))
-		if(affected_mob.adjustToxLoss(1, updating_health = FALSE))
+		if(affected_mob.metabolic_damage_adjust(src, TOXLOSS, 1, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/luminescent_fluid/proc/on_organ_added(mob/living/source, obj/item/organ/eyes/new_eyes)

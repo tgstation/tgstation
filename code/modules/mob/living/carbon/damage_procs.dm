@@ -125,6 +125,19 @@
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
+/mob/living/carbon/metabolic_damage_adjust(datum/reagent/caused_by, damage_type, amount, updating_health = null, updating_stamina = null, forced = null, required_biotype = null, required_bodytype = null, required_respiration_type = null)
+	. = 0
+	var/obj/item/organ/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
+	var/sig_return = NONE
+	if(isnull(liver))
+		if(!HAS_TRAIT(src, TRAIT_STABLELIVER))
+			return
+	else
+		sig_return = SEND_SIGNAL(liver, COMSIG_METABOLIC_DAMAGE_ADJUST, args)
+	if(sig_return & COMPONENT_CANCEL_METABOLIC_ADJUSTMENT)
+		return
+	. = ..(arglist(args))
+
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
@@ -198,6 +211,20 @@
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return FALSE
 	return affected_organ.apply_organ_damage(amount, maximum)
+
+/mob/living/carbon/metabolic_organ_adjust(datum/reagent/caused_by, slot, amount, maximum, required_organ_flag)
+	. = 0
+	var/obj/item/organ/liver/liver = get_organ_slot(ORGAN_SLOT_LIVER)
+	var/sig_return = NONE
+	if(isnull(liver))
+		if(!HAS_TRAIT(src, TRAIT_STABLELIVER))
+			return
+	else
+		sig_return = SEND_SIGNAL(liver, COMSIG_METABOLIC_ORGAN_ADJUST, args)
+	if(sig_return & COMPONENT_CANCEL_METABOLIC_ADJUSTMENT)
+		return
+	var/list/args_to_pass = args.Copy(3)
+	. = adjustOrganLoss(arglist(args_to_pass))
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have TRAIT_GODMODE), call the set damage proc on that organ, which can

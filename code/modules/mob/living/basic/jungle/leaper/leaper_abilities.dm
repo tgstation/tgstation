@@ -66,7 +66,7 @@
 	. = ..()
 	if(volume <= 5)
 		return
-	if(poisoned_mob.adjustToxLoss(2.5 * REM * seconds_per_tick, updating_health = FALSE))
+	if(poisoned_mob.metabolic_damage_adjust(src, TOXLOSS, 2.5 * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 // bubble ability structure
