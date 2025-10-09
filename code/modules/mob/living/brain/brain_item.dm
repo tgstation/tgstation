@@ -346,7 +346,8 @@
 	// If we crossed blinking brain damage thresholds either way, update our blinking
 	if (owner && ((prev_damage > BRAIN_DAMAGE_ASYNC_BLINKING && damage < BRAIN_DAMAGE_ASYNC_BLINKING) || (prev_damage < BRAIN_DAMAGE_ASYNC_BLINKING && damage > BRAIN_DAMAGE_ASYNC_BLINKING)))
 		var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
-		eyes?.animate_eyelids(owner)
+		if(eyes?.blink_animation)
+			eyes.animate_eyelids(owner)
 
 	// If we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)

@@ -33,7 +33,7 @@ export const Panel = (props) => {
         <Stack.Item>
           <Section fitted>
             <Stack mr={1} align="center">
-              <Stack.Item grow overflowX="auto">
+              <Stack.Item grow>
                 <ChatTabs />
               </Stack.Item>
               <Stack.Item>

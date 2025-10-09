@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /proc/populate_spontaneous_fish_traits()
 	var/list/list = list()
-	for(var/trait_path as anything in GLOB.fish_traits)
+	for(var/trait_path in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_path]
 		if(isnull(trait.spontaneous_manifest_types))
 			continue

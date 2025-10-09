@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /// Called when this movable hears a message from a source.
 /// Returns TRUE if the message was received and understood.
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
+/atom/movable/proc/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	return TRUE
 
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
-		if(hearing_movable.Hear(null, src, message_language, message, null, null, null, spans, message_mods, range))
+		if(hearing_movable.Hear(src, message_language, message, null, null, null, spans, message_mods, range))
 			listened += hearing_movable
 		if(!found_client && length(hearing_movable.client_mobs_in_contents))
 			found_client = TRUE

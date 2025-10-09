@@ -275,7 +275,7 @@
 #define CURATOR_PERCENTILE_CUT 0.225
 #define SERVICE_PERCENTILE_CUT 0.125
 
-/obj/item/canvas/proc/patron(mob/user)
+/obj/item/canvas/proc/patron(mob/living/user)
 	if(!finalized || !isliving(user))
 		return
 	if(!painting_metadata.loaded_from_json)
@@ -327,6 +327,10 @@
 	last_patron = WEAKREF(user.mind)
 
 	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
+	if(HAS_PERSONALITY(user, /datum/personality/creative))
+		user.add_mood_event("creative_patronage", /datum/mood_event/creative_patronage)
+	if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+		user.add_mood_event("unimaginative_patronage", /datum/mood_event/unimaginative_patronage)
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return
@@ -356,7 +360,7 @@
 /obj/item/canvas/proc/can_select_frame(mob/user)
 	if(!istype(loc, /obj/structure/sign/painting))
 		return FALSE
-	if(!user?.CanReach(loc) || IS_DEAD_OR_INCAP(user))
+	if(!loc.IsReachableBy(user) || IS_DEAD_OR_INCAP(user))
 		return FALSE
 	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
 		return FALSE
@@ -770,7 +774,7 @@
 	INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
+/obj/structure/sign/painting/proc/frame_canvas(mob/living/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
 		to_chat(user, span_warning("[new_canvas] won't fit in this frame."))
 		return FALSE
@@ -781,6 +785,10 @@
 		to_chat(user,span_notice("You frame [current_canvas]."))
 		add_art_element()
 		update_appearance()
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_framing", /datum/mood_event/creative_framing)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_framing", /datum/mood_event/unimaginative_framing)
 		return TRUE
 	return FALSE
 
@@ -922,7 +930,7 @@
 	var/our_dir = get_dir(user, on_wall)
 	var/check_dir = our_dir & (EAST|WEST) ? NORTH : EAST
 	var/turf/closed/wall/second_wall = get_step(on_wall, check_dir)
-	if(!istype(second_wall) || !user.CanReach(second_wall))
+	if(!istype(second_wall) || !second_wall.IsReachableBy(user))
 		to_chat(user, span_warning("You need a reachable wall to the [check_dir == EAST ? "right" : "left"] of this one to mount this frame!"))
 		return FALSE
 	if(check_wall_item(second_wall, our_dir, wall_external))
@@ -971,7 +979,7 @@
 		if(EAST)
 			bound_height = 64
 
-/obj/structure/sign/painting/large/frame_canvas(mob/user, obj/item/canvas/new_canvas)
+/obj/structure/sign/painting/large/frame_canvas(mob/living/user, obj/item/canvas/new_canvas)
 	. = ..()
 	if(.)
 		set_painting_offsets()

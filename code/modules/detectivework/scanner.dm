@@ -156,11 +156,13 @@
 	log_entry_data["scan_target"] = scanned_atom.name
 	log_entry_data["scan_time"] = station_time_timestamp()
 
-	log_entry_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_FIBRES(scanned_atom)
+	var/list/atom_fibers = GET_ATOM_FIBRES(scanned_atom)
+	if(length(atom_fibers))
+		log_entry_data[DETSCAN_CATEGORY_FIBER] = atom_fibers.Copy()
 
 	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
 	if(length(blood))
-		LAZYADD(log_entry_data[DETSCAN_CATEGORY_BLOOD], blood)
+		log_entry_data[DETSCAN_CATEGORY_BLOOD] = blood.Copy()
 
 	if(ishuman(scanned_atom))
 		var/mob/living/carbon/human/scanned_human = scanned_atom
@@ -169,7 +171,9 @@
 
 	else if(!ismob(scanned_atom))
 
-		log_entry_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(scanned_atom)
+		var/list/atom_fingerprints = GET_ATOM_FINGERPRINTS(scanned_atom)
+		if(length(atom_fingerprints))
+			log_entry_data[DETSCAN_CATEGORY_FINGERS] = atom_fingerprints.Copy()
 
 		// Only get reagents from non-mobs.
 		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
@@ -184,7 +188,10 @@
 			if(!blood_DNA || !blood_type)
 				continue
 
-			LAZYSET(blood, blood_DNA, blood_type)
+			// Add to our copied blood list instead of the original
+			if(!log_entry_data[DETSCAN_CATEGORY_BLOOD])
+				log_entry_data[DETSCAN_CATEGORY_BLOOD] = list()
+			LAZYSET(log_entry_data[DETSCAN_CATEGORY_BLOOD], blood_DNA, blood_type)
 
 	if(istype(scanned_atom, /obj/item/card/id))
 		var/obj/item/card/id/user_id = scanned_atom

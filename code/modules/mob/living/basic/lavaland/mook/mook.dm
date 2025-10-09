@@ -22,8 +22,8 @@
 	speed = 5
 	pixel_x = -16
 	base_pixel_x = -16
-	pixel_y = -16
-	base_pixel_y = -16
+	pixel_z = -16
+	base_pixel_z = -16
 
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL

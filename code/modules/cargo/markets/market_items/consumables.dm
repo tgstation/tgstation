@@ -27,7 +27,7 @@
 	var/static/list/choices
 	if(isnull(choices))
 		choices = list()
-		for(var/boxtype as anything in typesof(/obj/item/storage/box/donkpockets))
+		for(var/boxtype in typesof(/obj/item/storage/box/donkpockets))
 			choices[boxtype] = 3
 		choices[/obj/item/storage/box/donkpockets/donkpocketgondola] = 1
 	item = pick_weight(choices)

@@ -271,7 +271,7 @@ handles linking back and forth.
 	if(isnull(drop_target))
 		drop_target = movable_parent.drop_location()
 
-	return mat_container.retrieve_sheets(eject_amount, material_ref, target = drop_target, context = parent, user_data = user_data)
+	return mat_container.retrieve_stack(eject_amount, material_ref, target = drop_target, context = parent, user_data = user_data)
 
 /**
  * Insert an item into the mat container, helper proc to insert items with the correct context

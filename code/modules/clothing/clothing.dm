@@ -366,9 +366,9 @@
 	if (clothing_flags & CASTING_CLOTHES)
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-		.["pressureproof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
+		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
 	if(flags_cover & PEPPERPROOF)
-		.["pepperproof"] = "Protects the wearer from the effects of pepperspray."
+		.["pepper-proof"] = "Protects the wearer from the effects of pepperspray."
 	if (heat_protection || cold_protection)
 		var/heat_desc
 		var/cold_desc

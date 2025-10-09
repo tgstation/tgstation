@@ -199,13 +199,13 @@
 	var/is_allowed = TRUE
 	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, "turf is blocked!")
+			balloon_alert(user, "tile is blocked!")
 		return FALSE
 	if(!build_delay(user, cost, target = destination))
 		return FALSE
 	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
-			balloon_alert(user, "turf is blocked!")
+			balloon_alert(user, "tile is blocked!")
 		return FALSE
 
 	if(!useResource(cost, user))

@@ -101,13 +101,13 @@ GLOBAL_LIST_EMPTY(elevator_music)
 /// Start sound loops playing
 /datum/proximity_monitor/advanced/elevator_music_area/proc/turn_on()
 	enabled = TRUE
-	for (var/mob as anything in tracked_mobs)
+	for (var/mob in tracked_mobs)
 		var/datum/looping_sound/loop = tracked_mobs[mob]
 		loop.start()
 
 /// Stop active sound loops
 /datum/proximity_monitor/advanced/elevator_music_area/proc/turn_off()
 	enabled = FALSE
-	for (var/mob as anything in tracked_mobs)
+	for (var/mob in tracked_mobs)
 		var/datum/looping_sound/loop = tracked_mobs[mob]
 		loop.stop()

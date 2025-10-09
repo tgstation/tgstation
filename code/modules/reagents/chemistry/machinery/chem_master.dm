@@ -169,7 +169,7 @@
 	return containers
 
 /obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(user.combat_mode || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+	if(user.combat_mode && !is_reagent_container(tool) && !tool.is_open_container() || (tool.item_flags & ABSTRACT) || (tool.flags_1 & HOLOGRAM_1) || !can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
 		return NONE
 
 	if(is_reagent_container(tool) && tool.is_open_container())
@@ -507,7 +507,7 @@
 			var/datum/reagent/master_reagent = reagents.get_master_reagent()
 			if(selected_container == default_container) // Tubes and bottles gain reagent name
 				item_name_default = "[master_reagent.name] [item_name_default]"
-			if(!(initial(selected_container.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
+			if(!(initial(selected_container.initial_reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
 				item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
 			var/item_name = tgui_input_text(
 				usr,
