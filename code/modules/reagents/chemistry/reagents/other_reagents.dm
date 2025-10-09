@@ -222,7 +222,7 @@
 
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && !IS_ROBOTIC_ORGAN(liver) && liver.damage && !(liver.organ_flags & ORGAN_FAILING))
-		var/healing_bonus = liver.healing_factor * liver.maxHealth // doubles your natural organ healing rate
+		var/healing_bonus = liver.healing_factor * liver.maxHealth
 		liver.apply_organ_damage(-healing_bonus * REM * seconds_per_tick)
 
 	var/water_adaptation = HAS_TRAIT(affected_mob, TRAIT_WATER_ADAPTATION)
