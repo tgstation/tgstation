@@ -21,8 +21,8 @@ FLOOR SAFES
 	obj_flags = CONDUCTS_ELECTRICITY
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	custom_materials = list(
-		/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*4,
-		/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*2,
+		/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10,
+		/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT*5,
 	)
 	material_flags = MATERIAL_EFFECTS
 

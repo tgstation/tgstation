@@ -10,8 +10,8 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	custom_materials = list(
-		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT*3,
 	)
 	material_flags = MATERIAL_EFFECTS
 
@@ -56,8 +56,8 @@
 	max_integrity = 300
 	damage_deflection = 21
 	custom_materials = list(
-		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT*3,
 	)
 	material_flags = MATERIAL_EFFECTS
 
