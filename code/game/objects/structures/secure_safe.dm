@@ -24,21 +24,24 @@
 		max_total_storage = 20,
 	)
 	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	update_appearance()
 
-/obj/item/wallframe/secure_safe/after_attach(obj/attached_to)
+/obj/item/wallframe/secure_safe/update_icon_state()
+	. = ..()
+	if(obj_flags & EMAGGED)
+		icon_state = "[base_icon_state]_broken"
+	else
+		icon_state = "[base_icon_state][lock_code ? "_locked" : null]"
+
+/obj/item/wallframe/secure_safe/after_attach(obj/structure/secure_safe/safe)
 	. = ..()
 	for(var/obj/item in contents)
-		item.forceMove(attached_to)
+		item.forceMove(safe)
 
 	// Transfer lock code to the newly constructed structure
-	if(lock_code && istype(attached_to, /obj/structure/secure_safe))
-		var/obj/structure/secure_safe/safe = attached_to
+	if(lock_code)
 		var/datum/component/lockable_storage/lock_comp = safe.GetComponent(/datum/component/lockable_storage)
-		if(lock_comp)
-			lock_comp.lock_code = lock_code
-			if(!isnull(lock_comp.lock_code))
-				safe.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
-			safe.update_appearance()
+		lock_comp?.set_lock_code(lock_code)
 
 /datum/armor/secure_safe
 	melee = 30
@@ -92,6 +95,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		var/datum/component/lockable_storage/lock_comp = GetComponent(/datum/component/lockable_storage)
 		if(lock_comp)
 			new_safe.lock_code = lock_comp.lock_code
+			new_safe.update_appearance()
 
 		for(var/obj/item in contents)
 			item.forceMove(new_safe)

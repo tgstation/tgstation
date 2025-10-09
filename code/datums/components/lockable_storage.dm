@@ -34,7 +34,6 @@
 			canthold = list(/obj/item/storage/briefcase/secure),
 		)
 
-
 	src.lock_code = lock_code
 	if(!isnull(lock_code))
 		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
@@ -161,6 +160,22 @@
 	source.atom_storage.locked = STORAGE_NOT_LOCKED
 	source.update_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Sets the lock code for this storage and updates the locked state accordingly
+ * Arguments:
+ * * new_code - The new lock code to set, can be null to remove the code
+ */
+/datum/component/lockable_storage/proc/set_lock_code(new_code)
+	lock_code = new_code
+	var/atom/atom_parent = parent
+
+	if(!isnull(lock_code))
+		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	else
+		atom_parent.atom_storage.set_locked(STORAGE_NOT_LOCKED)
+
+	atom_parent.update_appearance()
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
