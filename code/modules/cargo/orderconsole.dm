@@ -7,7 +7,7 @@
 
 	///Can the supply console send the shuttle back and forth? Used in the UI backend.
 	var/can_send = TRUE
-	///Can this console only send requests?
+	///Can this console only send requests? Typically used at the cargo front desk for pedestrians.
 	var/requestonly = FALSE
 	///Can you approve requests placed for cargo? Works differently between the app and the computer.
 	var/can_approve_requests = TRUE
@@ -143,6 +143,7 @@
 			"orderer" = order.orderer,
 			"reason" = order.reason,
 			"id" = order.id,
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
 	data["amount_by_name"] = amount_by_name
 
@@ -238,32 +239,45 @@
 		rank = "Silicon"
 
 	var/datum/bank_account/account
-	if(self_paid && isliving(user))
+	if(isliving(user))
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-		if(!istype(id_card))
+		if(!istype(id_card) && self_paid)
 			say("No ID card detected.")
 			return
-		if(IS_DEPARTMENTAL_CARD(id_card))
+		if(IS_DEPARTMENTAL_CARD(id_card) && self_paid)
 			say("The [src] rejects [id_card].")
 			return
-		account = id_card.registered_account
-		if(!istype(account))
-			say("Invalid bank account.")
-			return
-		var/list/access = id_card.GetAccess()
-		if(pack.access_view && !(pack.access_view in access))
-			say("[id_card] lacks the requisite access for this purchase.")
-			return
+		account = id_card?.registered_account // We can still assign an account for request department purposes.
+		if(self_paid)
+			if(!istype(account))
+				say("Invalid bank account.")
+				return
+			var/list/access = id_card.GetAccess()
+			if(pack.access_view && !(pack.access_view in access))
+				say("[id_card] lacks the requisite access for this purchase.")
+				return
 
 	// The list we are operating on right now
 	var/list/working_list = SSshuttle.shopping_list
 	var/reason = ""
-	if(requestonly && !self_paid)
+	if(requestonly && !self_paid && !pack.goody)
 		working_list = SSshuttle.request_list
 		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
+
+		name = account?.account_holder
+		if(account?.account_job)
+			var/datum/bank_account/personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
+			if(!(personal_department.account_holder == "Cargo Budget"))
+				var/dept_choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
+				if(!dept_choice)
+					return
+				if(dept_choice != "Cargo Budget")
+					account = personal_department
+			else
+				account = SSeconomy.get_dep_account(cargo_account)
 
 	if(pack.goody && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -294,6 +308,7 @@
 			reason = reason,
 			paying_account = account,
 			coupon = applied_coupon,
+			department_destination = reason ? TRUE : FALSE, // Hijacking reason as a way to determine if an order's requested from at least one budget
 		)
 		working_list += order
 
