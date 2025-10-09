@@ -305,7 +305,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	toolspeed = 0.1
-	force = 30
+	force = 35
 	throwforce = 20
 	block_chance = 30
 	throw_range = 2
