@@ -65,5 +65,6 @@ type Request = {
   id: string;
   object: string;
   orderer: string;
+  account: string;
   reason: string;
 };

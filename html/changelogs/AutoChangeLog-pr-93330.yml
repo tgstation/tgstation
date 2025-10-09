@@ -1,0 +1,5 @@
+author: "DaCoolBoss"
+delete-after: True
+changes:
+  - bugfix: "Ballistic laser guns will no longer brick themselves when out of ammo."
+  - bugfix: "Ballistic laser guns now fire ammo directly from their loaded clip, without chambering."

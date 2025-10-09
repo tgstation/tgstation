@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - bugfix: "fixes clicking on an open airlock tile when pulling something"

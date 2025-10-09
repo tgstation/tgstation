@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - refactor: "The vorpal scythe now handles empowerment more cleanly."
