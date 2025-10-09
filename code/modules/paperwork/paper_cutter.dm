@@ -26,6 +26,7 @@
 	stored_blade = new /obj/item/hatchet/cutterblade(src)
 	register_context()
 	update_appearance()
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/papercutter/Destroy(force)
 	if(!isnull(stored_paper))
@@ -179,15 +180,6 @@
 	new /obj/item/paper/paperslip(get_turf(src))
 	new /obj/item/paper/paperslip(get_turf(src))
 	update_appearance()
-
-/obj/item/papercutter/mouse_drop_dragged(atom/over_object, mob/user)
-	if(over_object == user)
-		user.put_in_hands(src)
-
-	else if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/target_hand = over_object
-		user.putItemFromInventoryInHandIfPossible(src, target_hand.held_index)
-	add_fingerprint(user)
 
 /obj/item/paper/paperslip
 	name = "paper slip"
