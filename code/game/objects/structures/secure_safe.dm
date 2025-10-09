@@ -15,7 +15,7 @@
 	)
 	material_flags = MATERIAL_EFFECTS
 	/// The lock code transferred from the structure
-	var/lock_code
+	var/stored_lock_code
 
 /obj/item/wallframe/secure_safe/Initialize(mapload)
 	. = ..()
@@ -31,17 +31,21 @@
 	if(obj_flags & EMAGGED)
 		icon_state = "[base_icon_state]_broken"
 	else
-		icon_state = "[base_icon_state][lock_code ? "_locked" : null]"
+		icon_state = "[base_icon_state][stored_lock_code ? "_locked" : null]"
 
 /obj/item/wallframe/secure_safe/after_attach(obj/structure/secure_safe/safe)
-	. = ..()
+	if(!istype(safe, /obj/structure/secure_safe))
+		return ..()
+
 	for(var/obj/item in contents)
 		item.forceMove(safe)
 
 	// Transfer lock code to the newly constructed structure
-	if(lock_code)
-		var/datum/component/lockable_storage/lock_comp = safe.GetComponent(/datum/component/lockable_storage)
-		lock_comp?.set_lock_code(lock_code)
+	if(stored_lock_code)
+		var/datum/component/lockable_storage/storage_component = safe.GetComponent(/datum/component/lockable_storage)
+		storage_component?.set_lock_code(stored_lock_code)
+
+	return ..()
 
 /datum/armor/secure_safe
 	melee = 30
@@ -92,9 +96,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
 		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
 		// Transfer lock code to the wallframe
-		var/datum/component/lockable_storage/lock_comp = GetComponent(/datum/component/lockable_storage)
-		if(lock_comp)
-			new_safe.lock_code = lock_comp.lock_code
+		var/datum/component/lockable_storage/storage_component = GetComponent(/datum/component/lockable_storage)
+		if(storage_component)
+			new_safe.stored_lock_code = storage_component.lock_code
 			new_safe.update_appearance()
 
 		for(var/obj/item in contents)

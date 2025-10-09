@@ -167,15 +167,16 @@
  * * new_code - The new lock code to set, can be null to remove the code
  */
 /datum/component/lockable_storage/proc/set_lock_code(new_code)
+	var/obj/source = parent
+
+	// Can't set lock code if the electronics are emagged
+	if(source.obj_flags & EMAGGED)
+		return FALSE
+
 	lock_code = new_code
-	var/atom/atom_parent = parent
-
-	if(!isnull(lock_code))
-		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
-	else
-		atom_parent.atom_storage.set_locked(STORAGE_NOT_LOCKED)
-
-	atom_parent.update_appearance()
+	source.atom_storage.set_locked(!isnull(lock_code) ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED)
+	source.update_appearance()
+	return TRUE
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
