@@ -1,4 +1,0 @@
-author: "loganuk"
-delete-after: True
-changes:
-  - map: "Fixes runtimestation_minimal broken unit test - Should not affect players but fixes CI failures for all open PRs, going in changelog to inform contributors to update from main branch."
