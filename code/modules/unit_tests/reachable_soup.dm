@@ -5,7 +5,7 @@
 	var/obj/item/reagent_containers/cup/soup_pot/soup = EASY_ALLOCATE()
 	var/mob/living/carbon/human/dummy = EASY_ALLOCATE()
 
-	dummy.put_in_hands(soup)
+	dummy.put_in_active_hand(soup)
 	click_wrapper(dummy, range)
 	TEST_ASSERT_EQUAL(soup.loc, range, "Soup pot should have been placed on the stove.")
 
