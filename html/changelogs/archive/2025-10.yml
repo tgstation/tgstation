@@ -300,3 +300,8 @@
       reset the affected turfs.
   - admin: Equipping the admin outfit will no longer automatically trigger the debug
       gps effect.
+2025-10-09:
+  ArchBTW:
+  - rscadd: Readds Lean
+  Melbert:
+  - bugfix: Fix buckling and probably a lot more mousedrop interactions

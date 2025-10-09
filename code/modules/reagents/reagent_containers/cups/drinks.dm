@@ -406,6 +406,13 @@
 	if(icon_state == "colocup6")
 		desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
 
+/obj/item/reagent_containers/cup/glass/colocup/lean
+	name = "lean"
+	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
+	icon_state = "lean"
+	list_reagents = list(/datum/reagent/consumable/lean = 20)
+	random_sprite = FALSE
+
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
 // itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
