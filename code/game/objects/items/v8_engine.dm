@@ -54,6 +54,8 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	force = 12
+	block_chance = 40
+	armour_penetration = 15
 	throwforce = 10
 	throw_range = 5
 	throw_speed = 1
@@ -68,7 +70,7 @@
 
 /obj/item/house_edge/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
+	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 28, attacksound = active_hitsound)
 	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
