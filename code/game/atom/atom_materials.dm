@@ -410,10 +410,10 @@
 
 /// Compares the materials of two items to see if they're roughly the same. Primarily used in crafting and processing unit tests.
 /atom/proc/compare_materials(atom/target)
+	if(custom_materials == target.custom_materials) // SSmaterials caches the combinations so we don't have to run more complex checks
+		return TRUE
 	if(length(custom_materials) != length(target.custom_materials))
 		return FALSE
-	if(custom_materials == target.custom_materials)
-		return TRUE
 	for(var/mat in custom_materials)
 		var/enemy_amount = target.custom_materials[mat]
 		if(!enemy_amount) //we couldn't find said material, early return so we won't perform a division by zero

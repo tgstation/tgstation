@@ -739,7 +739,7 @@
 	loc.atom_storage?.refresh_views()
 	is_zero_amount(delete_if_zero = TRUE)
 	return new_stack
-
+z
 /**
  * Splits amount items from stack, attempts to place new stack in user's hands.
  * Returns the new stack.

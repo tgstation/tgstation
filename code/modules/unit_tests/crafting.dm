@@ -5,31 +5,33 @@
  * crafted result with a spawned instance of the same type to ensure that they match.
  */
 /datum/unit_test/crafting
+	//The object responsible for using the crafting component
+	var/atom/movable/crafter
+	//The reagent holder responsible for holding reagents that may be used in a recipe.
+	var/obj/item/reagent_containers/cup/bottomless_cup
+	///The tools that have been spawned so far, to be reused in other recipes as well.
+	var/list/tools = list()
 
 /datum/unit_test/crafting/Run()
 	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
 
-	///Clear the area around our crafting movable of objects that may mess with the unit test
-	for(var/atom/movable/trash in (range(1, crafter) - crafter))
-		qdel(trash)
+	clear_trash()
 
 	var/turf/turf = crafter.loc
 	var/old_turf_type = turf.type
 	var/datum/component/personal_crafting/unit_test/craft_comp = crafter.AddComponent(__IMPLIED_TYPE__)
-	var/obj/item/reagent_containers/cup/bottomless_cup = allocate_bottomless_cup()
-
-	var/list/tools = list()
+	bottomless_cup = allocate_bottomless_cup()
 
 	var/list/all_recipes = GLOB.crafting_recipes + GLOB.cooking_recipes
 	for(var/datum/crafting_recipe/recipe as anything in all_recipes)
 		if(recipe.non_craftable)
 			continue
 		//split into a different proc, so if something fails it's both easier to track and doesn't halt the loop.
-		process_recipe(crafter, craft_comp, recipe, bottomless_cup, tools)
+		process_recipe(craft_comp, recipe)
 		if(QDELETED(bottomless_cup) || bottomless_cup.loc != turf) //The cup itself was used in a recipe, rather than its contents.
 			bottomless_cup = allocate_bottomless_cup()
 
-	// We have one or two recipes that generate turf (from stacks, like snow walls), which shouldn't be carried between tests
+	// We have one or two recipes that generate turfs (from stacks, like snow walls), which shouldn't be carried between tests
 	if(turf.type != old_turf_type)
 		turf.ChangeTurf(old_turf_type)
 
@@ -40,16 +42,8 @@
 	bottomless_cup.reagents.maximum_volume = INFINITY
 	return bottomless_cup
 
-/datum/unit_test/crafting/proc/process_recipe(
-	atom/crafter,
-	datum/component/personal_crafting/unit_test/craft_comp,
-	datum/crafting_recipe/recipe,
-	obj/item/reagent_containers/bottomless_cup,
-	list/tools
-)
+/datum/unit_test/crafting/proc/process_recipe(datum/component/personal_crafting/unit_test/craft_comp, datum/crafting_recipe/recipe)
 	var/turf/turf = crafter.loc
-	//Components that have to be deleted later so they don't mess up with other recipes
-	var/list/spawned_components = list()
 	//Warn if uncreatables were found in the recipe if it fails
 	//If it doesn't fail, then it was already handled, maybe through `unit_test_spawn_extras`
 	var/list/uncreatables_found
@@ -57,10 +51,10 @@
 	for(var/spawn_path in recipe.unit_test_spawn_extras)
 		var/amount = recipe.unit_test_spawn_extras[spawn_path]
 		if(ispath(spawn_path, /obj/item/stack))
-			spawned_components += new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			new spawn_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 		for(var/index in 1 to amount)
-			spawned_components += new spawn_path(turf)
+			new spawn_path(turf)
 
 	for(var/req_path in recipe.reqs) //spawn items and reagents
 		var/amount = recipe.reqs[req_path]
@@ -75,12 +69,12 @@
 			continue
 
 		if(ispath(req_path, /obj/item/stack)) //it's a stack
-			spawned_components += new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
+			new req_path(turf, /*new_amount =*/ amount, /*merge =*/ FALSE)
 			continue
 
 		//it's any other item
 		for(var/iteration in 1 to amount)
-			spawned_components += new req_path(turf)
+			new req_path(turf)
 
 	for(var/req_path in recipe.chem_catalysts) // spawn catalysts
 		var/amount = recipe.chem_catalysts[req_path]
@@ -94,7 +88,7 @@
 		if(req_path in uncreatables)
 			LAZYADD(uncreatables_found, req_path)
 			continue
-		spawned_components += new req_path(turf)
+		new req_path(turf)
 
 	var/list/needed_tools = list()
 	needed_tools += recipe.tool_behaviors + recipe.tool_paths //either tool_behaviors and tool_paths could be null
@@ -125,18 +119,12 @@
 	if(istext(result) || isnull(result)) //construct_item() returned a text string telling us why it failed.
 		TEST_FAIL("[recipe.type] couldn't be crafted during unit test[result || ", result is null for some reason!"]")
 		if(uncreatables_found)
-			TEST_FAIL("The following objects that shouldn't initialize during unit tests were found in [recipe]: [english_list(uncreatables_found)]")
-		delete_components(spawned_components)
+			TEST_FAIL("The following objects that shouldn't be instantiated during unit tests were found in [recipe]: [english_list(uncreatables_found)]")
+		clear_trash()
 		return
-	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth right now
-	if(isturf(result))
-		delete_components(spawned_components)
-		return
-
-	spawned_components += result
-
-	if(recipe.crafting_flags & CRAFT_SKIP_MATERIALS_PARITY)
-		delete_components(spawned_components)
+	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth here
+	if(isturf(result) || (recipe.crafting_flags & CRAFT_SKIP_MATERIALS_PARITY))
+		clear_trash()
 		return
 
 	var/atom/copycat
@@ -145,12 +133,7 @@
 		copycat = new result.type(turf, stack_result.amount)
 	else
 		copycat = new result.type(turf)
-	spawned_components += copycat
 
-	// SSmaterials caches the combinations so we don't have to run more complex checks
-	if(result.custom_materials == copycat.custom_materials)
-		delete_components(spawned_components)
-		return
 	if(!result.compare_materials(copycat))
 		var/warning = "custom_materials of [result.type] when crafted compared to just spawned don't match"
 
@@ -176,16 +159,12 @@
 		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be] (current value: [what_it_is]). \
 			Otherwise [add_info]")
 
-	delete_components(spawned_components)
+	clear_trash()
 
-/**
- * Clear the area of the components that have been spawned as either the requirements of a recipe or its result
- * so they don't mess up with recipes that come after it.
- */
-/datum/unit_test/crafting/proc/delete_components(list/comps)
-	for(var/atom/movable/used as anything in comps)
-		if(!QDELETED(used))
-			qdel(used)
+///Clear the area around our crafting movable of objects that may mess with the unit test
+/datum/unit_test/crafting/proc/clear_trash()
+	for(var/atom/movable/trash in (range(1, crafter) - list(crafter, bottomless_cup)))
+		qdel(trash)
 
 /datum/component/personal_crafting/unit_test
 	ignored_flags = CRAFT_MUST_BE_LEARNED|CRAFT_ONE_PER_TURF|CRAFT_CHECK_DIRECTION|CRAFT_CHECK_DENSITY|CRAFT_ON_SOLID_GROUND|CRAFT_IGNORE_DO_AFTER
