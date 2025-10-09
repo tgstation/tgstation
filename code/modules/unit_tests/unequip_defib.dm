@@ -1,7 +1,7 @@
 /// Test you can mouse-drop a defib off your back to unequip it
-/datum/unit_test/buckling_self
+/datum/unit_test/unequip_defib
 
-/datum/unit_test/buckling_self/Run()
+/datum/unit_test/unequip_defib/Run()
 	var/mob/living/carbon/human/consistent/dummy = EASY_ALLOCATE()
 	dummy.mock_client = new()
 	dummy.hud_used = new dummy.hud_type(dummy)
