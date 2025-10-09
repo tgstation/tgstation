@@ -54,7 +54,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	force = 12
-	block_chance = 55 //its two handed so having its block so high should be okay, this is equal to a power crepe
+	block_chance = 55 //its two handed so having its block so high should be okay, this is equal to a power crepe and the power crepe is actually one handed
 	armour_penetration = 15
 	throwforce = 10
 	throw_range = 5
