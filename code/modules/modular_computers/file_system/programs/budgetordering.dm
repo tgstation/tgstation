@@ -66,7 +66,7 @@
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 	if(id_card?.registered_account)
-		buyer = SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
+		buyer = SSeconomy.get_dep_account(id_card?.registered_account.account_job.paycheck_department)
 		if((ACCESS_COMMAND in id_card.access))
 			requestonly = FALSE
 			can_approve_requests = TRUE
@@ -224,10 +224,10 @@
 			var/name = "*None Provided*"
 			var/rank = "*None Provided*"
 			var/ckey = usr.ckey
-			var/mob/living/carbon/human/H
+			var/mob/living/carbon/human/hwoman
 			if(ishuman(usr))
-				H = usr
-				rank = H.get_assignment(hand_first = TRUE)
+				hwoman = usr
+				rank = hwoman.get_assignment(hand_first = TRUE)
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
@@ -237,7 +237,7 @@
 			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
 			var/obj/item/card/id/id_card_customer = computer.stored_id?.GetID()
 			if(!id_card_customer)
-				id_card_customer = H?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.
+				id_card_customer = hwoman?.get_idcard(TRUE) //Grab from hands/mob if there's no id_card slot to prioritize.
 			name = id_card_customer?.registered_account.account_holder
 
 			if(self_paid)
