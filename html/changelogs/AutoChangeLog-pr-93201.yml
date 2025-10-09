@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fixed the pre-built (admin spawn) voltaic combat heart not having shock immunity"

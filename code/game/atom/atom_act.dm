@@ -72,6 +72,14 @@
 	if(!(protection & EMP_PROTECT_WIRES) && istype(wires))
 		wires.emp_pulse()
 
+	if(flags_1 & HOLOGRAM_1) // holograms should ignore EMP_PROTECT flags (since the protection itself is also a hologram)
+		if(prob(75 / severity))
+			// avoid spamming messages for anything inside the holodeck directly
+			if(!istype(get_area(src), /area/station/holodeck))
+				visible_message(span_warning("[src] fades away!"))
+			animate(alpha = 0, time = 1 SECONDS)
+			QDEL_IN(src, 1 SECONDS)
+
 	SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity, protection)
 	return protection // Pass the protection value collected here upwards
 

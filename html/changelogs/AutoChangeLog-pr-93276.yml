@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "The skeletal corpses left from spawner legions (e.g. from ore vent defenses and legion necropolis tendrils) now disappear during ash storms. This does not apply if the body gets brainswapped into."

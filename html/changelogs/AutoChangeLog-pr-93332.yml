@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - qol: "Makes plumbing synthesizers default to 5u"
