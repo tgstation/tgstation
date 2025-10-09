@@ -79,7 +79,7 @@
 
 /obj/machinery/materials_market/power_change()
 	. = ..()
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		set_light(0, 0)
 	else
 		set_light(initial(light_range), initial(light_power))
