@@ -13,7 +13,7 @@
 	var/list/tools = list()
 
 /datum/unit_test/crafting/Run()
-	var/atom/movable/crafter = allocate(__IMPLIED_TYPE__)
+	crafter = allocate(__IMPLIED_TYPE__)
 
 	clear_trash()
 
