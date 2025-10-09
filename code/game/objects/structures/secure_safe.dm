@@ -34,7 +34,7 @@
 		icon_state = "[base_icon_state][stored_lock_code ? "_locked" : null]"
 
 /obj/item/wallframe/secure_safe/after_attach(obj/structure/secure_safe/safe)
-	if(!istype(safe, /obj/structure/secure_safe))
+	if(!istype(safe))
 		return ..()
 
 	for(var/obj/item in contents)

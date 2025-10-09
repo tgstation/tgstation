@@ -34,12 +34,8 @@
 			canthold = list(/obj/item/storage/briefcase/secure),
 		)
 
-	src.lock_code = lock_code
-	if(!isnull(lock_code))
-		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	src.can_hack_open = can_hack_open
-
-	atom_parent.update_appearance()
+	set_lock_code(lock_code)
 
 /datum/component/lockable_storage/RegisterWithParent()
 	. = ..()
@@ -140,7 +136,7 @@
 	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
 	source.balloon_alert(user, "hacked")
-	lock_code = null
+	set_lock_code(null)
 
 /datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
 	SIGNAL_HANDLER
@@ -174,7 +170,8 @@
 		return FALSE
 
 	lock_code = new_code
-	source.atom_storage.set_locked(!isnull(lock_code) ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED)
+	var/lock_state = lock_code ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED
+	source.atom_storage.set_locked(lock_state)
 	source.update_appearance()
 	return TRUE
 
