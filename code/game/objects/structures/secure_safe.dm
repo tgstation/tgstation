@@ -14,6 +14,7 @@
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT*3,
 	)
 	material_flags = MATERIAL_EFFECTS
+	/// The lock code transferred from the structure
 	var/lock_code
 
 /obj/item/wallframe/secure_safe/Initialize(mapload)
@@ -29,7 +30,15 @@
 	for(var/obj/item in contents)
 		item.forceMove(attached_to)
 
-	var/datum/component/lockable_storage/lock = attached_to.GetComponent(/datum/component/lockable_storage)
+	// Transfer lock code to the newly constructed structure
+	if(lock_code && istype(attached_to, /obj/structure/secure_safe))
+		var/obj/structure/secure_safe/safe = attached_to
+		var/datum/component/lockable_storage/lock_comp = safe.GetComponent(/datum/component/lockable_storage)
+		if(lock_comp)
+			lock_comp.lock_code = lock_code
+			if(!isnull(lock_comp.lock_code))
+				safe.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+			safe.update_appearance()
 
 /datum/armor/secure_safe
 	melee = 30
@@ -79,11 +88,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/atom_deconstruct(disassembled)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
 		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
+		// Transfer lock code to the wallframe
+		var/datum/component/lockable_storage/lock_comp = GetComponent(/datum/component/lockable_storage)
+		if(lock_comp)
+			new_safe.lock_code = lock_comp.lock_code
+
 		for(var/obj/item in contents)
 			item.forceMove(new_safe)
-
-		var/datum/component/lockable_storage/lock = GetComponent(/datum/component/lockable_storage)
-		new_safe.lock_code = lock.lock_code
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
