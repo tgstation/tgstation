@@ -655,18 +655,11 @@
 		force_dismount(buckled_mob, throw_range = 2, gentle = TRUE)
 
 /datum/component/riding/creature/raptor/get_rider_offsets_and_layers(pass_index, mob/offsetter)
-	if(!SSmapping.is_planetary())
-		return list(
-			TEXT_NORTH = list(-1, 7),
-			TEXT_SOUTH = list(2, 10),
-			TEXT_EAST =  list(0, 7),
-			TEXT_WEST =  list(0, 7),
-		)
 	return list(
-		TEXT_NORTH = list(0, 7),
-		TEXT_SOUTH = list(0, 10),
-		TEXT_EAST =  list(-3, 9),
-		TEXT_WEST =  list(3, 9),
+		TEXT_NORTH = list(-1, 7),
+		TEXT_SOUTH = list(2, 10),
+		TEXT_EAST =  list(0, 7),
+		TEXT_WEST =  list(0, 7),
 	)
 
 /datum/component/riding/creature/raptor/get_parent_offsets_and_layers()

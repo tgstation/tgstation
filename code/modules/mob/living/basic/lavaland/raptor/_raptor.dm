@@ -36,6 +36,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	combat_mode = TRUE
 	mob_size = MOB_SIZE_LARGE
 	worn_slot_flags = ITEM_SLOT_BACK
+	held_w_class = WEIGHT_CLASS_BULKY
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = BODYTEMP_COLD_ICEBOX_SAFE
 	maximum_survivable_temperature = INFINITY
@@ -105,7 +106,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if (!mapload)
 		GLOB.raptor_population += REF(src)
 
-	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddComponent(/datum/component/obeys_commands, pet_commands, list(0, -base_pixel_w))
 	AddElement(\
 		/datum/element/change_force_on_death,\
 		move_resist = MOVE_RESIST_DEFAULT,\
@@ -179,7 +180,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		if (EAST, SOUTHEAST, NORTHEAST)
 			add_offsets(RAPTOR_INNATE_SOURCE, w_add = -8, animate = FALSE)
 		if (WEST, SOUTHWEST, NORTHWEST)
-			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 7, animate = FALSE)
+			add_offsets(RAPTOR_INNATE_SOURCE, w_add = 8, animate = FALSE)
 
 /mob/living/basic/raptor/examine(mob/user)
 	. = ..()
@@ -300,16 +301,19 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			desc = "Will this grow into something useful?"
 			icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 			base_icon_state = "baby"
+			base_pixel_w = 0
 		if (RAPTOR_YOUNG)
 			name = "raptor youngling"
 			desc = "A young raptor that can grow into a robust, trusty steed. Rather naive at such an age, it shouldn't be too hard to tame."
 			icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 			base_icon_state = "young"
+			base_pixel_w = initial(base_pixel_w)
 		if (RAPTOR_ADULT)
 			name = "raptor"
 			desc = initial(desc)
 			icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 			base_icon_state = "raptor"
+			base_pixel_w = initial(base_pixel_w)
 
 	can_be_held = initial(density)
 	density = initial(density)
@@ -350,14 +354,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		QDEL_NULL(ai_controller)
 		ai_controller = new /datum/ai_controller/basic_controller/baby_raptor(src)
 		collar_state = null
+		held_w_class = WEIGHT_CLASS_SMALL
 	else
 		collar_state = base_icon_state
+		held_w_class = WEIGHT_CLASS_BULKY
 		AddElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
 		if (prev_stage == RAPTOR_BABY)
 			QDEL_NULL(ai_controller)
 			ai_controller = new raptor_color.ai_controller(src)
 
-	// And finish setup on our color's side
+	// And finish the setup on our color's side
 	switch (new_stage)
 		if (RAPTOR_BABY)
 			raptor_color.setup_baby(src)
