@@ -65,10 +65,10 @@
 	. = ..()
 	var/obj/item/clothing/under/any_original = locate() in components
 	if(!any_original)
-		has_sensor = NO_SENSORS
+		set_has_sensor(NO_SENSORS)
 		return
-	has_sensor = any_original.has_sensor
-	sensor_mode = any_original.sensor_mode
+	set_has_sensor(any_original.has_sensor)
+	set_sensor_mode(any_original.sensor_mode)
 
 /obj/item/clothing/under/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
 	. = ..()
@@ -148,7 +148,7 @@
 		balloon_alert(user, "installing sensors...")
 		if(!do_after(user, 5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		has_sensor = HAS_SENSORS
+		set_has_sensor(HAS_SENSORS)
 		qdel(tool)
 		balloon_alert(user, "sensors installed")
 		playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
