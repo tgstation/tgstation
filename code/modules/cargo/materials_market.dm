@@ -74,6 +74,7 @@
 	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] cr! Sell it before it becomes liquid!"))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 	qdel(exportable)
+	use_energy(active_power_usage)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/materials_market/power_change()
