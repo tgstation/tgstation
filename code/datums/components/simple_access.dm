@@ -3,6 +3,8 @@
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///list of accesses we are allowed to access via this component
 	var/list/access
+	///Admin Access
+	var/aa_access
 
 /datum/component/simple_access/Initialize(list/new_access, atom/donor_atom)
 	. = ..()
@@ -21,6 +23,8 @@
 
 /datum/component/simple_access/proc/on_tried_access(datum/source, atom/locked_thing)
 	SIGNAL_HANDLER
+	if(aa_access)
+		return ACCESS_ALLOWED
 	if(!isobj(locked_thing))
 		return LOCKED_ATOM_INCOMPATIBLE
 	var/obj/locked_object = locked_thing
