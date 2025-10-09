@@ -24,12 +24,14 @@ type Data = {
   tier: number;
   num_players: number;
   roundstart_ruleset_report: RulesetReport[];
-  midround_ruleset_report: RulesetReport[];
+  light_midround_ruleset_report: RulesetReport[];
+  heavy_midround_ruleset_report: RulesetReport[];
 };
 
 enum TABS {
   Roundstart = 'Roundstart',
-  Midrounds = 'Midrounds',
+  LightMidrounds = 'LightMidrounds',
+  HeavyMidrounds = 'HeavyMidrounds',
 }
 
 export const DynamicTester = () => {
@@ -38,7 +40,8 @@ export const DynamicTester = () => {
     tier,
     num_players,
     roundstart_ruleset_report,
-    midround_ruleset_report,
+    light_midround_ruleset_report,
+    heavy_midround_ruleset_report,
   } = data;
 
   const [tab, setTab] = useState(Object.keys(TABS)[0]);
@@ -46,14 +49,17 @@ export const DynamicTester = () => {
   const ruleset_report =
     tab === TABS.Roundstart
       ? roundstart_ruleset_report
-      : midround_ruleset_report;
+      : tab === TABS.LightMidrounds
+        ? light_midround_ruleset_report
+        : heavy_midround_ruleset_report;
 
   const total_weight = ruleset_report.reduce(
     (acc, report) => acc + report.weight,
     0,
   );
   const rulesets_with_weight_percentages = ruleset_report.map((report) => {
-    const percentage = Math.round((report.weight / total_weight) * 100);
+    const percentage =
+      total_weight === 0 ? 0 : Math.round((report.weight / total_weight) * 100);
     return {
       ...report,
       percentage,
@@ -96,7 +102,7 @@ export const DynamicTester = () => {
                     selected={tab === tabName}
                     onClick={() => setTab(tabName)}
                   >
-                    {tabName}
+                    {TABS[tabName]}
                   </Tabs.Tab>
                 ))}
               </Tabs>
@@ -110,31 +116,33 @@ export const DynamicTester = () => {
                   <Table.Cell>Max Antags</Table.Cell>
                   <Table.Cell>Min Antags</Table.Cell>
                 </Table.Row>
-                {rulesets_with_weight_percentages.map((report) => (
-                  <Table.Row key={report.name}>
-                    {report.comment ? (
-                      <Table.Cell>
-                        <Tooltip content={report.comment} position="right">
-                          <Box
-                            inline
-                            style={{
-                              borderBottom:
-                                '2px dotted rgba(255, 255, 255, 0.8)',
-                            }}
-                          >
-                            {report.name}
-                          </Box>
-                        </Tooltip>
-                      </Table.Cell>
-                    ) : (
-                      <Table.Cell>{report.name}</Table.Cell>
-                    )}
-                    <Table.Cell>{report.weight}</Table.Cell>
-                    <Table.Cell>{report.percentage}%</Table.Cell>
-                    <Table.Cell>{report.max_candidates}</Table.Cell>
-                    <Table.Cell>{report.min_candidates}</Table.Cell>
-                  </Table.Row>
-                ))}
+                {rulesets_with_weight_percentages
+                  .sort((a, b) => (a.name > b.name ? 1 : -1))
+                  .map((report) => (
+                    <Table.Row key={`${report.name}-${TABS[tab]}`}>
+                      {report.comment ? (
+                        <Table.Cell>
+                          <Tooltip content={report.comment} position="right">
+                            <Box
+                              inline
+                              style={{
+                                borderBottom:
+                                  '2px dotted rgba(255, 255, 255, 0.8)',
+                              }}
+                            >
+                              {report.name}
+                            </Box>
+                          </Tooltip>
+                        </Table.Cell>
+                      ) : (
+                        <Table.Cell>{report.name}</Table.Cell>
+                      )}
+                      <Table.Cell>{report.weight}</Table.Cell>
+                      <Table.Cell>{report.percentage}%</Table.Cell>
+                      <Table.Cell>{report.max_candidates}</Table.Cell>
+                      <Table.Cell>{report.min_candidates}</Table.Cell>
+                    </Table.Row>
+                  ))}
               </Table>
             </Stack.Item>
           </Stack>

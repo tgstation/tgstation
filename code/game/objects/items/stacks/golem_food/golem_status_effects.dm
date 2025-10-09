@@ -94,9 +94,16 @@
 		animate(alpha = 50, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING)
 	return TRUE
 
-/datum/status_effect/golem/on_creation(mob/living/new_owner)
+/datum/status_effect/golem/on_creation(mob/living/new_owner, multiplier = 1)
+	///instead of straight out multiplying the duration, we use exponents to flatten the duration so it doesn't become exceedingly long for golems
+	var/exponent = 0.2
 	if(!isgolem(new_owner))
 		duration *= 0.1
+		exponent = 0.5 //non-golem benefit more from higher multipliers since it normally only lasts for 30 seconds for them.
+	if(multiplier > 1)
+		duration *= multiplier ** exponent
+	else // if the multiplier is lower than 1, don't bother using powers.
+		duration *= multiplier
 	var/buff_duration = duration
 	. = ..()
 	if (!.)

@@ -463,12 +463,14 @@
 	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
 	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
 	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
+	ADD_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 	. = ..()
 
 /datum/brain_trauma/special/ptsd/on_lose()
 	owner.clear_mood_event("combat_ptsd")
 	owner.mob_mood?.mood_modifier += 1
 	owner.mob_mood?.sanity_level = SANITY_GREAT
+	REMOVE_TRAIT(owner, TRAIT_DESENSITIZED, REF(src))
 	return ..()
 
 /datum/brain_trauma/special/primal_instincts

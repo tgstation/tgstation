@@ -62,6 +62,7 @@
 	on_made_callback?.Invoke(human_target)
 	ADD_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(human_target, TRAIT_DESENSITIZED, TRAIT_STATUS_EFFECT(id))
 	human_target.become_husk(TRAIT_STATUS_EFFECT(id))
 	human_target.faction |= FACTION_HERETIC
 
@@ -92,6 +93,7 @@
 	on_lost_callback?.Invoke(human_target)
 	REMOVE_TRAIT(human_target, TRAIT_FAKEDEATH, TRAIT_STATUS_EFFECT(id))
 	REMOVE_TRAIT(human_target, TRAIT_HERETIC_SUMMON, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(human_target, TRAIT_DESENSITIZED, TRAIT_STATUS_EFFECT(id))
 	human_target.cure_husk(TRAIT_STATUS_EFFECT(id))
 	human_target.faction -= FACTION_HERETIC
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)

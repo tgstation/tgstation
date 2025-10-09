@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "shuttle engines no longer provide negative power to your shuttles if you unwrench them."
