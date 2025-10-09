@@ -1,11 +1,11 @@
-///Proxy element that attaches components, elements and traits tthat are common to more or less all nullrods.
+///Proxy element that attaches components, elements and traits that are common to more or less all nullrods.
 /datum/element/nullrod_core
 
 /**
  * Called when the element is added to a datum. If the 'chaplain_spawnable' arg is TRUE and unit testing is enabled,
  * we check that the target is actually in the nullrod_variants global list
  */
-/datum/element/nullrod_core/Attach(obj/item/target, chaplain_spawnable = TRUE)
+/datum/element/nullrod_core/Attach(obj/item/target, chaplain_spawnable = TRUE, rune_remove_line = "BEGONE FOUL MAGIKS!!")
 	. = ..()
 	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
@@ -13,7 +13,7 @@
 	target.AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 	target.AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		success_forcesay = rune_remove_line, \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed), target), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \

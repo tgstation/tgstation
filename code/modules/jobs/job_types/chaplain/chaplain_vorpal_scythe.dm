@@ -77,7 +77,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE) // The implant is the actual item the chappie can select
+	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
 	AddComponent(
 		/datum/component/butchering, \
 		speed = 3 SECONDS, \
