@@ -23,7 +23,7 @@ jobs:
 
       - name: "Setup python"
         if: steps.value_holder.outputs.ACTIONS_ENABLED
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.x"
 

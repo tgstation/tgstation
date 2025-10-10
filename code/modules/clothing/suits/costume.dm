@@ -1,6 +1,7 @@
 /obj/item/clothing/suit/costume
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	abstract_type = /obj/item/clothing/suit/costume
 
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flashy costume"
@@ -77,6 +78,10 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/costume_justice
 
+/obj/item/clothing/suit/costume/justice/Initialize(mapload)
+	. = ..()
+	allowed = GLOB.security_vest_allowed
+
 /datum/armor/costume_justice
 	melee = 35
 	bullet = 30
@@ -122,7 +127,10 @@
 	inhand_icon_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT|HIDEBELT
-	allowed = list(/obj/item/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/cup/glass/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/flashlight/flare/candle, /obj/item/tank/internals/emergency_oxygen)
+
+/obj/item/clothing/suit/costume/imperium_monk/Initialize(mapload)
+	. = ..()
+	allowed = GLOB.chaplain_suit_allowed
 
 /obj/item/clothing/suit/costume/chickensuit
 	name = "chicken suit"
@@ -354,8 +362,6 @@
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
-	//cold_protection = CHEST|GROIN|ARMS
-	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
 	hoodtype = /obj/item/clothing/head/hooded/ian_hood
 	dog_fashion = /datum/dog_fashion/back
@@ -367,8 +373,6 @@
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "ian"
 	body_parts_covered = HEAD
-	//cold_protection = HEAD
-	//min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/suit/hooded/bee_costume // It's Hip!
@@ -619,6 +623,7 @@
 /obj/item/clothing/suit/costume/hawaiian/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	allowed += GLOB.personal_carry_allowed
 
 /obj/item/clothing/suit/costume/football_armor
 	name = "football protective gear"
@@ -636,6 +641,10 @@
 	name = "comedian coat"
 	desc = "I mean, don’t you have to be funny to be a comedian?"
 	icon_state = "joker_coat"
+
+/obj/item/clothing/suit/costume/joker/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.personal_carry_allowed
 
 /obj/item/clothing/suit/costume/deckers
 	name = "decker hoodie"

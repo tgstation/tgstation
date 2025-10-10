@@ -38,6 +38,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/machines/vending.dmi'
 	icon_state = "generic"
+	abstract_type = /obj/machinery/vending
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	verb_say = "beeps"
@@ -71,7 +72,7 @@
 	///Icon for the maintenance panel overlay
 	var/panel_type = "panel1"
 	///Whether this vendor can be selected when building a custom vending machine
-	var/allow_custom = FALSE
+	var/allow_custom = TRUE
 
 	/**
 	  * List of products this machine sells

@@ -77,7 +77,7 @@
 	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
-	AddComponent(/datum/component/bayonet_attachable, offset_x = 32, offset_y = 12)
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin")
 
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
@@ -141,6 +141,9 @@
 	worn_icon_state = "slopno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
+
+/obj/item/gun/ballistic/rifle/boltaction/surplus/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin_surplus")
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
 	name = "\improper Sakhno-Zhihao Sporting Rifle"
@@ -305,23 +308,27 @@
 
 	SET_BASE_PIXEL(-8, 0)
 
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to recall a tale about [src]."), \
+		lore = "<b>You were told this story, in hushed tones, from a wizened man in a grey jumpsuit...</b><br><br>\
+		It is said that the first slaying committed on a Nanotrasen space station was by an assistant.<br><br>\
+		That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.<br><br>\
+		They carry the weight of this act visibly; the grey jumpsuit. Breathing deeply filtered air. And with bloodsoaked yellow hands clenched into fists.<br><br>\
+		Eyes, sharp and waiting. Hunters in the dark.<br><br>\
+		Eventually, these killing spirits sought to stake a claim on the metal tombs they were trapped within. Rejecting their status. Determined to be something more.<br><br>\
+		This weapon is one such tool. And it is a grim one indeed. Wrought from scrap, pulled from the station's walls and floors and the very nails holding it together.<br>\
+		<br>\
+		It is a symbol that the true masters of this place are not those who merely inhabit it. But the one willing to twist it towards a killing intent." \
+	)
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 35, offset_y = 10)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
-
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/examine_more(mob/user)
-	. = ..()
-	. += span_notice("<b><i>Looking down at \the [src], you recall a tale told to you in some distant memory...</i></b>")
-
-	. += span_info("It's said that the first slaying committed on a Nanotrasen space station was by an assistant.")
-	. += span_info("That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.")
-	. += span_info("They carry the weight of this act visibly; the grey jumpsuit. Breathing deeply filtered air. And with bloodsoaked yellow hands clenched into fists. Eyes, sharp and waiting. Hunters in the dark.")
-	. += span_info("Eventually, these killing spirits sought to stake a claim on the metal tombs they were trapped within. Rejecting their status. Determined to be something more.")
-	. += span_info("This weapon is one such tool. And it is a grim one indeed. Wrought from scrap, pulled from the station's walls and floors and the very nails holding it together.")
-	. += span_info("It is a symbol that the true masters of this place are not those who merely inhabit it. But the one willing to twist it towards a killing intent.")
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
 	name = "pipe pistol"
@@ -492,3 +499,30 @@
 
 /obj/item/gun/ballistic/rifle/sks/empty
 	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/sks/empty
+
+// lahti-l39 anti material rifle //
+
+/obj/item/gun/ballistic/automatic/lahti
+	name = "\improper Lahti L-39"
+	desc = "The Lahti L-39, now manufactured in space with better materials making it more portable and reliable- still loaded in the same massive cartridge, \
+		this thing was made to go through a tank and come out the other end- imagine what it could do to an exosuit, there's also a completely useless sight which is totally obstructed by the magazine."
+	icon = 'icons/obj/weapons/guns/lahtil39.dmi'
+	icon_state = "lahtil"
+	inhand_icon_state = "sniper"
+	worn_icon_state = "sniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
+	mag_display = FALSE
+	recoil = 15
+	w_class = WEIGHT_CLASS_BULKY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/lahtimagazine
+	fire_delay = 8 SECONDS
+	slowdown = 2
+	burst_size = 1
+	slot_flags = ITEM_SLOT_BACK
+	actions_types = list()
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3

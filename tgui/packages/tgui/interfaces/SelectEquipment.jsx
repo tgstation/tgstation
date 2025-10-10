@@ -1,6 +1,5 @@
 import { sortBy, uniq } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
-import { atom, useAtom } from 'jotai';
 import { useState } from 'react';
 import {
   Box,
@@ -22,8 +21,6 @@ function getOutfitKey(outfit) {
   return outfit.path || outfit.ref;
 }
 
-const outfitTabAtom = atom('');
-
 export function SelectEquipment(props) {
   const { act, data } = useBackend();
   const { name, icon64, current_outfit, favorites } = data;
@@ -39,8 +36,7 @@ export function SelectEquipment(props) {
     ...outfits.map((entry) => entry.category),
     'Custom',
   ]);
-  const [tab] = useAtom(outfitTabAtom);
-
+  const [tab, setTab] = useState(categories[0]);
   const [searchText, setSearchText] = useState('');
   const searchFilter = createSearch(
     searchText,
@@ -79,7 +75,11 @@ export function SelectEquipment(props) {
                 />
               </Stack.Item>
               <Stack.Item>
-                <DisplayTabs categories={categories} />
+                <DisplayTabs
+                  categories={categories}
+                  tab={tab}
+                  onSelect={setTab}
+                />
               </Stack.Item>
               <Stack.Item grow basis={0}>
                 <OutfitDisplay entries={visibleOutfits} currentTab={tab} />
@@ -111,9 +111,7 @@ export function SelectEquipment(props) {
 }
 
 function DisplayTabs(props) {
-  const { categories } = props;
-
-  const [tab, setTab] = useAtom(outfitTabAtom);
+  const { categories, tab, onSelect } = props;
 
   return (
     <Tabs textAlign="center">
@@ -121,7 +119,7 @@ function DisplayTabs(props) {
         <Tabs.Tab
           key={category}
           selected={tab === category}
-          onClick={() => setTab(category)}
+          onClick={() => onSelect(category)}
         >
           {category}
         </Tabs.Tab>
@@ -133,7 +131,7 @@ function DisplayTabs(props) {
 function OutfitDisplay(props) {
   const { act, data } = useBackend();
   const { current_outfit, categories } = data;
-  const { entries, currentTab = categories[0] } = props;
+  const { entries, currentTab } = props;
 
   return (
     <Section fill scrollable>

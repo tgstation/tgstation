@@ -43,7 +43,7 @@
 	SIGNAL_HANDLER
 	return Hear(arglist(arguments))
 
-/obj/item/circuit_component/hear/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
+/obj/item/circuit_component/hear/Hear(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	if(!on.value)
 		return FALSE
 	if(speaker == parent?.shell)
@@ -53,6 +53,6 @@
 	if(message_language)
 		language_port.set_output(initial(message_language.name))
 	speaker_port.set_output(speaker)
-	speaker_name.set_output(speaker.GetVoice())
+	speaker_name.set_output(speaker.get_voice())
 	trigger_port.set_output(COMPONENT_SIGNAL)
 	return TRUE

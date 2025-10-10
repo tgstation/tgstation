@@ -260,7 +260,8 @@
 	set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
+		/obj/item/bounty_cube,
 	))
 
 ///Garment bag
@@ -299,16 +300,24 @@
 
 ///Money bag
 /datum/storage/bag/money
-	max_slots = 40
-	max_specific_storage = 40
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	max_total_storage = 1000
+	max_slots = 1000
 
 /datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/coin,
 		/obj/item/stack/spacecash,
-		/obj/item/holochip
+		/obj/item/holochip,
+		/obj/item/poker_chip,
+		/obj/item/stack/sheet/mineral/diamond, // Precious gems and stones are something a sophisticated french thief might put in his thief bag.
+		/obj/item/stack/sheet/mineral/gold, // This is money, the only real money actually, if you ask a Ron Paul-style guy.
+		/obj/item/stack/sheet/mineral/silver,
+		/obj/item/stack/sheet/mineral/mythril,
+		/obj/item/stack/telecrystal,
 	))
+
 
 ///Fishing bag
 /datum/storage/bag/fishing

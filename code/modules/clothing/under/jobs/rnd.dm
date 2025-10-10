@@ -1,6 +1,7 @@
 /obj/item/clothing/under/rank/rnd
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
+	abstract_type = /obj/item/clothing/under/rank/rnd
 	armor_type = /datum/armor/clothing_under/science
 
 /datum/armor/clothing_under/science

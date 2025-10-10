@@ -2,6 +2,7 @@
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
+	abstract_type = /obj/item/food/meat
 	var/subjectname = ""
 	var/subjectjob = null
 	var/blood_decal_type = /obj/effect/decal/cleanable/blood
@@ -66,6 +67,9 @@
 
 /obj/item/food/meat/slab/human/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+
+/obj/item/food/meat/slab/human/mutant
+	abstract_type = /obj/item/food/meat/slab/human/mutant
 
 /obj/item/food/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
@@ -152,6 +156,9 @@
 
 /obj/item/food/meat/slab/human/mutant/skeleton/make_processable()
 	return //skeletons don't have cutlets
+
+/obj/item/food/meat/slab/human/mutant/skeleton/make_grillable()
+	return
 
 /obj/item/food/meat/slab/human/mutant/zombie
 	name = "meat (rotten)"

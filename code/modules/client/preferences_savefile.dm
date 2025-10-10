@@ -13,7 +13,7 @@
 /// You do not need to raise this if you are adding new values that have sane defaults.
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 49
+#define SAVEFILE_VERSION_MAX 50
 
 #define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
 #define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
@@ -137,6 +137,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			quirk_to_migrate = "Cyborg Pre-screened dogtag",
 			new_typepath = /obj/item/clothing/accessory/dogtag/borg_ready,
 		)
+	if(current_version < 50)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Extrovert",
+			new_typepath = /datum/personality/extrovert,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Introvert",
+			new_typepath = /datum/personality/introvert,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Bad Touch",
+			new_typepath = /datum/personality/aloof,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Apathetic",
+			new_typepath = /datum/personality/apathetic,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Snob",
+			new_typepath = /datum/personality/snob,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Spiritual",
+			new_typepath = /datum/personality/spiritual,
+		)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -200,7 +225,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	var/data_validity_integer = check_savedata_version(savefile.get_entry())
 	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
@@ -235,14 +260,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	if(SHOULD_UPDATE_DATA(data_validity_integer))
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		update_preferences(data_validity_integer, savefile)
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
-	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
@@ -251,6 +275,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+
+	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	if(SHOULD_UPDATE_DATA(data_validity_integer)) //save the updated version
 		var/old_default_slot = default_slot

@@ -97,7 +97,7 @@
 	if (!length(required_traits))
 		return TRUE
 
-	for (var/trait as anything in required_traits)
+	for (var/trait in required_traits)
 		if (HAS_TRAIT(the_target, trait))
 			return TRUE
 	return FALSE

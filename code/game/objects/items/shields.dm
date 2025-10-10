@@ -5,6 +5,7 @@
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	abstract_type = /obj/item/shield
 	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK
 	force = 10
@@ -42,6 +43,7 @@
 /obj/item/shield/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/disarm_attack)
+	AddElement(/datum/element/cuffable_item) //I mean, it has a closed handle, right?
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/effective_block_chance = final_block_chance
@@ -343,7 +345,7 @@
 	var/effective_block_chance = final_block_chance
 	if(attack_type == OVERWHELMING_ATTACK)
 		effective_block_chance -= 25
-	
+
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/our_projectile = hitby
 

@@ -72,8 +72,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		qdel(delete)
 
 /mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(FALSE) // assuming direct control
 	item.item_flags |= IN_INVENTORY
-	return item.visual_equipped(src, slot, initial)
+	if(!item.visual_equipped(src, slot, initial))
+		return FALSE
+
+	add_item_coverage(item)
+	return TRUE
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()

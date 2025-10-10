@@ -12,6 +12,7 @@
 	icon = 'icons/obj/service/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	abstract_type = /obj/item/kitchen
 	worn_icon_state = "kitchen_tool"
 
 /obj/item/kitchen/Initialize(mapload)

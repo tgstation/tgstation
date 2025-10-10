@@ -112,7 +112,7 @@
 /area/station/service/chapel
 	name = "\improper Chapel"
 	icon_state = "chapel"
-	mood_bonus = 5
+	mood_bonus = 4
 	mood_message = "Being in the chapel brings me peace."
 	mood_trait = TRAIT_SPIRITUAL
 	ambience_index = AMBIENCE_HOLY

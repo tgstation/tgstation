@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - rscadd: "B.O.R.I.S.es can be installed inside of integrated circuits with MMI components, allowing an AI to remotely interface with them the same way an MMI or posibrain could."
-  - refactor: "The MMI component now uses item interaction behavior for inserting MMIs/B.O.R.I.S.es."

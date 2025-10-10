@@ -7,6 +7,8 @@
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = ""
+	/// Abstract root type
+	abstract_type = /obj/structure/statue
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
@@ -18,8 +20,6 @@
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
-	/// Abstract root type
-	var/abstract_type = /obj/structure/statue
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
@@ -401,6 +401,10 @@ Moving interrupts
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_sculpting", /datum/mood_event/creative_sculpting)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_sculpting", /datum/mood_event/unimaginative_sculpting)
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block

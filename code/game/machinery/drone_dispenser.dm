@@ -212,7 +212,7 @@
 			if(energy_used)
 				use_energy(energy_used)
 
-			for(var/spawnable_item as anything in dispense_type)
+			for(var/spawnable_item in dispense_type)
 				var/atom/spawned_atom = new spawnable_item(loc)
 				spawned_atom.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
@@ -237,7 +237,7 @@
 /obj/machinery/drone_dispenser/proc/count_shells()
 	. = 0
 	for(var/actual_shell in loc)
-		for(var/potential_item as anything in dispense_type)
+		for(var/potential_item in dispense_type)
 			if(istype(actual_shell, potential_item))
 				.++
 

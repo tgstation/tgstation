@@ -6,9 +6,7 @@
 	var/gun_neurons_activated = controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED]
 	var/top_force = 0
 	var/obj/item/top_force_item
-	for(var/obj/item/item as anything in held_weapons)
-		if(!item)
-			continue
+	for(var/obj/item/item in held_weapons)
 		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
 			continue
 		if(gun_neurons_activated && isgun(item))
@@ -19,9 +17,7 @@
 			top_force = item.force
 			top_force_item = item
 
-	for(var/obj/item/item as anything in choices)
-		if(!item)
-			continue
+	for(var/obj/item/item in choices)
 		if(HAS_TRAIT(item, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][item])
 			continue
 		if(gun_neurons_activated && isgun(item))

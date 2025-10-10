@@ -30,7 +30,7 @@
 		if(purge_power >= 1)
 			var/has_purging_chemical = FALSE
 			// They need one of the purge reagents in them
-			for(var/purging_chem as anything in PURGING_REAGENTS)
+			for(var/purging_chem in PURGING_REAGENTS)
 				if(holder.has_reagent(purging_chem))
 					// We have a purging chemical
 					has_purging_chemical = TRUE

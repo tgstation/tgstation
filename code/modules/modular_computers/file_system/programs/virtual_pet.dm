@@ -434,7 +434,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 /datum/computer_file/program/virtual_pet/ui_static_data(mob/user)
 	var/list/data = list()
 	data["pet_state_icons"] = list()
-	for(var/list_index as anything in pet_state_icons)
+	for(var/list_index in pet_state_icons)
 		var/list/sprite_location = pet_state_icons[list_index]
 		data["pet_state_icons"] += list(list(
 			"name" = list_index,
@@ -446,7 +446,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		"hat_name" = "none",
 	))
 
-	for(var/type_index as anything in hat_selections)
+	for(var/type_index in hat_selections)
 		if(level >= hat_selections[type_index])
 			var/obj/item/hat = type_index
 			var/hat_name = initial(hat.name)

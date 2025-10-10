@@ -2,6 +2,7 @@
 /obj/item/food/pizza
 	name = "pizza"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizza
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
 	icon_state = "pizzamargherita"
@@ -124,6 +125,7 @@
 /obj/item/food/pizzaslice
 	name = "pizza slice"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizzaslice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	icon_state = "pizzamargheritaslice"
 	foodtypes = GRAIN

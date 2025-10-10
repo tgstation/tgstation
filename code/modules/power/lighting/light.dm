@@ -388,7 +388,7 @@
 		return
 
 	// attempt to stick weapon into light socket
-	if(status != LIGHT_EMPTY)
+	if(status != LIGHT_EMPTY || user.combat_mode)
 		return ..()
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
 		tool.play_tool_sound(src, 75)

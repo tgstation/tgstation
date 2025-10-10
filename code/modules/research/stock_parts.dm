@@ -6,13 +6,13 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/devices/stock_parts.dmi'
+	///The generic category type that the stock part belongs to.  Generic objects that should not be instantiated should have the same type and abstract_type
+	abstract_type = /obj/item/stock_parts
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name
 	var/energy_rating = 1
-	///The generic category type that the stock part belongs to.  Generic objects that should not be instantiated should have the same type and abstract_type
-	var/abstract_type = /obj/item/stock_parts
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()

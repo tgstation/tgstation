@@ -2,6 +2,7 @@
 	name = "armor"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+	abstract_type = /obj/item/clothing/suit/armor
 	allowed = null
 	body_parts_covered = CHEST
 	cold_protection = CHEST|GROIN
@@ -754,6 +755,9 @@
 	fire = 50
 	acid = 50
 	wound = 30
+
+/obj/item/clothing/suit/armor/durability
+	abstract_type = /obj/item/clothing/suit/armor/durability
 
 /obj/item/clothing/suit/armor/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	take_damage(1, BRUTE, 0, 0)

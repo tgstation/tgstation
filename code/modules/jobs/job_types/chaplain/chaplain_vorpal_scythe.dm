@@ -60,8 +60,6 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/empowerment = SCYTHE_WEAK
 	///Our bonus to force after we have death knelled. Lasts approximately 2 minutes.
 	var/bonus_force_multiplier = 2
-	///Our initial force before empowerment. For tracking on the item, and in case the item somehow gains more force for some reason before we death knelled.
-	var/original_force
 
 /obj/item/vorpalscythe/examine(mob/user)
 	. = ..()
@@ -100,6 +98,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	if(target.stat < DEAD && target != user)
 		scythe_empowerment(SCYTHE_SATED)
+
+	return ..()
+
+/obj/item/vorpalscythe/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(empowerment == SCYTHE_EMPOWERED)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, bonus_force_multiplier)
 
 	return ..()
 
@@ -180,22 +184,13 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
 	var/allow_timer_set = FALSE
 
-	if(potential_empowerment == SCYTHE_EMPOWERED)
-		if(empowerment != SCYTHE_EMPOWERED) //We only empower our stats if we beheaded a human with a mind.
-			original_force = force
-			force *= bonus_force_multiplier
-			empowerment = potential_empowerment
+	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our current empowerment
 		allow_timer_set = TRUE
-	else if(empowerment < potential_empowerment) //so we don't end up weakening our scythe somehow and creating an infinite empowerment loop, only update empowerment if it is better
-		empowerment = potential_empowerment
-		allow_timer_set = TRUE
+	empowerment = potential_empowerment
 	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()
-	if(empowerment == SCYTHE_EMPOWERED)
-		force = original_force
-		original_force = null
 	empowerment = SCYTHE_WEAK
 
 /obj/item/vorpalscythe/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)

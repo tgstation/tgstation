@@ -299,16 +299,12 @@
 	)
 
 	//Makes the user passive, it's in their oath not to harm!
-	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH), HIPPOCRATIC_OATH_TRAIT)
-	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	med_hud.show_to(owner)
+	owner.add_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH, TRAIT_MEDICAL_HUD), HIPPOCRATIC_OATH_TRAIT)
 	return ..()
 
 /datum/status_effect/hippocratic_oath/on_remove()
 	QDEL_NULL(aura_healing)
-	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH), HIPPOCRATIC_OATH_TRAIT)
-	var/datum/atom_hud/med_hud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	med_hud.hide_from(owner)
+	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH, TRAIT_MEDICAL_HUD), HIPPOCRATIC_OATH_TRAIT)
 
 /datum/status_effect/hippocratic_oath/get_examine_text()
 	return span_notice("[owner.p_They()] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
@@ -476,6 +472,7 @@
 	alert_type = null
 	///What speed datum do we apply?
 	var/move_datum = /datum/movespeed_modifier/status_speed_boost
+	var/action_datum = null
 
 /datum/status_effect/speed_boost/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
@@ -485,11 +482,17 @@
 	. = ..()
 
 /datum/status_effect/speed_boost/on_apply()
-	owner.add_movespeed_modifier(move_datum, update = TRUE)
+	if(move_datum)
+		owner.add_movespeed_modifier(move_datum, update = TRUE)
+	if(action_datum)
+		owner.add_actionspeed_modifier(action_datum, update = TRUE)
 	return ..()
 
 /datum/status_effect/speed_boost/on_remove()
-	owner.remove_movespeed_modifier(move_datum, update = TRUE)
+	if(move_datum)
+		owner.remove_movespeed_modifier(move_datum, update = TRUE)
+	if(action_datum)
+		owner.remove_actionspeed_modifier(action_datum, update = TRUE)
 
 /datum/movespeed_modifier/status_speed_boost
 	multiplicative_slowdown = -1
