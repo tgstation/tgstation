@@ -5182,7 +5182,6 @@
 #include "code\modules\mob\living\basic\lavaland\mook\mook_village.dm"
 #include "code\modules\mob\living\basic\lavaland\node_drone\node_drone.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\_raptor.dm"
-#include "code\modules\mob\living\basic\lavaland\raptor\baby_raptor.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_ai_behavior.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_ai_controller.dm"
 #include "code\modules\mob\living\basic\lavaland\raptor\raptor_ai_subtrees.dm"

@@ -10,14 +10,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 #define HAPPINESS_BOOST_DAMPENER 0.3
 /// Innate raptor offsets
 #define RAPTOR_INNATE_SOURCE "raptor_innate"
-/// How much does meal complexity affect our growth?
-#define RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR 5
-/// Base value for raptor growth from meat
-#define RAPTOR_GROWTH_BASE_MEAT 10
-/// Base value for raptor growth from ash flora
-#define RAPTOR_GROWTH_BASE_PLANT 5
-/// How much growth progress raptors need to accumulate to fully grow into an adult
-#define RAPTOR_GROWTH_REQUIRED 100
 
 /mob/living/basic/raptor
 	name = "raptor"
@@ -71,8 +63,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/datum/raptor_color/raptor_color = null
 	/// Are we an adult, youngling or baby?
 	var/growth_stage = RAPTOR_ADULT
-	/// Our current growth progress towards the adult stage if we're a youngling
+	/// Our current growth progress towards the next stage if we're a youngling or a baby
 	var/growth_progress = 0
+	/// Probability of getting progress in the baby phase each second
+	var/growth_probability = 80
 	/// Food types that we can consume
 	var/static/list/food_types = list(
 		/obj/item/stack/ore = 0,
@@ -199,6 +193,17 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		if (0.8 to 0.999)
 			. += span_notice("[p_They()] [p_have()] a few minor bruises and scratches.")
 
+/mob/living/basic/raptor/Life(seconds_per_tick, times_fired)
+	. = ..()
+	if (growth_stage != RAPTOR_BABY || HAS_TRAIT(src, TRAIT_STASIS) || stat == DEAD)
+		return
+	if (!SPT_PROB(growth_probability, seconds_per_tick))
+		return
+	growth_progress += rand(RAPTOR_BABY_GROWTH_LOWER, RAPTOR_BABY_GROWTH_UPPER)
+	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
+		change_growth_stage(RAPTOR_YOUNG)
+		growth_progress = 0
+
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if(!.)
@@ -243,6 +248,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	)
 
 /mob/living/basic/raptor/proc/happiness_change(percent_value)
+	growth_probability = min(initial(growth_probability) * (1 + percent_value * HAPPINESS_BOOST_DAMPENER), 100)
 	/*
 	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
 	melee_damage_lower = initial(melee_damage_lower) + attack_boost
@@ -282,6 +288,28 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	heal_overall_damage(maxHealth)
 
 */
+
+/mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
+	SIGNAL_HANDLER
+
+	if (!istype(food, /obj/item/food))
+		return
+
+	var/obj/item/food/meal = food
+	var/is_flora = istype(meal, /obj/item/food/grown/ash_flora)
+	var/is_meat = (meal.foodtypes & (MEAT|GORE))
+	// Babies cannot gain growth from eating meat, only plants, but they get some passively
+	if ((!is_meat || growth_stage == RAPTOR_BABY) && !is_flora)
+		return
+
+	if (growth_stage == RAPTOR_ADULT)
+		return
+
+	// Better meals make your raptor grow faster
+	growth_progress += meal.crafting_complexity * RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR + ((is_flora && growth_stage == RAPTOR_YOUNG) ? RAPTOR_GROWTH_BASE_PLANT : RAPTOR_GROWTH_BASE_MEAT)
+	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
+		change_growth_stage(growth_stage == RAPTOR_BABY ? RAPTOR_YOUNG : RAPTOR_ADULT)
+		growth_progress = 0
 
 /// Changes the raptor to a new growth stage. Only should be done forwards, or on raptor init as the first thing before everything else
 /// Sorry for the monolith, but splitting it up results in even worse looking code with a ton of duplicate calls and assignments
@@ -351,17 +379,17 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		RemoveElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
 
 	if (new_stage == RAPTOR_BABY)
+		collar_state = null
 		QDEL_NULL(ai_controller)
 		ai_controller = new /datum/ai_controller/basic_controller/baby_raptor(src)
-		collar_state = null
 		held_w_class = WEIGHT_CLASS_SMALL
 	else
 		collar_state = base_icon_state
-		held_w_class = WEIGHT_CLASS_BULKY
 		AddElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
 		if (prev_stage == RAPTOR_BABY)
 			QDEL_NULL(ai_controller)
 			ai_controller = new raptor_color.ai_controller(src)
+		held_w_class = WEIGHT_CLASS_BULKY
 
 	// And finish the setup on our color's side
 	switch (new_stage)
@@ -372,25 +400,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		if (RAPTOR_ADULT)
 			raptor_color.setup_adult(src)
 	return TRUE
-
-/mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
-	SIGNAL_HANDLER
-
-	if (!istype(food, /obj/item/food))
-		return
-
-	var/obj/item/food/meal = food
-	var/is_flora = istype(meal, /obj/item/food/grown/ash_flora)
-	if (!(meal.foodtypes & (MEAT|GORE)) && !is_flora)
-		return
-
-	if (growth_stage != RAPTOR_YOUNG)
-		return
-
-	// Better meals make your raptor grow faster
-	growth_progress += meal.crafting_complexity * RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR + (is_flora ? RAPTOR_GROWTH_BASE_PLANT : RAPTOR_GROWTH_BASE_MEAT)
-	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
-		change_growth_stage(RAPTOR_ADULT)
 
 // Raptor types for mappers to use
 
@@ -487,7 +496,3 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 #undef HAPPINESS_BOOST_DAMPENER
 #undef RAPTOR_INNATE_SOURCE
-#undef RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR
-#undef RAPTOR_GROWTH_BASE_MEAT
-#undef RAPTOR_GROWTH_BASE_PLANT
-#undef RAPTOR_GROWTH_REQUIRED

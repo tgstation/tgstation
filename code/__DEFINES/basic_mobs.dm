@@ -53,6 +53,19 @@ GLOBAL_LIST_EMPTY(customized_pets)
 /// Fully grown adult raptor
 #define RAPTOR_ADULT "adult"
 
+/// How much does meal complexity affect our growth?
+#define RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR 5
+/// Base value for raptor growth from meat
+#define RAPTOR_GROWTH_BASE_MEAT 10
+/// Base value for raptor growth from ash flora
+#define RAPTOR_GROWTH_BASE_PLANT 5
+/// How much growth progress raptors need to accumulate to fully grow into an adult
+#define RAPTOR_GROWTH_REQUIRED 100
+/// Minimum random growth value a baby raptor can gain per second
+#define RAPTOR_BABY_GROWTH_LOWER 0.5
+/// Maximum random growth value a baby raptor can gain per second
+#define RAPTOR_BABY_GROWTH_UPPER 0.8
+
 ///this mob suffers depression
 #define BB_BASIC_DEPRESSED "basic_depressed"
 ///this mob will care for its young
