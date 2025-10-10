@@ -266,16 +266,6 @@
 	surplus = 0 // not while there isnt one on any station
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
-/datum/uplink_item/device_tools/powersink
-	name = "Power Sink"
-	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
-			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
-			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 20 MINUTES
-	item = /obj/item/powersink
-	cost = 11
-	limited_stock = 1
-
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"
 	desc = "High tech contact lenses that bind directly with the surface of your eyes to give them immunity to flashes and \
