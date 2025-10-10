@@ -58,7 +58,13 @@
 
 /datum/outfit/pirate/space/captain/cardboard
 	name = "Space Pirate Captain (EVA)"
-	l_hand = /obj/item/nullrod/claymore/saber/pirate
+	l_hand = /obj/item/fake_e_cutlass
+
+/obj/item/fake_e_cutlass
+	name = "fake energy cutlass"
+	desc = "Damn, son, where'd you find this? (Tell a coder if you do)"
+	icon_state = "e_cutlass_on"
+	inhand_icon_state = "e_cutlass_on"
 
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"
