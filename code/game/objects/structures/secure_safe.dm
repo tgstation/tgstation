@@ -23,7 +23,8 @@
 		max_specific_storage = WEIGHT_CLASS_GIGANTIC,
 		max_total_storage = 20,
 	)
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
+	if(stored_lock_code && !(obj_flags & EMAGGED))
+		atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	update_appearance()
 
 /obj/item/wallframe/secure_safe/update_icon_state()
@@ -33,6 +34,20 @@
 	else
 		icon_state = "[base_icon_state][stored_lock_code ? "_locked" : null]"
 
+/obj/item/wallframe/secure_safe/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
+	balloon_alert(user, "lock destroyed")
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	stored_lock_code = null
+	atom_storage.locked = STORAGE_NOT_LOCKED
+	update_appearance()
+	return TRUE
+
 /obj/item/wallframe/secure_safe/after_attach(obj/structure/secure_safe/safe)
 	if(!istype(safe))
 		return ..()
@@ -40,10 +55,12 @@
 	for(var/obj/item in contents)
 		item.forceMove(safe)
 
-	// Transfer lock code to the newly constructed structure
+	var/datum/component/lockable_storage/storage_component = safe.GetComponent(/datum/component/lockable_storage)
 	if(stored_lock_code)
-		var/datum/component/lockable_storage/storage_component = safe.GetComponent(/datum/component/lockable_storage)
 		storage_component?.set_lock_code(stored_lock_code)
+
+	if(obj_flags & EMAGGED)
+		storage_component?.break_lock()
 
 	return ..()
 
@@ -95,11 +112,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/atom_deconstruct(disassembled)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
 		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
+
 		// Transfer lock code to the wallframe
 		var/datum/component/lockable_storage/storage_component = GetComponent(/datum/component/lockable_storage)
 		if(storage_component)
 			new_safe.stored_lock_code = storage_component.lock_code
-			new_safe.update_appearance()
+
+		if(obj_flags & EMAGGED)
+			new_safe.obj_flags |= EMAGGED
+
+		new_safe.update_appearance()
 
 		for(var/obj/item in contents)
 			item.forceMove(new_safe)
@@ -139,8 +161,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	density = TRUE
 	anchored_tabletop_offset = 6
 	custom_materials = list(
-		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*2,
-		/datum/material/gold = SHEET_MATERIAL_AMOUNT,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT*3,
 	)
 	material_flags = MATERIAL_EFFECTS
 

@@ -138,6 +138,15 @@
 	source.balloon_alert(user, "hacked")
 	set_lock_code(null)
 
+/datum/component/lockable_storage/proc/break_lock()
+	can_hack_open = FALSE // since it's broken for good
+	lock_code = null
+
+	var/obj/source = parent
+	source.obj_flags |= EMAGGED
+	source.atom_storage.locked = STORAGE_NOT_LOCKED
+	source.update_appearance()
+
 /datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
 	SIGNAL_HANDLER
 
@@ -146,15 +155,11 @@
 
 	if(source.obj_flags & EMAGGED)
 		return FALSE
-	source.obj_flags |= EMAGGED
-	can_hack_open = FALSE // since it's broken for good
 
 	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
 	source.balloon_alert(user, "lock destroyed")
 	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	lock_code = null
-	source.atom_storage.locked = STORAGE_NOT_LOCKED
-	source.update_appearance()
+	break_lock()
 	return ITEM_INTERACT_SUCCESS
 
 /**
