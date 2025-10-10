@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Death of artifical mobs (such as monkey cube monkeys) result in a 75% weaker, 80% shorter moodlet that does not compound with more deaths."

@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Brimdust sacks no longer hit user's mount or allied mobs within lavaland pressure."
+  - balance: "Rush glands have had their speed boost reduced, but got a massive increase in duration. Non-implanted glands also only protect from damage slowdowns as opposed to all slowdowns in general."
+  - balance: "Goliaths, raptors and goldgrubs are now affected by movespeed modifiers, such as rush glands, when mounted."
+  - image: "Brimdust sacks' effect have received a visual upgrade."

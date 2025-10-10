@@ -1576,4 +1576,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait specifying that an AI has a remote connection to an integrated circuit
 #define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
 
+/// Mob is artificially spawned rather than being created through more natural means - applied to monkey cubes and such
+#define TRAIT_SPAWNED_MOB "spawned_mob"
+
 // END TRAIT DEFINES
