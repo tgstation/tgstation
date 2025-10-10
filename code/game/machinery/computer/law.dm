@@ -500,6 +500,7 @@
 			balloon_alert_to_viewers("inserted slot [index]")
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			module.pre_user_install_to_rack(user, src)
+			module.log_install(user, src)
 			return add_law_module(module, index)
 		if("remove_module")
 			var/index = clamp(text2num(params["slot"]), 1, length(ai_modules))
@@ -508,6 +509,7 @@
 				// These have feedback in the UI, the checks are only for sanity
 				return TRUE
 			module.pre_user_uninstall_from_rack(user, src)
+			module.log_uninstall(user, src)
 			// calls exited which handles updating laws and such
 			try_put_in_hand(module, user)
 			balloon_alert_to_viewers("removed slot [index]")
@@ -695,18 +697,22 @@
 			var/datum/ai_laws/ion_lawset = new ion_lawset_type()
 			core.laws = ion_lawset.inherent.Copy()
 			core.set_ioned(TRUE)
+			log_law_change(null, "ion replaced core lawset entirely in [src] ([log_status()]) with [ion_lawset] ([ion_lawset.id])")
 			qdel(ion_lawset)
 			. = TRUE
 		// Chance a random law is removed from the core lawset
 		if(prob(remove_law_prob))
-			var/removed = rand(1, length(core.laws))
-			core.laws.Cut(removed, removed + 1)
+			var/removed_index = rand(1, length(core.laws))
+			var/removed_law = core.laws[removed_index]
+			core.laws.Cut(removed_index, removed_index + 1)
 			core.set_ioned(TRUE)
+			log_law_change(null, "ion removed law from [src] ([log_status()], text: \"[removed_law]\")")
 			. = TRUE
 		// Chance the core lawset is shuffled entirely
 		if(prob(shuffle_prob))
 			core.laws = shuffle(core.laws)
 			core.set_ioned(TRUE)
+			log_law_change(null, "ion shuffled laws in [src] ([log_status()])")
 			. = TRUE
 		// Chance the first law in the core lawset is replaced with an ion law
 		// Don't add this one if we're replacing a random law later
@@ -714,6 +720,7 @@
 			core.laws.Insert(1, ion_message || generate_ion_law())
 			core.set_ioned(TRUE)
 			ion_message = null
+			log_law_change(null, "ion added law to [src] ([log_status()], text: \"[core.laws[1]]\")")
 			ions_added++
 		. = TRUE
 
@@ -728,16 +735,20 @@
 		// If we had no core law and thus added no ion law, this is guaranteed to replace the first supplied law
 		if(ions_added < ion_limit && (ion_message || (law == core && core_sub_ion) || prob(sub_ion_prob)))
 			var/picked_law = length(law.laws) <= 1 ? 1 : rand(2, length(law.laws))
+			var/replaced_law = law.laws[picked_law]
 			law.laws[picked_law] = ion_message || generate_ion_law()
 			law.set_ioned(TRUE)
 			ion_message = null
+			log_law_change(null, "ion replaced law in [src] ([log_status()], text: \"[replaced_law]\" -> \"[law.laws[picked_law]]\")")
 			ions_added++
 			. = TRUE
 
 		/// Chance for any supplied law to be lost entirely
 		else if(law != core && prob(remove_law_prob))
+			var/wiped = law.laws[1]
 			law.laws.Cut()
 			law.set_ioned(TRUE)
+			log_law_change(null, "ion wiped law from [src] ([log_status()], text: \"[wiped]\")")
 			. = TRUE
 
 	if(.)

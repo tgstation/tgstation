@@ -46,6 +46,8 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			borgo.laws.add_inherent_law(lawtext)
 		if(LAW_SUPPLIED)
 			borgo.laws.add_supplied_law(lawtext) // Just goes to the end of the list
+
+	log_law_change(user, "added law to [key_name(borgo)] (type: [lawtype], text: [lawtext])")
 	log_admin("[key_name(user)] has UPLOADED a [lawtype] law to [key_name(borgo)] stating: [lawtext]")
 	message_admins("[key_name(user)] has UPLOADED a [lawtype] law to [key_name(borgo)] stating: [lawtext]")
 	return TRUE
@@ -72,6 +74,10 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			relevant_laws.Swap(lawindex - 1, lawindex)
 		else
 			CRASH("Invalid direction ([direction]) passed to move_law_helper.")
+
+	log_law_change(user, "moved law for [key_name(borgo)] (type: [LAW_INHERENT], law: [law], direction: [direction])")
+	log_admin("[key_name(user)] has MOVED a [LAW_INHERENT] law for [key_name(borgo)] [direction]. LAW: [law]")
+	message_admins("[key_name(user)] has MOVED a [LAW_INHERENT] law for [key_name(borgo)] [direction]. LAW: [law]")
 	return TRUE
 
 /datum/law_panel/proc/edit_law_text_helper(mob/living/user, mob/living/silicon/borgo, lawtype, oldlaw)
@@ -90,17 +96,19 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 		if(LAW_ZEROTH)
 			borgo.laws.set_zeroth_law(newlaw)
 			borgo.laws.protected_zeroth = TRUE
-			return TRUE
 
 		else
 			return FALSE
 
-	var/lawindex = relevant_laws.Find(oldlaw)
-	if(!lawindex)
-		to_chat(user, span_danger("Something went wrong, we couldn't edit that law."))
-		return FALSE
+	if(lawtype != LAW_ZEROTH)
+		var/lawindex = relevant_laws.Find(oldlaw)
+		if(!lawindex)
+			to_chat(user, span_danger("Something went wrong, we couldn't edit that law."))
+			return FALSE
 
-	relevant_laws[lawindex] = newlaw
+		relevant_laws[lawindex] = newlaw
+
+	log_law_change(user, "edited law for [key_name(borgo)] (type: [lawtype], old: [oldlaw], new: [newlaw])")
 	log_admin("[key_name(user)] has EDITED [key_name(borgo)] [lawtype] law. OLD LAW: [oldlaw] \
 		NEW LAW: [newlaw]")
 	message_admins("[key_name(user)] has EDITED a [lawtype] law on [key_name(borgo)]")
@@ -118,6 +126,8 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			borgo.laws.clear_zeroth_law(force = TRUE)
 		else
 			return FALSE
+
+	log_law_change(user, "removed law from [key_name(borgo)] (type: [lawtype], text: [law])")
 	log_admin("[key_name(user)] has REMOVED a law from [key_name(borgo)]. LAW: [law]")
 	message_admins("[key_name(user)] has REMOVED a law from [key_name(borgo)]. LAW: [law]")
 	return TRUE

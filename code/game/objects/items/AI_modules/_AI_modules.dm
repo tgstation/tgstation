@@ -22,13 +22,21 @@
 /obj/item/ai_module/proc/can_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	return TRUE
 
-/// Called right before the module is added to the rack by a living mob, allowing special handling or logging
+/// Called right before the module is added to the rack by a living mob, allowing special handling
 /obj/item/ai_module/proc/pre_user_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	return
 
-/// Called right before the module is removed from the rack by a living mob, allowing special handling or logging
+/// Called right before the module is removed from the rack by a living mob, allowing special handling
 /obj/item/ai_module/proc/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	return
+
+/// Logs the installation of this module to the law change log and silicon log.
+/obj/item/ai_module/proc/log_install(mob/living/user, obj/machinery/ai_law_rack/rack)
+	log_silicon("[key_name(user)] has installed [src] into [rack] ([rack.log_status()])")
+
+/// Logs the uninstallation of this module to the law change log and silicon log.
+/obj/item/ai_module/proc/log_uninstall(mob/living/user, obj/machinery/ai_law_rack/rack)
+	log_silicon("[key_name(user)] has removed [src] from [rack] ([rack.log_status()])")
 
 /// Called after a module is installed into a law rack.
 /obj/item/ai_module/proc/on_rack_install(obj/machinery/ai_law_rack/rack)
@@ -70,6 +78,18 @@
 
 	if(ioned)
 		update_appearance()
+
+/// Logs the installation of this module to the law change log and silicon log.
+/obj/item/ai_module/law/log_install(mob/living/user, obj/machinery/ai_law_rack/rack)
+	. = ..()
+	for(var/law in laws)
+		log_law_change(user, "added law to [rack] ([rack.log_status()], text: [law])")
+
+/// Logs the uninstallation of this module to the law change log and silicon log.
+/obj/item/ai_module/law/log_uninstall(mob/living/user, obj/machinery/ai_law_rack/rack)
+	. = ..()
+	for(var/law in laws)
+		log_law_change(user, "removed law from [rack] ([rack.log_status()], text: [law])")
 
 /obj/item/ai_module/law/examine(mob/user)
 	. = ..()

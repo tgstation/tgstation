@@ -335,6 +335,7 @@
 	// Sets supplemental directive to this
 	laws.clear_inherent_laws()
 	laws.add_inherent_law("Do not interfere with the operations of the Syndicate.")
+	log_law_change(attacker, "emagged pai [key_name(src)]")
 	QDEL_NULL(leash) // Freedom!!!
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
 	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
@@ -406,6 +407,7 @@
 		return FALSE
 	laws.add_inherent_law(new_laws)
 	to_chat(src, span_notice(new_laws))
+	log_law_change(user, "added law for pai [key_name(src)] (text: [new_laws])")
 	return TRUE
 
 /**

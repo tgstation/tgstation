@@ -19,9 +19,6 @@
 	QDEL_NULL(gift)
 	return ..()
 
-/obj/item/ai_module/upgrade/pre_user_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
-	log_silicon("[key_name(user)] has installed [src] into [rack] ([rack.log_status()])")
-
 /obj/item/ai_module/upgrade/silicon_linked_to_installed(mob/living/silicon/lawed)
 	if(!isAI(lawed))
 		return
@@ -61,9 +58,13 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-/obj/item/ai_module/combat/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
-	log_silicon("[key_name(user)] has installed [src] into [rack] ([rack.log_status()])")
+/obj/item/ai_module/combat/log_install(mob/living/user, obj/machinery/ai_law_rack/rack)
+	. = ..()
 	message_admins("[ADMIN_LOOKUPFLW(user)] has installed [src] into [ADMIN_VERBOSEJMP(rack)] ([rack.log_status()])")
+
+/obj/item/ai_module/combat/log_uninstall(mob/living/user, obj/machinery/ai_law_rack/rack)
+	. = ..()
+	message_admins("[ADMIN_LOOKUPFLW(user)] has removed [src] from [ADMIN_VERBOSEJMP(rack)] ([rack.log_status()])")
 
 /obj/item/ai_module/combat/silicon_linked_to_installed(mob/living/silicon/lawed)
 	if(!isAI(lawed))
