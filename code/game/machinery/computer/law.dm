@@ -272,6 +272,16 @@
 		welded = TRUE
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/ai_law_rack/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!istype(tool.buffer, /obj/structure/ai_core))
+		return NONE
+
+	var/obj/structure/ai_core/to_link = tool.buffer
+	to_link.default_link_ref = WEAKREF(src)
+	tool.play_tool_sound(src, 20)
+	balloon_alert(user, "linked core to rack")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/ai_law_rack/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(var_name == NAMEOF(src, law_slots))

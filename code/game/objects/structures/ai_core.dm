@@ -13,9 +13,13 @@
 	var/obj/item/mmi/core_mmi
 	/// only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
 	var/mob/living/silicon/ai/remote_ai = null
+	/// Weakref to an ai module rack, if present we will try to link new AI to it instead of the station core
+	var/datum/weakref/default_link_ref
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
+	. += span_notice("Save this core to a multitool's buffer and upload it to a module rack to automatically link it on first boot. \
+		Otherwise, it will link[is_station_level(z) ? " to the station's core rack or" : ""] to the first rack found.")
 	if(!anchored)
 		if(state != EMPTY_CORE)
 			. += span_notice("It has some <b>bolts</b> that could be tightened.")
@@ -117,8 +121,8 @@
 
 /obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
-	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
-	. += span_notice("You could [active? "deactivate" : "activate"] it with a multitool.")
+	. += span_info("Its transmitter seems to be <b>[active? "on" : "off"]</b>.")
+	. += span_notice("You could [active ? "deactivate" : "activate"] it by [EXAMINE_HINT("right clicking")] with a multitool.")
 
 /obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -139,17 +143,25 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(tool.tool_behaviour == TOOL_MULTITOOL)
-		active = !active
-		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
-		return
-	return ..()
+/obj/structure/ai_core/latejoin_inactive/multitool_act_secondary(mob/living/user, obj/item/tool)
+	active = !active
+	tool.play_tool_sound(src, 50)
+	to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/multitool_act(mob/living/user, obj/item/multitool/tool)
+	tool.play_tool_sound(src, 50)
+	tool.set_buffer(src)
+	balloon_alert(user, "core saved to buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	switch(default_unfasten_wrench(user, tool))
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -352,10 +364,17 @@
 	if(!the_brainmob.mind.has_ever_been_ai)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 
-	var/mob/living/silicon/ai/ai_mob = new(loc, core_mmi.laws?.copy_lawset(), the_brainmob)
+	var/obj/machinery/ai_law_rack/default_link = default_link_ref?.resolve()
+	// empty lawset is passed here to avoid making laws by default in init
+	var/mob/living/silicon/ai/ai_mob = new(loc, core_mmi.laws?.copy_lawset() || new /datum/ai_laws, the_brainmob)
+	// then we either link, use mmi laws, or IF ALL ELSE FAILS, make laws
+	if(default_link?.can_link_to(ai_mob))
+		default_link.link_silicon(ai_mob)
+	else if(!core_mmi.laws)
+		ai_mob.make_laws() // links to core rack if possible
+
 	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(ai_mob)
 	malf_datum?.add_law_zero()
-
 	if(!isnull(the_brainmob.client))
 		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
