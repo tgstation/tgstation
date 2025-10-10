@@ -107,7 +107,7 @@ FLOOR SAFES
 		new_tumblers.Add(input_value)
 
 	tool.play_tool_sound(src)
-	if(do_after(user, 3 SECONDS, target = src))
+	if(do_after(user, 10 SECONDS, target = src))
 		tumblers = new_tumblers
 		current_tumbler_index = 1
 		dial = 0
