@@ -241,7 +241,7 @@ export const BeakerPanel = () => {
       theme="admin"
     >
       <Window.Content>
-        <Stack vertical>
+        <Stack vertical fill>
           <Stack.Item>
             <Section>
               <Stack>
@@ -282,10 +282,15 @@ export const BeakerPanel = () => {
                     }}
                   />
                 </Stack.Item>
+                <Stack.Item fontSize={0.9} align="center">
+                  <i>
+                    Spawned containers will grow to fit all listed reagents!
+                  </i>
+                </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow>
             <Stack fill>
               <Stack.Item grow>
                 <ContainerSection
