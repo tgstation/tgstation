@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored shared nullrod effects into an element."
+  - bugfix: "The carp-sie plushie is now an actual plushie."
+  - balance: "The toy cargo pack can no longer spawn ANY type of plushie. Instead it'll pull from the dedicated plushie spawner, which now contains the donk, rouny and whiny plushies as well."

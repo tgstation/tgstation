@@ -17,6 +17,9 @@
 
 #define COMSIG_LIONHUNTER_ON_HIT "lionhunter_on_hit"
 
+/// from /datum/component/subtype_picker/pick_subtype(): (obj/item/old_item, mob/picker)
+#define COMSIG_ITEM_SUBTYPE_PICKER_SELECTED "item_subtype_picker_selected"
+
 // /obj/machinery signals
 
 ///from /obj/machinery/atom_break(damage_flag): (damage_flag)

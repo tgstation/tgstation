@@ -137,6 +137,7 @@
 /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human)
 	. = ..()
 	spawned_human.color = "#454545"
+	spawned_human.AddComponent(/datum/component/storm_hating)
 
 
 /datum/outfit/consumed_miner

@@ -110,6 +110,7 @@
 #include "blindness.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
+#include "buckle.dm"
 #include "burning.dm"
 #include "cable_powernets.dm"
 #include "can_see.dm"

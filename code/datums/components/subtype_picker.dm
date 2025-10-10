@@ -24,6 +24,7 @@
 
 /datum/component/subtype_picker/Destroy(force)
 	on_picked_callback = null
+	subtype2descriptions = null
 	return ..()
 
 /datum/component/subtype_picker/RegisterWithParent()
@@ -69,11 +70,12 @@
 		return
 
 	var/picked_subtype = name2subtype[name_of_type]
-	picked_subtype = new picked_subtype(picker.drop_location())
-	on_picked_callback?.Invoke(picked_subtype, picker)
+	var/obj/item/picked = new picked_subtype(picker.drop_location())
+	on_picked_callback?.Invoke(picked, picker)
+	SEND_SIGNAL(picked, COMSIG_ITEM_SUBTYPE_PICKER_SELECTED, target, picker)
 
 	qdel(target)
-	picker.put_in_hands(picked_subtype)
+	picker.put_in_hands(picked)
 
 /**
  * Checks if we are allowed to interact with the radial menu

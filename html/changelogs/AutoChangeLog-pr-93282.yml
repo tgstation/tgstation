@@ -1,0 +1,5 @@
+author: "Sothanforax"
+delete-after: True
+changes:
+  - rscadd: "Added chitter and squeak emotes for moths"
+  - sound: "Added chitters and squeaks"
