@@ -305,3 +305,44 @@
   - rscadd: Readds Lean
   Melbert:
   - bugfix: Fix buckling and probably a lot more mousedrop interactions
+2025-10-10:
+  ArcaneMusic:
+  - qol: When placing cargo requests, you can now request that a crate be obtained
+      using your department's funds as opposed to the cargo budget.
+  ArchBTW:
+  - bugfix: fixes clicking on an open airlock tile when pulling something
+  - qol: Makes plumbing synthesizers default to 5u
+  DaCoolBoss:
+  - bugfix: Ballistic laser guns will no longer brick themselves when out of ammo.
+  - bugfix: Ballistic laser guns now fire ammo directly from their loaded clip, without
+      chambering.
+  Hatterhat:
+  - qol: The skeletal corpses left from spawner legions (e.g. from ore vent defenses
+      and legion necropolis tendrils) now disappear during ash storms. This does not
+      apply if the body gets brainswapped into.
+  SmArtKar:
+  - qol: You can now pick up trophies with PKC without needing to wield it
+  loganuk:
+  - map: CATWALK - Atmos gas tanks are now in space rather than inside the station,
+      widens Z1 & Z2 Atmos to suit
+  - map: CATWALK - Old gas tank chambers re-purposed as storage and chill area, upstairs
+      laid out a bit, downstairs floor much neater, another ladded added to atmos
+  - map: CATWALK - Added air mix pump to upper level atmos for passion projects
+  - map: CATWALK - In SM chamber moved position of a table and rack about
+  - map: CATWALK - OHSA screamed that one ladder used the wrong markings at lower
+      SM freezers, corrected
+  - map: CATWALK - Added 2x extra pipes to mix chamber and cobweb tweak
+  - map: CATWALK - Replaced a lot of plasma glass with reinforced glass at atmos
+  - map: CATWALK - Missing power cable upper engineering added - Good spot by Aliceee2ch
+  - map: CATWALK - Adds missing Pipe Scrubber machine to Turbine storage - Another
+      Aliceee2ch spot
+  - map: CATWALK - New atmos lift for heavy equipment or canisters between levels
+  - map: CATWALK - Gravity generator can be accessed just outside engineering front
+      door now
+  - map: CATWALK - Tool storage shrunk, if you want to play poker go to the bar or
+      the library or dorms, tech storage re-organised
+  - map: CATWALK - Solar Arrays adjusted to actually be usable in the event of power
+      loss
+  necromanceranne:
+  - refactor: The vorpal scythe now handles empowerment more cleanly.
+  - refactor: The pipegun now hints at its deep lore.
