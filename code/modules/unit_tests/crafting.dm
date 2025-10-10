@@ -135,29 +135,40 @@
 		copycat = new result.type(turf)
 
 	if(!result.compare_materials(copycat))
-		var/warning = "custom_materials of [result.type] when crafted compared to just spawned don't match"
+		var/mats_varname = NAMEOF(result, custom_materials)
 
-		var/target_var = "custom_materials"
-		var/mult = 1
+		var/warning = "[mats_varname] of [result.type] when crafted compared to simply spawned don't match"
+
+		///Added right between the first half of the warning and the second half.
+		var/other_info = ""
+
+		var/target_var = mats_varname
+		var/list/result_mats = result.custom_materials
+		var/list/copycat_mats = copycat.custom_materials
 		if(isstack(result))
-			target_var = "mats_per_unit"
 			var/obj/item/stack/stack_result = result
-			mult = 1 / stack_result.amount
-		var/what_it_should_be = result.transcribe_materials_list(mult)
-		var/what_it_is = copycat.transcribe_materials_list(mult)
+			var/obj/item/stack/stack_copy = copycat
+			target_var = NAMEOF(stack_result, mats_per_unit)
+			result_mats = stack_result.mats_per_unit
+			copycat_mats = stack_copy.mats_per_unit
+			other_info = " (size of resulting stack: [stack_result.amount])"
+		var/what_it_should_be = result.transcribe_materials_list(result_mats)
+		var/what_it_is = copycat.transcribe_materials_list(copycat_mats)
 		//compose a text string containing the syntax and paths to use for editing the custom_materials var
 		if(result.custom_materials)
 			what_it_should_be += " (you can round a bit for values above 100)"
 
 
-		var/add_info
+		///This tells you about other ways to deal with the issue, if you can't just change the materials of the object. For example, if there are two different recipes for it.
+		var/add_info = ""
+
 		if(istype(recipe, /datum/crafting_recipe/stack))
 			add_info = "add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to its stack_recipe datum"
 		else
-			add_info = "set the requirements_mats_blacklist variable of [recipe.type] or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it"
+			add_info = "set the [NAMEOF(recipe, requirements_mats_blacklist)] variable of [recipe.type] or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it"
 
-		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be] (current value: [what_it_is]). \
-			Otherwise [add_info]")
+		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be] (current value: [what_it_is])[other_info]. \
+			Please fix that, otherwise [add_info]")
 
 	clear_trash()
 

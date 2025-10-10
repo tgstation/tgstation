@@ -430,14 +430,16 @@
  * (eg. [list(/datum/material/meat = 100, /datum/material/plastic = 10)]). Also used in several unit tests.
  * Not to be confused with get_material_english_list()
  */
-/atom/proc/transcribe_materials_list(mult = 1)
-	if(!custom_materials)
-		return "null"
+/atom/proc/transcribe_materials_list(list/mats_list)
+	if(!mats_list)
+		if(!custom_materials)
+			return "null"
+		mats_list = custom_materials
 	var/text = "\[list("
 	var/index = 1
-	var/mats_len = length(custom_materials)
-	for(var/datum/material/mat as anything in custom_materials)
-		text += "[mat.type] = [round(custom_materials[mat] * mult)]"
+	var/mats_len = length(mats_list)
+	for(var/datum/material/mat as anything in mats_list)
+		text += "[mat.type] = [mats_list[mat]]"
 		if(index < mats_len)
 			text += ", "
 		index++

@@ -351,6 +351,7 @@
 	possible_transfer_amounts = list(10)
 	volume = 10
 	isGlass = FALSE
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/glass/sillycup/update_icon_state()
 	icon_state = reagents.total_volume ? "water_cup" : "water_cup_e"

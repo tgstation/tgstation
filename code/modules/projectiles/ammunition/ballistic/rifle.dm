@@ -183,4 +183,4 @@
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
 	newtonian_force = 0.5
-	custom_materials = null
+	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
