@@ -148,6 +148,7 @@
 	var/obj/source = parent
 	source.obj_flags |= EMAGGED
 	source.atom_storage.locked = STORAGE_NOT_LOCKED
+	SEND_SIGNAL(source, COMSIG_LOCKABLE_STORAGE_SET_CODE, lock_code)
 	source.update_appearance()
 
 /datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
@@ -170,7 +171,7 @@
  * Arguments:
  * * new_code - The new lock code to set, can be null to remove the code
  */
-/datum/component/lockable_storage/proc/set_lock_code(new_code)
+/datum/component/lockable_storage/proc/set_lock_code(new_code, mob/living/user)
 	var/obj/source = parent
 
 	// Can't set lock code if the electronics are emagged
@@ -178,9 +179,14 @@
 		return FALSE
 
 	lock_code = new_code
+	SEND_SIGNAL(source, COMSIG_LOCKABLE_STORAGE_SET_CODE, new_code)
 	var/lock_state = lock_code ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED
 	source.atom_storage.set_locked(lock_state)
 	source.update_appearance()
+
+	if(istype(user) && new_code)
+		to_chat(user, span_notice("You set the [source] pincode to [lock_code]."))
+
 	return TRUE
 
 ///Updates the icon state depending on if we're locked or not.
@@ -237,7 +243,8 @@
 			if(!lock_code)
 				if(length(numeric_input) != 5)
 					return TRUE
-				lock_code = numeric_input
+				//lock_code = numeric_input
+				set_lock_code(numeric_input, usr)
 				numeric_input = ""
 				return TRUE
 			//unlocking the current code.

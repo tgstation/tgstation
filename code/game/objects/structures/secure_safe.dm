@@ -111,6 +111,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	if(mapload)
 		PopulateContents()
 
+	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
+
 /obj/structure/secure_safe/atom_deconstruct(disassembled)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
 		var/obj/item/wallframe/secure_safe/new_safe = new(get_turf(src))
@@ -131,6 +133,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
+
+/obj/structure/secure_safe/proc/update_lock_code(obj/structure/secure_safe/safe, new_code)
+	SIGNAL_HANDLER
+
+	stored_lock_code = new_code
 
 /obj/structure/secure_safe/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)
