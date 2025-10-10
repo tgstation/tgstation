@@ -784,8 +784,8 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	force = 15
 	throw_speed = 3
 	throw_range = 7
-	throwforce = 24
-	armour_penetration = 20
+	throwforce = 15
+	armour_penetration = 10
 	sharpness = SHARP_POINTY
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
