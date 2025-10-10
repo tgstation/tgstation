@@ -68,7 +68,7 @@
 	inhand_icon_state = "e_cutlass_on"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	item_flag = ABSTRACT
+	item_flags = ABSTRACT
 
 /datum/outfit/pirate/silverscale
 	name = "Silver Scale Member"
