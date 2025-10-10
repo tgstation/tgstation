@@ -1,5 +1,27 @@
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 
+GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
+
+/proc/init_nullrod_variants()
+	var/list/rods = list()
+	for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
+		if(!nullrod_type::chaplain_spawnable)
+			continue
+		rods[nullrod_type] = nullrod_type::menu_description
+	//special non-nullrod subtyped shit
+	rods[/obj/item/toy/plush/carpplushie/nullrod] = "A plushie dealing a little less damage due to its cute form. \
+		Capable of blessing one person with the Carp-Sie favor, \
+		which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
+	rods[/obj/item/gun/ballistic/bow/divine] = "A divine bow and 10 quivered holy arrows."
+	rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
+		allowing you to conjure forth a vorpal scythe. \
+		Allows you to behead targets for empowered strikes. \
+		Harms you if you dismiss the scythe without first causing harm to a creature. \
+		The shard also causes you to become Morbid, shifting your interests towards the macabre."
+	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
+
+	return rods
+
 /obj/item/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian; its very presence disrupts and dampens 'magical forces'. That's what the guidebook says, anyway."
@@ -27,62 +49,19 @@
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "BEGONE FOUL MAGIKS!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
-	ADD_TRAIT(src, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
+	AddElement(/datum/element/nullrod_core, chaplain_spawnable)
 
 	if((GLOB.holy_weapon_type && station_holy_item) || type != /obj/item/nullrod)
 		return
-
-	var/list/rods = list()
-	for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
-		if(!initial(nullrod_type.chaplain_spawnable))
-			continue
-		rods[nullrod_type] = initial(nullrod_type.menu_description)
-	//special non-nullrod subtyped shit
-	rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-	rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
-								allowing you to conjure forth a vorpal scythe. \
-								Allows you to behead targets for empowered strikes. \
-								Harms you if you dismiss the scythe without first causing harm to a creature. \
-								The shard also causes you to become Morbid, shifting your interests towards the macabre."
-	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
-	AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
+	AddComponent(/datum/component/subtype_picker, GLOB.nullrod_variants, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /// Callback for subtype picker, invoked when the chaplain picks a new nullrod
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/new_holy_weapon, mob/living/picker)
-	// Some nullrod variants aren't nullrod subtypes
-	if(istype(new_holy_weapon))
-		new_holy_weapon.on_selected(src, picker)
-	else // In which case they still need to be marked as one
-		ADD_TRAIT(new_holy_weapon, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
 	if(!station_holy_item)
 		return
 	GLOB.holy_weapon_type = new_holy_weapon.type
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NULLROD_PICKED)
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[new_holy_weapon.name]")
-
-/// Called on a new instance of a nullrod when selected
-/// Override this to add behavior when a nullrod is picked
-/obj/item/nullrod/proc/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
-	return
-
-/// Callback for effect remover, invoked when a cult rune is cleared
-/obj/item/nullrod/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
@@ -319,6 +298,10 @@
 	toolspeed = 0.5 //same speed as an active chainsaw
 	chaplain_spawnable = FALSE //prevents being pickable as a chaplain weapon (it has 30 force)
 
+/obj/item/nullrod/vibro/talking/chainsword/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //Thanks goodness it cannot be selected by chappies
+
 /// Other Variants
 /// Not a special category on their own, but usually possess more unique mechanics
 
@@ -455,17 +438,20 @@
 		bonus_modifier = 0, \
 		butcher_sound = hitsound, \
 	)
+	RegisterSignal(src, COMSIG_ITEM_SUBTYPE_PICKER_SELECTED, PROC_REF(on_selected))
 
-/obj/item/nullrod/chainsaw/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
+/obj/item/nullrod/chainsaw/proc/on_selected(datum/source, obj/item/nullrod/old_weapon, mob/living/picker)
+	SIGNAL_HANDLER
 	if(!iscarbon(picker))
 		return
+	to_chat(picker, span_warning("[src] takes the place of your arm!"))
 	var/obj/item/bodypart/active = picker.get_active_hand()
 	var/mob/living/carbon/new_hero = picker
 	new_hero.make_item_prosthetic(src, active.body_zone)
 
 /obj/item/nullrod/chainsaw/equipped(mob/living/carbon/user, slot, initial)
 	. = ..()
-	if(!iscarbon(user))
+	if(!iscarbon(user) || HAS_TRAIT_FROM(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT))
 		return
 	if(!(slot & ITEM_SLOT_HANDS))
 		return
@@ -607,26 +593,19 @@
 
 // Carp-sie Plushie - Gives you the carp faction so that you can be friends with carp.
 
-/obj/item/nullrod/carp
+/obj/item/toy/plush/carpplushie/nullrod
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/nullrod/carp"
-	post_init_icon_state = "map_plushie_carp"
-	greyscale_config = /datum/greyscale_config/plush_carp
-	greyscale_colors = "#cc99ff#000000"
-	inhand_icon_state = "carp_plushie"
 	worn_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 15
-	attack_verb_continuous = list("bites", "eats", "fin slaps")
-	attack_verb_simple = list("bite", "eat", "fin slap")
-	hitsound = 'sound/items/weapons/bite.ogg'
-	menu_description = "A plushie dealing a little less damage due to its cute form. Capable of blessing one person with the Carp-Sie favor, which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
+	offspring_type = /obj/item/toy/plush/carpplushie
+	divine = TRUE
 
-/obj/item/nullrod/carp/Initialize(mapload)
+/obj/item/toy/plush/carpplushie/nullrod/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/nullrod_core)
 	AddComponent(/datum/component/faction_granter, FACTION_CARP, holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
 // Monk's Staff - Higher block, lower damage.

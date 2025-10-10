@@ -42,8 +42,7 @@
 	icon_state = "blastoff_ampoule"
 	base_icon_state = "blastoff_ampoule"
 	volume = 20
-	reagent_flags = TRANSPARENT
-	spillable = FALSE
+	initial_reagent_flags = TRANSPARENT
 	list_reagents = list(/datum/reagent/drug/blastoff = 10)
 	reagent_consumption_method = INHALE
 	consumption_sound = 'sound/effects/spray2.ogg'
@@ -52,16 +51,15 @@
 	. = ..()
 	if(!reagents.total_volume)
 		icon_state = "[base_icon_state]_empty"
-	else if(spillable)
+	else if(is_open_container())
 		icon_state = "[base_icon_state]_open"
 	else
 		icon_state = base_icon_state
 
 /obj/item/reagent_containers/cup/blastoff_ampoule/attack_self(mob/user)
-	if(!user.can_perform_action(src, NEED_DEXTERITY) || spillable)
+	if(!user.can_perform_action(src, NEED_DEXTERITY) || is_open_container())
 		return ..()
-	reagent_flags |= OPENCONTAINER
-	spillable = TRUE
+	add_container_flags(OPENCONTAINER)
 	playsound(src, 'sound/items/ampoule_snap.ogg', 40)
 	update_appearance()
 
@@ -74,8 +72,7 @@
 	var/obj/item/shard/ampoule_shard = new(drop_location())
 	playsound(src, SFX_SHATTER, 40, TRUE)
 	transfer_fingerprints_to(ampoule_shard)
-	spillable = TRUE
-	SplashReagents(hit_atom, throwingdatum)
+	splash_reagents(hit_atom, throwingdatum?.get_thrower(), was_thrown = TRUE, allow_closed_splash = FALSE)
 	qdel(src)
 	hit_atom.Bumped(ampoule_shard)
 
