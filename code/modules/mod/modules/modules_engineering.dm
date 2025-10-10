@@ -35,13 +35,10 @@
 	mask_worn_overlay = TRUE
 
 /obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
-	if(!mod.wearer)
+	if(!mod.wearer || !mod.wearer.combat_mode)
 		overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	else
-		if(mod.wearer.combat_mode)
-			overlay_state_inactive = "module_armorbooster_on-[mod.skin]"
-		else
-			overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+		overlay_state_inactive = "module_armorbooster_on-[mod.skin]"
 	return ..()
 
 
@@ -55,6 +52,7 @@
 
 /// Changes which overlay state we're using depending on combat mode status.
 /obj/item/mod/module/welding/syndicate/proc/on_combat_mode_toggle(mob/living/carbon/human/toggler)
+	SIGNAL_HANDLER
 	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_clothing_slots()
 
