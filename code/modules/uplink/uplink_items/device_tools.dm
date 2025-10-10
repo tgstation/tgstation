@@ -275,6 +275,7 @@
 	item = /obj/item/powersink
 	cost = 11
 	limited_stock = 1
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 
 /datum/uplink_item/device_tools/syndicate_contacts
 	name = "Polarized Contact Lenses"
