@@ -295,6 +295,7 @@
 	max_amount = 60
 	novariants = TRUE
 	merge_type = /obj/item/stack/thermoplastic
+	mats_per_unit = list(/datum/material/plastic = HALF_SHEET_AMOUNT / 2)
 	var/tile_type = /obj/structure/thermoplastic
 
 /obj/item/stack/thermoplastic/light
