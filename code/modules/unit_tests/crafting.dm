@@ -123,14 +123,14 @@
 		clear_trash()
 		return
 	//enforcing materials parity between crafted and spawned for turfs would be more trouble than worth here
-	if(isturf(result) || (recipe.crafting_flags & CRAFT_SKIP_MATERIALS_PARITY))
+	if((recipe.crafting_flags & (CRAFT_NO_MATERIALS|CRAFT_SKIP_MATERIALS_PARITY)) || isturf(result))
 		clear_trash()
 		return
 
 	var/atom/copycat
 	if(isstack(result))
 		var/obj/item/stack/stack_result = result
-		copycat = new result.type(turf, stack_result.amount)
+		copycat = new result.type(turf, /*new_amount =*/ stack_result.amount, /*merge =*/ FALSE)
 	else
 		copycat = new result.type(turf)
 

@@ -34,6 +34,8 @@
 #define CRAFT_SKIP_MATERIALS_PARITY (1<<8)
 /// Exclusive to the personal_crafting component, skips the time spent crafting the recipe.
 #define CRAFT_IGNORE_DO_AFTER (1<<9)
+/// This craft won't change the materials of the resulting item to match that of the combined components
+#define CRAFT_NO_MATERIALS (1<<10)
 
 //food/drink crafting defines
 //When adding new defines, please make sure to also add them to the encompassing list

@@ -246,14 +246,17 @@
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
 	var/atom/result
 	var/turf/craft_turf = get_turf(crafter.loc)
-	var/set_materials = TRUE
+	var/set_materials = !(recipe.crafting_flags & CRAFT_NO_MATERIALS)
 	if(ispath(recipe.result, /turf))
 		result = craft_turf.place_on_top(recipe.result)
 	else if(ispath(recipe.result, /obj/item/stack))
 		var/res_amount = recipe.result_amount || 1
 		//we don't merge the stack right away but try to put it in the hand of the crafter
-		result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount )
-		set_materials = FALSE //We've already set the materials on init. Don't do it again
+		if(set_materials)
+			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount )
+			set_materials = FALSE //We've already set the materials on init. Don't do it again
+		else
+			result = new recipe.result(craft_turf, res_amount, FALSE)
 	else
 		result = new recipe.result(craft_turf)
 		if(result.atom_storage && recipe.delete_contents)
