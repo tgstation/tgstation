@@ -157,8 +157,7 @@ SUBSYSTEM_DEF(materials)
 	if(!material_combos)
 		InitializeMaterials()
 	var/list/combo_params = list()
-	for(var/x in materials_declaration)
-		var/datum/material/mat = x
+	for(var/datum/material/mat as anything in materials_declaration)
 		combo_params += "[istype(mat) ? mat.id : mat]=[OPTIMAL_COST(materials_declaration[mat] * multiplier)]"
 	sortTim(combo_params, GLOBAL_PROC_REF(cmp_text_asc)) // We have to sort now in case the declaration was not in order
 	var/combo_index = combo_params.Join("-")

@@ -99,6 +99,7 @@
 		materials_mult *= mat_amt
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
+		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit)
 		initialize_materials(mats_per_unit, materials_mult)
 
 	recipes = get_main_recipes().Copy()
@@ -160,11 +161,6 @@
 			return FALSE
 		other_stack = find_other_stack(already_found)
 	return TRUE
-
-/obj/item/stack/apply_material_effects(list/materials)
-	. = ..()
-	if(amount)
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
 
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)

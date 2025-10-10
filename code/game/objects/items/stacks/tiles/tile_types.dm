@@ -209,7 +209,7 @@
 	inhand_icon_state = "tile-basalt"
 	turf_type = /turf/open/floor/fakebasalt
 	merge_type = /obj/item/stack/tile/basalt
-	mats_per_unit = list(/datum/material/sand = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 2)
 
 //Carpets
 /obj/item/stack/tile/carpet
