@@ -530,6 +530,7 @@
 	block_chance = 30
 	armour_penetration = 0
 	wound_bonus = -10
+	demolition_mod = 1
 	embed_type = /datum/embedding/holy_esword
 	sword_color_icon = "blue"
 	light_color = LIGHT_COLOR_LIGHT_CYAN
