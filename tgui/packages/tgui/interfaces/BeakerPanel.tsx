@@ -145,6 +145,7 @@ const ContainerSection = (props: ContainerProps) => {
                   step={1}
                   minValue={0}
                   maxValue={1000}
+                  unit="u"
                   value={container.reagents[reagent]}
                   onChange={(value) => {
                     setContainerReagentVolume(
@@ -193,6 +194,7 @@ const ContainerSection = (props: ContainerProps) => {
                 step={1}
                 minValue={0}
                 maxValue={1000}
+                unit="u"
                 value={setAddingReagentVolume}
                 onChange={(value) => {
                   setSetAddingReagentVolume(value);
