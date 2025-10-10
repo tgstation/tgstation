@@ -84,12 +84,13 @@ type ContainerProps = {
   container: Container;
   number: number;
   updateContainer: (container: Container) => void;
+  reagents: Reagent[];
+  containers: ContainerType[];
 };
 
 const ContainerSection = (props: ContainerProps) => {
-  const { container, number, updateContainer } = props;
-  const { act, data } = useBackend<Data>();
-  const { reagents, containers } = data;
+  const { container, number, updateContainer, reagents, containers } = props;
+  const { act } = useBackend<Data>();
 
   const [setAddingReagent, setSetAddingReagent] = useState<string>(
     reagents[0].id,
@@ -116,12 +117,10 @@ const ContainerSection = (props: ContainerProps) => {
         <Stack.Item>
           <Dropdown
             fluid
-            options={containers
-              .sort((a, b) => (a.text < b.text ? -1 : 1))
-              .map((container) => ({
-                displayText: readableContainerType(container),
-                value: container.id,
-              }))}
+            options={containers.map((container) => ({
+              displayText: readableContainerType(container),
+              value: container.id,
+            }))}
             placeholder="Select Container Type"
             selected={container.type}
             displayText={readableContainerType(
@@ -174,12 +173,10 @@ const ContainerSection = (props: ContainerProps) => {
             <Stack.Item grow>
               <Dropdown
                 fluid
-                options={reagents
-                  .sort((a, b) => (a.text < b.text ? -1 : 1))
-                  .map((reagent) => ({
-                    displayText: readableReagentType(reagent),
-                    value: reagent.id,
-                  }))}
+                options={reagents.map((reagent) => ({
+                  displayText: readableReagentType(reagent),
+                  value: reagent.id,
+                }))}
                 placeholder="Add Reagent"
                 selected={setAddingReagent}
                 displayText={readableReagentType(
@@ -229,8 +226,13 @@ export const BeakerPanel = () => {
 
   const [container_one, setContainerOne] = makeContainerState(containers[0]);
   const [container_two, setContainerTwo] = makeContainerState(containers[0]);
-
   const [grenadeTimer, setGrenadeTimer] = useState<number>(5.0);
+
+  const reagentsSorted = reagents.sort((a, b) => (a.text < b.text ? -1 : 1));
+  const containersSorted = containers.sort((a, b) =>
+    readableContainerType(a) < readableContainerType(b) ? -1 : 1,
+  );
+
   return (
     <Window
       title="Spawn a Reagent Container"
@@ -290,6 +292,8 @@ export const BeakerPanel = () => {
                   container={container_one}
                   number={1}
                   updateContainer={setContainerOne}
+                  reagents={reagentsSorted}
+                  containers={containersSorted}
                 />
               </Stack.Item>
               <Stack.Item grow>
@@ -297,6 +301,8 @@ export const BeakerPanel = () => {
                   container={container_two}
                   number={2}
                   updateContainer={setContainerTwo}
+                  reagents={reagentsSorted}
+                  containers={containersSorted}
                 />
               </Stack.Item>
             </Stack>
