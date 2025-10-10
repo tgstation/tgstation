@@ -243,7 +243,6 @@
 			if(!lock_code)
 				if(length(numeric_input) != 5)
 					return TRUE
-				//lock_code = numeric_input
 				set_lock_code(numeric_input, usr)
 				numeric_input = ""
 				return TRUE
