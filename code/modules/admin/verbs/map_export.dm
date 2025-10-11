@@ -35,6 +35,20 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 /proc/sanitize_filename(text)
 	return hashtag_newlines_and_tabs(text, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
+#define HASHTAG_NEWLINES_AND_TABS(text, repl_chars)\
+	var/output_text = text;\
+	var/list/replacements = repl_chars || list("\n"="#","\t"="#");\
+	for(var/char in replacements) {\
+		CHECK_TICK;\
+		var/replacement = replacements[char];\
+		var/index = findtext(output_text, char);\
+		while(index) {\
+			output_text = copytext(output_text, 1, index) + replacement + copytext(output_text, index + length(char));\
+			index = findtext(output_text, char, index + length(char));\
+		}\
+	}\
+	return output_text;
+
 /proc/hashtag_newlines_and_tabs(text, list/repl_chars = list("\n"="#","\t"="#"))
 	for(var/char in repl_chars)
 		var/index = findtext(text, char)
@@ -61,10 +75,73 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 		var/amount = material_holder.materials[each] / 100
 		var/datum/material/material_datum = each
 		while(amount > 0)
+			var/obj/item/stack/stack = material_datum.sheet_type
+			var/amount_var = NAMEOF_TYPEPATH(stack, amount)
 			var/amount_in_stack = max(1, min(50, amount))
 			amount -= amount_in_stack
-			data += "[data ? ",\n" : ""][material_datum.sheet_type]{\n\tamount = [amount_in_stack]\n\t}"
+			data += "[data ? ",\n" : ""][stack.type]{\n\t[amount_var] = [amount_in_stack]\n\t}"
 	return data
+
+/obj/machinery/ore_silo/PersistentInitialize()
+	. = ..()
+	var/datum/component/material_container/silo_container = materials
+
+	// transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
+	top_level:
+		for(var/obj/item/stack/target_stack in loc)
+			var/total_amount = 0
+			for(var/mat_type, per_unit_amount in target_stack.mats_per_unit)
+				if(!silo_container.can_hold_material(mat_type))
+					continue top_level
+				total_amount += (per_unit_amount * target_stack.amount)
+
+			if(!silo_container.has_space(total_amount))
+				continue top_level
+
+			// yes, a double loop is really neccessary
+			for(var/mat_type, per_unit_amount in target_stack.mats_per_unit)
+				silo_container.materials[mat_type] += (per_unit_amount * target_stack.amount)
+
+			qdel(target_stack)
+
+/*
+/obj/item/card/id/on_object_saved()
+	var/data
+	if(!registered_account)
+		return
+	if(registered_account.account_balance <= 0)
+		return
+
+	var/credits_var = NAMEOF_TYPEPATH(/obj/item/holochip, credits)
+	var/balance = registered_account.account_balance
+	data += "[data ? ",\n" : ""][/obj/item/holochip::type]{\n\t[credits_var] = [balance]\n\t}"
+	return data
+
+/obj/item/card/id/PersistentInitialize()
+	. = ..()
+
+	for(var/obj/item/holochip/money in loc)
+		var/credits = money.get_item_credit_value()
+		if(!credits)
+			continue
+		registered_account.adjust_money(credits)
+		qdel(money)
+
+
+/obj/machinery/light/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state) // the tube changes color depending on low power, which we don't want to track
+
+	. += NAMEOF(src, has_mock_cell)
+	. += NAMEOF(src, status)
+	return .
+
+/obj/structure/light_construct/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, stage)
+	. += NAMEOF(src, fixture_type)
+	return .
+*/
 
 /**Map exporter
 * Inputting a list of turfs into convert_map_to_tgm() will output a string
@@ -103,13 +180,6 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	. += NAMEOF(src, anchored)
 	return .
 
-/turf/open/get_save_vars()
-	. = ..()
-	var/datum/gas_mixture/turf_gasmix = return_air()
-	initial_gas_mix = turf_gasmix.to_string()
-	. += NAMEOF(src, initial_gas_mix)
-	return .
-
 /obj/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, req_access)
@@ -142,6 +212,34 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	. += NAMEOF(src, pipe_color)
 	return .
 
+/**
+ * A procedure for saving variables of an object with a custom value that will override the default value when the object is serialized via map export.
+ *
+ * IMPORTANT: Always use NAMEOF(src, varname) for the keys to ensure compile-time checking.
+ *
+ * Examples:
+ * - Saving a /datum/ reference to a savable id_tag
+ * - Saving a computed value based on multiple variables
+ * - Saving a non-serializable value to a serializable format
+ *
+ * Returns: A named list of variables with their custom values that will be serialized
+ */
+/atom/proc/get_custom_save_vars()
+	return list()
+
+// Optimiziations that skip saving atmospheric data for turfs that don't need it
+// - Space: Gas is constantly purged, and temperature is immutable
+// - Walls: Atmos values should not realistically change
+// - Planetary: Atmos slowly reverts to its default gas mix
+/turf/open/get_custom_save_vars()
+	. = ..()
+	if(isspaceturf(src) || planetary_atmos)
+		return .
+
+	var/datum/gas_mixture/turf_gasmix = return_air()
+	.[NAMEOF(src, initial_gas_mix)] = turf_gasmix.to_string()
+	return .
+
 GLOBAL_LIST_INIT(save_file_chars, list(
 	"a","b","c","d","e",
 	"f","g","h","i","j",
@@ -156,6 +254,26 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"Y","Z",
 ))
 
+#define TO_LIST_STRING(build_from)\
+	var/list/build_into = list();\
+	build_into += "list(";\
+	var/first_entry = TRUE;\
+	for(var/item in build_from) {\
+		CHECK_TICK;\
+		if(!first_entry) {\
+			build_into += ", ";\
+		}\
+		if(isnum(item) || !build_from[item]) {\
+			build_into += "[TGM_ENCODE(item)]";\
+		} else {\
+			build_into += "[TGM_ENCODE(item)] = [TGM_ENCODE(build_from[item])]";\
+		}\
+		first_entry = FALSE;\
+	}\
+	build_into += ")";\
+	return build_into.Join("");
+
+/*
 /proc/to_list_string(list/build_from)
 	var/list/build_into = list()
 	build_into += "list("
@@ -171,7 +289,30 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		first_entry = FALSE
 	build_into += ")"
 	return build_into.Join("")
+*/
 
+#define TGM_ENCODE(value)\
+	if(istext(value)) {\
+		/*Prevent symbols from being because otherwise you can name something*/\
+		/* [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.*/\
+		return "\"[HASHTAG_NEWLINES_AND_TABS("[value]", list("{"="", "}"="", "\""="", ","=""))]\"";\
+	}\
+	if(isnum(value) || ispath(value)) {\
+		return "[value]";\
+	}\
+	if(islist(value)) {\
+		return TO_LIST_STRING(value);\
+	}\
+	if(isnull(value)) {\
+		return "null";\
+	}\
+	if(isicon(value) || isfile(value)) {\
+		return "'[value]'";\
+	}\
+	/* fallback: string */\
+	return TGM_ENCODE("[value]");
+
+/*
 /// Takes a constant, encodes it into a TGM valid string
 /proc/tgm_encode(value)
 	if(istext(value))
@@ -181,7 +322,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	if(isnum(value) || ispath(value))
 		return "[value]"
 	if(islist(value))
-		return to_list_string(value)
+		return TO_LIST_STRING(value)
 	if(isnull(value))
 		return "null"
 	if(isicon(value) || isfile(value))
@@ -192,6 +333,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 
 	// fallback: string
 	return tgm_encode("[value]")
+*/
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
@@ -235,39 +377,33 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
 				//====Get turfs Data====
-				var/turf/place
-				var/area/location
+				var/turf/saved_turf
+				var/area/saved_area
 				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
 				//If there is nothing there, save as a noop (For odd shapes)
 				if(isnull(pull_from))
-					place = /turf/template_noop
-					location = /area/template_noop
+					saved_turf = /turf/template_noop
+					saved_area = /area/template_noop
 				//Ignore things in space, must be a space turf
-				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_SPACE))
-					place = /turf/template_noop
-					location = /area/template_noop
+				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_TURFS_SPACE))
+					saved_turf = /turf/template_noop
+					saved_area = /area/template_noop
 					pull_from = null
 				//Stuff to add
 				else
 					var/area/place_area = get_area(pull_from)
-					location = place_area.type
-					place = pull_from.type
+					saved_area = place_area.type
+					saved_turf = pull_from.type
 
-				//====Saving shuttles only / non shuttles only====
-				var/is_shuttle_area = ispath(location, /area/shuttle)
-				if((is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_IGNORE) || (!is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_ONLY))
-					place = /turf/template_noop
-					location = /area/template_noop
-					pull_from = null
 				//====Saving holodeck areas====
 				// All hologram objects get skipped and floor tiles get replaced with empty plating
-				if(ispath(location, /area/station/holodeck) && istype(place, /turf/open/floor/holofloor))
-					place = /turf/open/floor/holofloor/plating
+				if(ispath(saved_area, /area/station/holodeck) && istype(saved_turf, /turf/open/floor/holofloor))
+					saved_turf = /turf/open/floor/holofloor/plating
 				//====For toggling not saving areas and turfs====
 				if(!(save_flag & SAVE_AREAS))
-					location = /area/template_noop
+					saved_area = /area/template_noop
 				if(!(save_flag & SAVE_TURFS))
-					place = /turf/template_noop
+					saved_turf = /turf/template_noop
 				//====Generate Header Character====
 				// Info that describes this turf and all its contents
 				// Unique, will be checked for existing later
@@ -275,6 +411,50 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				current_header += "(\n"
 				//Add objects to the header file
 				var/empty = TRUE
+
+				//====Saving Shuttles==========
+				var/is_shuttle_area = ispath(saved_area, /area/shuttle)
+				var/is_custom_shuttle_area = ispath(saved_area, /area/shuttle/custom)
+				var/skip_nonshuttle_area = (shuttle_area_flag == SAVE_SHUTTLES_ONLY) && !is_shuttle_area
+				if(skip_nonshuttle_area)
+					saved_turf = /turf/template_noop
+					saved_area = /area/template_noop
+					pull_from = null
+
+				var/skip_shuttle_area
+				if(is_custom_shuttle_area)
+					skip_shuttle_area = !(save_flag & SAVE_AREAS_CUSTOM_SHUTTLES)
+				else if(is_shuttle_area)
+					skip_shuttle_area = !(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES)
+
+				if(skip_shuttle_area)
+					var/shuttle_depth = pull_from.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
+					var/obj/docking_port/mobile/shuttle = SSshuttle.get_containing_shuttle(pull_from)
+
+					// save turf underneath shuttle
+					saved_turf =	shuttle_depth ? pull_from.baseturf_at_depth(shuttle_depth + 1) : /turf/template_noop
+
+					// save area underneath shuttle
+					if(shuttle)
+						var/area/area_underneath_shuttle = shuttle.underlying_areas_by_turf[pull_from]
+						saved_area = area_underneath_shuttle.type || SHUTTLE_DEFAULT_UNDERLYING_AREA
+					else
+						saved_area = /area/template_noop
+
+					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
+						var/obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
+						if(shuttle_port)
+							var/metadata = generate_tgm_metadata(shuttle_port)
+							current_header += "[empty ? "" : ",\n"][shuttle_port.type][metadata]"
+							empty = FALSE
+
+					pull_from = null
+
+				// always replace [/turf/open/space] with [/turf/open/space/basic] since it speeds up the maploader
+				// [/turf/open/space] is created naturally when shuttles are moving or turf gets destroyed leading to space
+				if(saved_turf.type == /turf/open/space)
+					saved_turf = /turf/open/space/basic
+
 				//====SAVING OBJECTS====
 				if(save_flag & SAVE_OBJECTS)
 					for(var/obj/thing in pull_from)
@@ -286,12 +466,15 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						if(is_multi_tile_object(thing) && (thing.loc != pull_from))
 							continue
 
-						var/metadata = generate_tgm_metadata(thing)
+						var/metadata
+						if(save_flag & SAVE_OBJECTS_VARIABLES)
+							metadata = generate_tgm_metadata(thing)
+
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
-						if(save_flag & SAVE_OBJECT_PROPERTIES)
+						if(save_flag & SAVE_OBJECTS_PROPERTIES)
 							var/custom_data = thing.on_object_saved()
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 				//====SAVING MOBS====
@@ -303,12 +486,14 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
-				current_header += "[empty ? "" : ",\n"][place]"
+				current_header += "[empty ? "" : ",\n"][saved_turf]"
 				//====SAVING ATMOS====
-				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS) && !isspaceturf(pull_from))
-					var/metadata = generate_tgm_metadata(pull_from)
-					current_header += "[metadata]"
-				current_header += ",\n[location])\n"
+				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
+					var/turf/open/atmos_turf = pull_from
+					if(isopenturf(atmos_turf))
+						var/metadata = generate_tgm_metadata(atmos_turf)
+						current_header += "[metadata]"
+				current_header += ",\n[saved_area])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
 				// If we already know this header just use its key, otherwise we gotta make a new one
@@ -325,9 +510,25 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
 	var/list/vars_to_save = object.get_save_vars()
+	var/list/custom_vars = object.get_custom_save_vars()
+	// Tracks variables handled by get_custom_save_vars() This ensures the default variable saving loop
+	// correctly skips these names. A separate list is necessary because custom_vars can contain null or FALSE values.
+	var/list/custom_var_names = list()
+
+	for(var/variable in custom_vars)
+		CHECK_TICK
+		var/custom_value = custom_vars[variable]
+		var/text_value = TGM_ENCODE(custom_value)
+		if(!text_value)
+			continue
+		data_to_add += "[variable] = [text_value]"
+		custom_var_names[variable] = TRUE
 
 	for(var/variable in vars_to_save)
 		CHECK_TICK
+		if(custom_var_names[variable]) // skip variables that use custom serialization
+			continue
+
 		var/value = object.vars[variable]
 		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
@@ -336,7 +537,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(variable == "icon" && object.smoothing_flags)
 			continue
 
-		var/text_value = tgm_encode(value)
+		var/text_value = TGM_ENCODE(value)
 		if(!text_value)
 			continue
 		data_to_add += "[variable] = [text_value]"
@@ -357,3 +558,4 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		calculated = (calculated % length) + 1
 		output += pull_from[calculated]
 	return output.Join()
+
