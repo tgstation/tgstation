@@ -32,6 +32,7 @@
 	connect_to_new_turf()
 
 /datum/component/redirect_attack_hand_from_turf/Destroy(force)
+	interact_check = null
 	disconnect_from_old_turf()
 	return ..()
 
@@ -101,7 +102,7 @@
 	var/atom/movable/movable_parent = parent
 	if (!movable_parent.can_interact(user))
 		return NONE
-	
+
 	if (!isnull(interact_check) && !interact_check.Invoke(user))
 		return NONE
 
@@ -123,7 +124,7 @@
 
 	if (!isnull(held_item))
 		return NONE
-	
+
 	if (!isnull(interact_check) && !interact_check.Invoke(user))
 		return NONE
 
