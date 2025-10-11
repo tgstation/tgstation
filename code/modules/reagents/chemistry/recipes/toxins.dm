@@ -263,7 +263,6 @@
 	H_ion_release = -0.25
 	rate_up_lim = 15
 	purity_min = 0.3
-	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/ghoulpowder
@@ -303,7 +302,6 @@
 	H_ion_release = -0.06
 	rate_up_lim = 15
 	purity_min = 0.4
-	reaction_flags = REACTION_CLEAR_IMPURE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DAMAGING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/heparin
