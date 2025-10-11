@@ -4156,6 +4156,7 @@
 #include "code\modules\clothing\suits\wetfloor.dm"
 #include "code\modules\clothing\suits\wintercoats.dm"
 #include "code\modules\clothing\suits\wiz_robe.dm"
+#include "code\modules\clothing\under\_suit_sensor.dm"
 #include "code\modules\clothing\under\_under.dm"
 #include "code\modules\clothing\under\color.dm"
 #include "code\modules\clothing\under\costume.dm"
