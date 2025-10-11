@@ -429,7 +429,7 @@
 	if(!(occupant in occupants) || !(occupants[occupant] & VEHICLE_CONTROL_SETTINGS))
 		return
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in flat_equipment)
-		if(!is_equipment_eligible_for_action(equipment))
+		if(!is_equipment_valid_for_action(equipment))
 			continue
 
 		grant_equipment_action(occupant, equipment)
@@ -462,13 +462,15 @@
 
 /**
  * Called when equipment is attached to the mecha.
- * Grants equipment actions to all current occupants.
+ * Grants equipment actions to current occupants with VEHICLE_CONTROL_SETTINGS flag.
  */
 /obj/vehicle/sealed/mecha/proc/on_equipment_attach(obj/item/mecha_parts/mecha_equipment/equipment)
-	if(!is_equipment_eligible_for_action(equipment))
+	if(!is_equipment_valid_for_action(equipment))
 		return
 
 	for(var/mob/occupant in occupants)
+		if(!(occupants[occupant] & VEHICLE_CONTROL_SETTINGS))
+			continue
 		grant_equipment_action(occupant, equipment)
 
 /**
@@ -480,7 +482,7 @@
 		remove_action_type_from_mob(equipment.type, occupant)
 
 /// Create actions only for equipment that can be toggled or triggered, excluding air tanks.
-/obj/vehicle/sealed/mecha/proc/is_equipment_eligible_for_action(obj/item/mecha_parts/mecha_equipment/equipment)
+/obj/vehicle/sealed/mecha/proc/is_equipment_valid_for_action(obj/item/mecha_parts/mecha_equipment/equipment)
 	if(!(equipment.can_be_toggled || equipment.can_be_triggered))
 		return FALSE
 
