@@ -519,3 +519,52 @@
 	playsound(src, 'sound/items/baton/telescopic_baton_folded_pickup.ogg', 40, TRUE)
 	COOLDOWN_START(src, jiggle_cooldown, 1 SECONDS)
 	return TRUE
+
+// Null rod variants
+
+/obj/item/melee/energy/sword/nullrod
+	name = "light energy sword"
+	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
+	throw_speed = 3
+	throw_range = 4
+	block_chance = 30
+	armour_penetration = 0
+	wound_bonus = -10
+	demolition_mod = 1
+	embed_type = /datum/embedding/holy_esword
+	sword_color_icon = "blue"
+	light_color = LIGHT_COLOR_LIGHT_CYAN
+	active_force = 18
+	active_throwforce = 10
+	alt_force_mod = -3
+
+/obj/item/melee/energy/sword/nullrod/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/nullrod_core)
+
+/datum/embedding/holy_esword
+	embed_chance = 0
+
+/obj/item/melee/energy/sword/nullrod/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword. Or a road roller, if one happened to hit you.
+
+	return ..()
+
+/obj/item/melee/energy/sword/nullrod/red
+	name = "dark energy sword"
+	desc = "Woefully ineffective when used on steep terrain."
+	sword_color_icon = "red"
+	light_color = COLOR_SOFT_RED
+
+/obj/item/melee/energy/sword/nullrod/pirate
+	name = "nautical energy cutlass"
+	desc = "Convincing HR that your religion involved piracy was no mean feat."
+	icon_state = "e_cutlass"
+	inhand_icon_state = "e_cutlass"
+	base_icon_state = "e_cutlass"
+	sword_color_icon = null
+	light_color = COLOR_RED
