@@ -145,12 +145,10 @@
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 		chassis.remove_all_equipment_actions(owner)
-		chassis.generate_equipment_actions(owner)
 	else
 		chassis.balloon_alert(owner, "controlling pilot seat")
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
-		chassis.remove_all_equipment_actions(owner)
 		chassis.generate_equipment_actions(owner)
 	chassis.update_icon_state()
 
