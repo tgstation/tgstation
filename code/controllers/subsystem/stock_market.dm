@@ -39,7 +39,10 @@ SUBSYSTEM_DEF(stock_market)
 	for(var/datum/stock_market_event/event as anything in active_events)
 		event.handle()
 
-///Adjust the price of a material(either through buying or selling) ensuring it stays within limits
+/**
+ * Adjust the price of a material(either through buying or selling) ensuring it stays within limits
+ * Prices will typically range between half of their base price (0.5 * value_per_unit * SHEET_MATERIAL AMOUNT) and 3 times higher than their base price.
+ */
 /datum/controller/subsystem/stock_market/proc/adjust_material_price(datum/material/mat, delta)
 	mat = GET_MATERIAL_REF(mat)
 

@@ -44,7 +44,7 @@
 	material_id = /datum/material/bananium
 	message = "cm3 of bananium"
 
-/datum/export/material/diamond
+/datum/export/material/adamantine
 	cost = CARGO_CRATE_VALUE
 	material_id = /datum/material/adamantine
 	message = "cm3 of adamantine"
@@ -77,56 +77,63 @@
 	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen
 
 /datum/export/material/market
-	cost = 1
-	k_recovery_elasticity = 1/10 //Modeled such that a stack of materials, selling to drop the cost to ~20%, will recover fully in 8 minutes instead of 20.
+	k_elasticity = 0
+
+/datum/export/material/market/diamond
+	cost = CARGO_CRATE_VALUE * 1.3
+	material_id = /datum/material/diamond
+	message = "cm3 of diamonds"
+
+/datum/export/material/market/gold
+	cost = CARGO_CRATE_VALUE * 0.35
+	material_id = /datum/material/gold
+	message = "cm3 of gold"
+
+/datum/export/material/market/titanium
+	cost = CARGO_CRATE_VALUE * 0.35
+	material_id = /datum/material/titanium
+	message = "cm3 of titanium"
+
+/datum/export/material/market/uranium
+	cost = CARGO_CRATE_VALUE * 0.3
+	material_id = /datum/material/uranium
+	message = "cm3 of uranium"
+
+/datum/export/material/market/silver
+	cost = CARGO_CRATE_VALUE * 0.15
+	material_id = /datum/material/silver
+	message = "cm3 of silver"
+
+/datum/export/material/market/bscrystal
+	cost = CARGO_CRATE_VALUE * 0.8
+	message = "cm3 of bluespace crystals"
+	material_id = /datum/material/bluespace
 	export_types = list(
-		/obj/item/stack/sheet/mineral,
-		/obj/item/stack/tile/mineral,
+		/obj/item/stack/sheet/bluespace_crystal,
+		/obj/item/stack/ore/bluespace_crystal,
+	) //For whatever reason, bluespace crystals are not a mineral
+
+/datum/export/material/market/iron
+	cost = CARGO_CRATE_VALUE * 0.015
+	message = "cm3 of iron"
+	material_id = /datum/material/iron
+	export_types = list(
+		/obj/item/stack/sheet/iron,
+		/obj/item/stack/tile/iron,
+		/obj/item/stack/rods,
 		/obj/item/stack/ore,
 		/obj/item/coin,
-		/obj/item/stock_block,
 	)
 
-/datum/export/material/market/applies_to(obj/exported_obj, apply_elastic)
-	. = ..()
-	if(istype(exported_obj, /obj/item/stock_block))
-		var/obj/item/stock_block/block = exported_obj
-		if(!block.export_mat)
-			return FALSE
-		if(block.export_mat == material_id)
-			return TRUE
-		return FALSE
-
-/datum/export/material/market/get_amount(obj/exported_obj)
-	if(istype(exported_obj, /obj/item/stock_block))
-		var/obj/item/stock_block/block = exported_obj
-		return block.quantity
-	return ..()
-
-/datum/export/material/market/get_cost(obj/exported_obj, apply_elastic = TRUE)
-	if(!material_id)
-		return 0
-
-	var/obj/item/exported_item = exported_obj
-	var/amount = get_amount(exported_item)
-	if(!amount)
-		return 0
-
-	var/obj/item/stock_block/block
-	if(istype(exported_item, /obj/item/stock_block))
-		block = exported_item
-		if(block.export_mat != material_id)
-			return 0
-
-	var/material_value = 0
-	if(block)
-		if(block.fluid)
-			material_value = SSstock_market.materials_prices[block.export_mat] * amount
-		else
-			material_value = block.export_value
-	else
-		material_value = SSstock_market.materials_prices[material_id] * amount
-	return (apply_elastic ? cost : init_cost) * material_value // Cost in this case is only serving as the elastic modifier, where material value is the raw value of the sheets sold.
+/datum/export/material/market/glass
+	cost = CARGO_CRATE_VALUE * 0.015
+	message = "cm3 of glass"
+	material_id = /datum/material/glass
+	export_types = list(
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/ore,
+		/obj/item/shard,
+	)
 
 /datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
 	. = ..()
@@ -136,58 +143,5 @@
 
 	//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
 	if(!dry_run)
-		//decrease the market price
-		SSstock_market.adjust_material_price(material_id, -SSstock_market.materials_prices[material_id] * (amount / (amount + SSstock_market.materials_quantity[material_id])))
 		//increase the stock
 		SSstock_market.adjust_material_quantity(material_id, amount)
-
-/datum/export/material/market/diamond
-	material_id = /datum/material/diamond
-	message = "cm3 of diamonds"
-
-/datum/export/material/market/uranium
-	material_id = /datum/material/uranium
-	message = "cm3 of uranium"
-
-/datum/export/material/market/gold
-	material_id = /datum/material/gold
-	message = "cm3 of gold"
-
-/datum/export/material/market/silver
-	material_id = /datum/material/silver
-	message = "cm3 of silver"
-
-/datum/export/material/market/titanium
-	material_id = /datum/material/titanium
-	message = "cm3 of titanium"
-
-/datum/export/material/market/bscrystal
-	message = "of bluespace crystals"
-	material_id = /datum/material/bluespace
-	export_types = list(
-		/obj/item/stack/sheet/bluespace_crystal,
-		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stock_block,
-	) //For whatever reason, bluespace crystals are not a mineral
-
-/datum/export/material/market/iron
-	message = "cm3 of iron"
-	material_id = /datum/material/iron
-	export_types = list(
-		/obj/item/stack/sheet/iron,
-		/obj/item/stack/tile/iron,
-		/obj/item/stack/rods,
-		/obj/item/stack/ore,
-		/obj/item/coin,
-		/obj/item/stock_block,
-	)
-
-/datum/export/material/market/glass
-	message = "cm3 of glass"
-	material_id = /datum/material/glass
-	export_types = list(
-		/obj/item/stack/sheet/glass,
-		/obj/item/stack/ore,
-		/obj/item/shard,
-		/obj/item/stock_block,
-	)
