@@ -29,7 +29,7 @@ _All github inquiries (such as moderation actions) may be handled via the /tg/st
 
 [Running a server](.github/guides/RUNNING_A_SERVER.md)
 
-[Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
+[Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)asdf
 
 ## Compilation
 
