@@ -170,6 +170,10 @@
 		/datum/reagent/blood = 50,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
+	parts = list(
+		/obj/item/organ/brain,
+		/obj/item/organ/heart
+	)
 	result = /mob/living/basic/bear/butter
 	category = CAT_MISCFOOD
 
