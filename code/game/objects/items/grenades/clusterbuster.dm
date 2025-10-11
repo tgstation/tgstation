@@ -107,17 +107,12 @@
 	volatile = TRUE
 
 /obj/item/slime_extract/proc/activate_slime()
-	var/list/slime_chems = src.activate_reagents
-	if(!QDELETED(src))
-		var/chem = pick(slime_chems)
-		var/amount = 5
-		if(chem == "lesser plasma") //In the rare case we get another rainbow.
-			chem = /datum/reagent/toxin/plasma
-			amount = 4
-		if(chem == "holy water and uranium")
-			chem = /datum/reagent/uranium
-			reagents.add_reagent(/datum/reagent/water/holywater)
-		reagents.add_reagent(chem, amount)
+	var/list/slime_recipes = GLOB.slime_extract_recipe_list[src.type]
+	if(!QDELETED(src) && slime_recipes)
+		var/datum/chemical_reaction/slime/recipeselect = pick(slime_recipes)
+		var/list/required_reagents = recipeselect.required_reagents
+		for(var/datum/reagent/chem as anything in required_reagents)
+			reagents.add_reagent(chem, required_reagents[chem])
 
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/_ in 1 to numspawned)

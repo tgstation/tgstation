@@ -32,28 +32,23 @@ Self-sustaining extracts:
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", sort_list(extract.activate_reagents, GLOBAL_PROC_REF(cmp_typepaths_asc)))
-	if(isnull(reagentselect))
+	var/list/slime_recipes = GLOB.slime_extract_recipe_list[extract.type]
+	if(isnull(slime_recipes))
 		return
-	var/amount = 5
-	var/secondary
 
+	var/datum/chemical_reaction/slime/recipeselect = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", sort_list(slime_recipes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	if(isnull(recipeselect))
+		return
 	if (user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
-	if(!reagentselect)
-		return
-	if(reagentselect == "lesser plasma")
-		amount = 4
-		reagentselect = /datum/reagent/toxin/plasma
-	if(reagentselect == "holy water and uranium")
-		reagentselect = /datum/reagent/water/holywater
-		secondary = /datum/reagent/uranium
+
 	extract.forceMove(user.drop_location())
 	qdel(src)
 	user.put_in_active_hand(extract)
-	extract.reagents.add_reagent(reagentselect,amount)
-	if(secondary)
-		extract.reagents.add_reagent(secondary,amount)
+
+	var/list/required_reagents = recipeselect.required_reagents
+	for(var/datum/reagent/chem as anything in required_reagents)
+		extract.reagents.add_reagent(chem, required_reagents[chem])
 
 /obj/item/autoslime/examine(mob/user)
 	. = ..()
