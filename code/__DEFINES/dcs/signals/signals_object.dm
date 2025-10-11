@@ -538,7 +538,7 @@
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
-/// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
+/// from /obj/item/detective_scanner/scan(): (mob/user, datum/detective_scanner_log/entry)
 #define COMSIG_DETECTIVE_SCANNED "det_scanned"
 
 /// from /obj/plunger_act when an object is being plungered
