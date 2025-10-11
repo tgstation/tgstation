@@ -210,6 +210,7 @@
 	desc = "A plastic card for confidential corporate matters. Can be written on with pen somehow."
 	icon_state = "corppaperslip"
 	grind_results = list(/datum/reagent/plastic_polymers = 1.5) //It's a plastic card after all
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3, /datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	max_integrity = 130 //Slightly more sturdy because of being made out of a plastic
 	drop_sound = 'sound/items/handling/disk_drop.ogg'
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'

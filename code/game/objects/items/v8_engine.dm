@@ -58,6 +58,7 @@
 	throw_range = 5
 	throw_speed = 1
 	hitsound = 'sound/items/car_engine_start.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 14, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	/// The number of charges the house edge has accrued through 2-handed hits, to charge a more powerful charge attack.
 	var/fire_charges = 0
 	///Sound played when wielded.

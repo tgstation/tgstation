@@ -311,7 +311,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	fill_icon_state = "bucket"
 	fill_icon_thresholds = list(50, 90)
-	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -344,7 +344,7 @@
 	name = "wooden bucket"
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/bucket_wooden
 
@@ -399,6 +399,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "pestle"
 	force = 7
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/cup/mortar
 	name = "mortar"
@@ -408,7 +409,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50, 100)
 	volume = 100
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3)
 	resistance_flags = FLAMMABLE
 	initial_reagent_flags = OPENCONTAINER
 	var/obj/item/grinded
