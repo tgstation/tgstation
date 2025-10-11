@@ -427,19 +427,16 @@
 		to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
 		hit_mob.electrocute_act(50, "thunder", flags = SHOCK_TESLA|SHOCK_NOGLOVES)
 
-	for(var/obj/hit_thing in weather_turf)
-		if(QDELETED(hit_thing)) // stop, it's already dead
+	for(var/obj/item/stack/ore/hit_ore in weather_turf)
+		if(QDELETED(hit_ore))
 			continue
-		if(!hit_thing.uses_integrity)
-			continue
-		if(hit_thing.invisibility != INVISIBILITY_NONE)
-			continue
-		if(HAS_TRAIT(hit_thing, TRAIT_UNDERFLOOR))
-			continue
-		hit_thing.take_damage(20, BURN, ENERGY, FALSE)
+		// ores that get struck by thunder are smelted
+		// a bolt of lightning can reach temperatures of 30,000 Kelvin which is 5x hotter than the sun
+		hit_ore.fire_act(30000)
+
 	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, extrarange = 10, falloff_distance = 10)
 	weather_turf.visible_message(span_danger("A thunderbolt strikes [weather_turf]!"))
-	explosion(weather_turf, light_impact_range = 1, flame_range = 1, silent = TRUE, adminlog = FALSE)
+	new /obj/effect/hotspot(weather_turf)
 
 /**
  * Updates the overlays on impacted areas
