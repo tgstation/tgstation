@@ -294,7 +294,7 @@
 /obj/item/organ/cyberimp/arm/toolkit/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_tool = created_item.resolve()
-		if(istype(/obj/item/stamp/chameleon, potential_tool))
+		if(istype(potential_tool, /obj/item/stamp/chameleon))
 			return FALSE
 
 	balloon_alert(user, "experimental stamp unlocked")
@@ -304,7 +304,7 @@
 /obj/item/organ/cyberimp/arm/toolkit/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
-		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
+		if(istype(potential_knife, /obj/item/knife/combat/cyborg))
 			return FALSE
 
 	balloon_alert(user, "integrated knife unlocked")
