@@ -27,4 +27,4 @@
 	needs_discovery = TRUE // Only for already discovered species
 
 /datum/export/seed/potency/get_base_cost(obj/item/seeds/S)
-	return round(..() * (S.potency - discovered_plants[S.type]))
+	return ..() * (S.potency - discovered_plants[S.type])
