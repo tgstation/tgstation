@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix lighters triggering runtimes when out of fuel"
