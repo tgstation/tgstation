@@ -59,6 +59,10 @@
 	/// If FALSE it will just try to fire at ourselves straight up.
 	var/doafter_self_shoot = TRUE
 
+	/// If TRUE, will fire ITEM_INTERACT_BLOCKING (melee, etc) if the gun has a round already in the chamber, and is waiting to be fired (but cant, usually due to waiting on fire_delay).
+	/// If FALSE, nothing changed.
+	var/chambered_attack_block = FALSE
+
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
@@ -302,6 +306,8 @@
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
 		return ITEM_INTERACT_SUCCESS
+	if(chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
+		return ITEM_INTERACT_BLOCKING // block melee (etc), usually if waiting on fire delay
 	return NONE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
