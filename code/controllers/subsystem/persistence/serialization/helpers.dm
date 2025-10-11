@@ -12,6 +12,42 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"Y","Z",
 ))
 
+
+///Returns a list of overlays of every gas in the mixture
+#define GAS_OVERLAYS(gases, out_var, z_layer_turf)\
+	do { \
+		out_var = list();\
+		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
+		for(var/_ID in gases){\
+			if(GLOB.nonoverlaying_gases[_ID]) continue;\
+			var/_GAS = gases[_ID];\
+			var/_GAS_META = _GAS[GAS_META];\
+			if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
+			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset];\
+			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
+		} \
+	}\
+	while (FALSE)
+
+#define TO_LIST_STRING(build_from)\
+	var/list/build_into = list();\
+	build_into += "list(";\
+	var/first_entry = TRUE;\
+	for(var/item in build_from) {\
+		CHECK_TICK;\
+		if(!first_entry) {\
+			build_into += ", ";\
+		}\
+		if(isnum(item) || !build_from[item]) {\
+			build_into += "[tgm_encode(item)]";\
+		} else {\
+			build_into += "[tgm_encode(item)] = [tgm_encode(build_from[item])]";\
+		}\
+		first_entry = FALSE;\
+	}\
+	build_into += ")";\
+	return build_into.Join("");
+
 /proc/to_list_string(list/build_from)
 	var/list/build_into = list()
 	build_into += "list("

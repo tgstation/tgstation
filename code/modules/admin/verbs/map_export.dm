@@ -35,6 +35,20 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 /proc/sanitize_filename(text)
 	return hashtag_newlines_and_tabs(text, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
+#define HASHTAG_NEWLINES_AND_TABS(text, repl_chars)\
+	var/output_text = text;\
+	var/list/replacements = repl_chars || list("\n"="#","\t"="#");\
+	for(var/char in replacements) {\
+		CHECK_TICK;\
+		var/replacement = replacements[char];\
+		var/index = findtext(output_text, char);\
+		while(index) {\
+			output_text = copytext(output_text, 1, index) + replacement + copytext(output_text, index + length(char));\
+			index = findtext(output_text, char, index + length(char));\
+		}\
+	}\
+	return output_text;
+
 /proc/hashtag_newlines_and_tabs(text, list/repl_chars = list("\n"="#","\t"="#"))
 	for(var/char in repl_chars)
 		var/index = findtext(text, char)
@@ -240,6 +254,26 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"Y","Z",
 ))
 
+#define TO_LIST_STRING(build_from)\
+	var/list/build_into = list();\
+	build_into += "list(";\
+	var/first_entry = TRUE;\
+	for(var/item in build_from) {\
+		CHECK_TICK;\
+		if(!first_entry) {\
+			build_into += ", ";\
+		}\
+		if(isnum(item) || !build_from[item]) {\
+			build_into += "[TGM_ENCODE(item)]";\
+		} else {\
+			build_into += "[TGM_ENCODE(item)] = [TGM_ENCODE(build_from[item])]";\
+		}\
+		first_entry = FALSE;\
+	}\
+	build_into += ")";\
+	return build_into.Join("");
+
+/*
 /proc/to_list_string(list/build_from)
 	var/list/build_into = list()
 	build_into += "list("
@@ -255,7 +289,30 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		first_entry = FALSE
 	build_into += ")"
 	return build_into.Join("")
+*/
 
+#define TGM_ENCODE(value)\
+	if(istext(value)) {\
+		/*Prevent symbols from being because otherwise you can name something*/\
+		/* [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.*/\
+		return "\"[HASHTAG_NEWLINES_AND_TABS("[value]", list("{"="", "}"="", "\""="", ","=""))]\"";\
+	}\
+	if(isnum(value) || ispath(value)) {\
+		return "[value]";\
+	}\
+	if(islist(value)) {\
+		return TO_LIST_STRING(value);\
+	}\
+	if(isnull(value)) {\
+		return "null";\
+	}\
+	if(isicon(value) || isfile(value)) {\
+		return "'[value]'";\
+	}\
+	/* fallback: string */\
+	return TGM_ENCODE("[value]");
+
+/*
 /// Takes a constant, encodes it into a TGM valid string
 /proc/tgm_encode(value)
 	if(istext(value))
@@ -265,7 +322,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	if(isnum(value) || ispath(value))
 		return "[value]"
 	if(islist(value))
-		return to_list_string(value)
+		return TO_LIST_STRING(value)
 	if(isnull(value))
 		return "null"
 	if(isicon(value) || isfile(value))
@@ -276,6 +333,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 
 	// fallback: string
 	return tgm_encode("[value]")
+*/
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
@@ -460,7 +518,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	for(var/variable in custom_vars)
 		CHECK_TICK
 		var/custom_value = custom_vars[variable]
-		var/text_value = tgm_encode(custom_value)
+		var/text_value = TGM_ENCODE(custom_value)
 		if(!text_value)
 			continue
 		data_to_add += "[variable] = [text_value]"
@@ -479,7 +537,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(variable == "icon" && object.smoothing_flags)
 			continue
 
-		var/text_value = tgm_encode(value)
+		var/text_value = TGM_ENCODE(value)
 		if(!text_value)
 			continue
 		data_to_add += "[variable] = [text_value]"
