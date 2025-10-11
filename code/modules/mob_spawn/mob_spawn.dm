@@ -53,7 +53,7 @@
 	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
-/obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/proc/special(mob/living/spawned_mob, mob/mob_possessor)
 	SHOULD_CALL_PARENT(TRUE)
 	if(faction)
 		spawned_mob.faction = faction
@@ -296,7 +296,7 @@
 			if(mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))
 				INVOKE_ASYNC(src, PROC_REF(create))
 
-/obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.death(TRUE)
 	spawned_mob.adjustOxyLoss(oxy_damage)
