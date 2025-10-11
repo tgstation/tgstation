@@ -103,12 +103,16 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
 		changed = TRUE
 
-	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
-		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
+	if(has_sensor == NO_SENSORS)
+		if(istype(held_item, /obj/item/suit_sensor))
+			context[SCREENTIP_CONTEXT_LMB] = "Install suit sensors"
+			changed = TRUE
+	else if(held_item.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut suit sensors"
 		changed = TRUE
 
-	if(has_sensor == NO_SENSORS && (istype(held_item, /obj/item/radio) && !istype(held_item, /obj/item/radio/headset)))
-		context[SCREENTIP_CONTEXT_LMB] = "Install suit sensors"
+	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
+		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
 		changed = TRUE
 
 	return changed ? CONTEXTUAL_SCREENTIP_SET : .
@@ -144,17 +148,42 @@
 	if(istype(tool, /obj/item/clothing/accessory))
 		return attach_accessory(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if(has_sensor == NO_SENSORS && (istype(tool, /obj/item/radio) && !istype(tool, /obj/item/radio/headset)))
+	if(istype(tool, /obj/item/suit_sensor))
+		if(has_sensor != NO_SENSORS)
+			balloon_alert(user, "already has sensors!")
+			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "installing sensors...")
 		if(!do_after(user, 5 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		set_has_sensor(HAS_SENSORS)
+		var/obj/item/suit_sensor/sensor = tool
+		if(sensor.broken)
+			set_has_sensor(BROKEN_SENSORS)
+		else
+			set_has_sensor(HAS_SENSORS)
+			set_sensor_mode(sensor.sensor_mode)
 		qdel(tool)
 		balloon_alert(user, "sensors installed")
 		playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 		return ITEM_INTERACT_SUCCESS
 
 	return ..()
+
+/obj/item/clothing/under/wirecutter_act(mob/living/user, obj/item/tool)
+	if(has_sensor == NO_SENSORS)
+		balloon_alert(user, "doesn't have sensors!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "cutting out sensors...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/suit_sensor/sensor = new (drop_location())
+	if(sensor.IsReachableBy(user))
+		user.put_in_hands(sensor)
+	if(has_sensor == BROKEN_SENSORS)
+		sensor.broken = TRUE
+	else
+		sensor.set_mode(sensor_mode)
+	set_has_sensor(NO_SENSORS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/under/attack_hand_secondary(mob/user, params)
 	. = ..()
@@ -439,14 +468,14 @@
 	if(!can_toggle_sensors(user_mob))
 		return
 
-	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
-	if(isnull(switchMode))
+	var/current_mode_text = GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1)
+	var/new_mode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, GLOB.suit_sensor_mode_to_defines[current_mode_text])
+	if(isnull(new_mode))
 		return
 	if(!can_toggle_sensors(user_mob))
 		return
 
-	set_sensor_mode(modes.Find(switchMode) - 1)
+	set_sensor_mode(GLOB.suit_sensor_mode_to_defines[new_mode])
 	if (loc == user_mob)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
