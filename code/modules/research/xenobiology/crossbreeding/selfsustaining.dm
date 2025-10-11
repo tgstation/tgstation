@@ -32,7 +32,7 @@ Self-sustaining extracts:
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/list/slime_recipes = GLOB.slime_extract_recipe_list[extract.type]
+	var/list/slime_recipes = GLOB.slime_extract_auto_activate_reactions[extract.type]
 	if(isnull(slime_recipes))
 		return
 
@@ -61,9 +61,7 @@ Self-sustaining extracts:
 	qdel(src)
 	user.put_in_active_hand(extract)
 
-	var/list/required_reagents = recipeselect.required_reagents
-	for(var/datum/reagent/chem as anything in required_reagents)
-		extract.reagents.add_reagent(chem, required_reagents[chem])
+	extract.auto_activate_reaction(recipeselect)
 
 /obj/item/autoslime/examine(mob/user)
 	. = ..()

@@ -106,20 +106,12 @@
 /obj/effect/payload_spawner/random_slime/volatile
 	volatile = TRUE
 
-/obj/item/slime_extract/proc/activate_slime()
-	var/list/slime_recipes = GLOB.slime_extract_recipe_list[src.type]
-	if(!QDELETED(src) && slime_recipes)
-		var/datum/chemical_reaction/slime/recipeselect = pick(slime_recipes)
-		var/list/required_reagents = recipeselect.required_reagents
-		for(var/datum/reagent/chem as anything in required_reagents)
-			reagents.add_reagent(chem, required_reagents[chem])
-
 /obj/effect/payload_spawner/random_slime/spawn_payload(type, numspawned)
 	for(var/_ in 1 to numspawned)
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/slime_extract = new chosen(loc)
 		if(volatile)
-			addtimer(CALLBACK(slime_extract, TYPE_PROC_REF(/obj/item/slime_extract, activate_slime)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+			addtimer(CALLBACK(slime_extract, TYPE_PROC_REF(/obj/item/slime_extract, auto_activate_reaction), null), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 		var/steps = rand(1, 4)
 		for(var/step in 1 to steps)
 			step_away(src, loc)
