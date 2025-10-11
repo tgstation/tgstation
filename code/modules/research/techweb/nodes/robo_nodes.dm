@@ -31,7 +31,8 @@
 	design_ids = list(
 		"aicore",
 		"aifixer",
-		"aiupload",
+		"airack_normal",
+		"airack_small",
 		"asimov_module",
 		"borg_ai_control",
 		"corporate_module",
@@ -45,8 +46,6 @@
 		"paladin_module",
 		"protectstation_module",
 		"quarantine_module",
-		"remove_module",
-		"reset_module",
 		"robocop_module",
 		"safeguard_module",
 	)
@@ -59,7 +58,6 @@
 		design_ids -= list(
 			"aicore",
 			"aifixer",
-			"aiupload",
 			"borg_ai_control",
 			"intellicard",
 			"mecha_tracking_ai_control",
@@ -89,7 +87,6 @@
 		"painter_module",
 		"paladin_devotion_module",
 		"peacekeeper_module",
-		"purge_module",
 		"reporter_module",
 		"ten_commandments_module",
 		"thermurderdynamic_module",
