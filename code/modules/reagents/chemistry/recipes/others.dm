@@ -52,6 +52,8 @@
 	required_catalysts = list(/datum/reagent/stabilizing_agent = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
+#define MAX_EXO_TEMP 800
+
 /datum/chemical_reaction/plasma_solidification
 	required_reagents = list(/datum/reagent/iron = 5, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 20)
 	mob_react = FALSE
@@ -59,7 +61,23 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/plasma(get_turf(holder.my_atom), round(created_volume))
+	var/turf/reaction_location = get_turf(holder.my_atom)
+	var/obj/material_sheet = new /obj/item/stack/sheet/mineral/plasma(reaction_location, round(created_volume))
+
+	if(!reaction_location)
+		return
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
+	var/triggered_sparks = FALSE
+	for(var/creation_loop in 1 to round(created_volume))
+		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.05), T20C, MAX_EXO_TEMP)
+
+		if(enviro.temperature >= MAX_EXO_TEMP && !triggered_sparks) //Only trigger once for performance concerns.
+			material_sheet.visible_message("\The [material_sheet] reacts with the ambient heat and ignites the air!")
+			reaction_location.hotspot_expose(MAX_EXO_TEMP, CELL_VOLUME)
+			triggered_sparks = TRUE
+
+	reaction_location.air_update_turf(FALSE, FALSE)
 
 /datum/chemical_reaction/gold_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/gold = 20, /datum/reagent/iron = 1)
@@ -68,7 +86,16 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/gold(get_turf(holder.my_atom), round(created_volume))
+	var/turf/reaction_location = get_turf(holder.my_atom)
+	if(!reaction_location)
+		return
+
+	new /obj/item/stack/sheet/mineral/gold(reaction_location, round(created_volume))
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
+	for(var/creation_loop in 1 to round(created_volume))
+		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.1), T20C, MAX_EXO_TEMP)
+	reaction_location.air_update_turf(FALSE, FALSE)
 
 /datum/chemical_reaction/uranium_solidification
 	required_reagents = list(/datum/reagent/consumable/frostoil = 5, /datum/reagent/uranium = 20, /datum/reagent/potassium = 1)
@@ -77,7 +104,54 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/uranium(get_turf(holder.my_atom), round(created_volume))
+	var/turf/reaction_location = get_turf(holder.my_atom)
+	var/obj/mineral_sheet = new /obj/item/stack/sheet/mineral/uranium(reaction_location, round(created_volume))
+
+	if(!reaction_location)
+		return
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
+	for(var/creation_loop in 1 to round(created_volume))
+		enviro.temperature = clamp(max(T20C, enviro.temperature * 1.08), T20C, MAX_EXO_TEMP)
+		if(enviro.temperature >= MAX_EXO_TEMP)
+			radiation_pulse(
+				mineral_sheet,
+				max_range = 2,
+				threshold = RAD_VERY_LIGHT_INSULATION,
+				chance = (URANIUM_IRRADIATION_CHANCE / 4),
+				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+			)
+			mineral_sheet.propagate_radiation_pulse()
+	reaction_location.air_update_turf(FALSE, FALSE)
+
+/datum/chemical_reaction/silver_solidification
+	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
+	required_temp = 630
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
+
+/datum/chemical_reaction/silver_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	new /obj/item/stack/sheet/mineral/silver(get_turf(holder.my_atom), round(created_volume))
+
+/datum/chemical_reaction/hauntium_solidification
+	required_reagents = list(/datum/reagent/water/holywater = 10, /datum/reagent/hauntium = 20, /datum/reagent/iron = 1)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/hauntium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/turf/reaction_location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/hauntium(get_turf(holder.my_atom), round(created_volume))
+
+	if(!reaction_location)
+		return
+
+	var/datum/gas_mixture/enviro = reaction_location.return_air()
+	for(var/creation_loop in 1 to round(created_volume))
+		enviro.temperature = clamp(min(TCMB, enviro.temperature * 0.9), TCMB, enviro.temperature)
+	reaction_location.air_update_turf(FALSE, FALSE)
+#undef MAX_EXO_TEMP
 
 /datum/chemical_reaction/capsaicincondensation
 	results = list(/datum/reagent/consumable/condensedcapsaicin = 5)
@@ -858,16 +932,6 @@
 	required_reagents = list(/datum/reagent/plasma_oxide = 1,/datum/reagent/stabilizing_agent = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
-/datum/chemical_reaction/silver_solidification
-	required_reagents = list(/datum/reagent/silver = 20, /datum/reagent/carbon = 10)
-	required_temp = 630
-	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
-
-/datum/chemical_reaction/silver_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/mineral/silver(get_turf(holder.my_atom), round(created_volume))
-
 /datum/chemical_reaction/bone_gel
 	required_reagents = list(/datum/reagent/bone_dust = 10, /datum/reagent/carbon = 10)
 	required_temp = 630
@@ -1029,15 +1093,6 @@
 	for(var/i in 1 to rand(1, created_volume))
 		new /mob/living/basic/ant(location)
 	..()
-
-/datum/chemical_reaction/hauntium_solidification
-	required_reagents = list(/datum/reagent/water/holywater = 10, /datum/reagent/hauntium = 20, /datum/reagent/iron = 1)
-	mob_react = FALSE
-	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
-
-/datum/chemical_reaction/hauntium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/stack/sheet/hauntium(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/fish_hallucinogen_degradation
 	results = list(/datum/reagent/consumable/nutriment/protein = 0.1)
