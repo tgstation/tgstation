@@ -124,7 +124,7 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
+			"paid" = order.paying_account?.add_to_accounts ? 1 : 0, //number of orders purchased privatly
 			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
@@ -242,14 +242,14 @@
 	if(isliving(user))
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-		if(!istype(id_card) && self_paid)
-			say("No ID card detected.")
-			return
-		if(IS_DEPARTMENTAL_CARD(id_card) && self_paid)
-			say("The [src] rejects [id_card].")
-			return
 		account = id_card?.registered_account // We can still assign an account for request department purposes.
 		if(self_paid)
+			if(!istype(id_card))
+				say("No ID card detected.")
+				return
+			if(IS_DEPARTMENTAL_CARD(id_card))
+				say("The [src] rejects [id_card].")
+				return
 			if(!istype(account))
 				say("Invalid bank account.")
 				return
@@ -261,6 +261,7 @@
 	// The list we are operating on right now
 	var/list/working_list = SSshuttle.shopping_list
 	var/reason = ""
+	var/datum/bank_account/personal_department
 	if(requestonly && !self_paid && !pack.goody)
 		working_list = SSshuttle.request_list
 		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
@@ -269,15 +270,13 @@
 
 		name = account?.account_holder
 		if(account?.account_job)
-			var/datum/bank_account/personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
+			personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
 			if(!(personal_department.account_holder == "Cargo Budget"))
-				var/dept_choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
+				var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
 				if(!dept_choice)
 					return
-				if(dept_choice != "Cargo Budget")
-					account = personal_department
-			else
-				account = SSeconomy.get_dep_account(cargo_account)
+				if(dept_choice == "Cargo Budget")
+					personal_department = SSeconomy.get_dep_account(cargo_account)
 
 	if(pack.goody && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -289,6 +288,9 @@
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
+
+	if(!self_paid)
+		account = personal_department
 
 	amount = clamp(amount, 1, CARGO_MAX_ORDER - similar_count)
 	for(var/count in 1 to amount)
