@@ -36,9 +36,24 @@ Self-sustaining extracts:
 	if(isnull(slime_recipes))
 		return
 
-	var/datum/chemical_reaction/slime/recipeselect = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", sort_list(slime_recipes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	var/list/choices = list()
+	for(var/datum/chemical_reaction/slime/recipe as anything in slime_recipes)
+		var/choice = ""
+		for(var/datum/reagent/chem as anything in recipe.required_reagents)
+			if(length(choice)==0)
+				choice = chem.name
+			else
+				choice += ", [chem.name]"
+		choices[choice] = recipe
+
+	var/selectName = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", choices)
+	if(isnull(selectName))
+		return
+
+	var/datum/chemical_reaction/slime/recipeselect = choices[selectName]
 	if(isnull(recipeselect))
 		return
+
 	if (user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 
