@@ -621,8 +621,8 @@
 		user.dropItemToGround(src)
 		return TRUE
 
-/// Callled when a mob is manually attempting to unequip the item
-/// Returning FALSE wlil prevent the unequip from happening
+/// Called when a mob is manually attempting to unequip the item
+/// Returning FALSE will prevent the unequip from happening
 /obj/item/proc/can_mob_unequip(mob/user)
 	return TRUE
 
