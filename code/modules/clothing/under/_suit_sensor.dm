@@ -56,7 +56,7 @@
 		user.balloon_alert(user, "can't do that now!")
 		return
 	set_mode(GLOB.suit_sensor_mode_to_defines[new_mode])
-	balloon_alert(user, "sensor set to '[lowertext(new_mode)]'")
+	balloon_alert(user, "sensor set to '[LOWER_TEXT(new_mode)]'")
 
 /obj/item/suit_sensor/emp_act(severity)
 	. = ..()
