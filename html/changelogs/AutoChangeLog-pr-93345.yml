@@ -1,6 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - qol: "Flowers can now be attached to space helmets."
-  - qol: "Taking hats off of helmets will now put them in your hand."
-  - bugfix: "MOD flashlights won't move hats on them when toggling."

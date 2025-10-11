@@ -346,3 +346,48 @@
   necromanceranne:
   - refactor: The vorpal scythe now handles empowerment more cleanly.
   - refactor: The pipegun now hints at its deep lore.
+2025-10-11:
+  Fghj240:
+  - rscadd: New T3 cybernetic ears, the volume-adjusted ears.
+  - balance: The T1 and T2 ears are now slightly worse than and slightly better than
+      normal ears, respectively.
+  Ghommie:
+  - refactor: Refactored shared nullrod effects into an element.
+  - bugfix: The carp-sie plushie is now an actual plushie.
+  - balance: The toy cargo pack can no longer spawn ANY type of plushie. Instead it'll
+      pull from the dedicated plushie spawner, which now contains the donk, rouny
+      and whiny plushies as well.
+  - code_imp: Merged the human and living versions of the scream emote. Remember to
+      reset your scream hotkey if it is ever unset.
+  Iajret:
+  - bugfix: fixed not working MOD suit NVGs
+  Iamgoofball:
+  - bugfix: Fixes the clown/mime honorifics
+  Melbert:
+  - bugfix: You can interact with soup pots on stoves again
+  - balance: Death of artifical mobs (such as monkey cube monkeys) result in a 75%
+      weaker, 80% shorter moodlet that does not compound with more deaths.
+  SmArtKar:
+  - balance: Brimdust sacks no longer hit user's mount or allied mobs within lavaland
+      pressure.
+  - balance: Rush glands have had their speed boost reduced, but got a massive increase
+      in duration. Non-implanted glands also only protect from damage slowdowns as
+      opposed to all slowdowns in general.
+  - balance: Goliaths, raptors and goldgrubs are now affected by movespeed modifiers,
+      such as rush glands, when mounted.
+  - image: Brimdust sacks' effect have received a visual upgrade.
+  Sothanforax:
+  - rscadd: Added chitter and squeak emotes for moths
+  - sound: Added chitters and squeaks
+  lelandkemble:
+  - qol: Flowers can now be attached to space helmets.
+  - qol: Taking hats off of helmets will now put them in your hand.
+  - bugfix: MOD flashlights won't move hats on them when toggling.
+  necromanceranne:
+  - bugfix: The warp sfx now works properly.
+  - rscadd: Adds the Jaws of Recovery. One can be found in a locked glass cabinet
+      in medical. These jaws of life are restricted on what they can force open, and
+      alert security and medical whenever they are utilized to pry open departmental
+      doors. They can't be used to open high security doors whatsoever. And they come
+      with a bonesetter attachment instead of wirecutters. You know, for power-relocating
+      your arm.

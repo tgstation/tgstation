@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - code_imp: "Merged the human and living versions of the scream emote. Remember to reset your scream hotkey if it is ever unset."
