@@ -1,5 +1,6 @@
-#define ENGINE_COOLDOWN (5 SECONDS)
-#define SLASH_COOLDOWN (1.2 SECONDS)
+#define ENGINE_COOLDOWN 5 SECONDS
+#define SLASH_COOLDOWN 1.2 SECONDS
+#define SLASH_WINDUP 2 SECONDS
 #define CHARGE_DAMAGE_MOD 10
 #define HOUSE_EDGE_ICONS_MAX 3
 #define HOUSE_EDGE_ICONS_MIN 0
@@ -59,6 +60,7 @@
 	throwforce = 10
 	throw_range = 5
 	throw_speed = 1
+	armour_penetration = 15
 	hitsound = 'sound/items/car_engine_start.ogg'
 	/// The number of charges the house edge has accrued through 2-handed hits, to charge a more powerful charge attack.
 	var/fire_charges = 0
@@ -89,20 +91,20 @@
 	if(fire_charges <= 0)
 		balloon_alert(user, "no fire charges!")
 		return ITEM_INTERACT_BLOCKING
-	// user.throw_at(target = get_turf(interacting_with), range = 2 * fire_charges, speed = 5, thrower = user, spin = FALSE, gentle = FALSE, quickstart = TRUE)
 	to_chat(user, span_boldnotice("You take aim at [interacting_with]..."))
 	user.add_shared_particles(/particles/bonfire)
 
-	if(!do_after(user, 2 SECONDS, target = src))
+	if(!do_after(user, SLASH_WINDUP, target = src))
 		// Special attack fizzles, no slash and charges lost.
 		reset_charges()
 		drop_particles(user)
 		return ITEM_INTERACT_BLOCKING
 
-	user.add_shared_particles(/particles/smoke/ash)
-	Shake(duration = ENGINE_COOLDOWN)
+	user.add_shared_particles(/particles/bonfire)
+	new /obj/effect/temp_visual/focus_ring(get_turf(src))
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 35, vary = FALSE, extrarange = 3)
-	if(!do_after(user, 2 SECONDS, target = src) || fire_charges < 3)
+
+	if(!do_after(user, SLASH_WINDUP, target = src) || fire_charges < 3)
 		flaming_slash(interacting_with, user, upgraded = FALSE)
 		return ITEM_INTERACT_SUCCESS
 
@@ -128,7 +130,6 @@
 
 /// Kills any of the relevant particles off the wielder, as added during special attacks.
 /obj/item/house_edge/proc/drop_particles(mob/living/user)
-	user.remove_shared_particles(/particles/smoke/ash)
 	user.remove_shared_particles(/particles/bonfire)
 
 /**
@@ -148,7 +149,6 @@
 		projectile.damage /= 2 // The damage is pretty solid normally, but with the explosion and all the RNG that comes with, it's nearly a 1-shot. This evens a playing field a bit.
 	projectile.fire(null, interacting_with)
 
-	user.remove_shared_particles(/particles/bonfire)
 	user.visible_message(span_danger("[user] makes a[upgraded ? " devastating" : "" ] blazing slash at [interacting_with]!"),\
 		span_notice("You take a blazing swipe at [interacting_with]!"))
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', vol = 75, vary = FALSE, extrarange = 3)
