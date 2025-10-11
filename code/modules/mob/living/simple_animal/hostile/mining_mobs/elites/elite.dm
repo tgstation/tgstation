@@ -2,6 +2,9 @@
 #define TUMOR_ACTIVE 1
 #define TUMOR_PASSIVE 2
 
+// Makes the elite mob weaker on victory so they don't just go and trash the station with a dangerous, big health pool
+#define ELITE_POST_BATTLE_HEALTH_MULTIPLIER 0.4
+
 //Elite mining mobs
 /mob/living/simple_animal/hostile/asteroid/elite
 	name = "elite"
@@ -30,6 +33,7 @@
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
 	grant_actions_by_list(attack_action_types)
+	ADD_TRAIT(src, TRAIT_UNCONVERTABLE, INNATE_TRAIT) //You cannot convert them while they're battling.
 
 //Prevents elites from attacking members of their faction (can't hurt themselves either) and lets them mine rock with an attack despite not being able to smash walls.
 /mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget(atom/attacked_target)
@@ -226,7 +230,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	mychild.revive(HEAL_ALL)
 	if(boosted)
-		mychild.maxHealth = mychild.maxHealth * 2
+		mychild.maxHealth *= 1 / ELITE_POST_BATTLE_HEALTH_MULTIPLIER //we multiply it back to its original value
 		mychild.health = mychild.maxHealth
 		notify_ghosts(
 			"\A [mychild] has been challenged in \the [get_area(src)]!",
@@ -235,6 +239,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 	mychild.log_message("has been challenged by [key_name(activator)]!", LOG_GAME, color="#960000")
+	ADD_TRAIT(mychild, TRAIT_UNCONVERTABLE, INNATE_TRAIT)
 
 /obj/structure/elite_tumor/Initialize(mapload)
 	. = ..()
@@ -344,7 +349,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	mychild.revive(HEAL_ALL)
 	if(boosted)
 		times_won++
-		mychild.maxHealth = mychild.maxHealth * 0.4
+		mychild.maxHealth *= ELITE_POST_BATTLE_HEALTH_MULTIPLIER
 		mychild.health = mychild.maxHealth
 	if(times_won == 1)
 		mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
@@ -355,6 +360,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			Bear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight. In such a case, you will regain your full max health.\n\
 			Also, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
 		to_chat(mychild, span_boldbig("Note that you are a lavaland monster, and thus not allied to the station. You should not cooperate or act friendly with any station crew unless under extreme circumstances!"))
+
+	REMOVE_TRAIT(mychild, TRAIT_UNCONVERTABLE, INNATE_TRAIT)
 
 /obj/item/tumor_shard
 	name = "tumor shard"
@@ -373,20 +380,21 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(!istype(interacting_with, /mob/living/simple_animal/hostile/asteroid/elite))
 		return NONE
 
-	var/mob/living/simple_animal/hostile/asteroid/elite/E = interacting_with
-	if(E.stat != DEAD || E.sentience_type != SENTIENCE_BOSS || !E.key)
-		user.visible_message(span_notice("It appears [E] is unable to be revived right now. Perhaps try again later."))
+	var/mob/living/simple_animal/hostile/asteroid/elite/elite = interacting_with
+	if(elite.stat != DEAD || elite.sentience_type != SENTIENCE_BOSS || !elite.key)
+		user.visible_message(span_notice("It appears [elite] is unable to be revived right now. Perhaps try again later."))
 		return ITEM_INTERACT_BLOCKING
-	E.faction = list("[REF(user)]")
-	E.revive(HEAL_ALL)
-	user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
-	E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
-	to_chat(E, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
-	to_chat(E, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
-	E.maxHealth = E.maxHealth * 0.4
-	E.health = E.maxHealth
-	E.desc = "[E.desc] However, this one appears to be less wild in nature, and calmer around people."
-	E.sentience_type = SENTIENCE_ORGANIC
+	elite.faction = list("[REF(user)]")
+	elite.revive(HEAL_ALL)
+	user.visible_message(span_notice("[user] stabs [elite] with [src], reviving it."))
+	elite.playsound_local(get_turf(elite), 'sound/effects/magic.ogg', 40, 0)
+	to_chat(elite, span_userdanger("You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk."))
+	to_chat(elite, span_boldbig("Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!"))
+	elite.maxHealth *= ELITE_POST_BATTLE_HEALTH_MULTIPLIER
+	elite.health = elite.maxHealth
+	elite.desc = "[elite.desc] However, this one appears to be less wild in nature, and calmer around people."
+	elite.sentience_type = SENTIENCE_ORGANIC
+	REMOVE_TRAIT(elite, TRAIT_UNCONVERTABLE, INNATE_TRAIT)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -422,6 +430,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(mover == ourelite_ref.resolve() || mover == activator_ref.resolve())
 		return FALSE
+
+#undef ELITE_POST_BATTLE_HEALTH_MULTIPLIER
 
 #undef TUMOR_ACTIVE
 #undef TUMOR_INACTIVE
