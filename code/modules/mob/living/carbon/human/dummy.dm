@@ -82,6 +82,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
+	update_lips(null, null, null, update = FALSE)
 	cut_overlays(TRUE)
 
 /mob/living/carbon/human/dummy/setup_human_dna()
