@@ -253,7 +253,7 @@
 		var/res_amount = recipe.result_amount || 1
 		//we don't merge the stack right away but try to put it in the hand of the crafter
 		if(set_materials)
-			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount )
+			result = new recipe.result(craft_turf, res_amount, /*merge =*/ FALSE, /*mat_override =*/ total_materials, /*mat_amt =*/ 1 / res_amount)
 			set_materials = FALSE //We've already set the materials on init. Don't do it again
 		else
 			result = new recipe.result(craft_turf, res_amount, FALSE)

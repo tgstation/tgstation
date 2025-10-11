@@ -94,13 +94,11 @@
 	if(merge)
 		. = INITIALIZE_HINT_LATELOAD
 
-	var/materials_mult = amount
 	if(LAZYLEN(mat_override))
-		materials_mult *= mat_amt
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit)
-		initialize_materials(mats_per_unit, materials_mult)
+		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit, mat_amt)
+		initialize_materials(mats_per_unit, amount)
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
