@@ -66770,6 +66770,7 @@
 "wPH" = (
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/structure/table,
+/obj/item/multitool,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
