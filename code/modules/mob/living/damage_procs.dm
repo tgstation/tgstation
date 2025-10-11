@@ -276,6 +276,31 @@
 		return FALSE
 	return TRUE
 
+/mob/living/proc/metabolic_damage_adjust(datum/reagent/caused_by, damage_type, amount, updating_health = null, updating_stamina = null, forced = null, required_biotype = null, required_bodytype = null, required_respiration_type = null)
+	var/list/args_to_pass = list()
+	args_to_pass["amount"] = amount
+	switch(damage_type)
+		if(STAMINALOSS)
+			args_to_pass["updating_stamina"] = updating_stamina
+			args_to_pass["required_biotype"] = required_biotype
+			return adjustStaminaLoss(arglist(args_to_pass))
+		if(OXYLOSS)
+			args_to_pass["updating_health"] = updating_health
+			args_to_pass["required_respiration_type"] = required_respiration_type
+			return adjustOxyLoss(arglist(args_to_pass))
+		if(TOXLOSS)
+			args_to_pass["updating_health"] = updating_health
+			args_to_pass["required_biotype"] = required_biotype
+			return adjustToxLoss(arglist(args_to_pass))
+		if(BRUTELOSS)
+			args_to_pass["updating_health"] = updating_health
+			args_to_pass["required_bodytype"] = required_bodytype
+			return adjustBruteLoss(arglist(args_to_pass))
+		if(FIRELOSS)
+			args_to_pass["updating_health"] = updating_health
+			args_to_pass["required_bodytype"] = required_bodytype
+			return adjustFireLoss(arglist(args_to_pass))
+
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if (!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
@@ -434,6 +459,9 @@
 		updatehealth()
 
 /mob/living/proc/adjustOrganLoss(slot, amount, maximum, required_organ_flag)
+	return
+
+/mob/living/proc/metabolic_organ_adjust(datum/reagent/caused_by, slot, amount, maximum, required_organ_flag)
 	return
 
 /mob/living/proc/setOrganLoss(slot, amount, maximum, required_organ_flag)
