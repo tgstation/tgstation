@@ -126,8 +126,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	reactions_loop:
 		for(var/datum/chemical_reaction/slime/slime_reaction as anything in subtypesof(/datum/chemical_reaction/slime))
 			var/recipe_extract_type = slime_reaction.required_container
-
-			if(recipe_extract_type && recipe_extract_type in slime_extract_paths)
+			if(recipe_extract_type in slime_extract_paths)
 				for(var/datum/reagent/chem as anything in slime_reaction.required_reagents)
 					if(!(chem in auto_activate_reagent_whistlist))
 						continue reactions_loop
