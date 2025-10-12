@@ -331,11 +331,12 @@
 	var/emissive_effect
 	if((owner && HAS_TRAIT(owner, TRAIT_LUMINESCENT_EYES)) || (TRAIT_LUMINESCENT_EYES in organ_traits))
 		emissive_effect = EMISSIVE_BLOOM
-	else if((owner && HAS_TRAIT(owner, TRAIT_REFLECTIVE_EYES)) || (TRAIT_LUMINESCENT_EYES in organ_traits))
+	else if((owner && HAS_TRAIT(owner, TRAIT_REFLECTIVE_EYES)) || (TRAIT_REFLECTIVE_EYES in organ_traits))
 		emissive_effect = EMISSIVE_SPECULAR
 	if(emissive_effect)
 		return_list += emissive_appearance(eye_left.icon, eye_left.icon_state, spokesman, -EYES_LAYER, alpha = eye_left.alpha, effect_type = emissive_effect)
 		return_list += emissive_appearance(eye_right.icon, eye_right.icon_state, spokesman, -EYES_LAYER, alpha = eye_right.alpha, effect_type = emissive_effect)
+	return return_list
 
 /obj/item/organ/eyes/update_overlays()
 	. = ..()
