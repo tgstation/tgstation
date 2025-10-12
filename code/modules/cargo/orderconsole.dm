@@ -124,8 +124,8 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = order.paying_account?.add_to_accounts ? TRUE : FALSE, //number of orders purchased privatly
-			"dep_order" = order.department_destination ? TRUE : FALSE, //number of orders purchased by a department
+			"paid" = !!order.paying_account?.add_to_accounts, //number of orders purchased privatly
+			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
 	data["cart"] = list()
