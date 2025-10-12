@@ -45,8 +45,13 @@
 		span_notice("[user] completes the surgery on [target]'s ears."),
 	)
 	display_pain(target, "Your head swims, but it seems like you can feel your hearing coming back!")
-	target_ears.deaf = (20) //deafness works off ticks, so this should work out to about 30-40s
 	target_ears.set_organ_damage(0)
+	///makes you temporarily deaf for a duration post-surgery
+	var/deaf_change = 40 SECONDS - target_ears.temporary_deafness
+	if(deaf_change > 0)
+		target_ears.temporarily_deafen(deaf_change)
+	else
+		target_ears.recover_temp_deafness(-deaf_change)
 	return ..()
 
 /datum/surgery_step/fix_ears/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

@@ -61,7 +61,9 @@
 					ADD_TRAIT(infected_mob, TRAIT_DEAF, DISEASE_TRAIT)
 			else
 				to_chat(infected_mob, span_userdanger("Your ears pop and begin ringing loudly!"))
-				ears.deaf = min(20, ears.deaf + 15)
+				var/deafness_to_add = min(40 SECONDS - ears.temporary_deafness, 30 SECONDS)
+				if(deafness_to_add > 0)
+					ears.temporarily_deafen(deafness_to_add)
 
 /datum/symptom/deafness/on_stage_change(datum/disease/advance/advanced_disease)
 	. = ..()

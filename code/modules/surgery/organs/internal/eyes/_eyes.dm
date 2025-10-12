@@ -152,6 +152,11 @@
 	organ_owner.remove_status_effect(/datum/status_effect/eye_blur)
 	organ_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
 
+	if (scarring)
+		owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
+		owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
+		owner.cure_blind(EYE_SCARRING_TRAIT)
+
 	organ_owner.update_tint()
 	organ_owner.update_sight()
 	UnregisterSignal(organ_owner, list(
@@ -374,13 +379,6 @@
 	owner.cure_nearsighted(side == RIGHT_EYE_SCAR ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR)
 	owner.cure_blind(EYE_SCARRING_TRAIT)
 	owner.update_body()
-
-/obj/item/organ/eyes/on_mob_remove(mob/living/carbon/eye_owner)
-	. = ..()
-	if (scarring)
-		eye_owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
-		eye_owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
-		eye_owner.cure_blind(EYE_SCARRING_TRAIT)
 
 #undef OFFSET_X
 #undef OFFSET_Y

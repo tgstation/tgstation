@@ -517,8 +517,8 @@
 
 	if(ears && (deafen_pwr || damage_pwr))
 		var/ear_damage = damage_pwr * effect_amount
-		var/deaf = deafen_pwr * effect_amount
-		ears.adjustEarDamage(ear_damage,deaf)
+		var/deaf = deafen_pwr * effect_amount * 2 SECONDS
+		ears.sound_damage(ear_damage, deaf)
 
 		. = effect_amount //how soundbanged we are
 		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))

@@ -78,15 +78,13 @@ In all, this is a lot like the monkey code. /N
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
-			if(ears)
-				ears.adjustEarDamage(30,120)
+			ears?.sound_damage(300, 240 SECONDS)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)
-			if(ears)
-				ears.adjustEarDamage(15,60)
+			ears?.sound_damage(15, 120 SECONDS)
 
 	return TRUE
 

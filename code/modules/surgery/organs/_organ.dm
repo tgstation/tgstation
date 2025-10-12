@@ -250,7 +250,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return FALSE
 	damage = clamp(damage + damage_amount, 0, maximum)
 	. = (prev_damage - damage) // return net damage
-	var/message = check_damage_thresholds(owner)
+	var/message = check_damage_thresholds()
 	prev_damage = damage
 
 	var/was_failing = organ_flags & ORGAN_FAILING
@@ -273,7 +273,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
  *  If we have, send the corresponding threshold message to the owner, if such a message exists.
  */
-/obj/item/organ/proc/check_damage_thresholds(mob/organ_owner)
+/obj/item/organ/proc/check_damage_thresholds()
+	SHOULD_CALL_PARENT(TRUE)
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
@@ -351,9 +352,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		dna.species.regenerate_organs(src, replace_current = FALSE)
 		set_heartattack(FALSE)
 
-		// Ears have aditional vаr "deaf", need to update it too
+		// Ears have aditional var "deaf", need to update it too
 		var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-		ears?.adjustEarDamage(0, -INFINITY) // full heal ears deafness
+		ears.recover_temp_deafness(INFINITY)
 
 		return
 
@@ -390,7 +391,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!ears)
 		ears = new()
 		ears.Insert(src)
-	ears.adjustEarDamage(-INFINITY, -INFINITY) // actually do: set_organ_damage(0) and deaf = 0
+	ears.set_organ_damage(0)
+	ears.recover_temp_deafness(INFINITY)
 
 ///Organs don't die instantly, and neither should you when you get fucked up
 /obj/item/organ/proc/handle_failing_organs(seconds_per_tick)
