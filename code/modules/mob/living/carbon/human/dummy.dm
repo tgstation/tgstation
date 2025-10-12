@@ -156,6 +156,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/consistent/domutcheck()
 	return // We skipped adding any mutations so this runtimes
 
+/mob/living/carbon/human/consistent/slow
+
 #ifdef UNIT_TESTS
 //unit test dummies should be very fast with actions
 /mob/living/carbon/human/dummy/consistent/initialize_actionspeed()
