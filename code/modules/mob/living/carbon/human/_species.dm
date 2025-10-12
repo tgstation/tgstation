@@ -494,20 +494,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_body(mob/living/carbon/human/species_human)
 	species_human.remove_overlay(BODY_LAYER)
-	species_human.remove_overlay(EYES_LAYER)
 
 	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
+		species_human.remove_overlay(EYES_LAYER)
 		return
 
-	if(!HAS_TRAIT(species_human, TRAIT_HUSK))
-		var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
-		if(noggin?.head_flags & HEAD_EYESPRITES)
-			// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
-			var/obj/item/organ/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
-			if(eye_organ)
-				eye_organ.refresh(call_update = FALSE)
-				species_human.overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(species_human)
-				species_human.apply_overlay(EYES_LAYER)
+	handle_eyes(species_human)
 
 	if(HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		return
@@ -545,6 +537,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		species_human.overlays_standing[BODY_LAYER] = standing
 
 	species_human.apply_overlay(BODY_LAYER)
+
+/datum/species/proc/handle_eyes(mob/living/carbon/human/species_human)
+	species_human.remove_overlay(EYES_LAYER)
+	if(HAS_TRAIT(species_human, TRAIT_HUSK))
+		return
+	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
+	if(!(noggin?.head_flags & HEAD_EYESPRITES))
+		return
+	// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
+	var/obj/item/organ/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
+	if(eye_organ)
+		eye_organ.refresh(call_update = FALSE)
+		species_human.overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(species_human)
+		species_human.apply_overlay(EYES_LAYER)
 
 /// Updates face (as of now, only eye) offsets
 /datum/species/proc/update_face_offset(mob/living/carbon/human/species_human)

@@ -187,7 +187,7 @@
 					eye_left.color = eyes.eye_color_left
 				if(eyes.eye_color_right)
 					eye_right.color = eyes.eye_color_right
-			if(eyes.overlay_ignore_lighting)
+			if(TRAIT_LUMINESCENT_EYES in eyes.organ_traits)
 				eye_left.overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha)
 				eye_right.overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha)
 			else if(blocks_emissive != EMISSIVE_BLOCK_NONE)

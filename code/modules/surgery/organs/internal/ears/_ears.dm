@@ -240,16 +240,9 @@
 	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
-
-// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
-// This seems like the least invasive solution
-/obj/item/organ/ears/cybernetic/whisper/on_mob_insert(mob/living/carbon/ear_owner)
-	. = ..()
-	ADD_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
-
-/obj/item/organ/ears/cybernetic/whisper/on_mob_remove(mob/living/carbon/ear_owner)
-	. = ..()
-	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+	// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
+	// This seems like the least invasive solution
+	organ_traits = list(TRAIT_GOOD_HEARING)
 
 // "X-ray ears" that let you hear through walls
 /obj/item/organ/ears/cybernetic/xray
@@ -258,14 +251,7 @@
 	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
-
-/obj/item/organ/ears/cybernetic/xray/on_mob_insert(mob/living/carbon/ear_owner)
-	. = ..()
-	ADD_TRAIT(ear_owner, TRAIT_XRAY_HEARING, ORGAN_TRAIT)
-
-/obj/item/organ/ears/cybernetic/xray/on_mob_remove(mob/living/carbon/ear_owner)
-	. = ..()
-	REMOVE_TRAIT(ear_owner, TRAIT_XRAY_HEARING, ORGAN_TRAIT)
+	organ_traits = list(TRAIT_XRAY_HEARING)
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()

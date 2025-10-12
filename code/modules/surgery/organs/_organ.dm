@@ -253,9 +253,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	var/message = check_damage_thresholds(owner)
 	prev_damage = damage
 
+	var/was_failing = organ_flags & ORGAN_FAILING
 	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-	else
+		if(!was_failing)
+			organ_flags |= ORGAN_FAILING
+	else if(was_failing)
 		organ_flags &= ~ORGAN_FAILING
 
 	if(message && owner && owner.stat <= SOFT_CRIT)
@@ -276,19 +278,56 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	var/delta = damage - prev_damage
 	if(delta > 0)
-		if(damage >= maxHealth)
-			return now_failing
-		if(damage > high_threshold && prev_damage <= high_threshold)
-			return high_threshold_passed
 		if(damage > low_threshold && prev_damage <= low_threshold)
-			return low_threshold_passed
-	else
-		if(prev_damage > low_threshold && damage <= low_threshold)
-			return low_threshold_cleared
-		if(prev_damage > high_threshold && damage <= high_threshold)
-			return high_threshold_cleared
-		if(prev_damage == maxHealth)
-			return now_fixed
+			on_low_damage_received()
+			. = low_threshold_passed
+		if(damage > high_threshold && prev_damage <= high_threshold)
+			on_high_damage_received()
+			. = high_threshold_passed
+		if(damage >= maxHealth)
+			on_begin_failure()
+			. = now_failing
+		return
+
+	if(prev_damage == maxHealth)
+		on_failure_recovery()
+		. = now_fixed
+	if(prev_damage > high_threshold && damage <= high_threshold)
+		on_high_damage_healed()
+		. = high_threshold_cleared
+	if(prev_damage > low_threshold && damage <= low_threshold)
+		on_low_damage_healed()
+		. = low_threshold_cleared
+
+/**
+ * Called when the damage surpasses the low damage threshold.
+ *
+ * This and other procs like this one merely exist to make it easier to keep a standard on
+ * damage thresholds for organs. This doesn't mean you cannot make custom thresholds for various stuff,
+ * and you're more than welcome to improve or refactor any portion of the code around these mechanics
+ */
+/obj/item/organ/proc/on_low_damage_received()
+	return
+
+///Called when the damage goes below the low damage threshold
+/obj/item/organ/proc/on_low_damage_healed()
+	return
+
+///Called when the damage surpasses the high damage threshold
+/obj/item/organ/proc/on_high_damage_received()
+	return
+
+///Called when the damage goes below the high damage threshold
+/obj/item/organ/proc/on_high_damage_healed()
+	return
+
+///Called when the organ enters failing stage
+/obj/item/organ/proc/on_begin_failure()
+	return
+
+///Called when the organ recovers from failing stage
+/obj/item/organ/proc/on_failure_recovery()
+	return
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
