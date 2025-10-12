@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - image: "CMO now has unique backpack/satchel/etc. sprites which matches their teal palette."
+  - image: "CMO spawns with white sneakers instead of blue sneakers."
+  - qol: "Garment bags can hold empty backpacks/satchels/etc."
+  - rscdel: "Defib mount removed from CMO's locker."
+  - bugfix: "Items stocked in a storage item by default can be mouse-drag-swapped like any other item."
