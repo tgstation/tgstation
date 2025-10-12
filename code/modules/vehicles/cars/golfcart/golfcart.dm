@@ -133,7 +133,7 @@
 	animate(pixel_x = inital_pixel_x, pixel_y = inital_pixel_y, time=duration)
 
 /obj/vehicle/ridden/golfcart/proc/is_hotrod()
-	return engine && engine_state && engine_state == ENGINE_WELDED
+	return engine && engine_state == ENGINE_WELDED
 
 ///Called when something we crash into lands after being flinged
 /obj/vehicle/ridden/golfcart/proc/thrown_mob_landed(atom/thrown_atom)
