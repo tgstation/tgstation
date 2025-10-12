@@ -117,7 +117,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
-	LAZYADD(organ_traits, trait)
+	LAZYOR(organ_traits, trait)
 	if(isnull(owner))
 		return
 	ADD_TRAIT(owner, trait, REF(src))
