@@ -368,6 +368,7 @@
 	if (allow_crawler_through(mover))
 		return TRUE
 
+///Called for COMSIG_MOVABLE_PRE_MOVE on the golfcart front. If the rear of the cart doesn't fit where we want to go, block movement.
 /obj/vehicle/ridden/golfcart/proc/pre_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
 
@@ -386,6 +387,7 @@
 	movedelay = base_movedelay_effect * modification
 	child.set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 
+///Sets perform_extra_step to TRUE if we are going up stairs.
 /obj/vehicle/ridden/golfcart/zMove(dir, turf/target, z_move_flags)
 	var/can_do_extra_step = FALSE
 	if (currently_z_moving == CURRENTLY_Z_ASCENDING)
@@ -395,6 +397,7 @@
 		return
 	perform_extra_step = perform_extra_step || can_do_extra_step
 
+///Creates a fake glide effect on the golfcart and anything buckled to it. Called when moving up stairs as moving up stairs creates a two-tile move.
 /obj/vehicle/ridden/golfcart/proc/fake_glide(direct)
 	var/px = 0
 	var/py = 0
@@ -450,7 +453,10 @@
 			return
 		fake_glide(dir)
 
+///Called for COMSIG_ATOM_TRIED_PASS on the golfcart front. Allows mobs buckled to the rear of the cart to not get blocked by the front of the cart.
 /obj/vehicle/ridden/golfcart/proc/allow_movement_between_passengers(atom/source, atom/mover)
+	SIGNAL_HANDLER
+
 	if (mover in child.buckled_mobs)
 		return COMSIG_COMPONENT_PERMIT_PASSAGE
 
@@ -621,7 +627,10 @@
 	else
 		cargo_image = null
 
+///Allows mobs sitting in the rear of the cart to not shoot either the front of the cart or the driver of the cart.
 /obj/vehicle/ridden/golfcart/proc/dodge_friendly_fire(mob/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
 	if (!projectile.firer)
 		return
 	if (QDELETED(projectile.firer))

@@ -187,6 +187,7 @@
 		return ..()
 	return parent.examine_more(user)
 
+///Called if the rear of the golfcart MUST move to destination and must NOT notify the parent about it.
 /obj/golfcart_rear/proc/move_from_parent(atom/destination)
 	moving_from_parent = TRUE
 	currently_z_moving = destination.z != loc.z
@@ -253,6 +254,7 @@
 
 	return parent.Move(get_step(parent, get_dir(loc, newloc)), direct)
 
+///Called for COMSIG_ATOM_TRIED_PASS on passengers buckled to the cart. Allows them to not block each other's movement / get blocked by the cart.
 /obj/golfcart_rear/proc/allow_movement_between_bed_passengers(atom/source, atom/mover)
 	SIGNAL_HANDLER
 
@@ -286,6 +288,7 @@
 			animate = FALSE)
 		passenger.layer = layer + ((i * 0.01) - 0.01) * (-invert_layer)
 
+///Called from COMSIG_ATOM_POST_DIR_CHANGE on the rear of the cart. Only used to change buckled mobs' position / layers.
 /obj/golfcart_rear/proc/on_dir_changed(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 
