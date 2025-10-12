@@ -103,11 +103,9 @@
 		message = blockade_warning
 	data["message"] = message
 
-	var/list/amount_by_name = list()
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(cart_list[order.pack.name])
-			amount_by_name[order.pack.name] += 1
 			cart_list[order.pack.name][1]["amount"]++
 			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
 			if(order.department_destination)
@@ -116,7 +114,6 @@
 				cart_list[order.pack.name][1]["paid"]++
 			continue
 
-		amount_by_name[order.pack.name] += 1
 		cart_list[order.pack.name] = list(list(
 			"cost_type" = order.cost_type,
 			"object" = order.pack.name,
@@ -136,7 +133,6 @@
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
 		var/datum/supply_pack/pack = order.pack
-		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
 			"object" = pack.name,
 			"cost" = pack.get_cost(),
@@ -145,7 +141,6 @@
 			"id" = order.id,
 			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
-	data["amount_by_name"] = amount_by_name
 
 	return data
 
