@@ -21,9 +21,9 @@
 /obj/item/suit_sensor/examine(mob/user)
 	. = ..()
 	if(broken)
-		. += span_warning("it's currently broken. You can use a piece of [EXAMINE_HINT("cable")] to fix it")
+		. += span_warning("It's currently broken. You can use a piece of [EXAMINE_HINT("cable")] to fix it.")
 	else
-		. += span_notice("it's currently set on '[GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1)]'")
+		. += span_notice("It's currently set on '[GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1)]'.")
 
 /obj/item/suit_sensor/update_overlays()
 	. = ..()
@@ -39,9 +39,10 @@
 
 /obj/item/suit_sensor/proc/set_mode(new_mode)
 	if(sensor_mode == new_mode)
-		return
+		return FALSE
 	sensor_mode = new_mode
 	update_appearance(UPDATE_OVERLAYS)
+	return TRUE
 
 /obj/item/suit_sensor/attack_self(mob/living/user)
 	. = ..()
@@ -50,8 +51,8 @@
 	if(broken)
 		balloon_alert(user, "fix it first!")
 		return
-	var/current_mode_text = GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1)
-	var/new_mode = tgui_input_list(user, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, GLOB.suit_sensor_mode_to_defines[current_mode_text])
+	var/current_mode_text = GLOB.suit_sensor_mode_to_defines[sensor_mode + 1]
+	var/new_mode = tgui_input_list(user, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, current_mode_text)
 	if(isnull(new_mode) || broken|| !(user.mobility_flags & MOBILITY_USE) || !IsReachableBy(user))
 		user.balloon_alert(user, "can't do that now!")
 		return
@@ -72,7 +73,7 @@
 /obj/item/suit_sensor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stack/cable_coil))
 		return ..()
-	if(sensor_mode != BROKEN_SENSORS)
+	if(!broken)
 		balloon_alert(user, "not broken!")
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/stack/cable_coil/cabling = tool

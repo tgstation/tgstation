@@ -35,7 +35,7 @@
 	/// Does this undersuit spawn with a random sensor value
 	var/random_sensor = TRUE
 	/// What is the active sensor mode of this udnersuit
-	var/sensor_mode = NO_SENSORS
+	var/sensor_mode = SENSOR_OFF
 
 	// Accessory handling (Can be componentized eventually)
 	/// The max number of accessories we can have on this suit.
@@ -107,7 +107,7 @@
 		if(istype(held_item, /obj/item/suit_sensor))
 			context[SCREENTIP_CONTEXT_LMB] = "Install suit sensors"
 			changed = TRUE
-	else if(held_item.tool_behaviour == TOOL_WIRECUTTER)
+	else if(held_item?.tool_behaviour == TOOL_WIRECUTTER)
 		context[SCREENTIP_CONTEXT_LMB] = "Cut suit sensors"
 		changed = TRUE
 
@@ -445,7 +445,7 @@
 			if(SENSOR_COORDS)
 				. += "Its vital tracker and tracking beacon appear to be enabled."
 	else
-		. += span_small(span_tooltip("You can always use a station-bounced radio to install them", "It isn't equipped with medical sensors."))
+		. += span_tooltip("You can always get new install new suit sensors to install from a lathe", "It isn't equipped with medical sensors.")
 
 	if(LAZYLEN(attached_accessories))
 		var/list/accessories = list_accessories_with_icon(user)
@@ -468,8 +468,8 @@
 	if(!can_toggle_sensors(user_mob))
 		return
 
-	var/current_mode_text = GLOB.suit_sensor_mode_to_defines.Find(sensor_mode + 1)
-	var/new_mode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, GLOB.suit_sensor_mode_to_defines[current_mode_text])
+	var/current_mode_text = GLOB.suit_sensor_mode_to_defines[sensor_mode + 1]
+	var/new_mode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, current_mode_text)
 	if(isnull(new_mode))
 		return
 	if(!can_toggle_sensors(user_mob))
