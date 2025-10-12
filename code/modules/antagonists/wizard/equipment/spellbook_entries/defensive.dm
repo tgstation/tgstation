@@ -21,8 +21,8 @@
 
 /datum/spellbook_entry/lightning_packet
 	name = "Thrown Lightning"
-	desc = "Forged from eldrich energies, a packet of pure power, \
-		known as a spell packet will appear in your hand, that when thrown will stun the target."
+	desc = "Forged from eldrich energies, a bolt of pure power, \
+		a lightning bolt will appear in your hand, that when thrown will stun the target."
 	spell_type = /datum/action/cooldown/spell/conjure_item/spellpacket
 	category = SPELLBOOK_CATEGORY_DEFENSIVE
 
