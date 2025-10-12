@@ -391,3 +391,17 @@
       doors. They can't be used to open high security doors whatsoever. And they come
       with a bonesetter attachment instead of wirecutters. You know, for power-relocating
       your arm.
+2025-10-12:
+  Melbert:
+  - bugfix: Dragging defibs and modsuits off your back works again
+  paganiy:
+  - rscadd: changeling's last resort ability now can rupture surrounding them walls
+      and other objects
+  - rscadd: last resort now has a short animation
+  - balance: increased last resort's blind range from 2 to 4 tiles
+  - bugfix: fixed several runtimes related to changeling's last resort ability
+  - sound: added a gore sound effect to last resort explosion
+  timothymtorres:
+  - rscadd: Central Command has finally realized that old fashioned water is actually
+      good for you. It now provides a minor buff to the natural healing of liver damage.
+  - bugfix: Fix lighters triggering runtimes when out of fuel
