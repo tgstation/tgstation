@@ -18,7 +18,7 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(!IS_CHANGELING(C))
-				C.sound_damage(deaf = 30 SECONDS)
+				C.sound_damage(deafen = 30 SECONDS)
 				C.adjust_confusion(25 SECONDS)
 				C.set_jitter_if_lower(100 SECONDS)
 			else

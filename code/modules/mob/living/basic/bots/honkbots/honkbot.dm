@@ -83,7 +83,7 @@
 	if(HAS_TRAIT(current_target, TRAIT_DEAF))
 		return
 
-	sound_damage(deaf = 10 SECONDS)
+	sound_damage(deafen = 10 SECONDS)
 
 /mob/living/basic/bot/honkbot/ui_data(mob/user)
 	var/list/data = ..()
