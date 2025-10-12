@@ -251,24 +251,13 @@
 /obj/vehicle/ridden/golfcart/proc/can_weld_engine()
 	return hood_open && engine && (engine_state == ENGINE_WRENCHED || engine_state == ENGINE_WELDED)
 
-/obj/vehicle/ridden/golfcart/proc/set_to_hotrod_sprite()
-	if (icon == 'icons/obj/toys/golfcart_hotrod_split.dmi')
-		return
-	icon = 'icons/obj/toys/golfcart_hotrod_split.dmi'
-	update_appearance(UPDATE_ICON)
-
-/obj/vehicle/ridden/golfcart/proc/set_to_default_sprite()
-	if (icon == 'icons/obj/toys/golfcart_split.dmi')
-		return
-	icon = 'icons/obj/toys/golfcart_split.dmi'
-	update_appearance(UPDATE_ICON)
-
 /obj/vehicle/ridden/golfcart/proc/set_engine_state(state)
 	engine_state = state
-	if (engine_state == ENGINE_WELDED)
-		set_to_hotrod_sprite()
-	else
-		set_to_default_sprite()
+	if (engine_state == ENGINE_WELDED && icon != 'icons/obj/toys/golfcart_hotrod_split.dmi')
+		icon = 'icons/obj/toys/golfcart_hotrod_split.dmi'
+		update_appearance(UPDATE_ICON)
+	else if (engine_state != ENGINE_WELDED && icon != initial(icon))
+		icon = initial(icon)
 
 /obj/vehicle/ridden/golfcart/wrench_act(mob/living/user, obj/item/tool)
 	if (!can_wrench_engine())
@@ -312,16 +301,8 @@
 		balloon_alert(user, "repaired")
 	return
 
-/obj/vehicle/ridden/golfcart/proc/open_hood()
-	if (hood_open)
-		return
-	hood_open = TRUE
-	update_appearance(UPDATE_ICON)
-
-/obj/vehicle/ridden/golfcart/proc/close_hood()
-	if (!hood_open)
-		return
-	hood_open = FALSE
+/obj/vehicle/ridden/golfcart/proc/toggle_hood()
+	hood_open = !hood_open
 	update_appearance(UPDATE_ICON)
 
 /obj/vehicle/ridden/golfcart/click_alt(mob/user)
@@ -330,12 +311,11 @@
 	else
 		to_chat(user, span_warning("You must be sitting down to remove the key!"))
 	. = CLICK_ACTION_SUCCESS
+	toggle_hood()
 	if (hood_open)
-		close_hood()
+		to_chat(user, span_notice("You pop \the [src]'s hood."))
+	else
 		to_chat(user, span_notice("You shut \the [src]'s hood."))
-		return
-	open_hood()
-	to_chat(user, span_notice("You pop \the [src]'s hood."))
 
 /obj/vehicle/ridden/golfcart/examine_more(mob/user)
 	. = ..()
