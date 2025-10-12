@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - map: "Sec eva now becomes all access on red alert on nebula/catwalk/icebox/wawa"
