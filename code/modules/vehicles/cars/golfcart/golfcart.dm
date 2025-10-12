@@ -5,6 +5,7 @@
 #define CART_ROOF_LAYER (CARGO_HITBOX_LAYER + 0.01)
 #define CART_LOWER_LAYER (OBJ_LAYER)
 #define FAKE_GLIDE_INITIAL_SOURCE "fake_glide_initial"
+#define GOLFCART_RUN_OVER_DAMAGE (25)
 
 /obj/vehicle/ridden/golfcart
 	name = "golf cart"
@@ -175,13 +176,14 @@
 				span_userdanger("[src] drives over you!"),
 			)
 
-			var/damage = rand(5, 15)
-			person.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
-			person.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
-			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
-			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG)
-			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM)
-			person.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM)
+			var/damage = rand(GOLFCART_RUN_OVER_DAMAGE - GOLFCART_RUN_OVER_DAMAGE / 5, GOLFCART_RUN_OVER_DAMAGE + GOLFCART_RUN_OVER_DAMAGE / 5)
+			//adds up to exactly 1
+			person.apply_damage((1/3) * damage, BRUTE, BODY_ZONE_HEAD)
+			person.apply_damage((1/3) * damage, BRUTE, BODY_ZONE_CHEST)
+			person.apply_damage((1/12) * damage, BRUTE, BODY_ZONE_L_LEG)
+			person.apply_damage((1/12) * damage, BRUTE, BODY_ZONE_R_LEG)
+			person.apply_damage((1/12) * damage, BRUTE, BODY_ZONE_L_ARM)
+			person.apply_damage((1/12) * damage, BRUTE, BODY_ZONE_R_ARM)
 
 			add_mob_blood(person)
 			var/turf/below_us = get_turf(src)
