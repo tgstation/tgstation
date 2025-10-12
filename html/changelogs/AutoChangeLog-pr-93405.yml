@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - bugfix: "food / animal hybrids like the butterbear and cak now once again correctly grab ghosts and store brains."
