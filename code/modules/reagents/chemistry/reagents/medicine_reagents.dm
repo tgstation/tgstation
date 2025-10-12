@@ -931,7 +931,7 @@
 		return
 	var/multiplier = REM * seconds_per_tick * normalise_creation_purity()
 	ears.apply_organ_damage(-4 * multiplier)
-	ears.recover_temp_deafness(8 * multiplier)
+	ears.adjust_temporary_deafness(-8 * multiplier)
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)

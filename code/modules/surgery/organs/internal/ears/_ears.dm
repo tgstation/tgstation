@@ -39,9 +39,9 @@
 	// no healing if failing
 	if(organ_flags & ORGAN_FAILING)
 		return
-	recover_temp_deafness(seconds_per_tick SECONDS)
+	adjust_temporary_deafness(-seconds_per_tick SECONDS)
 	if((damage > low_threshold) && SPT_PROB(damage / 60, seconds_per_tick))
-		temporarily_deafen(4 SECONDS)
+		adjust_temporary_deafness(4 SECONDS)
 		SEND_SOUND(owner, sound('sound/items/weapons/flash_ring.ogg'))
 
 /obj/item/organ/ears/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -70,39 +70,28 @@
 	// Always show if we have an appendix
 	return ..() || (owner.stat != DEAD && HAS_TRAIT(owner, TRAIT_DEAF))
 
-///A easy to use proc to apply both organ damage and temporary deafness at once, so you don't have to remember the damage multiplier everytime
-/obj/item/organ/ears/proc/sound_damage(damage, deafen)
-	if(owner && HAS_TRAIT(owner, TRAIT_GODMODE))
-		return
-	apply_organ_damage(damage * damage_multiplier)
-	temporarily_deafen(deafen)
-
-///Render these ears temporarily unable to hear a thing
-/obj/item/organ/ears/proc/temporarily_deafen(amount)
+///Adjust the temporary deafness of the person, up or down
+/obj/item/organ/ears/proc/adjust_temporary_deafness(amount)
 	// organ failure makes us permanently deafened. Also, doesn't do anything if not in someone or during godmode
 	if(amount <= 0 || (owner && HAS_TRAIT(owner, TRAIT_GODMODE)))
 		return
 
-	temporary_deafness += amount * damage_multiplier
+	temporary_deafness += max(amount * damage_multiplier, 0)
 
-	if(owner && !HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
+	if(!owner)
+		return
+
+	if(temporary_deafness && !HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
 		on_deafened()
+	else if(!temporary_deafness && HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
+		on_undeafened(owner)
 
 ///Called when temporary deafness begins
 /obj/item/organ/ears/proc/on_deafened()
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(adjust_speech))
 	ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 
-/obj/item/organ/ears/proc/recover_temp_deafness(amount)
-	if(amount <= 0 || !temporary_deafness)
-		return
-
-	temporary_deafness = max(temporary_deafness - amount, 0)
-
-	if(!temporary_deafness && owner && HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
-		on_undeafened(owner)
-
-///Called when temporary deafness reaches zero
+///Called when temporary deafness reaches zero. Has to have an 'organ_owner' arg, because by the time it's called on 'on_mob_remove', owner is already null
 /obj/item/organ/ears/proc/on_undeafened(mob/living/organ_owner)
 	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)

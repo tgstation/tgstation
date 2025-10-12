@@ -173,7 +173,7 @@
 ///Called whenever the luminescent and/or reflective eyes traits are added or removed
 /obj/item/organ/eyes/proc/on_shiny_eyes_trait_update(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
-	source.dna.species.handle_eyes(source)
+	source.update_eyes()
 
 /obj/item/organ/eyes/update_atom_colour()
 	. = ..()
@@ -1033,8 +1033,9 @@
 		add_organ_trait(TRAIT_LUMINESCENT_EYES)
 		eye_icon_state = base_eye_state
 
-	if(!skip_call)
-		eye_owner.dna.species.handle_eyes(eye_owner)
+	if(!skip_call && ishuman(eye_owner))
+		var/mob/living/carbon/human/humie = eye_owner
+		humie.update_eyes()
 	head.head_flags = previous_flags
 
 #undef MATCH_LIGHT_COLOR

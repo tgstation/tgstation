@@ -278,27 +278,29 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
+	var/message = ""
 	if(delta > 0)
 		if(damage > low_threshold && prev_damage <= low_threshold)
 			on_low_damage_received()
-			. = low_threshold_passed
+			message = low_threshold_passed
 		if(damage > high_threshold && prev_damage <= high_threshold)
 			on_high_damage_received()
-			. = high_threshold_passed
+			message = high_threshold_passed
 		if(damage >= maxHealth)
 			on_begin_failure()
-			. = now_failing
-		return
+			message = now_failing
+		return message
 
 	if(prev_damage == maxHealth)
 		on_failure_recovery()
-		. = now_fixed
+		message = now_fixed
 	if(prev_damage > high_threshold && damage <= high_threshold)
 		on_high_damage_healed()
-		. = high_threshold_cleared
+		message = high_threshold_cleared
 	if(prev_damage > low_threshold && damage <= low_threshold)
 		on_low_damage_healed()
-		. = low_threshold_cleared
+		message = low_threshold_cleared
+	return message
 
 /**
  * Called when the damage surpasses the low damage threshold.
@@ -354,7 +356,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 		// Ears have aditional var "deaf", need to update it too
 		var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-		ears.recover_temp_deafness(INFINITY)
+		ears.adjust_temporary_deafness(-INFINITY)
 
 		return
 
@@ -392,7 +394,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		ears = new()
 		ears.Insert(src)
 	ears.set_organ_damage(0)
-	ears.recover_temp_deafness(INFINITY)
+	ears.adjust_temporary_deafness(-INFINITY)
 
 ///Organs don't die instantly, and neither should you when you get fucked up
 /obj/item/organ/proc/handle_failing_organs(seconds_per_tick)

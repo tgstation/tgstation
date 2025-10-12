@@ -30,6 +30,6 @@
 		if(!ears || (ears.organ_flags & ORGAN_FAILING) || IS_ROBOTIC_ORGAN(ears))
 			continue
 
-		ears.recover_temp_deafness(- 0.5 SECONDS * seconds_per_tick)
+		ears.adjust_temporary_deafness(-0.5 SECONDS * seconds_per_tick)
 		ears.apply_organ_damage(-0.025 * seconds_per_tick)
 		CHECK_TICK

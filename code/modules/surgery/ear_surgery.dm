@@ -48,10 +48,7 @@
 	target_ears.set_organ_damage(0)
 	///makes you temporarily deaf for a duration post-surgery
 	var/deaf_change = 40 SECONDS - target_ears.temporary_deafness
-	if(deaf_change > 0)
-		target_ears.temporarily_deafen(deaf_change)
-	else
-		target_ears.recover_temp_deafness(-deaf_change)
+	target_ears.adjust_temporary_deafness(deaf_change)
 	return ..()
 
 /datum/surgery_step/fix_ears/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

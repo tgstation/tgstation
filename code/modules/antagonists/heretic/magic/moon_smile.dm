@@ -41,7 +41,7 @@
 	cast_on.set_eye_blur_if_lower(moon_smile_duration + 2 SECONDS)
 
 	var/obj/item/organ/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
-	ears?.temporarily_deafen(moon_smile_duration)
+	ears?.adjust_temporary_deafness(moon_smile_duration)
 
 	cast_on.adjust_silence(moon_smile_duration)
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)

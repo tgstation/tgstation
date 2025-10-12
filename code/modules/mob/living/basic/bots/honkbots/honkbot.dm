@@ -83,8 +83,7 @@
 	if(HAS_TRAIT(current_target, TRAIT_DEAF))
 		return
 
-	var/obj/item/organ/ears/target_ears = current_target.get_organ_slot(ORGAN_SLOT_EARS)
-	target_ears?.temporarily_deafen(10 SECONDS)
+	sound_damage(deaf = 10 SECONDS)
 
 /mob/living/basic/bot/honkbot/ui_data(mob/user)
 	var/list/data = ..()
