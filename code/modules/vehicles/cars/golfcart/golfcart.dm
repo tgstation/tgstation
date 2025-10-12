@@ -12,7 +12,7 @@
 	desc = "An all-purpose cargo hauling vehicle."
 	icon = 'icons/obj/toys/golfcart_split.dmi'
 	icon_state = "front"
-	max_integrity = 150
+	max_integrity = 100
 	armor_type = /datum/armor/none
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
