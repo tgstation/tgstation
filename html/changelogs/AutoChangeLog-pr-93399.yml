@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "The Jaws of Recovery bonesetting mode now has an actual sprite."
+  - bugfix: "Some Jaws of Recovery cabinets that were strangely empty are now filled."
