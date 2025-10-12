@@ -95,7 +95,9 @@
 		RegisterSignals(receiver, list(
 			SIGNAL_ADDTRAIT(TRAIT_LUMINESCENT_EYES),
 			SIGNAL_REMOVETRAIT(TRAIT_LUMINESCENT_EYES),
-		), PROC_REF(on_glowy_eyes_trait_update))
+			SIGNAL_ADDTRAIT(TRAIT_REFLECTIVE_EYES),
+			SIGNAL_REMOVETRAIT(TRAIT_REFLECTIVE_EYES),
+		), PROC_REF(on_shiny_eyes_trait_update))
 
 	refresh(receiver, call_update = TRUE)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
@@ -164,9 +166,12 @@
 		COMSIG_COMPONENT_CLEAN_FACE_ACT,
 		SIGNAL_ADDTRAIT(TRAIT_LUMINESCENT_EYES),
 		SIGNAL_REMOVETRAIT(TRAIT_LUMINESCENT_EYES),
+		SIGNAL_ADDTRAIT(TRAIT_REFLECTIVE_EYES),
+		SIGNAL_REMOVETRAIT(TRAIT_REFLECTIVE_EYES),
 	))
 
-/obj/item/organ/eyes/proc/on_glowy_eyes_trait_update(mob/living/carbon/human/source)
+///Called whenever the luminescent and/or reflective eyes traits are added or removed
+/obj/item/organ/eyes/proc/on_shiny_eyes_trait_update(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 	source.dna.species.handle_eyes(source)
 
@@ -289,9 +294,8 @@
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -EYES_LAYER, parent)
 	var/list/overlays = list(eye_left, eye_right)
 
-	if(HAS_TRAIT(parent, TRAIT_LUMINESCENT_EYES) && !(parent.obscured_slots & HIDEEYES))
-		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -EYES_LAYER, alpha = eye_left.alpha)
-		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -EYES_LAYER, alpha = eye_right.alpha)
+	if(!(parent.obscured_slots & HIDEEYES))
+		overlays += get_emissive_overlays(eye_left, eye_right, parent)
 
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 
@@ -320,6 +324,18 @@
 			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
+
+///Returns the two emissive overlays built for the left and right eyes, in order.
+/obj/item/organ/eyes/proc/get_emissive_overlays(mutable_appearance/eye_left, mutable_appearance/eye_right, atom/spokesman)
+	var/list/return_list = list()
+	var/emissive_effect
+	if((owner && HAS_TRAIT(owner, TRAIT_LUMINESCENT_EYES)) || (TRAIT_LUMINESCENT_EYES in organ_traits))
+		emissive_effect = EMISSIVE_BLOOM
+	else if((owner && HAS_TRAIT(owner, TRAIT_REFLECTIVE_EYES)) || (TRAIT_LUMINESCENT_EYES in organ_traits))
+		emissive_effect = EMISSIVE_SPECULAR
+	if(emissive_effect)
+		return_list += emissive_appearance(eye_left.icon, eye_left.icon_state, spokesman, -EYES_LAYER, alpha = eye_left.alpha, effect_type = emissive_effect)
+		return_list += emissive_appearance(eye_right.icon, eye_right.icon_state, spokesman, -EYES_LAYER, alpha = eye_right.alpha, effect_type = emissive_effect)
 
 /obj/item/organ/eyes/update_overlays()
 	. = ..()
@@ -1107,6 +1123,7 @@
 	icon_state = "eyes-ghost"
 	blink_animation = FALSE
 	movement_type = PHASING
+	organ_traits = list(TRAIT_REFLECTIVE_EYES) //come on, they gotta have it, for the sake of Halloween.
 	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/eyes/snail
@@ -1175,3 +1192,11 @@
 	iris_overlay = null
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	penlight_message = "are green and plant-like"
+
+///A pair of eyes that appear more luminous in dim areas, but cannot be seen in complete dark. Mainly cosmetic for now.
+/obj/item/organ/eyes/felinid
+	name = "felinid eyes"
+	desc = "A pair of highly reflective eyes with slit pupils, like those of a cat."
+	organ_traits = list(TRAIT_REFLECTIVE_EYES)
+	pupils_name = "slit pupils"
+	penlight_message = "shine under the a pearly light"
