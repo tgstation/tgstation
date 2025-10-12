@@ -85,6 +85,8 @@
 	if(target_slime.applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		target_slime.spawn_corecross()
 
+/// An assoc list of slime extracts to their allowed recipes
+GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate_reaction_list())
 
 /**
 * Effect when activated by selfsustaining crossbreed or rainbow slime
@@ -105,8 +107,6 @@
 	for(var/datum/reagent/chem as anything in required_reagents)
 		reagents.add_reagent(chem, required_reagents[chem])
 
-/// An assoc list of slime extracts to their allowed recipes
-GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate_reaction_list())
 
 /proc/init_slime_auto_activate_reaction_list()
 	var/list/recipe_list = list()
