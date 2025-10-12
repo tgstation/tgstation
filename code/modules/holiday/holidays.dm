@@ -354,6 +354,25 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 /datum/holiday/anz/getStationPrefix()
 	return pick("Australian","New Zealand","Poppy", "Southern Cross")
 
+
+/datum/holiday/metalgearday
+	name = "April 30th"
+	begin_day = 30
+	begin_month = APRIL
+	holiday_hat = /obj/item/clothing/head/costume/snakeeater
+	holiday_mail = list(
+		/obj/item/cigarette/cigar/havana,
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/toy/katana, //In reference to the final battle in MGS2.
+	)
+
+/datum/holiday/metalgearday/greet()
+	return "Do you know what day it is today? Over 600 years ago today, George Washington became the first President of the United States on the balcony of Federal Hall."
+
+/datum/holiday/metalgearday/getStationPrefix()
+	return pick("Metal Gear","Liberty","Big Shell","Hara-Kiri Rock","Outer Heaven","Snake", "Solid", "Solidus", "Liquid", "Arsenal Gear", "Boss", "Box", "Variety Level", "Galuade", "Patriots", "La-li-lu-le-lo", "Zanzibar", "Mother Base", "Scissors", )
+
+
 // MAY
 
 /datum/holiday/labor
