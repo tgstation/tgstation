@@ -32,12 +32,12 @@ Self-sustaining extracts:
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/list/slime_recipes = GLOB.slime_extract_auto_activate_reactions[extract.type]
-	if(isnull(slime_recipes))
+	var/list/slime_reactions = GLOB.slime_extract_auto_activate_reactions[extract.type]
+	if(isnull(slime_reactions))
 		return
 
 	var/list/choices = list()
-	for(var/datum/chemical_reaction/slime/recipe as anything in slime_recipes)
+	for(var/datum/chemical_reaction/slime/recipe as anything in slime_reactions)
 		var/choice = ""
 		for(var/datum/reagent/chem as anything in recipe.required_reagents)
 			if(length(choice)==0)

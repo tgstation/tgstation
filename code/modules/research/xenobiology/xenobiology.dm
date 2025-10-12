@@ -85,6 +85,25 @@
 	if(target_slime.applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 		target_slime.spawn_corecross()
 
+/**
+* Effect when activated by selfsustaining crossbreed or rainbow slime
+*
+* * arg1 - The reaction being triggered. If null, a random reaction is picked
+*/
+/obj/item/slime_extract/proc/auto_activate_reaction(datum/chemical_reaction/slime/slime_reaction = null)
+	if(QDELETED(src))
+		return
+
+	if(isnull(slime_reaction))
+		var/list/slime_reactions = GLOB.slime_extract_auto_activate_reactions[src.type]
+		if(isnull(slime_reactions))
+			return
+		slime_reaction = pick(slime_reactions)
+
+	var/list/required_reagents = slime_reaction.required_reagents
+	for(var/datum/reagent/chem as anything in required_reagents)
+		reagents.add_reagent(chem, required_reagents[chem])
+
 /// An assoc list of slime extracts to their allowed recipes
 GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate_reaction_list())
 
@@ -118,26 +137,6 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				recipes.Add(slime_reaction)
 
 	return recipe_list
-
-
-/**
-* Effect when activated by selfsustaining crossbreed or rainbow slime
-*
-* * arg1 - The reaction being triggered. If null, a random reaction is picked
-*/
-/obj/item/slime_extract/proc/auto_activate_reaction(datum/chemical_reaction/slime/reaction = null)
-	if(QDELETED(src))
-		return
-
-	if(isnull(reaction))
-		/var/list/reactions = GLOB.slime_extract_auto_activate_reactions[src.type]
-		if(isnull(reactions))
-			return
-		reaction = pick(reactions)
-
-	var/list/required_reagents = reaction.required_reagents
-	for(var/datum/reagent/chem as anything in required_reagents)
-		reagents.add_reagent(chem, required_reagents[chem])
 
 
 /obj/item/slime_extract/grey
