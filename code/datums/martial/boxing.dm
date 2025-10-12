@@ -363,7 +363,7 @@
 
 /datum/martial_art/boxing/hunter/skill_experience_adjustment(mob/living/boxer, mob/living/defender, experience_value)
 	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
-		return ..() //Applies the regular crit effect if it is a normal human, and not a megafauna
+		return ..() //IF they're a normal human, we give the normal amount of experience instead
 
 	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 2 : 1
 	var/big_game_bonus = (defender.maxHealth / 500)
