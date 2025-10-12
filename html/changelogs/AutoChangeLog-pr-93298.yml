@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - map: "Deltastation Sec eva becomes all access when its red alert."
