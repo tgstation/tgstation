@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Sleeping Carp and Cain & Abel no longer tell you about armor penetration when you reflect projectiles with them"
