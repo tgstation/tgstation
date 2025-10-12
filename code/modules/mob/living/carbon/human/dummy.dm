@@ -163,6 +163,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/consistent/initialize_actionspeed()
 	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = -1)
+
+//this one gives us a small window of time for checks on asynced actions.
+/mob/living/carbon/human/consistent/slow/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = 0.1)
 #endif
 
 //Inefficient pooling/caching way.
