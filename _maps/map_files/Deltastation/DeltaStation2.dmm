@@ -12584,7 +12584,7 @@
 	},
 /obj/machinery/digital_clock/directional/south,
 /obj/item/mod/module/signlang_radio,
-/obj/structure/fireaxecabinet/jawsofrecovery/empty/directional/east,
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "dds" = (
