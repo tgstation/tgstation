@@ -815,8 +815,8 @@
 	var/list/tritium = cached_gases[/datum/gas/tritium]
 	/// List of gases we will assert, and possibly garbage collect.
 	var/list/asserted_gases = list(/datum/gas/hypernoblium, /datum/gas/bz)
-	var/list/bz = cached_gases[/datum/gas/bz]
 	air.assert_gases(arglist(asserted_gases))
+	var/list/bz = cached_gases[/datum/gas/bz]
 	var/reduction_factor = clamp(tritium[MOLES] / (tritium[MOLES] + bz[MOLES]), 0.001 , 1) //reduces trit consumption in presence of bz upward to 0.1% reduction
 	var/nob_formed = min((nitrogen[MOLES] + tritium[MOLES]) * 0.01, tritium[MOLES] * INVERSE(5 * reduction_factor), nitrogen[MOLES] * INVERSE(10))
 

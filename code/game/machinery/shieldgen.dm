@@ -58,7 +58,7 @@
 
 /obj/structure/emergency_shield/regenerating/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/structure/emergency_shield/regenerating/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -84,7 +84,7 @@
 
 /obj/structure/emergency_shield/cult/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/structure/emergency_shield/cult/narsie
 	name = "sanguine barrier"

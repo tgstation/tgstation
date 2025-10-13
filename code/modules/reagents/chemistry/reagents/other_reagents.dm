@@ -219,6 +219,12 @@
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
+
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver?.damage && !IS_ROBOTIC_ORGAN(liver) && !(liver.organ_flags & ORGAN_FAILING))
+		var/healing_bonus = liver.healing_factor * liver.maxHealth
+		liver.apply_organ_damage(-healing_bonus * REM * seconds_per_tick)
+
 	var/water_adaptation = HAS_TRAIT(affected_mob, TRAIT_WATER_ADAPTATION)
 	if(affected_mob.blood_volume)
 		var/blood_restored = water_adaptation ? 0.3 : 0.1
@@ -658,11 +664,12 @@
 									"Your appendages begin morphing." = MUT_MSG_EXTENDED,
 									"You feel as though you're about to change at any moment!" = MUT_MSG_ABOUT2TURN)
 
-/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/mutationtoxin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	if(!(affected_mob.dna?.species) || !(affected_mob.mob_biotypes & affected_biotype))
+	var/mob/living/carbon/affected_human = affected_mob
+	if(!(affected_human.dna?.species) || !(affected_human.mob_biotypes & affected_biotype))
 		return
 
 	if(SPT_PROB(5, seconds_per_tick))
@@ -678,13 +685,13 @@
 		for(var/i in mutationtexts)
 			if(mutationtexts[i] == filter)
 				pick_ur_fav += i
-		to_chat(affected_mob, span_warning("[pick(pick_ur_fav)]"))
+		to_chat(affected_human, span_warning("[pick(pick_ur_fav)]"))
 
 	if(current_cycle >= CYCLES_TO_TURN)
 		var/datum/species/species_type = race
-		affected_mob.set_species(species_type)
+		affected_human.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(affected_mob, span_warning("You've become \a [LOWER_TEXT(initial(species_type.name))]!"))
+		to_chat(affected_human, span_warning("You've become \a [LOWER_TEXT(initial(species_type.name))]!"))
 		return
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
@@ -741,20 +748,24 @@
 	taste_description = "grandma's gelatin"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
-	if(isjellyperson(affected_mob))
-		to_chat(affected_mob, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
-		var/species_type = pick(subtypesof(/datum/species/jelly))
-		affected_mob.set_species(species_type)
-		holder.del_reagent(type)
-		return UPDATE_MOB_HEALTH
-	if(current_cycle >= CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
+/datum/reagent/mutationtoxin/jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(!ishuman(affected_mob))
+		return ..()
+	var/mob/living/carbon/affected_human = affected_mob
+	if(isjellyperson(affected_human))
 		var/datum/species/species_type = pick(subtypesof(race))
-		affected_mob.set_species(species_type)
+		affected_human.set_species(species_type)
 		holder.del_reagent(type)
-		to_chat(affected_mob, span_warning("You've become \a [initial(species_type.name)]!"))
+		to_chat(affected_human, span_warning("Your jelly shifts and morphs, turning you into another subspecies!"))
 		return UPDATE_MOB_HEALTH
-	return ..()
+	if(current_cycle < CYCLES_TO_TURN) //overwrite since we want subtypes of jelly
+		return ..()
+	var/datum/species/species_type = pick(subtypesof(race))
+	affected_human.set_species(species_type)
+	holder.del_reagent(type)
+	to_chat(affected_human, span_warning("You've become \a [initial(species_type.name)]!"))
+	return UPDATE_MOB_HEALTH
+
 
 /datum/reagent/mutationtoxin/golem
 	name = "Golem Mutation Toxin"
@@ -838,13 +849,14 @@
 	taste_description = "slime"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/mulligan/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if (!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	to_chat(affected_mob, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
-	affected_mob.visible_message("<b>[affected_mob]</b> suddenly transforms!")
-	randomize_human_normie(affected_mob)
+	var/mob/living/carbon/human/affected_human = affected_mob
+	to_chat(affected_human, span_boldwarning("You grit your teeth in pain as your body rapidly mutates!"))
+	affected_human.visible_message("<b>[affected_human]</b> suddenly transforms!")
+	randomize_human_normie(affected_human)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"

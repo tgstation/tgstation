@@ -12,7 +12,7 @@
 	mob_size = MOB_SIZE_LARGE
 	can_buckle_to = FALSE
 
-	silicon_huds = list(DATA_HUD_MEDICAL_BASIC, DATA_HUD_SECURITY_BASIC, DATA_HUD_DIAGNOSTIC, DATA_HUD_BOT_PATH)
+	silicon_huds = list(TRAIT_MEDICAL_HUD_SENSOR_ONLY, TRAIT_SECURITY_HUD_ID_ONLY, TRAIT_DIAGNOSTIC_HUD, TRAIT_BOT_PATH_HUD)
 	radio = /obj/item/radio/headset/silicon/ai
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 

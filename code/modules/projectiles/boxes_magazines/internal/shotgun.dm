@@ -12,7 +12,7 @@
 	max_ammo = 4
 
 /obj/item/ammo_box/magazine/internal/shot/tube/fire
-	ammo_type = /obj/projectile/bullet/incendiary/shotgun/no_trail
+	ammo_type = /obj/item/ammo_casing/shotgun/incendiary/no_trail
 
 /obj/item/ammo_box/magazine/internal/shot/tube/buckshot
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot

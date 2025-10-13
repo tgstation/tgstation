@@ -19,9 +19,6 @@
 
 	PopulateContents()
 
-	for (var/obj/item/item in src)
-		item.item_flags |= IN_STORAGE
-
 /obj/item/storage/create_storage(
 	max_slots,
 	max_specific_storage,

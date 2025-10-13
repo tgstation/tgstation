@@ -112,6 +112,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
 	merge_type = /obj/item/stack/ore/glass
+	usable_for_construction = TRUE
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
@@ -124,7 +125,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	AddComponent(/datum/component/storm_hating)
 
 /obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
-	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount, merge = FALSE) //The newly spawned glass should not merge with other stacks on the turf, else it could cause issues.
+	//If we spawn the sheet of glass on the turf the ORM is "listening" to, it'll get redeemed before we can use it as return value and weird stuff my happen.
+	var/obj/item/stack/sheet/glass = new refined_type(null, amount)
 	qdel(src)
 	return glass
 
