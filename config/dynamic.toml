@@ -354,6 +354,16 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
+["Midround Mass Changelings"]
+weight = 5
+min_pop = 25
+blacklisted_roles = []
+repeatable_weight_decrease = 5
+repeatable = 1
+minimum_required_age = 0
+min_antag_cap = 2
+max_antag_cap = 3
+
 ["Paradox Clone"]
 weight = 5
 min_pop = 10
@@ -413,6 +423,16 @@ blacklisted_roles = [
 repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
+
+["Midround Mass Traitors"]
+weight = 10
+min_pop = 15
+blacklisted_roles = []
+repeatable_weight_decrease = 8
+repeatable = 1
+minimum_required_age = 0
+min_antag_cap = 2
+max_antag_cap = 4
 
 ["Midround Malfunctioning AI"]
 weight.1 = 0

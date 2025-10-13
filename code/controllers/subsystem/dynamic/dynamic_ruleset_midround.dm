@@ -674,7 +674,9 @@
 	name = "Mass Space Changelings"
 	config_tag = "Mass Changelings"
 	midround_type = HEAVY_MIDROUND
+	min_antag_cap = 2
 	max_antag_cap = 3
+	min_pop = 25
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
 	name = "Paradox Clone"
@@ -1085,6 +1087,16 @@
 		"[command_name()] High-Priority Update",
 	)
 
+/datum/dynamic_ruleset/midround/from_living/traitor/mass
+	name = "Mass Traitors"
+	config_tag = "Mass Traitors"
+	midround_type = HEAVY_MIDROUND
+	min_pop = 15
+	min_antag_cap = 2
+	max_antag_cap = 4
+	repeatable_weight_decrease = 8
+	blacklisted_roles = list()
+
 /datum/dynamic_ruleset/midround/from_living/malf_ai
 	name = "Malfunctioning AI"
 	config_tag = "Midround Malfunctioning AI"
@@ -1168,10 +1180,3 @@
 		source = candidate.current,
 		header = "Love Can Bloom",
 	)
-
-/datum/dynamic_ruleset/midround/from_living/traitor/mass
-	name = "Mass Traitors"
-	config_tag = "Mass Traitors"
-	midround_type = HEAVY_MIDROUND
-	min_pop = 15
-	max_antag_cap = 4
