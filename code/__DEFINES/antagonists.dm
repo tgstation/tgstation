@@ -105,9 +105,9 @@
 #define HKT_ROUTE "route"
 #define HKT_UI_BGR "ui_bgr"
 #define HKT_COST "cost"
+#define HKT_CATEGORY "category"
 /// Only present for already researched knowledge.
 #define HKT_INSTANCE "instance"
-#define HKT_CATEGORY "category"
 /// unique identifier most commonly used for identifying what knowledge is researchable
 #define HKT_ID "id"
 

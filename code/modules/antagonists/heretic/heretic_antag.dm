@@ -338,7 +338,7 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
-	generate_starting_knowledge()
+	generate_heretic_starting_knowledge(heretic_shops[HERETIC_KNOWLEDGE_START])
 	if(!length(path_info))
 		for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
 			path = new path()
