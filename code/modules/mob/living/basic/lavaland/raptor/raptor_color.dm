@@ -113,6 +113,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	description = "A tough breed of raptor, made to withstand the harshest of punishment and to laugh in the face of pain, \
 		this breed is able to withstand more punishment than its peers."
 	health = 400
+	// redirect_shots = FALSE // Need to figure out if I want this or not here
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/purple = /datum/raptor_color/white,
 		/datum/raptor_color/red = /datum/raptor_color/yellow,

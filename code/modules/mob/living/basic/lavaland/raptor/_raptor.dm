@@ -313,6 +313,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /// Changes the raptor to a new growth stage. Only should be done forwards, or on raptor init as the first thing before everything else
 /// Sorry for the monolith, but splitting it up results in even worse looking code with a ton of duplicate calls and assignments
+/// And making a *second* datum is just insanity
 /mob/living/basic/raptor/proc/change_growth_stage(new_stage, prev_stage = growth_stage)
 	if (new_stage == prev_stage)
 		return FALSE
@@ -371,9 +372,12 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	if (can_breed)
 		add_breeding_component()
 
-	if (!can_be_held && istype(loc, /obj/item/mob_holder))
-		var/obj/item/mob_holder/holder = loc
-		holder.release()
+	var/obj/item/mob_holder/holder = null
+	if (istype(loc, /obj/item/mob_holder))
+		holder = loc
+		if (!can_be_held)
+			holder.release()
+			holder = null
 
 	if (collar_state)
 		RemoveElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
@@ -383,13 +387,14 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		QDEL_NULL(ai_controller)
 		ai_controller = new /datum/ai_controller/basic_controller/baby_raptor(src)
 		held_w_class = WEIGHT_CLASS_SMALL
+		holder?.update_weight_class(held_w_class)
 	else
 		collar_state = base_icon_state
 		AddElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
 		if (prev_stage == RAPTOR_BABY)
 			QDEL_NULL(ai_controller)
 			ai_controller = new raptor_color.ai_controller(src)
-		held_w_class = WEIGHT_CLASS_BULKY
+		held_w_class = WEIGHT_CLASS_BULKY // No need to update the holder as we unfurl above
 
 	// And finish the setup on our color's side
 	switch (new_stage)
