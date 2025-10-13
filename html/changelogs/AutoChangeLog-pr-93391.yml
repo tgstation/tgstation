@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - rscadd: "The visors on MODsuits that used to have armor boosters now visibly toggle based on whether the wearer is in combat mode or not."

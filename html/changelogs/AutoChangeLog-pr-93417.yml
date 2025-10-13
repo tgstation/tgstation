@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "order console correctly differentiates between private & department orders"
-  - bugfix: "order console checkout cart displays correct Private/Department order text amounts"
