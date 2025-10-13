@@ -677,6 +677,12 @@
 	min_antag_cap = 2
 	max_antag_cap = 3
 	min_pop = 25
+	weight = list(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 3,
+		DYNAMIC_TIER_MEDIUMHIGH = 4,
+		DYNAMIC_TIER_HIGH = 5,
+	)
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
 	name = "Paradox Clone"
@@ -1096,6 +1102,12 @@
 	max_antag_cap = 4
 	repeatable_weight_decrease = 8
 	blacklisted_roles = list()
+	weight = list(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 3,
+		DYNAMIC_TIER_MEDIUMHIGH = 8,
+		DYNAMIC_TIER_HIGH = 10,
+	)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai
 	name = "Malfunctioning AI"
