@@ -676,19 +676,26 @@
 		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
 	else
 		transfer = min(transfer, (limit ? limit : target_stack.max_amount) - target_stack.amount)
+		// Ensure that we're not bloating the target stack to the point where it falls out of storage
+		if(target_stack.loc?.atom_storage)
+			var/datum/storage/target_storage = target_stack.loc?.atom_storage
+			var/cur_size = target_stack.w_class
+			var/new_size = target_stack.get_weight_from_size(target_stack.amount + transfer)
+			var/real_new_size = new_size
 
-	// Ensure that we're not bloating the target stack to the point where it falls out of storage
-	if(target_stack.loc?.atom_storage)
-		var/datum/storage/target_storage = target_stack.loc?.atom_storage
-		var/cur_size = target_stack.get_weight_from_size(target_stack.amount)
-		var/new_size = target_stack.get_weight_from_size(target_stack.amount + transfer)
-		if(new_size > cur_size)
-			var/size_limit = (new_size - target_storage.max_specific_storage) || (target_storage.get_total_weight() + new_size - cur_size - target_storage.max_total_storage)
-			// If we're over the stack limit the storage container can support, reduce the transferred amount
-			// to the nearest size threshold, then by a third of the target stack per excess size
-			if(size_limit > 0)
-				var/to_threshold = FLOOR(target_stack.amount + transfer, floor(target_stack.max_amount / 3))
-				transfer = max(to_threshold - floor(target_stack.max_amount / 3) * (size_limit - 1), 0)
+			// Ensure that we don't end up with two mergeable stacks if our own size gets reduced enough from the merge
+			if (!is_cyborg)
+				cur_size += w_class
+				if (amount > transfer)
+					real_new_size += get_weight_from_size(amount - transfer)
+
+			if(real_new_size > cur_size)
+				var/size_limit = max(new_size - target_storage.max_specific_storage, target_storage.get_total_weight() + real_new_size - cur_size - target_storage.max_total_storage)
+				// If we're over the stack limit the storage container can support, reduce the transferred amount
+				// to the nearest size threshold, then by a third of the target stack per excess size
+				if(size_limit > 0)
+					var/to_threshold = FLOOR(target_stack.amount + transfer, floor(target_stack.max_amount / 3))
+					transfer = max(to_threshold - floor(target_stack.max_amount / 3) * (size_limit - 1), 0)
 
 	if(!transfer)
 		return
