@@ -9,7 +9,7 @@
 	for(var/datum/computer_file/program/maintenance/theme/proto_theme as anything in typesof(/datum/computer_file/program/maintenance/theme))
 		if(proto_theme::abstract_type == proto_theme)
 			continue
-		if(!proto_theme::name)
+		if(!proto_theme::theme_name)
 			TEST_FAIL("[proto_theme] doesn't have a set name")
 		if(!proto_theme::theme_id)
 			TEST_FAIL("[proto_theme] doesn't have a set id")
