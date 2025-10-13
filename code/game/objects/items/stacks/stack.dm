@@ -214,9 +214,9 @@
 	update_weight_class(get_weight_from_size(amount))
 
 /obj/item/stack/proc/get_weight_from_size(stack_amount)
-	if(amount <= (max_amount * (1/3)))
+	if(stack_amount <= (max_amount * (1/3)))
 		return clamp(full_w_class - 2, WEIGHT_CLASS_TINY, full_w_class)
-	if (amount <= (max_amount * (2/3)))
+	if(stack_amount <= (max_amount * (2/3)))
 		return clamp(full_w_class - 1, WEIGHT_CLASS_TINY, full_w_class)
 	return full_w_class
 
@@ -690,8 +690,8 @@
 				if (amount > transfer)
 					real_new_size += get_weight_from_size(amount - transfer)
 
-			// If individual or total size changed, vibecheck for overflows
-			if(new_size > cur_size || real_new_size > real_cur_size)
+			// If total size changed, check for overflows
+			if(new_size > cur_size)
 				var/size_limit = max(new_size - target_storage.max_specific_storage, target_storage.get_total_weight() + real_new_size - real_cur_size - target_storage.max_total_storage)
 				// If we're over the stack limit the storage container can support, reduce the transferred amount
 				// to the nearest size threshold, then by a third of the target stack per excess size
