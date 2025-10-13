@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 						continue
 					export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
 
-	if(report.exported_atoms)
+	if(report.exported_atoms.len)
 		report.exported_atoms += "." //ugh
 
 	for(var/datum/export/exported_datum in report.total_amount)
@@ -308,7 +308,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		cargo_budget.adjust_money(report.total_value[exported_datum])
 
 	SSshuttle.centcom_message = msg
-	investigate_log("contents sold for [cargo_budget.account_balance - presale_points] credits. Contents: [report.exported_atoms ? report.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	if(report.exported_atoms.len)
+		investigate_log("contents sold for [cargo_budget.account_balance - presale_points] credits. Contents: [report.exported_atoms.Join(",")]. Message: [SSshuttle.centcom_message]", INVESTIGATE_CARGO)
 
 /*
 	Generates a box of mail depending on our exports and imports.
