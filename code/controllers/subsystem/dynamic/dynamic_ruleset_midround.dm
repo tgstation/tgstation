@@ -658,7 +658,7 @@
 	candidate_role = "Changeling"
 	pref_flag = ROLE_CHANGELING_MIDROUND
 	jobban_flag = ROLE_CHANGELING
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_VARIATION
 	weight = 5
 	min_pop = 15
 	max_antag_cap = 1
@@ -1079,6 +1079,7 @@
 	false_alarm_able = TRUE
 	pref_flag = ROLE_SLEEPER_AGENT
 	jobban_flag = ROLE_TRAITOR
+	ruleset_flags = RULESET_VARIATION
 	weight = 10
 	min_pop = 3
 	blacklisted_roles = list(
