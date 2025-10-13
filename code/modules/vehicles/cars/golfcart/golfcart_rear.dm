@@ -166,11 +166,13 @@
 	unload()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/golfcart_rear/proc/can_load(thing)
+	return is_type_in_typecache(thing, parent.allowed_cargo) && (!is_type_in_typecache(thing, parent.banned_cargo)) && (!has_buckled_mobs())
+
 /obj/golfcart_rear/mouse_drop_receive(atom/dropped, mob/user, params)
-	if (!is_type_in_typecache(dropped, parent.allowed_cargo) || is_type_in_typecache(dropped, parent.banned_cargo))
-		return ..()
-	if (has_buckled_mobs())
-		balloon_alert(user, "blocked!")
+	if (!can_load(dropped))
+		if (has_buckled_mobs())
+			balloon_alert(user, "blocked!")
 		return ..()
 	var/obj/dropped_obj = dropped
 	return load(dropped_obj)

@@ -14,7 +14,6 @@
 	icon_state = "front"
 	max_integrity = 100
 	armor_type = /datum/armor/none
-	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_ADJACENT
 	pass_flags_self = parent_type::pass_flags_self | LETPASSCLICKS
 	integrity_failure = 0.5
 	layer = ABOVE_MOB_LAYER
@@ -201,6 +200,11 @@
 		return
 	for(var/mob/living/future_pancake in loc)
 		run_over(future_pancake)
+
+/obj/vehicle/ridden/golfcart/mouse_drop_receive(atom/dropped, mob/user, params)
+	if (child.can_load(dropped))
+		return child.mouse_drop_receive(dropped, user, params)
+	return ..()
 
 /obj/vehicle/ridden/golfcart/item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
 	if (!hood_open)
