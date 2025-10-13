@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				if(!recipes)
 					recipes = list()
 					recipe_list[recipe_extract_type] = recipes
-				recipes.Add(slime_reaction)
+				recipes.Add(new slime_reaction())
 
 	return recipe_list
 
