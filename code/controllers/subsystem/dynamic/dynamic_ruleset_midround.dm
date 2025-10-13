@@ -674,9 +674,10 @@
 	name = "Mass Space Changelings"
 	config_tag = "Mass Changelings"
 	midround_type = HEAVY_MIDROUND
+	min_pop = 25
 	min_antag_cap = 2
 	max_antag_cap = 3
-	min_pop = 25
+	repeatable_weight_decrease = 4
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 3,
