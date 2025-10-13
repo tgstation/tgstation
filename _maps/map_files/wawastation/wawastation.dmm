@@ -23684,7 +23684,7 @@
 /area/station/maintenance/department/science)
 "ikc" = (
 /obj/structure/closet/crate/secure/loot{
-	codelen = 2;
+	code_length = 2;
 	name = "malfunctioning abandoned crate"
 	},
 /turf/open/misc/asteroid,
@@ -53739,6 +53739,7 @@
 /obj/item/wheelchair{
 	pixel_y = 3
 	},
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/paramedic)
 "stw" = (

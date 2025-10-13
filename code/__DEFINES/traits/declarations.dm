@@ -959,6 +959,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_SKIP "examine_skip"
 /// Objects with this trait cannot be repaired with duct tape
 #define TRAIT_DUCT_TAPE_UNREPAIRABLE "duct_tape_unrepairable"
+/// An item is ALWAYS considered baseline reachable and will pipe into CanBeReached().
+#define TRAIT_SKIP_BASIC_REACH_CHECK "skip_basic_reach_check"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -1573,5 +1575,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait specifying that an AI has a remote connection to an integrated circuit
 #define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
+
+/// Mob is artificially spawned rather than being created through more natural means - applied to monkey cubes and such
+#define TRAIT_SPAWNED_MOB "spawned_mob"
 
 // END TRAIT DEFINES
