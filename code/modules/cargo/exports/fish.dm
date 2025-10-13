@@ -1,5 +1,6 @@
 /datum/export/fish
 	cost = 30
+	k_hit_percentile = 0.03
 	unit_name = "fish"
 	export_types = list(/obj/item/fish)
 

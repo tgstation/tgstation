@@ -89,7 +89,6 @@ Then the player gets the profit from selling his own wasted time.
 				external_report.all_contents_scannable = FALSE
 				break
 			sold = export.sell_object(exported_atom, external_report, dry_run, apply_elastic)
-			external_report.exported_atoms += " [exported_atom.name]"
 			break
 	return sold
 
@@ -215,6 +214,7 @@ Then the player gets the profit from selling his own wasted time.
 	if(!(export_result & COMPONENT_STOP_EXPORT_REPORT))
 		report.total_value[src] += export_value
 		report.total_amount[src] += export_amount * amount_report_multiplier
+		report.exported_atoms += "[sold_item.name]"
 
 	if(!dry_run)
 		if(apply_elastic && k_elasticity > 0)
