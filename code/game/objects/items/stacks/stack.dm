@@ -697,7 +697,7 @@
 				// to the nearest size threshold, then by a third of the target stack per excess size
 				if(size_limit > 0)
 					var/to_threshold = FLOOR(target_stack.amount + transfer, floor(target_stack.max_amount / 3))
-					transfer = max(to_threshold - floor(target_stack.max_amount / 3) * (size_limit - 1), 0)
+					transfer = clamp(to_threshold - floor(target_stack.max_amount / 3) * (size_limit - 1) - target_stack.amount, 0, transfer)
 
 	if(!transfer)
 		return
