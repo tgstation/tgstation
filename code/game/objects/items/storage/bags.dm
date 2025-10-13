@@ -199,8 +199,17 @@
 		box = user.pulling
 
 	if (box)
-		user.transferItemToLoc(ore, box)
+		user.transferItemToLoc(ore, box, animated = FALSE)
 		return TRUE
+
+	if (istype(ore, /obj/item/stack/ore))
+		var/obj/item/stack/ore/real_ore = ore
+		for(var/obj/item/stack/ore/stored_ore as anything in src)
+			if(!real_ore.can_merge(stored_ore))
+				continue
+			real_ore.merge(stored_ore)
+			if(QDELETED(real_ore))
+				return TRUE
 
 	if (atom_storage.attempt_insert(ore, user))
 		return TRUE
