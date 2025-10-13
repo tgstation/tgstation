@@ -290,7 +290,7 @@
 
 /obj/item/mod/module/orebag/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(istype(arrived, /obj/item/stack/ore) && !dropping_ores)
+	if(istype(arrived, /obj/item/stack/ore) && !dropping_ores && old_loc != mod.wearer)
 		INVOKE_ASYNC(src, PROC_REF(move_ore), arrived)
 		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
 

@@ -225,7 +225,7 @@
 
 /obj/item/storage/bag/ore/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores)
+	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores && old_loc != loc)
 		INVOKE_ASYNC(src, PROC_REF(pickup_ore), arrived, listening_to)
 
 /obj/item/storage/bag/ore/proc/on_atom_initialized_on(atom/loc, atom/new_atom)

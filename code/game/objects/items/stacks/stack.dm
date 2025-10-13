@@ -682,15 +682,17 @@
 			var/cur_size = target_stack.w_class
 			var/new_size = target_stack.get_weight_from_size(target_stack.amount + transfer)
 			var/real_new_size = new_size
+			var/real_cur_size = cur_size
 
-			// Ensure that we don't end up with two mergeable stacks if our own size gets reduced enough from the merge
-			if (!is_cyborg)
-				cur_size += w_class
+			// Ensure that we don't end up with two mergeable stacks if our own size gets reduced enough from the merge and we share the space
+			if (!is_cyborg && loc == target_stack.loc)
+				real_cur_size += w_class
 				if (amount > transfer)
 					real_new_size += get_weight_from_size(amount - transfer)
 
-			if(real_new_size > cur_size)
-				var/size_limit = max(new_size - target_storage.max_specific_storage, target_storage.get_total_weight() + real_new_size - cur_size - target_storage.max_total_storage)
+			// If individual or total size changed, vibecheck for overflows
+			if(new_size > cur_size || real_new_size > real_cur_size)
+				var/size_limit = max(new_size - target_storage.max_specific_storage, target_storage.get_total_weight() + real_new_size - real_cur_size - target_storage.max_total_storage)
 				// If we're over the stack limit the storage container can support, reduce the transferred amount
 				// to the nearest size threshold, then by a third of the target stack per excess size
 				if(size_limit > 0)
