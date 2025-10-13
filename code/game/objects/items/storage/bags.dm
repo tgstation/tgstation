@@ -158,6 +158,10 @@
 
 	RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 	RegisterSignal(tile, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
+
+/obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
+	var/turf/tile = get_turf(user)
 	var/obj/structure/ore_box/box = null
 	if(istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
@@ -222,12 +226,12 @@
 /obj/item/storage/bag/ore/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
 	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores)
-		pickup_ore(arrived, listening_to)
+		INVOKE_ASYNC(src, PROC_REF(pickup_ore), arrived, listening_to)
 
 /obj/item/storage/bag/ore/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
 	if(is_type_in_list(new_atom, atom_storage.can_hold))
-		pickup_ore(new_atom, listening_to)
+		INVOKE_ASYNC(src, PROC_REF(pickup_ore), new_atom, listening_to)
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
