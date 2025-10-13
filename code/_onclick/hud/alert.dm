@@ -149,15 +149,14 @@
 	atom_appearance.pixel_y = atom.base_pixel_y
 	atom_appearance.pixel_w = atom.base_pixel_w
 	atom_appearance.pixel_z = atom.base_pixel_z
+	strip_appearance_underlays(atom_appearance)
 	return atom_appearance
 
 /atom/movable/screen/alert/Click(location, control, params)
 	SHOULD_CALL_PARENT(TRUE)
 
 	..()
-	if(!usr || !usr.client)
-		return FALSE
-	if(usr != owner)
+	if(!usr || !GET_CLIENT(usr) || usr != owner)
 		return FALSE
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
@@ -168,6 +167,8 @@
 	var/datum/our_master = master_ref?.resolve()
 	if(our_master)
 		return usr.client.Click(our_master, location, control, params)
+
+	return TRUE
 
 /atom/movable/screen/alert/Destroy()
 	. = ..()
