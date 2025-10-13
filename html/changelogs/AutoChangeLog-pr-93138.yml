@@ -1,4 +1,0 @@
-author: "Gaxeer"
-delete-after: True
-changes:
-  - bugfix: "energy dagger pen report will be now shown in detective scanner and also all items that transform will have additional note about it"

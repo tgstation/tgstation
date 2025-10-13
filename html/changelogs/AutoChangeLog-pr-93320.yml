@@ -1,4 +1,0 @@
-author: "ArchBTW"
-delete-after: True
-changes:
-  - bugfix: "Fixes riot shotgun unintentional melee when point blank shooting"
