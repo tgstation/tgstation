@@ -894,8 +894,8 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-///Flattens a keyed list into a list of its contents
-/proc/flatten_list(list/key_list)
+/// Turns an associative list into a flat list of values
+/proc/assoc_to_values(list/key_list)
 	if(!islist(key_list))
 		return null
 	. = list()
