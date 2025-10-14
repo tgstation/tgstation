@@ -720,7 +720,7 @@
 			continue
 		//now we can merge since we are done with it
 		for(var/obj/item/stack/item_stack in target)
-			if(item_stack == new_stack || new_stack.type != type_to_retrieve) //don't merge with self or different type
+			if(item_stack == new_stack || item_stack.type != type_to_retrieve) //don't merge with self or different type
 				continue
 			//speed merge
 			var/merge_amount = min(item_stack.amount, new_stack.max_amount - new_stack.get_amount())

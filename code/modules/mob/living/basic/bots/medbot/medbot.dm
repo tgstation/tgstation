@@ -366,7 +366,7 @@
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
 
-	if(CanReach(patient))
+	if(patient.IsReachableBy(src))
 		melee_attack(patient)
 
 /datum/id_trim/medibot
