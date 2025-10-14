@@ -70913,7 +70913,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/right/directional/west{
 	name = "First Aid Supplies";
-	req_access = list("medical")
+	req_access = list("paramedic")
 	},
 /obj/item/clothing/glasses/blindfold{
 	pixel_y = 3
