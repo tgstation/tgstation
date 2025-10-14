@@ -38,12 +38,10 @@ Self-sustaining extracts:
 
 	var/list/choices = list()
 	for(var/datum/chemical_reaction/slime/recipe as anything in slime_reactions)
-		var/choice = ""
+		var/list/req_chem_names = list()
 		for(var/datum/reagent/chem as anything in recipe.required_reagents)
-			if(length(choice)==0)
-				choice = chem.name
-			else
-				choice += ", [chem.name]"
+			req_chem_names += chem.name
+		var/choice = english_list(req_chem_names, and_text = ", ")
 		choices[choice] = recipe
 
 	var/selectName = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", choices)
