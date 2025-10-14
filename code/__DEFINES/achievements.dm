@@ -2,6 +2,7 @@
 
 /// Achievements icon set
 #define ACHIEVEMENTS_SET 'icons/ui/achievements/achievements.dmi'
+#define PDA_THEMES_PROGRESS_SET 'icons/ui/achievements/pda_themes.dmi'
 
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
