@@ -452,3 +452,16 @@
   - bugfix: integrated toolset and integrated paperwork implants can be emagged for
       an integrated combat knife and chameleon stamp, respectively (fixed a bug preventing
       that from working)
+2025-10-14:
+  FalloutFalcon:
+  - bugfix: ghost basic mobs use natural hair colors
+  Fghj240:
+  - bugfix: Atlas gravitronic spinal implants now use their intended sprite
+  Xander3359:
+  - refactor: Converts some attacks to interactions
+  necromanceranne:
+  - balance: Hunter boxing now grants a reasonable amount of experience in Athletics
+      for punching the absolute shit out of the local wildlife.
+  - balance: Includes crustaceans and reptiles to the list of mob types that Hunter
+      Boxing is allowed to mangle with their bare hands. You still can't use Hunter
+      Boxing on lizardpeople. Or crabpeople when they are added in 2030.
