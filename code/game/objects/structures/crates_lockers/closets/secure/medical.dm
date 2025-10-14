@@ -140,9 +140,9 @@
 	new /obj/item/clothing/glasses/science(src)
 
 /obj/structure/closet/secure_closet/paramedic
-	name = "emergency response team locker"
+	name = "emergency medical team locker"
 	req_access = list(ACCESS_PARAMEDIC)
-	icon_state = "paramed"
+	icon_state = "paramed_secure"
 
 /obj/structure/closet/secure_closet/paramedic/PopulateContents()
 	..()
