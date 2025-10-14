@@ -262,16 +262,16 @@
 
 	if(graft)
 		last_scan_data["graft_data"] = list(
-			"name" = graft.parent_name,
+			"name" = graft.plant_dna.name,
 			"icon" = graft.icon,
 			"icon_state" = graft.icon_state,
-			"yield" = graft.yield,
-			"production" = graft.production,
-			"lifespan" = graft.lifespan,
-			"endurance" = graft.endurance,
-			"weed_rate" = graft.weed_rate,
-			"weed_chance" = graft.weed_chance,
-			"graft_gene" = graft.stored_trait.type,
+			"yield" = graft.plant_dna.yield,
+			"production" = graft.plant_dna.production,
+			"lifespan" = graft.plant_dna.lifespan,
+			"endurance" = graft.plant_dna.endurance,
+			"weed_rate" = graft.plant_dna.weed_rate,
+			"weed_chance" = graft.plant_dna.weed_chance,
+			"graft_gene" = graft.plant_dna.graft_gene.type
 		)
 
 	if(user)

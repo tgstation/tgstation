@@ -165,7 +165,7 @@
 
 /mob/living/basic/mining_drone/ui_static_data(mob/user)
 	var/list/data = list()
-	data["bot_icon"] = icon2base64(getFlatIcon(src))
+	data["bot_icon"] = icon2base64(getFlatIcon(src, no_anim = TRUE))
 	data["possible_colors"] = list()
 	for(var/color in possible_colors)
 		data["possible_colors"] += list(list(

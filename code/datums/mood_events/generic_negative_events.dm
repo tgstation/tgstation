@@ -570,9 +570,12 @@
 /datum/mood_event/see_death/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
+		mood_change *= 0.25
+		timeout *= 0.2
 	if(HAS_TRAIT(owner, TRAIT_CULT_HALO) && !HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
 		// When cultists get halos, they stop caring about death
-		mood_change = 4
+		mood_change *= -0.5
 		description = "More souls for the Geometer!"
 		return
 
@@ -603,9 +606,9 @@
 
 	description = replacetext(normal_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
-/datum/mood_event/see_death/be_refreshed(datum/mood/home, ...)
+/datum/mood_event/see_death/be_refreshed(datum/mood/home, mob/dead_mob, ...)
 	// Every time we get refreshed we get worse if not desensitized
-	if(!HAS_TRAIT(owner, TRAIT_DESENSITIZED))
+	if(!HAS_TRAIT(owner, TRAIT_DESENSITIZED) && !HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
 		mood_change *= 1.5
 	return ..()
 

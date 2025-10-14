@@ -19,6 +19,13 @@
 		/obj/item/shovel/spade = 3,
 		/obj/item/storage/bag/plants = 5,
 	)
+
+	premium = list(
+		/obj/item/soil_sack = 8,
+		/obj/item/soil_sack/vermaculite = 3,
+		/obj/item/soil_sack/gel = 3,
+	)
+
 	contraband = list(
 		/obj/item/reagent_containers/cup/bottle/ammonia = 10,
 		/obj/item/reagent_containers/cup/bottle/diethylamine = 5,

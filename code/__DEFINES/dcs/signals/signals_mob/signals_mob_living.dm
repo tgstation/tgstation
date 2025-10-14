@@ -20,6 +20,9 @@
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
 
+/// Called when combat mode is toggled.
+#define COMSIG_COMBAT_MODE_TOGGLED "combat_mode_toggled"
+
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 

@@ -106,6 +106,7 @@
 		module = new module(src)
 		install(module)
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/mod/control/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -212,14 +213,14 @@
 		return
 	clean_up()
 
-/obj/item/mod/control/allow_attack_hand_drop(mob/user)
+/obj/item/mod/control/can_mob_unequip(mob/user)
 	if(user != wearer)
 		return ..()
 
 	if(active)
 		balloon_alert(wearer, "unit active!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
-		return
+		return FALSE
 
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
@@ -228,23 +229,6 @@
 			return FALSE
 
 	return ..()
-
-/obj/item/mod/control/mouse_drop_dragged(atom/over_object, mob/user)
-	if(user != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
-		return
-	if(active)
-		balloon_alert(wearer, "unit active!")
-		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
-		return
-	for(var/obj/item/part as anything in get_parts())
-		if(part.loc != src)
-			balloon_alert(wearer, "parts extended!")
-			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
-			return
-	if(!wearer.incapacitated)
-		var/atom/movable/screen/inventory/hand/ui_hand = over_object
-		if(wearer.putItemFromInventoryInHandIfPossible(src, ui_hand.held_index))
-			add_fingerprint(user)
 
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
 	if(seconds_electrified && get_charge() && shock(user))
