@@ -70,11 +70,92 @@
 	. += NAMEOF(src, pipe_color)
 	return .
 
+/obj/machinery/meter/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon)
+	. -= NAMEOF(src, icon_state)
+	// /obj/machinery/meter/monitored/distro_loop has an id_tag
+	return .
+
+/obj/structure/extinguisher_cabinet/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/requests_console/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, name)
+	return .
+
+/// CHECK IF ID_TAGS ARE NEEDED FOR FIREDOOR/FIREALARMS
+/obj/machinery/door/firedoor/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, name)
+	return .
+
+/obj/machinery/firealarm/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, name)
+	return .
+/// SEE ABOVE
+
+/obj/machinery/atmospherics/pipe/layer_manifold/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/structure/cable/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/duct/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/microwave/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/ai_slipper/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/atmospherics/components/unary/thermomachine/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon)
+	return .
+
+/obj/machinery/light_switch/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, name)
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/structure/steam_vent/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/smartfridge/drying/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/machinery/atmospherics/pipe/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon)
+	. -= NAMEOF(src, icon_state)
+	return .
+
 /obj/machinery/atmospherics/components/get_save_vars()
 	. = ..()
 	if(!override_naming)
-		// Prevents saving the dynamic name with \proper due to it converting to "???"
 		. -= NAMEOF(src, name)
+	. -= NAMEOF(src, icon_state)
 	. += NAMEOF(src, welded)
 	return .
 
@@ -82,6 +163,11 @@
 	. = ..()
 	. += NAMEOF(src, piping_layer)
 	. += NAMEOF(src, pipe_color)
+	return .
+
+/obj/machinery/portable_atmospherics/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
 	return .
 
 /obj/machinery/portable_atmospherics/canister/get_save_vars()
