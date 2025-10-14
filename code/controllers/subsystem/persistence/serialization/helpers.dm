@@ -29,7 +29,9 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		data_to_add += "[variable] = [custom_value]"
 		custom_var_names[variable] = TRUE
 
-	for(var/variable in vars_to_save)
+	while(vars_to_save.len)
+		var/variable = vars_to_save[vars_to_save.len]
+		vars_to_save.len--
 		CHECK_TICK
 		if(custom_var_names[variable]) // skip variables that use custom serialization
 			continue
