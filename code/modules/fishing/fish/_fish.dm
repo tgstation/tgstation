@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish
 	name = "fish"
 	desc = "very bland"
+	abstract_type = /obj/item/fish
 	icon = 'icons/obj/aquarium/fish.dmi'
 	lefthand_file = 'icons/mob/inhands/fish_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
@@ -220,7 +221,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	//Adding this because not all fish have the gore foodtype that makes them automatically eligible for dna infusion.
 	add_traits(list(TRAIT_DUCT_TAPE_UNREPAIRABLE, TRAIT_VALID_DNA_INFUSION), INNATE_TRAIT)
 
-	//stops new fish from being able to reproduce right away.
+	//new fish should be modestly hungry and cannot reproduce right away.
 	breeding_wait = world.time + (breeding_timeout * NEW_FISH_BREEDING_TIMEOUT_MULT)
 	last_feeding = world.time - (feeding_frequency * NEW_FISH_LAST_FEEDING_MULT)
 
@@ -230,6 +231,17 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	register_context()
 	register_item_context()
+
+	if(!PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type)
+		return
+	if(stable_population <= 1 && !HAS_TRAIT(src, TRAIT_FISH_NO_MATING) && !HAS_TRAIT(src, TRAIT_FISH_RECESSIVE) && !HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
+		var/list/pick_one = list(
+			/datum/fish_trait/crossbreeder,
+			/datum/fish_trait/no_mating,
+			/datum/fish_trait/recessive,
+		)
+		stack_trace("[type] has a stable_population of [stable_population] but has neither of these traits: [english_list(pick_one)]. \
+			Either increase its stable_population or add one of these traits to it.")
 
 /obj/item/fish/suicide_act(mob/living/user)
 	if(force == 0)
@@ -1274,7 +1286,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return FALSE
 	if(!being_targeted && length(get_aquarium_fishes()) >= AQUARIUM_MAX_BREEDING_POPULATION)
 		return FALSE
-	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && get_health_percentage() >= 0.8 && stable_population >= 1 && world.time >= breeding_wait
+	return !HAS_TRAIT(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH) && get_health_percentage() >= 0.8 && world.time >= breeding_wait
 
 /obj/item/fish/proc/try_to_reproduce()
 	if(!loc || !HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
@@ -1342,6 +1354,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	return create_offspring(chosen_type, second_fish, chosen_evolution)
 
+///The timeout multiplier for offspring fish, the ones generated when two compatible fish are coupled
+#define OFFSPRING_FISH_BREEDING_TIMEOUT_MULT 2
+
 /obj/item/fish/proc/create_offspring(chosen_type, obj/item/fish/partner, datum/fish_evolution/evolution)
 	var/obj/item/fish/new_fish = new chosen_type (loc, FALSE)
 	//Try to pass down compatible traits based on inheritability
@@ -1356,7 +1371,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		var/ratio_weight = new_fish.average_size * (((weight / average_weight) + (partner.weight / partner.average_weight)) / 2)
 		var/mean_weight = (weight + partner.weight)/2
 		new_fish.randomize_size_and_weight((mean_size + ratio_size) * 0.5, (mean_weight + ratio_weight) * 0.5, 0.3, update = FALSE)
-		partner.breeding_wait = world.time + breeding_timeout
+		partner.breeding_wait = world.time + partner.breeding_timeout
 
 		if(length(partner.custom_materials))
 			if(length(custom_materials))
@@ -1383,7 +1398,11 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 	breeding_wait = world.time + breeding_timeout
 
+	new_fish.breeding_wait = world.time + new_fish.breeding_timeout * OFFSPRING_FISH_BREEDING_TIMEOUT_MULT
+
 	return new_fish
+
+#undef OFFSPRING_FISH_BREEDING_TIMEOUT_MULT
 
 #define PAUSE_BETWEEN_PHASES 15
 #define PAUSE_BETWEEN_FLOPS 2
