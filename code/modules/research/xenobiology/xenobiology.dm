@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				skip = TRUE
 				break
 		if(skip)
-			continue;
+			continue
 
 		var/list/recipes = recipe_list[recipe_extract_type]
 		if(!recipes)
