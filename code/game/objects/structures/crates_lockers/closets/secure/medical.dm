@@ -147,16 +147,17 @@
 /obj/structure/closet/secure_closet/paramedic/PopulateContents()
 	..()
 
-	new /obj/item/clothing/under/rank/medical/paramedic(src)
-	new /obj/item/clothing/under/rank/medical/paramedic/skirt(src)
-	new /obj/item/storage/box/gloves_nitrile(src)
-	new /obj/item/clothing/shoes/workboots/black(src)
-	new /obj/item/radio/headset/headset_med(src)
-	new /obj/item/storage/belt/medical/paramedic(src)
-	new /obj/item/pinpointer/crew(src)
-	new /obj/item/storage/medkit/emergency(src)
-	new /obj/item/storage/box/bandages(src)
-	new /obj/item/emergency_bed(src)
-	for(var/i in 1 to 2)
-		new /obj/item/clothing/glasses/hud/health()
+	var/static/items_inside = list(
+		/obj/item/clothing/glasses/hud/health = 2,
+		/obj/item/clothing/under/rank/medical/paramedic = 1,
+		/obj/item/clothing/under/rank/medical/paramedic/skirt = 1,
+		/obj/item/storage/box/gloves_nitrile = 1,
+		/obj/item/storage/medkit/emergency = 1,
+		/obj/item/storage/box/bandages = 1,
+		/obj/item/pinpointer/crew = 1,
+		/obj/item/storage/belt/medical/paramedic = 1,
+		/obj/item/radio/headset/headset_med = 2,
+		/obj/item/clothing/shoes/workboots/black = 1,
+		/obj/item/emergency_bed = 2)
+	generate_items_inside(items_inside,src)
 
