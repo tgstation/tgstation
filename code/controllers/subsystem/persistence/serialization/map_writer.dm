@@ -106,13 +106,13 @@
 					var/obj/docking_port/mobile/shuttle = SSshuttle.get_containing_shuttle(pull_from)
 
 					// save turf underneath shuttle
-					saved_turf =	shuttle_depth ? pull_from.baseturf_at_depth(shuttle_depth + 1) : /turf/template_noop
+					saved_turf = shuttle_depth ? pull_from.baseturf_at_depth(shuttle_depth + 1) : /turf/template_noop
 
 					// save area underneath shuttle
 					if(shuttle)
 						var/area/area_underneath_shuttle = shuttle.underlying_areas_by_turf[pull_from]
 						saved_area = area_underneath_shuttle.type || SHUTTLE_DEFAULT_UNDERLYING_AREA
-					else
+					else // shouldn't be possible but just in case
 						saved_area = /area/template_noop
 
 					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
@@ -126,40 +126,43 @@
 
 				// always replace [/turf/open/space] with [/turf/open/space/basic] since it speeds up the maploader
 				// [/turf/open/space] is created naturally when shuttles are moving or turf gets destroyed leading to space
-				if(saved_turf.type == /turf/open/space)
+				if(isspaceturf(saved_turf))
 					saved_turf = /turf/open/space/basic
 
-				//====SAVING OBJECTS====
-				if(save_flag & SAVE_OBJECTS)
-					for(var/obj/thing in pull_from)
+				for(var/atom/target_atom as anything in pull_from)
+					//====SAVING OBJECTS====
+					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
+						var/obj/target_obj = target_atom
 						CHECK_TICK
-						if(obj_blacklist[thing.type])
+						if(obj_blacklist[target_obj.type])
 							continue
-						if(thing.flags_1 & HOLOGRAM_1)
+						if(target_obj.flags_1 & HOLOGRAM_1)
 							continue
-						if(is_multi_tile_object(thing) && (thing.loc != pull_from))
+						if(is_multi_tile_object(target_obj) && (target_obj.loc != pull_from))
 							continue
 
 						var/metadata
 						if(save_flag & SAVE_OBJECTS_VARIABLES)
-							metadata = generate_tgm_metadata(thing)
+							metadata = generate_tgm_metadata(target_obj)
 
-						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
+						current_header += "[empty ? "" : ",\n"][target_obj.type][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
 						if(save_flag & SAVE_OBJECTS_PROPERTIES)
-							var/custom_data = thing.on_object_saved()
+							var/custom_data = target_obj.on_object_saved()
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
-				//====SAVING MOBS====
-				if(save_flag & SAVE_MOBS)
-					for(var/mob/living/thing in pull_from)
+
+					//====SAVING MOBS====
+					if((save_flag & SAVE_MOBS) && isliving(target_atom))
+						var/mob/living/target_mob = target_atom
 						CHECK_TICK
 						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
 							continue
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
+
 				current_header += "[empty ? "" : ",\n"][saved_turf]"
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
