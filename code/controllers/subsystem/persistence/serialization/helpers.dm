@@ -12,79 +12,6 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"Y","Z",
 ))
 
-
-///Returns a list of overlays of every gas in the mixture
-#define GAS_OVERLAYS(gases, out_var, z_layer_turf)\
-	do { \
-		out_var = list();\
-		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
-		for(var/_ID in gases){\
-			if(GLOB.nonoverlaying_gases[_ID]) continue;\
-			var/_GAS = gases[_ID];\
-			var/_GAS_META = _GAS[GAS_META];\
-			if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
-			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset];\
-			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
-		} \
-	}\
-	while (FALSE)
-
-#define TO_LIST_STRING(build_from)\
-	var/list/build_into = list();\
-	build_into += "list(";\
-	var/first_entry = TRUE;\
-	for(var/item in build_from) {\
-		CHECK_TICK;\
-		if(!first_entry) {\
-			build_into += ", ";\
-		}\
-		if(isnum(item) || !build_from[item]) {\
-			build_into += "[tgm_encode(item)]";\
-		} else {\
-			build_into += "[tgm_encode(item)] = [tgm_encode(build_from[item])]";\
-		}\
-		first_entry = FALSE;\
-	}\
-	build_into += ")";\
-	return build_into.Join("");
-
-/proc/to_list_string(list/build_from)
-	var/list/build_into = list()
-	build_into += "list("
-	var/first_entry = TRUE
-	for(var/item in build_from)
-		CHECK_TICK
-		if(!first_entry)
-			build_into += ", "
-		if(isnum(item) || !build_from[item])
-			build_into += "[tgm_encode(item)]"
-		else
-			build_into += "[tgm_encode(item)] = [tgm_encode(build_from[item])]"
-		first_entry = FALSE
-	build_into += ")"
-	return build_into.Join("")
-
-/// Takes a constant, encodes it into a TGM valid string
-/proc/tgm_encode(value)
-	if(istext(value))
-		//Prevent symbols from being because otherwise you can name something
-		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
-		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ","=""))]\""
-	if(isnum(value) || ispath(value))
-		return "[value]"
-	if(islist(value))
-		return to_list_string(value)
-	if(isnull(value))
-		return "null"
-	if(isicon(value) || isfile(value))
-		return "'[value]'"
-	// not handled:
-	// - pops: /obj{name="foo"}
-	// - new(), newlist(), icon(), matrix(), sound()
-
-	// fallback: string
-	return tgm_encode("[value]")
-
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
 	var/list/vars_to_save = object.get_save_vars()
@@ -96,10 +23,10 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	for(var/variable in custom_vars)
 		CHECK_TICK
 		var/custom_value = custom_vars[variable]
-		var/text_value = tgm_encode(custom_value)
-		if(!text_value)
+		TGM_ENCODE(custom_value)
+		if(!custom_value)
 			continue
-		data_to_add += "[variable] = [text_value]"
+		data_to_add += "[variable] = [custom_value]"
 		custom_var_names[variable] = TRUE
 
 	for(var/variable in vars_to_save)
@@ -115,24 +42,33 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(variable == "icon" && object.smoothing_flags)
 			continue
 
-		var/text_value = tgm_encode(value)
-		if(!text_value)
+		TGM_ENCODE(value)
+		if(!value)
 			continue
-		data_to_add += "[variable] = [text_value]"
+		data_to_add += "[variable] = [value]"
 
 	if(!length(data_to_add))
 		return
 	return "{\n\t[data_to_add.Join(";\n\t")]\n\t}"
 
-// Could be inlined, not a massive cost tho so it's fine
-/// Generates a key matching our index
-/proc/calculate_tgm_header_index(index, key_length)
-	var/list/output = list()
-	// We want to stick the first one last, so we walk backwards
-	var/list/pull_from = GLOB.save_file_chars
-	var/length = length(pull_from)
-	for(var/i in key_length to 1 step -1)
-		var/calculated = FLOOR((index-1) / (length ** (i - 1)), 1)
-		calculated = (calculated % length) + 1
-		output += pull_from[calculated]
-	return output.Join()
+// cannot macro this due to infinite recursion TGM_ENCODE & TO_LIST_STRING call each other
+// also handles converting nested lists into strings
+/proc/to_list_string(list/build_from)
+	var/list/build_into = list()
+	build_into += "list("
+	var/first_entry = TRUE
+	for(var/item in build_from)
+		CHECK_TICK
+		if(!first_entry)
+			build_into += ", "
+
+		if(isnum(item) || !build_from[item])
+			TGM_ENCODE(item)
+			build_into += "[item]"
+		else
+			TGM_ENCODE(item)
+			TGM_ENCODE(build_from[item])
+			build_into += "[item] = [build_from[item]]"
+		first_entry = FALSE
+	build_into += ")"
+	return build_into.Join("")

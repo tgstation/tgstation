@@ -180,3 +180,39 @@
 				contents += "[key]\n"
 			contents += "\"}"
 	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
+
+// Could be inlined, not a massive cost tho so it's fine
+/// Generates a key matching our index
+/proc/calculate_tgm_header_index(index, key_length)
+	var/list/output = list()
+	// We want to stick the first one last, so we walk backwards
+	var/list/pull_from = GLOB.save_file_chars
+	var/length = length(pull_from)
+	for(var/i in key_length to 1 step -1)
+		var/calculated = FLOOR((index-1) / (length ** (i - 1)), 1)
+		calculated = (calculated % length) + 1
+		output += pull_from[calculated]
+	return output.Join()
+
+/*
+/// Takes a constant, encodes it into a TGM valid string
+/proc/tgm_encode(value)
+	if(istext(value))
+		//Prevent symbols from being because otherwise you can name something
+		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
+		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ","=""))]\""
+	if(isnum(value) || ispath(value))
+		return "[value]"
+	if(islist(value))
+		return to_list_string(value)
+	if(isnull(value))
+		return "null"
+	if(isicon(value) || isfile(value))
+		return "'[value]'"
+	// not handled:
+	// - pops: /obj{name="foo"}
+	// - new(), newlist(), icon(), matrix(), sound()
+
+	// fallback: string
+	return tgm_encode("[value]")
+*/
