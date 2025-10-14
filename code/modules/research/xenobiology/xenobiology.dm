@@ -95,7 +95,7 @@
 		return
 
 	if(isnull(slime_reaction))
-		var/list/slime_reactions = GLOB.slime_extract_auto_activate_reactions[src.type]
+		var/list/slime_reactions = GLOB.slime_extract_auto_activate_reactions[type]
 		if(isnull(slime_reactions))
 			return
 		slime_reaction = pick(slime_reactions)
