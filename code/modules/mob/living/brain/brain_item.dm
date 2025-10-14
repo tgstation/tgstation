@@ -27,7 +27,8 @@
 	var/decoy_override = FALSE
 	/// Two variables necessary for calculating whether we get a brain trauma or not
 	var/damage_delta = 0
-
+	// What color the brain is supposed to be. Used for describing it being healed by mannitol.
+	var/ideal_color = "pink"
 
 	var/list/datum/brain_trauma/traumas = list()
 
@@ -223,7 +224,10 @@
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
 			return TRUE
 
-		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
+		if (ideal_color)
+			user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of [ideal_color]."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of [ideal_color]."))
+		else
+			user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape."))
 		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
@@ -442,12 +446,14 @@
 	icon_state = "brain-x"
 	variant_traits_added = list(TRAIT_PRIMITIVE)
 	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	ideal_color = "grey"
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
 	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	ideal_color = "grey"
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
@@ -470,12 +476,14 @@
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	variant_traits_added = list(TRAIT_ROCK_METAMORPHIC)
+	ideal_color = NONE // It's not organic so there's no point in having an ideal color
 
 /obj/item/organ/brain/lustrous
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
+	ideal_color = NONE
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
@@ -517,6 +525,7 @@
 	icon_state = "brain-ghost"
 	movement_type = PHASING
 	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+	ideal_color = "white"
 
 /obj/item/organ/brain/abductor
 	name = "grey brain"
@@ -524,6 +533,7 @@
 	icon_state = "brain-x"
 	brain_size = 1.3
 	variant_traits_added = list(TRAIT_REMOTE_TASTING)
+	ideal_color = "grey"
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
@@ -694,3 +704,4 @@
 	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+	ideal_color = "green"
