@@ -52,7 +52,7 @@ Self-sustaining extracts:
 	if(isnull(recipeselect))
 		return
 
-	if (user.get_active_held_item() != src || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if (!user.is_holding(src) || !can_interact(user))
 		return
 
 	extract.forceMove(user.drop_location())
