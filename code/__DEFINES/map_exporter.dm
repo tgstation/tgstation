@@ -24,3 +24,63 @@
 #define SAVE_SHUTTLES_ONLY 1
 
 #define DMM2TGM_MESSAGE "MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
+
+/*
+#define TO_LIST_STRING(build_from, return_string_list) \
+	return_string_list += "list(";\
+	var/first_entry = TRUE;\
+	for(var/item in build_from) {\
+		CHECK_TICK;\
+		if(!first_entry) {\
+			return_string_list += ", ";\
+		}\
+		if(isnum(item) || !build_from[item]) {\
+			TGM_ENCODE_COPYCAT(item);\
+			return_string_list += "[item]";\
+		} else {\
+			TGM_ENCODE_COPYCAT(item);\
+			TGM_ENCODE_COPYCAT(build_from[item]);\
+			return_string_list += "[item] = [build_from[item]]";\
+		}\
+		first_entry = FALSE;\
+	}\
+	return_string_list += ")";
+*/
+
+/// Prevent symbols from being because otherwise you can name something
+/// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun
+#define HASHTAG_NEWLINES_AND_TABS(text, replacements)\
+	replacements = replacements || list("\n"="#","\t"="#");\
+	for(var/char in replacements){\
+		var/index = findtext(text, char);\
+		while(index){\
+			text = copytext(text, 1, index) + replacements[char] + copytext(text, index + length(char));\
+			index = findtext(text, char, index + length(char));\
+		};\
+	};
+
+/** Takes a constant, encodes it into a TGM valid string.
+ * not handled:
+ * - pops: /obj{name="foo"}
+ * - new(), newlist(), icon(), matrix(), sound()
+**/
+#define TGM_ENCODE(value)\
+	if(istext(value)) {\
+		var/list/replacement_characters = list("{"="", "}"="", "\""="", ","="");\
+		HASHTAG_NEWLINES_AND_TABS(value, replacement_characters);\
+		value = "\"[value]\"";\
+	} else if(isnum(value) || ispath(value)) {\
+		value = "[value]";\
+	} else if(islist(value)) {\
+		value = to_list_string(value);\
+	} else if(isnull(value)) {\
+		value = "null";\
+	} else if(isicon(value) || isfile(value)) {\
+		value = "'[value]'";\
+	} else {\
+		value = "[value]";\
+		var/list/replacement_characters = list("{"="", "}"="", "\""="", ","="");\
+		HASHTAG_NEWLINES_AND_TABS(value, replacement_characters);\
+		value = "\"[value]\"";\
+	};
+
