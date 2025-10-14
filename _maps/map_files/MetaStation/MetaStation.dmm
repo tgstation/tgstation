@@ -5839,6 +5839,7 @@
 	},
 /obj/machinery/suit_storage_unit/medical,
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "ccc" = (
@@ -33413,7 +33414,7 @@
 	name = "Cryogenics Bay"
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/cryo)
+/area/station/medical/paramedic)
 "lyu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -34855,10 +34856,6 @@
 /obj/item/book/codex_gigas,
 /turf/open/floor/engine/cult,
 /area/station/service/library)
-"maP" = (
-/obj/structure/sign/clock/directional/west,
-/turf/closed/wall,
-/area/station/maintenance/port)
 "maS" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Atmospherics - Entrance"
@@ -38795,13 +38792,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
-"nqE" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/curtain/cloth{
-	color = "#52B4E9"
-	},
-/turf/open/floor/plating,
-/area/station/medical/cryo)
 "nqL" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/gravity_generator)
@@ -92512,11 +92502,11 @@ sVY
 clp
 etn
 ayH
-pOa
-nZX
-nqE
+bMY
+bMY
+pYw
 lyh
-nqE
+pYw
 bMY
 sSp
 jFB
@@ -92769,7 +92759,7 @@ sVY
 pOa
 qZn
 pOa
-maP
+bMY
 cbV
 fFV
 odu
