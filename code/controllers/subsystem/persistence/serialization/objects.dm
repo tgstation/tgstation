@@ -91,11 +91,13 @@
 /obj/machinery/door/firedoor/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, name)
+	. -= NAMEOF(src, id_tag)
 	return .
 
 /obj/machinery/firealarm/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, name)
+	. -= NAMEOF(src, id_tag)
 	return .
 /// SEE ABOVE
 
