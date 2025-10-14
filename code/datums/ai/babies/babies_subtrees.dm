@@ -24,5 +24,8 @@
 	if(!controller.blackboard[BB_BABIES_PARTNER_TYPES] || !controller.blackboard[BB_BABIES_CHILD_TYPES])
 		return
 
+	if (is_type_in_list(controller.pawn, controller.blackboard[BB_BABIES_CHILD_TYPES]))
+		return
+
 	// Find target
 	controller.queue_behavior(/datum/ai_behavior/find_partner, BB_BABIES_TARGET, BB_BABIES_PARTNER_TYPES, BB_BABIES_CHILD_TYPES)

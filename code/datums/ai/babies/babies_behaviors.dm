@@ -13,7 +13,8 @@
 /datum/ai_behavior/find_partner/perform(seconds_per_tick, datum/ai_controller/controller, target_key, partner_types_key, child_types_key)
 	var/maximum_pop = controller.blackboard[BB_MAX_CHILDREN] || max_nearby_pop
 	var/mob/pawn_mob = controller.pawn
-	var/list/similar_species_types = controller.blackboard[partner_types_key] + controller.blackboard[child_types_key]
+	var/list/similar_species_types = controller.blackboard[partner_types_key]
+	var/list/children_types = controller.blackboard[child_types_key]
 	var/mob/living/living_pawn = controller.pawn
 	var/list/possible_partners = list()
 
@@ -22,7 +23,8 @@
 		if(!pawn_mob.faction_check_atom(other))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-		if(!is_type_in_list(other, similar_species_types))
+		// Don't breed with children please, thanks
+		if(!is_type_in_list(other, similar_species_types) || is_type_in_list(other, children_types))
 			continue
 
 		if(++nearby_pop >= maximum_pop)
@@ -59,7 +61,8 @@
 
 /datum/ai_behavior/make_babies/perform(seconds_per_tick, datum/ai_controller/controller, target_key, child_types_key)
 	var/mob/target = controller.blackboard[target_key]
-	if(QDELETED(target) || target.stat != CONSCIOUS)
+	var/list/children_types = controller.blackboard[child_types_key]
+	if(QDELETED(target) || target.stat != CONSCIOUS || is_type_in_list(target, children_types))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	controller.ai_interact(target = target, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
