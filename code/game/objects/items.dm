@@ -458,19 +458,6 @@
 	else if (siemens_coefficient <= 0.5)
 		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
 
-	if(resistance_flags & INDESTRUCTIBLE)
-		.["indestructible"] = "It is extremely robust! It'll probably withstand anything that could happen to it!"
-		return
-
-	if(resistance_flags & LAVA_PROOF)
-		.["lavaproof"] = "It is made of an extremely heat-resistant material, it'd probably be able to withstand lava!"
-	if(resistance_flags & (ACID_PROOF | UNACIDABLE))
-		.["acidproof"] = "It looks pretty robust! It'd probably be able to withstand acid!"
-	if(resistance_flags & FREEZE_PROOF)
-		.["freezeproof"] = "It is made of cold-resistant materials."
-	if(resistance_flags & FIRE_PROOF)
-		.["fireproof"] = "It is made of fire-retardant materials."
-
 /obj/item/examine_descriptor(mob/user)
 	return "item"
 
@@ -624,7 +611,7 @@
 	if(throwing)
 		throwing.finalize(FALSE)
 	if(loc == user && outside_storage)
-		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
+		if(!can_mob_unequip(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
 	. = FALSE
@@ -634,7 +621,9 @@
 		user.dropItemToGround(src)
 		return TRUE
 
-/obj/item/proc/allow_attack_hand_drop(mob/user)
+/// Called when a mob is manually attempting to unequip the item
+/// Returning FALSE will prevent the unequip from happening
+/obj/item/proc/can_mob_unequip(mob/user)
 	return TRUE
 
 /obj/item/attack_paw(mob/user, list/modifiers)

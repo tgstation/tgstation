@@ -378,16 +378,7 @@
 	var/list/cached_materials = custom_materials
 	if(!length(cached_materials))
 		return null
-
-	var/most_common_material = null
-	var/max_amount = 0
-	for(var/material in cached_materials)
-		if(cached_materials[material] > max_amount)
-			most_common_material = material
-			max_amount = cached_materials[material]
-
-	if(most_common_material)
-		return GET_MATERIAL_REF(most_common_material)
+	return GET_MATERIAL_REF(cached_materials[1]) //materials are sorted by amount, the first is always the main one
 
 /**
  * Gets the total amount of materials in this atom.

@@ -658,43 +658,29 @@
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
-	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_BOT_PATH)
+	clothing_traits = list(
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_MADNESS_IMMUNE,
+		TRAIT_MEDICAL_HUD,
+		TRAIT_SECURITY_HUD,
+		TRAIT_DIAGNOSTIC_HUD,
+		TRAIT_BOT_PATH_HUD,
+	)
 	var/xray = FALSE
 
 /obj/item/clothing/glasses/debug/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
 
-/obj/item/clothing/glasses/debug/equipped(mob/user, slot)
-	. = ..()
-	if(!(slot & ITEM_SLOT_EYES))
-		return
-	if(ishuman(user))
-		for(var/hud in hudlist)
-			var/datum/atom_hud/our_hud = GLOB.huds[hud]
-			our_hud.show_to(user)
-		user.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD), GLASSES_TRAIT)
-		if(xray)
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-
-/obj/item/clothing/glasses/debug/dropped(mob/user)
-	. = ..()
-	user.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_XRAY_VISION), GLASSES_TRAIT)
-	if(ishuman(user))
-		for(var/hud in hudlist)
-			var/datum/atom_hud/our_hud = GLOB.huds[hud]
-			our_hud.hide_from(user)
-
 /obj/item/clothing/glasses/debug/click_alt(mob/user)
 	if(!ishuman(user))
 		return CLICK_ACTION_BLOCKING
 	if(xray)
 		vision_flags &= ~SEE_MOBS|SEE_OBJS
-		REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+		detach_clothing_traits(TRAIT_XRAY_VISION)
 	else
 		vision_flags |= SEE_MOBS|SEE_OBJS
-		ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+		attach_clothing_traits(TRAIT_XRAY_VISION)
 	xray = !xray
 	var/mob/living/carbon/human/human_user = user
 	human_user.update_sight()

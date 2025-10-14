@@ -68,10 +68,12 @@
 	if (!owner)
 		return
 	ADD_TRAIT(grant_to, TRAIT_MIND_READER, GENETIC_MUTATION)
+	RegisterSignal(grant_to, COMSIG_MOB_EXAMINATE, PROC_REF(on_examining))
 
 /datum/action/cooldown/spell/pointed/mindread/Remove(mob/remove_from)
 	. = ..()
 	REMOVE_TRAIT(remove_from, TRAIT_MIND_READER, GENETIC_MUTATION)
+	UnregisterSignal(remove_from, COMSIG_MOB_EXAMINATE)
 
 /datum/action/cooldown/spell/pointed/mindread/is_valid_target(atom/cast_on)
 	if(!isliving(cast_on))
@@ -83,12 +85,15 @@
 	if(living_cast_on.stat == DEAD)
 		to_chat(owner, span_warning("[cast_on] is dead!"))
 		return FALSE
+	if(living_cast_on.mob_biotypes & MOB_ROBOTIC)
+		to_chat(owner, span_warning("[cast_on] is robotic, you can't read [cast_on.p_their()] mind!"))
+		return FALSE
 
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/mindread/cast(mob/living/cast_on)
 	. = ..()
-	if(cast_on.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+	if(cast_on.can_block_magic(antimagic_flags, charge_cost = 0))
 		to_chat(owner, span_warning("As you reach into [cast_on]'s mind, \
 			you are stopped by a mental blockage. It seems you've been foiled."))
 		return
@@ -102,21 +107,66 @@
 			you feel the overwhelming emptiness within. A truly evil being. \
 			[HAS_TRAIT(owner, TRAIT_EVIL) ? "It's nice to find someone who is like-minded." : "What is wrong with this person?"]"))
 
-	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
+	var/list/log_info = list()
+	var/list/discovered_info = list("<i>You plunge into [cast_on]'s mind and discover...</i>")
 	if(prob(20))
 		// chance to alert the read-ee
 		to_chat(cast_on, span_danger("You feel something foreign enter your mind."))
+		log_info += "Target alerted!"
 
 	var/list/recent_speech = cast_on.copy_recent_speech(copy_amount = 3, line_chance = 50)
 	if(length(recent_speech))
-		to_chat(owner, span_boldnotice("You catch some drifting memories of their past conversations..."))
+		discovered_info += "...Drifting memories of past conversations:"
+		var/list/speech_block = list()
 		for(var/spoken_memory in recent_speech)
-			to_chat(owner, span_notice("[spoken_memory]"))
+			speech_block += "&emsp;\"[spoken_memory]\"..."
+			log_info += "Recent speech: \"[spoken_memory]\""
+		discovered_info += jointext(speech_block, "<br>")
 
 	if(iscarbon(cast_on))
 		var/mob/living/carbon/carbon_cast_on = cast_on
-		to_chat(owner, span_boldnotice("You find that their intent is to [carbon_cast_on.combat_mode ? "harm" : "help"]..."))
-		to_chat(owner, span_boldnotice("You uncover that [carbon_cast_on.p_their()] true identity is [carbon_cast_on.mind.name]."))
+		discovered_info += "...Intent to <b>[carbon_cast_on.combat_mode ? "harm" : "help"]</b>."
+		discovered_info += "...True identity of <b>[carbon_cast_on.mind.name]</b>."
+		log_info += "Intent: \"[carbon_cast_on.combat_mode ? "harm" : "help"]\""
+		log_info += "Identity: \"[carbon_cast_on.mind.name]\""
+
+	to_chat(owner, boxed_message(span_notice(jointext(discovered_info, "<br>"))))
+	log_combat(owner, cast_on, "mind read (cast intentionally)", null, "info: [english_list(log_info, and_text = ", ")]")
+
+/datum/action/cooldown/spell/pointed/mindread/proc/on_examining(mob/examiner, atom/examining)
+	SIGNAL_HANDLER
+	if(!isliving(examining) || examiner == examining)
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
+
+/datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
+	if(examined.stat >= UNCONSCIOUS || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
+		return
+
+	var/antimagic = examined.can_block_magic(antimagic_flags, charge_cost = 0)
+	var/read_text = ""
+	if(!antimagic)
+		read_text = examined.get_typing_text()
+		if(!read_text)
+			return
+
+	sleep(0.5 SECONDS) // small pause so it comes after all examine text and effects
+	if(QDELETED(examiner))
+		return
+	if(antimagic)
+		to_chat(examiner, boxed_message(span_warning("You attempt to analyze [examined]'s current thoughts, but fail to penetrate [examined.p_their()] mind - It seems you've been foiled.")))
+		return
+
+	var/list/log_info = list()
+	if(prob(10))
+		to_chat(examined, span_danger("You feel something foreign enter your mind."))
+		log_info += "Target alerted!"
+
+	to_chat(examiner, boxed_message(span_notice("<i>You analyze [examined]'s current thoughts...</i><br>&emsp;\"[read_text]\"...")))
+	log_info += "Current thought: \"[read_text]\""
+
+	log_combat(examiner, examined, "mind read (triggered on examine)", null, "info: [english_list(log_info, and_text = ", ")]")
 
 /datum/mutation/mindreader/New(datum/mutation/copymut)
 	..()

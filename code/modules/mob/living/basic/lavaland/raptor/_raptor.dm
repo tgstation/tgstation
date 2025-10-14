@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/green/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/proficient_miner)
+	AddComponent(/datum/component/proficient_miner)
 
 /mob/living/basic/raptor/white
 	name = "white raptor"
@@ -299,8 +299,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon_dead = "raptor_black_dead"
 	maxHealth = 400
 	health = 400
-	speed = 1
-	ridable_component = /datum/component/riding/creature/raptor/fast
+	speed = 1.5
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	raptor_color = RAPTOR_BLACK
@@ -312,8 +311,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon_state = "raptor_yellow"
 	icon_living = "raptor_yellow"
 	icon_dead = "raptor_yellow_dead"
-	ridable_component = /datum/component/riding/creature/raptor/fast
-	speed = 1
+	speed = 1.5
 	raptor_color = RAPTOR_YELLOW
 	dex_description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. It's said that a thunderclap could be heard when this breed reaches its maximum speed."
 	child_path = /mob/living/basic/raptor/baby_raptor/yellow

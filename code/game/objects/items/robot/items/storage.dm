@@ -118,9 +118,6 @@
 	stored = new /obj/item/reagent_containers/cup/beaker/large(src)
 
 /obj/item/borg/apparatus/beaker/Destroy()
-	if(stored)
-		var/obj/item/reagent_containers/reagent_container = stored
-		reagent_container.SplashReagents(get_turf(src))
 	QDEL_NULL(stored)
 	return ..()
 

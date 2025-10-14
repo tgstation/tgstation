@@ -172,8 +172,8 @@
 	holder.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
 	add_filter("hot_spring_waves", 1, wave_filter(y = 1, size = 1, offset = 0, flags = WAVE_BOUNDED))
 	var/filter = get_filter("hot_spring_waves")
-	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
-	animate(offset = 0, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
+	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = QUAD_EASING)
+	animate(offset = 0, time = 3 SECONDS, easing = QUAD_EASING)
 
 /turf/open/water/hot_spring/Destroy()
 	remove_shared_particles("hot_springs_[GET_TURF_PLANE_OFFSET(src)]")
