@@ -5137,7 +5137,6 @@
 /area/station/command/gateway)
 "bmw" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -5153,6 +5152,7 @@
 /obj/machinery/door/airlock/medical{
 	name = "Paramedic Dispatch"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron,
 /area/station/medical/paramedic)
 "bmC" = (
@@ -6531,7 +6531,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "bFe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -10079,7 +10079,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "cvu" = (
 /obj/structure/disposalpipe/segment,
@@ -12584,7 +12584,6 @@
 	},
 /obj/machinery/digital_clock/directional/south,
 /obj/item/mod/module/signlang_radio,
-/obj/structure/fireaxecabinet/jawsofrecovery/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "dds" = (
@@ -16001,7 +16000,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "dWd" = (
 /obj/structure/cable,
@@ -25209,7 +25208,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "gjI" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -28519,9 +28518,11 @@
 /area/station/hallway/secondary/exit)
 "gXm" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/turf/open/floor/iron/white,
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/south{
+	pixel_y = -26
+	},
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "gXn" = (
 /obj/structure/table,
@@ -34176,7 +34177,8 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/white,
+/obj/item/surgicaldrill,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "ivz" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -46750,6 +46752,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "lAs" = (
@@ -56768,15 +56771,15 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "odc" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medbay - Paramedic Dispatch";
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
+/obj/machinery/suit_storage_unit/medical,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "odd" = (
 /obj/docking_port/stationary/random{
@@ -60096,7 +60099,7 @@
 	},
 /obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "oUM" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -65139,7 +65142,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "qdV" = (
 /obj/machinery/flasher/directional/south{
@@ -74774,7 +74777,6 @@
 /area/station/science/ordnance/office)
 "sxG" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -74784,7 +74786,8 @@
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Desk"
 	},
-/turf/open/floor/iron,
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
+/turf/open/floor/holofloor/dark,
 /area/station/medical/paramedic)
 "sxK" = (
 /obj/effect/turf_decal/siding/wood,
@@ -82142,7 +82145,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "umN" = (
 /turf/closed/wall,
@@ -83442,7 +83445,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/iron/white,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "uCp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -84742,12 +84746,17 @@
 /area/station/command/bridge)
 "uQF" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/effect/turf_decal/bot_red,
-/obj/machinery/suit_storage_unit/medical,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/structure/table/reinforced,
+/obj/item/toy/figure/md{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/hypospray/medipen{
+	pixel_y = -4
+	},
 /turf/open/floor/iron/textured,
 /area/station/medical/storage)
 "uQN" = (
@@ -85743,15 +85752,18 @@
 "vfA" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/south,
-/obj/item/clipboard,
-/obj/item/toy/figure/md{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/hypospray/medipen{
-	pixel_y = -4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/emergency_bed,
+/obj/item/emergency_bed{
+	pixel_y = 3
+	},
+/obj/item/wheelchair{
+	pixel_y = 15
+	},
+/obj/item/wheelchair{
+	pixel_y = 15
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
@@ -91298,7 +91310,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "wAt" = (
 /obj/machinery/hydroponics/soil,
@@ -94975,7 +94987,7 @@
 	},
 /obj/effect/landmark/start/medical_doctor,
 /obj/effect/turf_decal/tile/neutral/full,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "xxX" = (
 /obj/effect/decal/cleanable/dirt,
