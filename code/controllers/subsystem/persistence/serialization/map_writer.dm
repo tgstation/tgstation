@@ -157,10 +157,10 @@
 					if((save_flag & SAVE_MOBS) && isliving(target_atom))
 						var/mob/living/target_mob = target_atom
 						CHECK_TICK
-						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
+						if(istype(target_mob, /mob/living/carbon)) //Ignore people, but not animals
 							continue
-						var/metadata = generate_tgm_metadata(thing)
-						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
+						var/metadata = generate_tgm_metadata(target_mob)
+						current_header += "[empty ? "" : ",\n"][target_mob.type][metadata]"
 						empty = FALSE
 
 				current_header += "[empty ? "" : ",\n"][saved_turf]"
