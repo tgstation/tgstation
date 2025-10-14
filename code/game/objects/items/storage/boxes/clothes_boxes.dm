@@ -9,6 +9,15 @@
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/gloves/latex(src)
 
+/obj/item/storage/box/gloves_nitrile
+	name = "box of nitrile gloves"
+	desc = "Contains sterile nitrile gloves."
+	illustration = "latex"
+
+/obj/item/storage/box/gloves_nitrile/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/clothing/gloves/latex/nitrile(src)
+
 /obj/item/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."

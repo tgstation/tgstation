@@ -17795,10 +17795,10 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/machinery/computer/records/medical{
-	dir = 4
-	},
 /obj/machinery/newscaster/directional/west,
+/obj/structure/table/glass,
+/obj/item/toy/figure/paramedic,
+/obj/item/surgicaldrill,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "eUK" = (
@@ -51186,6 +51186,7 @@
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/treatment_center)
 "ouq" = (
@@ -56418,6 +56419,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "pPR" = (
@@ -62802,13 +62804,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/storage/medkit/emergency{
-	pixel_x = 0;
-	pixel_y = 6
-	},
-/obj/item/storage/box/bandages,
-/obj/item/surgicaldrill,
+/obj/structure/closet/secure_closet/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "rDN" = (
@@ -81292,7 +81288,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/end{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/west,
 /obj/structure/disposalpipe/segment,
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron,
@@ -251951,7 +251946,7 @@ soK
 kRP
 nMN
 kRP
-lcA
+kRP
 qVj
 qVj
 lcA
@@ -252208,7 +252203,7 @@ uNq
 dTW
 vND
 uzJ
-lcA
+tHr
 esC
 eUI
 lcA
@@ -252465,7 +252460,7 @@ pQL
 nCV
 lGh
 txo
-lcA
+tHr
 tVQ
 wim
 lcA

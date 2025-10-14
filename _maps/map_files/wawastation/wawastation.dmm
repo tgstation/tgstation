@@ -38700,10 +38700,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "nnF" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
+/obj/effect/landmark/start/paramedic,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
-/obj/effect/landmark/start/paramedic,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nnL" = (
@@ -43204,21 +43207,9 @@
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "oVX" = (
-/obj/structure/table,
-/obj/structure/window/spawner/directional/east,
-/obj/item/clothing/suit/jacket/straight_jacket,
-/obj/item/clothing/glasses/blindfold{
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/blindfold{
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 3
+/obj/structure/closet/secure_closet/paramedic,
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
 /area/station/medical/paramedic)
@@ -53743,6 +53734,7 @@
 	pixel_y = 3
 	},
 /obj/structure/fireaxecabinet/jawsofrecovery/directional/west,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/holofloor/dark,
 /area/station/medical/paramedic)
 "stw" = (

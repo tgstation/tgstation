@@ -5398,18 +5398,12 @@
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "bTm" = (
-/obj/structure/table/reinforced,
-/obj/item/wheelchair{
-	pixel_y = -3
-	},
-/obj/item/wheelchair,
-/obj/item/wheelchair{
-	pixel_y = 3
-	},
-/obj/structure/window/spawner/directional/north,
-/obj/structure/window/spawner/directional/west,
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/siding/blue/end{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/paramedic,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "bTq" = (
 /obj/machinery/camera/motion/directional/south{
@@ -70915,16 +70909,14 @@
 	name = "First Aid Supplies";
 	req_access = list("paramedic")
 	},
-/obj/item/clothing/glasses/blindfold{
+/obj/item/wheelchair{
+	pixel_y = -3
+	},
+/obj/item/wheelchair,
+/obj/item/wheelchair{
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "ylt" = (

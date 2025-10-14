@@ -9011,6 +9011,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "cay" = (
@@ -35325,21 +35326,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"llU" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
-/obj/machinery/button/elevator/directional/north{
-	id = "tram_lower_center_lift"
-	},
-/obj/machinery/lift_indicator/directional/north{
-	linked_elevator_id = "tram_lower_center_lift"
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/construction/engineering)
 "llY" = (
 /obj/machinery/computer/dna_console{
 	dir = 4
@@ -51125,10 +51111,12 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
-/obj/item/kirbyplants/random,
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 5
 	},
+/obj/structure/table/glass,
+/obj/item/surgicaldrill,
+/obj/item/toy/figure/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "qUy" = (
@@ -71412,15 +71400,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/structure/table/glass,
 /obj/structure/fireaxecabinet/jawsofrecovery/directional/east,
-/obj/item/storage/medkit/emergency{
-	pixel_y = 11;
-	pixel_x = -7
-	},
-/obj/item/storage/belt/medical/paramedic,
-/obj/item/surgicaldrill,
 /obj/machinery/light/cold/directional/east,
+/obj/structure/closet/secure_closet/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "xYZ" = (
@@ -105289,7 +105271,7 @@ fal
 fal
 fal
 fGF
-llU
+nRK
 tpm
 wjB
 vJA

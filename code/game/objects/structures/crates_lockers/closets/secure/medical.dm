@@ -138,3 +138,25 @@
 	new /obj/item/storage/box/syringes/variety(src)
 	new /obj/item/storage/box/beakers/variety(src)
 	new /obj/item/clothing/glasses/science(src)
+
+/obj/structure/closet/secure_closet/paramedic
+	name = "emergency response team locker"
+	req_access = list(ACCESS_PARAMEDIC)
+	icon_state = "paramed"
+
+/obj/structure/closet/secure_closet/paramedic/PopulateContents()
+	..()
+
+	new /obj/item/clothing/under/rank/medical/paramedic(src)
+	new /obj/item/clothing/under/rank/medical/paramedic/skirt(src)
+	new /obj/item/storage/box/gloves_nitrile(src)
+	new /obj/item/clothing/shoes/workboots/black(src)
+	new /obj/item/radio/headset/headset_med(src)
+	new /obj/item/storage/belt/medical/paramedic(src)
+	new /obj/item/pinpointer/crew(src)
+	new /obj/item/storage/medkit/emergency(src)
+	new /obj/item/storage/box/bandages(src)
+	new /obj/item/emergency_bed(src)
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/glasses/hud/health()
+
