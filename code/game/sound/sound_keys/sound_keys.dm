@@ -851,6 +851,6 @@
 /datum/sound_effect/fire_mode_switch
 	key = SFX_FIRE_MODE_SWITCH
 	file_paths = list(
-		'sound/items/weapons/gun_mode_switch2.ogg',
+		'sound/items/weapons/gun_mode_switch1.ogg',
 	)
 
