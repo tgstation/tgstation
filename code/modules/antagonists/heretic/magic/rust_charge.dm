@@ -18,11 +18,6 @@
 		var/mob/living/carbon/human/human_owner = owner
 		human_owner.physiology.damage_resistance += 100
 	RegisterSignal(owner, COMSIG_FINISHED_CHARGE, PROC_REF(affect_aoe))
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.uncuff()
-	var/obj/item/clothing/shoes/shoes = carbon_owner.shoes
-	if(istype(shoes) && shoes.tied == SHOES_KNOTTED)
-		shoes.adjust_laces(SHOES_TIED, carbon_owner)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
 	return TRUE
@@ -65,7 +60,6 @@
 /datum/action/cooldown/mob_cooldown/charge/rust/proc/affect_aoe()
 	SIGNAL_HANDLER
 	UnregisterSignal(owner, COMSIG_FINISHED_CHARGE)
-	REMOVE_TRAIT(owner, TRAIT_GODMODE, type)
 	for(var/mob/living/nearby_mob in view(1, owner))
 		if(nearby_mob == owner)
 			continue
