@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 	var/list/start_knowledges = list()
 	var/list/start_knowledge_ids = list()
-	for(var/route as anything in GLOB.heretic_path_datums)
+	for(var/route in GLOB.heretic_path_datums)
 		var/datum/heretic_knowledge_tree_column/column_path = GLOB.heretic_path_datums[route]
 		var/start_knowledge = column_path::start
 		// why aren't the tiered knowledges in a list?!?!? (initial() probably)
@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 /proc/generate_global_heretic_tree()
 	var/heretic_research_tree = list()
-	for(var/path as anything in GLOB.heretic_path_datums)
+	for(var/path in GLOB.heretic_path_datums)
 		var/datum/heretic_knowledge_tree_column/heretic_route = GLOB.heretic_path_datums[path]
 		heretic_research_tree[path] = generate_heretic_path(heretic_route)
 	if(!length(heretic_research_tree))
