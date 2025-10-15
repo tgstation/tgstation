@@ -3,9 +3,9 @@
 	desc = "You got caught up in the skillchip craze a few years back, and had one of the commercially available chips implanted into yourself."
 	icon = FA_ICON_MICROCHIP
 	value = 2
-	gain_text = span_notice("The chip in your head itches a bit.")
-	lose_text = span_danger("You don't feel so chipped anymore..")
-	medical_record_text = "Patient explained how they got caught up in 'the skillchip chase' recently, and now the chip in their head itches every so often. Dumbass."
+	gain_text = span_notice("Your suddenly feels chipped.")
+	lose_text = span_danger("You don't feel so chipped anymore.")
+	medical_record_text = "Patient explained how they got caught up in 'the skillchip chase' recently, and now they have some useless chip in their head. Dumbass."
 	mail_goodies = list(
 		/obj/item/skillchip/matrix_taunt,
 		/obj/item/skillchip/big_pointer,
@@ -24,8 +24,8 @@
 	if(isnull(chip_pref))
 		return ..()
 	installed_chip = GLOB.quirk_chipped_choice[chip_pref] || GLOB.quirk_chipped_choice[pick(GLOB.quirk_chipped_choice)]
-	gain_text = span_notice("The [installed_chip::name] in your head itches a bit.")
-	lose_text = span_notice("Your head stops itching so much.")
+	gain_text = span_notice("The [installed_chip::name] in your head buzzes with knowledge.")
+	lose_text = span_notice("You stop feeling the chip inside your head.")
 	return ..()
 
 /datum/quirk/chipped/add_unique(client/client_source)
