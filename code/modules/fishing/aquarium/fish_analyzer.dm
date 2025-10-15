@@ -94,7 +94,8 @@
 
 /obj/item/fish_analyzer/proc/aquarium_update()
 	SIGNAL_HANDLER
-	update_static_data_for_all_viewers()
+	//update static data on the next tick. to give time to offsprings to properly inherit the parents' traits and all.
+	addtimer(CALLBACK(src, PROC_REF(update_static_data_for_all_viewers)), 0)
 
 /obj/item/fish_analyzer/ui_interact(mob/user, datum/tgui/ui)
 	if(isnull(scanned_object))
