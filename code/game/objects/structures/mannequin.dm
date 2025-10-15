@@ -96,11 +96,9 @@
 	pedestal.pixel_z = -3
 	. += pedestal
 	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
-	if(underwear)
-		if(body_type == FEMALE && underwear.gender == MALE)
-			. += mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
-		else
-			. += mutable_appearance(underwear.icon, underwear.icon_state, layer = -BODY_LAYER)
+	var/mutable_appearance/underwear_overlay = underwear?.make_appearance(species_human)
+	if(underwear_overlay)
+		. += underwear_overlay
 	var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[undershirt_name]
 	if(undershirt)
 		if(body_type == FEMALE)

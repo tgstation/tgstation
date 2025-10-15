@@ -1253,12 +1253,52 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	use_static = FALSE
 	em_block = TRUE
 
+	/// Allows you to specify a greyscale config
+	var/greyscale_config
+	/// Icon state in the digitigrade template file to use if the wearer is digitigrade.
+	/// If null, no special digitigrade handling is done.
+	var/digi_icon_state
+	/// Color pallete for static colored underwear, like hearts.
+	/// Used so greyscale copies can have the same palette.
+	var/greyscale_colors = "#FFFFFF#FFFFFF#FFFFFF"
+
+/datum/sprite_accessory/underwear/proc/make_appearance(mob/living/carbon/human/for_who)
+	var/static/list/cached_icons = list()
+	var/use_female = for_who.dna.species.sexes && for_who.physique == FEMALE
+	var/use_digi = digi_icon_state && (for_who.bodyshape & BODYSHAPE_DIGITIGRADE) && !for_who.is_digitigrade_squished()
+
+	var/key = "[icon_state]-[greyscale_config || "ng"]-[use_female]-[use_digi]-[greyscale_colors]"
+	var/mutable_appearance/result
+	if(cached_icons[key]) // it's already cached
+		result = mutable_appearance(icon(cached_icons[key]))
+
+	else if(greyscale_config || use_female || use_digi) // icon ops ahead
+		var/icon/created = icon(greyscale_config ? SSgreyscale.GetColoredIconByType(greyscale_config, greyscale_colors) : icon, icon_state)
+		if(use_female)
+			created = wear_female_version(icon_state, icon, FEMALE_UNIFORM_FULL)
+		if(use_digi)
+			var/icon/replacement = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade_underwear, greyscale_colors), digi_icon_state)
+			created = replace_icon_legs(created, replacement)
+
+		cached_icons[key] = fcopy_rsc(created)
+		result = mutable_appearance(created)
+
+	else // no caching necessary
+		result = mutable_appearance(icon, icon_state)
+
+	result.layer = -BODY_LAYER
+	result.color = use_static ? null : for_who.underwear_color
+
+	return result
 
 //MALE UNDERWEAR
 /datum/sprite_accessory/underwear/nude
 	name = "Nude"
 	icon_state = null
 	gender = NEUTER
+
+/datum/sprite_accessory/underwear/nude/make_appearance(mob/living/carbon/human/for_who)
+	return
 
 /datum/sprite_accessory/underwear/male_briefs
 	name = "Briefs"
@@ -1269,21 +1309,25 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Boxers"
 	icon_state = "male_boxers"
 	gender = MALE
+	digi_icon_state = "boxers"
 
 /datum/sprite_accessory/underwear/male_stripe
 	name = "Striped Boxers"
 	icon_state = "male_stripe"
 	gender = MALE
+	digi_icon_state = "boxers_stripe"
 
 /datum/sprite_accessory/underwear/male_midway
 	name = "Midway Boxers"
 	icon_state = "male_midway"
 	gender = MALE
+	digi_icon_state = "midway"
 
 /datum/sprite_accessory/underwear/male_longjohns
 	name = "Long Johns"
 	icon_state = "male_longjohns"
 	gender = MALE
+	digi_icon_state = "longjohns"
 
 /datum/sprite_accessory/underwear/male_kinky
 	name = "Jockstrap"
@@ -1300,25 +1344,32 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	icon_state = "male_hearts"
 	gender = MALE
 	use_static = TRUE
+	digi_icon_state = "boxers_stripe_threecolor"
+	greyscale_colors = "#D62626#EEEEEE#D62626#"
 
 /datum/sprite_accessory/underwear/male_commie
 	name = "Commie Boxers"
 	icon_state = "male_commie"
 	gender = MALE
 	use_static = TRUE
+	digi_icon_state = "boxers_stripe_twocolor"
+	greyscale_colors = "#D62626#D1B62C#D62626"
 
 /datum/sprite_accessory/underwear/male_usastripe
 	name = "Freedom Boxers"
 	icon_state = "male_assblastusa"
 	gender = MALE
 	use_static = TRUE
+	digi_icon_state = "boxers_stripe_threecolor"
+	greyscale_colors = "#D62626#EEEEEE#2E26D6"
 
 /datum/sprite_accessory/underwear/male_uk
 	name = "UK Boxers"
 	icon_state = "male_uk"
 	gender = MALE
 	use_static = TRUE
-
+	digi_icon_state = "boxers_stripe_threecolor"
+	greyscale_colors = "#D62626#EEEEEE#2E26D6"
 
 //FEMALE UNDERWEAR
 /datum/sprite_accessory/underwear/female_bikini
@@ -1335,11 +1386,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Bralette w/ Boyshorts"
 	icon_state = "female_bralette"
 	gender = FEMALE
+	digi_icon_state = "short_short"
 
 /datum/sprite_accessory/underwear/female_sport
 	name = "Sports Bra w/ Boyshorts"
 	icon_state = "female_sport"
 	gender = FEMALE
+	digi_icon_state = "short"
 
 /datum/sprite_accessory/underwear/female_thong
 	name = "Thong"
@@ -1370,11 +1423,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Two-Piece Swimsuit"
 	icon_state = "swim_twopiece"
 	gender = FEMALE
+	digi_icon_state = "short_short"
 
 /datum/sprite_accessory/underwear/swimsuit_strapless_twopiece
 	name = "Strapless Two-Piece Swimsuit"
 	icon_state = "swim_strapless_twopiece"
 	gender = FEMALE
+	digi_icon_state = "short_short"
 
 /datum/sprite_accessory/underwear/swimsuit_stripe
 	name = "Strapless Striped Swimsuit"
