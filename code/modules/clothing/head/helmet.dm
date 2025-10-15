@@ -649,7 +649,6 @@
 
 /obj/item/clothing/head/helmet/military/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
 
 /obj/item/clothing/head/helmet/knight/warlord
 	name = "golden barbute helmet"
