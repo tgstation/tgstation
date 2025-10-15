@@ -48,6 +48,9 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/robes_side_effect(mob/living/user)
 	SHOULD_NOT_SLEEP(TRUE) // sleep here would fuck over the timing
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/is_equipped(mob/wearer)
+	return wearer.get_slot_by_item(src) & slot_flags
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_up(obj/item/clothing/head/hooded/hood)
 	hood_up = TRUE
 
@@ -143,7 +146,12 @@
 		if(istype(limb, /obj/item/bodypart/head) || istype(limb, /obj/item/bodypart/chest))
 			continue
 		iteration++
-		addtimer(CALLBACK(limb, TYPE_PROC_REF(/obj/item/bodypart, dismember), BURN), 1 SECONDS * iteration)
+		addtimer(CALLBACK(src, PROC_REF(burn_limbs), limb), 1 SECONDS * iteration)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash/proc/burn_limbs(obj/item/bodypart/limb)
+	if(QDELETED(limb) || !limb.owner || !is_equipped(limb.owner))
+		return
+	limb.dismember(BURN)
 
 /datum/action/item_action/toggle/flames
 	button_icon = 'icons/effects/magic.dmi'
@@ -240,7 +248,7 @@
 	murdering_with_blades = FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/proc/should_keep_cutting(mob/living/target)
-	if(target.stat == DEAD || !(src in target.get_equipped_items()))
+	if(target.stat == DEAD || !is_equipped(target))
 		return FALSE
 	return TRUE
 
@@ -603,13 +611,6 @@
 	if(health_hud in user.hud_used.infodisplay)
 		on_hud_remove(user)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/robes_side_effect(mob/living/user)
-	. = ..()
-	if(!iscarbon(user))
-		return
-	var/mob/living/carbon/victim = user
-	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10) // Give them a jumpstart so they can't undo
-
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_apply_modifiers(mob/living/user, damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 	if(braindead)
@@ -883,6 +884,8 @@
 		addtimer(CALLBACK(src, PROC_REF(vomit_your_guts_out), victim), 1 SECONDS * iteration)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/vomit_your_guts_out(mob/living/carbon/victim)
+	if(QDELETED(victim) || !is_equipped(victim))
+		return
 	victim.vomit(MOB_VOMIT_BLOOD | MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM | MOB_VOMIT_FORCE)
 	victim.spew_organ(rand(4, 6))
 
