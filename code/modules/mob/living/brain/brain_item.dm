@@ -476,14 +476,14 @@
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	variant_traits_added = list(TRAIT_ROCK_METAMORPHIC)
-	ideal_color = NONE // It's not organic so there's no point in having an ideal color
+	ideal_color = null // It's not organic so there's no point in having an ideal color
 
 /obj/item/organ/brain/lustrous
 	name = "lustrous brain"
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
-	ideal_color = NONE
+	ideal_color = null
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race

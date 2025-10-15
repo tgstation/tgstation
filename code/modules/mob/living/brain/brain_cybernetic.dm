@@ -4,7 +4,7 @@
 	icon_state = "brain-c"
 	organ_flags = ORGAN_ROBOTIC | ORGAN_VITAL
 	failing_desc = "seems to be broken, and will not work without repairs."
-	ideal_color = NONE
+	ideal_color = null
 
 /obj/item/organ/brain/cybernetic/brain_damage_examine()
 	if(suicided)
