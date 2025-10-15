@@ -1304,19 +1304,17 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING))
 		var/list/available_fishes = list()
 		SEND_SIGNAL(loc, COMSIG_AQUARIUM_GET_REPRODUCTION_CANDIDATES, src, available_fishes)
+		available_fishes -= src //self-reproduction goes last
 		if(length(available_fishes))
-			//make sure we check if the fish can reproduce with itself last, since that should've lower priority
-			available_fishes = shuffle(available_fishes) - src
-			available_fishes += src
+			available_fishes = shuffle(available_fishes)
 			for(var/obj/item/fish/other_fish as anything in available_fishes)
 				if(other_fish.ready_to_reproduce(TRUE))
 					second_fish = other_fish
 					break
 
-	if(!second_fish || second_fish == src) //check if the fish can self-reproduce in these cases.
-		if(!HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
-			return FALSE
-		second_fish = null //set it to null, since this will make the following operations a bit easier
+	//check if the fish can self-reproduce if there's no other option
+	if(!second_fish && !HAS_TRAIT(src, TRAIT_FISH_SELF_REPRODUCE))
+		return FALSE
 
 	if(PERFORM_ALL_TESTS(fish_breeding) && second_fish && !length(evolution_types))
 		return create_offspring(second_fish.type, second_fish)
