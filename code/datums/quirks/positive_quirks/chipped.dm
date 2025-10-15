@@ -34,9 +34,9 @@
 
 	var/mob/living/carbon/quirk_holder_carbon = quirk_holder
 	installed_chip = new installed_chip()
-
-	RegisterSignals(installed_chip, list(COMSIG_QDELETING, COMSIG_SKILLCHIP_REMOVED), PROC_REF(remove_effect))
-	RegisterSignal(installed_chip, COMSIG_SKILLCHIP_IMPLANTED, PROC_REF(apply_effect))
-
 	quirk_holder_carbon.implant_skillchip(installed_chip, force = TRUE)
 	installed_chip.try_activate_skillchip(silent = FALSE, force = TRUE)
+
+/datum/quirk/chipped/remove()
+	QDEL_NULL(installed_chip)
+	return ..()
