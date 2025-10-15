@@ -100,6 +100,9 @@
 	if(isnull(scanned_object))
 		balloon_alert(user, "no specimen data!")
 		return TRUE
+	if(!(scanned_object in view(7, get_turf(src))))
+		balloon_alert(user, "specimen data lost!")
+		return TRUE
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

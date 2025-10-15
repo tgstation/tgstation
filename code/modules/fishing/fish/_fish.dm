@@ -232,16 +232,22 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	register_context()
 	register_item_context()
 
-	if(!PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type)
+	if(!PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type || stable_population > 1)
 		return
-	if(stable_population <= 1 && !HAS_TRAIT(src, TRAIT_FISH_NO_MATING) && !HAS_TRAIT(src, TRAIT_FISH_RECESSIVE) && !HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
+	if(length(compatible_types))
+		for(var/obj/item/fish/fishie as anything in compatible_types)
+			if(length(fishie::stable_population > 1))
+				if(!HAS_TRAIT(src, TRAIT_FISH_RECESSIVE))
+					stack_trace("[type] has a stable population of [stable_population] but is compatible with fishes with a higher stable population. \
+						However, it doesn't have the [/datum/fish_trait/recessive] trait. Either increase its stable population or add the trait to it.")
+				return
+	if(!HAS_TRAIT(src, TRAIT_FISH_NO_MATING) && !HAS_TRAIT(src, TRAIT_FISH_CROSSBREEDER))
 		var/list/pick_one = list(
 			/datum/fish_trait/crossbreeder,
 			/datum/fish_trait/no_mating,
-			/datum/fish_trait/recessive,
 		)
 		stack_trace("[type] has a stable_population of [stable_population] but has neither of these traits: [english_list(pick_one)]. \
-			Either increase its stable_population or add one of these traits to it.")
+			Either increase its stable population or add one of these traits to it.")
 
 /obj/item/fish/suicide_act(mob/living/user)
 	if(force == 0)
