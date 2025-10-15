@@ -119,13 +119,3 @@
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE
-
-
-
-
-
-
-
-
-
-

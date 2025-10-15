@@ -652,21 +652,12 @@
 	wearer.mob_mood.modify_hud()
 	original_hud.show_hud(original_hud.hud_version)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/allow_attack_hand_drop(mob/user)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/can_mob_unequip(mob/user)
 	if(!ishuman(user))
 		return ..()
 	var/mob/living/carbon/human/wearer = user
 	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
-		wearer.balloon_alert(user, "brain too damaged to remove!")
-		return FALSE
-	return ..()
-
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(!ishuman(user))
-		return ..()
-	var/mob/living/carbon/human/wearer = user
-	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
-		wearer.balloon_alert(user, "brain too damaged to remove!")
+		wearer.balloon_alert(user, "can't strip, brain damaged!")
 		return FALSE
 	return ..()
 

@@ -3375,6 +3375,7 @@
 #include "code\modules\antagonists\heretic\knowledge\rust_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\starting_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\void_lore.dm"
+#include "code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\reroll_targets.dm"
 #include "code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_buff.dm"
 #include "code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_curse.dm"
 #include "code\modules\antagonists\heretic\knowledge\sacrifice_knowledge\sacrifice_knowledge.dm"

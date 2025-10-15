@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 			draft_blacklist[selected_knowledge] = draft_id
 			heretic_research_tree[parent_knowledge_path][HKT_NEXT] |= draft_id
 
-		var/list/blacklist_ids = flatten_list(draft_blacklist)
+		var/list/blacklist_ids = assoc_to_values(draft_blacklist)
 		for(var/blacklist_path in draft_blacklist)
 			var/id = draft_blacklist[blacklist_path]
 			final_draft[blacklist_path][HKT_BAN] += (blacklist_ids - id)
