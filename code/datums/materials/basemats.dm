@@ -329,7 +329,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	SIGNAL_HANDLER
 	if(prob(67))
 		return
-	var/list/elegible_fish_sources = flatten_list(GLOB.preset_fish_sources)
+	var/list/elegible_fish_sources = assoc_to_values(GLOB.preset_fish_sources)
 	for(var/datum/fish_source/source as anything in elegible_fish_sources)
 		if(source.fish_source_flags & FISH_SOURCE_FLAG_NO_BLUESPACE_ROD)
 			elegible_fish_sources -= source

@@ -70,6 +70,10 @@
 	mob_choice.name = target.name
 	selectable_targets[REF(target)] = mob_choice
 	for(var/obj/item/item as anything in visible_items)
+		//no revealing items that are not obscured but meant to be hidden
+		if(HAS_TRAIT(item, TRAIT_NO_STRIP) || HAS_TRAIT(item, TRAIT_EXAMINE_SKIP))
+			continue
+
 		var/datum/radial_menu_choice/item_choice = new
 
 		var/mutable_appearance/item_appearance = new(item)

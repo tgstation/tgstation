@@ -72,17 +72,6 @@
 	if(!icon_state)
 		item_flags |= ABSTRACT
 
-/obj/item/clothing/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	var/mob/M = user
-
-	if(ismecha(M.loc)) // stops inventory actions in a mech
-		return
-
-	if(loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-			add_fingerprint(user)
-
 /obj/item/food/clothing
 	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object. <--- stinky idiot wrote this"

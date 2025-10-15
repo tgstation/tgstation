@@ -322,6 +322,7 @@
 #include "trauma_granting.dm"
 #include "turf_icons.dm"
 #include "tutorial_sanity.dm"
+#include "unequip_defib.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
