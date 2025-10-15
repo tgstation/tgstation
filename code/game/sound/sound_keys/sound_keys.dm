@@ -847,3 +847,10 @@
 	key = SFX_RORO_WARBLE
 	file_paths = list(
 		'sound/mobs/non-humanoids/roro/roro_warble.ogg')
+
+/datum/sound_effect/fire_mode_switch
+	key = SFX_FIRE_MODE_SWITCH
+	file_paths = list(
+		'sound/items/weapons/gun_mode_switch2.ogg',
+	)
+
