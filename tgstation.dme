@@ -3957,6 +3957,7 @@
 #include "code\modules\client\preferences\glasses.dm"
 #include "code\modules\client\preferences\hemiplegic.dm"
 #include "code\modules\client\preferences\heterochromatic.dm"
+#include "code\modules\client\preferences\hide_roundend_ckey.dm"
 #include "code\modules\client\preferences\hotkeys.dm"
 #include "code\modules\client\preferences\item_outlines.dm"
 #include "code\modules\client\preferences\jobless_role.dm"

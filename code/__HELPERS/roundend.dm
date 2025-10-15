@@ -691,7 +691,11 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	var/jobtext = ""
 	if(!is_unassigned_job(ply.assigned_role))
 		jobtext = " the <b>[ply.assigned_role.title]</b>"
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	var/text
+	if(GLOB.roundend_hidden_ckeys[ckey(ply.key)])
+		text = "<b>[ply.name]</b>[jobtext] "
+	else
+		text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += " [span_redtext("died")]"
