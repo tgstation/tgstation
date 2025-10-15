@@ -1,0 +1,8 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored flash and flashers. Report any issue about it"
+  - balance: "Flashes now affect basic mobs as well. Yes, this extends to the hypno-flash. Yes, this includes converting them as a headrev / blood bro"
+  - balance: "Flashers now actually use the flashes that they're installed with, and the portable version is also triggered by nearby basic mobs and cyborgs passing through."
+  - balance: "Elite mobs cannot be converted while they're busy battling their challenger."
+  - balance: "Mobs that have been given sentience potions to are unconvertable. They answer to their master (the one that gave them the potion in the first place) anyway."

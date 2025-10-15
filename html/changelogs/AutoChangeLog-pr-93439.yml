@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - admin: "abstract types dont show up in admin selection menu for station traits"
