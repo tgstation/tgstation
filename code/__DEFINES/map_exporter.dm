@@ -25,28 +25,6 @@
 
 #define DMM2TGM_MESSAGE "MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE"
 
-/*
-#define TO_LIST_STRING(build_from, return_string_list) \
-	return_string_list += "list(";\
-	var/first_entry = TRUE;\
-	for(var/item in build_from) {\
-		CHECK_TICK;\
-		if(!first_entry) {\
-			return_string_list += ", ";\
-		}\
-		if(isnum(item) || !build_from[item]) {\
-			TGM_ENCODE_COPYCAT(item);\
-			return_string_list += "[item]";\
-		} else {\
-			TGM_ENCODE_COPYCAT(item);\
-			TGM_ENCODE_COPYCAT(build_from[item]);\
-			return_string_list += "[item] = [build_from[item]]";\
-		}\
-		first_entry = FALSE;\
-	}\
-	return_string_list += ")";
-*/
-
 /// Prevent symbols from being because otherwise you can name something
 /// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun
 #define HASHTAG_NEWLINES_AND_TABS(text, replacements)\
@@ -84,3 +62,7 @@
 		value = "\"[value]\"";\
 	};
 
+#define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
+#define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
+#define TGM_OBJ_CHECK (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
+#define TGM_MOB_CHECK (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))
