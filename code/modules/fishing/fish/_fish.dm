@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		return
 	if(length(compatible_types))
 		for(var/obj/item/fish/fishie as anything in compatible_types)
-			if(length(fishie::stable_population) > 1)
+			if(fishie::stable_population > 1)
 				if(!HAS_TRAIT(src, TRAIT_FISH_RECESSIVE))
 					stack_trace("[type] has a stable population of [stable_population] but is compatible with fishes with a higher stable population. \
 						However, it doesn't have the [/datum/fish_trait/recessive] trait. Either increase its stable population or add the trait to it.")
