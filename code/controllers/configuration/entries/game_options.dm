@@ -533,6 +533,14 @@
 	integer = FALSE
 	default = 4 // every 4 hours
 	min_val = -1
+/// The max amount of objects that can be saved on a single turf (rest get skipped)
+/datum/config_entry/number/persistent_max_object_limit_per_turf
+	default = 100
+	min_val = 1
+/// The max amount of mobs that can be saved on a single turf (rest get skipped)
+/datum/config_entry/number/persistent_max_mob_limit_per_turf
+	default = 5
+	min_val = 1
 /// The maximum amount of autosaves to store (set to -1 to never delete any autosaves)
 /datum/config_entry/number/persistent_max_autosaves
 	default = -1

@@ -64,6 +64,9 @@ PERSISTENT_USE_STATIC_MAP_GRID
 ##    O B J E C T S     ##
 ##########################
 
+## The max limit of allowed objects to be saved on a turf
+PERSISTENT_MAX_OBJECT_LIMIT_PER_TURF 100
+
 ## Save and load objects and their properties.
 PERSISTENT_SAVE_FLAGS objects
 ## Save and load objects variables
@@ -74,6 +77,9 @@ PERSISTENT_SAVE_FLAGS objects_properties
 ##########################
 ##       M O B S        ##
 ##########################
+
+## The max limit of allowed mobs to be saved on a turf
+PERSISTENT_MAX_MOB_LIMIT_PER_TURF 5
 
 ## Save and load mobs, excluding mob/living/carbon.
 PERSISTENT_SAVE_FLAGS mobs
