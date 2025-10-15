@@ -27,6 +27,13 @@
 	var/height = maxy - miny
 	var/depth = maxz - minz
 
+	var/max_object_limit = CONFIG_GET(number/persistent_max_object_limit_per_turf)
+	var/max_mob_limit = CONFIG_GET(number/persistent_max_mob_limit_per_turf)
+	var/total_mobs_saved = 0
+	var/total_objs_saved = 0
+	var/total_turfs_saved = 0
+	//var/total_areas_saved = 0  this might be useful later but not right now
+
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
 
@@ -127,30 +134,42 @@
 				// always replace [/turf/open/space] with [/turf/open/space/basic] since it speeds up the maploader
 				// [/turf/open/space] is created naturally when shuttles are moving or turf gets destroyed leading to space
 				if(isspaceturf(saved_turf))
+					// figure out why arrivals shuttle is bypassing this lol
 					saved_turf = /turf/open/space/basic
+				else if(!istype(saved_turf, /turf/template_noop))
+					// exclude all space and template_noop from our count
+					total_turfs_saved++
 
-				for(var/atom/target_atom as anything in pull_from)
+				// always reset these to 0 as we iterate to a new turf
+				GLOB.serialization_turf_obj_count = 0
+				GLOB.serialization_turf_mob_count = 0
+
+				for(var/atom/movable/target_atom as anything in pull_from)
+					if(target_atom.flags_1 & HOLOGRAM_1)
+						continue
+					if(is_multi_tile_object(target_atom) && (target_atom.loc != pull_from))
+						continue
+
 					//====SAVING OBJECTS====
 					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
 						var/obj/target_obj = target_atom
 						CHECK_TICK
 						if(obj_blacklist[target_obj.type])
 							continue
-						if(target_obj.flags_1 & HOLOGRAM_1)
-							continue
-						if(is_multi_tile_object(target_obj) && (target_obj.loc != pull_from))
+						if(GLOB.serialization_turf_obj_count >= max_object_limit)
 							continue
 
 						var/metadata
 						if(save_flag & SAVE_OBJECTS_VARIABLES)
 							metadata = generate_tgm_metadata(target_obj)
 
+						GLOB.serialization_turf_obj_count++
 						current_header += "[empty ? "" : ",\n"][target_obj.type][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
 						if(save_flag & SAVE_OBJECTS_PROPERTIES)
-							var/custom_data = target_obj.on_object_saved()
+							var/custom_data = target_obj.on_object_saved(serialization_turf_obj_count)
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 
 					//====SAVING MOBS====
@@ -159,6 +178,10 @@
 						CHECK_TICK
 						if(istype(target_mob, /mob/living/carbon)) //Ignore people, but not animals
 							continue
+						if(GLOB.serialization_turf_mob_count >= max_mob_limit)
+							continue
+
+						GLOB.serialization_turf_mob_count++
 						var/metadata = generate_tgm_metadata(target_mob)
 						current_header += "[empty ? "" : ",\n"][target_mob.type][metadata]"
 						empty = FALSE
@@ -167,9 +190,17 @@
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
 					var/turf/open/atmos_turf = pull_from
-					if(isopenturf(atmos_turf))
+					// Optimiziations that skip saving atmospheric data for turfs that don't need it
+					// - Walls: Atmos values should not realistically change
+					// - Space: Gas is constantly purged and temperature is immutable
+					// - Planetary: Atmos slowly reverts to its default gas mix
+					if(isopenturf(atmos_turf) && !isspaceturf(atmos_turf) && !atmos_turf.planetary_atmos)
 						var/metadata = generate_tgm_metadata(atmos_turf)
 						current_header += "[metadata]"
+
+				total_mobs_saved += GLOB.serialization_turf_mob_count
+				total_objs_saved += GLOB.serialization_turf_obj_count
+
 				current_header += ",\n[saved_area])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
@@ -197,25 +228,3 @@
 		output += pull_from[calculated]
 	return output.Join()
 
-/*
-/// Takes a constant, encodes it into a TGM valid string
-/proc/tgm_encode(value)
-	if(istext(value))
-		//Prevent symbols from being because otherwise you can name something
-		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
-		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ","=""))]\""
-	if(isnum(value) || ispath(value))
-		return "[value]"
-	if(islist(value))
-		return to_list_string(value)
-	if(isnull(value))
-		return "null"
-	if(isicon(value) || isfile(value))
-		return "'[value]'"
-	// not handled:
-	// - pops: /obj{name="foo"}
-	// - new(), newlist(), icon(), matrix(), sound()
-
-	// fallback: string
-	return tgm_encode("[value]")
-*/

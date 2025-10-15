@@ -11,12 +11,13 @@
 	for(var/each in material_holder.materials)
 		var/amount = material_holder.materials[each] / 100
 		var/datum/material/material_datum = each
-		while(amount > 0)
+		while((amount > 0) && OBJECT_SERIALIZATION_CHECK)
 			var/obj/item/stack/stack = material_datum.sheet_type
 			var/amount_var = NAMEOF_TYPEPATH(stack, amount)
 			var/amount_in_stack = max(1, min(50, amount))
 			amount -= amount_in_stack
 			data += "[data ? ",\n" : ""][stack.type]{\n\t[amount_var] = [amount_in_stack]\n\t}"
+			GLOB.serialization_turf_obj_count++
 	return data
 
 /obj/machinery/ore_silo/PersistentInitialize()
@@ -126,6 +127,28 @@
 	. -= NAMEOF(src, icon_state)
 	return .
 
+/obj/item/bodypart/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/effect/decal/cleanable/blood/footprints/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/item/stack/cable_coil/get_save_vars()
+	. = ..()
+	// wires modify several vars immediately after init which results
+	// in excessive save data that should be omitted
+	. -= NAMEOF(src, name)
+	. -= NAMEOF(src, icon_state)
+	. -= NAMEOF(src, pixel_x)
+	. -= NAMEOF(src, pixel_y)
+	. -= NAMEOF(src, color)
+	. += NAMEOF(src, cable_color)
+	return .
+
 /obj/machinery/atmospherics/components/unary/thermomachine/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, icon)
@@ -186,7 +209,7 @@
 
 ///  D O O R  &  A I R L O C K  ///
 
-/obj/machinery/door/on_object_saved()
+/obj/machinery/door/on_object_saved(obj_count)
 	var/data
 
 	if(welded)
@@ -251,13 +274,13 @@
 
 ///  N O T I C E   B O A R D  ///
 
-/obj/structure/noticeboard/on_object_saved()
+/obj/structure/noticeboard/on_object_saved(obj_count)
 	var/data
 
 	for(var/obj/item/paper/paper in contents)
 		var/metadata = generate_tgm_metadata(paper)
 		data += "[data ? ",\n" : ""][paper.type][metadata]"
-
+		GLOB.serialization_turf_obj_count++
 	return data
 
 
