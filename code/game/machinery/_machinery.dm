@@ -396,7 +396,7 @@
 	var/turf/this_turf = get_turf(src)
 	for(var/atom/movable/movable_atom in contents)
 		//so machines like microwaves dont dump out signalers after cooking
-		if(wires && (movable_atom in flatten_list(wires.assemblies)))
+		if(wires && (movable_atom in assoc_to_values(wires.assemblies)))
 			continue
 
 		if(subset && !(movable_atom in subset))

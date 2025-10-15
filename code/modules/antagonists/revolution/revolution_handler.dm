@@ -73,6 +73,10 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		if(isnull(real_headrev))
 			continue
 		add_memory_in_range(real_headrev, 5, /datum/memory/revolution_rev_victory, protagonist = real_headrev)
+		add_personality_mood_to_viewers(real_headrev, "revwin", list(
+			/datum/personality/nt/loyalist = /datum/mood_event/loyalist_revs_win,
+			/datum/personality/nt/disillusioned = /datum/mood_event/disillusioned_revs_win,
+		), range = 5)
 
 	result = REVOLUTION_VICTORY
 
@@ -99,6 +103,10 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		var/mob/living/head_of_staff = head_tracker.target?.current
 		if(!isnull(head_of_staff))
 			add_memory_in_range(head_of_staff, 5, /datum/memory/revolution_heads_victory, protagonist = head_of_staff)
+			add_personality_mood_to_viewers(head_of_staff, "revlost", list(
+				/datum/personality/nt/loyalist = /datum/mood_event/loyalist_revs_lost,
+				/datum/personality/nt/disillusioned = /datum/mood_event/disillusioned_revs_lost
+			), range = 5)
 
 	priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "[command_name()] Loyalty Monitoring Division")

@@ -37,29 +37,27 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALLOW_DARK_PAINTS_1 (1<<8)
 /// Should this object be unpaintable?
 #define UNPAINTABLE_1 (1<<9)
-/// Is this atom on top of another atom, and as such has click priority?
-#define IS_ONTOP_1 (1<<10)
 /// Is this atom immune to being dusted by the supermatter?
-#define SUPERMATTER_IGNORES_1 (1<<11)
+#define SUPERMATTER_IGNORES_1 (1<<10)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<12)
+#define CAN_BE_DIRTY_1 (1<<11)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<13)
+#define HTML_USE_INITAL_ICON_1 (1<<12)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
-#define IS_PLAYER_COLORABLE_1 (1<<14)
+#define IS_PLAYER_COLORABLE_1 (1<<13)
 /// Whether or not this atom has contextual screentips when hovered OVER
-#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<15)
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<14)
 /// Whether or not this atom is storing contents for a disassociated storage object
-#define HAS_DISASSOCIATED_STORAGE_1 (1<<16)
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<15)
 /// If this atom has experienced a decal element "init finished" sourced appearance update
 /// We use this to ensure stacked decals don't double up appearance updates for no reason
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
-#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<17)
+#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<16)
 /// This atom always returns its turf in get_turf_pixel instead of the turf from its offsets
-#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
+#define IGNORE_TURF_PIXEL_OFFSET_1 (1<<17)
 /// This atom does not need to generate its own preview icon for GAGS
-#define NO_NEW_GAGS_PREVIEW_1 (1<<19)
+#define NO_NEW_GAGS_PREVIEW_1 (1<<18)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -234,12 +232,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS ZAP_GENERATES_POWER
 
-///EMP will protect itself.
+///Object will protect itself.
 #define EMP_PROTECT_SELF (1<<0)
-///EMP will protect the contents from also being EMPed.
+///Object will protect its contents from being EMPed.
 #define EMP_PROTECT_CONTENTS (1<<1)
-///EMP will protect the wires.
+///Object will protect its wiring from being EMPed.
 #define EMP_PROTECT_WIRES (1<<2)
+///Don't indicate EMP protection in object examine text.
+#define EMP_NO_EXAMINE (1<<3)
 
 ///Protects against all EMP types.
 #define EMP_PROTECT_ALL (EMP_PROTECT_SELF | EMP_PROTECT_CONTENTS | EMP_PROTECT_WIRES)

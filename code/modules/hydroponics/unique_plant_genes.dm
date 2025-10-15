@@ -110,6 +110,7 @@
 	force_multiplier = 0.2
 	degrades_after_hit = TRUE
 	degradation_noun = "petals"
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/attack/novaflower_attack/attack_effect(obj/item/our_plant, mob/living/target, mob/living/user)
 	if(!istype(target))
@@ -191,6 +192,7 @@
 	name = "Rose Thorns"
 	description = "The stem has a lot of thorns."
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
@@ -207,6 +209,7 @@
 	name = "Burning Stem"
 	description = "The stem may burn your hand."
 	cancel_action_on_backfire = TRUE
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, span_danger("[our_plant] singes your bare hand!"))
@@ -217,6 +220,7 @@
 /datum/plant_gene/trait/backfire/nettle_burn
 	name = "Stinging Stem"
 	description = "The stem may sting your hand."
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/backfire/nettle_burn/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, span_danger("[our_plant] burns your bare hand!"))
@@ -239,7 +243,8 @@
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
 	name = "Active Capsicum Glands"
-	description = "You may survive a cold winter with this in hand."
+	description = "It emits a strong heat when handled."
+	trait_flags = TRAIT_SHOW_EXAMINE
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
 	var/datum/weakref/held_mob
@@ -457,6 +462,7 @@
 	name = "Large Bites"
 	description = "You can't hold off from eating this in one bite!"
 	icon = FA_ICON_DRUMSTICK_BITE
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/one_bite/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -685,14 +691,13 @@
 	name = "Complex Harvest"
 	description = "Halves the maximum yield of the plant, and prevents it from benefiting from pollination's yield bonus."
 	icon = FA_ICON_SLASH
-	trait_flags = TRAIT_SHOW_EXAMINE|TRAIT_HALVES_YIELD|TRAIT_NO_POLLINATION
+	trait_flags = TRAIT_HALVES_YIELD|TRAIT_NO_POLLINATION
 	mutability_flags = NONE
 
 /// Poppy's unique trait that allows slicing for sap
 /datum/plant_gene/trait/opium_production
 	name = "Sap Buds"
 	description = "Using a knife or other sharp object on the plant between ages 200 seconds to 400 seconds will yield a sap."
-	trait_flags = NONE
 	icon = FA_ICON_PILLS
 	/// Has parent plant been harvested for sap already?
 	var/extracted = FALSE

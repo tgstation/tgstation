@@ -654,6 +654,7 @@
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.rust_strength = 4 // Ascended heretics can rust whatever they want (below RUST_RESISTANCE_ABSOLUTE)
+	ADD_TRAIT(user, TRAIT_DESENSITIZED, type)
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

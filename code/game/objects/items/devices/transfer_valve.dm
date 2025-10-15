@@ -24,6 +24,7 @@
 
 /obj/item/transfer_valve/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
 	register_context()
 	register_item_context()

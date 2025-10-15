@@ -108,7 +108,8 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers) //do stuff before attackby!
-	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, target, user, modifiers, attack_modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, target, user, modifiers, attack_modifiers) | SEND_SIGNAL(user, COMSIG_USER_PRE_ITEM_ATTACK, src, target, modifiers, attack_modifiers)
+	if(signal_result & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE //return TRUE to avoid calling attackby after this proc does stuff
 
@@ -124,7 +125,7 @@
  * See: [/obj/item/proc/melee_attack_chain]
  */
 /obj/item/proc/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, modifiers, attack_modifiers)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK_SECONDARY, target, user, modifiers, attack_modifiers) | SEND_SIGNAL(user, COMSIG_USER_PRE_ITEM_ATTACK_SECONDARY, src, target, modifiers, attack_modifiers)
 
 	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

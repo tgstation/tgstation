@@ -8,8 +8,7 @@
 		and cash payouts. Upon purchase, you'll be granted your own contract uplink embedded within the supplied \
 		tablet computer. Additionally, you'll be granted standard contractor gear to help with your mission - \
 		comes supplied with the tablet, specialised space suit, chameleon jumpsuit and mask, agent card, \
-		specialised contractor baton, and three randomly selected low cost items. \
-		Can include otherwise unobtainable items."
+		and a specialised contractor baton."
 	item = /obj/item/storage/box/syndicate/contract_kit
 	category = /datum/uplink_category/contractor
 	cost = 20

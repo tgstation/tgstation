@@ -49,12 +49,20 @@
 	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SECONDARY, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 	return ..()
 
-/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, mob/living/carbon/target, mob/living/user)
+/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(!iscarbon(target) || !target.handcuffed)
+	if(!isliving(target)) //Removing restraints takes precedence
 		return NONE
-	context[SCREENTIP_CONTEXT_RMB] = "Cut Restraints"
-	return CONTEXTUAL_SCREENTIP_SET
+	var/mob/living/living_target = target
+	if(iscarbon(living_target))
+		var/mob/living/carbon/carbon_target = living_target
+		if(carbon_target.handcuffed)
+			context[SCREENTIP_CONTEXT_RMB] = "Cut Restraints"
+			return CONTEXTUAL_SCREENTIP_SET
+	if(living_target.has_status_effect(/datum/status_effect/cuffed_item))
+		context[SCREENTIP_CONTEXT_RMB] = "Remove Binds From Item"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 ///signal called on parent being examined
 /datum/element/cuffsnapping/proc/on_examine(datum/target, mob/user, list/examine_list)
@@ -72,48 +80,74 @@
 
 	examine_list += span_notice(examine_string)
 
-/datum/element/cuffsnapping/proc/try_cuffsnap_target(obj/item/cutter, mob/living/carbon/target, mob/living/cutter_user, list/modifiers)
+///Signal called on parent when it right-clicks another mob.
+/datum/element/cuffsnapping/proc/try_cuffsnap_target(obj/item/cutter, mob/living/target, mob/living/cutter_user, list/modifiers)
 	SIGNAL_HANDLER
 
-	if(!istype(target)) //we aren't the kind of mob that can even have cuffs, so we skip.
-		return
-
-	if(!target.handcuffed)
-		return
-
-	var/obj/item/restraints/handcuffs/cuffs = target.handcuffed
-
-	if(!istype(cuffs))
-		return
-
-	if(cuffs.restraint_strength && isnull(src.snap_time_strong))
-		cutter_user.visible_message(span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!"))
-		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
-		return COMPONENT_SKIP_ATTACK
-
-	else if(isnull(src.snap_time_weak))
-		cutter_user.visible_message(span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!"))
-		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
-		return COMPONENT_SKIP_ATTACK
-
-	. = COMPONENT_SKIP_ATTACK
-
-	INVOKE_ASYNC(src, PROC_REF(do_cuffsnap_target), cutter, target, cutter_user, cuffs)
-
-/datum/element/cuffsnapping/proc/do_cuffsnap_target(obj/item/cutter, mob/living/carbon/target, mob/cutter_user, obj/item/restraints/handcuffs/cuffs)
 	if(LAZYACCESS(cutter_user.do_afters, cutter))
 		return
 
+	var/mob/living/carbon/carbon_target = target
+	if(!istype(carbon_target) || !carbon_target.handcuffed)
+		var/datum/status_effect/cuffed_item/cuffed_status = target.has_status_effect(/datum/status_effect/cuffed_item)
+		if(!cuffed_status)
+			return NONE
+		INVOKE_ASYNC(src, PROC_REF(try_cuffsnap_item), cutter, target, cutter_user, cuffed_status.cuffed, cuffed_status.cuffs)
+		return COMPONENT_SKIP_ATTACK
+
+	var/obj/item/restraints/handcuffs/cuffs = carbon_target.handcuffed
+
+	if(!istype(cuffs))
+		return NONE
+
+	if(check_cuffs_strength(carbon_target, target, cutter_user, cuffs, span_notice("[cutter_user] tries to cut through [target]'s restraints with [cutter], but fails!")))
+		INVOKE_ASYNC(src, PROC_REF(do_cuffsnap_target), cutter, target, cutter_user, cuffs)
+
+	return COMPONENT_SKIP_ATTACK
+
+///Check that the type of restraints can be cut by this element.
+/datum/element/cuffsnapping/proc/check_cuffs_strength(obj/item/cutter, mob/living/target, mob/living/cutter_user, obj/item/restraints/handcuffs/cuffs, message)
+	if(cuffs.restraint_strength ? snap_time_strong : snap_time_weak)
+		return TRUE
+	cutter_user.visible_message(message)
+	playsound(source = get_turf(cutter), soundin = cutter.usesound || cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+	return FALSE
+
+///Called when a player tries to remove the cuffs restraining another mob.
+/datum/element/cuffsnapping/proc/do_cuffsnap_target(obj/item/cutter, mob/living/carbon/target, mob/cutter_user, obj/item/restraints/handcuffs/cuffs)
+	if(LAZYACCESS(cutter_user.do_afters, cutter))
+		return
 	log_combat(cutter_user, target, "cut or tried to cut [target]'s cuffs", cutter)
 
-	var/snap_time = src.snap_time_weak
-	if(cuffs.restraint_strength)
-		snap_time = src.snap_time_strong
+	do_snip_snap(cutter, target, cutter_user, cuffs, span_notice("[cutter_user] cuts [target]'s restraints with [cutter]!"))
 
-	if(snap_time == 0 || do_after(cutter_user, snap_time, target, interaction_key = cutter)) // If 0 just do it. This to bypass the do_after() creating a needless progress bar.
-		cutter_user.do_attack_animation(target, used_item = cutter)
-		cutter_user.visible_message(span_notice("[cutter_user] cuts [target]'s restraints with [cutter]!"))
-		qdel(target.handcuffed)
-		playsound(source = get_turf(cutter), soundin = cutter.usesound ? cutter.usesound : cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)
+///Called when a player tries to remove the cuffs binding an item to their owner
+/datum/element/cuffsnapping/proc/try_cuffsnap_item(obj/item/cutter, mob/living/target, mob/living/cutter_user, obj/item/cuffed, obj/item/restraints/handcuffs/cuffs)
+	if(check_cuffs_strength(cutter, target, cutter_user, cuffs, span_notice("[cutter_user] tries to cut through the restraints binding [cuffed] to [target], but fails!")))
+		return
 
-	return
+	log_combat(cutter_user, target, "cut or tried to cut restraints binding [cuffed] to")
+
+	do_snip_snap(cutter, target, cutter_user, cuffs, span_notice("[cutter_user] cuts the restraints binding [src] to [target] with [cutter]!"))
+
+///The proc responsible for the very timed action that deletes the cuffs
+/datum/element/cuffsnapping/proc/do_snip_snap(obj/item/cutter, mob/living/target, mob/cutter_user, obj/item/restraints/handcuffs/cuffs, message)
+	var/snap_time = cuffs.restraint_strength ? snap_time_strong : snap_time_weak
+
+	var/target_was_restrained = FALSE
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon_target = target
+		target_was_restrained = carbon_target.handcuffed
+
+	if(snap_time)
+		if(!do_after(cutter_user, snap_time, target, interaction_key = cutter)) // If 0 just do it. This to bypass the do_after() creating a needless progress bar.
+			return
+		if(target_was_restrained) //Removing restraints takes priority over cuffed items. This only applies for carbon mobs, but we need to make sure the restraints are still the same.
+			var/mob/living/carbon/carbon_target = target
+			if(carbon_target.handcuffed != cuffs)
+				return
+
+	cutter_user.do_attack_animation(target, used_item = cutter)
+	cutter_user.visible_message(message)
+	qdel(cuffs)
+	playsound(source = get_turf(cutter), soundin = cutter.usesound || cutter.hitsound, vol = cutter.get_clamped_volume(), vary = TRUE)

@@ -108,6 +108,7 @@
 	. = ..()
 	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 	owner.add_mood_event(id, /datum/mood_event/drunk, drunk_value)
+	owner.clear_mood_event("[id]_after")
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(drunk_gun_fired))
 
 /datum/status_effect/inebriated/drunk/on_remove()
@@ -122,6 +123,8 @@
 /// Clears any side effects we set due to being drunk.
 /datum/status_effect/inebriated/drunk/proc/clear_effects()
 	owner.clear_mood_event(id)
+	if(!QDELING(owner) && HAS_PERSONALITY(owner, /datum/personality/bibulous))
+		owner.add_mood_event("[id]_after", /datum/mood_event/drunk_after)
 
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
