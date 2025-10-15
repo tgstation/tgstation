@@ -11945,6 +11945,7 @@
 	},
 /obj/machinery/photocopier/prebuilt,
 /obj/machinery/camera/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "ehG" = (
