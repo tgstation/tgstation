@@ -1,5 +1,0 @@
-author: "mcbalaam"
-delete-after: True
-changes:
-  - qol: "Better output for sound requesting"
-  - bugfix: "\"Request Internet sound\" input window's title and description are not inverted anymore"

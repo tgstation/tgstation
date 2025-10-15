@@ -1,4 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - qol: "Health analyzers now tell the difference between curable and incurable permanent traumas"

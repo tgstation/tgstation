@@ -1,4 +1,0 @@
-author: "thegrb93"
-delete-after: True
-changes:
-  - bugfix: "Self sustaining slime and clusterbuster now correctly fill required reagents"

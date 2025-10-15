@@ -465,3 +465,26 @@
   - balance: Includes crustaceans and reptiles to the list of mob types that Hunter
       Boxing is allowed to mangle with their bare hands. You still can't use Hunter
       Boxing on lizardpeople. Or crabpeople when they are added in 2030.
+2025-10-15:
+  ArchBTW, NecromancerAnne (original code, sprites), SmArtKar (sprites), DrDiasyl (sprites):
+  - rscadd: adds Stunsword
+  Fghj240:
+  - qol: Health analyzers now tell the difference between curable and incurable permanent
+      traumas
+  SmArtKar:
+  - bugfix: Items no longer randomly fall out of bags when changing their size
+  TealSeer:
+  - code_imp: renamed flatten_list proc to assoc_to_values
+  Yobrocharlie:
+  - balance: buffed the cleric mace by a little bit.
+  mcbalaam:
+  - qol: Better output for sound requesting
+  - bugfix: '"Request Internet sound" input window''s title and description are not
+      inverted anymore'
+  thegrb93:
+  - bugfix: Self sustaining slime and clusterbuster now correctly fill required reagents
+  tontyGH:
+  - bugfix: moves the computer frame's anchor requirement from circuit step to finalization
+      step, fixing an issue where you could construct unanchored and FUNCTIONAL computers
+  - qol: as a side effect, you only need to wrench the PC down when construction is
+      being finished

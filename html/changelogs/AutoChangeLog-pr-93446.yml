@@ -1,5 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "moves the computer frame's anchor requirement from circuit step to finalization step, fixing an issue where you could construct unanchored and FUNCTIONAL computers"
-  - qol: "as a side effect, you only need to wrench the PC down when construction is being finished"
