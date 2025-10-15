@@ -94,6 +94,8 @@
 #define HEADINTERNALS (1<<16)
 /// Prevents masks from getting adjusted from enabling internals
 #define INTERNALS_ADJUST_EXEMPT (1<<17)
+/// Determines if our piece of clothing is carpy or piratey for Sleeping Carp's style factor.
+#define NAUTICALLY_RADICAL (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

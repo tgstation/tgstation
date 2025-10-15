@@ -66,6 +66,7 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | NAUTICALLY_RADICAL
 
 /obj/item/clothing/under/costume/soviet
 	name = "soviet uniform"
