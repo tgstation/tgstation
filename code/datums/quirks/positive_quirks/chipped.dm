@@ -3,7 +3,7 @@
 	desc = "You got caught up in the skillchip craze a few years back, and had one of the commercially available chips implanted into yourself."
 	icon = FA_ICON_MICROCHIP
 	value = 2
-	gain_text = span_notice("Your suddenly feels chipped.")
+	gain_text = span_notice("You suddenly feels chipped.")
 	lose_text = span_danger("You don't feel so chipped anymore.")
 	medical_record_text = "Patient explained how they got caught up in 'the skillchip chase' recently, and now they have some useless chip in their head. Dumbass."
 	mail_goodies = list(
