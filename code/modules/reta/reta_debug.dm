@@ -72,51 +72,49 @@ ADMIN_VERB(reta_manual_trigger, R_ADMIN, "RETA Door Access", "Manually trigger R
 		message_admins("RETA access granted successfully: [english_list(granted_depts)] personnel now have [calling_dept] access. Total eligible cards: [total_eligible_cards]")
 
 		// Send department announcement like the normal system
-		var/caller_info = " (Called by CENTCOM)"
-		var/enhanced_location = "[calling_dept][caller_info]"
+		var/caller_info = "(Called by CENTCOM)"
 
 		// Send announcements to all successfully granted departments
 		for(var/dept in granted_depts)
 			switch(dept)
 				if("Security")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SECURITY), "Security")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_SECURITY), "Security")
 				if("Engineering")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_ENGINEERING), "Engineering")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_ENGINEERING), "Engineering")
 				if("Medical")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_MEDICAL), "Medical")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_MEDICAL), "Medical")
 				if("Science")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SCIENCE), "Science")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_SCIENCE), "Science")
 				if("Service")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SERVICE), "Service")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_SERVICE), "Service")
 				if("Command")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_COMMAND), "Command")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_COMMAND), "Command")
 				if("Cargo")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SUPPLY), "Cargo")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_SUPPLY), "Cargo")
 				if("Mining")
-					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = enhanced_location), null, list(RADIO_CHANNEL_SUPPLY), "Mining")
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = calling_dept, "CALLER" = caller_info), null, list(RADIO_CHANNEL_SUPPLY), "Mining")
 
 		// Send confirmation to the calling department about who has been given access
-		var/calling_message = "RETA activated[caller_info]. The following now have temporary door access: [english_list(granted_depts)]."
+		var/grantee = english_list(granted_depts)
+		var/list/target_channels = list()
+		switch(calling_dept)
+			if("Security")
+				target_channels += RADIO_CHANNEL_SECURITY
+			if("Engineering")
+				target_channels += RADIO_CHANNEL_ENGINEERING
+			if("Medical")
+				target_channels += RADIO_CHANNEL_MEDICAL
+			if("Science")
+				target_channels += RADIO_CHANNEL_SCIENCE
+			if("Service")
+				target_channels += RADIO_CHANNEL_SERVICE
+			if("Command")
+				target_channels += RADIO_CHANNEL_COMMAND
+			if("Cargo")
+				target_channels += RADIO_CHANNEL_SUPPLY
+			if("Mining")
+				target_channels += RADIO_CHANNEL_SUPPLY
 
-		// Get an announcement system to send simple radio messages
-		var/obj/machinery/announcement_system/announcer = get_announcement_system(null, null, list(RADIO_CHANNEL_COMMON))
-		if(announcer)
-			switch(calling_dept)
-				if("Security")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SECURITY)
-				if("Engineering")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_ENGINEERING)
-				if("Medical")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_MEDICAL)
-				if("Science")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SCIENCE)
-				if("Service")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SERVICE)
-				if("Command")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_COMMAND)
-				if("Cargo")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SUPPLY)
-				if("Mining")
-					announcer.radio.talk_into(announcer, calling_message, RADIO_CHANNEL_SUPPLY)
+		aas_config_announce(/datum/aas_config_entry/rc_reta_announcement, list("GRANTEE" = grantee, "CALLER" = caller_info), null, target_channels)
 	else
 		message_admins("RETA access grant failed for all departments.")

@@ -226,7 +226,7 @@
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, seconds_per_tick)
 	return ..() || .
 
-/datum/reagent/milk/used_on_fish(obj/item/fish/fish)
+/datum/reagent/consumable/milk/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
 		fish.repair_damage(fish.max_integrity * max(fish.get_hunger() * 0.5, 0.12))
 		fish.sate_hunger()
@@ -1375,7 +1375,29 @@
 	quality = DRINK_NICE
 	taste_description = "mild aromatics"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	
+
 /datum/reagent/consumable/ethanol/bitters_soda/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick)
+
+/datum/reagent/consumable/lean
+	name = "Lean"
+	description = "The drank that makes you go wheezy."
+	color = "#DE55ED"
+	quality = DRINK_GOOD
+	taste_description = "purple and a hint of opioid."
+	addiction_types = list(/datum/addiction/opioids = 6)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolization_rate = 0.2 * REM
+
+/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.adjust_jitter(2.5 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_stutter(2.25 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_drugginess(2 SECONDS * REM * seconds_per_tick)
+	if(SPT_PROB(15, seconds_per_tick))
+		affected_mob.emote(pick("taunt","twitch","shiver","laugh","moan","blush","stare"))
+	if(current_cycle > 16 && SPT_PROB(3.5, seconds_per_tick))
+		affected_mob.adjust_dizzy(15 SECONDS * REM * seconds_per_tick)
+		affected_mob.adjust_drowsiness(7.5 SECONDS * REM * seconds_per_tick)
+		affected_mob.emote("drool")

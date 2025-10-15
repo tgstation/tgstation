@@ -31,6 +31,7 @@
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
 	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer) // funny that we pass monkey init args to non-monkey mobs, that's totally a future issue
 	if (!QDELETED(bananas))
+		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 		if(faction)
 			bananas.faction = faction
 

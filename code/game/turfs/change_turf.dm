@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /turf/proc/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	if(copy_to_turf.type != type)
-		copy_to_turf.ChangeTurf(type, flags)
+		copy_to_turf.ChangeTurf(type, null, flags)
 	if(copy_to_turf.icon_state != icon_state)
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)

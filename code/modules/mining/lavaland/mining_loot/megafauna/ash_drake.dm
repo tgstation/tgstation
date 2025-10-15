@@ -173,7 +173,7 @@
 			consumer.dna.features = list(
 				FEATURE_MUTANT_COLOR = "#A02720",
 				FEATURE_TAIL_LIZARD = "Dark Tiger",
-				FEATURE_TAIL = "None",
+				FEATURE_TAIL_CAT = "None",
 				FEATURE_SNOUT = "Sharp",
 				FEATURE_HORNS = "Curled",
 				FEATURE_EARS = "None",
