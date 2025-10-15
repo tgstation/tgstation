@@ -37278,7 +37278,6 @@
 /area/station/security/lockers)
 "jhs" = (
 /obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -46813,7 +46812,6 @@
 "lAV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron,
 /area/station/medical/cryo)
 "lAW" = (
@@ -80718,7 +80716,6 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/paramedic,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay)
@@ -80775,7 +80772,6 @@
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/effect/turf_decal/tile/blue/diagonal_edge,
 /obj/machinery/duct,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/break_room)
 "tWD" = (

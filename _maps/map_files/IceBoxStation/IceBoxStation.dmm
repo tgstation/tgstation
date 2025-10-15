@@ -19271,6 +19271,7 @@
 /obj/structure/chair/sofa/left/maroon{
 	dir = 4
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "frc" = (
@@ -33499,11 +33500,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/command/nuke_storage)
-"jxv" = (
-/obj/effect/landmark/start/paramedic,
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/station/medical/storage)
 "jxw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/icemoon,
@@ -64726,6 +64722,7 @@
 /obj/structure/chair/sofa/right/maroon{
 	dir = 4
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "sfr" = (
@@ -255631,7 +255628,7 @@ rZm
 sOO
 lRD
 gbP
-jxv
+xdl
 wPX
 cvS
 cvS

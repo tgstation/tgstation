@@ -5147,12 +5147,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"aLB" = (
-/obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/duct,
-/turf/open/floor/iron/white,
-/area/station/medical/treatment_center)
 "aLC" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -37388,7 +37382,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "lTh" = (
@@ -42057,6 +42050,7 @@
 /obj/structure/extinguisher_cabinet/directional/east{
 	pixel_x = 26
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nCy" = (
@@ -169879,7 +169873,7 @@ aKq
 aKP
 aLe
 oIU
-aLB
+aLA
 whF
 ecW
 dXo

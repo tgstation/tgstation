@@ -10641,7 +10641,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/safe)
 "dMN" = (
-/obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/loading_area/white{
 	color = "#52B4E9";
 	dir = 4
@@ -16204,6 +16203,7 @@
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -24173,7 +24173,6 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmospherics_engine)
 "isu" = (
-/obj/effect/landmark/start/paramedic,
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/engineering/tracking_beacon,
@@ -41581,13 +41580,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
-"oqi" = (
-/obj/effect/landmark/start/paramedic,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/station/medical/medbay/central)
 "oqk" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52179,7 +52171,6 @@
 /area/station/security/execution/transfer)
 "rUL" = (
 /obj/structure/sign/poster/official/soft_cap_pop_art/directional/north,
-/obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -53547,7 +53538,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "svp" = (
-/obj/effect/landmark/start/paramedic,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/central)
@@ -63076,6 +63066,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "vDV" = (
@@ -63565,7 +63556,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 4
 	},
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "vLi" = (
@@ -92785,7 +92775,7 @@ opD
 vun
 gQG
 tFr
-oqi
+nMf
 sDJ
 uYp
 pCl

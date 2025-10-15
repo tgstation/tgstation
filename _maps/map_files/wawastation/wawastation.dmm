@@ -4791,6 +4791,7 @@
 	dir = 5
 	},
 /obj/machinery/newscaster/directional/east,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "bGu" = (
@@ -10443,7 +10444,6 @@
 /area/station/science/auxlab/firing_range)
 "dHk" = (
 /obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -11612,12 +11612,6 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"ebo" = (
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical/paramedic)
 "ebs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
@@ -21741,6 +21735,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "hAL" = (
@@ -27079,13 +27074,6 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/station/service/library)
-"jvd" = (
-/obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical/paramedic)
 "jvt" = (
 /obj/structure/closet/secure_closet/chemical,
 /obj/effect/turf_decal/stripes/line{
@@ -27246,6 +27234,7 @@
 "jyx" = (
 /obj/structure/chair/office,
 /obj/structure/cable,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "jyM" = (
@@ -38700,7 +38689,6 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "nnF" = (
-/obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
@@ -42106,7 +42094,6 @@
 	color = "#52B4E9"
 	},
 /obj/effect/turf_decal/tile/blue/full,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/storage)
 "oDZ" = (
@@ -85918,9 +85905,9 @@ cBb
 hAA
 naZ
 sep
-ebo
-ebo
-jvd
+naZ
+naZ
+iuV
 sIv
 rnk
 bAr
