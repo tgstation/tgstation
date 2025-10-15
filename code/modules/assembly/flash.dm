@@ -223,7 +223,7 @@
 	if(HAS_TRAIT(victim, TRAIT_SPINNING))
 		return DEVIATION_NONE
 
-	// I don't want to mess with cyborgs' deep-rooted weakness to fleshes
+	// I don't want to mess with cyborgs' deep-rooted weakness to flashes
 	if(issilicon(victim))
 		return DEVIATION_NONE
 
