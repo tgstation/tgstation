@@ -39,13 +39,13 @@
 #define MOOK_ATTACK_ACTIVE 2
 #define MOOK_ATTACK_STRIKE 3
 
-///keeps track of how many gutlunches are born
+/// Keeps track of how many gutlunches are born
 GLOBAL_VAR_INIT(gutlunch_count, 0)
 
-///Pet customization settings saved for every client
+/// Pet customization settings saved for every client
 GLOBAL_LIST_EMPTY(customized_pets)
 
-//raptor defines
+// Raptor defines
 /// Raptor chick, tiny and very frail
 #define RAPTOR_BABY "baby"
 /// Raptor youngling, cannot be ridden and has reduced stats, but can hunt by itself just fine
@@ -53,6 +53,10 @@ GLOBAL_LIST_EMPTY(customized_pets)
 /// Fully grown adult raptor
 #define RAPTOR_ADULT "adult"
 
+/// Innate raptor offsets
+#define RAPTOR_INNATE_SOURCE "raptor_innate"
+
+// Growth values
 /// How much does meal complexity affect our growth?
 #define RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR 5
 /// Base value for raptor growth from meat
@@ -65,22 +69,46 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define RAPTOR_BABY_GROWTH_LOWER 0.5
 /// Maximum random growth value a baby raptor can gain per second
 #define RAPTOR_BABY_GROWTH_UPPER 0.8
+/// How long it takes for a raptor egg to grow up, in seconds
+#define RAPTOR_EGG_GROWTH_PROGRESS 100
 
-///this mob suffers depression
+// Raptor inheritance stats
+/// Maximum amount of traits a raptor can inherit
+#define RAPTOR_TRAIT_INHERIT_AMOUNT 2
+/// Minimum modifier to base attack values a raptor can get
+#define RAPTOR_INHERIT_MIN_ATTACK -5
+/// Maximum modifier to base attack values a raptor can get
+#define RAPTOR_INHERIT_MAX_ATTACK 5
+/// Minimum modifier to the base health value a raptor can get
+#define RAPTOR_INHERIT_MIN_HEALTH -30
+/// Maximum modifier to the base health value a raptor can get
+#define RAPTOR_INHERIT_MAX_HEALTH 30
+/// Minimum modifier to base speed values a raptor can get
+#define RAPTOR_INHERIT_MIN_SPEED -0.5
+/// Maximum modifier to base speed values a raptor can get
+#define RAPTOR_INHERIT_MAX_SPEED 0.5
+/// Minimum modifier a raptor can get to their modifiers, such as ability effect and growth speed
+#define RAPTOR_INHERIT_MIN_MODIFIER -0.25
+/// Maximum modifier a raptor can get to their modifiers, such as ability effect and growth speed
+#define RAPTOR_INHERIT_MAX_MODIFIER -0.25
+/// Genetic drift for raptors, aka min/max multiplier that parents' stats can receive when breeding
+#define RAPTOR_GENETIC_DRIFT 0.2
+
+/// This mob suffers depression
 #define BB_BASIC_DEPRESSED "basic_depressed"
-///this mob will care for its young
+/// This mob will care for its young
 #define BB_RAPTOR_MOTHERLY "raptor_motherly"
-///this mob will be playful around their owners
+/// This mob will be playful around their owners
 #define BB_RAPTOR_PLAYFUL "raptor_playful"
-///this mob will flee combat when it feels threatened
+/// This mob will flee combat when it feels threatened
 #define BB_RAPTOR_COWARD "raptor_coward"
-///our raptor baby target we will take care of
+/// Our raptor baby target we will take care of
 #define BB_RAPTOR_BABY "raptor_baby"
-///the raptor we will heal up
+/// The raptor we will heal up
 #define BB_INJURED_RAPTOR "injured_raptor"
-///the cooldown for next time we eat
+/// The cooldown for next time we eat
 #define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
-///our trough target
+/// Our trough target
 #define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
 
 #define MAX_RAPTOR_POP 64

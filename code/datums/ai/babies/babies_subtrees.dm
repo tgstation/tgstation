@@ -28,7 +28,3 @@
 
 	// Find target
 	controller.queue_behavior(partner_behavior, BB_BABIES_TARGET, BB_BABIES_PARTNER_TYPES, BB_BABIES_CHILD_TYPES)
-
-/datum/ai_planning_subtree/make_babies/raptor
-	reproduce_behavior = /datum/ai_behavior/make_babies/raptor
-	partner_behavior = /datum/ai_behavior/find_partner/raptor

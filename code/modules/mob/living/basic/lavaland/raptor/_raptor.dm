@@ -7,10 +7,6 @@ GLOBAL_LIST_INIT(raptor_inherit_traits, list(
 
 GLOBAL_LIST_EMPTY(raptor_population)
 
-#define HAPPINESS_BOOST_DAMPENER 0.3
-/// Innate raptor offsets
-#define RAPTOR_INNATE_SOURCE "raptor_innate"
-
 /mob/living/basic/raptor
 	name = "raptor"
 	desc = "A trusty, powerful steed. Taming it might prove difficult..."
@@ -19,7 +15,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	base_icon_state = "raptor"
 	pixel_w = -12
 	base_pixel_w = -12
-	speed = 2
+	speed = 0.5
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	maxHealth = 200
 	health = 200
@@ -77,9 +73,12 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/obj/item/food/meat/steak = 50,
 		/obj/item/food/grown/ash_flora = 10,
 	)
+	/// Inheritance datum we store our genetic data in
+	var/datum/raptor_inheritance/inherited_stats = null
 
-/mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type)
+/mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type, datum/raptor_inheritance/passed_stats)
 	. = ..()
+	inherited_stats = passed_stats || new(src)
 	// First thing as to go before tameable in change_growth_stage()
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 	raptor_color = GLOB.raptor_colors[color_type || raptor_color]
@@ -119,11 +118,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		BB_SPEAK_CHANCE = 2,
 	)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
-
-	/*
-	inherited_stats = new
-	inherit_properties()
-	*/
 
 	var/static/list/preferred_foods = typecacheof(list(
 		/obj/item/food/meat,
@@ -218,8 +212,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	return FALSE
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
-	if(!combat_mode && istype(target, /mob/living/basic/raptor/baby))
-		return target.attack_hand(src, list(LEFT_CLICK = TRUE))
+	if (!combat_mode && istype(target, /mob/living/basic/raptor))
+		var/mob/living/basic/raptor/possible_baby = target
+		if (possible_baby.growth_stage == RAPTOR_BABY)
+			return target.attack_hand(src, list(LEFT_CLICK = TRUE))
 	return ..()
 
 /mob/living/basic/raptor/proc/add_breeding_component()
@@ -229,10 +225,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/component/breed, \
 		can_breed_with = partner_types, \
 		baby_paths = baby_types, \
-		partner_check = CALLBACK(src, PROC_REF(partner_check)), \
 		breed_timer = 3 MINUTES, \
+		post_birth = CALLBACK(src, PROC_REF(egg_inherit)), \
 	)
-		// post_birth = CALLBACK(src, PROC_REF(egg_inherit)),
 
 /mob/living/basic/raptor/proc/add_happiness_component()
 	var/static/list/percentage_callbacks = list(0, 15, 25, 35, 50, 75, 90, 100)
@@ -248,8 +243,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	)
 
 /mob/living/basic/raptor/proc/happiness_change(percent_value)
-	growth_probability = min(initial(growth_probability) * (1 + percent_value * HAPPINESS_BOOST_DAMPENER), 100)
 	/*
+	growth_probability = min(initial(growth_probability) * (1 + percent_value * HAPPINESS_BOOST_DAMPENER), 100)
 	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
 	melee_damage_lower = initial(melee_damage_lower) + attack_boost
 	melee_damage_upper = melee_damage_lower + 5
@@ -262,32 +257,62 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return buckled_mobs[1].projectile_hit(hitting_projectile, def_zone, piercing_hit, blocked)
 	return ..()
 
-/mob/living/basic/raptor/proc/partner_check(mob/living/basic/raptor/partner)
-	if (!istype(partner))
-		return FALSE
-	return partner.growth_stage == RAPTOR_ADULT
-
-/*
-
-///pass down our inheritance to the egg
+/// Pass our genetic data to the egg
 /mob/living/basic/raptor/proc/egg_inherit(obj/item/food/egg/raptor_egg/baby_egg, mob/living/basic/raptor/partner)
-	var/datum/raptor_inheritance/inherit = new
-	inherit.set_parents(inherited_stats, partner.inherited_stats)
-	baby_egg.inherited_stats = inherit
-	baby_egg.determine_growth_path(src, partner)
+	var/datum/raptor_inheritance/child_genes = new()
+	child_genes.set_parents(src, partner)
+	baby_egg.inherited_stats = child_genes
+	baby_egg.child_color = get_child_color(partner)
+	// Halve our food modifiers every time we breed
+	for (var/food_type in inherited_stats.foods_eaten)
+		var/list/stat_mods = inherited_stats.foods_eaten[food_type]
+		stat_mods["amount"] /= 2
+		stat_mods["attack"] /= 2
+		stat_mods["health"] /= 2
+		stat_mods["speed"] /= 2
+		stat_mods["ability"] /= 2
+		stat_mods["growth"] /= 2
+		var/list/trait_list = stat_mods["traits"]
+		for (var/i in 1 to ceil(length(trait_list) / 2))
+			trait_list -= pick(trait_list)
 
-/mob/living/basic/raptor/proc/inherit_properties()
-	if(isnull(inherited_stats))
-		return
-	for(var/trait in GLOB.raptor_inherit_traits) // done this way to allow overriding of traits when assigned new inherit datum
-		var/should_inherit = (trait in inherited_stats.inherit_traits)
-		ai_controller?.set_blackboard_key(trait, should_inherit)
-	melee_damage_lower += inherited_stats.attack_modifier
-	melee_damage_upper += melee_damage_lower + 5
-	maxHealth += inherited_stats.health_modifier
-	heal_overall_damage(maxHealth)
+		var/list/color_chances = stat_mods["color_chances"]
+		for (var/datum/raptor_color/color_type as anything in color_chances)
+			color_chances[color_type] = floor(color_chances[color_type] / 2)
+			if (!color_chances[color_type])
+				color_chances -= color_type
 
-*/
+/mob/living/basic/raptor/proc/get_child_color(mob/living/basic/raptor/partner)
+	if (raptor_color == partner.raptor_color)
+		return raptor_color.type
+
+	if (raptor_color.guaranteed_crossbreeds[partner.raptor_color.type])
+		return raptor_color.guaranteed_crossbreeds[partner.raptor_color.type]
+
+	// This should be redundant as they should be mirroring eachother, but just in case
+	if (partner.raptor_color.guaranteed_crossbreeds[raptor_color.type])
+		return partner.raptor_color.guaranteed_crossbreeds[raptor_color.type]
+
+	// We've got all the colors in our family tree and aren't rolling a guarantee, bingo
+	if (length(inherited_stats.parent_colors | partner.inherited_stats.parent_colors | raptor_color.type | partner.raptor_color.type) == length(GLOB.raptor_colors))
+		return /datum/raptor_color/black
+
+	var/list/prob_list = list()
+	for (var/datum/raptor_color/color_type as anything in GLOB.raptor_colors)
+		prob_list[color_type] = color_type::spawn_chance
+
+	var/amount_eaten = 0
+	for (var/food_type in inherited_stats.foods_eaten)
+		var/list/stat_mods = inherited_stats.foods_eaten[food_type]
+		amount_eaten += stat_mods["amount"]
+
+	for (var/food_type in inherited_stats.foods_eaten)
+		var/list/stat_mods = inherited_stats.foods_eaten[food_type]
+		var/list/color_chances = stat_mods["color_chances"]
+		for (var/datum/raptor_color/color_type as anything in color_chances)
+			prob_list[color_type] += floor(color_chances[color_type] / amount_eaten * stat_mods["amount"] ** 2)
+
+	return pick_weight(prob_list)
 
 /mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -306,7 +331,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return
 
 	// Better meals make your raptor grow faster
-	growth_progress += meal.crafting_complexity * RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR + ((is_flora && growth_stage == RAPTOR_YOUNG) ? RAPTOR_GROWTH_BASE_PLANT : RAPTOR_GROWTH_BASE_MEAT)
+	var/growth_value = meal.crafting_complexity * RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR + (is_flora ? RAPTOR_GROWTH_BASE_PLANT : RAPTOR_GROWTH_BASE_MEAT)
+	growth_progress += growth_value * (1 + inherited_stats.growth_modifier)
 	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
 		change_growth_stage(growth_stage == RAPTOR_BABY ? RAPTOR_YOUNG : RAPTOR_ADULT)
 		growth_progress = 0
@@ -368,9 +394,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	else
 		remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 
-	// We assume that the raptors cannot regress in age and thus, only adults will have this applied (once)
 	if (can_breed)
 		add_breeding_component()
+	else
+		qdel(GetComponent(/datum/component/breed))
 
 	var/obj/item/mob_holder/holder = null
 	if (istype(loc, /obj/item/mob_holder))
@@ -395,6 +422,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			QDEL_NULL(ai_controller)
 			ai_controller = new raptor_color.ai_controller(src)
 		held_w_class = WEIGHT_CLASS_BULKY // No need to update the holder as we unfurl above
+
+	for(var/trait in GLOB.raptor_inherit_traits)
+		var/should_inherit = (trait in inherited_stats.personality_traits)
+		ai_controller?.set_blackboard_key(trait, should_inherit)
 
 	// And finish the setup on our color's side
 	switch (new_stage)
@@ -498,6 +529,3 @@ GLOBAL_LIST_EMPTY(raptor_population)
 /mob/living/basic/raptor/baby/blue
 	icon_state = "baby_blue"
 	raptor_color = /datum/raptor_color/blue
-
-#undef HAPPINESS_BOOST_DAMPENER
-#undef RAPTOR_INNATE_SOURCE

@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	/// Raptor's health
 	var/health = 200
 	/// Raptor's speed
-	var/speed = 2
+	var/speed = 0.5
 	// Minimal and maximal damage for the raptor
 	var/melee_damage_lower = 10
 	var/melee_damage_upper = 15
@@ -26,36 +26,44 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/guaranteed_crossbreeds = list()
 	/// Type of AI controller the raptor uses
 	var/datum/ai_controller/ai_controller = /datum/ai_controller/basic_controller/raptor
+	/// Chance that a newborn baby raptor will be of this color
+	var/spawn_chance = 33
 
 /// Shared proc, only called once on raptor init for color-specific traits and properties
 /datum/raptor_color/proc/setup_raptor(mob/living/basic/raptor/raptor)
 	raptor.ai_controller = new ai_controller(raptor)
 
 /datum/raptor_color/proc/setup_adult(mob/living/basic/raptor/raptor)
+	var/datum/raptor_inheritance/stats = raptor.inherited_stats
+	var/real_health = health + stats.health_modifier
 	// If we grow up while damaged, keep the damage percentage the same
-	raptor.health *= health / raptor.maxHealth
-	raptor.maxHealth = health
-	raptor.speed = speed
-	raptor.melee_damage_lower = melee_damage_lower
-	raptor.melee_damage_upper = melee_damage_upper
+	raptor.health *= real_health / raptor.maxHealth
+	raptor.maxHealth = real_health
+	raptor.set_varspeed(speed - stats.speed_modifier)
+	raptor.melee_damage_lower = melee_damage_lower + stats.attack_modifier
+	raptor.melee_damage_upper = melee_damage_upper + stats.attack_modifier
 	if (rideable_component)
 		raptor.AddElement(/datum/element/ridable, rideable_component)
 	setup_appearance(raptor)
 
 /datum/raptor_color/proc/setup_young(mob/living/basic/raptor/raptor)
-	raptor.health = health / 2
-	raptor.maxHealth = health / 2
-	raptor.speed = speed
-	raptor.melee_damage_lower = floor(melee_damage_lower / 2)
-	raptor.melee_damage_upper = floor(melee_damage_upper / 2)
+	var/datum/raptor_inheritance/stats = raptor.inherited_stats
+	var/real_health = health + stats.health_modifier
+	raptor.health *= real_health / 2 / raptor.maxHealth
+	raptor.maxHealth = real_health / 2
+	raptor.set_varspeed(speed - stats.speed_modifier)
+	raptor.melee_damage_lower = floor((melee_damage_lower + stats.attack_modifier) / 2)
+	raptor.melee_damage_upper = floor((melee_damage_upper + stats.attack_modifier) / 2)
 	setup_appearance(raptor)
 
 /datum/raptor_color/proc/setup_baby(mob/living/basic/raptor/raptor)
-	raptor.health = health / 8
-	raptor.maxHealth = health / 8
-	raptor.speed = speed * 2.5
-	raptor.melee_damage_lower = floor(melee_damage_lower / 3)
-	raptor.melee_damage_upper = floor(melee_damage_upper / 3)
+	var/datum/raptor_inheritance/stats = raptor.inherited_stats
+	var/real_health = health + stats.health_modifier
+	raptor.health *= real_health / 8 / raptor.maxHealth
+	raptor.maxHealth = real_health / 8
+	raptor.set_varspeed(speed + 4.5 - stats.speed_modifier)
+	raptor.melee_damage_lower = floor((melee_damage_lower + stats.attack_modifier) / 3)
+	raptor.melee_damage_upper = floor((melee_damage_upper + stats.attack_modifier) / 3)
 	setup_appearance(raptor)
 
 /datum/raptor_color/proc/setup_appearance(mob/living/basic/raptor/raptor)
@@ -90,12 +98,25 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		/datum/raptor_color/yellow = /datum/raptor_color/blue,
 	)
 
+// Purple raptors never "fully" grow up, and remain usable as backpacks
+/datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
+	raptor.icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
+	raptor.base_icon_state = "young"
+	raptor.base_pixel_w = initial(raptor.base_pixel_w)
+	raptor.can_be_held = TRUE
+	raptor.density = FALSE
+	raptor.move_resist = MOVE_RESIST_DEFAULT
+	raptor.change_offsets = FALSE
+	raptor.remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
+	raptor.held_w_class = WEIGHT_CLASS_BULKY
+	return ..()
+
 /*
 /mob/living/basic/raptor/purple/Initialize(mapload)
 	. = ..()
 	create_storage(
 		max_specific_storage = WEIGHT_CLASS_NORMAL,
-		max_total_storage = 10,
+		max_total_storage = 10, // make this affected by ability_modifier
 		storage_type = /datum/storage/raptor_storage,
 	)
 
@@ -121,7 +142,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /datum/raptor_color/green/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
-	raptor.AddComponent(/datum/component/proficient_miner, 0.05, TRUE)
+	raptor.AddComponent(/datum/component/proficient_miner, 0.05 * (1 + raptor.inherited_stats.ability_modifier), TRUE)
 
 /datum/raptor_color/white
 	color = "white"
@@ -135,8 +156,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	. = ..()
 	raptor.AddComponent( \
 		/datum/component/healing_touch, \
-		heal_brute = melee_damage_upper * 0.75, \
-		heal_burn = melee_damage_upper * 0.75, \
+		heal_brute = melee_damage_upper * 0.75 * (1 + raptor.inherited_stats.ability_modifier), \
+		heal_burn = melee_damage_upper * 0.75 * (1 + raptor.inherited_stats.ability_modifier), \
 		heal_time = 0, \
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/raptor)), \
 	)
@@ -146,8 +167,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	qdel(raptor.GetComponent(/datum/component/healing_touch))
 	raptor.AddComponent( \
 		/datum/component/healing_touch, \
-		heal_brute = melee_damage_upper, \
-		heal_burn = melee_damage_upper, \
+		heal_brute = melee_damage_upper * (1 + raptor.inherited_stats.ability_modifier), \
+		heal_burn = melee_damage_upper * (1 + raptor.inherited_stats.ability_modifier), \
 		heal_time = 0, \
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/raptor)), \
 	)
@@ -156,7 +177,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	color = "yellow"
 	description = "This breed possesses greasy fast speed, DEMON speed, making light work of long pilgrimages. \
 		It's said that a thunderclap could be heard when this breed reaches its maximum speed."
-	speed = 1.5
+	speed = 0
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/purple = /datum/raptor_color/blue,
 		/datum/raptor_color/white = /datum/raptor_color/red,
@@ -178,12 +199,13 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	color = "black"
 	description = "An ultra rare breed. Due to its sparse nature, not much is known about this sort. However it is said to possess many of its peers' abilities."
 	health = 400
-	speed = 1.5
+	speed = 0
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	redirect_shots = FALSE
 	rideable_component = /datum/component/riding/creature/raptor/combat
 	ai_controller = /datum/ai_controller/basic_controller/raptor/aggressive
+	spawn_chance = 1 // 1 in 200 chance without modifiers
 
 /datum/raptor_color/black/setup_raptor(mob/living/basic/raptor/raptor)
 	. = ..()
@@ -191,4 +213,5 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /datum/raptor_color/black/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
-	raptor.AddComponent(/datum/component/proficient_miner, 0.1, TRUE) // Slightly worse than greens at this
+	// Slightly worse than greens at this
+	raptor.AddComponent(/datum/component/proficient_miner, 0.1 * (1 + raptor.inherited_stats.ability_modifier), TRUE)

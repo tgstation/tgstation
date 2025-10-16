@@ -88,23 +88,25 @@
 	else
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target]."))
 
-	finish_eating(eater, target, feeder)
+	INVOKE_ASYNC(src, PROC_REF(finish_eating), eater, target, feeder)
 	return TRUE
 
 /datum/element/basic_eating/proc/finish_eating(mob/living/eater, atom/target, mob/living/feeder)
-	set waitfor = FALSE
 	if(drinking)
 		playsound(eater.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	else
 		playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+
 	var/atom/final_target = target
 	if(SEND_SIGNAL(eater, COMSIG_MOB_ATE, final_target, feeder) & COMSIG_MOB_TERMINATE_EAT)
 		return
+
 	if(isstack(target)) //if stack, only consume 1
 		var/obj/item/stack/food_stack = target
 		final_target = food_stack.split_stack(1)
 
 	eater.log_message("has eaten [target], [add_to_contents ? "swallowing it" : "destroying it"]!", LOG_ATTACK)
+	SEND_SIGNAL(target, COMSIG_ITEM_EATEN_BY_BASIC_MOB, eater, feeder)
 
 	if (add_to_contents)
 		var/atom/movable/movable_target = final_target
