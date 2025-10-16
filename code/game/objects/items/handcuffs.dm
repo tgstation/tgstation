@@ -581,7 +581,7 @@
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	if (thrower)
-		target = get_edge_target_turf_direct(src, target) // makes bolas easier to use in a chase and prevents stacking them with stun since they can no longer hit grounded targets
+		target = get_ranged_target_turf_direct(src, target, INFINITY) // makes bolas easier to use in a chase and prevents stacking them with stun since they can no longer hit grounded targets
 	if(!..())
 		return
 	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)
