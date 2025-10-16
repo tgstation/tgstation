@@ -373,7 +373,7 @@
 			span_danger("The siren pierces your hearing!"),
 		)
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			if(carbon.get_ear_protection())
+			if(carbon.get_ear_protection() > 0)
 				continue
 			carbon.adjust_confusion(6 SECONDS)
 

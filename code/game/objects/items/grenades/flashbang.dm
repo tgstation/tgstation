@@ -62,7 +62,7 @@
 
 //Bang
 	if(!distance)
-		living_mob.soundbang_act(SOUNDBANG_MASSIVE, 20 SECONDS, 10, 15)
+		living_mob.soundbang_act(SOUNDBANG_OVERWHELMING, 20 SECONDS, 10, 15)
 		return
 
 	if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
