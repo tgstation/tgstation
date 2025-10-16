@@ -1,0 +1,6 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "fixes implanter renaming not working"
+  - bugfix: "fixes clownborg picket sign renaming not working"
+  - code_imp: "brought most unique renaming implementations under UNIQUE_RENAME"
