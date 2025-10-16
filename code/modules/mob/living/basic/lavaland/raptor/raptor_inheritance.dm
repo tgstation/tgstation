@@ -71,6 +71,14 @@
 				traits_to_pick[raptor_trait] = 0
 			traits_to_pick[raptor_trait] += trait_list[raptor_trait] * stat_mods["amount"]
 
+	// If we don't clamp these, RNG and drift can get wildly out of control and result in polar values
+	// and this way we at most get twice the minimum/maximum value, so at least half the rand spread is within the clamp values
+	attack_mod = clamp(attack_mod, RAPTOR_INHERIT_MIN_ATTACK, RAPTOR_INHERIT_MAX_ATTACK)
+	health_mod = clamp(health_mod, RAPTOR_INHERIT_MIN_HEALTH, RAPTOR_INHERIT_MAX_HEALTH)
+	speed_mod = clamp(speed_mod, RAPTOR_INHERIT_MIN_SPEED, RAPTOR_INHERIT_MAX_SPEED)
+	ability_mod = clamp(ability_mod, RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER)
+	growth_mod = clamp(growth_mod, RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER)
+
 	attack_modifier = rand((min(mom_stats.attack_modifier, dad_stats.attack_modifier) + min(0, attack_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.attack_modifier, dad_stats.attack_modifier) + max(0, attack_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
 	health_modifier = rand((min(mom_stats.health_modifier, dad_stats.health_modifier) + min(0, health_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.health_modifier, dad_stats.health_modifier) + max(0, health_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
 	speed_modifier = rand((min(mom_stats.speed_modifier, dad_stats.speed_modifier) + min(0, speed_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.speed_modifier, dad_stats.speed_modifier) + max(0, speed_mod)) * (1 + RAPTOR_GENETIC_DRIFT))

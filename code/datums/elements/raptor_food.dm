@@ -17,7 +17,7 @@
 	/// Personality traits the child may get
 	var/list/personality_traits = null
 	/// Offspring color probability modifiers
-	var/list/color_chances
+	var/list/color_chances = null
 
 /datum/element/raptor_food/Attach(obj/item/target, attack_modifier, health_modifier, speed_modifier, ability_modifier, growth_modifier, list/personality_traits, list/color_chances)
 	. = ..()
