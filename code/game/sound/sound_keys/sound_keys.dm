@@ -872,3 +872,26 @@
 		'sound/items/goggles/goggles_equip3.ogg',
 		'sound/items/goggles/goggles_equip4.ogg',
 	)
+
+/datum/sound_effect/glasses_pickup
+	key = SFX_GLASSES_PICKUP
+	file_paths = list(
+		'sound/items/glasses/glasses_pickup1.ogg',
+		'sound/items/glasses/glasses_pickup2.ogg',
+		'sound/items/glasses/glasses_pickup3.ogg',
+	)
+
+/datum/sound_effect/glasses_drop
+	key = SFX_GLASSES_DROP
+	file_paths = list(
+		'sound/items/glasses/glasses_drop1.ogg',
+		'sound/items/glasses/glasses_drop2.ogg',
+		'sound/items/glasses/glasses_drop3.ogg',
+	)
+
+/datum/sound_effect/glasses_equip
+	key = SFX_GLASSES_EQUIP
+	file_paths = list(
+		'sound/items/glasses/glasses_equip1.ogg',
+		'sound/items/glasses/glasses_equip2.ogg',
+	)

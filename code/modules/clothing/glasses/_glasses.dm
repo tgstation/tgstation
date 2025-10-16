@@ -13,6 +13,9 @@
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	gender = PLURAL
 	sound_vary = TRUE
+	pickup_sound = SFX_GLASSES_PICKUP
+	drop_sound = SFX_GLASSES_DROP
+	equip_sound = SFX_GLASSES_EQUIP
 	var/vision_flags = 0
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
