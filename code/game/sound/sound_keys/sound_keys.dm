@@ -847,3 +847,28 @@
 	key = SFX_RORO_WARBLE
 	file_paths = list(
 		'sound/mobs/non-humanoids/roro/roro_warble.ogg')
+
+/datum/sound_effect/goggles_pickup
+	key = SFX_GOGGLES_PICKUP
+	file_paths = list(
+		'sound/items/goggles/goggles_pickup1.ogg',
+		'sound/items/goggles/goggles_pickup2.ogg',
+		'sound/items/goggles/goggles_pickup3.ogg',
+	)
+
+/datum/sound_effect/goggles_drop
+	key = SFX_GOGGLES_DROP
+	file_paths = list(
+		'sound/items/goggles/goggles_drop1.ogg',
+		'sound/items/goggles/goggles_drop2.ogg',
+		'sound/items/goggles/goggles_drop3.ogg',
+	)
+
+/datum/sound_effect/goggles_equip
+	key = SFX_GOGGLES_EQUIP
+	file_paths = list(
+		'sound/items/goggles/goggles_equip1.ogg',
+		'sound/items/goggles/goggles_equip2.ogg',
+		'sound/items/goggles/goggles_equip3.ogg',
+		'sound/items/goggles/goggles_equip4.ogg',
+	)
