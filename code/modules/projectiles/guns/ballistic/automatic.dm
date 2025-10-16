@@ -471,29 +471,24 @@
 	balloon_alert(user, "system reset")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gun/ballistic/automatic/battle_rifle/try_fire_gun(atom/target, mob/living/user, params)
-	. = ..()
-	if(!chambered || (chambered && !chambered.loaded_projectile))
-		return
-
-	if(shots_before_degradation)
-		shots_before_degradation --
-		return
-
-	else if ((obj_flags & EMAGGED) && degradation_stage == degradation_stage_max && !explosion_timer)
-		perform_extreme_malfunction(user)
-
-	else
-		attempt_degradation(FALSE)
-
-
 /obj/item/gun/ballistic/automatic/battle_rifle/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered.loaded_projectile && prob(75) && (emp_malfunction || degradation_stage == degradation_stage_max))
 		balloon_alert_to_viewers("*click*")
 		playsound(src, dry_fire_sound, dry_fire_sound_volume, TRUE)
 		return
 
-	return ..()
+	. = ..()
+	if(!.)
+		return
+
+	else if(shots_before_degradation)
+		shots_before_degradation --
+
+	else if ((obj_flags & EMAGGED) && degradation_stage == degradation_stage_max && !explosion_timer)
+		perform_extreme_malfunction(user)
+
+	else
+		attempt_degradation(FALSE)
 
 /// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(force_increment = FALSE)
