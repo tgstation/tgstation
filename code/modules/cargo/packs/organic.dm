@@ -4,6 +4,7 @@
 
 /datum/supply_pack/organic/hydroponics
 	access_view = ACCESS_HYDROPONICS
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/hydroponics/beekeeping_suits
 	name = "Beekeeper Suit Crate"
@@ -125,7 +126,7 @@
 	crate_type = /obj/structure/closet/crate/secure
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/organic/hydroponics
+/datum/supply_pack/organic/hydroponics/supplies
 	name = "Hydroponics Crate"
 	desc = "Supplies for growing a great garden! Contains two bottles of ammonia, \
 		two Plant-B-Gone spray bottles, a hatchet, cultivator, plant analyzer, \
@@ -140,7 +141,6 @@
 					/obj/item/clothing/suit/apron,
 				)
 	crate_name = "hydroponics crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
@@ -395,4 +395,51 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/structure/reagent_dispensers/servingdish)
 	crate_name = "nutraslop serving dish crate"
+
+
+/datum/supply_pack/organic/hydroponics/soil_normal
+	name = "NT-Ag Potting Soil Crate"
+	desc = "A crate containing sacks of regular, commercial soil."
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "potting soil crate"
+	contains = list(
+		/obj/item/soil_sack = 5,
+	)
+
+/datum/supply_pack/organic/hydroponics/soil_vermaculite
+	name = "NT-Ag Vermaculite Crate"
+	desc = "A crate containing sacks of NT-Ag vermaculite. Your favorite expanded mineral!"
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "vermaculite crate"
+	contains = list(
+		/obj/item/soil_sack/vermaculite = 3,
+	)
+
+/datum/supply_pack/organic/hydroponics/soil_gel
+	name = "NT-Ag Hydrogel Beads Crate"
+	desc = "A crate containing sacks of prehydrated superabsorbent gel beads. Everyone likes some nice beads."
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "hydrogel beads crate"
+	contains = list(
+		/obj/item/soil_sack/gel = 3,
+	)
+
+
+/datum/supply_pack/organic/hydroponics/soil_coir
+	name = "NT-Ag Korta Coir Crate"
+	desc = "A crate containing sacks of korta root coir. Good for starting a mushroom farm!"
+	cost = CARGO_CRATE_VALUE * 3
+	crate_name = "korta coir crate"
+	contains = list(
+		/obj/item/soil_sack/coir = 3,
+	)
+
+/datum/supply_pack/organic/hydroponics/soil_worm
+	name = "NT-Ag Worm Castings Crate"
+	desc = "A crate containing sacks of vermicompost. Worms not included! Or?.."
+	cost = CARGO_CRATE_VALUE * 4
+	crate_name = "worm castings crate"
+	contains = list(
+		/obj/item/soil_sack/worm = 3,
+	)
 

@@ -88,7 +88,7 @@
 	var/obj/item/sword = target
 	if(length(line) <= 1 || !teleport(user, line[length(line) - 1])) // teleports to the second last turf, should be adjacent to the target
 		return
-	if(!user.CanReach(stabbing, target))
+	if(!stabbing.IsReachableBy(user, sword?.reach))
 		return
 	sword.melee_attack_chain(user, stabbing)
 	if(prob(5) && check_holidays(APRIL_FOOLS))

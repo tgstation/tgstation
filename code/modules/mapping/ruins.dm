@@ -91,7 +91,7 @@
 	var/list/forced_ruins = list() //These go first on the z level associated (same random one by default) or if the assoc value is a turf to the specified turf.
 	var/list/ruins_available = list() //we can try these in the current pass
 
-	if(PERFORM_ALL_TESTS(log_mapping))
+	if(PERFORM_ALL_TESTS(maptest_log_mapping))
 		log_mapping("All ruins being loaded for map testing.")
 
 	switch(mineral_budget_update) //If we use more map configurations, add another case
@@ -104,7 +104,7 @@
 	for(var/key in ruins)
 		var/datum/map_template/ruin/R = ruins[key]
 
-		if(PERFORM_ALL_TESTS(log_mapping))
+		if(PERFORM_ALL_TESTS(maptest_log_mapping))
 			R.cost = 0
 			R.allow_duplicates = FALSE // no multiples for testing
 			R.always_place = !R.unpickable // unpickable ruin means it spawns as a set with another ruin

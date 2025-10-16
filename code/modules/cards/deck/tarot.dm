@@ -7,10 +7,8 @@
 	cardgame_desc = "tarot card reading"
 	icon_state = "deck_tarot_full"
 	deckstyle = "tarot"
-	is_standard_deck = FALSE
 
-/obj/item/toy/cards/deck/tarot/Initialize(mapload)
-	. = ..()
+/obj/item/toy/cards/deck/tarot/initialize_cards()
 	for(var/suit in list("Hearts", "Pikes", "Clovers", "Tiles"))
 		for(var/i in 1 to 10)
 			initial_cards += "[i] of [suit]"

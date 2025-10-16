@@ -39,30 +39,31 @@
 			covering_part += equipped
 	return covering_part
 
-/mob/living/carbon/human/bullet_act(obj/projectile/bullet, def_zone, piercing_hit = FALSE)
-	if(bullet.firer == src && bullet.original == src) //can't block or reflect when shooting yourself
+/mob/living/carbon/human/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if(hitting_projectile.firer == src && hitting_projectile.original == src) //can't block or reflect when shooting yourself
 		return ..()
 
-	if(bullet.reflectable)
-		if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
-			visible_message(
-				span_danger("\The [bullet] gets reflected by [src]!"),
-				span_userdanger("\The [bullet] gets reflected by [src]!"),
-			)
-			// Finds and plays the block_sound of item which reflected
-			for(var/obj/item/held_item in held_items)
-				if(held_item.IsReflect(def_zone))
-					playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
-			// Find a turf near or on the original location to bounce to
-			if(!isturf(loc)) //Open canopy mech (ripley) check. if we're inside something and still got hit
-				return loc.projectile_hit(bullet, def_zone, piercing_hit)
-			bullet.reflect(src)
-			return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
+	// The projectile cannot be reflected or you failed to pass a reflection% check
+	if (!hitting_projectile.reflectable || !check_reflect(def_zone))
+		return ..()
 
+	visible_message(
+		span_danger("\The [hitting_projectile] gets reflected by [src]!"),
+		span_userdanger("\The [hitting_projectile] gets reflected by [src]!"),
+	)
+	// Finds and plays the block_sound of item which reflected
+	for(var/obj/item/held_item in held_items)
+		if(held_item.IsReflect(def_zone))
+			playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
+	// Find a turf near or on the original location to bounce to
+	if(!isturf(loc)) // Open canopy mech (ripley) check. if we're inside something and still got hit
+		return loc.projectile_hit(hitting_projectile, def_zone, piercing_hit, blocked)
+	hitting_projectile.reflect(src)
+	return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
+
+/mob/living/carbon/human/bullet_act(obj/projectile/bullet, def_zone, piercing_hit, blocked)
 	if(check_block(bullet, bullet.damage, "\the [bullet]", PROJECTILE_ATTACK, bullet.armour_penetration, bullet.damage_type))
-		bullet.on_hit(src, 100, def_zone, piercing_hit)
-		return BULLET_ACT_HIT
-
+		return ..(bullet, def_zone, piercing_hit, 100)
 	return ..()
 
 ///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object

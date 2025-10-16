@@ -89,6 +89,7 @@
 #define RUST_RESISTANCE_REINFORCED 2
 #define RUST_RESISTANCE_TITANIUM 3
 #define RUST_RESISTANCE_ORGANIC 4
+/// Should not be rustable. EVER. Includes thing like space, lava, chasms, admin walls
 #define RUST_RESISTANCE_ABSOLUTE 5
 
 /// Turf will be passable if density is 0

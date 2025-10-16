@@ -285,11 +285,14 @@
 		/obj/item/toy/plush/shark = 3,
 		/obj/item/toy/plush/unicorn = 3,
 		/obj/item/toy/plush/monkey = 3,
+		/obj/item/toy/plush/donkpocket = 3,
 		/obj/item/toy/plush/maddie = 3, // Troutstation edit
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
+		/obj/item/toy/plush/whiny_plushie = 2,
+		/obj/item/toy/plush/rouny = 2,
 	)
 
 /obj/effect/spawner/random/entertainment/colorful_grenades

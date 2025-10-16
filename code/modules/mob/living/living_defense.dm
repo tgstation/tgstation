@@ -193,6 +193,7 @@
 		return
 	. = combat_mode
 	combat_mode = new_mode
+	SEND_SIGNAL(src, COMSIG_COMBAT_MODE_TOGGLED)
 	if(hud_used?.action_intent)
 		hud_used.action_intent.update_appearance()
 	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
@@ -822,3 +823,15 @@
 		return SUCCESSFUL_BLOCK
 
 	return FAILED_BLOCK
+
+/mob/living/proc/hypnosis_vulnerable()
+	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
+		return FALSE
+	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
+		return TRUE
+	if(IsSleeping() || IsUnconscious())
+		return TRUE
+	if(HAS_TRAIT(src, TRAIT_DUMB))
+		return TRUE
+	if(mob_mood && mob_mood.sanity < SANITY_UNSTABLE)
+		return TRUE

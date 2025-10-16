@@ -14,7 +14,7 @@
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
-///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit, blocked)
+///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit)
 #define COMSIG_ATOM_PRE_BULLET_ACT "pre_atom_bullet_act"
 	/// All this does is prevent default bullet on_hit from being called, [BULLET_ACT_HIT] being return is implied
 	#define COMPONENT_BULLET_ACTED (1<<0)

@@ -230,6 +230,7 @@
 			else
 				spawned_mob = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
 			spawned_mob.faction |= mob_faction
+			ADD_TRAIT(spawned_mob, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))

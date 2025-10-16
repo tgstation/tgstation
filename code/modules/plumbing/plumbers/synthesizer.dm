@@ -5,8 +5,8 @@
 	icon_state = "synthesizer"
 	icon = 'icons/obj/pipes_n_cables/hydrochem/plumbers.dmi'
 
-	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
-	var/amount = 1
+	///Amount we produce for every process by default.
+	var/amount = 5
 	///I track them here because I have no idea how I'd make tgui loop like that
 	var/static/list/possible_amounts = list(0, 1, 2, 3, 4, 5)
 	///The reagent we are producing. We are a typepath, but are also typecast because there's several occations where we need to use initial.

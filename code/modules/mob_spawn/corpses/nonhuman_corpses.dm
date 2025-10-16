@@ -11,7 +11,7 @@
 		return
 	. = ..()
 
-/obj/effect/mob_spawn/corpse/ai/special(mob/living/silicon/ai/spawned/dead_ai)
+/obj/effect/mob_spawn/corpse/ai/special(mob/living/silicon/ai/spawned/dead_ai, mob/mob_possessor)
 	. = ..()
 	dead_ai.name = src.name
 	dead_ai.real_name = src.name
@@ -24,7 +24,7 @@
 	///the color of the slime you're spawning.
 	var/slime_species = /datum/slime_type/grey
 
-/obj/effect/mob_spawn/corpse/slime/special(mob/living/basic/slime/spawned_slime)
+/obj/effect/mob_spawn/corpse/slime/special(mob/living/basic/slime/spawned_slime, mob/mob_possessor)
 	. = ..()
 	spawned_slime.set_slime_type(slime_species)
 

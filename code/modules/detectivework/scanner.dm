@@ -44,49 +44,12 @@
 	var/frNum = ++forensicPrintCount
 
 	report_paper.name = "FR-[frNum] 'Forensic Record'"
-	var/list/report_text = list("<H1>Forensic Record - (FR-[frNum])</H1><HR>")
+	var/list/report_text = list("<h1>Forensic Record - (FR-[frNum])</h1><hr>")
 
-	for(var/list/log in log_data)
-		report_text += "<H2>[capitalize(log["scan_target"])] scan at [log["scan_time"]]</H2><DL>"
+	for(var/datum/detective_scanner_log/log_entry as anything in log_data)
+		report_text += log_entry.generate_report_text()
 
-		if(!log[DETSCAN_CATEGORY_FIBER] && !log[DETSCAN_CATEGORY_BLOOD] && !log[DETSCAN_CATEGORY_FINGERS] && !log[DETSCAN_CATEGORY_DRINK] && !log[DETSCAN_CATEGORY_ACCESS])
-			report_text += "No forensic traces found.<HR>"
-			continue
-
-		if(log[DETSCAN_CATEGORY_FIBER])
-			report_text += "<DT><B>[DETSCAN_CATEGORY_FIBER]</B></DT><DD>"
-			for(var/fibers in log[DETSCAN_CATEGORY_FIBER])
-				report_text += fibers + "<BR>"
-			report_text += "</DD>"
-
-		if(log[DETSCAN_CATEGORY_BLOOD])
-			report_text += "<DT><B>[DETSCAN_CATEGORY_BLOOD]</B></DT><DD>"
-			for(var/blood in log[DETSCAN_CATEGORY_BLOOD])
-				report_text += "[blood], [log[DETSCAN_CATEGORY_BLOOD][blood]]<BR>"
-			report_text += "</DD>"
-
-		if(log[DETSCAN_CATEGORY_FINGERS])
-			report_text += "<DT><B>[DETSCAN_CATEGORY_FINGERS]</B></DT><DD>"
-			for(var/fingers in log[DETSCAN_CATEGORY_FINGERS])
-				report_text += fingers + "<BR>"
-			report_text += "</DD>"
-
-		if(log[DETSCAN_CATEGORY_DRINK])
-			report_text += "<DT><B>[DETSCAN_CATEGORY_DRINK]</B></DT><DD>"
-			for(var/reagent in log[DETSCAN_CATEGORY_DRINK])
-				report_text += "<B>[reagent]</B>: [log[DETSCAN_CATEGORY_DRINK][reagent]] u.<BR>"
-			report_text += "</DD>"
-
-		if(log[DETSCAN_CATEGORY_ACCESS])
-			report_text += "<DT><B>[DETSCAN_CATEGORY_ACCESS]</B></DT><DD>"
-			for(var/region in log[DETSCAN_CATEGORY_ACCESS])
-				var/list/access_list = log[DETSCAN_CATEGORY_ACCESS][region]
-				report_text += "<B>[region]</B>: [access_list.Join(", ")]<BR>"
-			report_text += "</DD>"
-
-		report_text += "</DL><HR>"
-
-	report_text += "<H1>Notes:</H1><BR>"
+	report_text += "<h1>Notes:</h1><br>"
 
 	report_paper.add_raw_text(report_text.Join())
 	report_paper.update_appearance()
@@ -149,35 +112,38 @@
 
 	// GATHER INFORMATION
 
-	var/list/log_entry_data = list()
+	var/datum/detective_scanner_log/log_entry = new
 
 	// Start gathering
 
-	log_entry_data["scan_target"] = scanned_atom.name
-	log_entry_data["scan_time"] = station_time_timestamp()
+	log_entry.scan_target = scanned_atom.name
+	log_entry.scan_time = station_time_timestamp()
 
 	var/list/atom_fibers = GET_ATOM_FIBRES(scanned_atom)
 	if(length(atom_fibers))
-		log_entry_data[DETSCAN_CATEGORY_FIBER] = atom_fibers.Copy()
+		log_entry.add_data_entry(DETSCAN_CATEGORY_FIBER, atom_fibers.Copy())
 
 	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
 	if(length(blood))
-		log_entry_data[DETSCAN_CATEGORY_BLOOD] = blood.Copy()
+		log_entry.add_data_entry(DETSCAN_CATEGORY_BLOOD, blood.Copy())
 
 	if(ishuman(scanned_atom))
 		var/mob/living/carbon/human/scanned_human = scanned_atom
 		if(!scanned_human.gloves)
-			LAZYADD(log_entry_data[DETSCAN_CATEGORY_FINGERS], md5(scanned_human.dna?.unique_identity))
+			log_entry.add_data_entry(
+				DETSCAN_CATEGORY_FINGERS,
+				rustg_hash_string(RUSTG_HASH_MD5, scanned_human.dna?.unique_identity)
+			)
 
 	else if(!ismob(scanned_atom))
 
 		var/list/atom_fingerprints = GET_ATOM_FINGERPRINTS(scanned_atom)
 		if(length(atom_fingerprints))
-			log_entry_data[DETSCAN_CATEGORY_FINGERS] = atom_fingerprints.Copy()
+			log_entry.add_data_entry(DETSCAN_CATEGORY_FINGERS, atom_fingerprints.Copy())
 
 		// Only get reagents from non-mobs.
 		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
-			LAZYADD(log_entry_data[DETSCAN_CATEGORY_DRINK], list(present_reagent.name = present_reagent.volume))
+			log_entry.add_data_entry(DETSCAN_CATEGORY_REAGENTS, list(present_reagent.name = present_reagent.volume))
 
 			// Get blood data from the blood reagent.
 			if(!istype(present_reagent, /datum/reagent/blood))
@@ -188,10 +154,7 @@
 			if(!blood_DNA || !blood_type)
 				continue
 
-			// Add to our copied blood list instead of the original
-			if(!log_entry_data[DETSCAN_CATEGORY_BLOOD])
-				log_entry_data[DETSCAN_CATEGORY_BLOOD] = list()
-			LAZYSET(log_entry_data[DETSCAN_CATEGORY_BLOOD], blood_DNA, blood_type)
+			log_entry.add_data_entry(DETSCAN_CATEGORY_BLOOD, list(blood_DNA = blood_type))
 
 	if(istype(scanned_atom, /obj/item/card/id))
 		var/obj/item/card/id/user_id = scanned_atom
@@ -202,14 +165,17 @@
 			var/list/access_names = list()
 			for(var/access_num in access_in_region)
 				access_names += SSid_access.get_access_desc(access_num)
-			LAZYADD(log_entry_data[DETSCAN_CATEGORY_ACCESS], region)
-			LAZYADD(log_entry_data[DETSCAN_CATEGORY_ACCESS][region], english_list(access_names))
+
+			log_entry.add_data_entry(DETSCAN_CATEGORY_ACCESS, list("[region]" = english_list(access_names)))
 
 	// sends it off to be modified by the items
-	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, log_entry_data)
+	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, log_entry)
+
+	// Perform sorting now, because probably this will be never modified
+	log_entry.sort_data_entries()
 
 	stoplag(3 SECONDS)
-	log_data += list(log_entry_data)
+	log_data += log_entry
 	return TRUE
 
 /obj/item/detective_scanner/click_alt(mob/living/user)
@@ -217,7 +183,7 @@
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(log_data) && !scanner_busy)
+	if(length(log_data) && !scanner_busy)
 		. += span_notice("Alt-click to clear scanner logs.")
 
 
@@ -228,8 +194,28 @@
 		ui.open()
 
 /obj/item/detective_scanner/ui_data(mob/user)
+	var/list/logs = list()
+	for(var/datum/detective_scanner_log/log as anything in log_data)
+		UNTYPED_LIST_ADD(logs, log.ui_data(user))
+
 	var/list/data = list()
-	data["log_data"] = log_data
+	data["logs"] = logs
+	return data
+
+/obj/item/detective_scanner/ui_static_data(mob/user)
+	var/list/categories = list()
+	for(var/key,value in GLOB.detective_scan_categories)
+		var/datum/detective_scan_category/category = value
+
+		var/list/category_data = list()
+		category_data["name"] = category.name
+		category_data["uiIcon"] = category.ui_icon
+		category_data["uiIconColor"] = category.ui_icon_color
+
+		categories[category.id] = category_data
+
+	var/list/data = list()
+	data["categories"] = categories
 	return data
 
 /obj/item/detective_scanner/ui_act(action, params, datum/tgui/ui)
@@ -251,7 +237,7 @@
 			balloon_alert(ui.user, "log deleted")
 			ui.send_update()
 		if("print")
-			if(!LAZYLEN(log_data))
+			if(!length(log_data))
 				balloon_alert(ui.user, "no logs!")
 				return
 			if(scanner_busy)
@@ -263,7 +249,7 @@
 			addtimer(CALLBACK(src, PROC_REF(safe_print_report)), 3 SECONDS)
 
 /obj/item/detective_scanner/proc/clear_logs(mob/living/user)
-	if(!LAZYLEN(log_data))
+	if(!length(log_data))
 		balloon_alert(user, "no logs!")
 		return CLICK_ACTION_BLOCKING
 	if(scanner_busy)

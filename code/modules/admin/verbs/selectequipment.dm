@@ -107,7 +107,9 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(select_equipment, R_FUN, "Select Equipment", mob/ta
 
 	var/icon/dummysprite = get_flat_human_icon(null,
 		dummy_key = dummy_key,
-		outfit_override = selected_outfit)
+		outfit_override = selected_outfit,
+		no_anim = TRUE,
+	)
 	data["icon64"] = icon2base64(dummysprite)
 	data["name"] = target_mob
 

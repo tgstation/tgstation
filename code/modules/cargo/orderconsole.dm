@@ -7,7 +7,7 @@
 
 	///Can the supply console send the shuttle back and forth? Used in the UI backend.
 	var/can_send = TRUE
-	///Can this console only send requests?
+	///Can this console only send requests? Typically used at the cargo front desk for pedestrians.
 	var/requestonly = FALSE
 	///Can you approve requests placed for cargo? Works differently between the app and the computer.
 	var/can_approve_requests = TRUE
@@ -103,11 +103,9 @@
 		message = blockade_warning
 	data["message"] = message
 
-	var/list/amount_by_name = list()
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(cart_list[order.pack.name])
-			amount_by_name[order.pack.name] += 1
 			cart_list[order.pack.name][1]["amount"]++
 			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
 			if(order.department_destination)
@@ -116,7 +114,6 @@
 				cart_list[order.pack.name][1]["paid"]++
 			continue
 
-		amount_by_name[order.pack.name] += 1
 		cart_list[order.pack.name] = list(list(
 			"cost_type" = order.cost_type,
 			"object" = order.pack.name,
@@ -124,8 +121,8 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account) ? 1 : 0, //number of orders purchased privatly
-			"dep_order" = order.department_destination ? 1 : 0, //number of orders purchased by a department
+			"paid" = !!order.paying_account?.add_to_accounts, //number of orders purchased privatly
+			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
 	data["cart"] = list()
@@ -136,15 +133,14 @@
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
 		var/datum/supply_pack/pack = order.pack
-		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
 			"object" = pack.name,
 			"cost" = pack.get_cost(),
 			"orderer" = order.orderer,
 			"reason" = order.reason,
 			"id" = order.id,
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
 		))
-	data["amount_by_name"] = amount_by_name
 
 	return data
 
@@ -238,32 +234,44 @@
 		rank = "Silicon"
 
 	var/datum/bank_account/account
-	if(self_paid && isliving(user))
+	if(isliving(user))
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
-		if(!istype(id_card))
-			say("No ID card detected.")
-			return
-		if(IS_DEPARTMENTAL_CARD(id_card))
-			say("The [src] rejects [id_card].")
-			return
-		account = id_card.registered_account
-		if(!istype(account))
-			say("Invalid bank account.")
-			return
-		var/list/access = id_card.GetAccess()
-		if(pack.access_view && !(pack.access_view in access))
-			say("[id_card] lacks the requisite access for this purchase.")
-			return
+		account = id_card?.registered_account // We can still assign an account for request department purposes.
+		if(self_paid)
+			if(!istype(id_card))
+				say("No ID card detected.")
+				return
+			if(IS_DEPARTMENTAL_CARD(id_card))
+				say("The [src] rejects [id_card].")
+				return
+			if(!istype(account))
+				say("Invalid bank account.")
+				return
+			var/list/access = id_card.GetAccess()
+			if(pack.access_view && !(pack.access_view in access))
+				say("[id_card] lacks the requisite access for this purchase.")
+				return
 
 	// The list we are operating on right now
 	var/list/working_list = SSshuttle.shopping_list
 	var/reason = ""
-	if(requestonly && !self_paid)
+	var/datum/bank_account/personal_department
+	if(requestonly && !self_paid && !pack.goody)
 		working_list = SSshuttle.request_list
 		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
 			return
+
+		name = account?.account_holder
+		if(account?.account_job)
+			personal_department = SSeconomy.get_dep_account(account.account_job.paycheck_department)
+			if(!(personal_department.account_holder == "Cargo Budget"))
+				var/dept_choice = tgui_alert(user, "Which department are you requesting this for?", "Choose department to request from", list("Cargo Budget", "[personal_department.account_holder]"))
+				if(!dept_choice)
+					return
+				if(dept_choice == "Cargo Budget")
+					personal_department = SSeconomy.get_dep_account(cargo_account)
 
 	if(pack.goody && !self_paid)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -275,6 +283,9 @@
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
 		return
+
+	if(!self_paid)
+		account = personal_department
 
 	amount = clamp(amount, 1, CARGO_MAX_ORDER - similar_count)
 	for(var/count in 1 to amount)
@@ -294,6 +305,7 @@
 			reason = reason,
 			paying_account = account,
 			coupon = applied_coupon,
+			department_destination = reason ? TRUE : FALSE, // Hijacking reason as a way to determine if an order's requested from at least one budget
 		)
 		working_list += order
 

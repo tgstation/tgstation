@@ -58,6 +58,13 @@
 	stop_typing()
 
 /**
+ * Exports whatever text is currently in the input box to this datum
+ */
+/datum/tgui_say/proc/save_text()
+	saved_text = null
+	window.send_message("save")
+
+/**
  * Makes the player force say what's in their current input box.
  */
 /mob/living/carbon/human/proc/force_say()
@@ -69,6 +76,19 @@
 	else
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
 	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY)
+
+/**
+ * Gets whatever text is currently in this mob's say box and returns it.
+ *
+ * Note: Sleeps, due to waiting for say to respond.
+ */
+/mob/proc/get_typing_text()
+	if(!client?.tgui_say?.window_open)
+		return
+	client.tgui_say.save_text()
+	var/safety = world.time
+	UNTIL(istext(client?.tgui_say?.saved_text) || world.time - safety > 2 SECONDS)
+	return client?.tgui_say?.saved_text
 
 /**
  * Handles text entry and forced speech.
@@ -92,5 +112,11 @@
 		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL)
 			target_channel = SAY_CHANNEL // No ooc leaks
 		delegate_speech(alter_entry(payload), target_channel)
+		return TRUE
+	if(type == "save")
+		saved_text = "" // so we can differentiate null (nothing saved) and empty (nothing typed)
+		var/target_channel = payload["channel"]
+		if(target_channel == SAY_CHANNEL || target_channel == RADIO_CHANNEL)
+			saved_text = payload["entry"] // only save IC text
 		return TRUE
 	return FALSE

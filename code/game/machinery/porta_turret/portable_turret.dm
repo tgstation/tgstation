@@ -1239,7 +1239,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/projectile)
 	. = ..()
-	if(!on)
+	if(!on || . != BULLET_ACT_HIT)
 		return
 	if(team_color == "blue" && istype(projectile, /obj/projectile/beam/lasertag/redtag))
 		set_disabled(10 SECONDS)

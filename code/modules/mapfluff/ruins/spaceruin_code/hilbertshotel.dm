@@ -527,7 +527,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/analyzer/hilbertsanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/item/hilbertshotel))
 		return ..()
-	if(!user.CanReach(interacting_with))
+	if(!interacting_with.IsReachableBy(user))
 		to_chat(user, span_warning("It's to far away to scan!"))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/hilbertshotel/sphere = interacting_with

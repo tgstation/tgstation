@@ -37,11 +37,14 @@
 		"thirteen",
 		"snake",
 	)
+	/// Whether the lighter starts with fuel
+	var/spawns_with_reagent = TRUE
 
 /obj/item/lighter/Initialize(mapload)
 	. = ..()
 	create_reagents(maximum_fuel, REFILLABLE | DRAINABLE)
-	reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
+	if(spawns_with_reagent)
+		reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
 	AddComponent(\
@@ -227,11 +230,10 @@
 
 /obj/item/lighter/process(seconds_per_tick)
 	if(lit)
+		open_flame(heat)
 		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= TOOL_FUEL_BURN_INTERVAL)
 			use(used = 0.25)
-
-	open_flame(heat)
 
 /obj/item/lighter/get_temperature()
 	return lit * heat
@@ -367,3 +369,9 @@
 		/obj/item/lighter/mime,
 		/obj/item/lighter/bright,
 	)
+
+/obj/item/lighter/empty
+	spawns_with_reagent = FALSE
+
+/obj/item/lighter/greyscale/empty
+	spawns_with_reagent = FALSE

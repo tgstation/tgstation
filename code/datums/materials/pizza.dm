@@ -16,6 +16,7 @@
 	item_sound_override = 'sound/effects/meatslap.ogg'
 	turf_sound_override = FOOTSTEP_MEAT
 	texture_layer_icon_state = "pizza"
+	mat_rust_resistance = RUST_RESISTANCE_REINFORCED
 	fish_weight_modifier = 0.9
 	fishing_difficulty_modifier = 13
 	fishing_cast_range = -2

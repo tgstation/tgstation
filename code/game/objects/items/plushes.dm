@@ -19,18 +19,12 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent //who initiated creation
 	var/obj/item/toy/plush/maternal_parent //who owns, see love()
-	var/static/list/breeding_blacklist // you cannot have sexual relations with this plush
-	// Troutstation edit
-	var/static/list/breeding_blacklist_parent_types = list(
-		/obj/item/toy/plush/carpplushie/dehy_carp,
-		/obj/item/toy/plush/maddie
-	)
 	var/list/scorned = list() //who the plush hates
 	var/list/scorned_by = list() //who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
-///Prevents players from cutting stuffing out of a plushie if true
+	///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -39,6 +33,9 @@
 	var/list/vowbroken_message
 	var/list/parent_message
 	var/normal_desc
+	/// The type of offspring this plush generates. If not set, it'll default to the type itself on init.
+	var/offspring_type
+
 	//--end of love :'(--
 
 /*
@@ -49,13 +46,10 @@
 
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
-	// Troutstation edit start
-	if(length(breeding_blacklist) == 0)
-		create_breeding_blacklist()
-	// Troutstation edit end
 	AddComponent(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, mapload, 6, -5, 90)
 	AddElement(/datum/element/toy_talk)
+	AddElement(/datum/element/cuffable_item)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -63,6 +57,9 @@
 			gender = FEMALE
 		else
 			gender = MALE
+
+	if(!offspring_type)
+		offspring_type = type
 
 	love_message = list("\n[src] is so happy, \he could rip a seam!")
 	partner_message = list("\n[src] has a ring on \his finger! It says bound to my dear [partner].")
@@ -73,12 +70,6 @@
 	normal_desc = desc
 
 // Troutstation edit start
-/obj/item/toy/plush/proc/create_breeding_blacklist()
-	breeding_blacklist = list()
-	for(var/obj/item/toy/plush/plush_type as anything in breeding_blacklist_parent_types)
-		for(var/obj/item/toy/plush/plush_subtype as anything in typesof(plush_type))
-			breeding_blacklist[plush_subtype] = TRUE
-
 /obj/item/toy/plush/proc/change_squeak_frequency(new_freq)
 	var/datum/component/squeak/squeak = GetComponent(/datum/component/squeak)
 	squeak.frequency = new_freq
@@ -311,19 +302,15 @@
 	mood_message = pick(partner_message)
 	update_desc()
 
-/obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
-	if(partner != Daddy)
+/obj/item/toy/plush/proc/plop(obj/item/toy/plush/daddy)
+	if(partner != daddy)
 		return FALSE //we do not have bastards in our toyshop
 
-	if(is_type_in_typecache(Daddy, breeding_blacklist))
-		return FALSE // some love is forbidden
+	// Ask the RNG if it looks more like mommy or daddy.
+	var/chosen_type = pick(offspring_type, daddy.offspring_type)
 
-	if(prob(50)) //it has my eyes
-		plush_child = new type(get_turf(loc))
-	else //it has your eyes
-		plush_child = new Daddy.type(get_turf(loc))
-
-	plush_child.make_young(src, Daddy)
+	plush_child = new chosen_type(get_turf(loc))
+	plush_child.make_young(src, daddy)
 
 /obj/item/toy/plush/proc/make_young(obj/item/toy/plush/Mama, obj/item/toy/plush/Dada)
 	if(Mama == Dada)

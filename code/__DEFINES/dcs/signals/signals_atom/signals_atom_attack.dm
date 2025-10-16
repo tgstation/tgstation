@@ -72,3 +72,10 @@
 
 /// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
 #define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"
+
+/// Called from [/mob/living/proc/send_item_attack_message()]: (obj/item/weapon, /mob/living/victim, mob/living/attacker)
+#define COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT "send_item_attack_message_object"
+/// Called from [/mob/living/proc/send_item_attack_message()]: (mob/living/victim, obj/item/weapon, mob/living/user)
+#define COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON "send_item_attack_message_carbon"
+	/// Return value if the hitby messages are changed.
+	#define SIGNAL_MESSAGE_MODIFIED (1<<0)

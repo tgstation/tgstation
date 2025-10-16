@@ -124,3 +124,16 @@
 	var/obj/item/organ/brain = locate() in dummy.organs
 	brain.forceMove(dummy.loc)
 	allocated += brain
+
+/datum/unit_test/felinid_ears
+
+/datum/unit_test/felinid_ears/Run()
+	var/mob/living/carbon/human/normal_dummy = allocate(/mob/living/carbon/human/consistent)
+	normal_dummy.dna.features[FEATURE_EARS] = SPRITE_ACCESSORY_NONE
+	normal_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(!istype(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with NONE ears set had cat ears on species gain.")
+	TEST_ASSERT_NOTNULL(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), "Felinid with NONE ears set had NO ears on species gain.")
+
+	var/mob/living/carbon/human/anime_dummy = allocate(/mob/living/carbon/human/consistent)
+	anime_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(istype(anime_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with default ears set did not have cat ears on species gain.")

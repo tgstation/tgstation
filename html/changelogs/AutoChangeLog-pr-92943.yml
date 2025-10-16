@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - balance: "Ore vents on lavaland/icebox now scale their size, and therefore difficulty, based on their distance from the mining station."

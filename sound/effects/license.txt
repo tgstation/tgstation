@@ -7,3 +7,13 @@ It has been licensed under CC-BY 3.0, which can be found at http://creativecommo
 
 alert.ogg by bbrocer. Extended, looped, and reverbed
 https://freesound.org/people/bbrocer/sounds/389511/
+
+{
+soil_plop.ogg is made using:
+
+https://freesound.org/people/jorickhoofd/sounds/169551/ -- License: Attribution 4.0
+https://freesound.org/people/Ali_6868/sounds/384361/, -- License: Creative Commons 0
+https://freesound.org/people/lolamadeus/sounds/179341/, -- License: Creative Commons 0
+https://freesound.org/people/fthrll/sounds/522200/, -- License: Creative Commons 0
+https://freesound.org/people/Hankof/sounds/655630/, -- License: Creative Commons 0
+}

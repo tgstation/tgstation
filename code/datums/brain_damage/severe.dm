@@ -356,7 +356,7 @@
 		stealables += potential_stealable
 
 	for(var/obj/item/stealable as anything in shuffle(stealables))
-		if(!owner.CanReach(stealable, view_only = TRUE) || stealable.IsObscured())
+		if(!stealable.IsReachableBy(owner) || stealable.IsObscured())
 			continue
 		// Try to do a raw click on the item with one of our empty hands, to pick it up (duh)
 		owner.log_message("attempted to pick up (kleptomania)", LOG_ATTACK, color = "orange")

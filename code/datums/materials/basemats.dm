@@ -329,7 +329,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	SIGNAL_HANDLER
 	if(prob(67))
 		return
-	var/list/elegible_fish_sources = flatten_list(GLOB.preset_fish_sources)
+	var/list/elegible_fish_sources = assoc_to_values(GLOB.preset_fish_sources)
 	for(var/datum/fish_source/source as anything in elegible_fish_sources)
 		if(source.fish_source_flags & FISH_SOURCE_FLAG_NO_BLUESPACE_ROD)
 			elegible_fish_sources -= source
@@ -759,6 +759,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.25
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	fish_weight_modifier = 1.2
 	fishing_difficulty_modifier = 30 //Sand fishing rods? What the hell are you doing?
 	fishing_cast_range = -2
@@ -790,6 +791,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	fish_weight_modifier = 1.2
 	fishing_difficulty_modifier = 25 //Sand fishing rods? What the hell are you doing?
 	fishing_cast_range = -2
@@ -817,6 +819,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	fish_weight_modifier = 0.8
 	fishing_difficulty_modifier = 25
 	fishing_cast_range = -2
