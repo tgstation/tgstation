@@ -1125,7 +1125,6 @@
 	icon_state = "eyes-ghost"
 	blink_animation = FALSE
 	movement_type = PHASING
-	organ_traits = list(TRAIT_REFLECTIVE_EYES) //come on, they gotta have it, for the sake of Halloween.
 	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
 /obj/item/organ/eyes/snail
@@ -1195,10 +1194,8 @@
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	penlight_message = "are green and plant-like"
 
-///A pair of eyes that appear more luminous in dim areas, but cannot be seen in complete dark. Mainly cosmetic for now.
 /obj/item/organ/eyes/felinid
 	name = "felinid eyes"
 	desc = "A pair of highly reflective eyes with slit pupils, like those of a cat."
-	organ_traits = list(TRAIT_REFLECTIVE_EYES)
 	pupils_name = "slit pupils"
 	penlight_message = "shine under the a pearly light"
