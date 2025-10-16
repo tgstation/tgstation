@@ -5940,6 +5940,7 @@
 #include "code\modules\projectiles\projectile\special\spit.dm"
 #include "code\modules\projectiles\projectile\special\temperature.dm"
 #include "code\modules\projectiles\projectile\special\wormhole.dm"
+#include "code\modules\reagent_tool\reagent_exporter.dm"
 #include "code\modules\reagents\chem_splash.dm"
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
