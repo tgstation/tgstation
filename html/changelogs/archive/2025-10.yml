@@ -391,3 +391,145 @@
       doors. They can't be used to open high security doors whatsoever. And they come
       with a bonesetter attachment instead of wirecutters. You know, for power-relocating
       your arm.
+2025-10-12:
+  Melbert:
+  - bugfix: Dragging defibs and modsuits off your back works again
+  paganiy:
+  - rscadd: changeling's last resort ability now can rupture surrounding them walls
+      and other objects
+  - rscadd: last resort now has a short animation
+  - balance: increased last resort's blind range from 2 to 4 tiles
+  - bugfix: fixed several runtimes related to changeling's last resort ability
+  - sound: added a gore sound effect to last resort explosion
+  timothymtorres:
+  - rscadd: Central Command has finally realized that old fashioned water is actually
+      good for you. It now provides a minor buff to the natural healing of liver damage.
+  - bugfix: Fix lighters triggering runtimes when out of fuel
+2025-10-13:
+  ArchBTW:
+  - bugfix: Fixes riot shotgun unintentional melee when point blank shooting
+  Ezel:
+  - map: Sec eva now becomes all access on red alert on nebula/catwalk/icebox/wawa
+  - map: Deltastation Sec eva becomes all access when its red alert.
+  Gaxeer:
+  - bugfix: energy dagger pen report will be now shown in detective scanner and also
+      all items that transform will have additional note about it
+  Ghommie:
+  - bugfix: Fixed dimensional anomalies duplicating airlocks
+  Hatterhat:
+  - rscadd: The visors on MODsuits that used to have armor boosters now visibly toggle
+      based on whether the wearer is in combat mode or not.
+  Krysonism:
+  - bugfix: food / animal hybrids like the butterbear and cak now once again correctly
+      grab ghosts and store brains.
+  Melbert:
+  - image: CMO now has unique backpack/satchel/etc. sprites which matches their teal
+      palette.
+  - image: CMO spawns with white sneakers instead of blue sneakers.
+  - qol: Garment bags can hold empty backpacks/satchels/etc.
+  - rscdel: Defib mount removed from CMO's locker.
+  - bugfix: Items stocked in a storage item by default can be mouse-drag-swapped like
+      any other item.
+  SmArtKar:
+  - bugfix: Sleeping Carp and Cain & Abel no longer tell you about armor penetration
+      when you reflect projectiles with them
+  - bugfix: Fixed raptors going at mach speeds
+  SyncIt21:
+  - bugfix: circuit multitool won't reveal special items on mobs
+  - bugfix: order console correctly differentiates between private & department orders
+  - bugfix: order console checkout cart displays correct Private/Department order
+      text amounts
+  lelandkemble:
+  - spellcheck: Removed lie about free stuff from contractor kit uplink description
+  necromanceranne:
+  - qol: The chaplain energy swords now work like energy swords. Turn them on and
+      off! Light your way with the blade. Light a cigarette with your blade like a
+      badass. Feel bad that it isn't a REAL energy sword.
+  - bugfix: The carp'sie plushie now fits in chaplain suit storage.
+  - bugfix: The Jaws of Recovery bonesetting mode now has an actual sprite.
+  - bugfix: Some Jaws of Recovery cabinets that were strangely empty are now filled.
+  vinylspiders:
+  - bugfix: integrated toolset and integrated paperwork implants can be emagged for
+      an integrated combat knife and chameleon stamp, respectively (fixed a bug preventing
+      that from working)
+2025-10-14:
+  FalloutFalcon:
+  - bugfix: ghost basic mobs use natural hair colors
+  Fghj240:
+  - bugfix: Atlas gravitronic spinal implants now use their intended sprite
+  Xander3359:
+  - refactor: Converts some attacks to interactions
+  necromanceranne:
+  - balance: Hunter boxing now grants a reasonable amount of experience in Athletics
+      for punching the absolute shit out of the local wildlife.
+  - balance: Includes crustaceans and reptiles to the list of mob types that Hunter
+      Boxing is allowed to mangle with their bare hands. You still can't use Hunter
+      Boxing on lizardpeople. Or crabpeople when they are added in 2030.
+2025-10-15:
+  ArchBTW, NecromancerAnne (original code, sprites), SmArtKar (sprites), DrDiasyl (sprites):
+  - rscadd: adds Stunsword
+  Fghj240:
+  - qol: Health analyzers now tell the difference between curable and incurable permanent
+      traumas
+  SmArtKar:
+  - bugfix: Items no longer randomly fall out of bags when changing their size
+  TealSeer:
+  - code_imp: renamed flatten_list proc to assoc_to_values
+  Yobrocharlie:
+  - balance: buffed the cleric mace by a little bit.
+  mcbalaam:
+  - qol: Better output for sound requesting
+  - bugfix: '"Request Internet sound" input window''s title and description are not
+      inverted anymore'
+  thegrb93:
+  - bugfix: Self sustaining slime and clusterbuster now correctly fill required reagents
+  tontyGH:
+  - bugfix: moves the computer frame's anchor requirement from circuit step to finalization
+      step, fixing an issue where you could construct unanchored and FUNCTIONAL computers
+  - qol: as a side effect, you only need to wrench the PC down when construction is
+      being finished
+2025-10-16:
+  EnterTheJake:
+  - rscadd: All Heretic paths now start with a gradually evolving passive ability.
+  - balance: the entire heretic tree has been rebalanced.
+  - balance: the grasp and mark upgrade are now granted upon selecting the path
+  - rscadd: All Heretic paths now have a unique robe.
+  - balance: Heretic ability to blade break is now disabled after X amount of knowledge
+      has been acquired (and so is the limit on blades) or the 2nd passive level is
+      unlocked.
+  - balance: it's no longer possible to cross-path into different heretic paths.
+  - balance: Every main knowledge spell will now grant to the heretic the option to
+      select a side knowledge from a draft of 3, this is a free point.
+  - balance: Heretic ascension will now call the shuttle with no possibility of recall.
+  - rscadd: A new tab has been added in the heretic UI, the knowledge shop.
+  - rscadd: Heretics will now gain temporary X-ray vision when near an untapped essence.
+  - balance: Codex cicatrix no longer requires a special pen.
+  - balance: Ritual of knowledge requires less items to complete now.
+  - balance: the minimum number of required sacrifices to unlock ascension has been
+      upped to 4, and the minimum bumped down to 5.
+  - image: loads of new sprites have been added.
+  FalloutFalcon:
+  - admin: abstract types dont show up in admin selection menu for station traits
+  Ghommie:
+  - refactor: Refactored flash and flashers. Report any issue about it
+  - balance: Flashes now affect basic mobs as well. Yes, this extends to the hypno-flash.
+      Yes, this includes converting them as a headrev / blood bro
+  - balance: Flashers now actually use the flashes that they're installed with, and
+      the portable version is also triggered by nearby basic mobs and cyborgs passing
+      through.
+  - balance: Elite mobs cannot be converted while they're busy battling their challenger.
+  - balance: Mobs that have been given sentience potions to are unconvertable. They
+      answer to their master (the one that gave them the potion in the first place)
+      anyway.
+  SmArtKar:
+  - bugfix: Fixed ore bags being able to reject any ores despite having ample space
+  - bugfix: Pulling a stack behind you and getting it topped up by lying items will
+      no longer spam pulls and lock out your inputs
+  - bugfix: Picking up ores into an ore box via an ore bag will no longer play a jank
+      animation
+  - qol: Ore bags and MODule ore bags no longer pick up ores you've dropped from your
+      hand until you walk over them again
+  Yobrocharlie:
+  - balance: restored the weak claymore to its former glory
+  grungussuss:
+  - qol: item offers now persist when pulling

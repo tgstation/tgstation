@@ -49,16 +49,20 @@
 	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SECONDARY, COMSIG_ATOM_EXAMINE, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 	return ..()
 
-/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, mob/living/target, mob/living/user)
+/datum/element/cuffsnapping/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	SIGNAL_HANDLER
-	if(iscarbon(target)) //Removing restraints takes precedence
-		var/mob/living/carbon/carbon_target = target
+	if(!isliving(target)) //Removing restraints takes precedence
+		return NONE
+	var/mob/living/living_target = target
+	if(iscarbon(living_target))
+		var/mob/living/carbon/carbon_target = living_target
 		if(carbon_target.handcuffed)
 			context[SCREENTIP_CONTEXT_RMB] = "Cut Restraints"
 			return CONTEXTUAL_SCREENTIP_SET
-	if(target.has_status_effect(/datum/status_effect/cuffed_item))
+	if(living_target.has_status_effect(/datum/status_effect/cuffed_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Remove Binds From Item"
 		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 ///signal called on parent being examined
 /datum/element/cuffsnapping/proc/on_examine(datum/target, mob/user, list/examine_list)

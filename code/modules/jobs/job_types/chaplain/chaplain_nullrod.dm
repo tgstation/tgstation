@@ -20,6 +20,10 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		The shard also causes you to become Morbid, shifting your interests towards the macabre."
 	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
 
+	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
+		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
+			Can be stored away easily while off, but impossible while on."
+
 	return rods
 
 /obj/item/nullrod
@@ -186,33 +190,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 /obj/item/nullrod/claymore/multiverse/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	SET_ATTACK_FORCE(attack_modifiers, rand(max(force - 15, 1), force + 15))
 	return ..()
-
-/obj/item/nullrod/claymore/saber
-	name = "light energy sword"
-	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
-	icon = 'icons/obj/weapons/transforming_energy.dmi'
-	icon_state = "e_sword_on_blue"
-	inhand_icon_state = "e_sword_on_blue"
-	worn_icon_state = "swordblue"
-	icon_angle = -45
-	slot_flags = ITEM_SLOT_BELT
-	hitsound = 'sound/items/weapons/blade1.ogg'
-	block_sound = 'sound/items/weapons/block_blade.ogg'
-	menu_description = "A sharp energy sword which provides a low chance of blocking incoming melee attacks. Can be worn on the belt."
-
-/obj/item/nullrod/claymore/saber/red
-	name = "dark energy sword"
-	desc = "Woefully ineffective when used on steep terrain."
-	icon_state = "e_sword_on_red"
-	inhand_icon_state = "e_sword_on_red"
-	worn_icon_state = "swordred"
-
-/obj/item/nullrod/claymore/saber/pirate
-	name = "nautical energy sword"
-	desc = "Convincing HR that your religion involved piracy was no mean feat."
-	icon_state = "e_cutlass_on"
-	inhand_icon_state = "e_cutlass_on"
-	worn_icon_state = "swordred"
 
 /// Vibro Variant
 /// This subtype possesses armor penetration and is sharp.
