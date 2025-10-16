@@ -326,6 +326,12 @@
 		"TOOL" = "replaced with the tool used",
 	)
 
+/obj/item/crowbar/power/paramedic/silent
+	name = "modified jaws of recovery"
+	desc = "Modified version for jaws of life, made to act like jaws of recovery. This one doesn't announce doors you're prying open and lets you pry any door, acting like regular jaws of life"
+	limit_jaws_access = FALSE
+	radio_alert = FALSE
+
 /obj/item/crowbar/cyborg
 	name = "hydraulic crowbar"
 	desc = "A hydraulic prying tool, simple but powerful."
