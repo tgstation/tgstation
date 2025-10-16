@@ -511,9 +511,10 @@
 	var/list/table_list = list()
 	for (var/obj/structure/table/t in range(table_range, parent_relic))
 		table_list.Add(t)
-	var/datum/component/table_smash/chosen_one = pick(table_list).GetComponent(/datum/component/table_smash)
+	var/obj/structure/table/chosen_table = pick(table_list)
+	var/datum/component/table_smash/smasher = chosen_table.GetComponent(/datum/component/table_smash)
 	for (var/mob/living/m in view(table_range, parent_relic))
-		chosen_one.tablepush(m, m)
+		smasher.tablepush(m, m)
 
 /obj/item/relic
 	desc = "What mysteries could this hold? Maybe Research & Development knows how to analyze it...."

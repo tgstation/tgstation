@@ -89,7 +89,9 @@
 	if(size >= RUFRAN_GIGANTIC_SIZE)
 		to_chat(user, span_warning("[src] can't get any bigger!"))
 		return
-	if((/datum/mutation/gigantism in serum.add_mutations) || (serum.add_mutations[1].name == "Gigantism")) // holy shit if you can make this cleaner PLEASE
+	var/list/mutations = serum.add_mutations
+	var/datum/mutation/primary_mutation = mutations[1]
+	if((/datum/mutation/gigantism in mutations) || (primary_mutation.name == "Gigantism")) // holy shit if you can make this cleaner PLEASE
 		to_chat(user, span_notice("You inject [src] with the gigantism serum!"))
 		size += RUFRAN_SIZE_INCREMENT
 		AddElement(/datum/element/item_scaling, size, size)
