@@ -7,7 +7,6 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_ANTEATER_SNOUT
 
-	preference = "feature_anteater_snout"
 	// external_bodyshapes = BODYSHAPE_SNOUTED
 
 	restyle_flags = EXTERNAL_RESTYLE_FLESH

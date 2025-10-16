@@ -63,7 +63,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Snout"
 	should_generate_icons = TRUE
-	relevant_external_organ = /obj/item/organ/anteater_snout
+	relevant_organ = /obj/item/organ/anteater_snout
 
 /datum/preference/choiced/anteater_snout/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.anteater_snouts_list)
@@ -78,7 +78,7 @@
 	savefile_key = "feature_anteater_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_external_organ = /obj/item/organ/tail/anteater
+	relevant_organ = /obj/item/organ/tail/anteater
 
 /datum/preference/choiced/anteater_tail/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.tails_list_anteater)
