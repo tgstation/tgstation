@@ -230,11 +230,10 @@
 
 /obj/item/lighter/process(seconds_per_tick)
 	if(lit)
+		open_flame(heat)
 		burned_fuel_for += seconds_per_tick
 		if(burned_fuel_for >= TOOL_FUEL_BURN_INTERVAL)
 			use(used = 0.25)
-
-	open_flame(heat)
 
 /obj/item/lighter/get_temperature()
 	return lit * heat

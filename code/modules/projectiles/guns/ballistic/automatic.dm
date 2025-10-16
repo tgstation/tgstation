@@ -329,6 +329,7 @@
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/recharge
 	empty_indicator = TRUE
+	bolt_type = BOLT_TYPE_OPEN
 	fire_delay = 2
 	can_suppress = FALSE
 	burst_size = 0

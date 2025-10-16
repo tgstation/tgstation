@@ -212,15 +212,15 @@
 	name = "basic cybernetic ears"
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
-	damage_multiplier = 0.9
+	damage_multiplier = 1.2
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 
 /obj/item/organ/ears/cybernetic/upgraded
 	name = "cybernetic ears"
 	icon_state = "ears-c-u"
-	desc =  "An advanced cybernetic ear, surpassing the performance of organic ears."
-	damage_multiplier = 0.5
+	desc =  "A cybernetic ear, surpassing the performance of organic ears."
+	damage_multiplier = 0.75
 
 /obj/item/organ/ears/cybernetic/whisper
 	name = "whisper-sensitive cybernetic ears"
@@ -231,6 +231,13 @@
 	// The original idea was to use signals to do this not traits. Unfortunately, the star effect used for whispers applies before any relevant signals
 	// This seems like the least invasive solution
 	organ_traits = list(TRAIT_GOOD_HEARING)
+
+/obj/item/organ/ears/cybernetic/volume
+	name = "volume-adjusting cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
+	bang_protect = 1
+	damage_multiplier = 0.5
 
 // "X-ray ears" that let you hear through walls
 /obj/item/organ/ears/cybernetic/xray

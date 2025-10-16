@@ -21,9 +21,9 @@
 		delete_extract(holder)
 
 /datum/chemical_reaction/slime/proc/delete_extract(datum/reagents/holder)
-	var/obj/item/slime_extract/M = holder.my_atom
-	if(M.extract_uses <= 0 && !results.len) //if the slime doesn't output chemicals
-		qdel(M)
+	var/obj/item/slime_extract/extract = holder.my_atom
+	if(!isnull(extract) && extract.extract_uses <= 0 && !length(results)) //if the slime doesn't output chemicals
+		qdel(extract)
 
 //Grey
 /datum/chemical_reaction/slime/slimespawn

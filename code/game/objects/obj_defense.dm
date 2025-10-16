@@ -27,7 +27,7 @@
 
 	return TRUE
 
-/obj/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+/obj/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, blocked = null)
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .
