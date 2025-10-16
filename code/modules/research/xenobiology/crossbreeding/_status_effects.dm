@@ -193,7 +193,8 @@
 /atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
 	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
-	icon_state = "bloodchill"
+	use_user_hud_icon = TRUE
+	overlay_state = "bloodchill"
 
 /datum/status_effect/bloodchill
 	id = "bloodchill"
@@ -231,10 +232,12 @@
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
+
 /atom/movable/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
-	icon_state = "bloodchill"
+	use_user_hud_icon = TRUE
+	overlay_state = "bloodchill"
 
 /datum/status_effect/rebreathing
 	id = "rebreathing"
