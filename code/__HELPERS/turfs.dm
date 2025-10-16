@@ -204,17 +204,7 @@ Turf and target are separate in case you want to teleport some distance from a t
  * * offset - Angle offset, 180 input would make the returned target turf be in the opposite direction
  */
 /proc/get_edge_target_turf_direct(atom/starting_atom, atom/target, offset)
-	var/angle = ATAN2(target.x - starting_atom.x, target.y - starting_atom.y)
-	if(offset)
-		angle += offset
-	var/turf/starting_turf = get_turf(starting_atom)
-	for(var/i in 1 to max(world.maxx, world.maxy)) // arbitrary limit to avoid infinite loops
-		var/turf/check = locate(starting_atom.x + cos(angle) * i, starting_atom.y + sin(angle) * i, starting_atom.z)
-		if(!check)
-			break
-		starting_turf = check
-
-	return starting_turf
+	return get_ranged_target_turf_direct(starting_atom, target, max(world.maxx, world.maxy), offset)
 
 /// returns turf relative to target_atom offset in dx and dy tiles, bound to map limits
 /proc/get_offset_target_turf(atom/target_atom, dx, dy)
