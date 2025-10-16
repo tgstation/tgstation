@@ -422,6 +422,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = BURN
 	force = 4
 
+	if(reagents && reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+		if(isliving(loc))
+			var/mob/living/user = loc
+			loc.visible_message(span_hear("[user]'s [src] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
+			user.flash_act(INFINITY, override_blindness_check = TRUE , visual = TRUE, length = 5 SECONDS)
+			user.playsound_local(get_turf(user), pick('sound/effects/explosion/explosion1.ogg', 'sound/effects/explosion/explosion2.ogg'), 50, TRUE)
+			user.cause_hallucination(/datum/hallucination/death, "trick trick [name]")
+		else
+			loc.visible_message(span_hear("\The [src] burns up!"))
+		qdel(src)
+		return
+
 	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
 		reagents.flags |= NO_REACT
 
