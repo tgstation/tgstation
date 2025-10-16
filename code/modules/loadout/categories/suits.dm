@@ -35,7 +35,7 @@
 		/datum/job/assistant = "#303030",
 		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,
 		/datum/job/captain = "#3c5a96",
-		/datum/job/head_of_personnel = "#3c6487",
+		/datum/job/head_of_personnel = "#3c5a96",
 		/datum/job/head_of_security = "#303030",
 		/datum/job/paramedic = "#28324b",
 		/datum/job/prisoner = "#ff8b00",
