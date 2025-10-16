@@ -193,6 +193,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 	return starting_turf
 
+
 /// returns turf relative to target_atom offset in dx and dy tiles, bound to map limits
 /proc/get_offset_target_turf(atom/target_atom, dx, dy)
 	var/x = min(world.maxx, max(1, target_atom.x + dx))
