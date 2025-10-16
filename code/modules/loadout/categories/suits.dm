@@ -32,15 +32,11 @@
 	item_path = /obj/item/clothing/suit/apron/overalls
 	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING
 	job_greyscale_palettes = list(
-		/datum/job/assistant = "#303030",
+		/datum/job/assistant = COLOR_JOB_DEFAULT,
 		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,
-		/datum/job/captain = "#3c5a96",
-		/datum/job/head_of_personnel = "#3c5a96",
-		/datum/job/head_of_security = "#303030",
+		/datum/job/captain = COLOR_JOB_COMMAND_GENERIC,
+		/datum/job/head_of_personnel = COLOR_JOB_COMMAND_GENERIC,
+		/datum/job/head_of_security = COLOR_JOB_DEFAULT,
 		/datum/job/paramedic = "#28324b",
 		/datum/job/prisoner = "#ff8b00",
-		/datum/job_department/cargo = "#824b32",
-		/datum/job_department/engineering = "#ff6600",
-		/datum/job_department/science = "#800080",
-		/datum/job_department/security = "#a53228",
 	)

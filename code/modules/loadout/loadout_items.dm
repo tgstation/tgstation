@@ -66,10 +66,10 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 	if(loadout_flags & LOADOUT_FLAG_JOB_GREYSCALING)
 		var/default_colors = SSgreyscale.ParseColorString(item_path::greyscale_colors)
-		var/list/final_palette = LAZYCOPY(job_greyscale_palettes)
+		var/list/final_palette = LAZYLISTDUPLICATE(job_greyscale_palettes)
 		switch(length(default_colors))
 			if(1)
-				final_palette |= default_one_color_job_palette()
+				LAZYOR(final_palette, default_one_color_job_palette())
 			if(2 to INFINITY)
 				stack_trace("[length(default_colors)] color job palettes are not implemented yet, please do so.")
 		job_greyscale_palettes = final_palette
@@ -398,29 +398,29 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 /// Default job gags colors for one color gags items
 /datum/loadout_item/proc/default_one_color_job_palette()
 	return list(
-		/datum/job/assistant = /obj/item/clothing/under/color/grey::greyscale_colors,
-		/datum/job/bitrunner = "#303030",
-		/datum/job/botanist = "#33cc33",
-		/datum/job/chemist = "#ff6600",
-		/datum/job/chief_engineer = "#d0d0d0",
-		/datum/job/chief_medical_officer = "#009999",
-		/datum/job/clown = "#ffbeff",
-		/datum/job/cook = "#d0d0d0",
-		/datum/job/coroner = "#303030",
+		/datum/job/assistant = COLOR_JOB_ASSISTANT,
+		/datum/job/bitrunner = COLOR_JOB_DEFAULT,
+		/datum/job/botanist = COLOR_JOB_BOTANIST,
+		/datum/job/chemist = COLOR_JOB_CHEMIST,
+		/datum/job/chief_engineer = COLOR_JOB_CE,
+		/datum/job/chief_medical_officer = COLOR_JOB_CMO,
+		/datum/job/clown = COLOR_JOB_CLOWN,
+		/datum/job/cook = COLOR_JOB_CHEF,
+		/datum/job/coroner = COLOR_JOB_DEFAULT,
 		/datum/job/curator = COLOR_DRIED_TAN,
 		/datum/job/detective = COLOR_DRIED_TAN,
 		/datum/job/geneticist = COLOR_BLUE_GRAY,
-		/datum/job/janitor = /obj/item/clothing/gloves/color/purple::greyscale_colors,
-		/datum/job/lawyer = "#003399",
+		/datum/job/janitor = COLOR_JOB_JANITOR,
+		/datum/job/lawyer = COLOR_JOB_LAWYER,
 		/datum/job/prisoner = COLOR_PRISONER_ORANGE,
 		/datum/job/psychologist = COLOR_DRIED_TAN,
-		/datum/job/roboticist = "#303030",
+		/datum/job/roboticist = COLOR_JOB_DEFAULT,
 		/datum/job/shaft_miner = COLOR_DARK_BROWN,
-		/datum/job_department/command = COLOR_COMMAND_BLUE,
-		/datum/job_department/engineering = COLOR_ENGINEERING_ORANGE,
-		/datum/job_department/medical = COLOR_MEDICAL_BLUE,
-		/datum/job_department/security = COLOR_SECURITY_RED,
-		/datum/job_department/science = COLOR_SCIENCE_PINK,
-		/datum/job_department/cargo = COLOR_CARGO_BROWN,
-		/datum/job = "#303030", // default for any job not listed above
+		/datum/job_department/command = COLOR_JOB_COMMAND_GENERIC,
+		/datum/job_department/engineering = COLOR_JOB_ENGI_GENERIC,
+		/datum/job_department/medical = COLOR_JOB_MED_GENERIC,
+		/datum/job_department/security = COLOR_JOB_SEC_GENERIC,
+		/datum/job_department/science = COLOR_JOB_SCI_GENERIC,
+		/datum/job_department/cargo = COLOR_JOB_CARGO_GENERIC,
+		/datum/job = COLOR_JOB_DEFAULT, // default for any job not listed above
 	)

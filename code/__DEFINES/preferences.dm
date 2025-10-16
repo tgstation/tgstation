@@ -182,3 +182,21 @@
 #define UPPER_LIP "Upper"
 #define MIDDLE_LIP "Middle"
 #define LOWER_LIP "Lower"
+
+// Job greyscale colors for loadout items
+#define COLOR_JOB_ASSISTANT /obj/item/clothing/under/color/grey::greyscale_colors
+#define COLOR_JOB_BOTANIST "#33cc33"
+#define COLOR_JOB_CARGO_GENERIC "#824b32"
+#define COLOR_JOB_CE "#d0d0d0"
+#define COLOR_JOB_CHEF "#d0d0d0"
+#define COLOR_JOB_CHEMIST "#ff6600"
+#define COLOR_JOB_CLOWN "#ffbeff"
+#define COLOR_JOB_CMO "#009999"
+#define COLOR_JOB_DEFAULT "#303030"
+#define COLOR_JOB_ENGI_GENERIC "#ff6600"
+#define COLOR_JOB_JANITOR /obj/item/clothing/gloves/color/purple::greyscale_colors
+#define COLOR_JOB_LAWYER "#003399"
+#define COLOR_JOB_SCI_GENERIC "#800080"
+#define COLOR_JOB_SEC_GENERIC "#A53228"
+#define COLOR_JOB_MED_GENERIC "#5B97BC"
+#define COLOR_JOB_COMMAND_GENERIC "#3C5A96"
