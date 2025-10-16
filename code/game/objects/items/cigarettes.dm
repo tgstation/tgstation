@@ -422,7 +422,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = BURN
 	force = 4
 
-	if(reagents && reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+	if(reagents && reagents.has_reagent(/datum/reagent/flash_powder))
 		if(isliving(loc))
 			var/mob/living/user = loc
 			loc.visible_message(span_hear("[user]'s [src] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
