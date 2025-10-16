@@ -35,6 +35,9 @@
 	var/normal_desc
 	/// The type of offspring this plush generates. If not set, it'll default to the type itself on init.
 	var/offspring_type
+	// Troutstation edit start
+	var/breedable = TRUE // Can this plush even breed?
+	// Troutstation edit end
 
 	//--end of love :'(--
 
@@ -187,6 +190,13 @@
 	var/concern = 20 //perhaps something might cloud true love with doubt
 	var/loyalty = 30 //why should another get between us?
 	var/duty = 50 //conquering another's is what I live for
+
+	// Troutstation edit begin
+	if(!breedable || !(Kisser.breedable))
+		user.show_message(span_notice("[src] doesn't seem particularly interested in [Kisser]."), MSG_VISUAL,
+			span_notice("No."), NONE)
+		return
+	// Troutstation edit end
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
