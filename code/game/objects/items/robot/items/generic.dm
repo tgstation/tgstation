@@ -386,14 +386,16 @@
 			to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
 	else
 		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
-		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
+		for(var/mob/living/living in get_hearers_in_view(9, user))
 			var/bang_effect = carbon.soundbang_act(SOUNDBANG_STRONG, 0, 0, 5)
 			switch(bang_effect)
+				if(0)
+					continue
 				if(1)
 					carbon.adjust_confusion(5 SECONDS)
 					carbon.adjust_stutter(20 SECONDS)
 					carbon.adjust_jitter(20 SECONDS)
-				if(2)
+				else
 					carbon.Paralyze(4 SECONDS)
 					carbon.adjust_confusion(10 SECONDS)
 					carbon.adjust_stutter(30 SECONDS)
