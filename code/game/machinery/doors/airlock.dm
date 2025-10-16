@@ -2433,6 +2433,7 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 	var/stealthy = FALSE

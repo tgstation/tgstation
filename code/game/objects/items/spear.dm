@@ -15,7 +15,7 @@
 	demolition_mod = 0.75
 	embed_type = /datum/embedding/spear
 	armour_penetration = 10
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 1.15)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "lacerate", "gore")
@@ -89,7 +89,6 @@
 		if(/obj/item/shard/plasma)
 			force = 11
 			throwforce = 21
-			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plasmaglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			icon_prefix = "spearplasma"
 			force_unwielded = 11
 			force_wielded = 19
@@ -99,7 +98,6 @@
 			throwforce = 21
 			throw_range = 8
 			throw_speed = 5
-			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/titaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			wound_bonus = -10
 			force_unwielded = 13
 			force_wielded = 18
@@ -110,7 +108,6 @@
 			throwforce = 22
 			throw_range = 9
 			throw_speed = 5
-			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plastitaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			wound_bonus = -10
 			exposed_wound_bonus = 20
 			force_unwielded = 13
@@ -247,7 +244,7 @@
 
 	throwforce = 22
 	armour_penetration = 15 //Enhanced armor piercing
-	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT * 7)
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
 	force_unwielded = 12
 	force_wielded = 20
 
@@ -270,7 +267,7 @@
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 
 	throwforce = 22	//Better to throw
-	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 20)
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
 	force_unwielded = 10
 	force_wielded = 18
 

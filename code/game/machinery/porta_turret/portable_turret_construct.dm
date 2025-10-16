@@ -16,6 +16,7 @@
 	anchored = FALSE
 	density = TRUE
 	use_power = NO_POWER_USE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
 	var/obj/item/gun/installed_gun = null
