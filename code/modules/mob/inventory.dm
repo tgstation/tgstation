@@ -365,8 +365,9 @@
 		return FALSE
 	if(QDELETED(to_transfer)) // Some items may get deleted upon getting unequipped.
 		return FALSE
-	to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
-	to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
+	if(!(to_transfer.item_flags & NO_PIXEL_RANDOM_DROP))
+		to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
+		to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
 	to_transfer.do_drop_animation(src)
 	return TRUE
 
