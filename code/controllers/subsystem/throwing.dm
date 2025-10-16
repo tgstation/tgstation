@@ -114,6 +114,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
 	SSthrowing.currentrun -= thrownthing
+	UnregisterSignal(thrownthing, COMSIG_QDELETING)
 	thrownthing.throwing = null
 	thrownthing = null
 	thrower = null
