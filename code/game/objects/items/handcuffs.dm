@@ -570,7 +570,9 @@
 	inhand_icon_state = "bola"
 	lefthand_file = 'icons/mob/inhands/weapons/thrown_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/thrown_righthand.dmi'
-	breakouttime = 3.5 SECONDS//easy to apply, easy to break out of
+	breakouttime = 4 SECONDS //easy to apply, easy to break out of
+	slowdown = 0.5 // ~25% speed reduction from base
+	throw_speed = 4 // really fast, good for chasing and escaping
 	gender = NEUTER
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
@@ -578,6 +580,7 @@
 	var/datum/weakref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
+	target = get_edge_target_turf_direct(src, target) // bolas are a chasing / escaping tool, this also prevents stacking it with stun since it can't hit grounded targets
 	if(!..())
 		return
 	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)
@@ -615,29 +618,28 @@
 /**
  * A traitor variant of the bola.
  *
- * It knocks people down and is harder to remove.
+ * It slows down more and is harder to remove.
  */
 /obj/item/restraints/legcuffs/bola/tactical
 	name = "reinforced bola"
-	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
+	desc = "A strong bola, made with a long steel chain. It looks hard to remove."
 	icon_state = "bola_r"
 	inhand_icon_state = "bola_r"
-	breakouttime = 7 SECONDS
-	knockdown = 3.5 SECONDS
+	breakouttime = 8 SECONDS // takes twice as long to remove as a normal bola
+	slowdown = 1 // 40% speed reduction from base (a normal bola is 25%)
 
 /**
  * A security variant of the bola.
  *
- * It's harder to remove, smaller and has a defined price.
+ * It's smaller, disappears after use and can't be caught by the target.
  */
 /obj/item/restraints/legcuffs/bola/energy
 	name = "energy bola"
-	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
+	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests. Can't be caught once thrown."
 	icon_state = "ebola"
 	inhand_icon_state = "ebola"
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
-	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
