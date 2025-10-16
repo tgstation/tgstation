@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed ore bags being able to reject any ores despite having ample space"
-  - bugfix: "Pulling a stack behind you and getting it topped up by lying items will no longer spam pulls and lock out your inputs"
-  - bugfix: "Picking up ores into an ore box via an ore bag will no longer play a jank animation"
-  - qol: "Ore bags and MODule ore bags no longer pick up ores you've dropped from your hand until you walk over them again"
