@@ -109,8 +109,8 @@
 	update_appearance()
 
 /obj/item/taperecorder/fire_act(exposed_temperature, exposed_volume)
-	mytape.unspool() //Fires unspool the tape, which makes sense if you don't think about it
-	..()
+	mytape?.unspool() //Fires unspool the tape, which makes sense if you don't think about it
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/taperecorder/attack_hand(mob/user, list/modifiers)
