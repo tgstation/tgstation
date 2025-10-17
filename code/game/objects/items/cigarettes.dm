@@ -426,7 +426,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(isliving(loc))
 			var/mob/living/user = loc
 			loc.visible_message(span_hear("[user]'s [src] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
-			user.flash_act(INFINITY, override_blindness_check = TRUE , visual = TRUE, length = 5 SECONDS)
+			user.flash_act(INFINITY, visual = TRUE, length = 5 SECONDS)
 			user.playsound_local(get_turf(user), SFX_EXPLOSION, 50, TRUE)
 			user.cause_hallucination(/datum/hallucination/death, "trick trick [name]")
 		else
