@@ -3,6 +3,6 @@
 // exporter procs
 
 /// Keeps track of how many objects are saved per turf during map export
-GLOBAL_VAR_INIT(serialization_turf_obj_count, 0)
+GLOBAL_VAR_INIT(TGM_objs, 0)
 /// Keeps track of how many mobs are saved per turf during map export
-GLOBAL_VAR_INIT(serialization_turf_mob_count, 0)
+GLOBAL_VAR_INIT(TGM_mobs, 0)
