@@ -38,7 +38,7 @@
 	desc = "In range of an explosion."
 /datum/relic_trans/emp
 	desc = "In range of an EMP."
-/datum/relic_trans/fire
+/datum/relic_trans/heat
 	desc = "Lighting on fire."
 /datum/relic_trans/paint
 	desc = "Applying a new coat of paint."
@@ -51,6 +51,8 @@
 	return
 /datum/relic_trans/tracked
 	desc = "Keeping a close eye with a pinpointer."
+/datum/relic_trans/mouseover
+	desc = "If you even think of touching it!"
 
 /datum/relic_node
 	var/node_id
@@ -142,8 +144,24 @@
 	desc = "This node made it create some items!"
 	var/obj/item/item_type
 	var/count
+
 /datum/relic_node/item/on_generate()
-	item_type = pick(subtypesof(/obj/item))
+	var/list/invalid_types = list(	/obj/item/debug,
+									/obj/item/card/id/advanced/debug,
+									/obj/item/flashlight/emp/debug,
+									/obj/item/storage/box/debugtools,
+									/obj/item/clothing/ears/earmuffs/debug,
+									/obj/item/modular_computer/debug,
+									/obj/machinery/power/rtg/debug,
+									/obj/item/gun/magic/wand/safety/debug,
+									/obj/item/gun/magic/hook/debug,
+									/obj/item/uplink/debug,
+									/obj/item/uplink/nuclear/debug)
+	var/list/valid_types = subtypesof(/obj/item)
+
+	for (var/i as anything in invalid_types)
+		valid_types.Remove(i)
+	item_type = pick(valid_types)
 	count = rand(1,4)
 	return
 
@@ -165,7 +183,7 @@
 								/mob/living/basic/revenant,
 								/mob/living/basic/alien/queen)
 /datum/relic_node/animal/on_generate()
-	var/list/valid_types = subtypesof(/mob/living/basic);
+	var/list/valid_types = subtypesof(/mob/living/basic)
 	if (!parent_relic.very_dangerous)
 		for (var/i as anything in invalid_types)
 			valid_types.Remove(i)
@@ -203,7 +221,7 @@
 	var/datum/gas/gas_type
 
 /datum/relic_node/outgas/on_generate()
-	amount = rand(1, 80)
+	amount = rand(1, 150)
 	gas_type = pick(subtypesof(/datum/gas/))
 
 /datum/relic_node/outgas/reaction_power(mob/user)
@@ -240,7 +258,7 @@
 	return
 
 /datum/relic_node/emp
-	desc = "This node made it emit an EMP pulse."
+	desc = "This node made it emit an EMP pulse!"
 	var/strong_range
 	var/weak_range
 
@@ -318,10 +336,14 @@
 	desc = "This node made it change its implements..."
 	var/force
 	var/damtype
+	var/tool_type
+	var/tool_speed
 
 /datum/relic_node/harm/on_generate()
 	damtype = pick(BRUTE, BURN, STAMINA, TOX, OXY, BRAIN)
 	force = rand(-25, 25)
+	tool_type = pick(GLOB.all_tool_behaviours)
+	tool_speed = rand(1, 3)
 	return
 
 /datum/relic_node/harm/reaction_power(mob/user)
@@ -342,6 +364,12 @@
 			else if (force >= parent_relic.force)
 				to_chat(user, span_notice("[parent_relic] transforms to look less helpful."))
 	parent_relic.force = force
+	parent_relic.throwforce = force
+
+	if (tool_type != parent_relic.tool_behaviour)
+		to_chat(user, span_notice("[parent_relic] looks like it could be used as a [tool_type]!"))
+		parent_relic.tool_behaviour = tool_type
+		parent_relic.toolspeed = tool_speed
 
 	if (damtype != parent_relic.damtype)
 		to_chat(user, span_notice("The external implements of [parent_relic] look different!"))
@@ -428,18 +456,20 @@
 
 /datum/relic_node/teleport
 	desc = "This node made it teleport somewhere else!!"
+
 /datum/relic_node/teleport/reaction_power(mob/user)
 	for(var/mob/living/m in view(3, parent_relic))
 		to_chat(m, span_notice("[parent_relic] vanishes into thin air!"))
 	var/turf/t = find_safe_turf(zlevel = parent_relic.z)
 	for (var/mob/living/m in range(0, parent_relic))
 		do_teleport(teleatom = m, destination = t)
-	do_teleport(teleatom = parent_relic, destination = t)
+	if (parent_relic.embedded_mob == null)
+		do_teleport(teleatom = parent_relic, destination = t)
 	for(var/mob/living/m in view(3, parent_relic))
 		to_chat(m, span_notice("[parent_relic] appears out of nowhere!"))
 
 /datum/relic_node/dimensional_shift
-	desc = "This node made it the tiles change dimensional orientation..."
+	desc = "This node made the tiles near it change dimensional orientation..."
 	var/new_theme_path
 
 /datum/relic_node/dimensional_shift/on_generate()
@@ -481,7 +511,8 @@
 					to_chat(c, span_warning("[parent_relic] demands something more, but you do not have what it wants."))
 			else // get a gift :)
 				to_chat(c, span_bolddanger("[parent_relic] offers a gift, and you feel your insides change to accept!"))
-				var/gland_type = subtypesof(/obj/item/organ/heart/gland)
+				var/gland_types = subtypesof(/obj/item/organ/heart/gland)
+				var/gland_type = pick(gland_types)
 				var/obj/item/organ/heart/gland/new_gland = new gland_type()
 				if (new_gland)
 					new_gland.replace_into(c)
@@ -511,10 +542,48 @@
 	var/list/table_list = list()
 	for (var/obj/structure/table/t in range(table_range, parent_relic))
 		table_list.Add(t)
+	if (table_list.len == 0)
+		return;
 	var/obj/structure/table/chosen_table = pick(table_list)
 	var/datum/component/table_smash/smasher = chosen_table.GetComponent(/datum/component/table_smash)
 	for (var/mob/living/m in view(table_range, parent_relic))
 		smasher.tablepush(m, m)
+		if (parent_relic.embedded_mob == null)
+			do_teleport(teleatom = parent_relic, destination = get_turf(m))
+
+/datum/relic_node/contraband
+	desc = "This node made something detectable that security would have problems with..."
+
+/datum/relic_node/contraband/reaction_power(mob/user)
+	ADD_TRAIT(parent_relic, TRAIT_CONTRABAND, INNATE_TRAIT)
+
+/datum/relic_node/cloaking
+	desc = "This node changed the relic's visibility..."
+	var/alpha
+
+/datum/relic_node/cloaking/on_generate()
+	alpha = rand(0, 200)
+
+/datum/relic_node/cloaking/reaction_power(mob/user)
+	parent_relic.sparks.start()
+	parent_relic.alpha = alpha
+
+/datum/relic_node/embed
+	desc = "This node made the relic try to embed itself inside something!!!"
+	var/range
+
+/datum/relic_node/embed/on_generate()
+	range = rand(2, 5)
+
+/datum/relic_node/embed/reaction_power(mob/user)
+	var/list/mob_list = list()
+	for (var/mob/living/m in view(range, parent_relic))
+		mob_list.Add(m)
+	if (mob_list.len == 0)
+		return;
+	var/mob/living/poor_sob = pick(mob_list)
+	var/danger_zone = pick(GLOB.all_body_zones)
+	parent_relic.force_embed(poor_sob, danger_zone)
 
 /obj/item/relic
 	desc = "What mysteries could this hold? Maybe Research & Development knows how to analyze it...."
@@ -522,11 +591,14 @@
 	min_cooldown = 2 SECONDS
 	//Max possible cooldown.
 	max_cooldown = 12 SECONDS
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
+	embed_type = /datum/embedding/relic
 	var/canhear_range = 5
 	var/node_limit = 0
 	var/list/relic_nodes = list()
 	var/datum/relic_node/current_node
+	var/mob/living/embedded_mob = null
+	var/obj/item/bodypart/embedded_limb = null
 	var/very_dangerous = FALSE
 	var/reacting_when_off_cooldown = FALSE //has a pending reaction
 	var/static/list/existing_relics = list()
@@ -549,13 +621,16 @@
 		/datum/relic_node/blood		= 10,
 		/datum/relic_node/rosetta	= 10,
 		/datum/relic_node/tabled	= 10,
+		/datum/relic_node/contraband= 5,
+		/datum/relic_node/cloaking	= 5,
+		/datum/relic_node/embed		= 10,
 	)
 
 	var/static/list/relic_trans_types = list(
 		/datum/relic_trans/none		= 10,
 		/datum/relic_trans/touch	= 10,
 		/datum/relic_trans/harm		= 10,
-		/datum/relic_trans/fire		= 10,
+		/datum/relic_trans/heat		= 10,
 		/datum/relic_trans/reagent	= 10,
 		/datum/relic_trans/paint	= 10,
 		// /datum/relic_trans/vacuum, // Requires adding a tick, not gonna do that.
@@ -563,6 +638,7 @@
 		/datum/relic_trans/explode	= 10,
 		/datum/relic_trans/tracked	= 10,
 		/datum/relic_trans/hear		= 10,
+		/datum/relic_trans/mouseover= 10,
 	)
 
 /obj/item/relic/Initialize()
@@ -575,6 +651,9 @@
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENTS, PROC_REF(on_exposure))
 	RegisterSignal(src, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_clicked))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IRRADIATED), PROC_REF(on_radiated))
+	RegisterSignal(src, COMSIG_ITEM_EMBEDDED, PROC_REF(on_embedded))
+	RegisterSignal(src, COMSIG_ITEM_UNEMBEDDED, PROC_REF(on_unembedded))
+	RegisterSignal(src, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 /obj/item/relic/Destroy(force)
 	existing_relics.Remove(src)
@@ -584,7 +663,7 @@
 
 /obj/item/relic/random_themed_appearance() // TODO: rewrite the original so adding shit is easier
 	. = ..()
-	if (prob(1.0))
+	if (prob(1))
 		icon = 'troutstation/icons/obj/devices/artefacts.dmi'
 		icon_state = "plushie_archytas"
 	update_appearance()
@@ -592,18 +671,20 @@
 /obj/item/relic/proc/on_emped(severity, protection)
 	SIGNAL_HANDLER
 	current_node.check_trans(null, /datum/relic_trans/emp)
+	if (!activated)
+		reveal()
 	return
 
 /obj/item/relic/proc/on_fired(exposed_temperature, exposed_volume)
 	SIGNAL_HANDLER
-	current_node.check_trans(null, /datum/relic_trans/fire)
+	current_node.check_trans(null, /datum/relic_trans/heat)
 	return
 
 /obj/item/relic/proc/on_clicked(atom/source, mob/user, obj/item/item)
 	SIGNAL_HANDLER
 	if(item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		balloon_alert(user, "The heat transfer warms [src].")
-		current_node.check_trans(user, /datum/relic_trans/fire)
+		current_node.check_trans(user, /datum/relic_trans/heat)
 	if (istype(item, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/container = item
 		container.reagents.remove_all(container.amount_per_transfer_from_this)
@@ -633,14 +714,30 @@
 	current_node.check_trans(null, /datum/relic_trans/irradiate)
 	return
 
+/obj/item/relic/proc/on_embedded(victim, target_limb)
+	SIGNAL_HANDLER
+	embedded_mob = victim
+	embedded_limb = target_limb
+	return
 
-/obj/item/relic/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
-	. = ..()
-	if (speaker == src || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
+/obj/item/relic/proc/on_unembedded(victim, target_limb)
+	SIGNAL_HANDLER
+	embedded_mob = null
+	embedded_limb = null
+	return
+
+/obj/item/relic/proc/handle_hearing(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if (hearing_args[HEARING_SPEAKER] == src || get_dist(src, hearing_args[HEARING_SPEAKER]) > canhear_range || hearing_args[HEARING_MESSAGE_MODE][MODE_RELAY])
 		return .
-	// to_chat(speaker, span_warning("DEBUG: [src] is listening to [speaker]...."))
+	//to_chat(hearing_args[HEARING_SPEAKER], span_warning("DEBUG: [source] is listening to [hearing_args[HEARING_SPEAKER]]...."))
 	current_node.check_trans(null, /datum/relic_trans/hear)
-	return .
+	return
+
+/obj/item/relic/MouseEntered(location, control, params)
+	. = ..()
+	if (current_node != null)
+		current_node.check_trans(null, /datum/relic_trans/mouseover)
 
 // Rules:
 // - Creates 3-15 nodes
@@ -706,8 +803,13 @@
 	else
 		if (istype(current_node, /datum/relic_node/rosetta) && istype(user, /mob/living))
 			var/datum/relic_node/rosetta/r = current_node
-			var/mob/living/l = user;
-			to_chat(user, span_notice("[src] has unknown text that fills you with knowledge of a language."))
+			var/mob/living/l = user
+			var/datum/language_holder/lholder = l.get_language_holder()
+			if(lholder.mutual_understanding[r.language] < r.percent)
+				to_chat(user, span_notice("[src] has familiar text that fills you with knowledge of a language."))
+			else
+				to_chat(user, span_warning("After reading the text on [src], you feel you understand it even less."))
+			l.remove_partial_language(r.language, MAGIC_TRAIT)
 			l.grant_partial_language(r.language, r.percent, MAGIC_TRAIT)
 		else
 			to_chat(user, span_notice("You touch [src], its surface seems inviting."))
@@ -759,6 +861,10 @@
 	if(!cooldown_timer)
 		cooldown_timer = rand(min_cooldown, max_cooldown)
 	generate()
+
+/datum/embedding/relic
+	embed_chance = 0
+
 ///
 
 /datum/supply_pack/imports/relicorder
@@ -774,5 +880,5 @@
 	desc = "We need these unknown objects researched, please buy a few from the stockpile. Please."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/relic = 3)
-	crate_name = "Spare Relics Crate"
+	crate_name = "Relic Grab Bag"
 	crate_type = /obj/structure/closet/crate/science
