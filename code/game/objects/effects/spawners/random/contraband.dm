@@ -53,7 +53,7 @@
 	loot = list(
 		/obj/item/gun/ballistic/automatic/pistol/contraband = 80,
 		/obj/item/gun/ballistic/shotgun/automatic/combat = 50,
-		/obj/item/storage/box/syndie_kit/throwing_weapons = 30,
+		/obj/item/storage/box/syndie_kit/throwing_weapons/contraband = 30,
 		/obj/item/grenade/clusterbuster/teargas = 20,
 		/obj/item/grenade/clusterbuster = 20,
 		/obj/item/gun/ballistic/automatic/pistol/deagle/contraband,
