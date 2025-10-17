@@ -64,3 +64,13 @@
  */
 /obj/proc/on_object_saved()
 	return null
+
+/**
+ * Check if an atom is savable for serilization during map export.
+ *
+ * IMPORTANT: For atoms that will always be blacklisted do NOT use this proc. Use the blacklist in map_writer.dm
+ * Examples:
+ * - [/obj/machinery/atmospherics/components/unary] spawns beneath cryo tubes that causes duplication
+ */
+/atom/proc/is_saveable()
+	return TRUE

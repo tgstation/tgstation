@@ -64,5 +64,5 @@
 
 #define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
 #define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
-#define TGM_OBJ_CHECK (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
-#define TGM_MOB_CHECK (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))
+#define TGM_MAX_OBJ_CHECK (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
+#define TGM_MAX_MOB_CHECK (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))

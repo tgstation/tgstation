@@ -11,13 +11,18 @@
 	for(var/each in material_holder.materials)
 		var/amount = material_holder.materials[each] / 100
 		var/datum/material/material_datum = each
-		while((amount > 0) && OBJECT_SERIALIZATION_CHECK)
+		while((amount > 0))
+/*
+			if(TGM_MAX_OBJ_CHECK)
+				continue
+			TGM_OBJ_INCREMENT
+*/
+
 			var/obj/item/stack/stack = material_datum.sheet_type
 			var/amount_var = NAMEOF_TYPEPATH(stack, amount)
 			var/amount_in_stack = max(1, min(50, amount))
 			amount -= amount_in_stack
 			data += "[data ? ",\n" : ""][stack.type]{\n\t[amount_var] = [amount_in_stack]\n\t}"
-			GLOB.serialization_turf_obj_count++
 	return data
 
 /obj/machinery/ore_silo/PersistentInitialize()
@@ -77,6 +82,97 @@
 	. -= NAMEOF(src, icon_state)
 	// /obj/machinery/meter/monitored/distro_loop has an id_tag
 	return .
+
+/obj/machinery/atmospherics/pipe/smart/simple/get_save_vars()
+	return list()
+
+/obj/machinery/atmospherics/pipe/smart/simple/get_custom_save_vars()
+	return list()
+
+#define CONVERT_PIPE_TO_TYPE(Type, Color, Visible, Layer)
+	CONVERT_PIPE_COLOR(Color)
+	CONVERT_PIPE_VISIBLE(Visible)
+	CONVERT_PIPE_LAYER(Layer)
+	Type = ##Type##Color##Visible##Layer
+
+#define CONVERT_PIPE_COLOR(Color) \
+	switch(Color)
+		if(COLOR_YELLOW)
+			Color = /yellow
+		if(ATMOS_COLOR_OMNI)
+			Color = /general
+		if(COLOR_CYAN)
+			Color = /cyan
+		if(COLOR_VIBRANT_LIME)
+			Color = /green
+		if(COLOR_ENGINEERING_ORANGE)
+			Color = /orange
+		if(COLOR_PURPLE)
+			Color = /purple
+		if(COLOR_DARK)
+			Color = /dark
+		if(COLOR_BROWN)
+			Color = /brown
+		if(COLOR_STRONG_VIOLET)
+			Color = /violet
+		if(COLOR_LIGHT_PINK)
+			Color = /pink
+		if(COLOR_RED)
+			Color = /scrubbers
+		if(COLOR_BLUE)
+			Color = /supply
+
+#define CONVERT_PIPE_LAYER(Layer) \
+	switch(Layer)
+		if(1)
+			Layer = /layer1
+		if(2)
+			Layer = /layer2
+		if(3)
+			Layer = null // maybe replace with "" ?
+		if(4)
+			Layer = /layer4
+		if(5)
+			Layer = /layer5
+
+#define CONVERT_PIPE_VISIBLE(Visible) \
+	if(Visible)
+		Visible = /visible
+	else
+		Visible = /hidden
+
+/obj/machinery/atmospherics/pipe/smart/simple/replace_saved_object()
+	var/typepath = /obj/machinery/atmospherics/pipe/smart/manifold4w
+
+	// we probably want to implement caching at some point to make it even faster
+	CONVERT_PIPE_TO_TYPE(typepath, pipe_color, piping_layer, hide)
+
+	/obj/machinery/atmospherics/pipe/smart/manifold4w
+
+	if(ispath(typepath))
+		return typepath
+
+	// error message
+	return FALSE
+
+#undef CONVERT_PIPE
+
+/obj/machinery/atmospherics/pipe/smart/simple/on_object_saved()
+	var/data
+
+
+/*
+		if(TGM_MAX_OBJ_CHECK)
+			continue
+		TGM_OBJ_INCREMENT
+*/
+/obj/machinery/atmospherics/pipe/smart/manifold4w
+/obj/machinery/atmospherics/pipe/smart/manifold4w/
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2
+
+	var/metadata = generate_tgm_metadata(paper)
+	data += "[data ? ",\n" : ""][paper.type][metadata]"
+	return data
 
 /obj/structure/extinguisher_cabinet/get_save_vars()
 	. = ..()
@@ -153,6 +249,12 @@
 	. = ..()
 	. -= NAMEOF(src, icon)
 	return .
+
+// these spawn underneath cryo machines and will duplicate after every save
+/obj/machinery/atmospherics/components/unary/is_saveable()
+	if(locate(/obj/machinery/cryo_cell) in loc)
+		return FALSE
+	. = ..()
 
 /obj/machinery/light_switch/get_save_vars()
 	. = ..()
@@ -274,13 +376,18 @@
 
 ///  N O T I C E   B O A R D  ///
 
-/obj/structure/noticeboard/on_object_saved(obj_count)
+/obj/structure/noticeboard/on_object_saved()
 	var/data
 
 	for(var/obj/item/paper/paper in contents)
+/*
+		if(TGM_MAX_OBJ_CHECK)
+			continue
+		TGM_OBJ_INCREMENT
+*/
+
 		var/metadata = generate_tgm_metadata(paper)
 		data += "[data ? ",\n" : ""][paper.type][metadata]"
-		GLOB.serialization_turf_obj_count++
 	return data
 
 
@@ -361,6 +468,15 @@
 	. = ..()
 	. += NAMEOF(src, charge)
 	. += NAMEOF(src, rigged)
+	return .
+
+/// MONEY ///
+
+/obj/item/holochip/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, name)
+
+	. += NAMEOF(src, credits)
 	return .
 
 /*
