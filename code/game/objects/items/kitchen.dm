@@ -174,6 +174,9 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
+	sound_vary = TRUE
+	pickup_sound = SFX_ROLLING_PIN_PICKUP
+	drop_sound = SFX_ROLLING_PIN_DROP
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"

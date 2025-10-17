@@ -967,3 +967,30 @@
 		'sound/items/tray/tray_insert2.ogg',
 		'sound/items/tray/tray_insert3.ogg',
 	)
+
+/datum/sound_effect/rolling_pin_pickup
+	key = SFX_ROLLING_PIN_PICKUP
+	file_paths = list(
+		'sound/items/rolling_pin/rolling_pin_pickup1.ogg',
+		'sound/items/rolling_pin/rolling_pin_pickup2.ogg',
+		'sound/items/rolling_pin/rolling_pin_pickup3.ogg',
+	)
+
+/datum/sound_effect/rolling_pin_drop
+	key = SFX_ROLLING_PIN_DROP
+	file_paths = list(
+		'sound/items/rolling_pin/rolling_pin_drop1.ogg',
+		'sound/items/rolling_pin/rolling_pin_drop2.ogg',
+		'sound/items/rolling_pin/rolling_pin_drop3.ogg',
+	)
+
+/datum/sound_effect/rolling_pin_rolling
+	key = SFX_ROLLING_PIN_ROLLING
+	file_paths = list(
+		'sound/items/rolling_pin/rolling_pin_rolling1.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling2.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling3.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling4.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling5.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling6.ogg',
+	)

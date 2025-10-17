@@ -300,6 +300,9 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_KNIFE_SLICE "knife_slice"
 #define SFX_POT_PICKUP "pot_pickup"
 #define SFX_POT_DROP "pot_drop"
+#define SFX_ROLLING_PIN_PICKUP "rolling_pin_pickup"
+#define SFX_ROLLING_PIN_DROP "rolling_pin_drop"
+#define SFX_ROLLING_PIN_ROLLING "rolling_pin_rolling"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
