@@ -572,6 +572,7 @@
 	id = "blessing_of_insanity"
 	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = STATUS_EFFECT_NO_TICK
+	alert_type = null
 
 /datum/status_effect/blessing_of_insanity/on_apply()
 	if(ishuman(owner))

@@ -107,7 +107,7 @@
 
 	///If the icon is too big, don't add it to the screen alert
 	var/add_src_icon = TRUE
-	var/list/dim = get_icon_dimensions(src)
+	var/list/dim = get_icon_dimensions(icon)
 	if(dim["height"] > ICON_SIZE_Y || dim["width"] > ICON_SIZE_X)
 		add_src_icon = FALSE
 
