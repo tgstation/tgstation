@@ -15,7 +15,7 @@
 	///Verb used in processing food (such as slice, flatten), defaults to process
 	var/screentip_verb
 
-/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process")
+/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process", soundin = null)
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
