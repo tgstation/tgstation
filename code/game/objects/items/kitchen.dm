@@ -38,6 +38,7 @@
 	sharpness = SHARP_POINTY
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
+	sound_vary = TRUE
 	pickup_sound = SFX_CUTLERY_PICKUP
 	drop_sound = SFX_CUTLERY_DROP
 
@@ -212,6 +213,7 @@
 	custom_price = PAYCHECK_LOWER * 2
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
+	sound_vary = TRUE
 	pickup_sound = SFX_CUTLERY_PICKUP
 	drop_sound = SFX_CUTLERY_DROP
 
