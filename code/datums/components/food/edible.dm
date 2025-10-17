@@ -596,6 +596,16 @@ Behavior that's still missing from this component that original food items had t
 
 	// Troutstation edit start
 	if(HAS_TRAIT(eater, TRAIT_TINY_SNOUT))
+		var/datum/component/anteater_lickable/lickable = food.GetComponent(/datum/component/anteater_lickable)
+		if(lickable)
+			if(eater == feeder)
+				lickable.lick(eater)
+			else
+				eater.visible_message(
+					span_danger("[feeder] tries to force [eater] to eat [parent] but that snout is just too narrow!"),
+					span_userdanger("[feeder] tries to force you to eat [parent], smushing it uselessly against your snout!")
+				)
+			return FALSE
 		if(!(food_flags & FOOD_TINY_SNOUT_EDIBLE))
 			if(eater == feeder)
 				eater.balloon_alert(eater, "won't fit in your snout!")

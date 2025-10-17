@@ -176,7 +176,7 @@ DEFINE_BITFIELD(food_flags, list(
 	"FOOD_IN_CONTAINER" = FOOD_IN_CONTAINER,
 	"FOOD_NO_EXAMINE" = FOOD_NO_EXAMINE,
 	"FOOD_NO_BITECOUNT" = FOOD_NO_BITECOUNT,
-	"FOOD_TINY_SNOUT_EDIBLE" = FOOD_TINY_SNOUT_EDIBLE,
+	"FOOD_TINY_SNOUT_EDIBLE" = FOOD_TINY_SNOUT_EDIBLE
 ))
 
 ///Define for return value of the after_eat callback that will call OnConsume if it hasn't already.

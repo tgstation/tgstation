@@ -10,9 +10,10 @@
 	)
 	tastes = list("candy corn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/candy_corn/prison
 	name = "desiccated candy corn"
@@ -44,8 +45,9 @@
 	bite_consumption = 1
 	food_reagents = list(/datum/reagent/consumable/mintextract = 2)
 	foodtypes = TOXIC | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/ant_candy
 	name = "ant candy"
@@ -87,7 +89,8 @@
 	tastes = list("nothing" = 1)
 	foodtypes = NONE
 	w_class = WEIGHT_CLASS_TINY
-
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit - hey, if it's not real, size doesn't matter
 
 /obj/item/food/chococoin
 	name = "chocolate coin"
@@ -100,9 +103,10 @@
 	)
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/fudgedice
 	name = "fudge dice"
@@ -116,9 +120,10 @@
 	trash_type = /obj/item/dice/fudge
 	tastes = list("fudge" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/chocoorange
 	name = "chocolate orange"
@@ -145,8 +150,9 @@
 	)
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD|SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/bonbon/caramel_truffle
 	name = "caramel truffle"
@@ -191,6 +197,7 @@
 	tastes = list("chocolate" = 1, "peanut butter" = 1)
 	foodtypes = SUGAR|JUNKFOOD|NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_FINGER_FOOD // Troutstation edit - these are just a bit too big
 
 // Gum
 /obj/item/food/bubblegum
@@ -201,10 +208,9 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	food_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
-	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/bubblegum/suicide_act(mob/living/user)
@@ -273,10 +279,11 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2) //Kek
 	tastes = list("candy")
 	foodtypes = JUNKFOOD
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_WORTHLESS
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/gumball/Initialize(mapload)
 	. = ..()
@@ -299,12 +306,14 @@
 	)
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_WORTHLESS
 	var/mutable_appearance/head
 	var/head_color = rgb(0, 0, 0)
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
+
 
 /obj/item/food/lollipop/Initialize(mapload)
 	. = ..()
@@ -346,9 +355,10 @@
 	) //lollipop, but vitamins = toxins
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtypes = JUNKFOOD|SUGAR|MEAT|BUGS
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	slot_flags = ITEM_SLOT_MASK
 	crafting_complexity = FOOD_COMPLEXITY_1
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 
 /obj/item/food/spiderlollipop/Initialize(mapload)
@@ -368,9 +378,10 @@
 	)
 	tastes = list("whimsical joy" = 1, "sugar" = 2)
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	slot_flags = ITEM_SLOT_MASK
 	crafting_complexity = FOOD_COMPLEXITY_1
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/swirl_lollipop/Initialize(mapload)
 	. = ..()

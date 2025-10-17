@@ -138,9 +138,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/cookie/Initialize(mapload)
 	. = ..()
@@ -157,9 +158,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN|SUGAR|DAIRY
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/fortunecookie/proc/get_fortune()
 	var/atom/drop_location = drop_location()
@@ -245,9 +247,10 @@
 	)
 	tastes = list("pretzel" = 1)
 	foodtypes = GRAIN|DAIRY|SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_UNWIND // Troutstation edit
 
 /obj/item/food/plumphelmetbiscuit
 	name = "plump helmet biscuit"
@@ -377,7 +380,7 @@
 	tastes = list("cream" = 2, "waffle" = 1)
 	bite_consumption = 4
 	foodtypes = DAIRY | SUGAR | GRAIN
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	crafting_complexity = FOOD_COMPLEXITY_2
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
 	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
@@ -392,6 +395,7 @@
 	 * assoc is the list of args that is going to be used in [flavour/add_flavour()]. Can as well be null for simple flavours.
 	 */
 	var/list/prefill_flavours
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)
 	if(ingredients)
@@ -451,6 +455,8 @@
 	tastes = list("raw brownie batter" = 1)
 	foodtypes = GRAIN|DAIRY|JUNKFOOD|SUGAR|BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/raw_brownie_batter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/brownie_sheet, rand(20 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -468,6 +474,8 @@
 	foodtypes = GRAIN|DAIRY|JUNKFOOD|SUGAR|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/brownie_sheet/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")

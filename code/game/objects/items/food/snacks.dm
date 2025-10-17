@@ -36,6 +36,8 @@
 	custom_price = 80
 	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/candy/bronx/make_edible()
 	. = ..()
@@ -97,6 +99,8 @@
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtypes = VEGETABLES|JUNKFOOD|FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/chips/make_leave_trash()
 	if(trash_type)
@@ -129,10 +133,11 @@
 	junkiness = 25
 	tastes = list("dried raisins" = 1)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	custom_price = PAYCHECK_CREW * 0.7
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/no_raisin/healthy
 	name = "homemade raisins"
@@ -167,8 +172,9 @@
 	)
 	junkiness = 10 //powergame trash food by buying candy cigs in bulk and eating them when they extinguish
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/candy_trash/nicotine
 	desc = "The leftover from a smoked-out candy cigarette. Smells like nicotine...?"
@@ -191,6 +197,8 @@
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtypes = JUNKFOOD | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/syndicake
 	name = "\improper Syndi-Cakes"
@@ -204,6 +212,8 @@
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtypes = GRAIN | FRUIT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/energybar
 	name = "\improper High-power energy bars"
@@ -216,8 +226,9 @@
 	)
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/peanuts
 	name = "\improper Gallery's peanuts"
@@ -232,6 +243,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/nutriment/fat/oil = 2)
 	var/safe_for_consumption = TRUE
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/peanuts/salted
 	name = "\improper Gallery's salt reserves peanuts"
@@ -321,6 +334,8 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	junkiness = 25
 	foodtypes = JUNKFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/cnds/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -414,6 +429,8 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	bite_consumption = 1
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/semki/healthy
 	name = "roasted sunflower seeds"
@@ -445,6 +462,8 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("fried corn" = 1)
 	foodtypes = JUNKFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/cornchips/make_leave_trash()
 	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
@@ -539,6 +558,8 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/nutriment/fat/oil = 3, /datum/reagent/consumable/caramel = 2)
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/sticko
 	name = "\improper Sticko Classic"
@@ -553,6 +574,8 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/sticko/matcha
 	name = "\improper Sticko Matcha"
@@ -630,6 +653,8 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 		/datum/reagent/consumable/sugar = 3
 	)
 	tastes = list("sugar" = 1, "lightning" = 1)
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/shok_roks/citrus
 	name = "\improper Shok-Roks - Cirrus Citrus flavour"
