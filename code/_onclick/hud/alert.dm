@@ -54,7 +54,7 @@
 		thealert.master_ref = master_ref
 		thealert.RegisterSignal(new_master, COMSIG_ATOM_UPDATE_APPEARANCE, TYPE_PROC_REF(/atom/movable/screen/alert, on_master_update_appearance))
 		thealert.update_appearance(UPDATE_OVERLAYS)
-	else
+	else if(severity)
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
 

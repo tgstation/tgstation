@@ -111,7 +111,7 @@
 	if(dim["height"] > ICON_SIZE_Y || dim["width"] > ICON_SIZE_X)
 		add_src_icon = FALSE
 
-	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled, add_src_icon ? src : null)
+	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled, new_master = add_src_icon ? src : null)
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)
