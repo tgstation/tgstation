@@ -10,7 +10,7 @@
 	facial_hair_hidden = FALSE
 	LAZYNULL(hair_masks)
 	if(human_head_owner)
-		for(var/obj/item/worn_item in human_head_owner.get_equipped_items())
+		for(var/obj/item/worn_item in human_head_owner.get_equipped_items(INCLUDE_ABSTRACT))
 			if(worn_item.hair_mask)
 				LAZYSET(hair_masks, worn_item.hair_mask, TRUE)
 		hair_hidden = !!(human_head_owner.obscured_slots & HIDEHAIR)

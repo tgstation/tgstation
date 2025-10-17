@@ -34,7 +34,7 @@
 ///Get all the clothing on a specific body part
 /mob/living/carbon/human/proc/get_clothing_on_part(obj/item/bodypart/def_zone)
 	var/list/covering_part = list()
-	for(var/obj/item/clothing/equipped in get_equipped_items())
+	for(var/obj/item/clothing/equipped in get_equipped_items(INCLUDE_ABSTRACT))
 		if(equipped.body_parts_covered & def_zone.body_part)
 			covering_part += equipped
 	return covering_part
@@ -85,7 +85,7 @@
 		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD))
+	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
 			if(worn_thing in held_items)
