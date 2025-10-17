@@ -40,14 +40,12 @@
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_dodge))
 	new_holder.faction |= FACTION_CARP //:D
 	new_holder.grant_language(/datum/language/carptongue, ALL, type)
-	new_holder.grant_language(/datum/language/piratespeak, ALL, type)
 
 /datum/martial_art/the_sleeping_carp/deactivate_style(mob/living/remove_from)
 	remove_from.remove_traits(scarp_traits, SLEEPING_CARP_TRAIT)
 	UnregisterSignal(remove_from, list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_CHECK_BLOCK))
 	remove_from.faction -= FACTION_CARP //:(
 	remove_from.remove_language(/datum/language/carptongue, ALL, type)
-	remove_from.remove_language(/datum/language/piratespeak, ALL, type)
 	return ..()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -294,12 +292,12 @@
 	playsound(carp_user.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return SUCCESSFUL_BLOCK
 
-/* Determines how 'carp-y' or how 'pirate-y' we are, granting us the ability to avoid attacks.
+/* Determines how 'carp-y' or how 'martial arts-y' we are, granting us the ability to avoid attacks.
 * At a baseline, we will always avoid projectile attacks, but we may not necessarily avoid other attacks.
-* If we wear carp based clothing, or pirate based clothing, we improve our style factor.
+* If we wear carp based clothing, or martial arts based clothing, we improve our style factor.
 * If we are a carp mutant, we improve our style factor.
 * If we literally are a carp, we just assume we're very carpy and return our max value.
-* If we wear a lot of armor, we reduce our style factor. Some pirate or carp items may result in a net netural bonus.
+* If we wear a lot of armor, we reduce our style factor. Some martial arts or carp items may result in a net netural bonus.
 * If there is anything in our hands, we're also less likely to avoid attacks.
 */
 /datum/martial_art/the_sleeping_carp/proc/carp_style_check(mob/living/carp_user)
@@ -326,7 +324,7 @@
 		var/tallied_style_factor = 0
 		if(possible_headbands.clothing_flags & CARP_STYLE_FACTOR)
 			tallied_style_factor += 20
-		style_factor_points += clamp(tallied_style_factor, 0, 20)
+		style_factor_points += clamp(tallied_style_factor, 0, 20) // Basically, you only need one chest level item to contribute
 		oh_no_armor += human_carp_user.run_armor_check(potential_head, MELEE)
 
 	// Then let's look for any chest clothing that is either armored or on theme
@@ -334,7 +332,7 @@
 		var/tallied_style_factor = 0
 		if(possible_gi.clothing_flags & CARP_STYLE_FACTOR)
 			tallied_style_factor += 20
-		style_factor_points += clamp(tallied_style_factor, 0, 20)
+		style_factor_points += clamp(tallied_style_factor, 0, 20) // Only need one head level item to contribute
 		oh_no_armor += human_carp_user.run_armor_check(potential_chest, MELEE)
 
 	// We also consider whether our footwear is appropriate
