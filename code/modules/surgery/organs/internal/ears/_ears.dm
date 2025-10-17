@@ -84,7 +84,7 @@
 	if(temporary_deafness && !HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
 		on_deafened()
 	else if(!temporary_deafness && HAS_TRAIT_FROM(owner, TRAIT_DEAF, EAR_DAMAGE))
-		on_undeafened(owner)
+		on_undeafened()
 
 ///Called when temporary deafness begins
 /obj/item/organ/ears/proc/on_deafened()
@@ -92,7 +92,7 @@
 	ADD_TRAIT(owner, TRAIT_DEAF, EAR_DAMAGE)
 
 ///Called when temporary deafness reaches zero. Has to have an 'organ_owner' arg, because by the time it's called on 'on_mob_remove', owner is already null
-/obj/item/organ/ears/proc/on_undeafened(mob/living/organ_owner)
+/obj/item/organ/ears/proc/on_undeafened(mob/living/organ_owner = owner)
 	REMOVE_TRAIT(organ_owner, TRAIT_DEAF, EAR_DAMAGE)
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
 

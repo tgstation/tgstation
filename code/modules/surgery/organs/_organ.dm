@@ -254,13 +254,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	var/message = check_damage_thresholds()
 	prev_damage = damage
 
-	var/was_failing = organ_flags & ORGAN_FAILING
-	if(damage >= maxHealth)
-		if(!was_failing)
-			organ_flags |= ORGAN_FAILING
-	else if(was_failing)
-		organ_flags &= ~ORGAN_FAILING
-
 	if(message && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, message)
 
@@ -288,11 +281,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			on_high_damage_received()
 			message = high_threshold_passed
 		if(damage >= maxHealth)
+			organ_flags |= ORGAN_FAILING
 			on_begin_failure()
 			message = now_failing
 		return message
 
 	if(prev_damage == maxHealth)
+		organ_flags &= ~ORGAN_FAILING
 		on_failure_recovery()
 		message = now_fixed
 	if(prev_damage > high_threshold && damage <= high_threshold)

@@ -1021,22 +1021,23 @@
 
 	var/obj/item/bodypart/head/head = eye_owner.get_bodypart(BODY_ZONE_HEAD) //if we have eyes we definently have a head anyway
 	var/previous_flags = head.head_flags
-	head.head_flags = previous_flags | HEAD_EYECOLOR
+	head.head_flags |= HEAD_EYECOLOR
 
 	///enabling and disabling the TRAIT_LUMINESCENT_EYES trait already calls handle_eyes(), in that case, let's skip that call
 	var/skip_call = FALSE
 	if(!eye.light_on)
 		eye_icon_state = initial(eye_icon_state)
-		skip_call = HAS_TRAIT(eye_owner, TRAIT_LUMINESCENT_EYES) && HAS_TRAIT_FROM_ONLY(eye_owner, TRAIT_LUMINESCENT_EYES, REF(src))
+		skip_call = HAS_TRAIT_FROM_ONLY(eye_owner, TRAIT_LUMINESCENT_EYES, REF(src))
 		remove_organ_trait(TRAIT_LUMINESCENT_EYES)
 	else
-		skip_call = !HAS_TRAIT(eye_owner, TRAIT_LUMINESCENT_EYES) || HAS_TRAIT_NOT_FROM(eye_owner, TRAIT_LUMINESCENT_EYES, REF(src))
+		skip_call = !HAS_TRAIT(eye_owner, TRAIT_LUMINESCENT_EYES)
 		add_organ_trait(TRAIT_LUMINESCENT_EYES)
 		eye_icon_state = base_eye_state
 
 	if(!skip_call && ishuman(eye_owner))
 		var/mob/living/carbon/human/humie = eye_owner
 		humie.update_eyes()
+
 	head.head_flags = previous_flags
 
 #undef MATCH_LIGHT_COLOR
@@ -1198,4 +1199,4 @@
 	name = "felinid eyes"
 	desc = "A pair of highly reflective eyes with slit pupils, like those of a cat."
 	pupils_name = "slit pupils"
-	penlight_message = "shine under the a pearly light"
+	penlight_message = "shine under the pearly light"
