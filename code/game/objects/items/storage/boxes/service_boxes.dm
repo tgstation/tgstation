@@ -303,5 +303,5 @@
 /obj/item/storage/box/purity_seal_box/PopulateContents()
     for(var/i in 1 to 4)
         new /obj/item/sticker/purity_seal(src)
-    for(var/i in 1 to 4)
-        new /obj/item/sticker/purity_seal/purity_seal_2(src)
+		new /obj/item/sticker/purity_seal/purity_seal_2(src)
+
