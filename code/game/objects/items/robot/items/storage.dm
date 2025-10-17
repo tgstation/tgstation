@@ -210,6 +210,11 @@
 	storable = list(/obj/item/organ,
 					/obj/item/bodypart)
 
+/obj/item/borg/apparatus/organ_storage/get_proxy_attacker_for(atom/target, mob/user)
+	if(isliving(target))
+		return stored || ..()
+	return ..()
+
 /obj/item/borg/apparatus/organ_storage/examine()
 	. = ..()
 	. += "The organ bag currently contains:"

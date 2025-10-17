@@ -1,0 +1,381 @@
+#define OPERATION_AFFECTS_MOOD (1<<0)
+#define OPERATION_NOTABLE (1<<1)
+#define OPERATION_LOOPING (1<<2)
+#define OPERATION_MORBID (1<<3)
+
+#define IMPLEMENT_HAND "hands"
+
+GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
+
+/datum/surgery_operation
+	var/name = "surgery operation"
+	var/desc = "A surgery operation that can be performed on a bodypart."
+
+	/// Biotype required to perform this operation
+	var/required_biotype = NONE
+
+	/// What tool(s) are needed to perform this operation
+	var/list/implements
+	/// How long to perform this operation
+	var/time = 1 SECONDS
+
+	var/operation_flags = NONE
+
+	/// SFX played before the do-after begins
+	var/preop_sound
+	/// SFX played on success, after the do-after
+	var/success_sound
+	/// SFX played on failure, after the do-after
+	var/failure_sound
+
+	/// Option displayed when this operation is available
+	var/datum/radial_menu_choice/main_option
+
+/**
+ * Checks to see if this operation can be performed on the bodypart
+ * This is the main entry point for checking availability
+ */
+/datum/surgery_operation/proc/check_availability(obj/item/bodypart/limb, obj/item/tool = IMPLEMENT_HAND)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(!state_check(limb))
+		return FALSE
+
+	if(required_biotype && !(limb.bodytype & required_biotype))
+		return FALSE
+
+	if(!is_available(limb))
+		return FALSE
+
+	if(get_tool_quality(tool) <= 0)
+		return FALSE
+
+	return TRUE
+
+/**
+ * Specifically concerns itself with checking limb state to see if the operation can be performed
+ */
+/datum/surgery_operation/proc/state_check(obj/item/bodypart/limb)
+	return FALSE
+
+/**
+ * Returns the quality of the passed tool for this operation
+ * Quality directly affects the time taken to perform the operation
+ *
+ * 0 = unusable
+ * 1 = standard quality
+ */
+/datum/surgery_operation/proc/get_tool_quality(obj/item/tool = IMPLEMENT_HAND)
+	if(!length(implements))
+		return 1
+	if(!tool_check(tool))
+		return 0
+	return implements[tool.tool_behaviour] || is_type_in_list(tool, implements, zebra = TRUE) || 0
+
+/**
+ * Checks to see if the provided tool is valid for this operation
+ * You can override this to add more specific checks, such as checking sharpness
+ */
+/datum/surgery_operation/proc/tool_check(obj/item/tool)
+	return TRUE
+
+/**
+ * Returns the name of whatever tool is recommended for this operation, such as "hemostat"
+ */
+/datum/surgery_operation/proc/get_recommended_tool()
+	if(!length(implements))
+		return null
+	var/recommendation = implements[1]
+	if(istext(recommendation))
+		return recommendation
+	if(ispath(recommendation, /obj/item))
+		var/obj/item/tool = recommendation
+		return tool::name
+	return null
+
+/**
+ * Checks to see if this operation can be performed on the bodypart
+ * You can override this to add more specific checks, such as checking for organs, etc.
+ *
+ * Don't call this, call check_availability() instead
+ */
+/datum/surgery_operation/proc/is_available(obj/item/bodypart/limb)
+	PROTECTED_PROC(TRUE)
+	return TRUE
+
+/**
+ * Return an assoc list or a list of radial slices to display when this operation is available
+ *
+ * Operations are "available" if they pass the check_availability() check, ie the bodypart is in a correct state
+ *
+ * By default it returns a single option with the operation name and description,
+ * but you can override this proc to return multiple options for one operation, like selecting which organ to operate on.
+ */
+/datum/surgery_operation/proc/get_radial_options(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+	if(!main_option)
+		main_option = new()
+		main_option.image = get_default_radial_image(limb, surgeon, tool)
+		main_option.name = name
+		main_option.info = desc
+
+	var/list/result = list()
+	result[main_option] = list("action" = "default")
+	return result
+
+/// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
+/datum/surgery_operation/proc/get_default_radial_image(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+	if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
+		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_[limb.body_zone]")
+	if(limb.body_zone == BODY_ZONE_L_ARM || limb.body_zone == BODY_ZONE_R_ARM)
+		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_arms")
+	if(limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG)
+		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_legs")
+	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
+
+/**
+ * Collates all time modifiers for this operation and returns the final modifier
+ */
+/datum/surgery_operation/proc/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+	var/implement_modifier = get_tool_quality(tool) || 1
+	var/location_modifier = get_location_modifier(limb.owner)
+	// modifiers are expressed as fractions of the base time - ie, 1.2x = 1.2x faster surgery
+	// but since we're multiplying time, we invert here - ie, 1.2x = 0.83x smaller time
+	return round(1 / (implement_modifier * location_modifier), 0.01)
+
+/mob/living/proc/perform_surgery(mob/living/patient, obj/item/potential_tool)
+	if(combat_mode)
+		return NONE
+
+	var/obj/item/bodypart/limb = patient.get_bodypart(deprecise_zone(zone_selected))
+	if(isnull(limb))
+		return NONE
+
+	// if(tool)
+	// 	tool = tool.get_proxy_attacker_for(limb, src)
+
+	var/list/operations = list()
+	var/list/radial_operations = list()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations)
+		if(!operation.check_availability(limb, potential_tool))
+			continue
+		for(var/radial_slice, option_info in operation.get_radial_options(limb, src, potential_tool))
+			operations[radial_slice] = list("operation" = operation) + option_info
+			radial_operations[radial_slice] = radial_slice
+
+	if(!length(operations))
+		return NONE // allow attacking
+
+	var/picked = show_radial_menu(
+		src, patient, radial_operations, require_near = TRUE, autopick_single_option = TRUE, radius = 48,
+	)
+	if(!picked)
+		return ITEM_INTERACT_BLOCKING // cancelled
+
+	var/datum/surgery_operation/picked_operation = operations[picked]["operation"]
+	return picked_operation.try_perform(limb, src, potential_tool, operations[picked])
+
+/**
+ * The actual chain of performing the operation
+ *
+ * Returns an item interaction flag - intended to be invoked from the interaction chain
+ */
+/datum/surgery_operation/proc/try_perform(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	if(!check_availability(limb, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	start_operation(limb, surgeon, tool, operation_args)
+
+	var/result = NONE
+
+	do
+		var/total_modifier = get_time_modifiers(limb, surgeon, tool)
+		var/final_time = time * total_modifier
+		if(!do_after(surgeon, final_time, limb.owner, extra_checks = CALLBACK(src, PROC_REF(operate_check), limb, surgeon, tool, operation_args)))
+			result |= ITEM_INTERACT_BLOCKING
+			break
+
+		if(ishuman(surgeon))
+			var/mob/living/carbon/human/surgeon_human = surgeon
+			surgeon_human.add_blood_DNA_to_items(limb.owner.get_blood_dna_list(), ITEM_SLOT_GLOVES)
+		else
+			surgeon.add_mob_blood(limb.owner)
+
+		if(tool)
+			tool.add_mob_blood(limb.owner)
+
+		if(is_successful(final_time))
+			success(limb, surgeon, tool, operation_args)
+			result |= ITEM_INTERACT_SUCCESS
+		else
+			failure(limb, surgeon, tool, operation_args, total_modifier)
+			result |= ITEM_INTERACT_FAILURE
+
+	while ((operation_flags & OPERATION_LOOPING) && can_loop(limb, surgeon, tool, operation_args))
+
+	return result
+
+/// Called after an operation to check if it can be repeated/looped
+/datum/surgery_operation/proc/can_loop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	PROTECTED_PROC(TRUE)
+	return operate_check(limb, surgeon, tool, operation_args)
+
+/// Called during the do-after to check if the operation can continue
+/datum/surgery_operation/proc/operate_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	PROTECTED_PROC(TRUE)
+	return check_availability(limb, tool)
+
+/**
+ * Checks if the operation was successful
+ *
+ * Returns TRUE if successful, FALSE if failed
+ */
+/datum/surgery_operation/proc/is_successful(operation_speed)
+	if(operation_speed > time * 2.5)
+		return FALSE
+	return TRUE
+
+/**
+ * Called when the operation initiates
+ * Don't touch this proc, override on_preop() instead
+ */
+/datum/surgery_operation/proc/start_operation(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	play_operation_sound(limb, surgeon, tool, preop_sound)
+	on_preop(limb, surgeon, tool, operation_args)
+
+/**
+ * Used to customize behavior when the operation starts
+ */
+/datum/surgery_operation/proc/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You begin to operate on [limb.owner]..."),
+		span_notice("[surgeon] begins to operate on [limb.owner]."),
+		span_notice("[surgeon] begins to operate on [limb.owner]."),
+	)
+
+/**
+ * Called when the operation is successful
+ * Don't touch this proc, override on_success() instead
+ */
+/datum/surgery_operation/proc/success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(operation_flags & OPERATION_NOTABLE)
+		SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
+		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
+
+	SEND_SIGNAL(surgeon, COMSIG_MOB_SURGERY_STEP_SUCCESS, src, limb, tool)
+	play_operation_sound(limb, surgeon, tool, success_sound)
+	on_success(limb, surgeon, tool, operation_args)
+
+/**
+ * Used to customize behavior when the operation is successful
+ */
+/datum/surgery_operation/proc/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You succeed."),
+		span_notice("[surgeon] succeeds!"),
+		span_notice("[surgeon] finishes."),
+	)
+
+/**
+ * Called when the operation fails
+ * Don't touch this proc, override on_failure() instead
+ */
+/datum/surgery_operation/proc/failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(operation_flags & OPERATION_NOTABLE)
+		SSblackbox.record_feedback("tally", "surgeries_failed", 1, type)
+
+	play_operation_sound(limb, surgeon, tool, failure_sound)
+	on_failure(limb, surgeon, tool, operation_args, total_penalty_modifier)
+
+/**
+ * Used to customize behavior when the operation fails
+ *
+ * total_penalty_modifier is the final modifier applied to the time taken to perform the operation,
+ * and it can be interpreted as how badly the operation was performed
+ *
+ * At its lowest, it will be just above 2.5 (the threshold for success), and can go up to infinity (theoretically)
+ */
+/datum/surgery_operation/proc/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier = 1)
+	var/screwedmessage = ""
+	switch(total_penalty_modifier)
+		if(2.5 to 3)
+			screwedmessage = " You almost had it, though."
+		if(3 to 4)
+			pass()
+		if(4 to 5)
+			screwedmessage = " This is hard to get right in these conditions..."
+		if(5 to INFINITY)
+			screwedmessage = " This is practically impossible in these conditions..."
+
+	display_results(
+		surgeon,
+		limb.owner,
+		span_warning("You screw up![screwedmessage]"),
+		span_warning("[surgeon] screws up!"),
+		span_notice("[surgeon] finishes."),
+		TRUE, //By default the patient will notice if the wrong thing has been cut
+	)
+
+// -- HELPERS --
+
+/// Used to display messages to the surgeon and patient
+/datum/surgery_operation/proc/display_results(mob/living/surgeon, mob/living/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
+	surgeon.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
+	if(target_detailed)
+		return
+	var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
+	if(!vague_message)
+		if(detailed_message)
+			stack_trace("DIDN'T GET PASSED A VAGUE MESSAGE.")
+			vague_message = detailed_message
+		else
+			stack_trace("NO MESSAGES TO SEND TO TARGET!")
+			vague_message = span_notice("You feel [you_feel] as you are operated on.")
+	target.show_message(vague_message, MSG_VISUAL, span_notice("You feel [you_feel] as you are operated on."))
+
+/// Display pain message to the target based on their traits and condition
+/datum/surgery_operation/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
+	if(!pain_message)
+		return
+
+	// Determine how drunk our patient is
+	var/drunken_patient = target.get_drunk_amount()
+	// Create a probability to ignore the pain based on drunkenness level
+	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
+
+	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
+		return
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
+		to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))
+		return
+	to_chat(target, span_userdanger(pain_message))
+	if(prob(30) && !mechanical_surgery)
+		target.emote("scream")
+
+/// Plays a sound for the operation based on the tool used
+/datum/surgery_operation/proc/play_operation_sound(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, sound_or_sound_list)
+	var/sound_to_play
+	if(islist(sound_or_sound_list))
+		var/list/sounds = sound_or_sound_list
+		sound_to_play = sounds[tool.tool_behaviour] || is_type_in_list(tool, sounds, zebra = TRUE)
+	else
+		sound_to_play = sound_or_sound_list
+
+	if(sound_to_play)
+		playsound(surgeon, sound_to_play, 50, TRUE)
+
+// melbert todos
+// - figure out simplemobs
+// - do something with surgical drapes (+speed bonus, +safety?)
+// - wounds put you in certain bodypart states (limb bleeding -> vessels cut, broken bone -> bone drilled, etc)
+// - trait for mobs which require a saw to break skin
+// - tie organ fishing to an open cavity

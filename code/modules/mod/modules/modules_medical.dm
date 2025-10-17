@@ -191,37 +191,37 @@
 	organ = null
 	return ..()
 
-/obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(!isliving(target))
-		organ.forceMove(drop_location())
-		organ = null
-		return
-	var/mob/living/carbon/human/organ_receiver = target
-	var/succeed = FALSE
-	if(organ_receiver.surgeries.len)
-		for(var/datum/surgery/organ_manipulation/procedure in organ_receiver.surgeries)
-			if(procedure.location != organ.zone)
-				continue
-			if(!ispath(procedure.steps[procedure.status], /datum/surgery_step/manipulate_organs))
-				continue
-			succeed = TRUE
-			break
+// /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
+// 	. = ..()
+// 	if(!isliving(target))
+// 		organ.forceMove(drop_location())
+// 		organ = null
+// 		return
+// 	var/mob/living/carbon/human/organ_receiver = target
+// 	var/succeed = FALSE
+// 	if(organ_receiver.surgeries.len)
+// 		for(var/datum/surgery/organ_manipulation/procedure in organ_receiver.surgeries)
+// 			if(procedure.location != organ.zone)
+// 				continue
+// 			if(!ispath(procedure.steps[procedure.status], /datum/surgery_step/manipulate_organs))
+// 				continue
+// 			succeed = TRUE
+// 			break
 
-	if(!succeed)
-		organ.forceMove(drop_location())
-		organ = null
-		return
+// 	if(!succeed)
+// 		organ.forceMove(drop_location())
+// 		organ = null
+// 		return
 
-	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
-	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
-		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
-			continue
-		organ_evacced.Remove(target, special = TRUE)
-		organ_evacced.forceMove(get_turf(target))
+// 	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
+// 	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
+// 		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
+// 			continue
+// 		organ_evacced.Remove(target, special = TRUE)
+// 		organ_evacced.forceMove(get_turf(target))
 
-	organ.Insert(target)
-	organ = null
+// 	organ.Insert(target)
+// 	organ = null
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
 /obj/item/mod/module/criminalcapture/patienttransport
@@ -406,22 +406,22 @@
 		/datum/surgery/healing/combo/upgraded/femto,
 		/datum/surgery/advanced/brainwashing,
 		/datum/surgery/advanced/brainwashing/mechanic,
-		/datum/surgery/advanced/bioware/nerve_splicing,
-		/datum/surgery/advanced/bioware/nerve_splicing/mechanic,
-		/datum/surgery/advanced/bioware/nerve_grounding,
-		/datum/surgery/advanced/bioware/nerve_grounding/mechanic,
-		/datum/surgery/advanced/bioware/vein_threading,
-		/datum/surgery/advanced/bioware/vein_threading/mechanic,
-		/datum/surgery/advanced/bioware/muscled_veins,
-		/datum/surgery/advanced/bioware/muscled_veins/mechanic,
-		/datum/surgery/advanced/bioware/ligament_hook,
-		/datum/surgery/advanced/bioware/ligament_hook/mechanic,
-		/datum/surgery/advanced/bioware/ligament_reinforcement,
-		/datum/surgery/advanced/bioware/ligament_reinforcement/mechanic,
-		/datum/surgery/advanced/bioware/cortex_imprint,
-		/datum/surgery/advanced/bioware/cortex_imprint/mechanic,
-		/datum/surgery/advanced/bioware/cortex_folding,
-		/datum/surgery/advanced/bioware/cortex_folding/mechanic,
+		// /datum/surgery/advanced/bioware/nerve_splicing,
+		// /datum/surgery/advanced/bioware/nerve_splicing/mechanic,
+		// /datum/surgery/advanced/bioware/nerve_grounding,
+		// /datum/surgery/advanced/bioware/nerve_grounding/mechanic,
+		// /datum/surgery/advanced/bioware/vein_threading,
+		// /datum/surgery/advanced/bioware/vein_threading/mechanic,
+		// /datum/surgery/advanced/bioware/muscled_veins,
+		// /datum/surgery/advanced/bioware/muscled_veins/mechanic,
+		// /datum/surgery/advanced/bioware/ligament_hook,
+		// /datum/surgery/advanced/bioware/ligament_hook/mechanic,
+		// /datum/surgery/advanced/bioware/ligament_reinforcement,
+		// /datum/surgery/advanced/bioware/ligament_reinforcement/mechanic,
+		// /datum/surgery/advanced/bioware/cortex_imprint,
+		// /datum/surgery/advanced/bioware/cortex_imprint/mechanic,
+		// /datum/surgery/advanced/bioware/cortex_folding,
+		// /datum/surgery/advanced/bioware/cortex_folding/mechanic,
 	)
 
 /obj/item/mod/module/surgical_processor/emergency
@@ -433,11 +433,11 @@
 	loaded_surgeries = list(
 		/datum/surgery/healing/combo/upgraded/femto,
 		/datum/surgery/blood_filter,
-		/datum/surgery/brain_surgery,
-		/datum/surgery/coronary_bypass,
-		/datum/surgery/ear_surgery,
-		/datum/surgery/eye_surgery,
-		/datum/surgery/hepatectomy,
+		// /datum/surgery/brain_surgery,
+		// /datum/surgery/coronary_bypass,
+		// /datum/surgery/ear_surgery,
+		// /datum/surgery/eye_surgery,
+		// /datum/surgery/hepatectomy,
 		/datum/surgery/revival,
 		/datum/surgery/stomach_pump,
 		/datum/surgery/advanced/wing_reconstruction,

@@ -80,8 +80,8 @@
 		for(var/datum/surgery/operations as anything in owner.surgeries)
 			if(operations.location != BODY_ZONE_CHEST)
 				continue
-			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
-				continue
+			// if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
+			// 	continue
 			attempt_grow(gib_on_success = FALSE)
 			return
 		attempt_grow()

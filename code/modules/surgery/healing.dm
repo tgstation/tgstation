@@ -26,12 +26,12 @@
 
 /datum/surgery/healing/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
-	if(healing_step_type)
-		steps = list(
-			/datum/surgery_step/incise/nobleed,
-			healing_step_type, //hehe cheeky
-			/datum/surgery_step/close,
-		)
+	// if(healing_step_type)
+	// 	steps = list(
+	// 		/datum/surgery_step/incise/nobleed,
+	// 		healing_step_type, //hehe cheeky
+	// 		/datum/surgery_step/close,
+	// 	)
 
 /datum/surgery_step/heal
 	name = "repair body (hemostat)"

@@ -370,3 +370,13 @@
 #undef SURGERY_STATE_FAILURE
 #undef SURGERY_STATE_SUCCESS
 #undef SURGERY_MOOD_CATEGORY
+
+/datum/surgery_step/incise
+
+/datum/surgery_step/retract_skin
+
+/datum/surgery_step/clamp_bleeders
+
+/datum/surgery_step/close
+
+/datum/surgery_step/saw

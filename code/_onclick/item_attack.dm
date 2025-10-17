@@ -181,6 +181,10 @@
 	return attacking_item.attack_atom(src, user, modifiers, attack_modifiers)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/surgery_ret = user.perform_surgery(src, tool)
+	if(surgery_ret)
+		return surgery_ret
+
 	for(var/datum/surgery/operation as anything in surgeries)
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
 			continue

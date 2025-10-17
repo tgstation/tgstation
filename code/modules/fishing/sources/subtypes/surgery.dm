@@ -23,16 +23,16 @@
 		var/random_type = pick(subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		return new random_type(spawn_location)
 
-	var/mob/living/carbon/carbon = fishing_spot
+	// var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
-	for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
-		var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
-		if(!istype(manip_step))
-			continue
-		for(var/obj/item/organ/organ in operation.operated_bodypart)
-			if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
-				continue
-			possible_organs |= organ
+	// for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
+	// 	var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
+	// 	if(!istype(manip_step))
+	// 		continue
+	// 	for(var/obj/item/organ/organ in operation.operated_bodypart)
+	// 		if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
+	// 			continue
+	// 		possible_organs |= organ
 
 	if(!length(possible_organs))
 		return null

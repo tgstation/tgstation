@@ -1234,60 +1234,60 @@
 	name = "Nerve Splicing"
 	desc = "A surgical procedure which splices the patient's nerves, making them more resistant to stuns."
 	id = "surgery_nerve_splice"
-	surgery = /datum/surgery/advanced/bioware/nerve_splicing
+	// surgery = /datum/surgery/advanced/bioware/nerve_splicing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/nerve_splicing/mechanic
 	name = "System Automatic Reset Subroutine"
 	desc = "A robotic upgrade which upgrades a robotic patient's automatic systems, making them more resistant to stuns."
 	id = "surgery_nerve_splice_mechanic"
-	surgery = /datum/surgery/advanced/bioware/nerve_splicing/mechanic
+	// surgery = /datum/surgery/advanced/bioware/nerve_splicing/mechanic
 
 /datum/design/surgery/nerve_grounding
 	name = "Nerve Grounding"
 	desc = "A surgical procedure which makes the patient's nerves act as grounding rods, protecting them from electrical shocks."
 	id = "surgery_nerve_ground"
-	surgery = /datum/surgery/advanced/bioware/nerve_grounding
+	// surgery = /datum/surgery/advanced/bioware/nerve_grounding
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/nerve_grounding/mechanic
 	name = "System Shock Dampening"
 	desc = "A robotic upgrade which installs grounding rods into the robotic patient's system, protecting them from electrical shocks."
 	id = "surgery_nerve_ground_mechanic"
-	surgery = /datum/surgery/advanced/bioware/nerve_grounding/mechanic
+	// surgery = /datum/surgery/advanced/bioware/nerve_grounding/mechanic
 
 /datum/design/surgery/vein_threading
 	name = "Vein Threading"
 	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	id = "surgery_vein_thread"
-	surgery = /datum/surgery/advanced/bioware/vein_threading
+	// surgery = /datum/surgery/advanced/bioware/vein_threading
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/vein_threading/mechanic
 	name = "Hydraulics Routing Optimization"
 	desc = "A robotic upgrade which severely reduces the amount of hydraulic fluid lost in case of injury."
 	id = "surgery_vein_thread_mechanic"
-	surgery = /datum/surgery/advanced/bioware/vein_threading/mechanic
+	// surgery = /datum/surgery/advanced/bioware/vein_threading/mechanic
 
 /datum/design/surgery/muscled_veins
 	name = "Vein Muscle Membrane"
 	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing a patient to pump blood without a heart."
 	id = "surgery_muscled_veins"
-	surgery = /datum/surgery/advanced/bioware/muscled_veins
+	// surgery = /datum/surgery/advanced/bioware/muscled_veins
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/muscled_veins/mechanic
 	name = "Hydraulics Redundancy Subroutine"
 	desc = "A robotic upgrade which adds sophisticated hydraulics redundancies, allowing a patient to pump hydraulic fluid without an engine."
 	id = "surgery_muscled_veins_mechanic"
-	surgery = /datum/surgery/advanced/bioware/muscled_veins/mechanic
+	// surgery = /datum/surgery/advanced/bioware/muscled_veins/mechanic
 
 /datum/design/surgery/ligament_hook
 	name = "Ligament Hook"
 	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
 	However this weakens the connection, making them easier to detach as well."
 	id = "surgery_ligament_hook"
-	surgery = /datum/surgery/advanced/bioware/ligament_hook
+	// surgery = /datum/surgery/advanced/bioware/ligament_hook
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/ligament_hook/mechanic
@@ -1295,14 +1295,14 @@
 	desc = "A robotic upgrade which installs rapid detachment anchor points, making it so limbs can be attached manually if detached. \
 		However this weakens the connection, making them easier to detach as well."
 	id = "surgery_ligament_hook_mechanic"
-	surgery = /datum/surgery/advanced/bioware/ligament_hook/mechanic
+	// surgery = /datum/surgery/advanced/bioware/ligament_hook/mechanic
 
 /datum/design/surgery/ligament_reinforcement
 	name = "Ligament Reinforcement"
 	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
 	However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
 	id = "surgery_ligament_reinforcement"
-	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
+	// surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/ligament_reinforcement/mechanic
@@ -1310,13 +1310,13 @@
 	desc = "A surgical procedure which adds reinforced limb anchor points to the patient's chassis, preventing dismemberment. \
 		However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
 	id = "surgery_ligament_reinforcement_mechanic"
-	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement/mechanic
+	// surgery = /datum/surgery/advanced/bioware/ligament_reinforcement/mechanic
 
 /datum/design/surgery/cortex_imprint
 	name = "Cortex Imprint"
 	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
 	id = "surgery_cortex_imprint"
-	surgery = /datum/surgery/advanced/bioware/cortex_imprint
+	// /surgery = /datum/surgery/advanced/bioware/cortex_imprint
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/cortex_imprint/mechanic
@@ -1324,20 +1324,20 @@
 	desc = "A surgical procedure which updates the patient's operating system to the 'latest version', whatever that means, making the brain able to bypass damage caused by minor brain traumas. \
 		Shame about all the adware."
 	id = "surgery_cortex_imprint_mechanic"
-	surgery = /datum/surgery/advanced/bioware/cortex_imprint/mechanic
+	// surgery = /datum/surgery/advanced/bioware/cortex_imprint/mechanic
 
 /datum/design/surgery/cortex_folding
 	name = "Cortex Folding"
 	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
 	id = "surgery_cortex_folding"
-	surgery = /datum/surgery/advanced/bioware/cortex_folding
+	// surgery = /datum/surgery/advanced/bioware/cortex_folding
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/cortex_folding/mechanic
 	name = "Wetware OS Labyrinthian Programming"
 	desc = "A robotic upgrade which reprograms the patient's neural network in a downright eldritch programming language, giving space to non-standard neural patterns."
 	id = "surgery_cortex_folding_mechanic"
-	surgery = /datum/surgery/advanced/bioware/cortex_folding/mechanic
+	// surgery = /datum/surgery/advanced/bioware/cortex_folding/mechanic
 
 /datum/design/surgery/necrotic_revival
 	name = "Necrotic Revival"

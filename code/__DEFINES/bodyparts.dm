@@ -66,3 +66,27 @@
 #define BODYPART_OVERLAY_CARP_INFUSION 2
 #define BODYPART_OVERLAY_CSS_SUICIDE 3
 #define BODYPART_OVERLAY_VOIDWALKER_CURSE 4
+
+// Bodypart surgery state
+/// The skin is closed completely
+#define SURGERY_SKIN_CLOSED 0
+/// An incision has been made into the skin
+#define SURGERY_SKIN_CUT 1
+/// Skin has been pulled back
+#define SURGERY_SKIN_OPEN 2
+
+/// Blood vessels are untouched
+#define SURGERY_VESSELS_NORMAL 0
+/// Blood vessels are accessible, cut, and bleeding
+#define SURGERY_VESSELS_UNCLAMPED 1
+/// Blood vessels are accessible but clamped
+#define SURGERY_VESSELS_CLAMPED 2
+/// Indicates either an incision has been made into the organs present in the limb or organs have been incised from the limb
+#define SURGERY_VESSELS_ORGANS_CUT 3
+
+/// Bones have been untouched
+#define SURGERY_BONE_INTACT 0
+/// Holes have been drilled in our bones, exclusive with sawed
+#define SURGERY_BONE_DRILLED 1
+/// Bones have been sawed apart
+#define SURGERY_BONE_SAWED 2

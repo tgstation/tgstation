@@ -219,6 +219,10 @@
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 
+	var/surgery_skin_state = SURGERY_SKIN_CLOSED
+	var/surgery_bone_state = SURGERY_BONE_INTACT
+	var/surgery_vessel_state = SURGERY_VESSELS_NORMAL
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)

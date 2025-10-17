@@ -1576,4 +1576,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait specifying that an AI has a remote connection to an integrated circuit
 #define TRAIT_CONNECTED_TO_CIRCUIT "connected_to_circuit"
 
+#define TRAIT_ORGAN_OPERATED_ON "organ_operated_on"
+
 // END TRAIT DEFINES
