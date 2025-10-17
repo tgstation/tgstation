@@ -195,17 +195,20 @@
 
 /obj/machinery/vending/custom/item_interaction(mob/living/user, obj/item/attack_item, list/modifiers)
 	if(isliving(user) && istype(attack_item, /obj/item/card/id))
+		. = ITEM_INTERACT_FAILURE
 		var/obj/item/card/id/card_used = attack_item
 		if(card_used?.registered_account)
 			if(!linked_account)
 				linked_account = card_used.registered_account
 				speak("\The [src] has been linked to [card_used].")
+				. = ITEM_INTERACT_SUCCESS
 			else if(linked_account == card_used.registered_account)
 				linked_account = null
 				speak("account unlinked.")
+				. = ITEM_INTERACT_SUCCESS
 			else
 				to_chat(user, "verification failed. unlinking process has been cancelled.")
-			return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/machinery/vending/custom/descformat(input, mob/living/user)
 	. = input
