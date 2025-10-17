@@ -443,7 +443,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	fishing_modifier = -4
-	clothing_flags = parent_type::clothing_flags | NAUTICALLY_RADICAL
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"

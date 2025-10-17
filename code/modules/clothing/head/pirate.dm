@@ -4,7 +4,6 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	dog_fashion = /datum/dog_fashion/head/pirate
-	clothing_flags = parent_type::clothing_flags | NAUTICALLY_RADICAL
 
 /obj/item/clothing/head/costume/pirate/Initialize(mapload)
 	. = ..()

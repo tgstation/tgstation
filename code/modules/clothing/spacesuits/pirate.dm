@@ -8,7 +8,6 @@
 	equip_delay_other = 2 SECONDS
 	fishing_modifier = -2
 	visor_dirt = null
-	clothing_flags = parent_type::clothing_flags | NAUTICALLY_RADICAL
 
 /datum/armor/space_pirate
 	melee = 30
@@ -34,7 +33,6 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 2 SECONDS
 	fishing_modifier = -3
-	clothing_flags = parent_type::clothing_flags | NAUTICALLY_RADICAL
 
 /obj/item/clothing/head/helmet/space/pirate/tophat
 	name = "designer pirate helmet"

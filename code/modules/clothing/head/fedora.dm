@@ -35,7 +35,6 @@
 	name = "carpskin fedora"
 	icon_state = "fedora_carpskin"
 	inhand_icon_state = null
-	clothing_flags = parent_type::clothing_flags | NAUTICALLY_RADICAL
 
 /obj/item/clothing/head/fedora/carpskin/Initialize(mapload)
 	. = ..()

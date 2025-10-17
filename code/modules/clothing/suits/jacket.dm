@@ -66,6 +66,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	blood_overlay_type = "coat"
 	flags_inv = HIDEBELT
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR // I know kung-fu
 
 /obj/item/clothing/suit/toggle/jacket/trenchcoat/Initialize(mapload)
 	. = ..()

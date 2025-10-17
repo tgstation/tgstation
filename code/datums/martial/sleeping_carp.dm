@@ -11,6 +11,26 @@
 	grab_state_modifier = 1
 	/// List of traits applied to users of this martial art.
 	var/list/scarp_traits = list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER, TRAIT_HEAVY_SLEEPER, TRAIT_PERFECT_ATTACKER)
+	/// List of objects exempt from reducing dodge probabilities
+	var/list/exempt_objects = list(
+		/obj/item/melee/baton/nunchaku,
+		/obj/item/staff/bostaff,
+		/obj/item/bambostaff,
+		/obj/item/cane,
+		/obj/item/nullrod/bostaff,
+		/obj/item/knife,
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/storage/toolbox,
+		/obj/item/spear,
+		/obj/item/claymore/shortsword,
+		/obj/item/nullrod/nullblade,
+		/obj/item/extendohand,
+		/obj/item/mop,
+		/obj/item/pushbroom,
+		/obj/item/melee/baseball_bat,
+		/obj/item/crowbar/hammer,
+		/obj/item/toy/plush/carpplushie,
+	)
 
 /datum/martial_art/the_sleeping_carp/activate_style(mob/living/new_holder)
 	. = ..()
@@ -296,39 +316,52 @@
 
 	var/obj/item/bodypart/potential_head = human_carp_user.get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/bodypart/potential_chest = human_carp_user.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/clothing/is_it_the_shoes = human_carp_user.get_item_by_slot(ITEM_SLOT_FEET)
 
 	// The presence of armor is a style malus
 	var/oh_no_armor = 0
 
 	// Lets look to see if any relevant headwear is armored or on theme
-	for(var/obj/item/clothing/possible_pirate_hats in human_carp_user.get_clothing_on_part(potential_head))
-		if(possible_pirate_hats.clothing_flags & NAUTICALLY_RADICAL)
-			style_factor_points += 20
-		oh_no_armor = human_carp_user.run_armor_check(potential_head, MELEE)
+	for(var/obj/item/clothing/possible_headbands in human_carp_user.get_clothing_on_part(potential_head))
+		var/tallied_style_factor = 0
+		if(possible_headbands.clothing_flags & CARP_STYLE_FACTOR)
+			tallied_style_factor += 20
+		style_factor_points += clamp(tallied_style_factor, 0, 20)
+		oh_no_armor += human_carp_user.run_armor_check(potential_head, MELEE)
 
 	// Then let's look for any chest clothing that is either armored or on theme
-	for(var/obj/item/clothing/possible_pirate_outfits in human_carp_user.get_clothing_on_part(potential_chest))
-		if(possible_pirate_outfits.clothing_flags & NAUTICALLY_RADICAL)
-			style_factor_points += 20
-		if(istype(possible_pirate_outfits, /obj/item/clothing/under/costume/gi)) // I know that it isn't pirate-y or carp-y, buuuut come on. COME ON.
-			style_factor_points += 20
-		if(istype(possible_pirate_outfits, /obj/item/clothing/suit/chaplainsuit/monkrobeeast)) //Also very suitable
-			style_factor_points += 20
-		oh_no_armor = human_carp_user.run_armor_check(potential_chest, MELEE)
+	for(var/obj/item/clothing/possible_gi in human_carp_user.get_clothing_on_part(potential_chest))
+		var/tallied_style_factor = 0
+		if(possible_gi.clothing_flags & CARP_STYLE_FACTOR)
+			tallied_style_factor += 20
+		style_factor_points += clamp(tallied_style_factor, 0, 20)
+		oh_no_armor += human_carp_user.run_armor_check(potential_chest, MELEE)
 
-	// If our carp user has peg legs, we get a bonus! Don't ask how you perform the martial art with a peg leg. It just works.
-	var/obj/item/bodypart/leg/left/potential_peg_left_leg = human_carp_user.get_bodypart(BODY_ZONE_L_LEG)
-	var/obj/item/bodypart/leg/right/potential_peg_right_leg = human_carp_user.get_bodypart(BODY_ZONE_R_LEG)
-
-	if(istype(potential_peg_left_leg, /obj/item/bodypart/leg/left/ghetto) || istype(potential_peg_right_leg, /obj/item/bodypart/leg/right/ghetto))
-		style_factor_points += 10
+	// We also consider whether our footwear is appropriate
+	if(is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
+		style_factor_points += 20
 
 	// Achieved a carp state of mind.
 	if(human_carp_user.has_status_effect(/datum/status_effect/organ_set_bonus/carp))
 		style_factor_points += 20
 
-	if(human_carp_user.get_active_held_item() | human_carp_user.get_inactive_held_item())
-		style_factor_points -= 30
+	var/list/our_held_items = list()
+	our_held_items += human_carp_user.get_active_held_item()
+	our_held_items += human_carp_user.get_inactive_held_item()
+
+	// We check for wielded objects. If they're not abstract items or exempt items, we
+	for(var/obj/item/possibly_a_held_object as anything in our_held_items)
+		if(possibly_a_held_object.item_flags & (ABSTRACT|HAND_ITEM) && !possibly_a_held_object.block_chance)
+			continue
+
+		if(possibly_a_held_object in exempt_objects)
+			continue
+
+		if(possibly_a_held_object.w_class <= WEIGHT_CLASS_SMALL && !possibly_a_held_object.block_chance)
+			continue
+
+		oh_no_armor += possibly_a_held_object.block_chance
+		oh_no_armor += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
 
 	if(human_carp_user.body_position != STANDING_UP) // YARR, MAN OVERBOARD
 		style_factor_points -= 30
@@ -340,7 +373,7 @@
 /// Verb added to humans who learn the art of the sleeping carp.
 /mob/living/proc/sleeping_carp_help()
 	set name = "Regale Teachings"
-	set desc = "Remember the martial techniques of the Sleeping Carp crew."
+	set desc = "Remember the martial techniques of the Sleeping Carp clan."
 	set category = "Sleeping Carp"
 
 	to_chat(usr, span_info("<b><i>You retreat inward and recall the teachings of the Sleeping Carp...</i></b>\n\
@@ -351,7 +384,7 @@
 	[span_notice("Grabs and Shoves")]: While in combat mode, your typical grab and shove do decent stamina damag, and your grabs harder to break. If you grab someone who has substantial amounts of stamina damage, you knock them out!\n\
 	<span class='notice'>While in combat mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \n\
 	However, your ability to avoid projectiles is negatively affected when your are burdened by armor, or whenever you are carrying objects in your hands. \n\
-	But if you commmit fully to the nautical lifestyle by wearing pirate-related or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\
+	But if you commmit fully to the nautical lifestyle by wearing martial arts or carp-related regalia, you will feel empowered enough to potentially avoid attacks even from melee weapons or other unarmed combatants. \n\
 	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \n\
 	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \n\
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>"))
