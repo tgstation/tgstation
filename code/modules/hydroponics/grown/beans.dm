@@ -27,6 +27,8 @@
 	juice_typepath = /datum/reagent/consumable/soymilk
 	tastes = list("soy" = 1)
 	distill_reagent = /datum/reagent/consumable/soysauce
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Koibean
 /obj/item/seeds/soya/koi
@@ -49,6 +51,8 @@
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 //Now squeezable for imitation carpmeat
 /obj/item/food/grown/koibeans/attack_self(mob/living/user)
@@ -82,6 +86,8 @@
 	foodtypes = VEGETABLES | DAIRY
 	tastes = list("creamy butter" = 1)
 	distill_reagent = /datum/reagent/consumable/yoghurt
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/grown/butterbeans/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into a pat of butter."), span_notice("You crush [src] into something that resembles butter."))
@@ -120,6 +126,8 @@
 	icon_state = "greenbean"
 	foodtypes = FRUIT
 	tastes = list("beans" = 1)
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Jumping Bean
 /obj/item/seeds/greenbean/jump
@@ -147,3 +155,5 @@
 	icon_state = "jumpingbean"
 	foodtypes = FRUIT | BUGS
 	tastes = list("bugs" = 1)
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit

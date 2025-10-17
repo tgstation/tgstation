@@ -27,6 +27,8 @@
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 20
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 // Ice Chili
 /obj/item/seeds/chili/ice
@@ -53,6 +55,8 @@
 	bite_consumption_mod = 5
 	foodtypes = VEGETABLES
 	wine_power = 30
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -80,6 +84,8 @@
 	bite_consumption_mod = 5
 	foodtypes = VEGETABLES
 	wine_power = 50
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 // Bell Pepper
 /obj/item/seeds/chili/bell_pepper

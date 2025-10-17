@@ -33,6 +33,8 @@
 	name = "ambrosia vulgaris branch"
 	desc = "This is a plant containing various healing chemicals."
 	wine_power = 30
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Ambrosia Deus
 /obj/item/seeds/ambrosia/deus
@@ -52,6 +54,8 @@
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
 	wine_power = 50
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
@@ -79,3 +83,5 @@
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70
 	wine_flavor = "the earthmother's blessing"
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit

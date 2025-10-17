@@ -27,6 +27,8 @@
 	filling_color = "#37946e"
 	foodtypes = VEGETABLES | TOXIC
 	distill_reagent = /datum/reagent/kronkus_extract
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/grown/kronkus/Initialize(mapload, nogenes)
 	. = ..()

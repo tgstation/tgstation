@@ -25,6 +25,8 @@
 	foodtypes = VEGETABLES
 	juice_typepath = /datum/reagent/consumable/aloejuice
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/grown/aloe/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/stack/medical/aloe/fresh, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)

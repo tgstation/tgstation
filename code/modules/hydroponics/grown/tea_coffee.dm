@@ -24,6 +24,8 @@
 	grind_results = list(/datum/reagent/toxin/teapowder = 0)
 	dry_grind = TRUE
 	can_distill = FALSE
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Tea Astra
 /obj/item/seeds/tea/astra
@@ -72,6 +74,8 @@
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta

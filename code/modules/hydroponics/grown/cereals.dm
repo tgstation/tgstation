@@ -27,6 +27,8 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
 	slot_flags = ITEM_SLOT_MASK
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -49,6 +51,8 @@
 	grind_results = list(/datum/reagent/consumable/flour = 0)
 	tastes = list("oat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/ale
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -75,6 +79,8 @@
 	grind_results = list(/datum/reagent/consumable/rice = 0)
 	tastes = list("rice" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/sake
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
@@ -99,6 +105,8 @@
 	can_distill = FALSE
 	slot_flags = ITEM_SLOT_MASK
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into meat."), span_notice("You crush [src] into something that resembles meat."))

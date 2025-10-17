@@ -28,6 +28,8 @@
 	foodtypes = FRUIT
 	tastes = list("cocoa" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -50,6 +52,8 @@
 	foodtypes = FRUIT
 	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/seeds/cocoapod/bungotree
 	name = "bungo tree seed pack"

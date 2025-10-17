@@ -25,6 +25,8 @@
 	foodtypes = VEGETABLES
 	juice_typepath = /datum/reagent/consumable/carrotjuice
 	wine_power = 30
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!I.get_sharpness())

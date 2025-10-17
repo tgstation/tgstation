@@ -23,3 +23,5 @@
 	foodtypes = NUTS
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 0)
 	tastes = list("peanuts" = 1)
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit

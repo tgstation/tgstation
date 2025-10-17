@@ -27,6 +27,8 @@
 	name = "strange plant"
 	desc = "What could this even be?"
 	icon_state = "crunchy"
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/grown/random/Initialize(mapload)
 	. = ..()

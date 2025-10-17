@@ -28,6 +28,8 @@
 	juice_typepath = /datum/reagent/consumable/berryjuice
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -52,6 +54,8 @@
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -78,6 +82,8 @@
 	tastes = list("death-berry" = 1)
 	distill_reagent = null
 	wine_power = 50
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Glow Berries
 /obj/item/seeds/berry/glow
@@ -105,6 +111,8 @@
 	tastes = list("glow-berry" = 1)
 	distill_reagent = null
 	wine_power = 60
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Grapes
 /obj/item/seeds/grape
@@ -137,6 +145,8 @@
 	juice_typepath = /datum/reagent/consumable/grapejuice
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/grown/grapes/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
@@ -188,6 +198,8 @@
 	juice_typepath = /datum/reagent/consumable/toechtauese_juice
 	tastes = list("fiery itchy pain" = 1)
 	distill_reagent = /datum/reagent/toxin/itching_powder
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/seeds/lanternfruit
 	name = "lanternfruit seed pack"

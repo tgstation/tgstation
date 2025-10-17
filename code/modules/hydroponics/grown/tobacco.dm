@@ -21,6 +21,8 @@
 	desc = "Dry them out to make some smokes."
 	icon_state = "tobacco_leaves"
 	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_menthe //Menthol, I guess.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 // Space Tobacco
 /obj/item/seeds/tobacco/space

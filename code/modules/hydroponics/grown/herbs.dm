@@ -25,3 +25,5 @@
 	juice_typepath = /datum/reagent/consumable/nutriment
 	tastes = list("nondescript herbs" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/fernet
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit

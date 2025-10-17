@@ -9,6 +9,8 @@
 	wine_power = 40
 	/// Default mushroom icon for recipes that need any mushroom
 	icon_state = "plumphelmet"
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 // Reishi
 /obj/item/seeds/reishi
@@ -236,6 +238,7 @@
 	name = "jupiter cup"
 	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
 	icon_state = "jupitercup"
+	food_flags = 0 // Troutstation edit - remove the ability to eat this with tiny snouts (it's too big)
 
 // Glowshroom
 /obj/item/seeds/glowshroom
