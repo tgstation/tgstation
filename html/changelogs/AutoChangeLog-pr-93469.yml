@@ -1,0 +1,5 @@
+author: "TheNobodyofimportance"
+delete-after: True
+changes:
+  - rscdel: "Removes chipped's brain damage status effect and flavor text"
+  - rscdel: "Removes mannitol from the mail list for chipped crew"

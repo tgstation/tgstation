@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
 	contents_thermal_insulation = 0
 	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
-
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
 	/// Whether or not this door is being animated
@@ -154,6 +153,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		add_to_roundstart_list()
 
 	closet_see_inside = new(src)
+	obj_flags |= UNIQUE_RENAME
 
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload)
@@ -836,39 +836,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		else
 			balloon_alert(user, "set to [choice]")
 
-	else if(!opened && IS_WRITING_UTENSIL(weapon))
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return
-
-		if(isnull(id_card) && secure)
-			balloon_alert(user, "not yours to rename!")
-			return
-
-		var/name_set = FALSE
-		var/desc_set = FALSE
-
-
-		var/input_name = tgui_input_text(user, "Locker Name", "Locker Name", max_length = MAX_NAME_LEN)
-
-		if(!isnull(input_name))
-			name = input_name
-			name_set = TRUE
-
-		var/input_desc = tgui_input_text(user, "Locker Description", "Locker Description", max_length = MAX_DESC_LEN)
-
-		if(!isnull(input_desc))
-			desc = input_desc
-			desc_set = TRUE
-
-		var/bit_flag = NONE
-		if(name_set)
-			bit_flag |= UPDATE_NAME
-		if(desc_set)
-			bit_flag |= UPDATE_DESC
-		if(bit_flag)
-			update_appearance(bit_flag)
-
 	else if(opened)
 		if(istype(weapon, cutting_tool))
 			if(weapon.tool_behaviour == TOOL_WELDER)
@@ -1259,6 +1226,16 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 ///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
 /obj/structure/closet/proc/add_to_roundstart_list()
 	GLOB.roundstart_station_closets += src
+
+/obj/structure/closet/rename_checks(mob/living/user)
+	. = TRUE
+	if(locked)
+		src.balloon_alert(user, "unlock first!")
+		return FALSE
+
+	if(isnull(id_card) && secure)
+		src.balloon_alert(user, "not yours to rename!")
+		return FALSE
 
 ///Spears deal bonus damages to lockers
 /obj/structure/closet/secure_closet/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)

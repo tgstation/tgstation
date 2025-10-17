@@ -30,5 +30,5 @@
 			continue
 		if(trash in food_trash_blacklist)
 			continue
-
-		TEST_ASSERT(food_trash[trash], "[food] must include its trash_type for loot table /obj/effect/spawner/random/trash/food_packaging or be added to this unit tests food_trash_blacklist")
+		if(!food_trash[trash])
+			TEST_FAIL("[food] must include its trash_type for loot table /obj/effect/spawner/random/trash/food_packaging or be added to this unit tests food_trash_blacklist")

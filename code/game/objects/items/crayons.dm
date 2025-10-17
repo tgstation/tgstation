@@ -215,6 +215,7 @@
 	drawtype = pick(all_drawables)
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
+	AddElement(/datum/element/tool_renaming)
 	if(can_change_colour)
 		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 

@@ -5,8 +5,9 @@
 	icon_state = "bloodpack"
 	volume = 200
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	var/blood_type = null
-	var/labelled = FALSE
+	var/labeled = FALSE
 
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
 	. = ..()
@@ -21,7 +22,7 @@
 
 /obj/item/reagent_containers/blood/update_name(updates)
 	. = ..()
-	if(!labelled)
+	if(!labeled)
 		name = "blood pack[blood_type ? " - [blood_type]" : ""]"
 
 /obj/item/reagent_containers/blood/random
@@ -81,27 +82,7 @@
 /obj/item/reagent_containers/blood/universal
 	blood_type = BLOOD_TYPE_UNIVERSAL
 
-/obj/item/reagent_containers/blood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!IS_WRITING_UTENSIL(tool))
-		return NONE
-
-	if(!user.can_write(tool))
-		return ITEM_INTERACT_BLOCKING
-
-	var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, max_length = MAX_NAME_LEN)
-	if(!user.can_perform_action(src))
-		return ITEM_INTERACT_BLOCKING
-
-	if(user.get_active_held_item() != tool)
-		return ITEM_INTERACT_BLOCKING
-
-	if(!custom_label)
-		labelled = FALSE
-		update_name()
-		return ITEM_INTERACT_SUCCESS
-
-	labelled = TRUE
-	name = "blood pack - [custom_label]"
+/obj/item/reagent_containers/blood/nameformat(input, user)
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-	balloon_alert(user, "new label set")
-	return ITEM_INTERACT_SUCCESS
+	labeled = TRUE
+	return "blood pack[input? " - [input]" : null]"
