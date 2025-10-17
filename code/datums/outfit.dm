@@ -505,7 +505,7 @@
 	for(var/item in beltpack)
 		var/itype = text2path(item)
 		if(itype)
-			belt_contents[itype] = belt[item]
+			belt_contents[itype] = beltpack[item]
 	box = text2path(outfit_data["box"])
 	var/list/impl = outfit_data["implants"]
 	implants = list()
