@@ -1,1560 +1,570 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ae" = (
-/obj/structure/sink/kitchen/directional/west,
-/mob/living/basic/goat/pete,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+"a" = (
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"ai" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria,
+"g" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"aS" = (
-/obj/structure/closet/secure_closet/freezer/meat,
-/obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Kitchen - Cold Room"
-	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+"h" = (
+/turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/control)
-"bv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/cook,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"bW" = (
+"x" = (
 /obj/effect/landmark/error,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"cX" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	name = "Kitchen"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"df" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
-/obj/machinery/door/airlock/freezer{
-	name = "Freezer"
-	},
-/obj/structure/plasticflaps/kitchen,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"ew" = (
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/airalarm/directional/east,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"fx" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"fW" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"gB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"hz" = (
-/obj/machinery/light_switch/directional/west{
-	pixel_y = 26
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/hand_labeler,
-/obj/item/stack/package_wrap,
-/obj/item/stack/package_wrap,
-/obj/item/holosign_creator/robot_seat/restaurant,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"hM" = (
-/obj/structure/table,
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/tile/bar,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"hO" = (
-/obj/machinery/door/firedoor,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/service/bar,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/door/airlock/glass{
-	name = "Bar"
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"iW" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"jb" = (
-/obj/machinery/atmospherics/components/binary/pump/on,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"jc" = (
+"A" = (
+/turf/cordon,
+/area/space)
+"G" = (
+/turf/closed/indestructible/splashscreen,
+/area/space)
+"W" = (
 /obj/effect/landmark/start/new_player,
 /turf/cordon,
 /area/space)
-"jm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"jB" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"ko" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light_switch/directional/north,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"kt" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"lp" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"lq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"mb" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"mg" = (
-/obj/structure/table,
-/obj/item/food/mint,
-/obj/item/reagent_containers/cup/beaker/large,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"mk" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/structure/cable,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"nc" = (
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"nn" = (
-/obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light/directional/south,
-/obj/structure/table,
-/obj/item/reagent_containers/cup/beaker/large,
-/obj/item/reagent_containers/cup/beaker{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/obj/item/rag{
-	pixel_x = -4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"of" = (
-/obj/machinery/food_cart,
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 4
-	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"rQ" = (
-/obj/machinery/gibber,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"sh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"sB" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/kitchen/rollingpin,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"tm" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"ut" = (
-/obj/structure/sign/poster/random/directional/east,
-/obj/machinery/requests_console/directional/south{
-	department = "Kitchen";
-	name = "Kitchen Requests Console"
-	},
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo"
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"uT" = (
-/obj/structure/table,
-/obj/structure/cable,
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"vi" = (
-/obj/machinery/icecream_vat,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"vy" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"vY" = (
-/obj/item/radio/intercom/directional/south,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/machinery/reagentgrinder{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/condiment/enzyme{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"wz" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/food/pie/cream,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"wM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/north{
-	name = "Kitchen Window";
-	req_access = list("kitchen")
-	},
-/obj/machinery/door/firedoor,
-/obj/item/paper,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchen_service";
-	name = "Service Shutter"
-	},
-/obj/item/pen,
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"wT" = (
-/obj/machinery/vending/dinnerware,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 5
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"xg" = (
-/turf/closed/indestructible/splashscreen,
-/area/space)
-"xJ" = (
-/obj/structure/sign/poster/random/directional/east,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 10
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"yu" = (
-/obj/structure/table,
-/obj/item/food/dough,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"yZ" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/structure/sink/kitchen/directional/east,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"zj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"zR" = (
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"zT" = (
-/obj/machinery/door/firedoor,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/navigate_destination/kitchen,
-/obj/effect/mapping_helpers/airlock/access/any/service/bar,
-/obj/effect/mapping_helpers/airlock/access/any/service/kitchen,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/machinery/door/airlock/public{
-	name = "Kitchen"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Ak" = (
-/obj/machinery/oven/range,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Br" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/light_switch/directional/south,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/deepfryer,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 5
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Cc" = (
-/obj/structure/table,
-/obj/item/storage/bag/plants,
-/obj/item/reagent_containers/cup/watering_can,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Ce" = (
-/obj/structure/cable,
-/obj/structure/table,
-/obj/item/storage/bag/tray,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Ct" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"CA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"CE" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"ET" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"Ft" = (
-/obj/effect/landmark/start/cook,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"GB" = (
-/obj/structure/reagent_dispensers/cooking_oil,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"Hb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"In" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/smartfridge/food,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Ji" = (
-/obj/structure/table,
-/obj/item/kitchen/rollingpin,
-/obj/effect/turf_decal/trimline/brown/warning,
-/obj/item/rag,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/item/aquarium_kit,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Jr" = (
-/obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/cake_ingredients,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"JE" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"JN" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Ke" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 5
-	},
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Kw" = (
-/obj/structure/table,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Kx" = (
-/obj/machinery/smartfridge/drinks,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"KU" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/freezer/fridge,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Lp" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/smartfridge/drying,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 9
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Lt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/hangover,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Md" = (
-/obj/machinery/button/door/directional/east{
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters Control";
-	req_access = list("kitchen")
-	},
-/obj/structure/table,
-/obj/machinery/processor{
-	pixel_y = 12
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"MI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/centcom/central_command_areas/control)
-"Nj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"ND" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"NY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/hangover,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Od" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/centcom/central_command_areas/control)
-"Op" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/griddle,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Oq" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 6
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Kitchen"
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"OL" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"OU" = (
-/obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/structure/desk_bell{
-	pixel_x = 7
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Pz" = (
-/obj/machinery/power/smes/magical,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"PJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"QB" = (
-/obj/structure/cable,
-/obj/machinery/holopad,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"QD" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"RB" = (
-/obj/machinery/rnd/production/techfab/department/service,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 6
-	},
-/obj/effect/turf_decal/box,
-/obj/structure/extinguisher_cabinet/directional/east,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"RL" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"SC" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"SN" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/sink/kitchen/directional/west,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"ST" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"Tf" = (
-/turf/cordon,
-/area/space)
-"Tp" = (
-/turf/closed/wall,
-/area/centcom/central_command_areas/control)
-"TX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Uh" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Uj" = (
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"UE" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/duct,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"VD" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/duct,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/control)
-"VF" = (
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/control)
-"VG" = (
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airalarm/tlv_kitchen,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Wh" = (
-/obj/machinery/vending/wardrobe/chef_wardrobe,
-/obj/effect/turf_decal/trimline/brown/warning{
-	dir = 6
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -6
-	},
-/obj/machinery/button/door/directional/south{
-	id = "kitchen_service";
-	name = "Service Shutter Control";
-	pixel_x = 6;
-	req_access = list("kitchen")
-	},
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"Ya" = (
-/obj/machinery/griddle,
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
-"ZD" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/turf/open/floor/iron/cafeteria,
-/area/centcom/central_command_areas/control)
 
 (1,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-xg
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+G
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
 "}
 (2,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (3,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-bW
-zR
-Kx
-hO
-Tp
-Tp
-Tp
-Tp
-Tp
-Tp
-Tp
-zj
-mb
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (4,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-Uj
-Uj
-zT
-jB
-yZ
-hz
-Ke
-Oq
-wT
-Wh
-Tp
-lq
-PJ
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (5,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-Pz
-zR
-In
-jB
-mk
-NY
-fx
-RL
-UE
-tm
-cX
-VD
-Ct
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+g
+a
+a
+a
+a
+a
+a
+h
 "}
 (6,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-CE
-QD
-lp
-Nj
-Ce
-Kw
-CA
-ND
-wM
-gB
-ST
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (7,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-wz
-QD
-Ak
-Nj
-uT
-yu
-Ft
-vY
-Tp
-Cc
-Od
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (8,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-jc
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-SC
-QD
-Jr
-Nj
-sB
-mg
-jm
-nn
-Tp
-Ji
-JN
-VF
+A
+A
+A
+A
+A
+A
+A
+W
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (9,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-OU
-QD
-Ak
-Lt
-QB
-ai
-SN
-ut
-Tp
-RB
-ew
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+g
+a
+a
+a
+g
+x
+a
+a
+g
+a
+a
+h
 "}
 (10,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-fW
-QD
-OL
-bv
-Uh
-Lp
-Tp
-Tp
-Tp
-Tp
-Tp
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (11,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-kt
-iW
-Ya
-Op
-ZD
-Br
-Tp
-ko
-aS
-GB
-Tp
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (12,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-Tp
-sh
-nc
-TX
-vy
-Hb
-df
-jb
-MI
-of
-Tp
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (13,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-Tp
-Md
-hM
-KU
-xJ
-VG
-Tp
-ae
-ET
-vi
-Tp
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+g
+a
+a
+a
+a
+a
+a
+h
 "}
 (14,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-Tp
-Tp
-Tp
-Tp
-Tp
-Tp
-Tp
-Tp
-JE
-rQ
-Tp
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (15,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (16,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-zR
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+h
 "}
 (17,1,1) = {"
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-Tf
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
-VF
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
+h
 "}
