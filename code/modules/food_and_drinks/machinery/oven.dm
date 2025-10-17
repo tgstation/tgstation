@@ -262,6 +262,7 @@
 	icon_state = "oven_tray"
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
+	sound_vary = TRUE
 	pickup_sound = SFX_TRAY_PICKUP
 	drop_sound = SFX_TRAY_DROP
 
