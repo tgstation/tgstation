@@ -39,7 +39,7 @@
 
 	// we want to keep decals from crayon writings, blood splatters, cobwebs, etc.
 	// most landmarks get deleted except for latejoin arrivals shuttle
-	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
+	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile, /obj/machinery/gravity_generator/part, /mob/living/carbon)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
 	if(!obj_blacklist)
 		obj_blacklist = default_blacklist
 
@@ -141,47 +141,53 @@
 					total_turfs_saved++
 
 				// always reset these to 0 as we iterate to a new turf
-				GLOB.serialization_turf_obj_count = 0
-				GLOB.serialization_turf_mob_count = 0
+				GLOB.TGM_objs = 0
+				GLOB.TGM_mobs = 0
 
 				for(var/atom/movable/target_atom as anything in pull_from)
 					if(target_atom.flags_1 & HOLOGRAM_1)
 						continue
 					if(is_multi_tile_object(target_atom) && (target_atom.loc != pull_from))
 						continue
+					if(!target_atom.is_saveable())
+						continue
+					if(obj_blacklist[target_atom.type])
+						continue
 
 					//====SAVING OBJECTS====
 					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
 						var/obj/target_obj = target_atom
 						CHECK_TICK
-						if(obj_blacklist[target_obj.type])
+
+/*
+						if(TGM_MAX_OBJ_CHECK)
 							continue
-						if(GLOB.serialization_turf_obj_count >= max_object_limit)
-							continue
+						TGM_OBJ_INCREMENT
+*/
 
 						var/metadata
 						if(save_flag & SAVE_OBJECTS_VARIABLES)
 							metadata = generate_tgm_metadata(target_obj)
 
-						GLOB.serialization_turf_obj_count++
 						current_header += "[empty ? "" : ",\n"][target_obj.type][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
 						if(save_flag & SAVE_OBJECTS_PROPERTIES)
-							var/custom_data = target_obj.on_object_saved(serialization_turf_obj_count)
+							var/custom_data = target_obj.on_object_saved()
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 
 					//====SAVING MOBS====
 					if((save_flag & SAVE_MOBS) && isliving(target_atom))
 						var/mob/living/target_mob = target_atom
 						CHECK_TICK
-						if(istype(target_mob, /mob/living/carbon)) //Ignore people, but not animals
-							continue
-						if(GLOB.serialization_turf_mob_count >= max_mob_limit)
-							continue
 
-						GLOB.serialization_turf_mob_count++
+/*
+						if(TGM_MAX_MOB_CHECK)
+							continue
+						TGM_MOB_INCREMENT
+*/
+
 						var/metadata = generate_tgm_metadata(target_mob)
 						current_header += "[empty ? "" : ",\n"][target_mob.type][metadata]"
 						empty = FALSE
@@ -198,8 +204,8 @@
 						var/metadata = generate_tgm_metadata(atmos_turf)
 						current_header += "[metadata]"
 
-				total_mobs_saved += GLOB.serialization_turf_mob_count
-				total_objs_saved += GLOB.serialization_turf_obj_count
+				total_mobs_saved += GLOB.TGM_objs
+				total_objs_saved += GLOB.TGM_mobs
 
 				current_header += ",\n[saved_area])\n"
 				//====Fill the contents file====
