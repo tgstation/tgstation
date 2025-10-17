@@ -208,6 +208,7 @@
 				. = ITEM_INTERACT_SUCCESS
 			else
 				to_chat(user, "verification failed. unlinking process has been cancelled.")
+		return
 	return ..()
 
 /obj/machinery/vending/custom/descformat(input, mob/living/user)
