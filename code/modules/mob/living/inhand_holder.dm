@@ -148,6 +148,20 @@
 		QDEL_NULL(held_mob)
 	return ..()
 
+/obj/item/mob_holder/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	// We need to pass clicks through to atom storage if we have one
+	if(. || !held_mob?.atom_storage)
+		return
+	return held_mob.attack_hand(user, modifiers)
+
+/obj/item/mob_holder/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	// We need to pass clicks through to atom storage if we have one
+	if(. != SECONDARY_ATTACK_CALL_NORMAL || !held_mob?.atom_storage)
+		return
+	return held_mob.attack_hand_secondary(user, modifiers)
+
 /obj/item/mob_holder/attack_self(mob/user, modifiers)
 	. = ..()
 	if(. || !held_mob) //overriden or mob missing

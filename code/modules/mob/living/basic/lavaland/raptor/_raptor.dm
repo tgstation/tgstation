@@ -414,6 +414,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		QDEL_NULL(ai_controller)
 		ai_controller = new /datum/ai_controller/basic_controller/baby_raptor(src)
 		held_w_class = WEIGHT_CLASS_SMALL
+		worn_slot_flags = NONE
 		holder?.update_weight_class(held_w_class)
 	else
 		collar_state = base_icon_state
@@ -421,7 +422,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		if (prev_stage == RAPTOR_BABY)
 			QDEL_NULL(ai_controller)
 			ai_controller = new raptor_color.ai_controller(src)
-		held_w_class = WEIGHT_CLASS_BULKY // No need to update the holder as we unfurl above
+		held_w_class = WEIGHT_CLASS_BULKY
+		worn_slot_flags = ITEM_SLOT_BACK
+		holder?.update_weight_class(held_w_class)
 
 	for(var/trait in GLOB.raptor_inherit_traits)
 		var/should_inherit = (trait in inherited_stats.personality_traits)
