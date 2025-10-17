@@ -722,6 +722,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lung_harm = 2
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
 
+/obj/item/cigarette/flash_powder
+	desc = "A Space brand cigarette that can be smoked anywhere."
+	list_reagents = list (/datum/reagent/drug/nicotine = 9, /datum/reagent/flash_powder = 5)
+
 // Rollies.
 
 /obj/item/cigarette/rollie
