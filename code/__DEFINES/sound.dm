@@ -288,6 +288,18 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define	SFX_RORO_WARBLE "roro_warble"
 #define SFX_POTTED_PLANT_PICKUP "potted_plant_pickup"
 #define SFX_POTTED_PLANT_DROP "potted_plant_drop"
+#define SFX_FOOD_PLATE_PICKUP "food_plate_pickup"
+#define SFX_FOOD_PLATE_DROP "food_plate_drop"
+#define SFX_TRAY_PICKUP "tray_pickup"
+#define SFX_TRAY_DROP "tray_drop"
+#define SFX_TRAY_INSERT "tray_insert"
+#define SFX_CUTLERY_PICKUP "generic_cutlery_pickup"
+#define SFX_CUTLERY_DROP "generic_cutlery_drop"
+#define SFX_KNIFE_PICKUP "knife_pickup"
+#define SFX_KNIFE_DROP "knife_drop"
+#define SFX_KNIFE_SLICE "knife_slice"
+#define SFX_POT_PICKUP "pot_pickup"
+#define SFX_POT_DROP "pot_drop"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
