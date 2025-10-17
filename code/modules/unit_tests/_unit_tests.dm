@@ -174,7 +174,6 @@
 #include "gloves_and_shoes_armor.dm"
 #include "greyscale_config.dm"
 #include "hallucination_icons.dm"
-#include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "high_five.dm"
 #include "holder_loving.dm"

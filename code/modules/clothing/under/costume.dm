@@ -148,6 +148,7 @@
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/yukata/green
 	name = "green yukata"
@@ -168,6 +169,7 @@
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/kimono/red
 	name = "red kimono"

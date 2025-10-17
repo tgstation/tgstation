@@ -465,3 +465,82 @@
   - balance: Includes crustaceans and reptiles to the list of mob types that Hunter
       Boxing is allowed to mangle with their bare hands. You still can't use Hunter
       Boxing on lizardpeople. Or crabpeople when they are added in 2030.
+2025-10-15:
+  ArchBTW, NecromancerAnne (original code, sprites), SmArtKar (sprites), DrDiasyl (sprites):
+  - rscadd: adds Stunsword
+  Fghj240:
+  - qol: Health analyzers now tell the difference between curable and incurable permanent
+      traumas
+  SmArtKar:
+  - bugfix: Items no longer randomly fall out of bags when changing their size
+  TealSeer:
+  - code_imp: renamed flatten_list proc to assoc_to_values
+  Yobrocharlie:
+  - balance: buffed the cleric mace by a little bit.
+  mcbalaam:
+  - qol: Better output for sound requesting
+  - bugfix: '"Request Internet sound" input window''s title and description are not
+      inverted anymore'
+  thegrb93:
+  - bugfix: Self sustaining slime and clusterbuster now correctly fill required reagents
+  tontyGH:
+  - bugfix: moves the computer frame's anchor requirement from circuit step to finalization
+      step, fixing an issue where you could construct unanchored and FUNCTIONAL computers
+  - qol: as a side effect, you only need to wrench the PC down when construction is
+      being finished
+2025-10-16:
+  EnterTheJake:
+  - rscadd: All Heretic paths now start with a gradually evolving passive ability.
+  - balance: the entire heretic tree has been rebalanced.
+  - balance: the grasp and mark upgrade are now granted upon selecting the path
+  - rscadd: All Heretic paths now have a unique robe.
+  - balance: Heretic ability to blade break is now disabled after X amount of knowledge
+      has been acquired (and so is the limit on blades) or the 2nd passive level is
+      unlocked.
+  - balance: it's no longer possible to cross-path into different heretic paths.
+  - balance: Every main knowledge spell will now grant to the heretic the option to
+      select a side knowledge from a draft of 3, this is a free point.
+  - balance: Heretic ascension will now call the shuttle with no possibility of recall.
+  - rscadd: A new tab has been added in the heretic UI, the knowledge shop.
+  - rscadd: Heretics will now gain temporary X-ray vision when near an untapped essence.
+  - balance: Codex cicatrix no longer requires a special pen.
+  - balance: Ritual of knowledge requires less items to complete now.
+  - balance: the minimum number of required sacrifices to unlock ascension has been
+      upped to 4, and the minimum bumped down to 5.
+  - image: loads of new sprites have been added.
+  FalloutFalcon:
+  - admin: abstract types dont show up in admin selection menu for station traits
+  Ghommie:
+  - refactor: Refactored flash and flashers. Report any issue about it
+  - balance: Flashes now affect basic mobs as well. Yes, this extends to the hypno-flash.
+      Yes, this includes converting them as a headrev / blood bro
+  - balance: Flashers now actually use the flashes that they're installed with, and
+      the portable version is also triggered by nearby basic mobs and cyborgs passing
+      through.
+  - balance: Elite mobs cannot be converted while they're busy battling their challenger.
+  - balance: Mobs that have been given sentience potions to are unconvertable. They
+      answer to their master (the one that gave them the potion in the first place)
+      anyway.
+  SmArtKar:
+  - bugfix: Fixed ore bags being able to reject any ores despite having ample space
+  - bugfix: Pulling a stack behind you and getting it topped up by lying items will
+      no longer spam pulls and lock out your inputs
+  - bugfix: Picking up ores into an ore box via an ore bag will no longer play a jank
+      animation
+  - qol: Ore bags and MODule ore bags no longer pick up ores you've dropped from your
+      hand until you walk over them again
+  Yobrocharlie:
+  - balance: restored the weak claymore to its former glory
+  grungussuss:
+  - qol: item offers now persist when pulling
+2025-10-17:
+  Aliceee2ch:
+  - qol: Jaws of Recovery can be worn on medical MODSuit suit storage now.
+  - rscadd: Added modified Jaws of Recovery and recipe for them. Made from regular
+      Jaws of Life they act like one, without area restrictions and radio announcements.
+  grungussuss:
+  - sound: added new sounds for potted plants
+  lelandkemble:
+  - bugfix: fixes implanter renaming not working
+  - bugfix: fixes clownborg picket sign renaming not working
+  - code_imp: brought most unique renaming implementations under UNIQUE_RENAME
