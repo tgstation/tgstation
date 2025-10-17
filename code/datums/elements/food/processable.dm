@@ -14,7 +14,7 @@
 	var/table_required
 	///Verb used in processing food (such as slice, flatten), defaults to process
 	var/screentip_verb
-	///Sound to play when processing
+	///Sound to play when the do_after begins
 	var/sound_to_play
 
 /datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process", sound_to_play = null)

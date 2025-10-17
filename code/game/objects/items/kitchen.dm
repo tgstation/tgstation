@@ -105,7 +105,6 @@
 	attack_verb_simple = list("prod", "whiff", "scratch", "poke")
 	sharpness = SHARP_EDGED
 	custom_price = PAYCHECK_LOWER * 2
-	sound_vary = TRUE
 	pickup_sound = null
 	drop_sound = null
 
