@@ -82,6 +82,7 @@
 	greyscale_config_worn = /datum/greyscale_config/blazer/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/suit/jacket/oversized
 	name = "oversized jacket"
