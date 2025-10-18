@@ -68,7 +68,7 @@
 	TEST_ASSERT_EQUAL(alice.facial_hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their facial hair color is not COLOR_LIGHT_BROWN")
 
 /datum/unit_test/multiple_surgeries/Run()
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent/slow)
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/patient_one = allocate(/mob/living/carbon/human/consistent)
 
