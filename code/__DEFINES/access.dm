@@ -89,6 +89,8 @@
 #define ACCESS_PSYCHOLOGY "psychology"
 /// Access for the Chief Medical Officer's personal quarters in mapping, as well as some other CMO-related things.
 #define ACCESS_CMO "cmo"
+/// Access to the Paramedic dispatch.
+#define ACCESS_PARAMEDIC "paramedic"
 
 /// General access for Cargo, allows for entry to Cargo Bay and Cargo's Office.
 #define ACCESS_CARGO "cargo"
@@ -325,6 +327,7 @@
 	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
 	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_PARAMEDIC, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
@@ -458,6 +461,7 @@
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
 	ACCESS_MORGUE_SECURE, \
+	ACCESS_PARAMEDIC, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \

@@ -68,3 +68,16 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	pda_slot = ITEM_SLOT_LPOCKET
+
+/datum/outfit/job/doctor/mod
+	name = "Paramedic (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/medical
+	suit = null
+	head = null
+	uniform = /obj/item/clothing/under/rank/medical/paramedic
+	mask = /obj/item/clothing/mask/breath/medical
+	r_pocket = /obj/item/flashlight/pen
+	internals_slot = ITEM_SLOT_SUITSTORE
+
