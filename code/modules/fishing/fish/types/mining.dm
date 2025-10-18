@@ -182,6 +182,7 @@
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
+	stable_population = 5
 	compatible_types = list(/obj/item/fish/lavaloop/plasma_river)
 	evolution_types = list(/datum/fish_evolution/plasmaloop)
 	hitsound = null

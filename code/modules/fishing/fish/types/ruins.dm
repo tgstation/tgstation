@@ -15,7 +15,7 @@
 	required_fluid_type = AQUARIUM_FLUID_ANY_WATER
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_integrity = 600
-	stable_population = 1 //This means they can only crossbreed.
+	stable_population = 2
 	grind_results = list(/datum/reagent/bone_dust = 5, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2

@@ -454,7 +454,7 @@
 	max_pressure = INFINITY
 	safe_air_limits = list()
 	fillet_type = /obj/item/food/badrecipe/moldy/bacteria
-	stable_population = 0
+	stable_population = 2
 
 /obj/item/fish/mossglob/Initialize(mapload, apply_qualities)
 	. = ..()
