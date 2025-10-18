@@ -304,8 +304,7 @@
 			orderer_ckey = ckey,
 			reason = reason,
 			paying_account = account,
-			coupon = applied_coupon,
-			department_destination = reason ? TRUE : FALSE, // Hijacking reason as a way to determine if an order's requested from at least one budget
+			coupon = applied_coupon
 		)
 		working_list += order
 
