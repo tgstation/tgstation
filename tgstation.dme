@@ -4739,6 +4739,7 @@
 #include "code\modules\loadout\categories\neck.dm"
 #include "code\modules\loadout\categories\pocket.dm"
 #include "code\modules\loadout\categories\shoes.dm"
+#include "code\modules\loadout\categories\suits.dm"
 #include "code\modules\logging\log_category.dm"
 #include "code\modules\logging\log_entry.dm"
 #include "code\modules\logging\log_holder.dm"
