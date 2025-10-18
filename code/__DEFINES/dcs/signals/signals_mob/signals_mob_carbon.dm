@@ -60,6 +60,13 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
+/// Called from metabolic processes adjusting organ damage, either higher or lower: /mob/living/carbon/metabolic_organ_adjust(datum/reagent/caused_by, slot, amount, maximum, required_organ_flag)
+#define COMSIG_METABOLIC_ORGAN_ADJUST "metabolic_organ_adjust"
+/// Called from metabolic processes adjusting body damage, either higher or lower: /mob/living/proc/metabolic_damage_adjust(datum/reagent/caused_by, damage_type, amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
+#define COMSIG_METABOLIC_DAMAGE_ADJUST "metabolic_damage_adjust"
+/// Returned when some metabolic voodoo juju means that the adjustment ain't happening
+	#define COMPONENT_CANCEL_METABOLIC_ADJUSTMENT (1<<0)
+
 ///from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
