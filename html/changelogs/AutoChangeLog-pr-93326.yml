@@ -1,0 +1,4 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - qol: "Search now filters materials/ingredients list in crafting menu"

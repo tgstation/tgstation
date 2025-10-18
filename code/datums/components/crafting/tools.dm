@@ -118,3 +118,14 @@
 	)
 	category = CAT_TOOLS
 
+/datum/crafting_recipe/jaws_of_recovery
+	name = "Modified Jaws of Life"
+	time = 10 SECONDS
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	result = /obj/item/crowbar/power/paramedic/silent
+	reqs = list(
+		/obj/item/crowbar/power = 1,
+		/obj/item/bonesetter = 1,
+	)
+	category = CAT_TOOLS
+
