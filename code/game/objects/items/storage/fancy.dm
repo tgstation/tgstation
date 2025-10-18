@@ -465,6 +465,9 @@
 	spawn_coupon = FALSE
 	open_status = FANCY_CONTAINER_OPEN
 
+/obj/item/storage/fancy/cigarettes/flash_powder
+	spawn_type = /obj/item/cigarette/flash_powder
+
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
