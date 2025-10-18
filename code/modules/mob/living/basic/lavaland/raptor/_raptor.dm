@@ -82,12 +82,13 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	// First thing as to go before tameable in change_growth_stage()
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 	raptor_color = GLOB.raptor_colors[color_type || raptor_color]
+	raptor_color.setup_raptor(src)
+
 	if (growth_stage == RAPTOR_ADULT)
 		raptor_color.setup_adult(src)
 	else
 		change_growth_stage(growth_stage, RAPTOR_ADULT)
 
-	raptor_color.setup_raptor(src)
 	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(\
 		/datum/element/crusher_loot,\
@@ -137,6 +138,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	RegisterSignal(src, COMSIG_LIVING_SCOOPED_UP, PROC_REF(on_picked_up))
 	adjust_offsets(dir)
 	add_happiness_component()
 
@@ -310,9 +312,17 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		var/list/stat_mods = inherited_stats.foods_eaten[food_type]
 		var/list/color_chances = stat_mods["color_chances"]
 		for (var/datum/raptor_color/color_type as anything in color_chances)
-			prob_list[color_type] += floor(color_chances[color_type] / amount_eaten * stat_mods["amount"] ** 2)
+			prob_list[color_type] += floor(color_chances[color_type] * stat_mods["amount"])
 
 	return pick_weight(prob_list)
+
+/mob/living/basic/raptor/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
+	SIGNAL_HANDLER
+	// Our inventory code sucks so we have to do this
+	holder.icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
+	holder.icon_state = icon_state
+	holder.pixel_w = 0
+	holder.pixel_z = 0
 
 /mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -470,34 +480,34 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	icon_state = "raptor_blue"
 	raptor_color = /datum/raptor_color/blue
 
-/mob/living/basic/raptor/youngling
+/mob/living/basic/raptor/young
 	growth_stage = RAPTOR_YOUNG
 
-/mob/living/basic/raptor/youngling/red
+/mob/living/basic/raptor/young/red
 	icon_state = "young_red"
 	raptor_color = /datum/raptor_color/red
 
-/mob/living/basic/raptor/youngling/purple
+/mob/living/basic/raptor/young/purple
 	icon_state = "young_purple"
 	raptor_color = /datum/raptor_color/purple
 
-/mob/living/basic/raptor/youngling/green
+/mob/living/basic/raptor/young/green
 	icon_state = "young_green"
 	raptor_color = /datum/raptor_color/green
 
-/mob/living/basic/raptor/youngling/white
+/mob/living/basic/raptor/young/white
 	icon_state = "young_white"
 	raptor_color = /datum/raptor_color/white
 
-/mob/living/basic/raptor/youngling/black
+/mob/living/basic/raptor/young/black
 	icon_state = "young_black"
 	raptor_color = /datum/raptor_color/black
 
-/mob/living/basic/raptor/youngling/yellow
+/mob/living/basic/raptor/young/yellow
 	icon_state = "young_yellow"
 	raptor_color = /datum/raptor_color/yellow
 
-/mob/living/basic/raptor/youngling/blue
+/mob/living/basic/raptor/young/blue
 	icon_state = "young_blue"
 	raptor_color = /datum/raptor_color/blue
 

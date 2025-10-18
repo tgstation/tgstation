@@ -8,8 +8,6 @@
 	slot_flags = NONE
 	/// Mob inside of us
 	var/mob/living/held_mob
-	/// True if we've started being destroyed
-	var/destroying = FALSE
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	body_parts_covered = HEAD
@@ -31,9 +29,9 @@
 	return ..()
 
 /obj/item/mob_holder/Destroy()
-	destroying = TRUE
-	if(held_mob)
+	if(held_mob?.loc == src)
 		release()
+	held_mob = null
 	return ..()
 
 /obj/item/mob_holder/proc/insert_mob(mob/living/new_prisoner)
@@ -78,11 +76,10 @@
 
 /obj/item/mob_holder/proc/release(display_messages = TRUE)
 	if(!held_mob)
-		if(!destroying)
+		if(!QDELETED(src))
 			qdel(src)
 		return FALSE
 	var/mob/living/released_mob = held_mob
-	held_mob = null // stops the held mob from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/captor = loc
 		if(display_messages)
@@ -93,7 +90,7 @@
 	released_mob.setDir(SOUTH)
 	if(display_messages)
 		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
-	if(!destroying)
+	if(!QDELETED(src))
 		qdel(src)
 	return TRUE
 
@@ -148,13 +145,6 @@
 		QDEL_NULL(held_mob)
 	return ..()
 
-/obj/item/mob_holder/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	// We need to pass clicks through to atom storage if we have one
-	if(. || !held_mob?.atom_storage)
-		return
-	return held_mob.attack_hand(user, modifiers)
-
 /obj/item/mob_holder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	// We need to pass clicks through to atom storage if we have one
@@ -173,3 +163,9 @@
 	if(. || !held_mob) // Another interaction was performed
 		return
 	tool.melee_attack_chain(user, held_mob, modifiers) //Interact with the mob with our tool
+
+/obj/item/mob_holder/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	held_mob?.mouse_drop_dragged(over, user, src_location, over_location, params)
+
+/obj/item/mob_holder/mouse_drop_receive(atom/dropping, mob/user, params)
+	held_mob?.mouse_drop_receive(dropping, user, params)

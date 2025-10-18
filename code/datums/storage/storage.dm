@@ -786,15 +786,20 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		parent.add_fingerprint(user)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	if(ismob(over_object))
-		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+	if(over_object == user)
+		if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return
+
+		if(isliving(parent) && user.pulling == parent)
+			var/mob/living/as_living = parent
+			if(as_living.can_be_held)
+				return
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	if(istype(over_object, /atom/movable/screen))
+	if(istype(over_object, /atom/movable/screen) || ismob(over_object))
 		return
 
 	if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))

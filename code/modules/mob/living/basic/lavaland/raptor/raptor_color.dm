@@ -31,6 +31,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /// Shared proc, only called once on raptor init for color-specific traits and properties
 /datum/raptor_color/proc/setup_raptor(mob/living/basic/raptor/raptor)
+	if (raptor.ai_controller)
+		CRASH("setup_raptor called on a raptor ([raptor]) with a present AI controller! This is most likely a result of a second call to setup_raptor.")
 	raptor.ai_controller = new ai_controller(raptor)
 
 /datum/raptor_color/proc/setup_adult(mob/living/basic/raptor/raptor)
@@ -93,15 +95,38 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/purple
 	color = "purple"
 	description = "A small, nimble breed, these raptors have been bred as travel companions rather than mounts, capable of storing the owner's possessions and helping them escape from danger unscathed."
+	health = 140 // smol
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/green = /datum/raptor_color/white,
 		/datum/raptor_color/yellow = /datum/raptor_color/blue,
 	)
+	rideable_component = null
+
+/datum/raptor_color/purple/setup_raptor(mob/living/basic/raptor/raptor)
+	. = ..()
+	RegisterSignal(raptor, COMSIG_LIVING_SCOOPED_UP, PROC_REF(on_picked_up))
+
+/datum/raptor_color/purple/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
+	SIGNAL_HANDLER
+
+	RegisterSignal(holder, COMSIG_ITEM_EQUIPPED, PROC_REF(on_holder_equipped))
+	RegisterSignals(holder, list(COMSIG_ITEM_DROPPED, COMSIG_QDELETING), PROC_REF(on_holder_dropped))
+
+/datum/raptor_color/purple/proc/on_holder_equipped(obj/item/mob_holder/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	// When we are picked up or equipped as a backpack just allow all interactions to go through like we're a normal backpack
+	var/mob/living/basic/raptor/raptor = source.held_mob
+	raptor.atom_storage.insert_on_attack = TRUE
+
+/datum/raptor_color/purple/proc/on_holder_dropped(obj/item/mob_holder/source, mob/dropper)
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/raptor/raptor = source.held_mob
+	raptor.atom_storage.insert_on_attack = FALSE
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
-	raptor.icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
-	raptor.base_icon_state = "young"
 	raptor.base_pixel_w = initial(raptor.base_pixel_w)
 	raptor.can_be_held = TRUE
 	raptor.density = FALSE
@@ -109,14 +134,25 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	raptor.change_offsets = FALSE
 	raptor.remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
-	return ..()
-
-/*
-/mob/living/basic/raptor/purple/Initialize(mapload)
 	. = ..()
-	create_storage(
-		max_specific_storage = WEIGHT_CLASS_NORMAL,
-		max_total_storage = 10, // make this affected by ability_modifier
+	if (raptor.atom_storage)
+		return
+	// A bit bigger (23 vs 21) than a backpack at max size, a bit less by default
+	var/storage_volume = floor(19 * (1 + raptor.inherited_stats.ability_modifier))
+	raptor.create_storage(
+		max_total_storage = storage_volume,
+		max_slots = storage_volume,
+		storage_type = /datum/storage/raptor_storage,
+	)
+
+/datum/raptor_color/purple/setup_young(mob/living/basic/raptor/raptor)
+	. = ..()
+	if (raptor.atom_storage)
+		return
+	var/storage_volume = floor(19 * (1 + raptor.inherited_stats.ability_modifier))
+	raptor.create_storage(
+		max_total_storage = storage_volume,
+		max_slots = storage_volume,
 		storage_type = /datum/storage/raptor_storage,
 	)
 
@@ -125,9 +161,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	insert_on_attack = FALSE // should flip when worn on the back
 
 /datum/storage/raptor_storage/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
-	..()
 	return NONE
-*/
 
 /datum/raptor_color/green
 	color = "green"
@@ -142,7 +176,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /datum/raptor_color/green/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
-	raptor.AddComponent(/datum/component/proficient_miner, 0.05 * (1 + raptor.inherited_stats.ability_modifier), TRUE)
+	var/ability_scale = INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
+	var/mining_mod = round(ability_scale * 0.1 SECONDS, 0.05 SECONDS)
+	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)
 
 /datum/raptor_color/white
 	color = "white"
@@ -214,4 +250,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/black/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
 	// Slightly worse than greens at this
-	raptor.AddComponent(/datum/component/proficient_miner, 0.1 * (1 + raptor.inherited_stats.ability_modifier), TRUE)
+	var/ability_scale = INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
+	var/mining_mod = round(ability_scale * 0.2 SECONDS, 0.05 SECONDS)
+	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)

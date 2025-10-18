@@ -256,7 +256,7 @@
 /obj/item/food/grown/ash_flora/fireblossom/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	AddElement(/datum/element/raptor_food, color_chances = string_list(/datum/raptor_color/blue = 5))
+	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
 
 // SEEDS
 
