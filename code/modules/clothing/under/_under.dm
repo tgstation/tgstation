@@ -445,7 +445,7 @@
 			if(SENSOR_COORDS)
 				. += "Its vital tracker and tracking beacon appear to be enabled."
 	else
-		. += span_tooltip("You can always get new install new suit sensors to install from a lathe", "It isn't equipped with medical sensors.")
+		. += span_tooltip("You can always get new suit sensors to install from a lathe.", "It isn't equipped with medical sensors.")
 
 	if(LAZYLEN(attached_accessories))
 		var/list/accessories = list_accessories_with_icon(user)
