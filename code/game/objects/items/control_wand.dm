@@ -14,6 +14,8 @@
 	name = "control wand"
 	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
+	drop_sound = 'sound/items/door_remote/door_remote_drop1.ogg'
+	pickup_sound = 'sound/items/door_remote/door_remote_pick_up1.ogg'
 
 	var/department = "civilian"
 	var/mode = WAND_OPEN
@@ -34,6 +36,10 @@
 		/area/station/ai_monitored/turret_protected/ai_upload,			// their doors with our several dozen access helpers
 	)
 	COOLDOWN_DECLARE(shock_cooldown)
+	/// sound played when mode is switched
+	var/mode_switch_sound = SFX_REMOTE_MODE_SWITCH
+	/// sound played when an action is done
+	var/action_sound = SFX_REMOTE_ACTION
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -80,6 +86,8 @@
 			mode = WAND_OPEN
 	update_icon_state()
 	balloon_alert(user, "mode: [ops[mode]]")
+	if(mode_switch_sound)
+		playsound(src, mode_switch_sound, 50, TRUE)
 
 /obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/door) && !isturf(interacting_with))
@@ -159,6 +167,8 @@
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/door/door
+	if(action_sound)
+		playsound(src, action_sound, 50, TRUE)
 
 	if (istype(interacting_with, /obj/machinery/door))
 		door = interacting_with

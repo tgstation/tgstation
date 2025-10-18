@@ -288,6 +288,8 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define	SFX_RORO_WARBLE "roro_warble"
 #define SFX_POTTED_PLANT_PICKUP "potted_plant_pickup"
 #define SFX_POTTED_PLANT_DROP "potted_plant_drop"
+#define SFX_REMOTE_MODE_SWITCH "remote_mode_switch"
+#define SFX_REMOTE_ACTION "remote_action"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
