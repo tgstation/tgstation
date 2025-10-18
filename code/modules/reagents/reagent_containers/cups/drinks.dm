@@ -18,6 +18,8 @@
 	. = ..()
 	if(!.) //if the bottle wasn't caught
 		var/mob/thrower = throwingdatum?.get_thrower()
+		if(!istype(thrower))
+			return
 		smash(hit_atom, thrower, throwingdatum)
 
 /obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
@@ -71,6 +73,10 @@
 	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 150
 
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handles
+
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
 	name = "silver cup"
 	desc = "Best loser!"
@@ -83,6 +89,9 @@
 	custom_materials = list(/datum/material/silver=SMALL_MATERIAL_AMOUNT*8)
 	volume = 100
 
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handle
 
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup
 	name = "bronze cup"
@@ -166,6 +175,10 @@
 	icon_state = "tea_empty"
 	base_icon_state = "tea"
 	inhand_icon_state = "coffee"
+
+/obj/item/reagent_containers/cup/glass/mug/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
 
 /obj/item/reagent_containers/cup/glass/mug/update_icon_state()
 	icon_state = "[base_icon_state][reagents.total_volume ? null : "_empty"]"
@@ -291,7 +304,7 @@
 	if(prob(flip_chance)) // landed upright
 		src.visible_message(span_notice("[src] lands upright!"))
 		var/mob/living/thrower = throwingdatum?.get_thrower()
-		if(thrower)
+		if(istype(thrower))
 			thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
 	else // landed on its side
 		animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
@@ -394,6 +407,13 @@
 	icon_state = "colocup[rand(0, 6)]"
 	if(icon_state == "colocup6")
 		desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
+
+/obj/item/reagent_containers/cup/glass/colocup/lean
+	name = "lean"
+	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
+	icon_state = "lean"
+	list_reagents = list(/datum/reagent/consumable/lean = 20)
+	random_sprite = FALSE
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
