@@ -41,7 +41,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	// If we grow up while damaged, keep the damage percentage the same
 	raptor.health *= real_health / raptor.maxHealth
 	raptor.maxHealth = real_health
-	raptor.set_varspeed(speed - stats.speed_modifier)
+	// -0.33 ~ 0.33 gets rounded to 0 rather than +-0.5
+	var/speed_mod = clamp(round(abs(stats.speed_modifier - 0.08), 0.5) * sign(stats.speed_modifier), -0.5, 0.5)
+	raptor.set_varspeed(speed - speed_mod)
 	raptor.melee_damage_lower = melee_damage_lower + stats.attack_modifier
 	raptor.melee_damage_upper = melee_damage_upper + stats.attack_modifier
 	if (rideable_component)
@@ -53,7 +55,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/real_health = health + stats.health_modifier
 	raptor.health *= real_health / 2 / raptor.maxHealth
 	raptor.maxHealth = real_health / 2
-	raptor.set_varspeed(speed - stats.speed_modifier)
+	var/speed_mod = clamp(round(abs(stats.speed_modifier - 0.08), 0.5) * sign(stats.speed_modifier), -0.5, 0.5)
+	raptor.set_varspeed(speed - speed_mod)
 	raptor.melee_damage_lower = floor((melee_damage_lower + stats.attack_modifier) / 2)
 	raptor.melee_damage_upper = floor((melee_damage_upper + stats.attack_modifier) / 2)
 	setup_appearance(raptor)
@@ -63,7 +66,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	var/real_health = health + stats.health_modifier
 	raptor.health *= real_health / 8 / raptor.maxHealth
 	raptor.maxHealth = real_health / 8
-	raptor.set_varspeed(speed + 4.5 - stats.speed_modifier)
+	var/speed_mod = clamp(round(abs(stats.speed_modifier - 0.08), 0.5) * sign(stats.speed_modifier), -0.5, 0.5)
+	raptor.set_varspeed(speed + 4.5 - speed_mod)
 	raptor.melee_damage_lower = floor((melee_damage_lower + stats.attack_modifier) / 3)
 	raptor.melee_damage_upper = floor((melee_damage_upper + stats.attack_modifier) / 3)
 	setup_appearance(raptor)
@@ -169,13 +173,14 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /datum/raptor_color/green/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
-	var/ability_scale = INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
+	var/ability_scale = 1 - INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
 	var/mining_mod = round(ability_scale * 0.1 SECONDS, 0.05 SECONDS)
 	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)
 
 /datum/raptor_color/white
 	color = "white"
-	description = "A loving sort, it cares for it peers and rushes to their aid with reckless abandon. It is able to heal any raptors' ailments."
+	description = "A loving sort, it cares for it peers and rushes to their aid with reckless abandon. It is able to heal any raptors' ailments, and rescue its owner in case of an emergency."
+	rideable_component = /datum/component/riding/creature/raptor/healer
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/blue = /datum/raptor_color/green,
 		/datum/raptor_color/yellow = /datum/raptor_color/red,
@@ -199,8 +204,24 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		heal_brute = melee_damage_upper * (1 + raptor.inherited_stats.ability_modifier), \
 		heal_burn = melee_damage_upper * (1 + raptor.inherited_stats.ability_modifier), \
 		heal_time = 0, \
-		valid_targets_typecache = typecacheof(list(/mob/living/basic/raptor)), \
+		valid_targets_typecache = typecacheof(list(/mob/living/basic/raptor, /mob/living/carbon/human)), \
+		extra_checks = CALLBACK(src, PROC_REF(heal_checks)), \
+		healing_multiplier = CALLBACK(src, PROC_REF(heal_multiplier)), \
 	)
+
+/datum/raptor_color/white/proc/heal_checks(mob/living/healer, mob/living/target)
+	if (istype(target, /mob/living/basic/raptor))
+		return TRUE
+	// Only heal raptors, or critted rider
+	if (target.stat == CONSCIOUS || target.stat == DEAD)
+		return FALSE
+	return target.buckled == healer
+
+/datum/raptor_color/white/proc/heal_multiplier(mob/living/healer, mob/living/target)
+	if (istype(target, /mob/living/basic/raptor))
+		return 1
+	// The healing is slow so this is fine
+	return 0.67
 
 /datum/raptor_color/yellow
 	color = "yellow"
@@ -243,6 +264,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/black/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
 	// Slightly worse than greens at this
-	var/ability_scale = INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
+	var/ability_scale = 1 - INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
 	var/mining_mod = round(ability_scale * 0.2 SECONDS, 0.05 SECONDS)
 	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)

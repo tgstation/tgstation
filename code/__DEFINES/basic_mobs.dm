@@ -89,9 +89,9 @@ GLOBAL_LIST_EMPTY(customized_pets)
 /// Maximum modifier to the base health value a raptor can get
 #define RAPTOR_INHERIT_MAX_HEALTH 30
 /// Minimum modifier to base speed values a raptor can get
-#define RAPTOR_INHERIT_MIN_SPEED -0.5
+#define RAPTOR_INHERIT_MIN_SPEED -0.66
 /// Maximum modifier to base speed values a raptor can get
-#define RAPTOR_INHERIT_MAX_SPEED 0.5
+#define RAPTOR_INHERIT_MAX_SPEED 0.66
 /// Minimum modifier a raptor can get to their modifiers, such as ability effect and growth speed
 #define RAPTOR_INHERIT_MIN_MODIFIER -0.25
 /// Maximum modifier a raptor can get to their modifiers, such as ability effect and growth speed

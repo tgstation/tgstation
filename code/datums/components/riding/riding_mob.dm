@@ -698,3 +698,35 @@
 
 /datum/component/riding/creature/raptor/combat
 	ai_behavior_while_ridden = RIDING_PAUSE_AI_MOVEMENT
+
+/datum/component/riding/creature/raptor/healer/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force)
+	RegisterSignal(rider, COMSIG_MOB_STATCHANGE, PROC_REF(on_buckled_stat_change))
+	return ..()
+
+/datum/component/riding/creature/raptor/healer/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force)
+	UnregisterSignal(former_rider, COMSIG_MOB_STATCHANGE)
+	return ..()
+
+/datum/component/riding/creature/raptor/healer/proc/on_buckled_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+
+	var/mob/living/basic/raptor/raptor = source.buckled
+	if (!istype(raptor)) // what
+		UnregisterSignal(source, COMSIG_MOB_STATCHANGE)
+		return
+
+	// Heal the owner and flee whatever might've attacked them
+	if (new_stat == CONSCIOUS || new_stat == DEAD || old_stat != CONSCIOUS || !raptor.ai_controller)
+		ADD_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
+		return
+
+	REMOVE_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
+	// Rip bozo, but you're not our friend
+	if (source in raptor.ai_controller.blackboard[BB_FRIENDS_LIST])
+		raptor.ai_controller.blackboard[BB_INJURED_RAPTOR] = source
+
+	for (var/mob/living/possible_hostile in view(5, raptor))
+		if (possible_hostile.stat || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
+			continue
+		raptor.ai_controller.blackboard[BB_BASIC_MOB_FLEE_TARGET] = possible_hostile
+		break
