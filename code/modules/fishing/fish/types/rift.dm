@@ -705,7 +705,7 @@
 	now_fixed = span_noticealien("The psychic noise starts to fade.")
 	low_threshold_cleared = span_noticealien("The whispers leave you alone.")
 
-	bang_protect = 5
+	bang_protect = EAR_PROTECTION_VACUUM
 	damage_multiplier = 0.1
 	visual = TRUE
 	/// Overlay for the mob sprite because actual organ overlays are a fucking unusable nightmare
