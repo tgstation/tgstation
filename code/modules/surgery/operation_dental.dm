@@ -8,7 +8,7 @@
 /datum/surgery_operation/add_dental_implant/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_bone_state != SURGERY_BONE_DRILLED)
 		return FALSE
-	if(limb.surgery_skin_state != SURGERY_SKIN_OPEN)
+	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE
@@ -68,7 +68,7 @@
 /datum/surgery_operation/remove_dental_implant/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_bone_state != SURGERY_BONE_DRILLED)
 		return FALSE
-	if(limb.surgery_skin_state != SURGERY_SKIN_OPEN)
+	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE

@@ -1,5 +1,7 @@
 /// Repairing specific organs
 /datum/surgery_operation/organ_repair
+	name = "repair organ"
+	desc = "Repair a patient's damaged organ."
 	/// What organ to repair
 	var/obj/item/organ/target_type
 
@@ -47,8 +49,9 @@
 
 /datum/surgery_operation/organ_repair/lobectomy
 	name = "excise damaged lung node"
+	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
 	implements = list(
-		TOOL_SCALPEL = 1,
+		TOOL_SCALPEL = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
@@ -58,7 +61,7 @@
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
-	required_biotype = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	target_type = /obj/item/organ/lungs
 	failure_damage_percent = 0.1
 
@@ -97,20 +100,21 @@
 /datum/surgery_operation/organ_repair/lobectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 1,
-		TOOL_WRENCH = 1,
+		TOOL_SCALPEL = 0.95,
+		TOOL_WRENCH = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/organ_repair/hepatectomy
 	name = "remove damaged liver section"
+	desc = "Perform repairs to a patient's damaged liver by removing the most damaged section."
 	implements = list(
-		TOOL_SCALPEL = 1,
+		TOOL_SCALPEL = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
@@ -120,7 +124,7 @@
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
-	required_biotype = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	target_type = /obj/item/organ/liver
 	heal_to_percent = 0.1
 	failure_damage_percent = 0.15
@@ -160,20 +164,21 @@
 /datum/surgery_operation/organ_repair/hepatectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 1,
-		TOOL_WRENCH = 1,
+		TOOL_SCALPEL = 0.95,
+		TOOL_WRENCH = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/organ_repair/coronary_bypass
 	name = "graft coronary bypass"
+	desc = "Graft a bypass onto a a patient's damaged heart to restore proper blood flow."
 	implements = list(
-		TOOL_HEMOSTAT = 1,
+		TOOL_HEMOSTAT = 0.95,
 		TOOL_WIRECUTTER = 0.35,
 		/obj/item/stack/package_wrap = 0.15,
 		/obj/item/stack/cable_coil = 0.5,
@@ -183,7 +188,7 @@
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
-	required_biotype = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	target_type = /obj/item/organ/heart
 
 /datum/surgery_operation/organ_repair/coronary_bypass/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -223,20 +228,21 @@
 /datum/surgery_operation/organ_repair/coronary_bypass/mechanic
 	name = "access engine internals"
 	implements = list(
-		TOOL_SCALPEL = 1,
-		TOOL_CROWBAR = 1,
+		TOOL_SCALPEL = 0.95,
+		TOOL_CROWBAR = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/organ_repair/gastrectomy
 	name = "remove lower duodenum"
+	desc = "Perform a patient's repairs to a damaged stomach by removing the lower duodenum."
 	implements = list(
-		TOOL_SCALPEL = 1,
+		TOOL_SCALPEL = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
@@ -247,7 +253,7 @@
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
-	required_biotype = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	target_type = /obj/item/organ/stomach
 	heal_to_percent = 0.2
 	failure_damage_percent = 0.15
@@ -290,8 +296,8 @@
 /datum/surgery_operation/organ_repair/gastrectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 1,
-		TOOL_WRENCH = 1,
+		TOOL_SCALPEL = 0.95,
+		TOOL_WRENCH = 0.95,
 		/obj/item/melee/energy/sword = 0.65,
 		/obj/item/knife = 0.45,
 		/obj/item/shard = 0.35,
@@ -299,12 +305,13 @@
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/organ_repair/ears
 	name = "ear surgery"
+	desc = "Repair a patient's damaged ears to restore hearing."
 	implements = list(
-		TOOL_HEMOSTAT = 1,
+		TOOL_HEMOSTAT = 0.95,
 		TOOL_SCREWDRIVER = 0.45,
 		/obj/item/pen = 0.25,
 	)
@@ -368,8 +375,9 @@
 
 /datum/surgery_operation/organ_repair/eyes
 	name = "eye surgery"
+	desc = "Repair a patient's damaged eyes to restore vision."
 	implements = list(
-		TOOL_HEMOSTAT = 1,
+		TOOL_HEMOSTAT = 0.95,
 		TOOL_SCREWDRIVER = 0.45,
 		/obj/item/pen = 0.25,
 	)
@@ -437,8 +445,9 @@
 
 /datum/surgery_operation/organ_repair/brain
 	name = "brain surgery"
+	desc = "Repair a patient's damaged brain tissue to restore cognitive function."
 	implements = list(
-		TOOL_HEMOSTAT = 1,
+		TOOL_HEMOSTAT = 0.95,
 		TOOL_SCREWDRIVER = 0.35,
 		/obj/item/pen = 0.15,
 	)
@@ -447,7 +456,7 @@
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_LOOPING
-	required_biotype = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	target_type = /obj/item/organ/brain
 	heal_to_percent = 0.25
 	failure_damage_percent = 0.3
@@ -503,11 +512,11 @@
 /datum/surgery_operation/organ_repair/brain/mechanic
 	name = "perform neural debugging"
 	implements = list(
-		TOOL_HEMOSTAT = 1,
+		TOOL_HEMOSTAT = 0.95,
 		TOOL_MULTITOOL = 0.85,
 		TOOL_SCREWDRIVER = 0.35,
 		/obj/item/pen = 0.15,
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC

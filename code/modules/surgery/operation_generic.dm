@@ -3,6 +3,7 @@
 /// First step of every surgery, makes an incision in the skin
 /datum/surgery_operation/incise_skin
 	name = "make incision"
+	desc = "Make an incision in the patient's skin to access internal organs."
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 0.75,
@@ -53,6 +54,7 @@
 /// Pulls the skin back to access internals
 /datum/surgery_operation/retract_skin
 	name = "retract skin"
+	desc = "Retract the patient's skin to access their internal organs."
 	implements = list(
 		TOOL_RETRACTOR = 1,
 		TOOL_SCREWDRIVER = 0.45,
@@ -85,6 +87,7 @@
 /// Closes the skin
 /datum/surgery_operation/close_skin
 	name = "mend incision"
+	desc = "Mend the incision in the patient's skin, closing it up."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/gun/energy/laser = 0.9,
@@ -96,7 +99,7 @@
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
 
 /datum/surgery_operation/close_skin/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state != SURGERY_SKIN_OPEN)
+	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	return TRUE
 
@@ -127,6 +130,7 @@
 /// Clamps bleeding blood vessels to prevent blood loss
 /datum/surgery_operation/clamp_bleeders
 	name = "clamp bleeders"
+	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 0.6,
@@ -163,6 +167,7 @@
 /// Unclamps blood vessels to allow blood flow again
 /datum/surgery_operation/unclamp_bleeders
 	name = "unclamp bleeders"
+	desc = "Unclamp blood vessels in the patient's body to allow blood flow again."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 0.6,
@@ -194,6 +199,7 @@
 /// Saws through bones to access organs
 /datum/surgery_operation/saw_bones
 	name = "saw bone"
+	desc = "Saw through the patient's bones to access their internal organs."
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 0.75,
@@ -252,6 +258,7 @@
 /// Fixes sawed bones back together
 /datum/surgery_operation/fix_bones
 	name = "fix bone"
+	desc = "Repair a patient's cut or broken bones."
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -290,6 +297,7 @@
 
 /datum/surgery_operation/drill_bones
 	name = "drill bone"
+	desc = "Drill through a patient's bones."
 	implements = list(
 		TOOL_DRILL = 1,
 		/obj/item/screwdriver/power = 0.8,
@@ -331,6 +339,7 @@
 
 /datum/surgery_operation/incise_organs
 	name = "incise organs"
+	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair."
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 0.75,

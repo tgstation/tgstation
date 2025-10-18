@@ -1,7 +1,6 @@
 /datum/surgery_operation/organ_bioware
 	implements = list(
 		IMPLEMENT_HAND = 1,
-		/obj/item/borg/cyborghug = 1,
 	)
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_MORBID
 	time = 12.5 SECONDS

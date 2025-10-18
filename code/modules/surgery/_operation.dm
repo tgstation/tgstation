@@ -2,6 +2,7 @@
 #define OPERATION_NOTABLE (1<<1)
 #define OPERATION_LOOPING (1<<2)
 #define OPERATION_MORBID (1<<3)
+#define OPERATION_REQUIRES_TECH (1<<4)
 
 #define IMPLEMENT_HAND "hands"
 
@@ -12,10 +13,12 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	var/desc = "A surgery operation that can be performed on a bodypart."
 
 	/// Biotype required to perform this operation
-	var/required_biotype = NONE
+	var/required_bodytype = NONE
 
 	/// What tool(s) are needed to perform this operation
 	var/list/implements
+	/// Chemicals that must be present in the body to perform this operation
+	var/list/chems_needed
 	/// How long to perform this operation
 	var/time = 1 SECONDS
 
@@ -29,7 +32,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	var/failure_sound
 
 	/// Option displayed when this operation is available
-	var/datum/radial_menu_choice/main_option
+	VAR_PRIVATE/datum/radial_menu_choice/main_option
 
 /**
  * Checks to see if this operation can be performed on the bodypart
@@ -50,6 +53,14 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	if(get_tool_quality(tool) <= 0)
 		return FALSE
 
+	for(var/chem in chems_needed)
+		if(!limb.owner.reagents?.has_reagent(chem))
+			return FALSE
+
+	if(operation_flags & OPERATION_REQUIRES_TECH)
+		// melbert todo
+		return FALSE
+
 	return TRUE
 
 /**
@@ -68,6 +79,8 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 /datum/surgery_operation/proc/get_tool_quality(obj/item/tool = IMPLEMENT_HAND)
 	if(!length(implements))
 		return 1
+	if(istype(tool, /obj/item/borg/cyborghug))
+		tool = IMPLEMENT_HAND // melbert todo
 	if(!tool_check(tool))
 		return 0
 	return implements[tool.tool_behaviour] || is_type_in_list(tool, implements, zebra = TRUE) || 0
@@ -363,6 +376,10 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 
 /// Plays a sound for the operation based on the tool used
 /datum/surgery_operation/proc/play_operation_sound(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, sound_or_sound_list)
+	if(required_biotype & BODYTYPE_ROBOTIC)
+		tool.play_tool_sound(limb)
+		return
+
 	var/sound_to_play
 	if(islist(sound_or_sound_list))
 		var/list/sounds = sound_or_sound_list
@@ -372,6 +389,21 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 
 	if(sound_to_play)
 		playsound(surgeon, sound_to_play, 50, TRUE)
+
+/datum/surgery_operation/proc/locate_operating_computer(turf/patient_turf)
+	if (isnull(patient_turf))
+		return null
+
+	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable, patient_turf)
+	var/obj/machinery/computer/operating/operating_computer = operating_table?.computer
+
+	if (isnull(operating_computer))
+		return null
+
+	if(operating_computer.machine_stat & (NOPOWER|BROKEN))
+		return null
+
+	return operating_computer
 
 // melbert todos
 // - figure out simplemobs

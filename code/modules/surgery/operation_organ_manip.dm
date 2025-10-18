@@ -171,7 +171,7 @@
 
 /datum/surgery_operation/organ_manipulation/internal
 	name = "internal organ manipulation"
-	desc = "Manipulate internal organs, such as a heart or lungs."
+	desc = "Manipulate a patient's internal organs, such as a heart or lungs."
 	abstract_type = /datum/surgery_operation/organ_manipulation/internal
 
 /datum/surgery_operation/organ_manipulation/internal/organ_check(obj/item/organ/organ)
@@ -194,7 +194,7 @@
 
 /datum/surgery_operation/organ_manipulation/internal/chest/mechanic
 	name = "prosthetic organ manipulation"
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
@@ -218,7 +218,7 @@
 
 /datum/surgery_operation/organ_manipulation/internal/other/mechanic
 	name = "prosthetic organ manipulation"
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
@@ -244,7 +244,7 @@
 
 /datum/surgery_operation/organ_manipulation/external/mechanic
 	name = "prosthetic feature manipulation"
-	required_biotype = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
