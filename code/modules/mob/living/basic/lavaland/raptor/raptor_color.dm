@@ -109,21 +109,14 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/purple/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
 	SIGNAL_HANDLER
 
-	RegisterSignal(holder, COMSIG_ITEM_EQUIPPED, PROC_REF(on_holder_equipped))
-	RegisterSignals(holder, list(COMSIG_ITEM_DROPPED, COMSIG_QDELETING), PROC_REF(on_holder_dropped))
-
-/datum/raptor_color/purple/proc/on_holder_equipped(obj/item/mob_holder/source, mob/equipper, slot)
-	SIGNAL_HANDLER
-
-	// When we are picked up or equipped as a backpack just allow all interactions to go through like we're a normal backpack
-	var/mob/living/basic/raptor/raptor = source.held_mob
-	raptor.atom_storage.insert_on_attack = TRUE
-
-/datum/raptor_color/purple/proc/on_holder_dropped(obj/item/mob_holder/source, mob/dropper)
-	SIGNAL_HANDLER
-
-	var/mob/living/basic/raptor/raptor = source.held_mob
-	raptor.atom_storage.insert_on_attack = FALSE
+	// Create a mirror storage for our raptor when picked up to handle interactions
+	var/datum/storage/raptor_storage = holder.create_storage(
+		max_total_storage = source.atom_storage.max_total_storage,
+		max_slots = source.atom_storage.max_slots,
+		storage_type = /datum/storage/raptor_storage,
+	)
+	raptor_storage.set_real_location(source)
+	raptor_storage.insert_on_attack = TRUE
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)

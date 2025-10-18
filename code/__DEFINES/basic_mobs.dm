@@ -71,6 +71,11 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define RAPTOR_BABY_GROWTH_UPPER 0.8
 /// How long it takes for a raptor egg to grow up, in seconds
 #define RAPTOR_EGG_GROWTH_PROGRESS 100
+/// How much happiness percentage affects our growth speed
+#define RAPTOR_GROWTH_HAPPINESS_MULTIPLIER 0.005 // Full happiness increases growth rate by 50%
+
+/// Damage boost per happiness percent
+#define RAPTOR_HAPPINESS_DAMAGE_BOOST 0.05
 
 // Raptor inheritance stats
 /// Maximum amount of traits a raptor can inherit

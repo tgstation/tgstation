@@ -778,7 +778,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		if(parent.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return
 
 		var/atom/movable/screen/inventory/hand/hand = over_object

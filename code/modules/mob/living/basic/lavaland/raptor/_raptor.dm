@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	melee_damage_upper = 15
 	combat_mode = TRUE
 	mob_size = MOB_SIZE_LARGE
+	head_icon = 'icons/mob/clothing/back/pets_back.dmi'
 	worn_slot_flags = ITEM_SLOT_BACK
 	held_w_class = WEIGHT_CLASS_BULKY
 	unsuitable_atmos_damage = 0
@@ -75,6 +76,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	)
 	/// Inheritance datum we store our genetic data in
 	var/datum/raptor_inheritance/inherited_stats = null
+	/// Current happiness value of the raptor
+	var/happiness_percentage = 0
 
 /mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type, datum/raptor_inheritance/passed_stats)
 	. = ..()
@@ -193,7 +196,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	. = ..()
 	if (growth_stage != RAPTOR_BABY || HAS_TRAIT(src, TRAIT_STASIS) || stat == DEAD)
 		return
-	if (!SPT_PROB(growth_probability, seconds_per_tick))
+	if (!SPT_PROB(growth_probability * (1 + happiness_percentage * RAPTOR_GROWTH_HAPPINESS_MULTIPLIER), seconds_per_tick))
 		return
 	growth_progress += rand(RAPTOR_BABY_GROWTH_LOWER, RAPTOR_BABY_GROWTH_UPPER)
 	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
@@ -245,13 +248,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	)
 
 /mob/living/basic/raptor/proc/happiness_change(percent_value)
-	/*
-	growth_probability = min(initial(growth_probability) * (1 + percent_value * HAPPINESS_BOOST_DAMPENER), 100)
-	var/attack_boost = round(initial(melee_damage_lower) * percent_value * HAPPINESS_BOOST_DAMPENER, 1)
-	melee_damage_lower = initial(melee_damage_lower) + attack_boost
-	melee_damage_upper = melee_damage_lower + 5
-	*/
-	return
+	var/attack_boost = round((percent_value - happiness_percentage) * RAPTOR_HAPPINESS_DAMAGE_BOOST, 1)
+	melee_damage_lower += attack_boost
+	melee_damage_upper += attack_boost
+	happiness_percentage = percent_value
 
 /mob/living/basic/raptor/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	// Most colors will redirect shots to their rider as to increase their own survivability, and only tank melee attacks
@@ -321,8 +321,11 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	// Our inventory code sucks so we have to do this
 	holder.icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 	holder.icon_state = icon_state
+	holder.alternate_worn_layer = HEAD_LAYER
 	holder.pixel_w = 0
 	holder.pixel_z = 0
+	holder.base_pixel_w = 0
+	holder.base_pixel_z = 0
 
 /mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
 	SIGNAL_HANDLER
@@ -342,7 +345,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	// Better meals make your raptor grow faster
 	var/growth_value = meal.crafting_complexity * RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR + (is_flora ? RAPTOR_GROWTH_BASE_PLANT : RAPTOR_GROWTH_BASE_MEAT)
-	growth_progress += growth_value * (1 + inherited_stats.growth_modifier)
+	growth_progress += growth_value * (1 + inherited_stats.growth_modifier) * (1 + happiness_percentage * RAPTOR_GROWTH_HAPPINESS_MULTIPLIER)
 	if (growth_progress >= RAPTOR_GROWTH_REQUIRED)
 		change_growth_stage(growth_stage == RAPTOR_BABY ? RAPTOR_YOUNG : RAPTOR_ADULT)
 		growth_progress = 0
@@ -367,18 +370,21 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 			base_icon_state = "baby"
 			base_pixel_w = 0
+			mob_size = MOB_SIZE_TINY
 		if (RAPTOR_YOUNG)
 			name = "raptor youngling"
 			desc = "A young raptor that can grow into a robust, trusty steed. Rather naive at such an age, it shouldn't be too hard to tame."
 			icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 			base_icon_state = "young"
 			base_pixel_w = initial(base_pixel_w)
+			mob_size = MOB_SIZE_HUMAN
 		if (RAPTOR_ADULT)
 			name = "raptor"
 			desc = initial(desc)
 			icon = 'icons/mob/simple/lavaland/raptor_big.dmi'
 			base_icon_state = "raptor"
 			base_pixel_w = initial(base_pixel_w)
+			mob_size = initial(mob_size)
 
 	can_be_held = initial(density)
 	density = initial(density)

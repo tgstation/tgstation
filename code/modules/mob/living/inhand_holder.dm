@@ -145,13 +145,6 @@
 		QDEL_NULL(held_mob)
 	return ..()
 
-/obj/item/mob_holder/attack_hand_secondary(mob/user, list/modifiers)
-	. = ..()
-	// We need to pass clicks through to atom storage if we have one
-	if(. != SECONDARY_ATTACK_CALL_NORMAL || !held_mob?.atom_storage)
-		return
-	return held_mob.attack_hand_secondary(user, modifiers)
-
 /obj/item/mob_holder/attack_self(mob/user, modifiers)
 	. = ..()
 	if(. || !held_mob) //overriden or mob missing
@@ -164,8 +157,3 @@
 		return
 	tool.melee_attack_chain(user, held_mob, modifiers) //Interact with the mob with our tool
 
-/obj/item/mob_holder/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
-	held_mob?.mouse_drop_dragged(over, user, src_location, over_location, params)
-
-/obj/item/mob_holder/mouse_drop_receive(atom/dropping, mob/user, params)
-	held_mob?.mouse_drop_receive(dropping, user, params)
