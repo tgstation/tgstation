@@ -144,10 +144,12 @@
 		chassis.balloon_alert(owner, "controlling gunner seat")
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
+		chassis.remove_all_equipment_actions(owner)
 	else
 		chassis.balloon_alert(owner, "controlling pilot seat")
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
+		chassis.generate_equipment_actions(owner)
 	chassis.update_icon_state()
 
 /datum/action/vehicle/sealed/mecha/mech_overclock
@@ -162,3 +164,33 @@
 	chassis.toggle_overclock(forced_state)
 	button_icon_state = "mech_overload_[chassis.overclock_mode ? "on" : "off"]"
 	build_all_button_icons()
+
+/datum/action/vehicle/sealed/mecha/equipment
+	name = "Mech Equipment"
+	button_icon_state = null
+	background_icon_state = "bg_tech"
+	var/obj/item/mecha_parts/mecha_equipment/equipment
+
+/datum/action/vehicle/sealed/mecha/equipment/Destroy()
+	equipment = null
+	return ..()
+
+/datum/action/vehicle/sealed/mecha/equipment/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants) || !equipment)
+		return
+
+	equipment.set_active(!equipment.active)
+	equipment.handle_ui_act(action = "toggle")
+	chassis.balloon_alert(owner, "[equipment.name] [equipment.active ? "on" : "off"]!")
+
+/datum/action/vehicle/sealed/mecha/equipment/proc/set_equipment(passed_equipment)
+	equipment = passed_equipment
+	name = "Toggle [equipment.name]"
+	desc = equipment.desc
+	target = equipment
+	if(target)
+		AddComponent(/datum/component/action_item_overlay, equipment)
+
+	build_button_icon()
