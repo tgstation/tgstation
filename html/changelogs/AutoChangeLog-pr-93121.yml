@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Crafted jumpsuits no longer magically have suit sensors already installed."
+  - rscadd: "Suit sensors are now physical items. They can be removed from clothing with wirecutter, printed from an autolathe, and/or installed on suit and dresses that don't have them."
