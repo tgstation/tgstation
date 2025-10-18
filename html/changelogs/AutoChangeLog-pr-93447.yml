@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Two new heavy dynamic rulesets: \"Midround Mass Traitors\" and \"Midround Mass Changelings\""
