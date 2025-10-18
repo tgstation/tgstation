@@ -1,0 +1,4 @@
+author: "JoJe3003"
+delete-after: True
+changes:
+  - rscadd: "New item \"Infinite Capacity Megacell added, which can be used for infinite power in the SMES. /obj/item/stock_parts/power_store/battery/infinite"
