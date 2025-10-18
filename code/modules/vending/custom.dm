@@ -200,7 +200,7 @@
 			if(!linked_account)
 				linked_account = card_used.registered_account
 				speak("\The [src] has been linked to [card_used].")
-				retun ITEM_INTERACT_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			else if(linked_account == card_used.registered_account)
 				linked_account = null
 				speak("account unlinked.")
