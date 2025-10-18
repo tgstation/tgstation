@@ -54,7 +54,7 @@
 	var/rate_up_lim = 30
 	/// If purity is below 0.15, it calls OverlyImpure() too. Set to 0 to disable this.
 	var/purity_min = 0.15
-	/// bitflags for clear conversions; REACTION_CLEAR_IMPURE, REACTION_CLEAR_INVERSE, REACTION_CLEAR_RETAIN, REACTION_INSTANT
+	/// bitflags for clear conversions; REACTION_INSTANT
 	var/reaction_flags = NONE
 	///Tagging vars
 	///A bitflag var for tagging reagents for the reagent loopup functon
@@ -107,8 +107,6 @@
  * Stuff that occurs at the end of a reaction. This will proc if the beaker is forced to stop and start again (say for sudden temperature changes).
  * Only procs at the END of reaction
  * If reaction_flags & REACTION_INSTANT then this isn't called
- * if reaction_flags REACTION_CLEAR_IMPURE then the impurity chem is handled here, producing the result in the beaker instead of in a mob
- * Likewise for REACTION_CLEAR_INVERSE the inverse chem is produced at the end of the reaction in the beaker
  * You should be calling ..() if you're writing a child function of this proc otherwise purity methods won't work correctly
  *
  * Proc where the additional magic happens.
@@ -125,7 +123,7 @@
 		if(!reagent)
 			continue
 		//Split like this so it's easier for people to edit this function in a child
-		reaction_clear_check(reagent, holder)
+		reaction_inverse_check(reagent, holder)
 	holder.chem_temp = cached_temp
 
 /**
@@ -135,20 +133,16 @@
  * Arguments:
  * * reagent - the target reagent to convert
  */
-/datum/chemical_reaction/proc/reaction_clear_check(datum/reagent/reagent, datum/reagents/holder)
-	if(!reagent)//Failures can delete R
+/datum/chemical_reaction/proc/reaction_inverse_check(datum/reagent/reagent, datum/reagents/holder)
+	if(!reagent || reagent.purity == 1)
 		return
-	if(reaction_flags & (REACTION_CLEAR_IMPURE | REACTION_CLEAR_INVERSE))
-		if(reagent.purity == 1)
-			return
 
-		var/cached_volume = reagent.volume
-		var/cached_purity = reagent.purity
-		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
-			if(reagent.inverse_chem_val > reagent.purity)
-				holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
-				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
-				return
+	var/cached_volume = reagent.volume
+	var/cached_purity = reagent.purity
+	if(reagent.inverse_chem && reagent.inverse_chem_val > reagent.purity)
+		holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
+		holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
+		return
 
 /**
  * Occurs when a reation is overheated (i.e. past its overheatTemp)

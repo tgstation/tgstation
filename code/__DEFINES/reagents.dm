@@ -104,45 +104,37 @@
 #define REAGENT_DEAD_PROCESS (1<<0)
 ///Doesn't appear on handheld health analyzers.
 #define REAGENT_INVISIBLE (1<<1)
-///When inverted, the inverted chem uses the name of the original chem
-#define REAGENT_SNEAKYNAME (1<<2)
 ///Retains initial volume of chem when splitting for purity effects
-#define REAGENT_SPLITRETAINVOL (1<<3)
+#define REAGENT_SPLITRETAINVOL (1<<2)
 ///Lets a given reagent be synthesized important for random reagents and things like the odysseus syringe gun(Replaces the old can_synth variable)
-#define REAGENT_CAN_BE_SYNTHESIZED (1<<4)
+#define REAGENT_CAN_BE_SYNTHESIZED (1<<3)
 ///Allows a reagent to work on a mob regardless of stasis
-#define REAGENT_IGNORE_STASIS (1<<5)
+#define REAGENT_IGNORE_STASIS (1<<4)
 ///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
-#define REAGENT_NO_RANDOM_RECIPE (1<<6)
+#define REAGENT_NO_RANDOM_RECIPE (1<<5)
 ///Does this reagent clean things?
-#define REAGENT_CLEANS (1<<7)
+#define REAGENT_CLEANS (1<<6)
 ///Does this reagent affect wounds? Used to check if some procs should be ran.
-#define REAGENT_AFFECTS_WOUNDS (1<<8)
+#define REAGENT_AFFECTS_WOUNDS (1<<7)
 /// If present, when metabolizing out of a mob, we divide by the mob's metabolism rather than multiply.
 /// Without this flag: Higher metabolism means the reagent exits the system faster.
 /// With this flag: Higher metabolism means the reagent exits the system slower.
-#define REAGENT_REVERSE_METABOLISM (1<<9)
+#define REAGENT_REVERSE_METABOLISM (1<<8)
 /// If present, this reagent will not be affected by the mob's metabolism at all, meaning it exits at a fixed rate for all mobs.
 /// Supercedes [REAGENT_REVERSE_METABOLISM].
-#define REAGENT_UNAFFECTED_BY_METABOLISM (1<<10)
+#define REAGENT_UNAFFECTED_BY_METABOLISM (1<<9)
 
 //Chemical reaction flags, for determining reaction specialties
-///Convert into impure/pure on reaction completion
-#define REACTION_CLEAR_IMPURE (1<<0)
-///Convert into inverse on reaction completion when purity is low enough
-#define REACTION_CLEAR_INVERSE (1<<1)
-///Clear converted chems retain their purities/inverted purities. Requires 1 or both of the above.
-#define REACTION_CLEAR_RETAIN (1<<2)
 ///Used to create instant reactions
-#define REACTION_INSTANT (1<<3)
+#define REACTION_INSTANT (1<<0)
 ///Used to force reactions to create a specific amount of heat per 1u created. So if thermic_constant = 5, for 1u of reagent produced, the heat will be forced up arbitarily by 5 irresepective of other reagents. If you use this, keep in mind standard thermic_constant values are 100x what it should be with this enabled.
-#define REACTION_HEAT_ARBITARY (1<<4)
+#define REACTION_HEAT_ARBITARY (1<<1)
 ///Used to bypass the chem_master transfer block (This is needed for competitive reactions unless you have an end state programmed). More stuff might be added later. When defining this, please add in the comments the associated reactions that it competes with
-#define REACTION_COMPETITIVE (1<<5)
+#define REACTION_COMPETITIVE (1<<2)
 ///Used to force pH changes to be constant regardless of volume
-#define REACTION_PH_VOL_CONSTANT (1<<6)
+#define REACTION_PH_VOL_CONSTANT (1<<3)
 ///If a reaction will generate its impure/inverse reagents in the middle of a reaction, as apposed to being determined on ingestion/on reaction completion
-#define REACTION_REAL_TIME_SPLIT (1<<7)
+#define REACTION_REAL_TIME_SPLIT (1<<4)
 
 ///Used for overheat_temp - This sets the overheat so high it effectively has no overheat temperature.
 #define NO_OVERHEAT 99999

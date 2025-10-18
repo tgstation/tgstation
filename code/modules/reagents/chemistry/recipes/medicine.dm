@@ -339,7 +339,6 @@
 	H_ion_release = 0.09
 	rate_up_lim = 25
 	purity_min = 0.15
-	reaction_flags = REACTION_CLEAR_INVERSE
 
 /datum/chemical_reaction/medicine/antihol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	explode_smoke(holder, equilibrium)
