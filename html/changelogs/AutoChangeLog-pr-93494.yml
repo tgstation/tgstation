@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "The BR-38 does not mysteriously lose charges when it is used on some objects, dropped on tables or smacked against glass panels."
