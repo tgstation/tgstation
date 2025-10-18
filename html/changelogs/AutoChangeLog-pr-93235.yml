@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - balance: "cargo exports now have different prices with applied elasticity"
+  - code_imp: "Improved performance of export code"
+  - qol: "stock blocks can be recycled for materials & show up as stock blocks in order console sold items"
+  - refactor: "refactored cargo export code in whole. Report bugs on GitHub"
