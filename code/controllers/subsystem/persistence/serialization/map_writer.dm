@@ -154,6 +154,8 @@
 					if(obj_blacklist[target_atom.type])
 						continue
 
+					var/typepath_replacement = target_atom.get_save_substitute_type()
+
 					//====SAVING OBJECTS====
 					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
 						var/obj/target_obj = target_atom

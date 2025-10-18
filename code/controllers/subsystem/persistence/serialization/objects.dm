@@ -70,109 +70,184 @@
 
 ///  A T M O S P H E R I C S  ///
 
-/obj/machinery/atmospherics/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, piping_layer)
-	. += NAMEOF(src, pipe_color)
-	return .
-
 /obj/machinery/meter/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, icon)
 	. -= NAMEOF(src, icon_state)
-	// /obj/machinery/meter/monitored/distro_loop has an id_tag
+	// /obj/machinery/meter/monitored/distro_loop has an id_tag fix that later
+	return .
+
+/obj/machinery/atmospherics/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, piping_layer)
+	. += NAMEOF(src, pipe_color)
+	. += NAMEOF(src, on)
+	. += NAMEOF(src, vent_movement)
+
+	. -= NAMEOF(src, name)
+	. -= NAMEOF(src, id_tag)
+	. -= NAMEOF(src, icon)
+	. -= NAMEOF(src, icon_state)
 	return .
 
 /obj/machinery/atmospherics/pipe/smart/simple/get_save_vars()
-	return list()
+	. = ..()
+	. -= NAMEOF(src, dir)
+	return .
 
-/obj/machinery/atmospherics/pipe/smart/simple/get_custom_save_vars()
-	return list()
+/obj/machinery/atmospherics/pipe/smart/simple/replace_saved_object_type()
+	var/base_type = /obj/machinery/atmospherics/pipe/smart/manifold4w
 
-#define CONVERT_PIPE_TO_TYPE(Type, Color, Visible, Layer)
-	CONVERT_PIPE_COLOR(Color)
-	CONVERT_PIPE_VISIBLE(Visible)
-	CONVERT_PIPE_LAYER(Layer)
-	Type = ##Type##Color##Visible##Layer
+	var/cache_key = "[base_type]-[pipe_color]-[hide]-[piping_layer]"
+	var/cached_typepath = GLOB.map_export_typepath_cache[cache_key]
+	if(!isnull(cached_typepath))
+		return cached_typepath
 
-#define CONVERT_PIPE_COLOR(Color) \
-	switch(Color)
+	var/color_path = ""
+	switch(pipe_color)
 		if(COLOR_YELLOW)
-			Color = /yellow
+			color_path = "/yellow"
 		if(ATMOS_COLOR_OMNI)
-			Color = /general
+			color_path = "/general"
 		if(COLOR_CYAN)
-			Color = /cyan
+			color_path = "/cyan"
 		if(COLOR_VIBRANT_LIME)
-			Color = /green
+			color_path = "/green"
 		if(COLOR_ENGINEERING_ORANGE)
-			Color = /orange
+			color_path = "/orange"
 		if(COLOR_PURPLE)
-			Color = /purple
+			color_path = "/purple"
 		if(COLOR_DARK)
-			Color = /dark
+			color_path = "/dark"
 		if(COLOR_BROWN)
-			Color = /brown
+			color_path = "/brown"
 		if(COLOR_STRONG_VIOLET)
-			Color = /violet
+			color_path = "/violet"
 		if(COLOR_LIGHT_PINK)
-			Color = /pink
+			color_path = "/pink"
 		if(COLOR_RED)
-			Color = /scrubbers
+			color_path = "/scrubbers"
 		if(COLOR_BLUE)
-			Color = /supply
+			color_path = "/supply"
 
-#define CONVERT_PIPE_LAYER(Layer) \
-	switch(Layer)
+	var/visible_path = hide ? "/hidden" : "/visible"
+
+	var/layer_path = ""
+	switch(piping_layer)
 		if(1)
-			Layer = /layer1
+			layer_path = "/layer1"
 		if(2)
-			Layer = /layer2
+			layer_path = "/layer2"
 		if(3)
-			Layer = null // maybe replace with "" ?
+			layer_path = ""
 		if(4)
-			Layer = /layer4
+			layer_path = "/layer4"
 		if(5)
-			Layer = /layer5
+			layer_path = "/layer5"
 
-#define CONVERT_PIPE_VISIBLE(Visible) \
-	if(Visible)
-		Visible = /visible
-	else
-		Visible = /hidden
-
-/obj/machinery/atmospherics/pipe/smart/simple/replace_saved_object()
-	var/typepath = /obj/machinery/atmospherics/pipe/smart/manifold4w
-
-	// we probably want to implement caching at some point to make it even faster
-	CONVERT_PIPE_TO_TYPE(typepath, pipe_color, piping_layer, hide)
-
-	/obj/machinery/atmospherics/pipe/smart/manifold4w
+	var/full_path = "[base_type][color_path][visible_path][layer_path]"
+	var/typepath = text2path(full_path)
 
 	if(ispath(typepath))
+		typepath_cache[cache_key] = typepath
 		return typepath
 
-	// error message
+	typepath_cache[cache_key] = FALSE
+	stack_trace("Failed to convert pipe to typepath: [full_path]")
 	return FALSE
 
-#undef CONVERT_PIPE
+// these spawn underneath cryo machines and will duplicate after every save
+/obj/machinery/atmospherics/components/unary/is_saveable()
+	if(locate(/obj/machinery/cryo_cell) in loc)
+		return FALSE
+	. = ..()
 
-/obj/machinery/atmospherics/pipe/smart/simple/on_object_saved()
-	var/data
+/obj/machinery/atmospherics/components/unary/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, welded)
+	return .
+
+// REMEMBER
+// lots of scrubbers/vents/pipe shit does not have layers 1 & 5 so plz test to make sure it works
+
+/obj/machinery/atmospherics/components/unary/get_save_substitute_type()
+	var/base_type
+	if(istype(src, /obj/machinery/atmospherics/components/unary/vent_scrubber))
+		base_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
+	else if(istype(src, /obj/machinery/atmospherics/components/unary/vent_pump/high_volume))
+		base_type = /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
+	else if(istype(src, /obj/machinery/atmospherics/components/unary/vent_pump))
+		base_type = /obj/machinery/atmospherics/components/unary/vent_pump
+	else
+		return FALSE
+
+	var/cache_key = "[base_type]-[on]-[piping_layer]"
+	var/cached_typepath = GLOB.map_export_typepath_cache[cache_key]
+	if(!isnull(cached_typepath))
+		return cached_typepath
+
+	var/on_path = on ? "/on" : ""
+
+	var/layer_path = ""
+	switch(piping_layer)
+		if(1)
+			layer_path = "/layer1"
+		if(2)
+			layer_path = "/layer2"
+		if(3)
+			layer_path = ""
+		if(4)
+			layer_path = "/layer4"
+		if(5)
+			layer_path = "/layer5"
+
+	var/full_path = "[base_type][on_path][layer_path]"
+	var/typepath = text2path(full_path)
+
+	if(ispath(typepath))
+		typepath_cache[cache_key] = typepath
+		return typepath
+
+	typepath_cache[cache_key] = FALSE
+	stack_trace("Failed to convert vent scrubber to typepath: [full_path]")
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/vent_pump/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, pump_direction)
+	. += NAMEOF(src, pressure_checks)
+	. += NAMEOF(src, internal_pressure_bound)
+	. += NAMEOF(src, external_pressure_bound)
+	. += NAMEOF(src, fan_overclocked)
+	return .
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, scrubbing)
+	. += NAMEOF(src, filter_types)
+	. += NAMEOF(src, widenet)
+	return .
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/PersistentInitialize()
+	. = ..()
+	if(widenet)
+		set_widenet(widenet)
 
 
-/*
-		if(TGM_MAX_OBJ_CHECK)
-			continue
-		TGM_OBJ_INCREMENT
-*/
-/obj/machinery/atmospherics/pipe/smart/manifold4w
-/obj/machinery/atmospherics/pipe/smart/manifold4w/
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2
+// Don't forget to look into other atmos subtypes for variables to save and initialize
+// knock it out now before it gets forgotten in the future
 
-	var/metadata = generate_tgm_metadata(paper)
-	data += "[data ? ",\n" : ""][paper.type][metadata]"
-	return data
+
+
+
+
+
+
+
+
+
+
+
 
 /obj/structure/extinguisher_cabinet/get_save_vars()
 	. = ..()
@@ -235,6 +310,8 @@
 
 /obj/item/stack/cable_coil/get_save_vars()
 	. = ..()
+	. += NAMEOF(src, cable_color)
+
 	// wires modify several vars immediately after init which results
 	// in excessive save data that should be omitted
 	. -= NAMEOF(src, name)
@@ -242,19 +319,12 @@
 	. -= NAMEOF(src, pixel_x)
 	. -= NAMEOF(src, pixel_y)
 	. -= NAMEOF(src, color)
-	. += NAMEOF(src, cable_color)
 	return .
 
 /obj/machinery/atmospherics/components/unary/thermomachine/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, icon)
 	return .
-
-// these spawn underneath cryo machines and will duplicate after every save
-/obj/machinery/atmospherics/components/unary/is_saveable()
-	if(locate(/obj/machinery/cryo_cell) in loc)
-		return FALSE
-	. = ..()
 
 /obj/machinery/light_switch/get_save_vars()
 	. = ..()
@@ -280,10 +350,11 @@
 
 /obj/machinery/atmospherics/components/get_save_vars()
 	. = ..()
+	. += NAMEOF(src, welded)
+
 	if(!override_naming)
 		. -= NAMEOF(src, name)
 	. -= NAMEOF(src, icon_state)
-	. += NAMEOF(src, welded)
 	return .
 
 /obj/item/pipe/get_save_vars()
@@ -326,53 +397,89 @@
 	return .
 
 /obj/machinery/door/password/get_save_vars()
-	return ..() + NAMEOF(src, password)
+	. = ..()
+	. += NAMEOF(src, password)
+	return .
 
 /obj/machinery/door/poddoor/get_save_vars()
-	return ..() + NAMEOF(src, id)
+	. = ..()
+	. += NAMEOF(src, id)
+	return .
 
 ///  P U Z Z L E  ///
 
 /obj/item/keycard/get_save_vars()
-	return ..() + NAMEOF(src, puzzle_id)
+	. = ..()
+	. += NAMEOF(src, puzzle_id)
+	return .
 
 /obj/machinery/door/puzzle/get_save_vars()
-	return ..() + NAMEOF(src, puzzle_id)
+	. = ..()
+	. += NAMEOF(src, puzzle_id)
+	return .
 
 /obj/item/pressure_plate/hologrid/get_save_vars()
-	return ..() + NAMEOF(src, reward)
+	. = ..()
+	. += NAMEOF(src, reward)
+	return .
 
 /obj/structure/light_puzzle/get_save_vars()
-	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, puzzle_id))
+	. = ..()
+	. += NAMEOF(src, queue_size)
+	. += NAMEOF(src, puzzle_id)
+	return .
 
 /obj/machinery/puzzle/get_save_vars()
-	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, id))
+	. = ..()
+	. += NAMEOF(src, queue_size)
+	. += NAMEOF(src, id)
+	return .
 
 /obj/machinery/puzzle/password/get_save_vars()
-	return ..() + list(NAMEOF(src, password), NAMEOF(src, tgui_text), NAMEOF(src, tgui_title), NAMEOF(src, input_max_len_is_pass))
+	. = ..()
+	. += NAMEOF(src, password)
+	. += NAMEOF(src, tgui_text)
+	. += NAMEOF(src, tgui_title)
+	. += NAMEOF(src, input_max_len_is_pass)
+	return .
 
 /obj/machinery/puzzle/password/pin/get_save_vars()
-	return ..() + NAMEOF(src, pin_length)
+	. = ..()
+	. += NAMEOF(src, pin_length)
+	return .
 
 /obj/structure/puzzle_blockade/get_save_vars()
-	return ..() + NAMEOF(src, id)
+	. = ..()
+	. += NAMEOF(src, id)
+	return .
 
 /obj/effect/puzzle_poddoor_open/get_save_vars()
-	return ..() + list(NAMEOF(src, queue_id), NAMEOF(src, id))
+	. = ..()
+	. += NAMEOF(src, queue_id)
+	. += NAMEOF(src, id)
+	return .
 
 /obj/effect/decal/puzzle_dots/get_save_vars()
-	return ..() + NAMEOF(src, id)
+	. = ..()
+	. += NAMEOF(src, id)
+	return .
 
 /obj/effect/decal/cleanable/crayon/puzzle/get_save_vars()
-	return ..() + NAMEOF(src, puzzle_id)
+	. = ..()
+	. += NAMEOF(src, puzzle_id)
+	return .
 
 /obj/item/paper/fluff/scrambled_pass/get_save_vars()
-	return ..() + NAMEOF(src, puzzle_id)
+	. = ..()
+	. += NAMEOF(src, puzzle_id)
+	return .
 
 ///  B U T T O N  ///
 
 /obj/machinery/button/get_save_vars()
-	return ..() + NAMEOF(src, id)
+	. = ..()
+	. += NAMEOF(src, id)
+	return .
 
 ///  N O T I C E   B O A R D  ///
 
@@ -411,16 +518,22 @@
 ///  A R T  ///
 
 /obj/structure/sign/painting/get_save_vars()
-	return ..() - NAMEOF(src, icon)
+	. = ..()
+	. -= NAMEOF(src, icon)
+	return .
 
 /obj/item/photo/get_save_vars()
-	return ..() - NAMEOF(src, icon)
+	. = ..()
+	. -= NAMEOF(src, icon)
+	return .
 
 
 ///  A I R   A L A R M  ///
 
 /obj/machinery/airalarm/get_save_vars()
-	return ..() - NAMEOF(src, name)
+	. = ..()
+	. -= NAMEOF(src, name)
+	return .
 
 ///  P H O T O C O P I E R  ///
 
@@ -433,14 +546,15 @@
 
 /obj/machinery/power/apc/get_save_vars()
 	. = ..()
-	if(auto_name)
-		. -= NAMEOF(src, name)
 	. += NAMEOF(src, opened)
 	. += NAMEOF(src, coverlocked)
 	. += NAMEOF(src, lighting)
 	. += NAMEOF(src, equipment)
 	. += NAMEOF(src, environ)
 	. += NAMEOF(src, cell_type)
+
+	if(auto_name)
+		. -= NAMEOF(src, name)
 
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	//. += NAMEOF(src, shorted)
@@ -474,9 +588,9 @@
 
 /obj/item/holochip/get_save_vars()
 	. = ..()
-	. -= NAMEOF(src, name)
-
 	. += NAMEOF(src, credits)
+
+	. -= NAMEOF(src, name)
 	return .
 
 /*
