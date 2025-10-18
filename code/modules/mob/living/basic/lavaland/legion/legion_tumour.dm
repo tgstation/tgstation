@@ -31,14 +31,10 @@
 	. = ..()
 	animate_pulse()
 
-/obj/item/organ/legion_tumour/apply_organ_damage(damage_amount, maximum, required_organ_flag)
-	var/was_failing = organ_flags & ORGAN_FAILING
-	. = ..()
-	if (was_failing != (organ_flags & ORGAN_FAILING))
-		animate_pulse()
+/obj/item/organ/legion_tumour/on_begin_failure()
+	animate_pulse()
 
-/obj/item/organ/legion_tumour/set_organ_damage(damage_amount, required_organ_flag)
-	. = ..()
+/obj/item/organ/legion_tumour/on_failure_recovery()
 	animate_pulse()
 
 /// Do a heartbeat animation depending on if we're failing or not
