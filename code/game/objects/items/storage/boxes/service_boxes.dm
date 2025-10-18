@@ -301,7 +301,7 @@
 	desc = "A box containing several blessed purity seals."
 
 /obj/item/storage/box/purity_seal_box/PopulateContents()
-    for(var/i in 1 to 4)
-        new /obj/item/sticker/purity_seal(src)
-        new /obj/item/sticker/purity_seal/purity_seal_2(src)
+	for(var/i in 1 to 4)
+		new /obj/item/sticker/purity_seal(src)
+		new /obj/item/sticker/purity_seal/purity_seal_2(src)
 
