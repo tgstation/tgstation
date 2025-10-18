@@ -5708,10 +5708,10 @@
 	dir = 1
 	},
 /obj/machinery/meter{
-	name = "N20 meter"
+	name = "N2O meter"
 	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "N20 Multideck Adapter";
+	name = "N2O Multideck Adapter";
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -31251,11 +31251,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
-	name = "N20 Multideck Adapter";
+	name = "N2O Multideck Adapter";
 	dir = 4
 	},
 /obj/machinery/meter{
-	name = "N20 meter"
+	name = "N2O meter"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
