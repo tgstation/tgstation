@@ -31,38 +31,20 @@
 
 
 /datum/round_event/ion_storm/start()
-	//AI laws
-	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
-		M.laws_sanity_check()
-		if(M.stat != DEAD && !M.incapacitated)
-			if(prob(replaceLawsetChance))
-				var/ion_lawset_type = pick_weighted_lawset()
-				var/datum/ai_laws/ion_lawset = new ion_lawset_type()
-				// our inherent laws now becomes the picked lawset's laws!
-				M.laws.inherent = ion_lawset.inherent.Copy()
-				// and clean up after.
-				qdel(ion_lawset)
+	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+		rack.scramble_ai_rack(
+			new_lawset_prob = replaceLawsetChance,
+			remove_law_prob = removeRandomLawChance,
+			shuffle_prob = shuffleLawsChance,
+			base_ion_prob = 100,
+			sub_ion_prob = removeDontImproveChance,
+			ion_limit = 2,
+			ion_message = ionMessage,
+		)
 
-			if(prob(removeRandomLawChance))
-				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
-
-			var/message = ionMessage || generate_ion_law()
-			if(message)
-				if(prob(removeDontImproveChance))
-					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
-				else
-					M.add_ion_law(message)
-
-			if(prob(shuffleLawsChance))
-				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
-
-			log_silicon("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
-			M.post_lawchange()
-
-	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in GLOB.alive_mob_list)
-			if(prob(botEmagChance))
-				bot.emag_act()
+	for(var/mob/living/bot as anything in GLOB.bots_list)
+		if(prob(botEmagChance))
+			bot.emag_act()
 
 /proc/generate_ion_law()
 	//Threats are generally bad things, silly or otherwise. Plural.

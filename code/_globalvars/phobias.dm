@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/mmi/posibrain,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
-		/obj/machinery/computer/upload,
+		/obj/machinery/ai_law_rack,
 		/obj/machinery/recharge_station,
 		/obj/structure/statue/diamond/ai1,
 		/obj/structure/statue/diamond/ai2,
