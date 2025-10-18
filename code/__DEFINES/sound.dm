@@ -288,6 +288,12 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define	SFX_RORO_WARBLE "roro_warble"
 #define SFX_POTTED_PLANT_PICKUP "potted_plant_pickup"
 #define SFX_POTTED_PLANT_DROP "potted_plant_drop"
+#define SFX_GOGGLES_PICKUP "goggles_pickup"
+#define SFX_GOGGLES_DROP "goggles_drop"
+#define SFX_GOGGLES_EQUIP "goggles_equip"
+#define SFX_GLASSES_PICKUP "glasses_pickup"
+#define SFX_GLASSES_DROP "glasses_drop"
+#define SFX_GLASSES_EQUIP "glasses_equip"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
