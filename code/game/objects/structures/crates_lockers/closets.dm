@@ -289,12 +289,27 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(vname in list(NAMEOF(src, locked), NAMEOF(src, welded), NAMEOF(src, secure), NAMEOF(src, icon_welded), NAMEOF(src, delivery_icon)))
 		update_appearance()
 
+// Clone of closet items
+/obj/effect/appearance_clone/closet_item
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /// Animates the closet door opening and closing
 /obj/structure/closet/proc/animate_door(closing = FALSE)
 	if(!door_anim_time)
 		return
 	if(!door_obj)
 		door_obj = new
+	if(closing && length(contents))
+		var/icon/mask_icon = icon(icon, has_closed_overlay ? "[icon_door || base_icon_state || initial(icon_state)]_door" : icon_state)
+		// When closing, all of our contents are already in src - they've already disappeared from the world
+		// So to make the animation less jarring, we create a clone of everything in the closet to show in the animation
+		for(var/content in src)
+			var/obj/effect/appearance_clone/closet_item/clone = new(loc, content)
+			// Mask keeps in in bounds of the inside of the closet
+			clone.add_filter("closet_mask", 1, alpha_mask_filter(x = -1 * (clone.pixel_x + clone.pixel_w), y = -1 * (clone.pixel_y + clone.pixel_z), icon = mask_icon))
+			clone.layer = FLOAT_LAYER - 1
+			vis_contents += clone
+
 	var/default_door_icon = "[icon_door || icon_state]_door"
 	vis_contents += door_obj
 	door_obj.icon = icon
@@ -330,6 +345,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/proc/end_door_animation()
 	is_animating_door = FALSE
 	vis_contents -= door_obj
+	for(var/obj/effect/appearance_clone/closet_item/clone in vis_contents)
+		vis_contents -= clone
+		qdel(clone)
 	update_icon()
 
 /// Calculates the matrix to be applied to the animated door overlay
