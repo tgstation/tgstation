@@ -183,14 +183,22 @@
 	/// Sounds when this bodypart is used in an umarmed attack
 	var/sound/unarmed_attack_sound = 'sound/items/weapons/punch1.ogg'
 	var/sound/unarmed_miss_sound = 'sound/items/weapons/punchmiss.ogg'
-	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
+	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
-	///Highest possible punch damage this bodypart can ive.
+	/// Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	/// Determines the accuracy bonus, armor penetration and knockdown probability.
 	var/unarmed_effectiveness = 10
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
 	var/unarmed_pummeling_bonus = 1
+	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb? Every integer above or below 0 is one effective grab level. Higher is a bonus, lower is a malus.
+	/// This is more powerful than adjusting grab escape chance. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
+	var/unarmed_grab_state_bonus = 0
+	/// If this limb is used to grab (which is only arms right now), how much additional damage does it deal to the grabbed individual when they fail to escape the grab?
+	var/unarmed_grab_damage_bonus = 0
+	/// If this limb is used to grab (which is only arms right now), how much more difficult is it to escape the grab, before accounting for grab state? Values above 0 is a malus, values below 0 is a bonus.
+	/// This is less powerful than adjusting grab state. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
+	var/unarmed_grab_escape_chance_bonus = 0
 	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
 	var/unarmed_sharpness = NONE
 
