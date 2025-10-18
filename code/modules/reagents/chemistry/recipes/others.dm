@@ -11,7 +11,7 @@
 
 /datum/chemical_reaction/lube/superlube
 	results = list(/datum/reagent/lube/superlube = 3)
-	required_reagents = list(/datum/reagent/lube = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/banana = 1)
+	required_reagents = list(/datum/reagent/lube = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/laughter = 3)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/spraytan
