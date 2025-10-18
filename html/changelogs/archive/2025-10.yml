@@ -533,3 +533,25 @@
   - balance: restored the weak claymore to its former glory
   grungussuss:
   - qol: item offers now persist when pulling
+2025-10-17:
+  Aliceee2ch:
+  - qol: Jaws of Recovery can be worn on medical MODSuit suit storage now.
+  - rscadd: Added modified Jaws of Recovery and recipe for them. Made from regular
+      Jaws of Life they act like one, without area restrictions and radio announcements.
+  grungussuss:
+  - sound: added new sounds for potted plants
+  lelandkemble:
+  - bugfix: fixes implanter renaming not working
+  - bugfix: fixes clownborg picket sign renaming not working
+  - code_imp: brought most unique renaming implementations under UNIQUE_RENAME
+2025-10-18:
+  Fghj240:
+  - rscadd: Added a knife, sugar, and a carrot to the icemoon listening post
+  Melbert:
+  - rscadd: Adds job-colored overalls to the loadout
+  TheNobodyofimportance:
+  - rscdel: Removes chipped's brain damage status effect and flavor text
+  - rscdel: Removes mannitol from the mail list for chipped crew
+  Twaticus:
+  - bugfix: Females wearing either a yukata or kimono no longer have holes in their
+      clothes.
