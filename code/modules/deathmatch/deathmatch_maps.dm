@@ -246,3 +246,12 @@
 
 /datum/turf_reservation/indestructible_plating
 	turf_type = /turf/open/indestructible/plating //a little hacky but i guess it has to be done
+
+/datum/lazy_template/deathmatch/deep_space
+	name = "Deep Space"
+	desc = "A deep-space cargo shipping station has fallen under attack by a Syndicate boarding party."
+	max_players = 8
+	automatic_gameend_time = 15 MINUTES //its a pretty big map
+	allowed_loadouts = list(/datum/outfit/deathmatch_loadout/cargo_spaceman, /datum/outfit/deathmatch_loadout/syndicate_spaceman, /datum/outfit/deathmatch_loadout/spacetider)
+	map_name = "deep_space"
+	key = "deep_space"
