@@ -343,8 +343,11 @@
 	if(isnull(to_drop))
 		return
 
-	var/x_offset = rand(-6, 6)
-	var/y_offset = rand(-6, 6)
+	var/x_offset = 0
+	var/y_offset = 0
+	if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
+		x_offset += rand(-6, 6)
+		y_offset += rand(-6, 6)
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
 	if(!transfer_item_to_turf(to_drop, drop_location(), x_offset, y_offset, force, silent, invdrop))
 		return
@@ -365,9 +368,8 @@
 		return FALSE
 	if(QDELETED(to_transfer)) // Some items may get deleted upon getting unequipped.
 		return FALSE
-	if(!(to_transfer.item_flags & NO_PIXEL_RANDOM_DROP))
-		to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
-		to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
+	to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
+	to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
 	to_transfer.do_drop_animation(src)
 	return TRUE
 
