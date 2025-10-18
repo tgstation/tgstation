@@ -546,12 +546,23 @@
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
+	var/list/items = list()
 	for(var/i in 1 to 5)
-		new /obj/item/throwing_star(src)
+		items += new /obj/item/throwing_star(src)
 	for(var/i in 1 to 2)
-		new /obj/item/paperplane/syndicate(src)
-	new /obj/item/restraints/legcuffs/bola/tactical(src)
-	new /obj/item/restraints/legcuffs/bola/tactical(src)
+		items += new /obj/item/paperplane/syndicate(src)
+	for(var/i in 1 to 2)
+		items += new /obj/item/restraints/legcuffs/bola/tactical(src)
+	return items
+
+/obj/item/storage/box/syndie_kit/throwing_weapons/contraband/PopulateContents()
+	. = ..()
+	for(var/obj/item/item in src)
+		if(prob(20))
+			item.throw_range = 2
+			item.AddComponent(/datum/component/boomerang, boomerang_throw_range = 7)
+			ADD_TRAIT(item, TRAIT_UNCATCHABLE, TRAIT_GENERIC)
+
 
 /obj/item/storage/box/syndie_kit/cutouts/PopulateContents()
 	for(var/i in 1 to 3)
