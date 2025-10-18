@@ -23,8 +23,9 @@
 	fishing_gravity_mult = 1.1
 
 /datum/material/iron/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+		return TRUE
 
 ///Breaks extremely easily but is transparent.
 /datum/material/glass
@@ -62,8 +63,9 @@
 	fishing_gravity_mult = 0.9
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
+		return TRUE
 
 /datum/material/glass/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
@@ -110,8 +112,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_gravity_mult = 1.1
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+		return TRUE
 
 ///Slight force increase
 /datum/material/gold
@@ -186,8 +189,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_gravity_mult = 1.1
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+		return TRUE
 
 ///Is slightly radioactive
 /datum/material/uranium
@@ -325,7 +329,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	SIGNAL_HANDLER
 	if(prob(67))
 		return
-	var/list/elegible_fish_sources = flatten_list(GLOB.preset_fish_sources)
+	var/list/elegible_fish_sources = assoc_to_values(GLOB.preset_fish_sources)
 	for(var/datum/fish_source/source as anything in elegible_fish_sources)
 		if(source.fish_source_flags & FISH_SOURCE_FLAG_NO_BLUESPACE_ROD)
 			elegible_fish_sources -= source
@@ -444,8 +448,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_gravity_mult = 1.1
 
 /datum/material/titanium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+		return TRUE
 
 /datum/material/runite
 	name = "runite"
@@ -484,8 +489,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/runite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+		return TRUE
 
 ///Force decrease
 /datum/material/plastic
@@ -568,7 +574,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		wooden.resistance_flags &= ~FLAMMABLE
 
 /datum/material/wood/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(5, BRUTE, BODY_ZONE_HEAD)
 	victim.reagents.add_reagent(/datum/reagent/cellulose, rand(8, 12))
 	source_item?.reagents?.add_reagent(/datum/reagent/cellulose, source_item.reagents.total_volume*(2/5))
 
@@ -613,8 +620,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/adamantine/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+		return TRUE
 
 ///RPG Magic.
 /datum/material/mythril
@@ -657,8 +665,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		qdel(source.GetComponent(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
+		return TRUE
 
 //formed when freon react with o2, emits a lot of plasma when heated
 /datum/material/hot_ice
@@ -728,8 +737,9 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	fishing_gravity_mult = 0.7
 
 /datum/material/metalhydrogen/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-	return TRUE
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(15, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+		return TRUE
 
 //I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
 /datum/material/sand
@@ -749,6 +759,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.25
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	fish_weight_modifier = 1.2
 	fishing_difficulty_modifier = 30 //Sand fishing rods? What the hell are you doing?
 	fishing_cast_range = -2
@@ -780,6 +791,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_WOOD
 	texture_layer_icon_state = "brick"
+	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	fish_weight_modifier = 1.2
 	fishing_difficulty_modifier = 25 //Sand fishing rods? What the hell are you doing?
 	fishing_cast_range = -2
@@ -807,6 +819,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = 0.3
 	turf_sound_override = FOOTSTEP_SAND
 	texture_layer_icon_state = "sand"
+	mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	fish_weight_modifier = 0.8
 	fishing_difficulty_modifier = 25
 	fishing_cast_range = -2
@@ -847,7 +860,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/runedmetal/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/fuel/unholywater, rand(8, 12))
-	victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5)
 	return TRUE
 
 /datum/material/bronze
@@ -1079,6 +1093,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		REMOVE_TRAIT(source, TRAIT_ROD_IGNORE_ENVIRONMENT, REF(src)) //light-absorbing, environment-cancelling fishing rod.
 
 /datum/material/zaukerite/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
-	victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
+	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
+		victim.apply_damage(30, BURN, BODY_ZONE_HEAD, wound_bonus = 5)
 	source_item?.reagents?.add_reagent(/datum/reagent/toxin/plasma, source_item.reagents.total_volume*5)
 	return TRUE

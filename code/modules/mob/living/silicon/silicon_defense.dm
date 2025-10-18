@@ -159,3 +159,6 @@
 	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
 
 #undef CYBORG_SLOWDOWN_THRESHOLD
+
+/mob/living/silicon/hypnosis_vulnerable()
+	return FALSE //It obeys its laws

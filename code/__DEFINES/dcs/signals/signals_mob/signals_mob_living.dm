@@ -16,9 +16,14 @@
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
 /// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
 #define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
+/// Called when a organ's damage is adjusted apply_organ_damage (damage_amount, maximum, required_organ_flag)
+#define COMSIG_ORGAN_ADJUST_DAMAGE "organ_adjust_damage"
 
 ///Called when movement intent is toggled.
 #define COMSIG_MOVE_INTENT_TOGGLED "move_intent_toggled"
+
+/// Called when combat mode is toggled.
+#define COMSIG_COMBAT_MODE_TOGGLED "combat_mode_toggled"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
@@ -355,3 +360,8 @@
 
 /// From /mob/living/update_offsets(animate) : (new_x, new_y, new_w, new_z, animate)
 #define COMSIG_LIVING_UPDATE_OFFSETS "living_update_offsets"
+
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
+	/// Prevent loot from being dropped
+	#define COMPONENT_NO_LOOT_DROP (1<<0)

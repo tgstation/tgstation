@@ -26,8 +26,6 @@
 
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob
-	name = "Unknown"
-	description = ""
 	color = COLOR_WHITE
 	taste_description = "bad code and slime"
 	chemical_flags = NONE

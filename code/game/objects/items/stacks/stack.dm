@@ -45,8 +45,6 @@
 	// these amounts will be multiplied by the stack size in on_grind()
 	/// Amount of matter given back to RCDs
 	var/matter_amount = 0
-	/// Does this stack require a unique girder in order to make a wall?
-	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/table_type
 	/// What typepath stairs do we create from this stack
@@ -72,6 +70,13 @@
 	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
 	/// or until the cut heals, whichever comes first
 	var/absorption_rate
+
+	/// Can this stack be used for contruction of girders?
+	var/usable_for_construction = FALSE
+	/// Does this stack require a unique girder in order to make a wall?
+	var/has_unique_girder = FALSE
+	///What type of wall does this sheet spawn
+	var/walltype
 
 /obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	amount = new_amount
@@ -118,14 +123,14 @@
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
-		merge_with_loc()
+		merge_with_loc(merge_into_ourselves = !isnull(pulledby))
 
 ///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
 	if(length(mats_per_unit))
 		set_custom_materials(mats_per_unit, amount)
 
-/obj/item/stack/proc/find_other_stack(list/already_found)
+/obj/item/stack/proc/find_other_stack(list/already_found, merge_into_ourselves = FALSE)
 	if(QDELETED(src) || isnull(loc))
 		return
 	for(var/obj/item/stack/item_stack in loc)
@@ -136,20 +141,23 @@
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])
 			continue
-		if(can_merge(item_stack))
+		if(merge_into_ourselves ? item_stack.can_merge(src) : can_merge(item_stack))
 			already_found[stack_ref] = TRUE
 			return item_stack
 
 /// Tries to merge the stack with everything on the same tile.
-/obj/item/stack/proc/merge_with_loc()
+/obj/item/stack/proc/merge_with_loc(merge_into_ourselves = FALSE)
 	var/list/already_found = list() // change to alist whenever dreamchecker and such finally supports that
-	var/obj/item/other_stack = find_other_stack(already_found)
+	var/obj/item/stack/other_stack = find_other_stack(already_found, merge_into_ourselves)
 	var/sanity = max_amount // just in case
 	while(other_stack && sanity > 0)
 		sanity--
-		if(merge(other_stack))
+		if(!merge_into_ourselves)
+			if(merge(other_stack))
+				return FALSE
+		else if (other_stack.merge(src) && !QDELETED(other_stack))
 			return FALSE
-		other_stack = find_other_stack(already_found)
+		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
 /obj/item/stack/apply_material_effects(list/materials)
@@ -203,12 +211,14 @@
 	return list() //empty list
 
 /obj/item/stack/proc/update_weight()
-	if(amount <= (max_amount * (1/3)))
-		update_weight_class(clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class))
-	else if (amount <= (max_amount * (2/3)))
-		update_weight_class(clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class))
-	else
-		update_weight_class(full_w_class)
+	update_weight_class(get_weight_from_size(amount))
+
+/obj/item/stack/proc/get_weight_from_size(stack_amount)
+	if(stack_amount <= (max_amount * (1/3)))
+		return clamp(full_w_class - 2, WEIGHT_CLASS_TINY, full_w_class)
+	if(stack_amount <= (max_amount * (2/3)))
+		return clamp(full_w_class - 1, WEIGHT_CLASS_TINY, full_w_class)
+	return full_w_class
 
 /obj/item/stack/update_icon_state()
 	if(novariants)
@@ -666,8 +676,35 @@
 		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
 	else
 		transfer = min(transfer, (limit ? limit : target_stack.max_amount) - target_stack.amount)
-	if(pulledby)
+		// Ensure that we're not bloating the target stack to the point where it falls out of storage
+		if(target_stack.loc?.atom_storage)
+			var/datum/storage/target_storage = target_stack.loc?.atom_storage
+			var/cur_size = target_stack.w_class
+			var/new_size = target_stack.get_weight_from_size(target_stack.amount + transfer)
+			var/real_new_size = new_size
+			var/real_cur_size = cur_size
+
+			// Ensure that we don't end up with two mergeable stacks if our own size gets reduced enough from the merge and we share the space
+			if (!is_cyborg && loc == target_stack.loc)
+				real_cur_size += w_class
+				if (amount > transfer)
+					real_new_size += get_weight_from_size(amount - transfer)
+
+			// If total size changed, check for overflows
+			if(new_size > cur_size)
+				var/size_limit = max(new_size - target_storage.max_specific_storage, target_storage.get_total_weight() + real_new_size - real_cur_size - target_storage.max_total_storage)
+				// If we're over the stack limit the storage container can support, reduce the transferred amount
+				// to the nearest size threshold, then by a third of the target stack per excess size
+				if(size_limit > 0)
+					var/to_threshold = FLOOR(target_stack.amount + transfer, floor(target_stack.max_amount / 3))
+					transfer = clamp(to_threshold - floor(target_stack.max_amount / 3) * (size_limit - 1) - target_stack.amount, 0, transfer)
+
+	if(!transfer)
+		return
+
+	if(pulledby && is_zero_amount(delete_if_zero = FALSE))
 		pulledby.start_pulling(target_stack)
+
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)

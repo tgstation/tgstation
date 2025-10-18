@@ -725,3 +725,54 @@
       is taken out
   timothymtorres:
   - bugfix: Fix shower causing mood and status effects to non-carbon mobs
+2025-09-30:
+  Ezel.:
+  - map: Reduces the amount of general available Sec clothes vendors across all maps
+  FeudeyTF:
+  - qol: Moved paginating buttons of newspaper in top
+  - qol: Changed maximum article length to 1024
+  - bugfix: Fixed the deletion of articles in the newspaper after the article was
+      released in the channel
+  Iamgoofball:
+  - spellcheck: Adds Honorific support for Clowns and Mimes
+  Melbert:
+  - bugfix: Fixes dormant DNA activator
+  SmArtKar:
+  - rscadd: Mining MODsuit has gained a magnetic harness for all of your crusher stowing
+      needs.
+  - balance: Magnetic harnesses now take only 0.5 seconds to pick up your gun, and
+      can pick up crushers.
+  - balance: Mining MODsuit has regained it small slowdown, and lost 10 melee armor.
+  - balance: Mining drill MODule is no longer instant (outside of the sphere mode
+      of a mining MOD)
+  - balance: The mining sphere MODule now can break rocks when rolling into them,
+      gives 20 melee and bomb armor when active, and has a shorter bomb cooldown,
+      but bombs themselves have reduced damage and mining AOE.
+  - balance: Mining sphere MODule now requires an upgrade in form of two pieces of
+      bileworm skin to be able to traverse lava, as opposed to being able to do so
+      innately.
+  - bugfix: Fixed MODsuit ore bag sometimes breaking permanently when depositing ores
+      into the ORM.
+  - bugfix: Fixed filter cache being infinitely expanded every time a filter is added
+  lelandkemble:
+  - balance: The Transit Tube system no longer allows high-volume freight transport
+      via Temporary Transit Pods.
+  loganuk:
+  - map: Icebox - AI Core - Standard walls in core become reinforced,  standard windoor
+      becomes reinforced version
+  necromanceranne:
+  - balance: Concussive gauntlets grant hunter boxing, much like punching mitts.
+  - balance: Punching mitts are now an option from the mining voucher, and can be
+      bought in the mining vendor for 1000 points.
+  - balance: Consolidates mining loot into random spawners instead of switch cases.
+  - balance: Demonic portals drop locked chests rather than just flat out the loot.
+  - balance: Removes the ship in a bottle, transference potion, adamantine extract,
+      clown hulk mob and ice boots from the possible demonic portal spawn list. Ship
+      in a bottle still exists for necropolis tendril spawns.
+  - balance: Removes the cursed katana from the necropolis tendril spawn list.
+  - balance: In instances where you would spawn a design disk for a modkit, you instead...
+      just get the modkit. No middle manning with science.
+  paganiy:
+  - bugfix: containers no longer close unexpectedly when the HUD refreshes (e.g.,
+      when lying down/getting up)
+  - bugfix: the dye spray can dye the external body parts again

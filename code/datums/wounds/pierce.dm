@@ -186,7 +186,7 @@
 	abstract = TRUE
 
 	required_limb_biostate = (BIO_FLESH)
-	required_wounding_types = list(WOUND_PIERCE)
+	required_wounding_type = WOUND_PIERCE
 
 	wound_series = WOUND_SERIES_FLESH_PUNCTURE_BLEED
 
