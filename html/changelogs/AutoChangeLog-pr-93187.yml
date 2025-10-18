@@ -1,0 +1,4 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - rscadd: "Broken Bulbs Scanner for Bluespace Light Replacer"
