@@ -23,7 +23,7 @@
 	multiplicative_slowdown = 4
 
 /datum/movespeed_modifier/status_effect/lobster_rush
-	multiplicative_slowdown = -0.5
+	multiplicative_slowdown = -0.2
 	blacklisted_movetypes = (FLYING|FLOATING)
 
 /datum/movespeed_modifier/status_effect/brimdust_concussion

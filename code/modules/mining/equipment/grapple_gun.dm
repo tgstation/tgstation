@@ -61,7 +61,7 @@
 		attacked_atom = singular_turf
 		break
 
-	if(user.CanReach(attacked_atom))
+	if(attacked_atom.IsReachableBy(user))
 		return ITEM_INTERACT_BLOCKING
 
 	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/items/weapons/zipline_fire.ogg')

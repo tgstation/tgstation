@@ -30,7 +30,7 @@
 // One day, someone should consider merging all tails into one, this is stupid
 // No I don't care that it will "Create situations where a felinid grows a lizard tail" that makes it more fun
 /datum/dna_block/feature/tail
-	feature_key = FEATURE_TAIL
+	feature_key = FEATURE_TAIL_CAT
 
 /datum/dna_block/feature/tail/create_unique_block(mob/living/carbon/human/target)
 	return construct_block(SSaccessories.tails_list_felinid.Find(target.dna.features[feature_key]), length(SSaccessories.tails_list_felinid))

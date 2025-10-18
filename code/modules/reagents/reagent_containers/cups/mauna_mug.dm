@@ -13,6 +13,7 @@
 
 /obj/item/reagent_containers/cup/maunamug/Initialize(mapload, vol)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/item/reagent_containers/cup/maunamug/get_cell()

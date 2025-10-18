@@ -776,7 +776,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
+	if(!. && active && prob(throw_stun_chance) && hit_atom)
 		finalize_baton_attack(hit_atom, throwingdatum?.get_thrower())
 
 /obj/item/melee/baton/security/emp_act(severity)
@@ -807,6 +807,42 @@
 
 /obj/item/melee/baton/security/loaded/hos
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/super
+
+///Stun Sword
+/obj/item/melee/baton/security/stunsword
+	name = "\improper NT-20 'Excalibur' Stunsword"
+	desc = "It's a sword. It stuns. What more could you want?"
+	icon_state = "stunsword"
+	inhand_icon_state = "stunsword"
+	base_icon_state = "stunsword"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	w_class = WEIGHT_CLASS_HUGE
+	sharpness = SHARP_EDGED
+	force = 30
+	throwforce = 10
+	wound_bonus = 0
+	exposed_wound_bonus = 30
+	stun_armour_penetration = 40
+	throw_stun_chance = 60
+	convertible = FALSE
+	tip_changes_color = FALSE
+
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list(
+		"Default" = "stunsword",
+		"Energy Stunsword" = "stunsword_energy",
+	)
+	unique_reskin_changes_inhand = TRUE
+	unique_reskin_changes_base_icon_state = TRUE
+
+/obj/item/melee/baton/security/stunsword/loaded
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/bluespace // 40% stun_armour_penetration
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod

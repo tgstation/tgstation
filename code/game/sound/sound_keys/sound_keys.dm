@@ -847,3 +847,24 @@
 	key = SFX_RORO_WARBLE
 	file_paths = list(
 		'sound/mobs/non-humanoids/roro/roro_warble.ogg')
+
+/datum/sound_effect/potted_plant_drop
+	key = SFX_POTTED_PLANT_DROP
+	file_paths = list(
+		'sound/items/potted_plant/potted_plant_drop1.ogg',
+		'sound/items/potted_plant/potted_plant_drop2.ogg',
+		'sound/items/potted_plant/potted_plant_drop3.ogg',
+		'sound/items/potted_plant/potted_plant_drop4.ogg',
+		'sound/items/potted_plant/potted_plant_drop5.ogg',
+	)
+
+/datum/sound_effect/potted_plant_pickup
+	key = SFX_POTTED_PLANT_PICKUP
+	file_paths = list(
+		'sound/items/potted_plant/potted_plant_pickup1.ogg',
+		'sound/items/potted_plant/potted_plant_pickup2.ogg',
+		'sound/items/potted_plant/potted_plant_pickup3.ogg',
+		'sound/items/potted_plant/potted_plant_pickup4.ogg',
+		'sound/items/potted_plant/potted_plant_pickup5.ogg',
+
+	)
