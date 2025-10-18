@@ -105,7 +105,7 @@
 	if(read_only_locked)
 		to_chat(user, span_warning("The write-portect tab seems to be stuck in place!"))
 	read_only = !read_only
-	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"].]"))
+	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
 /obj/item/disk_stack
 	name = "stack of floppy disks"
