@@ -64,11 +64,10 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(!first_entry)
 			build_into += ", "
 
+		TGM_ENCODE(item)
 		if(isnum(item) || !build_from[item])
-			TGM_ENCODE(item)
 			build_into += "[item]"
 		else
-			TGM_ENCODE(item)
 			TGM_ENCODE(build_from[item])
 			build_into += "[item] = [build_from[item]]"
 		first_entry = FALSE
