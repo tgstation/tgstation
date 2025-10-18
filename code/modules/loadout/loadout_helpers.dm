@@ -36,7 +36,7 @@
 	if(!equipped_outfit.equip(src, visuals_only))
 		return FALSE
 	// Handle any snowflake on_equips
-	var/list/new_contents = get_all_gear()
+	var/list/new_contents = get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES)
 	var/update = NONE
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		update |= item.on_equip_item(

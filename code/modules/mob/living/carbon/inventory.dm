@@ -65,9 +65,7 @@
 /mob/living/carbon/proc/get_visible_items()
 	var/list/visible_items = list()
 	var/obscured_item_slots = hidden_slots_to_inventory_slots(obscured_slots)
-	for (var/obj/item/held in held_items)
-		visible_items += held
-	for(var/obj/item/thing in get_equipped_items())
+	for(var/obj/item/thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS))
 		if(!(get_slot_by_item(thing) & obscured_item_slots))
 			visible_items += thing
 	return visible_items
@@ -166,7 +164,7 @@
 	return not_handled
 
 /mob/living/carbon/get_equipped_speed_mod_items()
-	return ..() + get_equipped_items()
+	return ..() + get_equipped_items(INCLUDE_ABSTRACT)
 
 /mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
@@ -426,7 +424,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
+	var/list/all_worn_items = get_equipped_items(INCLUDE_ABSTRACT)
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 
@@ -437,7 +435,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
+	var/list/all_worn_items = get_equipped_items(INCLUDE_ABSTRACT)
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 

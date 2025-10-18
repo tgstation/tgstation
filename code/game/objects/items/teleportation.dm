@@ -400,7 +400,7 @@
 	var/bagholdingcheck = FALSE
 	if(iscarbon(user))
 		var/mob/living/carbon/teleporting_guy = user
-		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear())
+		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES))
 			bagholdingcheck = TRUE
 
 	if(isclosedturf(destination))
