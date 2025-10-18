@@ -113,10 +113,10 @@
 		SEND_SIGNAL(parent, COMSIG_MOB_HAPPINESS_CHANGE, happiness_percentage)
 		happiness_callback?.Invoke(happiness_percentage)
 
+	var/mob/living/living_parent = parent
 	living_parent.ai_controller?.set_blackboard_key(blackboard_key, happiness_percentage)
 
 	if(!HAS_TRAIT(parent, TRAIT_MOB_HIDE_HAPPINESS) && amount > 0)
-		var/mob/living/living_parent = parent
 		new /obj/effect/temp_visual/heart(living_parent.loc)
 		living_parent.spin(spintime = 2 SECONDS, speed = 1)
 

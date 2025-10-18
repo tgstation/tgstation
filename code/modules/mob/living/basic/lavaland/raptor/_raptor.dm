@@ -132,6 +132,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, preferred_foods)
 	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_eat))
+	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(on_pre_eat))
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/ai_flee_while_injured, stop_fleeing_at = 0.5, start_fleeing_below = 0.2)
@@ -326,6 +327,11 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	holder.pixel_z = 0
 	holder.base_pixel_w = 0
 	holder.base_pixel_z = 0
+
+/mob/living/basic/raptor/proc/on_pre_eat(datum/source, obj/item/potential_food, list/effect_mult)
+	SIGNAL_HANDLER
+	if (happiness_percentage)
+		effect_mult += happiness_percentage * RAPTOR_GROWTH_HAPPINESS_MULTIPLIER
 
 /mob/living/basic/raptor/proc/on_eat(datum/source, atom/food, mob/living/feeder)
 	SIGNAL_HANDLER
