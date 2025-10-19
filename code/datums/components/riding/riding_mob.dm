@@ -730,3 +730,11 @@
 			continue
 		raptor.ai_controller.blackboard[BB_BASIC_MOB_FLEE_TARGET] = possible_hostile
 		break
+
+/datum/component/riding/creature/raptor/small/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(-1, 5),
+		TEXT_SOUTH = list(2, 8),
+		TEXT_EAST =  list(0, 5),
+		TEXT_WEST =  list(0, 5),
+	)

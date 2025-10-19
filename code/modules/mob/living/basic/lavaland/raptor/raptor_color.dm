@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	color = "purple"
 	description = "A small, nimble breed, these raptors have been bred as travel companions rather than mounts, capable of storing the owner's possessions and helping them escape from danger unscathed."
 	health = 120 // smol
-	speed = 0
+	rideable_component = /datum/component/riding/creature/raptor/small
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/green = /datum/raptor_color/white,
 		/datum/raptor_color/yellow = /datum/raptor_color/blue,
@@ -108,20 +108,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /datum/raptor_color/purple/setup_raptor(mob/living/basic/raptor/raptor)
 	. = ..()
-	RegisterSignal(raptor, COMSIG_LIVING_SCOOPED_UP, PROC_REF(on_picked_up))
 	RegisterSignal(raptor, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_pre_buckle))
-
-/datum/raptor_color/purple/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
-	SIGNAL_HANDLER
-
-	// Create a mirror storage for our raptor when picked up to handle interactions
-	var/datum/storage/raptor_storage = holder.create_storage(
-		max_total_storage = source.atom_storage.max_total_storage,
-		max_slots = source.atom_storage.max_slots,
-		storage_type = /datum/storage/raptor_storage,
-	)
-	raptor_storage.set_real_location(source)
-	raptor_storage.insert_on_attack = TRUE
+	raptor.inhand_holder_type = /obj/item/mob_holder/purple_raptor
 
 /datum/raptor_color/purple/proc/on_pre_buckle(mob/living/basic/raptor/source, mob/living/potential_rider, force = FALSE, ride_check_flags = NONE)
 	SIGNAL_HANDLER
@@ -144,6 +132,8 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	raptor.remove_offsets(RAPTOR_INNATE_SOURCE, FALSE)
 	raptor.held_w_class = WEIGHT_CLASS_BULKY
 	. = ..()
+	// Non-shorties cannot ride these, so we gotta keep em tameable through food
+	raptor.AddComponent(/datum/component/tameable, food_types = raptor.food_types, tame_chance = 25, bonus_tame_chance = 15, unique = TRUE)
 	if (raptor.atom_storage)
 		return
 	// A bit bigger (23 vs 21) than a backpack at max size, a bit less by default
@@ -165,12 +155,164 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 		storage_type = /datum/storage/raptor_storage,
 	)
 
+/obj/item/mob_holder/purple_raptor
+	/// Wings action granted to whoever is wearing us on their back
+	var/datum/action/innate/raptor_wings/flight_action = null
+
+	/// Are our wings open?
+	var/wings_open = FALSE
+	/// Wings underlay added to the owner, because human rendering code is a mess
+	var/mutable_appearance/wings_underlay = null
+	/// Our drift force
+	var/drift_force = 2 NEWTONS
+	/// Our stabilizing force
+	var/stabilizer_force = 4.5 NEWTONS
+
+/obj/item/mob_holder/purple_raptor/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags)
+	. = ..()
+	// Create a mirror storage for our raptor when picked up to handle interactions
+	var/datum/storage/raptor_storage = create_storage(
+		max_total_storage = held_mob.atom_storage.max_total_storage,
+		max_slots = held_mob.atom_storage.max_slots,
+		storage_type = /datum/storage/raptor_storage,
+	)
+	raptor_storage.set_real_location(held_mob)
+	raptor_storage.insert_on_attack = TRUE
+
+	flight_action = new(src)
+
+	AddComponent( \
+		/datum/component/jetpack, \
+		TRUE, \
+		drift_force, \
+		stabilizer_force, \
+		COMSIG_RAPTOR_WINGS_OPENED, \
+		COMSIG_RAPTOR_WINGS_CLOSED, \
+		null, \
+		CALLBACK(src, PROC_REF(can_fly)), \
+		CALLBACK(src, PROC_REF(can_fly)), \
+	)
+
+/obj/item/mob_holder/purple_raptor/Destroy()
+	if (ishuman(loc) && wings_open)
+		toggle_wings(loc)
+	QDEL_NULL(flight_action)
+	return ..()
+
+/obj/item/mob_holder/purple_raptor/equipped(mob/user, slot, initial)
+	. = ..()
+	if ((slot & ITEM_SLOT_BACK) && ishuman(user))
+		flight_action.Grant(user)
+
+/obj/item/mob_holder/purple_raptor/dropped(mob/user, silent)
+	. = ..()
+	flight_action.Remove(user)
+	if (wings_open)
+		toggle_wings(user)
+
+/obj/item/mob_holder/purple_raptor/proc/on_weight_updated(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	if (source.mob_height <= HUMAN_HEIGHT_SHORTEST && !HAS_TRAIT(source, TRAIT_FAT))
+		source.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
+		source.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
+	else
+		source.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
+		source.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
+
+/obj/item/mob_holder/purple_raptor/proc/can_fly()
+	var/mob/living/carbon/human/user = loc
+	if (!istype(user) || user.stat || user.body_position == LYING_DOWN || isnull(user.client))
+		return FALSE
+
+	if (user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS))
+		return FALSE
+
+	var/turf/location = get_turf(user)
+	if (!istype(location))
+		return FALSE
+
+	var/datum/gas_mixture/environment = location.return_air()
+	if (environment?.return_pressure() >= HAZARD_LOW_PRESSURE + 10)
+		return TRUE
+
+	to_chat(user, span_warning("The atmosphere is too thin for you to fly!"))
+	return FALSE
+
+/obj/item/mob_holder/purple_raptor/proc/toggle_wings(mob/living/carbon/human/user)
+	// In case something goes wrong
+	if (!istype(user))
+		wings_open = FALSE
+		worn_icon_state = icon_state
+		SEND_SIGNAL(src, COMSIG_RAPTOR_WINGS_CLOSED, user)
+		STOP_PROCESSING(SSprocessing, src)
+		return
+
+	if (!wings_open && !can_fly())
+		return
+
+	wings_open = !wings_open
+	worn_icon_state = "[icon_state][wings_open ? "_wings_out" : ""]"
+	user.update_worn_back()
+
+	// Raptors won't have the best of times keeping up tall humans or fatties up in the air
+	var/struggling = HAS_TRAIT(user, TRAIT_FAT) || user.mob_height > HUMAN_HEIGHT_SHORTEST
+	if (wings_open)
+		wings_underlay = user.apply_height_offsets(mutable_appearance(worn_icon, "raptor_purple_wings", -BODY_BEHIND_LAYER, user), UPPER_BODY)
+		user.add_overlay(wings_underlay)
+		user.physiology.stun_mod *= 2
+		user.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), REF(src))
+		if (struggling)
+			user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
+		else
+			user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
+		user.AddElement(/datum/element/forced_gravity, 0)
+		passtable_on(user, REF(src))
+		to_chat(user, span_notice("You begin gently hovering above ground as [held_mob] on your back starts furiously flapping [held_mob.p_their()] wings[struggling ? ", struggling to keep you up in the air" : ""]!"))
+		user.set_resting(FALSE, TRUE)
+		user.refresh_gravity()
+		START_PROCESSING(SSprocessing, src)
+		RegisterSignals(user, list(COMSIG_HUMAN_HEIGHT_UPDATED, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_weight_updated))
+		SEND_SIGNAL(src, COMSIG_RAPTOR_WINGS_OPENED, user)
+		return
+
+	user.cut_overlay(wings_underlay)
+	QDEL_NULL(wings_underlay)
+	user.physiology.stun_mod *= 0.5
+	user.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), REF(src))
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor/slow)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/raptor)
+	user.RemoveElement(/datum/element/forced_gravity, 0)
+	passtable_off(user, REF(src))
+	to_chat(user, span_notice("You settle gently back onto the ground[struggling ? ", [held_mob] on your back breathing out a sigh of releif" : ""]..."))
+	user.refresh_gravity()
+	STOP_PROCESSING(SSprocessing, src)
+	UnregisterSignal(user, list(COMSIG_HUMAN_HEIGHT_UPDATED, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
+	SEND_SIGNAL(src, COMSIG_RAPTOR_WINGS_CLOSED, user)
+
+/obj/item/mob_holder/purple_raptor/process(seconds_per_tick)
+	if (!can_fly())
+		toggle_wings(loc)
+		return PROCESS_KILL
+
 /datum/storage/raptor_storage
 	animated = FALSE
 	insert_on_attack = FALSE // should flip when worn on the back
 
 /datum/storage/raptor_storage/on_mousedropped_onto(datum/source, obj/item/dropping, mob/user)
 	return NONE
+
+/datum/action/innate/raptor_wings
+	name = "Toggle Flight"
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_IMMOBILE | AB_CHECK_INCAPACITATED
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon_state = "raptor_wings"
+
+/datum/action/innate/raptor_wings/Activate()
+	var/mob/living/carbon/human/user = owner
+	var/obj/item/mob_holder/purple_raptor/holder = target
+	if (user.get_item_by_slot(ITEM_SLOT_BACK) == holder)
+		holder.toggle_wings(user)
 
 /datum/raptor_color/green
 	color = "green"
@@ -186,7 +328,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/green/setup_adult(mob/living/basic/raptor/raptor)
 	. = ..()
 	var/ability_scale = 1 - INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
-	var/mining_mod = round(ability_scale * 0.1 SECONDS, 0.05 SECONDS)
+	var/mining_mod = round(ability_scale * 0.1, 0.05)
 	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)
 
 /datum/raptor_color/white
@@ -277,5 +419,5 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	. = ..()
 	// Slightly worse than greens at this
 	var/ability_scale = 1 - INVERSE_LERP(RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER, raptor.inherited_stats.ability_modifier)
-	var/mining_mod = round(ability_scale * 0.2 SECONDS, 0.05 SECONDS)
+	var/mining_mod = round(ability_scale * 0.2, 0.05)
 	raptor.AddComponent(/datum/component/proficient_miner, mining_mod, TRUE)
