@@ -1121,7 +1121,7 @@
 
 	// Normal non-husk handling
 	// This is the MEAT of limb icon code
-	var/used_icon = icon = icon_greyscale
+	var/used_icon = icon_greyscale
 	if(!should_draw_greyscale || !icon_greyscale)
 		used_icon = icon_static
 
