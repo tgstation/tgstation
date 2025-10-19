@@ -565,6 +565,7 @@
 #include "code\_globalvars\lists\ghost.dm"
 #include "code\_globalvars\lists\icons.dm"
 #include "code\_globalvars\lists\keybindings.dm"
+#include "code\_globalvars\lists\languages.dm"
 #include "code\_globalvars\lists\maintenance_loot.dm"
 #include "code\_globalvars\lists\mapping.dm"
 #include "code\_globalvars\lists\mobs.dm"
