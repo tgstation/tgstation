@@ -367,7 +367,7 @@
 	if(loc == user && reagents.total_volume)
 		reagents.expose(user.loc, TOUCH)
 		reagents.clear_reagents()
-		user.visible_message(span_notice("[user] empties out \the [src] onto the floor using the release valve."), span_info("You quietly empty out \the [src] using its release valve."))
+		user.visible_message(span_notice("[user] empties out [src] onto the floor using the release valve."), span_info("You quietly empty out [src] using its release valve."))
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, list/modifiers, list/attack_modifiers)
