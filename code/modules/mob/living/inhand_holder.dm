@@ -157,3 +157,5 @@
 		return
 	tool.melee_attack_chain(user, held_mob, modifiers) //Interact with the mob with our tool
 
+/obj/item/mob_holder/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE

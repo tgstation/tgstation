@@ -99,16 +99,17 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/purple
 	color = "purple"
 	description = "A small, nimble breed, these raptors have been bred as travel companions rather than mounts, capable of storing the owner's possessions and helping them escape from danger unscathed."
-	health = 140 // smol
+	health = 120 // smol
+	speed = 0
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/green = /datum/raptor_color/white,
 		/datum/raptor_color/yellow = /datum/raptor_color/blue,
 	)
-	rideable_component = null
 
 /datum/raptor_color/purple/setup_raptor(mob/living/basic/raptor/raptor)
 	. = ..()
 	RegisterSignal(raptor, COMSIG_LIVING_SCOOPED_UP, PROC_REF(on_picked_up))
+	RegisterSignal(raptor, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_pre_buckle))
 
 /datum/raptor_color/purple/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
 	SIGNAL_HANDLER
@@ -121,6 +122,17 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	)
 	raptor_storage.set_real_location(source)
 	raptor_storage.insert_on_attack = TRUE
+
+/datum/raptor_color/purple/proc/on_pre_buckle(mob/living/basic/raptor/source, mob/living/potential_rider, force = FALSE, ride_check_flags = NONE)
+	SIGNAL_HANDLER
+
+	if (!ishuman(potential_rider))
+		return COMPONENT_BLOCK_BUCKLE
+
+	var/mob/living/carbon/human/rider = potential_rider
+	if (rider.mob_height > HUMAN_HEIGHT_SHORTEST)
+		to_chat(rider, span_warning("Your tall stature will crush [source]!"))
+		return COMPONENT_BLOCK_BUCKLE
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks
 /datum/raptor_color/purple/setup_adult(mob/living/basic/raptor/raptor)
