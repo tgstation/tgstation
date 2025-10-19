@@ -426,7 +426,7 @@
 /obj/item/gun/energy/laser/carbine/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
-		lore = "The NT Type 5R Rapid Heat Delivery System (sometimes referred to as the RHDS5R in briefing manuals, and 'that piece if shit flashlight' amongst \
+		lore = "The NT Type 5R Rapid Heat Delivery System (sometimes referred to as the RHDS5R in briefing manuals, and 'that piece of shit flashlight' amongst \
 		TGMC troopers) was a shaky first step into automatic directed energy weaponry. <br>\
 		<br>\
 		Intended for use in special operations, particularly in the hands of orbital drop shock troopers, the Type 5R was foreseen to be an excellent \
