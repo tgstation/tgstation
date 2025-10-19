@@ -227,6 +227,7 @@
 		"ci-gloweyes-moth",
 		"ci-welding-moth",
 		"cybernetic_ears_whisper",
+		"cybernetic_ears_volume",
 		"cybernetic_lungs_tier3",
 		"cybernetic_stomach_tier3",
 		"cybernetic_liver_tier3",

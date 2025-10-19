@@ -77,20 +77,13 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "TO DUST WITH YE!! AWAY!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
-	)
+	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
 	AddComponent(
 		/datum/component/butchering, \
 		speed = 3 SECONDS, \
 		effectiveness = 125, \
 	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing revenants, much better at killing plants
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //also good at killing plants
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
@@ -192,15 +185,6 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()
 	empowerment = SCYTHE_WEAK
-
-/obj/item/vorpalscythe/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 #undef SCYTHE_WEAK
 #undef SCYTHE_SATED
