@@ -95,7 +95,7 @@
 	. -= NAMEOF(src, dir)
 	return .
 
-/obj/machinery/atmospherics/pipe/smart/simple/replace_saved_object_type()
+/obj/machinery/atmospherics/pipe/smart/simple/get_save_substitute_type()
 	var/base_type = /obj/machinery/atmospherics/pipe/smart/manifold4w
 
 	var/cache_key = "[base_type]-[pipe_color]-[hide]-[piping_layer]"
@@ -149,10 +149,10 @@
 	var/typepath = text2path(full_path)
 
 	if(ispath(typepath))
-		typepath_cache[cache_key] = typepath
+		GLOB.map_export_typepath_cache[cache_key] = typepath
 		return typepath
 
-	typepath_cache[cache_key] = FALSE
+	GLOB.map_export_typepath_cache[cache_key] = FALSE
 	stack_trace("Failed to convert pipe to typepath: [full_path]")
 	return FALSE
 
@@ -205,10 +205,10 @@
 	var/typepath = text2path(full_path)
 
 	if(ispath(typepath))
-		typepath_cache[cache_key] = typepath
+		GLOB.map_export_typepath_cache[cache_key] = typepath
 		return typepath
 
-	typepath_cache[cache_key] = FALSE
+	GLOB.map_export_typepath_cache[cache_key] = FALSE
 	stack_trace("Failed to convert vent scrubber to typepath: [full_path]")
 	return FALSE
 
@@ -382,19 +382,47 @@
 
 ///  D O O R  &  A I R L O C K  ///
 
-/obj/machinery/door/on_object_saved(obj_count)
-	var/data
-
-	if(welded)
-		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
-
-	return data
-
 /obj/machinery/door/airlock/get_save_vars()
 	. = ..()
+	. += NAMEOF(src, autoname)
+	. += NAMEOF(src, emergency)
+
+	if(autoname)
+		. -= NAMEOF(src, name)
+
 	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
-	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	return .
+
+/obj/machinery/door/airlock/on_object_saved()
+	var/data
+
+	if(abandoned)
+		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/abandoned]"
+	else // Only save these if not abandoned
+		if(welded)
+			data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
+
+		if(locked)
+			data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/locked]"
+
+	if(cyclelinkeddir)
+		var/obj/effect/mapping_helpers/airlock/cyclelink_helper/helper_path = /obj/effect/mapping_helpers/airlock/cyclelink_helper
+		var/dir_var = NAMEOF_TYPEPATH(helper_path, dir)
+		data += "[data ? ",\n" : ""][helper_path]{\n\t[dir_var] = [cyclelinkeddir]\n\t}"
+
+	if(closeOtherId)
+		var/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/helper_path = /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
+		var/cycle_id_var = NAMEOF_TYPEPATH(helper_path, cycle_id)
+		data += "[data ? ",\n" : ""][helper_path]{\n\t[cycle_id_var] = \"[closeOtherId]\"\n\t}"
+
+	if(unres_sides)
+		for(var/heading in list(NORTH, SOUTH, EAST, WEST))
+			if(unres_sides & heading)
+				var/obj/effect/mapping_helpers/airlock/unres/helper_path = /obj/effect/mapping_helpers/airlock/unres
+				var/dir_var = NAMEOF_TYPEPATH(helper_path, dir)
+				data += "[data ? ",\n" : ""][helper_path]{\n\t[dir_var] = [heading]\n\t}"
+
+	return data
 
 /obj/machinery/door/password/get_save_vars()
 	. = ..()
