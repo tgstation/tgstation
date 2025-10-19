@@ -39,7 +39,6 @@
 	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)
-
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(human_holder), allergy_string)
 

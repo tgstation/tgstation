@@ -16,7 +16,6 @@
 	carbon_user.gain_trauma(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/item_quirk/narcolepsy/add_unique(client/client_source)
-
 	give_item_to_holder(
 		/obj/item/storage/pill_bottle/prescription_stimulant,
 		list(
