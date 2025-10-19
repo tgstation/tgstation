@@ -63,9 +63,7 @@ FLOOR SAFES
 		AddElement(/datum/element/climbable)
 		AddElement(/datum/element/elevation, pixel_shift = 22)
 
-	if(!mapload)
-		open = TRUE
-		locked = FALSE
+	if(open && !locked)
 		return
 
 	update_appearance(UPDATE_ICON)
@@ -109,7 +107,7 @@ FLOOR SAFES
 	tool.play_tool_sound(src)
 	if(!do_after(user, 10 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
-	
+
 	tumblers = new_tumblers
 	current_tumbler_index = 1
 	dial = 0
@@ -294,6 +292,10 @@ FLOOR SAFES
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
 		balloon_alert(user, pick(sounds))
 
+/obj/structure/safe/open
+	open = TRUE
+	locked = FALSE
+
 //FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
@@ -304,6 +306,10 @@ FLOOR SAFES
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/undertile)
+
+/obj/structure/safe/floor/open
+	open = TRUE
+	locked = FALSE
 
 ///Special safe for the station's vault. Not explicitly required, but the piggy bank inside it is.
 /obj/structure/safe/vault

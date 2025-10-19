@@ -122,7 +122,7 @@
 
 /datum/crafting_recipe/vault
 	name = "Vault"
-	result = /obj/structure/safe
+	result = /obj/structure/safe/open
 	reqs = list(
 		/obj/item/stack/sheet/mineral/metal_hydrogen = 20,
 		/obj/item/stack/sheet/mineral/plastitanium = 10,
@@ -137,7 +137,7 @@
 
 /datum/crafting_recipe/vault_floor
 	name = "Floor Vault"
-	result = /obj/structure/safe/floor
+	result = /obj/structure/safe/floor/open
 	reqs = list(
 		/obj/item/stack/sheet/mineral/metal_hydrogen = 20,
 		/obj/item/stack/sheet/mineral/plastitanium = 10,
