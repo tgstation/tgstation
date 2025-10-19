@@ -237,7 +237,7 @@
 /obj/item/organ/ears/cybernetic/whisper
 	name = "whisper-sensitive cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however"
+	desc = "Allows the user to more easily hear whispers. The user becomes extra vulnerable to loud noises, however."
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 	organ_traits = list(TRAIT_GOOD_HEARING)
@@ -253,7 +253,7 @@
 /obj/item/organ/ears/cybernetic/xray
 	name = "wall-penetrating cybernetic ears"
 	icon_state = "ears-c-u"
-	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however"
+	desc = "Through the power of modern engineering, allows the user to hear speech through walls. The user becomes extra vulnerable to loud noises, however."
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 	organ_traits = list(TRAIT_XRAY_HEARING)
@@ -285,15 +285,15 @@
 /obj/item/organ/ears/cybernetic/cat/whisper
 	name = "whisper-sensiive cybernetic cat ears"
 	icon_state = "ears-c-cat-green"
-	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however"
+	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however."
 	damage_multiplier = 3 // 4 would be excessive
 	organ_traits = list(TRAIT_GOOD_HEARING)
 
 /obj/item/organ/ears/cybernetic/cat/xray
 	name = "wall-penetrating cybernetic cat ears"
 	icon_state = "ears-c-cat-blue"
-	desc = "Through the power of modern feline engineering, allows the user to hear speech through walls. The user becomes extremely vulnerable to loud noises, however"
-	damage_multiplier = 3
+	desc = "Through the power of modern feline engineering, allows the user to hear speech through walls. The user becomes extremely vulnerable to loud noises, however."
+	damage_multiplier = 3 // As above, 4 would be excessive
 	organ_traits = list(TRAIT_XRAY_HEARING)
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic
