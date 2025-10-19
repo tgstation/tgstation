@@ -847,3 +847,198 @@
 	key = SFX_RORO_WARBLE
 	file_paths = list(
 		'sound/mobs/non-humanoids/roro/roro_warble.ogg')
+
+/datum/sound_effect/potted_plant_drop
+	key = SFX_POTTED_PLANT_DROP
+	file_paths = list(
+		'sound/items/potted_plant/potted_plant_drop1.ogg',
+		'sound/items/potted_plant/potted_plant_drop2.ogg',
+		'sound/items/potted_plant/potted_plant_drop3.ogg',
+		'sound/items/potted_plant/potted_plant_drop4.ogg',
+		'sound/items/potted_plant/potted_plant_drop5.ogg',
+	)
+
+/datum/sound_effect/potted_plant_pickup
+	key = SFX_POTTED_PLANT_PICKUP
+	file_paths = list(
+		'sound/items/potted_plant/potted_plant_pickup1.ogg',
+		'sound/items/potted_plant/potted_plant_pickup2.ogg',
+		'sound/items/potted_plant/potted_plant_pickup3.ogg',
+		'sound/items/potted_plant/potted_plant_pickup4.ogg',
+		'sound/items/potted_plant/potted_plant_pickup5.ogg',
+
+	)
+
+/datum/sound_effect/goggles_pickup
+	key = SFX_GOGGLES_PICKUP
+	file_paths = list(
+		'sound/items/goggles/goggles_pickup1.ogg',
+		'sound/items/goggles/goggles_pickup2.ogg',
+		'sound/items/goggles/goggles_pickup3.ogg',
+	)
+
+/datum/sound_effect/goggles_drop
+	key = SFX_GOGGLES_DROP
+	file_paths = list(
+		'sound/items/goggles/goggles_drop1.ogg',
+		'sound/items/goggles/goggles_drop2.ogg',
+		'sound/items/goggles/goggles_drop3.ogg',
+	)
+
+/datum/sound_effect/goggles_equip
+	key = SFX_GOGGLES_EQUIP
+	file_paths = list(
+		'sound/items/goggles/goggles_equip1.ogg',
+		'sound/items/goggles/goggles_equip2.ogg',
+		'sound/items/goggles/goggles_equip3.ogg',
+		'sound/items/goggles/goggles_equip4.ogg',
+	)
+
+/datum/sound_effect/glasses_pickup
+	key = SFX_GLASSES_PICKUP
+	file_paths = list(
+		'sound/items/glasses/glasses_pickup1.ogg',
+		'sound/items/glasses/glasses_pickup2.ogg',
+		'sound/items/glasses/glasses_pickup3.ogg',
+	)
+
+/datum/sound_effect/glasses_drop
+	key = SFX_GLASSES_DROP
+	file_paths = list(
+		'sound/items/glasses/glasses_drop1.ogg',
+		'sound/items/glasses/glasses_drop2.ogg',
+		'sound/items/glasses/glasses_drop3.ogg',
+	)
+
+/datum/sound_effect/glasses_equip
+	key = SFX_GLASSES_EQUIP
+	file_paths = list(
+		'sound/items/glasses/glasses_equip1.ogg',
+		'sound/items/glasses/glasses_equip2.ogg',
+	)
+
+/datum/sound_effect/food_plate_pickup
+	key = SFX_FOOD_PLATE_PICKUP
+	file_paths = list(
+		'sound/items/food_plate/food_plate_pickup1.ogg',
+		'sound/items/food_plate/food_plate_pickup2.ogg',
+		'sound/items/food_plate/food_plate_pickup3.ogg',
+	)
+
+/datum/sound_effect/food_plate_drop
+	key = SFX_FOOD_PLATE_DROP
+	file_paths = list(
+		'sound/items/food_plate/food_plate_drop1.ogg',
+		'sound/items/food_plate/food_plate_drop2.ogg',
+		'sound/items/food_plate/food_plate_drop3.ogg',
+	)
+
+/datum/sound_effect/cutlery_pickup
+	key = SFX_CUTLERY_PICKUP
+	file_paths = list(
+		'sound/items/cutlery/cutlery_pickup1.ogg',
+		'sound/items/cutlery/cutlery_pickup2.ogg',
+		'sound/items/cutlery/cutlery_pickup3.ogg',
+	)
+
+/datum/sound_effect/cutlery_drop
+	key = SFX_CUTLERY_DROP
+	file_paths = list(
+		'sound/items/cutlery/cutlery_drop1.ogg',
+		'sound/items/cutlery/cutlery_drop2.ogg',
+		'sound/items/cutlery/cutlery_drop3.ogg',
+	)
+
+/datum/sound_effect/knife_pickup
+	key = SFX_KNIFE_PICKUP
+	file_paths = list(
+		'sound/items/knife/knife_pickup1.ogg',
+		'sound/items/knife/knife_pickup2.ogg',
+		'sound/items/knife/knife_pickup3.ogg',
+	)
+
+/datum/sound_effect/knife_drop
+	key = SFX_KNIFE_DROP
+	file_paths = list(
+		'sound/items/knife/knife_drop1.ogg',
+		'sound/items/knife/knife_drop2.ogg',
+		'sound/items/knife/knife_drop3.ogg',
+	)
+
+/datum/sound_effect/knife_slice
+	key = SFX_KNIFE_SLICE
+	file_paths = list(
+		'sound/items/knife/knife_slice1.ogg',
+		'sound/items/knife/knife_slice2.ogg',
+		'sound/items/knife/knife_slice3.ogg',
+		'sound/items/knife/knife_slice4.ogg',
+		'sound/items/knife/knife_slice5.ogg',
+		'sound/items/knife/knife_slice6.ogg',
+	)
+
+/datum/sound_effect/pot_pickup
+	key = SFX_POT_PICKUP
+	file_paths = list(
+		'sound/items/pot/pot_pickup1.ogg',
+		'sound/items/pot/pot_pickup2.ogg',
+		'sound/items/pot/pot_pickup3.ogg',
+	)
+
+/datum/sound_effect/pot_drop
+	key = SFX_POT_DROP
+	file_paths = list(
+		'sound/items/pot/pot_drop1.ogg',
+		'sound/items/pot/pot_drop2.ogg',
+		'sound/items/pot/pot_drop3.ogg',
+	)
+
+/datum/sound_effect/tray_pickup
+	key = SFX_TRAY_PICKUP
+	file_paths = list(
+		'sound/items/tray/tray_pickup1.ogg',
+		'sound/items/tray/tray_pickup2.ogg',
+		'sound/items/tray/tray_pickup3.ogg',
+	)
+
+/datum/sound_effect/tray_drop
+	key = SFX_TRAY_DROP
+	file_paths = list(
+		'sound/items/tray/tray_drop1.ogg',
+		'sound/items/tray/tray_drop2.ogg',
+		'sound/items/tray/tray_drop3.ogg',
+	)
+
+/datum/sound_effect/tray_insert
+	key = SFX_TRAY_INSERT
+	file_paths = list(
+		'sound/items/tray/tray_insert1.ogg',
+		'sound/items/tray/tray_insert2.ogg',
+		'sound/items/tray/tray_insert3.ogg',
+	)
+
+/datum/sound_effect/rolling_pin_pickup
+	key = SFX_ROLLING_PIN_PICKUP
+	file_paths = list(
+		'sound/items/rolling_pin/rolling_pin_pickup1.ogg',
+		'sound/items/rolling_pin/rolling_pin_pickup2.ogg',
+		'sound/items/rolling_pin/rolling_pin_pickup3.ogg',
+	)
+
+/datum/sound_effect/rolling_pin_drop
+	key = SFX_ROLLING_PIN_DROP
+	file_paths = list(
+		'sound/items/rolling_pin/rolling_pin_drop1.ogg',
+		'sound/items/rolling_pin/rolling_pin_drop2.ogg',
+		'sound/items/rolling_pin/rolling_pin_drop3.ogg',
+	)
+
+/datum/sound_effect/rolling_pin_rolling
+	key = SFX_ROLLING_PIN_ROLLING
+	file_paths = list(
+		'sound/items/rolling_pin/rolling_pin_rolling1.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling2.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling3.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling4.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling5.ogg',
+		'sound/items/rolling_pin/rolling_pin_rolling6.ogg',
+	)

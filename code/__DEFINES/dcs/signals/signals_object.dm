@@ -148,6 +148,8 @@
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
+///a mob has just dropped an item
+#define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
@@ -538,7 +540,7 @@
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
-/// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
+/// from /obj/item/detective_scanner/scan(): (mob/user, datum/detective_scanner_log/entry)
 #define COMSIG_DETECTIVE_SCANNED "det_scanned"
 
 /// from /obj/plunger_act when an object is being plungered

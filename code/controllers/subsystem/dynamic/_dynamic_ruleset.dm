@@ -10,9 +10,12 @@
 	/// Don't change this unless you know what you're doing.
 	var/config_tag
 
-	/// What flag to check for jobbans? Optional, if unset, uses pref_flag
+	/// What flag to check for jobbans?
+	/// Optional, if unset, uses pref_flag for jobbans instead
 	var/jobban_flag
-	/// What flag to check for prefs? Required if the antag has an associated preference
+	/// What flag to check for prefs?
+	/// Required if the antag has an associated preference, and must be unique
+	/// (unless RULESET_VARIATION is set in ruleset_flags)
 	var/pref_flag
 	/// Flags for this ruleset
 	var/ruleset_flags = NONE
