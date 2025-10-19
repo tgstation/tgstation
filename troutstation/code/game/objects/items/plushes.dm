@@ -140,3 +140,15 @@
 #undef RUFRAN_HUGE_SIZE
 #undef RUFRAN_GIGANTIC_SIZE
 #undef RUFRAN_SIZE_INCREMENT
+
+/obj/item/toy/plush/hugs
+	icon = 'troutstation/icons/obj/toys/plushes.dmi'
+	name = "hugs-the-moths plushie"
+	desc = "Hugs-The-Moths once sold off his likeness to a plush company for the royalties. This is the result."
+	icon_state = "plushie_hugs"
+	inhand_icon_state = null
+	gender = MALE
+	breedable = FALSE
+	attack_verb_continuous = list("claws", "hisses", "tail slaps") // from lizard plush
+	attack_verb_simple = list("claw", "hiss", "tail slap") // from lizard plush
+	squeak_override = list('sound/items/weapons/slash.ogg' = 1) // regular lizard plushes make this sound

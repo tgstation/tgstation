@@ -258,6 +258,7 @@
 		/obj/item/toy/plush/horse,
 		/obj/item/toy/plush/monkey,
 		/obj/item/toy/plush/maddie, // Troutstation edit
+		/obj/item/toy/plush/hugs, // Troutstation edit
 	)
 
 /obj/effect/spawner/random/entertainment/plushie_delux
@@ -287,6 +288,7 @@
 		/obj/item/toy/plush/monkey = 3,
 		/obj/item/toy/plush/donkpocket = 3,
 		/obj/item/toy/plush/maddie = 3, // Troutstation edit
+		/obj/item/toy/plush/hugs = 3, // Troutstation edit
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
