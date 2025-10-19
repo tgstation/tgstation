@@ -266,7 +266,7 @@
 	visual = TRUE
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
-	bodypart_overlay = /datum/bodypart_overlay/mutant/cyber_cat_ears
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic
 	sprite_accessory_override = /datum/sprite_accessory/ears/cat
 
 /obj/item/organ/ears/cybernetic/cat/upgraded
@@ -296,22 +296,9 @@
 	damage_multiplier = 3
 	organ_traits = list(TRAIT_XRAY_HEARING)
 
-/datum/bodypart_overlay/mutant/cyber_cat_ears
-	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
-	feature_key = FEATURE_EARS
-	dyable = TRUE
-	var/inner_layer = EXTERNAL_FRONT
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic
 	color_source = null
-
-/datum/bodypart_overlay/mutant/cyber_cat_ears/get_global_feature_list()
-	return SSaccessories.ears_list
-
-/datum/bodypart_overlay/mutant/cyber_cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
-
-/datum/bodypart_overlay/mutant/cyber_cat_ears/get_image(image_layer, obj/item/bodypart/limb)
-	var/mutable_appearance/base_ears = ..()
-	return base_ears
+	dyable = FALSE
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()
