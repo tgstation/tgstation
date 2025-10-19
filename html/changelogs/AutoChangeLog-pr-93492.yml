@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Certain toys and items (cardboard cutouts, toy singulo) no longer randomize their offset when dropped (as intended)"

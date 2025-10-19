@@ -555,3 +555,56 @@
   Twaticus:
   - bugfix: Females wearing either a yukata or kimono no longer have holes in their
       clothes.
+2025-10-19:
+  ArchBTW:
+  - bugfix: removes fov cone (oversight) with medieval pirate helmet
+  Arturlang:
+  - bugfix: moon robes now again will protect you from full body damage like low pressure
+      or high pressure or fire
+  Cirrial:
+  - spellcheck: Examining something you can cuff now uses the correct pronoun.
+  Ghommie:
+  - balance: Crafted jumpsuits no longer magically have suit sensors already installed.
+  - rscadd: Suit sensors are now physical items. They can be removed from clothing
+      with wirecutter, printed from an autolathe, and/or installed on suit and dresses
+      that don't have them.
+  JoJe3003:
+  - rscadd: New item "Infinite Capacity Megacell added, which can be used for infinite
+      power in the SMES. /obj/item/stock_parts/power_store/battery/infinite
+  KnigTheThrasher:
+  - map: (Nebula) Renamed fax machine in cmo's office so it's no longer research directors
+  L0pz:
+  - rscadd: Added purity seals, which may be found inside two boxes being sold by
+      the Deus-Vend
+  Melbert:
+  - rscadd: 'Two new heavy dynamic rulesets: "Midround Mass Traitors" and "Midround
+      Mass Changelings"'
+  Nobodyofimportance:
+  - rscadd: Felinid mutation toxin green slime extract recipe using milk
+  - rscadd: Moth mutation toxin green slime extract recipe using cellulose fiber (grind
+      cloth or wood!)
+  SmArtKar:
+  - bugfix: Fixed autoobserve storage interfaces getting stuck for ghosts
+  SyncIt21:
+  - balance: cargo exports now have different prices with applied elasticity
+  - code_imp: Improved performance of export code
+  - qol: stock blocks can be recycled for materials & show up as stock blocks in order
+      console sold items
+  - refactor: refactored cargo export code in whole. Report bugs on GitHub
+  TealSeer:
+  - bugfix: fixed white ship sometimes loading partially inside other ruins
+  grungussuss:
+  - sound: added sounds for eyewear
+  lelandkemble:
+  - spellcheck: Four pipes labeled N20 are now labeled N2O
+  necromanceranne:
+  - bugfix: The BR-38 does not mysteriously lose charges when it is used on some objects,
+      dropped on tables or smacked against glass panels.
+  paganiy:
+  - rscadd: New bluespace locator interface
+  - rscdel: Removed legacy teleport beacon tracking from bluespace locator
+  - bugfix: Bluespace locator now correctly locates tracking implants instead of beacon
+      implants
+  - qol: ' Added action buttons for toggling mech equipment'
+  - rscadd: Broken Bulbs Scanner for Bluespace Light Replacer
+  - qol: Search now filters materials/ingredients list in crafting menu

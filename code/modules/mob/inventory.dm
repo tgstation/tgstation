@@ -343,8 +343,11 @@
 	if(isnull(to_drop))
 		return
 
-	var/x_offset = rand(-6, 6)
-	var/y_offset = rand(-6, 6)
+	var/x_offset = 0
+	var/y_offset = 0
+	if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
+		x_offset += rand(-6, 6)
+		y_offset += rand(-6, 6)
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
 	if(!transfer_item_to_turf(to_drop, drop_location(), x_offset, y_offset, force, silent, invdrop))
 		return
