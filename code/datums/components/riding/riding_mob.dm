@@ -723,12 +723,12 @@
 	REMOVE_TRAIT(raptor, TRAIT_AI_PAUSED, REF(src))
 	// Rip bozo, but you're not our friend
 	if (source in raptor.ai_controller.blackboard[BB_FRIENDS_LIST])
-		raptor.ai_controller.blackboard[BB_INJURED_RAPTOR] = source
+		raptor.ai_controller.set_blackboard_key(BB_INJURED_RAPTOR, source)
 
 	for (var/mob/living/possible_hostile in view(5, raptor))
 		if (possible_hostile.stat || possible_hostile.invisibility > raptor.see_invisible || source.faction_check_atom(possible_hostile))
 			continue
-		raptor.ai_controller.blackboard[BB_BASIC_MOB_FLEE_TARGET] = possible_hostile
+		raptor.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, possible_hostile)
 		break
 
 /datum/component/riding/creature/raptor/small/get_rider_offsets_and_layers(pass_index, mob/offsetter)

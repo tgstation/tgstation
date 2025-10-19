@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 	var/mob/living/carbon/human/rider = potential_rider
 	if (rider.mob_height > HUMAN_HEIGHT_SHORTEST)
-		to_chat(rider, span_warning("Your tall stature will crush [source]!"))
+		to_chat(rider, span_warning("Your tall stature will crush [source] were you attempt to ride [source.p_them()]!"))
 		return COMPONENT_BLOCK_BUCKLE
 
 // Purple raptors never "fully" grow up, and remain usable as backpacks

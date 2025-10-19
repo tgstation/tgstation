@@ -16,7 +16,7 @@
 	var/drinking
 	/// If true, we put food in our tummy instead of deleting it
 	var/add_to_contents
-	/// If true, when add_to_contents would put the item into contents but it is used for healing, the item is instead consumed
+	/// If true, when add_to_contents would put the item into contents but when used for healing, the item is consumed instead
 	var/consume_healing
 	/// Types the animal can eat. Can be an assoc list with amount to heal/damage the mob by
 	var/list/food_types

@@ -10,6 +10,7 @@
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_MAX_CHILDREN = 5,
+		BB_RAPTOR_FLEE_THRESHOLD = 0.25,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -42,10 +43,12 @@
 			"wags their tail against",
 			"playfully leans against"
 		),
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/exact_match,
+		BB_HUNT_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_MAX_CHILDREN = 5,
+		BB_RAPTOR_FLEE_THRESHOLD = 0.1,
 	)
 
 	planning_subtrees = list(
@@ -56,7 +59,7 @@
 		/datum/ai_planning_subtree/random_speech/blackboard,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/simple_find_target/hunt,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_and_hunt_target/raptor_trough,
 		/datum/ai_planning_subtree/find_food,

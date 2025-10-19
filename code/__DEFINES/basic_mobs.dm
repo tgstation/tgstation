@@ -115,5 +115,7 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define BB_RAPTOR_EAT_COOLDOWN "raptor_eat_cooldown"
 /// Our trough target
 #define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
+/// HP level at which we'll flee from attackers
+#define BB_RAPTOR_FLEE_THRESHOLD "raptor_flee_threshold"
 
 #define MAX_RAPTOR_POP 64

@@ -30,6 +30,9 @@
 		return ..()
 
 	var/mob/living/basic/raptor/raptor = controller.pawn
+	if (raptor.health <= raptor.maxHealth * controller.blackboard[BB_RAPTOR_FLEE_THRESHOLD])
+		return ..()
+
 	if (!length(raptor.buckled_mobs))
 		return
 
