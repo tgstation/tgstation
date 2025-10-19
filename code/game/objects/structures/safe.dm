@@ -107,17 +107,16 @@ FLOOR SAFES
 		new_tumblers.Add(input_value)
 
 	tool.play_tool_sound(src)
-	if(do_after(user, 10 SECONDS, target = src))
-		tumblers = new_tumblers
-		current_tumbler_index = 1
-		dial = 0
-		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You successfully reset the lock for [src]. The new combination is: [tumblers.Join("-")]."))
-		balloon_alert(user, "lock set!")
-		return ITEM_INTERACT_SUCCESS
-	else
-		balloon_alert(user, "reset interrupted!")
+	if(!do_after(user, 10 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
+	
+	tumblers = new_tumblers
+	current_tumbler_index = 1
+	dial = 0
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You successfully reset the lock for [src]. The new combination is: [tumblers.Join("-")]."))
+	balloon_alert(user, "lock set!")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/safe/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(open)
