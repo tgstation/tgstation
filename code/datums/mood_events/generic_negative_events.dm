@@ -574,7 +574,7 @@
 	if(isnull(dead_mob))
 		return
 	if(HAS_TRAIT(owner, TRAIT_NAIVE) && naive_immune)
-		description = "Have a good nap, [get_descriptor(dead_mob)]."
+		description = "Have a good nap, [dead_mob.name]."
 		mood_change = 0
 		timeout *= 0.2
 		return
