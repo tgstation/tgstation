@@ -286,6 +286,14 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_CIG_PACK_RUSTLE "cig_pack_rustle"
 #define SFX_CIG_PACK_THROW_DROP "cig_pack_throw_drop"
 #define	SFX_RORO_WARBLE "roro_warble"
+#define SFX_POTTED_PLANT_PICKUP "potted_plant_pickup"
+#define SFX_POTTED_PLANT_DROP "potted_plant_drop"
+#define SFX_GOGGLES_PICKUP "goggles_pickup"
+#define SFX_GOGGLES_DROP "goggles_drop"
+#define SFX_GOGGLES_EQUIP "goggles_equip"
+#define SFX_GLASSES_PICKUP "glasses_pickup"
+#define SFX_GLASSES_DROP "glasses_drop"
+#define SFX_GLASSES_EQUIP "glasses_equip"
 #define SFX_FIRE_MODE_SWITCH "fire_mode_switch"
 
 // Standard is 44.1khz

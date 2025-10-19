@@ -82,6 +82,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
+	update_lips(null, null, null, update = FALSE)
 	cut_overlays(TRUE)
 
 /mob/living/carbon/human/dummy/setup_human_dna()
@@ -155,6 +156,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/consistent/domutcheck()
 	return // We skipped adding any mutations so this runtimes
+
+/mob/living/carbon/human/consistent/slow
+
+#ifdef UNIT_TESTS
+//unit test dummies should be very fast with actions
+/mob/living/carbon/human/dummy/consistent/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = -1)
+
+/mob/living/carbon/human/consistent/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = -1)
+
+//this one gives us a small window of time for checks on asynced actions.
+/mob/living/carbon/human/consistent/slow/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = 0.1)
+#endif
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
