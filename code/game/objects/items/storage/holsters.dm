@@ -41,6 +41,15 @@
 		/obj/item/gun/energy/disabler = 1,
 	),src)
 
+/obj/item/storage/belt/holster/energy/laser_pistol
+	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. A production stamp indicates that it was shipped with a Type 5C laser pistol."
+
+/obj/item/storage/belt/holster/energy/disabler/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/energy/laser/pistol = 1,
+	),src)
+
+
 /obj/item/storage/belt/holster/energy/smoothbore
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. Seems it was meant to fit two smoothbores."
 

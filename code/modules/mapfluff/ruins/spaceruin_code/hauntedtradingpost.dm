@@ -347,7 +347,7 @@
 	base_icon_state = "red"
 	stun_projectile = /obj/projectile/energy/electrode
 	stun_projectile_sound = 'sound/items/weapons/taser.ogg'
-	lethal_projectile = /obj/projectile/beam/laser/cybersun
+	lethal_projectile = /obj/projectile/beam/laser/donkbash
 	lethal_projectile_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	desc = "An energy gun auto-turret with Cybersun branding. It fires high-energy plasma beams that do a lot of damage, but it can be fairly slow."
 	armor_type = /datum/armor/syndicate_shuttle
@@ -356,7 +356,7 @@
 	always_up = FALSE
 	has_cover = TRUE
 
-/obj/projectile/beam/laser/cybersun
+/obj/projectile/beam/laser/donkbash
 	name = "plasma beam"
 	desc = "A big red plasma beam, currently in flight."
 	icon_state = "lava"
