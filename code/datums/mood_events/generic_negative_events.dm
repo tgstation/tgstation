@@ -570,6 +570,11 @@
 /datum/mood_event/see_death/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
+	if(HAS_TRAIT(owner, TRAIT_NAIVE))
+		description = "Have a good nap, [get_descriptor(dead_mob)]."
+		mood_change = 0
+		timeout *= 0.2
+		return
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
 		mood_change *= 0.25
 		timeout *= 0.2
