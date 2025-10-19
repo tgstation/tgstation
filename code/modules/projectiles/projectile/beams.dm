@@ -28,13 +28,14 @@
 	damage = 25
 	exposed_wound_bonus = 40
 
-/obj/projectile/beam/laser/carbine
+/obj/projectile/beam/laser/rapid
+	name = "rapid fire laser"
 	icon_state = "carbine_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 20
 
-/obj/projectile/beam/laser/carbine/practice
-	name = "practice laser"
+/obj/projectile/beam/laser/rapid/practice
+	name = "practice rapid fire laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 0
 

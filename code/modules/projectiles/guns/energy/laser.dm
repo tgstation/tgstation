@@ -50,7 +50,7 @@
 	burst_size = 2
 	fire_delay = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/assault)
-	emp_resistance = 4
+	emp_resistance = 2
 	weapon_weight = WEAPON_HEAVY
 	projectile_speed_multiplier = 1.5
 	SET_BASE_PIXEL(-8, 0)
