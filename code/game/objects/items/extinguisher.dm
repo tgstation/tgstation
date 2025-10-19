@@ -358,7 +358,7 @@
 
 /obj/item/extinguisher/click_alt(mob/user)
 	if(!user.is_holding(src))
-		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
+		to_chat(user, span_notice("You must be holding \the [src] in your hands to do this!"))
 		return CLICK_ACTION_BLOCKING
 	EmptyExtinguisher(user)
 	return CLICK_ACTION_SUCCESS
