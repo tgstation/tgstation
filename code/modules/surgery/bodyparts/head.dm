@@ -201,8 +201,6 @@
 			eye_right.color = eyes.eye_color_right
 
 	if(eyes.overlay_ignore_lighting)
-		var/mutable_appearance/left_em =
-		var/mutable_appearance/right_em =
 		eye_left.overlays += image(emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha), dir = SOUTH)
 		eye_right.overlays += image(emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha), dir = SOUTH)
 	else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
