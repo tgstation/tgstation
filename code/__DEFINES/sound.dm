@@ -294,6 +294,21 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_GLASSES_PICKUP "glasses_pickup"
 #define SFX_GLASSES_DROP "glasses_drop"
 #define SFX_GLASSES_EQUIP "glasses_equip"
+#define SFX_FOOD_PLATE_PICKUP "food_plate_pickup"
+#define SFX_FOOD_PLATE_DROP "food_plate_drop"
+#define SFX_TRAY_PICKUP "tray_pickup"
+#define SFX_TRAY_DROP "tray_drop"
+#define SFX_TRAY_INSERT "tray_insert"
+#define SFX_CUTLERY_PICKUP "generic_cutlery_pickup"
+#define SFX_CUTLERY_DROP "generic_cutlery_drop"
+#define SFX_KNIFE_PICKUP "knife_pickup"
+#define SFX_KNIFE_DROP "knife_drop"
+#define SFX_KNIFE_SLICE "knife_slice"
+#define SFX_POT_PICKUP "pot_pickup"
+#define SFX_POT_DROP "pot_drop"
+#define SFX_ROLLING_PIN_PICKUP "rolling_pin_pickup"
+#define SFX_ROLLING_PIN_DROP "rolling_pin_drop"
+#define SFX_ROLLING_PIN_ROLLING "rolling_pin_rolling"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
