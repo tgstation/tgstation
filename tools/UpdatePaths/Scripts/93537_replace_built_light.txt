@@ -1,0 +1,9 @@
+/obj/machinery/light/built/directional/north : /obj/machinery/light/empty/directional/north
+/obj/machinery/light/built/directional/south : /obj/machinery/light/empty/directional/south
+/obj/machinery/light/built/directional/east : /obj/machinery/light/empty/directional/east
+/obj/machinery/light/built/directional/west : /obj/machinery/light/empty/directional/west
+
+/obj/machinery/light/small/built/directional/north : /obj/machinery/light/small/empty/directional/north
+/obj/machinery/light/small/built/directional/south : /obj/machinery/light/small/empty/directional/south
+/obj/machinery/light/small/built/directional/east : /obj/machinery/light/small/empty/directional/east
+/obj/machinery/light/small/built/directional/west : /obj/machinery/light/small/empty/directional/west
