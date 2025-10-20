@@ -1,0 +1,112 @@
+###########################################
+##    P  E  R  S  I  S  T  E  N  C  E    ##
+###########################################
+
+## These are for reference and can help you configure the save and load settings
+##
+## Save File Size:
+## A full station z-level (255x255) is ~3 MB
+## An empty space z-level (255x255) is ~0.5 MB
+## An autosave on Meta with all default z-levels is ~10 MB
+## Autosaving 100 times, with all default z-levels on Meta, would be ~1 GB
+##
+## RAM Usage:
+## Be aware that BYOND is a 32-bit application and has a RAM limit of 4 GB
+## A full station z-level can consume approximately ~125 MB of RAM when loaded
+## A single empty space z-level will also consume ~10 MB of RAM
+## Loading 100 z-levels, with all of them empty space, will utilize ~1 GB of RAM
+##
+## Station Traits:
+## Certain station traits and random events are not compatiable with persistence on the station z-level
+## FORBID_STATION_TRAITS and ALLOW_RANDOM_EVENTS in game_options.txt allows you to disable them
+
+## To enable map saving and loading that persists between rounds, uncomment this flag
+## This will load the most recent saved map(s) in the _maps/persistence folder if available
+## Save folders in the persistence directory are formatted as year-month-day_UTF_hour.minute.second
+PERSISTENT_SAVE_ENABLED
+
+## The period of time in hours between map autosaves for persistence
+## Set to -1 to only allow saving when the server reboots
+## Defaults to every 4 hours
+PERSISTENT_AUTOSAVE_PERIOD 4
+
+## The maximum number of autosaves to store
+## Set to -1 to never delete any autosaves
+PERSISTENT_MAX_AUTOSAVES -1
+
+##########################
+##   Z - L E V E L S    ##
+##########################
+
+## Include specific z levels when saving and loading determined by ZTRAIT
+## CentCom and Transit/Reserved z-levels can be saved but are never loaded
+## It is recommended to disable them to avoid saving unnecessary data
+PERSISTENT_SAVE_Z_LEVELS CentCom
+PERSISTENT_SAVE_Z_LEVELS Station
+PERSISTENT_SAVE_Z_LEVELS Mining
+PERSISTENT_SAVE_Z_LEVELS Space Empty
+PERSISTENT_SAVE_Z_LEVELS Space Ruins
+PERSISTENT_SAVE_Z_LEVELS Ice Ruins
+PERSISTENT_SAVE_Z_LEVELS Transit/Reserved
+PERSISTENT_SAVE_Z_LEVELS Away Mission
+
+## This loads a fixed grid layout (not randomized) from the z-level JSON files if they were linked together
+## Requires "Space Empty", "Space Ruins", and "Ice Ruins" to be enabled in PERSISTENT_SAVE_Z_LEVELS to work
+PERSISTENT_USE_STATIC_MAP_GRID
+
+## This section includes specific flags that control which types of data are saved and loaded
+##
+## Note on template_noop when loading maps:
+## These placeholders are automatically replaced with the world's default turf or area from `\code\world.dm`
+## The current world defaults are turf = /turf/open/space/basic and area = /area/space
+
+##########################
+##    O B J E C T S     ##
+##########################
+
+## The max limit of allowed objects to be saved on a turf
+PERSISTENT_MAX_OBJECT_LIMIT_PER_TURF 100
+
+## Save and load objects and their properties.
+PERSISTENT_SAVE_FLAGS objects
+## Save and load objects variables
+PERSISTENT_SAVE_FLAGS objects_variables
+## Save and load objects custom properties from obj.on_object_saved().
+PERSISTENT_SAVE_FLAGS objects_properties
+
+##########################
+##       M O B S        ##
+##########################
+
+## The max limit of allowed mobs to be saved on a turf
+PERSISTENT_MAX_MOB_LIMIT_PER_TURF 5
+
+## Save and load mobs, excluding mob/living/carbon.
+PERSISTENT_SAVE_FLAGS mobs
+
+##########################
+##      T U R F S       ##
+##########################
+
+## Save and load turf types. When disabled, saves turfs as /turf/template_noop
+PERSISTENT_SAVE_FLAGS turfs
+## Save and load turf atmospheric properties (gases, temperature, etc.)
+PERSISTENT_SAVE_FLAGS turfs_atmos
+## Save and load space turfs. When disabled, skips saving objects, mobs, and
+## areas that are on space turfs. The space turf and area are saved as /template_noop
+PERSISTENT_SAVE_FLAGS turfs_space
+
+##########################
+##      A R E A S       ##
+##########################
+
+## Save and load area types. When disabled, saves areas as /area/template_noop
+PERSISTENT_SAVE_FLAGS areas
+## Save and load default shuttle area types like arrivals, cargo, mining, whiteship, etc.
+## When disabled, saves default shuttle areas & turfs as the baseturfs underneath (usually space)
+#PERSISTENT_SAVE_FLAGS areas_default_shuttles
+## Save and load custom shuttle area types from player made shuttles.
+## When disabled, saves custom shuttle areas as the baseturfs underneath (usually space)
+PERSISTENT_SAVE_FLAGS areas_custom_shuttles
+
+
