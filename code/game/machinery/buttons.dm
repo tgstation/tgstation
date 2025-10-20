@@ -71,7 +71,7 @@
 	return ..()
 
 /obj/machinery/button/proc/setup_device(mapload)
-	if(mapload && !device)
+	if(mapload && !device && device_type)
 		device = new device_type(src)
 	if(id && istype(device, /obj/item/assembly/control))
 		var/obj/item/assembly/control/control_device = device
