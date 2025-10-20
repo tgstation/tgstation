@@ -959,7 +959,8 @@
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
 
-///compare two lists, returns TRUE if they are the same
+/// Compare two lists, returns TRUE if they are the same. Does not work with
+/// associative list values, use deep_compare_list() instead
 /proc/compare_list(list/l,list/d)
 	if(!islist(l) || !islist(d))
 		return FALSE
