@@ -573,6 +573,11 @@
 	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
 		mood_change *= 0.25
 		timeout *= 0.2
+	if(istype(owner.mind?.assigned_role, /datum/job/bitrunning_glitch) || istype(owner.mind?.assigned_role, /datum/job/bit_avatar))
+		// Digital beings shouldn't care about death it's just gaming
+		mood_change *= -0.25
+		description = "Another one bites the dust!"
+		return
 	if(HAS_TRAIT(owner, TRAIT_CULT_HALO) && !HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
 		// When cultists get halos, they stop caring about death
 		mood_change *= -0.5
