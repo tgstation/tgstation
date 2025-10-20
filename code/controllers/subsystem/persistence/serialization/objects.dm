@@ -391,6 +391,7 @@
 		. -= NAMEOF(src, name)
 
 	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
+	. -= NAMEOF(src, density)
 	return .
 
 /obj/machinery/door/airlock/on_object_saved()
@@ -402,7 +403,7 @@
 		if(welded)
 			data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
 
-		if(locked)
+		if(locked && !cycle_pump) // cycle pumps has funky bolt behavior that needs to be ignored
 			data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/locked]"
 
 	if(cyclelinkeddir)
@@ -731,7 +732,6 @@
 /obj/item/reagent_containers/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, amount_per_transfer_from_this)
-	. += NAMEOF(src, reagent_flags)
 	return .
 
 /obj/item/reagent_containers/get_custom_save_vars()
@@ -755,7 +755,10 @@
 		has_identical_reagents = FALSE
 
 	if(!has_identical_reagents)
-		.[NAMEOF(src, list_reagents)] = current_reagents
+		.[NAMEOF(src, list_reagents)] = reagents_to_save
+
+	if(initial(initial_reagent_flags) != reagents.flags)
+		.[NAMEOF(src, initial_reagent_flags)] = reagents.flags
 
 	return .
 
