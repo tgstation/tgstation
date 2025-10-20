@@ -19,8 +19,6 @@
 	var/output = ""
 
 	for(var/part_type in valid_subtypes(/obj/item/stock_parts))
-		var/obj/item/stock_parts/type_to_check = part_type
-
 		if(!battery_whitelist.Find(part_type) && ispath(part_type, /obj/item/stock_parts/power_store))
 			continue
 
