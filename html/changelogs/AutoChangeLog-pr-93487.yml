@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Closet animation has been updated slightly - when closing objects no longer disappear instantly."

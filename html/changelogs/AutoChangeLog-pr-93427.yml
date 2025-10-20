@@ -1,5 +1,0 @@
-author: "Isratosh"
-delete-after: True
-changes:
-  - admin: "New admin/debug VV dropdown button to grant any mob all access."
-  - admin: "Reverse by removing the simple_access component, or edit via its access list variable."
