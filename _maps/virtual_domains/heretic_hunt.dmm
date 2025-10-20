@@ -19,6 +19,7 @@
 	pixel_x = -8;
 	pixel_y = -2
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "br" = (
@@ -88,6 +89,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "fd" = (
@@ -106,6 +108,7 @@
 	pixel_y = 10;
 	pixel_x = 2
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "fn" = (
@@ -113,6 +116,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/visible_heretic_influence,
 /turf/open/floor/plating/heretic_rust,
+/area/virtual_domain)
+"fq" = (
+/obj/machinery/power/rtg,
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "fA" = (
 /obj/structure/closet/crate/bin,
@@ -160,6 +168,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "hp" = (
@@ -184,6 +193,7 @@
 	dir = 8
 	},
 /obj/effect/spawner/random/medical/patient_stretcher,
+/obj/structure/cable,
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "hS" = (
@@ -219,6 +229,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/structure/sign/warning/electric_shock/directional/north,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "iy" = (
@@ -281,10 +292,9 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "kQ" = (
-/obj/structure/grille,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "lG" = (
@@ -326,6 +336,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"nf" = (
+/obj/structure/cable,
+/turf/closed/indestructible/reinforced,
+/area/virtual_domain)
 "nh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
@@ -354,6 +368,11 @@
 	},
 /turf/open/floor/plastic,
 /area/virtual_domain)
+"oc" = (
+/obj/effect/visible_heretic_influence,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "ok" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -371,6 +390,11 @@
 	pixel_y = -2
 	},
 /turf/open/floor/plating,
+/area/virtual_domain)
+"oL" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "oQ" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -440,6 +464,10 @@
 /obj/effect/decal/cleanable/plasma,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"sb" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "sd" = (
 /obj/item/storage/test_tube_rack,
 /obj/structure/table,
@@ -465,6 +493,10 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"sT" = (
+/obj/structure/cable,
+/turf/open/floor/plastic,
+/area/virtual_domain)
 "sY" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /turf/open/floor/iron/dark,
@@ -487,6 +519,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "uj" = (
@@ -528,7 +561,13 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plastic,
+/area/virtual_domain)
+"vG" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
 /area/virtual_domain)
 "vO" = (
 /obj/machinery/defibrillator_mount/directional/west,
@@ -547,6 +586,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "vR" = (
@@ -582,7 +622,15 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plastic,
+/area/virtual_domain)
+"xg" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "xz" = (
 /obj/effect/baseturf_helper/virtual_domain,
@@ -617,6 +665,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "yW" = (
@@ -648,6 +697,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "AE" = (
@@ -672,6 +722,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "BW" = (
@@ -723,6 +774,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "EB" = (
@@ -746,6 +798,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/virtual_domain)
+"EV" = (
+/obj/effect/turf_decal/tile/red,
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Fj" = (
 /turf/open/floor/iron/dark,
@@ -831,6 +888,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"Ho" = (
+/obj/structure/sign/warning/electric_shock/directional/east,
+/turf/open/floor/plating,
+/area/virtual_domain)
 "Hy" = (
 /obj/machinery/door/airlock/medical,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -845,6 +906,7 @@
 /area/virtual_domain)
 "Ih" = (
 /obj/structure/closet/firecloset,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Iu" = (
@@ -868,6 +930,7 @@
 /area/virtual_domain)
 "IS" = (
 /mob/living/basic/fake_crewman/engi,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "IX" = (
@@ -973,6 +1036,7 @@
 /area/virtual_domain)
 "Lj" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "Lp" = (
@@ -1017,6 +1081,13 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"Nm" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/structure/sign/warning/electric_shock/directional/north,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Np" = (
 /obj/machinery/light/directional/north,
@@ -1082,6 +1153,7 @@
 	dir = 1
 	},
 /obj/item/stack/medical/gauze/improvised,
+/obj/structure/cable,
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "PJ" = (
@@ -1101,6 +1173,7 @@
 "Qk" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "QP" = (
@@ -1155,6 +1228,11 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"RQ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/cable,
+/turf/open/floor/plastic,
+/area/virtual_domain)
 "RY" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
 	dir = 4
@@ -1166,6 +1244,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"Sb" = (
+/mob/living/basic/fake_crewman/md,
+/obj/structure/cable,
+/turf/open/floor/plastic,
 /area/virtual_domain)
 "Sf" = (
 /obj/effect/spawner/random/trash/cigbutt,
@@ -1182,6 +1265,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"SJ" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/sign/warning/electric_shock/directional/west,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "Tv" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
@@ -1197,6 +1287,13 @@
 "Ul" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
+/area/virtual_domain)
+"Va" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
 /area/virtual_domain)
 "Vh" = (
 /turf/open/floor/plating,
@@ -1262,6 +1359,7 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plastic,
 /area/virtual_domain)
 "Wv" = (
@@ -1284,6 +1382,13 @@
 /obj/effect/spawner/random/clothing/backpack,
 /obj/effect/spawner/random/exotic/antag_gear,
 /turf/open/floor/iron,
+/area/virtual_domain)
+"Xl" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plastic,
 /area/virtual_domain)
 "Xv" = (
 /obj/structure/table/glass,
@@ -1405,10 +1510,12 @@ Pr
 Pr
 Pr
 Pr
+Pr
 eT
 "}
 (2,1,1) = {"
 Pr
+Zt
 Zt
 Zt
 Zt
@@ -1443,6 +1550,7 @@ Pr
 Pr
 Zt
 Zt
+Zt
 Lj
 Vr
 Vr
@@ -1473,6 +1581,7 @@ Pr
 "}
 (4,1,1) = {"
 Pr
+Zt
 Zt
 Zt
 vP
@@ -1507,9 +1616,10 @@ Pr
 Pr
 Zt
 Zt
+Zt
 iw
 ki
-AV
+sb
 Gv
 Zu
 pm
@@ -1538,8 +1648,9 @@ Pr
 (6,1,1) = {"
 Pr
 Zt
+sb
 Lj
-mW
+Va
 Vj
 fl
 Km
@@ -1570,8 +1681,9 @@ Pr
 (7,1,1) = {"
 Pr
 Zt
+sb
 Po
-AV
+sb
 aY
 Qk
 vR
@@ -1602,6 +1714,7 @@ Pr
 (8,1,1) = {"
 Pr
 Zt
+sb
 Lj
 AA
 Vj
@@ -1634,8 +1747,9 @@ Pr
 (9,1,1) = {"
 Pr
 Zt
+nf
 Zt
-AA
+Nm
 AV
 IS
 iy
@@ -1666,10 +1780,11 @@ Pr
 (10,1,1) = {"
 Pr
 Zt
+fq
 Zt
 Np
 nM
-AV
+sb
 iy
 VW
 Zu
@@ -1699,10 +1814,11 @@ Pr
 Pr
 Zt
 Zt
+Zt
 gp
 Ih
-AV
-iy
+sb
+oL
 rq
 Zu
 ge
@@ -1731,10 +1847,11 @@ Pr
 Pr
 Zt
 Zt
+Zt
 Zu
-Ul
+vG
 pv
-Ul
+vG
 Zu
 Zu
 sd
@@ -1761,6 +1878,7 @@ Pr
 "}
 (13,1,1) = {"
 Pr
+Zt
 Zt
 Zt
 Zu
@@ -1794,6 +1912,7 @@ Pr
 (14,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 Zu
 Gt
@@ -1825,6 +1944,7 @@ Pr
 "}
 (15,1,1) = {"
 Pr
+Zt
 Zt
 Zu
 iQ
@@ -1858,6 +1978,7 @@ Pr
 (16,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 OX
 Zj
@@ -1872,7 +1993,7 @@ Zu
 Zu
 rC
 sy
-Vh
+Ho
 zd
 Zu
 Rx
@@ -1889,6 +2010,7 @@ Pr
 "}
 (17,1,1) = {"
 Pr
+Zt
 Zt
 Zu
 Zu
@@ -1907,9 +2029,9 @@ kQ
 rC
 Zu
 Zu
-Ul
+vG
 yW
-Ul
+vG
 Zu
 Zu
 Zu
@@ -1922,13 +2044,14 @@ Pr
 (18,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 Jt
 JD
 cz
 WL
-sL
-Ul
+xg
+vG
 di
 mu
 Iu
@@ -1940,7 +2063,7 @@ Zu
 Zu
 FH
 eV
-KR
+sT
 xa
 vO
 Zu
@@ -1954,12 +2077,13 @@ Pr
 (19,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 AV
 YL
 Lc
 Lc
-sL
+xg
 pv
 AV
 xK
@@ -1972,7 +2096,7 @@ Zu
 FR
 vh
 vh
-vh
+Xl
 vh
 vh
 Zu
@@ -1986,13 +2110,14 @@ Pr
 (20,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 AV
 mX
 AO
 uz
-sL
-Ul
+xg
+vG
 kw
 GZ
 Mg
@@ -2004,7 +2129,7 @@ Zu
 KR
 KR
 NO
-KR
+sT
 KR
 KR
 Hy
@@ -2018,6 +2143,7 @@ Pr
 (21,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 ta
 mX
@@ -2026,7 +2152,7 @@ uz
 gz
 Zu
 Zu
-Ul
+vG
 Zu
 Zu
 Zu
@@ -2050,15 +2176,16 @@ Pr
 (22,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 AV
 mX
 zp
 uz
+xg
 sL
-sL
-sL
-sL
+SJ
+xg
 xQ
 Zu
 ck
@@ -2068,7 +2195,7 @@ Zu
 KR
 KR
 KR
-NO
+Sb
 KR
 KR
 Hy
@@ -2082,15 +2209,16 @@ Pr
 (23,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 AV
 Lc
 Lc
 YL
-AV
-AV
-AV
-nM
+sb
+sb
+sb
+oc
 vR
 uS
 JG
@@ -2100,7 +2228,7 @@ Zu
 Lp
 hp
 hp
-hp
+RQ
 hp
 hp
 Zu
@@ -2114,16 +2242,17 @@ Pr
 (24,1,1) = {"
 Pr
 Zt
+Zt
 Zu
 Wk
 jR
 CT
 Wk
+EV
 Wk
+EV
 Wk
-Wk
-Wk
-Wk
+EV
 Zu
 rC
 Rd
@@ -2145,6 +2274,7 @@ Pr
 "}
 (25,1,1) = {"
 Pr
+Zt
 Zt
 Zu
 Zu
@@ -2205,9 +2335,11 @@ Zt
 Zt
 Zt
 Zt
+Zt
 Pr
 "}
 (27,1,1) = {"
+Pr
 Pr
 Pr
 Pr

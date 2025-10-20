@@ -14,6 +14,13 @@
 	for(var/mob/living/basic/fake_crewman/target in created_atoms)
 		RegisterSignal(target, COMSIG_LIVING_DROPPED_LOOT, PROC_REF(on_body_spawned))
 
+	for(var/mob/living/basic/heretic_summon/helper in created_atoms)
+		helper.ai_controller = new /datum/ai_controller/basic_controller/simple/simple_hostile(helper)
+		helper.ai_controller.blackboard[BB_BASIC_MOB_IDLE_WALK_CHANCE] = 0.1
+
+	var/obj/effect/heretic_rune/big/rune = locate() in created_atoms
+	rune.set_greyscale(pick(assoc_to_values(GLOB.heretic_path_to_color)))
+
 /datum/lazy_template/virtual_domain/heretic_hunt/proc/on_body_spawned(mob/living/source, list/loot, gibbed)
 	SIGNAL_HANDLER
 
@@ -77,6 +84,8 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_REINFORCEMENTS_SAY = "Help me!",
+		BB_RANDOM_DEAGGRO_CHANCE = 0.001, // basically never buuut...
+		BB_RANDOM_AGGRO_CHANCE = 10, // valid him
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
@@ -96,8 +105,9 @@
 		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/ranged_skirmish,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 // Immediately tries to attack the player (Terry player)
@@ -116,8 +126,9 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/ranged_skirmish,
+		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
 
 // The actual crewmate
@@ -177,9 +188,11 @@
 	weapon = /obj/item/weldingtool
 	attack_sound = 'sound/items/tools/welder.ogg'
 	melee_damage_type = BURN
+	damage_coeff = list(BRUTE = 1, BURN = 0.9, TOX = 1, STAMINA = 1, OXY = 1)
 
 /mob/living/basic/fake_crewman/engi/mod
 	death_spawner = /obj/effect/mob_spawn/corpse/human/engineer/mod
+	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 1, STAMINA = 1, OXY = 1)
 
 /mob/living/basic/fake_crewman/assistant
 	name = "assistant"
