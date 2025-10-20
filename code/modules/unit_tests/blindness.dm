@@ -1,4 +1,4 @@
-#define HAS_SCREEN_OVERLAY(mob, type) (locate(type) in flatten_list(mob.screens))
+#define HAS_SCREEN_OVERLAY(mob, type) (locate(type) in assoc_to_values(mob.screens))
 #define HAS_CLIENT_COLOR(mob, type) (locate(type) in mob.client_colours)
 
 /**

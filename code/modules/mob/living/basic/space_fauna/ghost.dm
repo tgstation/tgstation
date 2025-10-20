@@ -65,7 +65,7 @@
 /mob/living/basic/ghost/proc/give_identity()
 	if(random_identity)
 		ghost_hairstyle = random_hairstyle() //This only gives us the hairstyle name, not the icon_state (which we need).
-		ghost_hair_color = "#[random_color()]"
+		ghost_hair_color = random_hair_color()
 
 		if(prob(50)) //Only a chance at also getting facial hair
 			ghost_facial_hairstyle = random_facial_hairstyle()

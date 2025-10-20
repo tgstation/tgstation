@@ -226,12 +226,12 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
-/// from /obj/item/assembly/flash/flash_carbon, to the mob being flashed
+/// from /obj/item/assembly/flash/flash_mob, to the mob being flashed
 #define COMSIG_MOB_FLASH_OVERRIDE_CHECK "mob_flash_override_check"
 	/// Has the flash effect been overridden?
 	#define FLASH_OVERRIDDEN (1<<0)
 /// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
-#define COMSIG_MOB_PRE_FLASHED_CARBON "mob_pre_flashed_carbon"
+#define COMSIG_MOB_PRE_FLASHED_MOB "mob_pre_flashed_mob"
 	/// Return to override deviation to be full deviation (fail the flash, usually)
 	#define DEVIATION_OVERRIDE_FULL (1<<0)
 	/// Return to override deviation to be partial deviation
@@ -240,9 +240,9 @@
 	#define DEVIATION_OVERRIDE_NONE (1<<2)
 	/// Return to stop the flash entirely
 	#define STOP_FLASH (1<<3)
-/// from /obj/item/assembly/flash/flash_carbon, to the mob flashing another carbon
+/// from /obj/item/assembly/flash/flash_mob, to the mob flashing another carbon
 /// (mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation (from code/__DEFINES/mobs.dm))
-#define COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON "mob_success_flashed_carbon"
+#define COMSIG_MOB_SUCCESSFUL_FLASHED_MOB "mob_success_flashed_mob"
 
 /// from mob/get_status_tab_items(): (list/items)
 #define COMSIG_MOB_GET_STATUS_TAB_ITEMS "mob_get_status_tab_items"

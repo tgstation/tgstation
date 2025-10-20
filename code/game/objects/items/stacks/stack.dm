@@ -123,14 +123,14 @@
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
-		merge_with_loc()
+		merge_with_loc(merge_into_ourselves = !isnull(pulledby))
 
 ///Called to lazily update the materials of the item whenever the used or if more is added
 /obj/item/stack/proc/update_custom_materials()
 	if(length(mats_per_unit))
 		set_custom_materials(mats_per_unit, amount)
 
-/obj/item/stack/proc/find_other_stack(list/already_found)
+/obj/item/stack/proc/find_other_stack(list/already_found, merge_into_ourselves = FALSE)
 	if(QDELETED(src) || isnull(loc))
 		return
 	for(var/obj/item/stack/item_stack in loc)
@@ -141,20 +141,23 @@
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])
 			continue
-		if(can_merge(item_stack))
+		if(merge_into_ourselves ? item_stack.can_merge(src) : can_merge(item_stack))
 			already_found[stack_ref] = TRUE
 			return item_stack
 
 /// Tries to merge the stack with everything on the same tile.
-/obj/item/stack/proc/merge_with_loc()
+/obj/item/stack/proc/merge_with_loc(merge_into_ourselves = FALSE)
 	var/list/already_found = list() // change to alist whenever dreamchecker and such finally supports that
-	var/obj/item/other_stack = find_other_stack(already_found)
+	var/obj/item/stack/other_stack = find_other_stack(already_found, merge_into_ourselves)
 	var/sanity = max_amount // just in case
 	while(other_stack && sanity > 0)
 		sanity--
-		if(merge(other_stack))
+		if(!merge_into_ourselves)
+			if(merge(other_stack))
+				return FALSE
+		else if (other_stack.merge(src) && !QDELETED(other_stack))
 			return FALSE
-		other_stack = find_other_stack(already_found)
+		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
 /obj/item/stack/apply_material_effects(list/materials)
@@ -208,12 +211,14 @@
 	return list() //empty list
 
 /obj/item/stack/proc/update_weight()
-	if(amount <= (max_amount * (1/3)))
-		update_weight_class(clamp(full_w_class-2, WEIGHT_CLASS_TINY, full_w_class))
-	else if (amount <= (max_amount * (2/3)))
-		update_weight_class(clamp(full_w_class-1, WEIGHT_CLASS_TINY, full_w_class))
-	else
-		update_weight_class(full_w_class)
+	update_weight_class(get_weight_from_size(amount))
+
+/obj/item/stack/proc/get_weight_from_size(stack_amount)
+	if(stack_amount <= (max_amount * (1/3)))
+		return clamp(full_w_class - 2, WEIGHT_CLASS_TINY, full_w_class)
+	if(stack_amount <= (max_amount * (2/3)))
+		return clamp(full_w_class - 1, WEIGHT_CLASS_TINY, full_w_class)
+	return full_w_class
 
 /obj/item/stack/update_icon_state()
 	if(novariants)
@@ -449,22 +454,22 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		created = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
 		if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
-			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
+			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
 		created = new recipe.result_type(builder.drop_location())
 		builder.balloon_alert(builder, "built item")
 
-	if(created)
+	// split the material and use it for the craft
+	var/obj/item/stack/used_stack = split_stack(recipe.req_amount * multiplier)
+	if(ismovable(created))
 		created.setDir(builder.dir)
-		SEND_SIGNAL(created, COMSIG_ATOM_CONSTRUCTED, builder)
-		on_item_crafted(builder, created)
+	created.on_craft_completion(list(used_stack), null, builder)
+	qdel(used_stack) //you've outlived your purpose
 
-	// Use up the material
-	use(recipe.req_amount * multiplier)
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
@@ -491,10 +496,6 @@
 	//BubbleWrap END
 
 	return TRUE
-
-/// Run special logic on created items after they've been successfully crafted.
-/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
-	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))
@@ -671,8 +672,35 @@
 		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
 	else
 		transfer = min(transfer, (limit ? limit : target_stack.max_amount) - target_stack.amount)
-	if(pulledby)
+		// Ensure that we're not bloating the target stack to the point where it falls out of storage
+		if(target_stack.loc?.atom_storage)
+			var/datum/storage/target_storage = target_stack.loc?.atom_storage
+			var/cur_size = target_stack.w_class
+			var/new_size = target_stack.get_weight_from_size(target_stack.amount + transfer)
+			var/real_new_size = new_size
+			var/real_cur_size = cur_size
+
+			// Ensure that we don't end up with two mergeable stacks if our own size gets reduced enough from the merge and we share the space
+			if (!is_cyborg && loc == target_stack.loc)
+				real_cur_size += w_class
+				if (amount > transfer)
+					real_new_size += get_weight_from_size(amount - transfer)
+
+			// If total size changed, check for overflows
+			if(new_size > cur_size)
+				var/size_limit = max(new_size - target_storage.max_specific_storage, target_storage.get_total_weight() + real_new_size - real_cur_size - target_storage.max_total_storage)
+				// If we're over the stack limit the storage container can support, reduce the transferred amount
+				// to the nearest size threshold, then by a third of the target stack per excess size
+				if(size_limit > 0)
+					var/to_threshold = FLOOR(target_stack.amount + transfer, floor(target_stack.max_amount / 3))
+					transfer = clamp(to_threshold - floor(target_stack.max_amount / 3) * (size_limit - 1) - target_stack.amount, 0, transfer)
+
+	if(!transfer)
+		return
+
+	if(pulledby && is_zero_amount(delete_if_zero = FALSE))
 		pulledby.start_pulling(target_stack)
+
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)
 	target_stack.add(transfer)
