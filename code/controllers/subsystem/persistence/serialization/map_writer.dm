@@ -133,7 +133,7 @@
 
 				// always replace [/turf/open/space] with [/turf/open/space/basic] since it speeds up the maploader
 				// [/turf/open/space] is created naturally when shuttles are moving or turf gets destroyed leading to space
-				if(isspaceturf(saved_turf))
+				if(ispath(saved_turf, /turf/open/space))
 					// figure out why arrivals shuttle is bypassing this lol
 					saved_turf = /turf/open/space/basic
 				else if(!istype(saved_turf, /turf/template_noop))
