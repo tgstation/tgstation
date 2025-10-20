@@ -6,6 +6,12 @@
 	result_path = /obj/structure/light_construct
 	wall_external = TRUE
 
+/obj/item/wallframe/light_fixture/small
+	name = "small light fixture frame"
+	icon_state = "bulb-construct-item"
+	result_path = /obj/structure/light_construct/small
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+
 /obj/item/wallframe/light_fixture/try_build(turf/on_wall, user)
 	if(!..())
 		return
@@ -14,12 +20,6 @@
 		to_chat(user, span_warning("You cannot place [src] in this area!"))
 		return
 	return TRUE
-
-/obj/item/wallframe/light_fixture/small
-	name = "small light fixture frame"
-	icon_state = "bulb-construct-item"
-	result_path = /obj/structure/light_construct/small
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
 
 /obj/item/wallframe/light_fixture/small/attack_self(mob/user)
 	var/turf/local_turf = get_turf(user)
