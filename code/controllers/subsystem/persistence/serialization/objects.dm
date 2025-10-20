@@ -280,12 +280,23 @@
 
 /obj/structure/cable/get_save_vars()
 	. = ..()
+	. += NAMEOF(src, cable_color)
+	. += NAMEOF(src, cable_layer)
+
 	. -= NAMEOF(src, icon_state)
+	. -= NAMEOF(src, color)
 	return .
 
 /obj/machinery/duct/get_save_vars()
 	. = ..()
+	// idk shit about plumbing but i think these are correct?
+	. += NAMEOF(src, lock_layers)
+	. += NAMEOF(src, duct_layer)
+	. += NAMEOF(src, ignore_colors)
+	. += NAMEOF(src, duct_color)
+
 	. -= NAMEOF(src, icon_state)
+	. -= NAMEOF(src, color)
 	return .
 
 /obj/machinery/microwave/get_save_vars()
@@ -390,8 +401,9 @@
 	if(autoname)
 		. -= NAMEOF(src, name)
 
-	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
 	. -= NAMEOF(src, density)
+	. -= NAMEOF(src, opacity)
+	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
 	return .
 
 /obj/machinery/door/airlock/on_object_saved()
@@ -541,7 +553,6 @@
 	. += NAMEOF(src, welded)
 	. += NAMEOF(src, opened)
 	. += NAMEOF(src, locked)
-	. += NAMEOF(src, anchorable)
 	return .
 
 ///  A R T  ///
