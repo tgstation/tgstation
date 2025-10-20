@@ -22,6 +22,7 @@
 
 	return rewards_base
 
+/// Calculates total bonus from completing the domain in multiplayer
 /obj/machinery/quantum_server/proc/get_multiplayer_bonus()
 	var/total = 0
 	var/multiplayer = FALSE
@@ -32,9 +33,9 @@
 		if(multiplayer)
 			total += multiplayer_bonus
 		multiplayer = TRUE
-
 	return total
 
+/// Calculates total bonus from completing the domain without taking damage
 /obj/machinery/quantum_server/proc/get_nohit_bouns()
 	var/total = 0
 	for(var/datum/weakref/connection_ref in avatar_connection_refs)
@@ -44,7 +45,6 @@
 		if(connection.nohit && !(generated_domain.domain_flags & DOMAIN_NO_NOHIT_BONUS))
 			total += nohit_bonus
 	return total
-
 
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
