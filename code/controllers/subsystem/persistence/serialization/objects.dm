@@ -628,61 +628,104 @@
 /obj/machinery/light/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, status)
-	. += NAMEOF(src, start_with_cell)
-	. += NAMEOF(src, brightness)
-	. += NAMEOF(src, base_state)
-	. += NAMEOF(src, fitting)
 
-	. -= NAMEOF(src, icon_state) // icon_state is determined by status and updated dynamically
+	. -= NAMEOF(src, icon_state)
 	return .
 
 /obj/machinery/light/get_save_substitute_type()
-	// Determine the base type (tube vs bulb)
-	var/base_type
-	if(fitting == "bulb")
-		base_type = /obj/machinery/light/small
-	else
-		base_type = /obj/machinery/light
-
-	// Build cache key based on relevant properties
-	var/cache_key = "[base_type]-[status]-[start_with_cell]"
-	var/cached_typepath = GLOB.map_export_typepath_cache[cache_key]
-	if(!isnull(cached_typepath))
-		return cached_typepath
-
-	var/target_type
-
-	// Determine target type based on status
-	switch(status)
-		if(LIGHT_BROKEN)
-			// Broken lights should use the /broken subtype
-			target_type = text2path("[base_type]/broken")
-		if(LIGHT_EMPTY)
-			// Empty lights without cell should use /built subtype
-			if(!start_with_cell)
-				target_type = text2path("[base_type]/built")
-			else
-				// Empty with cell just uses base type
-				target_type = base_type
-		if(LIGHT_OK, LIGHT_BURNED)
-			// Working or burned out lights use the base type
-			target_type = base_type
-
-	// Validate the target type exists
-	if(!ispath(target_type))
-		GLOB.map_export_typepath_cache[cache_key] = FALSE
-		stack_trace("Failed to convert light to typepath: [target_type] (original: [type], status: [status])")
+	if(type != /obj/machinery/light)
 		return FALSE
 
-	GLOB.map_export_typepath_cache[cache_key] = target_type
-	return target_type
+	switch(status)
+		if(LIGHT_EMPTY)
+			return /obj/machinery/light/built
+		if(LIGHT_BROKEN)
+			return /obj/machinery/light/broken
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/burned
+	return FALSE
+
+/obj/machinery/light/built/get_save_substitute_type()
+	switch(status)
+		if(LIGHT_OK)
+			return /obj/machinery/light
+		if(LIGHT_BROKEN)
+			return /obj/machinery/light/broken
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/burned
+	return FALSE
+
+/obj/machinery/light/broken/get_save_substitute_type()
+	switch(status)
+		if(LIGHT_OK)
+			return /obj/machinery/light
+		if(LIGHT_EMPTY)
+			return /obj/machinery/light/built
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/burned
+	return FALSE
+
+/obj/machinery/light/small/get_save_substitute_type()
+	if(type != /obj/machinery/light/small)
+		return FALSE
+
+	switch(status)
+		if(LIGHT_EMPTY)
+			return /obj/machinery/light/small/built
+		if(LIGHT_BROKEN)
+			return /obj/machinery/light/small/broken
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/small/burned
+	return FALSE
+
+/obj/machinery/light/small/built/get_save_substitute_type()
+	switch(status)
+		if(LIGHT_OK)
+			return /obj/machinery/light/small
+		if(LIGHT_BROKEN)
+			return /obj/machinery/light/small/broken
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/small/burned
+	return FALSE
+
+/obj/machinery/light/small/broken/get_save_substitute_type()
+	switch(status)
+		if(LIGHT_OK)
+			return /obj/machinery/light/small
+		if(LIGHT_EMPTY)
+			return /obj/machinery/light/small/built
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/small/burned
+	return FALSE
+
+// Floor lights
+/obj/machinery/light/floor/get_save_substitute_type()
+	if(type != /obj/machinery/light/floor)
+		return FALSE
+
+	switch(status)
+		if(LIGHT_BROKEN)
+			return /obj/machinery/light/floor/broken
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/floor/burned
+		// LIGHT_EMPTY - no /built subtype exists yet for floor lights
+	return FALSE
+
+/obj/machinery/light/floor/broken/get_save_substitute_type()
+	switch(status)
+		if(LIGHT_OK)
+			return /obj/machinery/light/floor
+		if(LIGHT_BURNED)
+			return /obj/machinery/light/floor/burned
+		// LIGHT_EMPTY - no /built subtype exists yet for floor lights
+	return FALSE
 
 /obj/structure/light_construct/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, stage)
 	. += NAMEOF(src, fixture_type)
 
-	. -= NAMEOF(src, icon_state) // icon_state is built from stage
+	. -= NAMEOF(src, icon_state)
 	return .
 
 
