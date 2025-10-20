@@ -419,6 +419,10 @@
 		if("bulb")
 			new_light = new /obj/structure/light_construct/small(loc)
 			new_light.icon_state = "bulb-construct-stage[current_stage]"
+
+		if("floor bulb")
+			new_light = new /obj/structure/light_construct/floor(loc)
+			new_light.icon_state = "floor-construct-stage[current_stage]"
 	new_light.setDir(dir)
 	new_light.stage = current_stage
 	if(!disassembled)
@@ -744,7 +748,7 @@
 	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
-	fitting = "bulb"
+	fitting = "floor bulb"
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
@@ -754,6 +758,15 @@
 /obj/machinery/light/floor/broken
 	status = LIGHT_BROKEN
 	icon_state = "floor-broken"
+
+/obj/machinery/light/floor/burned
+	status = LIGHT_BURNED
+	icon_state = "floor-burned"
+
+/obj/machinery/light/floor/empty
+	icon_state = "floor-empty"
+	start_with_cell = FALSE
+	status = LIGHT_EMPTY
 
 /obj/machinery/light/floor/transport
 	name = "transport light"
