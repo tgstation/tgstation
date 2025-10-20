@@ -67,8 +67,10 @@
 /obj/proc/find_and_hang_on_wall()
 	if(istype(get_area(src), /area/shuttle))
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
-	var/turf/attachable_wall = get_step(src, dir)
+	var/turf/attachable_wall = loc //first attempt to locate a wall in our current turf
 	if(!iswallturf(attachable_wall))
-		return FALSE//Nothing to latch onto, or not the right thing.
+		attachable_wall = get_step(src, dir) //if no then attempt to locate it in our direction
+	if(!iswallturf(attachable_wall))
+		return FALSE //Nothing to latch onto, or not the right thing.
 	AddComponent(/datum/component/wall_mounted, attachable_wall)
 	return TRUE
