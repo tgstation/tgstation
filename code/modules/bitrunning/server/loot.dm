@@ -37,12 +37,15 @@
 
 /// Calculates total bonus from completing the domain without taking damage
 /obj/machinery/quantum_server/proc/get_nohit_bouns()
+	if(generated_domain.domain_flags & DOMAIN_NO_NOHIT_BONUS)
+		return 0
+
 	var/total = 0
 	for(var/datum/weakref/connection_ref in avatar_connection_refs)
 		var/datum/component/avatar_connection/connection = connection_ref.resolve()
 		if(isnull(connection))
 			continue
-		if(connection.nohit && !(generated_domain.domain_flags & DOMAIN_NO_NOHIT_BONUS))
+		if(connection.nohit)
 			total += nohit_bonus
 	return total
 
