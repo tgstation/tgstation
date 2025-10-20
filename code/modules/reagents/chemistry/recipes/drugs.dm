@@ -78,8 +78,8 @@
 	holder.clear_reagents()
 
 /datum/chemical_reaction/meth_crystal //Since the meth is a cooled pharmaceutical solvent, this precipitates it into a solid.
-	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/toxin/acid = 2)
 	results = list(/datum/reagent/consumable/ethanol = 1) //we don't care what this reagent is. We only need to record its purity
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/toxin/acid = 2)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
