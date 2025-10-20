@@ -1043,6 +1043,13 @@
 		'sound/items/rolling_pin/rolling_pin_rolling6.ogg',
 	)
 
+/datum/sound_effect/fire_mode_switch
+	key = SFX_FIRE_MODE_SWITCH
+	file_paths = list(
+		'sound/items/weapons/gun_mode_switch1.ogg',
+	)
+
+
 /datum/sound_effect/remote_mode_switch
 	key = SFX_REMOTE_MODE_SWITCH
 	file_paths = list(
