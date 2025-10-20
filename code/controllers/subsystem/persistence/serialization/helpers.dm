@@ -64,10 +64,14 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(!first_entry)
 			build_into += ", "
 
-		TGM_ENCODE(item)
+		// We must check build_from[item] before TGM_ENCODE(item) as the macro converts
+		// item typepaths/objects to strings, breaking associative list lookups
+		// (list[typepath] becomes list["string"]).
 		if(isnum(item) || !build_from[item])
+			TGM_ENCODE(item)
 			build_into += "[item]"
 		else
+			TGM_ENCODE(item)
 			TGM_ENCODE(build_from[item])
 			build_into += "[item] = [build_from[item]]"
 		first_entry = FALSE
