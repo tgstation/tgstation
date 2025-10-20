@@ -3,8 +3,8 @@
 	cost = BITRUNNER_COST_LOW
 	desc = "Betray your fellow man to achieve ultimate power."
 	difficulty = BITRUNNER_DIFFICULTY_LOW
-	help_text = "Heretics require sacrifice to fuel their dark rituals. Bring corpses back to the ritual site! \
-		Corpses of higher ranking crew members are more valuable to your cause."
+	help_text = "Heretics require sacrifice to fuel their dark rituals - bring corpses back to the ritual site! \
+		Corpses of higher ranking crew members are more valuable and may be holding useful equipment."
 	forced_outfit = /datum/outfit/virtual_domain_heretic
 	key = "heretic_hunt"
 	map_name = "heretic_hunt"
@@ -84,14 +84,11 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_REINFORCEMENTS_SAY = "Help me!",
-		BB_RANDOM_DEAGGRO_CHANCE = 0.001, // basically never buuut...
-		BB_RANDOM_AGGRO_CHANCE = 10, // valid him
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/capricious_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
@@ -101,7 +98,6 @@
 /datum/ai_controller/basic_controller/fake_crewman/ranged
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/capricious_retaliate,
 		/datum/ai_planning_subtree/call_reinforcements,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/maintain_distance,
@@ -114,8 +110,8 @@
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/call_reinforcements,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
@@ -123,8 +119,8 @@
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile/ranged
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/call_reinforcements,
+		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/maintain_distance,
 		/datum/ai_planning_subtree/ranged_skirmish,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
