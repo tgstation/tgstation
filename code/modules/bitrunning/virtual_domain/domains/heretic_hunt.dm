@@ -17,6 +17,9 @@
 /datum/lazy_template/virtual_domain/heretic_hunt/proc/on_body_spawned(mob/living/source, list/loot, gibbed)
 	SIGNAL_HANDLER
 
+	if(gibbed)
+		return
+
 	for(var/mob/living/carbon/human/body in loot)
 		RegisterSignal(body, COMSIG_MOVABLE_MOVED, PROC_REF(check_loc))
 		// let's be safe
@@ -64,6 +67,7 @@
 
 /datum/outfit/virtual_domain_heretic/pre_equip(mob/living/carbon/human/user, visuals_only)
 	ADD_TRAIT(user, TRAIT_ACT_AS_HERETIC, INNATE_TRAIT)
+	ADD_TRAIT(user, TRAIT_NO_TELEPORT, INNATE_TRAIT)
 	user.AddElement(/datum/element/leeching_walk)
 	user.faction |= FACTION_HERETIC
 

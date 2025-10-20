@@ -46,6 +46,7 @@
 		for(var/i in 1 to (spawn_loot[thing_to_spawn] || 1))
 			all_loot += create_loot(thing_to_spawn, loot_loc, target, gibbed, spread_px = spawn_loot.len * 3)
 
+	list_clear_nulls(all_loot) // in case of gibbed corpses
 	SEND_SIGNAL(target, COMSIG_LIVING_DROPPED_LOOT, all_loot, gibbed)
 
 /// Handles creating the loots
@@ -71,8 +72,8 @@
 	// if gibbed, dispose of the body
 	if(gibbed)
 		body.gib(DROP_ALL_REMAINS)
-	else
-		// otherwise continue with the rest of the damage types
-		body.setToxLoss(dead.getToxLoss())
-		body.setOxyLoss(dead.getOxyLoss())
+		return null
+	// otherwise continue with the rest of the damage types
+	body.setToxLoss(dead.getToxLoss())
+	body.setOxyLoss(dead.getOxyLoss())
 	return body
