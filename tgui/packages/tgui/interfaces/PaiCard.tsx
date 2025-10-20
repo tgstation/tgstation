@@ -206,9 +206,6 @@ const PaiOptions = (props) => {
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Holoform Range">
-          {emagged ? (
-            '∞'
-          ) : (
             <Stack>
               <Stack.Item>
                 <Button
@@ -226,7 +223,6 @@ const PaiOptions = (props) => {
                 />
               </Stack.Item>
             </Stack>
-          )}
         </LabeledList.Item>
         <LabeledList.Item label="Transmit">
           <Button
