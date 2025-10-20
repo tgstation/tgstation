@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Mime lighters no longer constantly runtime when lit"
+  - balance: "Cold lighters can't weld doors together"
