@@ -15,7 +15,6 @@
 		/datum/modular_mob_segment/hivebots_strong
 	)
 	reward_points = BITRUNNER_REWARD_LOW
-	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 // ID Trims
 /datum/id_trim/factory
