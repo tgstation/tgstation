@@ -257,14 +257,6 @@
 	crate_name = "\improper Type 5R laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/security/armory/laser_pistol
-	name = "Type 5C Laser Pistol Crate"
-	desc = "Contains six Type 5C laser pistols, developed by Nanotrasen. Easily portable, but without compromising on power."
-	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/gun/energy/laser/pistol = 6)
-	crate_name = "\improper Type 5C laser crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
-
 /datum/supply_pack/security/armory/disabler_smg
 	name = "Disabler SMG Crate"
 	desc = "Contains three disabler SMGs, capable of rapidly firing weak disabler beams."

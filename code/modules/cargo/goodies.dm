@@ -115,7 +115,7 @@
 /datum/supply_pack/goody/laser_pistol_single
 	name = "Type 5C Laser Pistol Single-Pack"
 	desc = "Contains one Type 5C laser pistol in an energy shoulder holster. Groovy."
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 2
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/storage/belt/holster/energy/laser_pistol)
 

@@ -33,6 +33,7 @@
 	desc = "The Type 5 Heat Delivery System Compact Variant, developed by Nanotrasen. The workhorse of Nanotrasen's security forces, but in a more portable size."
 	icon_state = "laser_pistol"
 	w_class = WEIGHT_CLASS_NORMAL
+	projectile_damage_multiplier = 0.8
 	cell_type = /obj/item/stock_parts/power_store/cell/laser_pistol
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/pistol)
 
@@ -41,7 +42,7 @@
 
 /obj/item/gun/energy/laser/assault
 	name = "\improper Type 5A assault laser rifle"
-	desc = "The Type 5 Heat Delivery System Assault Variant, developed by Nanotrasen. The workhorse of Nanotrasen's security forces and paramilityary organizations."
+	desc = "The Type 5 Heat Delivery System Assault Variant, developed by Nanotrasen. The workhorse of Nanotrasen's security forces and paramilitary organizations."
 	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "assault_laser"
 	inhand_icon_state = "assault_laser"
@@ -83,7 +84,7 @@
 /obj/item/gun/energy/laser/soul
 	name ="\improper Type 3 laser gun"
 	desc = "The Type 3 Heat Delivery System, developed by Nanotrasen. Quite possibly the most popular model of HDS ever made by Nanotrasen. They don't make them like they used too."
-	icon_state = "laseR_soulful"
+	icon_state = "laser_soulful"
 	inhand_icon_state = "laser_soulful"
 	ammo_x_offset = 1
 
@@ -95,6 +96,7 @@
 	fire_delay = 2
 	projectile_speed_multiplier = 1.5
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
+	weapon_weight = WEAPON_MEDIUM
 
 /obj/item/gun/energy/laser/donkbash
 	name = "\improper 'Donk-bashed' Type 5R laser carbine"

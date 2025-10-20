@@ -76,6 +76,7 @@
 /obj/effect/spawner/random/armory/assault_laser
 	name = "assault laser gun spawner"
 	icon_state = "laser_gun"
+	spawn_loot_count = 1
 	loot = list(/obj/item/gun/energy/laser/assault)
 
 /obj/effect/spawner/random/armory/pick_laser_loadout
@@ -86,7 +87,6 @@
 		/obj/effect/spawner/random/armory/laser_gun = 30,
 		/obj/effect/spawner/random/armory/laser_carbine = 30,
 		/obj/effect/spawner/random/armory/laser_pistol = 10,
-		/obj/effect/spawner/random/armory/assault_laser = 5,
 	)
 
 /obj/effect/spawner/random/armory/e_gun
