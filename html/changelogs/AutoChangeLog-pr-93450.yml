@@ -1,4 +1,0 @@
-author: "Phoenix4O4"
-delete-after: True
-changes:
-  - admin: "Restored missing controls in the Library Admin Console (filters, Raw/All toggle, Delete/Restore)."

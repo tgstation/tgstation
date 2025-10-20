@@ -608,3 +608,35 @@
   - qol: ' Added action buttons for toggling mech equipment'
   - rscadd: Broken Bulbs Scanner for Bluespace Light Replacer
   - qol: Search now filters materials/ingredients list in crafting menu
+2025-10-20:
+  ArchBTW:
+  - rscadd: adds super duper lube recipe (1 lube, 1 strange reagent, 1 banana juice)
+  Isratosh:
+  - admin: New admin/debug VV dropdown button to grant any mob all access.
+  - admin: Reverse by removing the simple_access component, or edit via its access
+      list variable.
+  MGOOOOOO:
+  - qol: Granibitaluri now offers painkilling as well as its normal effects.
+  Melbert:
+  - bugfix: Certain toys and items (cardboard cutouts, toy singulo) no longer randomize
+      their offset when dropped (as intended)
+  - qol: Closet animation has been updated slightly - when closing objects no longer
+      disappear instantly.
+  Phoenix4O4:
+  - admin: Restored missing controls in the Library Admin Console (filters, Raw/All
+      toggle, Delete/Restore).
+  SyncIt21:
+  - bugfix: restores custom vendor item interaction behaviors
+  - bugfix: crates ordered with department budgets have no malformed destination
+  grungussuss:
+  - sound: added more sounds for knives
+  - sound: added more sounds for pots
+  - sound: added more sounds for trays
+  - sound: added more sounds for cutlery
+  - sound: added more sounds for rolling pins
+  - sound: added new sfx for switching firing modes on guns
+  lelandkemble:
+  - bugfix: Folder renaming works again
+  - rscadd: Adds fake explosive cigarettes. Add flash powder to cigarettes to create.
+  tttruancy:
+  - balance: Plastic flaps now resist heat better
