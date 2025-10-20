@@ -215,12 +215,12 @@
 	 * If this breaks the CI, then something is wrong with crafting.
 	 */
 	unit_test_spawn_extras = list(
-		/obj/item/food/rootdough/egg,
-		/obj/item/food/grown/potato,
-		/obj/item/reagent_containers/condiment,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/beaker/slime,
-		/obj/item/reagent_containers/applicator/patch/synthflesh,
+		/obj/item/food/rootdough/egg = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/reagent_containers/condiment = 1,
+		/obj/item/reagent_containers/cup/bottle = 2,
+		/obj/item/reagent_containers/cup/beaker/slime = 1,
+		/obj/item/reagent_containers/applicator/patch/synthflesh = 1,
 	)
 	crafting_flags = CRAFT_CLEARS_REAGENTS
 
