@@ -44,14 +44,13 @@
  * INITIALIZATION
  */
 
-/obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/button/Initialize(mapload)
 	. = ..()
-	if(built)
-		setDir(ndir)
+	if(!mapload)
 		set_panel_open(TRUE)
 		update_appearance()
 
-	if(!built && !device && device_type)
+	if(mapload && !device && device_type)
 		device = new device_type(src)
 
 	check_access(null)
@@ -65,7 +64,8 @@
 			board.accesses = req_one_access
 
 	setup_device()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 	register_context()
 
 /obj/machinery/button/Destroy()

@@ -40,10 +40,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
-	if(!density)
-		find_and_hang_on_wall()
 	if(mapload)
 		PopulateContents()
+		find_and_hang_on_wall()
+
+/obj/structure/secure_safe/find_and_hang_on_wall()
+	if(!density)
+		return ..()
 
 /obj/structure/secure_safe/atom_deconstruct(disassembled)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
