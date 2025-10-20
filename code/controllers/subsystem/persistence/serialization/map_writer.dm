@@ -154,7 +154,7 @@
 					if(obj_blacklist[target_atom.type])
 						continue
 
-					var/typepath_replacement = target_atom.get_save_substitute_type()
+					var/typepath = target_atom.get_save_substitute_type() || target_atom.type
 
 					//====SAVING OBJECTS====
 					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
@@ -171,7 +171,7 @@
 						if(save_flag & SAVE_OBJECTS_VARIABLES)
 							metadata = generate_tgm_metadata(target_obj)
 
-						current_header += "[empty ? "" : ",\n"][target_obj.type][metadata]"
+						current_header += "[empty ? "" : ",\n"][typepath][metadata]"
 						empty = FALSE
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
