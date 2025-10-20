@@ -16,8 +16,16 @@
 
 	rewards_base += (length(spawned_threat_refs) * 2)
 
-	for(var/index in 2 to length(avatar_connection_refs))
-		rewards_base += multiplayer_bonus
+	var/multiplayer = FALSE
+	for(var/i in 1 to length(avatar_connection_refs))
+		var/datum/component/avatar_connection/connection = avatar_connection_refs[i]?.resolve()
+		if(isnull(connection))
+			continue
+		if(multiplayer)
+			rewards_base += multiplayer_bonus
+		if(connection.nohit && !(generated_domain.domain_flags & DOMAIN_NO_NOHIT_BONUS))
+			rewards_base += nohit_bonus
+		multiplayer = TRUE
 
 	return rewards_base
 

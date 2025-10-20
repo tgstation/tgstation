@@ -9,3 +9,4 @@
 	key = "psyker_shuffle"
 	map_name = "psyker_shuffle"
 	reward_points = BITRUNNER_REWARD_HIGH
+	domain_flags = DOMAIN_NO_NOHIT_BONUS

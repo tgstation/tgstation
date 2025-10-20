@@ -13,8 +13,6 @@
 	var/filename = "virtual_domain.dmm"
 	/// The start time of the map. Used to calculate time taken
 	var/start_time
-	/// This map is specifically for unit tests. Shouldn't display in game
-	var/test_only = FALSE
 
 	/**
 	 * Generic settings / UI
@@ -38,7 +36,7 @@
 	 */
 
 	/// Any restrictions this domain has on what external sources can load in
-	var/external_load_flags = NONE
+	var/domain_flags = NONE
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
 
