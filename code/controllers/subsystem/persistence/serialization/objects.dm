@@ -584,6 +584,12 @@
 
 /// P O W E R ///
 
+// these spawn underneath apc's that create them in Initilization()
+/obj/machinery/power/terminal/is_saveable()
+	if(locate(/obj/machinery/power/apc) in loc)
+		return FALSE
+	. = ..()
+
 /obj/machinery/power/apc/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, opened)
