@@ -783,7 +783,6 @@
 	stun_armour_penetration = 40
 	throw_stun_chance = 60
 	convertible = FALSE
-	tip_changes_color = FALSE
 
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list(
