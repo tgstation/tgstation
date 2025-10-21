@@ -264,11 +264,6 @@
 		balloon_alert(user, "close panel!")
 		return FALSE
 
-	//Make sure are close enough for a valid connection
-	if(possible_connector.loc != get_turf(src))
-		balloon_alert(user, "not close enough!")
-		return FALSE
-
 	//Perform the connection
 	connected_port = possible_connector
 	connected_port.connect_smes(src)
