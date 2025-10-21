@@ -640,3 +640,28 @@
   - rscadd: Adds fake explosive cigarettes. Add flash powder to cigarettes to create.
   tttruancy:
   - balance: Plastic flaps now resist heat better
+2025-10-21:
+  Aliceee2ch:
+  - spellcheck: Minor grammar fix for extinguishers
+  Melbert:
+  - bugfix: Rough Iron Walls are make-able
+  - bugfix: Clowns have regained their innocence towards death
+  - rscadd: Cursed / Unlucky players have an increased chance of drawing bad tarot
+      cards
+  ell_good:
+  - image: Resprites the voidwalker hud elements
+  grungussuss:
+  - sound: added new sounds for door remotes
+  lelandkemble:
+  - bugfix: Mime lighters no longer constantly runtime when lit
+  - balance: Cold lighters can't weld doors together
+  timothymtorres:
+  - rscadd: Secure safes are now fire-proof, conduct electricity, are resistant to
+      light explosions, and have armor/health that is similar to airlocks.
+  - rscadd: A message will now appear in your chat log when you set the PIN code for
+      a secure briefcase or secure safe in case people forget.
+  - rscadd: Vaults are now climbable, except floor ones.
+  - rscadd: Add crafting recipes for secure safe and vaults. When vaults are crafted,
+      they spawn open and can have their locking mechanism set via a wrench.
+  - bugfix: Secure safes will now transfer their state (locked, PIN code, emagged,
+      etc.) when deconstructed from a wall and vice-versa.
