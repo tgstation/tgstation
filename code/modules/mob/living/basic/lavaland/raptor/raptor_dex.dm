@@ -20,11 +20,12 @@
 /obj/item/raptor_dex/ui_static_data(mob/user)
 	var/list/data = list()
 	var/mob/living/basic/raptor/my_raptor = raptor.resolve()
+	var/datum/movespeed_modifier/intent_mod = my_raptor.get_move_intent_slowdown()
 	data["raptor_image"] = icon2base64(icon(icon = my_raptor.icon, icon_state = my_raptor.icon_state, dir = SOUTH, frame = 1))
 	data["raptor_attack"] = my_raptor.melee_damage_lower
 	data["raptor_health"] = my_raptor.health
 	data["raptor_max_health"] = my_raptor.maxHealth
-	data["raptor_speed"] = my_raptor.speed
+	data["raptor_speed"] = my_raptor.speed + intent_mod?.multiplicative_slowdown
 	data["raptor_color"] = my_raptor.name
 	data["raptor_gender"] = my_raptor.gender
 	data["raptor_description"] = my_raptor.raptor_color.description
