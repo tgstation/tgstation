@@ -67,13 +67,14 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		// We must check build_from[item] before TGM_ENCODE(item) as the macro converts
 		// item typepaths/objects to strings, breaking associative list lookups
 		// (list[typepath] becomes list["string"]).
+		var/encoded_item = item
+		TGM_ENCODE(encoded_item)
 		if(isnum(item) || !build_from[item])
-			TGM_ENCODE(item)
-			build_into += "[item]"
+			build_into += "[encoded_item]"
 		else
-			TGM_ENCODE(item)
-			TGM_ENCODE(build_from[item])
-			build_into += "[item] = [build_from[item]]"
+			var/encoded_value = build_from[item]
+			TGM_ENCODE(encoded_value)
+			build_into += "[encoded_item] = [encoded_value]"
 		first_entry = FALSE
 	build_into += ")"
 	return build_into.Join("")
