@@ -1042,3 +1042,26 @@
 		'sound/items/rolling_pin/rolling_pin_rolling5.ogg',
 		'sound/items/rolling_pin/rolling_pin_rolling6.ogg',
 	)
+
+/datum/sound_effect/fire_mode_switch
+	key = SFX_FIRE_MODE_SWITCH
+	file_paths = list(
+		'sound/items/weapons/gun_mode_switch1.ogg',
+	)
+
+
+/datum/sound_effect/remote_mode_switch
+	key = SFX_REMOTE_MODE_SWITCH
+	file_paths = list(
+		'sound/items/door_remote/door_remote_switch1.ogg',
+		'sound/items/door_remote/door_remote_switch2.ogg',
+		'sound/items/door_remote/door_remote_switch3.ogg',
+	)
+
+/datum/sound_effect/remote_action
+	key = SFX_REMOTE_ACTION
+	file_paths = list(
+		'sound/items/door_remote/door_remote_action1.ogg',
+		'sound/items/door_remote/door_remote_action2.ogg',
+	)
+
