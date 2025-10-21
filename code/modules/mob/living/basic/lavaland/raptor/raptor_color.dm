@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	/// RaptorDex description for the raptor
 	var/description = "Report this!"
 	/// Raptor's health
-	var/health = 200
+	var/health = 220
 	/// Raptor's speed
 	var/speed = 0.5
 	// Minimal and maximal damage for the raptor
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /datum/raptor_color/purple
 	color = "purple"
 	description = "A small, nimble breed, these raptors have been bred as travel companions rather than mounts, capable of storing the owner's possessions and helping them escape from danger unscathed."
-	health = 120 // smol
+	health = 140 // smol
 	rideable_component = /datum/component/riding/creature/raptor/small
 	guaranteed_crossbreeds = list(
 		/datum/raptor_color/green = /datum/raptor_color/white,
