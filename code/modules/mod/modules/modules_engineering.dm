@@ -26,16 +26,35 @@
 		head_cover.flash_protect = initial(head_cover.flash_protect)
 
 /obj/item/mod/module/welding/syndicate
+	name = "MODsuit flash-protected optical suite"
 	complexity = 0
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/welding, /obj/item/mod/module/welding/syndicate, /obj/item/mod/module/stealth/wraith)
-	overlay_state_inactive = "module_armorbooster_on"
+	overlay_state_inactive = "module_armorbooster_off"
 	use_mod_colors = TRUE
 	mask_worn_overlay = TRUE
 
 /obj/item/mod/module/welding/syndicate/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	if(!mod.wearer || !mod.wearer.combat_mode)
+		overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	else
+		overlay_state_inactive = "module_armorbooster_on-[mod.skin]"
 	return ..()
+
+
+/obj/item/mod/module/welding/syndicate/on_part_activation()
+	. = ..()
+	RegisterSignal(mod.wearer, COMSIG_COMBAT_MODE_TOGGLED, PROC_REF(on_combat_mode_toggle))
+
+/obj/item/mod/module/welding/syndicate/on_part_deactivation(deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod.wearer, COMSIG_COMBAT_MODE_TOGGLED)
+
+/// Changes which overlay state we're using depending on combat mode status.
+/obj/item/mod/module/welding/syndicate/proc/on_combat_mode_toggle(mob/living/carbon/human/toggler)
+	SIGNAL_HANDLER
+	playsound(src, 'sound/vehicles/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	update_clothing_slots()
 
 ///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray

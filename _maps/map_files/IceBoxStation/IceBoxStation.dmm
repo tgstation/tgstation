@@ -10019,6 +10019,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/red_alert_access,
 /turf/open/floor/iron/smooth,
 /area/station/security/brig/upper)
 "cJb" = (
@@ -50460,6 +50461,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/red_alert_access,
 /turf/open/floor/iron/smooth,
 /area/station/security/processing)
 "omg" = (
@@ -78520,6 +78522,7 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/machinery/light/cold/directional/north,
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "wjL" = (

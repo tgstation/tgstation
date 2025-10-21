@@ -30,7 +30,7 @@
 		return .
 
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
 	if(count_cards() == 0)
@@ -131,12 +131,17 @@
 
 	var/list/cards = fetch_card_atoms()
 
-	card = card || cards[1] //draw the card on top
+	card ||= pick_card(user, cards)
 	cards -= card
 
 	update_appearance()
 	playsound(src, 'sound/items/cards/cardflip.ogg', 50, TRUE)
 	return card
+
+/// Picks what card the user draws from the deck
+/obj/item/toy/cards/proc/pick_card(mob/living/user, list/obj/item/toy/singlecard/cards)
+	// By default just pick the top card
+	return cards[1]
 
 /// Returns the cards in this deck.
 /// Lazily generates the cards if they haven't already been made.

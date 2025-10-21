@@ -79,7 +79,6 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/toiletbong/wrench_act(mob/living/user, obj/item/tool)
-	..()
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 

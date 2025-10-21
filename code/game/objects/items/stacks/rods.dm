@@ -42,6 +42,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	pickup_sound = 'sound/items/handling/materials/iron_rod_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
 	sound_vary = TRUE
+	usable_for_construction = TRUE
 
 /datum/embedding/rods
 	embed_chance = 50

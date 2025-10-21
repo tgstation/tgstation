@@ -85,7 +85,7 @@
 
 /obj/structure/plasticflaps/proc/check_melt(turf/source, datum/gas_mixture/air, temperature)
 	SIGNAL_HANDLER
-	if(temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 1.5)
 		return
 	if(!COOLDOWN_FINISHED(src, burn_damage_cd))
 		return

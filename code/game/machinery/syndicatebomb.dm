@@ -70,6 +70,12 @@
 	if(!active)
 		return PROCESS_KILL
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			defuse()
+			return
+
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
 		switch(seconds_remaining())
@@ -448,7 +454,8 @@
 
 /obj/item/bombcore/badmin/summon/detonate()
 	var/obj/machinery/syndicatebomb/B = loc
-	spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE, cardinals_only = FALSE)
+	for(var/atom/spawned as anything in spawn_and_random_walk(summon_path, src, amt_summon, walk_chance=50, admin_spawn=TRUE, cardinals_only = FALSE))
+		ADD_TRAIT(spawned, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 	qdel(B)
 	qdel(src)
 

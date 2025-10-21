@@ -4588,6 +4588,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/red_alert_access,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "bDy" = (
@@ -53739,6 +53740,7 @@
 /obj/item/wheelchair{
 	pixel_y = 3
 	},
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/west,
 /turf/open/floor/iron/white/textured,
 /area/station/medical/paramedic)
 "stw" = (

@@ -229,17 +229,18 @@
 	if(!flushing && cover_open)
 		. += "[base_icon_state]-water"
 
-/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
-	for(var/obj/toilet_item in cistern_items)
+/obj/structure/toilet/dump_contents()
+	for(var/obj/toilet_item in (cistern_items + fishes))
 		toilet_item.forceMove(drop_location())
+
+/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
+	dump_contents()
 	for(var/datum/material/material as anything in custom_materials)
 		var/sheets_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1)
 		if(sheets_to_spawn > 0 && material.sheet_type)
 			new material.sheet_type(loc, sheets_to_spawn)
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
-	if(stuck_item)
-		stuck_item.forceMove(drop_location())
 
 /obj/structure/toilet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
