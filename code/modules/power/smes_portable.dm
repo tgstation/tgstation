@@ -216,9 +216,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
-	if(!connect_port(possible_connector, user))
+	if(!wrench.use_tool(src, user, 4 SECONDS, extra_checks = CALLBACK(src, PROC_REF(connect_port), possible_connector, user, TRUE)))
 		return ITEM_INTERACT_BLOCKING
-	if(!wrench.use_tool(src, user, 4 SECONDS))
+	if(!connect_port(possible_connector, user))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message( \
 		"[user] connects [src].", \
@@ -248,8 +248,9 @@
  * Arguments
  * * obj/machinery/power/smes/connector/possible_connector - the connector we are trying to link with
  * * mob/living/user - the mob trying to connect the port
+ * * check_only - don't connect but check if we can
  */
-/obj/machinery/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector, mob/living/user)
+/obj/machinery/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector, mob/living/user, check_only = FALSE)
 	PRIVATE_PROC(TRUE)
 
 	if(QDELETED(possible_connector))
@@ -264,6 +265,8 @@
 		return FALSE
 
 	//Perform the connection
+	if(check_only)
+		return TRUE
 	connected_port = possible_connector
 	connected_port.connect_smes(src)
 	set_anchored(TRUE)
