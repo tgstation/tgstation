@@ -1,26 +1,21 @@
-/obj/item/raptor_dex
-	name = "RaptorDex"
-	desc = "A device used to analyze lavaland raptors!"
-	icon = 'icons/obj/devices/scanner.dmi'
-	icon_state = "raptor_dex"
-	item_flags = NOBLUDGEON
+/datum/computer_file/program/raptordex
+	filename = "raptordex"
+	filedesc = "RaptorDex"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "bountyboard"
+	extended_desc = "Scan and analyze raptor genes."
+	size = 2
+	tgui_id = "RaptorDex"
+	program_icon = "crow"
+	can_run_on_flags = PROGRAM_PDA
 	/// Raptor scan data we have stored
 	var/list/scan_data = list("raptor_scan" = FALSE)
 
-/obj/item/raptor_dex/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "RaptorDex")
-		ui.open()
+/datum/computer_file/program/raptordex/tap(atom/tapped_atom, mob/living/user, list/modifiers)
+	if(!istype(tapped_atom, /mob/living/basic/raptor))
+		return FALSE
 
-/obj/item/raptor_dex/ui_data(mob/user)
-	return scan_data
-
-/obj/item/raptor_dex/interact_with_atom(atom/attacked_atom, mob/living/user)
-	if(!istype(attacked_atom, /mob/living/basic/raptor))
-		return NONE
-
-	var/mob/living/basic/raptor/my_raptor = attacked_atom
+	var/mob/living/basic/raptor/my_raptor = tapped_atom
 	var/datum/movespeed_modifier/intent_mod = my_raptor.get_move_intent_slowdown()
 
 	scan_data = list()
@@ -58,7 +53,9 @@
 		for(var/index in inherit.personality_traits)
 			scan_data["inherited_traits"] += GLOB.raptor_inherit_traits[index]
 
-	playsound(src, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
-	balloon_alert(my_raptor, "scanned")
-	ui_interact(user)
-	return ITEM_INTERACT_SUCCESS
+	playsound(computer, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
+	my_raptor.balloon_alert(user, "scanned")
+	return TRUE
+
+/datum/computer_file/program/raptordex/ui_data(mob/user)
+	return scan_data

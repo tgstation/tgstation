@@ -1,15 +1,17 @@
 import {
   Image,
   LabeledList,
+  Modal,
   ProgressBar,
   Section,
   Stack,
 } from 'tgui-core/components';
-
+import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
+  raptor_scan: boolean;
   raptor_attack: number;
   raptor_health: number;
   raptor_max_health: number;
@@ -35,6 +37,7 @@ type Data = {
 export const RaptorDex = (props) => {
   const { act, data } = useBackend<Data>();
   const {
+    raptor_scan,
     raptor_attack,
     raptor_health,
     raptor_max_health,
@@ -56,27 +59,37 @@ export const RaptorDex = (props) => {
     raptor_description,
     raptor_color,
   } = data;
+
+  if (!raptor_scan) {
+    return (
+      <Window title="Raptor Data" width={625} height={420} theme="hackerman">
+        <Window.Content>
+          <Modal textAlign="center">No scan data present.</Modal>
+        </Window.Content>
+      </Window>
+    );
+  }
+
   return (
-    <Window title="Raptor Data" width={625} height={370} theme="hackerman">
+    <Window title="Raptor Data" width={770} height={370} theme="hackerman">
       <Window.Content>
         <Stack>
+          {' '}
           <Stack.Item width="33%">
-            <Section
-              textAlign="center"
-              title={raptor_color
-                .split(' ')
-                .map((x: string) => x[0].toUpperCase() + x.substring(1))}
-            >
+            <Section textAlign="center" title={capitalizeAll(raptor_color)}>
               <Image
                 src={`data:image/jpeg;base64,${raptor_image}`}
-                height="160px"
-                width="160px"
+                height="128px"
+                width="224px"
                 style={{
                   verticalAlign: 'middle',
                   borderRadius: '1em',
                   border: '1px solid green',
                 }}
               />
+            </Section>
+            <Section fill title="Description">
+              {raptor_description}
             </Section>
           </Stack.Item>
           <Stack.Item width="33%" textAlign="center">
@@ -92,7 +105,7 @@ export const RaptorDex = (props) => {
                   {Math.round(10 / Math.max(raptor_speed, 0.5))}
                 </LabeledList.Item>
                 <LabeledList.Item label="Gender">
-                  {raptor_gender}
+                  {capitalizeFirst(raptor_gender)}
                 </LabeledList.Item>
               </LabeledList>
             </Section>
@@ -159,7 +172,7 @@ export const RaptorDex = (props) => {
           <Stack.Item width="33%">
             <Section textAlign="center" title="Friendship bond">
               <Image
-                mt={-7}
+                mt={-9.5}
                 src={`data:image/jpeg;base64,${raptor_happiness}`}
                 height="72px"
                 width="72px"
@@ -174,9 +187,6 @@ export const RaptorDex = (props) => {
             </Section>
           </Stack.Item>
         </Stack>
-        <Section fill title="Desc">
-          {raptor_description}
-        </Section>
       </Window.Content>
     </Window>
   );

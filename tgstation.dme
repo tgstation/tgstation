@@ -5650,6 +5650,7 @@
 #include "code\modules\modular_computers\file_system\programs\portrait_printer.dm"
 #include "code\modules\modular_computers\file_system\programs\powermonitor.dm"
 #include "code\modules\modular_computers\file_system\programs\radar.dm"
+#include "code\modules\modular_computers\file_system\programs\raptordex.dm"
 #include "code\modules\modular_computers\file_system\programs\records.dm"
 #include "code\modules\modular_computers\file_system\programs\restock_tracker.dm"
 #include "code\modules\modular_computers\file_system\programs\robocontrol.dm"
