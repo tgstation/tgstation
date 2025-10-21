@@ -204,7 +204,6 @@
 // adapted from portable atmos connection code
 /obj/machinery/smesbank/wrench_act(mob/living/user, obj/item/wrench)
 	if(connected_port)
-		wrench.play_tool_sound(src)
 		if(!wrench.use_tool(src, user, 8 SECONDS))
 			return ITEM_INTERACT_BLOCKING
 		user.visible_message( \
@@ -219,7 +218,6 @@
 	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
 	if(!connect_port(possible_connector, user))
 		return ITEM_INTERACT_BLOCKING
-	wrench.play_tool_sound(src)
 	if(!wrench.use_tool(src, user, 4 SECONDS))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message( \
