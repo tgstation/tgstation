@@ -241,7 +241,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smesbank/crowbar_act(mob/living/user, obj/item/tool)
-	. = NONE
 	if(connected_port)
 		balloon_alert(user, "disconnect from [connected_port] first!")
 		return ITEM_INTERACT_FAILURE
