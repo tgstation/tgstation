@@ -109,29 +109,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/element/change_force_on_death,\
 		move_resist = MOVE_RESIST_DEFAULT,\
 	)
-
-	var/static/list/display_emote = list(
-		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Kweh!", "Bwark!"),
-		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps its wings!", "pecks at the ground!"),
-		BB_EMOTE_SOUND = list(
-			'sound/mobs/non-humanoids/raptor/raptor_1.ogg',
-			'sound/mobs/non-humanoids/raptor/raptor_2.ogg',
-			'sound/mobs/non-humanoids/raptor/raptor_3.ogg',
-			'sound/mobs/non-humanoids/raptor/raptor_4.ogg',
-			'sound/mobs/non-humanoids/raptor/raptor_5.ogg',
-		),
-		BB_SPEAK_CHANCE = 2,
-	)
-	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
-
-	var/static/list/preferred_foods = typecacheof(list(
-		/obj/item/food/meat,
-		/obj/item/food/grown/ash_flora,
-	)) - typecacheof(list( // Don't seek out toxic foods
-		/obj/item/food/meat/slab/spider,
-		/obj/item/food/meat/slab/xeno,
-	))
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, preferred_foods)
 	RegisterSignal(src, COMSIG_MOB_ATE, PROC_REF(on_eat))
 	RegisterSignal(src, COMSIG_MOB_PRE_EAT, PROC_REF(on_pre_eat))
 
@@ -434,8 +411,14 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	if (new_stage == RAPTOR_BABY)
 		collar_state = null
+		var/list/friends = ai_controller?.blackboard[BB_FRIENDS_LIST]
+		if (friends)
+			friends = friends.Copy()
 		QDEL_NULL(ai_controller)
 		ai_controller = new /datum/ai_controller/basic_controller/baby_raptor(src)
+		for (var/old_friend in friends)
+			ai_controller.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, old_friend)
+		update_blackboard()
 		held_w_class = WEIGHT_CLASS_SMALL
 		worn_slot_flags = NONE
 		holder?.update_weight_class(held_w_class)
@@ -443,15 +426,17 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		collar_state = base_icon_state
 		AddElement(/datum/element/wears_collar, collar_icon = 'icons/mob/simple/lavaland/raptor_big.dmi', collar_icon_state = "[collar_state]_")
 		if (prev_stage == RAPTOR_BABY)
+			var/list/friends = ai_controller?.blackboard[BB_FRIENDS_LIST]
+			if (friends)
+				friends = friends.Copy()
 			QDEL_NULL(ai_controller)
 			ai_controller = new raptor_color.ai_controller(src)
+			for (var/old_friend in friends)
+				ai_controller.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, old_friend)
+			update_blackboard()
 		held_w_class = WEIGHT_CLASS_BULKY
 		worn_slot_flags = ITEM_SLOT_BACK
 		holder?.update_weight_class(held_w_class)
-
-	for(var/trait in GLOB.raptor_inherit_traits)
-		var/should_inherit = (trait in inherited_stats.personality_traits)
-		ai_controller?.set_blackboard_key(trait, should_inherit)
 
 	// And finish the setup on our color's side
 	switch (new_stage)
@@ -462,6 +447,36 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		if (RAPTOR_ADULT)
 			raptor_color.setup_adult(src)
 	return TRUE
+
+/mob/living/basic/raptor/proc/update_blackboard()
+	var/static/list/display_emote = list(
+		BB_EMOTE_SAY = list("Chirp chirp chirp!", "Kweh!", "Bwark!"),
+		BB_EMOTE_SEE = list("shakes its feathers!", "stretches!", "flaps its wings!", "pecks at the ground!"),
+		BB_EMOTE_SOUND = list(
+			'sound/mobs/non-humanoids/raptor/raptor_1.ogg',
+			'sound/mobs/non-humanoids/raptor/raptor_2.ogg',
+			'sound/mobs/non-humanoids/raptor/raptor_3.ogg',
+			'sound/mobs/non-humanoids/raptor/raptor_4.ogg',
+			'sound/mobs/non-humanoids/raptor/raptor_5.ogg',
+		),
+		BB_SPEAK_CHANCE = 2,
+	)
+
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
+
+	var/static/list/preferred_foods = typecacheof(list(
+		/obj/item/food/meat,
+		/obj/item/food/grown/ash_flora,
+	)) - typecacheof(list( // Don't seek out toxic foods
+		/obj/item/food/meat/slab/spider,
+		/obj/item/food/meat/slab/xeno,
+	))
+
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, preferred_foods)
+
+	for(var/trait in GLOB.raptor_inherit_traits)
+		var/should_inherit = (trait in inherited_stats.personality_traits)
+		ai_controller?.set_blackboard_key(trait, should_inherit)
 
 // Raptor types for mappers to use
 

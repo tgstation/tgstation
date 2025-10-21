@@ -170,6 +170,11 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /obj/item/mob_holder/purple_raptor/Initialize(mapload, mob/living/held_mob, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags)
 	. = ..()
+
+	var/mob/living/basic/raptor/raptor = held_mob
+	if (raptor.growth_stage == RAPTOR_BABY)
+		return
+
 	// Create a mirror storage for our raptor when picked up to handle interactions
 	var/datum/storage/raptor_storage = create_storage(
 		max_total_storage = held_mob.atom_storage.max_total_storage,
@@ -178,6 +183,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	)
 	raptor_storage.set_real_location(held_mob)
 	raptor_storage.insert_on_attack = TRUE
+
+	if (raptor.growth_stage != RAPTOR_ADULT)
+		return
 
 	flight_action = new(src)
 
@@ -201,7 +209,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /obj/item/mob_holder/purple_raptor/equipped(mob/user, slot, initial)
 	. = ..()
-	if ((slot & ITEM_SLOT_BACK) && ishuman(user))
+	if ((slot & ITEM_SLOT_BACK) && ishuman(user) && flight_action)
 		flight_action.Grant(user)
 
 /obj/item/mob_holder/purple_raptor/dropped(mob/user, silent)
@@ -409,7 +417,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	redirect_shots = FALSE
 	rideable_component = /datum/component/riding/creature/raptor/combat
 	ai_controller = /datum/ai_controller/basic_controller/raptor/aggressive
-	spawn_chance = 1 // 1 in 200 chance without modifiers
+	spawn_chance = 1 // 1 in 150 chance without modifiers
 
 /datum/raptor_color/black/setup_raptor(mob/living/basic/raptor/raptor)
 	. = ..()
