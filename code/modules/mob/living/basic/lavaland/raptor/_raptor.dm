@@ -91,7 +91,6 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	if (growth_stage == RAPTOR_ADULT)
 		raptor_color.setup_adult(src)
-		update_blackboard()
 	else
 		change_growth_stage(growth_stage, RAPTOR_ADULT)
 
@@ -119,6 +118,10 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	if (can_breed)
 		add_breeding_component()
+
+	// Babies handle it in their change_growth_stage
+	if (growth_stage != RAPTOR_BABY)
+		update_blackboard()
 
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
