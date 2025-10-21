@@ -11,7 +11,8 @@
 /datum/quirk/item_quirk/carbon_based/add(client/client_source)
 	var/mob/living/carbon/carbon_holder = quirk_holder
 	var/obj/item/organ/brain/quirk_holder_brain = carbon_holder.get_organ_slot(ORGAN_SLOT_BRAIN)
-	quirk_holder_brain.no_mmi = TRUE
+	if(quirk_holder_brain)
+		quirk_holder_brain.no_mmi = TRUE
 
 /datum/quirk/item_quirk/carbon_based/add_unique(client/client_source)
 	var/obj/item/clothing/accessory/dogtag/borg_not_ready/dogtag = new(quirk_holder)
@@ -20,4 +21,5 @@
 /datum/quirk/item_quirk/carbon_based/remove()
 	var/mob/living/carbon/carbon_holder = quirk_holder
 	var/obj/item/organ/brain/quirk_holder_brain = carbon_holder.get_organ_slot(ORGAN_SLOT_BRAIN)
-	quirk_holder_brain.no_mmi = null
+	if(quirk_holder_brain)
+		quirk_holder_brain.no_mmi = null
