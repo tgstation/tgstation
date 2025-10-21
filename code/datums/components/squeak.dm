@@ -75,10 +75,17 @@
 	SIGNAL_HANDLER
 
 	if(prob(squeak_chance))
+		// Troutstation edit for variable frequency
+		// see, when you use vary in playsound, it gets a random frequency, but if you specify a frequency, it overrides this
+		// therefore the only way to have both variable frequencies and funy pitch change stuff is to just calculate the frequency ourselves
+		// this feels like a hack because it IS a hack
+		var/rand_frequency = get_rand_frequency()
+		var/final_frequency = frequency * rand_frequency
+		// Troutstation edit end
 		if(!override_squeak_sounds)
-			playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, frequency = frequency) // Troutstation edit (added frequency)
+			playsound(parent, pick_weight(default_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, frequency = final_frequency) // Troutstation edit (added frequency)
 		else
-			playsound(parent, pick_weight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, frequency = frequency) // Troutstation edit (added frequency)
+			playsound(parent, pick_weight(override_squeak_sounds), volume, TRUE, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance, frequency = final_frequency) // Troutstation edit (added frequency)
 
 /datum/component/squeak/proc/step_squeak(obj/item/clothing/source)
 	SIGNAL_HANDLER
