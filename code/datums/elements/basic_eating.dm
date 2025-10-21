@@ -110,7 +110,7 @@
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target][healed ? ", restoring some health" : ""]."))
 	else if (to_damage > 0 && damage_type)
 		var/damaged = eater.apply_damage(to_damage, damage_type)
-		eater.visible_message(span_notice("[eater] [eat_verb]s [target][damaged ? ", and seems to hurt itself" : ""]."), span_notice("You [eat_verb] [target][damaged ? ", hurting yourself in the process" : ""]."))
+		eater.visible_message(span_notice("[eater] [eat_verb]s [target][damaged ? ", and seems to hurt [eater.p_themselves()]!" : "."]"), span_notice("You [eat_verb] [target][damaged ? ", hurting yourself in the process" : ""]."))
 	else
 		eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target]."))
 
