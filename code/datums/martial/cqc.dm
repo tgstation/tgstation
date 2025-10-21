@@ -12,8 +12,8 @@
 	display_combos = TRUE
 	/// Weakref to a mob we're currently restraining (with grab-grab combo)
 	VAR_PRIVATE/datum/weakref/restraining_mob
-	/// Probability of successfully blocking attacks while on throw mode
-	var/block_chance = 75
+	/// Stamina cost for blocking when in throw mode
+	var/block_stamina = 30
 
 /datum/martial_art/cqc/activate_style(mob/living/new_holder)
 	. = ..()
@@ -50,7 +50,7 @@
 		return NONE
 	if(attack_type == PROJECTILE_ATTACK)
 		return NONE
-	if(!prob(block_chance))
+	if(100 - cqc_user.getStaminaLoss() <= block_stamina)
 		return NONE
 
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
@@ -59,6 +59,7 @@
 			span_danger("[cqc_user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
 			span_userdanger("You block [attack_text]!"),
 		)
+		cqc_user.adjustStaminaLoss(30)
 		attacker.Stun(4 SECONDS)
 	else
 		cqc_user.visible_message(
@@ -375,7 +376,7 @@
 	to_chat(usr, "[span_notice("Pressure")]: Shove Grab. Decent stamina damage.")
 	to_chat(usr, "[span_notice("Consecutive CQC")]: Shove Shove Punch. Mainly offensive move, huge damage and decent stamina damage.")
 
-	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you have a chance to block and sometimes even counter attacks done to you.</i></b>")
+	to_chat(usr, "<b><i>In addition, by having your throw mode on when being attacked, you enter an active defense mode where you block and sometimes even counter attacks done to you at the cost of stamina.</i></b>")
 
 ///Subtype of CQC. Only used for the chef.
 /datum/martial_art/cqc/under_siege
