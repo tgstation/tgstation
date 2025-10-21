@@ -29,7 +29,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/anteater,
 	)
 
-	var/base_speed = 2.25
+	var/base_speed = 2.0
 	var/speed_multiplier_multiplier = 0.5 // i am good at names
 
 /datum/species/anteater/on_species_gain(mob/living/carbon/human/human, datum/species/old_species, pref_load, regenerate_icons)
