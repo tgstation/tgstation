@@ -1,5 +1,5 @@
 /obj/machinery/button/silent_alarm
-	name = "Silent alarm"
+	name = "\improper Silent alarm"
 	desc = "A small button that silently notifies security when pressed"
 	silent = TRUE
 	device_type = /obj/item/assembly/silent_alarm
@@ -10,7 +10,7 @@
 	icon_state = "control"
 	COOLDOWN_DECLARE(announce_cooldown)
 	assembly_flags = ASSEMBLY_SILENCE_BUTTON | ASSEMBLY_NO_DUPLICATES
-	var/list/broadcast_channels = list(RADIO_CHANNEL_SECURITY)
+	var/static/list/broadcast_channels = list(RADIO_CHANNEL_SECURITY)
 
 /obj/item/assembly/silent_alarm/activate(mob/user)
 	if(is_within_radio_jammer_range(src))
@@ -30,18 +30,4 @@
 		"LOCATION" = "will be replaced with the location of the triggered alarm",
 	)
 
-/obj/machinery/button/silent_alarm/north
-	table_bound = TRUE
-	dir = NORTH
-
-/obj/machinery/button/silent_alarm/south
-	table_bound = TRUE
-	dir = SOUTH
-
-/obj/machinery/button/silent_alarm/east
-	table_bound = TRUE
-	dir = EAST
-
-/obj/machinery/button/silent_alarm/west
-	table_bound = TRUE
-	dir = WEST
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/silent_alarm, 24)

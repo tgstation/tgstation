@@ -8126,7 +8126,7 @@
 	},
 /obj/effect/landmark/start/head_of_personnel,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
 "bXw" = (
@@ -10589,7 +10589,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "cBL" = (
@@ -11879,7 +11879,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "cTc" = (
@@ -12956,7 +12956,7 @@
 	},
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/landmark/start/atmospheric_technician,
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "diC" = (
@@ -16314,7 +16314,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/arrivals)
 "dZI" = (
@@ -19116,7 +19116,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "eLP" = (
@@ -26122,7 +26122,7 @@
 /obj/structure/chair/office,
 /obj/effect/landmark/start/cargo_technician,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
-/obj/machinery/button/silent_alarm/south,
+/obj/machinery/button/silent_alarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "gtx" = (
@@ -31218,7 +31218,7 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/neutral,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "hJM" = (
@@ -31551,7 +31551,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/button/silent_alarm/north,
+/obj/machinery/button/silent_alarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "hOY" = (
@@ -37352,7 +37352,7 @@
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/librarian,
-/obj/machinery/button/silent_alarm/south,
+/obj/machinery/button/silent_alarm/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/service/library)
 "jjm" = (
@@ -45189,7 +45189,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/bartender,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "lim" = (
@@ -51734,7 +51734,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs/aft)
 "mLP" = (
@@ -51873,7 +51873,7 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "mNX" = (
@@ -53304,7 +53304,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/button/silent_alarm/north,
+/obj/machinery/button/silent_alarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "niE" = (
@@ -62413,7 +62413,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/button/silent_alarm/south,
+/obj/machinery/button/silent_alarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pAa" = (
@@ -68430,7 +68430,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/large,
 /area/station/security/checkpoint/escape)
 "qVa" = (
@@ -81972,7 +81972,7 @@
 /obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/trimline/neutral,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/button/silent_alarm/north,
+/obj/machinery/button/silent_alarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
 "ukX" = (
@@ -88209,7 +88209,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/button/silent_alarm/north,
+/obj/machinery/button/silent_alarm/directional/north,
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
 "vMb" = (
@@ -90060,7 +90060,7 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "wlc" = (
@@ -98088,7 +98088,7 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/button/silent_alarm/north,
+/obj/machinery/button/silent_alarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "ylr" = (

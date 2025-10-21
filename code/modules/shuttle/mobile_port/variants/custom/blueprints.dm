@@ -106,7 +106,7 @@
 				var/obj/machinery/power/apc/apc = turf_area.apc
 				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
 				var/turf/apc_turf = get_turf(apc)
-				if(target == apc_turf || target == wallmount_comp.hanging_wall_turf)
+				if(target == apc_turf || target == wallmount_comp.supporting_object)
 					holder.image_state = "red"
 		else
 			holder.image_state = "red"
@@ -117,7 +117,7 @@
 				var/obj/machinery/power/apc/apc = turf_area.apc
 				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
 				var/turf/apc_turf = get_turf(apc)
-				if(HAS_TRAIT(apc_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF) || HAS_TRAIT(wallmount_comp.hanging_wall_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF))
+				if(HAS_TRAIT(apc_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF) || HAS_TRAIT(wallmount_comp.supporting_object, TRAIT_SHUTTLE_CONSTRUCTION_TURF))
 					holder.image_state = "red"
 	holder.regenerate_image()
 

@@ -6414,7 +6414,7 @@
 	pixel_y = 8
 	},
 /obj/effect/landmark/start/head_of_personnel,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "bTo" = (
@@ -7822,7 +7822,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/customs)
 "cor" = (
@@ -7865,7 +7865,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "coP" = (
@@ -9868,7 +9868,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/depsec/medical,
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "cQF" = (
@@ -19144,7 +19144,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
-/obj/machinery/button/silent_alarm/north,
+/obj/machinery/button/silent_alarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "fCk" = (
@@ -20085,7 +20085,7 @@
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
 "fRT" = (
@@ -23985,7 +23985,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/cargo_technician,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "gUQ" = (
@@ -24635,7 +24635,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/chemist,
-/obj/machinery/button/silent_alarm/east,
+/obj/machinery/button/silent_alarm/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "heC" = (
@@ -40075,7 +40075,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/roboticist,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "lxl" = (
@@ -71185,7 +71185,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "uvu" = (
@@ -73418,7 +73418,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/wood,
 /area/station/engineering/lobby)
 "vcf" = (
@@ -77548,7 +77548,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/geneticist,
-/obj/machinery/button/silent_alarm/west,
+/obj/machinery/button/silent_alarm/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "whR" = (
@@ -84147,7 +84147,7 @@
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/tile/dark_blue,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/button/silent_alarm/south,
+/obj/machinery/button/silent_alarm/directional/south,
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "yfK" = (

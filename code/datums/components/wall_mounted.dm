@@ -1,32 +1,36 @@
-// This element should be applied to wall-mounted machines/structures, so that if the wall it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
+// This element should be applied to mounted machines/structures, so that if the structure it's "hanging" from is broken or deconstructed, the hung structure will deconstruct.
 /datum/component/wall_mounted
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	/// The wall our object is currently linked to.
-	var/turf/hanging_wall_turf
+	/// The thing our object is currently attached to.
+	var/atom/supporting_object
 	/// Callback to the parent's proc to call on the linked object when the wall disappear's or changes.
 	var/datum/callback/on_drop
 
-/datum/component/wall_mounted/Initialize(target_wall, on_drop_callback)
+/datum/component/wall_mounted/Initialize(target, on_drop_callback)
 	. = ..()
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(!isturf(target_wall))
+	if(!isturf(target) && !istype(target, /obj/structure/table))
 		return COMPONENT_INCOMPATIBLE
-	hanging_wall_turf = target_wall
+	supporting_object = target
 	on_drop = on_drop_callback
 
 /datum/component/wall_mounted/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
-	RegisterSignal(hanging_wall_turf, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+	RegisterSignal(supporting_object, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	if(isturf(supporting_object))
+		RegisterSignal(supporting_object, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+	else
+		RegisterSignal(supporting_object, COMSIG_OBJ_DECONSTRUCT, PROC_REF(drop_wallmount))
+		RegisterSignal(supporting_object, COMSIG_MOVABLE_MOVED, PROC_REF(drop_wallmount))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_linked_destroyed))
 
 /datum/component/wall_mounted/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
-	UnregisterSignal(hanging_wall_turf, list(COMSIG_ATOM_EXAMINE, COMSIG_TURF_CHANGE))
+	UnregisterSignal(supporting_object, list(COMSIG_ATOM_EXAMINE, COMSIG_TURF_CHANGE, COMSIG_OBJ_DECONSTRUCT, COMSIG_MOVABLE_MOVED))
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
-	hanging_wall_turf = null
+	supporting_object = null
 
 /**
  * Basic reference handling if the hanging/linked object is destroyed first.
@@ -42,7 +46,7 @@
 /datum/component/wall_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if (parent in view(user.client?.view || world.view, user))
-		examine_list += span_notice("\The [hanging_wall_turf] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
+		examine_list += span_notice("\The [supporting_object] is currently supporting \the [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /**
  * When the type of turf changes, if it is changing into a floor we should drop our contents
@@ -73,7 +77,7 @@
 	var/obj/hanging_parent = parent
 
 	if(on_drop)
-		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls off the wall!"), vision_distance = 5)
+		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls off \the [supporting_object]!"), vision_distance = 5)
 		on_drop.Invoke(hanging_parent)
 	else
 		hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
@@ -91,12 +95,19 @@
 /obj/proc/find_and_hang_on_wall(directional = TRUE, custom_drop_callback)
 	if(istype(get_area(src), /area/shuttle))
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
-	var/turf/attachable_wall
+	var/turf/targeted_turf
+	var/target
 	if(directional)
-		attachable_wall = get_step(src, dir)
+		targeted_turf = get_step(src, dir)
 	else
-		attachable_wall = loc ///Pull from the curent object loc
-	if(!iswallturf(attachable_wall))
-		return FALSE//Nothing to latch onto, or not the right thing.
-	src.AddComponent(/datum/component/wall_mounted, attachable_wall, custom_drop_callback)
+		targeted_turf = loc ///Pull from the curent object loc
+	if(iswallturf(targeted_turf))
+		target = targeted_turf
+	else
+		for(var/obj/structure/table/potential in targeted_turf?.contents)
+			target = potential
+			break
+		if(!target)
+			return FALSE
+	src.AddComponent(/datum/component/wall_mounted, target, custom_drop_callback)
 	return TRUE

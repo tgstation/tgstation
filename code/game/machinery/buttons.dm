@@ -19,8 +19,6 @@
 	var/can_alter_skin = TRUE
 	///Whether the button flashes when pressed
 	var/silent = FALSE
-	///Whether the button is table mounted on init
-	var/table_bound = FALSE
 
 	var/obj/item/assembly/device
 	var/obj/item/electronics/airlock/board
@@ -69,19 +67,8 @@
 			board.accesses = req_one_access
 
 	setup_device()
-	if(table_bound)
-		if(dir)
-			switch(dir)
-				if(NORTH)
-					pixel_y = 24
-				if(SOUTH)
-					pixel_y = -24
-				if(EAST)
-					pixel_x = 24
-				if(WEST)
-					pixel_x = -24
-	else
-		find_and_hang_on_wall()
+
+	find_and_hang_on_wall()
 
 	register_context()
 
