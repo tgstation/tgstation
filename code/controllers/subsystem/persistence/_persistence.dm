@@ -1,6 +1,48 @@
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 #define KEEP_ROUNDS_MAP 3
 #define INFINITE_AUTOSAVES -1
+#define SAVE_COMPLETION_MARKER "save_complete.txt"
+
+/datum/controller/subsystem/persistence/proc/is_save_valid(save_directory_name)
+	var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory_name
+	var/completion_marker_path = "[full_path]/[SAVE_COMPLETION_MARKER]"
+
+	if(!fexists(completion_marker_path))
+		log_mapping("Save [save_directory_name] is incomplete - missing completion marker")
+		return FALSE
+
+	var/marker_text = file2text(completion_marker_path)
+	if(!marker_text)
+		log_mapping("Save [save_directory_name] has invalid completion marker - empty file")
+		return FALSE
+
+	var/list/marker_data = json_decode(marker_text)
+	if(!marker_data || !marker_data["save_completed"])
+		log_mapping("Save [save_directory_name] has invalid completion marker - bad JSON")
+		return FALSE
+
+	var/list/save_files = flist(full_path)
+	if(save_files.len <= 1)
+		log_mapping("Save [save_directory_name] appears empty except for completion marker")
+		return FALSE
+
+	return TRUE
+
+/datum/controller/subsystem/persistence/proc/cleanup_corrupted_saves()
+	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_dsc))
+	var/corrupted_count = 0
+
+	for(var/save_directory in all_saves)
+		if(!is_save_valid(save_directory))
+			var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory
+			log_admin("Deleting corrupted save: [full_path]")
+			fdel(full_path)
+			corrupted_count++
+
+	if(corrupted_count)
+		log_admin("Cleaned up [corrupted_count] corrupted save(s)")
+	return corrupted_count
+
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -199,21 +241,31 @@ SUBSYSTEM_DEF(persistence)
 		log_admin("Deleted oldest autosave: [oldest_autosave_full_path]")
 		fdel(oldest_autosave_full_path)
 
-/// Returns the directory path to the last save if it exists
 /datum/controller/subsystem/persistence/proc/get_last_save()
 	// organize by newest saves first
 	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_dsc))
 	if(!all_saves.len)
-		return // no saves exist yet
+		return null // no saves exist yet
 
-	return all_saves[1]
+	for(var/save_directory in all_saves)
+		if(is_save_valid(save_directory))
+			log_mapping("Using save: [save_directory]")
+			return save_directory
+		else
+			log_mapping("Skipping corrupted/incomplete save: [save_directory]")
+
+	log_mapping("ERROR: No valid saves found!")
+	return null
 
 /// Based on the last recent save, get a list of all z levels as numbers which have the specific trait
 /// Will return null if no traits match or a save file doesn't exist yet
 /datum/controller/subsystem/persistence/proc/cache_z_levels_map_configs()
-	var/last_save = MAP_PERSISTENT_DIRECTORY + get_last_save()
-	if(!last_save)
-		return null // no saves exist yet
+	var/last_save_name = get_last_save()
+	if(!last_save_name)
+		log_world("WARNING: No valid persistence saves found")
+		return null // no valid saves exist
+
+	var/last_save = MAP_PERSISTENT_DIRECTORY + last_save_name
 
 	var/list/matching_z_levels = list()
 	var/list/last_save_files = flist(last_save)
@@ -335,6 +387,10 @@ SUBSYSTEM_DEF(persistence)
 	var/save_flags = get_save_flags()
 	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 
+	var/completion_marker_path = "[map_save_directory]/[SAVE_COMPLETION_MARKER]"
+	if(fexists(completion_marker_path))
+		fdel(completion_marker_path)
+
 	for(var/z in 1 to world.maxz)
 		var/list/level_traits = list()
 		var/datum/space_level/level_to_check = SSmapping.z_list[z]
@@ -381,7 +437,6 @@ SUBSYSTEM_DEF(persistence)
 					break
 
 		var/map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z, save_flags)
-
 		var/file_path = "[map_save_directory]/[z].dmm"
 		rustg_file_write(map, file_path)
 
@@ -408,9 +463,22 @@ SUBSYSTEM_DEF(persistence)
 
 		rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), "[map_save_directory]/[z].json")
 
+	var/completion_data = list(
+		"save_completed" = TRUE,
+		"timestamp" = world.realtime,
+		"timestamp_readable" = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss"),
+		"z_levels_saved" = world.maxz
+	)
+	rustg_file_write(json_encode(completion_data, JSON_PRETTY_PRINT), completion_marker_path)
+
+ADMIN_VERB(cleanup_corrupted_saves, R_DEBUG, "Cleanup Corrupted Saves", "Delete all corrupted/incomplete persistence saves.", ADMIN_CATEGORY_DEBUG)
+	var/corrupted = SSpersistence.cleanup_corrupted_saves()
+	to_chat(user, "Cleaned up [corrupted] corrupted save(s)")
+
 ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Saves all z-levels that are have their persistent save config enabled.", ADMIN_CATEGORY_DEBUG)
 	SSpersistence.save_persistent_maps()
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
 #undef INFINITE_AUTOSAVES
+#undef SAVE_COMPLETION_MARKER
