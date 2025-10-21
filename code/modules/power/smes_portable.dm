@@ -260,7 +260,7 @@
 	//Make sure not already connected to something else
 	if(possible_connector.panel_open)
 		if(user)
-			balloon_alert(user, "close panel!")
+			balloon_alert(user, "close connector panel!")
 		return FALSE
 
 	//Perform the connection
