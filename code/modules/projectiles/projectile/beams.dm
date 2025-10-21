@@ -39,7 +39,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/yellow_laser
 	damage = 0
 
-/obj/projectile/beam/laser/donkbash
+/obj/projectile/beam/laser/cybersun
 	name = "red plasma beam"
 	icon_state = "lava"
 	light_color = COLOR_DARK_RED

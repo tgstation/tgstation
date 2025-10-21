@@ -31,8 +31,8 @@
 	select_name = "kill"
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 
-/obj/item/ammo_casing/energy/lasergun/donkbash
-	projectile_type = /obj/projectile/beam/laser/donkbash
+/obj/item/ammo_casing/energy/lasergun/cybersun
+	projectile_type = /obj/projectile/beam/laser/cybersun
 	e_cost = LASER_SHOTS(54, STANDARD_CELL_CHARGE)
 	select_name = "rapid fire"
 	fire_sound = 'sound/items/weapons/laser2.ogg'

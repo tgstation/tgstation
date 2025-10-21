@@ -98,24 +98,24 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
 	weapon_weight = WEAPON_MEDIUM
 
-/obj/item/gun/energy/laser/donkbash
-	name = "\improper 'Donk-bashed' Type 5R laser carbine"
-	desc = "The burst fire Type 5R Rapid Heat Delivery System, developed by Nanotrasen. Although this one seems to have beened horribly mangled. Presumably a Donk Co. employee got their hands on it..."
-	icon_state = "donkbash"
-	inhand_icon_state = "donkbash"
-	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/donkbash)
+/obj/item/gun/energy/laser/cybersun
+	name = "\improper Cybersun S-120"
+	desc = "A laser gun primarily used by syndicate security guards. It fires a rapid spray of low-power plasma beams."
+	icon_state = "cybersun_s120"
+	inhand_icon_state = "s120"
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/cybersun)
 	spread = 14
 	pin = /obj/item/firing_pin/implant/pindicate
 	ammo_x_offset = 1
 
-/obj/item/gun/energy/laser/donkbash/Initialize(mapload)
+/obj/item/gun/energy/laser/cybersun/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
 
-/obj/item/gun/energy/laser/donkbash/add_deep_lore()
+/obj/item/gun/energy/laser/cybersun/add_deep_lore()
 	return
 
-/obj/item/gun/energy/laser/donkbash/unrestricted
+/obj/item/gun/energy/laser/cybersun/unrestricted
 	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/carbine/practice

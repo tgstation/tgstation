@@ -176,7 +176,7 @@
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	spell_requirements = null
-	projectile_type = /obj/projectile/beam/laser/donkbash/weaker
+	projectile_type = /obj/projectile/beam/laser/cybersun/weaker
 	cast_range = 6
 	projectiles_per_fire = 3
 	var/barrage_delay = 0.8 SECONDS
@@ -197,7 +197,7 @@
 	if(do_after(owner, barrage_delay))
 		return ..()
 
-/obj/projectile/beam/laser/donkbash/weaker
+/obj/projectile/beam/laser/cybersun/weaker
 	damage = 11
 
 #undef LIGHTNING_ABILITY_TYPEPATH
