@@ -1,9 +1,13 @@
 #define ENGINE_COOLDOWN 5 SECONDS
 #define SLASH_COOLDOWN 1.2 SECONDS
-#define SLASH_WINDUP 2 SECONDS
+#define SLASH_WINDUP 1 SECONDS
 #define CHARGE_DAMAGE_MOD 10
 #define HOUSE_EDGE_ICONS_MAX 3
 #define HOUSE_EDGE_ICONS_MIN 0
+
+/**
+ * File for the House Edge sword and the V8 Engine, obtained from the black market.
+ */
 
 /obj/item/v8_engine
 	name = "ancient engine"
@@ -104,7 +108,7 @@
 	new /obj/effect/temp_visual/focus_ring(get_turf(src))
 	playsound(src, 'sound/items/car_engine_start.ogg', vol = 35, vary = FALSE, extrarange = 3)
 
-	if(!do_after(user, SLASH_WINDUP, target = src) || fire_charges < 3)
+	if(!do_after(user, SLASH_WINDUP * 2, target = src) || fire_charges < 3)
 		flaming_slash(interacting_with, user, upgraded = FALSE)
 		return ITEM_INTERACT_SUCCESS
 
