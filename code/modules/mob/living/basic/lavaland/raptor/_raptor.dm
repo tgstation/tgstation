@@ -74,6 +74,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/obj/item/food/meat/steak = 50,
 		/obj/item/food/grown/ash_flora = 10,
 		/obj/item/fish = 15,
+		/obj/item/organ = 25,
 	)
 	/// Inheritance datum we store our genetic data in
 	var/datum/raptor_inheritance/inherited_stats = null
@@ -308,6 +309,12 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/proc/on_pre_eat(datum/source, obj/item/potential_food, list/effect_mult)
 	SIGNAL_HANDLER
+
+	if (isorgan(potential_food))
+		var/obj/item/organ/guts = potential_food
+		if (!(guts.organ_flags & ORGAN_EDIBLE) || !(guts.organ_flags & ORGAN_ORGANIC))
+			return COMSIG_MOB_CANCEL_EAT
+
 	if (happiness_percentage)
 		effect_mult += happiness_percentage * RAPTOR_GROWTH_HAPPINESS_MULTIPLIER
 
