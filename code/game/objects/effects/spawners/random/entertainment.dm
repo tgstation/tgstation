@@ -257,8 +257,10 @@
 		/obj/item/toy/plush/pkplush,
 		/obj/item/toy/plush/horse,
 		/obj/item/toy/plush/monkey,
+		/obj/effect/spawner/random/entertainment/plushie/vending, // Troutstation edit
 		/obj/item/toy/plush/maddie, // Troutstation edit
 		/obj/item/toy/plush/hugs, // Troutstation edit
+		/obj/item/toy/plush/cyd, // Troutstation edit
 	)
 
 /obj/effect/spawner/random/entertainment/plushie_delux
@@ -275,6 +277,7 @@
 		/obj/item/toy/plush/pkplush = 5,
 		/obj/item/toy/plush/human = 5,
 		/obj/item/toy/plush/horse = 5,
+		/obj/effect/spawner/random/entertainment/plushie/vending = 5, // Troutstation edit
 		// rare plushies
 		/obj/item/toy/plush/carpplushie = 3,
 		/obj/item/toy/plush/lizard_plushie/green = 3,
@@ -287,6 +290,7 @@
 		/obj/item/toy/plush/unicorn = 3,
 		/obj/item/toy/plush/monkey = 3,
 		/obj/item/toy/plush/donkpocket = 3,
+		/obj/item/toy/plush/cyd = 3, // Troutstation edit
 		/obj/item/toy/plush/maddie = 3, // Troutstation edit
 		/obj/item/toy/plush/hugs = 3, // Troutstation edit
 		// super rare plushies
