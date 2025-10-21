@@ -79,11 +79,11 @@
 	ability_mod = clamp(ability_mod, RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER)
 	growth_mod = clamp(growth_mod, RAPTOR_INHERIT_MIN_MODIFIER, RAPTOR_INHERIT_MAX_MODIFIER)
 
-	attack_modifier = rand((min(mom_stats.attack_modifier, dad_stats.attack_modifier) + min(0, attack_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.attack_modifier, dad_stats.attack_modifier) + max(0, attack_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
-	health_modifier = rand((min(mom_stats.health_modifier, dad_stats.health_modifier) + min(0, health_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.health_modifier, dad_stats.health_modifier) + max(0, health_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
-	speed_modifier = rand((min(mom_stats.speed_modifier, dad_stats.speed_modifier) + min(0, speed_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.speed_modifier, dad_stats.speed_modifier) + max(0, speed_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
-	ability_modifier = rand((min(mom_stats.ability_modifier, dad_stats.ability_modifier) + min(0, ability_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.ability_modifier, dad_stats.ability_modifier) + max(0, ability_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
-	growth_modifier = rand((min(mom_stats.growth_modifier, dad_stats.growth_modifier) + min(0, growth_mod)) * (1 - RAPTOR_GENETIC_DRIFT), (max(mom_stats.growth_modifier, dad_stats.growth_modifier) + max(0, growth_mod)) * (1 + RAPTOR_GENETIC_DRIFT))
+	attack_modifier = rand((min(mom_stats.attack_modifier, dad_stats.attack_modifier) + min(0, attack_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MIN_ATTACK, (max(mom_stats.attack_modifier, dad_stats.attack_modifier) + max(0, attack_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MAX_ATTACK)
+	health_modifier = rand((min(mom_stats.health_modifier, dad_stats.health_modifier) + min(0, health_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MIN_HEALTH, (max(mom_stats.health_modifier, dad_stats.health_modifier) + max(0, health_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MAX_HEALTH)
+	speed_modifier = rand((min(mom_stats.speed_modifier, dad_stats.speed_modifier) + min(0, speed_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MIN_SPEED, (max(mom_stats.speed_modifier, dad_stats.speed_modifier) + max(0, speed_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MAX_SPEED)
+	ability_modifier = rand((min(mom_stats.ability_modifier, dad_stats.ability_modifier) + min(0, ability_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MIN_MODIFIER, (max(mom_stats.ability_modifier, dad_stats.ability_modifier) + max(0, ability_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MAX_MODIFIER)
+	growth_modifier = rand((min(mom_stats.growth_modifier, dad_stats.growth_modifier) + min(0, growth_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MIN_MODIFIER, (max(mom_stats.growth_modifier, dad_stats.growth_modifier) + max(0, growth_mod)) + RAPTOR_GENETIC_DRIFT * RAPTOR_INHERIT_MAX_MODIFIER)
 
 	for(var/i in 1 to min(length(traits_to_pick), RAPTOR_TRAIT_INHERIT_AMOUNT))
 		var/chosen_trait = pick_weight(traits_to_pick)

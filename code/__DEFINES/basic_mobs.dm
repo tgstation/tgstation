@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define RAPTOR_INHERIT_MIN_MODIFIER -0.25
 /// Maximum modifier a raptor can get to their modifiers, such as ability effect and growth speed
 #define RAPTOR_INHERIT_MAX_MODIFIER 0.25
-/// Genetic drift for raptors, aka min/max multiplier that parents' stats can receive when breeding
+/// Genetic drift for raptors, aka min/max value from the cap that stats can receive when breeding
 #define RAPTOR_GENETIC_DRIFT 0.2
 
 /// This mob suffers depression
