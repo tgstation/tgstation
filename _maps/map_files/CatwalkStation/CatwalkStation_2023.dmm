@@ -53516,8 +53516,6 @@
 	name = "Supermatter Engine Room"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/engine,
 /area/station/engineering/main)
