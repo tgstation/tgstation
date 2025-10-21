@@ -217,14 +217,9 @@
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/machinery/power/smes/connector/possible_connector = locate(/obj/machinery/power/smes/connector) in loc
-	if(!possible_connector)
-		to_chat(user, span_notice("There's no power connector to connect to."))
-		return ITEM_INTERACT_BLOCKING
-	wrench.play_tool_sound(src)
-	if(!wrench.use_tool(src, user, 4 SECONDS))
-		return ITEM_INTERACT_BLOCKING
 	if(!connect_port(possible_connector, user))
-		to_chat(user, span_notice("[src] failed to connect to [possible_connector]."))
+		return ITEM_INTERACT_BLOCKING
+	if(!wrench.use_tool(src, user, 4 SECONDS))
 		return ITEM_INTERACT_BLOCKING
 	user.visible_message( \
 		"[user] connects [src].", \
@@ -258,9 +253,15 @@
 /obj/machinery/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector, mob/living/user)
 	PRIVATE_PROC(TRUE)
 
+	if(QDELETED(possible_connector))
+		if(user)
+			balloon_alert(user, "no connector!")
+		return FALSE
+
 	//Make sure not already connected to something else
 	if(possible_connector.panel_open)
-		balloon_alert(user, "close panel!")
+		if(user)
+			balloon_alert(user, "close panel!")
 		return FALSE
 
 	//Perform the connection
