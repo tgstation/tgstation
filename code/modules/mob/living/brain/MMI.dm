@@ -56,6 +56,9 @@
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
+		if(newbrain.no_mmi)
+			to_chat(user, span_warning("[src]'s indicator light turns red and it refuses to connect to [newbrain]."))
+			return
 		if(newbrain.suicided)
 			to_chat(user, span_warning("[newbrain] is completely useless."))
 			return

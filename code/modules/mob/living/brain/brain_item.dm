@@ -48,6 +48,8 @@
 	var/variant_traits_added
 	/// Variance in brain traits removed by subtypes
 	var/variant_traits_removed
+	// Can this brain fit in an MMI?
+	var/no_mmi = null
 
 /obj/item/organ/brain/Initialize(mapload)
 	. = ..()
@@ -235,6 +237,8 @@
 	. = ..()
 	if(length(skillchips))
 		. += span_info("It has a skillchip embedded in it.")
+	if(no_mmi)
+		. += span_info("Something aobut it looks a little off.")
 	. += brain_damage_examine()
 	if (smooth_brain)
 		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")

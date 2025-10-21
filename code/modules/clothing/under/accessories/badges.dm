@@ -177,6 +177,10 @@
 	name = "Pre-Approved Cyborg Candidate dogtag"
 	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
 
+/obj/item/clothing/accessory/dogtag/borg_not_ready
+	name = "Silicon incompatibility dogtag"
+	display = "This employee is incompatible with man-machine interfaces, and cannot be made into a cyborg as an alternative to medical resuscitation."
+
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
