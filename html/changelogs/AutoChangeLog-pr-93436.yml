@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored organ damage code a little. Hopefully there won't be issues (otherwise report them)."
