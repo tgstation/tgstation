@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 
 /obj/item/mob_holder/purple_raptor/dropped(mob/user, silent)
 	. = ..()
-	flight_action.Remove(user)
+	// No need to remove the action as its deleted on Destroy
 	if (wings_open)
 		toggle_wings(user)
 
