@@ -286,7 +286,7 @@
 
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
-	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	var/list/hearers = mob_only_listeners(get_hearers_in_view(vision_distance, src)) //caches the hearers and then removes ignored mobs.
 	hearers -= ignored_mobs
 
 	var/raw_msg = message
@@ -295,8 +295,7 @@
 	if(visible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b> [message]")
 
-	for(var/atom/movable/hearer in hearers)
-		var/mob/hearing_mob = hearer.get_listening_mob()
+	for(var/mob/hearing_mob as anything in hearers)
 		if(!hearing_mob?.client)
 			continue
 		if(self_message && hearing_mob == src)
@@ -359,14 +358,13 @@
  * * audible_message_flags (optional) is the type of message being sent.
  */
 /atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, audible_message_flags = NONE)
-	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+	var/list/hearers = mob_only_listeners(get_hearers_in_view(hearing_distance, src))
 	var/raw_msg = message
 	if(audible_message_flags & WITH_EMPHASIS_MESSAGE)
 		message = apply_message_emphasis(message)
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b> [message]")
-	for(var/atom/movable/hearer in hearers)
-		var/mob/hearing_mob = hearer.get_listening_mob()
+	for(var/mob/hearing_mob as anything in hearers)
 		if(!hearing_mob?.client)
 			continue
 		if(self_message && hearing_mob == src)
