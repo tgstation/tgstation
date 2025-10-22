@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "ORM now displays your mining point balance instead of your bank account balance"
