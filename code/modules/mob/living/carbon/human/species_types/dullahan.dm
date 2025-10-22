@@ -62,6 +62,7 @@
 	head.update_limb()
 	head.update_icon_dropped()
 	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
+	RegisterSignal(my_head, COMSIG_ATOM_EXITING, PROC_REF(on_relay_move))
 
 /// If we gained a new body part, it had better not be a head
 /datum/species/dullahan/proc/on_gained_part(mob/living/carbon/human/dullahan, obj/item/bodypart/part)
@@ -83,6 +84,15 @@
 	my_head = null
 	human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
 	human.gib(DROP_ALL_REMAINS)
+
+/// Head was butchered? No more dullahan
+/datum/species/dullahan/proc/on_relay_move()
+	SIGNAL_HANDLER
+	if(QDELETED(my_head?.owner) || !isdullahan(my_head?.owner))
+		return
+	my_head.owner.gib(DROP_ALL_REMAINS)
+	QDEL_IN(my_head, 0)
+	my_head = null
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/human)
 	. = ..()
@@ -176,6 +186,7 @@
 
 /obj/item/organ/tongue/dullahan
 	zone = BODY_ZONE_CHEST
+	item_flags = parent_type::item_flags | DROPDEL
 	organ_flags = parent_type::organ_flags | ORGAN_UNREMOVABLE
 	modifies_speech = TRUE
 
@@ -193,6 +204,7 @@
 
 /obj/item/organ/ears/dullahan
 	zone = BODY_ZONE_CHEST
+	item_flags = parent_type::item_flags | DROPDEL
 	organ_flags = parent_type::organ_flags | ORGAN_UNREMOVABLE
 	decay_factor = 0
 
@@ -201,6 +213,7 @@
 	desc = "An abstraction."
 	actions_types = list(/datum/action/item_action/organ_action/dullahan)
 	zone = BODY_ZONE_CHEST
+	item_flags = parent_type::item_flags | DROPDEL
 	organ_flags = parent_type::organ_flags | ORGAN_UNREMOVABLE
 	decay_factor = 0
 	tint = INFINITY // to switch the vision perspective to the head on species_gain() without issue.
@@ -241,20 +254,8 @@
 
 /obj/item/dullahan_relay/Destroy()
 	lose_hearing_sensitivity(ROUNDSTART_TRAIT)
-	if(!QDELETED(owner))
-		var/mob/living/carbon/human/human = owner
-		if(isdullahan(human))
-			var/datum/species/dullahan/dullahan_species = human.dna.species
-			dullahan_species.my_head = null
-			owner.gib(DROP_ALL_REMAINS)
 	owner = null
 	return ..()
-
-/obj/item/dullahan_relay/process()
-	if(istype(loc, /obj/item/bodypart/head) && !QDELETED(owner))
-		return
-	qdel(src)
-	return PROCESS_KILL
 
 /// Updates our names after applying name prefs
 /obj/item/dullahan_relay/proc/on_prefs_loaded(mob/living/carbon/human/headless)
