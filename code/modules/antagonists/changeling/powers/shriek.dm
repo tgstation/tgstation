@@ -17,7 +17,7 @@
 		return FALSE
 	playsound(user, 'sound/effects/screech.ogg', 100)
 	for(var/mob/living/living in get_hearers_in_view(4, user))
-		if(IS_CHANGELING(living) || !living.soundbang_act(SOUNDBANG_MASSIVE, stun_pwr = 0, damage_pwr = 0, deafen_pwr = 30))
+		if(IS_CHANGELING(living) || !living.soundbang_act(SOUNDBANG_MASSIVE, stun_pwr = 0, damage_pwr = 0, deafen_pwr = 1 MINUTES, ignore_deafness = TRUE, send_sound = FALSE))
 			continue
 		if(issilicon(living))
 			living.Paralyze(rand(10 SECONDS, 20 SECONDS))

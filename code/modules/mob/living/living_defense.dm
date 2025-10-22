@@ -35,6 +35,10 @@
 /mob/living/proc/get_eye_protection()
 	return 0
 
+///A easy to use proc to apply both organ damage and temporary deafness at once, so you don't have to get the ears everytime.
+/mob/living/proc/sound_damage(damage, deafen)
+	return
+
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection(ignore_deafness = FALSE)
 	if(!ignore_deafness && HAS_TRAIT(src, TRAIT_DEAF))
@@ -655,11 +659,13 @@
 	return TRUE
 
 //called when the mob receives a loud bang
-/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15, ignore_deafness = FALSE)
-	var/effect_amount = get_ear_protection(ignore_deafness)
-	if(effect_amount <= 0)
+/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15, ignore_deafness = FALSE, send_sound = TRUE)
+	var/protection = get_ear_protection(ignore_deafness)
+	if(protection >= intensity)
 		return FALSE
 
+	///The amplitude of the effect is reduced by sound protection, while weakness only makes it worse.
+	var/effect_amount = protection > 0 ? 1 - (protection/intensity) : 1 - protection
 	if(stun_pwr)
 		Paralyze(stun_pwr * effect_amount * 0.1)
 		Knockdown(stun_pwr * effect_amount)
@@ -672,9 +678,10 @@
 
 	var/ear_damage = damage_pwr * effect_amount
 	var/deaf = deafen_pwr * effect_amount
-	ears.adjustEarDamage(ear_damage,deaf)
+	sound_damage(ear_damage, deaf)
 
-	SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
+	if(send_sound)
+		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0, 1, 0, 250))
 
 	if(ears.damage >= 15 && prob(ears.damage - 5))
 		to_chat(src, span_userdanger("You can't hear anything!"))

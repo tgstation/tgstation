@@ -16,6 +16,17 @@
 	if(isclothing(wear_mask)) //Mask
 		. += wear_mask.flash_protect
 
+/mob/living/carbon/sound_damage(damage, deafen)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
+		return
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	if(QDELETED(ears))
+		return
+	if(damage)
+		ears.apply_organ_damage(damage * ears.damage_multiplier)
+	if(deafen)
+		ears.adjust_temporary_deafness(deafen)
+
 /mob/living/carbon/get_ear_protection(ignore_deafness = FALSE)
 	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
@@ -81,6 +92,12 @@
 	return ..()
 
 /mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+	// In the future replace these with parent call if the item attack message proc is ever unshittified
+	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
+		return TRUE
+
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
 		return
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
