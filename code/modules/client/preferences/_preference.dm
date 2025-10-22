@@ -459,8 +459,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	. = ..()
 	if(relevant_organ && relevant_organ::bodypart_overlay)
 		feature_key ||= relevant_organ::bodypart_overlay::feature_key
+		main_feature_name ||= capitalize(relevant_organ::name)
 	if(relevant_body_markings)
 		feature_key ||= relevant_body_markings::dna_feature_key
+		main_feature_name ||= "Body markings"
 	if(isnull(feature_key))
 		CRASH("`feature_key` was not set or inferable for [type]!")
 
