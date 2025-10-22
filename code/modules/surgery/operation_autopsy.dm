@@ -20,7 +20,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/autopsy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/autopsy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -28,9 +28,8 @@
 		span_notice("[surgeon] uses [tool] to perform an autopsy on [limb.owner]."),
 		span_notice("[surgeon] uses [tool] on [limb.owner]'s chest."),
 	)
-	display_pain(limb.owner, "You feel a burning sensation in your chest!")
 
-/datum/surgery_operation/autopsy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/autopsy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
 	ADD_TRAIT(limb.owner, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 	ADD_TRAIT(limb.owner, TRAIT_SURGICALLY_ANALYZED, AUTOPSY_TRAIT)
 	tool.scan_cadaver(surgeon, limb.owner)
@@ -40,16 +39,6 @@
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
 		surgeon.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 	return ..()
-
-/datum/surgery_operation/autopsy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
-	display_results(
-		surgeon,
-		limb.owner,
-		span_warning("You screw up, bruising [limb.owner]'s chest!"),
-		span_warning("[surgeon] screws up, brusing [limb.owner]'s chest!"),
-		span_warning("[surgeon] screws up!"),
-	)
-	limb.receive_damage(5, wound_bonus = CANT_WOUND, damage_source = tool)
 
 /datum/surgery_operation/autopsy/mechanic
 	name = "system failure analysis"
