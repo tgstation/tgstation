@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "You can deconstruct a smes power bank"
+  - bugfix: "portable smes UI updates & closes correctly when unanchored from the connector"
