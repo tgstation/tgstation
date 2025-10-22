@@ -148,16 +148,12 @@
 	..()
 
 	var/static/items_inside = list(
-		/obj/item/clothing/glasses/hud/health = 2,
-		/obj/item/clothing/under/rank/medical/paramedic = 1,
-		/obj/item/clothing/under/rank/medical/paramedic/skirt = 1,
-		/obj/item/storage/box/gloves_nitrile = 1,
 		/obj/item/storage/medkit/emergency = 1,
 		/obj/item/storage/box/bandages = 1,
 		/obj/item/pinpointer/crew = 1,
 		/obj/item/storage/belt/medical/paramedic = 1,
 		/obj/item/radio/headset/headset_med = 2,
-		/obj/item/clothing/shoes/workboots/black = 1,
-		/obj/item/emergency_bed = 2)
+		/obj/item/emergency_bed = 2,
+		/obj/item/storage/bag/garment/paramedic = 2)
 	generate_items_inside(items_inside,src)
 

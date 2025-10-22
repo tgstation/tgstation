@@ -3859,9 +3859,13 @@
 /area/station/hallway/secondary/command)
 "ayP" = (
 /obj/machinery/suit_storage_unit/medical,
-/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
 /area/station/medical/paramedic)
 "ayR" = (
 /turf/closed/wall/r_wall,
@@ -14871,9 +14875,11 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/blue/filled,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "dZu" = (
@@ -26178,12 +26184,6 @@
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
-"ilW" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/turf/open/floor/iron/dark,
-/area/station/medical/paramedic)
 "ilX" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /turf/open/floor/iron/white,
@@ -65248,11 +65248,11 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
 "vFE" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 5
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "vFL" = (
@@ -71491,7 +71491,9 @@
 /obj/structure/fireaxecabinet/jawsofrecovery/directional/east,
 /obj/machinery/light/cold/directional/east,
 /obj/structure/closet/secure_closet/paramedic,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
 /area/station/medical/paramedic)
 "xYZ" = (
 /mob/living/basic/bot/cleanbot,
@@ -72028,6 +72030,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "yhI" = (
@@ -171147,7 +171150,7 @@ eQL
 ycx
 eHN
 ayP
-ilW
+kEM
 kEM
 cas
 qUr
