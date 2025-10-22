@@ -154,6 +154,7 @@
 		/obj/item/storage/belt/medical/paramedic = 1,
 		/obj/item/radio/headset/headset_med = 2,
 		/obj/item/emergency_bed = 2,
-		/obj/item/storage/bag/garment/paramedic = 2)
+		/obj/item/storage/bag/garment/paramedic = 2,
+	)
 	generate_items_inside(items_inside,src)
 
