@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Partial language understanding once again knows which words are common."
+  - bugfix: "Expressive Aphasia is no longer so aphasic you don't know any words."
