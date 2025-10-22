@@ -1,0 +1,8 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - rscadd: "Added new medical access for paramedics."
+  - map: "Added paramedic dispatch on: TramStation and IceBox, removed elevator from Tram and moved chemstorage on IceBox."
+  - map: "Paramedic dispatch area is used on every paramedic office now."
+  - map: "Medical MODsuit and Jaws of Recovery moved to paramedic office."
+  - map: "Redesigned northern medbay on MetaStation."
