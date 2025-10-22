@@ -1,9 +1,15 @@
 /datum/surgery_operation/add_dental_implant
 	name = "add dental implant"
+	desc = "Implant a dental item into a patient's teeth."
 	implements = list(
 		/obj/item/reagent_containers/applicator/pill = 1,
 	)
 	time = 1.6 SECONDS
+
+/datum/surgery_operation/add_dental_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+	var/image/base = ..()
+	base.overlays += add_radial_overlays(image('icons/hud/implants.dmi', "reagents"))
+	return base
 
 /datum/surgery_operation/add_dental_implant/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_bone_state != SURGERY_BONE_DRILLED)
@@ -60,6 +66,7 @@
 
 /datum/surgery_operation/remove_dental_implant
 	name = "remove dental implant"
+	desc = "Remove a dental implant from a patient's teeth."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		HAND_IMPLEMENT = 1,

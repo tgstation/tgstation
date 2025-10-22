@@ -16,14 +16,14 @@
 	name = "Wetware OS Destructive Defragmentation"
 	desc = "A destructive robotic defragmentation method which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/mechanic_unwrench,
-		/datum/surgery_step/lobotomize/mechanic,
-		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close,
-	)
+	// steps = list(
+	// 	/datum/surgery_step/mechanic_open,
+	// 	/datum/surgery_step/open_hatch,
+	// 	/datum/surgery_step/mechanic_unwrench,
+	// 	/datum/surgery_step/lobotomize/mechanic,
+	// 	/datum/surgery_step/mechanic_wrench,
+	// 	/datum/surgery_step/mechanic_close,
+	// )
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
 	. = ..()

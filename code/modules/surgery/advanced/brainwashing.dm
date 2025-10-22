@@ -24,14 +24,14 @@
 	name = "Reprogramming"
 	desc = "Malware which directly implants a directive into the robotic patient's operating system, making it their absolute priority. It can be cleared using a mindshield implant."
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/mechanic_unwrench,
-		/datum/surgery_step/brainwash/mechanic,
-		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close,
-	)
+	// steps = list(
+	// 	/datum/surgery_step/mechanic_open,
+	// 	/datum/surgery_step/open_hatch,
+	// 	/datum/surgery_step/mechanic_unwrench,
+	// 	/datum/surgery_step/brainwash/mechanic,
+	// 	/datum/surgery_step/mechanic_wrench,
+	// 	/datum/surgery_step/mechanic_close,
+	// )
 
 /datum/surgery/advanced/brainwashing/can_start(mob/user, mob/living/carbon/target)
 	if(!..())

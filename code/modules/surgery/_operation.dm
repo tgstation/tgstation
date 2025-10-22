@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	if(!state_check(limb))
 		return FALSE
 
-	if(required_biotype && !(limb.bodytype & required_biotype))
+	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
 
 	if(!is_available(limb))
@@ -146,6 +146,29 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
 
 /**
+ * Helper for constructing overlays to apply to a radial image
+ *
+ * Input can be
+ * * - An atom typepath
+ * * - An atom instance
+ * * - Another image
+ *
+ * Returns a list of images
+ */
+/datum/surgery_operation/proc/add_radial_overlays(list/overlay_icons)
+	if(!islist(overlay_icons))
+		overlay_icons = list(overlay_icons)
+
+	var/list/created_list = list()
+	for(var/input in overlay_icons)
+		var/image/created = isimage(input) ? input : image(input)
+		created.layer = FLOAT_LAYER
+		created.plane = FLOAT_PLANE
+		created_list += created
+
+	return created_list
+
+/**
  * Collates all time modifiers for this operation and returns the final modifier
  */
 /datum/surgery_operation/proc/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
@@ -179,13 +202,24 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 		return NONE // allow attacking
 
 	var/picked = show_radial_menu(
-		src, patient, radial_operations, require_near = TRUE, autopick_single_option = TRUE, radius = 48,
+		user = src,
+		anchor = patient,
+		choices = radial_operations,
+		require_near = TRUE,
+		autopick_single_option = TRUE,
+		radius = 56,
+		custom_check = CALLBACK(src, PROC_REF(surgery_check), limb, potential_tool),
 	)
 	if(!picked)
 		return ITEM_INTERACT_BLOCKING // cancelled
 
 	var/datum/surgery_operation/picked_operation = operations[picked]["operation"]
 	return picked_operation.try_perform(limb, src, potential_tool, operations[picked])
+
+/mob/living/proc/surgery_check(obj/item/bodypart/limb, obj/item/tool)
+	if(!is_holding(tool))
+		return FALSE
+	return TRUE
 
 /**
  * The actual chain of performing the operation
@@ -376,7 +410,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 
 /// Plays a sound for the operation based on the tool used
 /datum/surgery_operation/proc/play_operation_sound(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, sound_or_sound_list)
-	if(required_biotype & BODYTYPE_ROBOTIC)
+	if(required_bodytype & BODYTYPE_ROBOTIC)
 		tool.play_tool_sound(limb)
 		return
 

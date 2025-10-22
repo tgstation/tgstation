@@ -16,14 +16,14 @@
 	name = "Aggression Suppression Programming"
 	desc = "Malware which permanently inhibits the aggression programming of the patient's neural network, making the patient unwilling to cause direct harm."
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/mechanic_unwrench,
-		/datum/surgery_step/pacify/mechanic,
-		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close,
-	)
+	// steps = list(
+	// 	/datum/surgery_step/mechanic_open,
+	// 	/datum/surgery_step/open_hatch,
+	// 	/datum/surgery_step/mechanic_unwrench,
+	// 	/datum/surgery_step/pacify/mechanic,
+	// 	/datum/surgery_step/mechanic_wrench,
+	// 	/datum/surgery_step/mechanic_close,
+	// )
 
 /datum/surgery/advanced/pacify/can_start(mob/user, mob/living/carbon/target)
 	. = ..()

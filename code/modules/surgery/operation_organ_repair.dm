@@ -259,7 +259,8 @@
 	failure_damage_percent = 0.15
 
 /datum/surgery_operation/organ_repair/gastrectomy/tool_check(obj/item/tool)
-	return tool.get_sharpness() != NONE
+	// Require sharpness OR a tool behavior match
+	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/organ_repair/gastrectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

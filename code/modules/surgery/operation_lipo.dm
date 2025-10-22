@@ -17,8 +17,14 @@
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
+/datum/surgery_operation/lipoplasty/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+	var/image/base = ..()
+	base.overlays += add_radial_overlays(list(/obj/item/food/meat/slab/human, /obj/item/scalpel))
+	return base
+
 /datum/surgery_operation/lipoplasty/tool_check(obj/item/tool)
-	return tool.get_sharpness() != NONE
+	// Require sharpness OR a tool behavior match
+	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/lipoplasty/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)

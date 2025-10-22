@@ -432,7 +432,7 @@
 /obj/item/surgical_processor/mod/emergency
 	loaded_surgeries = list(
 		/datum/surgery/healing/combo/upgraded/femto,
-		/datum/surgery/blood_filter,
+		// /datum/surgery/blood_filter,
 		// /datum/surgery/brain_surgery,
 		// /datum/surgery/coronary_bypass,
 		// /datum/surgery/ear_surgery,
@@ -440,5 +440,5 @@
 		// /datum/surgery/hepatectomy,
 		/datum/surgery/revival,
 		/datum/surgery/stomach_pump,
-		/datum/surgery/advanced/wing_reconstruction,
+		// /datum/surgery/advanced/wing_reconstruction,
 	)

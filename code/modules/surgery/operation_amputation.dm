@@ -1,7 +1,8 @@
 /datum/surgery_operation/amputate
 	name = "amputate limb"
+	desc = "Sever a limb from the patient's body."
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD
-	requires_bodypart_type = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		/obj/item/shears = 3,
 		TOOL_SCALPEL = 1,
@@ -16,8 +17,11 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
+/datum/surgery_operation/amputate/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+	return image(/obj/item/circular_saw)
+
 /datum/surgery_operation/amputate/is_available(obj/item/bodypart/limb)
-	return !HAS_TRAIT(limb.owner, TRAIT_NODISMEMBER)
+	return !HAS_TRAIT(limb.owner, TRAIT_NODISMEMBER) && limb.body_zone != BODY_ZONE_CHEST && !(limb.bodypart_flags & BODYPART_UNREMOVABLE)
 
 /datum/surgery_operation/amputate/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
@@ -53,7 +57,7 @@
 
 /datum/surgery_operation/amputate/mechanic
 	name = "disassemble limb"
-	requires_bodypart_type = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		/obj/item/shovel/giant_wrench = 3,
 		TOOL_WRENCH = 1,
@@ -72,7 +76,7 @@
 
 /datum/surgery_operation/amputate/pegleg
 	name = "detach peg leg"
-	requires_bodypart_type = BODYTYPE_PEG
+	required_bodytype = BODYTYPE_PEG
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 1,

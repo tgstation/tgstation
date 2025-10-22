@@ -18,15 +18,15 @@
 /datum/surgery/revival/mechanic
 	name = "Full System Reboot"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	steps = list(
-		/datum/surgery_step/mechanic_open,
-		/datum/surgery_step/open_hatch,
-		/datum/surgery_step/mechanic_unwrench,
-		/datum/surgery_step/prepare_electronics,
-		/datum/surgery_step/revive,
-		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close,
-	)
+	// steps = list(
+	// 	/datum/surgery_step/mechanic_open,
+	// 	/datum/surgery_step/open_hatch,
+	// 	/datum/surgery_step/mechanic_unwrench,
+	// 	/datum/surgery_step/prepare_electronics,
+	// 	/datum/surgery_step/revive,
+	// 	/datum/surgery_step/mechanic_wrench,
+	// 	/datum/surgery_step/mechanic_close,
+	// )
 
 /datum/surgery/revival/can_start(mob/user, mob/living/target)
 	if(!..())

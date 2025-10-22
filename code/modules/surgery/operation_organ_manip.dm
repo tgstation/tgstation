@@ -61,7 +61,8 @@
 			continue
 		if(!LAZYACCESS(cached_organ_manipulation_options, organ.type))
 			var/datum/radial_menu_choice/option = new()
-			option.image = image(organ)
+			option.image = get_default_radial_image(limb, surgeon, organ)
+			option.image.overlays += add_radial_overlays(organ)
 			option.name = "remove [organ.name]"
 			option.info = "Remove [organ.name] from the patient."
 			LAZYSET(cached_organ_manipulation_options, organ.type, option)
@@ -80,7 +81,8 @@
 
 	if(!LAZYACCESS(cached_organ_manipulation_options, organ.type))
 		var/datum/radial_menu_choice/option = new()
-		option.image = image(organ)
+		option.image = get_default_radial_image(limb, surgeon, organ)
+		option.image.overlays += add_radial_overlays(list(image('icons/hud/screen_gen.dmi', "arrow_large_still"), organ))
 		option.name = "insert [organ.name]"
 		option.info = "insert [organ.name] into the patient."
 		LAZYSET(cached_organ_manipulation_options, organ.type, option)
