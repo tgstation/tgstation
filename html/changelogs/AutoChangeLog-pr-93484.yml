@@ -1,0 +1,4 @@
+author: "L0pz"
+delete-after: True
+changes:
+  - qol: "Drone pings are now louder"

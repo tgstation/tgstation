@@ -1,0 +1,4 @@
+author: "JoJe3003"
+delete-after: True
+changes:
+  - bugfix: "Fixed a bug where infinite capacity power cells and megacells wouldn't work on large power grids (high loads)."

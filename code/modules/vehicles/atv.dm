@@ -112,11 +112,11 @@
 	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
 
-/obj/vehicle/ridden/atv/bullet_act(obj/projectile/proj)
+/obj/vehicle/ridden/atv/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(prob(50) || !LAZYLEN(buckled_mobs))
 		return ..()
 	for(var/mob/buckled_mob as anything in buckled_mobs)
-		return buckled_mob.projectile_hit(proj)
+		return buckled_mob.projectile_hit(hitting_projectile)
 	return ..()
 
 /obj/vehicle/ridden/atv/atom_destruction()
