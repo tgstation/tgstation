@@ -179,7 +179,7 @@
 		return TRUE
 
 /obj/item/reagent_containers/cup/soda_cans/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(reagents.total_volume)
+	if(reagents.total_volume && !(reagents.flags & OPENCONTAINER))
 		burst_soda(loc)
 
 #undef SODA_FIZZINESS_THROWN
