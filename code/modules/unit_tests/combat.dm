@@ -141,8 +141,10 @@
 
 /// Tests that soundbang_act (and therefore sound_damage) works correctly
 /datum/unit_test/soundbang
+
+/datum/unit_test/soundbang/Run()
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
-	victim.soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 0, damage_pwr = 10, deafen_pwr = 20 SECONDS)
+	victim.soundbang_act(intensity = SOUNDBANG_NORMAL, damage_pwr = 10, deafen_pwr = 20 SECONDS)
 	TEST_ASSERT_EQUAL(victim.get_organ_loss(ORGAN_SLOT_EARS), 10, "victim didn't take the right amount of ears damage")
 	TEST_ASSERT(HAS_TRAIT_FROM(victim, TRAIT_DEAF, EAR_DAMAGE), "victim wasn't temporarily deafened")
 	var/obj/item/organ/ears/ears = victim.get_organ_slot(ORGAN_SLOT_EARS)
