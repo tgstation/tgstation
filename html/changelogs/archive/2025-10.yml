@@ -665,3 +665,39 @@
       they spawn open and can have their locking mechanism set via a wrench.
   - bugfix: Secure safes will now transfer their state (locked, PIN code, emagged,
       etc.) when deconstructed from a wall and vice-versa.
+2025-10-22:
+  Ghommie:
+  - refactor: Refactored organ damage code a little. Hopefully there won't be issues
+      (otherwise report them).
+  - bugfix: Fixes borg being chiefly unaffected by flashes.
+  JoJe3003:
+  - bugfix: Fixed a bug where infinite capacity power cells and megacells wouldn't
+      work on large power grids (high loads).
+  L0pz:
+  - qol: Drone pings are now louder
+  Melbert:
+  - rscdel: Security batons no longer get more armor penetration the larger the cell
+      installed
+  - balance: Security baton base stun armor pen upped 10% -> 15%
+  - balance: Gold telescopic baton stun armor pen downed 60% -> 50%
+  - balance: Silver telescopic baton stun armor pen downed 40% -> 30%
+  - balance: Bronze telescopic baton stun armor pen downed 20% -> 15%
+  - balance: Contractor baton stun armor pen downed 30% -> 25%
+  - balance: Nunchuck stun armor pen downed 30% -> 25%
+  SmArtKar:
+  - bugfix: Fixed lavaloop charge bar getting stuck when swapping hands
+  - bugfix: Fixed flypeople not being able to gain nutrition from slurping up vomit
+  SyncIt21:
+  - bugfix: crystal meth has correct purity based colours
+  necromanceranne:
+  - balance: The strongarm implants now directly improves the unarmed power of the
+      arm it is implanted into.
+  - balance: The strongarm implant's super slam now uses similar calculations to normal
+      unarmed attacks, including improvements from mutations and athletics.
+  - balance: The strongarm always uses the super slam against nonhuman opponents.
+      It will only go on cooldown, and care about that cooldown, when used against
+      humans.
+  tonyhawq:
+  - rscadd: Adds a golf cart to cargo warehouse and cargo imports
+  - rscadd: Adds golf carts which can transport crates, machines, fuel tanks, and
+      people
