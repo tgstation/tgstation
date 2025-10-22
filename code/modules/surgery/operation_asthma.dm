@@ -6,8 +6,8 @@
 		TOOL_WIRECUTTER = 0.45,
 	)
 	time = 8 SECONDS
-	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
-	success_sound = 'sound/items/handling/surgery/close1.ogg'
+	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
+	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 
 	/// The amount of inflammation a failure or success of this surgery will reduce.
 	var/inflammation_reduction = 75
