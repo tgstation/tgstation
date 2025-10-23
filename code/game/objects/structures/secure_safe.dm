@@ -104,14 +104,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
 	//this will create the storage for us.
-	AddComponent(/datum/component/lockable_storage, stored_lock_code)
-
-	if(!density)
-		find_and_hang_on_wall()
+	AddComponent(/datum/component/lockable_storage, , stored_lock_code)
 	if(mapload)
 		PopulateContents()
-
+		find_and_hang_on_wall()
 	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
+
+/obj/structure/secure_safe/find_and_hang_on_wall()
+	if(!density)
+		return ..()
 
 /obj/structure/secure_safe/atom_deconstruct(disassembled)
 	if(!density) //if we're a wall item, we'll drop a wall frame.
