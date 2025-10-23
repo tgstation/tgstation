@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed dropped limbs rotating and disappearing when pulled/thrown"
