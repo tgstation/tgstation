@@ -1255,7 +1255,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/picked_color = pick(random_color_list)
 	var/color_filter = color_transition_filter(picked_color, SATURATION_OVERRIDE)
 	if (can_color_clothing && (methods & (TOUCH|VAPOR|INHALE)))
-		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES
+		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT
 		if (methods & (VAPOR|INHALE) || touch_protection >= 1)
 			include_flags |= INCLUDE_POCKETS
 		for (var/obj/item/to_color in exposed_mob.get_equipped_items(include_flags))
