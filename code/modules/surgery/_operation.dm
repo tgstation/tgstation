@@ -2,10 +2,13 @@
 #define OPERATION_NOTABLE (1<<1)
 /// Surgery will automatically repeat until it can no longer be performed
 #define OPERATION_LOOPING (1<<2)
+/// Grants a speed bonus if the user is morbid and their tool is morbid
 #define OPERATION_MORBID (1<<3)
 #define OPERATION_REQUIRES_TECH (1<<4)
 /// No matter what the surgeon is targeting, we always operate on the chest
 #define OPERATION_REDIRECT_CHEST (1<<5)
+/// Operation can be performed on standing patients
+#define OPERATION_STANDING_ALLOWED (1<<6)
 
 #define IMPLEMENT_HAND "hands"
 
@@ -32,7 +35,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 		if(!operation.check_availability(operated_limb, src, potential_tool))
 			continue
 		for(var/radial_slice, option_info in operation.get_radial_options(operated_limb, src, potential_tool))
-			operations[radial_slice] = list("operation" = operation) + option_info
+			operations[radial_slice] = list("operation" = operation, "limb" = operated_limb) + option_info
 			radial_operations[radial_slice] = radial_slice
 
 	if(!length(operations))
@@ -51,6 +54,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 		return ITEM_INTERACT_BLOCKING // cancelled
 
 	var/datum/surgery_operation/picked_operation = operations[picked]["operation"]
+	var/obj/item/bodypart/limb = operations[picked]["limb"]
 	return picked_operation.try_perform(limb, src, potential_tool, operations[picked])
 
 /mob/living/proc/surgery_check(obj/item/tool)
@@ -92,6 +96,9 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(isnull(limb.owner))
+		return FALSE
+
+	if(limb.owner.body_position != LYING_DOWN && !(operation_flags & OPERATION_STANDING_ALLOWED))
 		return FALSE
 
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
@@ -229,11 +236,38 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
  * Collates all time modifiers for this operation and returns the final modifier
  */
 /datum/surgery_operation/proc/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
-	var/implement_modifier = get_tool_quality(tool) || 1
-	var/location_modifier = get_location_modifier(limb.owner)
+	var/implement_modifier = get_tool_quality(tool) || 1.0
+	var/location_modifier = get_location_modifier(get_turf(limb))
+	var/morbid_modifier = get_morbid_modifier(surgeon, tool)
 	// modifiers are expressed as fractions of the base time - ie, 1.2x = 1.2x faster surgery
 	// but since we're multiplying time, we invert here - ie, 1.2x = 0.83x smaller time
-	return round(1 / (implement_modifier * location_modifier), 0.01)
+	return round(1.0 / (implement_modifier * location_modifier * morbid_modifier), 0.01)
+
+/// Returns a time modifier for morbid operations
+/datum/surgery_operation/proc/get_morbid_modifier(mob/living/surgeon, obj/item/tool)
+	if(!(operation_flags & OPERATION_MORBID))
+		return 1.0
+	if(!HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
+		return 1.0
+	if(!isitem(tool) || !(tool.item_flags & CRUEL_IMPLEMENT))
+		return 1.0
+
+	return 0.7
+
+/// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
+/datum/surgery_operation/proc/get_location_modifier(turf/operation_turf)
+	// Technically this IS a typecache, just not the usual kind :3
+	var/static/list/modifiers = zebra_typecacheof(list(
+		/obj/structure/table = 0.8,
+		/obj/structure/table/optable = 1.0,
+		/obj/structure/table/optable/abductor = 1.2,
+		/obj/machinery/stasis = 0.9,
+		/obj/structure/bed = 0.7,
+	))
+	var/mod = 0.5
+	for(var/obj/thingy in operation_turf)
+		mod = max(mod, modifiers[thingy.type])
+	return mod
 
 /**
  * The actual chain of performing the operation

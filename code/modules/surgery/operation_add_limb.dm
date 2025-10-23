@@ -6,7 +6,7 @@
 		/obj/item = 1,
 	)
 	time = 3.2 SECONDS
-	operation_flags = OPERATION_REDIRECT_CHEST
+	operation_flags = OPERATION_REDIRECT_CHEST | OPERATION_STANDING_ALLOWED
 	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
 	var/list/always_accepted_prosthetics = list(
 		/obj/item/chainsaw, // the OG, too large otherwise

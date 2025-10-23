@@ -5,6 +5,7 @@
 	time = 10 SECONDS
 	success_sound = 'sound/machines/printer.ogg'
 	required_bodytype = BODYTYPE_ORGANIC
+	operation_flags = OPERATION_MORBID
 
 /datum/surgery_operation/autopsy/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)

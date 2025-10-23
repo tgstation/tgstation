@@ -2,6 +2,8 @@
 /datum/surgery_operation/organ_manipulation
 	name = "organ manipulation"
 	abstract_type = /datum/surgery_operation/organ_manipulation
+	operation_flags = OPERATION_MORBID
+
 	var/list/cached_organ_manipulation_options
 
 	var/insert_preop_sound = 'sound/items/handling/surgery/organ2.ogg'

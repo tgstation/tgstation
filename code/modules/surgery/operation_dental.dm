@@ -20,14 +20,13 @@
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
-
 	var/obj/item/bodypart/head/teeth_receptangle = limb
-	if(limb.teeth_count <= 0)
+	if(teeth_receptangle.teeth_count <= 0)
 		return FALSE
 	var/count = 0
 	for(var/obj/item/reagent_containers/applicator/pill/dental in limb)
 		count++
-	if(count >= limb.teeth_count)
+	if(count >= teeth_receptangle.teeth_count)
 		return FALSE
 	return TRUE
 

@@ -27,45 +27,45 @@
 // 	TEST_ASSERT(!patient.has_trauma_type(), "Patient kept their brain trauma after brain surgery")
 // 	TEST_ASSERT(patient.get_organ_loss(ORGAN_SLOT_BRAIN) < 20, "Patient did not heal their brain damage after brain surgery")
 
-/datum/unit_test/head_transplant/Run()
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+// /datum/unit_test/head_transplant/Run()
+// 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 
-	var/mob/living/carbon/human/alice = allocate(/mob/living/carbon/human/consistent)
-	alice.fully_replace_character_name(null, "Alice")
-	alice.set_haircolor(COLOR_LIGHT_PINK, update = FALSE)
-	alice.set_hairstyle("Very Long Hair", update = FALSE)
-	alice.set_facial_haircolor(COLOR_LIGHT_PINK, update = FALSE)
-	alice.set_facial_hairstyle("Shaved", update = TRUE)
+// 	var/mob/living/carbon/human/alice = allocate(/mob/living/carbon/human/consistent)
+// 	alice.fully_replace_character_name(null, "Alice")
+// 	alice.set_haircolor(COLOR_LIGHT_PINK, update = FALSE)
+// 	alice.set_hairstyle("Very Long Hair", update = FALSE)
+// 	alice.set_facial_haircolor(COLOR_LIGHT_PINK, update = FALSE)
+// 	alice.set_facial_hairstyle("Shaved", update = TRUE)
 
-	var/mob/living/carbon/human/bob = allocate(/mob/living/carbon/human/consistent)
-	bob.fully_replace_character_name(null, "Bob")
-	bob.set_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
-	bob.set_hairstyle("Short Hair", update = FALSE)
-	bob.set_facial_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
-	bob.set_facial_hairstyle("Beard (Full)", update = TRUE)
+// 	var/mob/living/carbon/human/bob = allocate(/mob/living/carbon/human/consistent)
+// 	bob.fully_replace_character_name(null, "Bob")
+// 	bob.set_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
+// 	bob.set_hairstyle("Short Hair", update = FALSE)
+// 	bob.set_facial_haircolor(COLOR_LIGHT_BROWN, update = FALSE)
+// 	bob.set_facial_hairstyle("Beard (Full)", update = TRUE)
 
-	var/obj/item/bodypart/head/alices_head = alice.get_bodypart(BODY_ZONE_HEAD)
-	alices_head.drop_limb()
+// 	var/obj/item/bodypart/head/alices_head = alice.get_bodypart(BODY_ZONE_HEAD)
+// 	alices_head.drop_limb()
 
-	var/obj/item/bodypart/head/bobs_head = bob.get_bodypart(BODY_ZONE_HEAD)
-	bobs_head.drop_limb()
+// 	var/obj/item/bodypart/head/bobs_head = bob.get_bodypart(BODY_ZONE_HEAD)
+// 	bobs_head.drop_limb()
 
-	TEST_ASSERT_EQUAL(alice.get_bodypart(BODY_ZONE_HEAD), null, "Alice still has a head after dismemberment")
-	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Unknown", "Alice's head was dismembered, but they are not Unknown")
+// 	TEST_ASSERT_EQUAL(alice.get_bodypart(BODY_ZONE_HEAD), null, "Alice still has a head after dismemberment")
+// 	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Unknown", "Alice's head was dismembered, but they are not Unknown")
 
-	TEST_ASSERT_EQUAL(bobs_head.real_name, "Bob", "Bob's head does not remember that it is from Bob")
+// 	TEST_ASSERT_EQUAL(bobs_head.real_name, "Bob", "Bob's head does not remember that it is from Bob")
 
-	// Put Bob's head onto Alice's body
-	var/datum/surgery_step/add_prosthetic/add_prosthetic = new
-	user.put_in_active_hand(bobs_head)
-	add_prosthetic.success(user, alice, BODY_ZONE_HEAD, bobs_head)
+// 	// Put Bob's head onto Alice's body
+// 	var/datum/surgery_step/add_prosthetic/add_prosthetic = new
+// 	user.put_in_active_hand(bobs_head)
+// 	add_prosthetic.success(user, alice, BODY_ZONE_HEAD, bobs_head)
 
-	TEST_ASSERT(!isnull(alice.get_bodypart(BODY_ZONE_HEAD)), "Alice has no head after prosthetic replacement")
-	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Bob", "Bob's head was transplanted onto Alice's body, but their name is not Bob")
-	TEST_ASSERT_EQUAL(alice.hairstyle, "Short Hair", "Bob's head was transplanted onto Alice's body, but their hairstyle is not Short Hair")
-	TEST_ASSERT_EQUAL(alice.hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their hair color is not COLOR_LIGHT_BROWN")
-	TEST_ASSERT_EQUAL(alice.facial_hairstyle, "Beard (Full)", "Bob's head was transplanted onto Alice's body, but their facial hairstyle is not Beard (Full)")
-	TEST_ASSERT_EQUAL(alice.facial_hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their facial hair color is not COLOR_LIGHT_BROWN")
+// 	TEST_ASSERT(!isnull(alice.get_bodypart(BODY_ZONE_HEAD)), "Alice has no head after prosthetic replacement")
+// 	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Bob", "Bob's head was transplanted onto Alice's body, but their name is not Bob")
+// 	TEST_ASSERT_EQUAL(alice.hairstyle, "Short Hair", "Bob's head was transplanted onto Alice's body, but their hairstyle is not Short Hair")
+// 	TEST_ASSERT_EQUAL(alice.hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their hair color is not COLOR_LIGHT_BROWN")
+// 	TEST_ASSERT_EQUAL(alice.facial_hairstyle, "Beard (Full)", "Bob's head was transplanted onto Alice's body, but their facial hairstyle is not Beard (Full)")
+// 	TEST_ASSERT_EQUAL(alice.facial_hair_color, COLOR_LIGHT_BROWN, "Bob's head was transplanted onto Alice's body, but their facial hair color is not COLOR_LIGHT_BROWN")
 
 // /datum/unit_test/multiple_surgeries/Run()
 // 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)

@@ -13,7 +13,7 @@
 		return FALSE
 	if(limb.bodypart_flags & BODYPART_UNREMOVABLE)
 		return FALSE
-	if(deprivate_zone(surgeon.zone_selected) != limb.body_zone)
+	if(deprecise_zone(surgeon.zone_selected) != limb.body_zone)
 		return FALSE
 	if(limb.body_zone != tool.body_zone)
 		return FALSE
