@@ -399,7 +399,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	SSticker.delay_end = FALSE
 
 	log_world("::group::Expensive Unit Test Times")
-	sortTim(GLOB.test_run_times, associative = TRUE)
+	sortTim(GLOB.test_run_times, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	for(var/type in GLOB.test_run_times)
 		var/duration = GLOB.test_run_times[type]
 		log_world("[type] took [duration/10]s")
