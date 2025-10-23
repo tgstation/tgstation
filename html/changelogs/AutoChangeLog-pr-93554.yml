@@ -1,0 +1,4 @@
+author: "TheNobodyofimportance"
+delete-after: True
+changes:
+  - balance: "Vomit drinking now checks for fly mouth instead of fly species"

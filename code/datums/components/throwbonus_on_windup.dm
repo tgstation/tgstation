@@ -45,13 +45,17 @@
 		start_windup()
 
 /datum/component/throwbonus_on_windup/proc/start_windup()
+	if(!QDELETED(our_bar))
+		CRASH("throwbonus_on_windup component attempted to start windup while already winding up a throw!")
 
 	throwforce_bonus = initial(throwforce_bonus)
 	var/mob/living/our_holder = holder?.resolve()
 	if(isnull(holder))
 		return
+
 	if(throw_text)
 		to_chat(our_holder, span_warning(throw_text))
+
 	var/x_position = CEILING(our_holder.get_visual_width() * 0.5, 1)
 	our_bar = new()
 	our_bar.maximum_count = maximum_bonus
@@ -76,8 +80,11 @@
 	holder = null
 	return ..()
 
-/datum/component/throwbonus_on_windup/proc/throw_change(datum/source, throw_mode)
+/datum/component/throwbonus_on_windup/proc/throw_change(mob/living/source, throw_mode)
 	SIGNAL_HANDLER
+
+	if (source.get_active_held_item() != parent)
+		return
 
 	if(throw_mode)
 		start_windup()
