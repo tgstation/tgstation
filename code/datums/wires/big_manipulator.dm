@@ -23,8 +23,8 @@
 	var/list/status = list()
 	status += "The big light bulb [holder_manipulator.power_access_wire_cut ? "is off" : "is glowing [holder_manipulator.on ? "green" : "red"]"]."
 	status += "The small light bulb [holder_manipulator.held_object ? "is glowing bright green" : "is off"]."
-	status += "The green number on the display shows [span_bold("[length(holder_manipulator.pickup_points)]")]."
-	status += "The red number on the display shows [span_bold("[length(holder_manipulator.dropoff_points)]")]."
+	status += "The green number on the display shows [length(holder_manipulator.pickup_points)]"."
+	status += "The red number on the display shows [length(holder_manipulator.dropoff_points)]."
 	return status
 
 /datum/wires/big_manipulator/on_pulse(wire)
