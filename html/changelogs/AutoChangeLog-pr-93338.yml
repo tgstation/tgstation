@@ -1,6 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - rscadd: "New bluespace locator interface"
-  - rscdel: "Removed legacy teleport beacon tracking from bluespace locator"
-  - bugfix: "Bluespace locator now correctly locates tracking implants instead of beacon implants"

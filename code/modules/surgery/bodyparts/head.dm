@@ -173,7 +173,6 @@
 
 /obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
-
 	. += get_hair_and_lips_icon(dropped)
 	// We need to get the eyes if we are dropped (ugh)
 	if(!dropped)
@@ -200,9 +199,10 @@
 		if(eyes.eye_color_right)
 			eye_right.color = eyes.eye_color_right
 
-	if(eyes.overlay_ignore_lighting)
-		eye_left.overlays += image(emissive_appearance(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha), dir = SOUTH)
-		eye_right.overlays += image(emissive_appearance(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha), dir = SOUTH)
+	var/list/emissive_overlays = eyes.get_emissive_overlays(eye_left, eye_right, src)
+	if(length(emissive_overlays))
+		eye_left.overlays += image(emissive_overlays[1], dir = SOUTH)
+		eye_right.overlays += image(emissive_overlays[2], dir = SOUTH)
 	else if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		eye_left.overlays += image(emissive_blocker(eye_left.icon, eye_left.icon_state, src, alpha = eye_left.alpha), dir = SOUTH)
 		eye_right.overlays += image(emissive_blocker(eye_right.icon, eye_right.icon_state, src, alpha = eye_right.alpha), dir = SOUTH)
