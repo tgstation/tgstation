@@ -144,9 +144,11 @@
 				tool.play_tool_sound(src, 75)
 				switch(fixture_type)
 					if("tube")
-						new_light = new /obj/machinery/light/built(loc)
+						new_light = new /obj/machinery/light/empty(loc)
 					if("bulb")
-						new_light = new /obj/machinery/light/small/built(loc)
+						new_light = new /obj/machinery/light/small/empty(loc)
+					if("floor")
+						new_light = new /obj/machinery/light/floor/empty(loc)
 				new_light.setDir(dir)
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
@@ -168,4 +170,10 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-stage1"
 	fixture_type = "bulb"
+	sheets_refunded = 1
+
+/obj/structure/light_construct/floor
+	name = "floor light fixture frame"
+	icon_state = "floor-construct-stage1"
+	fixture_type = "floor"
 	sheets_refunded = 1
