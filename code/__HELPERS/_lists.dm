@@ -894,14 +894,6 @@
 		used_key_list[input_key] = 1
 	return input_key
 
-///Flattens a keyed list into a list of its contents
-/proc/flatten_list(list/key_list)
-	if(!islist(key_list))
-		return null
-	. = list()
-	for(var/key in key_list)
-		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
-
 ///Make a normal list an associative one
 /proc/make_associative(list/flat_list)
 	. = list()
@@ -958,6 +950,14 @@
 			continue
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
+
+/// Turns an associative list into a flat list of values
+/proc/assoc_to_values(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)

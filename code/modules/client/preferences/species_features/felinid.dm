@@ -9,7 +9,7 @@
 	return assoc_to_keys_features(SSaccessories.tails_list_felinid)
 
 /datum/preference/choiced/tail_felinid/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_TAIL] = value
+	target.dna.features[FEATURE_TAIL_CAT] = value
 
 /datum/preference/choiced/tail_felinid/create_default_value()
 	var/datum/sprite_accessory/tails/felinid/cat/tail = /datum/sprite_accessory/tails/felinid/cat

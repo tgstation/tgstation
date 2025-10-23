@@ -740,7 +740,7 @@
 	else
 		var/obj/item/organ/ears/has_ears = human_examined.get_organ_slot(ORGAN_SLOT_EARS)
 		if(has_ears)
-			if(has_ears.deaf)
+			if(has_ears.temporary_deafness)
 				final_message += "\tDamaged eardrums in [examining.p_their()] ear canals."
 			else
 				final_message += "\tA set of [has_ears.damage ? "" : "healthy "][has_ears.name]."

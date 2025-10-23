@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "When placing cargo requests, you can now request that a crate be obtained using your department's funds as opposed to the cargo budget."
