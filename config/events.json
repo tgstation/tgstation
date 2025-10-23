@@ -1,8 +1,4 @@
 {
-	"Space Pirates": {
-		"min_players": 20,
-		"weight": 10
-	},
 	"Spawn Bitrunning Glitch": {
 		"min_players": 1,
 		"weight": 100
