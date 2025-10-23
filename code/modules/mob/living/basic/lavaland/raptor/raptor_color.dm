@@ -210,13 +210,17 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 /obj/item/mob_holder/purple_raptor/equipped(mob/user, slot, initial)
 	. = ..()
 	if ((slot & ITEM_SLOT_BACK) && ishuman(user) && flight_action)
-		flight_action.Grant(user)
+		flight_action.Grant(held_mob)
+		flight_action.GiveAction(user)
 
 /obj/item/mob_holder/purple_raptor/dropped(mob/user, silent)
 	. = ..()
-	// No need to remove the action as its deleted on Destroy
 	if (wings_open)
 		toggle_wings(user)
+	// Removed in Destroy()
+	if (flight_action)
+		flight_action.Remove(held_mob)
+		flight_action.HideFrom(user)
 
 /obj/item/mob_holder/purple_raptor/proc/on_weight_updated(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
@@ -317,9 +321,9 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	button_icon_state = "raptor_wings"
 
 /datum/action/innate/raptor_wings/Activate()
-	var/mob/living/carbon/human/user = owner
 	var/obj/item/mob_holder/purple_raptor/holder = target
-	if (user.get_item_by_slot(ITEM_SLOT_BACK) == holder)
+	var/mob/living/carbon/human/user = holder.loc
+	if (istype(user) && user.get_item_by_slot(ITEM_SLOT_BACK) == holder)
 		holder.toggle_wings(user)
 
 /datum/raptor_color/green
