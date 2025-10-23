@@ -393,6 +393,13 @@
 
 ///  D O O R  &  A I R L O C K  ///
 
+/obj/machinery/door/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, density)
+	. -= NAMEOF(src, opacity)
+	. -= NAMEOF(src, icon_state)
+	return .
+
 /obj/machinery/door/airlock/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, autoname)
@@ -555,6 +562,110 @@
 	. += NAMEOF(src, locked)
 	return .
 
+///  T R A M  ///
+
+// The tram is a little tricky to save because all the [/obj/structure/transport/linear] get deleted except for the one at the bottom left of the tram. These all get used during Init to determine the size and shape of the tram.
+// Next problem is the landmark [/obj/effect/landmark/transport/transport_id] gets attatched to the /datum/transport_controller/ and then deleted.
+// To resolve these we are going to insert a transport structure on the same turf as any tram wall/floors.
+// Then we lookup the landmark from the datum and insert it on the same turf that has the bottom left transport structure
+// Without these fixes the tram will runtime on any map or ruins that has it setup
+/*
+/obj/structure/thermoplastic/on_object_saved()
+	var/data
+	if(!(locate(/obj/structure/transport/linear/tram) in loc))
+		data += "[data ? ",\n" : ""][/obj/structure/transport/linear/tram]"
+	return data
+
+/obj/structure/tram/on_object_saved()
+	var/data
+	if(!(locate(/obj/structure/transport/linear/tram) in loc))
+		data += "[data ? ",\n" : ""][/obj/structure/transport/linear/tram]"
+	return data
+*/
+/obj/structure/transport/linear/tram/is_saveable(turf/current_loc)
+	return TRUE // skip multi-tile object checks
+
+/obj/structure/transport/linear/tram/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/obj/structure/tram/spoiler/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+	return .
+
+/*
+/obj/structure/transport/linear/tram/get_save_substitute_type(turf/current_loc)
+	// substitute any tram pieces that are not the bottom left turf of the bounding box
+	// since the tram is considered a multi-tile object
+	if(src.loc == current_loc)
+		return FALSE
+
+	if(locate(/obj/structure/thermoplastic) in current_loc) // tram open turf floor
+		return /obj/structure/transport/linear/tram
+	if(locate(/obj/structure/tram) in current_loc) // tram wall
+		return /obj/structure/transport/linear/tram
+
+	var/obj/structure/tram/spoiler/tram_corner = locate(/obj/structure/tram/spoiler) in current_loc
+	if(tram_corner)
+		switch(tram_corner.dir)
+			if(NORTH)
+				return /obj/structure/transport/linear/tram/corner/northeast
+			if(SOUTH)
+				return /obj/structure/transport/linear/tram/corner/southwest
+			if(EAST)
+				return /obj/structure/transport/linear/tram/corner/southeast
+			if(WEST)
+				return /obj/structure/transport/linear/tram/corner/northwest
+
+	return FALSE
+*/
+
+// these are for public elevators
+/obj/structure/transport/linear/public/on_object_saved(turf/current_loc)
+	var/data
+	var/datum/transport_controller/linear/transport = transport_controller_datum
+	if(transport?.specific_transport_id)
+		if(transport.transport_modules?[1] != src)
+			return // only save the landmark to the 1st turf regardless wherever it may be
+
+		var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
+		var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
+		data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
+	return data
+
+// these are for the tram
+/obj/structure/transport/linear/tram/on_object_saved(turf/current_loc)
+	// only save the landmark to the bottom left turf of the bounding box since
+	// the tram is considered a multi-tile object
+	if(src.loc != current_loc)
+		return
+
+	var/data
+	var/datum/transport_controller/linear/transport = transport_controller_datum
+	if(transport?.specific_transport_id)
+		var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
+		var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
+		data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
+	return data
+
+//obj/structure/transport/linear/public
+
+/obj/machinery/elevator_control_panel/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, linked_elevator_id)
+	. += NAMEOF(src, preset_destination_names)
+	return .
+
+/obj/machinery/lift_indicator/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)
+
+	. += NAMEOF(src, linked_elevator_id)
+	. += NAMEOF(src, current_lift_floor)
+	return .
+
 ///  A R T  ///
 
 /obj/structure/sign/painting/get_save_vars()
@@ -584,7 +695,7 @@
 
 /// P O W E R ///
 
-// these spawn underneath apc's that create them in Initilization()
+// these spawn underneath apc's but are created by them in Initilization()
 /obj/machinery/power/terminal/is_saveable()
 	if(locate(/obj/machinery/power/apc) in loc)
 		return FALSE
