@@ -398,6 +398,13 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		RunUnitTest(unit_path, test_results)
 	SSticker.delay_end = FALSE
 
+	log_world("::group::Expensive Unit Test Times")
+	sortTim(GLOB.test_run_times, associative = TRUE)
+	for(var/type in GLOB.test_run_times)
+		var/duration = GLOB.test_run_times[type]
+		log_world("[type] took [duration/10]s")
+	log_world("::endgroup::")
+
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)
 	file(file_name) << json_encode(test_results)

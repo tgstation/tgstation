@@ -297,9 +297,6 @@ GLOBAL_VAR(restart_counter)
 #ifdef UNIT_TESTS
 		if(GLOB.failed_any_test)
 			LAZYADD(fail_reasons, "Unit Tests failed!")
-		for(var/type in GLOB.test_run_times)
-			var/duration = GLOB.test_run_times[type]
-			log_world("[type] took [duration/10]s")
 #endif
 		if(!GLOB.log_directory)
 			LAZYADD(fail_reasons, "Missing GLOB.log_directory!")
