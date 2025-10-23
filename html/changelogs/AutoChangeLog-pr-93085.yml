@@ -1,8 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Secure safes are now fire-proof, conduct electricity, are resistant to light explosions, and have armor/health that is similar to airlocks."
-  - rscadd: "A message will now appear in your chat log when you set the PIN code for a secure briefcase or secure safe in case people forget."
-  - rscadd: "Vaults are now climbable, except floor ones."
-  - rscadd: "Add crafting recipes for secure safe and vaults. When vaults are crafted, they spawn open and can have their locking mechanism set via a wrench."
-  - bugfix: "Secure safes will now transfer their state (locked, PIN code, emagged, etc.) when deconstructed from a wall and vice-versa."

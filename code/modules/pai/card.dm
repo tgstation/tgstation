@@ -125,6 +125,7 @@
 		name = pai.name,
 		transmit = pai.can_transmit,
 		receive = pai.can_receive,
+		leashed = pai.leash,
 		range = pai.leash?.distance,
 	)
 	return data
@@ -158,6 +159,9 @@
 			return TRUE
 		if("toggle_holo")
 			pai.toggle_holo()
+			return TRUE
+		if("toggle_leash")
+			pai.toggle_leash()
 			return TRUE
 		if("toggle_radio")
 			pai.toggle_radio(params["option"])
