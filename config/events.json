@@ -240,19 +240,6 @@
 		"min_players": 20,
 		"weight": 10
 	},
-	"Changeling Meteor": {
-		"min_players": 20,
-		"weight": 8
-	},
-	"Spawn Fugitives": {
-		"min_players": 20,
-		"weight": 10,
-		"earliest_start": 18000
-	},
-	"Spawn Nightmare": {
-		"min_players": 20,
-		"weight": 10
-	},
 	"Lone Operative": {
 		"min_players": 0,
 		"weight": 0
