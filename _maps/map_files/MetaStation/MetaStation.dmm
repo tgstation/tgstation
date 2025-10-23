@@ -9444,6 +9444,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
+"dqm" = (
+/obj/effect/spawner/structure/window,
+/obj/structure/curtain/cloth{
+	color = "#52B4E9"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/turf/open/floor/plating,
+/area/station/medical/paramedic)
 "dqn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -16204,6 +16212,7 @@
 	color = "#52B4E9"
 	},
 /obj/effect/landmark/start/paramedic,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
@@ -33408,11 +33417,11 @@
 "lyh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Cryogenics Bay"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "lyu" = (
@@ -46201,11 +46210,11 @@
 /area/station/science/xenobiology/hallway)
 "pUM" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Paramedic Dispatch Room"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "pUS" = (
@@ -48638,7 +48647,9 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_x = 21
+	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
@@ -63387,11 +63398,11 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Paramedic Dispatch Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "vIz" = (
@@ -93523,7 +93534,7 @@ waF
 pkn
 bMY
 bMY
-pYw
+dqm
 vIn
 pYw
 bMY
