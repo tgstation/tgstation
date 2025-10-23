@@ -3,47 +3,6 @@
 #define INFINITE_AUTOSAVES -1
 #define SAVE_COMPLETION_MARKER "save_complete.txt"
 
-/datum/controller/subsystem/persistence/proc/is_save_valid(save_directory_name)
-	var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory_name
-	var/completion_marker_path = "[full_path]/[SAVE_COMPLETION_MARKER]"
-
-	if(!fexists(completion_marker_path))
-		log_mapping("Save [save_directory_name] is incomplete - missing completion marker")
-		return FALSE
-
-	var/marker_text = file2text(completion_marker_path)
-	if(!marker_text)
-		log_mapping("Save [save_directory_name] has invalid completion marker - empty file")
-		return FALSE
-
-	var/list/marker_data = json_decode(marker_text)
-	if(!marker_data || !marker_data["save_completed"])
-		log_mapping("Save [save_directory_name] has invalid completion marker - bad JSON")
-		return FALSE
-
-	var/list/save_files = flist(full_path)
-	if(save_files.len <= 1)
-		log_mapping("Save [save_directory_name] appears empty except for completion marker")
-		return FALSE
-
-	return TRUE
-
-/datum/controller/subsystem/persistence/proc/cleanup_corrupted_saves()
-	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_dsc))
-	var/corrupted_count = 0
-
-	for(var/save_directory in all_saves)
-		if(!is_save_valid(save_directory))
-			var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory
-			log_admin("Deleting corrupted save: [full_path]")
-			fdel(full_path)
-			corrupted_count++
-
-	if(corrupted_count)
-		log_admin("Cleaned up [corrupted_count] corrupted save(s)")
-	return corrupted_count
-
-
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	dependencies = list(
@@ -114,6 +73,8 @@ SUBSYSTEM_DEF(persistence)
 
 	/// A list of map config jsons used by persistence organized by z-level traits
 	var/list/map_configs_cache
+	/// Tracking variables for save metrics
+	var/list/current_save_metrics = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
@@ -218,10 +179,59 @@ SUBSYSTEM_DEF(persistence)
 	var/map_directory = MAP_PERSISTENT_DIRECTORY + timestamp_utc
 	return map_directory
 
+/datum/controller/subsystem/persistence/proc/is_save_valid(save_directory_name)
+	var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory_name
+	var/completion_marker_path = "[full_path]/[SAVE_COMPLETION_MARKER]"
+
+	if(!fexists(completion_marker_path))
+		log_mapping("Save [save_directory_name] is incomplete - missing completion marker")
+		return FALSE
+
+	var/list/save_files = flist(full_path)
+	if(save_files.len <= 1)
+		log_mapping("Save [save_directory_name] appears empty except for completion marker")
+		return FALSE
+
+	return TRUE
+
+/*
+/datum/controller/subsystem/persistence/proc/cleanup_corrupted_saves()
+	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_dsc))
+	var/corrupted_count = 0
+
+	for(var/save_directory in all_saves)
+		if(!is_save_valid(save_directory))
+			var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory
+			log_admin("Deleting corrupted save: [full_path]")
+			fdel(full_path)
+			corrupted_count++
+
+	if(corrupted_count)
+		log_admin("Cleaned up [corrupted_count] corrupted save(s)")
+	return corrupted_count
+*/
+
 ///Deletes empty save directories and removes the oldest saves if the total count exceeds the max autosaves allowed in config
 /datum/controller/subsystem/persistence/proc/prune_old_autosaves()
 	if(!CONFIG_GET(flag/persistent_save_enabled))
 		return
+
+	// First, remove any corrupted/incomplete saves
+	var/list/all_saves_raw = flist(MAP_PERSISTENT_DIRECTORY)
+	for(var/save_directory in all_saves_raw)
+		var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory
+
+		if(!flist(full_path).len)
+			log_mapping("Deleted empty autosave: [full_path]")
+			log_admin("Deleted empty autosave: [full_path]")
+			fdel(full_path)
+			continue
+
+		if(!is_save_valid(save_directory))
+			log_mapping("Deleted corrupted autosave: [full_path]")
+			log_admin("Deleted corrupted autosave: [full_path]")
+			fdel(full_path)
+
 	if(CONFIG_GET(number/persistent_max_autosaves) == INFINITE_AUTOSAVES)
 		return
 
@@ -269,6 +279,9 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/matching_z_levels = list()
 	var/list/last_save_files = flist(last_save)
+
+	// Filter out the completion marker file
+	last_save_files -= SAVE_COMPLETION_MARKER
 
 	// prune the map .dmm files from our list since we only need JSONs
 	for(var/dmm_file in last_save_files)
@@ -337,16 +350,21 @@ SUBSYSTEM_DEF(persistence)
  */
 /datum/controller/subsystem/persistence/proc/get_all_saves(sorting_method)
 	var/list/all_saves = flist(MAP_PERSISTENT_DIRECTORY)
+	var/list/valid_saves = list()
 
 	// Prune any empty save directories
 	for(var/path in all_saves)
 		var/full_path = MAP_PERSISTENT_DIRECTORY + path
 
+/*
 		if(!flist(full_path).len) // empty save directory
 			log_mapping("Deleted empty autosave: [full_path]")
 			log_admin("Deleted empty autosave: [full_path]")
 			all_saves -= full_path
 			fdel(full_path)
+*/
+		if(is_save_valid(path))
+			valid_saves += path
 
 	sortTim(all_saves, sorting_method)
 	return all_saves
@@ -386,10 +404,8 @@ SUBSYSTEM_DEF(persistence)
 	var/map_save_directory = get_current_persistence_map_directory()
 	var/save_flags = get_save_flags()
 	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
-
-	var/completion_marker_path = "[map_save_directory]/[SAVE_COMPLETION_MARKER]"
-	if(fexists(completion_marker_path))
-		fdel(completion_marker_path)
+	var/overall_save_start = REALTIMEOFDAY
+	var/current_save_metrics = list()
 
 	for(var/z in 1 to world.maxz)
 		var/list/level_traits = list()
@@ -436,12 +452,11 @@ SUBSYSTEM_DEF(persistence)
 					top_z = above_z
 					break
 
+		var/z_save_time_start = REALTIMEOFDAY
 		var/map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z, save_flags)
 		var/file_path = "[map_save_directory]/[z].dmm"
 		rustg_file_write(map, file_path)
-
 		var/map_path = copytext(map_save_directory, 7) // drop the "_maps/" from directory
-
 		var/json_data = list(
 			"version" = MAP_CURRENT_VERSION,
 			"map_name" = level_to_check.name || CUSTOM_MAP_PATH,
@@ -463,17 +478,32 @@ SUBSYSTEM_DEF(persistence)
 
 		rustg_file_write(json_encode(json_data, JSON_PRETTY_PRINT), "[map_save_directory]/[z].json")
 
+		var/z_save_time_end = (REALTIMEOFDAY - z_save_time_start) / 10
+		current_save_metrics += list(list(
+			"z-level" = bottom_z,
+			"multi z-levels" = top_z - bottom_z,
+			"save_time_seconds" = z_save_time_end,
+			"mobs_saved" = GLOB.TGM_total_mobs,
+			"objs_saved" = GLOB.TGM_total_objs,
+			"turfs_saved" = GLOB.TGM_total_turfs,
+			"areas_saved" = GLOB.TGM_total_areas,
+		))
+
+	var/overall_save_time_end = (REALTIMEOFDAY - overall_save_start) / 10
 	var/completion_data = list(
 		"save_completed" = TRUE,
-		"timestamp" = world.realtime,
-		"timestamp_readable" = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss"),
-		"z_levels_saved" = world.maxz
+		"timestamp" = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss"),
+		"total_save_time_seconds" = overall_save_time_end,
+		"z_level_metrics" = current_save_metrics
 	)
+	var/completion_marker_path = "[map_save_directory]/[SAVE_COMPLETION_MARKER]"
 	rustg_file_write(json_encode(completion_data, JSON_PRETTY_PRINT), completion_marker_path)
 
+/*
 ADMIN_VERB(cleanup_corrupted_saves, R_DEBUG, "Cleanup Corrupted Saves", "Delete all corrupted/incomplete persistence saves.", ADMIN_CATEGORY_DEBUG)
 	var/corrupted = SSpersistence.cleanup_corrupted_saves()
 	to_chat(user, "Cleaned up [corrupted] corrupted save(s)")
+*/
 
 ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Saves all z-levels that are have their persistent save config enabled.", ADMIN_CATEGORY_DEBUG)
 	SSpersistence.save_persistent_maps()
