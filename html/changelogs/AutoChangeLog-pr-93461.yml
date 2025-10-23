@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - qol: "The fish analyzer UI should update more reliably."
+  - bugfix: "Fixed some of the fishes being unable to reproduce."
+  - balance: "Fish acquired through means other than fish farming itself takes less time to be able to reproduce."
