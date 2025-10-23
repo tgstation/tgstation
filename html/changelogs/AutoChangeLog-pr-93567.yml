@@ -1,4 +1,0 @@
-author: "Arceniu"
-delete-after: True
-changes:
-  - bugfix: "fixed a tier 3 cyber stomach acid power(tier2 power 35>25, tier3 power 0>35)"
