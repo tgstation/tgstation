@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
  */
 /datum/surgery_operation/proc/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool = IMPLEMENT_HAND)
 
-	var/mob/patient = get_patient(operating_on)
+	var/mob/living/patient = get_patient(operating_on)
 
 	if(isnull(patient))
 		return FALSE
@@ -155,8 +155,10 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 /**
  * Checks to see if the provided tool is valid for this operation
  * You can override this to add more specific checks, such as checking sharpness
+ *
+ * Tool is only asserted to be an item if IMPLEMENT_HAND is not used
  */
-/datum/surgery_operation/proc/tool_check(obj/item/tool)
+/datum/surgery_operation/proc/tool_check(tool)
 	return TRUE
 
 /**
@@ -539,13 +541,49 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 
 	return TRUE
 
+/// Gets either the chest's skin state, or if no chest (non-carbon), gets it from the status effect holder
+/datum/surgery_operation/basic/proc/get_skin_state(mob/living/patient)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	if(isnull(chest)) // non-carbon
+		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
+		return state_holder?.skin_state || SURGERY_SKIN_CLOSED
+
+	return chest.surgery_skin_state
+
+/// Gets either the chest's vessel state, or if no chest (non-carbon), gets it from the status effect holder
+/datum/surgery_operation/basic/proc/get_vessel_state(mob/living/patient)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	if(isnull(chest)) // non-carbon
+		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
+		return state_holder?.vessel_state || SURGERY_VESSELS_NORMAL
+
+	return chest.surgery_vessel_state
+
+/// Sets either the chest's skin state, or if no chest (non-carbon), sets it on the status effect holder
+/datum/surgery_operation/basic/proc/set_skin_state(mob/living/patient, new_state)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	if(isnull(chest)) // non-carbon
+		patient.apply_status_effect(/datum/status_effect/basic_surgery_state, new_state, null)
+		return
+
+	chest.surgery_skin_state = new_state
+
+/// Sets either the chest's vessel state, or if no chest (non-carbon), sets it on the status effect holder
+/datum/surgery_operation/basic/proc/set_vessel_state(mob/living/patient, new_state)
+	if(iscarbon(patient)) // non-carbon
+		var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+		chest.surgery_vessel_state = new_state
+		return
+
+	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, null, new_state)
+
 /// Operation that specifically targets limbs
 /datum/surgery_operation/limb
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
 
 /datum/surgery_operation/limb/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
-	return patient.get_bodypart(deprecise_zone(surgeon.selected_body_zone))
+	return patient.get_bodypart(deprecise_zone(surgeon.zone_selected))
 
 /datum/surgery_operation/limb/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool = IMPLEMENT_HAND)
 	SHOULD_NOT_OVERRIDE(TRUE) // you are looking for is_available()
@@ -593,6 +631,45 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	if(limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG)
 		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_legs")
 	return ..()
+
+/// Operation that specifically targets organs
+/datum/surgery_operation/organ
+	/// Biotype required to perform this operation
+	var/required_biotype = ORGAN_ORGANIC
+	/// The type of organ this operation can target
+	var/obj/item/organ/target_type
+
+/datum/surgery_operation/organ/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
+	return patient.get_organ_by_type(target_type)
+
+/datum/surgery_operation/organ/get_patient(obj/item/organ/organ)
+	return organ.owner
+
+/datum/surgery_operation/organ/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(!isorgan(operating_on))
+		stack_trace("Organ operation being performed on non-organ!")
+		return FALSE
+
+	var/obj/item/organ/organ = operating_on
+	if(required_biotype && !(organ.organ_flags & required_biotype))
+		return FALSE
+
+	if(!organ_check(organ))
+		return FALSE
+
+	return TRUE
+
+/**
+ * Specifically concerns itself with checking organ state to see if the operation can be performed
+ *
+ * Also checks limb state if necessary (via organ.bodypart_owner)
+ */
+/datum/surgery_operation/organ/proc/organ_check(obj/item/organ/organ)
+	return FALSE
 
 // melbert todos
 // - figure out simplemobs

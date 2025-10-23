@@ -1,4 +1,4 @@
-/datum/surgery_operation/limb/fix_wings
+/datum/surgery_operation/organ/fix_wings
 	name = "repair wings"
 	desc = "Repair a patient's damaged wings to restore flight capability."
 	implements = list(
@@ -8,47 +8,48 @@
 	)
 	operation_flags = OPERATION_REQUIRES_TECH
 	time = 20 SECONDS
+	target_type = /obj/item/organ/wings/moth
 
-/datum/surgery_operation/limb/fix_wings/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/organ/fix_wings/get_default_radial_image(obj/item/organ/wings/moth/organ, mob/living/surgeon, obj/item/tool)
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")
 
-/datum/surgery_operation/limb/fix_wings/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+/datum/surgery_operation/organ/fix_wings/organ_check(obj/item/organ/wings/moth/organ)
+	if(!organ.burnt)
 		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
+	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
-	if(limb.surgery_bone_state == SURGERY_BONE_INTACT)
+	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE
-	if(limb.owner.reagents?.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) < 1)
+	if(organ.bodypart_owner.surgery_bone_state == SURGERY_BONE_INTACT)
 		return FALSE
-	var/obj/item/organ/wings/moth/wings = locate() in limb
-	return wings?.burnt
+	if(organ.owner.reagents?.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) < 1)
+		return FALSE
+	return TRUE
 
-/datum/surgery_operation/limb/fix_wings/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/fix_wings/on_preop(obj/item/organ/wings/moth/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
-		limb.owner,
-		span_notice("You begin to repair [limb.owner]'s damaged wings..."),
-		span_notice("[surgeon] begins to repair [limb.owner]'s damaged wings."),
-		span_notice("[surgeon] begins to perform surgery on [limb.owner]'s damaged wings."),
+		organ.owner,
+		span_notice("You begin to repair [organ.owner]'s damaged wings..."),
+		span_notice("[surgeon] begins to repair [organ.owner]'s damaged wings."),
+		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s damaged wings."),
 	)
-	display_pain(limb.owner, "Your wings sting like hell!")
+	display_pain(organ.owner, "Your wings sting like hell!")
 
-/datum/surgery_operation/limb/fix_wings/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/fix_wings/on_success(obj/item/organ/wings/moth/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
-		limb.owner,
-		span_notice("You succeed in repairing [limb.owner]'s wings."),
-		span_notice("[surgeon] successfully repairs [limb.owner]'s wings!"),
-		span_notice("[surgeon] completes the surgery on [limb.owner]'s wings."),
+		organ.owner,
+		span_notice("You succeed in repairing [organ.owner]'s wings."),
+		span_notice("[surgeon] successfully repairs [organ.owner]'s wings!"),
+		span_notice("[surgeon] completes the surgery on [organ.owner]'s wings."),
 	)
-	display_pain(limb.owner, "You can feel your wings again!")
+	display_pain(organ.owner, "You can feel your wings again!")
 	// heal the wings in question
-	var/obj/item/organ/wings/moth/wings = locate() in limb
-	wings?.heal_wings(surgeon, ALL)
+	organ.heal_wings(surgeon, ALL)
 
 	// might as well heal their antennae too
-	var/obj/item/organ/antennae/antennae = limb.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_ANTENNAE)
+	var/obj/item/organ/antennae/antennae = organ.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_ANTENNAE)
 	antennae?.heal_antennae(surgeon, ALL)
 
-	limb.owner.update_body_parts()
+	organ.owner.update_body_parts()

@@ -127,7 +127,8 @@
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
 
-	return tool.get_temperature() > 0
+	// Require heat OR a tool behavior match
+	return tool.get_temperature() > 0 || implements[tool.tool_behaviour]
 
 /datum/surgery_operation/limb/close_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -412,7 +413,7 @@
 		return FALSE
 	if(limb.surgery_vessel_state != SURGERY_VESSELS_CLAMPED)
 		return FALSE
-	if(limb.surgery_bone_state != SURGERY_BONE_SAWED)
+	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
 		return FALSE
 	return TRUE
 

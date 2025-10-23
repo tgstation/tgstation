@@ -190,9 +190,9 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
-	if(limb.surgery_vessel_state != SURGERY_VESSELS_ORGANS_CUT)
+	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
 		return FALSE
-	if(limb.surgery_bone_state != SURGERY_BONE_SAWED)
+	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
 		return FALSE
 	return TRUE
 
@@ -214,7 +214,7 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
-	if(limb.surgery_vessel_state != SURGERY_VESSELS_ORGANS_CUT)
+	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
 		return FALSE
 	if(limb.surgery_bone_state > SURGERY_BONE_DRILLED)
 		return FALSE
@@ -242,7 +242,7 @@
 		return FALSE
 	if(limb.surgery_vessel_state != SURGERY_VESSELS_CLAMPED)
 		return FALSE
-	if(limb.surgery_bone_state != SURGERY_BONE_SAWED)
+	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
 		return FALSE
 	return TRUE
 

@@ -16,9 +16,9 @@
 	return base
 
 /datum/surgery_operation/limb/organ_bioware/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_bone_state != SURGERY_VESSELS_ORGANS_CUT)
+	if(limb.surgery_bone_state < SURGERY_VESSELS_ORGANS_CUT)
 		return FALSE
-	if(limb.surgery_vessel_state != SURGERY_BONE_SAWED)
+	if(limb.surgery_vessel_state < SURGERY_BONE_SAWED)
 		return FALSE
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE

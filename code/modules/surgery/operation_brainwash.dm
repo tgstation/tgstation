@@ -14,7 +14,7 @@
 	// 	/datum/surgery/advanced/brainwashing_sleeper/mechanic,
 	// )
 
-/datum/surgery_operation/limb/brainwash
+/datum/surgery_operation/organ/brainwash
 	name = "brainwash"
 	implements = list(
 		TOOL_HEMOSTAT = 0.85,
@@ -27,71 +27,70 @@
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_MORBID
+	target_type = /obj/item/organ/brain
+	required_biotype = ORGAN_ORGANIC
 
-/datum/surgery_operation/limb/brainwash/state_check(obj/item/bodypart/limb)
-	var/obj/item/organ/brain/target_brain = locate() in limb
-	if(isnull(target_brain))
+/datum/surgery_operation/organ/brainwash/organ_check(obj/item/organ/organ)
+	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
-	if(!brain_check(target_brain))
+	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
+		return FALSE
+	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/brainwash/brain_check(obj/item/organ/brain/brain)
-	return !IS_ROBOTIC_ORGAN(brain)
-
-/datum/surgery_operation/limb/brainwash/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/mob/pre_owner = limb.owner
+/datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	operation_args["objective"] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)
 	return !!operation_args["objective"]
 
-/datum/surgery_operation/limb/brainwash/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/brainwash/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
-		limb.owner,
-		span_notice("You begin to brainwash [limb.owner]..."),
-		span_notice("[surgeon] begins to fix [limb.owner]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [limb.owner]'s brain."),
+		organ.owner,
+		span_notice("You begin to brainwash [organ.owner]..."),
+		span_notice("[surgeon] begins to fix [organ.owner]'s brain."),
+		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s brain."),
 	)
-	display_pain(limb.owner, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
+	display_pain(organ.owner, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
 
-/datum/surgery_operation/limb/brainwash/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	if(!limb.owner.mind)
-		to_chat(surgeon, span_warning("[limb.owner] doesn't respond to the brainwashing, as if [limb.owner.p_they()] lacked a mind..."))
+/datum/surgery_operation/organ/brainwash/on_success(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
+	if(!organ.owner.mind)
+		to_chat(surgeon, span_warning("[organ.owner] doesn't respond to the brainwashing, as if [organ.owner.p_they()] lacked a mind..."))
 		return ..()
-	if(HAS_MIND_TRAIT(limb.owner, TRAIT_UNCONVERTABLE))
-		to_chat(surgeon, span_warning("[limb.owner] seems resistant to the brainwashing..."))
+	if(HAS_MIND_TRAIT(organ.owner, TRAIT_UNCONVERTABLE))
+		to_chat(surgeon, span_warning("[organ.owner] seems resistant to the brainwashing..."))
 		return ..()
 
 	display_results(
 		surgeon,
-		limb.owner,
-		span_notice("You successfully brainwash [limb.owner]!"),
-		span_notice("[surgeon] successfully brainwashes [limb.owner]!"),
-		span_notice("[surgeon] finishes performing surgery on [limb.owner]'s brain."),
+		organ.owner,
+		span_notice("You successfully brainwash [organ.owner]!"),
+		span_notice("[surgeon] successfully brainwashes [organ.owner]!"),
+		span_notice("[surgeon] finishes performing surgery on [organ.owner]'s brain."),
 	)
-	on_brainwash(limb, surgeon, tool, operation_args)
+	on_brainwash(organ.owner, surgeon, tool, operation_args)
 
-/datum/surgery_operation/limb/brainwash/proc/on_brainwash(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/brainwash/proc/on_brainwash(mob/living/carbon/brainwashed, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/objective = operation_args["objective"] || "Oooo no objective set somehow report this to an admin"
-	to_chat(limb.owner, span_notice("A new thought forms in your mind: '[objective]'"))
-	brainwash(limb.owner, objective)
-	message_admins("[ADMIN_LOOKUPFLW(surgeon)] surgically brainwashed [ADMIN_LOOKUPFLW(limb.owner)] with the objective '[objective]'.")
-	surgeon.log_message("has brainwashed [key_name(limb.owner)] with the objective '[objective]' using brainwashing surgery.", LOG_ATTACK)
-	limb.owner.log_message("has been brainwashed with the objective '[objective]' by [key_name(surgeon)] using brainwashing surgery.", LOG_VICTIM, log_globally=FALSE)
-	surgeon.log_message("surgically brainwashed [key_name(limb.owner)] with the objective '[objective]'.", LOG_GAME)
+	to_chat(brainwashed, span_notice("A new thought forms in your mind: '[objective]'"))
+	brainwash(brainwashed, objective)
+	message_admins("[ADMIN_LOOKUPFLW(surgeon)] surgically brainwashed [ADMIN_LOOKUPFLW(brainwashed)] with the objective '[objective]'.")
+	surgeon.log_message("has brainwashed [key_name(brainwashed)] with the objective '[objective]' using brainwashing surgery.", LOG_ATTACK)
+	brainwashed.log_message("has been brainwashed with the objective '[objective]' by [key_name(surgeon)] using brainwashing surgery.", LOG_VICTIM, log_globally=FALSE)
+	surgeon.log_message("surgically brainwashed [key_name(brainwashed)] with the objective '[objective]'.", LOG_GAME)
 
-/datum/surgery_operation/limb/brainwash/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/brainwash/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	display_results(
 		surgeon,
-		limb.owner,
+		organ.owner,
 		span_notice("You screw up, bruising the brain's tissue!"),
 		span_notice("[surgeon] screws up, causing brain damage!"),
-		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
+		span_notice("[surgeon] completes the surgery on [organ.owner]'s brain."),
 	)
-	display_pain(limb.owner, "Your head throbs with horrible pain!")
-	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
+	display_pain(organ.owner, "Your head throbs with horrible pain!")
+	organ.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
 
-/datum/surgery_operation/limb/brainwash/mechanic
+/datum/surgery_operation/organ/brainwash/mechanic
 	name = "reprogram"
 	implements = list(
 		TOOL_MULTITOOL = 0.85,
@@ -102,11 +101,9 @@
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
+	required_biotype = ORGAN_ROBOTIC
 
-/datum/surgery_operation/limb/brainwash/mechanic/brain_check(obj/item/organ/brain/brain)
-	return IS_ROBOTIC_ORGAN(brain)
-
-/datum/surgery_operation/limb/brainwash/sleeper
+/datum/surgery_operation/organ/brainwash/sleeper
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
@@ -126,25 +123,25 @@
 		"The cyborgs and the AI are stalking you. What are they planning?",
 	)
 
-/datum/surgery_operation/limb/brainwash/sleeper/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/brainwash/sleeper/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	operation_args["objective"] = pick(possible_objectives)
 	return TRUE
 
-/datum/surgery_operation/limb/brainwash/sleeper/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/brainwash/sleeper/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
-		limb.owner,
-		span_notice("You begin to brainwash [limb.owner]..."),
-		span_notice("[surgeon] begins to fix [limb.owner]'s brain."),
-		span_notice("[surgeon] begins to perform surgery on [limb.owner]'s brain."),
+		organ.owner,
+		span_notice("You begin to brainwash [organ.owner]..."),
+		span_notice("[surgeon] begins to fix [organ.owner]'s brain."),
+		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s brain."),
 	)
-	display_pain(limb.owner, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
+	display_pain(organ.owner, "Your head pounds with unimaginable pain!") // Same message as other brain surgeries
 
-/datum/surgery_operation/limb/brainwash/sleeper/on_brainwash(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/organ/brainwash/sleeper/on_brainwash(mob/living/carbon/brainwashed, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.owner.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
+	brainwashed.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
 
-/datum/surgery_operation/limb/brainwash/sleeper/mechanic
+/datum/surgery_operation/organ/brainwash/sleeper/mechanic
 	name = "reprogramming"
 	implements = list(
 		TOOL_MULTITOOL = 0.85,
@@ -155,6 +152,4 @@
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-
-/datum/surgery_operation/limb/brainwash/sleeper/mechanic/brain_check(obj/item/organ/brain/brain)
-	return IS_ROBOTIC_ORGAN(brain)
+	required_biotype = ORGAN_ROBOTIC
