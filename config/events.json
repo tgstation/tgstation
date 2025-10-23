@@ -175,7 +175,7 @@
 	},
 	"Ventilation Clog: Major": {
 		"min_players": 0,
-		"weight": 10,
+		"weight": 12,
 		"earliest_start": 6000
 	},
 	"Ventilation Clog: Critical": {
@@ -194,7 +194,7 @@
 	},
 	"Wormholes": {
 		"min_players": 2,
-		"weight": 1
+		"weight": 2
 	},
 	"Anomaly: Energetic Flux": {
 		"min_players": 1,
@@ -237,10 +237,6 @@
 		"weight": 20
 	},
 	"Anomaly: Vortex": {
-		"min_players": 20,
-		"weight": 10
-	},
-	"Abductors": {
 		"min_players": 20,
 		"weight": 10
 	},
