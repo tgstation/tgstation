@@ -32,14 +32,15 @@
 	var/total_mobs_saved = 0
 	var/total_objs_saved = 0
 	var/total_turfs_saved = 0
-	//var/total_areas_saved = 0  this might be useful later but not right now
+	var/total_areas_saved = 0
 
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
 
 	// we want to keep decals from crayon writings, blood splatters, cobwebs, etc.
 	// most landmarks get deleted except for latejoin arrivals shuttle
-	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile, /obj/machinery/gravity_generator/part, /mob/living/carbon)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
+	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile, /obj/machinery/gravity_generator/part, /obj/structure/fluff/airlock_filler, /mob/living/carbon)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
+
 	if(!obj_blacklist)
 		obj_blacklist = default_blacklist
 
@@ -147,9 +148,7 @@
 				for(var/atom/movable/target_atom as anything in pull_from)
 					if(target_atom.flags_1 & HOLOGRAM_1)
 						continue
-					if(is_multi_tile_object(target_atom) && (target_atom.loc != pull_from))
-						continue
-					if(!target_atom.is_saveable())
+					if(!target_atom.is_saveable(pull_from))
 						continue
 					if(obj_blacklist[target_atom.type])
 						continue
@@ -176,7 +175,7 @@
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
 						if(save_flag & SAVE_OBJECTS_PROPERTIES)
-							var/custom_data = target_obj.on_object_saved()
+							var/custom_data = target_obj.on_object_saved(pull_from)
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 
 					//====SAVING MOBS====
