@@ -1,12 +1,62 @@
 #define OPERATION_AFFECTS_MOOD (1<<0)
 #define OPERATION_NOTABLE (1<<1)
+/// Surgery will automatically repeat until it can no longer be performed
 #define OPERATION_LOOPING (1<<2)
 #define OPERATION_MORBID (1<<3)
 #define OPERATION_REQUIRES_TECH (1<<4)
+/// No matter what the surgeon is targeting, we always operate on the chest
+#define OPERATION_REDIRECT_CHEST (1<<5)
 
 #define IMPLEMENT_HAND "hands"
 
 GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
+
+
+/mob/living/proc/perform_surgery(mob/living/patient, obj/item/potential_tool)
+	if(combat_mode)
+		return NONE
+
+	var/obj/item/bodypart/targeted_limb = patient.get_bodypart(deprecise_zone(zone_selected))
+
+	// if(tool)
+	// 	tool = tool.get_proxy_attacker_for(limb, src)
+
+	var/list/operations = list()
+	var/list/radial_operations = list()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations)
+		var/obj/item/bodypart/operated_limb = targeted_limb
+		if((operation.operation_flags & OPERATION_REDIRECT_CHEST) && (isnull(operated_limb) || operated_limb.body_zone != BODY_ZONE_CHEST))
+			operated_limb = patient.get_bodypart(BODY_ZONE_CHEST)
+		if(isnull(operated_limb))
+			continue
+		if(!operation.check_availability(operated_limb, src, potential_tool))
+			continue
+		for(var/radial_slice, option_info in operation.get_radial_options(operated_limb, src, potential_tool))
+			operations[radial_slice] = list("operation" = operation) + option_info
+			radial_operations[radial_slice] = radial_slice
+
+	if(!length(operations))
+		return NONE // allow attacking
+
+	var/picked = show_radial_menu(
+		user = src,
+		anchor = patient,
+		choices = radial_operations,
+		require_near = TRUE,
+		autopick_single_option = TRUE,
+		radius = 56,
+		custom_check = CALLBACK(src, PROC_REF(surgery_check), potential_tool),
+	)
+	if(!picked)
+		return ITEM_INTERACT_BLOCKING // cancelled
+
+	var/datum/surgery_operation/picked_operation = operations[picked]["operation"]
+	return picked_operation.try_perform(limb, src, potential_tool, operations[picked])
+
+/mob/living/proc/surgery_check(obj/item/tool)
+	if(!is_holding(tool))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation
 	var/name = "surgery operation"
@@ -38,19 +88,22 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
  * Checks to see if this operation can be performed on the bodypart
  * This is the main entry point for checking availability
  */
-/datum/surgery_operation/proc/check_availability(obj/item/bodypart/limb, obj/item/tool = IMPLEMENT_HAND)
+/datum/surgery_operation/proc/check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool = IMPLEMENT_HAND)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(!state_check(limb))
+	if(isnull(limb.owner))
 		return FALSE
 
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
 
-	if(!is_available(limb))
+	if(!state_check(limb))
 		return FALSE
 
-	if(get_tool_quality(tool) <= 0)
+	if(!get_tool_quality(tool))
+		return FALSE
+
+	if(!is_available(limb))
 		return FALSE
 
 	for(var/chem in chems_needed)
@@ -108,12 +161,12 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 
 /**
  * Checks to see if this operation can be performed on the bodypart
- * You can override this to add more specific checks, such as checking for organs, etc.
+ * You can override this to add more specific checks, such as if a tool can be used on the limb
+ * or if the surgeon has a specific trait / skill
  *
  * Don't call this, call check_availability() instead
  */
-/datum/surgery_operation/proc/is_available(obj/item/bodypart/limb)
-	PROTECTED_PROC(TRUE)
+/datum/surgery_operation/proc/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	return TRUE
 
 /**
@@ -164,6 +217,10 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 		var/image/created = isimage(input) ? input : image(input)
 		created.layer = FLOAT_LAYER
 		created.plane = FLOAT_PLANE
+		created.pixel_w = 0
+		created.pixel_x = 0
+		created.pixel_y = 0
+		created.pixel_z = 0
 		created_list += created
 
 	return created_list
@@ -178,59 +235,17 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 	// but since we're multiplying time, we invert here - ie, 1.2x = 0.83x smaller time
 	return round(1 / (implement_modifier * location_modifier), 0.01)
 
-/mob/living/proc/perform_surgery(mob/living/patient, obj/item/potential_tool)
-	if(combat_mode)
-		return NONE
-
-	var/obj/item/bodypart/limb = patient.get_bodypart(deprecise_zone(zone_selected))
-	if(isnull(limb))
-		return NONE
-
-	// if(tool)
-	// 	tool = tool.get_proxy_attacker_for(limb, src)
-
-	var/list/operations = list()
-	var/list/radial_operations = list()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations)
-		if(!operation.check_availability(limb, potential_tool))
-			continue
-		for(var/radial_slice, option_info in operation.get_radial_options(limb, src, potential_tool))
-			operations[radial_slice] = list("operation" = operation) + option_info
-			radial_operations[radial_slice] = radial_slice
-
-	if(!length(operations))
-		return NONE // allow attacking
-
-	var/picked = show_radial_menu(
-		user = src,
-		anchor = patient,
-		choices = radial_operations,
-		require_near = TRUE,
-		autopick_single_option = TRUE,
-		radius = 56,
-		custom_check = CALLBACK(src, PROC_REF(surgery_check), limb, potential_tool),
-	)
-	if(!picked)
-		return ITEM_INTERACT_BLOCKING // cancelled
-
-	var/datum/surgery_operation/picked_operation = operations[picked]["operation"]
-	return picked_operation.try_perform(limb, src, potential_tool, operations[picked])
-
-/mob/living/proc/surgery_check(obj/item/bodypart/limb, obj/item/tool)
-	if(!is_holding(tool))
-		return FALSE
-	return TRUE
-
 /**
  * The actual chain of performing the operation
  *
  * Returns an item interaction flag - intended to be invoked from the interaction chain
  */
 /datum/surgery_operation/proc/try_perform(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	if(!check_availability(limb, tool))
+	if(!check_availability(limb, surgeon, tool))
 		return ITEM_INTERACT_BLOCKING
 
-	start_operation(limb, surgeon, tool, operation_args)
+	if(!start_operation(limb, surgeon, tool, operation_args))
+		return ITEM_INTERACT_BLOCKING
 
 	var/result = NONE
 
@@ -269,7 +284,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 /// Called during the do-after to check if the operation can continue
 /datum/surgery_operation/proc/operate_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	PROTECTED_PROC(TRUE)
-	return check_availability(limb, tool)
+	return check_availability(limb, surgeon, tool)
 
 /**
  * Checks if the operation was successful
@@ -288,8 +303,29 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 /datum/surgery_operation/proc/start_operation(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	var/preop_time = world.time
+	var/preop_mob = limb.owner
+	if(!pre_preop(limb, surgeon, tool, operation_args))
+		return FALSE
+	// if pre_preop slept, sanity check that everything is still valid
+	if(preop_time != world.time && (limb.owner != preop_mob || !surgeon.Adjacent(preop_mob) || !surgeon.is_holding(tool) || !operate_check(limb, surgeon, tool, operation_args)))
+		return FALSE
+
 	play_operation_sound(limb, surgeon, tool, preop_sound)
 	on_preop(limb, surgeon, tool, operation_args)
+	return TRUE
+
+/**
+ * Allows for any extra checks or setup when the operation starts
+ * If you want user input before for an operation, do it here
+ *
+ * This proc can sleep, sanity checks are automatically performed after it completes
+ *
+ * Return FALSE to cancel the operation
+ * Return TRUE to continue
+ */
+/datum/surgery_operation/proc/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	return TRUE
 
 /**
  * Used to customize behavior when the operation starts

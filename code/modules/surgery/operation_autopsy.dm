@@ -9,14 +9,11 @@
 /datum/surgery_operation/autopsy/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
-	return TRUE
-
-/datum/surgery_operation/autopsy/is_available(obj/item/bodypart/limb)
+	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
 	if(limb.owner.stat != DEAD)
 		return FALSE
 	if(HAS_TRAIT_FROM(limb.owner, TRAIT_DISSECTED, AUTOPSY_TRAIT))
-		return FALSE
-	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
 	return TRUE
 

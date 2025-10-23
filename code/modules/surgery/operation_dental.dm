@@ -18,23 +18,17 @@
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE
-	return TRUE
-
-/datum/surgery_operation/add_dental_implant/is_available(obj/item/bodypart/limb)
-	if(!istype(limb, /obj/item/bodypart/head))
+	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
 
 	var/obj/item/bodypart/head/teeth_receptangle = limb
-	if(teeth_receptangle.teeth_count <= 0)
+	if(limb.teeth_count <= 0)
 		return FALSE
-
 	var/count = 0
-	for(var/obj/item/reagent_containers/applicator/pill/dental in teeth_receptangle)
+	for(var/obj/item/reagent_containers/applicator/pill/dental in limb)
 		count++
-
-	if(count >= teeth_receptangle.teeth_count)
+	if(count >= limb.teeth_count)
 		return FALSE
-
 	return TRUE
 
 /datum/surgery_operation/add_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)

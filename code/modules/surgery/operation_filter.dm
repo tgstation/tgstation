@@ -16,10 +16,9 @@
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
 		return FALSE
+	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
 	return TRUE
-
-/datum/surgery_operation/filter_blood/is_available(obj/item/bodypart/limb)
-	return limb.body_zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/filter_blood/can_loop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	return ..() && has_filterable_chems(limb.owner, tool)

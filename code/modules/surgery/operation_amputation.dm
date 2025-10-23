@@ -18,10 +18,9 @@
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
 /datum/surgery_operation/amputate/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	return image(/obj/item/circular_saw)
-
-/datum/surgery_operation/amputate/is_available(obj/item/bodypart/limb)
-	return !HAS_TRAIT(limb.owner, TRAIT_NODISMEMBER) && limb.body_zone != BODY_ZONE_CHEST && !(limb.bodypart_flags & BODYPART_UNREMOVABLE)
+	var/image/base = ..()
+	base.overlays += add_radial_overlays(/obj/item/circular_saw)
+	return base
 
 /datum/surgery_operation/amputate/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
@@ -29,6 +28,12 @@
 	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
+		return FALSE
+	if(limb.body_zone == BODY_ZONE_CHEST)
+		return FALSE
+	if(limb.bodypart_flags & BODYPART_UNREMOVABLE)
+		return FALSE
+	if(HAS_TRAIT(limb.owner, TRAIT_NODISMEMBER))
 		return FALSE
 	return TRUE
 

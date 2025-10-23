@@ -12,7 +12,7 @@
 	/// The amount of inflammation a failure or success of this surgery will reduce.
 	var/inflammation_reduction = 75
 
-/datum/surgery_operation/asthmatic_bypass/is_available(obj/item/bodypart/limb)
+/datum/surgery_operation/asthmatic_bypass/state_check(obj/item/bodypart/limb)
 	if(!(locate(/obj/item/organ/lungs) in limb))
 		return FALSE
 	if(!limb.owner.has_quirk(/datum/quirk/item_quirk/asthma))

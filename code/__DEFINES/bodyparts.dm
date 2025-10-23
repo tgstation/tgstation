@@ -94,3 +94,11 @@
 #define SURGERY_BONE_DRILLED 1
 /// Bones have been sawed apart
 #define SURGERY_BONE_SAWED 2
+
+// Special state - this one is a bitflag for surgery specific states
+/// No special state
+#define SURGERY_NO_SPECIAL_STATE NONE
+/// Used in advanced plastic surgery: Has plastic been applied
+#define SURGERY_PLASTIC_APPLIED (1<<0)
+/// Used in prosthetic surgery: Is the prosthetic unsecured
+#define SURGERY_PROSTHETIC_UNSECURED (1<<1)

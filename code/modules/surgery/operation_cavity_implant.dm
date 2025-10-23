@@ -26,15 +26,14 @@
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
 		return FALSE
+	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
 	return TRUE
-
-/datum/surgery_operation/cavity_implant/is_available(obj/item/bodypart/chest/limb)
-	return limb.body_zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/cavity_implant/tool_check(obj/item/tool)
 	if(tool.w_class > WEIGHT_CLASS_NORMAL && !is_type_in_typecache(tool, heavy_cavity_implants))
 		return FALSE
-	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & ABSTRACT))
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 		return FALSE
 	if(isorgan(tool)) // you rarely want to implant an organ
 		return FALSE
@@ -86,12 +85,6 @@
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/undo_cavity_implant/is_available(obj/item/bodypart/chest/limb)
-	// unlike implant removal, don't show the surgery as an option unless something is actually implanted
-	// it would stand to reason standard implants would be hidden from view (requires a search)
-	// while cavity implants would be blatantly visible (no search necessary)
-	return limb.body_zone == BODY_ZONE_CHEST && isitem(limb.cavity_item)
-
 /datum/surgery_operation/undo_cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(list(/obj/item/hemostat, limb.cavity_item))
@@ -101,6 +94,13 @@
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
+		return FALSE
+	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
+	// unlike implant removal, don't show the surgery as an option unless something is actually implanted
+	// it would stand to reason standard implants would be hidden from view (requires a search)
+	// while cavity implants would be blatantly visible (no search necessary)
+	if(isnull(limb.cavity_item))
 		return FALSE
 	return TRUE
 

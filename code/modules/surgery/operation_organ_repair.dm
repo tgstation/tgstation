@@ -20,20 +20,17 @@
 	if(operation_flags & OPERATION_LOOPING)
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 
-/datum/surgery_operation/organ_repair/is_available(obj/item/bodypart/limb)
-	var/obj/item/organ/to_repair = locate(target_type) in limb
-	if(isnull(to_repair))
-		return FALSE
-	if(to_repair.damage < (to_repair.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(to_repair, TRAIT_ORGAN_OPERATED_ON)))
-		return FALSE
-	return TRUE
-
 /datum/surgery_operation/organ_repair/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state != SURGERY_VESSELS_ORGANS_CUT)
 		return FALSE
 	if(limb.surgery_bone_state != SURGERY_BONE_SAWED)
+		return FALSE
+	var/obj/item/organ/to_repair = locate(target_type) in limb
+	if(isnull(to_repair))
+		return FALSE
+	if(to_repair.damage < (to_repair.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(to_repair, TRAIT_ORGAN_OPERATED_ON)))
 		return FALSE
 	return TRUE
 

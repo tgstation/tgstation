@@ -31,12 +31,9 @@
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE
-	return TRUE
-
-/datum/surgery_operation/lipoplasty/is_available(obj/item/bodypart/limb)
-	if(!HAS_TRAIT_FROM(limb.owner, TRAIT_FAT, OBESITY) || limb.owner.nutrition < NUTRITION_LEVEL_WELL_FED)
-		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
+	if(!HAS_TRAIT_FROM(limb.owner, TRAIT_FAT, OBESITY) && limb.owner.nutrition < NUTRITION_LEVEL_WELL_FED)
 		return FALSE
 	return TRUE
 

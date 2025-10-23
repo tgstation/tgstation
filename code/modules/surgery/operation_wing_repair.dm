@@ -20,9 +20,6 @@
 		return FALSE
 	if(limb.surgery_bone_state == SURGERY_BONE_INTACT)
 		return FALSE
-	return TRUE
-
-/datum/surgery_operation/fix_wings/is_available(obj/item/bodypart/limb)
 	var/obj/item/organ/wings/moth/wings = locate() in limb
 	return wings?.burnt
 

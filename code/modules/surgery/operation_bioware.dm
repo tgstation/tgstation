@@ -22,10 +22,11 @@
 		return FALSE
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
+	if(limb.body_zone != required_zone)
+		return FALSE
+	if(limb.owner.has_status_effect(status_effect_gained))
+		return FALSE
 	return TRUE
-
-/datum/surgery_operation/organ_bioware/is_available(obj/item/bodypart/limb)
-	return limb.body_zone == required_zone && !limb.owner.has_status_effect(status_effect_gained)
 
 /datum/surgery_operation/organ_bioware/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	limb.owner.apply_status_effect(status_effect_gained)

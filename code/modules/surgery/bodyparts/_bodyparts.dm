@@ -219,9 +219,14 @@
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 
+	/// What state is the skin in for determining surgery availability
 	var/surgery_skin_state = SURGERY_SKIN_CLOSED
+	/// What state is the bone in for determining surgery availability
 	var/surgery_bone_state = SURGERY_BONE_INTACT
+	/// What state are the vessels in for determining surgery availability
 	var/surgery_vessel_state = SURGERY_VESSELS_NORMAL
+	/// Any special states for snowflake surgeries - this one is a bitflag
+	var/surgery_special_state = SURGERY_NO_SPECIAL_STATE
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
