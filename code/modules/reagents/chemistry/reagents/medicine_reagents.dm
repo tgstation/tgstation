@@ -1149,6 +1149,20 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/strange_reagent/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
+	. = ..()
+	if(istype(exposed_obj, /obj/item/trash/bee))
+		var/obj/item/trash/bee/buzz = exposed_obj
+		var/mob/living/basic/bee/revived_bee = new (get_turf(buzz))
+		if(buzz.beegent)
+			revived_bee.assign_reagent(buzz.beegent)
+		qdel(buzz)
+
+	else if(istype(exposed_obj, /obj/item/food/deadmouse))
+		var/obj/item/food/deadmouse/mouse = exposed_obj
+		new /mob/living/basic/mouse (get_turf(mouse))
+		qdel(mouse)
+
 /datum/reagent/medicine/strange_reagent/fishy_reagent
 	name = "Fishy Reagent"
 	description = "This reagent has a chemical composition very similar to that of Strange Reagent, however, it seems to work purely and only on... fish. Or at least, aquatic creatures."
