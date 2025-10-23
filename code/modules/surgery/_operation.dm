@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
 		else
 			surgeon.add_mob_blood(limb.owner)
 
-		if(tool)
+		if(isitem(tool))
 			tool.add_mob_blood(limb.owner)
 
 		if(is_successful(final_time))
