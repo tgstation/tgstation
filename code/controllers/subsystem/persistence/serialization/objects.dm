@@ -626,13 +626,27 @@
 /obj/structure/transport/linear/public/on_object_saved(turf/current_loc)
 	var/data
 	var/datum/transport_controller/linear/transport = transport_controller_datum
-	if(transport?.specific_transport_id)
-		if(transport.transport_modules?[1] != src)
-			return // only save the landmark to the 1st turf regardless wherever it may be
 
-		var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
-		var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
-		data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
+	if(!transport || !transport.specific_transport_id || !length(transport.transport_modules))
+		return
+
+	var/total_elevator_turfs = length(transport.transport_modules)
+	var/middle_section
+	if(total_elevator_turfs == 6) // this handles 2x3 otherwise elevator music is put in a corner that won't have full area coverage
+		middle_section = 2
+	else // this handles 1x1, 2x2, 3x3, etc. elevators by just getting the middle turf which is generally the center
+		middle_section = ceil(total_elevator_turfs / 2)
+
+	if(transport.transport_modules[middle_section] != src)
+		return
+
+	var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
+	var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
+	data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
+
+	var/obj/effect/abstract/elevator_music_zone/elevator_music_path = /obj/effect/abstract/elevator_music_zone
+	var/elevator_id_var = NAMEOF_TYPEPATH(elevator_music_path, linked_elevator_id)
+	data += "[data ? ",\n" : ""][elevator_music_path]{\n\t[elevator_id_var] = \"[transport.specific_transport_id]\"\n\t}"
 	return data
 
 // these are for the tram
