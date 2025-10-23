@@ -1080,7 +1080,7 @@
 
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)
-		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
+		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED, COMSIG_LIVING_BEING_OPERATED_ON))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
@@ -1088,12 +1088,20 @@
 	update_appearance()
 	if (!patient)
 		return
-	RegisterSignal(patient, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_surgery_change))
-	RegisterSignal(patient, COMSIG_MOB_SURGERY_FINISHED, PROC_REF(on_surgery_change))
+	RegisterSignals(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED), PROC_REF(on_surgery_change))
+	RegisterSignal(patient, COMSIG_LIVING_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)
 	SIGNAL_HANDLER
 	update_appearance()
+
+/obj/structure/table/optable/proc/get_surgeries(datum/source, mob/living/surgeon, list/operations)
+	SIGNAL_HANDLER
+
+	if(isnull(computer))
+		return
+
+	operations |= computer.advanced_surgeries
 
 /obj/structure/table/optable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (istype(tool, /obj/item/clothing/mask/breath))
@@ -1432,4 +1440,3 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
-

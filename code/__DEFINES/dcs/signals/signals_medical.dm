@@ -19,7 +19,7 @@
 /// From /obj/item/shockpaddles/proc/do_disarm(), sent to the shock-ee in non-revival scenarios: (obj/item/shockpaddles/source)
 #define COMSIG_HEARTATTACK_DEFIB "heartattack_defib"
 
-/// From /datum/surgery/can_start(): (mob/source, datum/surgery/surgery, mob/living/patient)
-#define COMSIG_SURGERY_STARTING "surgery_starting"
-	#define COMPONENT_CANCEL_SURGERY (1<<0)
-	#define COMPONENT_FORCE_SURGERY (1<<1)
+/// Sent from /mob/living/perform_surgery: (mob/living/patient, list/possible_operations)
+#define COMSIG_LIVING_OPERATING_ON "living_operating_on"
+/// Sent from /mob/living/perform_surgery: (mob/living/patient, list/possible_operations)
+#define COMSIG_LIVING_BEING_OPERATED_ON "living_being_operated_on"

@@ -108,7 +108,7 @@
 		/obj/item/stack/sheet/plastic = 1,
 	)
 	time = 4.8 SECONDS
-	operation_flags = OPERATION_MORBID
+	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
 	preop_sound = 'sound/effects/blob/blobattack.ogg'
 	success_sound = 'sound/effects/blob/attackblob.ogg'
 	failure_sound = 'sound/effects/blob/blobattack.ogg'

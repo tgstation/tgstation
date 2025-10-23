@@ -65,8 +65,11 @@
 	return TRUE
 
 /datum/surgery_operation/basic/close_skin/tool_check(obj/item/tool)
-	// Require heat OR a tool behavior match
-	return (tool.get_temperature() > 0 || implements[tool.tool_behaviour])
+	if(istype(tool, /obj/item/gun/energy/laser))
+		var/obj/item/gun/energy/laser/lasergun = tool
+		return lasergun.cell?.charge > 0
+
+	return tool.get_temperature() > 0
 
 /datum/surgery_operation/basic/close_skin/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

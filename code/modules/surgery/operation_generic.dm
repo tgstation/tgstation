@@ -127,8 +127,7 @@
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
 
-	// Require heat OR a tool behavior match
-	return tool.get_temperature() > 0 || implements[tool.tool_behaviour]
+	return tool.get_temperature() > 0
 
 /datum/surgery_operation/limb/close_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

@@ -6,7 +6,7 @@
 		TOOL_SCREWDRIVER = 0.35,
 		/obj/item/pen = 0.15
 	)
-	operation_flags = OPERATION_REQUIRES_TECH
+	operation_flags = OPERATION_LOCKED
 	time = 20 SECONDS
 	target_type = /obj/item/organ/wings/moth
 

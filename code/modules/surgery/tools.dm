@@ -371,13 +371,13 @@
 /obj/item/surgical_processor/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot & ITEM_SLOT_HANDS))
-		UnregisterSignal(user, COMSIG_SURGERY_STARTING)
+		UnregisterSignal(user, COMSIG_LIVING_OPERATING_ON)
 		return
-	RegisterSignal(user, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
+	RegisterSignal(user, COMSIG_LIVING_OPERATING_ON, PROC_REF(check_surgery), override = TRUE)
 
 /obj/item/surgical_processor/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_SURGERY_STARTING)
+	UnregisterSignal(user, COMSIG_LIVING_OPERATING_ON)
 
 /obj/item/surgical_processor/interact_with_atom(atom/design_holder, mob/living/user, list/modifiers)
 	if(!istype(design_holder, /obj/item/disk/surgery) && !istype(design_holder, /obj/machinery/computer/operating))
@@ -402,13 +402,10 @@
 	if(downloaded)
 		. += mutable_appearance(src.icon, "+downloaded")
 
-/obj/item/surgical_processor/proc/check_surgery(mob/user, datum/surgery/surgery, mob/patient)
+/obj/item/surgical_processor/proc/check_surgery(datum/source, mob/living/patient, list/operations)
 	SIGNAL_HANDLER
 
-	if(surgery.replaced_by in loaded_surgeries)
-		return COMPONENT_CANCEL_SURGERY
-	if(surgery.type in loaded_surgeries)
-		return COMPONENT_FORCE_SURGERY
+	operations |= loaded_surgeries
 
 /obj/item/scalpel/advanced
 	name = "laser scalpel"

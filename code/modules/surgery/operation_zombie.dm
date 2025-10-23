@@ -6,7 +6,7 @@
 		/obj/item/pen = 0.30,
 	)
 	time = 5 SECONDS
-	operation_flags = OPERATION_MORBID | OPERATION_REQUIRES_TECH
+	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
 
 	var/list/zombie_chems = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 

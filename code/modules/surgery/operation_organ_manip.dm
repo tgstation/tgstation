@@ -97,9 +97,9 @@
 	if(!..())
 		return FALSE
 
-	switch(LAZYACCESS(operation_args, "action"))
+	switch(operation_args["action"])
 		if("remove")
-			var/obj/item/organ/organ = LAZYACCESS(operation_args, "organ")
+			var/obj/item/organ/organ = operation_args["organ"]
 			if(QDELETED(organ) || !(organ in limb))
 				return FALSE
 		if("insert")
@@ -111,9 +111,9 @@
 	return TRUE
 
 /datum/surgery_operation/limb/organ_manipulation/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	switch(LAZYACCESS(operation_args, "action"))
+	switch(operation_args["action"])
 		if("remove")
-			var/obj/item/organ = LAZYACCESS(operation_args, "organ")
+			var/obj/item/organ = operation_args["organ"]
 			play_operation_sound(limb, surgeon, tool, remove_preop_sound)
 			display_results(
 				surgeon,
@@ -135,10 +135,10 @@
 			display_pain(limb.owner, "You can feel something being placed in your [limb.plaintext_zone]!")
 
 /datum/surgery_operation/limb/organ_manipulation/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	switch(LAZYACCESS(operation_args, "action"))
+	switch(operation_args["action"])
 		if("remove")
 			play_operation_sound(limb, surgeon, tool, remove_success_sound)
-			on_success_remove_organ(limb, surgeon, LAZYACCESS(operation_args, "organ"), tool)
+			on_success_remove_organ(limb, surgeon, operation_args["organ"], tool)
 		if("insert")
 			play_operation_sound(limb, surgeon, tool, insert_success_sound)
 			on_success_insert_organ(limb, surgeon, tool)

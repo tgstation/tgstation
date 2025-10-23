@@ -1,0 +1,69 @@
+/datum/surgery_operation/organ/pacify
+	name = "pacification"
+	desc = "Remove aggressive tendencies from a patient's brain."
+	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
+	implements = list(
+		TOOL_HEMOSTAT = 1,
+		TOOL_SCREWDRIVER = 0.35,
+		/obj/item/pen = 0.15,
+	)
+	time = 4 SECONDS
+	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
+	required_biotype = ORGAN_ORGANIC
+	target_type = /obj/item/organ/brain
+
+/datum/surgery_operation/organ/pacify/organ_check(obj/item/organ/brain/organ)
+	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
+		return FALSE
+	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
+		return FALSE
+	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
+		return FALSE
+	return TRUE
+
+/datum/surgery_operation/organ/pacify/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		organ.owner,
+		span_notice("You begin to pacify [organ.owner]..."),
+		span_notice("[surgeon] begins to fix [organ.owner]'s brain."),
+		span_notice("[surgeon] begins to perform surgery on [organ.owner]'s brain."),
+	)
+	display_pain(organ.owner, "Your head pounds with unimaginable pain!")
+
+/datum/surgery_operation/organ/pacify/on_success(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		organ.owner,
+		span_notice("You succeed in pacifying [organ.owner]."),
+		span_notice("[surgeon] successfully fixes [organ.owner]!"),
+		span_notice("[surgeon] completes the surgery on [organ.owner]'s brain."),
+	)
+	display_pain(organ.owner, "Your head pounds... the concept of violence flashes in your head, and nearly makes you hurl!")
+	organ.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
+
+/datum/surgery_operation/organ/pacify/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		organ.owner,
+		span_notice("You screw up, rewiring [organ.owner]'s brain the wrong way around..."),
+		span_warning("[surgeon] screws up, causing brain damage!"),
+		span_notice("[surgeon] completes the surgery on [organ.owner]'s brain."),
+	)
+	display_pain(organ.owner, "Your head pounds, and it feels like it's getting worse!")
+	organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+
+/datum/surgery_operation/organ/pacify/mechanic
+	name = "delete aggression programming"
+	implements = list(
+		TOOL_MULTITOOL = 1,
+		TOOL_HEMOSTAT = 0.35,
+		TOOL_SCREWDRIVER = 0.35,
+		/obj/item/pen = 0.15,
+	)
+	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
+	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
+	failure_sound = null
+	required_biotype = ORGAN_ROBOTIC

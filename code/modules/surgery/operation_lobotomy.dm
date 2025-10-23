@@ -1,7 +1,7 @@
 /datum/surgery_operation/organ/lobotomy
 	name = "lobotomize"
 	desc = "Repair most of a patient's brain traumas, with the risk of causing new permanent traumas."
-	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_REQUIRES_TECH
+	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED
 	implements = list(
 		TOOL_SCALPEL = 0.85,
 		/obj/item/melee/energy/sword = 0.55,
@@ -56,7 +56,7 @@
 		if(1)
 			organ.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 		if(2)
-			if(HAS_TRAIT(target, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
+			if(HAS_TRAIT(organ.owner, TRAIT_SPECIAL_TRAUMA_BOOST) && prob(50))
 				organ.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
 			else
 				organ.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_MAGIC)

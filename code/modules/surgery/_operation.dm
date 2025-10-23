@@ -6,26 +6,38 @@
 #define OPERATION_LOOPING (1<<2)
 /// Grants a speed bonus if the user is morbid and their tool is morbid
 #define OPERATION_MORBID (1<<3)
-/// Not innately available to doctors, requires some tech to perform
-#define OPERATION_REQUIRES_TECH (1<<4)
+/// Not innately available to doctors, must be added via COMSIG_MOB_ATTEMPT_SURGERY to show up
+#define OPERATION_LOCKED (1<<4)
 /// Operation can be performed on standing patients
 #define OPERATION_STANDING_ALLOWED (1<<6)
 
 /// Dummy "tool" for surgeries which use hands
 #define IMPLEMENT_HAND "hands"
 
-GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
+GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation))
 
-/mob/living/proc/perform_surgery(mob/living/patient, obj/item/potential_tool)
+/mob/living/proc/perform_surgery(mob/living/patient, obj/item/potential_tool = IMPLEMENT_HAND)
 	if(combat_mode)
 		return NONE
 
 	// if(tool)
 	// 	tool = tool.get_proxy_attacker_for(limb, src)
 
+	var/list/possible_operations = list()
+	for(var/operation_type, datum/surgery_operation/operation as anything in GLOB.operations)
+		if(body_position != LYING_DOWN && !(operation.operation_flags & OPERATION_STANDING_ALLOWED))
+			continue
+		if(operation.operation_flags & OPERATION_LOCKED)
+			continue
+		operations += operation
+
+	SEND_SIGNAL(src, COMSIG_LIVING_OPERATING_ON, patient, possible_operations)
+	SEND_SIGNAL(patient, COMSIG_LIVING_BEING_OPERATED_ON, patient, possible_operations)
+
 	var/list/operations = list()
 	var/list/radial_operations = list()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations)
+	for(var/operation_type in possible_operations)
+		var/datum/surgery_operation/operation = GLOB.operations[operation_type]
 		var/atom/movable/operate_on = operation.get_operation_target(src, patient, potential_tool)
 		if(isnull(operate_on))
 			continue
@@ -85,24 +97,17 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
  * Checks to see if this operation can be performed
  * This is the main entry point for checking availability
  */
-/datum/surgery_operation/proc/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool = IMPLEMENT_HAND)
+/datum/surgery_operation/proc/check_availability(atom/movable/operating_on, mob/living/surgeon, tool)
 
 	var/mob/living/patient = get_patient(operating_on)
 
 	if(isnull(patient))
 		return FALSE
 
-	if(patient.body_position != LYING_DOWN && !(operation_flags & OPERATION_STANDING_ALLOWED))
-		return FALSE
-
 	if(!get_tool_quality(tool))
 		return FALSE
 
 	if(!is_available(operating_on))
-		return FALSE
-
-	if(operation_flags & OPERATION_REQUIRES_TECH)
-		// melbert todo
 		return FALSE
 
 	return TRUE
@@ -114,14 +119,18 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
  * 0 = unusable
  * 1 = standard quality
  */
-/datum/surgery_operation/proc/get_tool_quality(obj/item/tool = IMPLEMENT_HAND)
+/datum/surgery_operation/proc/get_tool_quality(tool = IMPLEMENT_HAND)
 	if(!length(implements))
 		return 1
 	if(istype(tool, /obj/item/borg/cyborghug))
 		tool = IMPLEMENT_HAND // melbert todo
 	if(!tool_check(tool))
 		return 0
-	return implements[tool.tool_behaviour] || is_type_in_list(tool, implements, zebra = TRUE) || 0
+	if(!isitem(tool))
+		return implements[tool]
+
+	var/obj/item/realtool = tool
+	return implements[realtool.tool_behaviour] || is_type_in_list(realtool, implements, zebra = TRUE) || 0
 
 /**
  * Return an assoc list or a list of radial slices to display when this operation is available
@@ -272,7 +281,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes(/datum/surgery_operation))
  *
  * Returns an item interaction flag - intended to be invoked from the interaction chain
  */
-/datum/surgery_operation/proc/try_perform(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/proc/try_perform(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args = list())
 	if(!check_availability(operating_on, surgeon, tool))
 		return ITEM_INTERACT_BLOCKING
 
