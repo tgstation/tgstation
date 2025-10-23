@@ -50,7 +50,7 @@ SUBSYSTEM_DEF(events)
 	for(var/variable in configuration)
 		var/datum/round_event_control/event = events_by_name[variable]
 		if(!event)
-			stack_trace("Invalid event [event] attempting to be configured.")
+			stack_trace("Invalid event [variable] attempting to be configured.")
 			continue
 		for(var/event_variable in configuration[variable])
 			if(!(event.vars.Find(event_variable)))
