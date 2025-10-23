@@ -70,7 +70,13 @@
  * Examples:
  * - [/obj/machinery/atmospherics/components/unary] spawns beneath cryo tubes that causes duplication
  */
-/atom/proc/is_saveable()
+/atom/proc/is_saveable(turf/current_loc)
+	return TRUE
+
+/atom/movable/is_saveable(turf/current_loc)
+	if(is_multi_tile_object(src) && (src.loc != current_loc))
+		return FALSE
+
 	return TRUE
 
 /**
