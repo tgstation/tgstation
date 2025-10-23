@@ -1,4 +1,4 @@
-/datum/surgery_operation/autopsy
+/datum/surgery_operation/limb/autopsy
 	name = "autopsy"
 	desc = "Perform a detailed analysis of a deceased patient's body."
 	implements = list(/obj/item/autopsy_scanner = 1)
@@ -7,7 +7,7 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	operation_flags = OPERATION_MORBID
 
-/datum/surgery_operation/autopsy/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
@@ -18,7 +18,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/autopsy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
+/datum/surgery_operation/limb/autopsy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -27,7 +27,7 @@
 		span_notice("[surgeon] uses [tool] on [limb.owner]'s chest."),
 	)
 
-/datum/surgery_operation/autopsy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
+/datum/surgery_operation/limb/autopsy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/autopsy_scanner/tool, list/operation_args)
 	ADD_TRAIT(limb.owner, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 	ADD_TRAIT(limb.owner, TRAIT_SURGICALLY_ANALYZED, AUTOPSY_TRAIT)
 	tool.scan_cadaver(surgeon, limb.owner)
@@ -38,6 +38,6 @@
 		surgeon.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 	return ..()
 
-/datum/surgery_operation/autopsy/mechanic
+/datum/surgery_operation/limb/autopsy/mechanic
 	name = "system failure analysis"
 	required_bodytype = BODYTYPE_ROBOTIC

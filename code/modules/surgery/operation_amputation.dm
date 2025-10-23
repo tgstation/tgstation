@@ -1,4 +1,4 @@
-/datum/surgery_operation/amputate
+/datum/surgery_operation/limb/amputate
 	name = "amputate limb"
 	desc = "Sever a limb from the patient's body."
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD
@@ -17,12 +17,12 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/amputate/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/amputate/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(/obj/item/circular_saw)
 	return base
 
-/datum/surgery_operation/amputate/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
@@ -37,7 +37,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/amputate/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/amputate/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -47,7 +47,7 @@
 	)
 	display_pain(limb.owner, "You feel a gruesome pain in your [limb.plaintext_zone]'s joint!")
 
-/datum/surgery_operation/amputate/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/amputate/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -60,7 +60,7 @@
 		surgeon.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 	limb.drop_limb()
 
-/datum/surgery_operation/amputate/mechanic
+/datum/surgery_operation/limb/amputate/mechanic
 	name = "disassemble limb"
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
@@ -74,12 +74,12 @@
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
-/datum/surgery_operation/amputate/mechanic/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/amputate/pegleg
+/datum/surgery_operation/limb/amputate/pegleg
 	name = "detach peg leg"
 	required_bodytype = BODYTYPE_PEG
 	implements = list(
@@ -93,5 +93,5 @@
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'
 	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
 
-/datum/surgery_operation/amputate/mechanic/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
 	return TRUE

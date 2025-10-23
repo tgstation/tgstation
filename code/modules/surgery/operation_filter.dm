@@ -1,4 +1,4 @@
-/datum/surgery_operation/filter_blood
+/datum/surgery_operation/limb/filter_blood
 	name = "blood filtration"
 	desc = "Remove unwanted chemicals from a patient's bloodstream."
 	implements = list(/obj/item/blood_filter = 1)
@@ -6,12 +6,12 @@
 	operation_flags = OPERATION_LOOPING
 	success_sound = 'sound/machines/card_slide.ogg'
 
-/datum/surgery_operation/filter_blood/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/filter_blood/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(/obj/item/blood_filter)
 	return base
 
-/datum/surgery_operation/filter_blood/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/filter_blood/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
@@ -20,14 +20,14 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/filter_blood/can_loop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/filter_blood/can_loop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	return ..() && has_filterable_chems(limb.owner, tool)
 
-/datum/surgery_operation/filter_blood/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/filter_blood/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_pain(limb.owner, "You feel a throbbing pain in your chest!")
 
-/datum/surgery_operation/filter_blood/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/filter_blood/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	var/obj/item/blood_filter/bloodfilter = tool
 	for(var/datum/reagent/chem as anything in limb.owner.reagents?.reagent_list)
@@ -45,7 +45,7 @@
 	if(surgeon.is_holding_item_of_type(/obj/item/healthanalyzer))
 		chemscan(surgeon, limb.owner)
 
-/datum/surgery_operation/filter_blood/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/filter_blood/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -55,7 +55,7 @@
 	)
 	limb.receive_damage(5, damage_source = tool)
 
-/datum/surgery_operation/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
+/datum/surgery_operation/limb/filter_blood/proc/has_filterable_chems(mob/living/carbon/target, obj/item/blood_filter/bloodfilter)
 	if(!length(target.reagents?.reagent_list))
 		bloodfilter.audible_message(span_notice("[bloodfilter] pings as it reports no chemicals detected in [target]'s blood."))
 		playsound(target, 'sound/machines/ping.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)

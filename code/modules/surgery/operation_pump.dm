@@ -1,13 +1,13 @@
-/datum/surgery_operation/stomach_pump
+/datum/surgery_operation/limb/stomach_pump
 	name = "pump stomach"
 	desc = "Manually pump a patient's stomach to induce vomiting and expel harmful chemicals."
-	requires_bodypart_type = BODYTYPE_ORGANIC
+	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		HAND_IMPLEMENT = 1,
 	)
 	time = 2 SECONDS
 
-/datum/surgery_operation/stomach_pump/state_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/stomach_pump/state_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
@@ -19,7 +19,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/stomach_pump/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/stomach_pump/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -29,7 +29,7 @@
 	)
 	display_pain(limb.owner, "You feel a horrible sloshing feeling in your gut! You're going to be sick!")
 
-/datum/surgery_operation/stomach_pump/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/stomach_pump/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -39,7 +39,7 @@
 	)
 	limb.owner.vomit((MOB_VOMIT_MESSAGE | MOB_VOMIT_STUN), lost_nutrition = 20, purge_ratio = 0.67)
 
-/datum/surgery_operation/stomach_pump/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/stomach_pump/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -50,6 +50,6 @@
 	limb.owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
 	limb.receive_damage(5)
 
-/datum/surgery_operation/stomach_pump/mechanic
+/datum/surgery_operation/limb/stomach_pump/mechanic
 	name = "purge nutrient processor"
-	requires_bodypart_type = BODYTYPE_ROBOTIC
+	required_bodytype = BODYTYPE_ROBOTIC

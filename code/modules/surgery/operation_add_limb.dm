@@ -1,4 +1,4 @@
-/datum/surgery_operation/prosthetic_replacement
+/datum/surgery_operation/limb/prosthetic_replacement
 	name = "prosthetic replacement"
 	desc = "Replace a missing limb with a prosthetic or arbitrary item."
 	implements = list(
@@ -6,7 +6,7 @@
 		/obj/item = 1,
 	)
 	time = 3.2 SECONDS
-	operation_flags = OPERATION_REDIRECT_CHEST | OPERATION_STANDING_ALLOWED
+	operation_flags = OPERATION_STANDING_ALLOWED
 	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
 	var/list/always_accepted_prosthetics = list(
 		/obj/item/chainsaw, // the OG, too large otherwise
@@ -14,11 +14,16 @@
 		/obj/item/food/pizzaslice, // he's turning her into a papa john's
 	)
 
+/datum/surgery_operation/prosthetic_replacement/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
+	// We always operate on the chest even if we're targeting left leg or w/e
+	return patient.get_bodypart(BODY_ZONE_CHEST)
+
 /datum/operation/prosthetic_replacement/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE
+	// While we are operating on chest, we need to make sure the actual missing limb is missing
 	if(limb.owner.get_bodypart(deprecise_zone(surgeon.zone_selected)))
 		return FALSE
 	// check bodyshape compatibility for real bodyparts
@@ -31,7 +36,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/prosthetic_replacement/tool_check(obj/item/bodypart/tool)
+/datum/surgery_operation/limb/prosthetic_replacement/tool_check(obj/item/bodypart/tool)
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 		return FALSE
 	if(isbodypart(tool))
@@ -44,7 +49,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/prosthetic_replacement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/prosthetic_replacement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/target_zone = deprecise_zone(surgeon.zone_selected)
 	operation_args["target_zone"] = target_zone
 
@@ -66,7 +71,7 @@
 		else if(new_limb.check_for_frankenstein(limb.owner))
 			operation_args["tox_damage"] = 30
 
-/datum/surgery_operation/prosthetic_replacement/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/prosthetic_replacement/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(!surgeon.temporarilyRemoveItemFromInventory(tool))
 		return // should never happen
 	if(operation_args["tox_damage"] > 0)
@@ -76,7 +81,7 @@
 		return
 	handle_arbitrary_prosthetic(limb.owner, surgeon, tool, operation_args["target_zone"])
 
-/datum/surgery_operation/prosthetic_replacement/proc/handle_bodypart(mob/living/carbon/patient, mob/living/surgeon, obj/item/bodypart/bodypart_to_attach)
+/datum/surgery_operation/limb/prosthetic_replacement/proc/handle_bodypart(mob/living/carbon/patient, mob/living/surgeon, obj/item/bodypart/bodypart_to_attach)
 	bodypart_to_attach.try_attach_limb(patient)
 	if(bodypart_to_attach.check_for_frankenstein(patient))
 		bodypart_to_attach.bodypart_flags |= BODYPART_IMPLANTED
@@ -88,7 +93,7 @@
 	)
 	display_pain(patient, "You feel synthetic sensation wash from your [bodypart_to_attach.plaintext_zone], which you can feel again!", TRUE)
 
-/datum/surgery_operation/prosthetic_replacement/proc/handle_arbitrary_prosthetic(mob/living/carbon/patient, mob/living/surgeon, obj/item/thing_to_attach, target_zone)
+/datum/surgery_operation/limb/prosthetic_replacement/proc/handle_arbitrary_prosthetic(mob/living/carbon/patient, mob/living/surgeon, obj/item/thing_to_attach, target_zone)
 	SSblackbox.record_feedback("tally", "arbitrary_prosthetic", 1, initial(thing_to_attach.name))
 	var/obj/item/bodypart/new_limb = patient.make_item_prosthetic(thing_to_attach, target_zone, 80)
 	new_limb.surgery_special_state |= SURGERY_PROSTHETIC_UNSECURED
@@ -100,7 +105,7 @@
 	)
 	display_pain(patient, "You feel a strange sensation as [thing_to_attach] takes place of an arm!", TRUE)
 
-/datum/surgery_operation/secure_arbitrary_prosthetic
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic
 	name = "secure prosthetic"
 	desc = "Ensure that an arbitrary prosthetic is properly attached to a patient's body."
 	implements = list(
@@ -110,12 +115,12 @@
 	)
 	time = 4.8 SECONDS
 
-/datum/surgery_operation/secure_arbitrary_prosthetic/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/state_check(obj/item/bodypart/limb)
 	if(!(limb.surgery_special_state & SURGERY_PROSTHETIC_UNSECURED))
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -126,7 +131,7 @@
 	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
 	display_pain(limb.owner, "[surgeon] begins to [tool.singular_name] [limb] to your body!", IS_ROBOTIC_LIMB(chest))
 
-/datum/surgery_operation/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
+/datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,

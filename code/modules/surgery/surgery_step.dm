@@ -129,7 +129,7 @@
 	//multiply speed_mod by sterilizer modifier
 	speed_mod *= surgery.speed_modifier
 
-	speed_mod /= (get_location_modifier(target) * implement_speed_mod) * target.mob_surgery_speed_mod
+	// speed_mod /= (get_location_modifier(target) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
 

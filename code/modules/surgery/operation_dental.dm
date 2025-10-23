@@ -1,4 +1,4 @@
-/datum/surgery_operation/add_dental_implant
+/datum/surgery_operation/limb/add_dental_implant
 	name = "add dental implant"
 	desc = "Implant a dental item into a patient's teeth."
 	implements = list(
@@ -6,12 +6,12 @@
 	)
 	time = 1.6 SECONDS
 
-/datum/surgery_operation/add_dental_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/add_dental_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(image('icons/hud/implants.dmi', "reagents"))
 	return base
 
-/datum/surgery_operation/add_dental_implant/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/add_dental_implant/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_bone_state != SURGERY_BONE_DRILLED)
 		return FALSE
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
@@ -30,7 +30,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/add_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/add_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -40,7 +40,7 @@
 	)
 	display_pain(limb.owner, "Something's being jammed into your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/add_dental_implant/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/add_dental_implant/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	// Pills go into head
 	surgeon.transferItemToLoc(tool, limb, TRUE)
 
@@ -57,7 +57,7 @@
 		span_notice("[surgeon] wedges something into [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 
-/datum/surgery_operation/remove_dental_implant
+/datum/surgery_operation/limb/remove_dental_implant
 	name = "remove dental implant"
 	desc = "Remove a dental implant from a patient's teeth."
 	implements = list(
@@ -65,7 +65,7 @@
 		HAND_IMPLEMENT = 1,
 	)
 
-/datum/surgery_operation/remove_dental_implant/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/remove_dental_implant/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_bone_state != SURGERY_BONE_DRILLED)
 		return FALSE
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
@@ -74,7 +74,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/remove_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/remove_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -84,7 +84,7 @@
 	)
 	display_pain(limb.owner, "You feel fingers poke around at your teeth.")
 
-/datum/surgery_operation/remove_dental_implant/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/remove_dental_implant/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	pass()
 	// melbert todo
 

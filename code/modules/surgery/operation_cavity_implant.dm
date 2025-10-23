@@ -1,4 +1,4 @@
-/datum/surgery_operation/cavity_implant
+/datum/surgery_operation/limb/cavity_implant
 	name = "cavity implant"
 	desc = "Implant an item into a patient's body cavity."
 	implements = list(
@@ -10,18 +10,18 @@
 	/// Items that bypass normal size restrictions for cavity implantation
 	var/list/heavy_cavity_implants
 
-/datum/surgery_operation/cavity_implant/New()
+/datum/surgery_operation/limb/cavity_implant/New()
 	. = ..()
 	heavy_cavity_implants = typecacheof(list(
 		/obj/item/transfer_valve,
 	))
 
-/datum/surgery_operation/cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(image('icons/hud/screen_gen.dmi', "arrow_large_still"))
 	return base
 
-/datum/surgery_operation/cavity_implant/state_check(obj/item/bodypart/chest/limb)
+/datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
@@ -30,7 +30,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/cavity_implant/tool_check(obj/item/tool)
+/datum/surgery_operation/limb/cavity_implant/tool_check(obj/item/tool)
 	if(tool.w_class > WEIGHT_CLASS_NORMAL && !is_type_in_typecache(tool, heavy_cavity_implants))
 		return FALSE
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
@@ -41,7 +41,7 @@
 	// 	return FALSE
 	return TRUE
 
-/datum/surgery_operation/cavity_implant/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/cavity_implant/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -51,7 +51,7 @@
 	)
 	display_pain(limb.owner, "You can feel something being inserted into your [limb.plaintext_zone], it hurts like hell!")
 
-/datum/surgery_operation/cavity_implant/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/cavity_implant/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if (!surgeon.transferItemToLoc(tool, limb.owner, force = TRUE)) // shouldn't fail but just in case
 		display_results(
 			surgeon,
@@ -71,7 +71,7 @@
 		span_notice("[surgeon] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [limb.owner]'s [limb.plaintext_zone]."),
 	)
 
-/datum/surgery_operation/undo_cavity_implant
+/datum/surgery_operation/limb/undo_cavity_implant
 	name = "remove cavity implant"
 	desc = "Remove an item from a body cavity."
 	implements = list(
@@ -85,12 +85,12 @@
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/undo_cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/undo_cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(list(/obj/item/hemostat, limb.cavity_item))
 	return base
 
-/datum/surgery_operation/undo_cavity_implant/state_check(obj/item/bodypart/chest/limb)
+/datum/surgery_operation/limb/undo_cavity_implant/state_check(obj/item/bodypart/chest/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
@@ -104,7 +104,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/undo_cavity_implant/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/undo_cavity_implant/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -114,7 +114,7 @@
 	)
 	display_pain(limb.owner, "You feel a serious pain in your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/undo_cavity_implant/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/undo_cavity_implant/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(isnull(limb.cavity_item)) // something else could have removed it mid surgery?
 		display_results(
 			surgeon,

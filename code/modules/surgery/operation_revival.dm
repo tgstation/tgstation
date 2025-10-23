@@ -1,4 +1,4 @@
-/datum/surgery_operation/revival
+/datum/surgery_operation/limb/revival
 	name = "shock brain"
 	desc = "Use a defibrillator to shock a patient's brain back to life."
 	implements = list(
@@ -15,7 +15,7 @@
 	)
 	success_sound = 'sound/machines/defib/defib_zap.ogg'
 
-/datum/surgery_operation/revival/state_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/revival/state_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
@@ -33,10 +33,10 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/revival/brain_check(obj/item/organ/brain/brain)
+/datum/surgery_operation/limb/revival/brain_check(obj/item/organ/brain/brain)
 	return IS_ORGANIC_ORGAN(brain)
 
-/datum/surgery_operation/revival/tool_check(obj/item/tool)
+/datum/surgery_operation/limb/revival/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/shockpaddles))
 		var/obj/item/shockpaddles/paddles = tool
 		if((paddles.req_defib && !paddles.defib.powered) || !HAS_TRAIT(paddles, TRAIT_WIELDED) || paddles.cooldown || paddles.busy)
@@ -52,7 +52,7 @@
 
 	return TRUE
 
-/datum/surgery_operation/revival/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/revival/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -60,9 +60,9 @@
 		span_notice("[surgeon] prepares to give [limb.owner]'s brain the spark of life with [tool]."),
 		span_notice("[surgeon] prepares to give [limb.owner]'s brain the spark of life."),
 	)
-	limb.owner.notify_pain("Someone is trying to zap your brain.", source = limb.owner)
+	limb.owner.notify_revival("Someone is trying to zap your brain.", source = limb.owner)
 
-/datum/surgery_operation/revival/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/revival/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -80,7 +80,7 @@
 	on_revived(surgeon, limb.owner)
 
 /// Called when you have been successfully raised from the dead
-/datum/surgery_operation/revive/proc/on_revived(mob/living/surgeon, mob/living/patient)
+/datum/surgery_operation/limb/revival/proc/on_revived(mob/living/surgeon, mob/living/patient)
 	patient.visible_message(span_notice("...[patient] wakes up, alive and aware!"))
 	patient.emote("gasp")
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID)) // Contrary to their typical hatred of resurrection, it wouldn't be very thematic if morbid people didn't love playing god
@@ -88,11 +88,11 @@
 	patient.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
 
 /// Called when revival fails
-/datum/surgery_operation/revive/proc/on_no_revive(mob/living/surgeon, mob/living/patient)
-	patient.visible_message(span_warning("...[patient.p_they()] convulse[target.p_s()], then lie[target.p_s()] still."))
+/datum/surgery_operation/limb/revival/proc/on_no_revive(mob/living/surgeon, mob/living/patient)
+	patient.visible_message(span_warning("...[patient.p_they()] convulse[patient.p_s()], then lie[patient.p_s()] still."))
 	patient.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) // MAD SCIENCE
 
-/datum/surgery_operation/revive/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/revival/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -101,8 +101,8 @@
 		span_warning("[surgeon] shocks [limb.owner]'s brain with [tool], but [limb.owner] don't react."),
 	)
 
-/datum/surgery_operation/revival/mechanic
+/datum/surgery_operation/limb/revival/mechanic
 	name = "full system reboot"
 
-/datum/surgery_operation/revival/mechanic/brain_check(obj/item/organ/brain/brain)
+/datum/surgery_operation/limb/revival/mechanic/brain_check(obj/item/organ/brain/brain)
 	return IS_ROBOTIC_ORGAN(brain)

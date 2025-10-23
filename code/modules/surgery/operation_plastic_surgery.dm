@@ -3,7 +3,7 @@
 	desc = "The disk provides instructions on how to do an Advanced Plastic Surgery, this surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face. With the surgery long becoming obsolete with the rise of genetics technology. This item became an antique to many collectors, With only the cheaper and easier basic form of plastic surgery remaining in use in most places."
 	// surgeries = list(/datum/surgery/plastic_surgery/advanced)
 
-/datum/surgery_operation/plastic_surgery
+/datum/surgery_operation/limb/plastic_surgery
 	name = "plastic surgery"
 	desc = "Reshape or reconstruct a patient's body part for cosmetic or functional purposes."
 	implements = list(
@@ -16,14 +16,14 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 
-/datum/surgery_operation/plastic_surgery/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/plastic_surgery/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/plastic_surgery/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/plastic_surgery/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(HAS_TRAIT_FROM(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC))
 		return TRUE //skip name selection if fixing disfigurement
 
@@ -49,7 +49,7 @@
 	operation_args["chosen_name"] = tgui_input_list(surgeon, "New name to assign", "Plastic Surgery", names)
 	return !!operation_args["chosen_name"]
 
-/datum/surgery_operation/plastic_surgery/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/plastic_surgery/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -59,7 +59,7 @@
 	)
 	display_pain(limb.owner, "You feel a slicing pain across your face!")
 
-/datum/surgery_operation/plastic_surgery/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/plastic_surgery/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(HAS_TRAIT_FROM(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC))
 		REMOVE_TRAIT(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		display_results(
@@ -90,7 +90,7 @@
 		surgeon.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)
 	limb.surgery_special_state &= ~SURGERY_PLASTIC_APPLIED
 
-/datum/surgery_operation/plastic_surgery/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/plastic_surgery/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -101,7 +101,7 @@
 	display_pain(limb.owner, "Your face feels horribly scarred and deformed!")
 	ADD_TRAIT(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
-/datum/surgery_operation/add_plastic
+/datum/surgery_operation/limb/add_plastic
 	name = "apply plastic"
 	desc = "Apply plastic to a patient's body part to to allow for greater customization in future plastic surgeries."
 	implements = list(
@@ -113,7 +113,7 @@
 	success_sound = 'sound/effects/blob/attackblob.ogg'
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
 
-/datum/surgery_operation/add_plastic/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/add_plastic/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_special_state & SURGERY_PLASTIC_APPLIED)
@@ -122,7 +122,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/add_plastic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/add_plastic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -132,6 +132,6 @@
 	)
 	display_pain(limb.owner, "You feel a strange sensation as something is applied to your face!")
 
-/datum/surgery_operation/add_plastic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/add_plastic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	limb.surgery_special_state |= SURGERY_PLASTIC_APPLIED

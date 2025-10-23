@@ -1,4 +1,4 @@
-/datum/surgery_operation/asthmatic_bypass
+/datum/surgery_operation/limb/asthmatic_bypass
 	name = "force open windpipe"
 	desc = "Forcibly expand a patient's windpipe, relieving asthma symptoms."
 	implements = list(
@@ -12,7 +12,7 @@
 	/// The amount of inflammation a failure or success of this surgery will reduce.
 	var/inflammation_reduction = 75
 
-/datum/surgery_operation/asthmatic_bypass/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/asthmatic_bypass/state_check(obj/item/bodypart/limb)
 	if(!(locate(/obj/item/organ/lungs) in limb))
 		return FALSE
 	if(!limb.owner.has_quirk(/datum/quirk/item_quirk/asthma))
@@ -21,7 +21,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/asthmatic_bypass/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/asthmatic_bypass/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -31,7 +31,7 @@
 	)
 	display_pain(limb.owner, "You feel an agonizing stretching sensation in your neck!")
 
-/datum/surgery_operation/asthmatic_bypass/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/asthmatic_bypass/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/quirk/item_quirk/asthma/asthma = limb.owner.get_quirk(/datum/quirk/item_quirk/asthma)
 	if(isnull(asthma))
 		return
@@ -46,7 +46,7 @@
 		span_notice("[surgeon] finishes stretching [limb.owner]'s windpipe.")
 	)
 
-/datum/surgery_operation/asthmatic_bypass/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/asthmatic_bypass/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	var/datum/quirk/item_quirk/asthma/asthma = limb.owner.get_quirk(/datum/quirk/item_quirk/asthma)
 	if(isnull(asthma))
 		return

@@ -1,5 +1,5 @@
 /// Repairing specific organs
-/datum/surgery_operation/organ_repair
+/datum/surgery_operation/limb/organ_repair
 	name = "repair organ"
 	desc = "Repair a patient's damaged organ."
 	/// What organ to repair
@@ -15,12 +15,12 @@
 	/// If TRUE, an organ can be repaired multiple times
 	var/repeatable = FALSE
 
-/datum/surgery_operation/organ_repair/New()
+/datum/surgery_operation/limb/organ_repair/New()
 	. = ..()
 	if(operation_flags & OPERATION_LOOPING)
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 
-/datum/surgery_operation/organ_repair/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/organ_repair/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state != SURGERY_VESSELS_ORGANS_CUT)
@@ -34,17 +34,17 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/organ_repair/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/to_repair = locate(target_type) in limb
 	to_repair.set_organ_damage(to_repair.maxHealth * heal_to_percent)
 	to_repair.organ_flags &= ~ORGAN_EMP
 	ADD_TRAIT(to_repair, TRAIT_ORGAN_OPERATED_ON, TRAIT_GENERIC)
 
-/datum/surgery_operation/organ_repair/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	var/obj/item/organ/to_repair = locate(target_type) in limb
 	to_repair.apply_organ_damage(to_repair.maxHealth * failure_damage_percent)
 
-/datum/surgery_operation/organ_repair/lobectomy
+/datum/surgery_operation/limb/organ_repair/lobectomy
 	name = "excise damaged lung node"
 	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
 	implements = list(
@@ -62,7 +62,7 @@
 	target_type = /obj/item/organ/lungs
 	failure_damage_percent = 0.1
 
-/datum/surgery_operation/organ_repair/lobectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/lobectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -72,7 +72,7 @@
 	)
 	display_pain(limb.owner, "You feel a stabbing pain in your chest!")
 
-/datum/surgery_operation/organ_repair/lobectomy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/lobectomy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -82,7 +82,7 @@
 		span_notice("[surgeon] successfully excises [limb.owner]'s most damaged lobe."),
 	)
 
-/datum/surgery_operation/organ_repair/lobectomy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/lobectomy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	. = ..()
 	limb.owner.losebreath += 4
 	display_results(
@@ -94,7 +94,7 @@
 	)
 	display_pain(limb.owner, "You feel a sharp stab in your chest; the wind is knocked out of you and it hurts to catch your breath!")
 
-/datum/surgery_operation/organ_repair/lobectomy/mechanic
+/datum/surgery_operation/limb/organ_repair/lobectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
 		TOOL_SCALPEL = 0.95,
@@ -107,7 +107,7 @@
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 	required_bodytype = BODYTYPE_ROBOTIC
 
-/datum/surgery_operation/organ_repair/hepatectomy
+/datum/surgery_operation/limb/organ_repair/hepatectomy
 	name = "remove damaged liver section"
 	desc = "Perform repairs to a patient's damaged liver by removing the most damaged section."
 	implements = list(
@@ -126,7 +126,7 @@
 	heal_to_percent = 0.1
 	failure_damage_percent = 0.15
 
-/datum/surgery_operation/organ_repair/hepatectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/hepatectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -136,7 +136,7 @@
 	)
 	display_pain(limb.owner, "Your abdomen burns in horrific stabbing pain!")
 
-/datum/surgery_operation/organ_repair/hepatectomy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/hepatectomy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -147,7 +147,7 @@
 	)
 	display_pain(limb.owner, "The pain receeds slightly!")
 
-/datum/surgery_operation/organ_repair/hepatectomy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/hepatectomy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	. = ..()
 	display_results(
 		surgeon,
@@ -158,7 +158,7 @@
 	)
 	display_pain(limb.owner, "The pain in your abdomen intensifies!")
 
-/datum/surgery_operation/organ_repair/hepatectomy/mechanic
+/datum/surgery_operation/limb/organ_repair/hepatectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
 		TOOL_SCALPEL = 0.95,
@@ -171,7 +171,7 @@
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 	required_bodytype = BODYTYPE_ROBOTIC
 
-/datum/surgery_operation/organ_repair/coronary_bypass
+/datum/surgery_operation/limb/organ_repair/coronary_bypass
 	name = "graft coronary bypass"
 	desc = "Graft a bypass onto a a patient's damaged heart to restore proper blood flow."
 	implements = list(
@@ -188,7 +188,7 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	target_type = /obj/item/organ/heart
 
-/datum/surgery_operation/organ_repair/coronary_bypass/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/coronary_bypass/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -198,7 +198,7 @@
 	)
 	display_pain(limb.owner, "The pain in your chest is unbearable! You can barely take it anymore!")
 
-/datum/surgery_operation/organ_repair/coronary_bypass/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/coronary_bypass/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -209,7 +209,7 @@
 	)
 	display_pain(limb.owner, "The pain in your chest throbs, but your heart feels better than ever!")
 
-/datum/surgery_operation/organ_repair/coronary_bypass/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/coronary_bypass/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	. = ..()
 	limb.adjustBleedStacks(30)
 	var/blood_name = LOWER_TEXT(limb.owner.get_bloodtype()?.get_blood_name()) || "blood"
@@ -222,7 +222,7 @@
 	)
 	display_pain(limb.owner, "Your chest burns; you feel like you're going insane!")
 
-/datum/surgery_operation/organ_repair/coronary_bypass/mechanic
+/datum/surgery_operation/limb/organ_repair/coronary_bypass/mechanic
 	name = "access engine internals"
 	implements = list(
 		TOOL_SCALPEL = 0.95,
@@ -235,7 +235,7 @@
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 	required_bodytype = BODYTYPE_ROBOTIC
 
-/datum/surgery_operation/organ_repair/gastrectomy
+/datum/surgery_operation/limb/organ_repair/gastrectomy
 	name = "remove lower duodenum"
 	desc = "Perform a patient's repairs to a damaged stomach by removing the lower duodenum."
 	implements = list(
@@ -255,11 +255,11 @@
 	heal_to_percent = 0.2
 	failure_damage_percent = 0.15
 
-/datum/surgery_operation/organ_repair/gastrectomy/tool_check(obj/item/tool)
+/datum/surgery_operation/limb/organ_repair/gastrectomy/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
-/datum/surgery_operation/organ_repair/gastrectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/gastrectomy/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -269,7 +269,7 @@
 	)
 	display_pain(limb.owner, "You feel a horrible stab in your gut!")
 
-/datum/surgery_operation/organ_repair/gastrectomy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/gastrectomy/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -280,7 +280,7 @@
 	)
 	display_pain(limb.owner, "The pain in your gut receeds slightly!")
 
-/datum/surgery_operation/organ_repair/gastrectomy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/gastrectomy/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	. = ..()
 	display_results(
 		surgeon,
@@ -291,7 +291,7 @@
 	)
 	display_pain(limb.owner, "The pain in your gut intensifies!")
 
-/datum/surgery_operation/organ_repair/gastrectomy/mechanic
+/datum/surgery_operation/limb/organ_repair/gastrectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
 		TOOL_SCALPEL = 0.95,
@@ -305,7 +305,7 @@
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 	required_bodytype = BODYTYPE_ROBOTIC
 
-/datum/surgery_operation/organ_repair/ears
+/datum/surgery_operation/limb/organ_repair/ears
 	name = "ear surgery"
 	desc = "Repair a patient's damaged ears to restore hearing."
 	implements = list(
@@ -318,7 +318,7 @@
 	heal_to_percent = 0
 	repeatable = TRUE
 
-/datum/surgery_operation/organ_repair/ears/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/organ_repair/ears/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
@@ -327,7 +327,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/organ_repair/ears/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/ears/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -337,7 +337,7 @@
 	)
 	display_pain(limb.owner, "You feel a dizzying pain in your head!")
 
-/datum/surgery_operation/organ_repair/ears/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/ears/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	var/obj/item/organ/ears/ears = locate() in limb
 	ears.deaf = 20
@@ -350,7 +350,7 @@
 	)
 	display_pain(limb.owner, "Your head swims, but it seems like you can feel your hearing coming back!")
 
-/datum/surgery_operation/organ_repair/ears/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/ears/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	var/obj/item/organ/brain/brain = locate() in limb
 	if(brain)
 		display_results(
@@ -371,7 +371,7 @@
 			span_warning("[surgeon] accidentally stabs [limb.owner] right in the brain!"),
 		)
 
-/datum/surgery_operation/organ_repair/eyes
+/datum/surgery_operation/limb/organ_repair/eyes
 	name = "eye surgery"
 	desc = "Repair a patient's damaged eyes to restore vision."
 	implements = list(
@@ -384,7 +384,7 @@
 	heal_to_percent = 0
 	repeatable = TRUE
 
-/datum/surgery_operation/organ_repair/eyes/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/organ_repair/eyes/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
@@ -393,10 +393,10 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/organ_repair/eyes/get_default_radial_image(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/organ_repair/eyes/get_default_radial_image(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_eyes")
 
-/datum/surgery_operation/organ_repair/eyes/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/eyes/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -406,7 +406,7 @@
 	)
 	display_pain(limb.owner, "You feel a stabbing pain in your eyes!")
 
-/datum/surgery_operation/organ_repair/eyes/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/eyes/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	limb.owner.remove_status_effect(/datum/status_effect/temporary_blindness)
 	limb.owner.set_eye_blur_if_lower(70 SECONDS) //this will fix itself slowly.
@@ -419,7 +419,7 @@
 	)
 	display_pain(limb.owner, "Your vision blurs, but it seems like you can see a little better now!")
 
-/datum/surgery_operation/organ_repair/eyes/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/eyes/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	var/obj/item/organ/brain/brain = locate() in limb
 	if(brain)
 		display_results(
@@ -441,7 +441,7 @@
 			span_warning("[surgeon] accidentally stabs [limb.owner] right in the brain!"),
 		)
 
-/datum/surgery_operation/organ_repair/brain
+/datum/surgery_operation/limb/organ_repair/brain
 	name = "brain surgery"
 	desc = "Repair a patient's damaged brain tissue to restore cognitive function."
 	implements = list(
@@ -460,7 +460,7 @@
 	failure_damage_percent = 0.3
 	repeatable = TRUE
 
-/datum/surgery_operation/organ_repair/brain/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/organ_repair/brain/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
@@ -469,7 +469,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/organ_repair/brain/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/brain/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -479,7 +479,7 @@
 	)
 	display_pain(limb.owner, "Your head pounds with unimaginable pain!")
 
-/datum/surgery_operation/organ_repair/brain/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_repair/brain/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/to_repair = locate(target_type) in limb
 	to_repair.apply_organ_damage(-to_repair.maxHealth * heal_to_percent) // no parent call, special healing for this one
 	display_results(
@@ -495,7 +495,7 @@
 	if(to_repair.damage > to_repair.maxHealth * 0.1)
 		to_chat(surgeon, "[limb.owner]'s brain looks like it could be fixed further.")
 
-/datum/surgery_operation/organ_repair/brain/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/organ_repair/brain/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
 	. = ..()
 	display_results(
 		surgeon,
@@ -507,7 +507,7 @@
 	display_pain(limb.owner, "Your head throbs with horrible pain; thinking hurts!")
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
-/datum/surgery_operation/organ_repair/brain/mechanic
+/datum/surgery_operation/limb/organ_repair/brain/mechanic
 	name = "perform neural debugging"
 	implements = list(
 		TOOL_HEMOSTAT = 0.95,

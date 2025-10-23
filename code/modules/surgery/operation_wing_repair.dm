@@ -1,4 +1,4 @@
-/datum/surgery_operation/fix_wings
+/datum/surgery_operation/limb/fix_wings
 	name = "repair wings"
 	desc = "Repair a patient's damaged wings to restore flight capability."
 	implements = list(
@@ -6,24 +6,25 @@
 		TOOL_SCREWDRIVER = 0.35,
 		/obj/item/pen = 0.15
 	)
-	chems_needed = list(/datum/reagent/medicine/c2/synthflesh)
 	operation_flags = OPERATION_REQUIRES_TECH
 	time = 20 SECONDS
 
-/datum/surgery_operation/fix_wings/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/fix_wings/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")
 
-/datum/surgery_operation/fix_wings/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/fix_wings/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
 		return FALSE
 	if(limb.surgery_bone_state == SURGERY_BONE_INTACT)
 		return FALSE
+	if(limb.owner.reagents?.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) < 1)
+		return FALSE
 	var/obj/item/organ/wings/moth/wings = locate() in limb
 	return wings?.burnt
 
-/datum/surgery_operation/fix_wings/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/fix_wings/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -33,7 +34,7 @@
 	)
 	display_pain(limb.owner, "Your wings sting like hell!")
 
-/datum/surgery_operation/fix_wings/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/fix_wings/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,

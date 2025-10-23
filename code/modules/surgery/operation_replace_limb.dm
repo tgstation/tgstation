@@ -1,4 +1,4 @@
-/datum/surgery_operation/replace_limb
+/datum/surgery_operation/limb/replace_limb
 	name = "replace limb"
 	desc = "Replace a patient's limb with a robotic or prosthetic one."
 	implements = list(
@@ -6,7 +6,7 @@
 	)
 	time = 3.2 SECONDS
 
-/datum/surgery_operation/replace_limb/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool)
+/datum/surgery_operation/limb/replace_limb/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool)
 	if(HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS))
 		return FALSE
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
@@ -19,14 +19,14 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/replace_limb/tool_check(obj/item/bodypart/tool)
+/datum/surgery_operation/limb/replace_limb/tool_check(obj/item/bodypart/tool)
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 		return FALSE
 	if(!IS_ROBOTIC_LIMB(tool))
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/replace_limb/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
+/datum/surgery_operation/limb/replace_limb/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
 	// purposefully doesn't use plaintext zone for more context on what is being replaced with what
 	display_results(
 		surgeon,
@@ -37,7 +37,7 @@
 	)
 	display_pain(limb.owner, "You feel a horrible pain in your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/replace_limb/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
+/datum/surgery_operation/limb/replace_limb/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, list/operation_args)
 	if(!surgeon.temporarilyRemoveItemFromInventory(tool))
 		return // should never happen
 

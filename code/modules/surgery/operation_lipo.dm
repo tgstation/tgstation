@@ -1,4 +1,4 @@
-/datum/surgery_operation/lipoplasty
+/datum/surgery_operation/limb/lipoplasty
 	name = "lipoplasty"
 	desc = "Remove excess fat from a patient's body."
 	implements = list(
@@ -17,16 +17,16 @@
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/lipoplasty/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/lipoplasty/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(list(/obj/item/food/meat/slab/human, /obj/item/scalpel))
 	return base
 
-/datum/surgery_operation/lipoplasty/tool_check(obj/item/tool)
+/datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
-/datum/surgery_operation/lipoplasty/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/lipoplasty/state_check(obj/item/bodypart/limb)
 	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
 		return FALSE
 	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
@@ -37,7 +37,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/lipoplasty/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/lipoplasty/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -47,7 +47,7 @@
 	)
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/lipoplasty/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/lipoplasty/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -77,7 +77,7 @@
 	newmeat.reagents.add_reagent(/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
 	newmeat.forceMove(limb.owner.drop_location())
 
-/datum/surgery_operation/lipoplasty/mechanic
+/datum/surgery_operation/limb/lipoplasty/mechanic
 	name = "engage expulsion valve" //gross
 	implements = list(
 		TOOL_WRENCH = 0.95,
