@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Angry monkeys (and the primal instincts trauma) are VIOLENT again"
-  - qol: "Monkeys no longer screech every tick they are attacking someone (now ~1 in 4 ticks, or ~1 in 10 for primal instincts)"

@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue which could randomly completely break a player's visuals until an admin resets their HUD"
