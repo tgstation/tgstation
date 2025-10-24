@@ -42,10 +42,6 @@
 		find_and_hang_on_wall()
 	GLOB.intercoms_list += src
 
-/obj/item/radio/intercom/find_and_hang_on_wall()
-	if(!unscrewed)
-		return ..()
-
 /obj/item/radio/intercom/Destroy()
 	GLOB.intercoms_list -= src
 	return ..()
@@ -78,6 +74,7 @@
 		if(tool.use_tool(src, user, 40, volume=50))
 			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
 			unscrewed = TRUE
+
 	return TRUE
 
 /obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)
