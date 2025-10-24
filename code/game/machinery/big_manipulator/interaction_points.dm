@@ -101,14 +101,7 @@
 		if(!length(atoms_on_the_turf))
 			return FALSE // nothing to pick up
 
-		if(should_use_filters)
-			// If the atom filters are required, we need to check if any atom on the turf fits the filters.
-			for(var/atom/movable/movable_atom in atoms_on_the_turf)
-				if(check_filters_for_atom(movable_atom))
-					return TRUE
-			return FALSE
-
-		// If the atom filters are skipped, then we just check if ANY match the filtering mode (objects/items/etc)
+		// If the atom filters are required, we need to check if any atom on the turf fits the filters. If not, the check will only determine whether it fits the category
 		for(var/atom/movable/movable_atom in atoms_on_the_turf)
 			if(check_filters_for_atom(movable_atom))
 				return TRUE

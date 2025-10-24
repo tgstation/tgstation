@@ -56,41 +56,41 @@
 	var/datum/tasking_strategy/dropoff_strategy
 
 /obj/machinery/big_manipulator/proc/update_hud()
-  LAZYCLEARLIST(hud_points)
+	LAZYCLEARLIST(hud_points)
 
-  var/image/main_hud = hud_list[BIG_MANIP_HUD]
-  if(!main_hud)
-    return
+	var/image/main_hud = hud_list[BIG_MANIP_HUD]
+	if(!main_hud)
+		return
 
-  main_hud.loc = get_turf(src)
-  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, src.plane)
+	main_hud.loc = get_turf(src)
+	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, src.plane)
 
-  main_hud.overlays.Cut()
-  var/list/point_overlays = list()
+	main_hud.overlays.Cut()
+	var/list/point_overlays = list()
 
-  for(var/i = 1 in 1 to length(pickup_points))
-    var/datum/interaction_point/point = pickup_points[i]
-    var/turf/target_turf = point.interaction_turf
-    if(target_turf)
-      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
-      var/turf/manip_turf = get_turf(src)
-      point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-      point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-      point_overlays += point_appearance
+	for(var/i in 1 to length(pickup_points))
+		var/datum/interaction_point/point = pickup_points[i]
+		var/turf/target_turf = point.interaction_turf
+		if(target_turf)
+			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
+			var/turf/manip_turf = get_turf(src)
+			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+			point_overlays += point_appearance
 
-  for(var/i = 1 in 1 to length(pickup_points))
-    var/datum/interaction_point/point = dropoff_points[i]
-    var/turf/target_turf = point.interaction_turf
-    if(target_turf)
-      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
-      var/turf/manip_turf = get_turf(src)
-      point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
-      point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
-      point_overlays += point_appearance
+	for(var/i in 1 to length(dropoff_points))
+		var/datum/interaction_point/point = dropoff_points[i]
+		var/turf/target_turf = point.interaction_turf
+		if(target_turf)
+			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
+			var/turf/manip_turf = get_turf(src)
+			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
+			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
+			point_overlays += point_appearance
 
-  main_hud.overlays += point_overlays
-  hud_points += main_hud
-  set_hud_image_active(BIG_MANIP_HUD)
+	main_hud.overlays += point_overlays
+	hud_points += main_hud
+	set_hud_image_active(BIG_MANIP_HUD)
 
 /// Attempts to find the closest open turf to the manipulator
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
@@ -151,7 +151,6 @@
 /obj/machinery/big_manipulator/Initialize(mapload)
 	. = ..()
 	create_manipulator_arm()
-	RegisterSignal(manipulator_arm, COMSIG_QDELETING, PROC_REF(on_hand_qdel))
 	process_upgrades()
 	if(on)
 		toggle_power_state(null)
@@ -499,12 +498,6 @@
 	manipulator_arm = new/obj/effect/big_manipulator_arm(src)
 	manipulator_arm.dir = NORTH
 	vis_contents += manipulator_arm
-
-/// Destroying the manipulator if the arm is destroyed.
-/obj/machinery/big_manipulator/proc/on_hand_qdel()
-	SIGNAL_HANDLER
-
-	deconstruct(TRUE)
 
 /obj/machinery/big_manipulator/proc/toggle_power_state(mob/user)
 	var/new_power_state = !on
