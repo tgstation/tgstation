@@ -63,26 +63,26 @@
     return
 
   main_hud.loc = get_turf(src)
-  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, src.plane
 
   main_hud.overlays.Cut()
   var/list/point_overlays = list()
 
-  for(var/i = 1; i <= length(pickup_points); i++)
+  for(var/i = 1 in 1 to length(pickup_points))
     var/datum/interaction_point/point = pickup_points[i]
     var/turf/target_turf = point.interaction_turf
     if(target_turf)
-      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
       var/turf/manip_turf = get_turf(src)
       point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
       point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
       point_overlays += point_appearance
 
-  for(var/i = 1; i <= length(dropoff_points); i++)
+  for(var/i = 1 in 1 to length(pickup_points))
     var/datum/interaction_point/point = dropoff_points[i]
     var/turf/target_turf = point.interaction_turf
     if(target_turf)
-      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
+      var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
       var/turf/manip_turf = get_turf(src)
       point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
       point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
@@ -96,7 +96,7 @@
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/center = get_turf(src)
 
-	var/list/directions = list(NORTH, EAST, SOUTH, WEST, NORTHWEST, SOUTHWEST, SOUTHEAST, NORTHEAST)
+	var/list/directions = GLOB.alldirs
 	for(var/dir in directions)
 		var/turf/checked_turf = get_step(center, dir)
 		if(checked_turf && !isclosedturf(checked_turf))
@@ -108,18 +108,18 @@
 /// Attempts to create a new interaction point and assign it to the correct list.
 /// Arguments: `new_turf` (turf), `new_filters` (list), `new_filters_status` (boolean),
 /// `new_interaction_mode` (use a define), `transfer_type` (use a define).
-/obj/machinery/big_manipulator/proc/create_new_interaction_point(turf/new_turf, list/new_filters, new_filters_status, new_interaction_mode, transfer_type)
+/obj/machinery/big_manipulator/proc/create_new_interaction_point(mob/user, turf/new_turf, list/new_filters, new_filters_status, new_interaction_mode, transfer_type)
 	if(!new_turf)
 		new_turf = find_suitable_turf()
 		if(!new_turf)
-			balloon_alert(usr, "no suitable turfs found!")
+			balloon_alert(user, "no suitable turfs found!")
 			return FALSE
 
 	if(transfer_type == TRANSFER_TYPE_PICKUP && length(pickup_points) + 1 > interaction_point_limit)
-		balloon_alert(usr, "pickup point limit reached!")
+		balloon_alert(user, "pickup point limit reached!")
 		return FALSE
 	if(transfer_type == TRANSFER_TYPE_DROPOFF && length(dropoff_points) + 1 > interaction_point_limit)
-		balloon_alert(usr, "dropoff point limit reached!")
+		balloon_alert(user, "dropoff point limit reached!")
 		return FALSE
 
 	var/datum/interaction_point/new_interaction_point = new(new_turf, new_filters, new_filters_status, new_interaction_mode)
@@ -256,7 +256,7 @@
 	if(gone != poor_monkey)
 		return
 
-	if(!is_type_in_list(poor_monkey, manipulator_arm.vis_contents))
+	if(!(poor_monkey in manipulator_arm.vis_contents))
 		return
 
 	manipulator_arm.vis_contents -= poor_monkey
@@ -691,11 +691,11 @@
 			return TRUE
 
 		if("create_pickup_point")
-			create_new_interaction_point(null, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
+			create_new_interaction_point(null, ui.user, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
 			return TRUE
 
 		if("create_dropoff_point")
-			create_new_interaction_point(null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
+			create_new_interaction_point(null, ui.user, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
 		if("reset_tasking_Pickup Points")
@@ -716,7 +716,6 @@
 				else
 					dropoff_tasking = new_schedule
 					update_strategies()
-				SStgui.update_uis(src)
 			return TRUE
 
 		if("adjust_interaction_speed")
@@ -725,7 +724,6 @@
 				return FALSE
 
 			speed_multiplier = clamp(new_speed, min_speed_multiplier, max_speed_multiplier)
-			SStgui.update_uis(src)
 			return TRUE
 
 		if("adjust_point_param")
@@ -735,13 +733,13 @@
 	if(!param) // there may be no value if we're resetting stuff
 		return FALSE
 
-	var/datum/interaction_point/target_point = locate(point_ref)
+	var/datum/interaction_point/target_point = locate(point_ref) in (pickup_points + dropoff_points)
 	if(!target_point)
 		return FALSE
 
 	switch(param)
 		if("set_name")
-			target_point.name = "[value]"
+			target_point.name = reject_bad_name(value, allow_numbers = TRUE, strict = TRUE)
 			return TRUE
 
 		if("toggle_priority")

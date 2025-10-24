@@ -194,11 +194,7 @@
 
 /// Fills the interaction endpoint priority list for the current interaction mode.
 /datum/interaction_point/proc/fill_priority_list()
-	var/list/priorities_to_set = list()
-	priorities_to_set += null
-	priorities_to_set += null
-	priorities_to_set += null
-	priorities_to_set += null
+	var/list/priorities_to_set = new /list(4)
 
 	switch(interaction_mode)
 		if(INTERACT_DROP)
