@@ -187,6 +187,49 @@
 /datum/bodypart_overlay/mutant/cat_ears/color_image(image/overlay, layer, obj/item/bodypart/limb)
 	return // We color base ears manually above in get_image
 
+/obj/item/organ/ears/cat/cybernetic
+	name = "basic cybernetic cat ears"
+	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon_state = "ears-c-cat"
+	desc = "A basic cybernetic organ designed to mimic the operation of ears."
+	damage_multiplier = 2.4
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic
+	sprite_accessory_override = /datum/sprite_accessory/ears/cat
+	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
+
+
+/obj/item/organ/ears/cat/cybernetic/upgraded
+	name = "cybernetic cat ears"
+	icon_state = "ears-c-cat-u"
+	desc = "A cybernetic cat ear, still less durable than human ears."
+	damage_multiplier = 1.5
+
+/obj/item/organ/ears/cat/cybernetic/volume
+	name = "volume-adjusting cybernetic cat ears"
+	icon_state = "ears-c-cat-u2"
+	desc = "Advanced cybernetic cat ears capable of dampening loud noises to protect their user."
+	damage_multiplier = 1
+	bang_protect = 1
+
+/obj/item/organ/ears/cat/cybernetic/whisper
+	name = "whisper-sensiive cybernetic cat ears"
+	icon_state = "ears-c-cat-green"
+	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however."
+	damage_multiplier = 3 // 4 would be excessive
+	organ_traits = list(TRAIT_GOOD_HEARING)
+
+/obj/item/organ/ears/cat/cybernetic/xray
+	name = "wall-penetrating cybernetic cat ears"
+	icon_state = "ears-c-cat-blue"
+	desc = "Through the power of modern feline engineering, allows the user to hear speech through walls. The user becomes extremely vulnerable to loud noises, however."
+	damage_multiplier = 3 // As above, 4 would be excessive
+	organ_traits = list(TRAIT_XRAY_HEARING)
+
+/datum/bodypart_overlay/mutant/cat_ears/cybernetic
+	color_source = null
+	dyable = FALSE
+
 /obj/item/organ/ears/ghost
 	name = "ghost ears"
 	desc = "All the more to hear you... though it can't hear through walls."
@@ -247,48 +290,6 @@
 	// Same sensitivity as felinid ears
 	damage_multiplier = 2
 	organ_traits = list(TRAIT_XRAY_HEARING)
-
-/obj/item/organ/ears/cybernetic/cat
-	name = "basic cybernetic cat ears"
-	icon_state = "ears-c-cat"
-	desc = "A basic cybernetic organ designed to mimic the operation of ears."
-	damage_multiplier = 2.4
-	visual = TRUE
-	worn_icon = 'icons/mob/clothing/head/costume.dmi'
-	restyle_flags = EXTERNAL_RESTYLE_FLESH
-	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/cybernetic
-	sprite_accessory_override = /datum/sprite_accessory/ears/cat
-
-/obj/item/organ/ears/cybernetic/cat/upgraded
-	name = "cybernetic cat ears"
-	icon_state = "ears-c-cat-u"
-	desc = "A cybernetic cat ear, still less durable than human ears."
-	damage_multiplier = 1.5
-
-/obj/item/organ/ears/cybernetic/cat/volume
-	name = "volume-adjusting cybernetic cat ears"
-	icon_state = "ears-c-cat-u2"
-	desc = "Advanced cybernetic cat ears capable of dampening loud noises to protect their user."
-	damage_multiplier = 1
-	bang_protect = 1
-
-/obj/item/organ/ears/cybernetic/cat/whisper
-	name = "whisper-sensiive cybernetic cat ears"
-	icon_state = "ears-c-cat-green"
-	desc = "Allows the user to more easily hear whispers. The user becomes extremely vulnerable to loud noises, however."
-	damage_multiplier = 3 // 4 would be excessive
-	organ_traits = list(TRAIT_GOOD_HEARING)
-
-/obj/item/organ/ears/cybernetic/cat/xray
-	name = "wall-penetrating cybernetic cat ears"
-	icon_state = "ears-c-cat-blue"
-	desc = "Through the power of modern feline engineering, allows the user to hear speech through walls. The user becomes extremely vulnerable to loud noises, however."
-	damage_multiplier = 3 // As above, 4 would be excessive
-	organ_traits = list(TRAIT_XRAY_HEARING)
-
-/datum/bodypart_overlay/mutant/cat_ears/cybernetic
-	color_source = null
-	dyable = FALSE
 
 /obj/item/organ/ears/cybernetic/emp_act(severity)
 	. = ..()
