@@ -1,4 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes:
-  - balance: "prosthetic item limbs are no longer considered equipped items for some purposes such as ventcrawling."

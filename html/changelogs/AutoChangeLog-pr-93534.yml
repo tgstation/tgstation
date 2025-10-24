@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "wall mounts placed by player now falls off when the wall they are mounted on is destroyed"
-  - code_imp: "cleaned up wall mount code"

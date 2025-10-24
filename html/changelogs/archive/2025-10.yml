@@ -761,3 +761,33 @@
       layout, pipes and cables too
   - map: CATWALK - AI Upload - Re-balanced to have extra protection similar to every
       other map, layout tweaks for style as well as clearer layout of modules
+2025-10-24:
+  Aliceee2ch:
+  - balance: Minimal hacked APC amount for purchasing doomsday module was lowered
+      from 15 to 10.
+  ArchBTW:
+  - qol: 'Changes Wallet Priority: Standard ID cards now go in order properly: from
+      left to right'
+  Ghommie:
+  - qol: The fish analyzer UI should update more reliably.
+  - bugfix: Fixed some of the fishes being unable to reproduce.
+  - balance: Fish acquired through means other than fish farming itself takes less
+      time to be able to reproduce.
+  Krysonism:
+  - balance: prosthetic item limbs are no longer considered equipped items for some
+      purposes such as ventcrawling.
+  Melbert:
+  - bugfix: Angry monkeys (and the primal instincts trauma) are VIOLENT again
+  - qol: Monkeys no longer screech every tick they are attacking someone (now ~1 in
+      4 ticks, or ~1 in 10 for primal instincts)
+  SmArtKar:
+  - bugfix: Fixed dropped limbs rotating and disappearing when pulled/thrown
+  - bugfix: Fixed an issue which could randomly completely break a player's visuals
+      until an admin resets their HUD
+  - bugfix: Fixed glow bleeding through chair and sofa armrests
+  SyncIt21:
+  - bugfix: wall mounts placed by player now falls off when the wall they are mounted
+      on is destroyed
+  - code_imp: cleaned up wall mount code
+  TheNobodyofimportance:
+  - balance: Vomit drinking now checks for fly mouth instead of fly species
