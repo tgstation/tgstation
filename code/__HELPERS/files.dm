@@ -137,10 +137,32 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 			. += delimiter // Add the delimiter before each successive node.
 		. += SANITIZE_FILENAME(node)
 
+/**
+ * Verifys wether a string or file ends with a given file type
+ *
+ * Arguments:
+ * * file - A string or file. No checks for if this file ACCTALLY exists
+ * * file_types - A list of strings to check against [e.g. list(".ogg", ".wav")]
+ */
 /proc/is_file_type_in_list(file, file_types = list())
-	if((findlasttext("[file]", ".") in file_types))
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return FALSE
+	var/ext = copytext("[file]", extstart)
+	if((ext in file_types))
 		return TRUE
 
+/**
+ * Verifys wether a string or file ends with a given file type
+ *
+ * Arguments:
+ * * file - A string or file. No checks for if this file ACCTALLY exists
+ * * file_types - A list of strings to check against [e.g. ".ogg"]
+ */
 /proc/is_file_type(file, file_type)
-	if((findlasttext("[file]", ".") == file_type))
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return FALSE
+	var/ext = copytext("[file]", extstart)
+	if(ext == file_type)
 		return TRUE
