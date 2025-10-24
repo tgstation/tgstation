@@ -29,6 +29,7 @@
 	average_size = 60
 	average_weight = 1000
 	weight_size_deviation = 0.1
+	stable_population = 5
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 	required_temperature_max = MIN_AQUARIUM_TEMP+40

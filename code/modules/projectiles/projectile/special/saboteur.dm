@@ -21,7 +21,7 @@
 	var/list/things_to_disrupt = list(target)
 	if(isliving(target))
 		var/mob/living/live_target = target
-		things_to_disrupt += live_target.get_all_gear()
+		things_to_disrupt += live_target.get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES)
 
 	var/success = FALSE
 	for(var/atom/disrupted as anything in things_to_disrupt)

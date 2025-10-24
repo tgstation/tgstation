@@ -20,7 +20,7 @@
 
 	if(length(user.held_items) < 0 || iscyborg(user) || source.anchored)
 		return
-	examine_list += span_smallnotice("You could bind [source.p_they()] to your wrist with a pair of handcuffs...")
+	examine_list += span_smallnotice("You could bind [source.p_them()] to your wrist with a pair of handcuffs...")
 
 ///Give context to players holding a pair of handcuffs when hovering the item
 /datum/element/cuffable_item/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)

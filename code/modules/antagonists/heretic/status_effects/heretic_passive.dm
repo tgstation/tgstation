@@ -415,6 +415,8 @@
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!our_brain)
+		return
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
@@ -450,6 +452,8 @@
 
 /datum/status_effect/heretic_passive/moon/on_remove()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!our_brain)
+		return ..()
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
 	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)

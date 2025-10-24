@@ -264,19 +264,12 @@
 	// Attacker lateral to the victim.
 	return DEVIATION_PARTIAL
 
-/obj/item/assembly/flash/attack(mob/living/M, mob/user)
+/obj/item/assembly/flash/attack(mob/living/target, mob/user)
 	if(!try_use_flash(user))
 		return FALSE
 
-	. = TRUE
-	if(!issilicon(M))
-		flash_mob(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
-		return
-	flash_silicon(M, user)
-
-	user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to blind [M] with the flash!"))
-
-/obj/item/assembly/flash/proc/flash_silicon(mob/living/silicon/silicon)
+	flash_mob(target, user, confusion_duration = 5 SECONDS, targeted = TRUE)
+	return TRUE
 
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(holder)

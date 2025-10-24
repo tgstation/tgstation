@@ -144,3 +144,31 @@
 		holder.update_total()
 
 #undef SPEED_REAGENT_STRENGTH
+
+/datum/reagent/reaction_agent/inversing_buffer
+	name = "Chiral Inversing Buffer"
+	description = "This reagent will consume itself and convert impure reagents into their inversed counterparts. Amount varies based on volume of added buffer."
+	ph = 7
+	color = "#b60046"
+
+/datum/reagent/reaction_agent/inversing_buffer/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
+	. = ..()
+	if(!.)
+		return
+
+	for(var/_reagent in target.reagent_list)
+		var/datum/reagent/reaction_agent/reagent = _reagent
+		if(reagent.purity <= reagent.inverse_chem_val)
+			target.my_atom.audible_message(span_warning("The beaker goes into a rolling boil as the contents begin inversing!"))
+			playsound(target.my_atom, 'sound/effects/chemistry/catalyst.ogg', 50, TRUE)
+			var/converted = min(reagent.volume, amount * 10)//Converts up to 10 units of reagent per 1 unit of inversing buffer.
+			if(converted > 0)
+				target.remove_reagent(reagent.type, converted, safety = FALSE)
+				target.add_reagent(reagent.inverse_chem, converted, FALSE, added_purity = reagent.get_inverse_purity(reagent.purity))
+				volume -= amount
+				holder.update_total()
+				break
+		else
+			target.my_atom.audible_message(span_warning("The buffer quietly fizzles away with no effect."))
+			volume -= amount
+			holder.update_total()

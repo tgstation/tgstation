@@ -829,7 +829,7 @@
 		if(eyes.apply_organ_damage(-2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 			. = UPDATE_MOB_HEALTH
 		// If our eyes are seriously damaged, we have a probability of causing eye blur while healing depending on purity
-		if(eyes.damaged && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
+		if(eyes.damage >= eyes.low_threshold && IS_ORGANIC_ORGAN(eyes) && SPT_PROB(16 - min(normalized_purity * 6, 12), seconds_per_tick))
 			// While healing, gives some eye blur
 			if(affected_mob.is_blind_from(EYE_DAMAGE))
 				to_chat(affected_mob, span_warning("Your vision slowly returns..."))
@@ -929,7 +929,9 @@
 	var/obj/item/organ/ears/ears = affected_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		return
-	ears.adjustEarDamage(-4 * REM * seconds_per_tick * normalise_creation_purity(), -4 * REM * seconds_per_tick * normalise_creation_purity())
+	var/multiplier = REM * seconds_per_tick * normalise_creation_purity()
+	ears.apply_organ_damage(-4 * multiplier)
+	ears.adjust_temporary_deafness(-8 * multiplier)
 	return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/affected_mob)
@@ -1779,6 +1781,7 @@
 	overdose_threshold = 50
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM //same as C2s
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA)
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

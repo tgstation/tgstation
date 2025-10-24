@@ -214,6 +214,7 @@
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
 	forceMove(new_mecha)
 	log_message("[src] initialized.", LOG_MECHA)
+	chassis.on_equipment_attach(src)
 
 /**
  * called to detach this equipment
@@ -221,6 +222,7 @@
  * * moveto: optional target to move this equipment to
  */
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
+	chassis.on_equipment_detach(src)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
 	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)

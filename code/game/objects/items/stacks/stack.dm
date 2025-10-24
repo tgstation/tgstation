@@ -454,22 +454,22 @@
 		var/turf/covered_turf = builder.drop_location()
 		if(!isturf(covered_turf))
 			return
-		var/turf/created_turf = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
+		created = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
 		if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
-			created_turf.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
+			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
 		created = new recipe.result_type(builder.drop_location())
 		builder.balloon_alert(builder, "built item")
 
-	if(created)
+	// split the material and use it for the craft
+	var/obj/item/stack/used_stack = split_stack(recipe.req_amount * multiplier)
+	if(ismovable(created))
 		created.setDir(builder.dir)
-		SEND_SIGNAL(created, COMSIG_ATOM_CONSTRUCTED, builder)
-		on_item_crafted(builder, created)
+	created.on_craft_completion(list(used_stack), null, builder)
+	qdel(used_stack) //you've outlived your purpose
 
-	// Use up the material
-	use(recipe.req_amount * multiplier)
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
@@ -496,10 +496,6 @@
 	//BubbleWrap END
 
 	return TRUE
-
-/// Run special logic on created items after they've been successfully crafted.
-/obj/item/stack/proc/on_item_crafted(mob/builder, atom/created)
-	return
 
 /obj/item/stack/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, amount))

@@ -454,7 +454,7 @@
 	max_pressure = INFINITY
 	safe_air_limits = list()
 	fillet_type = /obj/item/food/badrecipe/moldy/bacteria
-	stable_population = 0
+	stable_population = 2
 
 /obj/item/fish/mossglob/Initialize(mapload, apply_qualities)
 	. = ..()
@@ -815,7 +815,7 @@
 
 /obj/item/organ/ears/babbelfish/proc/on_drain_magic(mob/user)
 	to_chat(user, span_noticealien("Your [src] pop as they protect your mind from psychic phenomena!"))
-	adjustEarDamage(ddeaf = 20)
+	adjust_temporary_deafness(40 SECONDS)
 
 /obj/item/organ/ears/babbelfish/proc/on_expire(mob/user)
 	to_chat(user, span_noticealien("Your [src] suddenly burst apart!"))

@@ -263,6 +263,9 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/dest_tagger/borg
 	name = "cyborg destination tagger"

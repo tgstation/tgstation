@@ -306,6 +306,7 @@
 #include "stuns.dm"
 #include "style_hotswapping.dm"
 #include "subsystem_init.dm"
+#include "suit_sensor.dm"
 #include "suit_storage_icons.dm"
 #include "surgeries.dm"
 #include "syringe_gun.dm"

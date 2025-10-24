@@ -44,16 +44,14 @@
 
 	/// The duration of these effects are based on sanity, mainly for flavor but also to make it a weaker alpha strike
 	var/maximum_duration = 15 SECONDS
-	var/mind_gate_duration = ((SANITY_MAXIMUM - cast_on.mob_mood.sanity) / (SANITY_MAXIMUM - SANITY_INSANE)) * maximum_duration
+	var/mind_gate_duration = ((SANITY_MAXIMUM - cast_on.mob_mood.sanity) / (SANITY_MAXIMUM - SANITY_INSANE)) * maximum_duration  + 1 SECONDS
 	to_chat(cast_on, span_warning("Your eyes cry out in pain, your ears bleed and your lips seal! THE MOON SMILES UPON YOU!"))
-	cast_on.adjust_temp_blindness(mind_gate_duration + 1 SECONDS)
-	cast_on.set_eye_blur_if_lower(mind_gate_duration + 2 SECONDS)
+	cast_on.adjust_temp_blindness(mind_gate_duration)
+	cast_on.set_eye_blur_if_lower(mind_gate_duration + 1 SECONDS)
 
-	var/obj/item/organ/ears/ears = cast_on.get_organ_slot(ORGAN_SLOT_EARS)
-	//adjustEarDamage takes deafness duration parameter in one unit per two seconds, instead of the normal time, so we divide by two seconds
-	ears?.adjustEarDamage(0, (mind_gate_duration + 1 SECONDS) / (2 SECONDS))
+	cast_on.sound_damage(0, mind_gate_duration)
 
-	cast_on.adjust_silence(mind_gate_duration + 1 SECONDS)
+	cast_on.adjust_silence(mind_gate_duration)
 	cast_on.add_mood_event("moon_smile", /datum/mood_event/moon_smile)
 
 	// Only knocksdown if the target has a low enough sanity

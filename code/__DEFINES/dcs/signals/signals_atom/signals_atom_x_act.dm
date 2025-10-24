@@ -24,8 +24,8 @@
 	#define COMPONENT_BULLET_PIERCED (1<<2)
 ///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit, blocked)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
-///from base of atom/on_craft_completion(): (components, datum/crafting_recipe/current_recipe)
-#define COMSIG_ATOM_ON_CRAFT "atom_checkparts"
+///from base of atom/on_craft_completion(): (components, datum/crafting_recipe/current_recipe, atom/crafter)
+#define COMSIG_ATOM_ON_CRAFT "atom_on_craft_completion"
 ///from base of atom/used_in_craft(): (atom/result)
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)

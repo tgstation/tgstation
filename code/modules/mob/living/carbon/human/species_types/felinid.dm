@@ -6,6 +6,7 @@
 	mutantbrain = /obj/item/organ/brain/felinid
 	mutanttongue = /obj/item/organ/tongue/cat
 	mutantears = /obj/item/organ/ears/cat
+	mutanteyes = /obj/item/organ/eyes/felinid
 	mutant_organs = list(
 		/obj/item/organ/tail/cat = "Cat",
 	)

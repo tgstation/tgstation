@@ -1062,7 +1062,7 @@
 	var/chest_covered = FALSE
 	var/head_covered = FALSE
 	var/hands_covered = FALSE
-	for (var/obj/item/clothing/equipped in get_equipped_items())
+	for (var/obj/item/clothing/equipped in get_equipped_items(INCLUDE_ABSTRACT))
 		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
 		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
 			hands_covered = TRUE

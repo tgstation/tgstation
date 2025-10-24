@@ -128,7 +128,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(dept_key)
 		LAZYADD(GLOB.reta_consoles_by_origin[dept_key], src)
 
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_LIST(messages)

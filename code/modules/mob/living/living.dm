@@ -1190,7 +1190,9 @@
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
 		if(grabbing_bodypart)
-			damage_on_resist_fail += rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)
+			damage_on_resist_fail += (rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)) + grabbing_bodypart.unarmed_grab_damage_bonus
+			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
+			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
 
 		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
 		var/puller_drunkenness = human_puller.get_drunk_amount()

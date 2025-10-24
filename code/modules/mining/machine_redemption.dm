@@ -290,7 +290,7 @@
 		if(card?.registered_account)
 			data["user"] = list(
 				"name" = card.registered_account.account_holder,
-				"cash" = card.registered_account.account_balance,
+				"cash" = card.registered_account.mining_points,
 			)
 
 		else if(issilicon(user))

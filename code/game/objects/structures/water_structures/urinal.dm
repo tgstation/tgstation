@@ -16,7 +16,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	. = ..()
 	if(mapload)
 		hidden_item = new /obj/item/food/urinalcake(src)
-	find_and_hang_on_wall()
+		find_and_hang_on_wall()
 
 /obj/structure/urinal/Exited(atom/movable/gone, direction)
 	. = ..()

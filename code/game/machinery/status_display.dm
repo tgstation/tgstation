@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	pixel_shift = 32
 
 //makes it go on the wall when built
-/obj/machinery/status_display/Initialize(mapload, ndir, building)
+/obj/machinery/status_display/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -407,7 +407,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		/obj/item/circuit_component/status_display,
 	))
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_sec_level_change))
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -842,7 +843,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	/// list to pick the first line from
 	var/list/firstline_to_secondline = list()
 
-/obj/machinery/status_display/random_message/Initialize(mapload, ndir, building)
+/obj/machinery/status_display/random_message/Initialize(mapload)
 	if(firstline_to_secondline?.len)
 		message1 = pick(firstline_to_secondline)
 		message2 = firstline_to_secondline[message1]

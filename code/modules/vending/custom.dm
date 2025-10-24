@@ -200,12 +200,15 @@
 			if(!linked_account)
 				linked_account = card_used.registered_account
 				speak("\The [src] has been linked to [card_used].")
+				return ITEM_INTERACT_SUCCESS
 			else if(linked_account == card_used.registered_account)
 				linked_account = null
 				speak("account unlinked.")
+				return ITEM_INTERACT_SUCCESS
 			else
 				to_chat(user, "verification failed. unlinking process has been cancelled.")
-			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_FAILURE
+	return ..()
 
 /obj/machinery/vending/custom/descformat(input, mob/living/user)
 	. = input

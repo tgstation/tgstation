@@ -261,7 +261,8 @@
 
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai)

@@ -34,13 +34,12 @@
 	/// Trophies from persistence have a good chance to be dusted if removal is attempted, though rarely it pays off.
 	var/persistence_loaded_fish = FALSE
 
-/obj/structure/fish_mount/Initialize(mapload, floor_to_wall_dir)
+/obj/structure/fish_mount/Initialize(mapload)
 	. = ..()
 	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
-	if(floor_to_wall_dir)
-		setDir(floor_to_wall_dir)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)

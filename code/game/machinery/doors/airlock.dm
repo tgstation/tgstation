@@ -1157,7 +1157,7 @@
 			return
 
 		if(atom_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=1))
+			if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return
 			user.visible_message(span_notice("[user] begins welding the airlock."), \
 							span_notice("You begin repairing the airlock..."), \
@@ -1172,7 +1172,7 @@
 			to_chat(user, span_notice("The airlock doesn't need repairing."))
 
 /obj/machinery/door/airlock/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
-	if(!tool.tool_start_check(user, amount=1))
+	if(!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	user.visible_message(span_notice("[user] begins [welded ? "unwelding":"welding"] the airlock."), \
 		span_notice("You begin [welded ? "unwelding":"welding"] the airlock..."), \

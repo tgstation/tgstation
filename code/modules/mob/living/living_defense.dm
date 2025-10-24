@@ -35,6 +35,10 @@
 /mob/living/proc/get_eye_protection()
 	return 0
 
+///A easy to use proc to apply both organ damage and temporary deafness at once, so you don't have to get the ears everytime.
+/mob/living/proc/sound_damage(damage, deafen)
+	return
+
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
 	var/turf/current_turf = get_turf(src)

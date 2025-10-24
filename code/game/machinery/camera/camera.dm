@@ -103,11 +103,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	fire = 90
 	acid = 50
 
-/obj/machinery/camera/Initialize(mapload, ndir, building)
+/obj/machinery/camera/Initialize(mapload)
 	. = ..()
-
-	if(building)
-		setDir(ndir)
 
 	for(var/network_name in network)
 		network -= network_name
@@ -130,8 +127,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 #endif
 
 	alarm_manager = new(src)
-	find_and_hang_on_wall(directional = TRUE, \
-		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())

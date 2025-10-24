@@ -957,12 +957,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// List of weakrefs to all turrets
 	var/list/turrets = list()
 
-/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/turretid/Initialize(mapload)
 	. = ..()
-	if(built)
+	if(!mapload)
 		locked = FALSE
+	else
+		find_and_hang_on_wall()
 	power_change() //Checks power and initial settings
-	find_and_hang_on_wall()
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()

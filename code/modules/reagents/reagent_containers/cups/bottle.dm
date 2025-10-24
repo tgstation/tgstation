@@ -261,6 +261,11 @@
 	desc = "A small bottle of basic buffer."
 	list_reagents = list(/datum/reagent/reaction_agent/basic_buffer = 30)
 
+/obj/item/reagent_containers/cup/bottle/inversing_buffer
+	name = "Chiral inversing buffer bottle"
+	desc = "A small bottle of chiral inversing buffer."
+	list_reagents = list(/datum/reagent/reaction_agent/inversing_buffer = 30)
+
 /obj/item/reagent_containers/cup/bottle/romerol
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."

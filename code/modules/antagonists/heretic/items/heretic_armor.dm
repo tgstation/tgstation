@@ -584,6 +584,18 @@
 	RegisterSignal(human_user, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_apply_modifiers))
 	signal_registered += COMSIG_MOB_APPLY_DAMAGE_MODIFIERS
 
+	// adjust ignores damage modifiers so we listen to them separately
+	var/list/damage_adjust_signals = list(
+		COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
+		COMSIG_LIVING_ADJUST_BURN_DAMAGE,
+		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
+		COMSIG_LIVING_ADJUST_TOX_DAMAGE,
+		COMSIG_LIVING_ADJUST_STAMINA_DAMAGE
+	)
+
+	RegisterSignals(human_user, damage_adjust_signals, PROC_REF(adjust_damage))
+	signal_registered += damage_adjust_signals
+
 	RegisterSignal(human_user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	signal_registered += COMSIG_LIVING_DEATH
 
@@ -606,7 +618,8 @@
 
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
-	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
+	if(our_brain)
+		REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	braindead = FALSE
 	if(health_hud in user.hud_used.infodisplay)
 		on_hud_remove(user)
@@ -616,6 +629,14 @@
 	if(braindead)
 		return
 	damage_mods += 0
+	handle_damage(user, damage)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/adjust_damage(mob/living/user, type, amount, forced)
+	SIGNAL_HANDLER
+	handle_damage(user, amount)
+	return COMPONENT_IGNORE_CHANGE
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_damage(mob/living/user, damage)
 	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage * damage_modifier)
 	check_braindeath(user)
 

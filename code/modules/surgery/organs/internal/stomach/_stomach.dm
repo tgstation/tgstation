@@ -534,7 +534,7 @@
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
 
-/obj/item/organ/stomach/cybernetic/tier2/stomach_acid_power(atom/movable/nomnom)
+/obj/item/organ/stomach/cybernetic/tier3/stomach_acid_power(atom/movable/nomnom)
 	if (isliving(nomnom))
 		return 0
 	if (IsEdible(nomnom))

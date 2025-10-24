@@ -22,6 +22,9 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	custom_price = PAYCHECK_COMMAND
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
