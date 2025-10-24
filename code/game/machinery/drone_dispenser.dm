@@ -77,6 +77,11 @@
 		MATCONTAINER_EXAMINE, \
 		allowed_items = /obj/item/stack \
 	)
+
+	// Troutstation edit start
+	if(starting_amount == 0 && mapload) // free drones, but not free for newly created machines
+		starting_amount = SHEET_MATERIAL_AMOUNT * 2.5
+	// Troutstation edit finish
 	materials.insert_amount_mat(starting_amount, /datum/material/iron)
 	materials.insert_amount_mat(starting_amount, /datum/material/glass)
 	materials.precise_insertion = TRUE
