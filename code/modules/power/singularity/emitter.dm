@@ -74,6 +74,8 @@
 			set_anchored(TRUE)
 		connect_to_network()
 
+	RegisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_emitter_overlay))
+
 	sparks = new
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
@@ -138,6 +140,9 @@
 	return welded
 
 /obj/machinery/power/emitter/Destroy()
+	//no emitter means no signal
+	UnregisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS)
+
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
 		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
@@ -146,14 +151,44 @@
 	QDEL_NULL(sparks)
 	return ..()
 
+/obj/machinery/power/emitter/proc/get_emitter_disk_color()
+	if(!diskie)
+		return COLOR_VIBRANT_LIME
+	if(istype(diskie, /obj/item/emitter_disk/stamina))
+		return COLOR_BLUE_LIGHT
+	if(istype(diskie, /obj/item/emitter_disk/healing))
+		return COLOR_LIGHT_YELLOW
+	if(istype(diskie, /obj/item/emitter_disk/incendiary))
+		return COLOR_ORANGE
+	if(istype(diskie, /obj/item/emitter_disk/sanity))
+		return COLOR_BLUSH_PINK
+	if(istype(diskie, /obj/item/emitter_disk/magnetic))
+		return COLOR_SILVER
+	if(istype(diskie, /obj/item/emitter_disk/blast))
+		return COLOR_SYNDIE_RED //it shoots explosions, u think it'd be subtle?
+
+/obj/machinery/power/emitter/proc/add_emitter_overlay(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	if(!active) return
+
+	var/color
+	if(!powered)
+		color = "#AF750F" //stank low power orange
+	else
+		color = get_emitter_disk_color()
+		if(!color) //if no color for some reason just set it to green
+			color = COLOR_VIBRANT_LIME
+
+	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay", FLOAT_LAYER, src)
+	overlay.color = color
+	overlays |= overlay
+	return
+
 /obj/machinery/power/emitter/update_icon_state()
-	if(!active || !powernet)
-		icon_state = base_icon_state
-		return ..()
 	if(panel_open)
 		icon_state = "[base_icon_state]_open"
-		return ..()
-	icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
+	else
+		icon_state = base_icon_state
 	return ..()
 
 /obj/machinery/power/emitter/interact(mob/user)
@@ -373,6 +408,7 @@
 		no_shot_counter = diskie.no_shot_counter
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		to_chat(user, span_notice("You update the [src]'s diode configuration with the [config_disk]."))
+		update_appearance()
 		if(diskie.consumable)
 			qdel(diskie)
 	return ..()
@@ -410,6 +446,7 @@
 		user.put_in_hands(diskie)
 	diskie = null
 	playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
+	update_appearance()
 	set_projectile()
 	return TRUE
 
