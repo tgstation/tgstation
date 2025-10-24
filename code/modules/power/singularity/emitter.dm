@@ -155,17 +155,17 @@
 	if(!diskie)
 		return COLOR_VIBRANT_LIME
 	if(istype(diskie, /obj/item/emitter_disk/stamina))
-		return COLOR_BLUE_LIGHT
+		return COLOR_TRUE_BLUE
 	if(istype(diskie, /obj/item/emitter_disk/healing))
-		return COLOR_LIGHT_YELLOW
+		return COLOR_YELLOW
 	if(istype(diskie, /obj/item/emitter_disk/incendiary))
-		return COLOR_ORANGE
+		return COLOR_RED_LIGHT //laser is bright red in practice
 	if(istype(diskie, /obj/item/emitter_disk/sanity))
-		return COLOR_BLUSH_PINK
+		return COLOR_TONGUE_PINK //blush pink is very magenta, beam is very pallid
 	if(istype(diskie, /obj/item/emitter_disk/magnetic))
 		return COLOR_SILVER
 	if(istype(diskie, /obj/item/emitter_disk/blast))
-		return COLOR_SYNDIE_RED //it shoots explosions, u think it'd be subtle?
+		return COLOR_SYNDIE_RED //it shoots explosions, u think it'd be subtle? laser is grey but im not sure if thats an oversight
 
 /obj/machinery/power/emitter/proc/add_emitter_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
@@ -173,7 +173,7 @@
 
 	var/color
 	if(!powered)
-		color = "#AF750F" //stank low power orange
+		color = COLOR_ORANGE //stank low power orange
 	else
 		color = get_emitter_disk_color()
 		if(!color) //if no color for some reason just set it to green
