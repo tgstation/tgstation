@@ -136,3 +136,11 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		if(.)
 			. += delimiter // Add the delimiter before each successive node.
 		. += SANITIZE_FILENAME(node)
+
+/proc/is_file_type_in_list(file, file_types = list())
+	if((findlasttext("[file]", ".") in file_types))
+		return TRUE
+
+/proc/is_file_type(file, file_type)
+	if((findlasttext("[file]", ".") == file_type))
+		return TRUE

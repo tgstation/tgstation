@@ -100,7 +100,7 @@
 			var/datum/track/new_track = new()
 			new_track.song_path = file("[CONFIG_JUKEBOX_SOUNDS][track_file]")
 			var/list/track_data = splittext(track_file, "+")
-			if(!length(track_data) || copytext("[new_track.song_path]", -4) != ".ogg")
+			if(!length(track_data) || !IS_SOUND_FILE(new_track.song_path))
 				continue
 			var/track_name = track_data[JUKEBOX_NAME]
 			if(endswith(track_name, ".ogg"))
