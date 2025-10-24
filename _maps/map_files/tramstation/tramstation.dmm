@@ -20093,7 +20093,8 @@
 	pixel_y = 0;
 	id = "paramedic_shutters";
 	name = "Shutters button";
-	pixel_x = 23
+	pixel_x = 23;
+	req_access = list("paramedic")
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
@@ -69778,6 +69779,10 @@
 /obj/item/wrench,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
+"xqm" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall,
+/area/station/asteroid)
 "xqB" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Treatment Center"
@@ -106398,7 +106403,7 @@ tqp
 qjU
 qjU
 qjU
-qpd
+xqm
 pIc
 hZr
 hZr
@@ -106654,7 +106659,7 @@ mDx
 pwh
 fNX
 nag
-qjU
+cbc
 qjU
 aaa
 hZr
