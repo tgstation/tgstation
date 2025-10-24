@@ -10,10 +10,10 @@ ADMIN_VERB(upload_jukebox_music, R_SERVER, "Jukebox Upload Music", "Upload a val
 
 	var/list/track_data = splittext(file, "+")
 	if(track_data.len < 2)
-		if(tgui_alert(user, "Your song currently does not have a beat in deciseconds added to its title. Continue? EX: SS13+5.ogg", "Confirmation", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, "Your song currently does not have a beat in deciseconds added to its title, e.g: SS13+5.ogg. Continue?", "Confirmation", list("Yes", "No")) != "Yes")
 			return
 	if(track_data.len > 2)
-		tgui_alert(user, "Titles should only have its title and beat in deciseconds, EX: SS13+5.ogg", "Loading error", list("Ok"))
+		tgui_alert(user, "Titles should only have its title and beat in deciseconds, e.g: SS13+5.ogg", "Loading error", list("Ok"))
 		return
 
 
@@ -31,7 +31,7 @@ ADMIN_VERB(delete_jukebox_music, R_ADMIN, "Jukebox Delete Music", "Remove an upl
 	var/list/files = flist(CONFIG_JUKEBOX_SOUNDS)
 	// Filter out things that are not sound files, like the exclude
 	for(var/thing in files)
-		if(!IS_SOUND_FILE(thing))
+		if(!IS_SOUND_FILE_COMPLETE(thing))
 			files -= thing
 	if(!files.len)
 		to_chat(user, span_warning("No uploaded tracks found."))
