@@ -63,7 +63,7 @@
     return
 
   main_hud.loc = get_turf(src)
-  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, src.plane
+  main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, src.plane)
 
   main_hud.overlays.Cut()
   var/list/point_overlays = list()
