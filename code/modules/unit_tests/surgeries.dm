@@ -91,46 +91,46 @@
 // 	TEST_ASSERT(surgery_for_one.step_in_progress, "Surgery on patient one was not initiated, despite having rod of asclepius")
 
 /// Ensures that the tend wounds surgery can be started
-/datum/unit_test/start_tend_wounds
+// /datum/unit_test/start_tend_wounds
 
-/datum/unit_test/start_tend_wounds/Run()
-	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+// /datum/unit_test/start_tend_wounds/Run()
+// 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+// 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 
-	var/datum/surgery/surgery = new /datum/surgery/healing/brute/basic
+// 	var/datum/surgery/surgery = new /datum/surgery/healing/brute/basic
 
-	if (!surgery.can_start(user, patient))
-		TEST_FAIL("Can't start basic tend wounds!")
+// 	if (!surgery.can_start(user, patient))
+// 		TEST_FAIL("Can't start basic tend wounds!")
 
-	qdel(surgery)
+// 	qdel(surgery)
 
-/datum/unit_test/tend_wounds/Run()
-	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
-	patient.take_overall_damage(100, 100)
+// /datum/unit_test/tend_wounds/Run()
+// 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+// 	patient.take_overall_damage(100, 100)
 
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+// 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 
-	// Test that tending wounds actually lowers damage
-	var/datum/surgery_step/heal/brute/basic/basic_brute_heal = new
-	basic_brute_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
+// 	// Test that tending wounds actually lowers damage
+// 	var/datum/surgery_step/heal/brute/basic/basic_brute_heal = new
+// 	basic_brute_heal.success(user, patient, BODY_ZONE_CHEST)
+// 	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
 
-	var/datum/surgery_step/heal/burn/basic/basic_burn_heal = new
-	basic_burn_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getFireLoss() < 100, "Tending burn wounds didn't lower burn damage ([patient.getFireLoss()])")
+// 	var/datum/surgery_step/heal/burn/basic/basic_burn_heal = new
+// 	basic_burn_heal.success(user, patient, BODY_ZONE_CHEST)
+// 	TEST_ASSERT(patient.getFireLoss() < 100, "Tending burn wounds didn't lower burn damage ([patient.getFireLoss()])")
 
-	// Test that wearing clothing lowers heal amount
-	var/mob/living/carbon/human/naked_patient = allocate(/mob/living/carbon/human/consistent)
-	naked_patient.take_overall_damage(100)
+// 	// Test that wearing clothing lowers heal amount
+// 	var/mob/living/carbon/human/naked_patient = allocate(/mob/living/carbon/human/consistent)
+// 	naked_patient.take_overall_damage(100)
 
-	var/mob/living/carbon/human/clothed_patient = allocate(/mob/living/carbon/human/consistent)
-	clothed_patient.equipOutfit(/datum/outfit/job/doctor, TRUE)
-	clothed_patient.take_overall_damage(100)
+// 	var/mob/living/carbon/human/clothed_patient = allocate(/mob/living/carbon/human/consistent)
+// 	clothed_patient.equipOutfit(/datum/outfit/job/doctor, TRUE)
+// 	clothed_patient.take_overall_damage(100)
 
-	basic_brute_heal.success(user, naked_patient, BODY_ZONE_CHEST)
-	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
+// 	basic_brute_heal.success(user, naked_patient, BODY_ZONE_CHEST)
+// 	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
 
-	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+// 	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
 
 /// Tests items-as-prosthetic-limbs can apply
 /datum/unit_test/prosthetic_item

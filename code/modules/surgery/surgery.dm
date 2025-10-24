@@ -91,11 +91,11 @@
 	if(requires_tech)
 		. = FALSE
 
-	var/surgery_signal = SEND_SIGNAL(user, COMSIG_SURGERY_STARTING, src, patient)
-	if(surgery_signal & COMPONENT_FORCE_SURGERY)
-		return TRUE
-	if(surgery_signal & COMPONENT_CANCEL_SURGERY)
-		return FALSE
+	// var/surgery_signal = SEND_SIGNAL(user, COMSIG_SURGERY_STARTING, src, patient)
+	// if(surgery_signal & COMPONENT_FORCE_SURGERY)
+	// 	return TRUE
+	// if(surgery_signal & COMPONENT_CANCEL_SURGERY)
+	// 	return FALSE
 
 	var/turf/patient_turf = get_turf(patient)
 

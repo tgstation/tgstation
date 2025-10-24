@@ -217,25 +217,19 @@
 	)
 	display_pain(limb.owner, "Your brain feels stronger... more flexible!")
 
-/datum/surgery_operation/limb/bioware/cortex_folding/failure(obj/item/bodypart/limb, mob/living/surgeon, tool, total_penalty_modifier)
-	if(limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
-		display_results(
-			surgeon,
-			limb.owner,
-			span_warning("You screw up, damaging the brain!"),
-			span_warning("[surgeon] screws up, damaging the brain!"),
-			span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
-		)
-		display_pain(limb.owner, "Your head throbs with excruciating pain!")
-		limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
-		limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-		return
-
-	surgeon.visible_message(
-		span_warning("[surgeon] suddenly notices that the brain [surgeon.p_they()] [surgeon.p_were()] working on is not there anymore."),
-		span_warning("You suddenly notice that the brain you were working on is not there anymore.")
-		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+/datum/surgery_operation/limb/bioware/cortex_folding/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, total_penalty_modifier)
+	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
+		return ..()
+	display_results(
+		surgeon,
+		limb.owner,
+		span_warning("You screw up, damaging the brain!"),
+		span_warning("[surgeon] screws up, damaging the brain!"),
+		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
+	display_pain(limb.owner, "Your head throbs with excruciating pain!")
+	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
+	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/limb/bioware/cortex_imprint
 	name = "cortex imprinting"
@@ -263,22 +257,16 @@
 	)
 	display_pain(limb.owner, "Your brain feels stronger... more resillient!")
 
-/datum/surgery_operation/limb/bioware/cortex_imprint/failure(obj/item/bodypart/limb, mob/living/surgeon, tool, total_penalty_modifier)
-	if(limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
-		display_results(
-			surgeon,
-			limb.owner,
-			span_warning("You screw up, damaging the brain!"),
-			span_warning("[surgeon] screws up, damaging the brain!"),
-			span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
-		)
-		display_pain(limb.owner, "Your brain throbs with intense pain; Thinking hurts!")
-		limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
-		limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
-		return
-
-	surgeon.visible_message(
-		span_warning("[surgeon] suddenly notices that the brain [surgeon.p_they()] [surgeon.p_were()] working on is not there anymore."),
-		span_warning("You suddenly notice that the brain you were working on is not there anymore.")
-		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+/datum/surgery_operation/limb/bioware/cortex_imprint/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, total_penalty_modifier)
+	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
+		return ..()
+	display_results(
+		surgeon,
+		limb.owner,
+		span_warning("You screw up, damaging the brain!"),
+		span_warning("[surgeon] screws up, damaging the brain!"),
+		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
+	display_pain(limb.owner, "Your brain throbs with intense pain; Thinking hurts!")
+	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
+	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)

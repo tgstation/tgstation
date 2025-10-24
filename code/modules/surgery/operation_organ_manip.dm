@@ -3,27 +3,34 @@
 	name = "organ manipulation"
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation
 	operation_flags = OPERATION_MORBID
+	/// Radial slice datums for every organ type we can manipulate
+	VAR_PRIVATE/list/cached_organ_manipulation_options
 
-	var/list/cached_organ_manipulation_options
-
+	/// Sound played when starting to insert an organ
 	var/insert_preop_sound = 'sound/items/handling/surgery/organ2.ogg'
+	/// Sound played when starting to remove an organ
 	var/remove_preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	/// Sound played when successfully inserting an organ
 	var/insert_success_sound = 'sound/items/handling/surgery/organ1.ogg'
+	/// Sound played when successfully removing an organ
 	var/remove_success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
+	/// Implements used to insert organs
+	var/list/insert_implements = list(
+		/obj/item/organ = 1,
+	)
+	/// Implements used to remove organs
 	var/list/remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		/obj/item/kitchen/fork = 0.35,
 		TOOL_CROWBAR = 0.55,
-	)
-	var/list/insert_implements = list(
-		/obj/item/organ = 1,
 	)
 
 /datum/surgery_operation/limb/organ_manipulation/New()
 	. = ..()
 	implements = remove_implements + insert_implements
 
+/// Checks that the passed organ can be inserted/removed
 /datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/organ/organ)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!organ.useable)
@@ -32,6 +39,7 @@
 		return FALSE
 	return TRUE
 
+/// Checks that the passed organ can be inserted/removed in the specified zones
 /datum/surgery_operation/limb/organ_manipulation/proc/zone_check(obj/item/organ/organ, limb_zone, operated_zone)
 	SHOULD_CALL_PARENT(TRUE)
 	if(organ.valid_zones)
@@ -61,15 +69,16 @@
 	for(var/obj/item/organ/organ in limb)
 		if(!organ_check(organ) || !zone_check(organ, limb.body_zone, surgeon.zone_selected))
 			continue
-		if(!LAZYACCESS(cached_organ_manipulation_options, organ.type))
-			var/datum/radial_menu_choice/option = new()
+		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
+		if(!option)
+			option = new()
 			option.image = get_default_radial_image(limb, surgeon, organ)
 			option.image.overlays += add_radial_overlays(organ)
 			option.name = "remove [organ.name]"
 			option.info = "Remove [organ.name] from the patient."
 			LAZYSET(cached_organ_manipulation_options, organ.type, option)
 
-		options[cached_organ_manipulation_options[organ.type]] = list("action" = "remove", "organ" = organ)
+		options[option] = list("action" = "remove", "organ" = organ)
 
 	return options
 
@@ -81,8 +90,9 @@
 		if(existing_organ.slot == organ.slot)
 			return null
 
-	if(!LAZYACCESS(cached_organ_manipulation_options, organ.type))
-		var/datum/radial_menu_choice/option = new()
+	var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
+	if(!option)
+		option = new()
 		option.image = get_default_radial_image(limb, surgeon, organ)
 		option.image.overlays += add_radial_overlays(list(image('icons/hud/screen_gen.dmi', "arrow_large_still"), organ))
 		option.name = "insert [organ.name]"
@@ -90,7 +100,7 @@
 		LAZYSET(cached_organ_manipulation_options, organ.type, option)
 
 	var/list/result = list()
-	result[cached_organ_manipulation_options[organ.type]] = list("action" = "insert")
+	result[option] = list("action" = "insert")
 	return result
 
 /datum/surgery_operation/limb/organ_manipulation/operate_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)

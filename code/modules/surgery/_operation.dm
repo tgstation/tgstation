@@ -24,13 +24,14 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 	// 	tool = tool.get_proxy_attacker_for(limb, src)
 
 	var/list/possible_operations = list()
-	for(var/operation_type, datum/surgery_operation/operation as anything in GLOB.operations)
-		if(body_position != LYING_DOWN && !(operation.operation_flags & OPERATION_STANDING_ALLOWED))
+	for(var/datum/surgery_operation/operation_type as anything in GLOB.operations)
+		if(body_position != LYING_DOWN && !(operation_type::operation_flags & OPERATION_STANDING_ALLOWED))
 			continue
-		if(operation.operation_flags & OPERATION_LOCKED)
+		if(operation_type::operation_flags & OPERATION_LOCKED)
 			continue
-		operations += operation
+		possible_operations += operation_type
 
+	// Signals can add operation types
 	SEND_SIGNAL(src, COMSIG_LIVING_OPERATING_ON, patient, possible_operations)
 	SEND_SIGNAL(patient, COMSIG_LIVING_BEING_OPERATED_ON, patient, possible_operations)
 
@@ -38,17 +39,24 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 	var/list/radial_operations = list()
 	for(var/operation_type in possible_operations)
 		var/datum/surgery_operation/operation = GLOB.operations[operation_type]
+		if(operation.replaced_by && (operation.replaced_by in possible_operations))
+			continue
 		var/atom/movable/operate_on = operation.get_operation_target(src, patient, potential_tool)
 		if(isnull(operate_on))
 			continue
 		if(!operation.check_availability(operate_on, src, potential_tool))
 			continue
-		for(var/radial_slice, option_info in operation.get_radial_options(operate_on, src, potential_tool))
+		for(var/datum/radial_menu_choice/radial_slice, option_info in operation.get_radial_options(operate_on, src, potential_tool))
+			if(radial_operations[radial_slice])
+				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation_type]'.")
+				continue
 			operations[radial_slice] = list("operation" = operation, "target" = operate_on) + option_info
 			radial_operations[radial_slice] = radial_slice
 
 	if(!length(operations))
 		return NONE // allow attacking
+
+	sortTim(radial_operations, GLOBAL_PROC_REF(cmp_name_asc))
 
 	var/picked = show_radial_menu(
 		user = src,
@@ -82,6 +90,9 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 	var/time = 1 SECONDS
 
 	var/operation_flags = NONE
+
+	/// Typepath of a surgical operation that supersedes this one
+	var/replaced_by
 
 	/// SFX played before the do-after begins
 	var/preop_sound
@@ -239,8 +250,15 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 
 	return 0.7
 
+/// Returns a time modifier based on the mob's status
 /datum/surgery_operation/proc/get_mob_surgery_speed_mod(atom/movable/operating_on)
-	return get_patient(operating_on).mob_surgery_speed_mod
+	var/mob/living/patient = get_patient(operating_on)
+	var/basemod = patient.mob_surgery_speed_mod
+	if(HAS_TRAIT(patient, TRAIT_SURGICALLY_ANALYZED))
+		basemod *= 0.8
+	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
+		basemod *= 0.8
+	return basemod
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
 /datum/surgery_operation/proc/get_location_modifier(turf/operation_turf)
