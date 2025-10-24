@@ -103,8 +103,7 @@
 			if(!length(track_data) || !IS_SOUND_FILE(new_track.song_path))
 				continue
 			var/track_name = track_data[JUKEBOX_NAME]
-			if(endswith(track_name, ".ogg"))
-				track_name = copytext(track_name, 1, length(track_name) - 3)
+			track_name = strip_filepath_extension(track_name, SSsounds.valid_file_extensions)
 			new_track.song_name = track_name
 			new_track.song_length = SSsounds.get_sound_length(new_track.song_path)
 			if(track_data.len >= 3) // Bandaid for legacy tracks to not use the length for the bpm rather then the actual beats.

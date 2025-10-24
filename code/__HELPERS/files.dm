@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	if(!extstart)
 		return FALSE
 	var/ext = copytext("[file]", extstart)
-	if((ext in file_types))
+	if(ext in file_types)
 		return TRUE
 
 /**
@@ -166,3 +166,12 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	var/ext = copytext("[file]", extstart)
 	if(ext == file_type)
 		return TRUE
+
+/proc/strip_filepath_extension(file, file_types)
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return "[file]"
+	var/ext = copytext("[file]", extstart)
+	if(ext in file_types)
+		return copytext("[file]", 1, extstart)
+	return "[file]"
