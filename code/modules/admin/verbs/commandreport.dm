@@ -106,7 +106,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 					return
 
 				if(!IS_SOUND_FILE_COMPLETE(sound_file))
-					tgui_alert(ui_user, "Invalid file type. Please select any file type in: [jointext(SSsounds.valid_file_extensions, ", ")].", "Loading error", list("Ok"))
+					tgui_alert(ui_user, "Invalid file type. Please select a sound file.", "Loading error", list("Ok"))
 					return
 
 				played_sound = sound_file
