@@ -566,7 +566,7 @@
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.attackby(ammo_to_load, user)
+	held_crossbow.load_gun(ammo_to_load, user)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"
