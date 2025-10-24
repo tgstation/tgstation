@@ -74,7 +74,6 @@
 		if(tool.use_tool(src, user, 40, volume=50))
 			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
 			unscrewed = TRUE
-
 	return TRUE
 
 /obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)
