@@ -1,0 +1,4 @@
+author: "MGOOOOOO"
+delete-after: True
+changes:
+  - bugfix: "Sterilizine will now correctly apply its 20% surgery speed bonus."
