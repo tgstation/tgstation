@@ -155,9 +155,9 @@
 	organ_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
 
 	if (scarring)
-		owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
-		owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
-		owner.cure_blind(EYE_SCARRING_TRAIT)
+		organ_owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
+		organ_owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
+		organ_owner.cure_blind(EYE_SCARRING_TRAIT)
 
 	organ_owner.update_tint()
 	organ_owner.update_sight()

@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	register_context()
 	register_item_context()
 
-	if(!PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type || stable_population > 1)
+	if(!apply_qualities || !PERFORM_ALL_TESTS(focus_only/fish_population) || type == abstract_type || stable_population > 1)
 		return
 	if(length(compatible_types))
 		for(var/obj/item/fish/fishie as anything in compatible_types)

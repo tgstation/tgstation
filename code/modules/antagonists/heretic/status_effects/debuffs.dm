@@ -157,7 +157,6 @@
 
 /datum/status_effect/star_mark/extended
 	duration = 3 MINUTES
-f
 
 /// Used by moon heretics to make people mad
 /datum/status_effect/moon_converted
