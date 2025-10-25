@@ -1039,7 +1039,7 @@
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is \
-		one of the more frequently encountered examples of Cybersun Industry weaponry. Extremely similar to Nanotrasen's \
+		one of the more frequently encountered examples of Cybersun Industries weaponry. Extremely similar to Nanotrasen's \
 		own Secure Apprehension Device (also simply known as the stun baton), the contractor baton is able to induce \
 		CNS disruption in a target to render them helpless. It is also capable of devastating blunt force trauma if \
 		used as a bludgeon. And, most conveniently of all, the contractor baton is capable of telescopic deployment, \
