@@ -2,9 +2,9 @@
 	name = "repair wings"
 	desc = "Repair a patient's damaged wings to restore flight capability."
 	implements = list(
-		TOOL_HEMOSTAT = 0.85,
-		TOOL_SCREWDRIVER = 0.35,
-		/obj/item/pen = 0.15
+		TOOL_HEMOSTAT = 1.15,
+		TOOL_SCREWDRIVER = 2.85,
+		/obj/item/pen = 6.67,
 	)
 	operation_flags = OPERATION_LOCKED
 	time = 20 SECONDS
@@ -16,11 +16,9 @@
 /datum/surgery_operation/organ/fix_wings/organ_check(obj/item/organ/wings/moth/organ)
 	if(!organ.burnt)
 		return FALSE
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state == SURGERY_BONE_INTACT)
+	if(!HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED))
 		return FALSE
 	if(organ.owner.reagents?.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) < 1)
 		return FALSE

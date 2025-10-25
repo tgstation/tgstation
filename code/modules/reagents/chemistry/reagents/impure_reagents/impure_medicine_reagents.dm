@@ -954,8 +954,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = min(0.7, surgery.speed_modifier)
+	exposed_mob.add_surgery_speed_mod(type, 0.7, min(reac_volume * 1 MINUTES, 5 MINUTES))
 
 /datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

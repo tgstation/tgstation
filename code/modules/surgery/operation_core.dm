@@ -2,19 +2,13 @@
 	name = "remove core"
 	desc = "Remove the core from a slime."
 	implements = list(
-		TOOL_HEMOSTAT = 1.0,
-		TOOL_CROWBAR = 1.0,
+		TOOL_HEMOSTAT = 1,
+		TOOL_CROWBAR = 1,
 	)
 	time = 1.6 SECONDS
 
 /datum/surgery_operation/basic/core_removal/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
-	if(!isslime(patient))
-		return FALSE
-	if(patient.stat != DEAD)
-		return FALSE
-	if(get_skin_state(patient) < SURGERY_SKIN_CUT)
-		return FALSE
-	return TRUE
+	return isslime(patient) && patient.stat == DEAD && has_surgery_state(patient, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/basic/core_removal/on_preop(mob/living/basic/slime/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

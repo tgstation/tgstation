@@ -4,14 +4,14 @@
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
-		/obj/item/shears = 3,
+		/obj/item/shears = 0.33,
 		TOOL_SCALPEL = 1,
 		TOOL_SAW = 1,
-		/obj/item/shovel/serrated = 0.75,
-		/obj/item/melee/arm_blade = 0.8,
-		/obj/item/fireaxe = 0.5,
-		/obj/item/hatchet = 0.4,
-		/obj/item/knife/butcher = 0.25,
+		/obj/item/melee/arm_blade = 1.25,
+		/obj/item/shovel/serrated = 1.33,
+		/obj/item/fireaxe = 2,
+		/obj/item/hatchet = 2.5,
+		/obj/item/knife/butcher = 4,
 	)
 	time = 6.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -23,11 +23,7 @@
 	return base
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(limb.body_zone == BODY_ZONE_CHEST)
 		return FALSE
@@ -64,20 +60,18 @@
 	name = "disassemble limb"
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
-		/obj/item/shovel/giant_wrench = 3,
+		/obj/item/shovel/giant_wrench = 0.33,
 		TOOL_WRENCH = 1,
 		TOOL_CROWBAR = 1,
-		TOOL_SCALPEL = 0.5,
-		TOOL_SAW = 0.5,
+		TOOL_SCALPEL = 2,
+		TOOL_SAW = 2,
 	)
 	time = 2 SECONDS //WAIT I NEED THAT!!
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/limb/amputate/pegleg
 	name = "detach peg leg"
@@ -85,9 +79,9 @@
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 1,
-		/obj/item/fireaxe = 0.9,
-		/obj/item/hatchet = 0.75,
-		TOOL_SCALPEL = 0.25,
+		/obj/item/fireaxe = 1.15,
+		/obj/item/hatchet = 1.33,
+		TOOL_SCALPEL = 4,
 	)
 	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'

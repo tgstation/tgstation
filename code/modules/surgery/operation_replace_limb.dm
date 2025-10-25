@@ -9,7 +9,7 @@
 /datum/surgery_operation/limb/replace_limb/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool)
 	if(HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS))
 		return FALSE
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	if(limb.bodypart_flags & BODYPART_UNREMOVABLE)
 		return FALSE

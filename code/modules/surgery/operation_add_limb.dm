@@ -19,9 +19,7 @@
 	return patient.get_bodypart(BODY_ZONE_CHEST)
 
 /datum/operation/prosthetic_replacement/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	// While we are operating on chest, we need to make sure the actual missing limb is missing
 	if(limb.owner.get_bodypart(deprecise_zone(surgeon.zone_selected)))
@@ -51,6 +49,7 @@
 
 /datum/surgery_operation/limb/prosthetic_replacement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/target_zone = deprecise_zone(surgeon.zone_selected)
+	// Save this for later
 	operation_args["target_zone"] = target_zone
 
 	// purposefully doesn't use plaintext zone for more context on what is being replaced with what
@@ -96,7 +95,7 @@
 /datum/surgery_operation/limb/prosthetic_replacement/proc/handle_arbitrary_prosthetic(mob/living/carbon/patient, mob/living/surgeon, obj/item/thing_to_attach, target_zone)
 	SSblackbox.record_feedback("tally", "arbitrary_prosthetic", 1, initial(thing_to_attach.name))
 	var/obj/item/bodypart/new_limb = patient.make_item_prosthetic(thing_to_attach, target_zone, 80)
-	new_limb.surgery_special_state |= SURGERY_PROSTHETIC_UNSECURED
+	new_limb.surgery_state |= SURGERY_PROSTHETIC_UNSECURED
 	display_results(
 		surgeon, patient,
 		span_notice("You attach [thing_to_attach]."),
@@ -110,15 +109,13 @@
 	desc = "Ensure that an arbitrary prosthetic is properly attached to a patient's body."
 	implements = list(
 		/obj/item/stack/medical/suture = 1,
-		/obj/item/stack/sticky_tape/surgical = 0.80,
-		/obj/item/stack/sticky_tape = 0.50,
+		/obj/item/stack/sticky_tape/surgical = 1.25,
+		/obj/item/stack/sticky_tape = 2,
 	)
 	time = 4.8 SECONDS
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/state_check(obj/item/bodypart/limb)
-	if(!(limb.surgery_special_state & SURGERY_PROSTHETIC_UNSECURED))
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_PROSTHETIC_UNSECURED)
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
 	display_results(
@@ -141,6 +138,6 @@
 	)
 	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
 	display_pain(limb.owner, "You feel more secure as your prosthetic is firmly attached to your body!", IS_ROBOTIC_LIMB(chest))
-	limb.surgery_special_state &= ~SURGERY_PROSTHETIC_UNSECURED
+	limb.surgery_state &= ~SURGERY_PROSTHETIC_UNSECURED
 	limb.AddComponent(/datum/component/item_as_prosthetic_limb, null, 0) // updates drop probability to zero
 	tool.use(1)

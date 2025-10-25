@@ -6,9 +6,9 @@
 	desc = "Unscrew the shell of a mechanical patient to access its internals."
 	implements = list(
 		TOOL_SCREWDRIVER = 1,
-		TOOL_SCALPEL = 0.75,
-		/obj/item/knife = 0.50,
-		/obj/item = 0.10,
+		TOOL_SCALPEL = 1.33,
+		/obj/item/knife = 2,
+		/obj/item = 10, // i think this amounts to a 180% chance of failure (clamped to 99%)
 	)
 	operation_flags = OPERATION_SELF_OPERABLE
 	required_bodytype = BODYTYPE_ROBOTIC
@@ -26,9 +26,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_incision/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state != SURGERY_SKIN_CLOSED)
-		return FALSE
-	return TRUE
+	return !HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/limb/mechanical_incision/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -42,7 +40,7 @@
 
 /datum/surgery_operation/limb/mechanical_incision/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_skin_state = SURGERY_SKIN_CUT
+	limb.surgery_state |= SURGERY_SKIN_CUT
 
 /// Mechanical equivalent of opening skin and clamping vessels
 /datum/surgery_operation/limb/mechanical_open
@@ -64,9 +62,7 @@
 	return base
 
 /datum/surgery_operation/limb/mechanical_open/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state != SURGERY_SKIN_CUT)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/mechanical_open/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -80,8 +76,10 @@
 
 /datum/surgery_operation/limb/mechanical_open/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_skin_state = SURGERY_SKIN_OPEN
-	limb.surgery_vessel_state = SURGERY_VESSELS_CLAMPED
+	// We get both vessels and skin done at the same time wowee
+	limb.surgery_state |= SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+	limb.surgery_state &= ~SURGERY_SKIN_CUT
+	limb.refresh_bleed_rate()
 
 /// Mechanical equivalent of cauterizing / closing skin
 /datum/surgery_operation/limb/mechanical_close
@@ -90,9 +88,9 @@
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SCREWDRIVER = 1,
-		TOOL_SCALPEL = 0.75,
-		/obj/item/knife = 0.50,
-		/obj/item = 0.10,
+		TOOL_SCALPEL = 1.33,
+		/obj/item/knife = 2,
+		/obj/item = 10,
 	)
 	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
@@ -105,7 +103,10 @@
 	return base
 
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
+		return FALSE
+	// Nothing to repair, this is the limb's natural state
+	if(INNATELY_LACKING_SKIN(limb))
 		return FALSE
 	return TRUE
 
@@ -121,8 +122,8 @@
 
 /datum/surgery_operation/limb/mechanical_close/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_skin_state = SURGERY_SKIN_CLOSED
-	limb.surgery_vessel_state = SURGERY_VESSELS_NORMAL
+	limb.surgery_state &= ~SURGERY_UNSET_ON_CLOSE
+	limb.refresh_bleed_rate()
 
 // Mechanical equivalent of cutting vessels and organs
 /datum/surgery_operation/limb/prepare_electronics
@@ -131,12 +132,15 @@
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_MULTITOOL = 1,
-		TOOL_HEMOSTAT = 0.75,
+		TOOL_HEMOSTAT = 1.33,
 	)
 	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
+
+/datum/surgery_operation/limb/prepare_electronics/state_check(obj/item/bodypart/limb)
+	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/limb/prepare_electronics/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
@@ -155,7 +159,8 @@
 
 /datum/surgery_operation/limb/prepare_electronics/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_vessel_state = SURGERY_VESSELS_ORGANS_CUT
+	limb.surgery_state |= SURGERY_ORGANS_CUT
+	limb.refresh_bleed_rate()
 
 // Mechanical equivalent of sawing bone
 /datum/surgery_operation/limb/mechanic_unwrench
@@ -164,11 +169,18 @@
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,
-		TOOL_RETRACTOR = 0.75,
+		TOOL_RETRACTOR = 1.33,
 	)
 	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
+
+/datum/surgery_operation/limb/mechanic_unwrench/state_check(obj/item/bodypart/limb)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+		return FALSE
+	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/mechanic_unwrench/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
@@ -187,7 +199,7 @@
 
 /datum/surgery_operation/limb/mechanic_unwrench/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_bone_state = SURGERY_BONE_SAWED
+	limb.surgery_state |= SURGERY_BONE_SAWED
 
 // Mechanical equivalent of unsawing bone
 /datum/surgery_operation/limb/mechanic_wrench
@@ -196,11 +208,18 @@
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,
-		TOOL_RETRACTOR = 0.75,
+		TOOL_RETRACTOR = 1.33,
 	)
 	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
+
+/datum/surgery_operation/limb/mechanic_wrench/state_check(obj/item/bodypart/limb)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
+		return FALSE
+	if(INNATELY_LACKING_BONES(limb))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/mechanic_wrench/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	var/image/base = ..()
@@ -219,4 +238,4 @@
 
 /datum/surgery_operation/limb/mechanic_wrench/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_bone_state = SURGERY_BONE_INTACT
+	limb.surgery_state &= ~SURGERY_BONE_SAWED

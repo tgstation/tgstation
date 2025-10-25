@@ -4,8 +4,8 @@
 	implements = list(
 		/obj/item/shockpaddles = 1,
 		/obj/item/melee/touch_attack/shock = 1,
-		/obj/item/melee/baton/security = 0.75,
-		/obj/item/gun/energy = 0.6,
+		/obj/item/melee/baton/security = 1.33,
+		/obj/item/gun/energy = 1.67,
 	)
 	operation_flags = OPERATION_MORBID
 	time = 5 SECONDS
@@ -16,11 +16,7 @@
 	success_sound = 'sound/machines/defib/defib_zap.ogg'
 
 /datum/surgery_operation/limb/revival/state_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
 		return FALSE
 	if(limb.owner.stat != DEAD)
 		return FALSE

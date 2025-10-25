@@ -68,37 +68,40 @@
 #define BODYPART_OVERLAY_VOIDWALKER_CURSE 4
 
 // Bodypart surgery state
-
-// Skin states
-/// The skin is closed completely
-#define SURGERY_SKIN_CLOSED 0
 /// An incision has been made into the skin
-#define SURGERY_SKIN_CUT 1
+#define SURGERY_SKIN_CUT (1<<0)
 /// Skin has been pulled back - 99% of surgeries require this
-#define SURGERY_SKIN_OPEN 2
-
-// Internals state
-/// Blood vessels are untouched
-#define SURGERY_VESSELS_NORMAL 0
+#define SURGERY_SKIN_OPEN (1<<1)
 /// Blood vessels are accessible, cut, and bleeding
-#define SURGERY_VESSELS_UNCLAMPED 1
+#define SURGERY_VESSELS_UNCLAMPED (1<<2)
 /// Blood vessels are accessible but clamped
-#define SURGERY_VESSELS_CLAMPED 2
+#define SURGERY_VESSELS_CLAMPED (1<<3)
 /// Indicates either an incision has been made into the organs present in the limb or organs have been incised from the limb
-#define SURGERY_VESSELS_ORGANS_CUT 3
-
-// Bone State
-/// Bones have been untouched
-#define SURGERY_BONE_INTACT 0
+#define SURGERY_ORGANS_CUT (1<<4)
 /// Holes have been drilled in our bones, exclusive with sawed
-#define SURGERY_BONE_DRILLED 1
+#define SURGERY_BONE_DRILLED (1<<5)
 /// Bones have been sawed apart
-#define SURGERY_BONE_SAWED 2
-
-// Special state - this one is a bitflag for surgery specific states
-/// No special state
-#define SURGERY_NO_SPECIAL_STATE NONE
+#define SURGERY_BONE_SAWED (1<<6)
 /// Used in advanced plastic surgery: Has plastic been applied
-#define SURGERY_PLASTIC_APPLIED (1<<0)
+#define SURGERY_PLASTIC_APPLIED (1<<7)
 /// Used in prosthetic surgery: Is the prosthetic unsecured
-#define SURGERY_PROSTHETIC_UNSECURED (1<<1)
+#define SURGERY_PROSTHETIC_UNSECURED (1<<8)
+
+/// All states that concern itself with the skin
+#define SURGERY_SKIN_STATES (SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
+/// All states that concern itself with the blood vessels
+#define SURGERY_VESSEL_STATES (SURGERY_VESSELS_UNCLAMPED|SURGERY_VESSELS_CLAMPED)
+/// All states that concern itself with the bones
+#define SURGERY_BONE_STATES (SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+/// All states that concern itself with internal organs
+#define SURGERY_ORGAN_STATES (SURGERY_ORGANS_CUT)
+
+/// These states are automatically cleared when the surgery is closed for ease of use
+#define SURGERY_UNSET_ON_CLOSE (SURGERY_SKIN_STATES|SURGERY_VESSEL_STATES|SURGERY_BONE_STATES|SURGERY_ORGAN_STATES)
+
+/// Checks if a bodypart lacks both flesh and metal, meaning it has no skin to cut.
+#define INNATELY_LACKING_SKIN(limb) (!(BIO_FLESH|BIO_METAL))
+/// Checks if a bodypart lacks both bone and metal, meaning it has no bones to saw.
+#define INNATELY_LACKING_BONES(limb) (!(BIO_BONE|BIO_METAL))
+/// Checks if a bodypart lacks both blood and wires, meaning it has no vessels to manipulate.
+#define INNATELY_LACKING_VESSELS(limb) (!(BIO_BLOODED|BIO_WIRED))

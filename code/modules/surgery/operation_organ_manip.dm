@@ -22,8 +22,8 @@
 	/// Implements used to remove organs
 	var/list/remove_implements = list(
 		TOOL_HEMOSTAT = 1,
-		/obj/item/kitchen/fork = 0.35,
-		TOOL_CROWBAR = 0.55,
+		TOOL_CROWBAR = 1.8,
+		/obj/item/kitchen/fork = 2.85,
 	)
 
 /datum/surgery_operation/limb/organ_manipulation/New()
@@ -78,7 +78,7 @@
 			option.info = "Remove [organ.name] from the patient."
 			LAZYSET(cached_organ_manipulation_options, organ.type, option)
 
-		options[option] = list("action" = "remove", "organ" = organ)
+		options[option] = list("[OPERATION_ACTION]" = "remove", "organ" = organ)
 
 	return options
 
@@ -100,14 +100,14 @@
 		LAZYSET(cached_organ_manipulation_options, organ.type, option)
 
 	var/list/result = list()
-	result[option] = list("action" = "insert")
+	result[option] = list("[OPERATION_ACTION]" = "insert")
 	return result
 
 /datum/surgery_operation/limb/organ_manipulation/operate_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(!..())
 		return FALSE
 
-	switch(operation_args["action"])
+	switch(operation_args[OPERATION_ACTION])
 		if("remove")
 			var/obj/item/organ/organ = operation_args["organ"]
 			if(QDELETED(organ) || !(organ in limb))
@@ -121,7 +121,7 @@
 	return TRUE
 
 /datum/surgery_operation/limb/organ_manipulation/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	switch(operation_args["action"])
+	switch(operation_args[OPERATION_ACTION])
 		if("remove")
 			var/obj/item/organ = operation_args["organ"]
 			play_operation_sound(limb, surgeon, tool, remove_preop_sound)
@@ -145,7 +145,7 @@
 			display_pain(limb.owner, "You can feel something being placed in your [limb.plaintext_zone]!")
 
 /datum/surgery_operation/limb/organ_manipulation/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	switch(operation_args["action"])
+	switch(operation_args[OPERATION_ACTION])
 		if("remove")
 			play_operation_sound(limb, surgeon, tool, remove_success_sound)
 			on_success_remove_organ(limb, surgeon, operation_args["organ"], tool)
@@ -198,13 +198,7 @@
 	return ..() && organ.zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/mechanic
 	name = "prosthetic organ manipulation"
@@ -212,7 +206,7 @@
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
-		/obj/item/kitchen/fork = 0.35,
+		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
 
@@ -223,11 +217,9 @@
 	return ..() && organ.zone != BODY_ZONE_CHEST
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	if(limb.surgery_bone_state > SURGERY_BONE_DRILLED)
+	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(limb))
 		return FALSE
 	return TRUE
 
@@ -237,7 +229,7 @@
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
-		/obj/item/kitchen/fork = 0.35,
+		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
 
@@ -250,13 +242,7 @@
 	return ..() && (organ.organ_flags & ORGAN_EXTERNAL)
 
 /datum/surgery_operation/limb/organ_manipulation/external/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state != SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/limb/organ_manipulation/external/mechanic
 	name = "prosthetic feature manipulation"
@@ -264,6 +250,6 @@
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
-		/obj/item/kitchen/fork = 0.35,
+		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE

@@ -8,8 +8,8 @@
 	desc = "Reshape or reconstruct a patient's body part for cosmetic or functional purposes."
 	implements = list(
 		TOOL_SCALPEL = 1,
-		/obj/item/knife = 0.50,
-		TOOL_WIRECUTTER = 0.35,
+		/obj/item/knife = 2,
+		TOOL_WIRECUTTER = 2.85,
 	)
 	time = 6.4 SECONDS
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD
@@ -17,7 +17,7 @@
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 
 /datum/surgery_operation/limb/plastic_surgery/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
@@ -34,7 +34,7 @@
 		names += limb.owner.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
 
 	else
-		var/advanced = limb.surgery_special_state & SURGERY_PLASTIC_APPLIED
+		var/advanced = limb.surgery_state & SURGERY_PLASTIC_APPLIED
 		var/obj/item/offhand = surgeon.get_inactive_held_item()
 		if(istype(offhand, /obj/item/photo) && advanced)
 			var/obj/item/photo/disguises = offhand
@@ -88,7 +88,7 @@
 		human_target.update_ID_card()
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
 		surgeon.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)
-	limb.surgery_special_state &= ~SURGERY_PLASTIC_APPLIED
+	limb.surgery_state &= ~SURGERY_PLASTIC_APPLIED
 
 /datum/surgery_operation/limb/plastic_surgery/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -114,9 +114,9 @@
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
 
 /datum/surgery_operation/limb/add_plastic/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
-	if(limb.surgery_special_state & SURGERY_PLASTIC_APPLIED)
+	if(HAS_SURGERY_STATE(limb, SURGERY_PLASTIC_APPLIED))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
@@ -134,4 +134,4 @@
 
 /datum/surgery_operation/limb/add_plastic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_special_state |= SURGERY_PLASTIC_APPLIED
+	limb.surgery_state |= SURGERY_PLASTIC_APPLIED

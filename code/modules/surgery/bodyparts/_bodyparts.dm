@@ -219,14 +219,8 @@
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 
-	/// What state is the skin in for determining surgery availability
-	var/surgery_skin_state = SURGERY_SKIN_CLOSED
-	/// What state is the bone in for determining surgery availability
-	var/surgery_bone_state = SURGERY_BONE_INTACT
-	/// What state are the vessels in for determining surgery availability
-	var/surgery_vessel_state = SURGERY_VESSELS_NORMAL
-	/// Any special states for snowflake surgeries - this one is a bitflag
-	var/surgery_special_state = SURGERY_NO_SPECIAL_STATE
+	/// What state is the bodypart in for determining surgery availability
+	VAR_FINAL/surgery_state = NONE
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -260,6 +254,16 @@
 		grind_results = null
 	else
 		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+
+	// No skin to cut
+	if(INNATELY_LACKING_SKIN(src))
+		surgery_state |= SURGERY_SKIN_OPEN
+	// No bone to cut
+	if(INNATELY_LACKING_BONES(src))
+		surgery_state |= SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED // These are normally mutually exclusive, but as a bonus for lacking bones you can do drill and saw operations simultaneously
+	// No blood vessels
+	if(INNATELY_LACKING_VESSELS(src))
+		surgery_state |= SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
@@ -1315,6 +1319,14 @@
 
 	if(generic_bleedstacks > 0)
 		cached_bleed_rate += 0.5
+
+	if(biological_state & (BIO_WIRED|BIO_BLOODED))
+		// better clamp those up quick
+		if(surgery_state & SURGERY_VESSELS_UNCLAMPED)
+			cached_bleed_rate += 2
+		// better, but still not exactly ideal
+		else if(surgery_state & (SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT))
+			cached_bleed_rate += 0.25
 
 	for(var/obj/item/embeddies as anything in embedded_objects)
 		if(!embeddies.get_embed().is_harmless())

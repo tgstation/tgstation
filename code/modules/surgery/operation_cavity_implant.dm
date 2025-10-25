@@ -22,9 +22,7 @@
 	return base
 
 /datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
@@ -76,9 +74,9 @@
 	desc = "Remove an item from a body cavity."
 	implements = list(
 		IMPLEMENT_HAND = 1,
-		TOOL_HEMOSTAT = 0.5,
-		TOOL_CROWBAR = 0.4,
-		/obj/item/kitchen/fork = 0.2,
+		TOOL_HEMOSTAT = 2,
+		TOOL_CROWBAR = 2.5,
+		/obj/item/kitchen/fork = 5,
 	)
 
 	time = 3.2 SECONDS
@@ -91,9 +89,7 @@
 	return base
 
 /datum/surgery_operation/limb/undo_cavity_implant/state_check(obj/item/bodypart/chest/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE

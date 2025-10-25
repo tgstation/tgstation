@@ -10,9 +10,9 @@
 	desc = "Perform superficial wound care on a patient's bruises and burns."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
-		TOOL_SCREWDRIVER = 0.65,
-		TOOL_WIRECUTTER = 0.60,
-		/obj/item/pen = 0.55,
+		TOOL_SCREWDRIVER = 1.5,
+		TOOL_WIRECUTTER = 1.67,
+		/obj/item/pen = 1.8,
 	)
 	time = 2.5 SECONDS
 	operation_flags = OPERATION_LOOPING
@@ -29,6 +29,15 @@
 	/// The amount of damage healed scales based on how much damage the patient has times this multiplier
 	var/healing_multiplier = 0.07
 
+/datum/surgery_operation/basic/tend_wounds/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
+	// We allow tend wounds with even just cut skin
+	if(!has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT))
+		return FALSE
+	// Nothing to treat
+	if(patient.getBruteLoss() <= 0 && patient.getFireLoss() <= 0)
+		return FALSE
+	return TRUE
+
 /datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	var/list/options = list()
 
@@ -42,14 +51,14 @@
 			LAZYSET(cached_healing_options, "[COMBO_SURGERY]", all_healing)
 
 		options[all_healing] = list(
-			"action" = "heal",
+			"[OPERATION_ACTION]" = "heal",
 			"brute_heal" = healing_amount,
 			"burn_heal" = healing_amount,
 			"brute_multiplier" = healing_multiplier,
 			"burn_multiplier" = healing_multiplier,
 		)
 
-	if(can_heal & BRUTE_SURGERY)
+	if((can_heal & BRUTE_SURGERY) && patient.getBruteLoss() > 0)
 		var/datum/radial_menu_choice/brute_healing = LAZYACCESS(cached_healing_options, "[BRUTE_SURGERY]")
 		if(!brute_healing)
 			brute_healing = new()
@@ -59,12 +68,12 @@
 			LAZYSET(cached_healing_options, "[BRUTE_SURGERY]", brute_healing)
 
 		options[brute_healing] = list(
-			"action" = "heal",
+			"[OPERATION_ACTION]" = "heal",
 			"brute_heal" = healing_amount,
 			"brute_multiplier" = healing_multiplier,
 		)
 
-	if(can_heal & BURN_SURGERY)
+	if((can_heal & BURN_SURGERY) && patient.getFireLoss() > 0)
 		var/datum/radial_menu_choice/burn_healing = LAZYACCESS(cached_healing_options, "[BURN_SURGERY]")
 		if(burn_healing)
 			burn_healing = new()
@@ -74,7 +83,7 @@
 			LAZYSET(cached_healing_options, "[BURN_SURGERY]", burn_healing)
 
 		options[burn_healing] = list(
-			"action" = "heal",
+			"[OPERATION_ACTION]" = "heal",
 			"burn_heal" = healing_amount,
 			"burn_multiplier" = healing_multiplier,
 		)

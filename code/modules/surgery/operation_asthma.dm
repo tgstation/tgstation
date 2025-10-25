@@ -2,8 +2,8 @@
 	name = "force open windpipe"
 	desc = "Forcibly expand a patient's windpipe, relieving asthma symptoms."
 	implements = list(
-		TOOL_RETRACTOR = 0.80,
-		TOOL_WIRECUTTER = 0.45,
+		TOOL_RETRACTOR = 1.25,
+		TOOL_WIRECUTTER = 2.25,
 	)
 	time = 8 SECONDS
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
@@ -13,11 +13,7 @@
 	var/inflammation_reduction = 75
 
 /datum/surgery_operation/organ/asthmatic_bypass/organ_check(obj/item/organ/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
 
 /datum/surgery_operation/organ/asthmatic_bypass/organ_check(obj/item/organ/organ)
 	if(!organ.owner.has_quirk(/datum/quirk/item_quirk/asthma))

@@ -12,9 +12,7 @@
 	return base
 
 /datum/surgery_operation/limb/filter_blood/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE

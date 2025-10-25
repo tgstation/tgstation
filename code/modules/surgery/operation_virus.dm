@@ -3,25 +3,26 @@
 	desc = "Force a symbiotic relationship between a patient and a virus it is infected with."
 	implements = list(
 		TOOL_CAUTERY = 1,
-		TOOL_WELDER = 0.5,
-		/obj/item = 0.3,
+		TOOL_WELDER = 2,
+		/obj/item = 3.33,
 	)
 	time = 10 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
 	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
 
+	var/list/required_chems = list(
+		/datum/reagent/medicine/spaceacillin,
+		/datum/reagent/consumable/virus_food,
+		/datum/reagent/toxin/formaldehyde,
+	)
+
 /datum/surgery_operation/basic/viral_bonding/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
-	if(get_skin_state(patient) < SURGERY_SKIN_OPEN)
+	if(!has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
-	if(get_vessel_state(patient) < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	if(patient.reagents?.get_reagent_amount(/datum/reagent/medicine/spaceacillin) < 1)
-		return FALSE
-	if(patient.reagents?.get_reagent_amount(/datum/reagent/consumable/virus_food) < 1)
-		return FALSE
-	if(patient.reagents?.get_reagent_amount(/datum/reagent/toxin/formaldehyde) < 1)
-		return FALSE
+	for(var/chem in required_chems)
+		if(patient.reagents?.get_reagent_amount(chem) < 1)
+			return FALSE
 	for(var/datum/disease/infected_disease as anything in patient.diseases)
 		if(infected_disease.severity != DISEASE_SEVERITY_UNCURABLE)
 			return TRUE

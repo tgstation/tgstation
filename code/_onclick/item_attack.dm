@@ -185,14 +185,6 @@
 	if(surgery_ret)
 		return surgery_ret
 
-	for(var/datum/surgery/operation as anything in surgeries)
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
-			continue
-		if(!(operation.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src) && !HAS_TRAIT(user, TRAIT_SELF_SURGERY))
-			continue
-		if(operation.next_step(user, modifiers))
-			return ITEM_INTERACT_SUCCESS
-
 	return NONE
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)

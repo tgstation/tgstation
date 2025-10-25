@@ -1560,8 +1560,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Attached to objects currently on tables and such, allowing them to walk on other objects without the climbing delay
 #define TRAIT_ON_CLIMBABLE "on_climbable"
 
-/// Trait that allows mobs to perform surgery on themselves
+/// Allows a mob to perform any operation on themselves (with a penalty), where normally only specific operations allow self-surgery.
 #define TRAIT_SELF_SURGERY "self_surgery"
+/// This mob's surgical operations ignore ALL speed modifiers (even positive ones!) besides tool quality.
+/// The mob can also no longer fail their operations, unless the operation says otherwise
+#define TRAIT_IGNORE_SURGERY_MODIFIERS "ignore_surgery_modifiers"
 
 /// Trait that makes mobs with it immune to mining gear AOE attacks
 #define TRAIT_MINING_AOE_IMMUNE "mining_aoe_immune"

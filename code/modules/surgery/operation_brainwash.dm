@@ -17,10 +17,10 @@
 /datum/surgery_operation/organ/brainwash
 	name = "brainwash"
 	implements = list(
-		TOOL_HEMOSTAT = 0.85,
-		TOOL_WIRECUTTER = 0.50,
-		/obj/item/stack/package_wrap = 0.35,
-		/obj/item/stack/cable_coil = 0.15,
+		TOOL_HEMOSTAT = 1.15,
+		TOOL_WIRECUTTER = 2,
+		/obj/item/stack/package_wrap = 2.85,
+		/obj/item/stack/cable_coil = 6.67,
 	)
 	time = 20 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -31,13 +31,7 @@
 	required_biotype = ORGAN_ORGANIC
 
 /datum/surgery_operation/organ/brainwash/organ_check(obj/item/organ/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	operation_args["objective"] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)
@@ -93,11 +87,11 @@
 /datum/surgery_operation/organ/brainwash/mechanic
 	name = "reprogram"
 	implements = list(
-		TOOL_MULTITOOL = 0.85,
-		TOOL_HEMOSTAT = 0.50,
-		TOOL_WIRECUTTER = 0.50,
-		/obj/item/stack/package_wrap = 0.35,
-		/obj/item/stack/cable_coil = 0.15,
+		TOOL_MULTITOOL = 1.15,
+		TOOL_HEMOSTAT = 2,
+		TOOL_WIRECUTTER = 2,
+		/obj/item/stack/package_wrap = 2.85,
+		/obj/item/stack/cable_coil = 6.67,
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
@@ -144,11 +138,11 @@
 /datum/surgery_operation/organ/brainwash/sleeper/mechanic
 	name = "reprogramming"
 	implements = list(
-		TOOL_MULTITOOL = 0.85,
-		TOOL_HEMOSTAT = 0.50,
-		TOOL_WIRECUTTER = 0.50,
-		/obj/item/stack/package_wrap = 0.35,
-		/obj/item/stack/cable_coil = 0.15,
+		TOOL_MULTITOOL = 1.15,
+		TOOL_HEMOSTAT = 2,
+		TOOL_WIRECUTTER = 2,
+		/obj/item/stack/package_wrap = 2.85,
+		/obj/item/stack/cable_coil = 6.67,
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'

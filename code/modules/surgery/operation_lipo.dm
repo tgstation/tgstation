@@ -3,12 +3,12 @@
 	desc = "Remove excess fat from a patient's body."
 	implements = list(
 		TOOL_SAW = 1,
-		TOOL_SCALPEL = 0.8,
-		/obj/item/shovel/serrated = 0.75,
-		/obj/item/melee/energy/sword = 0.75,
-		/obj/item/hatchet = 0.3,
-		/obj/item/knife = 0.3,
-		/obj/item = 0.2,
+		TOOL_SCALPEL = 1.25,
+		/obj/item/shovel/serrated = 1.33,
+		/obj/item/melee/energy/sword = 1.33,
+		/obj/item/hatchet = 3.33,
+		/obj/item/knife = 3.33,
+		/obj/item = 5,
 	)
 	required_bodytype = BODYTYPE_ORGANIC
 	preop_sound = list(
@@ -27,9 +27,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/lipoplasty/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(limb.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
@@ -80,15 +78,15 @@
 /datum/surgery_operation/limb/lipoplasty/mechanic
 	name = "engage expulsion valve" //gross
 	implements = list(
-		TOOL_WRENCH = 0.95,
-		TOOL_CROWBAR = 0.95,
-		/obj/item/shovel/serrated = 0.75,
-		/obj/item/melee/energy/sword = 0.75,
-		TOOL_SAW = 0.6,
-		/obj/item/hatchet = 0.3,
-		/obj/item/knife = 0.3,
-		TOOL_SCALPEL = 0.25,
-		/obj/item = 0.2,
+		TOOL_WRENCH = 1.05,
+		TOOL_CROWBAR = 1.05,
+		/obj/item/shovel/serrated = 1.33,
+		/obj/item/melee/energy/sword = 1.33,
+		TOOL_SAW = 1.67,
+		/obj/item/hatchet = 3.33,
+		/obj/item/knife = 3.33,
+		TOOL_SCALPEL = 4,
+		/obj/item = 5,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'

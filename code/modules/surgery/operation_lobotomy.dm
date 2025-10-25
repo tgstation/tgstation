@@ -3,11 +3,11 @@
 	desc = "Repair most of a patient's brain traumas, with the risk of causing new permanent traumas."
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED
 	implements = list(
-		TOOL_SCALPEL = 0.85,
+		TOOL_SCALPEL = 1.15,
 		/obj/item/melee/energy/sword = 0.55,
-		/obj/item/knife = 0.35,
-		/obj/item/shard = 0.25,
-		/obj/item = 0.20,
+		/obj/item/knife = 2.85,
+		/obj/item/shard = 4,
+		/obj/item = 5,
 	)
 	target_type = /obj/item/organ/brain
 	required_biotype = ORGAN_ORGANIC
@@ -20,13 +20,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/organ/lobotomy/organ_check(obj/item/organ/brain/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/lobotomy/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -87,11 +81,11 @@
 /datum/surgery_operation/organ/lobotomy/mechanical
 	name = "execute neural defragging"
 	implements = list(
-		TOOL_MULTITOOL = 0.85,
+		TOOL_MULTITOOL = 1.15,
 		/obj/item/melee/energy/sword = 0.55,
-		/obj/item/knife = 0.35,
-		/obj/item/shard = 0.25,
-		/obj/item = 0.20,
+		/obj/item/knife = 2.85,
+		/obj/item/shard = 4,
+		/obj/item = 5,
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'

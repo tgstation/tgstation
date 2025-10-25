@@ -4,8 +4,8 @@
 	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
 	implements = list(
 		TOOL_HEMOSTAT = 1,
-		TOOL_SCREWDRIVER = 0.35,
-		/obj/item/pen = 0.15,
+		TOOL_SCREWDRIVER = 2.85,
+		/obj/item/pen = 6.67,
 	)
 	time = 4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -15,13 +15,7 @@
 	target_type = /obj/item/organ/brain
 
 /datum/surgery_operation/organ/pacify/organ_check(obj/item/organ/brain/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/pacify/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -59,9 +53,9 @@
 	name = "delete aggression programming"
 	implements = list(
 		TOOL_MULTITOOL = 1,
-		TOOL_HEMOSTAT = 0.35,
-		TOOL_SCREWDRIVER = 0.35,
-		/obj/item/pen = 0.15,
+		TOOL_HEMOSTAT = 2.85,
+		TOOL_SCREWDRIVER = 2.85,
+		/obj/item/pen = 6.67,
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'

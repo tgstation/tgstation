@@ -7,10 +7,10 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_SCALPEL = 1,
-		/obj/item/melee/energy/sword = 0.75,
-		/obj/item/knife = 0.65,
-		/obj/item/shard = 0.45,
-		/obj/item = 0.3,
+		/obj/item/melee/energy/sword = 1.33,
+		/obj/item/knife = 1.5,
+		/obj/item/shard = 2.25,
+		/obj/item = 3.33,
 	)
 	time = 1.6 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -27,9 +27,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/incise_skin/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state != SURGERY_SKIN_CLOSED)
-		return FALSE
-	return TRUE
+	return !HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/incise_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -42,11 +40,9 @@
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
 /datum/surgery_operation/limb/incise_skin/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	. = ..()
-	limb.surgery_skin_state = SURGERY_SKIN_CUT
-	limb.surgery_vessel_state = SURGERY_VESSELS_UNCLAMPED // ouch, cuts the vessels
+	limb.surgery_state |= SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED // ouch, cuts the vessels
 	if(!limb.can_bleed())
-		return
+		return ..()
 
 	var/blood_name = limb.owner.get_bloodtype()?.get_blood_name() || "Blood"
 	display_results(
@@ -56,7 +52,7 @@
 		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
 	)
-	limb.adjustBleedStacks(10)
+	limb.refresh_bleed_rate()
 
 /// Pulls the skin back to access internals
 /datum/surgery_operation/limb/retract_skin
@@ -65,9 +61,9 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_RETRACTOR = 1,
-		TOOL_SCREWDRIVER = 0.45,
-		TOOL_WIRECUTTER = 0.35,
-		/obj/item/stack/rods = 0.35,
+		TOOL_SCREWDRIVER = 2.25,
+		TOOL_WIRECUTTER = 2.85,
+		/obj/item/stack/rods = 2.85,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
@@ -79,9 +75,7 @@
 	return base
 
 /datum/surgery_operation/limb/retract_skin/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state != SURGERY_SKIN_CUT)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/retract_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -95,7 +89,8 @@
 
 /datum/surgery_operation/limb/retract_skin/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_skin_state = SURGERY_SKIN_OPEN
+	limb.surgery_state |= SURGERY_SKIN_OPEN
+	limb.surgery_state &= ~SURGERY_SKIN_CUT
 
 /// Closes the skin
 /datum/surgery_operation/limb/close_skin
@@ -104,9 +99,9 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_CAUTERY = 1,
-		/obj/item/gun/energy/laser = 0.9,
-		TOOL_WELDER = 0.7,
-		/obj/item = 0.3,
+		/obj/item/gun/energy/laser = 1.15,
+		TOOL_WELDER = 1.5,
+		/obj/item = 3.33,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
@@ -118,7 +113,9 @@
 	return base
 
 /datum/surgery_operation/limb/close_skin/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
+		return FALSE
+	if(INNATELY_LACKING_SKIN(limb))
 		return FALSE
 	return TRUE
 
@@ -141,10 +138,10 @@
 
 /datum/surgery_operation/limb/close_skin/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_skin_state = SURGERY_SKIN_CLOSED // Going from open to closed directly for simplicity
-	limb.surgery_vessel_state = SURGERY_VESSELS_NORMAL // Blood vessels as well, all handled in one step
-	// melbert todo : mend used to heal 45 brute for saw surgeries
-	limb.adjustBleedStacks(-3)
+	if(limb.surgery_state & SURGERY_BONE_SAWED)
+		limb.heal_damage(40)
+	limb.surgery_state &= ~SURGERY_UNSET_ON_CLOSE
+	limb.refresh_bleed_rate()
 
 /// Clamps bleeding blood vessels to prevent blood loss
 /datum/surgery_operation/limb/clamp_bleeders
@@ -153,9 +150,9 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_HEMOSTAT = 1,
-		TOOL_WIRECUTTER = 0.6,
-		/obj/item/stack/package_wrap = 0.35,
-		/obj/item/stack/cable_coil = 0.15,
+		TOOL_WIRECUTTER = 1.67,
+		/obj/item/stack/package_wrap = 2.85,
+		/obj/item/stack/cable_coil = 6.67,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -166,9 +163,7 @@
 	return base
 
 /datum/surgery_operation/limb/clamp_bleeders/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_vessel_state != SURGERY_VESSELS_UNCLAMPED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(limb, SURGERY_VESSELS_UNCLAMPED)
 
 /datum/surgery_operation/limb/clamp_bleeders/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -182,12 +177,12 @@
 
 /datum/surgery_operation/limb/clamp_bleeders/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_vessel_state = SURGERY_VESSELS_CLAMPED
+	limb.surgery_state |= SURGERY_VESSELS_CLAMPED
+	limb.surgery_state &= ~SURGERY_VESSELS_UNCLAMPED
 	// free brute healing if you do it after sawing bones
-	if(limb.surgery_bone_state == SURGERY_BONE_SAWED)
+	if(limb.surgery_state & SURGERY_BONE_SAWED)
 		limb.heal_damage(20)
-	// of course, this is what you came here for
-	limb.adjustBleedStacks(-3)
+	limb.refresh_bleed_rate()
 
 /// Unclamps blood vessels to allow blood flow again
 /datum/surgery_operation/limb/unclamp_bleeders
@@ -196,9 +191,9 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_HEMOSTAT = 1,
-		TOOL_WIRECUTTER = 0.6,
-		/obj/item/stack/package_wrap = 0.35,
-		/obj/item/stack/cable_coil = 0.15,
+		TOOL_WIRECUTTER = 1.67,
+		/obj/item/stack/package_wrap = 2.85,
+		/obj/item/stack/cable_coil = 6.67,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -209,7 +204,9 @@
 	return base
 
 /datum/surgery_operation/limb/unclamp_bleeders/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_vessel_state != SURGERY_VESSELS_CLAMPED)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED))
+		return FALSE
+	if(INNATELY_LACKING_VESSELS(limb))
 		return FALSE
 	return TRUE
 
@@ -225,7 +222,8 @@
 
 /datum/surgery_operation/limb/unclamp_bleeders/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_vessel_state = SURGERY_VESSELS_UNCLAMPED
+	limb.surgery_state |= SURGERY_VESSELS_UNCLAMPED
+	limb.surgery_state &= ~SURGERY_VESSELS_CLAMPED
 
 /// Saws through bones to access organs
 /datum/surgery_operation/limb/saw_bones
@@ -234,12 +232,12 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_SAW = 1,
-		/obj/item/shovel/serrated = 0.75,
-		/obj/item/melee/arm_blade = 0.75,
-		/obj/item/fireaxe = 0.5,
-		/obj/item/hatchet = 0.35,
-		/obj/item/knife/butcher = 0.35,
-		/obj/item = 0.25,
+		/obj/item/shovel/serrated = 1.33,
+		/obj/item/melee/arm_blade = 1.33,
+		/obj/item/fireaxe = 2,
+		/obj/item/hatchet = 2.85,
+		/obj/item/knife/butcher = 2.85,
+		/obj/item = 4,
 	)
 	time = 5.4 SECONDS
 	preop_sound = list(
@@ -259,9 +257,9 @@
 	return base
 
 /datum/surgery_operation/limb/saw_bones/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_bone_state != SURGERY_BONE_INTACT)
+	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
 		return FALSE
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	return TRUE
 
@@ -281,8 +279,7 @@
 
 /datum/surgery_operation/limb/saw_bones/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	// melbert todo : check for bio state
-	limb.surgery_bone_state = SURGERY_BONE_SAWED
+	limb.surgery_state |= SURGERY_BONE_SAWED
 	limb.receive_damage(50, sharpness = tool.get_sharpness(), wound_bonus = CANT_WOUND, damage_source = tool)
 	display_results(
 		surgeon,
@@ -301,8 +298,8 @@
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 0.5,
-		/obj/item/stack/sticky_tape = 0.3,
+		/obj/item/stack/sticky_tape/super = 2,
+		/obj/item/stack/sticky_tape = 3.33,
 	)
 	preop_sound = list(
 		/obj/item/stack/medical/bone_gel = 'sound/misc/soggy.ogg',
@@ -318,9 +315,11 @@
 	return base
 
 /datum/surgery_operation/limb/fix_bones/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_bone_state == SURGERY_BONE_INTACT)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
+		return FALSE
+	if(INNATELY_LACKING_BONES(limb))
 		return FALSE
 	return TRUE
 
@@ -336,7 +335,7 @@
 
 /datum/surgery_operation/limb/fix_bones/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_bone_state = SURGERY_BONE_INTACT
+	limb.surgery_state &= ~(SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
 	limb.heal_damage(40)
 
 /datum/surgery_operation/limb/drill_bones
@@ -345,10 +344,10 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_DRILL = 1,
-		/obj/item/screwdriver/power = 0.8,
-		/obj/item/pickaxe/drill = 0.6,
-		TOOL_SCREWDRIVER = 0.25,
-		/obj/item/kitchen/spoon = 0.2,
+		/obj/item/screwdriver/power = 1.25,
+		/obj/item/pickaxe/drill = 1.67,
+		TOOL_SCREWDRIVER = 4,
+		/obj/item/kitchen/spoon = 5,
 	)
 	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'
@@ -360,9 +359,9 @@
 	return base
 
 /datum/surgery_operation/limb/drill_bones/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_bone_state != SURGERY_BONE_INTACT)
+	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
 		return FALSE
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	return TRUE
 
@@ -378,7 +377,7 @@
 
 /datum/surgery_operation/limb/drill_bones/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_bone_state = SURGERY_BONE_DRILLED
+	limb.surgery_state |= SURGERY_BONE_DRILLED
 	display_results(
 		surgeon,
 		limb.owner,
@@ -393,10 +392,10 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_SCALPEL = 1,
-		/obj/item/melee/energy/sword = 0.75,
-		/obj/item/knife = 0.65,
-		/obj/item/shard = 0.45,
-		/obj/item = 0.3,
+		/obj/item/melee/energy/sword = 1.33,
+		/obj/item/knife = 1.5,
+		/obj/item/shard = 2.25,
+		/obj/item = 3.33,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -408,11 +407,9 @@
 	return base
 
 /datum/surgery_operation/limb/incise_organs/state_check(obj/item/bodypart/limb)
-	if(limb.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 		return FALSE
-	if(limb.surgery_vessel_state != SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(limb.surgery_bone_state < SURGERY_BONE_SAWED)
+	if(HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
 		return FALSE
 	return TRUE
 
@@ -432,8 +429,7 @@
 
 /datum/surgery_operation/limb/incise_organs/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_vessel_state = SURGERY_VESSELS_ORGANS_CUT
-	limb.adjustBleedStacks(10)
+	limb.surgery_state |= SURGERY_ORGANS_CUT
 	limb.receive_damage(10, sharpness = tool.get_sharpness(), wound_bonus = CANT_WOUND, damage_source = tool)
 	display_results(
 		surgeon,
@@ -443,3 +439,4 @@
 		span_notice("[surgeon] makes an incision in the organs of [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")
+	limb.refresh_bleed_rate()

@@ -367,9 +367,7 @@
 				to_chat(exposed_mob, span_warning("Your stomach feels empty and cramps!"))
 
 	if(methods & (PATCH|TOUCH))
-		var/mob/living/carbon/exposed_carbon = exposed_mob
-		for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-			surgery.speed_modifier = min(0.9, surgery.speed_modifier)
+		exposed_mob.add_surgery_speed_mod(type, 0.9, min(reac_volume * 1 MINUTES, 5 MINUTES))
 
 		if(show_message)
 			to_chat(exposed_carbon, span_danger("You feel your injuries fade away to nothing!") )
@@ -1306,8 +1304,7 @@
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
-		surgery.speed_modifier = min(surgery.speed_modifier  +  0.1, 1.1)
+	exposed_mob.add_surgery_speed_mod(type, 1.1, min(reac_volume * 1 MINUTES, 5 MINUTES))
 
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"

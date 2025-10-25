@@ -3,10 +3,10 @@
 	desc = "Make an incision in the patient's skin to access internals."
 	implements = list(
 		TOOL_SCALPEL = 1,
-		/obj/item/melee/energy/sword = 0.75,
-		/obj/item/knife = 0.65,
-		/obj/item/shard = 0.45,
-		/obj/item = 0.3,
+		/obj/item/melee/energy/sword = 1.33,
+		/obj/item/knife = 1.5,
+		/obj/item/shard = 2.25,
+		/obj/item = 3.33,
 	)
 	time = 1.6 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -17,11 +17,8 @@
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/basic/incise_skin/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
-	if(iscarbon(patient))
-		return FALSE // use the limb one for carbons
-	if(get_skin_state(patient) >= SURGERY_SKIN_CUT)
-		return FALSE
-	return TRUE
+	// Carbons can use the real surgery
+	return !iscarbon(patient) && has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/basic/incise_skin/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
@@ -39,16 +36,17 @@
 
 /datum/surgery_operation/basic/incise_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	set_skin_state(patient, SURGERY_SKIN_OPEN)
+	// Skip straight to open, basic mobs don't have vessels to bleed from
+	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/basic/close_skin
 	name = "mend incision"
 	desc = "Mend the incision in the patient's skin, closing it up."
 	implements = list(
 		TOOL_CAUTERY = 1,
-		/obj/item/gun/energy/laser = 0.9,
-		TOOL_WELDER = 0.7,
-		/obj/item = 0.3,
+		/obj/item/gun/energy/laser = 1.15,
+		TOOL_WELDER = 1.5,
+		/obj/item = 3.33,
 	)
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
@@ -58,11 +56,8 @@
 	return image(/obj/item/cautery)
 
 /datum/surgery_operation/basic/close_skin/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
-	if(iscarbon(patient))
-		return FALSE // use the limb one for carbons
-	if(get_skin_state(patient) >= SURGERY_SKIN_CUT)
-		return FALSE
-	return TRUE
+	// Carbons can use the real surgery. Also we're not picky and allow this if any surgical state is detected
+	return !iscarbon(patient) && has_any_surgery_state(patient)
 
 /datum/surgery_operation/basic/close_skin/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))
@@ -83,5 +78,5 @@
 
 /datum/surgery_operation/basic/close_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	set_skin_state(patient, SURGERY_SKIN_CLOSED)
-	set_vessel_state(patient, SURGERY_VESSELS_NORMAL)
+	// Just nuke the status effect, wipe the slate clean
+	patient.remove_status_effect(/datum/status_effect/basic_surgery_state)

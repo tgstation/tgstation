@@ -17,13 +17,7 @@
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 
 /datum/surgery_operation/organ/repair/organ_check(obj/item/organ/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_ORGANS_CUT)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/repair/is_available(obj/item/organ/organ, mob/living/surgeon, obj/item/tool)
 	if(organ.damage < (organ.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON)))
@@ -42,10 +36,10 @@
 	name = "excise damaged lung node"
 	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
+		TOOL_SCALPEL = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
 	)
 	time = 4.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -90,11 +84,11 @@
 /datum/surgery_operation/organ/repair/lobectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		TOOL_WRENCH = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
+		TOOL_SCALPEL = 1.05,
+		TOOL_WRENCH = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
@@ -104,10 +98,10 @@
 	name = "remove damaged liver section"
 	desc = "Perform repairs to a patient's damaged liver by removing the most damaged section."
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
+		TOOL_SCALPEL = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
 	)
 	time = 5.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -153,11 +147,11 @@
 /datum/surgery_operation/organ/repair/hepatectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		TOOL_WRENCH = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
+		TOOL_SCALPEL = 1.05,
+		TOOL_WRENCH = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
@@ -167,10 +161,10 @@
 	name = "graft coronary bypass"
 	desc = "Graft a bypass onto a a patient's damaged heart to restore proper blood flow."
 	implements = list(
-		TOOL_HEMOSTAT = 0.95,
-		TOOL_WIRECUTTER = 0.35,
-		/obj/item/stack/package_wrap = 0.15,
-		/obj/item/stack/cable_coil = 0.5,
+		TOOL_HEMOSTAT = 1.05,
+		TOOL_WIRECUTTER = 2.85,
+		/obj/item/stack/package_wrap = 6.67,
+		/obj/item/stack/cable_coil = 2,
 	)
 	time = 9 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -216,11 +210,11 @@
 /datum/surgery_operation/organ/repair/coronary_bypass/mechanic
 	name = "access engine internals"
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		TOOL_CROWBAR = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
+		TOOL_SCALPEL = 1.05,
+		TOOL_CROWBAR = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
@@ -230,11 +224,11 @@
 	name = "remove lower duodenum"
 	desc = "Perform a patient's repairs to a damaged stomach by removing the lower duodenum."
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
-		/obj/item = 0.25,
+		TOOL_SCALPEL = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
+		/obj/item = 4,
 	)
 	time = 5.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
@@ -284,12 +278,12 @@
 /datum/surgery_operation/organ/repair/gastrectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 0.95,
-		TOOL_WRENCH = 0.95,
-		/obj/item/melee/energy/sword = 0.65,
-		/obj/item/knife = 0.45,
-		/obj/item/shard = 0.35,
-		/obj/item = 0.25,
+		TOOL_SCALPEL = 1.05,
+		TOOL_WRENCH = 1.05,
+		/obj/item/melee/energy/sword = 1.5,
+		/obj/item/knife = 2.25,
+		/obj/item/shard = 2.85,
+		/obj/item = 4,
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
@@ -299,9 +293,9 @@
 	name = "ear surgery"
 	desc = "Repair a patient's damaged ears to restore hearing."
 	implements = list(
-		TOOL_HEMOSTAT = 0.95,
-		TOOL_SCREWDRIVER = 0.45,
-		/obj/item/pen = 0.25,
+		TOOL_HEMOSTAT = 1.05,
+		TOOL_SCREWDRIVER = 2.25,
+		/obj/item/pen = 4,
 	)
 	target_type = /obj/item/organ/ears
 	time = 6.4 SECONDS
@@ -309,11 +303,9 @@
 	repeatable = TRUE
 
 /datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/ears/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state > SURGERY_BONE_DRILLED)
+	if(HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))
 		return FALSE
 	return TRUE
 
@@ -364,9 +356,9 @@
 	name = "eye surgery"
 	desc = "Repair a patient's damaged eyes to restore vision."
 	implements = list(
-		TOOL_HEMOSTAT = 0.95,
-		TOOL_SCREWDRIVER = 0.45,
-		/obj/item/pen = 0.25,
+		TOOL_HEMOSTAT = 1.05,
+		TOOL_SCREWDRIVER = 2.25,
+		/obj/item/pen = 4,
 	)
 	time = 6.4 SECONDS
 	target_type = /obj/item/organ/eyes
@@ -374,11 +366,9 @@
 	repeatable = TRUE
 
 /datum/surgery_operation/organ/repair/eyes/organ_check(obj/item/organ/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
+	if(!HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state > SURGERY_BONE_DRILLED)
+	if(HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))
 		return FALSE
 	return TRUE
 
@@ -434,9 +424,9 @@
 	name = "brain surgery"
 	desc = "Repair a patient's damaged brain tissue to restore cognitive function."
 	implements = list(
-		TOOL_HEMOSTAT = 0.95,
-		TOOL_SCREWDRIVER = 0.35,
-		/obj/item/pen = 0.15,
+		TOOL_HEMOSTAT = 1.05,
+		TOOL_SCREWDRIVER = 2.85,
+		/obj/item/pen = 6.67,
 	)
 	time = 10 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -449,13 +439,7 @@
 	repeatable = TRUE
 
 /datum/surgery_operation/organ/repair/brain/organ_check(obj/item/organ/brain/organ)
-	if(organ.bodypart_owner.surgery_skin_state < SURGERY_SKIN_OPEN)
-		return FALSE
-	if(organ.bodypart_owner.surgery_vessel_state < SURGERY_VESSELS_CLAMPED)
-		return FALSE
-	if(organ.bodypart_owner.surgery_bone_state < SURGERY_BONE_SAWED)
-		return FALSE
-	return TRUE
+	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED)
 
 /datum/surgery_operation/organ/repair/brain/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -497,10 +481,10 @@
 /datum/surgery_operation/organ/repair/brain/mechanic
 	name = "perform neural debugging"
 	implements = list(
-		TOOL_HEMOSTAT = 0.95,
-		TOOL_MULTITOOL = 0.85,
-		TOOL_SCREWDRIVER = 0.35,
-		/obj/item/pen = 0.15,
+		TOOL_HEMOSTAT = 1.05,
+		TOOL_MULTITOOL = 1.15,
+		TOOL_SCREWDRIVER = 2.85,
+		/obj/item/pen = 6.67,
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
