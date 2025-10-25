@@ -76,10 +76,14 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	// Cargo storage
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
-/obj/item/exodrone/Destroy()
-	GLOB.exodrones -= src
+/obj/item/exodrone/deconstruct()
+	. = ..()
 	explosion(src, 0, 0, 1, 1)
 	do_sparks(5, FALSE, src)
+	qdel(src)
+
+/obj/item/exodrone/Destroy()
+	GLOB.exodrones -= src
 	. = ..()
 
 /// Description for drone listing, describes location and current status
@@ -339,7 +343,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/proc/drone_log(message)
 	if(length(drone_log) > EXODRONE_LOG_SIZE)
-		drone_log = list()
+		drone_log.Remove()
 	drone_log.Insert(1,message)
 
 /obj/item/exodrone/proc/has_tool(tool_type)

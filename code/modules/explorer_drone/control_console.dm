@@ -117,7 +117,7 @@
 			signal_lost = FALSE
 			return TRUE
 		if("self_destruct")
-			qdel(controlled_drone) //var will be nulled in signal response
+			controlled_drone.deconstruct()
 			return TRUE
 		if("add_tool")
 			if(controlled_drone && controlled_drone.drone_status == EXODRONE_IDLE)
