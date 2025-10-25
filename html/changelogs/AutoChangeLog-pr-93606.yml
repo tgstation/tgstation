@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "hand crafted station intercoms now get deconstructed when the wall is destroyed"
+  - bugfix: "light fixtures applying the wall mounted component on completed light frames"
+  - bugfix: "APC offsets are correct"
+  - bugfix: "poster signs dropped from paintings again have positive integrity and will get destroyed properly"
