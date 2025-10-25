@@ -90,7 +90,7 @@
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
 	var/list/all_surgeries = list()
-	for(var/datum/surgery/surgeries as anything in advanced_surgeries)
+	for(var/datum/surgery_operation/surgeries as anything in advanced_surgeries)
 		var/list/surgery = list()
 		surgery["name"] = initial(surgeries.name)
 		surgery["desc"] = initial(surgeries.desc)
