@@ -105,7 +105,10 @@ SUBSYSTEM_DEF(tts)
 		return
 
 	var/channel = SSsounds.random_available_channel()
-	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
+	for(var/atom/movable/hearer in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
+		var/mob/listening_mob = hearer.get_listening_mob()
+		if(isnull(listening_mob))
+			continue
 		if(QDELING(listening_mob))
 			stack_trace("TTS tried to play a sound to a deleted mob.")
 			continue
@@ -115,13 +118,13 @@ SUBSYSTEM_DEF(tts)
 		if(volume_modifier == 0 || (tts_pref == TTS_SOUND_OFF))
 			continue
 
-		var/sound_volume = ((listening_mob == target)? 60 : 85) + volume_offset
+		var/sound_volume = ((hearer == target)? 60 : 85) + volume_offset
 		sound_volume = sound_volume*volume_modifier
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
 		var/audio_to_use = (tts_pref == TTS_SOUND_BLIPS) ? audio_blips : audio
 		if(!holder.has_language(language))
 			continue
-		if(get_dist(listening_mob, turf_source) <= range)
+		if(get_dist(hearer, turf_source) <= range)
 			listening_mob.playsound_local(
 				turf_source,
 				vol = sound_volume,
