@@ -34,13 +34,12 @@
 	/// Trophies from persistence have a good chance to be dusted if removal is attempted, though rarely it pays off.
 	var/persistence_loaded_fish = FALSE
 
-/obj/structure/fish_mount/Initialize(mapload, floor_to_wall_dir)
+/obj/structure/fish_mount/Initialize(mapload)
 	. = ..()
 	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
-	if(floor_to_wall_dir)
-		setDir(floor_to_wall_dir)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)
@@ -70,7 +69,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fish_mount/proc/add_first_fish()
-	var/obj/item/fish/fish_path = pick(subtypesof(/obj/item/fish) - list(typesof(/obj/item/fish/holo) + list(/obj/item/fish/starfish/chrystarfish))) // chrystarfish immediately shatters when placed
+	var/list/valid_picks = subtypesof(/obj/item/fish) - typesof(/obj/item/fish/holo) - /obj/item/fish/starfish/chrystarfish // chrystarfish immediately shatters when placed
+	var/obj/item/fish/fish_path = pick(valid_picks)
 	if(fish_path.fish_id_redirect_path)
 		fish_path = fish_path.fish_id_redirect_path
 	var/fluff_name = pick("John Trasen III", "a nameless intern", "Pun Pun", AQUARIUM_COMPANY, "Unknown", "Central Command")
