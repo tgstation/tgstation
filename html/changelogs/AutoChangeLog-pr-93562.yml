@@ -1,0 +1,4 @@
+author: "JoJe3003"
+delete-after: True
+changes:
+  - bugfix: "Admin spawn panel toggle \"By name\"/\"By type\" updates search results without having to update the search string."
