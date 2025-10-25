@@ -631,12 +631,7 @@
 		return
 
 	var/total_elevator_turfs = length(transport.transport_modules)
-	var/middle_section
-	if(total_elevator_turfs == 6) // this handles 2x3 otherwise elevator music is put in a corner that won't have full area coverage
-		middle_section = 2
-	else // this handles 1x1, 2x2, 3x3, etc. elevators by just getting the middle turf which is generally the center
-		middle_section = ceil(total_elevator_turfs / 2)
-
+	var/middle_section = ceil(total_elevator_turfs / 2) // 2x3 elevators do not play nice with this calculation
 	if(transport.transport_modules[middle_section] != src)
 		return
 
