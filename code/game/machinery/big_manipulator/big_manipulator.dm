@@ -690,6 +690,7 @@
 		if("remove_point")
 			pickup_points.Remove(target_point)
 			dropoff_points.Remove(target_point) // one'll hit for sure
+			update_hud()
 			qdel(target_point)
 			return TRUE
 
