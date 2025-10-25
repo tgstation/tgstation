@@ -78227,7 +78227,7 @@
 "vVv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
 "vVD" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
