@@ -1,3 +1,8 @@
+/// When assigned, spawners will continue to spawn a mob repeatedly until reaching max_spawned. New mobs will be spawned regardless of how many exist under that cap.
+#define SPAWN_CONTINUOUS_BEHAVIOR "continuous"
+/// When assigned, spawners will spawn a group of mobs as defined by max_spawn_per_attempt, and will only spawn a new wave after
+#define SPAWN_BY_WAVE_BEHAVIOR "complete_wave"
+
 /datum/component/spawner
 	/// Time to wait between spawns
 	var/spawn_time
@@ -19,9 +24,23 @@
 	var/spawn_distance
 	/// Distance from the spawner to exclude mobs from spawning
 	var/spawn_distance_exclude
+	/// What type of behavior does this spawner have?
+	var/spawner_logic
 	COOLDOWN_DECLARE(spawn_delay)
 
-/datum/component/spawner/Initialize(spawn_types = list(), spawn_time = 30 SECONDS, max_spawned = 5, max_spawn_per_attempt = 1 , faction = list(FACTION_MINING), spawn_text = null, datum/callback/spawn_callback = null, spawn_distance = 1, spawn_distance_exclude = 0, initial_spawn_delay = 0 SECONDS)
+/datum/component/spawner/Initialize(
+	spawn_types = list(),
+	spawn_time = 30 SECONDS,
+	max_spawned = 5,
+	max_spawn_per_attempt = 1 ,
+	faction = list(FACTION_MINING),
+	spawn_text = null,
+	datum/callback/spawn_callback = null,
+	spawn_distance = 1,
+	spawn_distance_exclude = 0,
+	initial_spawn_delay = 0 SECONDS,
+	spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR
+)
 	if (!islist(spawn_types))
 		CRASH("invalid spawn_types to spawn specified for spawner component!")
 	src.spawn_time = spawn_time
@@ -37,8 +56,7 @@
 	if(initial_spawn_delay)
 		COOLDOWN_START(src, spawn_delay, spawn_time)
 
-	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(stop_spawning))
-	RegisterSignal(parent, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(stop_spawning))
+	RegisterSignals(parent, list(COMSIG_QDELETING, COMSIG_VENT_WAVE_CONCLUDED), PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
@@ -51,15 +69,24 @@
 	STOP_PROCESSING(SSprocessing, src)
 	spawned_things = list()
 
+/// Determine if we can spawn a mob based on the current spawn logic.
+/datum/component/spawner/proc/check_spawn_availability()
+	validate_references()
+	var/spawned_total = length(spawned_things)
+	switch(spawner_logic)
+		if(SPAWN_CONTINUOUS_BEHAVIOR)
+			if(spawned_total >= max_spawned)
+				return
+		if(SPAWN_BY_WAVE_BEHAVIOR)
+			if(spawned_total) //If any mobs are still alive.
+			
+
+
 /// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()
 	if(!length(spawn_types))
 		return
 	if(!COOLDOWN_FINISHED(src, spawn_delay))
-		return
-	validate_references()
-	var/spawned_total = length(spawned_things)
-	if(spawned_total >= max_spawned)
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
@@ -128,3 +155,6 @@
 		return
 	spawned_things -= WEAKREF(source)
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))
+
+#undef SPAWN_CONTINUOUS_BEHAVIOR
+#undef SPAWN_BY_WAVE_BEHAVIOR

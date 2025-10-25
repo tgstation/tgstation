@@ -476,8 +476,9 @@
  * @params inner_range - The inner range of the circle to NOT pull from.
  * @params center - The center of the circle to pull from, can be an atom (we'll apply get_turf() to it within circle_x_turfs procs.)
  * @params view_based - If TRUE, we'll use circle_view_turfs instead of circle_range_turfs procs.
+ * @params reject_blocked - If TRUE, ignore picked turfs in this selection that have density.
  */
-/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE, reject_blocked = TRUE)
 	if(inner_range > outer_range) // If the inner range is larger than the outer range, you're using this wrong.
 		CRASH("Turf peel inner range is larger than outer range!")
 	var/list/peel = list()
@@ -492,10 +493,12 @@
 	for(var/turf/possible_spawn as anything in outer)
 		if(possible_spawn in inner)
 			continue
+		if(possible_spawn.density && reject_blocked)
+			continue
 		peel += possible_spawn
 
 	if(!length(peel))
-		return center //Offer the center only as a default case when we don't have a valid circle.
+		peel += center //Offer the center only as a default case when we don't have a valid circle.
 	return peel
 
 ///check if 2 diagonal turfs are blocked by dense objects
