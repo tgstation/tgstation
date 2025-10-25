@@ -28,7 +28,7 @@
 	/// The range of the paintings effect
 	var/range = 7
 
-/obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/Initialize(mapload)
 	. = ..()
 	if(ispath(applied_status_effect))
 		var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_status_effect))
@@ -44,7 +44,7 @@
 		return
 	if(IS_HERETIC(viewer))
 		return
-	if(viewer.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+	if(viewer.can_block_magic(MAGIC_RESISTANCE_MOON))
 		return
 	if(viewer.reagents.has_reagent(/datum/reagent/water/holywater))
 		return
@@ -54,7 +54,7 @@
 	to_chat(viewer, span_hypnophrase("Your mind is overcome! The painting leaves a mark on your psyche."))
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
-	if(!user.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+	if(!user.can_block_magic(MAGIC_RESISTANCE_MOON))
 		user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
 		to_chat(user, span_hypnophrase("There's an itch in your brain. It's laughing at you..."))
 	qdel(src)
@@ -177,7 +177,7 @@
 		/obj/item/food/grown/harebell,
 	)
 
-/obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/vines/Initialize(mapload)
 	. = ..()
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 
