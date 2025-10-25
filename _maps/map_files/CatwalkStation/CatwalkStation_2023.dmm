@@ -34734,6 +34734,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
 "jKX" = (
@@ -48237,6 +48240,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/railing/corner/end{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/upper)
 "nBS" = (
@@ -56438,6 +56444,7 @@
 /obj/machinery/door/airlock/engineering/glass,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/hallway)
 "pQQ" = (
@@ -63573,6 +63580,17 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/starboard/lesser)
+"rTb" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "rTe" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue"
@@ -193796,7 +193814,7 @@ sRP
 bWQ
 oNI
 fke
-mLY
+rTb
 mLY
 mLY
 wzD
