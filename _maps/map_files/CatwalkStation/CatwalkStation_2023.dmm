@@ -38446,15 +38446,6 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/security/brig)
-"kNB" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos/upper)
 "kNI" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/cleanable/glass,
@@ -73511,12 +73502,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/service/bar)
-"uGg" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
-/area/station/engineering/atmos/project)
 "uGj" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/start/hangover,
@@ -129128,7 +129113,7 @@ vMn
 rND
 cMW
 jRo
-kNB
+unl
 lFU
 dIn
 jSf
@@ -194664,7 +194649,7 @@ xnH
 eWk
 bIj
 qrt
-uGg
+rqo
 phM
 poD
 ngH
