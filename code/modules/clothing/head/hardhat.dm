@@ -247,6 +247,9 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 	clothing_traits = list()
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
 	. = ..()
