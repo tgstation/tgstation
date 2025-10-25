@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - image: "Boulder platforms spawned by throwing boulders on lava or activating vents now have new sprites that smooth together"
