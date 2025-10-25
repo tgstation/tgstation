@@ -73806,7 +73806,6 @@
 	},
 /obj/machinery/atmospherics/pipe/multiz/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "uJs" = (
@@ -194167,7 +194166,7 @@ gvK
 ijs
 rhD
 dwq
-bDd
+xbP
 ijs
 xqb
 ijs
@@ -194424,7 +194423,7 @@ gvK
 ijs
 ijs
 lEy
-bDd
+xbP
 ijs
 jMG
 ijs
