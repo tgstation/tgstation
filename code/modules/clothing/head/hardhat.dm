@@ -1,6 +1,10 @@
 /obj/item/clothing/head/utility
 	icon = 'icons/obj/clothing/head/utility.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
+	sound_vary = TRUE
+	pickup_sound = SFX_HARD_HAT_PICKUP
+	drop_sound = SFX_HARD_HAT_DROP
+	equip_sound = SFX_HARD_HAT_EQUIP
 
 /obj/item/clothing/head/utility/hardhat
 	name = "hard hat"
