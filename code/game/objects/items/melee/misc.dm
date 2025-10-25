@@ -546,3 +546,27 @@
 	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
 		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace. Or a road roller, if one happened to hit you.
 	return ..()
+
+/obj/item/melee/gladius
+	name = "gladius"
+	desc = "A short but formidable sword, favored by recently-reanimated ancient warriors."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "gladius"
+	inhand_icon_state = "gladius"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
+	force = 30
+	throwforce = 10
+	w_class = WEIGHT_CLASS_NORMAL
+	block_chance = 50
+	armour_penetration = 75
+	sharpness = SHARP_POINTY
+	attack_verb_continuous = list("stabs", "cuts")
+	attack_verb_simple = list("stab", "cut")
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
+	wound_bonus = 10
+	exposed_wound_bonus = 25

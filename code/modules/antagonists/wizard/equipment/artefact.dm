@@ -304,6 +304,7 @@
 	uniform = /obj/item/clothing/under/costume/roman
 	shoes = /obj/item/clothing/shoes/roman
 	back = /obj/item/spear
+	belt = /obj/item/storage/belt/sheath/gladius
 	r_hand = /obj/item/claymore
 	l_hand = /obj/item/shield/roman
 
