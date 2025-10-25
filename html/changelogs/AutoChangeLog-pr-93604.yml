@@ -1,0 +1,5 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - qol: "Better exodrone console UI"
+  - rscadd: "Exodrones now create a small explosion (0, 0, 1, 1) when self-destruction is triggered"
