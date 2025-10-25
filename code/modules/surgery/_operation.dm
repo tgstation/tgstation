@@ -1,57 +1,10 @@
-/// Applies moodlets after the surgical operation is complete
-#define OPERATION_AFFECTS_MOOD (1<<0)
-/// Notable operations are specially logged and also leave memories
-#define OPERATION_NOTABLE (1<<1)
-/// Operation will automatically repeat until it can no longer be performed
-#define OPERATION_LOOPING (1<<2)
-/// Grants a speed bonus if the user is morbid and their tool is morbid
-#define OPERATION_MORBID (1<<3)
-/// Not innately available to doctors, must be added via COMSIG_MOB_ATTEMPT_SURGERY to show up
-#define OPERATION_LOCKED (1<<4)
-/// A surgeon can perform this operation on themselves
-#define OPERATION_SELF_OPERABLE (1<<5)
-/// Operation can be performed on standing patients
-#define OPERATION_STANDING_ALLOWED (1<<6)
-/// Some traits may cause operations to be infalliable - this flag disables that behavior, always allowing it to be failed
-#define OPERATION_ALWAYS_FAILABLE (1<<7)
-/// If set, the operation will ignore clothing when checking for access to the target body part.
-#define OPERATION_IGNORE_CLOTHES (1<<8)
-
-// Mood defines
-#define SURGERY_STATE_STARTED "surgery_started"
-#define SURGERY_STATE_FAILURE "surgery_failed"
-#define SURGERY_STATE_SUCCESS "surgery_success"
-#define SURGERY_MOOD_CATEGORY "surgery"
-
-/// Dummy "tool" for surgeries which use hands
-#define IMPLEMENT_HAND "hands"
-
-/// Surgery speed modifiers are soft-capped at this value
-/// The actual modifier can exceed this but it gets
-#define SURGERY_MODIFIER_FAILURE_THRESHOLD 2.5
-/// There is an x percent chance of failure per second beyond 2.5x the base surgery time
-#define FAILURE_CHANCE_PER_SECOND 10
-/// Calculates failure chance of an operation based on the base time and the effective speed modifier
-/// This may look something like: Base time 1 second and 4x effective multiplier -> 4 seconds - 2.5 seconds = 1.5 seconds * 10 = 15% failure chance
-/// Or: Base time 2 seconds and 1x effective multiplier -> 2 seconds - 5 seconds = -3 seconds * 10 = -30% failure chance (clamped to 0%)
-#define GET_FAILURE_CHANCE(base_time, speed_mod) (FAILURE_CHANCE_PER_SECOND * (((speed_mod * (base_time)) - (SURGERY_MODIFIER_FAILURE_THRESHOLD * (base_time))) / (1 SECONDS)))
-
-/// Checks if the limb has all of the bitflags passed
-#define HAS_SURGERY_STATE(limb, state) ((limb.surgery_state & (state)) == (state))
-/// Checks if the limb has any of the bitflags passed
-#define HAS_ANY_SURGERY_STATE(limb, state) ((limb.surgery_state & (state)))
-
-// Operation argument indexes
-#define OPERATION_SPEED "speed_modifier"
-#define OPERATION_ACTION "action"
-
-/// All operation singletons indexed by typepath
-GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation))
-
 /// Attempts to perform a surgery with whatever tool is passed
-/mob/living/proc/perform_surgery(mob/living/patient, obj/item/potential_tool = IMPLEMENT_HAND)
-	if(combat_mode)
+/mob/living/proc/perform_surgery(mob/living/patient, potential_tool = IMPLEMENT_HAND)
+	if(combat_mode || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return NONE
+
+	if(istype(potential_tool, /obj/item/borg/cyborghug))
+		potential_tool = IMPLEMENT_HAND // melbert todo
 
 	var/list/possible_operations = list()
 	for(var/datum/surgery_operation/operation_type as anything in GLOB.operations)
@@ -86,7 +39,12 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 			radial_operations[radial_slice] = radial_slice
 
 	if(!length(operations))
-		return NONE // allow attacking
+		if(isitem(potential_tool))
+			var/obj/item/realtool = potential_tool
+			if(realtool.item_flags & SURGICAL_TOOL)
+				return ITEM_INTERACT_BLOCKING
+
+		return NONE
 
 	sortTim(radial_operations, GLOBAL_PROC_REF(cmp_name_asc))
 
@@ -191,10 +149,10 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 
 	var/mob/living/patient = get_patient(operating_on)
 
-	if(isnull(patient))
+	if(isnull(patient) || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return FALSE
 
-	if(!get_tool_quality(tool))
+	if(get_tool_quality(tool) <= 0)
 		return FALSE
 
 	if(!is_available(operating_on))
@@ -215,8 +173,6 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 /datum/surgery_operation/proc/get_tool_quality(tool = IMPLEMENT_HAND)
 	if(!length(implements))
 		return 1
-	if(istype(tool, /obj/item/borg/cyborghug))
-		tool = IMPLEMENT_HAND // melbert todo
 	if(!tool_check(tool))
 		return 0
 	if(!isitem(tool))
@@ -376,7 +332,7 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
  * Returns the atom/movable being operated on
  */
 /datum/surgery_operation/proc/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
-	return patient
+	return HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE) ? patient : null
 
 /**
  * The actual chain of performing the operation
@@ -428,9 +384,8 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 			var/obj/item/realtool = tool
 			realtool.add_mob_blood(patient)
 
-		// We modify speed modifier here AFTER the do after to increase failure chances
-		// Failure chance is based on how long the operation takes,
-		// but we don't actually want these penalties to affect the surgery's real time - instead its "effective time"
+		// We modify speed modifier here AFTER the do after to increase failure chances, that's intentional
+		// Think of it as modifying "effective time" rather than "real time". Failure chance goes up but the time it took is unchanged
 
 		// Using TRAIT_SELF_SURGERY on a surgery which doesn't normally allow self surgery imparts a flat penalty
 		// (On top of the 1.5x real time surgery modifier, an effective time modifier of 3x under standard conditions)
@@ -449,7 +404,6 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 			success(operating_on, surgeon, tool, operation_args)
 			result |= ITEM_INTERACT_SUCCESS
 			update_surgery_mood(patient, SURGERY_STATE_SUCCESS)
-
 
 	while ((operation_flags & OPERATION_LOOPING) && can_loop(operating_on, surgeon, tool, operation_args))
 
@@ -691,10 +645,14 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 		TRUE, //By default the patient will notice if the wrong thing has been cut
 	)
 
-/// Simple surgery which works on any mob
+/// Simple surgery which works on ANY mob
 /datum/surgery_operation/basic
 	/// Biotype required to perform this operation
 	var/required_biotype = MOB_ORGANIC
+	/// When working on carbons, what body zone are we working on
+	var/carbon_zone = BODY_ZONE_CHEST
+	/// When working on carbons, what bodypart are we working on
+	var/required_bodytype = NONE
 
 /datum/surgery_operation/basic/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
 	SHOULD_NOT_OVERRIDE(TRUE) // you are looking for is_available()
@@ -711,23 +669,30 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 	if(required_biotype && !(living_target.mob_biotypes & required_biotype))
 		return FALSE
 
+	var/obj/item/bodypart/carbon_part = living_target.get_bodypart(carbon_zone)
+	if(!isnull(carbon_part))
+		if(!HAS_TRAIT(carbon_part, TRAIT_READY_TO_OPERATE))
+			return FALSE
+		if(required_bodytype && !(carbon_part.bodytype & required_bodytype))
+			return FALSE
+
 	return TRUE
 
 /datum/surgery_operation/basic/proc/has_surgery_state(mob/living/patient, state = SURGERY_SKIN_OPEN)
-	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
-	if(isnull(chest)) // non-carbon
+	var/obj/item/bodypart/carbon_part = patient.get_bodypart(carbon_zone)
+	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
 		return state_holder?.surgery_state & state == state
 
-	return HAS_SURGERY_STATE(chest, state)
+	return HAS_SURGERY_STATE(carbon_part, state)
 
 /datum/surgery_operation/basic/proc/has_any_surgery_state(mob/living/patient, state = ALL)
-	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
-	if(isnull(chest)) // non-carbon
+	var/obj/item/bodypart/carbon_part = patient.get_bodypart(carbon_zone)
+	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
 		return state_holder?.surgery_state & state
 
-	return HAS_ANY_SURGERY_STATE(chest, state)
+	return HAS_ANY_SURGERY_STATE(carbon_part, state)
 
 /// Operation that specifically targets limbs
 /datum/surgery_operation/limb
@@ -751,7 +716,8 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 	var/obj/item/bodypart/limb = operating_on
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
-
+	if(!HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
+		return FALSE
 	if(!state_check(limb))
 		return FALSE
 
@@ -815,7 +781,8 @@ GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation)
 	var/obj/item/organ/organ = operating_on
 	if(required_biotype && !(organ.organ_flags & required_biotype))
 		return FALSE
-
+	if(!HAS_TRAIT(organ.bodypart_owner, TRAIT_READY_TO_OPERATE))
+		return FALSE
 	if(!organ_check(organ))
 		return FALSE
 

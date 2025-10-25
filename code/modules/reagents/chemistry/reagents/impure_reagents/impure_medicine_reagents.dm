@@ -949,7 +949,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	metabolized_traits = list(TRAIT_ANALGESIA)
 	tox_damage = 0
 
-/datum/reagent/inverse/krokodil/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
+/datum/reagent/inverse/krokodil/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return

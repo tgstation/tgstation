@@ -332,10 +332,11 @@
 	attack_verb_simple = list("slap")
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
+	gender = PLURAL
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator)
+	AddElement(/datum/element/surgery_aid, name)
 
 /obj/item/surgical_drapes/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -354,7 +355,7 @@
 
 /obj/item/surgical_processor/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator)
+	AddElement(/datum/element/surgery_aid, /obj/item/surgical_drapes::name) // i guess it's a drape dispenser
 
 /obj/item/surgical_processor/examine(mob/user)
 	. = ..()
@@ -425,6 +426,7 @@
 	light_power = 0.4
 	light_color = LIGHT_COLOR_BLUE
 	sharpness = SHARP_EDGED
+	item_flags = parent_type::item_flags | NO_BLOOD_ON_ITEM
 
 /obj/item/scalpel/advanced/get_all_tool_behaviours()
 	return list(TOOL_SAW, TOOL_SCALPEL)

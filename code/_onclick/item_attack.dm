@@ -181,9 +181,10 @@
 	return attacking_item.attack_atom(src, user, modifiers, attack_modifiers)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	var/surgery_ret = user.perform_surgery(src, tool)
-	if(surgery_ret)
-		return surgery_ret
+	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+		var/surgery_ret = user.perform_surgery(src, tool)
+		if(surgery_ret)
+			return surgery_ret
 
 	return NONE
 
@@ -333,7 +334,7 @@
 		final_force *= attacking_item.get_demolition_modifier(src)
 
 	var/wounding = attacking_item.wound_bonus
-	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && body_position == LYING_DOWN && (LAZYLEN(surgeries) > 0))
+	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && HAS_TRAIT(user, TRAIT_READY_TO_OPERATE))
 		wounding = CANT_WOUND
 
 	if(user != src)

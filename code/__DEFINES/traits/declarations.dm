@@ -1565,6 +1565,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This mob's surgical operations ignore ALL speed modifiers (even positive ones!) besides tool quality.
 /// The mob can also no longer fail their operations, unless the operation says otherwise
 #define TRAIT_IGNORE_SURGERY_MODIFIERS "ignore_surgery_modifiers"
+/// Trait applied to mobs or bodyparts which allows for them to be operated on
+#define TRAIT_READY_TO_OPERATE "ready_to_operate"
 
 /// Trait that makes mobs with it immune to mining gear AOE attacks
 #define TRAIT_MINING_AOE_IMMUNE "mining_aoe_immune"

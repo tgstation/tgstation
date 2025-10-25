@@ -17,8 +17,8 @@
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/basic/incise_skin/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
-	// Carbons can use the real surgery
-	return !iscarbon(patient) && has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
+	// Only for limbless mobs. Limbed mobs can use the real deal surgery
+	return !patient.has_limbs && has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/basic/incise_skin/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
@@ -56,8 +56,8 @@
 	return image(/obj/item/cautery)
 
 /datum/surgery_operation/basic/close_skin/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
-	// Carbons can use the real surgery. Also we're not picky and allow this if any surgical state is detected
-	return !iscarbon(patient) && has_any_surgery_state(patient)
+	// Only for limbless mobs. Also we're not picky and allow this if any surgical state is detected
+	return !patient.has_limbs && has_any_surgery_state(patient)
 
 /datum/surgery_operation/basic/close_skin/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))
