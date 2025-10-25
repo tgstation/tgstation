@@ -1,3 +1,7 @@
+/**
+ * AI Core Display Picker TGUI
+ * Allows AIs to select core display options with search functionality
+ */
 /datum/ai_core_display_picker
 	var/mob/living/silicon/ai/ai_user
 
@@ -22,17 +26,15 @@
 	if(ai_user)
 		ai_user.core_display_picker = null
 
-// No assets needed for DMIcon system
-
 /datum/ai_core_display_picker/ui_data(mob/user)
 	var/list/data = list()
 
 	// If no override is set, find the actual current display from the AI's icon state
 	var/current_display = ai_user.display_icon_override
 	if(!current_display)
-		// Default to "Blue" if no override (this is the typical default AI appearance)
+		// Default to "Blue" if no override
 		current_display = "Blue"
-		// Try to identify current display from the AI's actual icon state if possible
+		// Try to identify current display
 		if(ai_user.icon_state)
 			for(var/display_name in GLOB.ai_core_display_screens)
 				if("ai-[LOWER_TEXT(display_name)]" == ai_user.icon_state)
@@ -71,7 +73,7 @@
 	switch(action)
 		if("select_option")
 			var/chosen_option = params["option"]
-			if(chosen_option && (chosen_option in GLOB.ai_core_display_screens))
+			if(chosen_option in GLOB.ai_core_display_screens)
 				ai_user.display_icon_override = chosen_option
 				ai_user.set_core_display_icon(chosen_option)
 				return TRUE

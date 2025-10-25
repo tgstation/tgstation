@@ -70,7 +70,7 @@
 	var/current_emotion = "None"
 	var/current_icon_state
 	var/obj/machinery/status_display/ai/first_display = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/status_display/ai)
-	if(first_display && first_display.emotion)
+	if(first_display?.emotion)
 		current_emotion = first_display.emotion
 		if(current_emotion in GLOB.ai_status_display_emotes)
 			current_icon_state = GLOB.ai_status_display_emotes[current_emotion]
