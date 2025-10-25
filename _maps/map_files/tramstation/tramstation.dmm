@@ -69779,10 +69779,6 @@
 /obj/item/wrench,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
-"xqm" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/asteroid)
 "xqB" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Treatment Center"
@@ -106403,7 +106399,7 @@ tqp
 qjU
 qjU
 qjU
-xqm
+aaS
 pIc
 hZr
 hZr
