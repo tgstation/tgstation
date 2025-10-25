@@ -43950,7 +43950,6 @@
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/upper)
 "mqT" = (
