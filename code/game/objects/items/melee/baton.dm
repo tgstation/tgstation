@@ -1025,7 +1025,7 @@
 		of the device, few would-be troublemakers want to find themselves on the wrong end of an officer brandishing \
 		this baton.<br>\
 		<br>\
-		TerraGov law enforcement has  avoided the adoption of stun batons due to various ethical dilemmas posed by \
+		TerraGov law enforcement has avoided the adoption of stun batons due to various ethical dilemmas posed by \
 		their usage. Namely, the longterm physical and mental ramifications of being struck by a human cattleprod. \
 		Citizens' rights advocacy groups protest against the proliferation of stun batons as a policing tool, \
 		arguing that they are 'inhumane' and 'authoritarian'. Nanotrasen, on the other hand, has had no such qualms \
