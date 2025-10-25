@@ -1014,19 +1014,23 @@
 /obj/item/melee/baton/security/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
-		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is the unholy union of a mace and a \
-		cattleprod. This nonlethal device was designed to put a stop to ruffians, scoundrels, ne'er-do-wells and criminals wherever they may rear their ugly \
-		heads.<br>\
+		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is \
+		the unholy union of a mace and a cattleprod. This nonlethal device was designed to put a stop to ruffians, \
+		scoundrels, ne'er-do-wells and criminals wherever they may rear their ugly heads.<br>\
 		<br>\
-		A symbol of Nanotrasen security forces, the stun baton is the primary tool officers employ against the unlawful scum and villainy of the Spinward and \
-		abroad. Trained to 'baton first, interrogate later', Nanotrasen security has long since earned itself a mixed reputation. Able to rapidly shut down the \
-		central nervous system of a criminal with only a few direct applications of the conductive striking head of the device, few would-be troublemakers want to \
-		find themselves on the wrong end of an officer brandishing this baton.<br>\
+		A symbol of Nanotrasen security forces, the stun baton is the primary tool officers employ against the \
+		unlawful scum and villainy of the Spinward and abroad. Trained to 'baton first, interrogate later', \
+		Nanotrasen security has long since earned itself a mixed reputation. Able to rapidly shut down the \
+		central nervous system of a criminal with only a few direct applications of the conductive striking head \
+		of the device, few would-be troublemakers want to find themselves on the wrong end of an officer brandishing \
+		this baton.<br>\
 		<br>\
-		TerraGov law enforcement has long since avoided the adoption of stun batons due to various ethical dilemmas posed by their usage. Namely, the longterm \
-		physical and mental ramifications of being struck by a human cattleprod. Citizens' rights advocacy groups protest against the proliferation of \
-		stun batons as a policing tool, arguing that they are 'inhumane' and 'authoritarian'. Nanotarsen, on the other hand, has had no such concerns when deploying \
-		stun batons as a compliance measure across all of their existing stations and facilities against unruly members of staff." \
+		TerraGov law enforcement has  avoided the adoption of stun batons due to various ethical dilemmas posed by \
+		their usage. Namely, the longterm physical and mental ramifications of being struck by a human cattleprod. \
+		Citizens' rights advocacy groups protest against the proliferation of stun batons as a policing tool, \
+		arguing that they are 'inhumane' and 'authoritarian'. Nanotrasen, on the other hand, has had no such qualms \
+		when deploying stun batons as a compliance measure across all of their existing stations and facilities against \
+		unruly members of staff." \
 	)
 
 // Contractor Baton
@@ -1034,19 +1038,26 @@
 /obj/item/melee/baton/telescopic/contractor_baton/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
-		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is one of the more frequently encountered examples of Cybersun \
-		Industry weaponry. Extremely similar to Nanotrasen's own Secure Apprehension Device (also simply known as the stun baton), the contractor baton is able to induce \
-		CNS disruption to render them helpless. It is also capable of devastating blunt force trauma if used as a bludgeon. And, most conveniently of all, the contractor \
-		baton is capable of telescopic deployment, allowing for discretion while making an approach towards a target.<br>\
+		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is \
+		one of the more frequently encountered examples of Cybersun Industry weaponry. Extremely similar to Nanotrasen's \
+		own Secure Apprehension Device (also simply known as the stun baton), the contractor baton is able to induce \
+		CNS disruption in a target to render them helpless. It is also capable of devastating blunt force trauma if \
+		used as a bludgeon. And, most conveniently of all, the contractor baton is capable of telescopic deployment, \
+		allowing for discretion while making an approach towards a target.<br>\
 		<br>\
-		The contractor baton is famously associated with contractors; specialized field agents chosen from the cream of the crop amongst the rabble of agents \
-		sent by the Syndicate collective. While the standard agent is tasked with sabotage, terrorism, murder or theft, contractors have the critical task of \
-		kidnapping high value personnel. Anyone with the potential to possess classified or sensitive data about Nanotarsen security systems and devices could be \
-		a target for Cybersun. For this purpose, it is usually easier for the target to be alive. Therefore, the contractor baton is essential for the task \
-		without compromising on self defense However, Cybersun Industries has long since found workarounds for extracting data from the recently deceased. Death may \
-		not spare you from the machinations of Cybersun Industries if they deem you a valuable asset to their goals.<br>\
+		The contractor baton is famously associated with contractors; elite Cybersun field agents. While the standard \
+		agent would often be tasked with sabotage, terrorism, murder or theft; contractors have the critical task of \
+		kidnapping high value personnel. Anyone with the potential to possess classified or sensitive data about Nanotarsen \
+		security systems and devices could be a target for Cybersun. <br>\
 		<br>\
-		Nanotrasen has long since employed various countermeasures to contractor insurgencies; employing selective memory wiping or falsified memory injection, the \
-		establishment of 'dummy' command staff through the artificial acceleration of otherwise incompetent but useful crewmembers ( whose incompetence will often \
-		result in an acceptable degree of operational disruption), as well as frequent staff turnover and reassignment." \
+		Extracting this information is most easily performed on living subjects. As such, the contractor baton was designed \
+		with nonlethal incapacitation in mind. However, Cybersun Industries has long since found workarounds for extracting \
+		data from the recently deceased, should the contractor find themselves with only a corpse left to send back. Death \
+		may not spare you from the machinations of Cybersun Industries if they deem you a valuable asset towards their goals.<br>\
+		<br>\
+		Nanotrasen utilizes a number of countermeasures to contractor insurgencies, such as; employing selective memory wiping \
+		or falsified memory injection, the establishment of 'dummy' command staff through the artificial acceleration \
+		of otherwise incompetent but useful crewmembers ( whose incompetence will often result in an acceptable degree \
+		of operational disruption), which provides convenient scapegoats in the event of a security breach, as well as \
+		frequent staff turnover and reassignment." \
 	)
