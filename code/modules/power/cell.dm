@@ -161,7 +161,7 @@
 	ratingdesc = FALSE
 
 /obj/item/stock_parts/power_store/cell/infinite/use(used, force = FALSE)
-	return TRUE
+	return used
 
 /obj/item/stock_parts/power_store/cell/infinite/abductor
 	name = "void core"
