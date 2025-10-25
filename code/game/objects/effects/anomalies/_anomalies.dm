@@ -23,8 +23,6 @@
 	var/immortal = FALSE
 	///Chance per second that we will move
 	var/move_chance = ANOMALY_MOVECHANCE
-	/// Whether this anomaly is allowed to drop a core or not (e.g supermatter anomalies)
-	var/drops_core = TRUE
 
 /obj/effect/anomaly/Initialize(mapload, new_lifespan, drops_core = TRUE)
 	. = ..()
@@ -38,7 +36,8 @@
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
 
-	src.drops_core = drops_core
+	if(!drops_core)
+		anomaly_core = null
 
 	if(anomaly_core)
 		anomaly_core = new anomaly_core(src)
@@ -110,7 +109,7 @@
 		)
 	)
 
-	if(drops_core && !isnull(anomaly_core))
+	if(!isnull(anomaly_core))
 		var/anomaly_type = anomaly_core.type
 		if (SSresearch.is_core_available(anomaly_type))
 			SSresearch.increment_existing_anomaly_cores(anomaly_type)
