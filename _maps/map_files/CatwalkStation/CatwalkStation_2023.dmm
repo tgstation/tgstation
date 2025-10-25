@@ -12944,6 +12944,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
 	},
+/obj/structure/closet/firecloset,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "dJt" = (
@@ -17025,7 +17026,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/structure/closet/radiation,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "eSm" = (
