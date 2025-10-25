@@ -32,46 +32,38 @@
 /obj/item/grenade/hypnotic/proc/bang(turf/turf, mob/living/living_mob)
 	if(living_mob.stat == DEAD) //They're dead!
 		return
-	var/distance = max(0, get_dist(get_turf(src), turf))
+	var/distance = get_dist(get_turf(src), turf)
 
 	//Bang
 	var/hypno_sound = FALSE
 
 	//Hearing protection check
-	if(iscarbon(living_mob))
-		var/mob/living/carbon/target = living_mob
-		var/list/reflist = list(1)
-		SEND_SIGNAL(target, COMSIG_CARBON_SOUNDBANG, reflist)
-		var/intensity = reflist[1]
-		var/ear_safety = target.get_ear_protection()
-		var/effect_amount = intensity - ear_safety
-		if(effect_amount > 0)
-			hypno_sound = TRUE
+	if(living_mob.get_ear_protection() < 0)
+		hypno_sound = TRUE
 
-	if(!distance || loc == living_mob || loc == living_mob.loc)
-		living_mob.Paralyze(10)
-		living_mob.Knockdown(100)
+	if(!distance)
+		living_mob.Paralyze(1 SECONDS)
+		living_mob.Knockdown(10 SECONDS)
 		to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
 		living_mob.adjust_hallucinations(150 SECONDS)
 
 	else
 		if(distance <= 1)
-			living_mob.Paralyze(5)
-			living_mob.Knockdown(30)
+			living_mob.Paralyze(0.5 SECONDS)
+			living_mob.Knockdown(3 SECONDS)
 		if(hypno_sound)
 			to_chat(living_mob, span_hypnophrase("The sound echoes in your brain..."))
 			living_mob.adjust_hallucinations(150 SECONDS)
 
 	//Flash
-	if(living_mob.flash_act(affect_silicon = 1))
-		living_mob.Paralyze(max(10/max(1, distance), 5))
-		living_mob.Knockdown(max(100/max(1, distance), 40))
-		if(iscarbon(living_mob))
-			var/mob/living/carbon/target = living_mob
-			if(target.hypnosis_vulnerable()) //The sound causes the necessary conditions unless the target has mindshield or hearing protection
-				target.apply_status_effect(/datum/status_effect/trance, 100, TRUE)
-			else
-				to_chat(target, span_hypnophrase("The light is so pretty..."))
-				target.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
-				target.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
-				target.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
+	if(!living_mob.flash_act(affect_silicon = TRUE))
+		return
+	living_mob.Paralyze(max(1 SECONDS / (distance || 1), 0.5 SECONDS))
+	living_mob.Knockdown(max(10 SECONDS / (distance || 1), 4 SECONDS))
+	if(living_mob.hypnosis_vulnerable()) //The sound causes the necessary conditions unless the target has mindshield or hearing protection
+		living_mob.apply_status_effect(/datum/status_effect/trance, 10 SECONDS, TRUE)
+		return
+	to_chat(living_mob, span_hypnophrase("The light is so pretty..."))
+	living_mob.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
+	living_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+	living_mob.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
