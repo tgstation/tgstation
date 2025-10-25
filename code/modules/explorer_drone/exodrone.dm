@@ -77,10 +77,8 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
 /obj/item/exodrone/Destroy()
-	GLOB.exodrones -= src
-	explosion(src, 0, 0, 1, 1)
-	do_sparks(5, FALSE, src)
 	. = ..()
+	GLOB.exodrones -= src
 
 /// Description for drone listing, describes location and current status
 /obj/item/exodrone/proc/ui_description()
