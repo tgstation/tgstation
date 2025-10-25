@@ -18,6 +18,7 @@
 
 	if(antag)
 		spawned_mob.mind.add_antag_datum(/datum/antagonist/domain_ghost_actor)
+		spawned_mob.mind.set_assigned_role(SSjob.get_job_type(/datum/job/bitrunning_glitch))
 
 /// Simulates a ghost role spawn without calling special(), ie a bitrunner spawn instead of a ghost.
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/proc/artificial_spawn(mob/living/runner)

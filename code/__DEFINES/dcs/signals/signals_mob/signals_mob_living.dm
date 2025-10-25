@@ -365,3 +365,5 @@
 #define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
 	/// Prevent loot from being dropped
 	#define COMPONENT_NO_LOOT_DROP (1<<0)
+/// From /datum/element/death_drops/on_death(mob/living/target, gibbed) : (list/loot, gibbed)
+#define COMSIG_LIVING_DROPPED_LOOT "living_dropped_loot"
