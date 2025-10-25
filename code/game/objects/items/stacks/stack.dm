@@ -94,12 +94,11 @@
 	if(merge)
 		. = INITIALIZE_HINT_LATELOAD
 
-	var/materials_mult = amount
 	if(LAZYLEN(mat_override))
-		materials_mult *= mat_amt
 		mats_per_unit = mat_override
 	if(LAZYLEN(mats_per_unit))
-		initialize_materials(mats_per_unit, materials_mult)
+		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(mats_per_unit, mat_amt)
+		initialize_materials(mats_per_unit, amount)
 
 	recipes = get_main_recipes().Copy()
 	if(material_type)
@@ -119,6 +118,10 @@
 
 /obj/item/stack/LateInitialize()
 	merge_with_loc()
+
+/obj/item/stack/Destroy()
+	mats_per_unit = null
+	return ..()
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -159,11 +162,6 @@
 			return FALSE
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
-
-/obj/item/stack/apply_material_effects(list/materials)
-	. = ..()
-	if(amount)
-		mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(materials, 1/amount)
 
 /obj/item/stack/blend_requirements()
 	if(is_cyborg)
@@ -456,7 +454,7 @@
 			return
 		created = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
-		if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
+		if(LAZYLEN(mats_per_unit))
 			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
@@ -473,7 +471,7 @@
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
-	if((recipe.crafting_flags & CRAFT_APPLIES_MATS) && LAZYLEN(mats_per_unit))
+	if(LAZYLEN(mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
 			crafted_stack.set_custom_materials(mats_per_unit, (recipe.req_amount / recipe.res_amount) * crafted_stack.amount)
@@ -573,11 +571,10 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check && is_zero_amount(delete_if_zero = TRUE))
-		return TRUE
-	update_custom_materials()
-	update_appearance()
-	update_weight()
+	if(!is_zero_amount(delete_if_zero = check))
+		update_custom_materials()
+		update_appearance()
+		update_weight()
 	return TRUE
 
 /obj/item/stack/tool_use_check(mob/living/user, amount, heat_required)
@@ -764,7 +761,7 @@
 	loc.atom_storage?.refresh_views()
 	is_zero_amount(delete_if_zero = TRUE)
 	return new_stack
-
+z
 /**
  * Splits amount items from stack, attempts to place new stack in user's hands.
  * Returns the new stack.

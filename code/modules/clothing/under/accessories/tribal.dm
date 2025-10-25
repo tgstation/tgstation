@@ -5,6 +5,7 @@
 	icon_state = "talisman"
 	attachment_slot = NONE
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
@@ -12,6 +13,7 @@
 	icon_state = "skull"
 	attachment_slot = GROIN
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/clothing/accessory/skilt
 	name = "sinew skirt"
@@ -20,3 +22,4 @@
 	minimize_when_attached = FALSE
 	attachment_slot = GROIN
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)

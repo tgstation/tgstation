@@ -8,6 +8,7 @@
 	result = /obj/item/stack/sheet/paperframes
 	result_amount = 5
 	category = CAT_STRUCTURE
+	requirements_mats_blacklist = list(/obj/item/stack/sheet/mineral/wood)
 
 /datum/crafting_recipe/rib
 	name = "Colossal Rib"
