@@ -10,6 +10,7 @@
 	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
+	icon_dead = "bee_item"
 	icon = 'icons/mob/simple/bees.dmi'
 	gender = FEMALE
 	speak_emote = list("buzzes")
@@ -40,7 +41,6 @@
 	held_w_class = WEIGHT_CLASS_TINY
 	environment_smash  = ENVIRONMENT_SMASH_NONE
 	habitable_atmos = null
-	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/bee
 	///the reagent the bee has
 	var/datum/reagent/beegent = null
@@ -100,13 +100,23 @@
 	return ..()
 
 /mob/living/basic/bee/death(gibbed)
+	if(mind)
+		. = ..()
+		corpse_visuals()
+		return ..()
+
 	if(!(flags_1 & HOLOGRAM_1) && !gibbed)
 		spawn_corpse()
-	return ..()
+
+/mob/living/basic/bee/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	generate_bee_visuals()
+
 
 /// Leave something to remember us by
 /mob/living/basic/bee/proc/spawn_corpse()
 	new /obj/item/trash/bee(loc, src)
+	qdel(src)
 
 /mob/living/basic/bee/early_melee_attack(atom/target, list/modifiers)
 	. = ..()
@@ -161,6 +171,19 @@
 	add_overlay(greyscale_overlay)
 
 	add_overlay("[icon_base]_wings")
+
+/mob/living/basic/bee/proc/corpse_visuals()
+	cut_overlays()
+	var/bee_color = BEE_DEFAULT_COLOUR
+	if(beegent?.color)
+		bee_color = beegent.color
+
+	var/static/mutable_appearance/greyscale_overlay
+	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/simple/bees.dmi')
+	greyscale_overlay.icon_state = "[icon_dead]_overlay"
+	greyscale_overlay.color = bee_color
+	add_overlay(greyscale_overlay)
+
 
 /mob/living/basic/bee/proc/pollinate(obj/machinery/hydroponics/hydro)
 	if(!hydro.can_bee_pollinate())
