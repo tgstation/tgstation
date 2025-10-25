@@ -55,6 +55,7 @@
 	/// Dropoff strategy for tasking.
 	var/datum/tasking_strategy/dropoff_strategy
 
+/// Re-creates hud images for the points
 /obj/machinery/big_manipulator/proc/update_hud()
 	LAZYCLEARLIST(hud_points)
 
@@ -63,7 +64,7 @@
 		return
 
 	main_hud.loc = get_turf(src)
-	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, src.plane)
+	main_hud.appearance = mutable_appearance('icons/effects/interaction_points.dmi', null, ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 
 	main_hud.overlays.Cut()
 	var/list/point_overlays = list()
@@ -72,7 +73,7 @@
 		var/datum/interaction_point/point = pickup_points[i]
 		var/turf/target_turf = point.interaction_turf
 		if(target_turf)
-			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
+			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "pickup_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 			var/turf/manip_turf = get_turf(src)
 			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
 			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
@@ -82,7 +83,7 @@
 		var/datum/interaction_point/point = dropoff_points[i]
 		var/turf/target_turf = point.interaction_turf
 		if(target_turf)
-			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, src.plane)
+			var/mutable_appearance/point_appearance = mutable_appearance('icons/effects/interaction_points.dmi', "dropoff_[i]", ABOVE_NORMAL_TURF_LAYER, src, GAME_PLANE)
 			var/turf/manip_turf = get_turf(src)
 			point_appearance.pixel_x = (target_turf.x - manip_turf.x) * 32
 			point_appearance.pixel_y = (target_turf.y - manip_turf.y) * 32
@@ -92,34 +93,30 @@
 	hud_points += main_hud
 	set_hud_image_active(BIG_MANIP_HUD)
 
-/// Attempts to find the closest open turf to the manipulator
+/// Attempts to find a suitable turf near the manipulator
 /obj/machinery/big_manipulator/proc/find_suitable_turf()
 	var/turf/center = get_turf(src)
 
-	var/list/directions = GLOB.alldirs
-	for(var/dir in directions)
-		var/turf/checked_turf = get_step(center, dir)
-		if(checked_turf && !isclosedturf(checked_turf))
+	for(var/turf/checked_turf in orange(center, 1))
+		if(!isclosedturf(checked_turf))
 			return checked_turf
 
 	// didn't find any :boowomp:
 	return null
 
 /// Attempts to create a new interaction point and assign it to the correct list.
-/// Arguments: `new_turf` (turf), `new_filters` (list), `new_filters_status` (boolean),
-/// `new_interaction_mode` (use a define), `transfer_type` (use a define).
 /obj/machinery/big_manipulator/proc/create_new_interaction_point(mob/user, turf/new_turf, list/new_filters, new_filters_status, new_interaction_mode, transfer_type)
-	if(!new_turf)
+	if(!new_turf || !isturf(new_turf))
 		new_turf = find_suitable_turf()
 		if(!new_turf)
 			balloon_alert(user, "no suitable turfs found!")
 			return FALSE
 
-	if(transfer_type == TRANSFER_TYPE_PICKUP && length(pickup_points) + 1 > interaction_point_limit)
-		balloon_alert(user, "pickup point limit reached!")
-		return FALSE
-	if(transfer_type == TRANSFER_TYPE_DROPOFF && length(dropoff_points) + 1 > interaction_point_limit)
-		balloon_alert(user, "dropoff point limit reached!")
+	var/list/current_points = (transfer_type == TRANSFER_TYPE_PICKUP) ? pickup_points : dropoff_points
+	var/point_type = (transfer_type == TRANSFER_TYPE_PICKUP) ? "pickup" : "dropoff"
+
+	if(length(current_points) + 1 > interaction_point_limit)
+		balloon_alert(user, "[point_type] point limit reached!")
 		return FALSE
 
 	var/datum/interaction_point/new_interaction_point = new(new_turf, new_filters, new_filters_status, new_interaction_mode)
@@ -127,11 +124,7 @@
 	if(QDELETED(new_interaction_point)) // if something STILL somehow went wrong
 		return FALSE
 
-	switch(transfer_type) // assigning to the correct list
-		if(TRANSFER_TYPE_PICKUP)
-			pickup_points += new_interaction_point
-		if(TRANSFER_TYPE_DROPOFF)
-			dropoff_points += new_interaction_point
+	current_points += new_interaction_point
 
 	if(obj_flags & EMAGGED)
 		new_interaction_point.type_filters += /mob/living
@@ -140,13 +133,6 @@
 		update_hud()
 
 	return new_interaction_point
-
-/// Allow each point to interact with mobs when the manipulator is emagged.
-/obj/machinery/big_manipulator/proc/update_all_points_on_emag_act()
-	for(var/datum/interaction_point/pickup_point in pickup_points)
-		pickup_point.type_filters += /mob/living
-	for(var/datum/interaction_point/dropoff_point in dropoff_points)
-		dropoff_point.type_filters += /mob/living
 
 /obj/machinery/big_manipulator/Initialize(mapload)
 	. = ..()
@@ -236,26 +222,19 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_atom_from_hud(src)
 
-	qdel(manipulator_arm)
-	if(!isnull(held_object))
-		var/obj/containment_resolve = held_object?.resolve()
-		containment_resolve?.forceMove(get_turf(containment_resolve))
-
-	var/mob/monkey_resolve = monkey_worker?.resolve()
-	if(!isnull(monkey_resolve))
-		monkey_resolve.forceMove(get_turf(monkey_resolve))
+	QDEL_NULL(manipulator_arm)
+	// QDEL_NULL(monkey_worker.resolve())
+	// QDEL_NULL(held_object.resolve())
 	id_lock = null
 	return ..()
 
 /obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
+	. = ..()
 	if(isnull(monkey_worker))
 		return
 
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
 	if(gone != poor_monkey)
-		return
-
-	if(!(poor_monkey in manipulator_arm.vis_contents))
 		return
 
 	manipulator_arm.vis_contents -= poor_monkey
@@ -264,19 +243,7 @@
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(isnull(get_turf(src)))
-		qdel(manipulator_arm)
-		return
 
-	if(!manipulator_arm)
-		create_manipulator_arm()
-
-	// updating all interaction points to maintain their relative positions when the manipulator moves
-	// this ensures that interaction points move with the manipulator, preserving their relative layout
-	update_interaction_points_on_move(old_loc)
-
-/// Updates all interaction points to maintain their relative positions when the manipulator moves
-/obj/machinery/big_manipulator/proc/update_interaction_points_on_move(atom/old_loc)
 	if(!old_loc || !isturf(old_loc))
 		return
 
@@ -341,16 +308,9 @@
 	if(!manipulator_turf)
 		return null
 
-	if(center.z != manipulator_turf.z)
-		center = locate(center.x, center.y, manipulator_turf.z)
-		if(!center)
-			return null
-
-	var/list/directions = list(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
-	for(var/dir in directions)
-		var/turf/check = get_step(center, dir)
-		if(check && !isclosedturf(check))
-			return check
+	for(var/turf/each in orange(1, src))
+		if(!isclosedturf(each))
+			return each
 
 	return null
 
@@ -359,10 +319,8 @@
 	if(!point)
 		return
 
-	if(point in pickup_points)
-		pickup_points -= point
-	else if(point in dropoff_points)
-		dropoff_points -= point
+	pickup_points.Remove(point)
+	dropoff_points.Remove(point)
 
 	qdel(point)
 	if(is_operational)
@@ -376,7 +334,11 @@
 	balloon_alert(user, "overloaded")
 	obj_flags |= EMAGGED
 
-	update_all_points_on_emag_act()
+	for(var/datum/interaction_point/pickup_point in pickup_points)
+		pickup_point.type_filters += /mob/living
+	for(var/datum/interaction_point/dropoff_point in dropoff_points)
+		dropoff_point.type_filters += /mob/living
+
 	return TRUE
 
 /obj/machinery/big_manipulator/wrench_act(mob/living/user, obj/item/tool)
@@ -423,15 +385,12 @@
 	process_upgrades()
 
 /obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
-	if(isnull(monkey_worker))
-		return
-
 	if(current_task != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
 		return
 
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
-	if(isnull(poor_monkey))
+	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker?.resolve()
+	if(!poor_monkey)
 		return
 
 	balloon_alert(user, "trying to unbuckle...")
@@ -444,14 +403,14 @@
 	poor_monkey.forceMove(drop_point)
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
-	if(!ismonkey(monkey))
-		return
-
-	if(!isnull(monkey_worker))
-		return
-
 	if(current_task != CURRENT_TASK_NONE)
 		balloon_alert(user, "turn it off first!")
+		return
+
+	if(monkey_worker?.resolve())
+		return
+
+	if(!ismonkey(monkey))
 		return
 
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey
@@ -483,32 +442,33 @@
 
 	var/obj/item/card/id/clicked_by_this_id = some_item
 
-	if(id_lock)
-		var/obj/item/card/id/resolve_id = id_lock.resolve()
-		if(clicked_by_this_id != resolve_id)
-			balloon_alert(user, "locked by another id")
-			return
-		id_lock = null
-	else
+	if(!id_lock)
 		id_lock = WEAKREF(clicked_by_this_id)
-	balloon_alert(user, "successfully [id_lock ? "locked" : "unlocked"]")
+		balloon_alert(user, "successfully locked")
+		return
+	var/obj/item/card/id/resolve_id = id_lock.resolve()
+	if(clicked_by_this_id != resolve_id)
+		balloon_alert(user, "locked by another id")
+		return
+	id_lock = null
+	balloon_alert(user, "successfully unlocked")
 
 /// Attaching the arm effect to the core.
 /obj/machinery/big_manipulator/proc/create_manipulator_arm()
-	manipulator_arm = new/obj/effect/big_manipulator_arm(src)
+	manipulator_arm = new /obj/effect/big_manipulator_arm(src)
 	manipulator_arm.dir = NORTH
 	vis_contents += manipulator_arm
 
 /obj/machinery/big_manipulator/proc/toggle_power_state(mob/user)
-	var/new_power_state = !on
+	var/newly_on = !on
 
 	if(!user)
-		on = new_power_state
+		on = newly_on
 		if(!on)
 			remove_all_huds()
 		return
 
-	if(new_power_state)
+	if(newly_on)
 		if(!powered())
 			balloon_alert(user, "no power!")
 			return
@@ -519,13 +479,13 @@
 
 		validate_all_points()
 
-		on = new_power_state
+		on = newly_on
 		SStgui.update_uis(src)
 		try_kickstart(user)
 
 	else
 		drop_held_atom()
-		on = new_power_state
+		on = newly_on
 		cycle_timer_running = FALSE
 		// Set stopping task instead of ending current task immediately
 		if(current_task != CURRENT_TASK_NONE && current_task != CURRENT_TASK_STOPPING)
@@ -537,21 +497,10 @@
 		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/validate_all_points()
-	var/list/pickup_to_remove = list()
-	for(var/datum/interaction_point/point in pickup_points)
+	for(var/datum/interaction_point/point in (pickup_points + dropoff_points))
 		if(!point.is_valid())
-			pickup_to_remove += point
-
-	for(var/datum/interaction_point/point_to_remove in pickup_to_remove)
-		pickup_points.Remove(point_to_remove)
-
-	var/list/dropoff_to_remove = list()
-	for(var/datum/interaction_point/point in dropoff_points)
-		if(!point.is_valid())
-			dropoff_to_remove += point
-
-	for(var/datum/interaction_point/point_to_remove in dropoff_to_remove)
-		dropoff_points.Remove(point_to_remove)
+			pickup_points.Remove(point)
+			dropoff_points.Remove(point)
 
 	if(is_operational)
 		update_hud()
@@ -579,7 +528,7 @@
 		return
 	var/obj/obj_resolve = held_object?.resolve()
 	obj_resolve?.forceMove(get_turf(obj_resolve))
-	finish_manipulation()
+	finish_manipulation(TRANSFER_TYPE_DROPOFF) // MCBALAAM TODO
 
 /obj/machinery/big_manipulator/ui_interact(mob/user, datum/tgui/ui)
 	if(id_lock)
@@ -684,11 +633,11 @@
 			return TRUE
 
 		if("create_pickup_point")
-			create_new_interaction_point(null, ui.user, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
+			create_new_interaction_point(ui.user, null, list(), FALSE, null, TRANSFER_TYPE_PICKUP)
 			return TRUE
 
 		if("create_dropoff_point")
-			create_new_interaction_point(null, ui.user, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
+			create_new_interaction_point(ui.user, null, list(), FALSE, INTERACT_DROP, TRANSFER_TYPE_DROPOFF)
 			return TRUE
 
 		if("reset_tasking_Pickup Points")
@@ -701,14 +650,14 @@
 
 		if("cycle_tasking_schedule")
 			var/new_schedule = params["new_schedule"]
-			var/is_pickup = params["is_pickup"]
-			if(new_schedule in list("Round Robin", "Strict Robin", "Prefer First"))
+
+			if(new_schedule in list(TASKING_ROUND_ROBIN, TASKING_STRICT_ROBIN, TASKING_PREFER_FIRST))
+				var/is_pickup = params["is_pickup"]
 				if(is_pickup)
 					pickup_tasking = new_schedule
-					update_strategies()
 				else
 					dropoff_tasking = new_schedule
-					update_strategies()
+				update_strategies()
 			return TRUE
 
 		if("adjust_interaction_speed")
@@ -739,10 +688,8 @@
 			return target_point.tick_priority_by_index(value)
 
 		if("remove_point")
-			if(value)
-				pickup_points -= target_point
-			else
-				dropoff_points -= target_point
+			pickup_points.Remove(target_point)
+			dropoff_points.Remove(target_point) // one'll hit for sure
 			qdel(target_point)
 			return TRUE
 
@@ -806,36 +753,8 @@
 		if("move_to")
 			var/button_number = text2num(value["buttonNumber"])
 
-			var/dx = 0
-			var/dy = 0
-			switch(button_number)
-				if(1)
-					dx = -1
-					dy = 1
-				if(2)
-					dx = 0
-					dy = 1
-				if(3)
-					dx = 1
-					dy = 1
-				if(4)
-					dx = -1
-					dy = 0
-				if(5)
-					dx = 0
-					dy = 0
-				if(6)
-					dx = 1
-					dy = 0
-				if(7)
-					dx = -1
-					dy = -1
-				if(8)
-					dx = 0
-					dy = -1
-				if(9)
-					dx = 1
-					dy = -1
+			var/dx = ((button_number - 1) % 3) - 1
+			var/dy = 1 - round((button_number - 1) / 3)
 
 			var/turf/new_turf = locate(x + dx, y + dy, z)
 			if(!new_turf || isclosedturf(new_turf))
@@ -861,7 +780,7 @@
 
 	end_current_task() // ends any previous task first (momentarily sets IDLE)
 	current_task_start_time = world.time
-	current_task_duration = duration / 10 // the duration is in deciseconds for TGUI
+	current_task_duration = duration
 	current_task = task_type
 	SStgui.update_uis(src)
 
@@ -882,9 +801,13 @@
 		SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/remove_all_huds()
-	for(var/image/hud_image in hud_points)
-		qdel(hud_image)
+	var/image/main_hud = hud_list[BIG_MANIP_HUD]
+	if(main_hud)
+		main_hud.overlays.Cut()
+		main_hud.loc = null
+
 	hud_points.Cut()
+	set_hud_image_inactive(BIG_MANIP_HUD)
 
 /obj/machinery/big_manipulator/proc/update_strategies()
 	pickup_strategy = create_strategy(pickup_tasking)

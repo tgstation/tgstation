@@ -215,8 +215,8 @@
 	start_task(type == CURRENT_TASK_MOVING_PICKUP ? CURRENT_TASK_MOVING_PICKUP : CURRENT_TASK_MOVING_DROPOFF, total_rotation_time)
 
 	// If the next point is on the same tile, we don't need to rotate at all
-	if(num_rotations == 0)
-		addtimer(CALLBACK(src, callback, target_point), 0)
+	if(!num_rotations)
+		addtimer(CALLBACK(src, callback, target_point), BASE_INTERACTION_TIME)
 		return TRUE
 
 	// Breaking the angle up into 45 degree steps
