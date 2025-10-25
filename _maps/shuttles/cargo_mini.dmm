@@ -18,8 +18,8 @@
 	req_access_txt = "31"
 	},
 /obj/docking_port/mobile/supply{
-	dwidth = 3;
-	width = 9
+	dwidth = null;
+	width = null
 	},
 /turf/open/floor/plating,
 /area/shuttle/supply)
