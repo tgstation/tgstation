@@ -1026,7 +1026,7 @@
 		this baton.<br>\
 		<br>\
 		TerraGov law enforcement has avoided the adoption of stun batons due to various ethical dilemmas posed by \
-		their usage. Namely, the longterm physical and mental ramifications of being struck by a human cattleprod. \
+		their usage, largely because of the longterm physical and mental ramifications of being struck by a human cattleprod. \
 		Citizens' rights advocacy groups protest against the proliferation of stun batons as a policing tool, \
 		arguing that they are 'inhumane' and 'authoritarian'. Nanotrasen, on the other hand, has had no such qualms \
 		when deploying stun batons as a compliance measure across all of their existing stations and facilities against \
@@ -1042,12 +1042,12 @@
 		one of the more frequently encountered examples of Cybersun Industries weaponry. Extremely similar to Nanotrasen's \
 		own Secure Apprehension Device (also simply known as the stun baton), the contractor baton is able to induce \
 		CNS disruption in a target to render them helpless. It is also capable of devastating blunt force trauma if \
-		used as a bludgeon. And, most conveniently of all, the contractor baton is capable of telescopic deployment, \
-		allowing for discretion while making an approach towards a target.<br>\
+		used as a bludgeon. The contractor baton is also capable of telescopic deployment, allowing for discretion while \
+		making an approach towards a target.<br>\
 		<br>\
-		The contractor baton is famously associated with contractors; elite Cybersun field agents. While the standard \
-		agent would often be tasked with sabotage, terrorism, murder or theft; contractors have the critical task of \
-		kidnapping high value personnel. Anyone with the potential to possess classified or sensitive data about Nanotarsen \
+		The contractor baton is famously associated with contractors, elite Cybersun field agents. While the standard \
+		agent would often be tasked with sabotage, terrorism, murder or theft, contractors have the critical task of \
+		kidnapping high value personnel. Anyone with the potential to possess classified or sensitive data about Nanotrasen \
 		security systems and devices could be a target for Cybersun. <br>\
 		<br>\
 		Extracting this information is most easily performed on living subjects. As such, the contractor baton was designed \
@@ -1055,9 +1055,9 @@
 		data from the recently deceased, should the contractor find themselves with only a corpse left to send back. Death \
 		may not spare you from the machinations of Cybersun Industries if they deem you a valuable asset towards their goals.<br>\
 		<br>\
-		Nanotrasen utilizes a number of countermeasures to contractor insurgencies, such as; employing selective memory wiping \
+		Nanotrasen utilizes a number of countermeasures to contractor insurgencies, such as employing selective memory wiping \
 		or falsified memory injection, the establishment of 'dummy' command staff through the artificial acceleration \
-		of otherwise incompetent but useful crewmembers ( whose incompetence will often result in an acceptable degree \
-		of operational disruption), which provides convenient scapegoats in the event of a security breach, as well as \
+		of otherwise incompetent but useful crewmembers (whose incompetence will often result in an acceptable degree \
+		of operational disruption), which provides convenient scapegoats in the event of a security breach as well as \
 		frequent staff turnover and reassignment." \
 	)
