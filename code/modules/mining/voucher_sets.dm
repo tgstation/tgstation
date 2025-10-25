@@ -46,6 +46,7 @@
 	set_items = list(
 		/obj/item/kinetic_crusher,
 		/obj/item/extinguisher/mini,
+		/obj/item/crusher_trophy/retool_kit,
 	)
 
 /datum/voucher_set/mining/extraction_kit
