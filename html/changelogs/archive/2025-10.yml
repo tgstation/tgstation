@@ -791,3 +791,12 @@
   - code_imp: cleaned up wall mount code
   TheNobodyofimportance:
   - balance: Vomit drinking now checks for fly mouth instead of fly species
+2025-10-25:
+  MGOOOOOO:
+  - bugfix: Sterilizine will now correctly apply its 20% surgery speed bonus.
+  SmArtKar:
+  - bugfix: Fixed PKC mark effect being offset to the side when applied to some mobs.
+  - image: Boulder platforms spawned by throwing boulders on lava or activating vents
+      now have new sprites that smooth together
+  grungussuss:
+  - sound: added handling sounds for various devices
