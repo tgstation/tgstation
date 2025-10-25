@@ -90,9 +90,9 @@
 				// Info that describes this turf and all its contents
 				// Unique, will be checked for existing later
 				var/list/current_header = list()
-				current_header += "(\n"
-				//Add objects to the header file
-				var/empty = TRUE
+
+// Save current_headers until the end when the list is joined
+//				current_header += "(\n"
 
 				//====Saving Shuttles==========
 				var/is_shuttle_area = ispath(saved_area, /area/shuttle)
@@ -126,9 +126,15 @@
 					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
 						var/obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
 						if(shuttle_port)
+/*
+							current_header += TGM_MAP_SEPARATOR(data)
 							var/metadata = generate_tgm_metadata(shuttle_port)
 							current_header += "[empty ? "" : ",\n"][shuttle_port.type][metadata]"
-							empty = FALSE
+							data = TRUE
+*/
+
+							TGM_MAP_BLOCK(current_header, shuttle_port.type, generate_tgm_metadata(shuttle_port))
+
 
 					pull_from = null
 
@@ -170,11 +176,15 @@
 						if(save_flag & SAVE_OBJECTS_VARIABLES)
 							metadata = generate_tgm_metadata(target_obj)
 
-						current_header += "[empty ? "" : ",\n"][typepath][metadata]"
-						empty = FALSE
+//						current_header += "[empty ? "" : ",\n"][typepath][metadata]"
+//						data = TRUE
+						TGM_MAP_BLOCK(current_header, typepath, metadata)
+
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
 						if(save_flag & SAVE_OBJECTS_PROPERTIES)
+
+
 							var/custom_data = target_obj.on_object_saved(pull_from)
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 
@@ -189,11 +199,16 @@
 						TGM_MOB_INCREMENT
 */
 
+/*
 						var/metadata = generate_tgm_metadata(target_mob)
 						current_header += "[empty ? "" : ",\n"][target_mob.type][metadata]"
-						empty = FALSE
+						data = TRUE
+*/
+						TGM_MAP_BLOCK(current_header, typepath, generate_tgm_metadata(target_mob))
+
 
 				current_header += "[empty ? "" : ",\n"][saved_turf]"
+				var/turf_metadata
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
 					var/turf/open/atmos_turf = pull_from
@@ -202,15 +217,25 @@
 					// - Space: Gas is constantly purged and temperature is immutable
 					// - Planetary: Atmos slowly reverts to its default gas mix
 					if(isopenturf(atmos_turf) && !isspaceturf(atmos_turf) && !atmos_turf.planetary_atmos)
+/*
 						var/metadata = generate_tgm_metadata(atmos_turf)
 						current_header += "[metadata]"
+*/
+						turf_metadata = generate_tgm_metadata(atmos_turf)
+
+				TGM_MAP_BLOCK(current_header, saved_turf.type, turf_metadata)
+
+
 
 				total_mobs_saved += GLOB.TGM_objs
 				total_objs_saved += GLOB.TGM_mobs
 
-				current_header += ",\n[saved_area])\n"
+//				current_header += ",\n[saved_area]"
+				TGM_MAP_BLOCK(current_header, saved_area.type, null) // no metadata for now
+
 				//====Fill the contents file====
-				var/textiftied_header = current_header.Join()
+				var/textiftied_header = "(\n[current_header.Join()])\n"
+
 				// If we already know this header just use its key, otherwise we gotta make a new one
 				var/key = header_data[textiftied_header]
 				if(!key)
