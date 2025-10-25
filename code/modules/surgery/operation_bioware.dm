@@ -217,7 +217,7 @@
 	)
 	display_pain(limb.owner, "Your brain feels stronger... more flexible!")
 
-/datum/surgery_operation/limb/bioware/cortex_folding/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, total_penalty_modifier)
+/datum/surgery_operation/limb/bioware/cortex_folding/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
 		return ..()
 	display_results(
@@ -257,7 +257,7 @@
 	)
 	display_pain(limb.owner, "Your brain feels stronger... more resillient!")
 
-/datum/surgery_operation/limb/bioware/cortex_imprint/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, total_penalty_modifier)
+/datum/surgery_operation/limb/bioware/cortex_imprint/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
 		return ..()
 	display_results(

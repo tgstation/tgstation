@@ -49,7 +49,7 @@
 		span_notice("[surgeon] finishes stretching [organ.owner]'s windpipe.")
 	)
 
-/datum/surgery_operation/organ/asthmatic_bypass/on_failure(obj/item/organ/lungs/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/asthmatic_bypass/on_failure(obj/item/organ/lungs/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/quirk/item_quirk/asthma/asthma = organ.owner.get_quirk(/datum/quirk/item_quirk/asthma)
 	if(isnull(asthma))
 		return

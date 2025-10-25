@@ -106,12 +106,6 @@
 	for(var/datum/wound/wound as anything in wounds)
 		wound.remove_wound(TRUE)
 
-	for(var/datum/surgery/surgery as anything in phantom_owner.surgeries) //if we had an ongoing surgery on that limb, we stop it.
-		if(surgery.operated_bodypart == src)
-			phantom_owner.surgeries -= surgery
-			qdel(surgery)
-			break
-
 	if(!phantom_owner.has_embedded_objects())
 		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		phantom_owner.clear_mood_event("embedded")
@@ -295,13 +289,6 @@
 		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
 
 		if(special) //non conventional limb attachment
-			for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
-				var/surgery_zone = check_zone(attach_surgery.location)
-				if(surgery_zone == body_zone)
-					new_limb_owner.surgeries -= attach_surgery
-					qdel(attach_surgery)
-					break
-
 			for(var/obj/item/organ/organ as anything in new_limb_owner.organs)
 				if(deprecise_zone(organ.zone) != body_zone)
 					continue

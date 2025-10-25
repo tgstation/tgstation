@@ -79,7 +79,7 @@
 	brainwashed.log_message("has been brainwashed with the objective '[objective]' by [key_name(surgeon)] using brainwashing surgery.", LOG_VICTIM, log_globally=FALSE)
 	surgeon.log_message("surgically brainwashed [key_name(brainwashed)] with the objective '[objective]'.", LOG_GAME)
 
-/datum/surgery_operation/organ/brainwash/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/brainwash/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		organ.owner,

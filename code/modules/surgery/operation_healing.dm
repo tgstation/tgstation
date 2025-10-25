@@ -158,7 +158,7 @@
 
 	var/dead_multiplier = patient.stat == DEAD ? 0.2 : 1.0
 	var/accessibility_modifier = 1.0
-	if(!get_location_accessible(patient, BODY_ZONE_CHEST))
+	if(!patient.is_location_accessible(BODY_ZONE_CHEST))
 		accessibility_modifier = 0.55
 		user_msg += " as best as you can while [patient.p_they()] [patient.p_have()] clothing on"
 		target_msg += " as best as [surgeon.p_they()] can while [patient.p_they()] [patient.p_have()] clothing on"
@@ -184,7 +184,7 @@
 		span_notice("[target_msg]."),
 	)
 
-/datum/surgery_operation/basic/tend_wounds/on_failure(mob/living/patient, mob/living/surgeon, tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/basic/tend_wounds/on_failure(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
 	display_results(
 		surgeon,
 		patient,

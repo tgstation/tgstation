@@ -31,7 +31,7 @@
 	ADD_TRAIT(limb.owner, TRAIT_DISSECTED, AUTOPSY_TRAIT)
 	ADD_TRAIT(limb.owner, TRAIT_SURGICALLY_ANALYZED, AUTOPSY_TRAIT)
 	tool.scan_cadaver(surgeon, limb.owner)
-	var/obj/machinery/computer/operating/operating_computer = locate_operating_computer(get_turf(limb.owner))
+	var/obj/machinery/computer/operating/operating_computer = locate_operating_computer(limb)
 	if (!isnull(operating_computer))
 		SEND_SIGNAL(operating_computer, COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE, limb.owner)
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))

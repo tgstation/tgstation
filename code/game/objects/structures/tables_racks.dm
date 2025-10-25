@@ -1080,7 +1080,7 @@
 
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)
-		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED, COMSIG_LIVING_BEING_OPERATED_ON))
+		UnregisterSignal(patient, list(COMSIG_LIVING_SURGERY_STARTED, COMSIG_LIVING_SURGERY_FINISHED, COMSIG_LIVING_BEING_OPERATED_ON))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
@@ -1088,7 +1088,7 @@
 	update_appearance()
 	if (!patient)
 		return
-	RegisterSignals(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED), PROC_REF(on_surgery_change))
+	RegisterSignals(patient, list(COMSIG_LIVING_SURGERY_STARTED, COMSIG_LIVING_SURGERY_FINISHED), PROC_REF(on_surgery_change))
 	RegisterSignal(patient, COMSIG_LIVING_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)

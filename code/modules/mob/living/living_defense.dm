@@ -91,6 +91,10 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
+/// Check if the passed body zone is covered by some clothes
+/mob/living/proc/is_location_accessible(location)
+	return TRUE
+
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
 	. = ..()
 	if (. != BULLET_ACT_HIT)

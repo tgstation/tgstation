@@ -35,7 +35,7 @@
 	organ.organ_flags &= ~ORGAN_EMP
 	ADD_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON, TRAIT_GENERIC)
 
-/datum/surgery_operation/organ/repair/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	organ.apply_organ_damage(organ.maxHealth * failure_damage_percent)
 
 /datum/surgery_operation/organ/repair/lobectomy
@@ -75,7 +75,7 @@
 		span_notice("[surgeon] successfully excises [organ.owner]'s most damaged lobe."),
 	)
 
-/datum/surgery_operation/organ/repair/lobectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/lobectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	organ.owner.losebreath += 4
 	display_results(
@@ -139,7 +139,7 @@
 	)
 	display_pain(organ.owner, "The pain receeds slightly!")
 
-/datum/surgery_operation/organ/repair/hepatectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/hepatectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -200,7 +200,7 @@
 	)
 	display_pain(organ.owner, "The pain in your chest throbs, but your heart feels better than ever!")
 
-/datum/surgery_operation/organ/repair/coronary_bypass/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/coronary_bypass/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	organ.bodypart_owner.adjustBleedStacks(30)
 	var/blood_name = LOWER_TEXT(organ.owner.get_bloodtype()?.get_blood_name()) || "blood"
@@ -270,7 +270,7 @@
 	)
 	display_pain(organ.owner, "The pain in your gut receeds slightly!")
 
-/datum/surgery_operation/organ/repair/gastrectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/gastrectomy/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -339,7 +339,7 @@
 	)
 	display_pain(organ.owner, "Your head swims, but it seems like you can feel your hearing coming back!")
 
-/datum/surgery_operation/organ/repair/ears/on_failure(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/ears/on_failure(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/brain/brain = locate() in organ.bodypart_owner
 	if(brain)
 		display_results(
@@ -408,7 +408,7 @@
 	)
 	display_pain(organ.owner, "Your vision blurs, but it seems like you can see a little better now!")
 
-/datum/surgery_operation/organ/repair/eyes/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/eyes/on_failure(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/organ/brain/brain = locate() in organ.bodypart_owner
 	if(brain)
 		display_results(
@@ -482,7 +482,7 @@
 	if(organ.damage > organ.maxHealth * 0.1)
 		to_chat(surgeon, "[organ.owner]'s brain looks like it could be fixed further.")
 
-/datum/surgery_operation/organ/repair/brain/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/organ/repair/brain/on_failure(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,

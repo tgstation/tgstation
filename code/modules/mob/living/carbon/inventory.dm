@@ -425,12 +425,7 @@
 	RETURN_TYPE(/list)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/covered_flags = NONE
-	var/list/all_worn_items = get_equipped_items()
-	for(var/obj/item/worn_item in all_worn_items)
-		covered_flags |= worn_item.body_parts_covered
-
-	return cover_flags2body_zones(covered_flags)
+	return cover_flags2body_zones(get_all_covered_flags())
 
 ///Returns a bitfield of all zones covered by clothing
 /mob/living/carbon/proc/get_all_covered_flags()
@@ -442,6 +437,19 @@
 		covered_flags |= worn_item.body_parts_covered
 
 	return covered_flags
+
+/mob/living/carbon/is_location_accessible(location)
+	switch(location)
+		// Snowflake checks for these precise zones
+		if(BODY_ZONE_PRECISE_EYES)
+			if(is_eyes_covered() || (obscured_slots & HIDEFACE))
+				return FALSE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			if(is_mouth_covered() || (obscured_slots & HIDEFACE))
+				return FALSE
+
+	// Default, just checks bodyparts covered
+	return (location in get_covered_body_zones())
 
 /// Attempts to equip the given item in a conspicious place.
 /// This is used when, for instance, a character spawning with an item

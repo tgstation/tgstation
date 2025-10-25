@@ -45,7 +45,7 @@
 	if(surgeon.is_holding_item_of_type(/obj/item/healthanalyzer))
 		chemscan(surgeon, limb.owner)
 
-/datum/surgery_operation/limb/filter_blood/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, total_penalty_modifier)
+/datum/surgery_operation/limb/filter_blood/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,

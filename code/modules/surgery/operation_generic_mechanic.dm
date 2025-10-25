@@ -10,6 +10,7 @@
 		/obj/item/knife = 0.50,
 		/obj/item = 0.10,
 	)
+	operation_flags = OPERATION_SELF_OPERABLE
 	required_bodytype = BODYTYPE_ROBOTIC
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
@@ -52,6 +53,7 @@
 		IMPLEMENT_HAND = 1,
 		TOOL_CROWBAR = 1,
 	)
+	operation_flags = OPERATION_SELF_OPERABLE
 	time = 1 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
@@ -92,6 +94,7 @@
 		/obj/item/knife = 0.50,
 		/obj/item = 0.10,
 	)
+	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
@@ -130,6 +133,7 @@
 		TOOL_MULTITOOL = 1,
 		TOOL_HEMOSTAT = 0.75,
 	)
+	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
@@ -162,6 +166,7 @@
 		TOOL_WRENCH = 1,
 		TOOL_RETRACTOR = 0.75,
 	)
+	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 
@@ -193,6 +198,7 @@
 		TOOL_WRENCH = 1,
 		TOOL_RETRACTOR = 0.75,
 	)
+	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 

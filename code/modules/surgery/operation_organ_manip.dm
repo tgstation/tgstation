@@ -214,6 +214,7 @@
 		TOOL_CROWBAR = 1,
 		/obj/item/kitchen/fork = 0.35,
 	)
+	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
 
 // Operating on non-chest organs requires bones be intact
 /datum/surgery_operation/limb/organ_manipulation/internal/other
@@ -238,6 +239,7 @@
 		TOOL_CROWBAR = 1,
 		/obj/item/kitchen/fork = 0.35,
 	)
+	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
 
 // All external organ manipulation requires bones sawed
 /datum/surgery_operation/limb/organ_manipulation/external
@@ -264,3 +266,4 @@
 		TOOL_CROWBAR = 1,
 		/obj/item/kitchen/fork = 0.35,
 	)
+	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE

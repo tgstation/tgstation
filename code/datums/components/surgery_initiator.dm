@@ -37,7 +37,7 @@
 
 	var/mob/living/surgery_target = surgery_target_ref?.resolve()
 	if (!isnull(surgery_target_ref))
-		UnregisterSignal(surgery_target, COMSIG_MOB_SURGERY_STARTED)
+		UnregisterSignal(surgery_target, COMSIG_LIVING_SURGERY_STARTED)
 
 /// Does the surgery initiation.
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
@@ -76,7 +76,7 @@
 	surgery_target_ref = WEAKREF(target)
 
 	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, PROC_REF(on_set_selected_zone))
-	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_mob_surgery_started))
+	RegisterSignal(target, COMSIG_LIVING_SURGERY_STARTED, PROC_REF(on_mob_surgery_started))
 
 	ui_interact(user)
 
@@ -324,7 +324,7 @@
 	if(surgery.surgery_flags & SURGERY_IGNORE_CLOTHES)
 		return FALSE
 
-	return !get_location_accessible(target, user.zone_selected)
+	return !target.is_location_accessible(user.zone_selected)
 
 /**
  * Adds context sensitivy directly to the surgery initator file for screentips
