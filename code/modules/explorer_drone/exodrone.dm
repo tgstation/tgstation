@@ -76,11 +76,10 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	// Cargo storage
 	create_storage(max_slots = EXODRONE_CARGO_SLOTS, canthold = GLOB.blacklisted_cargo_types)
 
-/obj/item/exodrone/deconstruct()
+/obj/item/exodrone/handle_deconstruct()
 	. = ..()
 	explosion(src, 0, 0, 1, 1)
 	do_sparks(5, FALSE, src)
-	qdel(src)
 
 /obj/item/exodrone/Destroy()
 	GLOB.exodrones -= src

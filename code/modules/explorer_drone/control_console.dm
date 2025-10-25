@@ -117,7 +117,7 @@
 			signal_lost = FALSE
 			return TRUE
 		if("self_destruct")
-			controlled_drone.deconstruct()
+			controlled_drone.handle_deconstruct()
 			return TRUE
 		if("add_tool")
 			if(controlled_drone && controlled_drone.drone_status == EXODRONE_IDLE)
