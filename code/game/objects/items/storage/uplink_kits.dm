@@ -892,6 +892,12 @@
 	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
 	new /obj/item/food/grown/apple(src)
 
+/obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()
+	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/head/costume/snakeeater(src)
+	new /obj/item/clothing/under/costume/gi(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI
 #undef KIT_STEALTHY
