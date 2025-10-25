@@ -19,6 +19,10 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 	voice_filter = "lowpass=f=750,volume=2"
+	sound_vary = TRUE
+	pickup_sound = SFX_GAS_MASK_PICKUP
+	drop_sound = SFX_GAS_MASK_DROP
+	equip_sound = SFX_GAS_MASK_EQUIP
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter

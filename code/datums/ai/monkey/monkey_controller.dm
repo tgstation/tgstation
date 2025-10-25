@@ -31,7 +31,11 @@ have ways of interacting with a specific mob and control it.
 /datum/targeting_strategy/basic/monkey
 
 /datum/targeting_strategy/basic/monkey/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	// if they wronged us, all bets are off
 	if(controller.blackboard[BB_MONKEY_ENEMIES][the_target])
+		return FALSE
+	// target was forcibly set, all bets are off again
+	if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == the_target)
 		return FALSE
 	return ..()
 

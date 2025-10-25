@@ -3890,7 +3890,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "bqT" = (
 /obj/structure/cable,
@@ -4588,6 +4588,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/red_alert_access,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "bDy" = (
@@ -4790,7 +4791,8 @@
 	dir = 5
 	},
 /obj/machinery/newscaster/directional/east,
-/turf/open/floor/iron/white,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "bGu" = (
 /obj/structure/chair/sofa/bench/right{
@@ -7287,7 +7289,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "cEG" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -8109,7 +8111,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/machinery/firealarm/directional/south,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "cUe" = (
 /obj/machinery/rnd/production/protolathe/department/science,
@@ -9124,7 +9126,7 @@
 /obj/item/storage/toolbox/emergency,
 /obj/structure/table,
 /obj/machinery/light_switch/directional/west,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "dla" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10212,7 +10214,7 @@
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "dCI" = (
 /obj/structure/disposalpipe/segment{
@@ -10442,11 +10444,10 @@
 /area/station/science/auxlab/firing_range)
 "dHk" = (
 /obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "dHy" = (
 /obj/machinery/light/small/directional/north,
@@ -11611,12 +11612,6 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"ebo" = (
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/station/medical/paramedic)
 "ebs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
@@ -12343,7 +12338,6 @@
 /obj/machinery/door/airlock/medical{
 	name = "Medical Breakroom and Paramedic Dispatch"
 	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12351,7 +12345,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic,
+/turf/open/floor/holofloor/dark,
 /area/station/medical/exam_room)
 "epr" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -14659,7 +14654,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/requests_console/auto_name/directional/west,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "fhu" = (
 /turf/open/floor/engine/n2,
@@ -17208,7 +17203,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "fZc" = (
 /obj/structure/cable,
@@ -19827,7 +19822,7 @@
 	},
 /obj/item/radio/intercom/directional/east,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "gTM" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -21740,7 +21735,8 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/north,
-/turf/open/floor/iron/white,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "hAL" = (
 /obj/structure/cable,
@@ -22199,7 +22195,6 @@
 	name = "Reception"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -22207,7 +22202,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/turf/open/floor/iron/white,
+/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "hIv" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -22813,7 +22809,7 @@
 	dir = 10
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "hTQ" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
@@ -24263,7 +24259,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "ivh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/hidden{
@@ -24298,7 +24294,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "ivR" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -25150,7 +25146,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "iLb" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -25958,7 +25954,8 @@
 /obj/machinery/light/warm/directional/west,
 /obj/item/storage/fancy/coffee_condi_display,
 /obj/structure/table,
-/turf/open/floor/iron/white,
+/obj/item/surgicaldrill,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "jbV" = (
 /obj/structure/plasticflaps,
@@ -27077,13 +27074,6 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/station/service/library)
-"jvd" = (
-/obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/station/medical/paramedic)
 "jvt" = (
 /obj/structure/closet/secure_closet/chemical,
 /obj/effect/turf_decal/stripes/line{
@@ -27226,12 +27216,9 @@
 /area/station/command/meeting_room)
 "jyg" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/machinery/suit_storage_unit/medical,
-/obj/effect/turf_decal/box/white{
-	color = "#52B4E9"
-	},
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light_switch/directional/west,
+/obj/structure/closet/l3closet,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "jyu" = (
@@ -27247,7 +27234,8 @@
 "jyx" = (
 /obj/structure/chair/office,
 /obj/structure/cable,
-/turf/open/floor/iron/white,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "jyM" = (
 /obj/structure/ladder{
@@ -33091,7 +33079,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "ltF" = (
 /obj/structure/cable,
@@ -37960,7 +37948,7 @@
 "naZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nbf" = (
 /obj/structure/cable,
@@ -38161,7 +38149,11 @@
 	dir = 8
 	},
 /obj/machinery/digital_clock/directional/west,
-/turf/open/floor/iron/white,
+/obj/machinery/suit_storage_unit/medical,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "neb" = (
 /obj/structure/table,
@@ -38697,11 +38689,13 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "nnF" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
+/obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
 	},
-/obj/effect/landmark/start/paramedic,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nnL" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
@@ -39814,13 +39808,13 @@
 	name = "Medical Breakroom and Paramedic Dispatch"
 	},
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
+/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nKi" = (
 /obj/effect/landmark/start/cargo_technician,
@@ -40125,7 +40119,7 @@
 /obj/effect/spawner/random/vending/colavend,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nOZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -42100,7 +42094,6 @@
 	color = "#52B4E9"
 	},
 /obj/effect/turf_decal/tile/blue/full,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/storage)
 "oDZ" = (
@@ -43201,23 +43194,11 @@
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
 "oVX" = (
-/obj/structure/table,
-/obj/structure/window/spawner/directional/east,
-/obj/item/clothing/suit/jacket/straight_jacket,
-/obj/item/clothing/glasses/blindfold{
-	pixel_y = 3
+/obj/structure/closet/secure_closet/paramedic,
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
 	},
-/obj/item/clothing/glasses/blindfold{
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 3
-	},
-/turf/open/floor/iron/white/textured,
+/turf/open/floor/holofloor/dark,
 /area/station/medical/paramedic)
 "oWd" = (
 /obj/structure/cable,
@@ -52780,7 +52761,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/iron/white/smooth_large,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "set" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -53740,7 +53721,8 @@
 	pixel_y = 3
 	},
 /obj/structure/fireaxecabinet/jawsofrecovery/directional/west,
-/turf/open/floor/iron/white/textured,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/holofloor/dark,
 /area/station/medical/paramedic)
 "stw" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -54620,7 +54602,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "sIx" = (
 /obj/structure/cable,
@@ -58467,7 +58449,7 @@
 /obj/item/emergency_bed{
 	pixel_y = 11
 	},
-/turf/open/floor/iron/white/textured,
+/turf/open/floor/holofloor/dark,
 /area/station/medical/paramedic)
 "tYI" = (
 /obj/effect/landmark/start/head_of_security,
@@ -85923,9 +85905,9 @@ cBb
 hAA
 naZ
 sep
-ebo
-ebo
-jvd
+naZ
+naZ
+iuV
 sIv
 rnk
 bAr
