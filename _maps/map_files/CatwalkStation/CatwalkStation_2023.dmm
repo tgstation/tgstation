@@ -29604,6 +29604,9 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
+"isJ" = (
+/turf/open/floor/iron,
+/area/station/cargo/miningoffice)
 "isN" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -39825,15 +39828,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/iron/freezer,
 /area/station/engineering/atmos/pumproom)
-"llP" = (
-/obj/effect/turf_decal/caution/stand_clear{
-	dir = 4
-	},
-/obj/docking_port/stationary/mining_home{
-	dir = 4
-	},
-/turf/open/floor/engine/hull,
-/area/space/nearstation)
 "llY" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -42318,6 +42312,15 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
+"lWi" = (
+/obj/docking_port/stationary/mining_home{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "lWn" = (
 /obj/structure/chair{
 	dir = 1
@@ -61745,9 +61748,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "miningshuttleexit"
-	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
@@ -70117,9 +70117,6 @@
 "tSW" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Mining Maintenance Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "miningshuttleexit"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/plating,
@@ -131833,11 +131830,11 @@ lAR
 hRj
 hRj
 hRj
-hRj
-hRj
-llP
-hRj
-hRj
+bCh
+isJ
+isJ
+isJ
+bCh
 hRj
 hRj
 rKA
@@ -132090,11 +132087,11 @@ lAR
 hRj
 hRj
 hRj
-hRj
-hRj
-hRj
-hRj
-hRj
+bCh
+bCh
+obJ
+bCh
+bCh
 hRj
 hRj
 rKA
@@ -132349,7 +132346,7 @@ hRj
 hRj
 hRj
 hRj
-hRj
+lWi
 hRj
 hRj
 hRj
