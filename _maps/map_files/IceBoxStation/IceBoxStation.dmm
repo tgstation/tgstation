@@ -14224,6 +14224,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
+"dSp" = (
+/obj/machinery/shower/directional/east,
+/obj/structure/fluff/shower_drain,
+/obj/effect/spawner/random/trash/soap,
+/turf/open/floor/iron/freezer,
+/area/station/commons/toilet)
 "dSJ" = (
 /obj/machinery/flasher/directional/north{
 	id = "visitorflash"
@@ -39867,8 +39873,6 @@
 	},
 /obj/item/storage/box/rxglasses,
 /obj/item/hand_labeler,
-/obj/item/gun/syringe,
-/obj/item/gun/syringe,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -84255,6 +84259,8 @@
 /obj/item/mod/module/thermal_regulator,
 /obj/effect/turf_decal/tile/blue/full,
 /obj/item/mod/module/signlang_radio,
+/obj/item/gun/syringe,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/storage)
 "xMh" = (
@@ -250185,7 +250191,7 @@ mmA
 whk
 uja
 aJi
-aJi
+dSp
 eCT
 uja
 oUO
