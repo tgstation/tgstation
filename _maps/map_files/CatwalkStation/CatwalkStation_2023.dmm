@@ -4804,7 +4804,6 @@
 	dir = 1
 	},
 /obj/structure/lattice,
-/obj/structure/lattice,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "buZ" = (
@@ -16864,7 +16863,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/obj/machinery/light/directional/west,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /obj/machinery/door/airlock/atmos/glass{
 	name = "Atmospherics"
@@ -42041,7 +42039,8 @@
 "lPE" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	initialize_directions = 4
+	initialize_directions = 4;
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
@@ -56439,7 +56438,7 @@
 /obj/machinery/door/airlock/engineering/glass,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/door/firedoor,
-/turf/closed/wall/r_wall,
+/turf/open/floor/iron/dark,
 /area/station/engineering/hallway)
 "pQQ" = (
 /obj/machinery/door/airlock/maintenance,
@@ -58961,6 +58960,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison/safe)
+"qEi" = (
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/atmos/project)
 "qEE" = (
 /obj/structure/chair{
 	dir = 8
@@ -67287,6 +67293,15 @@
 /obj/effect/spawner/random/contraband/permabrig_weapon,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
+"sVQ" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/station/engineering/atmos/upper)
 "sWg" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -72734,15 +72749,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"uxD" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/project)
 "uxG" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
@@ -74981,7 +74987,9 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos/upper)
 "vdI" = (
@@ -129533,7 +129541,7 @@ nPS
 wZd
 acU
 vdG
-yhi
+xZd
 dDV
 alk
 ppL
@@ -129788,9 +129796,9 @@ heR
 unl
 esK
 rUM
-anF
-hIp
-mWb
+sVQ
+jZx
+yhi
 dDV
 alk
 ppL
@@ -130045,9 +130053,9 @@ xpn
 aNf
 gOL
 cyW
-krK
-dWg
-xZd
+anF
+hIp
+mWb
 dDV
 alk
 ppL
@@ -195069,8 +195077,8 @@ eEW
 ijs
 ijs
 ckn
-fZu
-pVJ
+ijs
+ijs
 mLG
 lPE
 qRp
@@ -195326,10 +195334,10 @@ gvK
 pxN
 ijs
 ijs
-sUn
-iuu
+fZu
+pVJ
 sAj
-uxD
+psw
 qRp
 qRp
 smD
@@ -195583,8 +195591,8 @@ gvK
 pHB
 ijs
 ijs
-ijs
-ijs
+sUn
+iuu
 mLG
 psw
 qRp
@@ -195840,7 +195848,7 @@ bRd
 lFy
 kfb
 aZh
-sAj
+qEi
 sBl
 mLG
 lPE
