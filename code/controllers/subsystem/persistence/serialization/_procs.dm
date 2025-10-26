@@ -69,6 +69,8 @@
  * For atoms that will always be blacklisted do NOT use this proc. Use the blacklist in map_writer.dm
  * Examples:
  * - [/obj/machinery/atmospherics/components/unary] spawns beneath cryo tubes that causes duplication
+ * - [/obj/machinery/power/terminal] spawns beneath APC's that causes duplication
+ * - [/obj/structure/transport/linear/tram] needs to skip multi-tile object checks
  */
 /atom/proc/is_saveable(turf/current_loc)
 	return TRUE
