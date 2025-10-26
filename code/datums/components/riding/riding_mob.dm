@@ -424,6 +424,7 @@
 		COOLDOWN_START(src, pony_trot_cooldown, 500 MILLISECONDS)
 
 /datum/component/riding/creature/bear
+	vehicle_move_delay = 1.5
 
 /datum/component/riding/creature/bear/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
