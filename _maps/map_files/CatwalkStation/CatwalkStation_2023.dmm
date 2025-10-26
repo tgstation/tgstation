@@ -19798,10 +19798,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/openspace,
 /area/space/nearstation)
-"fGD" = (
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos/upper)
 "fGL" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -34758,13 +34754,10 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "jKI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured_large,
 /area/station/engineering/atmos/upper)
 "jKX" = (
 /turf/closed/wall/r_wall,
@@ -128078,7 +128071,7 @@ fgx
 kqH
 vLj
 hYg
-fGD
+oKx
 eQO
 lsV
 xCJ
