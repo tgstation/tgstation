@@ -60,7 +60,7 @@
 		return NONE
 	// Having epinephrine stops metabolization of an allergen, but doesn't remove it from the system
 	if(source.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
-		return COMSIG_MOB_STOP_REAGENT_TICK
+		return COMSIG_MOB_STOP_REAGENT_METABOLISM
 	// Otherwise the allergen causes a ton of damage though otherwise processes normally
 	source.apply_damage(3 * seconds_per_tick, TOX)
 	source.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)
