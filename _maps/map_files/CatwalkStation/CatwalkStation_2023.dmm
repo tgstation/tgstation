@@ -11678,9 +11678,14 @@
 /obj/machinery/computer/security/qm{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/machinery/button/door/directional/west{
+	pixel_y = -1;
+	name = "Cargo Lockdown";
+	id = "cargolockdown";
+	req_access = list("cargo")
 	},
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/qm)
@@ -13166,19 +13171,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"dJC" = (
-/obj/machinery/door/airlock/mining{
-	name = "Cargo Bay"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/machinery/door/poddoor/shutters/preopen{
-	name = "Cargo Bay Shutters";
-	id = "qm_cargobay";
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "dJE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -24256,7 +24248,6 @@
 /obj/effect/turf_decal/trimline/brown/filled,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining/glass,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "gND" = (
@@ -51379,6 +51370,7 @@
 /obj/effect/turf_decal/trimline/brown/end{
 	dir = 4
 	},
+/obj/machinery/door/airlock/mining/glass,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "ooS" = (
@@ -55807,7 +55799,9 @@
 /obj/effect/turf_decal/trimline/brown/filled,
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/mining/glass,
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Bay"
+	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "pCb" = (
@@ -81997,6 +81991,7 @@
 /obj/item/clothing/head/fedora/white,
 /obj/effect/turf_decal/trimline/brown/filled/end,
 /obj/machinery/camera/autoname/directional/south,
+/obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/holofloor/dark,
 /area/station/command/heads_quarters/qm)
 "wNC" = (
@@ -193547,10 +193542,10 @@ cjh
 cjh
 cjh
 mus
-dJC
+cXX
 mus
 mus
-dJC
+cXX
 dnU
 mus
 cXX
