@@ -654,7 +654,10 @@
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
+	var/sound_to_play = chosen_option[TOOL_PROCESSING_SOUND]
 	to_chat(user, span_notice("You start working on [src]."))
+	if(sound_to_play)
+		playsound(src, sound_to_play, 50, TRUE)
 	if(!process_item.use_tool(src, user, processing_time, volume=50))
 		return
 	var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]

@@ -16,6 +16,17 @@
 	if(isclothing(wear_mask)) //Mask
 		. += wear_mask.flash_protect
 
+/mob/living/carbon/sound_damage(damage, deafen)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
+		return
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	if(QDELETED(ears))
+		return
+	if(damage)
+		ears.apply_organ_damage(damage * ears.damage_multiplier)
+	if(deafen)
+		ears.adjust_temporary_deafness(deafen)
+
 /mob/living/carbon/get_ear_protection()
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_DEAF))
@@ -56,7 +67,7 @@
 	return null
 
 /mob/living/carbon/is_ears_covered()
-	for(var/obj/item/worn_thing as anything in get_equipped_items())
+	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_thing.flags_cover & EARS_COVERED)
 			return worn_thing
 
@@ -523,8 +534,8 @@
 
 	if(ears && (deafen_pwr || damage_pwr))
 		var/ear_damage = damage_pwr * effect_amount
-		var/deaf = deafen_pwr * effect_amount
-		ears.adjustEarDamage(ear_damage,deaf)
+		var/deaf = deafen_pwr * effect_amount * 2 SECONDS
+		sound_damage(ear_damage, deaf)
 
 		. = effect_amount //how soundbanged we are
 		SEND_SOUND(src, sound('sound/items/weapons/flash_ring.ogg',0,1,0,250))
