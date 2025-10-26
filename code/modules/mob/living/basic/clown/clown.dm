@@ -597,7 +597,7 @@
 	. = ..()
 	var/list/reachable_turfs = list()
 	for(var/turf/adjacent_turf in RANGE_TURFS(1, owner.loc))
-		if(adjacent_turf == owner.loc || !owner.CanReach(adjacent_turf) || !isopenturf(adjacent_turf))
+		if(adjacent_turf == owner.loc || !adjacent_turf.IsReachableBy(owner) || !isopenturf(adjacent_turf))
 			continue
 		reachable_turfs += adjacent_turf
 
@@ -625,10 +625,10 @@
 /datum/action/cooldown/exquisite_bunch/Trigger(mob/clicker, trigger_flags, atom/target)
 	if(activating)
 		return
-	var/bunch_turf = get_step(owner.loc, owner.dir)
+	var/atom/bunch_turf = get_step(owner.loc, owner.dir)
 	if(!bunch_turf)
 		return
-	if(!owner.CanReach(bunch_turf) || !isopenturf(bunch_turf))
+	if(!bunch_turf.IsReachableBy(owner) || !isopenturf(bunch_turf))
 		owner.balloon_alert(owner, "can't do that here!")
 		return
 	activating = TRUE

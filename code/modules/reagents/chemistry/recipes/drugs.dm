@@ -78,6 +78,7 @@
 	holder.clear_reagents()
 
 /datum/chemical_reaction/meth_crystal //Since the meth is a cooled pharmaceutical solvent, this precipitates it into a solid.
+	results = list(/datum/reagent/consumable/ethanol = 1) //we don't care what this reagent is. We only need to record its purity
 	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/toxin/acid = 2)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
@@ -86,36 +87,21 @@
 /datum/chemical_reaction/meth_crystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 
-	// Calculate purity ignoring sulfuric acid
-	var/total_nonacid = 0
-	var/meth_amt_in_mix = 0
-	for(var/datum/reagent/R in holder.reagent_list)
-		if(istype(R, /datum/reagent/toxin/acid))
-			continue // acid doesn't count against purity
-		total_nonacid += R.volume
-		if(istype(R, /datum/reagent/drug/methamphetamine))
-			meth_amt_in_mix += R.volume
-
-	var/purity = (total_nonacid > 0) ? (meth_amt_in_mix / total_nonacid) : 0.5 //All this tints the crystal above blue purity.
-
+	var/datum/reagent/consumable/ethanol/dummy_reagent = holder.has_reagent(/datum/reagent/consumable/ethanol)
 	for(var/i in 1 to round(created_volume, CHEMICAL_VOLUME_ROUNDING))
 		var/obj/item/food/drug/meth_crystal/new_crystal = new(location)
 		new_crystal.pixel_x = rand(-6, 6)
 		new_crystal.pixel_y = rand(-6, 6)
+		new_crystal.color = gradient("#FAFAFA", "#78C8FA", dummy_reagent.creation_purity)
 
-		var/effective_purity = 0
-		if(purity > 0.9)
-			effective_purity = (purity - 0.9) / 0.1
+		var/meth_amt = 10
+		new_crystal.reagents.add_reagent(/datum/reagent/drug/methamphetamine, meth_amt)
+		var/imp_amt = round(meth_amt * (1 - dummy_reagent.creation_purity) * 0.25, 0.1)
+		if(imp_amt > 0)
+			new_crystal.reagents.add_reagent(/datum/reagent/consumable/failed_reaction, imp_amt)
 
-		new_crystal.color = BlendRGB("#FAFAFA", "#78C8FA", effective_purity)
-
-		if(new_crystal.reagents)
-			new_crystal.reagents.clear_reagents()
-			var/meth_amt = 10
-			new_crystal.reagents.add_reagent(/datum/reagent/drug/methamphetamine, meth_amt)
-			var/imp_amt = round(meth_amt * (1 - purity) * 0.25, 0.1)
-			if(imp_amt > 0)
-				new_crystal.reagents.add_reagent(/datum/reagent/consumable/failed_reaction, imp_amt)
+	dummy_reagent.volume = 0
+	holder.update_total()
 
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)

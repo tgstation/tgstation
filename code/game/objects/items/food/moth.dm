@@ -194,7 +194,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/green_lasagne/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/green_lasagne_slice
 	name = "green lasagne al forno slice"

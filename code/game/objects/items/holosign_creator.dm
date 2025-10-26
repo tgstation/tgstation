@@ -13,6 +13,9 @@
 	throw_speed = 3
 	throw_range = 7
 	item_flags = NOBLUDGEON
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	var/list/signs
 	var/max_signs = 10
 	//time to create a holosign in deciseconds.

@@ -7,7 +7,6 @@
 	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?;Make your next murder FUN!"
 	vend_reply = "Come back for more!"
 	light_mask = "donksoft-light-mask"
-	circuit = /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	products = list(
 		/obj/item/card/emagfake = 4,
 		/obj/item/hot_potato/harmless/toy = 4,

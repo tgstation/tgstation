@@ -40,7 +40,7 @@
 			span_hear("You hear clicking."))
 		var/floor_to_wall = get_dir(user, on_wall)
 
-		var/obj/hanging_object = new result_path(get_turf(user), floor_to_wall, TRUE)
+		var/obj/hanging_object = new result_path(get_turf(user))
 		hanging_object.setDir(floor_to_wall)
 		if(pixel_shift)
 			switch(floor_to_wall)
@@ -52,6 +52,7 @@
 					hanging_object.pixel_x = pixel_shift
 				if(WEST)
 					hanging_object.pixel_x = -pixel_shift
+		hanging_object.find_and_hang_on_wall()
 		after_attach(hanging_object)
 
 	qdel(src)
@@ -93,3 +94,6 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
 	custom_price = PAYCHECK_CREW * 0.5
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP

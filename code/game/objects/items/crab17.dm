@@ -22,7 +22,7 @@
 		var/turf/targetturf = get_safe_random_station_turf_equal_weight()
 		if (!targetturf)
 			return FALSE
-		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+		var/list/accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
 		var/mob/living/L
 		if(isliving(user))
 			L = user
@@ -201,7 +201,7 @@
  * Grabs the accounts to be robbed and puts them in accounts_to_rob, tells the accounts they're being drained and calls dump() to start draining.
  */
 /obj/structure/checkoutmachine/proc/start_dumping()
-	accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
+	accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
 	accounts_to_rob -= bogdanoff?.get_bank_account()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i

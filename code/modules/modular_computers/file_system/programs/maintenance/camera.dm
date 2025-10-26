@@ -27,22 +27,30 @@
 	. = ..()
 	internal_camera = new(computer)
 	internal_camera.print_picture_on_snap = FALSE
+	RegisterSignal(internal_camera, COMSIG_CAMERA_IMAGE_CAPTURED, PROC_REF(save_picture))
 
 /datum/computer_file/program/maintenance/camera/Destroy()
-	if(internal_camera)
-		QDEL_NULL(internal_camera)
-	if(internal_picture)
-		QDEL_NULL(internal_picture)
+	QDEL_NULL(internal_camera)
+	QDEL_NULL(internal_picture)
 	return ..()
 
 /datum/computer_file/program/maintenance/camera/tap(atom/tapped_atom, mob/living/user, list/modifiers)
 	. = ..()
-	if(internal_picture)
-		QDEL_NULL(internal_picture)
+
+	QDEL_NULL(internal_picture)
+	if(internal_camera.blending)
+		user.balloon_alert(user, "still blending!")
+		return
+
 	var/turf/our_turf = get_turf(tapped_atom)
 	var/spooky_camera = locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files
 	internal_camera.see_ghosts = spooky_camera ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
-	internal_picture = internal_camera.captureimage(our_turf, user, internal_camera.picture_size_x + 1, internal_camera.picture_size_y + 1)
+	INVOKE_ASYNC(internal_camera, TYPE_PROC_REF(/obj/item/camera, captureimage), our_turf, user, internal_camera.picture_size_x + 1, internal_camera.picture_size_y + 1)
+
+/datum/computer_file/program/maintenance/camera/proc/save_picture(cam, target, user, datum/picture/picture)
+	SIGNAL_HANDLER
+
+	internal_picture = picture
 	picture_number++
 	computer.save_photo(internal_picture.picture_image)
 
@@ -62,7 +70,7 @@
 	switch(action)
 		if("print_photo")
 			if(computer.stored_paper <= 0)
-				to_chat(usr, span_notice("Hardware error: Printer out of paper."))
+				to_chat(ui.user, span_notice("Hardware error: Printer out of paper."))
 				return
 			internal_camera.printpicture(usr, internal_picture)
 			computer.stored_paper--

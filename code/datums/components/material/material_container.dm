@@ -673,16 +673,16 @@
 //===========================================HIGH LEVEL=======================================
 
 /**
- * For spawning mineral sheets at a specific location. Used by machines to output sheets.
+ * For spawning stacks (mineral sheets or ore) at a specific location. Used by machines to output sheets.
  *
  * Arguments:
- * sheet_amt: number of sheets to extract
+ * stack_amt: number of sheets to extract
  * [material][datum/material]: type of sheets present in this container to extract
  * [target][atom]: drop location
- * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_SHEETS_RETRIEVED and is used mostly for silo logging
+ * [atom][context]: context - the atom performing the operation, this is the last argument sent in COMSIG_MATCONTAINER_STACK_RETRIEVED and is used mostly for silo logging
  * user_data - in the form rendered by ID_DATA(user), for material logging (and if this component is connected to a silo, also for permission checking)
  */
-/datum/component/material_container/proc/retrieve_sheets(sheet_amt, datum/material/material, atom/target = null, atom/context = parent, alist/user_data)
+/datum/component/material_container/proc/retrieve_stack(stack_amt, datum/material/material, atom/target = null, atom/context = parent, alist/user_data)
 	//do we support sheets of this material
 	if(!material.sheet_type)
 		return 0 //Add greyscale sheet handling here later
@@ -690,8 +690,8 @@
 		return 0
 
 	//requested amount greater than available amount or just an invalid value
-	sheet_amt = min(round(materials[material] / SHEET_MATERIAL_AMOUNT), sheet_amt)
-	if(sheet_amt <= 0)
+	stack_amt = min(round(materials[material] / SHEET_MATERIAL_AMOUNT), stack_amt)
+	if(stack_amt <= 0)
 		return 0
 	//auto drop location
 	if(!target)
@@ -702,27 +702,30 @@
 
 	//eject sheets based on available amount after each iteration
 	var/count = 0
-	while(sheet_amt > 0)
+	while(stack_amt > 0)
+		var/type_to_retrieve = material.sheet_type || material.ore_type
 		//don't merge yet. we need to do stuff with it first
-		var/obj/item/stack/sheet/new_sheets = new material.sheet_type(target, min(sheet_amt, MAX_STACK_SIZE), FALSE)
-		new_sheets.manufactured = TRUE
-		count += new_sheets.amount
+		var/obj/item/stack/new_stack = new type_to_retrieve(target, min(stack_amt, MAX_STACK_SIZE), FALSE)
+		if(istype(new_stack, /obj/item/stack/sheet))
+			var/obj/item/stack/sheet/new_sheets = new_stack
+			new_sheets.manufactured = TRUE
+		count += new_stack.amount
 		//use material & deduct work needed
-		use_amount_mat(new_sheets.amount * SHEET_MATERIAL_AMOUNT, material)
-		sheet_amt -= new_sheets.amount
+		use_amount_mat(new_stack.amount * SHEET_MATERIAL_AMOUNT, material)
+		stack_amt -= new_stack.amount
 		//send signal
-		SEND_SIGNAL(src, COMSIG_MATCONTAINER_SHEETS_RETRIEVED, new_sheets, context, user_data)
+		SEND_SIGNAL(src, COMSIG_MATCONTAINER_STACK_RETRIEVED, new_stack, context, user_data)
 		//no point merging anything into an already full stack
-		if(new_sheets.amount == new_sheets.max_amount)
+		if(new_stack.amount == new_stack.max_amount)
 			continue
 		//now we can merge since we are done with it
 		for(var/obj/item/stack/item_stack in target)
-			if(item_stack == new_sheets || item_stack.type != material.sheet_type) //don't merge with self or different type
+			if(item_stack == new_stack || item_stack.type != type_to_retrieve) //don't merge with self or different type
 				continue
 			//speed merge
-			var/merge_amount = min(item_stack.amount, new_sheets.max_amount - new_sheets.get_amount())
+			var/merge_amount = min(item_stack.amount, new_stack.max_amount - new_stack.get_amount())
 			item_stack.use(merge_amount)
-			new_sheets.add(merge_amount)
+			new_stack.add(merge_amount)
 			break
 	return count
 
@@ -736,7 +739,7 @@
 /datum/component/material_container/proc/retrieve_all(target = null, atom/context = parent)
 	var/result = 0
 	for(var/MAT in materials)
-		result += retrieve_sheets(amount2sheet(materials[MAT]), MAT, target, context, user_data = ID_DATA(null))
+		result += retrieve_stack(amount2sheet(materials[MAT]), MAT, target, context, user_data = ID_DATA(null))
 	return result
 //============================================================================================
 

@@ -388,7 +388,7 @@
 
 	for(var/obj/item/fish/fish_type as anything in types_to_mate_with)
 		var/list/type_fishes = tracked_fish_by_type[fish_type]
-		if(length(type_fishes) >= initial(fish_type.stable_population))
+		if(length(type_fishes) >= fish_type::stable_population)
 			continue
 		candidates += type_fishes
 

@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		Obtaining control of the weapon will be easier if Head of Staff office APCs are already under your control."
 	cost = 130
 	one_purchase = TRUE
-	minimum_apcs = 15 // So you cant speedrun delta
+	minimum_apcs = 10 // So you cant speedrun delta
 	power_type = /datum/action/innate/ai/nuke_station
 	unlock_text = span_notice("You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.")
 	///List of areas that grant discounts. "heads_quarters" will match any head of staff office.
@@ -888,7 +888,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 
 /datum/ai_module/malf/upgrade/upgrade_turrets/upgrade(mob/living/silicon/ai/AI)
 	for(var/obj/machinery/porta_turret/ai/turret as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/porta_turret/ai))
-		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+		turret.AddElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 		turret.max_integrity = 200
 		turret.repair_damage(200)
 		turret.lethal_projectile = /obj/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.

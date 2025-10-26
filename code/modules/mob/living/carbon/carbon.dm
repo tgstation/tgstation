@@ -512,7 +512,7 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	for(var/obj/item/clothing/worn_item in get_equipped_items())
+	for(var/obj/item/clothing/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		tint += worn_item.tint
 
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -1076,18 +1076,6 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
-
-/mob/living/carbon/proc/hypnosis_vulnerable()
-	if(HAS_MIND_TRAIT(src, TRAIT_UNCONVERTABLE))
-		return FALSE
-	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
-		return TRUE
-	if(IsSleeping() || IsUnconscious())
-		return TRUE
-	if(HAS_TRAIT(src, TRAIT_DUMB))
-		return TRUE
-	if(mob_mood.sanity < SANITY_UNSTABLE)
-		return TRUE
 
 /mob/living/carbon/wash(clean_types)
 	. = ..()

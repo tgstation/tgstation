@@ -485,84 +485,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
 
-/**
- * Handles the body of a human
- *
- * Handles lipstick, having no eyes, eye color, undergarnments like underwear, undershirts, and socks, and body layers.
- * Arguments:
- * * species_human - Human, whoever we're handling the body for
- */
-/datum/species/proc/handle_body(mob/living/carbon/human/species_human)
-	species_human.remove_overlay(BODY_LAYER)
-	species_human.remove_overlay(EYES_LAYER)
-
-	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN))
-		return
-
-	if(!HAS_TRAIT(species_human, TRAIT_HUSK))
-		var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
-		if(noggin?.head_flags & HEAD_EYESPRITES)
-			// eyes (missing eye sprites get handled by the head itself, but sadly we have to do this stupid shit here, for now)
-			var/obj/item/organ/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
-			if(eye_organ)
-				eye_organ.refresh(call_update = FALSE)
-				species_human.overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(species_human)
-				species_human.apply_overlay(EYES_LAYER)
-
-	if(HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
-		return
-
-	// Underwear, Undershirts & Socks
-	var/list/standing = list()
-	if(species_human.underwear)
-		var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[species_human.underwear]
-		var/mutable_appearance/underwear_overlay
-		if(underwear)
-			if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
-				underwear_overlay = mutable_appearance(wear_female_version(underwear.icon_state, underwear.icon, FEMALE_UNIFORM_FULL), layer = -BODY_LAYER)
-			else
-				underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-			if(!underwear.use_static)
-				underwear_overlay.color = species_human.underwear_color
-			standing += underwear_overlay
-
-	if(species_human.undershirt)
-		var/datum/sprite_accessory/undershirt/undershirt = SSaccessories.undershirt_list[species_human.undershirt]
-		if(undershirt)
-			var/mutable_appearance/working_shirt
-			if(species_human.dna.species.sexes && species_human.physique == FEMALE)
-				working_shirt = mutable_appearance(wear_female_version(undershirt.icon_state, undershirt.icon), layer = -BODY_LAYER)
-			else
-				working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, layer = -BODY_LAYER)
-			standing += working_shirt
-
-	if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodyshape & BODYSHAPE_DIGITIGRADE))
-		var/datum/sprite_accessory/socks/socks = SSaccessories.socks_list[species_human.socks]
-		if(socks)
-			standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
-
-	if(standing.len)
-		species_human.overlays_standing[BODY_LAYER] = standing
-
-	species_human.apply_overlay(BODY_LAYER)
-
-/// Updates face (as of now, only eye) offsets
-/datum/species/proc/update_face_offset(mob/living/carbon/human/species_human)
-	var/list/eye_overlays = species_human.overlays_standing[EYES_LAYER]
-	species_human.remove_overlay(EYES_LAYER)
-
-	if(HAS_TRAIT(species_human, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(species_human, TRAIT_HUSK) || !length(eye_overlays))
-		return
-
-	var/obj/item/bodypart/head/noggin = species_human.get_bodypart(BODY_ZONE_HEAD)
-	for (var/mutable_appearance/overlay as anything in eye_overlays)
-		overlay.pixel_w = 0
-		overlay.pixel_z = 0
-		noggin.worn_face_offset.apply_offset(overlay)
-
-	species_human.overlays_standing[EYES_LAYER] = eye_overlays
-	species_human.apply_overlay(EYES_LAYER)
-
 // This exists so sprite accessories can still be per-layer without having to include that layer's
 // number in their sprite name, which causes issues when those numbers change.
 /datum/species/proc/mutant_bodyparts_layertext(layer)
@@ -604,7 +526,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/list/new_features = list()
 	var/static/list/organs_to_randomize = list()
-	for(var/obj/item/organ/organ_path as anything in mutant_organs)
+	for(var/obj/item/organ/organ_path as anything in get_organs())
 		if(!organ_path.bodypart_overlay)
 			continue
 		var/overlay_path = initial(organ_path.bodypart_overlay)
@@ -1475,21 +1397,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return cached_features
 
 	var/list/features = list()
+	var/list/mut_organs = get_organs()
 
 	for (var/preference_type in GLOB.preference_entries)
 		var/datum/preference/preference = GLOB.preference_entries[preference_type]
 		if ( \
 			(preference.relevant_inherent_trait in inherent_traits) \
-			|| (preference.relevant_external_organ in get_mut_organs()) \
+			|| (preference.relevant_organ in mut_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 			|| (preference.relevant_body_markings in body_markings) \
 		)
 			features += preference.savefile_key
-
-	for (var/obj/item/organ/organ_type as anything in mutant_organs)
-		var/preference = initial(organ_type.preference)
-		if (!isnull(preference))
-			features += preference
 
 	GLOB.features_by_species[type] = features
 
@@ -1536,7 +1454,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_hiss_sound(mob/living/carbon/human/human)
 	return
 
-/datum/species/proc/get_mut_organs(include_brain = TRUE)
+/// Returns a list of all organ typepaths this species probably has
+/datum/species/proc/get_organs(include_brain = TRUE)
 	var/list/mut_organs = list()
 	mut_organs += mutant_organs
 	if (include_brain)
@@ -1553,7 +1472,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return mut_organs
 
 /datum/species/proc/get_types_to_preload()
-	return get_mut_organs(FALSE)
+	return get_organs(FALSE)
 
 
 /**

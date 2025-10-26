@@ -104,7 +104,7 @@
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
-	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
+	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !source.IsReachableBy(clicker))
 		return
 	var/y_position = source.get_cached_height() + 1
 	var/obj/effect/overlay/happiness_overlay/hearts = new

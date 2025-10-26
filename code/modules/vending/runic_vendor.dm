@@ -14,7 +14,7 @@
 	var/time_to_decay = 30 SECONDS
 	/// Area around the vendor that will pushback nearby mobs.
 	var/pulse_distance = PULSE_DISTANCE_RANGE
-
+	allow_custom = FALSE
 
 /obj/machinery/vending/runic_vendor/Initialize(mapload)
 	if(mapload)

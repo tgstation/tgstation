@@ -422,16 +422,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	damtype = BURN
 	force = 4
 
-	if(reagents && reagents.has_reagent(/datum/reagent/drug/methamphetamine))
+	if(reagents?.has_reagent(/datum/reagent/flash_powder))
+		if(!isliving(loc))
+			loc.visible_message(span_hear("\The [src] burns up!"))
+			qdel(src)
+			return
+		var/mob/living/user = loc
+		loc.visible_message(span_hear("[user]'s [name] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
+		user.flash_act(INFINITY, visual = TRUE, length = 5 SECONDS)
+		user.playsound_local(get_turf(user), SFX_EXPLOSION, 50, TRUE)
+		user.cause_hallucination(/datum/hallucination/death, "trick trick [name]")
+		qdel(src)
+		return
+
+	if(reagents?.has_reagent(/datum/reagent/drug/methamphetamine))
 		reagents.flags |= NO_REACT
 
-	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
+	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
-	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
+	if(reagents?.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
 		e.start(src)
@@ -709,6 +722,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Xeno Filtered brand cigarette."
 	lung_harm = 2
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
+
+/obj/item/cigarette/flash_powder
+	desc = /obj/item/cigarette/space_cigarette::desc
+	list_reagents = list (/datum/reagent/drug/nicotine = 9, /datum/reagent/flash_powder = 5)
 
 // Rollies.
 

@@ -1,8 +1,8 @@
 ///Detects movables that may have been accidentally placed in space, as well as movables which do not have the proper nearspace area (meaning they aren't lit properly.)
-/datum/unit_test/mapping_nearstation_test
+/datum/unit_test/maptest_mapping_nearstation_test
 	priority = TEST_PRE
 
-/datum/unit_test/mapping_nearstation_test/Run()
+/datum/unit_test/maptest_mapping_nearstation_test/Run()
 	if(SSmapping.is_planetary())
 		return //No need to test for orphaned spaced atoms on this map.
 

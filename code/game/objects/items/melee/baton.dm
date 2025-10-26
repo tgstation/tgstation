@@ -30,7 +30,7 @@
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
 	/// How much armor does our baton ignore? This operates as armour penetration, but only applies to the stun attack.
-	var/stun_armour_penetration = 15
+	var/stun_armour_penetration = 15 // pens very light / cosmetic armor
 	/// What armor does our stun attack check before delivering the attack?
 	var/armour_type_against_stun = MELEE
 	/// Chance of causing force_say() when stunning a human mob
@@ -96,7 +96,7 @@
 
 	readout += "\nThe effects of each strike can be mitigated by utilizing [span_warning("[armour_type_against_stun]")] armor."
 
-	readout += "\nIt has a stun armor-piercing capability of [span_warning("[get_stun_penetration_value()]%")]."
+	readout += "\nIt has a stun armor-piercing capability of [span_warning("[stun_armour_penetration]%")]."
 	return readout.Join("\n")
 
 /// Checks if we can actually USE the baton. Impure
@@ -229,8 +229,7 @@
 			var/mob/living/carbon/human/human_target = target
 			if(prob(force_say_chance))
 				human_target.force_say()
-		var/effective_armour_penetration = get_stun_penetration_value()
-		var/armour_block = target.run_armor_check(null, armour_type_against_stun, null, null, effective_armour_penetration)
+		var/armour_block = target.run_armor_check(null, armour_type_against_stun, null, null, stun_armour_penetration)
 		target.apply_damage(stamina_damage, STAMINA, blocked = armour_block)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
@@ -303,10 +302,6 @@
 	user.apply_damage(2 * force, BRUTE, BODY_ZONE_HEAD, attacking_item = src)
 	log_combat(user, user, "accidentally stun attacked [user.p_them()]self due to their clumsiness", src)
 	user.do_attack_animation(user)
-
-/// Handles the penetration value of our baton, called during baton_effect()
-/obj/item/melee/baton/proc/get_stun_penetration_value()
-	return stun_armour_penetration
 
 /obj/item/conversion_kit
 	name = "conversion kit"
@@ -410,19 +405,18 @@
 	name = "bronze-capped telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked BRONZE, and thus has mediocre penetrative power."
 	icon_state = "telebaton_bronze"
-	stun_armour_penetration = 20
 
 /obj/item/melee/baton/telescopic/silver
 	name = "silver-capped telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked SILVER, and thus has decent penetrative power."
 	icon_state = "telebaton_silver"
-	stun_armour_penetration = 40
+	stun_armour_penetration = 30 // strong enough to pen sec armor
 
 /obj/item/melee/baton/telescopic/gold
 	name = "gold-capped telescopic baton"
 	desc = "A compact yet robust personal defense weapon. Can be concealed when folded. This one is ranked GOLD, and thus has exceptional penetrative power."
 	icon_state = "telebaton_gold"
-	stun_armour_penetration = 60
+	stun_armour_penetration = 50 // strong enough to pen syndicate modsuits
 
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
@@ -440,7 +434,7 @@
 	cooldown = 2.5 SECONDS
 	force_say_chance = 80 //very high force say chance because it's funny
 	stamina_damage = 85
-	stun_armour_penetration = 40
+	stun_armour_penetration = 30 // strong enough to pen sec armor
 	clumsy_knockdown_time = 24 SECONDS
 	affect_cyborg = TRUE
 	wait_desc = "still charging!"
@@ -476,8 +470,6 @@
 	force_say_chance = 50
 	stamina_damage = 60
 	armour_type_against_stun = ENERGY
-	// This value is added to our stun armour penetration when called by get_stun_penetration_value(). For giving some batons extra OOMPH.
-	var/additional_stun_armour_penetration = 0
 	knockdown_time = 5 SECONDS
 	clumsy_knockdown_time = 15 SECONDS
 	cooldown = 2.5 SECONDS
@@ -509,8 +501,6 @@
 	var/convertible = TRUE //if it can be converted with a conversion kit
 	///Whether or not our inhand changes when active.
 	var/active_changes_inhand = TRUE
-	///Whether or not our baton visibly changes the inhand sprite based on inserted cell
-	var/tip_changes_color = TRUE
 	///When set, inhand_icon_state defaults to this instead of base_icon_state
 	var/base_inhand_state = null
 
@@ -581,10 +571,7 @@
 	if(active)
 		icon_state = "[base_icon_state]_active"
 		if(active_changes_inhand)
-			if(tip_changes_color)
-				inhand_icon_state = "[base_inhand]_active_[get_baton_tip_color()]"
-			else
-				inhand_icon_state = "[base_inhand]_active"
+			inhand_icon_state = "[base_inhand]_active"
 		return ..()
 	if(!cell)
 		icon_state = "[base_icon_state]_nocell"
@@ -646,35 +633,7 @@
 
 /// Toggles the stun baton's light
 /obj/item/melee/baton/security/proc/toggle_light()
-	set_light_color(get_baton_tip_color(TRUE))
 	set_light_on(!light_on)
-	return
-
-/// Change our baton's top color based on the contained cell.
-/obj/item/melee/baton/security/proc/get_baton_tip_color(set_light = FALSE)
-	var/tip_type_to_set
-	var/tip_light_to_set
-
-	if(cell)
-		var/chargepower = cell.maxcharge
-		var/zap_value = clamp(chargepower/STANDARD_CELL_CHARGE, 0, 100)
-		switch(zap_value)
-			if(-INFINITY to 10)
-				tip_type_to_set = "orange"
-				tip_light_to_set = LIGHT_COLOR_ORANGE
-			if(11 to 20)
-				tip_type_to_set = "red"
-				tip_light_to_set = LIGHT_COLOR_INTENSE_RED
-			if(21 to 30)
-				tip_type_to_set = "green"
-				tip_light_to_set = LIGHT_COLOR_GREEN
-			if(31 to INFINITY)
-				tip_type_to_set = "blue"
-				tip_light_to_set = LIGHT_COLOR_BLUE
-	else
-		tip_type_to_set = "orange"
-
-	return set_light ? tip_light_to_set : tip_type_to_set
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
@@ -734,13 +693,6 @@
 	stun_override = 0 //Avoids knocking people down prematurely.
 	return ..()
 
-/obj/item/melee/baton/security/get_stun_penetration_value()
-	if(cell)
-		var/chargepower = cell.maxcharge
-		var/zap_pen = clamp(chargepower/STANDARD_CELL_CHARGE, 0, 100)
-		return zap_pen + additional_stun_armour_penetration
-	return stun_armour_penetration + additional_stun_armour_penetration
-
 /*
  * After a target is hit, we apply some status effects.
  * After a period of time, we then check to see what stun duration we give.
@@ -776,7 +728,7 @@
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
+	if(!. && active && prob(throw_stun_chance) && hit_atom)
 		finalize_baton_attack(hit_atom, throwingdatum?.get_thrower())
 
 /obj/item/melee/baton/security/emp_act(severity)
@@ -808,6 +760,41 @@
 /obj/item/melee/baton/security/loaded/hos
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/super
 
+///Stun Sword
+/obj/item/melee/baton/security/stunsword
+	name = "\improper NT-20 'Excalibur' Stunsword"
+	desc = "It's a sword. It stuns. What more could you want?"
+	icon_state = "stunsword"
+	inhand_icon_state = "stunsword"
+	base_icon_state = "stunsword"
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	w_class = WEIGHT_CLASS_HUGE
+	sharpness = SHARP_EDGED
+	force = 30
+	throwforce = 10
+	wound_bonus = 0
+	exposed_wound_bonus = 30
+	stun_armour_penetration = 40
+	throw_stun_chance = 60
+	convertible = FALSE
+
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list(
+		"Default" = "stunsword",
+		"Energy Stunsword" = "stunsword_energy",
+	)
+	unique_reskin_changes_inhand = TRUE
+	unique_reskin_changes_base_icon_state = TRUE
+
+/obj/item/melee/baton/security/stunsword/loaded
+	preload_cell_type = /obj/item/stock_parts/power_store/cell/bluespace // 40% stun_armour_penetration
+
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
@@ -830,7 +817,6 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	active_changes_inhand = FALSE
-	tip_changes_color = FALSE
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
@@ -896,7 +882,6 @@
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
 	active_changes_inhand = FALSE
-	tip_changes_color = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
@@ -977,7 +962,7 @@
 	knockdown_time = 0.25 SECONDS
 	demolition_mod = 1.5
 	stamina_damage = 30 // 4 hit stamcrit
-	stun_armour_penetration = 30 // bronze-silver telescopic
+	stun_armour_penetration = 25 // bronze-silver telescopic
 	force = 16 // 7 hit crit
 	exposed_wound_bonus = 5
 

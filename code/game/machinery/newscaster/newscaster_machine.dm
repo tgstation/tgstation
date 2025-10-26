@@ -72,12 +72,13 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
-/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+/obj/machinery/newscaster/Initialize(mapload)
 	. = ..()
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src

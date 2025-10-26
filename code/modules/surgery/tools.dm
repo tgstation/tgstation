@@ -643,6 +643,9 @@
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
 	var/surgical_tray_overlay = "filter"

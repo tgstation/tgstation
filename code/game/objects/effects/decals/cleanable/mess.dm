@@ -194,7 +194,8 @@
 	if(. || !ishuman(user))
 		return
 	var/mob/living/carbon/human/as_human = user
-	if(!isflyperson(as_human))
+	var/obj/item/organ/tongue/user_tongue = user.get_organ_slot(ORGAN_SLOT_TONGUE)
+	if(!istype(user_tongue, /obj/item/organ/tongue/fly))
 		return
 	playsound(get_turf(src), 'sound/items/drink.ogg', 50, TRUE) //slurp
 	as_human.visible_message(span_alert("[as_human] extends a small proboscis into the vomit pool, sucking it with a slurping sound."))

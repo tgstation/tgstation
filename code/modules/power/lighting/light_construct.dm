@@ -28,11 +28,10 @@
 	fire = 80
 	acid = 50
 
-/obj/structure/light_construct/Initialize(mapload, ndir, building)
+/obj/structure/light_construct/Initialize(mapload)
 	. = ..()
-	if(building)
-		setDir(ndir)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
@@ -107,11 +106,9 @@
 					return
 				to_chat(user, span_notice("You begin deconstructing [src]..."))
 				if (tool.use_tool(src, user, 30, volume=50))
-					new /obj/item/stack/sheet/iron(drop_location(), sheets_refunded)
 					user.visible_message(span_notice("[user.name] deconstructs [src]."), \
 						span_notice("You deconstruct [src]."), span_hear("You hear a ratchet."))
 					playsound(src, 'sound/items/deconstruct.ogg', 75, TRUE)
-					qdel(src)
 				return
 
 			if(istype(tool, /obj/item/stack/cable_coil))
@@ -148,6 +145,7 @@
 					if("bulb")
 						new_light = new /obj/machinery/light/small/built(loc)
 				new_light.setDir(dir)
+				new_light.find_and_hang_on_wall()
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell
@@ -159,10 +157,12 @@
 
 /obj/structure/light_construct/blob_act(obj/structure/blob/attacking_blob)
 	if(attacking_blob && attacking_blob.loc == loc)
-		qdel(src)
+		deconstruct(FALSE)
 
-/obj/structure/light_construct/atom_deconstruct(disassembled = TRUE)
+/obj/structure/light_construct/atom_deconstruct(disassembled)
 	new /obj/item/stack/sheet/iron(loc, sheets_refunded)
+	if(stage == LIGHT_CONSTRUCT_WIRED)
+		new /obj/item/stack/cable_coil(drop_location(), 1, "red")
 
 /obj/structure/light_construct/small
 	name = "small light fixture frame"

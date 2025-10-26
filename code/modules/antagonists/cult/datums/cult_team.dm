@@ -58,6 +58,7 @@
 				SEND_SOUND(mind.current, 'sound/music/antag/bloodcult/bloodcult_eyes.ogg')
 				to_chat(mind.current, span_cult_large(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
 				mind.current.AddElement(/datum/element/cult_eyes)
+				ADD_TRAIT(mind.current, TRAIT_DESENSITIZED, CULT_TRAIT)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
 

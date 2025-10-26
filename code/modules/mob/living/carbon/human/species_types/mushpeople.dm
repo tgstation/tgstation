@@ -59,8 +59,6 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
 
-	preference = "feature_mushperson_cap"
-
 	dna_block = /datum/dna_block/feature/mush_cap
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 

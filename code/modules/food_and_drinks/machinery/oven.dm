@@ -46,6 +46,9 @@
 		remove_shared_particles(particle_type)
 	return ..()
 
+/obj/machinery/oven/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || istype(contained, /obj/item/plate/oven_tray)
+
 /// Used to determine if the oven appears active and cooking, or offline.
 /obj/machinery/oven/proc/appears_active()
 	return !open && length(used_tray?.contents) && !(machine_stat & (BROKEN|NOPOWER))
@@ -123,11 +126,11 @@
 ///Adds a tray to the oven, making sure the shit can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
 	used_tray = oven_tray
+	playsound(src, SFX_TRAY_INSERT, 50, TRUE)
 
 	if(!open)
 		oven_tray.vis_flags |= VIS_HIDE
 	vis_contents += oven_tray
-	oven_tray.flags_1 |= IS_ONTOP_1
 	oven_tray.vis_flags |= VIS_INHERIT_PLANE
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
@@ -144,7 +147,6 @@
 
 /obj/machinery/oven/proc/tray_removed_from_oven(obj/item/oven_tray)
 	SIGNAL_HANDLER
-	oven_tray.flags_1 &= ~IS_ONTOP_1
 	oven_tray.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= oven_tray
 	used_tray = null
@@ -260,6 +262,9 @@
 	icon_state = "oven_tray"
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
+	sound_vary = TRUE
+	pickup_sound = SFX_TRAY_PICKUP
+	drop_sound = SFX_TRAY_DROP
 
 /obj/item/plate/oven_tray/item_interaction_secondary(mob/living/user, obj/item/item, list/modifiers)
 	if(isnull(item.atom_storage))

@@ -113,7 +113,8 @@
 			strength_bonus *= potential_spine.strength_bonus
 
 		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus, 1)
-		grant_experience = TRUE
+		if(defender.stat <= HARD_CRIT) // Do not grant experience against dead targets
+			grant_experience = TRUE
 
 	var/current_atk_verb = atk_verb
 	var/current_atk_verbed = atk_verbed
@@ -160,7 +161,7 @@
 		return TRUE
 
 	if(grant_experience)
-		skill_experience_adjustment(attacker, (damage/lower_force))
+		skill_experience_adjustment(attacker, defender, (damage/lower_force))
 
 	//Determine our attackers athletics level as a knockout probability bonus
 	var/attacker_athletics_skill =  (attacker.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER) + base_unarmed_effectiveness)
@@ -180,7 +181,7 @@
 
 	playsound(defender, 'sound/effects/coin2.ogg', 40, TRUE)
 	new /obj/effect/temp_visual/crit(get_turf(defender))
-	skill_experience_adjustment(attacker, experience_earned) //double experience for a successful crit
+	skill_experience_adjustment(attacker, defender, experience_earned) //double experience for a successful crit
 
 	return TRUE
 
@@ -221,7 +222,7 @@
 	return TRUE
 
 /// Handles our instances of experience gain while boxing. It also applies the exercised status effect.
-/datum/martial_art/boxing/proc/skill_experience_adjustment(mob/living/boxer, experience_value)
+/datum/martial_art/boxing/proc/skill_experience_adjustment(mob/living/boxer, mob/living/defender, experience_value)
 	//Boxing in heavier gravity gives you more experience
 	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 1 : 2
 
@@ -261,7 +262,7 @@
 		experience_earned = 2
 
 	// WE reward experience for getting punched while boxing
-	skill_experience_adjustment(boxer, experience_earned) //just getting hit a bunch doesn't net you much experience however
+	skill_experience_adjustment(boxer, attacker, experience_earned) //just getting hit a bunch doesn't net you much experience however
 
 	if(!prob(block_chance))
 		return NONE
@@ -307,7 +308,7 @@
 	default_damage_type = BRUTE
 	boxing_traits = list(TRAIT_BOXING_READY)
 	/// The mobs we are looking for to pass the honor check
-	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG | MOB_MINING
+	var/honorable_mob_biotypes = MOB_BEAST | MOB_SPECIAL | MOB_PLANT | MOB_BUG | MOB_MINING | MOB_CRUSTACEAN | MOB_REPTILE
 	/// Our crit shout words. First word is then paired with a second word to form an attack name.
 	var/list/first_word_strike = list("Extinction", "Brutalization", "Explosion", "Adventure", "Thunder", "Lightning", "Sonic", "Atomizing", "Whirlwind", "Tornado", "Shark", "Falcon")
 	var/list/second_word_strike = list(" Punch", " Pawnch", "-punch", " Jab", " Hook", " Fist", " Uppercut", " Straight", " Strike", " Lunge")
@@ -359,6 +360,15 @@
 		return // Does not apply to humans (who aren't megafauna)
 
 	defender.apply_damage(rand(15,20), default_damage_type, BODY_ZONE_CHEST)
+
+/datum/martial_art/boxing/hunter/skill_experience_adjustment(mob/living/boxer, mob/living/defender, experience_value)
+	if(defender.mob_biotypes & MOB_HUMANOID && !istype(defender, /mob/living/simple_animal/hostile/megafauna))
+		return ..() //IF they're a normal human, we give the normal amount of experience instead
+
+	var/gravity_modifier = boxer.has_gravity() > STANDARD_GRAVITY ? 2 : 1
+	var/big_game_bonus = (defender.maxHealth / 500)
+
+	boxer.mind?.adjust_experience(/datum/skill/athletics, round(experience_value * (gravity_modifier + big_game_bonus), 1))
 
 #undef LEFT_RIGHT_COMBO
 #undef RIGHT_LEFT_COMBO

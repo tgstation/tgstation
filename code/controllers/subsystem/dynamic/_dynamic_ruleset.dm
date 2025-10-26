@@ -10,9 +10,12 @@
 	/// Don't change this unless you know what you're doing.
 	var/config_tag
 
-	/// What flag to check for jobbans? Optional, if unset, uses pref_flag
+	/// What flag to check for jobbans?
+	/// Optional, if unset, uses pref_flag for jobbans instead
 	var/jobban_flag
-	/// What flag to check for prefs? Required if the antag has an associated preference
+	/// What flag to check for prefs?
+	/// Required if the antag has an associated preference, and must be unique
+	/// (unless RULESET_VARIATION is set in ruleset_flags)
 	var/pref_flag
 	/// Flags for this ruleset
 	var/ruleset_flags = NONE
@@ -77,6 +80,8 @@
 	var/minimum_required_age = 0
 	/// Templates necessary for this ruleset to be executed
 	VAR_PROTECTED/list/ruleset_lazy_templates
+	/// Extra logging information can be set here, to be output into any admin messaging and dynamic logs.
+	VAR_FINAL/log_data
 
 /datum/dynamic_ruleset/New(list/dynamic_config)
 	for(var/new_var in dynamic_config?[config_tag])
@@ -220,6 +225,7 @@
 
 	// This is (mostly) redundant, buuuut the (potential) sleep above makes it iffy, so let's just be safe
 	if(!can_be_selected())
+		log_data = "Reason: Ruleset cannot be selected."
 		return FALSE
 
 	var/max_candidates = get_antag_cap(population_size, max_antag_cap || min_antag_cap)
@@ -227,6 +233,7 @@
 
 	var/list/selected_candidates = select_candidates(antag_candidates, max_candidates)
 	if(length(selected_candidates) < min_candidates)
+		log_data = "Reason: Not enough eligible candidates. Have: [length(selected_candidates)], Need: [min_candidates]"
 		return FALSE
 
 	for(var/mob/candidate as anything in selected_candidates)

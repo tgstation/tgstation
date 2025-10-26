@@ -105,7 +105,7 @@
 /datum/component/profound_fisher/proc/should_fish_on(mob/living/user, atom/target)
 	if(!HAS_TRAIT(target, TRAIT_FISHING_SPOT) || GLOB.fishing_challenges_by_user[user])
 		return FALSE
-	if(user.combat_mode || !user.CanReach(target))
+	if(user.combat_mode || !target.IsReachableBy(user))
 		return FALSE
 	return TRUE
 

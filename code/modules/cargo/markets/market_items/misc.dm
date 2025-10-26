@@ -221,3 +221,12 @@
 	. = ..()
 	if(.)
 		availability_prob *= 0.5
+
+/datum/market_item/misc/tricktrickcigarettes
+	name = "Trick Trick Cigarettes"
+	desc = "Cigarettes filled with flash powder. Makes for a fun prank!"
+	item = /obj/item/storage/fancy/cigarettes/flash_powder
+	price_min = PAYCHECK_CREW
+	price_max = PAYCHECK_CREW * 3
+	stock_max = 3
+	availability_prob = 25

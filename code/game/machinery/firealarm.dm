@@ -49,10 +49,10 @@
 	fire = 90
 	acid = 30
 
-/obj/machinery/firealarm/Initialize(mapload, dir, building)
+/obj/machinery/firealarm/Initialize(mapload)
 	. = ..()
 	id_tag = assign_random_name()
-	if(building)
+	if(!mapload)
 		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
@@ -78,9 +78,9 @@
 	)
 
 	register_context()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 	update_appearance()
-
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)

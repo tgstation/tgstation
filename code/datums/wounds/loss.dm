@@ -5,7 +5,7 @@
 	required_limb_biostate = NONE
 	require_any_biostate = TRUE
 
-	required_wounding_types = list(WOUND_ALL)
+	required_wounding_type = WOUND_ALL
 
 	wound_series = WOUND_SERIES_LOSS_BASIC
 

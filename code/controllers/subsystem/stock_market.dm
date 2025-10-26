@@ -20,16 +20,9 @@ SUBSYSTEM_DEF(stock_market)
 /datum/controller/subsystem/stock_market/Initialize()
 	for(var/datum/material/possible_market as anything in subtypesof(/datum/material)) // I need to make this work like this, but lets hardcode it for now
 		if(possible_market.tradable)
-			materials_prices += possible_market
 			materials_prices[possible_market] = possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT
-
-			materials_trends += possible_market
 			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
-
-			materials_trend_life += possible_market
 			materials_trend_life[possible_market] = rand(1,3)
-
-			materials_quantity += possible_market
 			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-(possible_market.tradable_base_quantity) * 0.5, possible_market.tradable_base_quantity * 0.5))
 	return SS_INIT_SUCCESS
 

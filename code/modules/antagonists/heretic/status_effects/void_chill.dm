@@ -26,6 +26,8 @@
 /datum/status_effect/void_chill/on_apply()
 	if(issilicon(owner))
 		return FALSE
+	if(IS_HERETIC_OR_MONSTER(owner))
+		return FALSE
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()

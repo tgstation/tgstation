@@ -7,14 +7,13 @@
 	abstract_type = /obj/item/clothing/under
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	slot_flags = ITEM_SLOT_ICLOTHING
-	interaction_flags_click = NEED_DEXTERITY
+	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	armor_type = /datum/armor/clothing_under
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	limb_integrity = 30
-	interaction_flags_click = ALLOW_RESTING
 
 	/// Has this undersuit been freshly laundered and, as such, imparts a mood bonus for wearing
 	var/freshly_laundered = FALSE
@@ -35,7 +34,7 @@
 	/// Does this undersuit spawn with a random sensor value
 	var/random_sensor = TRUE
 	/// What is the active sensor mode of this udnersuit
-	var/sensor_mode = NO_SENSORS
+	var/sensor_mode = SENSOR_OFF
 
 	// Accessory handling (Can be componentized eventually)
 	/// The max number of accessories we can have on this suit.
@@ -54,9 +53,25 @@
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
+		set_sensor_mode(pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF))
+	//ensure we add or remove relevant clothing traits based on base sensor status and mode
+	update_wearer_status()
+
 	register_context()
 	AddElement(/datum/element/update_icon_updates_onmob, flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK, body = TRUE)
+
+/obj/item/clothing/under/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	var/obj/item/clothing/under/any_original = locate() in components
+	if(!any_original)
+		set_has_sensor(NO_SENSORS)
+		return
+	set_has_sensor(any_original.has_sensor)
+	set_sensor_mode(any_original.sensor_mode)
+
+/obj/item/clothing/under/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	. = ..()
+	dump_attachments()
 
 /obj/item/clothing/under/setup_reskinning()
 	if(!check_setup_reskinning())
@@ -70,7 +85,7 @@
 
 	var/changed = FALSE
 
-	if((isnull(held_item) || held_item == src) && has_sensor == HAS_SENSORS)
+	if(has_sensor == HAS_SENSORS && (isnull(held_item) || held_item == src))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Set suit sensors to tracking"
 		changed = TRUE
@@ -83,8 +98,16 @@
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove accessory"
 		changed = TRUE
 
-	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
+	if(has_sensor == BROKEN_SENSORS && istype(held_item, /obj/item/stack/cable_coil))
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
+		changed = TRUE
+
+	if(has_sensor == NO_SENSORS)
+		if(istype(held_item, /obj/item/suit_sensor))
+			context[SCREENTIP_CONTEXT_LMB] = "Install suit sensors"
+			changed = TRUE
+	else if(held_item?.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_LMB] = "Cut suit sensors"
 		changed = TRUE
 
 	if(can_adjust && adjusted != DIGITIGRADE_STYLE)
@@ -112,14 +135,54 @@
 	if (blood_overlay)
 		. += blood_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(repair_sensors(attacking_item, user))
-		return TRUE
+/obj/item/clothing/under/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/cable_coil))
+		if(!repair_sensors(user))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/cabling = tool
+		cabling.use(1)
+		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/clothing/accessory))
-		return attach_accessory(attacking_item, user)
+	if(istype(tool, /obj/item/clothing/accessory))
+		return attach_accessory(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/suit_sensor))
+		if(has_sensor != NO_SENSORS)
+			balloon_alert(user, "already has sensors!")
+			return ITEM_INTERACT_BLOCKING
+		balloon_alert(user, "installing sensors...")
+		if(!do_after(user, 5 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/suit_sensor/sensor = tool
+		if(sensor.broken)
+			set_has_sensor(BROKEN_SENSORS)
+		else
+			set_has_sensor(HAS_SENSORS)
+			set_sensor_mode(sensor.sensor_mode)
+		qdel(tool)
+		balloon_alert(user, "sensors installed")
+		playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
+
+/obj/item/clothing/under/wirecutter_act(mob/living/user, obj/item/tool)
+	if(has_sensor == NO_SENSORS)
+		balloon_alert(user, "doesn't have sensors!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "cutting out sensors...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/suit_sensor/sensor = new (drop_location())
+	if(sensor.IsReachableBy(user))
+		user.put_in_hands(sensor)
+	if(has_sensor == BROKEN_SENSORS)
+		sensor.broken = TRUE
+	else
+		sensor.set_mode(sensor_mode)
+	set_has_sensor(NO_SENSORS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/under/attack_hand_secondary(mob/user, params)
 	. = ..()
@@ -142,7 +205,7 @@
 	if(damaged_state == CLOTHING_SHREDDED && has_sensor > NO_SENSORS)
 		break_sensors()
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
-		repair_sensors(cable_required = FALSE)
+		repair_sensors()
 	update_appearance()
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
@@ -162,9 +225,16 @@
 
 /obj/item/clothing/under/equipped(mob/living/user, slot)
 	..()
-	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
-		freshly_laundered = FALSE
-		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
+	if(slot & ITEM_SLOT_ICLOTHING)
+		if(freshly_laundered)
+			freshly_laundered = FALSE
+			user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
+		update_wearer_status()
+
+/obj/item/clothing/under/dropped(mob/living/user)
+	. = ..()
+	if(user.get_item_by_slot(ITEM_SLOT_ICLOTHING) == src)
+		GLOB.suit_sensors_list -= user
 
 // Start suit sensor handling
 
@@ -174,35 +244,21 @@
 		return
 
 	visible_message(span_warning("[src]'s medical sensors short out!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
-	has_sensor = BROKEN_SENSORS
+	set_has_sensor(BROKEN_SENSORS)
 	sensor_malfunction()
-	update_wearer_status()
 
 /**
  * Repair the suit sensors and update the mob's status on the global sensor list.
  * Can be called either through player action such as repairing with coil, or as part of a general fixing proc
- *
- * Arguments:
- * * attacking_item - the item being used for the repair, if any
- * * user - mob that's doing the repair
- * * cable_required - set to FALSE to bypass consuming cable coil
  */
-/obj/item/clothing/under/proc/repair_sensors(obj/item/attacking_item, mob/user, cable_required = TRUE)
+/obj/item/clothing/under/proc/repair_sensors(mob/user)
 	if(has_sensor != BROKEN_SENSORS)
-		return
-
-	if(cable_required)
-		if(!istype(attacking_item, /obj/item/stack/cable_coil))
-			return
-		var/obj/item/stack/cable_coil/cabling = attacking_item
-		if(!cabling.use(1))
-			return
-		cabling.visible_message(span_notice("[user] repairs the suit sensors on [src] with [cabling]."))
+		if(user)
+			balloon_alert(user, "sensors [has_sensor == NO_SENSORS ? "missing" : "not broken"]!")
+		return FALSE
 
 	playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
-	has_sensor = HAS_SENSORS
-	update_wearer_status()
-
+	set_has_sensor(HAS_SENSORS)
 	return TRUE
 
 /// If the item is being worn, a gentle reminder every 3-5 minutes that the sensors are broken
@@ -211,29 +267,46 @@
 		do_sparks(number = 2, cardinal_only = FALSE, source = src)
 		addtimer(CALLBACK(src, PROC_REF(sensor_malfunction)), rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX * 0.5), TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
-/// If the item is being worn, update the mob's status on the global sensor list
+/// Changes whether the suit sensor has a sensor, or if it's broken, etc. and handles updating mob status if applicable
+/obj/item/clothing/under/proc/set_has_sensor(new_has_sensor)
+	if(new_has_sensor == has_sensor)
+		return FALSE
+	if(new_has_sensor < BROKEN_SENSORS || new_has_sensor > LOCKED_SENSORS)
+		stack_trace("Invalid has_sensor value [new_has_sensor] passed to set_has_sensor()")
+		return FALSE
+	has_sensor = new_has_sensor
+	update_wearer_status()
+	return TRUE
+
+/// Changes the active sensor mode of the suit and handles updating mob status if applicable
+/obj/item/clothing/under/proc/set_sensor_mode(new_sensor_mode)
+	if(new_sensor_mode == sensor_mode)
+		return FALSE
+	if(new_sensor_mode < SENSOR_OFF || new_sensor_mode > SENSOR_COORDS)
+		stack_trace("Invalid sensor_mode value [new_sensor_mode] passed to set_sensor_mode()")
+		return FALSE
+	sensor_mode = new_sensor_mode
+	update_wearer_status()
+	return TRUE
+
+/// Updates the sensor status and any mobs status if applicable
 /obj/item/clothing/under/proc/update_wearer_status()
-	if(!ishuman(loc))
+	if(has_sensor <= NO_SENSORS || sensor_mode <= SENSOR_VITALS)
+		detach_clothing_traits(TRAIT_BASIC_HEALTH_HUD_VISIBLE)
+	else
+		attach_clothing_traits(TRAIT_BASIC_HEALTH_HUD_VISIBLE)
+
+	if(!ishuman(loc) || isdummy(loc))
 		return
 
-	var/mob/living/carbon/human/ooman = loc
-	ooman.update_suit_sensors()
-	ooman.med_hud_set_status()
+	var/mob/living/carbon/human/wearer = loc
 
-/mob/living/carbon/human/update_suit_sensors()
-	. = ..()
-	update_sensor_list()
-
-/// Adds or removes a mob from the global suit sensors list based on sensor status and mode
-/mob/living/carbon/human/proc/update_sensor_list()
-	var/obj/item/clothing/under/uniform = w_uniform
-	if(istype(uniform) && uniform.has_sensor > NO_SENSORS && uniform.sensor_mode)
-		GLOB.suit_sensors_list |= src
+	if(has_sensor >= HAS_SENSORS && sensor_mode >= SENSOR_LIVING)
+		GLOB.suit_sensors_list |= wearer
 	else
-		GLOB.suit_sensors_list -= src
+		GLOB.suit_sensors_list -= wearer
 
-/mob/living/carbon/human/dummy/update_sensor_list()
-	return
+	wearer.med_hud_set_status()
 
 /obj/item/clothing/under/emp_act(severity)
 	. = ..()
@@ -244,13 +317,11 @@
 
 	if(severity <= EMP_HEAVY)
 		break_sensors()
+		return
 
-	else
-		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
-		playsound(source = src, soundin = 'sound/effects/sparks/sparks3.ogg', vol = 75, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
-		visible_message(span_warning("The [src]'s medical sensors flash and change rapidly!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
-
-	update_wearer_status()
+	set_sensor_mode(pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS))
+	playsound(source = src, soundin = 'sound/effects/sparks/sparks3.ogg', vol = 75, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
+	visible_message(span_warning("The [src]'s medical sensors flash and change rapidly!"), blind_message = span_warning("The [src] makes an electronic sizzling sound!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /**
  * Called by medical scanners a simple summary of the status
@@ -371,6 +442,9 @@
 				. += "Its vital tracker appears to be enabled."
 			if(SENSOR_COORDS)
 				. += "Its vital tracker and tracking beacon appear to be enabled."
+	else
+		. += span_tooltip("You can always get new suit sensors to install from a lathe.", "It isn't equipped with medical sensors.")
+
 	if(LAZYLEN(attached_accessories))
 		var/list/accessories = list_accessories_with_icon(user)
 		. += "It has [english_list(accessories)] attached."
@@ -392,14 +466,14 @@
 	if(!can_toggle_sensors(user_mob))
 		return
 
-	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
-	if(isnull(switchMode))
+	var/current_mode_text = GLOB.suit_sensor_mode_to_defines[sensor_mode + 1]
+	var/new_mode = tgui_input_list(user_mob, "Select a sensor mode", "Suit Sensors", GLOB.suit_sensor_mode_to_defines, current_mode_text)
+	if(isnull(new_mode))
 		return
 	if(!can_toggle_sensors(user_mob))
 		return
 
-	sensor_mode = modes.Find(switchMode) - 1
+	set_sensor_mode(GLOB.suit_sensor_mode_to_defines[new_mode])
 	if (loc == user_mob)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
@@ -411,15 +485,12 @@
 			if(SENSOR_COORDS)
 				to_chat(user_mob, span_notice("Your suit will now report your exact vital lifesigns as well as your coordinate position."))
 
-	update_wearer_status()
-
 /obj/item/clothing/under/item_ctrl_click(mob/user)
 	if(!can_toggle_sensors(user))
 		return CLICK_ACTION_BLOCKING
 
-	sensor_mode = SENSOR_COORDS
+	set_sensor_mode(SENSOR_COORDS)
 	balloon_alert(user, "set to tracking")
-	update_wearer_status()
 	return CLICK_ACTION_SUCCESS
 
 /// Checks if the toggler is allowed to toggle suit sensors currently
@@ -438,7 +509,7 @@
 			balloon_alert(toggler, "sensors shorted!")
 			return FALSE
 		if(NO_SENSORS)
-			balloon_alert(toggler, "no sensors to ajdust!")
+			balloon_alert(toggler, "no sensors to adjust!")
 			return FALSE
 
 	return TRUE

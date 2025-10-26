@@ -338,7 +338,7 @@
 		var/list/filter_info = filter_data[index]
 		if (filter_info["name"] != name)
 			continue
-		filter_data -= filter_info
+		filter_data -= list(filter_info)
 		filter_cache -= filter_cache[index]
 		break
 
@@ -487,6 +487,12 @@
 	ASSERT(isatom(src) || isimage(src))
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	return atom_cast.filters[name]
+
+/// Returns filter data associated with the passed key
+/datum/proc/get_filter_data(name)
+	for (var/list/filter_info as anything in filter_data)
+		if (filter_info["name"] == name)
+			return filter_info.Copy()
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names, update = TRUE)

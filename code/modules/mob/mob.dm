@@ -1301,8 +1301,7 @@
 	if(!writing_instrument)
 		return FALSE
 
-	var/pen_info = writing_instrument.get_writing_implement_details()
-	if(!pen_info || (pen_info["interaction_mode"] != MODE_WRITING))
+	if(!IS_WRITING_UTENSIL(writing_instrument))
 		if(!silent_if_not_writing_tool)
 			to_chat(src, span_warning("You can't write with \the [writing_instrument]!"))
 		return FALSE
@@ -1383,6 +1382,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DIRECT_CONTROL, "Give Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_OFFER_GHOSTS, "Offer Control to Ghosts")
 	VV_DROPDOWN_OPTION(VV_HK_VIEW_PLANES, "View/Edit Planes")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_ACCESS, "Give Access")
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
@@ -1456,6 +1456,12 @@
 		if(!check_rights(R_DEBUG))
 			return
 		usr.client.edit_plane_masters(src)
+
+	if(href_list[VV_HK_GIVE_ACCESS])
+		if(!check_rights(NONE))
+			return
+		AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
+		to_chat(usr, span_notice("Access granted."))
 /**
  * extra var handling for the logging var
  */
@@ -1665,13 +1671,44 @@
 	for(var/hud_trait in GLOB.trait_to_hud)
 		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_enabled))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_disabled))
+	for(var/hud_trait in GLOB.trait_blockers_to_hud)
+		RegisterSignal(src, SIGNAL_ADDTRAIT(hud_trait), PROC_REF(hud_trait_blocker_gained))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(hud_trait), PROC_REF(hud_trait_blocker_lost))
 
 /mob/proc/hud_trait_enabled(datum/source, new_trait)
 	SIGNAL_HANDLER
+
+	for(var/blocker, blocked_traits in GLOB.trait_blockers_to_hud)
+		if(HAS_TRAIT(src, blocker) && (new_trait in blocked_traits))
+			return
+
 	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
 	datahud.show_to(src)
 
-/mob/proc/hud_trait_disabled(datum/source, new_trait)
+/mob/proc/hud_trait_disabled(datum/source, lost_trait)
 	SIGNAL_HANDLER
-	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
+
+	for(var/blocker, blocked_traits in GLOB.trait_blockers_to_hud)
+		if(HAS_TRAIT(src, blocker) && (lost_trait in blocked_traits))
+			return // it may seem counterintuitive to check for blockers on trait removal, the blocker now has total reign over whether the hud should come back
+
+	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[lost_trait]]
 	datahud.hide_from(src)
+
+/mob/proc/hud_trait_blocker_gained(datum/source, new_trait)
+	SIGNAL_HANDLER
+
+	for(var/trait in GLOB.trait_blockers_to_hud[new_trait])
+		if(!HAS_TRAIT(src, trait))
+			continue
+		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
+		datahud.hide_from(src)
+
+/mob/proc/hud_trait_blocker_lost(datum/source, new_trait)
+	SIGNAL_HANDLER
+
+	for(var/trait in GLOB.trait_blockers_to_hud[new_trait])
+		if(!HAS_TRAIT(src, trait))
+			continue
+		var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[trait]]
+		datahud.show_to(src)

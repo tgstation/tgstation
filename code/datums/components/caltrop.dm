@@ -104,6 +104,8 @@
 	if(HAS_TRAIT(digitigrade_fan, TRAIT_LIGHT_STEP))
 		damage *= 0.75
 
+	if(flags & CALTROP_ANTS && HAS_TRAIT(digitigrade_fan, TRAIT_SPACE_ANT_IMMUNITY))
+		damage = 0
 
 	if(!(flags & CALTROP_SILENT) && !digitigrade_fan.has_status_effect(/datum/status_effect/caltropped))
 		digitigrade_fan.apply_status_effect(/datum/status_effect/caltropped)

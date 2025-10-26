@@ -827,11 +827,6 @@
 	)
 	/// Materials that will be extracted.
 	var/list/accepted_mats
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_obj_entered),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_atom_initialized_on),
-	)
-	var/datum/component/connect_loc_behalf/connector
 	var/datum/component/material_container/container
 
 /obj/item/mod/module/recycler/Initialize(mapload)
@@ -846,7 +841,7 @@
 		50 * SHEET_MATERIAL_AMOUNT, \
 		MATCONTAINER_EXAMINE | MATCONTAINER_NO_INSERT, \
 		container_signals = list( \
-			COMSIG_MATCONTAINER_SHEETS_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
+			COMSIG_MATCONTAINER_STACK_RETRIEVED = TYPE_PROC_REF(/obj/item/mod/module/recycler, InsertSheets) \
 		) \
 	)
 
@@ -855,16 +850,20 @@
 	return ..()
 
 /obj/item/mod/module/recycler/on_activation(mob/activator)
-	connector = AddComponent(/datum/component/connect_loc_behalf, mod.wearer, loc_connections)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
 
 /obj/item/mod/module/recycler/on_deactivation(mob/activator, display_message, deleting = FALSE)
-	QDEL_NULL(connector)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_wearer_moved))
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	if(mod.wearer.loc)
+		UnregisterSignal(mod.wearer.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 
 /obj/item/mod/module/recycler/proc/on_wearer_moved(datum/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
-
+	if(old_loc)
+		UnregisterSignal(mod.wearer.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	if(mod.wearer.loc)
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
+		RegisterSignal(mod.wearer.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
 	for(var/obj/item/item in mod.wearer.loc)
 		if(!is_type_in_list(item, allowed_item_types))
 			return
@@ -872,18 +871,14 @@
 
 /obj/item/mod/module/recycler/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-
-	if(!is_type_in_list(arrived, allowed_item_types))
-		return
-	insert_trash(arrived)
+	if(is_type_in_list(arrived, allowed_item_types))
+		insert_trash(arrived)
 
 /obj/item/mod/module/recycler/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
-
-	if(!is_type_in_list(new_atom, allowed_item_types))
-		return
-	//Give the new atom the time to fully initialize and maybe live if the wearer moves away.
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/module/recycler, insert_trash_if_nearby), new_atom), 0.5 SECONDS)
+	// Give the new atom the time to fully initialize and maybe live if the wearer moves away.
+	if(is_type_in_list(new_atom, allowed_item_types))
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/mod/module/recycler, insert_trash_if_nearby), new_atom), 0.5 SECONDS)
 
 /obj/item/mod/module/recycler/proc/insert_trash_if_nearby(atom/new_atom)
 	if(new_atom && mod?.wearer && new_atom.loc == mod.wearer.loc)

@@ -94,7 +94,7 @@
 	var/turf/nearest_beacon_loc
 
 	///The type of data HUD the bot uses. Diagnostic by default.
-	var/data_hud_type = DATA_HUD_DIAGNOSTIC
+	var/data_hud_type = TRAIT_DIAGNOSTIC_HUD
 	var/datum/atom_hud/data/bot_path/private/path_hud
 	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
@@ -191,8 +191,7 @@
 
 	//If a bot has its own HUD (for player bots), provide it.
 	if(!isnull(data_hud_type))
-		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-		datahud.show_to(src)
+		ADD_TRAIT(src, data_hud_type, INNATE_TRAIT)
 	if(path_hud)
 		path_hud.add_atom_to_hud(src)
 		path_hud.show_to(src)

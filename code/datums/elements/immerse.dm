@@ -269,10 +269,12 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 /// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
 	SIGNAL_HANDLER
+	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[source]
+	if (!effect_relay)
+		return
 	var/matrix/new_transform = matrix()
 	new_transform.Scale(1 / source.current_size)
 	new_transform.Turn(-new_lying_angle)
-	var/atom/movable/immerse_mask/effect_relay = generated_visual_overlays[source]
 	var/mutable_appearance/relay_appearance = new(effect_relay.appearance)
 	relay_appearance.transform = new_transform
 	effect_relay.appearance = relay_appearance
@@ -281,10 +283,13 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 /datum/element/immerse/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
 	SIGNAL_HANDLER
 	var/atom/movable/immerse_mask/immerse_mask = generated_visual_overlays[source]
-	immerse_mask.do_spin_animation(speed, loops, segments, -segment)
+	if (immerse_mask)
+		immerse_mask.do_spin_animation(speed, loops, segments, -segment)
 
 /datum/element/immerse/proc/on_update_offsets(mob/living/source, new_x, new_y, new_w, new_z, animate)
 	SIGNAL_HANDLER
+	if (!generated_visual_overlays[source])
+		return
 	var/old_height = ceil(max(ICON_SIZE_Y - source.pixel_z, ICON_SIZE_Y) / ICON_SIZE_Y)
 	var/new_height = ceil(max(ICON_SIZE_Y - new_z, ICON_SIZE_Y) / ICON_SIZE_Y)
 	if (old_height != new_height)

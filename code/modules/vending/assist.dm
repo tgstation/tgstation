@@ -34,7 +34,6 @@
 		/obj/item/universal_scanner = 3,
 		/obj/item/vending_refill/custom = 3,
 	)
-	allow_custom = TRUE
 
 	refill_canister = /obj/item/vending_refill/assist
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"

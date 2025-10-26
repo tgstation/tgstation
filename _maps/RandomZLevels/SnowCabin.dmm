@@ -139,9 +139,9 @@
 /area/awaymission/cabin)
 "aE" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/baseturf_helper/asteroid/snow,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/power/turbine/inlet_compressor,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
@@ -198,17 +198,10 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "aQ" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	dir = 1;
-	icon = 'icons/obj/pipes_n_cables/simple.dmi';
-	icon_state = "compressor";
-	name = "geothermal generator"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/power/turbine/core_rotor,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aR" = (
@@ -701,17 +694,9 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "dv" = (
-/obj/structure{
-	anchored = 1;
-	density = 1;
-	desc = "Generates power from lava!";
-	icon = 'icons/obj/pipes_n_cables/simple.dmi';
-	icon_state = "turbine";
-	name = "geothermal generator"
-	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/power/turbine/turbine_outlet,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "dC" = (
@@ -5109,6 +5094,11 @@
 /obj/effect/decal/cleanable/molten_object/large,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"SW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/open/floor/plating,
+/area/awaymission/cabin)
 "To" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/hatchet/wooden,
@@ -36321,7 +36311,7 @@ vh
 xt
 an
 aw
-ed
+SW
 ed
 hv
 an

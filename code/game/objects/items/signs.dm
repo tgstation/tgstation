@@ -5,6 +5,7 @@
 	name = "blank picket sign"
 	desc = "It's blank."
 	force = 5
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bashes", "smacks")
 	attack_verb_simple = list("bash", "smack")
@@ -20,21 +21,14 @@
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/nano_picket_sign)
 
-/obj/item/picket_sign/proc/retext(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
-		return
-	var/txt = tgui_input_text(user, "What would you like to write on the sign?", "Sign Label", max_length = 30)
-	if(txt && user.can_perform_action(src))
-		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-		label = txt
-		name = "[label] sign"
-		desc = "It reads: [label]"
+/obj/item/picket_sign/nameformat(input, user)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	label = input
+	AddComponent(/datum/component/rename, name, "It reads: [input]")
+	return "[input] sign"
 
-/obj/item/picket_sign/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(W))
-		retext(user, W)
-	else
-		return ..()
+/obj/item/picket_sign/rename_reset()
+	label = initial(label)
 
 /obj/item/picket_sign/attack_self(mob/living/carbon/human/user)
 	if(!COOLDOWN_FINISHED(src, picket_sign_cooldown))
@@ -66,7 +60,10 @@
 	if(!istype(target, /obj/item/picket_sign))
 		return FALSE
 	var/obj/item/picket_sign/sign = target
-	sign.retext(owner)
+	var/input = tgui_input_text(owner, "What would you like to write on the sign?", "Sign Label", max_length = 30)
+	if(input && owner.can_perform_action(sign))
+		sign.label = input
+		sign.AddComponent(/datum/component/rename, "[input] sign", "It reads: [input]")
 	return TRUE
 
 /datum/crafting_recipe/picket_sign

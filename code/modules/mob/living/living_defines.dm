@@ -89,7 +89,11 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/quirks = list()
+	/// Lazylist of all quirks the mob has. These are not singletons
+	var/list/quirks
+	/// Lazylist of all typepaths of personalities the mob has.
+	var/list/personalities
+
 	///a list of surgery datums. generally empty, they're added when the player wants them.
 	var/list/surgeries = list()
 	///Mob specific surgery speed modifier
@@ -244,3 +248,6 @@
 	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
 	/// Reference handling is done by the martial arts themselves
 	var/list/datum/martial_art/martial_arts
+
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	var/reach_length = 1

@@ -178,7 +178,7 @@
 	icon_state = "lizardskin_shoes"
 	inhand_icon_state = null
 
-/obj/item/clothing/shoes/kim
+/obj/item/clothing/shoes/jackboots/kim
 	name = "aerostatic boots"
 	desc = "A crisp, clean set of boots for working long hours on the beat."
 	icon_state = "aerostatic_boots"

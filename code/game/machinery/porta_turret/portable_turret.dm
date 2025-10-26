@@ -957,12 +957,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// List of weakrefs to all turrets
 	var/list/turrets = list()
 
-/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
+/obj/machinery/turretid/Initialize(mapload)
 	. = ..()
-	if(built)
+	if(!mapload)
 		locked = FALSE
+	else
+		find_and_hang_on_wall()
 	power_change() //Checks power and initial settings
-	find_and_hang_on_wall()
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
@@ -1239,7 +1240,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/projectile)
 	. = ..()
-	if(!on)
+	if(!on || . != BULLET_ACT_HIT)
 		return
 	if(team_color == "blue" && istype(projectile, /obj/projectile/beam/lasertag/redtag))
 		set_disabled(10 SECONDS)

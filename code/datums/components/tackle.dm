@@ -411,6 +411,13 @@
 		if(istype(potential_spine))
 			defense_mod += potential_spine.strength_bonus
 
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade))
+			defense_mod += 8
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust))
+			var/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/rust_robes = tackle_target.wear_suit
+			if(rust_robes.rusted)
+				defense_mod += 10
+
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
 	var/sacker_drunkenness = sacker.get_drunk_amount()

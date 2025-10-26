@@ -165,7 +165,7 @@
 			grabbed_mob.adjustBruteLoss(5)
 		return
 
-	if(cistern_open && !cover_open && user.CanReach(src))
+	if(cistern_open && !cover_open && IsReachableBy(user))
 		if(!LAZYLEN(cistern_items))
 			to_chat(user, span_notice("The cistern is empty."))
 			return
@@ -232,9 +232,12 @@
 	if(!flushing && cover_open)
 		. += "[base_icon_state]-water"
 
-/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
-	for(var/obj/toilet_item in cistern_items)
+/obj/structure/toilet/dump_contents()
+	for(var/obj/toilet_item in (cistern_items + fishes))
 		toilet_item.forceMove(drop_location())
+
+/obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
+	dump_contents()
 	if(buildstacktype)
 		new buildstacktype(loc,buildstackamount)
 	else
@@ -242,8 +245,6 @@
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
-	if(stuck_item)
-		stuck_item.forceMove(drop_location())
 
 /obj/structure/toilet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)

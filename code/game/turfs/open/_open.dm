@@ -457,7 +457,6 @@
 		playsound(slipper.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
-	slipper.add_mood_event("slipped", /datum/mood_event/slipped)
 	if(force_drop && iscarbon(slipper)) //carbon specific behavior that living doesn't have
 		var/mob/living/carbon/carbon = slipper
 		for(var/obj/item/item in slipper.held_items)

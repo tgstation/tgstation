@@ -39,11 +39,13 @@
  *
  * Returns the given overlay, which can be deleted to stop displaying it. Will return null if no bodypart matching the overlay's attached_body_zone field can be found.
  */
-/mob/living/carbon/human/proc/give_emote_overlay(overlay_typepath)
-	var/datum/bodypart_overlay/simple/emote/overlay = new overlay_typepath()
-	var/obj/item/bodypart/bodypart = src.get_bodypart(overlay.attached_body_zone)
+/mob/living/carbon/human/proc/give_emote_overlay(datum/bodypart_overlay/simple/emote/overlay_typepath)
+	var/obj/item/bodypart/bodypart = get_bodypart(overlay_typepath::attached_body_zone)
 	if(!bodypart)
 		return null
+	if(locate(overlay_typepath) in bodypart.bodypart_overlays)
+		return null
+	var/datum/bodypart_overlay/simple/emote/overlay = new overlay_typepath()
 	bodypart.add_bodypart_overlay(overlay)
 	return overlay
 

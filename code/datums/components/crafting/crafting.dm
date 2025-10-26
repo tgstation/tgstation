@@ -372,8 +372,8 @@
 	if(recipe.structures)
 		requirements += recipe.structures
 
+	var/list/surroundings
 	for(var/path_key in requirements)
-		var/list/surroundings
 		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
 		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 			continue

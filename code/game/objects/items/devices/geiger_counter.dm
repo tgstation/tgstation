@@ -112,9 +112,9 @@
 
 /obj/item/geiger_counter/click_alt(mob/living/user)
 	if(!scanning)
-		to_chat(usr, span_warning("[src] must be on to reset its radiation level!"))
+		to_chat(user, span_warning("[src] must be on to reset its radiation level!"))
 		return CLICK_ACTION_BLOCKING
-	to_chat(usr, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
+	to_chat(user, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
 	last_perceived_radiation_danger = null
 	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS

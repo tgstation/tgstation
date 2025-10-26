@@ -166,6 +166,7 @@ As the AI, you can use CTRL + 1-9 to set a location hotkey for your camera, allo
 As the Bartender, the drinks you start with only give you the basics. If you want more advanced mixtures, look into working with chemistry, hydroponics, or even mining for things to grind up and throw in!
 As the Bartender, you can use a circular saw on your shotgun to make it easier to store.
 As the Bartender, remember to set up the bar sign by walking up to it and clicking it!
+As the Bartender, serving a glass of water between drinks is your best friend. It slows alcohol absorption and provides hydration to support liver recovery.
 As the Blob, don't neglect the creation of factories. These create spores that carry your reagent and can chase crew members far further than you. Spores can also be rallied to swarm the crew and cause panic, and can even take over corpses to create much more dangerous blob zombies!
 As the Blob, keep your core some distance from space, as it is both expensive to expand onto space, easy to be attacked from, and does not count towards your win condition. Emitter platforms built in space are especially dangerous.
 As the Blob, removing strong blobs, resource nodes, factories, and nodes will give you 4, 15, 25, and 25 resources back, respectively.

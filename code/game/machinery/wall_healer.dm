@@ -69,6 +69,8 @@
 		update_appearance()
 	init_payment()
 	register_context()
+	if(mapload)
+		find_and_hang_on_wall()
 
 /obj/machinery/wall_healer/Destroy()
 	clear_using_mob()

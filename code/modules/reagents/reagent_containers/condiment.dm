@@ -44,6 +44,7 @@
 	if(!canconsume(target, user))
 		return ITEM_INTERACT_BLOCKING
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(target == user)
 		user.visible_message(
 			span_notice("[user] swallows some of the contents of \the [src]."),

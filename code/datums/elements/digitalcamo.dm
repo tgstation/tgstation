@@ -27,14 +27,14 @@
 
 /datum/element/digitalcamo/proc/HideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		for (var/hud_type in AI.silicon_huds)
-			var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		for (var/hud_trait in AI.silicon_huds)
+			var/datum/atom_hud/silicon_hud = GLOB.huds[GLOB.trait_to_hud[hud_trait]]
 			silicon_hud.hide_single_atomhud_from(AI,target)
 
 /datum/element/digitalcamo/proc/UnhideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		for (var/hud_type in AI.silicon_huds)
-			var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+		for (var/hud_trait in AI.silicon_huds)
+			var/datum/atom_hud/silicon_hud = GLOB.huds[GLOB.trait_to_hud[hud_trait]]
 			silicon_hud.unhide_single_atomhud_from(AI,target)
 
 /datum/element/digitalcamo/proc/on_examine(datum/source, mob/M, list/examine_list)

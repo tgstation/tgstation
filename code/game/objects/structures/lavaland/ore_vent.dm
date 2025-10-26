@@ -237,13 +237,34 @@
 		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
 	add_shared_particles(/particles/smoke/ash)
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
-		for(var/turf/closed/mineral/rock in oview(i))
-			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
-				new /obj/effect/decal/cleanable/rubble(rock)
-			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user)
+		for(var/turf/rock in oview(i))
+
+			if(istype(rock, /turf/closed/mineral)) //Solid wall checks: Mine out the wall, but start skipping more as we move farther away.
+				if(prob(50 + (i * 8)))
+					continue
+				var/turf/closed/mineral/drillable = rock
+				drillable.gets_drilled(user)
 				if(prob(50))
-					new /obj/effect/decal/cleanable/rubble(rock)
+					new /obj/effect/decal/cleanable/rubble(rock) // Only throw rubble when we actually mine something, and not all the time.
+				continue //skip the rest of the checks
+
+			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // Open rock floors: make rubble decals occasionally.
+				new /obj/effect/decal/cleanable/rubble(rock)
+				continue
+
+			if(istype(rock, /turf/open/lava)) // Lava turfs, skip as we get farther away, otherwise produce a boulder and make it a platform, lasting the whole wave.
+				if(prob(30 + (i * 8))) // We want to skip these less than the mining walls, since lava is more common to deal with.
+					continue
+
+				var/obj/item/boulder/produced = produce_boulder(FALSE)
+				var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
+
+				if(!platform || !QDELETED(produced))
+					qdel(produced)
+					continue
+				platform.alpha = 0
+				platform.pixel_z = -16
+				animate(platform, alpha = 255, time = 2 SECONDS, pixel_z = 0, easing = QUAD_EASING|EASE_OUT)
 		sleep(0.6 SECONDS)
 	return TRUE
 
@@ -475,6 +496,42 @@
 	log_game("Vent-spawned mob [key_name_and_tag(killed)] was killed")
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, killed.type)
 
+/**
+ * The part of initialization and the ore_generation subsystem's setup that assigns the size of an ore_vent and it's boulders.
+ * @param random: Used for random sized boulders, and the standard (pre 9-6-2025) behavior.
+ * @param force_size: An override we use for map_generation, when we know what size boulder we need from this ore vent already. Use the standard ore_vent size defines.
+ */
+/obj/structure/ore_vent/proc/vent_size_setup(random = FALSE, force_size, map_loading)
+	var/string_boulder_size
+
+	if(force_size)
+		string_boulder_size = force_size
+
+	else if(random)
+		string_boulder_size = pick_weight(ore_vent_options)
+
+	name = "[string_boulder_size] ore vent"
+	switch(string_boulder_size)
+		if(LARGE_VENT_TYPE)
+			boulder_size = BOULDER_SIZE_LARGE
+			wave_timer = WAVE_DURATION_LARGE
+			if(map_loading)
+				GLOB.ore_vent_sizes["large"] += 1
+		if(MEDIUM_VENT_TYPE)
+			boulder_size = BOULDER_SIZE_MEDIUM
+			wave_timer = WAVE_DURATION_MEDIUM
+			if(map_loading)
+				GLOB.ore_vent_sizes["medium"] += 1
+		if(SMALL_VENT_TYPE)
+			boulder_size = BOULDER_SIZE_SMALL
+			wave_timer = WAVE_DURATION_SMALL
+			if(map_loading)
+				GLOB.ore_vent_sizes["small"] += 1
+		else
+			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
+			wave_timer = WAVE_DURATION_SMALL
+			name = initial(name)
+
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
@@ -489,6 +546,7 @@
 	)
 
 /obj/structure/ore_vent/random
+	// Todo: determine if we need a boulder_size default thats unique from the override performed in vent_size_setup.
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
@@ -496,29 +554,8 @@
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
 		generate_description()
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
-	var/string_boulder_size = pick_weight(ore_vent_options)
-	name = "[string_boulder_size] ore vent"
-	switch(string_boulder_size)
-		if(LARGE_VENT_TYPE)
-			boulder_size = BOULDER_SIZE_LARGE
-			wave_timer = WAVE_DURATION_LARGE
-			if(mapload)
-				GLOB.ore_vent_sizes["large"] += 1
-		if(MEDIUM_VENT_TYPE)
-			boulder_size = BOULDER_SIZE_MEDIUM
-			wave_timer = WAVE_DURATION_MEDIUM
-			if(mapload)
-				GLOB.ore_vent_sizes["medium"] += 1
-		if(SMALL_VENT_TYPE)
-			boulder_size = BOULDER_SIZE_SMALL
-			wave_timer = WAVE_DURATION_SMALL
-			if(mapload)
-				GLOB.ore_vent_sizes["small"] += 1
-		else
-			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
-			wave_timer = WAVE_DURATION_SMALL
-			name = initial(name)
-
+	if(!mapload)
+		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
 
 
 /obj/structure/ore_vent/random/icebox //The one that shows up on the top level of icebox
@@ -620,6 +657,20 @@
 		/mob/living/simple_animal/hostile/megafauna/wendigo/noportal,
 		/mob/living/simple_animal/hostile/megafauna/colossus,
 	)
+
+/obj/effect/landmark/mining_center
+	name = "Mining Epicenter"
+	icon_state = "mining_epicenter"
+
+/obj/effect/landmark/mining_center/Initialize(mapload)
+	..()
+
+	for(var/obj/mining_mark as anything in GLOB.mining_center)
+		if(src.z == mining_mark.z)
+			CRASH("\The [src] spawned on Z level [z] already exists! Maps should only have at most one mining epicenter for normal ore generation.")
+
+	GLOB.mining_center += loc
+	return INITIALIZE_HINT_QDEL
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM

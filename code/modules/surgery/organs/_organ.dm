@@ -117,7 +117,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Add a Trait to an organ that it will give its owner.
 /obj/item/organ/proc/add_organ_trait(trait)
-	LAZYADD(organ_traits, trait)
+	LAZYOR(organ_traits, trait)
 	if(isnull(owner))
 		return
 	ADD_TRAIT(owner, trait, REF(src))
@@ -249,14 +249,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(required_organ_flag && !(organ_flags & required_organ_flag))
 		return FALSE
 	damage = clamp(damage + damage_amount, 0, maximum)
+	SEND_SIGNAL(src, COMSIG_ORGAN_ADJUST_DAMAGE, damage_amount, maximum, required_organ_flag)
 	. = (prev_damage - damage) // return net damage
-	var/message = check_damage_thresholds(owner)
+	var/message = check_damage_thresholds()
 	prev_damage = damage
-
-	if(damage >= maxHealth)
-		organ_flags |= ORGAN_FAILING
-	else
-		organ_flags &= ~ORGAN_FAILING
 
 	if(message && owner && owner.stat <= SOFT_CRIT)
 		to_chat(owner, message)
@@ -271,24 +267,66 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
  *  If we have, send the corresponding threshold message to the owner, if such a message exists.
  */
-/obj/item/organ/proc/check_damage_thresholds(mob/organ_owner)
+/obj/item/organ/proc/check_damage_thresholds()
+	SHOULD_CALL_PARENT(TRUE)
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage
+	var/message = ""
 	if(delta > 0)
-		if(damage >= maxHealth)
-			return now_failing
-		if(damage > high_threshold && prev_damage <= high_threshold)
-			return high_threshold_passed
 		if(damage > low_threshold && prev_damage <= low_threshold)
-			return low_threshold_passed
-	else
-		if(prev_damage > low_threshold && damage <= low_threshold)
-			return low_threshold_cleared
-		if(prev_damage > high_threshold && damage <= high_threshold)
-			return high_threshold_cleared
-		if(prev_damage == maxHealth)
-			return now_fixed
+			on_low_damage_received()
+			message = low_threshold_passed
+		if(damage > high_threshold && prev_damage <= high_threshold)
+			on_high_damage_received()
+			message = high_threshold_passed
+		if(damage >= maxHealth)
+			organ_flags |= ORGAN_FAILING
+			on_begin_failure()
+			message = now_failing
+		return message
+
+	if(prev_damage == maxHealth)
+		organ_flags &= ~ORGAN_FAILING
+		on_failure_recovery()
+		message = now_fixed
+	if(prev_damage > high_threshold && damage <= high_threshold)
+		on_high_damage_healed()
+		message = high_threshold_cleared
+	if(prev_damage > low_threshold && damage <= low_threshold)
+		on_low_damage_healed()
+		message = low_threshold_cleared
+	return message
+
+/**
+ * Called when the damage surpasses the low damage threshold.
+ *
+ * This and other procs like this one merely exist to make it easier to keep a standard on
+ * damage thresholds for organs. This doesn't mean you cannot make custom thresholds for various stuff,
+ * and you're more than welcome to improve or refactor any portion of the code around these mechanics
+ */
+/obj/item/organ/proc/on_low_damage_received()
+	return
+
+///Called when the damage goes below the low damage threshold
+/obj/item/organ/proc/on_low_damage_healed()
+	return
+
+///Called when the damage surpasses the high damage threshold
+/obj/item/organ/proc/on_high_damage_received()
+	return
+
+///Called when the damage goes below the high damage threshold
+/obj/item/organ/proc/on_high_damage_healed()
+	return
+
+///Called when the organ enters failing stage
+/obj/item/organ/proc/on_begin_failure()
+	return
+
+///Called when the organ recovers from failing stage
+/obj/item/organ/proc/on_failure_recovery()
+	return
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
@@ -312,9 +350,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		dna.species.regenerate_organs(src, replace_current = FALSE)
 		set_heartattack(FALSE)
 
-		// Ears have aditional vаr "deaf", need to update it too
+		// Ears have aditional var "deaf", need to update it too
 		var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
-		ears?.adjustEarDamage(0, -INFINITY) // full heal ears deafness
+		ears.adjust_temporary_deafness(-INFINITY)
 
 		return
 
@@ -351,7 +389,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!ears)
 		ears = new()
 		ears.Insert(src)
-	ears.adjustEarDamage(-INFINITY, -INFINITY) // actually do: set_organ_damage(0) and deaf = 0
+	ears.set_organ_damage(0)
+	ears.adjust_temporary_deafness(-INFINITY)
 
 ///Organs don't die instantly, and neither should you when you get fucked up
 /obj/item/organ/proc/handle_failing_organs(seconds_per_tick)

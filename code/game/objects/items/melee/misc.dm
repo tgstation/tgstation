@@ -60,6 +60,7 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
 	AddComponent(/datum/component/jousting)
 	//fast and effective, but as a sword, it might damage the results.
 	AddComponent(/datum/component/butchering, \
@@ -173,6 +174,7 @@
 
 /obj/item/melee/parsnip_sabre/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed sword guard
 	AddComponent(/datum/component/jousting)
 
 /obj/item/melee/parsnip_sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -511,7 +513,7 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.5, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.5)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
-	force = 14
+	force = 16
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10

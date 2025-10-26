@@ -11,7 +11,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	var/gpstag
+	var/tracking_on = TRUE
+	var/debug_mode = FALSE
+	var/overlay_icon = "working"
 
 /obj/item/gps/Initialize(mapload)
 	. = ..()
@@ -19,7 +25,7 @@
 
 /// Adds the GPS component to this item.
 /obj/item/gps/proc/add_gps_component()
-	AddComponent(/datum/component/gps/item, gpstag)
+	AddComponent(/datum/component/gps/item, gpstag, tracking_on, overlay_state = overlay_icon, debug = debug_mode)
 
 /obj/item/gps/spaceruin
 	gpstag = SPACE_SIGNAL_GPSTAG
@@ -60,33 +66,8 @@
 	name = "visible GPS"
 	gpstag = "ADMIN"
 	desc = "This admin-spawn GPS unit leaves the coordinates visible \
-		on any turf that it passes over, for debugging. Especially useful \
+		on any turf that it passes over while being dragged on the floor. Especially useful \
 		for marking the area around the transition edges."
-	var/list/turf/tagged
-
-/obj/item/gps/visible_debug/Initialize(mapload)
-	. = ..()
-	tagged = list()
-	START_PROCESSING(SSfastprocess, src)
-
-/obj/item/gps/visible_debug/process()
-	var/turf/T = get_turf(src)
-	if(T)
-		// I assume it's faster to color,tag and OR the turf in, rather
-		// then checking if its there
-		T.color = RANDOM_COLOUR
-		T.maptext = MAPTEXT("[T.x],[T.y],[T.z]")
-		tagged |= T
-
-/obj/item/gps/visible_debug/proc/clear()
-	while(tagged.len)
-		var/turf/T = pop(tagged)
-		T.color = initial(T.color)
-		T.maptext = initial(T.maptext)
-
-/obj/item/gps/visible_debug/Destroy()
-	if(tagged)
-		clear()
-	tagged = null
-	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
+	tracking_on = FALSE
+	debug_mode = TRUE
+	overlay_icon = FALSE

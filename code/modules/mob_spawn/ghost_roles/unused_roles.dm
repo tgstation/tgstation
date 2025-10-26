@@ -24,7 +24,7 @@
 	new /obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/human/prisoner_transport/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/ghost_role/human/prisoner_transport/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	spawned_human.fully_replace_character_name(null, "NTP #LL-0[rand(111,999)]") //Nanotrasen Prisoner #Lavaland-(numbers)
 
@@ -153,7 +153,7 @@
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
 	return ..()
 
-/obj/effect/mob_spawn/ghost_role/human/exile/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/ghost_role/human/exile/special(mob/living/new_spawn, mob/mob_possessor)
 	. = ..()
 	new_spawn.fully_replace_character_name(null,"Wish Granter's Victim ([rand(1,999)])")
 	var/wish = rand(1,4)
@@ -227,7 +227,7 @@
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 
-/obj/effect/mob_spawn/cow/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/cow/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	gender = FEMALE
 
@@ -270,7 +270,7 @@
 	outfit = /datum/outfit/syndicatespace/syndicrew
 	spawner_job_path = /datum/job/syndicate_cybersun
 
-/obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace/special(mob/living/new_spawn, mob/mob_possessor)
 	. = ..()
 	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 	var/datum/job/spawn_job = SSjob.get_job_type(spawner_job_path)

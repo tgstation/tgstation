@@ -220,15 +220,15 @@
           //To improve our code. Thanks gooncoders, very cool
           var mapWidth = map["view-size"].x,
             mapHeight = map["view-size"].y,
-            tilesShownX = tooltip.client_view_w;
-          tilesShownY = tooltip.client_view_h;
-          (realIconSizeX = mapWidth / tilesShownX),
-            (realIconSizeY = mapHeight / tilesShownY),
-            (resizeRatioX = realIconSizeX / tooltip.tileSize),
-            (resizeRatioY = realIconSizeY / tooltip.tileSize),
+            tilesShownX = tooltip.client_view_w,
+            tilesShownY = tooltip.client_view_h,
+            realIconSizeX = mapWidth / tilesShownX,
+            realIconSizeY = mapHeight / tilesShownY,
+            resizeRatioX = realIconSizeX / tooltip.tileSize,
+            resizeRatioY = realIconSizeY / tooltip.tileSize,
             //Calculate letterboxing offsets
-            (leftOffset = (map.size.x - mapWidth) / 2),
-            (topOffset = (map.size.y - mapHeight) / 2);
+            leftOffset = (map.size.x - mapWidth) / 2,
+            topOffset = (map.size.y - mapHeight) / 2;
 
           //alert(realIconSize + ' | ' +tooltip.tileSize + ' | ' + resizeRatio); //DEBUG
 

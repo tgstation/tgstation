@@ -65,6 +65,7 @@
 
 	if(cult_team.cult_risen)
 		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
+		ADD_TRAIT(current, TRAIT_DESENSITIZED, CULT_TRAIT)
 	if(cult_team.cult_ascendent)
 		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
@@ -87,7 +88,8 @@
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
 		current.RemoveElement(/datum/element/cult_halo)
 
-	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
+	REMOVE_TRAIT(current, TRAIT_DESENSITIZED, CULT_TRAIT)
+	REMOVE_TRAIT(current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)

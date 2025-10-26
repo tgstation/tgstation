@@ -22,8 +22,6 @@
 
 	/// Sight flags this eye pair imparts on its user.
 	var/sight_flags = NONE
-	/// changes how the eyes overlay is applied, makes it apply over the lighting layer
-	var/overlay_ignore_lighting = FALSE
 	/// How much innate tint these eyes have
 	var/tint = 0
 	/// How much innare flash protection these eyes have, usually paired with tint
@@ -52,8 +50,6 @@
 
 	/// Glasses cannot be worn over these eyes. Currently unused
 	var/no_glasses = FALSE
-	/// indication that the eyes are undergoing some negative effect
-	var/damaged = FALSE
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
 	/// Scarring on this organ
@@ -82,8 +78,13 @@
 
 /obj/item/organ/eyes/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
+	if(organ_flags & ORGAN_FAILING)
+		receiver.become_blind(EYE_DAMAGE)
+	if(damage >= low_threshold)
+		receiver.assign_nearsightedness(EYE_DAMAGE, damage >= high_threshold ? 3 : 2, TRUE)
+
 	receiver.cure_blind(NO_EYES)
-	apply_damaged_eye_effects()
+
 	// Ensures that non-player mobs get their eye colors assigned, as players get them from prefs
 	if (ishuman(receiver))
 		var/mob/living/carbon/human/as_human = receiver
@@ -91,9 +92,17 @@
 			eye_color_left = as_human.eye_color_left
 		if (!eye_color_right)
 			eye_color_right = as_human.eye_color_right
+		RegisterSignals(receiver, list(
+			SIGNAL_ADDTRAIT(TRAIT_LUMINESCENT_EYES),
+			SIGNAL_REMOVETRAIT(TRAIT_LUMINESCENT_EYES),
+			SIGNAL_ADDTRAIT(TRAIT_REFLECTIVE_EYES),
+			SIGNAL_REMOVETRAIT(TRAIT_REFLECTIVE_EYES),
+		), PROC_REF(on_shiny_eyes_trait_update))
+
 	refresh(receiver, call_update = TRUE)
 	RegisterSignal(receiver, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(receiver, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_wash))
+
 	if (scarring)
 		apply_scarring_effects()
 
@@ -134,19 +143,37 @@
 		if(!special)
 			human_owner.update_body()
 
+	// become blind (if not special)
+	if(!special)
+		organ_owner.become_blind(NO_EYES)
+
 	// Cure blindness from eye damage
 	organ_owner.cure_blind(EYE_DAMAGE)
 	organ_owner.cure_nearsighted(EYE_DAMAGE)
 	// Eye blind and temp blind go to, even if this is a bit of cheesy way to clear blindness
 	organ_owner.remove_status_effect(/datum/status_effect/eye_blur)
 	organ_owner.remove_status_effect(/datum/status_effect/temporary_blindness)
-	// Then become blind anyways (if not special)
-	if(!special)
-		organ_owner.become_blind(NO_EYES)
+
+	if (scarring)
+		organ_owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
+		organ_owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
+		organ_owner.cure_blind(EYE_SCARRING_TRAIT)
 
 	organ_owner.update_tint()
 	organ_owner.update_sight()
-	UnregisterSignal(organ_owner, list(COMSIG_ATOM_BULLET_ACT, COMSIG_COMPONENT_CLEAN_FACE_ACT))
+	UnregisterSignal(organ_owner, list(
+		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_COMPONENT_CLEAN_FACE_ACT,
+		SIGNAL_ADDTRAIT(TRAIT_LUMINESCENT_EYES),
+		SIGNAL_REMOVETRAIT(TRAIT_LUMINESCENT_EYES),
+		SIGNAL_ADDTRAIT(TRAIT_REFLECTIVE_EYES),
+		SIGNAL_REMOVETRAIT(TRAIT_REFLECTIVE_EYES),
+	))
+
+///Called whenever the luminescent and/or reflective eyes traits are added or removed
+/obj/item/organ/eyes/proc/on_shiny_eyes_trait_update(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+	source.update_eyes()
 
 /obj/item/organ/eyes/update_atom_colour()
 	. = ..()
@@ -267,9 +294,8 @@
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -EYES_LAYER, parent)
 	var/list/overlays = list(eye_left, eye_right)
 
-	if(overlay_ignore_lighting && !(parent.obscured_slots & HIDEEYES))
-		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -EYES_LAYER, alpha = eye_left.alpha)
-		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -EYES_LAYER, alpha = eye_right.alpha)
+	if(!(parent.obscured_slots & HIDEEYES))
+		overlays += get_emissive_overlays(eye_left, eye_right, parent)
 
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 
@@ -298,6 +324,19 @@
 			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
+
+///Returns the two emissive overlays built for the left and right eyes, in order.
+/obj/item/organ/eyes/proc/get_emissive_overlays(mutable_appearance/eye_left, mutable_appearance/eye_right, atom/spokesman)
+	var/list/return_list = list()
+	var/emissive_effect
+	if((owner && HAS_TRAIT(owner, TRAIT_LUMINESCENT_EYES)) || (TRAIT_LUMINESCENT_EYES in organ_traits))
+		emissive_effect = EMISSIVE_BLOOM
+	else if((owner && HAS_TRAIT(owner, TRAIT_REFLECTIVE_EYES)) || (TRAIT_REFLECTIVE_EYES in organ_traits))
+		emissive_effect = EMISSIVE_SPECULAR
+	if(emissive_effect)
+		return_list += emissive_appearance(eye_left.icon, eye_left.icon_state, spokesman, -EYES_LAYER, alpha = eye_left.alpha, effect_type = emissive_effect)
+		return_list += emissive_appearance(eye_right.icon, eye_right.icon_state, spokesman, -EYES_LAYER, alpha = eye_right.alpha, effect_type = emissive_effect)
+	return return_list
 
 /obj/item/organ/eyes/update_overlays()
 	. = ..()
@@ -358,13 +397,6 @@
 	owner.cure_blind(EYE_SCARRING_TRAIT)
 	owner.update_body()
 
-/obj/item/organ/eyes/on_mob_remove(mob/living/carbon/eye_owner)
-	. = ..()
-	if (scarring)
-		eye_owner.cure_nearsighted(TRAIT_RIGHT_EYE_SCAR)
-		eye_owner.cure_nearsighted(TRAIT_LEFT_EYE_SCAR)
-		eye_owner.cure_blind(EYE_SCARRING_TRAIT)
-
 #undef OFFSET_X
 #undef OFFSET_Y
 
@@ -374,38 +406,28 @@
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
 
-/obj/item/organ/eyes/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
-	. = ..()
-	if(!owner)
-		return FALSE
-	apply_damaged_eye_effects()
-
-/// Applies effects to our owner based on how damaged our eyes are
-/obj/item/organ/eyes/proc/apply_damaged_eye_effects()
-	// we're in healthy threshold, either try to heal (if damaged) or do nothing
-	if(damage <= low_threshold)
-		if(damaged)
-			damaged = FALSE
-			// clear nearsightedness from damage
-			owner.cure_nearsighted(EYE_DAMAGE)
-			// and cure blindness from damage
-			owner.cure_blind(EYE_DAMAGE)
+/obj/item/organ/eyes/on_low_damage_received()
+	if(damage >= high_threshold)
 		return
+	owner?.assign_nearsightedness(EYE_DAMAGE, 2, TRUE)
 
-	//various degrees of "oh fuck my eyes", from "point a laser at your eye" to "staring at the Sun" intensities
-	// 50 - blind
-	// 49-31 - nearsighted (2 severity)
-	// 30-20 - nearsighted (1 severity)
-	if(organ_flags & ORGAN_FAILING)
-		// become blind from damage
-		owner.become_blind(EYE_DAMAGE)
+/obj/item/organ/eyes/on_high_damage_received()
+	owner?.assign_nearsightedness(EYE_DAMAGE, 3, TRUE)
 
-	else
-		// become nearsighted from damage
-		var/severity = damage > high_threshold ? 3 : 2
-		owner.assign_nearsightedness(EYE_DAMAGE, severity, TRUE)
+/obj/item/organ/eyes/on_begin_failure()
+	owner?.become_blind(EYE_DAMAGE)
 
-	damaged = TRUE
+/obj/item/organ/eyes/on_failure_recovery()
+	owner?.cure_blind(EYE_DAMAGE)
+
+/obj/item/organ/eyes/on_high_damage_healed()
+	if(damage <= low_threshold)
+		return
+	owner?.assign_nearsightedness(EYE_DAMAGE, 2, TRUE)
+
+/obj/item/organ/eyes/on_low_damage_healed()
+	// clear nearsightedness from damage
+	owner?.cure_nearsighted(EYE_DAMAGE)
 
 /obj/item/organ/eyes/feel_for_damage(self_aware)
 	// Eye damage has visual effects, so we don't really need to "feel" it when self-examining
@@ -681,15 +703,8 @@
 	eye_color_left = "#3cb8a5"
 	eye_color_right = "#3cb8a5"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
+	organ_traits = list(TRAIT_XRAY_VISION)
 	penlight_message = "replaced by small radiation emitters and detectors"
-
-/obj/item/organ/eyes/robotic/xray/on_mob_insert(mob/living/carbon/eye_owner)
-	. = ..()
-	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
-
-/obj/item/organ/eyes/robotic/xray/on_mob_remove(mob/living/carbon/eye_owner)
-	. = ..()
-	REMOVE_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
 
 /obj/item/organ/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -1004,17 +1019,25 @@
 	if(QDELETED(eye_owner) || !ishuman(eye_owner)) //Other carbon mobs don't have eye color.
 		return
 
-	if(!eye.light_on)
-		eye_icon_state = initial(eye_icon_state)
-		overlay_ignore_lighting = FALSE
-	else
-		overlay_ignore_lighting = TRUE
-		eye_icon_state = base_eye_state
-
 	var/obj/item/bodypart/head/head = eye_owner.get_bodypart(BODY_ZONE_HEAD) //if we have eyes we definently have a head anyway
 	var/previous_flags = head.head_flags
-	head.head_flags = previous_flags | HEAD_EYECOLOR
-	eye_owner.dna.species.handle_body(eye_owner)
+	head.head_flags |= HEAD_EYECOLOR
+
+	///enabling and disabling the TRAIT_LUMINESCENT_EYES trait already calls handle_eyes(), in that case, let's skip that call
+	var/skip_call = FALSE
+	if(!eye.light_on)
+		eye_icon_state = initial(eye_icon_state)
+		skip_call = HAS_TRAIT_FROM_ONLY(eye_owner, TRAIT_LUMINESCENT_EYES, REF(src))
+		remove_organ_trait(TRAIT_LUMINESCENT_EYES)
+	else
+		skip_call = !HAS_TRAIT(eye_owner, TRAIT_LUMINESCENT_EYES)
+		add_organ_trait(TRAIT_LUMINESCENT_EYES)
+		eye_icon_state = base_eye_state
+
+	if(!skip_call && ishuman(eye_owner))
+		var/mob/living/carbon/human/humie = eye_owner
+		humie.update_eyes()
+
 	head.head_flags = previous_flags
 
 #undef MATCH_LIGHT_COLOR
@@ -1140,7 +1163,7 @@
 	eye_color_right = "#f74a4d"
 	eye_icon_state = "eyes_glow"
 	iris_overlay = null
-	overlay_ignore_lighting = TRUE
+	organ_traits = list(TRAIT_UNNATURAL_RED_GLOWY_EYES, TRAIT_LUMINESCENT_EYES)
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	low_light_cutoff = list(5, 12, 20)
 	medium_light_cutoff = list(15, 20, 30)
@@ -1153,10 +1176,6 @@
 		apply_organ_damage(20 * examtool.light_power) //that's 0.5 lightpower for a penlight, so one penlight shining is equivalent to two seconds in a lit area
 	return span_danger("[owner.p_Their()] eyes [penlight_message].")
 
-/obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_insert(mob/living/carbon/eye_owner)
-	. = ..()
-	ADD_TRAIT(eye_owner, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
-
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_life(seconds_per_tick, times_fired)
 	if(!owner.is_blind() && isturf(owner.loc) && owner.has_light_nearby(light_amount=0.5)) //we allow a little more than usual so we can produce light from the adapted eyes
 		to_chat(owner, span_danger("Your eyes! They burn in the light!"))
@@ -1165,10 +1184,6 @@
 	else
 		apply_organ_damage(-10) //heal quickly
 	. = ..()
-
-/obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_remove(mob/living/carbon/unadapted, special = FALSE, movement_flags)
-	REMOVE_TRAIT(unadapted, TRAIT_UNNATURAL_RED_GLOWY_EYES, ORGAN_TRAIT)
-	return ..()
 
 /obj/item/organ/eyes/pod
 	name = "pod eyes"
@@ -1179,3 +1194,9 @@
 	iris_overlay = null
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	penlight_message = "are green and plant-like"
+
+/obj/item/organ/eyes/felinid
+	name = "felinid eyes"
+	desc = "A pair of highly reflective eyes with slit pupils, like those of a cat."
+	pupils_name = "slit pupils"
+	penlight_message = "shine under the pearly light"

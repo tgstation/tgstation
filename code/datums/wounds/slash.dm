@@ -25,7 +25,7 @@
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE
 
-	required_wounding_types = list(WOUND_SLASH)
+	required_wounding_type = WOUND_SLASH
 	required_limb_biostate = BIO_FLESH
 
 	wound_series = WOUND_SERIES_FLESH_SLASH_BLEED

@@ -406,7 +406,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	inhand_icon_state = "sheet-wood"
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/wood=SHEET_MATERIAL_AMOUNT)
-	sheettype = "wood"
+	construction_path_type = "wood"
 	armor_type = /datum/armor/mineral_wood
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
@@ -471,7 +471,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	icon_state = "sheet-bamboo"
 	inhand_icon_state = "sheet-bamboo"
 	icon = 'icons/obj/stack_objects.dmi'
-	sheettype = "bamboo"
+	construction_path_type = "bamboo"
 	mats_per_unit = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT)
 	throwforce = 15
 	armor_type = /datum/armor/mineral_bamboo
@@ -594,7 +594,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	. = ..()
 	. += GLOB.durathread_recipes
 
-/obj/item/stack/sheet/durathread/on_item_crafted(mob/builder, atom/created)
+/obj/item/stack/sheet/durathread/used_in_craft(atom/created, datum/crafting_recipe/recipe)
+	. = ..()
 	created.set_armor_rating(CONSUME, max(50, created.get_armor_rating(CONSUME)))
 
 /obj/item/stack/sheet/cotton
@@ -783,7 +784,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	sheettype = "bronze"
+	construction_path_type = "bronze"
 	force = 5
 	throwforce = 10
 	max_amount = 50

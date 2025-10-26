@@ -41,8 +41,6 @@
 #define ROLE_VOIDWALKER "Voidwalker"
 #define ROLE_SUNWALKER "Sunwalker"
 
-// Latejoin roles
-#define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
 #define ROLE_PROVOCATEUR "Provocateur"
 #define ROLE_STOWAWAY_CHANGELING "Stowaway Changeling"
 #define ROLE_SYNDICATE_INFILTRATOR "Syndicate Infiltrator"

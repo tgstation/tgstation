@@ -130,6 +130,10 @@
 		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unsecure" : "Install/Secure"]"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	if(held_item?.atom_storage)
+		context[SCREENTIP_CONTEXT_RMB] = "Dump contents"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	if(broken > NOT_BROKEN)
 		if(broken == REALLY_BROKEN && held_item?.tool_behaviour == TOOL_WIRECUTTER)
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"

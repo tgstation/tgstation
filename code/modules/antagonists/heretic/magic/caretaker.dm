@@ -30,7 +30,7 @@
 		return
 
 	for(var/mob/living/alive in orange(5, owner))
-		if(alive.stat != DEAD && alive.client)
+		if(alive.stat != DEAD && alive.client && (owner in view(alive)))
 			owner.balloon_alert(owner, "other minds nearby!")
 			return . | SPELL_CANCEL_CAST
 
