@@ -1,4 +1,4 @@
-/datum/preference/choiced/pod_hair
+/datum/preference/choiced/species_feature/pod_hair
 	savefile_key = "feature_pod_hair"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -6,11 +6,8 @@
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/pod_hair
 
-/datum/preference/choiced/pod_hair/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.pod_hair_list)
-
-/datum/preference/choiced/pod_hair/icon_for(value)
-	var/datum/sprite_accessory/pod_hair = SSaccessories.pod_hair_list[value]
+/datum/preference/choiced/species_feature/pod_hair/icon_for(value)
+	var/datum/sprite_accessory/pod_hair = get_accessory_for_value(value)
 
 	var/datum/universal_icon/icon_with_hair = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "pod_head_m")
 
@@ -23,9 +20,3 @@
 	icon_with_hair.blend_color(COLOR_GREEN, ICON_MULTIPLY)
 
 	return icon_with_hair
-
-/datum/preference/choiced/pod_hair/create_default_value()
-	return pick(assoc_to_keys_features(SSaccessories.pod_hair_list))
-
-/datum/preference/choiced/pod_hair/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_POD_HAIR] = value

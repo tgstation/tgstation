@@ -147,7 +147,7 @@
 
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
-	dna_block = /datum/dna_block/feature/ears
+	dna_block = /datum/dna_block/feature/accessory/ears
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears
 
@@ -160,9 +160,6 @@
 
 	/// Layer upon which we add the inner ears overlay
 	var/inner_layer = EXTERNAL_FRONT
-
-/datum/bodypart_overlay/mutant/cat_ears/get_global_feature_list()
-	return SSaccessories.ears_list
 
 /datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)

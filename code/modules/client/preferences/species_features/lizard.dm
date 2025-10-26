@@ -23,7 +23,7 @@
 
 	return final_icon
 
-/datum/preference/choiced/lizard_body_markings
+/datum/preference/choiced/species_feature/lizard_body_markings
 	savefile_key = "feature_lizard_body_markings"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -31,11 +31,8 @@
 	should_generate_icons = TRUE
 	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/lizard
 
-/datum/preference/choiced/lizard_body_markings/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.lizard_markings_list)
-
-/datum/preference/choiced/lizard_body_markings/icon_for(value)
-	var/datum/sprite_accessory/sprite_accessory = SSaccessories.lizard_markings_list[value]
+/datum/preference/choiced/species_feature/lizard_body_markings/icon_for(value)
+	var/datum/sprite_accessory/sprite_accessory = get_accessory_for_value(value)
 
 	var/datum/universal_icon/final_icon = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
@@ -54,10 +51,7 @@
 
 	return final_icon
 
-/datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_LIZARD_MARKINGS] = value
-
-/datum/preference/choiced/lizard_frills
+/datum/preference/choiced/species_feature/lizard_frills
 	savefile_key = "feature_lizard_frills"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -65,16 +59,10 @@
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/frills
 
-/datum/preference/choiced/lizard_frills/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.frills_list)
+/datum/preference/choiced/species_feature/lizard_frills/icon_for(value)
+	return generate_lizard_side_shot(get_accessory_for_value(value), "frills")
 
-/datum/preference/choiced/lizard_frills/icon_for(value)
-	return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
-
-/datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_FRILLS] = value
-
-/datum/preference/choiced/lizard_horns
+/datum/preference/choiced/species_feature/lizard_horns
 	savefile_key = "feature_lizard_horns"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -82,14 +70,8 @@
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/horns
 
-/datum/preference/choiced/lizard_horns/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.horns_list)
-
-/datum/preference/choiced/lizard_horns/icon_for(value)
-	return generate_lizard_side_shot(SSaccessories.horns_list[value], "horns")
-
-/datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_HORNS] = value
+/datum/preference/choiced/species_feature/lizard_horns/icon_for(value)
+	return generate_lizard_side_shot(get_accessory_for_value(value), "horns")
 
 /datum/preference/choiced/lizard_legs
 	savefile_key = "feature_lizard_legs"
@@ -130,7 +112,7 @@
 	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	return initial(species_type.digitigrade_customization) == DIGITIGRADE_OPTIONAL
 
-/datum/preference/choiced/lizard_snout
+/datum/preference/choiced/species_feature/lizard_snout
 	savefile_key = "feature_lizard_snout"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
@@ -138,38 +120,17 @@
 	should_generate_icons = TRUE
 	relevant_organ = /obj/item/organ/snout
 
-/datum/preference/choiced/lizard_snout/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.snouts_list)
+/datum/preference/choiced/species_feature/lizard_snout/icon_for(value)
+	return generate_lizard_side_shot(get_accessory_for_value(value), "snout", include_snout = FALSE)
 
-/datum/preference/choiced/lizard_snout/icon_for(value)
-	return generate_lizard_side_shot(SSaccessories.snouts_list[value], "snout", include_snout = FALSE)
-
-/datum/preference/choiced/lizard_snout/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_SNOUT] = value
-
-/datum/preference/choiced/lizard_spines
+/datum/preference/choiced/species_feature/lizard_spines
 	savefile_key = "feature_lizard_spines"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_organ = /obj/item/organ/spines
 
-/datum/preference/choiced/lizard_spines/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.spines_list)
-
-/datum/preference/choiced/lizard_spines/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_SPINES] = value
-
-/datum/preference/choiced/lizard_tail
+/datum/preference/choiced/species_feature/lizard_tail
 	savefile_key = "feature_lizard_tail"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_organ = /obj/item/organ/tail/lizard
-
-/datum/preference/choiced/lizard_tail/init_possible_values()
-	return assoc_to_keys_features(SSaccessories.tails_list_lizard)
-
-/datum/preference/choiced/lizard_tail/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_TAIL_LIZARD] = value
-
-/datum/preference/choiced/lizard_tail/create_default_value()
-	return /datum/sprite_accessory/tails/lizard/smooth::name
