@@ -34204,7 +34204,7 @@
 	id = "paramed_dispatch";
 	name = "Privacy Shutters";
 	pixel_x = 6;
-	req_access = list("medical")
+	req_access = list("paramedic")
 	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
