@@ -557,7 +557,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
-	force = 30
+	force = 40
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	block_chance = 50
@@ -565,8 +565,11 @@
 	sharpness = SHARP_POINTY
 	attack_verb_continuous = list("stabs", "cuts")
 	attack_verb_simple = list("stab", "cut")
+	sound_vary = TRUE
 	block_sound = 'sound/items/weapons/parry.ogg'
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	pickup_sound = 'sound\items\knife\knife_pickup1.ogg'
+	drop_sound = 'sound\items\knife\knife_drop1.ogg'
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 10
 	exposed_wound_bonus = 25
