@@ -582,7 +582,9 @@
 /atom/movable/screen/alert/penthrite
 	name = "Strong Heartbeat"
 	desc = "Your heart beats with great force!"
-	icon_state = "penthrite"
+	use_user_hud_icon = TRUE
+	overlay_icon = 'icons/obj/medical/syringe.dmi'
+	overlay_state = "luxpen"
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
