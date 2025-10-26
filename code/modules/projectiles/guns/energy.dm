@@ -50,6 +50,11 @@
 	/// sound played when fire mode select is done
 	var/fire_mode_switch_sound = SFX_FIRE_MODE_SWITCH
 
+	// EMP related vars
+
+	/// A divide to the amount of charge lost when the weapon is EMP'd. Higher means more resistant.
+	var/emp_resistance = 1
+
 /obj/item/gun/energy/fire_sounds()
 	// What frequency the energy gun's sound will make
 	var/pitch_to_use = 1
@@ -76,7 +81,7 @@
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
-		cell.use(round(cell.charge / severity))
+		cell.use(round(cell.charge / emp_resistance / severity))
 		chambered = null //we empty the chamber
 		recharge_newshot() //and try to charge a new shot
 		update_appearance()

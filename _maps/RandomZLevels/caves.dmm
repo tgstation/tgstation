@@ -1190,7 +1190,7 @@
 "yS" = (
 /obj/structure/closet/crate,
 /obj/item/paper/fluff/awaymissions/caves/shipment_receipt,
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/soul,
 /obj/item/slimepotion/fireproof,
 /obj/item/slimepotion/fireproof,
 /obj/item/clothing/glasses/thermal,

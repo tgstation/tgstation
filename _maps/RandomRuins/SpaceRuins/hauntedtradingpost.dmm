@@ -2104,7 +2104,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/spawner/random/exotic/technology,
 /obj/effect/mapping_helpers/apc/syndicate_access,
-/obj/item/gun/energy/laser/carbine/cybersun,
+/obj/item/gun/energy/laser/cybersun,
 /obj/effect/mapping_helpers/apc/full_charge,
 /obj/machinery/power/apc/auto_name/directional/south{
 	cable_layer = 1
