@@ -23,7 +23,7 @@
 	desc = "Specialized internal camera protected from the hellish depths of SSWardrobe. \
 	Yell at coders if you somehow manage to see this"
 
-/datum/computer_file/program/maintenance/camera/on_install()
+/datum/computer_file/program/maintenance/camera/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	internal_camera = new(computer)
 	internal_camera.print_picture_on_snap = FALSE
