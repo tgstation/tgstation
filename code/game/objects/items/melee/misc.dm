@@ -569,7 +569,7 @@
 	block_sound = 'sound/items/weapons/parry.ogg'
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	pickup_sound = 'sound/items/knife/knife_pickup1.ogg'
-	drop_sound = 'sound/items/knife/knife_drop1.ogg'
+	drop_sound = SFX_KNIFE_DROP
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	wound_bonus = 10
 	exposed_wound_bonus = 25
