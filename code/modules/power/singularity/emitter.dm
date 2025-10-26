@@ -63,6 +63,8 @@
 	var/last_projectile_params
 	//the disk in the gun
 	var/obj/item/emitter_disk/diskie
+	//color of beam fired by emitter
+	var/laser_color
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
@@ -151,36 +153,22 @@
 	QDEL_NULL(sparks)
 	return ..()
 
-/obj/machinery/power/emitter/proc/get_emitter_disk_color()
-	if(!diskie)
-		return COLOR_VIBRANT_LIME
-	if(istype(diskie, /obj/item/emitter_disk/stamina))
-		return COLOR_TRUE_BLUE
-	if(istype(diskie, /obj/item/emitter_disk/healing))
-		return COLOR_YELLOW
-	if(istype(diskie, /obj/item/emitter_disk/incendiary))
-		return COLOR_RED_LIGHT //laser is bright red in practice
-	if(istype(diskie, /obj/item/emitter_disk/sanity))
-		return COLOR_TONGUE_PINK //blush pink is very magenta, beam is very pallid
-	if(istype(diskie, /obj/item/emitter_disk/magnetic))
-		return COLOR_SILVER
-	if(istype(diskie, /obj/item/emitter_disk/blast))
-		return COLOR_SYNDIE_RED //it shoots explosions, u think it'd be subtle? laser is grey but im not sure if thats an oversight
-
 /obj/machinery/power/emitter/proc/add_emitter_overlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
-	if(!active) return
+	if(!active)
+		return
 
-	var/color
-	if(!powered)
-		color = COLOR_ORANGE //stank low power orange
+	if (!powered)
+		laser_color = COLOR_ORANGE //stank low power orange
+
+	else if (diskie)
+		laser_color = diskie.laser_color
+
 	else
-		color = get_emitter_disk_color()
-		if(!color) //if no color for some reason just set it to green
-			color = COLOR_VIBRANT_LIME
+		laser_color = COLOR_VIBRANT_LIME
 
 	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay", FLOAT_LAYER, src)
-	overlay.color = color
+	overlay.color = laser_color
 	overlays |= overlay
 	return
 
@@ -655,6 +643,7 @@
 	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk6"
+	var/laser_color = COLOR_VIBRANT_LIME
 	var/stored_proj = /obj/projectile/beam/emitter/hitscan
 	var/stored_sound = 'sound/items/weapons/emitter.ogg'
 	var/consumed_on_removal = TRUE
@@ -668,6 +657,7 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bluelens
 	consumed_on_removal = FALSE
 	consumable = FALSE
+	laser_color = COLOR_TRUE_BLUE
 
 /obj/item/emitter_disk/healing
 	name = "\improper Diode Disk: Bioregenerative"
@@ -675,6 +665,7 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/bioregen
 	consumed_on_removal = FALSE
 	consumable = FALSE
+	laser_color = COLOR_YELLOW
 
 /obj/item/emitter_disk/incendiary
 	name = "\improper Diode Disk: Conflagratory"
@@ -682,6 +673,8 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/incend
 	consumed_on_removal = FALSE
 	consumable = FALSE
+	laser_color = COLOR_RED_LIGHT
+
 
 /obj/item/emitter_disk/sanity
 	name = "\improper Diode Disk: Psychosiphoning"
@@ -689,6 +682,8 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/psy
 	consumed_on_removal = FALSE
 	consumable = FALSE
+	laser_color = COLOR_TONGUE_PINK
+
 
 /obj/item/emitter_disk/magnetic
 	name = "\improper Diode Disk: Magnetogenerative"
@@ -696,6 +691,7 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/magnetic
 	consumed_on_removal = FALSE
 	consumable = FALSE
+	laser_color = COLOR_SILVER
 
 /obj/item/emitter_disk/blast
 	name = "\improper Diode Disk: Hyperconcussive"
@@ -703,4 +699,5 @@
 	stored_proj = /obj/projectile/beam/emitter/hitscan/blast
 	consumed_on_removal = FALSE
 	consumable = FALSE
+	laser_color = COLOR_SYNDIE_RED //magnetic is already grey
 	fire_rate_mod = 2
