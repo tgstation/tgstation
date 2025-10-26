@@ -665,3 +665,162 @@
       they spawn open and can have their locking mechanism set via a wrench.
   - bugfix: Secure safes will now transfer their state (locked, PIN code, emagged,
       etc.) when deconstructed from a wall and vice-versa.
+2025-10-22:
+  Ghommie:
+  - refactor: Refactored organ damage code a little. Hopefully there won't be issues
+      (otherwise report them).
+  - bugfix: Fixes borg being chiefly unaffected by flashes.
+  JoJe3003:
+  - bugfix: Fixed a bug where infinite capacity power cells and megacells wouldn't
+      work on large power grids (high loads).
+  L0pz:
+  - qol: Drone pings are now louder
+  Melbert:
+  - rscdel: Security batons no longer get more armor penetration the larger the cell
+      installed
+  - balance: Security baton base stun armor pen upped 10% -> 15%
+  - balance: Gold telescopic baton stun armor pen downed 60% -> 50%
+  - balance: Silver telescopic baton stun armor pen downed 40% -> 30%
+  - balance: Bronze telescopic baton stun armor pen downed 20% -> 15%
+  - balance: Contractor baton stun armor pen downed 30% -> 25%
+  - balance: Nunchuck stun armor pen downed 30% -> 25%
+  SmArtKar:
+  - bugfix: Fixed lavaloop charge bar getting stuck when swapping hands
+  - bugfix: Fixed flypeople not being able to gain nutrition from slurping up vomit
+  SyncIt21:
+  - bugfix: crystal meth has correct purity based colours
+  necromanceranne:
+  - balance: The strongarm implants now directly improves the unarmed power of the
+      arm it is implanted into.
+  - balance: The strongarm implant's super slam now uses similar calculations to normal
+      unarmed attacks, including improvements from mutations and athletics.
+  - balance: The strongarm always uses the super slam against nonhuman opponents.
+      It will only go on cooldown, and care about that cooldown, when used against
+      humans.
+  tonyhawq:
+  - rscadd: Adds a golf cart to cargo warehouse and cargo imports
+  - rscadd: Adds golf carts which can transport crates, machines, fuel tanks, and
+      people
+2025-10-23:
+  00-Steven:
+  - bugfix: Partial language understanding once again knows which words are common.
+  - bugfix: Expressive Aphasia is no longer so aphasic you don't know any words.
+  Aliceee2ch:
+  - rscadd: Added new medical access for paramedics.
+  - map: 'Added paramedic dispatch on: TramStation and IceBox, removed elevator from
+      Tram and moved chemstorage on IceBox.'
+  - map: Paramedic dispatch area is used on every paramedic office now.
+  - map: Medical MODsuit and Jaws of Recovery moved to paramedic office.
+  - map: Redesigned northern medbay on MetaStation.
+  - bugfix: Fixed piping and powergrid in some places of Catwalk engineering.
+  Arceniu:
+  - bugfix: fixed a tier 3 cyber stomach acid power(tier2 power 35>25, tier3 power
+      0>35)
+  Ghommie:
+  - bugfix: Fixed temporary deafness never going away.
+  KnigTheThrasher:
+  - map: fixed a kebab on nebulastation being a basetype
+  MGOOOOOO:
+  - rscadd: 'Chiral Inversing Buffer : A new way to convert your hidden impurities
+      and inverses into their true form! Requires a purchase from Cargo or a trip
+      to Lavaland to acquire.'
+  - balance: A new geyser has been added to Lavaland that outputs Chiral Inversing
+      Buffer. Geyser weights have been adjusted to accommodate this addition.
+  Melbert:
+  - bugfix: Felines can speak again (so can voicebox users)
+  SmArtKar:
+  - bugfix: ORM now displays your mining point balance instead of your bank account
+      balance
+  - bugfix: Fixed jumpsuit sensor repair runtimes
+  SyncIt21:
+  - bugfix: pda internal cam app does not lag the server
+  - bugfix: You can deconstruct a smes power bank
+  - bugfix: portable smes UI updates & closes correctly when unanchored from the connector
+  grungussuss:
+  - sound: added sounds for gas masks
+  loganuk:
+  - map: CATWALK - Medbay - Explore and look for things, Medbay should feel a lot
+      easier to work together
+  - map: CATWALK - Medbay - Freezer room now above main medbay
+  - map: CATWALK - Medbay - Break room moved to hallway separate but better linked
+  - map: CATWALK - Medbay - Equipment room moved to where CMO office was, CMO office
+      has new location over-looking med
+  - map: CATWALK - Medbay - Private treatment room available upstairs
+  - map: CATWALK - Medbay - Morgue now has extra coffins and size increased
+  - map: CATWALK - Medbay - Anti tider/riot lockdown shutters added at reception and
+      CMO office
+  - map: CATWALK - Medbay - Reception desk with queue and one way system
+  - map: CATWALK - Medbay - Cryo is now all together in the same room
+  - map: CATWALK - Medbay - Brand new operating theatre
+  - map: CATWALK - Medbay - Brand new treatment area
+  - map: CATWALK - Medbay - Pharma increased in size
+  - map: CATWALK - Medbay - Huge chem factory area to play with and a brand new room
+      on the upper level that starts locked
+  - map: CATWALK - Medbay - Sec post is now larger
+  - map: CATWALK - Hallways - A few lights/lattices/catwalks tweaked to suit new medbay
+      layout, pipes and cables too
+  - map: CATWALK - AI Upload - Re-balanced to have extra protection similar to every
+      other map, layout tweaks for style as well as clearer layout of modules
+2025-10-24:
+  Aliceee2ch:
+  - balance: Minimal hacked APC amount for purchasing doomsday module was lowered
+      from 15 to 10.
+  ArchBTW:
+  - qol: 'Changes Wallet Priority: Standard ID cards now go in order properly: from
+      left to right'
+  Ghommie:
+  - qol: The fish analyzer UI should update more reliably.
+  - bugfix: Fixed some of the fishes being unable to reproduce.
+  - balance: Fish acquired through means other than fish farming itself takes less
+      time to be able to reproduce.
+  Krysonism:
+  - balance: prosthetic item limbs are no longer considered equipped items for some
+      purposes such as ventcrawling.
+  Melbert:
+  - bugfix: Angry monkeys (and the primal instincts trauma) are VIOLENT again
+  - qol: Monkeys no longer screech every tick they are attacking someone (now ~1 in
+      4 ticks, or ~1 in 10 for primal instincts)
+  SmArtKar:
+  - bugfix: Fixed dropped limbs rotating and disappearing when pulled/thrown
+  - bugfix: Fixed an issue which could randomly completely break a player's visuals
+      until an admin resets their HUD
+  - bugfix: Fixed glow bleeding through chair and sofa armrests
+  SyncIt21:
+  - bugfix: wall mounts placed by player now falls off when the wall they are mounted
+      on is destroyed
+  - code_imp: cleaned up wall mount code
+  TheNobodyofimportance:
+  - balance: Vomit drinking now checks for fly mouth instead of fly species
+2025-10-25:
+  MGOOOOOO:
+  - bugfix: Sterilizine will now correctly apply its 20% surgery speed bonus.
+  SmArtKar:
+  - bugfix: Fixed PKC mark effect being offset to the side when applied to some mobs.
+  - image: Boulder platforms spawned by throwing boulders on lava or activating vents
+      now have new sprites that smooth together
+  grungussuss:
+  - sound: added handling sounds for various devices
+2025-10-26:
+  FeudeyTF:
+  - bugfix: Now you can get "Getting an upgrade" achievement. Craft your own unique
+      item!
+  JoJe3003:
+  - bugfix: Admin spawn panel toggle "By name"/"By type" updates search results without
+      having to update the search string.
+  SyncIt21:
+  - bugfix: hand crafted station intercoms now get deconstructed when the wall is
+      destroyed
+  - bugfix: light fixtures applying the wall mounted component on completed light
+      frames
+  - bugfix: APC offsets are correct
+  - bugfix: poster signs dropped from paintings again have positive integrity and
+      will get destroyed properly
+  TealSeer:
+  - code_imp: removed f
+  Time-Green:
+  - bugfix: Voidwalker's 'planet allergy' effect goes away again when you leave a
+      planet
+  mcbalaam:
+  - qol: Better exodrone console UI
+  - rscadd: Exodrones now create a small explosion (0, 0, 1, 1) when self-destruction
+      is triggered

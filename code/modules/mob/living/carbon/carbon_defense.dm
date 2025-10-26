@@ -67,7 +67,7 @@
 	return null
 
 /mob/living/carbon/is_ears_covered()
-	for(var/obj/item/worn_thing as anything in get_equipped_items())
+	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_thing.flags_cover & EARS_COVERED)
 			return worn_thing
 

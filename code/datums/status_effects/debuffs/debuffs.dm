@@ -370,8 +370,8 @@
 		return FALSE
 
 	marked_underlay = new()
-	marked_underlay.pixel_w = -owner.pixel_x
-	marked_underlay.pixel_z = -owner.pixel_y
+	marked_underlay.pixel_w = -(owner.base_pixel_x + owner.base_pixel_w)
+	marked_underlay.pixel_z = -(owner.base_pixel_y + owner.base_pixel_z)
 	marked_underlay.transform *= 0.5
 	owner.vis_contents += marked_underlay
 	animate(marked_underlay, ready_delay, transform = matrix() * 1.2, flags = CIRCULAR_EASING | EASE_IN)

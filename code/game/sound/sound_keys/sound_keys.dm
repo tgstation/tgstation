@@ -1065,3 +1065,46 @@
 		'sound/items/door_remote/door_remote_action2.ogg',
 	)
 
+/datum/sound_effect/gas_mask_pickup
+	key = SFX_GAS_MASK_PICKUP
+	file_paths = list(
+		'sound/items/gas_mask/gas_mask_pickup1.ogg',
+		'sound/items/gas_mask/gas_mask_pickup2.ogg',
+		'sound/items/gas_mask/gas_mask_pickup3.ogg',
+	)
+
+/datum/sound_effect/gas_mask_drop
+	key = SFX_GAS_MASK_DROP
+	file_paths = list(
+		'sound/items/gas_mask/gas_mask_drop1.ogg',
+		'sound/items/gas_mask/gas_mask_drop2.ogg',
+		'sound/items/gas_mask/gas_mask_drop3.ogg',
+	)
+
+/datum/sound_effect/gas_mask_equip
+	key = SFX_GAS_MASK_EQUIP
+	file_paths = list(
+		'sound/items/gas_mask/gas_mask_equip1.ogg',
+		'sound/items/gas_mask/gas_mask_equip2.ogg',
+		'sound/items/gas_mask/gas_mask_equip3.ogg',
+	)
+
+/datum/sound_effect/generic_device_pickup
+	key = SFX_GENERIC_DEVICE_PICKUP
+	file_paths = list(
+		'sound/items/generic_device/generic_device_pickup1.ogg',
+		'sound/items/generic_device/generic_device_pickup2.ogg',
+		'sound/items/generic_device/generic_device_pickup3.ogg',
+		'sound/items/generic_device/generic_device_pickup4.ogg',
+		'sound/items/generic_device/generic_device_pickup5.ogg',
+	)
+
+/datum/sound_effect/generic_device_drop
+	key = SFX_GENERIC_DEVICE_DROP
+	file_paths = list(
+		'sound/items/generic_device/generic_device_drop1.ogg',
+		'sound/items/generic_device/generic_device_drop2.ogg',
+		'sound/items/generic_device/generic_device_drop3.ogg',
+		'sound/items/generic_device/generic_device_drop4.ogg',
+		'sound/items/generic_device/generic_device_drop5.ogg',
+	)

@@ -73,10 +73,10 @@
 ///Adjust the temporary deafness of the person, up or down
 /obj/item/organ/ears/proc/adjust_temporary_deafness(amount)
 	// organ failure makes us permanently deafened. Also, doesn't do anything if not in someone or during godmode
-	if(amount <= 0 || (owner && HAS_TRAIT(owner, TRAIT_GODMODE)))
+	if(amount > 0 && owner && HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
 
-	temporary_deafness += max(amount * damage_multiplier, 0)
+	temporary_deafness = max(temporary_deafness + amount * damage_multiplier, 0)
 
 	if(!owner)
 		return
