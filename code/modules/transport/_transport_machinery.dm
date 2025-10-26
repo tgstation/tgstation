@@ -150,12 +150,3 @@
 	set_machine_stat(machine_stat & ~BROKEN)
 	update_appearance()
 	return TRUE
-
-/obj/item/wallframe/tram/try_build(obj/structure/tram/on_tram, mob/user)
-	var/turf/tram_turf = get_turf(user)
-	var/obj/structure/thermoplastic/tram_floor = locate() in tram_turf
-	if(!istype(tram_floor))
-		balloon_alert(user, "needs tram!")
-		return FALSE
-
-	return ..()
