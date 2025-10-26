@@ -5,7 +5,7 @@
  * Do NOT return variable values or custom data in this proc.
  * To save calculated values or custom data, use either get_custom_save_vars() or on_object_saved()
  *
- * Returns: A list of variable names (strings) to be serialized.
+ * Returns: Array list of variable names to be serialized
  */
 /atom/proc/get_save_vars()
 	. = list()
@@ -48,7 +48,7 @@
  * - Saving a object reference as a savable id_tag
  * - Saving a calculated value
  *
- * Returns: A named list of variables with their custom values that will be serialized
+ * Returns: Assoicated list of variables with custom values to be serialized
  */
 /atom/proc/get_custom_save_vars()
 	return list()
@@ -59,6 +59,8 @@
  * - Saving material stacks (ie. ore in a silo)
  * - Saving variables that can be shown as mapping helpers (ie. welded airlock mapping helper)
  * - Saving objects inside of another object (ie. paper inside a noticeboard)
+ *
+ * Returns: Null or array list of additional object data to be included on turf
  */
 /obj/proc/on_object_saved()
 	return null
@@ -71,6 +73,8 @@
  * - [/obj/machinery/atmospherics/components/unary] spawns beneath cryo tubes that causes duplication
  * - [/obj/machinery/power/terminal] spawns beneath APC's that causes duplication
  * - [/obj/structure/transport/linear/tram] needs to skip multi-tile object checks
+ *
+ * Returns: Boolean
  */
 /atom/proc/is_saveable(turf/current_loc)
 	return TRUE
