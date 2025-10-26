@@ -48,6 +48,7 @@
 	lighting_cutoff_blue = 25
 	can_be_held = TRUE
 	worn_slot_flags = ITEM_SLOT_HEAD
+	inhand_holder_type = /obj/item/mob_holder/drone
 	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
 	var/picked = FALSE
 	/// Stored drone color, restored when unhacked

@@ -259,6 +259,7 @@
 	greyscale_colors = "#927444#8b4c31#4c202d"
 	starting_programs = list(
 		/datum/computer_file/program/skill_tracker,
+		/datum/computer_file/program/raptordex,
 	)
 
 /obj/item/modular_computer/pda/bitrunner
