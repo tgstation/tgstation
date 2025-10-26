@@ -657,6 +657,12 @@
 		var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
 		var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
 		data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
+
+
+// example test
+	TGM_MAP_BLOCK(data, landmark_path, content)
+	content = TGM_WRAPPER("var = [TGM_ENCODE(value)]")
+
 	return data
 
 //obj/structure/transport/linear/public

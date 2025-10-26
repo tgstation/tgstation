@@ -62,6 +62,33 @@
 		value = "\"[value]\"";\
 	};
 
+#define TGM_MAP_SEPARATOR(map_data) (map_data ? ",\n" : "")
+#define TGM_MAP_STRUCTURE(key, content) "[key]{\n\t[content]\n\t}"
+
+/*
+#define TGM_ADD_BLOCK(map_data, key, content)\
+    map_data += (map_data ? ",\n" : "");\
+    map_data += "[key]{\n\t[content]\n\t}";
+*/
+
+#define TGM_VARS_BLOCK(content) ("{\n\t[content]\n\t}")
+
+#define TGM_MAP_BLOCK(map_string, typepath, content)\
+	map_string += (length(map_string) ? "" : ",\n");\
+	map_string += "[typepath]";\
+	map_string += "[content]"; // maybe skip adding this to the list if empty?
+
+// for on_object_saved()
+TGM_ADD_BLOCK(data, obj_typepath, variable_content, data???/empty?)
+// for map_writer.dm
+TGM_ADD_BLOCK(current_header, obj_typepath, metadata, empty)
+
+// the ,\n only gets added at the start
+// on_object_saved = ,\n[typepath]{\n\t[blah] = [blah_value]\n\t}
+
+// the ,\n only gets added at the start
+// ,\n[typepath]{metadata}
+
 #define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
 #define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
 #define TGM_MAX_OBJ_CHECK (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
