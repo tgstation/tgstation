@@ -1,0 +1,7 @@
+author: "loganuk"
+delete-after: True
+changes:
+  - qol: "New verb in \"AI commands\" to update AI display status"
+  - bugfix: "Stopped \"Friend Computer\" emotion affecting evac displays instead of just AI displays"
+  - code_imp: "Replaced radial wheel for AI status or AI core display with TGUI menus"
+  - image: "AIs can now update their status displays with way more graphics to match core display options onto the TVs."
