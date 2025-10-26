@@ -800,3 +800,27 @@
       now have new sprites that smooth together
   grungussuss:
   - sound: added handling sounds for various devices
+2025-10-26:
+  FeudeyTF:
+  - bugfix: Now you can get "Getting an upgrade" achievement. Craft your own unique
+      item!
+  JoJe3003:
+  - bugfix: Admin spawn panel toggle "By name"/"By type" updates search results without
+      having to update the search string.
+  SyncIt21:
+  - bugfix: hand crafted station intercoms now get deconstructed when the wall is
+      destroyed
+  - bugfix: light fixtures applying the wall mounted component on completed light
+      frames
+  - bugfix: APC offsets are correct
+  - bugfix: poster signs dropped from paintings again have positive integrity and
+      will get destroyed properly
+  TealSeer:
+  - code_imp: removed f
+  Time-Green:
+  - bugfix: Voidwalker's 'planet allergy' effect goes away again when you leave a
+      planet
+  mcbalaam:
+  - qol: Better exodrone console UI
+  - rscadd: Exodrones now create a small explosion (0, 0, 1, 1) when self-destruction
+      is triggered
