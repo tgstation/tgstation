@@ -286,6 +286,7 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_CIG_PACK_RUSTLE "cig_pack_rustle"
 #define SFX_CIG_PACK_THROW_DROP "cig_pack_throw_drop"
 #define	SFX_RORO_WARBLE "roro_warble"
+#define SFX_ALIEN_SPIT_ACID "alien_split_acid"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000

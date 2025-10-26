@@ -847,3 +847,10 @@
 	key = SFX_RORO_WARBLE
 	file_paths = list(
 		'sound/mobs/non-humanoids/roro/roro_warble.ogg')
+
+/datum/sound_effect/alien_spit_acid
+	key = SFX_ALIEN_SPIT_ACID
+	file_paths = list(
+		'sound/effects/alien/alien_spitacid.ogg',
+		'sound/effects/alien/alien_spitacid2.ogg'
+	)

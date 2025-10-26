@@ -325,3 +325,6 @@
 
 /// Permanent trait from an overdose effect
 #define OVERDOSE_TRAIT "overdose"
+
+/// Trait from a blood worm being in a host
+#define BLOOD_WORM_HOST_TRAIT "blood_worm_host_trait"
