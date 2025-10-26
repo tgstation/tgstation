@@ -9444,14 +9444,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
-"dqm" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/curtain/cloth{
-	color = "#52B4E9"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/turf/open/floor/plating,
-/area/station/medical/paramedic)
 "dqn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24331,6 +24323,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "ivu" = (
@@ -93537,7 +93530,7 @@ waF
 pkn
 bMY
 bMY
-dqm
+pYw
 vIn
 pYw
 bMY
