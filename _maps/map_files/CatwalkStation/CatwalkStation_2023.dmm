@@ -1915,10 +1915,6 @@
 "aBF" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/firealarm/directional/south,
-/obj/item/clothing/head/cone{
-	pixel_x = 13;
-	pixel_y = 3
-	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology/hallway)
 "aBN" = (
@@ -53628,18 +53624,6 @@
 "oZJ" = (
 /turf/open/floor/glass/reinforced,
 /area/station/service/library)
-"oZN" = (
-/obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/item/clothing/head/cone{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/turf/open/floor/iron,
-/area/station/science/xenobiology/hallway)
 "oZO" = (
 /obj/structure/railing/corner/end{
 	dir = 8
@@ -59722,6 +59706,20 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood/large,
 /area/station/service/theater_dressing)
+"qMo" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/station/science/xenobiology/hallway)
 "qMr" = (
 /obj/structure/closet/secure_closet/courtroom,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -72725,6 +72723,16 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/hallway)
+"uui" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = 13;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/station/science/xenobiology/hallway)
 "uuj" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/mid_joiner,
@@ -123659,7 +123667,7 @@ vAX
 rIV
 pUe
 nAB
-hcZ
+uui
 fUN
 dUP
 rOA
@@ -123916,7 +123924,7 @@ fhV
 xqU
 kQC
 nAB
-hcZ
+qMo
 fUN
 rkJ
 arT
@@ -125717,7 +125725,7 @@ qEM
 tGN
 wwz
 gVB
-oZN
+mmY
 arT
 hRY
 wps
