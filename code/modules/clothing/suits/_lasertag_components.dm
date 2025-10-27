@@ -11,7 +11,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 ///call this proc before removing the component.
-/datum/component/lasertag/proc/should_delete(var/source)
+/datum/component/lasertag/proc/should_delete(source)
 	lasertag_granters -= source
 	if(LAZYLEN(lasertag_granters))
 		return FALSE
