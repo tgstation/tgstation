@@ -273,7 +273,7 @@
 	AddComponent(\
 		/datum/component/spawner, \
 		spawn_types = defending_mobs, \
-		spawn_time = 10 SECONDS, \
+		spawn_time = 7.5 SECONDS, \
 		max_spawned = 10, \
 		max_spawn_per_attempt = round(boulder_size/5), \
 		max_spawn_types_per_attempt = 2, \
@@ -284,7 +284,7 @@
 		spawner_logic = SPAWN_BY_WAVE_BEHAVIOR, \
 		max_waves = wave_timer, \
 		effect = /obj/effect/temp_visual/dust_cloud, \
-		spawn_windup = 1 SECONDS, \
+		spawn_windup = 0.9 SECONDS, \
 	)
 	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever, or until all waves are completed.
 	RegisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(handle_wave_conclusion))
@@ -677,7 +677,7 @@
 	name = "dust"
 	desc = "We're all like... dust... in the wind."
 	icon_state = "light_dust_cloud"
-	layer = BELOW_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE
 	pixel_x = -4
 	pixel_z = -4

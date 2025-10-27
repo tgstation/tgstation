@@ -129,8 +129,9 @@
 		return
 	var/atom/spawner = parent
 	COOLDOWN_START(src, spawn_delay, spawn_time)
+	var/list/local_spawn_types = spawn_types.Copy()
 	for(var/i in 1 to max_spawn_types_per_attempt)
-		var/chosen_mob_type = pick(spawn_types)
+		var/chosen_mob_type = pick_n_take(local_spawn_types) //This way we avoid duplicates when spawning.
 		var/adjusted_spawn_count = 1
 		var/max_spawn_this_attempt = min(max_spawn_per_attempt, max_spawned - spawned_total)
 		if (max_spawn_this_attempt > 1)
@@ -187,7 +188,7 @@
 /**
  * Registers signals and flags onto a component spawned mob, to keep track of the spawned mob, as well as prevent them from getting treated as naturally spawned.
  * @param: mob/spawned_mob: Mob to have signals sent to/registered onto.
- * @param: atom/spawner: 
+ * @param: atom/spawner:
  */
 /datum/component/spawner/proc/setup_spawned_mob(mob/spawned_mob, atom/spawner)
 	spawned_mob.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
