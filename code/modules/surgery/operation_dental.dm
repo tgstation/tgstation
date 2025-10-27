@@ -12,7 +12,7 @@
 	return base
 
 /datum/surgery_operation/limb/add_dental_implant/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	var/obj/item/bodypart/head/teeth_receptangle = limb
 	if(!istype(teeth_receptangle))
@@ -62,7 +62,7 @@
 	)
 
 /datum/surgery_operation/limb/remove_dental_implant/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
 
 /datum/surgery_operation/limb/remove_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

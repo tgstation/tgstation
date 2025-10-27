@@ -27,7 +27,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/incise_skin/state_check(obj/item/bodypart/limb)
-	return !HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
+	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/incise_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -40,7 +40,7 @@
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
 /datum/surgery_operation/limb/incise_skin/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	limb.surgery_state |= SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED // ouch, cuts the vessels
+	limb.add_surgical_state(SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED) // ouch, cuts the vessels)
 	if(!limb.can_bleed())
 		return ..()
 
@@ -52,7 +52,6 @@
 		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
 	)
-	limb.refresh_bleed_rate()
 
 /// Pulls the skin back to access internals
 /datum/surgery_operation/limb/retract_skin
@@ -75,7 +74,7 @@
 	return base
 
 /datum/surgery_operation/limb/retract_skin/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/retract_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -89,8 +88,8 @@
 
 /datum/surgery_operation/limb/retract_skin/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_state |= SURGERY_SKIN_OPEN
-	limb.surgery_state &= ~SURGERY_SKIN_CUT
+	limb.add_surgical_state(SURGERY_SKIN_OPEN)
+	limb.remove_surgical_state(SURGERY_SKIN_CUT)
 
 /// Closes the skin
 /datum/surgery_operation/limb/close_skin
@@ -113,7 +112,7 @@
 	return base
 
 /datum/surgery_operation/limb/close_skin/state_check(obj/item/bodypart/limb)
-	if(!HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
 		return FALSE
 	if(INNATELY_LACKING_SKIN(limb))
 		return FALSE
@@ -138,10 +137,9 @@
 
 /datum/surgery_operation/limb/close_skin/on_success(obj/item/bodypart/limb)
 	. = ..()
-	if(limb.surgery_state & SURGERY_BONE_SAWED)
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
 		limb.heal_damage(40)
-	limb.surgery_state &= ~SURGERY_UNSET_ON_CLOSE
-	limb.refresh_bleed_rate()
+	limb.remove_surgical_state(SURGERY_UNSET_ON_CLOSE)
 
 /// Clamps bleeding blood vessels to prevent blood loss
 /datum/surgery_operation/limb/clamp_bleeders
@@ -163,7 +161,7 @@
 	return base
 
 /datum/surgery_operation/limb/clamp_bleeders/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_VESSELS_UNCLAMPED)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_UNCLAMPED)
 
 /datum/surgery_operation/limb/clamp_bleeders/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -177,12 +175,11 @@
 
 /datum/surgery_operation/limb/clamp_bleeders/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_state |= SURGERY_VESSELS_CLAMPED
-	limb.surgery_state &= ~SURGERY_VESSELS_UNCLAMPED
 	// free brute healing if you do it after sawing bones
-	if(limb.surgery_state & SURGERY_BONE_SAWED)
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
 		limb.heal_damage(20)
-	limb.refresh_bleed_rate()
+	limb.add_surgical_state(SURGERY_VESSELS_CLAMPED)
+	limb.remove_surgical_state(SURGERY_VESSELS_UNCLAMPED)
 
 /// Unclamps blood vessels to allow blood flow again
 /datum/surgery_operation/limb/unclamp_bleeders
@@ -204,7 +201,7 @@
 	return base
 
 /datum/surgery_operation/limb/unclamp_bleeders/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(INNATELY_LACKING_VESSELS(limb))
 		return FALSE
@@ -222,8 +219,8 @@
 
 /datum/surgery_operation/limb/unclamp_bleeders/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_state |= SURGERY_VESSELS_UNCLAMPED
-	limb.surgery_state &= ~SURGERY_VESSELS_CLAMPED
+	limb.add_surgical_state(SURGERY_VESSELS_UNCLAMPED)
+	limb.remove_surgical_state(SURGERY_VESSELS_CLAMPED)
 
 /// Saws through bones to access organs
 /datum/surgery_operation/limb/saw_bones
@@ -257,9 +254,9 @@
 	return base
 
 /datum/surgery_operation/limb/saw_bones/state_check(obj/item/bodypart/limb)
-	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
+	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
 		return FALSE
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	return TRUE
 
@@ -279,7 +276,7 @@
 
 /datum/surgery_operation/limb/saw_bones/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_state |= SURGERY_BONE_SAWED
+	limb.add_surgical_state(SURGERY_BONE_SAWED)
 	limb.receive_damage(50, sharpness = tool.get_sharpness(), wound_bonus = CANT_WOUND, damage_source = tool)
 	display_results(
 		surgeon,
@@ -315,9 +312,9 @@
 	return base
 
 /datum/surgery_operation/limb/fix_bones/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
-	if(!HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
+	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
 		return FALSE
 	if(INNATELY_LACKING_BONES(limb))
 		return FALSE
@@ -335,7 +332,7 @@
 
 /datum/surgery_operation/limb/fix_bones/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.surgery_state &= ~(SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
+	limb.remove_surgical_state(SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
 	limb.heal_damage(40)
 
 /datum/surgery_operation/limb/drill_bones
@@ -359,9 +356,9 @@
 	return base
 
 /datum/surgery_operation/limb/drill_bones/state_check(obj/item/bodypart/limb)
-	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
+	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
 		return FALSE
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	return TRUE
 
@@ -377,7 +374,7 @@
 
 /datum/surgery_operation/limb/drill_bones/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_state |= SURGERY_BONE_DRILLED
+	limb.add_surgical_state(SURGERY_BONE_DRILLED)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -407,9 +404,9 @@
 	return base
 
 /datum/surgery_operation/limb/incise_organs/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 		return FALSE
-	if(HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
 		return FALSE
 	return TRUE
 
@@ -429,7 +426,7 @@
 
 /datum/surgery_operation/limb/incise_organs/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_state |= SURGERY_ORGANS_CUT
+	limb.add_surgical_state(SURGERY_ORGANS_CUT)
 	limb.receive_damage(10, sharpness = tool.get_sharpness(), wound_bonus = CANT_WOUND, damage_source = tool)
 	display_results(
 		surgeon,
@@ -439,4 +436,3 @@
 		span_notice("[surgeon] makes an incision in the organs of [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")
-	limb.refresh_bleed_rate()

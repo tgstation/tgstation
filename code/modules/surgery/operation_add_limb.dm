@@ -19,7 +19,7 @@
 	return patient.get_bodypart(BODY_ZONE_CHEST)
 
 /datum/surgery_operation/limb/prosthetic_replacement/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	// While we are operating on chest, we need to make sure the actual missing limb is missing
 	if(limb.owner.get_bodypart(deprecise_zone(surgeon.zone_selected))) // melbert todo breaks on op pc
@@ -95,7 +95,7 @@
 /datum/surgery_operation/limb/prosthetic_replacement/proc/handle_arbitrary_prosthetic(mob/living/carbon/patient, mob/living/surgeon, obj/item/thing_to_attach, target_zone)
 	SSblackbox.record_feedback("tally", "arbitrary_prosthetic", 1, initial(thing_to_attach.name))
 	var/obj/item/bodypart/new_limb = patient.make_item_prosthetic(thing_to_attach, target_zone, 80)
-	new_limb.surgery_state |= SURGERY_PROSTHETIC_UNSECURED
+	new_limb.add_surgical_state(SURGERY_PROSTHETIC_UNSECURED)
 	display_results(
 		surgeon, patient,
 		span_notice("You attach [thing_to_attach]."),
@@ -115,7 +115,7 @@
 	time = 4.8 SECONDS
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_PROSTHETIC_UNSECURED)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_PROSTHETIC_UNSECURED)
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
 	display_results(
@@ -138,6 +138,6 @@
 	)
 	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
 	display_pain(limb.owner, "You feel more secure as your prosthetic is firmly attached to your body!", IS_ROBOTIC_LIMB(chest))
-	limb.surgery_state &= ~SURGERY_PROSTHETIC_UNSECURED
+	limb.remove_surgical_state(SURGERY_PROSTHETIC_UNSECURED)
 	limb.AddComponent(/datum/component/item_as_prosthetic_limb, null, 0) // updates drop probability to zero
 	tool.use(1)

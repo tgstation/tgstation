@@ -239,6 +239,5 @@
 
 /datum/surgery_operation/basic/tend_wounds/combo/master
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
-	replaced_by = null
 	healing_amount = 1
 	healing_multiplier = 0.4

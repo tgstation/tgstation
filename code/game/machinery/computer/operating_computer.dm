@@ -159,7 +159,7 @@
 			valid_operations += GLOB.operations[operation_type]
 
 		for(var/datum/surgery_operation/operation as anything in valid_operations)
-			if(operation.replaced_by && (operation.replaced_by in advanced_surgeries))
+			if(operation.replaced_by && (operation.replaced_by != operation.type) && (operation.replaced_by in advanced_surgeries))
 				continue
 			if(!operation.show_as_next_step(table.patient, target_zone))
 				continue

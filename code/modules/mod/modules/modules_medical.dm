@@ -191,37 +191,26 @@
 	organ = null
 	return ..()
 
-// /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
-// 	. = ..()
-// 	if(!isliving(target))
-// 		organ.forceMove(drop_location())
-// 		organ = null
-// 		return
-// 	var/mob/living/carbon/human/organ_receiver = target
-// 	var/succeed = FALSE
-// 	if(organ_receiver.surgeries.len)
-// 		for(var/datum/surgery/organ_manipulation/procedure in organ_receiver.surgeries)
-// 			if(procedure.location != organ.zone)
-// 				continue
-// 			if(!ispath(procedure.steps[procedure.status], /datum/surgery_step/manipulate_organs))
-// 				continue
-// 			succeed = TRUE
-// 			break
+/obj/projectile/organ/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == organ)
+		organ = null
 
-// 	if(!succeed)
-// 		organ.forceMove(drop_location())
-// 		organ = null
-// 		return
+/obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
+	. = ..()
+	if(!isliving(target) || !(organ.organ_flags & ORGAN_UNUSABLE))
+		organ.forceMove(drop_location())
+		return
+	var/mob/living/organ_receiver = target
+	// bodyparts actually *do* hit a specific bodypart, but random variance would make this projectile unusable
+	// so we just fake it, and assume the organ always hits the place it needs to go
+	var/obj/item/bodypart/fake_hit_part = organ_receiver.get_bodypart(organ.zone)
+	if(!LIMB_HAS_SURGERY_STATE(fake_hit_part, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
+		organ.forceMove(drop_location())
+		return
 
-// 	var/list/organs_to_boot_out = organ_receiver.get_organ_slot(organ.slot)
-// 	for(var/obj/item/organ/organ_evacced as anything in organs_to_boot_out)
-// 		if(organ_evacced.organ_flags & ORGAN_UNREMOVABLE)
-// 			continue
-// 		organ_evacced.Remove(target, special = TRUE)
-// 		organ_evacced.forceMove(get_turf(target))
-
-// 	organ.Insert(target)
-// 	organ = null
+	// handles swapping any existing organ out for us
+	organ.Insert(target)
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
 /obj/item/mod/module/criminalcapture/patienttransport

@@ -36,6 +36,8 @@
 #define ORGAN_GHOST (1<<14)
 /// This is a mutant organ, having this makes you a -derived mutant to health analyzers.
 #define ORGAN_MUTANT (1<<15)
+/// The organ has been chomped or otherwise rendered unusable.
+#define ORGAN_UNUSABLE (1<<16)
 
 /// Scarring on the right eye
 #define RIGHT_EYE_SCAR (1<<0)
@@ -125,10 +127,15 @@ DEFINE_BITFIELD(operation_flags, list(
 /// Dummy "tool" for surgeries which use hands
 #define IMPLEMENT_HAND "hands"
 
+// Yes these are glorified bitflag manipulation macros, they're meant to make reading surgical operating a bit easier
+/// Checks if the input surgery state has all of the bitflags passed
+#define HAS_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)) == (check_state))
+/// Checks if the input surgery state has any of the bitflags passed
+#define HAS_ANY_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)))
 /// Checks if the limb has all of the bitflags passed
-#define HAS_SURGERY_STATE(limb, state) ((limb.surgery_state & (state)) == (state))
+#define LIMB_HAS_SURGERY_STATE(limb, check_state) HAS_SURGERY_STATE(limb?.surgery_state, check_state)
 /// Checks if the limb has any of the bitflags passed
-#define HAS_ANY_SURGERY_STATE(limb, state) ((limb.surgery_state & (state)))
+#define LIMB_HAS_ANY_SURGERY_STATE(limb, check_state) HAS_ANY_SURGERY_STATE(limb?.surgery_state, check_state)
 
 /// Surgery speed modifiers are soft-capped at this value
 /// The actual modifier can exceed this but it gets

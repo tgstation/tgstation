@@ -1,19 +1,3 @@
-/obj/item/disk/surgery/brainwashing
-	name = "Brainwashing Surgery Disk"
-	desc = "The disk provides instructions on how to impress an order on a brain, making it the primary objective of the patient."
-	// surgeries = list(
-	// 	/datum/surgery/advanced/brainwashing,
-	// 	/datum/surgery/advanced/brainwashing/mechanic,
-	// )
-
-/obj/item/disk/surgery/sleeper_protocol
-	name = "Suspicious Surgery Disk"
-	desc = "The disk provides instructions on how to turn someone into a sleeper agent for the Syndicate."
-	// surgeries = list(
-	// 	/datum/surgery/advanced/brainwashing_sleeper,
-	// 	/datum/surgery/advanced/brainwashing_sleeper/mechanic,
-	// )
-
 /datum/surgery_operation/organ/brainwash
 	name = "brainwash"
 	implements = list(
@@ -31,7 +15,7 @@
 	required_biotype = ORGAN_ORGANIC
 
 /datum/surgery_operation/organ/brainwash/organ_check(obj/item/organ/organ)
-	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
+	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	operation_args["objective"] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)

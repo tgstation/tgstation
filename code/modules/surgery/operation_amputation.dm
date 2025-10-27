@@ -23,7 +23,7 @@
 	return base
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(limb.body_zone == BODY_ZONE_CHEST)
 		return FALSE
@@ -71,7 +71,7 @@
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
 
 /datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/limb/amputate/pegleg
 	name = "detach peg leg"

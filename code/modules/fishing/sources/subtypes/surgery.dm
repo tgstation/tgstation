@@ -23,16 +23,14 @@
 		var/random_type = pick(subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		return new random_type(spawn_location)
 
-	// var/mob/living/carbon/carbon = fishing_spot
+	var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
-	// for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
-	// 	var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
-	// 	if(!istype(manip_step))
-	// 		continue
-	// 	for(var/obj/item/organ/organ in operation.operated_bodypart)
-	// 		if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
-	// 			continue
-	// 		possible_organs |= organ
+	for(var/obj/item/organ/fishable as anything in carbon.organ)
+		if(fishable.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_EXTERNAL|ORGAN_VITAL))
+			continue
+		if(!LIMB_HAS_SURGERY_STATE(fishable.bodypart_owner, SURGERY_FISH_STATE(fishable.zone)))
+			continue
+		possible_organs += fishable
 
 	if(!length(possible_organs))
 		return null
@@ -48,7 +46,7 @@
 		FISH_SOURCE_AUTOWIKI_NAME = "Organs",
 		FISH_SOURCE_AUTOWIKI_DUD = "",
 		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
-		FISH_SOURCE_AUTOWIKI_NOTES = "A random organ from an ongoing organ manipulation surgery.",
+		FISH_SOURCE_AUTOWIKI_NOTES = "A random organ from an ongoing surgical operation.",
 	))
 
 	return data

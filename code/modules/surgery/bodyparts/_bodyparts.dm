@@ -255,15 +255,16 @@
 	else
 		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 
-	// No skin to cut
+	var/innate_state = NONE
 	if(INNATELY_LACKING_SKIN(src))
-		surgery_state |= SURGERY_SKIN_OPEN
-	// No bone to cut
+		innate_state |= SURGERY_SKIN_OPEN
 	if(INNATELY_LACKING_BONES(src))
-		surgery_state |= SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED // These are normally mutually exclusive, but as a bonus for lacking bones you can do drill and saw operations simultaneously
-	// No blood vessels
+		// These are normally mutually exclusive, but as a bonus for lacking bones, you can do drill and saw operations simultaneously!
+		innate_state |= SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED
 	if(INNATELY_LACKING_VESSELS(src))
-		surgery_state |= SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT
+		innate_state |= SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT
+	if(innate_state)
+		add_surgical_state(innate_state)
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
@@ -851,6 +852,9 @@
 
 	UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_SET_BODY_POSITION))
 
+	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_FISH_STATE(body_zone)))
+		qdel(old_owner.GetComponent(/datum/component/fishing_spot))
+
 /// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
 /obj/item/bodypart/proc/apply_ownership(mob/living/carbon/new_owner)
 	SHOULD_CALL_PARENT(TRUE)
@@ -883,6 +887,9 @@
 
 	forceMove(owner)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal)) //this must be set after we moved, or we insta gib
+
+	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_FISH_STATE(body_zone)))
+		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
 
 /// Called on addition of a bodypart
 /obj/item/bodypart/proc/on_adding(mob/living/carbon/new_owner)
@@ -1320,12 +1327,14 @@
 	if(generic_bleedstacks > 0)
 		cached_bleed_rate += 0.5
 
+	// In 99% of situations we won't get to this point if we aren't wired or blooded
+	// But I'm covering my ass in case someone adds some weird new species
 	if(biological_state & (BIO_WIRED|BIO_BLOODED))
 		// better clamp those up quick
-		if(surgery_state & SURGERY_VESSELS_UNCLAMPED)
+		if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_UNCLAMPED))
 			cached_bleed_rate += 2
 		// better, but still not exactly ideal
-		else if(surgery_state & (SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT))
+		else if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT))
 			cached_bleed_rate += 0.25
 
 	for(var/obj/item/embeddies as anything in embedded_objects)
@@ -1537,3 +1546,35 @@
 	if(isnull(owner))
 		return
 	REMOVE_TRAIT(owner, old_trait, bodypart_trait_source)
+
+/// Add one or multiple surgical states to the bodypart
+/obj/item/bodypart/proc/add_surgical_state(new_states)
+	if(!new_states)
+		CRASH("add_surgical_state called with no new states to add")
+	if((surgery_state & new_states) == new_states)
+		return
+
+	var/old_states = surgery_state
+	surgery_state |= new_states
+	update_surgical_state(old_states, new_states)
+
+/// Remove one or multiple surgical states from the bodypart
+/obj/item/bodypart/proc/remove_surgical_state(removing_states)
+	if(!removing_states)
+		CRASH("remove_surgical_state called with no states to remove")
+	if(!(surgery_state & removing_states))
+		return
+
+	var/old_states = surgery_state
+	surgery_state &= ~removing_states
+	update_surgical_state(old_states, removing_states)
+
+/// Called when surgical state changes so we can react to it
+/obj/item/bodypart/proc/update_surgical_state(old_state, changed_states)
+	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_ORGANS_CUT|SURGERY_VESSEL_STATES))
+		refresh_bleed_rate()
+
+	if(HAS_SURGERY_STATE(surgery_state, SURGERY_FISH_STATE(body_zone)))
+		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery) // no-op if they already have one
+	else if(HAS_SURGERY_STATE(old_state, SURGERY_FISH_STATE(body_zone)))
+		qdel(owner.GetComponent(/datum/component/fishing_spot))

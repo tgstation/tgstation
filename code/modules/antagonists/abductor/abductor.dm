@@ -135,7 +135,9 @@
 	var/static/list/ayy_operations
 	if(!length(ayy_operations))
 		ayy_operations = list()
-		ayy_operations += /datum/surgery/organ_extraction // this one's pretty important
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/external/alien
 		ayy_operations += /datum/surgery_operation/basic/tend_wounds/combo/master
 		ayy_operations += /datum/surgery_operation/limb/add_plastic // unlocks advanced plastic surgery
 		ayy_operations += /datum/surgery_operation/limb/bionecrosis

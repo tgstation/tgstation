@@ -24,7 +24,7 @@
 			continue
 		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
 			continue
-		if(operation.replaced_by && (operation.replaced_by in possible_operations))
+		if(operation.replaced_by && (operation.replaced_by != operation_type) && (operation.replaced_by in possible_operations))
 			continue
 		var/atom/movable/operate_on = operation.get_operation_target(src, patient, potential_tool)
 		if(isnull(operate_on))
@@ -724,17 +724,17 @@
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(carbon_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
-		return state_holder?.surgery_state & state == state
+		return HAS_SURGERY_STATE(state_holder?.surgery_state, state)
 
-	return HAS_SURGERY_STATE(carbon_part, state)
+	return LIMB_HAS_SURGERY_STATE(carbon_part, state)
 
 /datum/surgery_operation/basic/proc/has_any_surgery_state(mob/living/patient, state = ALL)
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(carbon_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
-		return state_holder?.surgery_state & state
+		return HAS_ANY_SURGERY_STATE(state_holder?.surgery_state, state)
 
-	return HAS_ANY_SURGERY_STATE(carbon_part, state)
+	return LIMB_HAS_ANY_SURGERY_STATE(carbon_part, state)
 
 /// Operation that specifically targets limbs
 /datum/surgery_operation/limb

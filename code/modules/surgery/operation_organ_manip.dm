@@ -31,12 +31,8 @@
 	implements = remove_implements + insert_implements
 
 /// Checks that the passed organ can be inserted/removed
-/datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/organ/organ)
+/datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!organ.useable)
-		return FALSE
-	if(organ.organ_flags & ORGAN_UNREMOVABLE)
-		return FALSE
 	return TRUE
 
 /// Checks that the passed organ can be inserted/removed in the specified zones
@@ -59,6 +55,13 @@
 
 	return TRUE
 
+/datum/surgery_operation/limb/organ_manipulation/proc/can_operate_on_organ(obj/item/bodypart/limb, obj/item/organ/organ, mob/living/surgeon)
+	if(!organ_check(limb, organ))
+		return FALSE
+	if(!zone_check(organ, limb.body_zone, surgeon.zone_selected))
+		return FALSE
+	return TRUE
+
 /datum/surgery_operation/limb/organ_manipulation/get_radial_options(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	if(istype(tool, /obj/item/organ))
 		return get_insert_options(limb, surgeon, tool)
@@ -67,7 +70,7 @@
 /datum/surgery_operation/limb/organ_manipulation/proc/get_remove_options(obj/item/bodypart/limb, mob/living/surgeon)
 	var/list/options = list()
 	for(var/obj/item/organ/organ in limb)
-		if(!organ_check(organ) || !zone_check(organ, limb.body_zone, surgeon.zone_selected))
+		if(!can_operate_on_organ(limb, organ, surgeon) || (organ.organ_flags & ORGAN_UNREMOVABLE))
 			continue
 		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
 		if(!option)
@@ -83,7 +86,7 @@
 	return options
 
 /datum/surgery_operation/limb/organ_manipulation/proc/get_insert_options(obj/item/bodypart/limb, mob/living/surgeon, obj/item/organ/organ)
-	if(!organ_check(organ) || !zone_check(organ, limb.body_zone, surgeon.zone_selected))
+	if(!can_operate_on_organ(limb, organ, surgeon) || !(organ.organ_flags & ORGAN_UNUSABLE))
 		return null
 
 	for(var/obj/item/organ/existing_organ in limb)
@@ -188,17 +191,15 @@
 	desc = "Manipulate a patient's internal organs, such as a heart or lungs."
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation/internal
 
-/datum/surgery_operation/limb/organ_manipulation/internal/organ_check(obj/item/organ/organ)
-	return ..() && !(organ.organ_flags & ORGAN_EXTERNAL)
+/datum/surgery_operation/limb/organ_manipulation/internal/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
+	return !(organ.organ_flags & ORGAN_EXTERNAL)
 
 // Operating on chest organs requires bones be sawed
 /datum/surgery_operation/limb/organ_manipulation/internal/chest
-
-/datum/surgery_operation/limb/organ_manipulation/internal/chest/organ_check(obj/item/organ/organ)
-	return ..() && organ.zone == BODY_ZONE_CHEST
+	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED) && limb.body_zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/mechanic
 	name = "prosthetic organ manipulation"
@@ -210,16 +211,34 @@
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
 
+/// Abductor subtype that works through clothes and lets you extract the heart without sawing bones
+/datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
+	name = "experimental organ manipulation"
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+
+/datum/surgery_operation/limb/organ_manipulation/internal/chest/alien/state_check(obj/item/bodypart/limb)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
+
+/datum/surgery_operation/limb/organ_manipulation/internal/chest/alien/can_operate_on_organ(obj/item/bodypart/limb, obj/item/organ/organ, mob/living/surgeon)
+	if(!..())
+		return FALSE
+	if(organ.slot == ORGAN_SLOT_HEART)
+		return TRUE // Hearts can be manipulated so long as we pass normal state check
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
+		return TRUE // Other organs can only be manipulated if we also pass bone sawed check
+	return FALSE
+
 // Operating on non-chest organs requires bones be intact
 /datum/surgery_operation/limb/organ_manipulation/internal/other
-
-/datum/surgery_operation/limb/organ_manipulation/internal/other/organ_check(obj/item/organ/organ)
-	return ..() && organ.zone != BODY_ZONE_CHEST
+	name = "experimental organ manipulation"
+	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
-	if(HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(limb))
+	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(limb))
+		return FALSE
+	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
 	return TRUE
 
@@ -232,17 +251,24 @@
 		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
+	replaced_by = null
+
+/// Abductor subtype that works through clothes
+/datum/surgery_operation/limb/organ_manipulation/internal/other/alien
+	name = "experimental feature manipulation"
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 
 // All external organ manipulation requires bones sawed
 /datum/surgery_operation/limb/organ_manipulation/external
 	name = "feature manipulation"
 	desc = "Manipulate features of the patient, such as a moth's wings or a lizard's tail."
+	replaced_by = /datum/surgery_operation/limb/organ_manipulation/external/alien
 
-/datum/surgery_operation/limb/organ_manipulation/external/organ_check(obj/item/organ/organ)
-	return ..() && (organ.organ_flags & ORGAN_EXTERNAL)
+/datum/surgery_operation/limb/organ_manipulation/external/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
+	return (organ.organ_flags & ORGAN_EXTERNAL)
 
 /datum/surgery_operation/limb/organ_manipulation/external/state_check(obj/item/bodypart/limb)
-	return HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/limb/organ_manipulation/external/mechanic
 	name = "prosthetic feature manipulation"
@@ -253,3 +279,11 @@
 		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
+	replaced_by = null
+
+/// Abductor subtype that works through clothes
+/datum/surgery_operation/limb/organ_manipulation/external/alien
+	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
+
+/datum/surgery_operation/limb/organ_manipulation/external/alien/state_check(obj/item/bodypart/limb)
+	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)

@@ -8,7 +8,7 @@
 	operation_flags = OPERATION_MORBID
 
 /datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE

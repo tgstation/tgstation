@@ -8,7 +8,7 @@
 	required_biotype = ORGAN_ORGANIC
 
 /datum/surgery_operation/organ/stomach_pump/organ_check(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool)
-	if(!HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
+	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(HAS_TRAIT(organ.owner, TRAIT_HUSK))
 		return FALSE

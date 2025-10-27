@@ -120,6 +120,9 @@ DEFINE_BITFIELD(surgery_state, list(
 /// All states that concern itself with internal organs
 #define SURGERY_ORGAN_STATES (SURGERY_ORGANS_CUT)
 
+/// Surgery state required for a limb with a certain zone to... be... fished... in...
+#define SURGERY_FISH_STATE(for_zone) (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|(for_zone == BODY_ZONE_CHEST ? SURGERY_BONE_SAWED : NONE))
+
 /// These states are automatically cleared when the surgery is closed for ease of use
 #define SURGERY_UNSET_ON_CLOSE (SURGERY_SKIN_STATES|SURGERY_VESSEL_STATES|SURGERY_BONE_STATES|SURGERY_ORGAN_STATES)
 

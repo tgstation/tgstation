@@ -11,7 +11,7 @@
 	var/list/zombie_chems = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 
 /datum/surgery_operation/limb/bionecrosis/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED))
 		return FALSE
 	if(locate(/obj/item/organ/zombie_infection) in limb)
 		return FALSE

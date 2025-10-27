@@ -1,8 +1,3 @@
-/obj/item/disk/surgery/advanced_plastic_surgery
-	name = "Advanced Plastic Surgery Disk"
-	desc = "The disk provides instructions on how to do an Advanced Plastic Surgery, this surgery allows one-self to completely remake someone's face with that of another. Provided they have a picture of them in their offhand when reshaping the face. With the surgery long becoming obsolete with the rise of genetics technology. This item became an antique to many collectors, With only the cheaper and easier basic form of plastic surgery remaining in use in most places."
-	// surgeries = list(/datum/surgery/plastic_surgery/advanced)
-
 /datum/surgery_operation/limb/plastic_surgery
 	name = "plastic surgery"
 	desc = "Reshape or reconstruct a patient's body part for cosmetic or functional purposes."
@@ -17,7 +12,7 @@
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 
 /datum/surgery_operation/limb/plastic_surgery/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
@@ -34,7 +29,7 @@
 		names += limb.owner.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
 
 	else
-		var/advanced = limb.surgery_state & SURGERY_PLASTIC_APPLIED
+		var/advanced = LIMB_HAS_SURGERY_STATE(limb, SURGERY_PLASTIC_APPLIED)
 		var/obj/item/offhand = surgeon.get_inactive_held_item()
 		if(istype(offhand, /obj/item/photo) && advanced)
 			var/obj/item/photo/disguises = offhand
@@ -88,7 +83,7 @@
 		human_target.update_ID_card()
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
 		surgeon.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)
-	limb.surgery_state &= ~SURGERY_PLASTIC_APPLIED
+	limb.remove_surgical_state(SURGERY_PLASTIC_APPLIED)
 
 /datum/surgery_operation/limb/plastic_surgery/on_failure(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -114,9 +109,9 @@
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
 
 /datum/surgery_operation/limb/add_plastic/state_check(obj/item/bodypart/limb)
-	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
-	if(HAS_SURGERY_STATE(limb, SURGERY_PLASTIC_APPLIED))
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_PLASTIC_APPLIED))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_HEAD)
 		return FALSE
@@ -134,4 +129,4 @@
 
 /datum/surgery_operation/limb/add_plastic/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	limb.surgery_state |= SURGERY_PLASTIC_APPLIED
+	limb.add_surgical_state(SURGERY_PLASTIC_APPLIED)

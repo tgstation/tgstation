@@ -13,7 +13,7 @@
 	var/inflammation_reduction = 75
 
 /datum/surgery_operation/organ/asthmatic_bypass/organ_check(obj/item/organ/organ)
-	return HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
+	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
 
 /datum/surgery_operation/organ/asthmatic_bypass/organ_check(obj/item/organ/organ)
 	if(!organ.owner.has_quirk(/datum/quirk/item_quirk/asthma))
