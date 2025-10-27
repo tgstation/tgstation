@@ -43,7 +43,7 @@
 					continue
 				floor_candidates += floor
 
-			// Enter() is expensive to call on potentially hundreds-thousands of turfs at once and can even lead to server crashes. We can pick() a subset instead and get close enough results at a fraction of the cost.
+			// Enter() is expensive to call on potentially hundreds to thousands of turfs at once and can even lead to server crashes. We can pick() a subset instead and get close enough results at a fraction of the cost.
 			for(var/turf/open/floor as anything in pick(floor_candidates, min(25, length(floor_candidates))))
 				if(!floor.Enter(vine))
 					continue
