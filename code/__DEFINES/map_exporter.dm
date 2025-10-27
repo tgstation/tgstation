@@ -66,3 +66,49 @@
 #define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
 #define TGM_MAX_OBJ_CHECK (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
 #define TGM_MAX_MOB_CHECK (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))
+
+// Metrics tracking macros for map serialization
+
+/*
+/// Reset all global metrics counters at the start of a save operation
+#define RESET_SAVE_METRICS(...) \
+	/datum/controller/global_vars/InitGlobal/TGM_objs = 0; \
+	/datum/controller/global_vars/InitGlobal/TGM_mobs = 0; \
+	/datum/controller/global_vars/InitGlobal/TGM_total_objs = 0; \
+	/datum/controller/global_vars/InitGlobal/TGM_total_mobs = 0; \
+	/datum/controller/global_vars/InitGlobal/TGM_total_turfs = 0; \
+	/datum/controller/global_vars/InitGlobal/TGM_total_areas = 0;
+*/
+
+/// Increment object counter (per turf)
+#define INCREMENT_OBJ_COUNT(...) \
+	do { \
+		GLOB.TGM_objs++; \
+		GLOB.TGM_total_objs++; \
+	} while (FALSE); \
+
+/// Increment mob counter (per turf)
+#define INCREMENT_MOB_COUNT(...) \
+	do { \
+		GLOB.TGM_mobs++; \
+		GLOB.TGM_total_mobs++; \
+	} while (FALSE); \
+
+/// Increment turf counter
+#define INCREMENT_TURF_COUNT (GLOB.TGM_total_turfs++)
+
+/// Increment area counter (should only be called once per unique area)
+#define INCREMENT_AREA_COUNT (GLOB.TGM_total_areas++)
+
+/*
+/// Reset per-turf counters (called at start of each turf)
+#define RESET_PER_TURF_COUNTERS(...) \
+	/datum/controller/global_vars/InitGlobal/TGM_objs = 0; \
+	/datum/controller/global_vars/InitGlobal/TGM_mobs = 0;
+*/
+
+/// Check if object limit is exceeded
+#define OBJECT_LIMIT_EXCEEDED (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
+
+/// Check if mob limit is exceeded
+#define MOB_LIMIT_EXCEEDED (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))

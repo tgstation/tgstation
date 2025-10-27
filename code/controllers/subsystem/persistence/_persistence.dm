@@ -75,6 +75,20 @@ SUBSYSTEM_DEF(persistence)
 	var/list/map_configs_cache
 	/// Tracking variables for save metrics
 	var/list/current_save_metrics = list()
+	/// Current z-level being saved (for progress tracking)
+	var/current_save_z_level = 0
+	/// Current x coordinate being processed (for progress tracking)
+	var/current_save_x = 0
+	/// Current y coordinate being processed (for progress tracking)
+	var/current_save_y = 0
+	/// Whether a save operation is currently in progress
+	var/save_in_progress = FALSE
+	/// Maximum X coordinate for current z-level
+	var/current_max_x = 0
+	/// Maximum Y coordinate for current z-level
+	var/current_max_y = 0
+	/// Areas that have been counted (to avoid double-counting)
+	var/list/counted_areas = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	load_poly()
@@ -401,11 +415,21 @@ SUBSYSTEM_DEF(persistence)
 	return flags
 
 /datum/controller/subsystem/persistence/proc/save_persistent_maps()
+	save_in_progress = TRUE
+	current_save_metrics = list()
+	counted_areas = list()
+
+	GLOB.TGM_objs = 0
+	GLOB.TGM_mobs = 0
+	GLOB.TGM_total_objs = 0
+	GLOB.TGM_total_mobs = 0
+	GLOB.TGM_total_turfs = 0
+	GLOB.TGM_total_areas = 0
+
 	var/map_save_directory = get_current_persistence_map_directory()
 	var/save_flags = get_save_flags()
 	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 	var/overall_save_start = REALTIMEOFDAY
-	var/current_save_metrics = list()
 
 	for(var/z in 1 to world.maxz)
 		var/list/level_traits = list()
@@ -416,7 +440,7 @@ SUBSYSTEM_DEF(persistence)
 			z_traits["yi"] = level_to_check.yi
 		level_traits += list(z_traits)
 
-		// skip saving certain z-levels depending on config settings
+		// Skip saving certain z-levels depending on config settings
 		if(!persistent_save_z_levels[ZTRAIT_CENTCOM] && is_centcom_level(z))
 			continue
 		else if(!persistent_save_z_levels[ZTRAIT_STATION] && is_station_level(z))
@@ -429,9 +453,9 @@ SUBSYSTEM_DEF(persistence)
 			continue
 		else if(!persistent_save_z_levels[ZTRAIT_MINING] && is_mining_level(z))
 			continue
-		else if(!persistent_save_z_levels[ZTRAIT_RESERVED] && is_reserved_level(z)) // for shuttles in transit (hyperspace)
+		else if(!persistent_save_z_levels[ZTRAIT_RESERVED] && is_reserved_level(z))
 			continue
-		else if(!persistent_save_z_levels[ZTRAIT_AWAY] && is_away_level(z)) // gateway away missions
+		else if(!persistent_save_z_levels[ZTRAIT_AWAY] && is_away_level(z))
 			continue
 
 		var/bottom_z = z
@@ -451,6 +475,19 @@ SUBSYSTEM_DEF(persistence)
 				if(!SSmapping.level_trait(above_z, ZTRAIT_UP) && SSmapping.level_trait(above_z, ZTRAIT_DOWN))
 					top_z = above_z
 					break
+
+		// Update progress tracking for this z-level
+		current_save_z_level = z
+		current_save_x = 0
+		current_save_y = 0
+		current_max_x = world.maxx
+		current_max_y = world.maxy
+
+		// Reset metrics for this z-level
+		var/z_objs_start = GLOB.TGM_total_objs
+		var/z_mobs_start = GLOB.TGM_total_mobs
+		var/z_turfs_start = GLOB.TGM_total_turfs
+		var/z_areas_start = GLOB.TGM_total_areas
 
 		var/z_save_time_start = REALTIMEOFDAY
 		var/map = write_map(1, 1, bottom_z, world.maxx, world.maxy, top_z, save_flags)
@@ -483,10 +520,10 @@ SUBSYSTEM_DEF(persistence)
 			"z-level" = bottom_z,
 			"multi z-levels" = top_z - bottom_z,
 			"save_time_seconds" = z_save_time_end,
-			"mobs_saved" = GLOB.TGM_total_mobs,
-			"objs_saved" = GLOB.TGM_total_objs,
-			"turfs_saved" = GLOB.TGM_total_turfs,
-			"areas_saved" = GLOB.TGM_total_areas,
+			"mobs_saved" = GLOB.TGM_total_mobs - z_mobs_start,
+			"objs_saved" = GLOB.TGM_total_objs - z_objs_start,
+			"turfs_saved" = GLOB.TGM_total_turfs - z_turfs_start,
+			"areas_saved" = GLOB.TGM_total_areas - z_areas_start,
 		))
 
 	var/overall_save_time_end = (REALTIMEOFDAY - overall_save_start) / 10
@@ -498,6 +535,25 @@ SUBSYSTEM_DEF(persistence)
 	)
 	var/completion_marker_path = "[map_save_directory]/[SAVE_COMPLETION_MARKER]"
 	rustg_file_write(json_encode(completion_data, JSON_PRETTY_PRINT), completion_marker_path)
+
+	// Reset progress tracking
+	save_in_progress = FALSE
+	current_save_z_level = 0
+	current_save_x = 0
+	current_save_y = 0
+	current_max_x = 0
+	current_max_y = 0
+	counted_areas = list()
+
+/// Gets the current progress percentage for the active z-level
+/datum/controller/subsystem/persistence/proc/get_current_progress_percent()
+	if(!save_in_progress || current_max_x == 0 || current_max_y == 0)
+		return 0
+
+	var/total_tiles = current_max_x * current_max_y
+	var/completed_tiles = (current_save_x * current_max_y) + current_save_y
+
+	return (completed_tiles / total_tiles) * 100
 
 /*
 ADMIN_VERB(cleanup_corrupted_saves, R_DEBUG, "Cleanup Corrupted Saves", "Delete all corrupted/incomplete persistence saves.", ADMIN_CATEGORY_DEBUG)

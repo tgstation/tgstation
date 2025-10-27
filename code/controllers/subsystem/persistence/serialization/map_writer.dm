@@ -1,16 +1,5 @@
-/**Map exporter
-* Inputting a list of turfs into convert_map_to_tgm() will output a string
-* with the turfs and their objects / areas on said turf into the TGM mapping format
-* for .dmm files. This file can then be opened in the map editor or imported
-* back into the game.
-* ============================
-* This has been made semi-modular so you should be able to use these functions
-* elsewhere in code if you ever need to get a file in the .dmm format
-**/
-
-
 /**
- *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
+ * Enhanced write_map procedure with proper progress tracking and metrics
  */
 /proc/write_map(
 	minx,
@@ -29,10 +18,6 @@
 
 	var/max_object_limit = CONFIG_GET(number/persistent_max_object_limit_per_turf)
 	var/max_mob_limit = CONFIG_GET(number/persistent_max_mob_limit_per_turf)
-	var/total_mobs_saved = 0
-	var/total_objs_saved = 0
-	var/total_turfs_saved = 0
-	var/total_areas_saved = 0
 
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
@@ -53,15 +38,31 @@
 	var/list/header = list() //The actual header in text
 	var/list/contents = list() //The contents in text (bit at the end)
 	var/key_index = 1 // How many keys we've generated so far
+
 	for(var/z in 0 to depth)
 		for(var/x in 0 to width)
+			// Update progress tracking for the UI
+			if(SSpersistence.save_in_progress)
+				SSpersistence.current_save_x = x
+				SSpersistence.current_save_y = 0
+
 			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
+
+				// Update progress tracking for the UI
+				if(SSpersistence.save_in_progress)
+					SSpersistence.current_save_y = y
+
 				//====Get turfs Data====
 				var/turf/saved_turf
 				var/area/saved_area
 				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
+
+				// Reset per-turf counters
+				GLOB.TGM_objs = 0
+				GLOB.TGM_mobs = 0
+
 				//If there is nothing there, save as a noop (For odd shapes)
 				if(isnull(pull_from))
 					saved_turf = /turf/template_noop
@@ -139,11 +140,12 @@
 					saved_turf = /turf/open/space/basic
 				else if(!istype(saved_turf, /turf/template_noop))
 					// exclude all space and template_noop from our count
-					total_turfs_saved++
+					INCREMENT_TURF_COUNT
 
-				// always reset these to 0 as we iterate to a new turf
-				GLOB.TGM_objs = 0
-				GLOB.TGM_mobs = 0
+				// Count unique areas
+				if(saved_area != /area/template_noop && !(saved_area in SSpersistence.counted_areas))
+					SSpersistence.counted_areas += saved_area
+					INCREMENT_AREA_COUNT
 
 				for(var/atom/movable/target_atom as anything in pull_from)
 					if(target_atom.flags_1 & HOLOGRAM_1)
@@ -160,11 +162,9 @@
 						var/obj/target_obj = target_atom
 						CHECK_TICK
 
-/*
-						if(TGM_MAX_OBJ_CHECK)
+						if(OBJECT_LIMIT_EXCEEDED)
 							continue
-						TGM_OBJ_INCREMENT
-*/
+						INCREMENT_OBJ_COUNT()
 
 						var/metadata
 						if(save_flag & SAVE_OBJECTS_VARIABLES)
@@ -183,11 +183,10 @@
 						var/mob/living/target_mob = target_atom
 						CHECK_TICK
 
-/*
-						if(TGM_MAX_MOB_CHECK)
+						if(MOB_LIMIT_EXCEEDED)
 							continue
-						TGM_MOB_INCREMENT
-*/
+						INCREMENT_MOB_COUNT()
+						//GLOB.TGM_mobs++
 
 						var/metadata = generate_tgm_metadata(target_mob)
 						current_header += "[empty ? "" : ",\n"][target_mob.type][metadata]"
@@ -204,9 +203,6 @@
 					if(isopenturf(atmos_turf) && !isspaceturf(atmos_turf) && !atmos_turf.planetary_atmos)
 						var/metadata = generate_tgm_metadata(atmos_turf)
 						current_header += "[metadata]"
-
-				total_mobs_saved += GLOB.TGM_objs
-				total_objs_saved += GLOB.TGM_mobs
 
 				current_header += ",\n[saved_area])\n"
 				//====Fill the contents file====
