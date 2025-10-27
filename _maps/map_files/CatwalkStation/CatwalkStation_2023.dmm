@@ -10153,10 +10153,10 @@
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "cPB" = (
-/obj/structure/table/reinforced,
 /obj/item/flashlight/lamp{
 	pixel_y = 7
 	},
+/obj/structure/table/wood,
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "cPW" = (
@@ -17680,6 +17680,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/wood/parquet,
 /area/station/command/heads_quarters/qm)
 "eZL" = (
@@ -45602,6 +45603,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "mNj" = (
@@ -51272,16 +51274,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"osx" = (
-/obj/effect/spawner/random/maintenance,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/window{
-	dir = 8;
-	name = "Cargo Bay Shutters";
-	id = "qm_cargobay"
-	},
-/turf/open/floor/plating,
-/area/station/cargo/storage)
 "osC" = (
 /obj/structure/table,
 /obj/item/clipboard{
@@ -128802,7 +128794,7 @@ qPj
 cjh
 ssa
 cjh
-osx
+csb
 mNb
 csb
 cjh
