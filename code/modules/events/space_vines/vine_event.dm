@@ -36,11 +36,18 @@
 		turfs += override_turf
 	else
 		var/obj/structure/spacevine/vine = new()
-
 		for(var/area/station/hallway/area in GLOB.areas)
+			var/list/floor_candidates = list()
 			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
-				if(!isopenspaceturf(floor) && floor.Enter(vine))
-					turfs += floor
+				if(isopenspaceturf(floor))
+					continue
+				floor_candidates += floor
+
+			// Enter() is expensive to call on potentially hundreds-thousands of turfs at once and can even lead to server crashes. We can pick() a subset instead and get close enough results at a fraction of the cost.
+			for(var/turf/open/floor as anything in pick(floor_candidates, min(25, length(floor_candidates))))
+				if(!floor.Enter())
+					continue
+				turfs += floor
 
 		qdel(vine)
 
