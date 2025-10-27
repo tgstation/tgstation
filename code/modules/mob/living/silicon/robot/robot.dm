@@ -1,4 +1,11 @@
-/mob/living/silicon/robot/Initialize(mapload)
+/**
+ * Init args
+ * * innate_laws: If set, the cyborg will use this lawset and will not linked to an ai. Make sure you're passing a copy of the lawset
+ * * master_ai: If set, the cyborg will try to link to this ai on spawn rather than the first ai found
+ * * aisync: If TRUE, will try to link to an AI on spawn. If FALSE, will not link to any AI on spawn, even if master_ai is set
+ * * lawsync: Sets lawupdate variable - if FALSE we will link to an ai but we won't take their laws
+ */
+/mob/living/silicon/robot/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync = TRUE, lawsync = src.lawupdate)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -35,8 +42,16 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	make_laws()
-	if(lawupdate && !TryConnectToAI())
+	if(innate_laws)
+		laws = innate_laws
+		lawupdate = FALSE
+	else
+		make_laws()
+	if(!aisync || !lawsync)
+		lawupdate = FALSE
+	// try connect to ai will update the lawset so we need to ensure law update is set before calling it
+	if(aisync && !try_connect_to_ai(master_ai))
+		// however, if we found no ai, we fall back to no law updates
 		lawupdate = FALSE
 
 	if(!scrambledcodes && !builtInCamera)
@@ -992,8 +1007,14 @@
 	for(var/mob/unbuckle_me_now as anything in buckled_mobs)
 		unbuckle_mob(unbuckle_me_now, FALSE)
 
-/mob/living/silicon/robot/proc/TryConnectToAI()
-	set_connected_ai(select_active_ai_with_fewest_borgs(z))
+/mob/living/silicon/robot/proc/try_connect_to_ai(mob/living/silicon/connect_to)
+	if(isnull(connect_to))
+		var/turf/robot_turf = get_turf(src)
+		connect_to = select_active_ai_with_fewest_borgs(robot_turf.z)
+		if(isnull(connect_to))
+			return FALSE
+
+	set_connected_ai(connect_to)
 	if(connected_ai)
 		sync_to_ai()
 		lawupdate = TRUE
@@ -1027,7 +1048,8 @@
 	lamp_doom = FALSE
 	if(connected_ai)
 		connected_ai.connected_robots |= src
-		lamp_doom = connected_ai.doomsday_device ? TRUE : FALSE
+		lamp_doom = !!connected_ai.doomsday_device
+		try_sync_laws()
 	toggle_headlamp(FALSE, TRUE)
 
 /mob/living/silicon/robot/get_exp_list(minutes)

@@ -27,6 +27,7 @@
 
 /mob/living/silicon/proc/make_laws()
 	laws = new()
+	laws.name = "Inherent Laws"
 
 /mob/living/silicon/ai/make_laws()
 	. = ..()

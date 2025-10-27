@@ -173,7 +173,7 @@
 /obj/item/ai_module/law/core/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	if(rack.get_parent_rack()) // If we are a sub rack, no stun
 		return
-	for(var/mob/living/bot in flatten_list(rack.linked_mobs))
+	for(var/mob/living/bot in assoc_to_values(rack.linked_mobs))
 		// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
 		if(bot.AmountStun() > 5 SECONDS || IS_MALF_AI(bot))
 			continue

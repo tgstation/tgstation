@@ -235,6 +235,7 @@
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
+	laws.name = "PAI Directives"
 	law_ui.update_inherent_stated_laws(laws)
 
 /mob/living/silicon/pai/process(seconds_per_tick)

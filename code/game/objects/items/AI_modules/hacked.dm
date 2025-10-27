@@ -67,7 +67,7 @@
 	if(istype(interacting_with, /obj/machinery/ai_law_rack/core))
 		var/obj/machinery/ai_law_rack/rack = interacting_with
 		// find the first non-malf ai linked, but also allow a malf ai to be selected if it's the only one
-		for(var/mob/living/silicon/ai/linked_ai in flatten_list(rack.linked_mobs))
+		for(var/mob/living/silicon/ai/linked_ai in assoc_to_values(rack.linked_mobs))
 			if(!target_ai?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
 				break
 			target_ai = linked_ai

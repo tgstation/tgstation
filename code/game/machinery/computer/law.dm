@@ -71,7 +71,7 @@
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
 /obj/machinery/ai_law_rack/Destroy()
-	for(var/mob/bot in flatten_list(linked_mobs))
+	for(var/mob/bot in assoc_to_values(linked_mobs))
 		unlink_silicon(bot)
 
 	QDEL_NULL(combined_lawset)
@@ -216,7 +216,7 @@
 			break
 
 /obj/machinery/ai_law_rack/on_deconstruction(disassembled)
-	for(var/mob/living/bot in flatten_list(linked_mobs))
+	for(var/mob/living/bot in assoc_to_values(linked_mobs))
 		if(bot.AmountStun() > 5 SECONDS || IS_MALF_AI(bot))
 			continue
 		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
@@ -367,7 +367,7 @@
 	var/obj/machinery/ai_law_rack/core/core_rack = get_parent_rack()
 
 	module.on_rack_install(src)
-	for(var/mob/living/silicon/linked_ref in flatten_list(core_rack ? core_rack.linked_mobs : linked_mobs))
+	for(var/mob/living/silicon/linked_ref in assoc_to_values(core_rack ? core_rack.linked_mobs : linked_mobs))
 		module.silicon_linked_to_installed(linked_ref)
 	ai_modules[slot] = module
 	ai_modules[module] = security
@@ -386,7 +386,7 @@
 
 	ai_modules[index] = null
 	module.on_rack_uninstall(src)
-	for(var/mob/living/silicon/linked_ref in flatten_list(core_rack ? core_rack.linked_mobs : linked_mobs))
+	for(var/mob/living/silicon/linked_ref in assoc_to_values(core_rack ? core_rack.linked_mobs : linked_mobs))
 		module.silicon_unlinked_from_installed(linked_ref)
 	if(!QDELING(src))
 		update_appearance()
@@ -835,7 +835,7 @@
 		return
 
 	for(var/obj/item/ai_module/installed in child.ai_modules)
-		for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
+		for(var/mob/living/silicon/linked_ref in assoc_to_values(linked_mobs))
 			installed.silicon_linked_to_installed(linked_ref)
 
 	LAZYADD(linked_racks, child)
@@ -849,7 +849,7 @@
 	SIGNAL_HANDLER
 
 	for(var/obj/item/ai_module/installed in child.ai_modules)
-		for(var/mob/living/silicon/linked_ref in flatten_list(linked_mobs))
+		for(var/mob/living/silicon/linked_ref in assoc_to_values(linked_mobs))
 			installed.silicon_unlinked_from_installed(linked_ref)
 
 	UnregisterSignal(child, COMSIG_QDELETING)

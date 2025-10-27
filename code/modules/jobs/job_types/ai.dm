@@ -29,7 +29,7 @@
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 			if(!R.connected_ai)
-				R.TryConnectToAI()
+				R.try_connect_to_ai()
 	var/mob/living/silicon/ai/ai_spawn = spawned
 	if(player_client)
 		ai_spawn.set_gender(player_client)
