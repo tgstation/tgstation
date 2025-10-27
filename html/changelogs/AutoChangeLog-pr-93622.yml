@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - qol: "Adds lore text to the stun baton and contractor baton, detailing a bit about their dynamic as tools of Nanotrasen and Cybersun Industries respectively. Examine them closely to learn more."
