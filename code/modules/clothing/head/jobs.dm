@@ -17,6 +17,9 @@
 	var/mouse_control_probability = 20
 	/// Allowed time between movements
 	COOLDOWN_DECLARE(move_cooldown)
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
 /// Admin variant of the chef hat where every mouse pilot input will always be transferred to the wearer
 /obj/item/clothing/head/utility/chefhat/i_am_assuming_direct_control
@@ -637,6 +640,9 @@
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 	flags_inv = HIDEHAIR //Cover your head doctor!
 	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
+	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = SFX_CLOTH_DROP
+	equip_sound = null
 
 /obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
 	. = ..()
@@ -683,6 +689,9 @@
 		A little useless now, given the technology available, but it certainly completes the look."
 	icon_state = "headmirror"
 	body_parts_covered = NONE
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
 /obj/item/clothing/head/utility/head_mirror/Initialize(mapload)
 	. = ..()
