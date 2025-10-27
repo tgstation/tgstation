@@ -5319,9 +5319,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "bBl" = (
-/obj/effect/turf_decal/trimline/brown/filled/warning{
-	dir = 4
-	},
+/obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "bBp" = (
@@ -7112,7 +7110,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/turf_decal/trimline/brown/filled/warning{
+/obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -24787,6 +24785,10 @@
 	dir = 4
 	},
 /area/station/medical/cryo)
+"gXX" = (
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "gYu" = (
 /obj/item/lazarus_injector,
 /obj/item/gun/grenadelauncher,
@@ -63618,15 +63620,15 @@
 "rSb" = (
 /obj/machinery/light_switch/directional/south,
 /obj/structure/table,
-/obj/item/clothing/head/costume/mailman,
 /obj/item/stack/package_wrap,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/item/storage/box/shipping{
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/item/clothing/head/costume/mailman,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/sorting)
 "rSj" = (
@@ -81044,6 +81046,12 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
+"wIn" = (
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "wIw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -82407,9 +82415,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/interrogation)
 "xcG" = (
-/obj/effect/turf_decal/trimline/brown/end{
-	dir = 8
-	},
+/obj/effect/turf_decal/trimline/brown,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "xcT" = (
@@ -127073,9 +127079,9 @@ iKT
 oDH
 afI
 bZJ
-bBl
-bBl
-bBl
+aCa
+aCa
+aCa
 bBl
 oDH
 oDH
@@ -127329,11 +127335,11 @@ bmG
 qPj
 emd
 soS
-aCa
+wIn
 xcG
 nak
 xcG
-aCa
+gXX
 bhp
 sNQ
 mHf
