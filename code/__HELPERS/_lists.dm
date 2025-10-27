@@ -552,13 +552,11 @@
 
 	/// The final list that gets returned
 	var/list/result
-	/// Shuffling the list and picking the first n indices is faster in some cases
-	var/list/copy_to_shuffle
 	/// length of our list_to_pick
 	n = min(n, list_to_pick_length)
 
 	// Shuffle and slice the first n indices
-	copy_to_shuffle = list_to_pick.Copy()
+	var/list/copy_to_shuffle = copy_to_shuffle = list_to_pick.Copy()
 	shuffle(copy_to_shuffle)
 	result = copy_to_shuffle.Copy(1, n + 1)
 
