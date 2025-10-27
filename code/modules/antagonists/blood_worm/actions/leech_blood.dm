@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm_leech
-	name = "Leech"
-	desc = "Aggressively grab a target with your teeth and feed off of their blood. Also works on inorganic targets like blood bags."
+	name = "Leech Blood"
+	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on inorganic targets like blood bags."
 
 	cooldown_time = 5 SECONDS
 	shared_cooldown = NONE

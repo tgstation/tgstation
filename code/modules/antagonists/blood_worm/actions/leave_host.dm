@@ -1,5 +1,5 @@
 /datum/action/blood_worm_eject
-	name = "Eject"
+	name = "Leave Host"
 	desc = "Leave your host, taking their blood with you."
 
 /datum/action/blood_worm_eject/IsAvailable(feedback)

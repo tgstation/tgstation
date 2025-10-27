@@ -37,9 +37,13 @@
 	. = ..()
 	if (!.)
 		unset_click_ability(owner, refund_cooldown = FALSE)
-		return
+		return FALSE
 
 	var/modifiers = params2list(params)
+
+	// Don't block examines, grabs, etc.
+	if (modifiers[SHIFT_CLICK] || modifiers[ALT_CLICK] || modifiers[CTRL_CLICK])
+		return FALSE
 
 	owner.visible_message(
 		message = span_danger("\The [owner] spit[owner.p_s()] blood!"),
@@ -58,11 +62,11 @@
 
 	owner.newtonian_move(get_angle(target, owner), instant = TRUE, drift_force = 1 NEWTONS)
 
-	if (ishuman(owner))
-		var/mob/living/carbon/human/host = owner
-		host.blood_volume -= health_cost * BLOOD_WORM_HEALTH_TO_BLOOD
+	var/mob/living/basic/blood_worm/worm = src.target
+
+	if (worm.host)
+		worm.host.blood_volume -= health_cost * BLOOD_WORM_HEALTH_TO_BLOOD
 	else
-		var/mob/living/basic/blood_worm/worm = owner
 		worm.adjustBruteLoss(health_cost)
 
 /datum/action/cooldown/mob_cooldown/blood_worm_spit/Activate(atom/target)

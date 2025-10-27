@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm_invade
-	name = "Invade"
-	desc = "Enter a humanoid corpse, taking it as your host."
+	name = "Invade Corpse"
+	desc = "Invade a humanoid corpse, taking it as your host."
 
 	cooldown_time = 0 SECONDS
 	shared_cooldown = NONE

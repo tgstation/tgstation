@@ -32,10 +32,18 @@
 	var/mob/living/carbon/human/host
 	var/mob/living/blood_worm_host/backseat
 
+	var/atom/movable/screen/blood_level/blood_display
+
+	/// Typed, please initialize with a proper action subtype.
 	var/datum/action/cooldown/mob_cooldown/blood_worm_leech/leech_action
+	/// Typed, please initialize with a proper action subtype.
 	var/datum/action/cooldown/mob_cooldown/blood_worm_spit/spit_action
+	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm_invade/invade_action
 
+	/// Typed, please initialize with a proper action subtype.
+	var/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/transfuse_action
+	/// Not typed, please leave empty.
 	var/datum/action/blood_worm_eject/eject_action
 
 	var/list/innate_actions = list()
@@ -52,12 +60,13 @@
 
 	leech_action = new leech_action(src)
 	spit_action = new spit_action(src)
-	invade_action = new invade_action(src)
+	invade_action = new(src)
 
+	transfuse_action = new transfuse_action(src)
 	eject_action = new(src)
 
 	innate_actions = list(leech_action, spit_action, invade_action)
-	host_actions = list(spit_action, eject_action)
+	host_actions = list(transfuse_action, spit_action, eject_action)
 
 	grant_actions(src, innate_actions)
 
@@ -114,6 +123,11 @@
 	start_dilution()
 	sync_health()
 
+	if (host.hud_used)
+		create_host_hud(host)
+	else
+		RegisterSignal(host, COMSIG_MOB_HUD_CREATED, PROC_REF(create_host_hud))
+
 	forceMove(host)
 
 /mob/living/basic/blood_worm/proc/leave_host()
@@ -149,6 +163,8 @@
 	sync_health()
 
 	host.blood_volume = 0
+
+	remove_host_hud()
 
 	host = null
 
@@ -191,6 +207,25 @@
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
 		host.handle_blood(seconds_per_tick, times_fired)
+
+/mob/living/basic/blood_worm/proc/create_host_hud(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(host, COMSIG_MOB_HUD_CREATED)
+
+	var/datum/hud/hud = host.hud_used
+	blood_display = new(null, hud)
+	hud.infodisplay += blood_display
+	hud.show_hud(hud.hud_version)
+
+/mob/living/basic/blood_worm/proc/remove_host_hud()
+	var/datum/hud/hud = host.hud_used
+
+	if (!hud)
+		QDEL_NULL(blood_display)
+		return
+
+	hud.infodisplay -= blood_display
+	QDEL_NULL(blood_display)
 
 /mob/living/basic/blood_worm/proc/grant_actions(mob/target, list/actions)
 	for (var/datum/action/action as anything in actions)
@@ -241,11 +276,12 @@
 
 	speed = 0
 
-	invade_action = /datum/action/cooldown/mob_cooldown/blood_worm_invade
 	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/hatchling
 	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm_spit/hatchling
 
-	regen_rate = 0.4 // A little over 2 minutes to recover from 0 to 50.
+	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
+
+	regen_rate = 0.2 // 250 seconds to recover from 0 to 50, or a little over 4 minutes
 
 /mob/living/basic/blood_worm/hatchling/Initialize(mapload)
 	. = ..()
