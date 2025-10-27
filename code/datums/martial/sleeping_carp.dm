@@ -235,7 +235,12 @@
 	SIGNAL_HANDLER
 
 	var/determine_avoidance = 100
-	determine_avoidance = clamp(determine_avoidance + carp_style_check(carp_user), 0, 100)
+	var/additional_adjustments = 0
+
+	if(istype(hitting_projectile, /obj/projectile/bullet/c38/match/true)) // 75% chance to ignore evasion
+		additional_adjustments -= 75
+
+	determine_avoidance = clamp(determine_avoidance + carp_style_check(carp_user) + additional_adjustments, 0, 100)
 
 	if(istype(hitting_projectile, /obj/projectile/bullet/harpoon)) // WHITE WHALE HOLY GRAIL
 		return NONE
@@ -245,6 +250,8 @@
 
 	if(!prob(determine_avoidance))
 		return NONE
+
+
 
 	carp_user.visible_message(
 		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
