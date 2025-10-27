@@ -546,7 +546,8 @@
 * e.g. pick_n(list_of_stuff, 10) would return a list of 10 items from the list, chosen randomly.
 */
 /proc/pick_n(list/list_to_pick, n)
-	if(!islist(list_to_pick) || !list_to_pick.len || n <= 0)
+	var/list_to_pick_length = list_to_pick.len
+	if(!islist(list_to_pick) || !list_to_pick_length || n <= 0)
 		return list()
 
 	/// The final list that gets returned
@@ -554,7 +555,6 @@
 	/// Shuffling the list and picking the first n indices is faster in some cases
 	var/list/copy_to_shuffle
 	/// length of our list_to_pick
-	var/list_to_pick_length = list_to_pick.len
 	n = min(n, list_to_pick_length)
 
 	// Shuffle and slice the first n indices
