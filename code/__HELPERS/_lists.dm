@@ -542,6 +542,39 @@
 	list_to_pick[.]--
 
 /**
+* Picks n items from a list
+* e.g. pick_n(list_of_stuff, 10) would return a list of 10 items from the list, chosen randomly.
+*/
+proc/pick_n(list/list_to_pick, n)
+	if(!islist(list_to_pick) || !list_to_pick.len || n <= 0)
+		return list()
+
+	/// The final list that gets returned
+	var/list/result
+	/// Shuffling the list and picking the first n indices is faster in some cases
+	var/list/copy_to_shuffle
+	var/len = list_to_pick.len
+	n = min(n, len)
+
+	// If we're picking more than 25% of the list, shuffle once (faster)
+	if(n >= len / 4)
+		copy_to_shuffle = list_to_pick.Copy()
+		shuffle(copy_to_shuffle)
+		result = copy_to_shuffle.Copy(1, n + 1)
+	else
+		// For small samples, select random indices (no full copy or shuffle)
+		result = list()
+		var/list/used = list()
+		while(result.len < n)
+			var/i = rand(1, len)
+			if(used[i])
+				continue
+			used[i] = TRUE
+			result += list_to_pick[i]
+
+	return result
+
+/**
  * Given a list, return a copy where values without defined weights are given weight 1.
  * For example, fill_with_ones(list(A, B=2, C)) = list(A=1, B=2, C=1)
  * Useful for weighted random choices (loot tables, syllables in languages, etc.)
