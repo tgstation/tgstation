@@ -191,7 +191,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 		old_body.remove_from_current_living_antags()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
 	if(info_button)
-		info_button.Remove(old_body)
+		if(old_body)
+			info_button.Remove(old_body)
 		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(new_body.stat != DEAD)
@@ -471,6 +472,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visuals_only = TRUE)
 	dummy.wear_suit?.update_greyscale()
+	dummy.set_combat_mode(TRUE)
 	var/icon = getFlatIcon(dummy)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.

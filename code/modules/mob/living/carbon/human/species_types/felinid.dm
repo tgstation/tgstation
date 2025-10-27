@@ -6,6 +6,7 @@
 	mutantbrain = /obj/item/organ/brain/felinid
 	mutanttongue = /obj/item/organ/tongue/cat
 	mutantears = /obj/item/organ/ears/cat
+	mutanteyes = /obj/item/organ/eyes/felinid
 	mutant_organs = list(
 		/obj/item/organ/tail/cat = "Cat",
 	)
@@ -26,8 +27,8 @@
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
 	if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-		if(human_who_gained_species.dna.features[FEATURE_TAIL] == SPRITE_ACCESSORY_NONE)
-			human_who_gained_species.dna.features[FEATURE_TAIL] = get_consistent_feature_entry(SSaccessories.tails_list_felinid)
+		if(human_who_gained_species.dna.features[FEATURE_TAIL_CAT] == SPRITE_ACCESSORY_NONE)
+			human_who_gained_species.dna.features[FEATURE_TAIL_CAT] = get_consistent_feature_entry(SSaccessories.tails_list_felinid)
 		if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
 			human_who_gained_species.dna.features[FEATURE_EARS] = get_consistent_feature_entry(SSaccessories.ears_list)
 
