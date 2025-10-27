@@ -74,7 +74,13 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/storage)
 "abp" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -8964,6 +8970,7 @@
 	name = "\improper APLU \"Cargostormer 3\""
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/recharge_floor,
 /area/station/cargo/warehouse)
 "cAc" = (
@@ -11424,11 +11431,15 @@
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "diP" = (
-/obj/machinery/firealarm/directional/south,
 /obj/item/cigbutt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/machinery/suit_storage_unit/industrial/loader,
+/obj/machinery/button/door/directional/south{
+	id = "qm_warehouse";
+	name = "Warehouse Shutters";
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
 "djc" = (
@@ -13304,7 +13315,13 @@
 /area/station/maintenance/starboard/lesser)
 "dME" = (
 /obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/storage)
 "dMJ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
@@ -28920,11 +28937,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light/small/dim/directional/north,
-/obj/machinery/button/door/directional/west{
-	pixel_y = -8;
-	id = "qm_warehouse";
-	name = "Warehouse Shutters"
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/cargo/warehouse)
@@ -29226,7 +29238,13 @@
 "ikz" = (
 /obj/machinery/camera/autoname/directional/south,
 /obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/storage)
 "ikG" = (
 /obj/structure/table/wood,
@@ -32198,7 +32216,13 @@
 "jaQ" = (
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/door/firedoor/heavy,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/dark_red/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/cargo/storage)
 "jbc" = (
 /obj/structure/lattice/catwalk,
@@ -39335,16 +39359,6 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
-"kXj" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	name = "Cargo Desk";
-	req_access = list("mining")
-	},
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "kXt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -41564,6 +41578,11 @@
 /obj/structure/sign/directions/lavaland/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
+"lES" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/textured,
+/area/station/cargo/storage)
 "lEV" = (
 /obj/structure/table,
 /obj/item/stack/spacecash/c10{
@@ -47131,6 +47150,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
+/obj/structure/sign/poster/random/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "nmf" = (
@@ -67729,15 +67749,6 @@
 "sYL" = (
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
-"sYW" = (
-/obj/effect/mapping_helpers/airlock/access/all/supply/mining,
-/obj/machinery/door/airlock/mining{
-	name = "Mining Office"
-	},
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron,
-/area/station/cargo/storage)
 "sYX" = (
 /obj/effect/turf_decal/box/corners,
 /turf/open/floor/iron/dark/smooth_large,
@@ -85917,7 +85928,6 @@
 "yab" = (
 /obj/structure/sign/poster/random/directional/south,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "yai" = (
@@ -131111,8 +131121,8 @@ dqv
 nOn
 aDk
 jtZ
-pKt
-sYW
+lES
+cjh
 xap
 bMi
 juc
@@ -131369,7 +131379,7 @@ aDk
 tJc
 nbb
 pKt
-kXj
+cjh
 nlU
 akz
 iGA
