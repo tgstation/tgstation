@@ -824,3 +824,24 @@
   - qol: Better exodrone console UI
   - rscadd: Exodrones now create a small explosion (0, 0, 1, 1) when self-destruction
       is triggered
+2025-10-27:
+  1393F:
+  - bugfix: The syndicate rebar crossbow quiver's action button now functions correctly.
+  Fghj240:
+  - bugfix: stabilized cerulean extract clones keep your traits
+  - bugfix: certain traits now function properly when added midround
+  Krysonism:
+  - balance: ' Sentient bears are now fast mounts equal to ponies and yellow raptors.'
+  loganuk:
+  - qol: New verb in "AI commands" to update AI display status
+  - bugfix: Stopped "Friend Computer" emotion affecting evac displays instead of just
+      AI displays
+  - code_imp: Replaced radial wheel for AI status or AI core display with TGUI menus
+  - image: AIs can now update their status displays with way more graphics to match
+      core display options onto the TVs.
+  necromanceranne:
+  - qol: Adds lore text to the stun baton and contractor baton, detailing a bit about
+      their dynamic as tools of Nanotrasen and Cybersun Industries respectively. Examine
+      them closely to learn more.
+  theselfish:
+  - qol: Reskinnable items now have a

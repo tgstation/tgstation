@@ -1,0 +1,5 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - sound: "added sounds for utility headwear"
+  - sound: "surgery caps use cloth sounds now"
