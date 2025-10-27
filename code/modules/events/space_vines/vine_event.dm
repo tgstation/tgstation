@@ -44,18 +44,12 @@
 
 		// Enter() is expensive to call on potentially hundreds to thousands of turfs at once and can even lead to server crashes.
 		// We can pick() a subset instead and get close enough results at a fraction of the cost.
-		var/max_attempts = 25
-		var/attempts = 0
-
-		// Pick extra candidates to compensate for potential Enter() failures
-		var/list/chosen = pick_n(floor_candidates, min(max_attempts * 2, length(floor_candidates))) // results in at most 50 calls of Enter(), a reasonable amount while still feeling random.
+		var/turfs_to_test = 50
+		var/list/chosen = pick_n(floor_candidates, min(turfs_to_test, length(floor_candidates))) // results in at most 50 calls of Enter(), a reasonable amount while still feeling random.
 
 		for(var/turf/open/floor as anything in chosen)
-			if(attempts >= max_attempts)
-				break
 			if(floor.Enter(vine))
 				turfs += floor
-				attempts++
 		qdel(vine)
 
 	if(length(turfs)) //Pick a turf to spawn at if we can
