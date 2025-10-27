@@ -7,20 +7,17 @@
  * the Initialize proc for this subsystem draws the maps as one of the last initializing subsystems
  *
  * Fire() for this subsystem doens't actually updates anything, and purely just reapplies the overlays that it already tracks
- * actual updating of marker locations is handled by [/datum/controller/subsystem/minimaps/proc/on_move]
- * and zlevel changes are handled in [/datum/controller/subsystem/minimaps/proc/on_z_change]
+ * actual updating of marker locations is handled by [/datum/tactical_map/proc/on_move]
+ * and zlevel changes are handled in [/datum/tactical_map/proc/on_z_change]
  * tracking of the actual atoms you want to be drawn on is done by means of datums holding info pertaining to them with [/datum/hud_displays]
  *
  * Todo
  * *: add fetching of images to allow stuff like adding/removing xeno crowns easily
  * *: add a system for viscontents so things like minimap draw are more responsive
  */
-SUBSYSTEM_DEF(minimaps)
-	name = "Minimaps"
-	priority = FIRE_PRIORITY_MINIMAPS
-	wait = 10
-	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	flags = SS_NO_INIT
+
+// Minimap datum that is created only when needed
+/datum/tactical_map
 	///Minimap hud display datums sorted by zlevel
 	var/list/datum/hud_displays/minimaps_by_z = list()
 	///Assoc list of images we hold by their source
@@ -40,18 +37,20 @@ SUBSYSTEM_DEF(minimaps)
 	///assoc list of minimap objects that are hashed so we have to update as few as possible
 	var/list/hashed_minimaps = list()
 
-/datum/controller/subsystem/minimaps/Initialize()
-	initialized = TRUE
+	///assoc list of what colors things are supposed to be
+	var/static/list/tacmap_colors = list(
+		/atom = MINIMAP_SOLID,
+		/obj/machinery/door = MINIMAP_DOOR,
+		/obj/structure/fence = MINIMAP_FENCE,
+	)
+
+/// Initialized only when needed
+/datum/tactical_map/proc/Initialize()
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
 		load_new_z(null, z_level)
 
-	return SS_INIT_SUCCESS
-
-/datum/controller/subsystem/minimaps/stat_entry(msg)
-	msg = "Upd:[length(update_targets_unsorted)] Mark:[length(removal_cbs)]"
-	return ..()
-
-/datum/controller/subsystem/minimaps/Recover()
+/* XANTODO Check this out?
+/datum/tactical_map/Recover()
 	minimaps_by_z = SSminimaps.minimaps_by_z
 	images_by_source = SSminimaps.images_by_source
 	update_targets = SSminimaps.update_targets
@@ -59,8 +58,9 @@ SUBSYSTEM_DEF(minimaps)
 	removal_cbs = SSminimaps.removal_cbs
 	updators_by_datum = SSminimaps.updators_by_datum
 	drawn_images = SSminimaps.drawn_images
+*/
 
-/datum/controller/subsystem/minimaps/fire(resumed)
+/datum/tactical_map/process(seconds_per_tick)
 	var/static/iteration = 0
 	var/depthcount = 0
 	for(var/datum/minimap_updator/updator as anything in update_targets_unsorted)
@@ -70,12 +70,21 @@ SUBSYSTEM_DEF(minimaps)
 		updator.minimap.overlays = updator.raw_blips
 		depthcount++
 		iteration++
+/* XANTODO Maybe this exists for a reason lol
 		if(MC_TICK_CHECK)
 			return
+*/
 	iteration = 0
 
+///Gets the RGB of a target based on a static list. Returns MINIMAP_SOLID if no color was set
+/datum/tactical_map/proc/get_tacmap_color(/atom/colored_atom)
+	var/color = tacmap_colors[colored_atom]
+	if(!color)
+		return MINIMAP_SOLID
+	return color
+
 ///Creates a minimap for a particular z level
-/datum/controller/subsystem/minimaps/proc/load_new_z(datum/dcs, datum/space_level/z_level)
+/datum/tactical_map/proc/load_new_z(datum/dcs, datum/space_level/z_level)
 	SIGNAL_HANDLER
 
 	var/level = z_level.z_value
@@ -89,17 +98,17 @@ SUBSYSTEM_DEF(minimaps)
 			if(isspaceturf(location))
 				continue
 			if(location.density)
-				icon_gen.DrawBox(location.minimap_color, xval, yval)
+				icon_gen.DrawBox(get_tacmap_color[location], xval, yval)
 				continue
 			var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/fence) in location)
 			if(alttarget)
-				icon_gen.DrawBox(alttarget.minimap_color, xval, yval)
+				icon_gen.DrawBox(get_tacmap_color[alttarget], xval, yval)
 				continue
 			var/area/turfloc = location.loc
-			if(turfloc.minimap_color)
-				icon_gen.DrawBox(BlendRGB(location.minimap_color, turfloc.minimap_color, 0.5), xval, yval)
+			if(get_tacmap_color[turfloc])
+				icon_gen.DrawBox(BlendRGB(get_tacmap_color[location], get_tacmap_color[turfloc], 0.5), xval, yval)
 				continue
-			icon_gen.DrawBox(location.minimap_color, xval, yval)
+			icon_gen.DrawBox(get_tacmap_color[location], xval, yval)
 	icon_gen.Scale(480*2,480*2) //scale it up x2 to make it easer to see
 	icon_gen.Crop(1, 1, min(icon_gen.Width(), 480), min(icon_gen.Height(), 480)) //then cut all the empty pixels
 
@@ -147,7 +156,7 @@ SUBSYSTEM_DEF(minimaps)
  * * flags: flags for the types of blips we want to be updated
  * * ztarget: zlevel we want to be updated with
  */
-/datum/controller/subsystem/minimaps/proc/add_to_updaters(atom/target, flags, ztarget)
+/datum/tactical_map/proc/add_to_updaters(atom/target, flags, ztarget)
 	var/datum/minimap_updator/holder = new(target, ztarget)
 	for(var/flag in bitfield2list(flags))
 		LAZYADD(update_targets["[flag]"], holder)
@@ -159,7 +168,7 @@ SUBSYSTEM_DEF(minimaps)
 /**
  * Removes a atom from the subsystems updating overlays
  */
-/datum/controller/subsystem/minimaps/proc/remove_updator(atom/target)
+/datum/tactical_map/proc/remove_updator(atom/target)
 	SIGNAL_HANDLER
 	UnregisterSignal(target, COMSIG_QDELETING)
 	var/datum/minimap_updator/holder = updators_by_datum[target]
@@ -216,11 +225,12 @@ SUBSYSTEM_DEF(minimaps)
  * * hud_flags: tracked HUDs we want this atom to be displayed on
  * * marker: image or mutable_appearance we want to be using on the map
  */
-/datum/controller/subsystem/minimaps/proc/add_marker(atom/target, hud_flags = NONE, image/blip)
+/datum/tactical_map/proc/add_marker(atom/target, hud_flags = NONE, image/blip)
 	if(!isatom(target) || !hud_flags || !blip)
 		CRASH("Invalid marker added to subsystem")
 
-	if(!initialized || !(minimaps_by_z["[target.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
+	// XANTODO Probably need initialized check somehow if(!initialized || !(minimaps_by_z["[target.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
+	if(!(minimaps_by_z["[target.z]"])) //the minimap doesn't exist yet, z level was probably loaded after init
 		for(var/datum/callback/callback as anything in earlyadds["[target.z]"])
 			if(callback.arguments[1] == target)
 				return
@@ -247,7 +257,7 @@ SUBSYSTEM_DEF(minimaps)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_marker), override = TRUE) //override for atoms that were on a late loaded z-level, overrides the remove_earlyadd above
 
 ///Removes the object from the earlyadds list, in case it was qdel'd before the z-level was fully loaded
-/datum/controller/subsystem/minimaps/proc/remove_earlyadd(atom/source)
+/datum/tactical_map/proc/remove_earlyadd(atom/source)
 	SIGNAL_HANDLER
 	remove_marker(source)
 	for(var/datum/callback/callback in earlyadds["[source.z]"])
@@ -260,7 +270,7 @@ SUBSYSTEM_DEF(minimaps)
 /**
  * removes an image from raw tracked lists, invoked by callback
  */
-/datum/controller/subsystem/minimaps/proc/removeimage(image/blip, atom/target, hud_flags)
+/datum/tactical_map/proc/removeimage(image/blip, atom/target, hud_flags)
 	var/turf/target_turf = get_turf(target)
 	for(var/flag in bitfield2list(hud_flags))
 		minimaps_by_z["[target_turf.z]"].images_raw["[flag]"] -= blip
@@ -275,7 +285,7 @@ SUBSYSTEM_DEF(minimaps)
  *
  * TODO gross amount of assoc usage and unneeded ALL FLAGS iteration
  */
-/datum/controller/subsystem/minimaps/proc/on_z_change(atom/movable/source, oldz, newz)
+/datum/tactical_map/proc/on_z_change(atom/movable/source, oldz, newz)
 	SIGNAL_HANDLER
 	var/image/blip
 	for(var/flag in GLOB.all_minimap_flags)
@@ -325,11 +335,10 @@ SUBSYSTEM_DEF(minimaps)
 	blip?.UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(source, COMSIG_ATOM_EXITED)
 
-
 /**
  * Removes an atom and it's blip from the subsystem
  */
-/datum/controller/subsystem/minimaps/proc/remove_marker(atom/source)
+/datum/tactical_map/proc/remove_marker(atom/source)
 	SIGNAL_HANDLER
 	if(!removal_cbs[source]) //already removed
 		return
@@ -341,7 +350,6 @@ SUBSYSTEM_DEF(minimaps)
 	removal_cbs[source].Invoke()
 	removal_cbs -= source
 
-
 /**
  * Fetches a /atom/movable/screen/minimap instance or creates on if none exists
  * Note this does not destroy them when the map is unused, might be a potential thing to do?
@@ -349,7 +357,7 @@ SUBSYSTEM_DEF(minimaps)
  * * zlevel: zlevel to fetch map for
  * * flags: map flags to fetch from
  */
-/datum/controller/subsystem/minimaps/proc/fetch_minimap_object(zlevel, flags)
+/datum/tactical_map/proc/fetch_minimap_object(zlevel, flags)
 	var/hash = "[zlevel]-[flags]"
 	if(hashed_minimaps[hash])
 		return hashed_minimaps[hash]
@@ -360,7 +368,7 @@ SUBSYSTEM_DEF(minimaps)
 	return map
 
 ///fetches the drawing icon for a minimap flag and returns it, creating it if needed. assumes minimap_flag is ONE flag
-/datum/controller/subsystem/minimaps/proc/get_drawing_image(zlevel, minimap_flag)
+/datum/tactical_map/proc/get_drawing_image(zlevel, minimap_flag)
 	var/hash = "[zlevel]-[minimap_flag]"
 	if(drawn_images[hash])
 		return drawn_images[hash]

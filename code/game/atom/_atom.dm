@@ -118,9 +118,6 @@
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
 	var/list/canSmoothWith = null
 
-	///The color this atom will be if we choose to draw it on the minimap
-	var/minimap_color = MINIMAP_SOLID
-
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
 
