@@ -300,7 +300,7 @@
 	max_specific_storage = WEIGHT_CLASS_BULKY
 	click_alt_open = FALSE
 
-/datum/storage/green_sabre_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+/datum/storage/gladius_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/melee/gladius)
 
