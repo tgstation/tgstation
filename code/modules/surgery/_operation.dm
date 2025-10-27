@@ -6,25 +6,18 @@
 	if(istype(potential_tool, /obj/item/borg/cyborghug))
 		potential_tool = IMPLEMENT_HAND // melbert todo
 
-	var/list/possible_operations = list()
-	for(var/datum/surgery_operation/operation_type as anything in GLOB.operations)
-		if(operation_type::operation_flags & OPERATION_LOCKED)
-			continue
-		possible_operations += operation_type
-
-	// Signals can add operation types
+	// List of typepaths of operations we *can* do
+	var/list/possible_operations = GLOB.operations.unlocked.Copy()
+	// Signals can add operation types to the list to unlock special ones
 	SEND_SIGNAL(src, COMSIG_LIVING_OPERATING_ON, patient, possible_operations)
 	SEND_SIGNAL(patient, COMSIG_LIVING_BEING_OPERATED_ON, patient, possible_operations)
 
 	var/list/operations = list()
 	var/list/radial_operations = list()
-	for(var/operation_type in possible_operations)
-		var/datum/surgery_operation/operation = GLOB.operations[operation_type]
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
 		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && patient.body_position != LYING_DOWN)
 			continue
 		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
-			continue
-		if(operation.replaced_by && (operation.replaced_by != operation_type) && (operation.replaced_by in possible_operations))
 			continue
 		var/atom/movable/operate_on = operation.get_operation_target(src, patient, potential_tool)
 		if(isnull(operate_on))
@@ -33,7 +26,7 @@
 			continue
 		for(var/datum/radial_menu_choice/radial_slice, option_info in operation.get_radial_options(operate_on, src, potential_tool))
 			if(radial_operations[radial_slice])
-				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation_type]'.")
+				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation.type]'.")
 				continue
 			operations[radial_slice] = list("operation" = operation, "target" = operate_on, "force_fail" = intentionally_fail) + option_info
 			radial_operations[radial_slice] = radial_slice
@@ -107,6 +100,47 @@
  */
 /mob/living/proc/remove_surgery_speed_mod(id)
 	LAZYREMOVE(mob_surgery_speed_mods, id)
+
+GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
+
+/// Singleton containing all surgery operation, as well as some helpers for organizing them
+/datum/operation_holder
+	/// All operation singletons, indexed by typepath
+	/// It is recommended to use get_instances() where possible, rather than accessing this directly
+	var/list/operations_by_typepath
+	/// All operation typepaths which are unlocked by default, indexed by typepath
+	var/list/unlocked
+	/// All operation typepaths which are locked by something, indexed by typepath
+	var/list/locked
+
+/datum/operation_holder/New()
+	. = ..()
+	operations_by_typepath = list()
+	unlocked = list()
+	locked = list()
+
+	for(var/datum/operation_type as anything in subtypesof(/datum/surgery_operation))
+		if(operation_type::abstract_type == operation_type)
+			continue
+		var/datum/surgery_operation/operation = new operation_type()
+		operations_by_typepath[operation_type] = operation
+		if(operation.operation_flags & OPERATION_LOCKED)
+			locked += operation_type
+		else
+			unlocked += operation_type
+
+/// Takes in a list of operation typepaths and returns their singleton instances. Optionally can filter out replaced surgeries and by certain operation flags.
+/datum/operation_holder/proc/get_instances(list/typepaths, filter_replaced = TRUE, flag_to_exclude = NONE)
+	var/list/result = list()
+	for(var/datum/surgery_operation/operation_type as anything in typepaths)
+		if(filter_replaced && (operation_type::replaced_by && (operation_type::replaced_by != operation_type) && (operation_type::replaced_by in typepaths)))
+			continue
+		if(flag_to_exclude && (operation_type::operation_flags & flag_to_exclude))
+			continue
+		if(!operations_by_typepath[operation_type])
+			continue
+		result += operations_by_typepath[operation_type]
+	return result
 
 /datum/surgery_operation
 	abstract_type = /datum/surgery_operation
@@ -403,9 +437,9 @@
 		else
 			surgeon.add_mob_blood(patient)
 
-		if(isitem(tool))
-			var/obj/item/realtool = tool
-			realtool.add_mob_blood(patient)
+		// if(isitem(tool))
+		// 	var/obj/item/realtool = tool
+		// 	realtool.add_mob_blood(patient)
 
 		// We modify speed modifier here AFTER the do after to increase failure chances, that's intentional
 		// Think of it as modifying "effective time" rather than "real time". Failure chance goes up but the time it took is unchanged
@@ -683,16 +717,16 @@
 		return FALSE
 	if(required_biotype && !(potential_patient.mob_biotypes & required_biotype))
 		return FALSE
-	if(!potential_patient.has_limbs)
-		return TRUE
-	if(body_zone != carbon_zone)
-		return FALSE
-	var/obj/item/bodypart/limb = potential_patient.get_bodypart(body_zone)
-	if(isnull(limb) || !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
-		return FALSE
-	if(required_bodytype && !(limb.bodytype & required_bodytype))
-		return FALSE
-	return TRUE
+	if(potential_patient.has_limbs)
+		if(body_zone != carbon_zone)
+			return FALSE
+		var/obj/item/bodypart/limb = potential_patient.get_bodypart(body_zone)
+		if(isnull(limb) || !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
+			return FALSE
+		if(required_bodytype && !(limb.bodytype & required_bodytype))
+			return FALSE
+
+	return is_available(potential_patient)
 
 /datum/surgery_operation/basic/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
 	SHOULD_NOT_OVERRIDE(TRUE) // you are looking for is_available()

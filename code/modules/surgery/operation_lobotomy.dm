@@ -78,7 +78,7 @@
 		if(3)
 			organ.owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_MAGIC)
 
-/datum/surgery_operation/organ/lobotomy/mechanical
+/datum/surgery_operation/organ/lobotomy/mechanic
 	name = "execute neural defragging"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,

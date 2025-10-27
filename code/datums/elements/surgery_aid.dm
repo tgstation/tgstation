@@ -66,7 +66,6 @@
 
 /datum/status_effect/surgery_prepped/on_apply()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	ADD_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/surgery_prepped/on_remove()
@@ -109,6 +108,7 @@
 		ADD_TRAIT(precise_part, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 	else if(body_zone != BODY_ZONE_CHEST)
 		stack_trace("Attempting to track surgery on a non-carbon mob with a non-chest body zone! This should not happen.")
+	ADD_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/surgery_prepped/proc/untrack_surgery(body_zone)
 	LAZYREMOVE(zones, body_zone)

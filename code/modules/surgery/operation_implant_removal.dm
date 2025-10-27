@@ -12,9 +12,6 @@
 /datum/surgery_operation/basic/implant_removal/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	return image(/obj/item/hemostat)
 
-/datum/surgery_operation/basic/implant_removal/show_as_next_step(mob/living/potential_patient, body_zone)
-	return ..() && is_available(potential_patient)
-
 /datum/surgery_operation/basic/implant_removal/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	return has_surgery_state(patient, SURGERY_SKIN_OPEN)
 

@@ -150,6 +150,3 @@ DEFINE_BITFIELD(operation_flags, list(
 // Operation argument indexes
 #define OPERATION_SPEED "speed_modifier"
 #define OPERATION_ACTION "action"
-
-/// All operation singletons indexed by typepath
-GLOBAL_LIST_INIT(operations, init_subtypes_w_path_keys(/datum/surgery_operation))

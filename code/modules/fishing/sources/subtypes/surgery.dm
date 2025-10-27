@@ -25,7 +25,7 @@
 
 	var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
-	for(var/obj/item/organ/fishable as anything in carbon.organ)
+	for(var/obj/item/organ/fishable as anything in carbon.organs)
 		if(fishable.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_EXTERNAL|ORGAN_VITAL))
 			continue
 		if(!LIMB_HAS_SURGERY_STATE(fishable.bodypart_owner, SURGERY_FISH_STATE(fishable.zone)))

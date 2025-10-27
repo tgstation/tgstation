@@ -28,6 +28,13 @@
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
+	if(linked_techweb)
+		RegisterSignal(linked_techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_techweb_research))
+		RegisterSignal(linked_techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_techweb_unresearch))
+
+		for(var/datum/design/surgery/design in linked_techweb.get_researched_design_datums())
+			advanced_surgeries |= design.surgery
+
 	var/list/operating_signals = list(
 		COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE = TYPE_PROC_REF(/datum/component/experiment_handler, try_run_autopsy_experiment),
 	)
@@ -63,15 +70,6 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/computer/operating/proc/sync_surgeries()
-	if(!linked_techweb)
-		return
-	for(var/i in linked_techweb.researched_designs)
-		var/datum/design/surgery/D = SSresearch.techweb_design_by_id(i)
-		if(!istype(D))
-			continue
-		advanced_surgeries |= D.surgery
-
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/direction in GLOB.alldirs)
 		table = locate(/obj/structure/table/optable) in get_step(src, direction)
@@ -98,7 +96,8 @@
 	. = ..()
 	var/zone_found = LAZYACCESS(zone_on_open, WEAKREF(user))
 	if(zone_found)
-		user.zone_selected = zone_found
+		var/atom/movable/screen/zone_sel/selector = user.hud_used?.zone_select
+		selector?.set_selected_zone(zone_found, user, FALSE)
 		LAZYREMOVE(zone_on_open, WEAKREF(user))
 
 /obj/machinery/computer/operating/ui_data(mob/user)
@@ -143,32 +142,25 @@
 	var/list/data = list()
 
 	data["surgeries"] = list()
-	for(var/datum/surgery_operation/surgeries as anything in advanced_surgeries)
-		var/list/surgery = list()
-		surgery["name"] = initial(surgeries.name)
-		surgery["desc"] = initial(surgeries.desc)
-		data["surgeries"] += list(surgery)
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(advanced_surgeries))
+		data["surgeries"] += list(list(
+			"name" = operation.name,
+			"desc" = operation.desc,
+		))
 
 	data["possible_next_operations"] = list()
 	if(table?.patient)
-		var/list/valid_operations = list()
-		for(var/datum/surgery_operation/operation_type as anything in GLOB.operations)
-			// Default and loaded surgeries are the only surgeries we recommend
-			if((operation_type::operation_flags & OPERATION_LOCKED) && !(operation_type in advanced_surgeries))
-				continue
-			valid_operations += GLOB.operations[operation_type]
-
-		for(var/datum/surgery_operation/operation as anything in valid_operations)
-			if(operation.replaced_by && (operation.replaced_by != operation.type) && (operation.replaced_by in advanced_surgeries))
-				continue
+		// Only show basic, unlocked operations and anything we have unlocked in this computer
+		for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(GLOB.operations.unlocked + advanced_surgeries))
 			if(!operation.show_as_next_step(table.patient, target_zone))
 				continue
 			data["possible_next_operations"] += list(list(
-				"name" = "[capitalize(operation.name)] ([operation.get_recommended_tool() || "nothing"])",
+				"name" = "[operation.name] ([operation.get_recommended_tool() || "nothing"])",
 				"desc" = operation.desc,
 			))
 
-		if(!length(data["possible_next_operations"]) && !HAS_TRAIT(table.patient, TRAIT_READY_TO_OPERATE))
+		var/obj/item/releveant_bodypart = table.patient.get_bodypart(target_zone)
+		if(!length(data["possible_next_operations"]) && !HAS_TRAIT(releveant_bodypart, TRAIT_READY_TO_OPERATE))
 			data["possible_next_operations"] += list(list(
 				"name" = "Prepare for surgery ([/obj/item/surgical_drapes::name])",
 				"desc" = "Begin surgery by applying surgical drapes to the patient.",
@@ -181,16 +173,33 @@
 	if(.)
 		return
 	switch(action)
-		if("sync")
-			sync_surgeries()
 		if("open_experiments")
 			experiment_handler.ui_interact(usr)
 		if("change_zone")
 			if(params["new_zone"] in GLOB.all_body_zones)
 				target_zone = params["new_zone"]
-				ui.user.zone_selected = params["new_zone"]
+				var/atom/movable/screen/zone_sel/selector = ui.user.hud_used?.zone_select
+				selector?.set_selected_zone(params["new_zone"], ui.user, FALSE)
 			update_static_data_for_all_viewers()
 	return TRUE
+
+/obj/machinery/computer/operating/proc/on_techweb_research(datum/source, datum/design/surgery/design)
+	SIGNAL_HANDLER
+
+	if(!istype(design))
+		return
+
+	advanced_surgeries |= design.surgery
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers)), 0.1 SECONDS, TIMER_UNIQUE)
+
+/obj/machinery/computer/operating/proc/on_techweb_unresearch(datum/source, datum/design/surgery/design)
+	SIGNAL_HANDLER
+
+	if(!istype(design))
+		return
+
+	advanced_surgeries -= design.surgery
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers)), 0.1 SECONDS, TIMER_UNIQUE)
 
 #undef MENU_OPERATION
 #undef MENU_SURGERIES

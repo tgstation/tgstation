@@ -1,8 +1,10 @@
 /datum/surgery_operation/limb/bioware
+	abstract_type = /datum/surgery_operation/limb/bioware
 	implements = list(
 		IMPLEMENT_HAND = 1,
 	)
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_MORBID
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_MORBID | OPERATION_LOCKED
+	required_bodytype = BODYTYPE_ORGANIC
 	time = 12.5 SECONDS
 	/// What status effect is gained when the surgery is successful?
 	/// Used to check against other bioware types to prevent stacking.
@@ -29,12 +31,12 @@
 	if(limb.owner.ckey)
 		SSblackbox.record_feedback("tally", "bioware", 1, status_effect_gained)
 
-/datum/surgery_operation/limb/bioware/thread_veins
+/datum/surgery_operation/limb/bioware/vein_threading
 	name = "thread veins"
 	desc = "Weave the patient's veins into a reinforced mesh, reducing blood loss from injuries."
 	status_effect_gained = /datum/status_effect/bioware/heart/threaded_veins
 
-/datum/surgery_operation/limb/bioware/thread_veins/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/vein_threading/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -44,7 +46,7 @@
 	)
 	display_pain(limb.owner, "Your entire body burns in agony!")
 
-/datum/surgery_operation/limb/bioware/thread_veins/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/bioware/vein_threading/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -54,6 +56,9 @@
 		span_notice("[surgeon] finishes manipulating [limb.owner]'s circulatory system."),
 	)
 	display_pain(limb.owner, "You can feel your blood pumping through reinforced veins!")
+
+/datum/surgery_operation/limb/bioware/vein_threading/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/muscled_veins
 	name = "muscled veins"
@@ -81,13 +86,16 @@
 	)
 	display_pain(limb.owner, "You can feel your heartbeat's powerful pulses ripple through your body!")
 
-/datum/surgery_operation/limb/bioware/splice_nerves
+/datum/surgery_operation/limb/bioware/muscled_veins/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
+
+/datum/surgery_operation/limb/bioware/nerve_splicing
 	name = "splice nerves"
 	desc = "Splice the patient's nerves to make them more resistant to stuns."
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/spliced
 
-/datum/surgery_operation/limb/bioware/splice_nerves/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/nerve_splicing/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -97,7 +105,7 @@
 	)
 	display_pain(limb.owner, "Your entire body goes numb!")
 
-/datum/surgery_operation/limb/bioware/splice_nerves/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/bioware/nerve_splicing/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -108,13 +116,16 @@
 	)
 	display_pain(limb.owner, "You regain feeling in your body; It feels like everything's happening around you in slow motion!")
 
-/datum/surgery_operation/limb/bioware/ground_nerves
+/datum/surgery_operation/limb/bioware/nerve_splicing/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
+
+/datum/surgery_operation/limb/bioware/nerve_grounding
 	name = "ground nerves"
 	desc = "Reroute the patient's nerves to act as grounding rods, protecting them from electrical shocks."
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/grounded
 
-/datum/surgery_operation/limb/bioware/ground_nerves/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/nerve_grounding/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -124,7 +135,7 @@
 	)
 	display_pain(limb.owner, "Your entire body goes numb!")
 
-/datum/surgery_operation/limb/bioware/ground_nerves/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/bioware/nerve_grounding/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -135,12 +146,15 @@
 	)
 	display_pain(limb.owner, "You regain feeling in your body! You feel energzed!")
 
-/datum/surgery_operation/limb/bioware/reshape_ligaments
+/datum/surgery_operation/limb/bioware/nerve_grounding/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
+
+/datum/surgery_operation/limb/bioware/ligament_hook
 	name = "reshape ligaments"
 	desc = "Reshape the patient's ligaments to allow limbs to be manually reattached if severed, at the cost of making them easier to detach."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/hooked
 
-/datum/surgery_operation/limb/bioware/reshape_ligaments/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/ligament_hook/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -150,7 +164,7 @@
 	)
 	display_pain(limb.owner, "Your limbs burn with severe pain!")
 
-/datum/surgery_operation/limb/bioware/reshape_ligaments/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/bioware/ligament_hook/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -161,12 +175,15 @@
 	)
 	display_pain(limb.owner, "Your limbs feel... strangely loose.")
 
-/datum/surgery_operation/limb/bioware/strengthen_ligaments
+/datum/surgery_operation/limb/bioware/ligament_hook/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
+
+/datum/surgery_operation/limb/bioware/ligament_reinforcement
 	name = "strengthen ligaments"
 	desc = "Strengthen the patient's ligaments to make dismemberment more difficult, at the cost of making nerve connections easier to interrupt."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/reinforced
 
-/datum/surgery_operation/limb/bioware/strengthen_ligaments/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/ligament_reinforcement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -176,7 +193,7 @@
 	)
 	display_pain(limb.owner, "Your limbs burn with severe pain!")
 
-/datum/surgery_operation/limb/bioware/strengthen_ligaments/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/bioware/ligament_reinforcement/on_success(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
 	display_results(
 		surgeon,
@@ -187,10 +204,14 @@
 	)
 	display_pain(limb.owner, "Your limbs feel more secure, but also more frail.")
 
+/datum/surgery_operation/limb/bioware/ligament_reinforcement/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
+
 /datum/surgery_operation/limb/bioware/cortex_folding
 	name = "cortex folding"
 	desc = "A biological upgrade which folds the patient's cerebral cortex into a fractal pattern, increasing neural density and flexibility."
 	status_effect_gained = /datum/status_effect/bioware/cortex/folded
+	required_zone = BODY_ZONE_HEAD
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
@@ -227,10 +248,14 @@
 	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
+/datum/surgery_operation/limb/bioware/cortex_folding/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC
+
 /datum/surgery_operation/limb/bioware/cortex_imprint
 	name = "cortex imprinting"
 	desc = "A biological upgrade which carves the patient's cerebral cortex into a self-imprinting pattern, increasing neural density and resilience."
 	status_effect_gained = /datum/status_effect/bioware/cortex/imprinted
+	required_zone = BODY_ZONE_HEAD
 
 /datum/surgery_operation/limb/bioware/cortex_imprint/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
@@ -266,3 +291,6 @@
 	display_pain(limb.owner, "Your brain throbs with intense pain; Thinking hurts!")
 	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+
+/datum/surgery_operation/limb/bioware/cortex_imprint/mechanic
+	required_bodytype = BODYTYPE_ROBOTIC

@@ -16,9 +16,6 @@
 /datum/surgery_operation/basic/incise_skin/get_default_radial_image(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	return image(/obj/item/scalpel)
 
-/datum/surgery_operation/basic/incise_skin/show_as_next_step(mob/living/potential_patient, body_zone)
-	return ..() && is_available(potential_patient)
-
 /datum/surgery_operation/basic/incise_skin/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	// Only for limbless mobs. Limbed mobs can use the real deal surgery
 	return !patient.has_limbs && has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
@@ -57,9 +54,6 @@
 
 /datum/surgery_operation/basic/close_skin/get_default_radial_image(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	return image(/obj/item/cautery)
-
-/datum/surgery_operation/basic/close_skin/show_as_next_step(mob/living/potential_patient, body_zone)
-	return ..() && is_available(potential_patient)
 
 /datum/surgery_operation/basic/close_skin/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	// Only for limbless mobs. Also we're not picky and allow this if any surgical state is detected

@@ -7,9 +7,6 @@
 	)
 	time = 1.6 SECONDS
 
-/datum/surgery_operation/basic/core_removal/show_as_next_step(mob/living/potential_patient, body_zone)
-	return ..() && is_available(potential_patient)
-
 /datum/surgery_operation/basic/core_removal/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	return isslime(patient) && patient.stat == DEAD && has_surgery_state(patient, SURGERY_SKIN_OPEN)
 

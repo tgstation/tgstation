@@ -32,7 +32,6 @@
 
 /// Checks that the passed organ can be inserted/removed
 /datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
-	SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
 /// Checks that the passed organ can be inserted/removed in the specified zones

@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
+import { capitalizeFirst } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
@@ -44,7 +45,7 @@ export const OperatingComputer = (props) => {
   const [tab, setTab] = useSharedState('tab', 1);
 
   return (
-    <Window width={350} height={470}>
+    <Window width={350} height={500}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab selected={tab === 1} onClick={() => setTab(1)}>
@@ -100,7 +101,11 @@ const PatientStateView = (props) => {
   const { act, data } = useBackend<Data>();
   const { has_table, patient, target_zone, possible_next_operations } = data;
   if (!has_table) {
-    return <NoticeBox color="yellow">No Table Detected</NoticeBox>;
+    return (
+      <Section>
+        <NoticeBox color="yellow">No Table Detected</NoticeBox>
+      </Section>
+    );
   }
 
   return (
@@ -202,7 +207,7 @@ const PatientStateView = (props) => {
                             borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                           }}
                         >
-                          - {operation.name}
+                          - {capitalizeFirst(operation.name)}
                         </Box>
                       </Tooltip>
                     </Stack.Item>
@@ -220,17 +225,16 @@ const PatientStateView = (props) => {
 };
 
 const SurgeryProceduresView = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { data } = useBackend<Data>();
   const { surgeries } = data;
   return (
     <Section title="Advanced Surgery Procedures">
-      <Button
-        icon="download"
-        content="Sync Research Database"
-        onClick={() => act('sync')}
-      />
       {surgeries.map((surgery) => (
-        <Section title={surgery.name} key={surgery.name} level={2}>
+        <Section
+          title={capitalizeFirst(surgery.name)}
+          key={surgery.name}
+          level={2}
+        >
           {surgery.desc}
         </Section>
       ))}

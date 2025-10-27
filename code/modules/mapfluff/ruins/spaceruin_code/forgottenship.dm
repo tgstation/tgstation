@@ -80,9 +80,9 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(
 		/datum/surgery_operation/organ/lobotomy,
-		/datum/surgery_operation/organ/lobotomy/mechanical,
-		/datum/surgery_operation/linb/bioware/vein_threading,
-		/datum/surgery_operation/linb/bioware/nerve_splicing,
+		/datum/surgery_operation/organ/lobotomy/mechanic,
+		/datum/surgery_operation/limb/bioware/vein_threading,
+		/datum/surgery_operation/limb/bioware/nerve_splicing,
 	)
 
 /obj/structure/fluff/empty_sleeper/syndicate/captain

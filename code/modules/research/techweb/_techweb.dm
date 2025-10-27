@@ -565,3 +565,10 @@
 			handler.announce_message_to_all(announcetext)
 
 	return TRUE
+
+/// Returns a flat list of all design datums this techweb has researched.
+/datum/techweb/proc/get_researched_design_datums()
+	var/list/designs = list()
+	for(var/id in researched_designs)
+		designs += SSresearch.techweb_design_by_id(id)
+	return designs

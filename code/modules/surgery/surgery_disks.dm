@@ -3,6 +3,7 @@
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT)
+	/// List of surgical operations contained on this disk
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
@@ -13,7 +14,9 @@
 
 /obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()
-	surgeries = typesof(/datum/surgery_operation)
+	surgeries = list()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation), flag_to_exclude = OPERATION_LOCKED))
+		surgeries += operation.type
 
 /obj/item/disk/surgery/advanced_plastic_surgery
 	name = "advanced plastic surgery disk"
@@ -36,7 +39,7 @@
 		lore = "Most forms of plastic surgery became obsolete due in no small part to advances in genetics technology. \
 			Very basic methods still remain in use, but scarcely, and primarily to reverse a patient's disfigurements. \
 			As a consequence, this item became an antique to many collectors - \
-			though some black alley surgeons still seek one out for its now uncommon knowledge."
+			though some black alley surgeons still seek one out for its now uncommon knowledge." \
 	)
 
 /obj/item/disk/surgery/brainwashing

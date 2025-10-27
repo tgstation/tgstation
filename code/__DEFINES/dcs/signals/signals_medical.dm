@@ -1,12 +1,10 @@
-/// From /datum/surgery/New(): (datum/surgery/surgery, surgery_location (body zone), obj/item/bodypart/targeted_limb)
+/// From /datum/surgery_operation/try_perform: (datum/surgery_operation/operation, atom/movable/operating_on, tool)
 #define COMSIG_LIVING_SURGERY_STARTED "mob_surgery_started"
-
-/// From /datum/surgery/Destroy(): (surgery_type, surgery_location, obj/item/bodypart/targeted_limb)
+/// From /datum/surgery_operation/success: (datum/surgery_operation/operation, atom/movable/operating_on, tool)
 #define COMSIG_LIVING_SURGERY_FINISHED "mob_surgery_finished"
-
-/// From /datum/surgery_step/success(): (datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/// From /datum/surgery_step/success(): (datum/surgery_operation/operation, atom/movable/operating_on, tool)
 #define COMSIG_LIVING_SURGERY_SUCCESS "mob_surgery_step_success"
-
+/// From /datum/surgery_step/failure(): (datum/surgery_operation/operation, atom/movable/operating_on, tool)
 #define COMSIG_LIVING_SURGERY_FAILED "mob_surgery_step_failed"
 
 /// From /obj/item/shockpaddles/do_help, after the defib do_after is complete, but before any effects are applied: (mob/living/defibber, obj/item/shockpaddles/source)

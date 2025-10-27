@@ -142,9 +142,12 @@
 		ayy_operations += /datum/surgery_operation/limb/add_plastic // unlocks advanced plastic surgery
 		ayy_operations += /datum/surgery_operation/limb/bionecrosis
 		ayy_operations += /datum/surgery_operation/organ/brainwash
+		ayy_operations += /datum/surgery_operation/organ/brainwash/mechanic
 		ayy_operations += /datum/surgery_operation/organ/fix_wings // i guess
 		ayy_operations += /datum/surgery_operation/organ/lobotomy
+		ayy_operations += /datum/surgery_operation/organ/lobotomy/mechanic
 		ayy_operations += /datum/surgery_operation/organ/pacify
+		ayy_operations += /datum/surgery_operation/organ/pacify/mechanic
 		ayy_operations += /datum/surgery_operation/basic/viral_bonding
 		ayy_operations += subtypesof(/datum/surgery_operation/limb/bioware)
 

@@ -29,9 +29,6 @@
 	/// The amount of damage healed scales based on how much damage the patient has times this multiplier
 	var/healing_multiplier = 0.07
 
-/datum/surgery_operation/basic/tend_wounds/show_as_next_step(mob/living/potential_patient, body_zone)
-	return ..() && is_available(potential_patient)
-
 /datum/surgery_operation/basic/tend_wounds/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	// We allow tend wounds with even just cut skin
 	if(!has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT))

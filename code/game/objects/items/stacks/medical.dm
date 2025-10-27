@@ -328,7 +328,7 @@
 				break // one at a time
 		affecting.adjustBleedStacks(-1 * stop_bleeding, 0)
 	if(flesh_regeneration || sanitization)
-		for(var/datum/wound/burn/flesh/wound as anything in affecting.wounds)
+		for(var/datum/wound/burn/flesh/wound in affecting.wounds)
 			if(wound.can_be_ointmented_or_meshed())
 				wound.flesh_healing += flesh_regeneration
 				wound.sanitization += sanitization
@@ -382,6 +382,8 @@
 	custom_price = PAYCHECK_CREW * 2
 	absorption_rate = 0.125
 	absorption_capacity = 5
+	sanitization = 3
+	flesh_regeneration = 5
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/gauze
@@ -490,6 +492,13 @@
 
 	if(limb.cached_bleed_rate)
 		add_mob_blood(patient)
+
+	// Dressing burns provides a "one-time" bonus to sanitization and healing
+	// However, any notable infection will reduce the effectiveness of this bonus
+	for(var/datum/wound/burn/flesh/wound in limb.wounds)
+		wound.sanitization += sanitization * (wound.infestation > 0.1 ? 0.2 : 1)
+		wound.flesh_healing += flesh_regeneration * (wound.infestation > 0.1 ? 0 : 1)
+
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
@@ -527,6 +536,8 @@
 	burn_cleanliness_bonus = 0.7
 	absorption_rate = 0.075
 	absorption_capacity = 4
+	sanitization = 1
+	flesh_regeneration = 3
 	merge_type = /obj/item/stack/medical/gauze/improvised
 
 	/*

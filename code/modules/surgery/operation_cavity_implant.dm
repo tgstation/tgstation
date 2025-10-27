@@ -35,8 +35,8 @@
 		return FALSE
 	if(isorgan(tool)) // you rarely want to implant an organ
 		return FALSE
-	// if(tool.tool_behaviour in GLOB.all_surgical_tool_behaviours) // you rarely want to implant a medical tool
-	// 	return FALSE
+	if(tool.tool_behaviour in GLOB.all_surgical_tool_behaviours) // you rarely want to implant a medical tool
+		return FALSE
 	return TRUE
 
 /datum/surgery_operation/limb/cavity_implant/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
