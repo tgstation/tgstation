@@ -86,7 +86,7 @@
 			if(location.density)
 				icon_gen.DrawBox(location.tacmap_color, xval, yval)
 				continue
-			var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/fence) in location)
+			var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/window) in location) || (locate(/obj/structure/fence) in location)
 			if(alttarget)
 				icon_gen.DrawBox(alttarget.tacmap_color, xval, yval)
 				continue

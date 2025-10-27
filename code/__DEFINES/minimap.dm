@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define TACMAP_BLACK "#111111d0"
 #define TACMAP_SOLID "#ebe5e5ee"
 #define TACMAP_DOOR "#451e5eee"
+#define TACMAP_WINDOW "#525252d0"
 #define TACMAP_FENCE "#8c2294ee"
 #define TACMAP_LAVA "#db4206d0"
 #define TACMAP_DIRT "#9c906dd0"
@@ -41,6 +42,7 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define TACMAP_WATER "#94b0d59c" //lower opacity as its really bright
 
 //Area colours
+//Departments
 #define TACMAP_AREA_COMMAND COLOR_COMMAND_BLUE
 #define TACMAP_AREA_CARGO COLOR_CARGO_BROWN
 #define TACMAP_AREA_ENGINEERING COLOR_ENGINEERING_ORANGE
@@ -48,6 +50,8 @@ GLOBAL_LIST_INIT(all_minimap_flags, bitfield2list(MINIMAP_FLAG_ALL))
 #define TACMAP_AREA_SCIENCE COLOR_SCIENCE_PINK
 #define TACMAP_AREA_SECURITY COLOR_SECURITY_RED
 #define TACMAP_AREA_SERVICE COLOR_SERVICE_LIME
+//General
+#define TACMAP_AREA_MAINTENANCE COLOR_WEBSAFE_DARK_GRAY
 
 //Area colours
 #define TACMAP_AREA_ENGI "#c19504d0"
