@@ -9,6 +9,32 @@
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/bluetag)
 	resistance_flags = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	var/last_slot
+
+/obj/item/clothing/suit/bluetag/equipped(mob/equipper, slot)
+	. = ..()
+	if (slot != ITEM_SLOT_OCLOTHING)
+		return
+	last_slot = slot
+	var/mob/living/carbon/human/wearer = equipper
+	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
+	if (!comp)
+		wearer.AddComponent(/datum/component/lasertag)
+		comp = wearer.GetComponent(/datum/component/lasertag)
+	comp.team_color = "blue"
+	comp.lasertag_granters += src
+
+
+/obj/item/clothing/suit/bluetag/dropped(mob/living/user)
+	. = ..()
+	if(last_slot != ITEM_SLOT_OCLOTHING)
+		return
+	last_slot = null
+	var/mob/living/carbon/human/wearer = user
+	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
+	if (comp.should_delete(src))
+		qdel(comp)
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
@@ -21,3 +47,30 @@
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/gun/energy/laser/redtag)
 	resistance_flags = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	var/last_slot
+
+
+/obj/item/clothing/suit/redtag/equipped(mob/equipper, slot)
+	. = ..()
+	if (slot != ITEM_SLOT_OCLOTHING)
+		return
+	last_slot = slot
+	var/mob/living/carbon/human/wearer = equipper
+	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
+	if (!comp)
+		wearer.AddComponent(/datum/component/lasertag)
+		comp = wearer.GetComponent(/datum/component/lasertag)
+	comp.team_color = "red"
+	comp.lasertag_granters += src
+
+
+/obj/item/clothing/suit/redtag/dropped(mob/living/user)
+	. = ..()
+	if(last_slot != ITEM_SLOT_OCLOTHING)
+		return
+	last_slot = null
+	var/mob/living/carbon/human/wearer = user
+	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
+	if (comp.should_delete(src))
+		qdel(comp)

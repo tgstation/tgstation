@@ -4136,6 +4136,7 @@
 #include "code\modules\clothing\spacesuits\softsuit.dm"
 #include "code\modules\clothing\spacesuits\specialops.dm"
 #include "code\modules\clothing\spacesuits\syndi.dm"
+#include "code\modules\clothing\suits\_lasertag_components.dm"
 #include "code\modules\clothing\suits\_suits.dm"
 #include "code\modules\clothing\suits\ablativecoat.dm"
 #include "code\modules\clothing\suits\armor.dm"
