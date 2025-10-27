@@ -18537,10 +18537,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"fmC" = (
-/obj/structure/closet/l3closet/security,
-/turf/open/floor/iron/dark,
-/area/station/security/office)
 "fmN" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -68458,6 +68454,7 @@
 "tlL" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "tlQ" = (
@@ -75560,6 +75557,7 @@
 /area/station/hallway/primary/aft)
 "vhx" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/closet/bombcloset/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "vhJ" = (
@@ -82227,7 +82225,6 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/south,
-/obj/structure/closet/bombcloset/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "xak" = (
@@ -169996,7 +169993,7 @@ gRG
 dOb
 rTo
 wcn
-fmC
+rTo
 bwH
 wAs
 tov
