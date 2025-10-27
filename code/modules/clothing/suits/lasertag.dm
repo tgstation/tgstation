@@ -22,7 +22,7 @@
 	if (!comp)
 		wearer.AddComponent(/datum/component/lasertag)
 		comp = wearer.GetComponent(/datum/component/lasertag)
-	comp.team_color = "blue"
+		comp.team_color = "blue"
 	comp.lasertag_granters += src
 
 
@@ -61,7 +61,7 @@
 	if (!comp)
 		wearer.AddComponent(/datum/component/lasertag)
 		comp = wearer.GetComponent(/datum/component/lasertag)
-	comp.team_color = "red"
+		comp.team_color = "red"
 	comp.lasertag_granters += src
 
 
