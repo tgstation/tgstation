@@ -149,6 +149,7 @@
 
 /**
  * This proc determines the tile that a spawner will place a mob on.
+ * @param: atom/spawner: typed definition of the parent, used to send a signal in case a mob spawns to the default position, as well as center our circles to pick turfs from.
  */
 /datum/component/spawner/proc/pick_turf(atom/spawner)
 	var/turf/picked_spot
@@ -168,6 +169,10 @@
  * Adds handling to the created mob from the spawner component,
  * such as adding to spawned_things list,
  * weakrefs to the spawned_things list, and registering relevant signals.
+ *
+ * @param: turf/picked_spot: Turf to spawn the mob onto.
+ * @param: mob/chosen_mob_type: Type of mob to spawn.
+ * @param: atom/spawner: type definition of parent, passed for further setup on setup_spawned_mob.
  */
 /datum/component/spawner/proc/delayed_mob_spawn(turf/picked_spot, mob/chosen_mob_type, atom/spawner)
 	if(!picked_spot)
@@ -179,6 +184,11 @@
 		CRASH("Failed to spawn mob!")
 	setup_spawned_mob(created, spawner)
 
+/**
+ * Registers signals and flags onto a component spawned mob, to keep track of the spawned mob, as well as prevent them from getting treated as naturally spawned.
+ * @param: mob/spawned_mob: Mob to have signals sent to/registered onto.
+ * @param: atom/spawner: 
+ */
 /datum/component/spawner/proc/setup_spawned_mob(mob/spawned_mob, atom/spawner)
 	spawned_mob.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
 	spawned_things += WEAKREF(spawned_mob)
