@@ -35,33 +35,28 @@
 		turfs += override_turf
 	else
 		var/obj/structure/spacevine/vine = new()
-		var/list/areas = shuffle(GLOB.areas.Copy())
-		/// Build a list of area turfs in advance so we don't have to keep calling get_turfs_from_all_zlevels()
-		var/list/per_area_lists = list()
-		for(var/area/station/hallway/area in areas)
-			var/list/floor_candidates = list()
+		var/list/floor_candidates = list()
+		for(var/area/station/hallway/area in shuffle(GLOB.areas.Copy()))
 			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
-				if(!isopenspaceturf(floor))
-					floor_candidates += floor
-			if(length(floor_candidates))
-				per_area_lists += floor_candidates
-
-		/// We'll round robin pick a turf from each area until 25 attempts are used. This way things still feel random enough and we get a good spread.
-		/// limit max_attempts because physically moving the vine onto a tile to test viability using Enter() is expensive
-		var/max_attempts = 25
-		while(max_attempts > 0 && length(per_area_lists.len))
-			for(var/i = 1; i <= length(per_area_lists); i++)
-				var/list/floor_candidates = per_area_lists[i]
-				if(!length(floor_candidates))
+				if(isopenspaceturf(floor))
 					continue
+				floor_candidates += floor
 
-				// Pick one random turf from this area's candidates
-				var/turf/open/floor = pick(floor_candidates)
-				if(floor.Enter(vine))
-					turfs += floor
-					max_attempts--
-					if(max_attempts <= 0)
-						break
+		// Enter() is expensive to call on potentially hundreds to thousands of turfs at once and can even lead to server crashes.
+		// We can pick() a subset instead and get close enough results at a fraction of the cost.
+		var/max_attempts = 25
+		var/attempts = 0
+
+		// Pick extra candidates to compensate for potential Enter() failures
+		var/list/chosen = pick_n(floor_candidates, min(max_attempts * 2, length(floor_candidates)))
+
+		for(var/turf/open/floor as anything in chosen)
+			if(attempts >= max_attempts)
+				break
+			if(floor.Enter(vine))
+				turfs += floor
+				attempts++
+		qdel(vine)
 
 	if(length(turfs)) //Pick a turf to spawn at if we can
 		var/turf/floor = pick(turfs)
