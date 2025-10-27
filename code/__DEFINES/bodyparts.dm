@@ -87,6 +87,30 @@
 /// Used in prosthetic surgery: Is the prosthetic unsecured
 #define SURGERY_PROSTHETIC_UNSECURED (1<<8)
 
+DEFINE_BITFIELD(surgery_state, list(
+	"SKIN CUT" = SURGERY_SKIN_CUT,
+	"SKIN OPEN" = SURGERY_SKIN_OPEN,
+	"VESSELS UNCLAMPED" = SURGERY_VESSELS_UNCLAMPED,
+	"VESSELS CLAMPED" = SURGERY_VESSELS_CLAMPED,
+	"ORGANS CUT" = SURGERY_ORGANS_CUT,
+	"BONE DRILLED" = SURGERY_BONE_DRILLED,
+	"BONE SAWED" = SURGERY_BONE_SAWED,
+	"PLASTIC APPLIED" = SURGERY_PLASTIC_APPLIED,
+	"PROSTHETIC UNSECURED" = SURGERY_PROSTHETIC_UNSECURED,
+))
+
+#define SURGERY_STATE_READABLE list(\
+	"Skin is cut" = SURGERY_SKIN_CUT, \
+	"Skin is open" = SURGERY_SKIN_OPEN, \
+	"Blood vessels are unclamped" = SURGERY_VESSELS_UNCLAMPED, \
+	"Blood vessels are clamped" = SURGERY_VESSELS_CLAMPED, \
+	"Organs are cut" = SURGERY_ORGANS_CUT, \
+	"Bone is drilled" = SURGERY_BONE_DRILLED, \
+	"Bone is sawed" = SURGERY_BONE_SAWED, \
+	"Plastic is applied" = SURGERY_PLASTIC_APPLIED, \
+	"Prosthetic is unsecured" = SURGERY_PROSTHETIC_UNSECURED \
+)
+
 /// All states that concern itself with the skin
 #define SURGERY_SKIN_STATES (SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
 /// All states that concern itself with the blood vessels

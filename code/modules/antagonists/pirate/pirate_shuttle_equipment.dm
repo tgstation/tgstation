@@ -160,15 +160,15 @@
 	name = "Advanced Surgery Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(
-		/datum/surgery/advanced/lobotomy,
-		/datum/surgery/advanced/lobotomy/mechanic,
+	// 	/datum/surgery/advanced/lobotomy,
+	// 	/datum/surgery/advanced/lobotomy/mechanic,
 		// /datum/surgery/advanced/bioware/vein_threading,
 		// /datum/surgery/advanced/bioware/vein_threading/mechanic,
 		// /datum/surgery/advanced/bioware/nerve_splicing,
 		// /datum/surgery/advanced/bioware/nerve_splicing/mechanic,
-		/datum/surgery_step/heal/combo/upgraded,
-		/datum/surgery_step/pacify,
-		/datum/surgery_step/pacify/mechanic,
+		// /datum/surgery_step/heal/combo/upgraded,
+		// /datum/surgery_step/pacify,
+		// /datum/surgery_step/pacify/mechanic,
 	)
 
 //Pad & Pad Terminal

@@ -34,7 +34,7 @@
 	desc = "Weave the patient's veins into a reinforced mesh, reducing blood loss from injuries."
 	status_effect_gained = /datum/status_effect/bioware/heart/threaded_veins
 
-/datum/surgery_operation/limb/bioware/thread_veins/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/thread_veins/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -60,7 +60,7 @@
 	desc = "Add a muscled membrane to the patient's veins, allowing them to pump blood without a heart."
 	status_effect_gained = /datum/status_effect/bioware/heart/muscled_veins
 
-/datum/surgery_operation/limb/bioware/muscled_veins/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/muscled_veins/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -87,7 +87,7 @@
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/spliced
 
-/datum/surgery_operation/limb/bioware/splice_nerves/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/splice_nerves/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -114,7 +114,7 @@
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/grounded
 
-/datum/surgery_operation/limb/bioware/ground_nerves/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/ground_nerves/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -140,7 +140,7 @@
 	desc = "Reshape the patient's ligaments to allow limbs to be manually reattached if severed, at the cost of making them easier to detach."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/hooked
 
-/datum/surgery_operation/limb/bioware/reshape_ligaments/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/reshape_ligaments/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -166,7 +166,7 @@
 	desc = "Strengthen the patient's ligaments to make dismemberment more difficult, at the cost of making nerve connections easier to interrupt."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/reinforced
 
-/datum/surgery_operation/limb/bioware/strengthen_ligaments/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/strengthen_ligaments/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -192,7 +192,7 @@
 	desc = "A biological upgrade which folds the patient's cerebral cortex into a fractal pattern, increasing neural density and flexibility."
 	status_effect_gained = /datum/status_effect/bioware/cortex/folded
 
-/datum/surgery_operation/limb/bioware/cortex_folding/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/cortex_folding/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -232,7 +232,7 @@
 	desc = "A biological upgrade which carves the patient's cerebral cortex into a self-imprinting pattern, increasing neural density and resilience."
 	status_effect_gained = /datum/status_effect/bioware/cortex/imprinted
 
-/datum/surgery_operation/limb/bioware/cortex_imprint/preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
+/datum/surgery_operation/limb/bioware/cortex_imprint/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	display_results(
 		surgeon,
 		limb.owner,

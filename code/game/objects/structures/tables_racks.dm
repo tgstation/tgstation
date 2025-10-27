@@ -1080,20 +1080,31 @@
 
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)
-		UnregisterSignal(patient, list(SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE), SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE), COMSIG_LIVING_BEING_OPERATED_ON))
+		UnregisterSignal(patient, list(
+			SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
+			SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
+			COMSIG_LIVING_BEING_OPERATED_ON,
+			COMSIG_LIVING_SURGERY_FINISHED,
+		))
 		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
 	patient = new_patient
 	update_appearance()
+	computer?.update_static_data_for_all_viewers()
 	if (!patient)
 		return
-	RegisterSignals(patient, list(SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE), SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE)), PROC_REF(on_surgery_change))
+	RegisterSignals(patient, list(
+		SIGNAL_ADDTRAIT(TRAIT_READY_TO_OPERATE),
+		SIGNAL_REMOVETRAIT(TRAIT_READY_TO_OPERATE),
+		COMSIG_LIVING_SURGERY_FINISHED,
+	), PROC_REF(on_surgery_change))
 	RegisterSignal(patient, COMSIG_LIVING_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/structure/table/optable/proc/on_surgery_change(datum/source)
 	SIGNAL_HANDLER
 	update_appearance()
+	computer?.update_static_data_for_all_viewers()
 
 /obj/structure/table/optable/proc/get_surgeries(datum/source, mob/living/surgeon, list/operations)
 	SIGNAL_HANDLER

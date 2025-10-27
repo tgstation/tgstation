@@ -2,12 +2,12 @@
 	name = "pump stomach"
 	desc = "Manually pump a patient's stomach to induce vomiting and expel harmful chemicals."
 	implements = list(
-		HAND_IMPLEMENT = 1,
+		IMPLEMENT_HAND = 1,
 	)
 	time = 2 SECONDS
 	required_biotype = ORGAN_ORGANIC
 
-/datum/surgery_operation/organ/stomach_pump/state_check(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/organ/stomach_pump/organ_check(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool)
 	if(!HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(HAS_TRAIT(organ.owner, TRAIT_HUSK))

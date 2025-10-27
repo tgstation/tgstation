@@ -12,18 +12,3 @@
 /obj/item/skillchip/self_surgery/Initialize(mapload, is_removable)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
-
-/obj/item/skillchip/self_surgery/on_activate(mob/living/carbon/user, silent)
-	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_INITIATE_SURGERY_STEP, PROC_REF(apply_surgery_penalty))
-
-/obj/item/skillchip/self_surgery/on_deactivate(mob/living/carbon/user, silent)
-	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_INITIATE_SURGERY_STEP)
-
-/obj/item/skillchip/self_surgery/proc/apply_surgery_penalty(mob/living/carbon/_source, mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, datum/surgery_step/step, list/modifiers)
-	SIGNAL_HANDLER
-	if(user != target)
-		return
-	modifiers[FAIL_PROB_INDEX] += 33
-	modifiers[SPEED_MOD_INDEX] *= 1.5

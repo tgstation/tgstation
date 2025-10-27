@@ -302,7 +302,7 @@
 	heal_to_percent = 0
 	repeatable = TRUE
 
-/datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/ears/organ)
+/datum/surgery_operation/organ/repair/ears/organ_check(obj/item/organ/organ)
 	if(!HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))

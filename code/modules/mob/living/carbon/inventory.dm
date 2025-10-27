@@ -449,7 +449,7 @@
 				return FALSE
 
 	// Default, just checks bodyparts covered
-	return (location in get_covered_body_zones())
+	return !(location in get_covered_body_zones())
 
 /// Attempts to equip the given item in a conspicious place.
 /// This is used when, for instance, a character spawning with an item

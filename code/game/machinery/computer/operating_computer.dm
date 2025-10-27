@@ -14,7 +14,9 @@
 	var/datum/techweb/linked_techweb
 	light_color = LIGHT_COLOR_BLUE
 
+	var/target_zone = BODY_ZONE_CHEST
 	var/datum/component/experiment_handler/experiment_handler
+	var/list/datum/weakref/zone_on_open
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	. = ..()
@@ -86,27 +88,28 @@
 	if(!ui)
 		ui = new(user, src, "OperatingComputer", name)
 		ui.open()
+		LAZYSET(zone_on_open, WEAKREF(user), user.zone_selected)
+
+/obj/machinery/computer/operating/ui_assets(mob/user)
+	. = ..()
+	. += get_asset_datum(/datum/asset/simple/body_zones)
+
+/obj/machinery/computer/operating/ui_close(mob/user)
+	. = ..()
+	var/zone_found = LAZYACCESS(zone_on_open, WEAKREF(user))
+	if(zone_found)
+		user.zone_selected = zone_found
+		LAZYREMOVE(zone_on_open, WEAKREF(user))
 
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
-	var/list/all_surgeries = list()
-	for(var/datum/surgery_operation/surgeries as anything in advanced_surgeries)
-		var/list/surgery = list()
-		surgery["name"] = initial(surgeries.name)
-		surgery["desc"] = initial(surgeries.desc)
-		all_surgeries += list(surgery)
-	data["surgeries"] = all_surgeries
 
-	//If there's no patient just hop to it yeah?
-	if(!table)
-		data["patient"] = null
+	data["has_table"] = !!table
+	data["target_zone"] = target_zone
+	if(isnull(table?.patient))
 		return data
 
-	data["table"] = table
 	data["patient"] = list()
-	data["procedures"] = list()
-	if(!table.patient)
-		return data
 	var/mob/living/carbon/patient = table.patient
 
 	switch(patient.stat)
@@ -130,30 +133,47 @@
 	data["patient"]["fireLoss"] = patient.getFireLoss()
 	data["patient"]["toxLoss"] = patient.getToxLoss()
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
-	if(patient.surgeries.len)
-		for(var/datum/surgery/procedure in patient.surgeries)
-			var/datum/surgery_step/surgery_step = GLOB.surgery_steps[procedure.steps[procedure.status]]
-			var/chems_needed = surgery_step.get_chem_list()
-			var/alternative_step
-			var/alt_chems_needed = ""
-			var/alt_chems_present = FALSE
-			if(surgery_step.repeatable)
-				var/datum/surgery_step/next_step = procedure.get_surgery_next_step()
-				if(next_step)
-					alternative_step = capitalize(next_step.name)
-					alt_chems_needed = next_step.get_chem_list()
-					alt_chems_present = next_step.chem_check(patient)
-				else
-					alternative_step = "Finish operation"
-			data["procedures"] += list(list(
-				"name" = capitalize("[patient.parse_zone_with_bodypart(procedure.location)] [procedure.name]"),
-				"next_step" = capitalize(surgery_step.name),
-				"chems_needed" = chems_needed,
-				"alternative_step" = alternative_step,
-				"alt_chems_needed" = alt_chems_needed,
-				"chems_present" = surgery_step.chem_check(patient),
-				"alt_chems_present" = alt_chems_present
+	data["patient"]["blood_level"] = patient.blood_volume
+	data["patient"]["standard_blood_level"] = BLOOD_VOLUME_NORMAL
+	data["patient"]["has_limbs"] = patient.has_limbs // used for allowing zone selection
+	data["patient"]["surgery_state"] = patient.get_surgery_state_as_list(target_zone)
+	return data
+
+/obj/machinery/computer/operating/ui_static_data(mob/user)
+	var/list/data = list()
+
+	data["surgeries"] = list()
+	for(var/datum/surgery_operation/surgeries as anything in advanced_surgeries)
+		var/list/surgery = list()
+		surgery["name"] = initial(surgeries.name)
+		surgery["desc"] = initial(surgeries.desc)
+		data["surgeries"] += list(surgery)
+
+	data["possible_next_operations"] = list()
+	if(table?.patient)
+		var/list/valid_operations = list()
+		for(var/datum/surgery_operation/operation_type as anything in GLOB.operations)
+			// Default and loaded surgeries are the only surgeries we recommend
+			if((operation_type::operation_flags & OPERATION_LOCKED) && !(operation_type in advanced_surgeries))
+				continue
+			valid_operations += GLOB.operations[operation_type]
+
+		for(var/datum/surgery_operation/operation as anything in valid_operations)
+			if(operation.replaced_by && (operation.replaced_by in advanced_surgeries))
+				continue
+			if(!operation.show_as_next_step(table.patient, target_zone))
+				continue
+			data["possible_next_operations"] += list(list(
+				"name" = "[capitalize(operation.name)] ([operation.get_recommended_tool() || "nothing"])",
+				"desc" = operation.desc,
 			))
+
+		if(!length(data["possible_next_operations"]) && !HAS_TRAIT(table.patient, TRAIT_READY_TO_OPERATE))
+			data["possible_next_operations"] += list(list(
+				"name" = "Prepare for surgery ([/obj/item/surgical_drapes::name])",
+				"desc" = "Begin surgery by applying surgical drapes to the patient.",
+			))
+
 	return data
 
 /obj/machinery/computer/operating/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -165,6 +185,11 @@
 			sync_surgeries()
 		if("open_experiments")
 			experiment_handler.ui_interact(usr)
+		if("change_zone")
+			if(params["new_zone"] in GLOB.all_body_zones)
+				target_zone = params["new_zone"]
+				ui.user.zone_selected = params["new_zone"]
+			update_static_data_for_all_viewers()
 	return TRUE
 
 #undef MENU_OPERATION

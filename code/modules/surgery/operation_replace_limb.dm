@@ -19,10 +19,13 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/replace_limb/tool_check(obj/item/bodypart/tool)
+/datum/surgery_operation/limb/replace_limb/tool_check(obj/item/tool)
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 		return FALSE
-	if(!IS_ROBOTIC_LIMB(tool))
+	if(!isbodypart(tool))
+		return FALSE
+	var/obj/item/bodypart/part = tool
+	if(!IS_ROBOTIC_LIMB(part))
 		return FALSE
 	return TRUE
 

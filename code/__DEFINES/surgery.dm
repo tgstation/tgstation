@@ -104,6 +104,18 @@
 /// If set, the operation will ignore clothing when checking for access to the target body part.
 #define OPERATION_IGNORE_CLOTHES (1<<8)
 
+DEFINE_BITFIELD(operation_flags, list(
+	"AFFECTS MOOD" = OPERATION_AFFECTS_MOOD,
+	"NOTABLE" = OPERATION_NOTABLE,
+	"LOOPING" = OPERATION_LOOPING,
+	"MORBID" = OPERATION_MORBID,
+	"LOCKED" = OPERATION_LOCKED,
+	"SELF OPERABLE" = OPERATION_SELF_OPERABLE,
+	"STANDING ALLOWED" = OPERATION_STANDING_ALLOWED,
+	"ALWAYS FAILABLE" = OPERATION_ALWAYS_FAILABLE,
+	"IGNORE CLOTHES" = OPERATION_IGNORE_CLOTHES,
+))
+
 // Surgery related mood defines
 #define SURGERY_STATE_STARTED "surgery_started"
 #define SURGERY_STATE_FAILURE "surgery_failed"

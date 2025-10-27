@@ -58,7 +58,7 @@
 	desc = "Remove a dental implant from a patient's teeth."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
-		HAND_IMPLEMENT = 1,
+		IMPLEMENT_HAND = 1,
 	)
 
 /datum/surgery_operation/limb/remove_dental_implant/state_check(obj/item/bodypart/limb)

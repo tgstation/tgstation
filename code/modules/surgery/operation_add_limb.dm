@@ -14,15 +14,15 @@
 		/obj/item/food/pizzaslice, // he's turning her into a papa john's
 	)
 
-/datum/surgery_operation/prosthetic_replacement/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
+/datum/surgery_operation/limb/prosthetic_replacement/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
 	// We always operate on the chest even if we're targeting left leg or w/e
 	return patient.get_bodypart(BODY_ZONE_CHEST)
 
-/datum/operation/prosthetic_replacement/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/prosthetic_replacement/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
 	if(!HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	// While we are operating on chest, we need to make sure the actual missing limb is missing
-	if(limb.owner.get_bodypart(deprecise_zone(surgeon.zone_selected)))
+	if(limb.owner.get_bodypart(deprecise_zone(surgeon.zone_selected))) // melbert todo breaks on op pc
 		return FALSE
 	// check bodyshape compatibility for real bodyparts
 	if(isbodypart(tool))

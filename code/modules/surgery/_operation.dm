@@ -1,5 +1,5 @@
 /// Attempts to perform a surgery with whatever tool is passed
-/mob/living/proc/perform_surgery(mob/living/patient, potential_tool = IMPLEMENT_HAND)
+/mob/living/proc/perform_surgery(mob/living/patient, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE)
 	if(combat_mode || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return NONE
 
@@ -35,7 +35,7 @@
 			if(radial_operations[radial_slice])
 				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation_type]'.")
 				continue
-			operations[radial_slice] = list("operation" = operation, "target" = operate_on) + option_info
+			operations[radial_slice] = list("operation" = operation, "target" = operate_on, "force_fail" = intentionally_fail) + option_info
 			radial_operations[radial_slice] = radial_slice
 
 	if(!length(operations))
@@ -70,6 +70,22 @@
 		return FALSE
 	return TRUE
 
+/// Takes a target zone and returns a list of readable surgery states for that zone.
+/// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
+/mob/living/proc/get_surgery_state_as_list(target_zone)
+	var/list/state = list()
+	if(has_limbs)
+		var/obj/item/bodypart/part = get_bodypart(target_zone)
+		state = bitfield_to_list(part?.surgery_state, SURGERY_STATE_READABLE)
+		if(!length(state))
+			state += HAS_TRAIT(part, TRAIT_READY_TO_OPERATE) ? "Ready for surgery" : "State normal"
+	else
+		var/datum/status_effect/basic_surgery_state/state_holder = has_status_effect(__IMPLIED_TYPE__)
+		state = bitfield_to_list(state_holder?.surgery_state, SURGERY_STATE_READABLE)
+		if(!length(state))
+			state += HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) ? "Ready for surgery" : "State normal"
+	return state
+
 /**
  * Adds a speed modifier to this mob
  *
@@ -93,6 +109,7 @@
 	LAZYREMOVE(mob_surgery_speed_mods, id)
 
 /datum/surgery_operation
+	abstract_type = /datum/surgery_operation
 	/// Name of the operation
 	var/name = "surgery operation"
 	/// Description of the operation, keep it short
@@ -101,7 +118,7 @@
 	/**
 	 * What tool(s) can be used to perform this operation?
 	 *
-	 * Assoc list of item typepath, TOOL_X, or HAND_IMPLEMENT to a multiplier for how effective that tool is at performing the operation.
+	 * Assoc list of item typepath, TOOL_X, or IMPLEMENT_HAND to a multiplier for how effective that tool is at performing the operation.
 	 * For example, list(TOOL_SCALPEL = 2, TOOL_SAW = 0.5) means that you can use a scalpel to operate, and it will double the time the operation takes.
 	 * Likewise using a saw will halve the time it takes. If a tool is not listed, it cannot be used for this operation.
 	 *
@@ -335,6 +352,12 @@
 	return HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE) ? patient : null
 
 /**
+ * Called by operating computers to hint that this surgery could come next given the target's current state
+ */
+/datum/surgery_operation/proc/show_as_next_step(mob/living/potential_patient, body_zone)
+	return FALSE
+
+/**
  * The actual chain of performing the operation
  *
  * * operating_on - The atom being operated on, probably a bodypart or occasionally a mob directly
@@ -396,7 +419,7 @@
 		if(HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS) && !(operation_flags & OPERATION_ALWAYS_FAILABLE))
 			operation_args[OPERATION_SPEED] = 0
 
-		if(prob(clamp(GET_FAILURE_CHANCE(time, operation_args[OPERATION_SPEED]), 0, 99)))
+		if(operation_args["force_fail"] || prob(clamp(GET_FAILURE_CHANCE(time, operation_args[OPERATION_SPEED]), 0, 99)))
 			failure(operating_on, surgeon, tool, operation_args)
 			result |= ITEM_INTERACT_FAILURE
 			update_surgery_mood(patient, SURGERY_STATE_FAILURE)
@@ -647,12 +670,29 @@
 
 /// Simple surgery which works on ANY mob
 /datum/surgery_operation/basic
+	abstract_type = /datum/surgery_operation/basic
 	/// Biotype required to perform this operation
 	var/required_biotype = MOB_ORGANIC
 	/// When working on carbons, what body zone are we working on
 	var/carbon_zone = BODY_ZONE_CHEST
 	/// When working on carbons, what bodypart are we working on
 	var/required_bodytype = NONE
+
+/datum/surgery_operation/basic/show_as_next_step(mob/living/potential_patient, body_zone)
+	if(!HAS_TRAIT(potential_patient, TRAIT_READY_TO_OPERATE))
+		return FALSE
+	if(required_biotype && !(potential_patient.mob_biotypes & required_biotype))
+		return FALSE
+	if(!potential_patient.has_limbs)
+		return TRUE
+	if(body_zone != carbon_zone)
+		return FALSE
+	var/obj/item/bodypart/limb = potential_patient.get_bodypart(body_zone)
+	if(isnull(limb) || !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
+		return FALSE
+	if(required_bodytype && !(limb.bodytype & required_bodytype))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/basic/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
 	SHOULD_NOT_OVERRIDE(TRUE) // you are looking for is_available()
@@ -668,6 +708,8 @@
 	var/mob/living/living_target = operating_on
 	if(required_biotype && !(living_target.mob_biotypes & required_biotype))
 		return FALSE
+	if(!living_target.has_limbs)
+		return TRUE
 
 	var/obj/item/bodypart/carbon_part = living_target.get_bodypart(carbon_zone)
 	if(!isnull(carbon_part))
@@ -696,6 +738,7 @@
 
 /// Operation that specifically targets limbs
 /datum/surgery_operation/limb
+	abstract_type = /datum/surgery_operation/limb
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
 
@@ -729,6 +772,17 @@
 /datum/surgery_operation/limb/proc/state_check(obj/item/bodypart/limb)
 	return FALSE
 
+/datum/surgery_operation/limb/show_as_next_step(mob/living/potential_patient, body_zone)
+	var/obj/item/bodypart/limb = potential_patient.get_bodypart(body_zone)
+	if(isnull(limb) || !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
+		return FALSE
+	if(required_bodytype && !(limb.bodytype & required_bodytype))
+		return FALSE
+	if(!state_check(limb))
+		return FALSE
+	// melbert todo we need some zone checks here
+	return TRUE
+
 /datum/surgery_operation/limb/get_patient(obj/item/bodypart/limb)
 	return limb.owner
 
@@ -755,6 +809,7 @@
 
 /// Operation that specifically targets organs
 /datum/surgery_operation/organ
+	abstract_type = /datum/surgery_operation/organ
 	/// Biotype required to perform this operation
 	var/required_biotype = ORGAN_ORGANIC
 	/// The type of organ this operation can target
@@ -795,6 +850,16 @@
  */
 /datum/surgery_operation/organ/proc/organ_check(obj/item/organ/organ)
 	return FALSE
+
+/datum/surgery_operation/organ/show_as_next_step(mob/living/potential_patient, body_zone)
+	var/obj/item/organ/organ = potential_patient.get_organ_by_type(target_type)
+	if(isnull(organ) || organ.bodypart_owner.body_zone != body_zone || !HAS_TRAIT(organ.bodypart_owner, TRAIT_READY_TO_OPERATE))
+		return FALSE
+	if(required_biotype && !(organ.organ_flags & required_biotype))
+		return FALSE
+	if(!organ_check(organ))
+		return FALSE
+	return TRUE
 
 // melbert todos
 // - figure out simplemobs

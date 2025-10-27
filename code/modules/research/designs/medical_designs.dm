@@ -1144,91 +1144,91 @@
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	id = "surgery_lobotomy"
-	surgery = /datum/surgery/advanced/lobotomy
+	// surgery = /datum/surgery/advanced/lobotomy
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/lobotomy/mechanic
 	name = "Wetware OS Destructive Defragmentation"
 	desc = "A destructive robotic defragmentation method which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	id = "surgery_lobotomy_mechanic"
-	surgery = /datum/surgery/advanced/lobotomy/mechanic
+	// surgery = /datum/surgery/advanced/lobotomy/mechanic
 
 /datum/design/surgery/pacify
 	name = "Pacification"
 	desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	id = "surgery_pacify"
-	surgery = /datum/surgery/advanced/pacify
+	// surgery = /datum/surgery/advanced/pacify
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/pacify/mechanic
 	name = "Aggression Suppression Programming"
 	desc = "Malware which permanently inhibits the aggression programming of the patient's neural network, making the patient unwilling to cause direct harm."
 	id = "surgery_pacify_mechanic"
-	surgery = /datum/surgery/advanced/pacify/mechanic
+	// surgery = /datum/surgery/advanced/pacify/mechanic
 
 /datum/design/surgery/viral_bonding
 	name = "Viral Bonding"
 	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
 	id = "surgery_viral_bond"
-	surgery = /datum/surgery/advanced/viral_bonding
+	// surgery = /datum/surgery/advanced/viral_bonding
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing //PLEASE ACCOUNT FOR UNIQUE HEALING BRANCHES IN THE hptech HREF (currently 2 for Brute/Burn; Combo is bonus)
 	name = "Tend Wounds"
 	desc = "An upgraded version of the original surgery."
 	id = "surgery_healing_base" //holder because CI cries otherwise. Not used in techweb unlocks.
-	surgery = /datum/surgery/healing
+	// surgery = /datum/surgery/healing
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/healing/brute_upgrade
 	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded
+	// surgery = /datum/surgery/healing/brute/upgraded
 	id = "surgery_heal_brute_upgrade"
 
 /datum/design/surgery/healing/brute_upgrade_2
 	name = "Tend Wounds (Brute) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
+	// surgery = /datum/surgery/healing/brute/upgraded/femto
 	id = "surgery_heal_brute_upgrade_femto"
 
 /datum/design/surgery/healing/burn_upgrade
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/burn/upgraded
+	// surgery = /datum/surgery/healing/burn/upgraded
 	id = "surgery_heal_burn_upgrade"
 
 /datum/design/surgery/healing/burn_upgrade_2
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/burn/upgraded/femto
+	// surgery = /datum/surgery/healing/burn/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
 /datum/design/surgery/healing/combo
 	name = "Tend Wounds (Physical)"
 	desc = "A surgical procedure that repairs both bruises and burns. Repair efficiency is not as high as the individual surgeries but it is faster."
-	surgery = /datum/surgery/healing/combo
+	// surgery = /datum/surgery/healing/combo
 	id = "surgery_heal_combo"
 
 /datum/design/surgery/healing/combo_upgrade
 	name = "Tend Wounds (Physical) Upgrade"
-	surgery = /datum/surgery/healing/combo/upgraded
+	// surgery = /datum/surgery/healing/combo/upgraded
 	id = "surgery_heal_combo_upgrade"
 
 /datum/design/surgery/healing/combo_upgrade_2
 	name = "Tend Wounds (Physical) Upgrade"
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
-	surgery = /datum/surgery/healing/combo/upgraded/femto
+	// surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
 
 /datum/design/surgery/brainwashing
 	name = "Brainwashing"
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing"
-	surgery = /datum/surgery/advanced/brainwashing
+	// surgery = /datum/surgery/advanced/brainwashing
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/brainwashing/mechanic
 	name = "Reprogramming"
 	desc = "Malware which directly implants a directive into the robotic patient's operating system, making it their absolute priority. It can be cleared using a mindshield implant."
 	id = "surgery_brainwashing_mechanic"
-	surgery = /datum/surgery/advanced/brainwashing/mechanic
+	// surgery = /datum/surgery/advanced/brainwashing/mechanic
 
 /datum/design/surgery/nerve_splicing
 	name = "Nerve Splicing"
@@ -1343,7 +1343,7 @@
 	name = "Necrotic Revival"
 	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
 	id = "surgery_zombie"
-	surgery = /datum/surgery/advanced/necrotic_revival
+	// surgery = /datum/surgery/advanced/necrotic_revival
 	research_icon_state = "surgery_head"
 
 /datum/design/surgery/wing_reconstruction
@@ -1364,5 +1364,5 @@
 	name = "Experimental Dissection"
 	desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
 	id = "surgery_oldstation_dissection"
-	surgery = /datum/surgery/advanced/experimental_dissection
+	// surgery = /datum/surgery/advanced/experimental_dissection
 	research_icon_state = "surgery_chest"

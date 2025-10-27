@@ -17,6 +17,9 @@
 	required_biotype = NONE
 	carbon_zone = BODY_ZONE_HEAD
 
+/datum/surgery_operation/basic/revival/show_as_next_step(mob/living/potential_patient, body_zone)
+	return ..() && is_available(potential_patient)
+
 /datum/surgery_operation/basic/revival/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	if(patient.stat != DEAD)
 		return FALSE

@@ -402,10 +402,10 @@
 
 /obj/item/surgical_processor/mod/preloaded
 	loaded_surgeries = list(
-		/datum/surgery/advanced/pacify,
-		/datum/surgery/healing/combo/upgraded/femto,
-		/datum/surgery/advanced/brainwashing,
-		/datum/surgery/advanced/brainwashing/mechanic,
+		// /datum/surgery/advanced/pacify,
+		// /datum/surgery/healing/combo/upgraded/femto,
+		// /datum/surgery/advanced/brainwashing,
+		// /datum/surgery/advanced/brainwashing/mechanic,
 		// /datum/surgery/advanced/bioware/nerve_splicing,
 		// /datum/surgery/advanced/bioware/nerve_splicing/mechanic,
 		// /datum/surgery/advanced/bioware/nerve_grounding,
@@ -431,14 +431,14 @@
 
 /obj/item/surgical_processor/mod/emergency
 	loaded_surgeries = list(
-		/datum/surgery/healing/combo/upgraded/femto,
+		// /datum/surgery/healing/combo/upgraded/femto,
 		// /datum/surgery/blood_filter,
 		// /datum/surgery/brain_surgery,
 		// /datum/surgery/coronary_bypass,
 		// /datum/surgery/ear_surgery,
 		// /datum/surgery/eye_surgery,
 		// /datum/surgery/hepatectomy,
-		/datum/surgery/revival,
-		/datum/surgery/stomach_pump,
+		// /datum/surgery/revival,
+		// /datum/surgery/stomach_pump,
 		// /datum/surgery/advanced/wing_reconstruction,
 	)
