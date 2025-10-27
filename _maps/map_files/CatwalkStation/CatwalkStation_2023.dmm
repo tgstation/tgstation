@@ -11187,6 +11187,7 @@
 	dir = 1
 	},
 /obj/machinery/light_switch/directional/north,
+/obj/structure/sign/clock/directional/east,
 /turf/open/floor/holofloor/dark,
 /area/station/command/heads_quarters/qm)
 "dfC" = (
@@ -13523,9 +13524,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "dOH" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 4
-	},
 /obj/machinery/light/directional/east,
 /obj/machinery/status_display/supply{
 	pixel_x = 32
@@ -26667,7 +26665,6 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/information,
-/obj/structure/sign/clock/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
@@ -75258,6 +75255,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
 	},
+/obj/structure/sign/clock/directional/east,
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "vdP" = (
