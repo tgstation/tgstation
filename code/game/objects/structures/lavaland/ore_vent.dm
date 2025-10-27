@@ -223,8 +223,6 @@
 		return FALSE
 	if(!can_interact(user) && !mech_scan)
 		return FALSE
-	if(!COOLDOWN_FINISHED(src, wave_cooldown) || node)
-		return FALSE
 	//This is where we start spitting out mobs.
 	Shake(duration = 3 SECONDS)
 	if(spawn_drone)
@@ -232,9 +230,7 @@
 		node.arrive(src)
 		RegisterSignal(node, COMSIG_QDELETING, PROC_REF(handle_wave_conclusion))
 		RegisterSignal(node, COMSIG_MOVABLE_MOVED, PROC_REF(handle_wave_conclusion))
-		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.25)
-		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.5)
-		addtimer(CALLBACK(node, TYPE_PROC_REF(/atom, update_appearance)), wave_timer * 0.75)
+
 	add_shared_particles(/particles/smoke/ash)
 	for(var/i in 1 to 5) // Clears the surroundings of the ore vent before starting wave defense.
 		for(var/turf/rock in oview(i))
@@ -277,15 +273,22 @@
 	AddComponent(\
 		/datum/component/spawner, \
 		spawn_types = defending_mobs, \
-		spawn_time = (10 SECONDS + (5 SECONDS * (boulder_size/5))), \
+		spawn_time = 10 SECONDS, \
 		max_spawned = 10, \
-		max_spawn_per_attempt = (1 + (boulder_size/5)), \
+		max_spawn_per_attempt = round(boulder_size/5), \
+		max_spawn_types_per_attempt = 2, \
 		spawn_text = "emerges to assault", \
 		spawn_distance = 4, \
 		spawn_distance_exclude = 3, \
+		initial_spawn_delay = 6 SECONDS, \
+		spawner_logic = SPAWN_BY_WAVE_BEHAVIOR, \
+		max_waves = wave_timer, \
+		effect = /obj/effect/temp_visual/dust_cloud, \
+		spawn_windup = 1 SECONDS, \
 	)
-	COOLDOWN_START(src, wave_cooldown, wave_timer)
-	addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
+	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever, or until all waves are completed.
+	RegisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(handle_wave_conclusion))
+	// addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -300,8 +303,6 @@
 /obj/structure/ore_vent/proc/handle_wave_conclusion(datum/source)
 	SIGNAL_HANDLER
 
-	SEND_SIGNAL(src, COMSIG_VENT_WAVE_CONCLUDED)
-	COOLDOWN_RESET(src, wave_cooldown)
 	remove_shared_particles(/particles/smoke/ash)
 
 	//happens in COMSIG_QDELETING
@@ -321,6 +322,7 @@
  */
 /obj/structure/ore_vent/proc/initiate_wave_loss(loss_message)
 	visible_message(span_danger(loss_message))
+	playsound(src, 'sound/effects/rock/rock_break.ogg', 50)
 	icon_state = base_icon_state
 	update_appearance(UPDATE_ICON_STATE)
 	reset_drone(success = FALSE)
@@ -344,7 +346,7 @@
 			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 		if(!user_id_card)
 			continue
-		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+		var/point_reward_val = ((MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER)/ 2 // We remove the base value of discovering the vent
 		if(user_id_card.registered_account)
 			user_id_card.registered_account.mining_points += point_reward_val
 			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
@@ -638,9 +640,8 @@
 		return
 	// Completely override the normal wave defense, and just spawn the boss.
 	var/mob/living/simple_animal/hostile/megafauna/boss = new summoned_boss(loc)
-	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
+	RegisterSignal(boss, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(handle_wave_conclusion))
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_spawned", 1, summoned_boss)
-	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
 	boss.say(boss.summon_line, language = /datum/language/common, forced = "summon line") //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
@@ -671,6 +672,18 @@
 
 	GLOB.mining_center += loc
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/temp_visual/dust_cloud
+	name = "dust"
+	desc = "We're all like... dust... in the wind."
+	icon_state = "light_dust_cloud"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	pixel_x = -4
+	pixel_z = -4
+	base_pixel_z = -4
+	base_pixel_x = -4
+	duration = 1 SECONDS
 
 #undef MAX_ARTIFACT_ROLL_CHANCE
 #undef MINERAL_TYPE_OPTIONS_RANDOM

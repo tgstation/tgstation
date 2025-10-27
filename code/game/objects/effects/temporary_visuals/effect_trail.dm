@@ -27,7 +27,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	AddElement(/datum/element/floor_loving)
-	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval)
+	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval, spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR)
 	src.target = target
 	movement = GLOB.move_manager.move_towards(src, chasing = target, delay = move_speed, home = homing, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
 

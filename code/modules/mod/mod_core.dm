@@ -486,6 +486,7 @@
 			spawn_time = 5 SECONDS, \
 			max_spawned = 3, \
 			faction = mod.wearer.faction, \
+			spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR, \
 		)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))
