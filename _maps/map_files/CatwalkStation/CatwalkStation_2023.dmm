@@ -938,11 +938,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
-"amN" = (
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
 "amU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/assistant,
@@ -5175,16 +5170,6 @@
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/execution/transfer)
-"byE" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Abandoned Hallway"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
 "byJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/tank/internals/oxygen,
@@ -12950,15 +12935,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "dGi" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Abandoned Hallway"
-	},
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
+/area/station/hallway/primary/starboard)
 "dGu" = (
 /obj/structure/frame/computer{
 	anchored = 1
@@ -37664,6 +37645,7 @@
 "kxY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
+/obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron/sepia,
 /area/station/hallway/secondary/construction)
 "kyg" = (
@@ -41643,6 +41625,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/service/library/printer)
+"lFR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public/glass{
+	name = "Abandoned Hallway"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "lFW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44654,6 +44647,12 @@
 /obj/machinery/computer/records/medical/laptop,
 /turf/open/floor/carpet/cyan,
 /area/station/command/heads_quarters/cmo)
+"mxt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/sepia,
+/area/station/hallway/secondary/construction)
 "mxF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -59161,6 +59160,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison/safe)
+"qEl" = (
+/obj/structure/sign/poster/contraband/random/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/construction)
 "qEE" = (
 /obj/structure/chair{
 	dir = 8
@@ -69204,8 +69207,10 @@
 /area/station/maintenance/port/aft)
 "txz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/graffiti,
-/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/door/airlock/public/glass{
+	name = "Abandoned Hallway"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "txH" = (
@@ -126713,18 +126718,18 @@ aCa
 upr
 qMi
 aCa
-djL
-uzj
+aCa
+aCa
 txz
 tjR
 kxY
-nLp
+qEl
 dOk
 hFi
 lim
 qVm
 hFi
-nLp
+uzj
 uVf
 lqr
 lAf
@@ -126970,9 +126975,9 @@ qMi
 qMi
 qMi
 fok
-byE
-aXa
-epi
+fok
+fok
+lFR
 aXa
 tjA
 aXa
@@ -127228,14 +127233,14 @@ fRo
 xCW
 oDH
 dGi
-vOE
-amN
+aCa
+txz
 gZh
 hFi
 ajB
 nLp
 wLK
-vOE
+mxt
 nLp
 hFi
 jbW
