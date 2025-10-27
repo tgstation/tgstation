@@ -4,6 +4,7 @@
 	ambience_index = AMBIENCE_MEDICAL
 	airlock_wires = /datum/wires/airlock/medbay
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_MEDICAL
 
 /area/station/medical/abandoned
 	name = "\improper Abandoned Medbay"

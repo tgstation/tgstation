@@ -1,5 +1,6 @@
 /area/station/service
 	airlock_wires = /datum/wires/airlock/service
+	tacmap_color = TACMAP_AREA_SERVICE
 
 /*
 * Bar/Kitchen Areas

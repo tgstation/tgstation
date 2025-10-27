@@ -31,7 +31,7 @@
 	minimap_flags = MINIMAP_FLAG_XENO|MINIMAP_FLAG_MARINE|MINIMAP_FLAG_MARINE_SOM|MINIMAP_FLAG_EXCAVATION_ZONE
 	marker_flags = NONE
 */ // XANTODO: Minimap actions
-/datum/action/minimap
+// /datum/action/minimap
 
 /datum/action/minimap/observer/Trigger(mob/clicker, trigger_flags)
 	. = ..()

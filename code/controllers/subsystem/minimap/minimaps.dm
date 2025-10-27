@@ -37,13 +37,6 @@
 	///assoc list of minimap objects that are hashed so we have to update as few as possible
 	var/list/hashed_minimaps = list()
 
-	///assoc list of what colors things are supposed to be
-	var/static/list/tacmap_colors = list(
-		/atom = MINIMAP_SOLID,
-		/obj/machinery/door = MINIMAP_DOOR,
-		/obj/structure/fence = MINIMAP_FENCE,
-	)
-
 /// Initialized only when needed
 /datum/tactical_map/proc/Initialize()
 	for(var/datum/space_level/z_level as anything in SSmapping.z_list)
@@ -76,13 +69,6 @@
 */
 	iteration = 0
 
-///Gets the RGB of a target based on a static list. Returns MINIMAP_SOLID if no color was set
-/datum/tactical_map/proc/get_tacmap_color(/atom/colored_atom)
-	var/color = tacmap_colors[colored_atom]
-	if(!color)
-		return MINIMAP_SOLID
-	return color
-
 ///Creates a minimap for a particular z level
 /datum/tactical_map/proc/load_new_z(datum/dcs, datum/space_level/z_level)
 	SIGNAL_HANDLER
@@ -98,17 +84,17 @@
 			if(isspaceturf(location))
 				continue
 			if(location.density)
-				icon_gen.DrawBox(get_tacmap_color[location], xval, yval)
+				icon_gen.DrawBox(location.tacmap_color, xval, yval)
 				continue
 			var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/fence) in location)
 			if(alttarget)
-				icon_gen.DrawBox(get_tacmap_color[alttarget], xval, yval)
+				icon_gen.DrawBox(alttarget.tacmap_color, xval, yval)
 				continue
 			var/area/turfloc = location.loc
-			if(get_tacmap_color[turfloc])
-				icon_gen.DrawBox(BlendRGB(get_tacmap_color[location], get_tacmap_color[turfloc], 0.5), xval, yval)
+			if(turfloc.tacmap_color)
+				icon_gen.DrawBox(BlendRGB(location.tacmap_color, turfloc.tacmap_color, 0.5), xval, yval)
 				continue
-			icon_gen.DrawBox(get_tacmap_color[location], xval, yval)
+			icon_gen.DrawBox(location.tacmap_color, xval, yval)
 	icon_gen.Scale(480*2,480*2) //scale it up x2 to make it easer to see
 	icon_gen.Crop(1, 1, min(icon_gen.Width(), 480), min(icon_gen.Height(), 480)) //then cut all the empty pixels
 
@@ -252,7 +238,7 @@
 				updator.raw_blips += blip
 	if(ismovable(target))
 		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
-		blip.RegisterSignal(target, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/image, minimap_on_move))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(minimap_on_move))
 	removal_cbs[target] = CALLBACK(src, PROC_REF(removeimage), blip, target, hud_flags)
 	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(remove_marker), override = TRUE) //override for atoms that were on a late loaded z-level, overrides the remove_earlyadd above
 
@@ -308,30 +294,30 @@
 /**
  * Simple proc, updates overlay position on the map when a atom moves
  */
-/image/proc/minimap_on_move(atom/movable/source, oldloc)
+/datum/tactical_map/proc/minimap_on_move(atom/movable/source, oldloc)
 	SIGNAL_HANDLER
 	if(isturf(source.loc))
-		pixel_x = MINIMAP_PIXEL_FROM_WORLD(source.x) + SSminimaps.minimaps_by_z["[source.z]"].x_offset
-		pixel_y = MINIMAP_PIXEL_FROM_WORLD(source.y) + SSminimaps.minimaps_by_z["[source.z]"].y_offset
+		images_by_source[source].pixel_x = MINIMAP_PIXEL_FROM_WORLD(source.x) + minimaps_by_z["[source.z]"].x_offset
+		images_by_source[source].pixel_y = MINIMAP_PIXEL_FROM_WORLD(source.y) + minimaps_by_z["[source.z]"].y_offset
 		return
 
 	var/atom/movable/movable_loc = source.loc
-	source.override_minimap_tracking(source.loc)
-	pixel_x = MINIMAP_PIXEL_FROM_WORLD(movable_loc.x) + SSminimaps.minimaps_by_z["[movable_loc.z]"].x_offset
-	pixel_y = MINIMAP_PIXEL_FROM_WORLD(movable_loc.y) + SSminimaps.minimaps_by_z["[movable_loc.z]"].y_offset
+	source.override_minimap_tracking(source.loc, src)
+	images_by_source[movable_loc].pixel_x = MINIMAP_PIXEL_FROM_WORLD(movable_loc.x) + minimaps_by_z["[movable_loc.z]"].x_offset
+	images_by_source[movable_loc].pixel_y = MINIMAP_PIXEL_FROM_WORLD(movable_loc.y) + minimaps_by_z["[movable_loc.z]"].y_offset
 
 ///Used to handle minimap tracking inside other movables
-/atom/movable/proc/override_minimap_tracking(atom/movable/loc)
-	var/image/blip = SSminimaps.images_by_source[src]
-	blip.RegisterSignal(loc, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/image, minimap_on_move))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(cancel_override_minimap_tracking))
+/atom/movable/proc/override_minimap_tracking(atom/movable/loc, datum/tactical_map/map)
+	var/image/blip = map.images_by_source[src]
+	blip.RegisterSignal(loc, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/tactical_map, minimap_on_move))
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, TYPE_PROC_REF(/datum/tactical_map, cancel_override_minimap_tracking))
 
 ///Stops minimap override tracking
-/atom/movable/proc/cancel_override_minimap_tracking(atom/movable/source, atom/movable/mover)
+/datum/tactical_map/proc/cancel_override_minimap_tracking(atom/movable/source, atom/movable/mover)
 	SIGNAL_HANDLER
-	if(mover != src)
+	if(mover != source)
 		return
-	var/image/blip = SSminimaps.images_by_source[src]
+	var/image/blip = images_by_source[source]
 	blip?.UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(source, COMSIG_ATOM_EXITED)
 
@@ -342,7 +328,7 @@
 	SIGNAL_HANDLER
 	if(!removal_cbs[source]) //already removed
 		return
-	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOVABLE_Z_CHANGED))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
 	var/turf/source_turf = get_turf(source)
 	for(var/flag in GLOB.all_minimap_flags)
 		minimaps_by_z["[source_turf.z]"].images_assoc["[flag]"] -= source
@@ -361,7 +347,7 @@
 	var/hash = "[zlevel]-[flags]"
 	if(hashed_minimaps[hash])
 		return hashed_minimaps[hash]
-	var/atom/movable/screen/minimap/map = new(null, null, zlevel, flags)
+	var/atom/movable/screen/minimap/map = new(null, null, zlevel, flags, src)
 	if (!map.icon) //Don't wanna save an unusable minimap for a z-level.
 		CRASH("Empty and unusable minimap generated for '[zlevel]-[flags]'") //Can be caused by atoms calling this proc before minimap subsystem initializing.
 	hashed_minimaps[hash] = map
@@ -392,19 +378,22 @@
 	var/list/mob/stop_polling
 	///z this minimap is displaying
 	var/tracked_z
+	///ref to the minimap we follow
+	var/datum/tactical_map/my_map
 
-/atom/movable/screen/minimap/Initialize(mapload, datum/hud/hud_owner, target, flags)
+/atom/movable/screen/minimap/Initialize(mapload, datum/hud/hud_owner, target, flags, tactical_map)
 	. = ..()
+	my_map = tactical_map
 	tracked_z = target
-	if(!SSminimaps.minimaps_by_z["[target]"])
+	if(!my_map.minimaps_by_z["[target]"])
 		return
 	choices_by_mob = list()
 	stop_polling = list()
-	icon = SSminimaps.minimaps_by_z["[target]"].hud_image
-	SSminimaps.add_to_updaters(src, flags, target)
+	icon = my_map.minimaps_by_z["[target]"].hud_image
+	my_map.add_to_updaters(src, flags, target)
 
 /atom/movable/screen/minimap/Destroy()
-	SSminimaps.hashed_minimaps -= src
+	my_map.hashed_minimaps -= src
 	stop_polling = null
 	return ..()
 
@@ -436,9 +425,9 @@
 	var/list/modifiers = params2list(params)
 	// we only care about absolute coords because the map is fixed to 1,1 so no client stuff
 	var/list/pixel_coords = params2screenpixel(modifiers["screen-loc"])
-	var/zlevel = SSminimaps.updators_by_datum[src].ztarget
-	var/x = (pixel_coords[1] - SSminimaps.minimaps_by_z["[zlevel]"].x_offset) / 2
-	var/y = (pixel_coords[2] - SSminimaps.minimaps_by_z["[zlevel]"].y_offset) / 2
+	var/zlevel = my_map.updators_by_datum[src].ztarget
+	var/x = (pixel_coords[1] - my_map.minimaps_by_z["[zlevel]"].x_offset) / 2
+	var/y = (pixel_coords[2] - my_map.minimaps_by_z["[zlevel]"].y_offset) / 2
 	var/c_x = clamp(CEILING(x, 1), 1, world.maxx)
 	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
 	choices_by_mob[source] = list(c_x, c_y)
@@ -450,6 +439,8 @@
 	icon_state = "locator"
 	layer = MINIMAP_LOCATOR_LAYER // 1 above minimap
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	///ref to the minimap we follow
+	var/datum/tactical_map/my_map
 
 ///updates the screen loc of the locator so that it's on the movers location on the minimap
 /atom/movable/screen/minimap_locator/proc/update(atom/movable/mover, atom/oldloc, direction)
@@ -457,8 +448,8 @@
 	var/turf/mover_turf = get_turf(mover)
 	var/x_coord = mover_turf.x * 2
 	var/y_coord = mover_turf.y * 2
-	x_coord += SSminimaps.minimaps_by_z["[mover_turf.z]"].x_offset
-	y_coord += SSminimaps.minimaps_by_z["[mover_turf.z]"].y_offset
+	x_coord += my_map.minimaps_by_z["[mover_turf.z]"].x_offset
+	y_coord += my_map.minimaps_by_z["[mover_turf.z]"].y_offset
 	// + 1 because tiles start at 1
 	var/x_tile = FLOOR(x_coord/32, 1) + 1
 	// -3 to center the image
@@ -560,10 +551,14 @@
 	var/atom/movable/screen/minimap_extras/minimap_z_down/z_down
 	///Sets a fixed z level to be tracked by this minimap action instead of being influenced by the owner's / locator override's z level.
 	var/default_overwatch_level = 0
+	///Reference to the map datum we display
+	var/datum/tactical_map/my_map
 
-/datum/action/minimap/New(Target, new_minimap_flags, new_marker_flags)
+/datum/action/minimap/New(Target, new_minimap_flags, new_marker_flags, tactical_map)
 	. = ..()
+	my_map = tactical_map
 	locator = new
+	locator.my_map = tactical_map
 	z_indicator = new
 	z_indicator.minimap_action = src
 	z_up = new
@@ -690,13 +685,13 @@
 	RegisterSignal(tracking, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_owner_z_change))
 	z_indicator.set_indicated_z(default_overwatch_level ? default_overwatch_level : tracking.z)
 	if(default_overwatch_level)
-		if(!SSminimaps.minimaps_by_z["[default_overwatch_level]"] || !SSminimaps.minimaps_by_z["[default_overwatch_level]"].hud_image)
+		if(!my_map.minimaps_by_z["[default_overwatch_level]"] || !my_map.minimaps_by_z["[default_overwatch_level]"].hud_image)
 			return
-		map_object = SSminimaps.fetch_minimap_object(default_overwatch_level, minimap_flags)
+		map_object = my_map.fetch_minimap_object(default_overwatch_level, minimap_flags)
 		return
-	if(!SSminimaps.minimaps_by_z["[tracking.z]"] || !SSminimaps.minimaps_by_z["[tracking.z]"].hud_image)
+	if(!my_map.minimaps_by_z["[tracking.z]"] || !my_map.minimaps_by_z["[tracking.z]"].hud_image)
 		return
-	map_object = SSminimaps.fetch_minimap_object(tracking.z, minimap_flags)
+	map_object = my_map.fetch_minimap_object(tracking.z, minimap_flags)
 
 /datum/action/minimap/Remove(mob/remove_from)
 	toggle_minimap(FALSE)
@@ -733,13 +728,13 @@
 				owner.client.screen -= z_down
 
 	z_indicator.set_indicated_z(new_z_shown)
-	if(!SSminimaps.minimaps_by_z["[new_z_shown]"] || !SSminimaps.minimaps_by_z["[new_z_shown]"].hud_image)
+	if(!my_map.minimaps_by_z["[new_z_shown]"] || !my_map.minimaps_by_z["[new_z_shown]"].hud_image)
 		if(minimap_displayed)
 			owner.client?.screen -= locator
 			locator.UnregisterSignal(tracking, COMSIG_MOVABLE_MOVED)
 			minimap_displayed = FALSE
 		return
-	map_object = SSminimaps.fetch_minimap_object(new_z_shown, minimap_flags)
+	map_object = my_map.fetch_minimap_object(new_z_shown, minimap_flags)
 	if(minimap_displayed)
 		if(owner.client)
 			owner.client.screen += map_object
@@ -758,11 +753,19 @@
 	name = "marine radio headset"
 	///The type of minimap this headset gives access to
 	var/datum/action/minimap/minimap_type = /datum/action/minimap
+	///Reference to the minimap that is being used
+	var/datum/tactical_map/my_map
+
+/obj/item/radio/headset/mainship/Destroy()
+	QDEL_NULL(my_map)
+	return ..()
 
 /obj/item/radio/headset/mainship/equipped(mob/user, slot, initial)
 	. = ..()
+	/* XANTODO Create map?
 	if(!SSminimaps.initialized)
 		SSminimaps.Initialize()
+	*/
 	if(!(slot_flags & slot))
 		remove_minimap(user)
 		return
@@ -771,13 +774,16 @@
 /// Adds a minimap to the mob, starts the subsystem if it hasnt already
 /obj/item/radio/headset/mainship/proc/add_minimap(mob/user)
 	remove_minimap(user)
-	var/datum/action/minimap/mini = new minimap_type
+	if(!my_map)
+		my_map = new
+		my_map.Initialize()
+	var/datum/action/minimap/mini = new minimap_type(tactical_map = my_map)
 	mini.Grant(user)
 	addtimer(CALLBACK(src, PROC_REF(update_minimap_icon), user), 0.1 SECONDS) //Mobs are spawned inside nullspace sometimes so this is to avoid that hijinks
 
 ///Remove all action of type minimap from the wearer, and make him disappear from the minimap
 /obj/item/radio/headset/mainship/proc/remove_minimap(mob/user)
-	SSminimaps.remove_marker(user)
+	my_map?.remove_marker(user)
 	for(var/datum/action/action as anything in user.actions)
 		if(istype(action, /datum/action/minimap))
 			action.Remove(user)
@@ -785,22 +791,21 @@
 ///Updates the wearer's minimap icon
 /obj/item/radio/headset/mainship/proc/update_minimap_icon(mob/wearer)
 	SIGNAL_HANDLER
-	return NONE
-	/*
-	SSminimaps.remove_marker(wearer)
+	my_map.remove_marker(wearer)
+/* XANTODO Conditional map markers
 	if(!wearer.job || !wearer.job.minimap_icon)
 		return
 	var/marker_flags = initial(minimap_type.marker_flags)
 	if(wearer.stat == DEAD)
 		if(HAS_TRAIT(wearer, TRAIT_UNDEFIBBABLE))
-			SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "undefibbable", MINIMAP_BLIPS_LAYER))
+			my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "undefibbable", MINIMAP_BLIPS_LAYER))
 			return
 		if(!wearer.mind && !wearer.has_ai())
 			var/mob/dead/observer/ghost = wearer.get_ghost(TRUE)
 			if(!ghost?.can_reenter_corpse)
-				SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "undefibbable", MINIMAP_BLIPS_LAYER))
+				my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "undefibbable", MINIMAP_BLIPS_LAYER))
 				return
-		SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "defibbable", MINIMAP_LABELS_LAYER))
+		my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, "defibbable", MINIMAP_LABELS_LAYER))
 		return
 	if(wearer.assigned_squad)
 		var/image/underlay = image('icons/ui_icons/minimap/map_blips.dmi', null, "squad_underlay", MINIMAP_BLIPS_LAYER)
@@ -812,11 +817,10 @@
 			var/image/leader_trim = image('icons/ui_icons/minimap/map_blips.dmi', null, "leader_trim")
 			underlay.overlays += leader_trim
 
-		SSminimaps.add_marker(wearer, marker_flags, underlay)
+		my_map.add_marker(wearer, marker_flags, underlay)
 		return
-	SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, wearer.job.minimap_icon), MINIMAP_BLIPS_LAYER)
-	*/ // XANTODO GET WEARER MINIMAP ICON AAAAAAAAAAAAAAAAAAAAA
-
+	my_map.add_marker(wearer, marker_flags, image('icons/ui_icons/minimap/map_blips.dmi', null, wearer.job.minimap_icon), MINIMAP_BLIPS_LAYER)
+*/
 
 
 
