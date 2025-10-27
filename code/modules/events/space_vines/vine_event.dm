@@ -48,7 +48,7 @@
 		var/attempts = 0
 
 		// Pick extra candidates to compensate for potential Enter() failures
-		var/list/chosen = pick_n(floor_candidates, min(max_attempts * 2, length(floor_candidates)))
+		var/list/chosen = pick_n(floor_candidates, min(max_attempts * 2, length(floor_candidates))) // results in at most 50 calls of Enter(), a reasonable amount while still feeling random.
 
 		for(var/turf/open/floor as anything in chosen)
 			if(attempts >= max_attempts)
