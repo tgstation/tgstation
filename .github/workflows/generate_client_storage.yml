@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - tgui/public/*
 
 jobs:
   dispatch_repo:
@@ -15,11 +17,11 @@ jobs:
         uses: actions/create-github-app-token@v2
         if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
         with:
-            app-id: ${{ secrets.APP_ID }}
-            private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
         env:
-            APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
-            APP_ID: ${{ secrets.APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_ID: ${{ secrets.APP_ID }}
 
       - name: Send Repository Dispatch
         if: success()

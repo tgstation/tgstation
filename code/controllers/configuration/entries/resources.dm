@@ -31,4 +31,4 @@
 
 /datum/config_entry/string/storage_cdn_iframe
 	protection = CONFIG_ENTRY_LOCKED
-	default = "https://tgstation.github.io/tgstation/assets/iframe.html"
+	default = "https://tgstation.github.io/byond-client-storage/assets/iframe.html"
