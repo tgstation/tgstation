@@ -12,7 +12,7 @@
 	/// Callback to a proc that is called when a mob is spawned. Primarily used for sentient spawners.
 	var/datum/callback/spawn_callback
 
-	/// How many mobs can we spawn maximum each time we try to spawn? (1 - max)
+	/// How many mobs can we spawn maximum each time we try to spawn? (1 - max) This number is applied 
 	var/max_spawn_per_attempt
 	/// How many types of mobs, taken from spawn_types, will be spawned in every spawn attempt?
 	var/max_spawn_types_per_attempt

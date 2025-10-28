@@ -288,7 +288,6 @@
 	)
 	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever, or until all waves are completed.
 	RegisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(handle_wave_conclusion))
-	// addtimer(CALLBACK(src, PROC_REF(handle_wave_conclusion)), wave_timer)
 	icon_state = icon_state_tapped
 	update_appearance(UPDATE_ICON_STATE)
 
