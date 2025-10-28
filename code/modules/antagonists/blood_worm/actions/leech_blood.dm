@@ -37,7 +37,7 @@
 
 	leech.visible_message(
 		message = span_danger("\The [leech] start[leech.p_s()] trying to bite into \the [target]!"),
-		self_message = span_warning("You start trying to bite into \the [target]!"),
+		self_message = span_danger("You start trying to bite into \the [target]!"),
 		ignored_mobs = list(target)
 	)
 
@@ -58,7 +58,7 @@
 
 	leech.visible_message(
 		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
-		self_message = span_warning("You bite into \the [target]!"),
+		self_message = span_danger("You bite into \the [target]!"),
 		blind_message = span_hear("You hear a sickening crunch!"),
 		ignored_mobs = list(target)
 	)

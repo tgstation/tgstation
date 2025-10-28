@@ -45,6 +45,8 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/transfuse_action
 	/// Not typed, please leave empty.
 	var/datum/action/blood_worm_eject/eject_action
+	/// Not typed, please leave empty.
+	var/datum/action/cooldown/mob_cooldown/blood_worm_revive/revive_action
 
 	var/list/innate_actions = list()
 	var/list/host_actions = list()
@@ -64,9 +66,10 @@
 
 	transfuse_action = new transfuse_action(src)
 	eject_action = new(src)
+	revive_action = new(src)
 
 	innate_actions = list(leech_action, spit_action, invade_action)
-	host_actions = list(transfuse_action, spit_action, eject_action)
+	host_actions = list(transfuse_action, spit_action, eject_action, revive_action)
 
 	grant_actions(src, innate_actions)
 
@@ -110,7 +113,7 @@
 
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
-	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER), BLOOD_WORM_HOST_TRAIT)
+	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE), BLOOD_WORM_HOST_TRAIT)
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions)

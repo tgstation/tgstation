@@ -48,7 +48,7 @@
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_warning("You transfuse blood into your host."))
+	to_chat(owner, span_danger("You transfuse blood into your host."))
 
 	host.blood_volume -= health_cost * BLOOD_WORM_HEALTH_TO_BLOOD
 

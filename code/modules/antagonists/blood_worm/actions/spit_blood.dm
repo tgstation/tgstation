@@ -47,7 +47,7 @@
 
 	owner.visible_message(
 		message = span_danger("\The [owner] spit[owner.p_s()] blood!"),
-		self_message = span_warning("You spit blood!"),
+		self_message = span_danger("You spit blood!"),
 		blind_message = span_hear("You hear spitting.")
 	)
 
