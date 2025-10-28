@@ -1933,7 +1933,7 @@
 	if(!after_input_check(user))
 		return TRUE
 	var/default_age = AGE_MIN
-	if ishuman(user)
+	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		default_age = human_user.age ? clamp(human_user.age, AGE_MIN, AGE_MAX) : AGE_MIN
 	var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", default_age, AGE_MAX, AGE_MIN)
