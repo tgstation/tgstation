@@ -11937,6 +11937,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
 "dqB" = (
@@ -13647,6 +13648,8 @@
 "dRP" = (
 /obj/item/cigbutt,
 /obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
 "dRU" = (
@@ -15210,7 +15213,6 @@
 /area/station/science/robotics/lab)
 "emR" = (
 /obj/effect/turf_decal/bot_white,
-/obj/effect/spawner/random/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -22320,6 +22322,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
 "gmE" = (
@@ -38022,7 +38025,7 @@
 "kDv" = (
 /obj/machinery/light/warm/dim/directional/west,
 /obj/effect/turf_decal/bot_white,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
 "kDx" = (
@@ -49249,11 +49252,8 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "nOn" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
 /obj/effect/turf_decal/bot_white,
+/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
 "nOo" = (
@@ -69349,7 +69349,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white,
-/obj/effect/spawner/random/structure/crate,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/cargo/storage)
 "tzO" = (
@@ -131395,7 +131394,7 @@ uHT
 qsi
 jfF
 tzx
-aDk
+nOn
 tJc
 nbb
 pKt
@@ -131653,7 +131652,7 @@ qsi
 jfF
 gmC
 dRP
-tJc
+aDk
 meu
 tDE
 cjh
