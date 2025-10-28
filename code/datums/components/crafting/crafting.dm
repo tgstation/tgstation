@@ -244,12 +244,17 @@
 	//used to gather the material composition of the utilized requirements to transfer to the result
 	var/list/total_materials = list()
 	var/list/stuff_to_use = get_used_reqs(recipe, crafter, total_materials)
+
 	for(var/mat in recipe.removed_mats)
 		var/to_remove = recipe.removed_mats[mat]
-		if(total_materials[mat] < to_remove)
-			total_materials -= mat
+		var/datum/material/ref_mat = locate(mat) in total_materials
+		if(!ref_mat)
+			continue
+		if(total_materials[ref_mat] < to_remove)
+			total_materials -= ref_mat
 		else
-			total_materials[mat] -= to_remove
+			total_materials[ref_mat] -= to_remove
+
 	var/atom/result
 	var/turf/craft_turf = get_turf(crafter.loc)
 	var/set_materials = !(recipe.crafting_flags & CRAFT_NO_MATERIALS)

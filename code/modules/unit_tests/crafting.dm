@@ -137,7 +137,7 @@
 	if(!result.compare_materials(copycat))
 		var/mats_varname = NAMEOF(result, custom_materials)
 
-		var/warning = "[mats_varname] of [result.type] when crafted compared to simply spawned don't match"
+		var/warning = "[mats_varname] of [result.type] when crafted compared to only spawned don't match"
 
 		///Added right between the first half of the warning and the second half.
 		var/other_info = ""
