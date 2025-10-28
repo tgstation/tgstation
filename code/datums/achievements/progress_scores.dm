@@ -78,6 +78,15 @@
 	desc = "Track how many unlockable PDA themes, namely from maintenances disks, you've installed on your PDA (or another that you stole) so that you can use them on future rounds as well."
 	database_id = PDA_THEMES_SCORE
 	track_high_scores = FALSE //This is purely personal progress
+	var/list/cheevo_icons
+
+/datum/award/score/progress/pda_themes/New()
+	var/list/unlockable_themes = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
+
+	cheevo_icons = list()
+	for(var/datum/computer_file/program/maintenance/theme/theme as anything in unlockable_themes)
+		cheevo_icons[theme] = icon2base64(icon(theme::icon_file, theme::icon))
+	cheevo_icons["unknown"] = icon2base64(icon(PDA_THEMES_PROGRESS_SET, "unknown"))
 
 /datum/award/score/progress/pda_themes/get_table()
 	return "pda_themes_progress"
@@ -90,20 +99,8 @@
 		"name" = "PDA Themes",
 		"entries" = list(),
 	)
-	var/static/list/unlockable_themes
-	if(!unlockable_themes)
-		unlockable_themes = subtypesof(/datum/computer_file/program/maintenance/theme)
-		for(var/datum/computer_file/program/maintenance/theme/theme as anything in unlockable_themes)
-			if(theme::abstract_type == theme)
-				unlockable_themes -= theme
 
-	///One day, we should make an asset spritesheet for these (and the fish progress score)
-	var/static/list/cheevo_icons
-	if(!cheevo_icons)
-		cheevo_icons = list()
-		for(var/datum/computer_file/program/maintenance/theme/theme as anything in unlockable_themes)
-			cheevo_icons[theme] = icon2base64(icon(theme::icon_file, theme::icon))
-		cheevo_icons += icon2base64(icon(PDA_THEMES_PROGRESS_SET, "unknown"))
+	var/list/unlockable_themes = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
 
 	var/list/unlocked_themes = holder.data[type]
 	var/unlocked_len = length(unlocked_themes)

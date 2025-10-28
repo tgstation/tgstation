@@ -46,30 +46,30 @@
 
 /datum/computer_file/program/maintenance/theme/cat
 	theme_name = PDA_THEME_CAT_NAME
-	theme_id = PDA_THEME_CAT_NAME
+	theme_id = PDA_THEME_ID_CAT
 	icon = "cat"
 
 /datum/computer_file/program/maintenance/theme/lightmode
 	theme_name = PDA_THEME_LIGHT_MODE_NAME
-	theme_id = PDA_THEME_LIGHT_MODE_NAME
+	theme_id = PDA_THEME_ID_LIGHT_MODE
 	icon = "light_mode"
 
 /datum/computer_file/program/maintenance/theme/spooky
 	theme_name = PDA_THEME_SPOOKY_NAME
-	theme_id = PDA_THEME_SPOOKY_NAME
+	theme_id = PDA_THEME_ID_SPOOKY
 	icon = "eldritch"
 
 /datum/computer_file/program/maintenance/theme/hacker
 	theme_name = PDA_THEME_HACKERMAN_NAME
-	theme_id = PDA_THEME_HACKERMAN_NAME
+	theme_id = PDA_THEME_ID_HACKERMAN
 	icon = "hacker"
 
 /datum/computer_file/program/maintenance/theme/roulette
 	theme_name = PDA_THEME_ROULETTE_NAME
-	theme_id = PDA_THEME_ROULETTE_NAME
+	theme_id = PDA_THEME_ID_ROULETTE
 	icon = "roulette"
 
 /datum/computer_file/program/maintenance/theme/alien
 	theme_name = PDA_THEME_ABDUCTOR_NAME
-	theme_id = PDA_THEME_ABDUCTOR_NAME
+	theme_id = PDA_THEME_ID_ABDUCTOR
 	icon = "alien"
