@@ -1,12 +1,12 @@
 // This element should be applied to wall-mounted machines/structures, so that if the wall it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
 /datum/component/wall_mounted
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	/// The wall our object is currently linked to.
-	var/turf/closed/wall/hanging_wall_turf
+	/// The closed turf our object is currently linked to.
+	var/turf/closed/hanging_wall_turf
 
 /datum/component/wall_mounted/Initialize(target_wall, on_drop_callback)
 	. = ..()
-	if(!isobj(parent) || !iswallturf(target_wall))
+	if(!isobj(parent) || !isclosedturf(target_wall))
 		return COMPONENT_INCOMPATIBLE
 	hanging_wall_turf = target_wall
 
@@ -74,11 +74,11 @@
 		msg = "[type] Could not find wall turf at COORDS "
 
 	var/turf/attachable_wall = get_turf(src) //first attempt to locate a wall in our current turf
-	if(!iswallturf(attachable_wall))
+	if(!isclosedturf(attachable_wall))
 		if(msg)
 			msg += "([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
 		attachable_wall = get_step(attachable_wall, dir) //if no then attempt to locate it in our direction
-	if(!iswallturf(attachable_wall))
+	if(!isclosedturf(attachable_wall))
 		if(msg)
 			msg += " ([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
 			stack_trace(msg)
