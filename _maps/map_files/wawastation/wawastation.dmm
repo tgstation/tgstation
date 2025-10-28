@@ -16759,11 +16759,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"fQR" = (
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "fQX" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/hydroponics/soil/rich,
@@ -44637,7 +44632,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/firealarm_sanity,
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/research)
 "pvo" = (
@@ -175565,7 +175559,7 @@ oZT
 jKg
 jqG
 jxF
-fQR
+vjZ
 mxq
 twx
 twx
