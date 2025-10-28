@@ -1097,6 +1097,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	humi.adjust_coretemperature(skin_core_change)
 
+	if(humi.has_status_effect(/datum/status_effect/ineffective_thermoregulation))
+		return
+
 	// get the enviroment details of where the mob is standing
 	var/datum/gas_mixture/environment = humi.loc?.return_air()
 	if(!environment) // if there is no environment (nullspace) drop out here.

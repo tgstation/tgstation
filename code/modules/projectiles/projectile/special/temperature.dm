@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	armor_flag = ENERGY
-	var/temperature = -50 // reduce the body temperature by 50 points
+	var/temperature = -30 // reduce the body temperature by 50 points
 
 /obj/projectile/temp/is_hostile_projectile()
 	return temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
@@ -18,6 +18,7 @@
 		// The new body temperature is adjusted by the bullet's effect temperature
 		// Reduce the amount of the effect temperature change based on the amount of insulation the mob is wearing
 		hit_mob.adjust_bodytemperature((thermal_protection * temperature) + temperature)
+		hit_mob.apply_status_effect(/datum/status_effect/ineffective_thermoregulation)
 
 	else if(isliving(target))
 		var/mob/living/L = target
@@ -34,7 +35,7 @@
 /obj/projectile/temp/hot
 	name = "heat beam"
 	icon_state = "lava"
-	temperature = 100 // Raise the body temp by 100 points
+	temperature = 50 // Raise the body temp by 50 points
 
 /obj/projectile/temp/hot/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
@@ -53,7 +54,7 @@
 
 	if(isliving(target))
 		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/freezing_blast)
+		living_target.apply_status_effect(/datum/status_effect/freezing_blast) //its traitor only so i dont care
 
 /obj/projectile/temp/cryo/on_range()
 	var/turf/T = get_turf(src)
