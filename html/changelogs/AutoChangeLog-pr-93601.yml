@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - map: "Meta's pipe and wire placements are more predictable"
+  - bugfix: "Meta's pipes and wires below library are connected again"
