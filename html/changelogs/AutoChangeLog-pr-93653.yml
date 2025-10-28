@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Prevents post-slip events such as hats falling off from occurring while crawling over slips."
