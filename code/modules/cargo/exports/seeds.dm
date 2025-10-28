@@ -8,14 +8,13 @@
 	/// Plants sold on the market
 	var/static/list/discovered_plants = list()
 	/// Highest rarity of the most valuable seed
-	var/static/highest_rarity = 0
+	var/highest_rarity = 0
 
 /datum/export/seed/New()
 	. = ..()
-	if(!highest_rarity)
-		for(var/obj/item/seeds/seed as anything in subtypesof(/obj/item/seeds))
-			if(seed::rarity > highest_rarity)
-				highest_rarity = seed::rarity
+	for(var/obj/item/seeds/seed as anything in subtypesof(/obj/item/seeds))
+		if(seed::rarity > highest_rarity)
+			highest_rarity = seed::rarity
 
 /datum/export/seed/get_base_cost(obj/item/seeds/S)
 	var/discovered = discovered_plants[S.type]
