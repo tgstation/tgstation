@@ -437,7 +437,7 @@
 	homemade_treat_text = "Although this is extremely difficult and slow to function, <b>Bone gel and surgical tape</b> may be applied directly to the wound, though this is nigh-impossible for most people to do so individually unless they've dosed themselves with one or more <b>painkillers</b> (Morphine and Miner's Salve have been known to help)"
 
 	/// Tracks if a surgeon has reset the bone (part one of the surgical treatment process)
-	var/reset = FALSE
+	VAR_FINAL/reset = FALSE
 
 /datum/wound_pregen_data/bone/compound
 	abstract = FALSE

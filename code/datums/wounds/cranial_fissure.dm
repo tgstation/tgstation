@@ -41,7 +41,7 @@
 	sound_effect = 'sound/effects/dismember.ogg'
 
 	/// If TRUE we have been prepped for surgery (to repair)
-	var/prepped = FALSE
+	VAR_FINAL/prepped = FALSE
 
 #define CRANIAL_FISSURE_FILTER_DISPLACEMENT "cranial_fissure_displacement"
 
