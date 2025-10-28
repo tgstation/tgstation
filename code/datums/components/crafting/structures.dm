@@ -119,6 +119,12 @@
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER, TOOL_DRILL)
 	time = 30 SECONDS
+	removed_mats = list(
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.55,
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+	)
 	category = CAT_STRUCTURE
 
 /datum/crafting_recipe/vault

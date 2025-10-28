@@ -307,7 +307,7 @@ FLOOR SAFES
 	custom_materials = list(
 		/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT * 15,
 		/datum/material/alloy/plastitanium = SHEET_MATERIAL_AMOUNT * 8,
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.55,
 	)
 
 /obj/structure/safe/floor/Initialize(mapload)

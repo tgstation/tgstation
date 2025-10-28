@@ -165,10 +165,10 @@
 		if(istype(recipe, /datum/crafting_recipe/stack))
 			add_info = "add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to its stack_recipe datum"
 		else
-			add_info = "set the [NAMEOF(recipe, requirements_mats_blacklist)] variable of [recipe.type] or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it"
+			add_info = "set the [NAMEOF(recipe, requirements_mats_blacklist)] or [NAMEOF(recipe, removed_mats)] var of [recipe.type], or add the CRAFT_SKIP_MATERIALS_PARITY crafting flag to it"
 
 		TEST_FAIL("[warning]. [target_var] should be [what_it_should_be] (current value: [what_it_is])[other_info]. \
-			Please fix that, otherwise [add_info]")
+			Fix that. Otherwise, [add_info]")
 
 	clear_trash()
 
