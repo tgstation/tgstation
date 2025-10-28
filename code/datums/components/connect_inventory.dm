@@ -32,7 +32,7 @@
 /datum/component/connect_inventory/proc/update_signals()
 	unregister_signals()
 
-	for(var/obj/item/item as anything in tracked.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD))
+	for(var/obj/item/item as anything in tracked.get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
 		if(!(allowed_slots & tracked.get_slot_by_item(item)))
 			continue
 		RegisterSignal(item, COMSIG_ITEM_DROPPED, PROC_REF(on_unequipped_item))
@@ -40,7 +40,7 @@
 			parent.RegisterSignal(item, signal, connections[signal])
 
 /datum/component/connect_inventory/proc/unregister_signals()
-	for(var/obj/item/item as anything in tracked.get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD))
+	for(var/obj/item/item as anything in tracked.get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
 		UnregisterSignal(item, COMSIG_ITEM_DROPPED)
 		parent.UnregisterSignal(item, connections)
 

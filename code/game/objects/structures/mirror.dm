@@ -35,10 +35,6 @@
 	///List of all Races that can be chosen, decided by its Initialize.
 	var/list/selectable_races = list()
 
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	update_choices()
-
 /obj/structure/mirror/Destroy()
 	mirror_options = null
 	selectable_races = null
@@ -59,6 +55,10 @@
 		update_signals = list(COMSIG_ATOM_BREAK), \
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
+	if(mapload)
+		find_and_hang_on_wall()
+	update_choices()
+	register_context()
 
 /obj/structure/mirror/proc/can_reflect(atom/movable/target)
 	///I'm doing it this way too, because the signal is sent before the broken variable is set to TRUE.
@@ -69,11 +69,6 @@
 	return TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
-
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	find_and_hang_on_wall()
-	register_context()
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
