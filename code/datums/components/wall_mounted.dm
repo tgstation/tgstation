@@ -79,10 +79,10 @@
 	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
 		msg = "[type] Could not find attachable object at COORDS "
 
-	var/list/turf/attachable_things = list()
-	attachable_things += get_turf(src)
-	attachable_things += get_step(attachable_things[1], dir)
-	for(var/turf/target as anything in attachable_things)
+	var/list/turf/attachable_turfs = list()
+	attachable_turfs += get_turf(src)
+	attachable_turfs += get_step(attachable_turfs[1], dir)
+	for(var/turf/target as anything in attachable_turfs)
 		var/atom/attachable_atom
 		if(isclosedturf(target))
 			attachable_atom = target //your usual wallmount
