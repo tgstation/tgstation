@@ -76,11 +76,11 @@
 	var/turf/attachable_wall = loc //first attempt to locate a wall in our current turf
 	if(!iswallturf(attachable_wall))
 		if(msg)
-			msg += "[attachable_wall.x],[attachable_wall.y],[attachable_wall.z]"
+			msg += "([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
 		attachable_wall = get_step(src, dir) //if no then attempt to locate it in our direction
 	if(!iswallturf(attachable_wall))
 		if(msg)
-			msg += " [attachable_wall.x],[attachable_wall.y],[attachable_wall.z]"
+			msg += " ([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
 			stack_trace(msg)
 		return FALSE //Nothing to latch onto, or not the right thing.
 	AddComponent(/datum/component/wall_mounted, attachable_wall)
