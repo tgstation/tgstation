@@ -2789,9 +2789,6 @@
 /area/station/ai_monitored/turret_protected/ai)
 "aYJ" = (
 /obj/machinery/disposal/bin,
-/obj/machinery/firealarm/directional/south{
-	pixel_x = 26
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -10385,7 +10382,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/map/meta/left{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -10702,7 +10700,9 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/landmark/firealarm_sanity,
+/obj/effect/landmark/firealarm_sanity{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "dOs" = (
@@ -11478,7 +11478,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eax" = (
-/obj/structure/sign/poster/official/random/directional/south,
+/obj/structure/sign/poster/official/random/directional/south{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -32
+	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/duct,
 /turf/open/floor/plating,
@@ -12645,7 +12649,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "erU" = (
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
@@ -12653,6 +12656,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "esd" = (
@@ -12861,12 +12865,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "euT" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/station/maintenance/aft/greater)
 "euX" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/white,
@@ -17442,11 +17443,9 @@
 /turf/open/floor/grass,
 /area/station/science/research)
 "gda" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/station/hallway/secondary/exit/departure_lounge)
 "gdb" = (
 /turf/closed/wall/r_wall,
 /area/station/security/range)
@@ -20862,7 +20861,8 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "hlu" = (
 /obj/structure/sign/painting/library{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -21983,7 +21983,8 @@
 	dir = 4
 	},
 /obj/structure/sign/map/meta/right{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -25767,7 +25768,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/map/meta/right{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -28351,7 +28353,8 @@
 /obj/machinery/button/flasher{
 	id = "IsolationFlash";
 	pixel_x = -23;
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28709,7 +28712,8 @@
 	dir = 1
 	},
 /obj/structure/sign/map/meta/left{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
@@ -38085,7 +38089,8 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/map/meta/left{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -46496,12 +46501,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "pZW" = (
-/obj/structure/lattice,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/station/maintenance/port/aft)
 "qaf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
@@ -54204,7 +54206,8 @@
 "sFo" = (
 /obj/machinery/button/crematorium{
 	id = "crematoriumChapel";
-	pixel_x = -26
+	pixel_x = -26;
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
@@ -61166,7 +61169,8 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/structure/sign/painting/library_secure{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/effect/spawner/random/decoration/statue{
 	spawn_loot_chance = 50
@@ -61780,6 +61784,10 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"vig" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "vip" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/airalarm/directional/north,
@@ -63547,7 +63555,8 @@
 "vKt" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/structure/sign/painting/library_secure{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/effect/spawner/random/decoration/statue{
 	spawn_loot_chance = 50
@@ -69204,7 +69213,8 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/delivery,
 /obj/structure/sign/map/meta/right{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -69469,11 +69479,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
 "xKd" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/station/maintenance/port)
 "xKh" = (
 /obj/structure/railing{
 	dir = 10
@@ -83522,7 +83530,7 @@ pOa
 aox
 aox
 aox
-euT
+aox
 aox
 aaa
 aaa
@@ -83779,7 +83787,7 @@ pOa
 pOa
 pOa
 emN
-pOa
+xKd
 pOa
 aaa
 aaa
@@ -85341,7 +85349,7 @@ aaa
 aaa
 lMJ
 aox
-pZW
+lMJ
 aaa
 aaa
 xjH
@@ -85598,7 +85606,7 @@ lMJ
 lMJ
 jUb
 kPQ
-jUb
+pZW
 jUb
 lMJ
 xjH
@@ -88700,7 +88708,7 @@ gAf
 tSw
 tSw
 aaa
-gda
+lAu
 aaa
 aaa
 sGL
@@ -88957,7 +88965,7 @@ gmS
 drm
 tSw
 tSw
-tSw
+euT
 tSw
 gAf
 sGL
@@ -97451,8 +97459,8 @@ iUm
 aAS
 kJB
 biA
-iUm
-xKd
+gda
+lAu
 lMJ
 aaa
 aaa
@@ -98177,7 +98185,7 @@ jgE
 jgE
 jgE
 jgE
-njX
+cRw
 njX
 njX
 njX
@@ -98990,7 +98998,7 @@ lYc
 tew
 iUm
 gRb
-gRb
+vig
 iUm
 iUm
 iUm
