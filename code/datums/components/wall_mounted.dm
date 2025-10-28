@@ -6,7 +6,7 @@
 
 /datum/component/wall_mounted/Initialize(target_wall, on_drop_callback)
 	. = ..()
-	if(!isobj(parent) || !isclosedturf(target_wall))
+	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	hanging_wall_turf = target_wall
 
@@ -73,15 +73,21 @@
 	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
 		msg = "[type] Could not find wall turf at COORDS "
 
-	var/turf/attachable_wall = get_turf(src) //first attempt to locate a wall in our current turf
-	if(!isclosedturf(attachable_wall))
+	var/list/turf/attachable_things = list()
+	attachable_things += get_turf(src)
+	attachable_things += get_step(attachable_things[1], dir)
+	for(var/turf/target as anything in attachable_things)
+		var/atom/attachable_atom
+		if(isclosedturf(target))
+			attachable_atom = target
+		else
+			attachable_atom = locate(/obj/structure/window) in target
+		if(attachable_atom)
+			AddComponent(/datum/component/wall_mounted, attachable_atom)
+			return TRUE
 		if(msg)
-			msg += "([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
-		attachable_wall = get_step(attachable_wall, dir) //if no then attempt to locate it in our direction
-	if(!isclosedturf(attachable_wall))
-		if(msg)
-			msg += " ([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
-			stack_trace(msg)
-		return FALSE //Nothing to latch onto, or not the right thing.
-	AddComponent(/datum/component/wall_mounted, attachable_wall)
-	return TRUE
+			msg += "([target.x],[target.y],[target.z]) "
+	if(msg)
+		stack_trace(msg)
+
+	return FALSE
