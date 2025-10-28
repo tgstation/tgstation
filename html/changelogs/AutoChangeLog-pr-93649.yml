@@ -1,0 +1,4 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - bugfix: "Containers that appear sealed (spray bottles, hyposprays, gel cans, condiment packets, inhaler cartridges) no longer spill when thrown or poured out."

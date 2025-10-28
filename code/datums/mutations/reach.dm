@@ -53,15 +53,16 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(homan, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
 	RegisterSignal(homan, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(homan, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
+	homan.reach_length++
 
 /datum/mutation/elastic_arms/on_losing(mob/living/carbon/human/homan)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(homan, list(COMSIG_ATOM_CANREACH, COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
+	UnregisterSignal(homan, list(COMSIG_LIVING_TRY_PUT_IN_HAND, COMSIG_LIVING_TRY_PULL))
+	homan.reach_length = min(1, homan.reach_length - 1)
 
 /// signal sent when prompting if an item can be equipped
 /datum/mutation/elastic_arms/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/pick_item)
@@ -83,30 +84,3 @@
 		if(item_target.w_class > WEIGHT_CLASS_BULKY)
 			item_target.balloon_alert(owner, "arms too floppy to pull this!")
 			return COMSIG_LIVING_CANCEL_PULL
-
-// probably buggy. let's enlist our players as bug testers
-/datum/mutation/elastic_arms/proc/on_canreach(mob/source, atom/target)
-	SIGNAL_HANDLER
-
-	var/distance = get_dist(target, source)
-
-	// We only care about handling the reach distance, anything closer or further is handled normally.
-	// Also, no z-level shenanigans. Yet.
-	if((distance != 2) || source.z != target.z)
-		return
-
-	var/direction = get_dir(source, target)
-	if(!direction)
-		return
-	var/turf/open/adjacent_turf = get_step(source, direction)
-
-	// Make sure it's an open turf we're trying to pass over.
-	if(!istype(adjacent_turf))
-		return
-
-	// Check if there's something dense inbetween, then allow it.
-	for(var/atom/thing in adjacent_turf)
-		if(thing.density)
-			return
-
-	return COMPONENT_ALLOW_REACH

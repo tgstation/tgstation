@@ -140,6 +140,10 @@
 	var/burst_fire_selection = FALSE
 	/// If it has an icon for a selector switch indicating current firemode.
 	var/selector_switch_icon = FALSE
+	/// Suppressor attached to the gun, if any
+	var/obj/item/suppressor/suppressor = null
+	/// Sound played when the burst mode is changed
+	var/burst_select_sound = SFX_FIRE_MODE_SWITCH
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
@@ -162,7 +166,13 @@
 
 /obj/item/gun/ballistic/Destroy()
 	QDEL_NULL(magazine)
+	QDEL_NULL(suppressor)
 	return ..()
+
+/obj/item/gun/ballistic/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == suppressor)
+		clear_suppressor()
 
 /obj/item/gun/ballistic/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
@@ -283,7 +293,10 @@
 		fire_delay = initial(fire_delay)
 		balloon_alert(user, "switched to [burst_size]-round burst")
 
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	if(burst_select_sound)
+		playsound(user, burst_select_sound, 50, TRUE)
+	else
+		playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
 	update_appearance()
 	update_item_action_buttons()
 
@@ -529,7 +542,7 @@
 			return ITEM_INTERACT_FAILURE
 
 		if(suppressed)
-			balloon_alert(user, "already has a supressor!")
+			balloon_alert(user, "already has a suppressor!")
 			return ITEM_INTERACT_FAILURE
 
 		if(!user.transferItemToLoc(tool, src))
@@ -590,27 +603,28 @@
 	return ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
-/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
-	suppressed = S
-	update_weight_class(w_class + S.w_class) //so pistols do not fit in pockets when suppressed
+/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/new_suppressor)
+	suppressor = new_suppressor
+	suppressed = suppressor.suppression
+	update_weight_class(w_class + suppressor.w_class) //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
 	if(!can_unsuppress)
 		return
-	if(isitem(suppressed))
-		var/obj/item/I = suppressed
-		update_weight_class(w_class - I.w_class)
-	return ..()
+	suppressed = SUPPRESSED_NONE
+	if(suppressor)
+		update_weight_class(w_class - suppressor.w_class)
+		suppressor = null
+	update_appearance()
 
 /obj/item/gun/ballistic/click_alt(mob/user)
 	if(!suppressed || !can_unsuppress)
 		return CLICK_ACTION_BLOCKING
-	var/obj/item/suppressor/S = suppressed
 	if(!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
-	balloon_alert(user, "[S.name] removed")
-	user.put_in_hands(S)
+	balloon_alert(user, "[suppressor.name] removed")
+	user.put_in_hands(suppressor)
 	clear_suppressor()
 	return CLICK_ACTION_SUCCESS
 
@@ -690,7 +704,7 @@
 		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
-	if (suppressed)
+	if (suppressor)
 		. += "It has a suppressor [can_unsuppress ? "attached that can be removed with <b>alt+click</b>." : "that is integral or can't otherwise be removed."]"
 	if(can_misfire)
 		. += span_danger("You get the feeling this might explode if you fire it...")
@@ -868,3 +882,5 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
+	/// How quiet should the gun be when we're installed?
+	var/suppression = SUPPRESSED_QUIET

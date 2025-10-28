@@ -216,7 +216,7 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "canister_generic"
 
-	initial_reagent_flags = SEALED_CONTAINER|DRAINABLE|REFILLABLE
+	initial_reagent_flags = SEALED_CONTAINER | DRAINABLE | REFILLABLE | NO_SPLASH
 	has_variable_transfer_amount = FALSE
 
 	max_integrity = 60

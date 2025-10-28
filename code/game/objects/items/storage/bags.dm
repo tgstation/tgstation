@@ -158,14 +158,20 @@
 
 	RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 	RegisterSignal(tile, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
+
+/obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
+	var/turf/tile = get_turf(user)
 	var/obj/structure/ore_box/box = null
 	if(istype(user.pulling, /obj/structure/ore_box))
 		box = user.pulling
 
 	var/show_message = FALSE
 	for(var/atom/thing as anything in tile)
-		if(is_type_in_typecache(thing, atom_storage.can_hold))
-			show_message ||= pickup_ore(thing, user, box)
+		if(!is_type_in_typecache(thing, atom_storage.can_hold))
+			continue
+		if(pickup_ore(thing, user, box))
+			show_message = TRUE
 
 	if (!show_message)
 		spam_protection = FALSE
@@ -197,8 +203,17 @@
 		box = user.pulling
 
 	if (box)
-		user.transferItemToLoc(ore, box)
+		user.transferItemToLoc(ore, box, animated = FALSE)
 		return TRUE
+
+	if (istype(ore, /obj/item/stack/ore))
+		var/obj/item/stack/ore/real_ore = ore
+		for(var/obj/item/stack/ore/stored_ore as anything in src)
+			if(!real_ore.can_merge(stored_ore))
+				continue
+			real_ore.merge(stored_ore)
+			if(QDELETED(real_ore))
+				return TRUE
 
 	if (atom_storage.attempt_insert(ore, user))
 		return TRUE
@@ -210,13 +225,13 @@
 
 /obj/item/storage/bag/ore/proc/on_obj_entered(atom/new_loc, atom/movable/arrived, atom/old_loc)
 	SIGNAL_HANDLER
-	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores)
-		pickup_ore(arrived, listening_to)
+	if(is_type_in_list(arrived, atom_storage.can_hold) && !dropping_ores && old_loc != loc)
+		INVOKE_ASYNC(src, PROC_REF(pickup_ore), arrived, listening_to)
 
 /obj/item/storage/bag/ore/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
 	if(is_type_in_list(new_atom, atom_storage.can_hold))
-		pickup_ore(new_atom, listening_to)
+		INVOKE_ASYNC(src, PROC_REF(pickup_ore), new_atom, listening_to)
 
 /obj/item/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
@@ -342,6 +357,9 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
+	sound_vary = TRUE
+	pickup_sound = SFX_TRAY_PICKUP
+	drop_sound = SFX_TRAY_DROP
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -548,7 +566,7 @@
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.attackby(ammo_to_load, user)
+	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"

@@ -262,7 +262,7 @@
 	inverse_chem = /datum/reagent/inverse/healing/convermol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/c2/convermol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/oxycalc = 2.5 * REM * (current_cycle-1)
 	if(!overdosed)
@@ -294,7 +294,7 @@
 	/// A cooldown for spacing bursts of stamina damage
 	COOLDOWN_DECLARE(drowsycd)
 
-/datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOxyLoss(-4.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
@@ -326,11 +326,11 @@
 	/// Temperatures below this number give radiation healing.
 	var/rads_heal_threshold = 100
 
-/datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/human/affected_mob)
+/datum/reagent/medicine/c2/seiver/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	rads_heal_threshold = rand(rads_heal_threshold - 50, rads_heal_threshold + 50) // Basically this means 50K and below will always give the radiation heal, and upto 150K could. Calculated once.
 
-/datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/chemtemp = min(holder.chem_temp, 1000)
 	chemtemp = chemtemp ? chemtemp : T0C //why do you have null sweaty
@@ -368,7 +368,7 @@
 	ph = 9.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/c2/multiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
 	for(var/r in affected_mob.reagents.reagent_list)
@@ -589,7 +589,7 @@
 	send_alert(user)
 	user.add_traits(subject_traits, type)
 
-/datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)

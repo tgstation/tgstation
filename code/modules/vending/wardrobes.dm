@@ -569,6 +569,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/suit/chaplainsuit/habit = 1,
 		/obj/item/clothing/head/chaplain/habit_veil = 1,
+		/obj/item/storage/box/purity_seal_box = 2,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,
@@ -700,7 +701,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/security/detective/kim = 1,
 		/obj/item/clothing/suit/jacket/det_suit/kim = 1,
 		/obj/item/clothing/gloves/kim = 1,
-		/obj/item/clothing/shoes/kim = 1,
+		/obj/item/clothing/shoes/jackboots/kim = 1,
 		/obj/item/reagent_containers/cup/glass/flask/det = 2,
 		/obj/item/storage/fancy/cigarettes = 5,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy = 5,

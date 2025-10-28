@@ -366,7 +366,7 @@
 		update_bot_mode(new_mode = BOT_IDLE)
 		return
 
-	if(CanReach(patient))
+	if(patient.IsReachableBy(src))
 		melee_attack(patient)
 
 /datum/id_trim/medibot
@@ -392,6 +392,7 @@
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
 		ACCESS_PHARMACY,
+		ACCESS_PARAMEDIC,
 		)
 	honorifics = list("Medical Robot")
 	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE

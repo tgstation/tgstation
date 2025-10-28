@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	item_flags = NOBLUDGEON
 	obj_flags = UNIQUE_RENAME
-	initial_reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER | NO_SPLASH
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -44,6 +44,7 @@
 		to_chat(user, span_warning("[src] is empty!"))
 		return ITEM_INTERACT_BLOCKING
 
+	user.changeNext_move(CLICK_CD_MELEE)
 	if(interacting_with == user)
 		interacting_with.visible_message(span_notice("[user] attempts to [apply_method] [src] on [user.p_them()]self."))
 		if(self_delay)

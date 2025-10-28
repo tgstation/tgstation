@@ -751,11 +751,17 @@
 	var/typepath = owner.type
 	clone = new typepath(owner.drop_location())
 	if(iscarbon(owner) && iscarbon(clone))
-		var/mob/living/carbon/carbon_owner = owner
-		var/mob/living/carbon/carbon_clone = clone
-		carbon_clone.real_name = carbon_owner.real_name
-		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
-		carbon_clone.updateappearance(mutcolor_update = TRUE)
+		var/mob/living/carbon/human/human_owner = owner
+		var/mob/living/carbon/human/human_clone = clone
+		human_clone.physique = human_owner.physique
+		human_clone.real_name = human_owner.real_name
+		human_clone.age = human_owner.age
+		human_clone.voice = human_owner.voice
+		human_clone.voice_filter = human_owner.voice_filter
+		for(var/datum/quirk/original_quirks as anything in human_owner.quirks)
+			human_clone.add_quirk(original_quirks.type, add_unique = FALSE, announce = FALSE)
+		human_owner.dna.copy_dna(human_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		human_clone.updateappearance(mutcolor_update = TRUE)
 	return ..()
 
 /datum/status_effect/stabilized/cerulean/tick(seconds_between_ticks)

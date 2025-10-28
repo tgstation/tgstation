@@ -989,3 +989,21 @@
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
 	icon = FA_ICON_DISEASE
+
+/datum/plant_gene/trait/carnivory
+	name = "Obligate Carnivory"
+	description = "Pests have positive effect on the plant health."
+	icon = FA_ICON_SPIDER
+
+/datum/plant_gene/trait/semiaquatic
+	name = "Semiaquatic"
+	description = "A type of plant that thrives in flooded conditions due to less competion from weeds, but can also grow on land."
+	icon = FA_ICON_BOWL_RICE
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/soil_lover
+	name = "Soil Lover"
+	description = "A plant that needs the firm embrace of soil to develop properly, produces small irregular produce when grown hydroponically."
+	icon =  FA_ICON_MOUND
+	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+

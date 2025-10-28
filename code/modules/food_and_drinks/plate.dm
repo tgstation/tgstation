@@ -3,6 +3,9 @@
 	desc = "Holds food, powerful. Good for morale when you're not eating your spaghetti off of a desk."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate"
+	sound_vary = TRUE
+	pickup_sound = SFX_FOOD_PLATE_PICKUP
+	drop_sound = SFX_FOOD_PLATE_DROP
 	w_class = WEIGHT_CLASS_BULKY //No backpack.
 	///How many things fit on this plate?
 	var/max_items = 8
@@ -53,10 +56,12 @@
 	target.attackby(object_to_eat, user)
 	return TRUE //No normal attack
 
+/obj/item/plate/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE
+
 ///This proc adds the food to viscontents and makes sure it can deregister if this changes.
 /obj/item/plate/proc/AddToPlate(obj/item/item_to_plate)
 	vis_contents += item_to_plate
-	item_to_plate.flags_1 |= IS_ONTOP_1
 	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
 	RegisterSignal(item_to_plate, COMSIG_QDELETING, PROC_REF(ItemMoved))
@@ -72,7 +77,6 @@
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
 /obj/item/plate/proc/ItemRemovedFromPlate(obj/item/removed_item)
-	removed_item.flags_1 &= ~IS_ONTOP_1
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))

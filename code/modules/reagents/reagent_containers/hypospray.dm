@@ -11,7 +11,7 @@
 	volume = 30
 	possible_transfer_amounts = list(5)
 	resistance_flags = ACID_PROOF
-	initial_reagent_flags = OPENCONTAINER
+	initial_reagent_flags = OPENCONTAINER | NO_SPLASH
 	slot_flags = ITEM_SLOT_BELT
 	var/ignore_flags = NONE
 	var/infinite = FALSE
@@ -42,6 +42,7 @@
 		injected += injected_reagent.name
 	var/contained = english_list(injected)
 	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(!used_up && (ignore_flags || affected_mob.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))) // Ignore flag should be checked first or there will be an error message.
 		to_chat(affected_mob, span_warning("You feel a tiny prick!"))
