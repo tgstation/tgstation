@@ -8,7 +8,7 @@
 	/// Plants sold on the market
 	var/static/list/discovered_plants = list()
 	/// Highest rarity of the most valuable seed
-	var/highest_rarity = 0
+	var/highest_rarity
 
 /datum/export/seed/New()
 	. = ..()
