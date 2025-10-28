@@ -1,16 +1,16 @@
-// This element should be applied to wall-mounted machines/structures, so that if the wall it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
-/datum/component/wall_mounted
+// This element should be applied to wall-mounted machines/structures, so that if the support structure it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
+/datum/component/atom_mounted
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// The closed turf our object is currently linked to.
 	var/atom/hanging_support_atom
 
-/datum/component/wall_mounted/Initialize(target_structure, on_drop_callback)
+/datum/component/atom_mounted/Initialize(target_structure, on_drop_callback)
 	. = ..()
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	hanging_support_atom = target_structure
 
-/datum/component/wall_mounted/RegisterWithParent()
+/datum/component/atom_mounted/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(isclosedturf(hanging_support_atom))
@@ -19,7 +19,7 @@
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
-/datum/component/wall_mounted/UnregisterFromParent()
+/datum/component/atom_mounted/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	UnregisterSignal(hanging_support_atom, list(COMSIG_ATOM_EXAMINE))
 	if(isclosedturf(hanging_support_atom))
@@ -32,26 +32,26 @@
 /**
  * When the wall is examined, explains that it's supporting the linked object.
  */
-/datum/component/wall_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
+/datum/component/atom_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if (parent in view(user.client?.view || world.view, user))
 		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
-/datum/component/wall_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+/datum/component/atom_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 
 	if(ispath(path, /turf/open))
 		drop_wallmount()
 
-/datum/component/wall_mounted/proc/on_structure_delete(datum/source, force)
+/datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
 	SIGNAL_HANDLER
 
 	drop_wallmount()
 
 /// If we get dragged from our wall (by a singulo for instance) we should deconstruct
-/datum/component/wall_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
+/datum/component/atom_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 	// If we're having our lighting messed with we're likely to get dragged about
 	// That shouldn't lead to a decon
@@ -63,7 +63,7 @@
  * Handles the dropping of the linked object. This is done via deconstruction, as that should be the most sane way to handle it for most objects.
  * Except for intercoms, which are handled by creating a new wallframe intercom, as they're apparently items.
 */
-/datum/component/wall_mounted/proc/drop_wallmount()
+/datum/component/atom_mounted/proc/drop_wallmount()
 	PRIVATE_PROC(TRUE)
 
 	var/obj/hanging_parent = parent
@@ -77,7 +77,7 @@
 
 	var/msg
 	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
-		msg = "[type] Could not find wall turf at COORDS "
+		msg = "[type] Could not find attachable object at COORDS "
 
 	var/list/turf/attachable_things = list()
 	attachable_things += get_turf(src)
@@ -85,11 +85,18 @@
 	for(var/turf/target as anything in attachable_things)
 		var/atom/attachable_atom
 		if(isclosedturf(target))
-			attachable_atom = target
+			attachable_atom = target //your usual wallmount
 		else
-			attachable_atom = locate(/obj/structure/window) in target
+			var/static/list/attachables = list(
+				/obj/structure/table,
+				/obj/structure/window,
+			) //list of structures to mount on
+			for(var/obj/attachable in target)
+				if(is_type_in_list(attachable, attachables))
+					attachable_atom = attachable
+					break
 		if(attachable_atom)
-			AddComponent(/datum/component/wall_mounted, attachable_atom)
+			AddComponent(/datum/component/atom_mounted, attachable_atom)
 			return TRUE
 		if(msg)
 			msg += "([target.x],[target.y],[target.z]) "
