@@ -70,14 +70,14 @@
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
 
 	var/msg
-	if(SSatoms.initialized == INITIALIZATION_INNEW_MAPLOAD)
+	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
 		msg = "[type] Could not find wall turf at COORDS "
 
-	var/turf/attachable_wall = loc //first attempt to locate a wall in our current turf
+	var/turf/attachable_wall = get_turf(loc) //first attempt to locate a wall in our current turf
 	if(!iswallturf(attachable_wall))
 		if(msg)
 			msg += "([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
-		attachable_wall = get_step(src, dir) //if no then attempt to locate it in our direction
+		attachable_wall = get_step(attachable_wall, dir) //if no then attempt to locate it in our direction
 	if(!iswallturf(attachable_wall))
 		if(msg)
 			msg += " ([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
