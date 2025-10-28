@@ -16,6 +16,8 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
+	/// We can't cut mobs with this biostate
+	var/biostate_blacklist = BIO_CHITIN
 
 /datum/surgery_operation/limb/incise_skin/get_default_radial_image()
 	return image(/obj/item/scalpel)
@@ -25,7 +27,11 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/incise_skin/state_check(obj/item/bodypart/limb)
-	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
+	if(limb.biological_state & biostate_blacklist)
+		return FALSE
+	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/incise_skin/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -50,6 +56,20 @@
 		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[blood_name] pools around the incision in [limb.owner]'s [limb.plaintext_zone]."),
 	)
+
+/// Subtype for thick skinned creatures (Xenomorphs)
+/datum/surgery_operation/limb/incise_skin/thick
+	implements = list(
+		TOOL_SAW = 1,
+		/obj/item/melee/energy/sword = 1.25,
+		/obj/item/fireaxe = 1.5,
+		/obj/item/knife/butcher = 2.5,
+		/obj/item = 5,
+	)
+	biostate_blacklist = BIO_FLESH|BIO_METAL
+
+/datum/surgery_operation/limb/incise_skin/thick/tool_check(obj/item/tool)
+	return ..() && tool.force >= 10
 
 /// Pulls the skin back to access internals
 /datum/surgery_operation/limb/retract_skin
