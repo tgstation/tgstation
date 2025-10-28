@@ -48,13 +48,7 @@
 	name = "cryo beam"
 	range = 9
 	temperature = -350 // Single slow shot reduces temp greatly
-
-/obj/projectile/temp/cryo/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-
-	if(isliving(target))
-		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/freezing_blast) //its traitor only so i dont care
+	//removed watchers gaze because this shits already incredibly strong for genetics
 
 /obj/projectile/temp/cryo/on_range()
 	var/turf/T = get_turf(src)
