@@ -23,7 +23,7 @@
 	)
 
 /datum/surgery_operation/basic/dissection/on_failure(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
-	var/points_earned = round(check_value(target) * 0.01)
+	var/points_earned = round(check_value(patient) * 0.01)
 	display_results(
 		surgeon,
 		patient,

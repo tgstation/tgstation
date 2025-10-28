@@ -58,7 +58,7 @@
 		limb.owner,
 		span_notice("You jerk apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[surgeon] jerks apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [operlimb.ownerating_on]'s [limb.plaintext_zone]."),
+		span_notice("[surgeon] jerks apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
 	)
 	limb.receive_damage(rand(4, 8), wound_bonus = 10, sharpness = SHARP_EDGED, damage_source = tool)
 

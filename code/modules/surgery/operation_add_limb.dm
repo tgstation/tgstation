@@ -93,7 +93,7 @@
 		var/obj/item/bodypart/new_limb = tool
 		if(IS_ROBOTIC_LIMB(new_limb))
 			operation_args["tox_damage"] = 0
-		else if(new_chest.check_for_frankenstein(chest.owner))
+		else if(new_limb.check_for_frankenstein(chest.owner))
 			operation_args["tox_damage"] = 30
 
 /datum/surgery_operation/prosthetic_replacement/on_success(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool, list/operation_args)
