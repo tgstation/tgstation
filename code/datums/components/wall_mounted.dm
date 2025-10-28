@@ -73,7 +73,7 @@
 	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
 		msg = "[type] Could not find wall turf at COORDS "
 
-	var/turf/attachable_wall = get_turf(loc) //first attempt to locate a wall in our current turf
+	var/turf/attachable_wall = get_turf(src) //first attempt to locate a wall in our current turf
 	if(!iswallturf(attachable_wall))
 		if(msg)
 			msg += "([attachable_wall.x],[attachable_wall.y],[attachable_wall.z])"
