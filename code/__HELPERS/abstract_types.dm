@@ -9,6 +9,6 @@
 			abstracts |= sometype::abstract_type
 	return abstracts
 
-/// Like subtypesof, but automatically excludes abstract typepaths 
-/proc/valid_subtypes(datum/sometype)
+/// Like subtypesof, but automatically excludes abstract typepaths
+/proc/valid_subtypesof(datum/sometype)
 	return subtypesof(sometype) - get_abstract_types()

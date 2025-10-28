@@ -94,7 +94,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		return
 
-	for(var/datum/station_trait/trait_typepath as anything in valid_subtypes(/datum/station_trait))
+	for(var/datum/station_trait/trait_typepath as anything in valid_subtypesof(/datum/station_trait))
 
 		// If forced, (probably debugging), just set it up now, keep it out of the pool.
 		if(initial(trait_typepath.force))

@@ -22,6 +22,6 @@ GLOBAL_LIST_EMPTY(supplypod_loading_bays)
 /// Called when the global exports_list is empty, and sets it up.
 /proc/init_Exports()
 	var/list/exports = list()
-	for(var/datum/export/subtype as anything in valid_subtypes(/datum/export))
+	for(var/datum/export/subtype as anything in valid_subtypesof(/datum/export))
 		exports += new subtype
 	return exports

@@ -18,7 +18,7 @@
 	export_types = list(/obj/item/cargo_unit_test_content)
 
 /datum/unit_test/cargo_selling/Run()
-	for(var/datum/export/subtype as anything in valid_subtypes(/datum/export))
+	for(var/datum/export/subtype as anything in valid_subtypesof(/datum/export))
 		if(subtype::k_recovery_time < SSprocessing.wait)
 			TEST_FAIL("[subtype] should have k_recovery time >= [SSprocessing.wait]")
 		var/datum/export/sell = new subtype

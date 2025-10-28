@@ -50,13 +50,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /proc/init_preference_entries()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in valid_subtypes(/datum/preference))
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[preference_type] = new preference_type
 	return output
 
 /proc/init_preference_entries_by_key()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in valid_subtypes(/datum/preference))
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 

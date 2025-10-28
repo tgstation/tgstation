@@ -18,7 +18,7 @@
 /datum/autowiki/stock_parts/generate()
 	var/output = ""
 
-	for(var/part_type in valid_subtypes(/obj/item/stock_parts))
+	for(var/part_type in valid_subtypesof(/obj/item/stock_parts))
 		if(!battery_whitelist.Find(part_type) && ispath(part_type, /obj/item/stock_parts/power_store))
 			continue
 
