@@ -80058,10 +80058,6 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
-"wCA" = (
-/obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
-/turf/closed/wall,
-/area/station/maintenance/port/aft)
 "wCC" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -111853,7 +111849,7 @@ lpq
 qCN
 gmX
 xrE
-wCA
+lIr
 lIr
 nRm
 eVW
