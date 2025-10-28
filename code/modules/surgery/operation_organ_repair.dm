@@ -321,7 +321,8 @@
 
 /datum/surgery_operation/organ/repair/ears/on_success(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
-	organ.deaf = 20
+	var/deaf_change = 40 SECONDS - organ.temporary_deafness
+	organ.adjust_temporary_deafness(deaf_change)
 	display_results(
 		surgeon,
 		organ.owner,

@@ -134,9 +134,7 @@
 /proc/init_subtypes(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/datum/path as anything in subtypesof(prototype))
-		if(path::abstract_type == path)
-			continue
+	for(var/path in valid_subtypesof(prototype))
 		L += new path()
 	return L
 
@@ -145,9 +143,7 @@
 /proc/init_paths(prototype, list/L)
 	if(!istype(L))
 		L = list()
-		for(var/datum/path as anything in subtypesof(prototype))
-			if(path::abstract_type == path)
-				continue
+		for(var/path in valid_subtypesof(prototype))
 			L += path
 		return L
 
@@ -155,9 +151,7 @@
 /proc/init_subtypes_w_path_keys(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/datum/path as anything in subtypesof(prototype))
-		if(path::abstract_type == path)
-			continue
+	for(var/path in valid_subtypesof(prototype))
 		L[path] = new path()
 	return L
 

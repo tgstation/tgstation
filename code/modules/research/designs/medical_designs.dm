@@ -1043,6 +1043,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_ears_volume
+	name = "Volume-adjusting Cybernetic Ears"
+	desc = "A pair of volume-adjusting cybernetic ears"
+	id = "cybernetic_ears_volume"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 4 SECONDS
+	materials = list(
+			/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+			/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+			/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/ears/cybernetic/volume
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cybernetic_ears_xray
 	name = "Wall-penetrating Cybernetic Ears"
 	desc = "A pair of wall-penetrating cybernetic ears."

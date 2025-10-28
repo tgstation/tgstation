@@ -22,15 +22,10 @@
 		return FALSE
 	if(HAS_TRAIT(patient, TRAIT_SUICIDED) || HAS_TRAIT(patient, TRAIT_HUSK) || HAS_TRAIT(patient, TRAIT_DEFIB_BLACKLISTED))
 		return FALSE
-	// Extra checks for limbed mobs, since they have brains and stuff
-	if(patient.has_limbs)
-		if(!has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
-			return FALSE
-		var/obj/item/organ/brain/brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
-		if(isnull(brain) || !brain_check(brain))
-			return FALSE
-	// Otherwise it's a fairly simple requirement
-	else if(!has_surgery_state(patient, SURGERY_SKIN_OPEN))
+	if(!has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
+		return FALSE
+	var/obj/item/organ/brain/brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(patient.has_limbs && (isnull(brain) || !brain_check(brain)))
 		return FALSE
 	return TRUE
 

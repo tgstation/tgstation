@@ -14,7 +14,7 @@
 	return image('icons/obj/medical/syringe.dmi', "implantcase-1")
 
 /datum/surgery_operation/basic/implant_removal/state_check(mob/living/patient)
-	return has_surgery_state(patient, SURGERY_SKIN_OPEN)
+	return has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
 
 /datum/surgery_operation/basic/implant_removal/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

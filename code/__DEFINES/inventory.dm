@@ -289,6 +289,8 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/gun/ballistic/bow/divine,
 	/obj/item/gun/ballistic/revolver/chaplain,
+	/obj/item/toy/plush/carpplushie/nullrod,
+	/obj/item/melee/energy/sword/nullrod,
 ))
 
 //Allowed list for all mining suits

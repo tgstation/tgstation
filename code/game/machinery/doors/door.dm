@@ -632,7 +632,13 @@
 
 /obj/machinery/door/morgue/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(drag_check)))
+
+// if dragging, block redirect_Attack_hand_from_turf
+/obj/machinery/door/morgue/proc/drag_check(mob/user)
+	if (user.pulling)
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/get_dumping_location()
 	return null

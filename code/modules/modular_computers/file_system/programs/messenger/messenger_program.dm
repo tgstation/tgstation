@@ -723,6 +723,7 @@
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
 
+
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
 	..()
