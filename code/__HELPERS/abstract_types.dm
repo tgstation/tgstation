@@ -1,3 +1,4 @@
+/// Returns a list of all abstract typepaths for all datums
 /proc/get_abstract_types()
 	var/static/list/abstracts
 	if(abstracts)
