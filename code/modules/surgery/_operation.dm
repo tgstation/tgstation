@@ -2,7 +2,7 @@
 /mob/living/proc/perform_surgery(mob/living/patient, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE)
 	if(combat_mode || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return NONE
-	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH ? patient : DOAFTER_SOURCE_SURGERY))))
+	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? patient : DOAFTER_SOURCE_SURGERY)))
 		patient.balloon_alert(surgeon, "already performing surgery!")
 		return ITEM_INTERACT_BLOCKING
 
