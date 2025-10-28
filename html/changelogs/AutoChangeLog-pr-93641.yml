@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "posters applied on walls fall off when the wall is destroyed"
+  - bugfix: "player mounted tram wall frame controller falls off when the wall is destroyed"
