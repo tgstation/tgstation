@@ -88,9 +88,7 @@ GLOBAL_LIST_INIT(blood_types, init_blood_types())
 /// Initializes the list of blood type singletons
 /proc/init_blood_types()
 	. = list()
-	for(var/datum/blood_type/blood_type_path as anything in subtypesof(/datum/blood_type))
-		if(blood_type_path::abstract_type == blood_type_path) // Don't instantiate abstract blood types
-			continue
+	for(var/datum/blood_type/blood_type_path as anything in valid_subtypesof(/datum/blood_type))
 		var/datum/blood_type/new_type = new blood_type_path()
 		.[new_type.id] = new_type
 

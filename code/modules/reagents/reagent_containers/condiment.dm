@@ -413,6 +413,7 @@
 	name = "condiment pack"
 	desc = "A small plastic pack with condiments to put on your food."
 	icon_state = "condi_empty"
+	initial_reagent_flags = parent_type::initial_reagent_flags | NO_SPLASH
 	volume = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)

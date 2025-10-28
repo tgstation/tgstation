@@ -419,6 +419,7 @@
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\_planes.dm"
 #include "code\__HELPERS\_string_lists.dm"
+#include "code\__HELPERS\abstract_types.dm"
 #include "code\__HELPERS\admin.dm"
 #include "code\__HELPERS\ai.dm"
 #include "code\__HELPERS\announcements.dm"
