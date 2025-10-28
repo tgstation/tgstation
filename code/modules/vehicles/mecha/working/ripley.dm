@@ -300,8 +300,12 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
+	can_be_triggered = TRUE
 	///Number of atoms we can store
 	var/cargo_capacity = 15
+
+/obj/item/mecha_parts/mecha_equipment/ejector/get_action_type()
+	return /datum/action/vehicle/sealed/mecha/equipment/cargo_module
 
 /obj/item/mecha_parts/mecha_equipment/ejector/attach()
 	. = ..()
