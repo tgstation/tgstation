@@ -1364,5 +1364,5 @@
 	name = "Experimental Dissection"
 	desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
 	id = "surgery_oldstation_dissection"
-	// surgery = /datum/surgery/advanced/experimental_dissection
+	surgery = /datum/surgery_operation/basic/dissection
 	research_icon_state = "surgery_chest"

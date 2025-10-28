@@ -35,4 +35,4 @@
 ///Ancient computer that starts with dissection to tell players they have it.
 /obj/machinery/computer/operating/oldstation
 	name = "ancient operating computer"
-	advanced_surgeries = list(/datum/surgery/advanced/experimental_dissection)
+	advanced_surgeries = list(/datum/surgery_operation/basic/dissection)

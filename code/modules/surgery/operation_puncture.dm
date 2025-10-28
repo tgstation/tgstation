@@ -1,4 +1,4 @@
-/datum/surgery_operation/repair_puncture
+/datum/surgery_operation/limb/repair_puncture
 	name = "realign blood vessels"
 	desc = "Realign a patient's torn blood vessels to prepare for sealing."
 	implements = list(
@@ -10,7 +10,7 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 
-/datum/surgery_operation/repair_puncture/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/repair_puncture/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
 	if(isnull(pierce_wound) || pierce_wound.blood_flow <= 0 || pierce_wound.mend_state)
 		return FALSE
@@ -18,7 +18,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/repair_puncture/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/repair_puncture/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -28,7 +28,7 @@
 	)
 	display_pain(limb.owner, "You feel a horrible stabbing pain in your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/repair_puncture/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/repair_puncture/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
 	pierce_wound?.adjust_blood_flow(-0.25)
 	limb.receive_damage(3, wound_bonus = CANT_WOUND, sharpness = tool.get_sharpness(), damage_source = tool)
@@ -52,17 +52,17 @@
 		span_notice("[surgeon] successfully realigns some of the blood vessels in  [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 
-/datum/surgery_operation/repair_puncture/on_failure(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/limb/repair_puncture/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	display_results(
 		surgeon,
-		operating_on,
-		span_notice("You jerk apart some of the blood vessels in [operating_on]'s [operation_args["target_zone"]]."),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [operating_on]'s [operation_args["target_zone"]] with [tool]!"),
-		span_notice("[surgeon] jerks apart some of the blood vessels in [operating_on]'s [operation_args["target_zone"]]."),
+		limb.owner,
+		span_notice("You jerk apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[surgeon] jerks apart some of the blood vessels in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
+		span_notice("[surgeon] jerks apart some of the blood vessels in [operlimb.ownerating_on]'s [limb.plaintext_zone]."),
 	)
 	limb.receive_damage(rand(4, 8), wound_bonus = 10, sharpness = SHARP_EDGED, damage_source = tool)
 
-/datum/surgery_operation/seal_veins
+/datum/surgery_operation/limb/seal_veins
 	name = "seal blood vessels"
 	desc = "Seal a patient's realigned blood vessels."
 	implements = list(
@@ -75,14 +75,14 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 
-/datum/surgery_operation/seal_veins/tool_check(mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/seal_veins/tool_check(mob/living/surgeon, obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
 
 	return tool.get_temperature() > 0
 
-/datum/surgery_operation/repair_puncture/state_check(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/seal_veins/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
 	if(isnull(pierce_wound) || pierce_wound.blood_flow <= 0 || !pierce_wound.mend_state)
 		return FALSE
@@ -90,7 +90,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/seal_veins/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/seal_veins/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -100,7 +100,7 @@
 	)
 	display_pain(limb.owner, "You feel a burning sensation in your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/seal_veins/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/seal_veins/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
 	pierce_wound?.adjust_blood_flow(-0.5)
 
