@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	armor_flag = ENERGY
-	var/temperature = -30 // reduce the body temperature by 50 points
+	var/temperature = -30 // reduce the body temperature by 30 points
 
 /obj/projectile/temp/is_hostile_projectile()
 	return temperature != 0 // our damage is done by cooling or heating (casting to boolean here)
