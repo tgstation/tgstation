@@ -1,0 +1,11 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Dullahans spawn with their intended organs"
+  - bugfix: "Dullahans can hear/see emotes"
+  - bugfix: "Dullahan heads properly have preferences applied to them"
+  - bugfix: "Dullahan heads no longer appear eyeless"
+  - bugfix: "Dullahans can hear things from their head regardless of if their body is nearby"
+  - bugfix: "Dullahans can hear TTS messages"
+  - bugfix: "Dullahans have a TTS voice"
+  - qol: "Dullahans have a head in the character preview, for the sake of easier customization"
