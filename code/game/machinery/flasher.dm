@@ -28,7 +28,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	. = ..()
 	if(mapload)
 		bulb = new(src)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()

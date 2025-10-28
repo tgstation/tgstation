@@ -79,7 +79,7 @@
 
 	register_context()
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	update_appearance()
 
 /obj/machinery/firealarm/Destroy()

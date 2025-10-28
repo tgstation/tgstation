@@ -62,7 +62,7 @@
 
 	setup_device(mapload)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	register_context()
 
 /obj/machinery/button/Destroy()

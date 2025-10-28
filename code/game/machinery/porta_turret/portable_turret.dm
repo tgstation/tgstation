@@ -962,7 +962,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	if(!mapload)
 		locked = FALSE
 	else
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	power_change() //Checks power and initial settings
 
 /obj/machinery/turretid/Destroy()

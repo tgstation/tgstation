@@ -128,7 +128,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	alarm_manager = new(src)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())

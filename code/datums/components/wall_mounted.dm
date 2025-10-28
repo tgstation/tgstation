@@ -70,8 +70,8 @@
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
 
-///Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_mounted component to the object.
-/obj/proc/find_and_hang_on_wall()
+///Checks object direction and then verifies if there's a support atom. Finally.
+/obj/proc/find_and_hang_on_atom()
 	if(istype(get_area(src), /area/shuttle))
 		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
 
