@@ -26,6 +26,8 @@
 	var/list/parts = list()
 	///items, structures and machineries of types that are in this list won't transfer their materials to the result
 	var/list/requirements_mats_blacklist
+	///if set, the materials in this list and their values will be subtracted from the result.
+	var/list/removed_mats
 	///like tool_behaviors but for reagents
 	var/list/chem_catalysts = list()
 	///where it shows up in the crafting UI
