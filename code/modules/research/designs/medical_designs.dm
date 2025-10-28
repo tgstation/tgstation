@@ -1205,7 +1205,7 @@
 /datum/design/surgery/tend_wounds_upgrade/femto
 	name = "Tend Wounds Upgrade"
 	surgery = /datum/surgery_operation/basic/tend_wounds/master
-	id = "surgery_heal_brute_upgrade_femto"
+	id = "surgery_heal_upgrade_femto"
 
 /datum/design/surgery/tend_wounds_combo
 	name = "Tend Wounds Combo"

@@ -1,6 +1,7 @@
 /datum/surgery_operation/basic/implant_removal
 	name = "implant removal"
-	desc = "Attempt to remove an implant from a patient."
+	desc = "Attempt to find and remove an implant from a patient. \
+		Any implant found will be destroyed unless an implant case is held or nearby."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1.5,
@@ -9,10 +10,10 @@
 	time = 6.4 SECONDS
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
-/datum/surgery_operation/basic/implant_removal/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	return image(/obj/item/hemostat)
+/datum/surgery_operation/basic/implant_removal/get_default_radial_image()
+	return image('icons/obj/medical/syringe.dmi', "implantcase-1")
 
-/datum/surgery_operation/basic/implant_removal/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/basic/implant_removal/state_check(mob/living/patient)
 	return has_surgery_state(patient, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/basic/implant_removal/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)

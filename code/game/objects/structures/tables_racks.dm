@@ -1293,7 +1293,7 @@
 		. += mutable_appearance(icon, air_tank.tank_holder_icon_state)
 	if (breath_mask?.loc == src)
 		. += mutable_appearance(icon, "mask_[breath_mask.icon_state]")
-	if (patient && !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
+	if (!patient || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return
 	. += mutable_appearance(icon, "[icon_state]_[computer ? "" : "un"]linked")
 	if (computer)

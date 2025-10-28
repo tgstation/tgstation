@@ -11,6 +11,9 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 
+/datum/surgery_operation/limb/plastic_surgery/get_default_radial_image()
+	return image(/obj/item/scalpel)
+
 /datum/surgery_operation/limb/plastic_surgery/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
@@ -107,6 +110,9 @@
 	preop_sound = 'sound/effects/blob/blobattack.ogg'
 	success_sound = 'sound/effects/blob/attackblob.ogg'
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
+
+/datum/surgery_operation/limb/add_plastic/get_default_radial_image()
+	return image(/obj/item/stack/sheet/plastic)
 
 /datum/surgery_operation/limb/add_plastic/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))

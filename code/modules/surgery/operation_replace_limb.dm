@@ -5,27 +5,46 @@
 		/obj/item/bodypart = 1,
 	)
 	time = 3.2 SECONDS
+	/// Radial slice datums for every augment type
+	VAR_PRIVATE/list/cached_augment_options
 
-/datum/surgery_operation/limb/replace_limb/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool)
+/datum/surgery_operation/limb/replace_limb/get_recommended_tool()
+	return "cybernetic limb"
+
+/datum/surgery_operation/limb/replace_limb/get_radial_options(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+	var/datum/radial_menu_choice/option = LAZYACCESS(cached_augment_options, tool.type)
+	if(!option)
+		option = new()
+		option.name = "augment with [tool.name]"
+		option.info = "Replace the patient's [limb.name] with [tool.name]."
+		option.image = image(tool)
+		LAZYSET(cached_augment_options, tool.type, option)
+
+	return option
+
+/datum/surgery_operation/limb/replace_limb/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, body_zone)
+	if(limb.body_zone != body_zone)
+		return FALSE
+	if(limb.body_zone != tool.body_zone)
+		return FALSE
+	return TRUE
+
+/datum/surgery_operation/limb/replace_limb/state_check(obj/item/bodypart/limb)
 	if(HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS))
 		return FALSE
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE
 	if(limb.bodypart_flags & BODYPART_UNREMOVABLE)
 		return FALSE
-	if(deprecise_zone(surgeon.zone_selected) != limb.body_zone)
-		return FALSE
-	if(limb.body_zone != tool.body_zone)
-		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/replace_limb/tool_check(obj/item/tool)
+/datum/surgery_operation/limb/replace_limb/tool_check(obj/item/bodypart/tool)
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
 		return FALSE
 	if(!isbodypart(tool))
 		return FALSE
-	var/obj/item/bodypart/part = tool
-	if(!IS_ROBOTIC_LIMB(part))
+	var/obj/item/bodypart/limb = tool
+	if(!IS_ROBOTIC_LIMB(limb))
 		return FALSE
 	return TRUE
 

@@ -51,7 +51,7 @@
 	)
 	display_pain(limb.owner, "The infection in your [limb.plaintext_zone] stings like hell! It feels like you're being stabbed!")
 
-/datum/surgery_operation/limb/debride/can_loop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/debride/can_loop(mob/living/patient, obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	var/datum/wound/burn/flesh/wound = locate() in limb.wounds
 	return ..() && wound?.infestation > 0
 

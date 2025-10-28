@@ -1,5 +1,6 @@
 /// Repairing specific organs
 /datum/surgery_operation/organ/repair
+	abstract_type = /datum/surgery_operation/organ/repair
 	name = "repair organ"
 	desc = "Repair a patient's damaged organ."
 	required_biotype = ORGAN_ORGANIC
@@ -16,10 +17,9 @@
 	if(operation_flags & OPERATION_LOOPING)
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 
-/datum/surgery_operation/organ/repair/organ_check(obj/item/organ/organ)
-	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
-
-/datum/surgery_operation/organ/repair/is_available(obj/item/organ/organ, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/organ/repair/state_check(obj/item/organ/organ)
+	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
+		return FALSE
 	if(organ.damage < (organ.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON)))
 		return FALSE
 	return TRUE
@@ -302,7 +302,7 @@
 	heal_to_percent = 0
 	repeatable = TRUE
 
-/datum/surgery_operation/organ/repair/ears/organ_check(obj/item/organ/organ)
+/datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/organ)
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))
@@ -365,14 +365,14 @@
 	heal_to_percent = 0
 	repeatable = TRUE
 
-/datum/surgery_operation/organ/repair/eyes/organ_check(obj/item/organ/organ)
+/datum/surgery_operation/organ/repair/eyes/state_check(obj/item/organ/organ)
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/organ/repair/eyes/get_default_radial_image(obj/item/organ/organ, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/organ/repair/eyes/get_default_radial_image()
 	return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_eyes")
 
 /datum/surgery_operation/organ/repair/eyes/on_preop(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -438,7 +438,7 @@
 	failure_damage_percent = 0.3
 	repeatable = TRUE
 
-/datum/surgery_operation/organ/repair/brain/organ_check(obj/item/organ/brain/organ)
+/datum/surgery_operation/organ/repair/brain/state_check(obj/item/organ/brain/organ)
 	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED)
 
 /datum/surgery_operation/organ/repair/brain/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

@@ -14,21 +14,26 @@
 
 	var/list/operations = list()
 	var/list/radial_operations = list()
+	var/operating_zone = deprecise_zone(zone_selected)
 	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
 		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && patient.body_position != LYING_DOWN)
 			continue
 		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
 			continue
-		var/atom/movable/operate_on = operation.get_operation_target(src, patient, potential_tool)
+		var/atom/movable/operate_on = operation.get_operation_target(patient, operating_zone)
 		if(isnull(operate_on))
 			continue
-		if(!operation.check_availability(operate_on, src, potential_tool))
+		if(!operation.check_availability(patient, operate_on, src, potential_tool, operating_zone))
 			continue
-		for(var/datum/radial_menu_choice/radial_slice, option_info in operation.get_radial_options(operate_on, src, potential_tool))
+		var/potential_options = operation.get_radial_options(operate_on, src, potential_tool)
+		if(!islist(potential_options))
+			potential_options = list(potential_options)
+		for(var/datum/radial_menu_choice/radial_slice as anything in potential_options)
 			if(radial_operations[radial_slice])
 				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation.type]'.")
 				continue
-			operations[radial_slice] = list("operation" = operation, "target" = operate_on, "force_fail" = intentionally_fail) + option_info
+			var/option_specific_info = list("[OPERATION_TARGET]" = operate_on) + (potential_options[radial_slice] || list("[OPERATION_ACTION]" = "default"))
+			operations[radial_slice] = list(operation, option_specific_info)
 			radial_operations[radial_slice] = radial_slice
 
 	if(!length(operations))
@@ -50,11 +55,15 @@
 		radius = 56,
 		custom_check = CALLBACK(src, PROC_REF(surgery_check), potential_tool),
 	)
-	if(!picked)
-		return ITEM_INTERACT_BLOCKING // cancelled
+	if(isnull(picked))
+		return ITEM_INTERACT_BLOCKING
 
-	var/datum/surgery_operation/picked_operation = operations[picked]["operation"]
-	return picked_operation.try_perform(operations[picked]["target"], src, potential_tool, operations[picked])
+	var/datum/surgery_operation/picked_op = operations[picked][1]
+	var/list/op_info = operations[picked][2]
+	op_info[OPERATION_TARGET_ZONE] = operating_zone
+	op_info[OPERATION_FORCE_FAIL] = intentionally_fail
+
+	return picked_op.try_perform(op_info[OPERATION_TARGET], src, potential_tool, op_info)
 
 /// Callback for checking if the surgery radial can be kept open
 /mob/living/proc/surgery_check(obj/item/tool)
@@ -71,7 +80,7 @@
 		var/obj/item/bodypart/part = get_bodypart(target_zone)
 		state = bitfield_to_list(part?.surgery_state, SURGERY_STATE_READABLE)
 		if(!length(state))
-			state += HAS_TRAIT(part, TRAIT_READY_TO_OPERATE) ? "Ready for surgery" : "State normal"
+			state += part ? (HAS_TRAIT(part, TRAIT_READY_TO_OPERATE) ? "Ready for surgery" : "State normal") : "Bodypart missing"
 	else
 		var/datum/status_effect/basic_surgery_state/state_holder = has_status_effect(__IMPLIED_TYPE__)
 		state = bitfield_to_list(state_holder?.surgery_state, SURGERY_STATE_READABLE)
@@ -196,22 +205,32 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Checks to see if this operation can be performed
  * This is the main entry point for checking availability
  */
-/datum/surgery_operation/proc/check_availability(atom/movable/operating_on, mob/living/surgeon, tool)
+/datum/surgery_operation/proc/check_availability(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_BE_PURE(TRUE)
 
-	var/mob/living/patient = get_patient(operating_on)
-
-	if(isnull(patient) || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
+	if(isnull(patient) || isnull(operating_on))
 		return FALSE
 
 	if(get_tool_quality(tool) <= 0)
 		return FALSE
 
-	if(!is_available(operating_on))
+	if(!is_available(operating_on, body_zone))
+		return FALSE
+
+	if(!state_check(operating_on))
 		return FALSE
 
 	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(get_working_zone(operating_on)))
 		return FALSE
 
+	return snowflake_check_availability(operating_on, surgeon, tool, body_zone)
+
+/**
+ * Snowflake checks for surgeries which need many interconnected conditions to be met
+ */
+/datum/surgery_operation/proc/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
 	return TRUE
 
 /**
@@ -224,18 +243,16 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_tool_quality(tool = IMPLEMENT_HAND)
 	if(!length(implements))
 		return 1
-	if(!tool_check(tool))
-		return 0
 	if(!isitem(tool))
 		return implements[tool]
+	if(!tool_check(tool))
+		return 0
 
 	var/obj/item/realtool = tool
 	return (realtool.toolspeed) * (implements[realtool.tool_behaviour] || is_type_in_list(realtool, implements, zebra = TRUE) || 0)
 
 /**
- * Return an assoc list or a list of radial slices to display when this operation is available
- *
- * Operations are "available" if they pass the check_availability() check, ie the bodypart is in a correct state
+ * Return a radial slice, a list of radial slices, or an assoc list of radial slice to operation info
  *
  * By default it returns a single option with the operation name and description,
  * but you can override this proc to return multiple options for one operation, like selecting which organ to operate on.
@@ -243,31 +260,29 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_radial_options(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
 	if(!main_option)
 		main_option = new()
-		main_option.image = get_default_radial_image(operating_on, surgeon, tool)
+		main_option.image = get_default_radial_image()
 		main_option.name = name
 		main_option.info = desc
 
-	var/list/result = list()
-	result[main_option] = list("[OPERATION_ACTION]" = "default")
-	return result
+	return main_option
 
 /**
- * Checks to see if this operation can be performed
- * You can override this to add more specific checks, such as if a tool can be used on the target
- * or if the surgeon has a specific trait / skill
- *
- * Don't call this, call check_availability() instead
+ * Checks to see if this operation can be performed on the provided target
  */
-/datum/surgery_operation/proc/is_available(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/proc/is_available(atom/movable/operating_on, body_zone)
 	return TRUE
+
+/**
+ * Specifically concerns itself with checking the operated movable's state to see if the operation can be performed
+ */
+/datum/surgery_operation/proc/state_check(atom/movable/operating_on)
+	return FALSE
 
 /**
  * Checks to see if the provided tool is valid for this operation
  * You can override this to add more specific checks, such as checking sharpness
- *
- * Tool is only asserted to be an item if IMPLEMENT_HAND is not used
  */
-/datum/surgery_operation/proc/tool_check(tool)
+/datum/surgery_operation/proc/tool_check(obj/item/tool)
 	return TRUE
 
 /**
@@ -285,8 +300,20 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	return null
 
 /// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
-/datum/surgery_operation/proc/get_default_radial_image(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/proc/get_default_radial_image()
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
+
+/// Helper to get a generic limb radial image based on body zone
+/datum/surgery_operation/proc/get_generic_limb_radial_image(body_zone)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(body_zone == BODY_ZONE_HEAD || body_zone == BODY_ZONE_CHEST || body_zone == BODY_ZONE_PRECISE_EYES || body_zone == BODY_ZONE_PRECISE_MOUTH)
+		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_[body_zone]")
+	if(body_zone == BODY_ZONE_L_ARM || body_zone == BODY_ZONE_R_ARM)
+		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_arms")
+	if(body_zone == BODY_ZONE_L_LEG || body_zone == BODY_ZONE_R_LEG)
+		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_legs")
+	return get_default_radial_image()
 
 /**
  * Helper for constructing overlays to apply to a radial image
@@ -299,6 +326,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Returns a list of images
  */
 /datum/surgery_operation/proc/add_radial_overlays(list/overlay_icons)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(!islist(overlay_icons))
 		overlay_icons = list(overlay_icons)
 
@@ -382,14 +411,16 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  *
  * Returns the atom/movable being operated on
  */
-/datum/surgery_operation/proc/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
-	return HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE) ? patient : null
+/datum/surgery_operation/proc/get_operation_target(mob/living/patient, body_zone)
+	return patient
 
 /**
  * Called by operating computers to hint that this surgery could come next given the target's current state
  */
 /datum/surgery_operation/proc/show_as_next_step(mob/living/potential_patient, body_zone)
-	return FALSE
+	var/atom/movable/operate_on = get_operation_target(potential_patient, body_zone)
+	return !isnull(operate_on) && is_available(operate_on, body_zone) && state_check(operate_on)
+
 
 /**
  * The actual chain of performing the operation
@@ -397,18 +428,19 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * * operating_on - The atom being operated on, probably a bodypart or occasionally a mob directly
  * * surgeon - The mob performing the operation
  * * tool - The tool being used to perform the operation. CAN BE A STRING, ie, IMPLEMENT_HAND, be careful
- * * operation_args - Additional arguments passed from the radial menu selection
+ * * operation_args - Additional arguments passed into the operation. Contains largely niche info that only certain operations care about or can be accessed through other means
  *
  * Returns an item interaction flag - intended to be invoked from the interaction chain
  */
 /datum/surgery_operation/proc/try_perform(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args = list())
-	if(!check_availability(operating_on, surgeon, tool))
-		return ITEM_INTERACT_BLOCKING
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/mob/living/patient = get_patient(operating_on)
 
+	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
+		return ITEM_INTERACT_BLOCKING
 	if(!start_operation(operating_on, surgeon, tool, operation_args))
 		return ITEM_INTERACT_BLOCKING
 
-	var/mob/living/patient = get_patient(operating_on)
 	var/was_sleeping = (patient.stat != DEAD && HAS_TRAIT(patient, TRAIT_KNOCKEDOUT))
 	var/result = NONE
 
@@ -423,7 +455,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			// Actual delay is capped - think of the excess time as being added to failure chance instead
 			delay = time * min(operation_args[OPERATION_SPEED], SURGERY_MODIFIER_FAILURE_THRESHOLD),
 			target = patient,
-			extra_checks = CALLBACK(src, PROC_REF(operate_check), operating_on, surgeon, tool, operation_args),
+			extra_checks = CALLBACK(src, PROC_REF(operate_check), patient, operating_on, surgeon, tool, operation_args),
 			// You can only operate on one mob at a time without a hippocratic oath
 			interaction_key = HAS_TRAIT(surgeon, TRAIT_HIPPOCRATIC_OATH) ? patient : DOAFTER_SOURCE_SURGERY,
 		))
@@ -462,7 +494,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			result |= ITEM_INTERACT_SUCCESS
 			update_surgery_mood(patient, SURGERY_STATE_SUCCESS)
 
-	while ((operation_flags & OPERATION_LOOPING) && can_loop(operating_on, surgeon, tool, operation_args))
+	while ((operation_flags & OPERATION_LOOPING) && can_loop(patient, operating_on, surgeon, tool, operation_args))
 
 	SEND_SIGNAL(patient, COMSIG_LIVING_SURGERY_FINISHED, src, operating_on, tool)
 
@@ -472,14 +504,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	return result
 
 /// Called after an operation to check if it can be repeated/looped
-/datum/surgery_operation/proc/can_loop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/proc/can_loop(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	PROTECTED_PROC(TRUE)
-	return operate_check(operating_on, surgeon, tool, operation_args)
+	return operate_check(patient, operating_on, surgeon, tool, operation_args)
 
 /// Called during the do-after to check if the operation can continue
-/datum/surgery_operation/proc/operate_check(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+/datum/surgery_operation/proc/operate_check(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	PROTECTED_PROC(TRUE)
-	return check_availability(operating_on, surgeon, tool)
+	return check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE])
 
 /**
  * Allows for any extra checks or setup when the operation starts
@@ -495,6 +527,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Used to display messages to the surgeon and patient
 /datum/surgery_operation/proc/display_results(mob/living/surgeon, mob/living/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	surgeon.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(target_detailed)
 		return
@@ -510,6 +543,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Display pain message to the target based on their traits and condition
 /datum/surgery_operation/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!pain_message)
 		return
 
@@ -558,6 +592,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Helper for getting an operating compupter the patient is linked to
 /datum/surgery_operation/proc/locate_operating_computer(atom/movable/operating_on)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/turf/operating_turf = get_turf(operating_on)
 	if(isnull(operating_turf))
 		return null
@@ -702,60 +737,52 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		TRUE, //By default the patient will notice if the wrong thing has been cut
 	)
 
-/// Simple surgery which works on ANY mob
+/**
+ * Basic operations are a simple base type for surgeries that
+ * 1. Target a specific zone on humans
+ * 2. Work on non-humans
+ *
+ * Use this as a bsae if your surgery needs to work on everyone
+ *
+ * "operating_on" is the mob being operated on, be it carbon or non-carbon.
+ * If the mob is carbon, we check the relevant bodypart for surgery states and traits. No bodypart, no operation.
+ * If the mob is non-carbon, we just check the mob directly.
+ */
 /datum/surgery_operation/basic
 	abstract_type = /datum/surgery_operation/basic
 	/// Biotype required to perform this operation
 	var/required_biotype = MOB_ORGANIC
-	/// When working on carbons, what body zone are we working on
-	var/carbon_zone = BODY_ZONE_CHEST
+	/// The zone we are expected to be working on, even if the target is a non-carbon mob
+	var/target_zone = BODY_ZONE_CHEST
 	/// When working on carbons, what bodypart are we working on
 	var/required_bodytype = NONE
 
-/datum/surgery_operation/basic/show_as_next_step(mob/living/potential_patient, body_zone)
-	if(!HAS_TRAIT(potential_patient, TRAIT_READY_TO_OPERATE))
-		return FALSE
-	if(required_biotype && !(potential_patient.mob_biotypes & required_biotype))
-		return FALSE
-	if(potential_patient.has_limbs)
-		if(body_zone != carbon_zone)
-			return FALSE
-		var/obj/item/bodypart/limb = potential_patient.get_bodypart(body_zone)
-		if(isnull(limb) || !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
-			return FALSE
-		if(required_bodytype && !(limb.bodytype & required_bodytype))
-			return FALSE
+/datum/surgery_operation/basic/get_working_zone(atom/movable/operating_on)
+	return target_zone
 
-	return is_available(potential_patient)
+/datum/surgery_operation/basic/is_available(mob/living/patient, body_zone)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-/datum/surgery_operation/basic/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
-	SHOULD_NOT_OVERRIDE(TRUE) // you are looking for is_available()
-
-	. = ..()
-	if(!.)
+	if(body_zone != target_zone)
 		return FALSE
-
-	if(!isliving(operating_on))
-		stack_trace("Basic operation being performed on non-living!")
+	if(!HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return FALSE
-
-	var/mob/living/living_target = operating_on
-	if(required_biotype && !(living_target.mob_biotypes & required_biotype))
+	if(required_biotype && !(patient.mob_biotypes & required_biotype))
 		return FALSE
-	if(!living_target.has_limbs)
+	if(!patient.has_limbs)
 		return TRUE
 
-	var/obj/item/bodypart/carbon_part = living_target.get_bodypart(carbon_zone)
-	if(!isnull(carbon_part))
-		if(!HAS_TRAIT(carbon_part, TRAIT_READY_TO_OPERATE))
-			return FALSE
-		if(required_bodytype && !(carbon_part.bodytype & required_bodytype))
-			return FALSE
-
+	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
+	if(isnull(carbon_part))
+		return FALSE
+	if(!HAS_TRAIT(carbon_part, TRAIT_READY_TO_OPERATE))
+		return FALSE
+	if(required_bodytype && !(carbon_part.bodytype & required_bodytype))
+		return FALSE
 	return TRUE
 
 /datum/surgery_operation/basic/proc/has_surgery_state(mob/living/patient, state = SURGERY_SKIN_OPEN)
-	var/obj/item/bodypart/carbon_part = patient.get_bodypart(carbon_zone)
+	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
 		return HAS_SURGERY_STATE(state_holder?.surgery_state, state)
@@ -763,58 +790,39 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	return LIMB_HAS_SURGERY_STATE(carbon_part, state)
 
 /datum/surgery_operation/basic/proc/has_any_surgery_state(mob/living/patient, state = ALL)
-	var/obj/item/bodypart/carbon_part = patient.get_bodypart(carbon_zone)
+	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
 		return HAS_ANY_SURGERY_STATE(state_holder?.surgery_state, state)
 
 	return LIMB_HAS_ANY_SURGERY_STATE(carbon_part, state)
 
-/// Operation that specifically targets limbs
+/**
+ * Limb opterations are a base focused on the limb the surgeon is targeting
+ *
+ * Use this if your surgery targets a specific limb on the mob
+ *
+ * "operating_on" is asserted to be a bodypart - the bodypart the surgeon is targeting.
+ * If there is no bodypart, there's no operation.
+ */
 /datum/surgery_operation/limb
 	abstract_type = /datum/surgery_operation/limb
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
 
-/datum/surgery_operation/limb/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
-	return patient.get_bodypart(deprecise_zone(surgeon.zone_selected))
+/datum/surgery_operation/limb/get_operation_target(mob/living/patient, body_zone)
+	return patient.get_bodypart(body_zone)
 
-/datum/surgery_operation/limb/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool = IMPLEMENT_HAND)
-	SHOULD_NOT_OVERRIDE(TRUE) // you are looking for is_available()
+/datum/surgery_operation/limb/is_available(obj/item/bodypart/limb, body_zone)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	. = ..()
-	if(!.)
+	if(limb.body_zone != body_zone)
 		return FALSE
-
-	if(!isbodypart(operating_on))
-		stack_trace("Limb operation being performed on non-limb!")
-		return FALSE
-
-	var/obj/item/bodypart/limb = operating_on
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
 	if(!HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
 		return FALSE
-	if(!state_check(limb))
-		return FALSE
 
-	return TRUE
-
-/**
- * Specifically concerns itself with checking limb state to see if the operation can be performed
- */
-/datum/surgery_operation/limb/proc/state_check(obj/item/bodypart/limb)
-	return FALSE
-
-/datum/surgery_operation/limb/show_as_next_step(mob/living/potential_patient, body_zone)
-	var/obj/item/bodypart/limb = potential_patient.get_bodypart(body_zone)
-	if(isnull(limb) || !HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
-		return FALSE
-	if(required_bodytype && !(limb.bodytype & required_bodytype))
-		return FALSE
-	if(!state_check(limb))
-		return FALSE
-	// melbert todo we need some zone checks here
 	return TRUE
 
 /datum/surgery_operation/limb/get_patient(obj/item/bodypart/limb)
@@ -831,17 +839,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	return ..()
 
-/// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
-/datum/surgery_operation/limb/get_default_radial_image(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
-	if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
-		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_[limb.body_zone]")
-	if(limb.body_zone == BODY_ZONE_L_ARM || limb.body_zone == BODY_ZONE_R_ARM)
-		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_arms")
-	if(limb.body_zone == BODY_ZONE_L_LEG || limb.body_zone == BODY_ZONE_R_LEG)
-		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_legs")
-	return ..()
-
-/// Operation that specifically targets organs
+/**
+ * Organ operations are a base focused on a specific organ typepath
+ *
+ * Use this if your surgery targets a specific organ type
+ *
+ * "operating_on" is asserted to be an organ of the type defined by target_type.
+ * No organ of that type, no operation.
+ */
 /datum/surgery_operation/organ
 	abstract_type = /datum/surgery_operation/organ
 	/// Biotype required to perform this operation
@@ -849,7 +854,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	/// The type of organ this operation can target
 	var/obj/item/organ/target_type
 
-/datum/surgery_operation/organ/get_operation_target(mob/living/surgeon, mob/living/patient, obj/item/tool = IMPLEMENT_HAND)
+/datum/surgery_operation/organ/get_default_radial_image()
+	return get_generic_limb_radial_image(target_type::zone)
+
+/datum/surgery_operation/organ/get_operation_target(mob/living/patient, body_zone)
 	return patient.get_organ_by_type(target_type)
 
 /datum/surgery_operation/organ/get_patient(obj/item/organ/organ)
@@ -858,41 +866,16 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/get_working_zone(obj/item/organ/organ)
 	return organ.zone
 
-/datum/surgery_operation/organ/check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
-	. = ..()
-	if(!.)
-		return FALSE
+/datum/surgery_operation/organ/is_available(obj/item/organ/organ, body_zone)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(!isorgan(operating_on))
-		stack_trace("Organ operation being performed on non-organ!")
+	if(organ.zone != body_zone)
 		return FALSE
-
-	var/obj/item/organ/organ = operating_on
 	if(required_biotype && !(organ.organ_flags & required_biotype))
 		return FALSE
 	if(!HAS_TRAIT(organ.bodypart_owner, TRAIT_READY_TO_OPERATE))
 		return FALSE
-	if(!organ_check(organ))
-		return FALSE
 
-	return TRUE
-
-/**
- * Specifically concerns itself with checking organ state to see if the operation can be performed
- *
- * Also checks limb state if necessary (via organ.bodypart_owner)
- */
-/datum/surgery_operation/organ/proc/organ_check(obj/item/organ/organ)
-	return FALSE
-
-/datum/surgery_operation/organ/show_as_next_step(mob/living/potential_patient, body_zone)
-	var/obj/item/organ/organ = potential_patient.get_organ_by_type(target_type)
-	if(isnull(organ) || organ.bodypart_owner.body_zone != body_zone || !HAS_TRAIT(organ.bodypart_owner, TRAIT_READY_TO_OPERATE))
-		return FALSE
-	if(required_biotype && !(organ.organ_flags & required_biotype))
-		return FALSE
-	if(!organ_check(organ))
-		return FALSE
 	return TRUE
 
 // melbert todos

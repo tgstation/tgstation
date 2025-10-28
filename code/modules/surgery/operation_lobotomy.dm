@@ -19,7 +19,7 @@
 	// Require sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
-/datum/surgery_operation/organ/lobotomy/organ_check(obj/item/organ/brain/organ)
+/datum/surgery_operation/organ/lobotomy/state_check(obj/item/organ/brain/organ)
 	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/lobotomy/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

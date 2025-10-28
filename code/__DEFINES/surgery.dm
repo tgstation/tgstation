@@ -148,5 +148,13 @@ DEFINE_BITFIELD(operation_flags, list(
 #define GET_FAILURE_CHANCE(base_time, speed_mod) (FAILURE_CHANCE_PER_SECOND * (((speed_mod * (base_time)) - (SURGERY_MODIFIER_FAILURE_THRESHOLD * (base_time))) / (1 SECONDS)))
 
 // Operation argument indexes
+/// Total speed/failure modifier applied to the operation
 #define OPERATION_SPEED "speed_modifier"
+/// The action being performed, simply "default" for 95% of surgeries
 #define OPERATION_ACTION "action"
+/// Whether the operation should automatically fail
+#define OPERATION_FORCE_FAIL "force_fail"
+/// The body zone being targeted by the operation
+#define OPERATION_TARGET_ZONE "target_zone"
+/// The specific target of the operation, usually a bodypart or organ, generally redundant
+#define OPERATION_TARGET "target"

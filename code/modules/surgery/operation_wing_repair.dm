@@ -10,10 +10,10 @@
 	time = 20 SECONDS
 	target_type = /obj/item/organ/wings/moth
 
-/datum/surgery_operation/organ/fix_wings/get_default_radial_image(obj/item/organ/wings/moth/organ, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/organ/fix_wings/get_default_radial_image()
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")
 
-/datum/surgery_operation/organ/fix_wings/organ_check(obj/item/organ/wings/moth/organ)
+/datum/surgery_operation/organ/fix_wings/state_check(obj/item/organ/wings/moth/organ)
 	if(!organ.burnt)
 		return FALSE
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))

@@ -7,7 +7,10 @@
 	)
 	time = 1.6 SECONDS
 
-/datum/surgery_operation/basic/core_removal/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/basic/core_removal/get_default_radial_image()
+	return image(/mob/living/basic/slime)
+
+/datum/surgery_operation/basic/core_removal/state_check(mob/living/patient)
 	return isslime(patient) && patient.stat == DEAD && has_surgery_state(patient, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/basic/core_removal/on_preop(mob/living/basic/slime/patient, mob/living/surgeon, obj/item/tool, list/operation_args)

@@ -6,10 +6,8 @@
 	operation_flags = OPERATION_LOOPING
 	success_sound = 'sound/machines/card_slide.ogg'
 
-/datum/surgery_operation/limb/filter_blood/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/blood_filter)
-	return base
+/datum/surgery_operation/limb/filter_blood/get_default_radial_image()
+	return image(/obj/item/blood_filter)
 
 /datum/surgery_operation/limb/filter_blood/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
@@ -18,7 +16,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/filter_blood/can_loop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/filter_blood/can_loop(mob/living/patient, obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	return ..() && has_filterable_chems(limb.owner, tool)
 
 /datum/surgery_operation/limb/filter_blood/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)

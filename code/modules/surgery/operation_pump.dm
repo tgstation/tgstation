@@ -6,8 +6,12 @@
 	)
 	time = 2 SECONDS
 	required_biotype = ORGAN_ORGANIC
+	target_type = /obj/item/organ/stomach
 
-/datum/surgery_operation/organ/stomach_pump/organ_check(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/organ/stomach_pump/get_default_radial_image()
+	return image(/atom/movable/screen/alert/disgusted)
+
+/datum/surgery_operation/organ/stomach_pump/state_check(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool)
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(HAS_TRAIT(organ.owner, TRAIT_HUSK))

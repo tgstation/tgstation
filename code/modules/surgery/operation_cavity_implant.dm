@@ -16,7 +16,7 @@
 		/obj/item/transfer_valve,
 	))
 
-/datum/surgery_operation/limb/cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/cavity_implant/get_default_radial_image()
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(image('icons/hud/screen_gen.dmi', "arrow_large_still"))
 	return base
@@ -83,10 +83,14 @@
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/limb/undo_cavity_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(list(/obj/item/hemostat, limb.cavity_item))
-	return base
+/datum/surgery_operation/limb/undo_cavity_implant/get_radial_options(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+	// Not bothering to cache this as the chance of hitting the same cavity item in the same round is rather low
+	var/datum/radial_menu_choice/option = new()
+	option.name = "remove [limb.cavity_item]"
+	option.info = "Replace the [limb.cavity_item] embededd in the patient's chest cavity."
+	option.image = get_generic_limb_radial_image(BODY_ZONE_CHEST)
+	option.image.overlays += add_radial_overlays(limb.cavity_item)
+	return option
 
 /datum/surgery_operation/limb/undo_cavity_implant/state_check(obj/item/bodypart/chest/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))

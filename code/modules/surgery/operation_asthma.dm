@@ -12,10 +12,10 @@
 	/// The amount of inflammation a failure or success of this surgery will reduce.
 	var/inflammation_reduction = 75
 
-/datum/surgery_operation/organ/asthmatic_bypass/organ_check(obj/item/organ/organ)
+/datum/surgery_operation/organ/asthmatic_bypass/state_check(obj/item/organ/organ)
 	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
 
-/datum/surgery_operation/organ/asthmatic_bypass/organ_check(obj/item/organ/organ)
+/datum/surgery_operation/organ/asthmatic_bypass/state_check(obj/item/organ/organ)
 	if(!organ.owner.has_quirk(/datum/quirk/item_quirk/asthma))
 		return FALSE
 	return TRUE

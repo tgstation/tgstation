@@ -14,7 +14,10 @@
 	target_type = /obj/item/organ/brain
 	required_biotype = ORGAN_ORGANIC
 
-/datum/surgery_operation/organ/brainwash/organ_check(obj/item/organ/organ)
+/datum/surgery_operation/limb/brainwash/get_default_radial_image()
+	return image(/atom/movable/screen/alert/hypnosis)
+
+/datum/surgery_operation/organ/brainwash/state_check(obj/item/organ/organ)
 	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)

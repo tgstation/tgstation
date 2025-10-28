@@ -7,6 +7,9 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	operation_flags = OPERATION_MORBID
 
+/datum/surgery_operation/limb/autopsy/get_default_radial_image()
+	return image(/obj/item/autopsy_scanner)
+
 /datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
 		return FALSE

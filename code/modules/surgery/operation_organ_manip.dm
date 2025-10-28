@@ -30,6 +30,9 @@
 	. = ..()
 	implements = remove_implements + insert_implements
 
+/datum/surgery_operation/limb/organ_manipulation/get_recommended_tool()
+	return "[..()] / organ"
+
 /// Checks that the passed organ can be inserted/removed
 /datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return TRUE
@@ -74,7 +77,7 @@
 		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
 		if(!option)
 			option = new()
-			option.image = get_default_radial_image(limb, surgeon, organ)
+			option.image = get_generic_limb_radial_image(limb)
 			option.image.overlays += add_radial_overlays(organ)
 			option.name = "remove [organ.name]"
 			option.info = "Remove [organ.name] from the patient."
@@ -95,7 +98,7 @@
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
 	if(!option)
 		option = new()
-		option.image = get_default_radial_image(limb, surgeon, organ)
+		option.image = get_generic_limb_radial_image(limb)
 		option.image.overlays += add_radial_overlays(list(image('icons/hud/screen_gen.dmi', "arrow_large_still"), organ))
 		option.name = "insert [organ.name]"
 		option.info = "insert [organ.name] into the patient."
@@ -105,7 +108,7 @@
 	result[option] = list("[OPERATION_ACTION]" = "insert")
 	return result
 
-/datum/surgery_operation/limb/organ_manipulation/operate_check(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+/datum/surgery_operation/limb/organ_manipulation/operate_check(mob/living/patient, obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	if(!..())
 		return FALSE
 

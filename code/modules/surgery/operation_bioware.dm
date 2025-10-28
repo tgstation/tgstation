@@ -12,10 +12,8 @@
 	/// Zone to operate on for this bioware
 	var/required_zone = BODY_ZONE_CHEST
 
-/datum/surgery_operation/limb/bioware/get_default_radial_image(obj/item/bodypart/limb, mob/living/surgeon, tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(image('icons/hud/implants.dmi', "lighting_bolt"))
-	return base
+/datum/surgery_operation/limb/bioware/get_default_radial_image()
+	return image('icons/hud/implants.dmi', "lighting_bolt")
 
 /datum/surgery_operation/limb/bioware/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED|SURGERY_SKIN_OPEN))

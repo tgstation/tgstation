@@ -6,10 +6,8 @@
 	)
 	time = 1.6 SECONDS
 
-/datum/surgery_operation/limb/add_dental_implant/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(image('icons/hud/implants.dmi', "reagents"))
-	return base
+/datum/surgery_operation/limb/add_dental_implant/get_default_radial_image()
+	return image('icons/hud/implants.dmi', "reagents")
 
 /datum/surgery_operation/limb/add_dental_implant/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))

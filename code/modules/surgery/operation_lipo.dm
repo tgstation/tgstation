@@ -17,10 +17,8 @@
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/limb/lipoplasty/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(list(/obj/item/food/meat/slab/human, /obj/item/scalpel))
-	return base
+/datum/surgery_operation/limb/lipoplasty/get_default_radial_image()
+	return image(/obj/item/food/meat/slab/human)
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match

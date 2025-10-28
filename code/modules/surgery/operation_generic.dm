@@ -17,10 +17,8 @@
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 
-/datum/surgery_operation/limb/incise_skin/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/scalpel)
-	return base
+/datum/surgery_operation/limb/incise_skin/get_default_radial_image()
+	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/limb/incise_skin/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
@@ -68,10 +66,8 @@
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 
-/datum/surgery_operation/limb/retract_skin/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/retractor)
-	return base
+/datum/surgery_operation/limb/retract_skin/get_default_radial_image()
+	return image(/obj/item/retractor)
 
 /datum/surgery_operation/limb/retract_skin/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
@@ -106,10 +102,8 @@
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
 
-/datum/surgery_operation/limb/close_skin/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/cautery)
-	return base
+/datum/surgery_operation/limb/close_skin/get_default_radial_image()
+	return image(/obj/item/cautery)
 
 /datum/surgery_operation/limb/close_skin/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
@@ -155,10 +149,8 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
-/datum/surgery_operation/limb/clamp_bleeders/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/hemostat)
-	return base
+/datum/surgery_operation/limb/clamp_bleeders/get_default_radial_image()
+	return image(/obj/item/hemostat)
 
 /datum/surgery_operation/limb/clamp_bleeders/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_UNCLAMPED)
@@ -195,10 +187,8 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
-/datum/surgery_operation/limb/unclamp_bleeders/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/hemostat)
-	return base
+/datum/surgery_operation/limb/unclamp_bleeders/get_default_radial_image()
+	return image(/obj/item/hemostat)
 
 /datum/surgery_operation/limb/unclamp_bleeders/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED))
@@ -248,10 +238,8 @@
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 
-/datum/surgery_operation/limb/saw_bones/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/circular_saw)
-	return base
+/datum/surgery_operation/limb/saw_bones/get_default_radial_image()
+	return image(/obj/item/circular_saw)
 
 /datum/surgery_operation/limb/saw_bones/state_check(obj/item/bodypart/limb)
 	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
@@ -306,10 +294,8 @@
 	)
 	time = 4 SECONDS
 
-/datum/surgery_operation/limb/fix_bones/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/stack)
-	return base
+/datum/surgery_operation/limb/fix_bones/get_default_radial_image()
+	return image(/obj/item/stack/medical/bone_gel)
 
 /datum/surgery_operation/limb/fix_bones/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
@@ -350,10 +336,8 @@
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/limb/drill_bones/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/surgicaldrill)
-	return base
+/datum/surgery_operation/limb/drill_bones/get_default_radial_image()
+	return image(/obj/item/surgicaldrill)
 
 /datum/surgery_operation/limb/drill_bones/state_check(obj/item/bodypart/limb)
 	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
@@ -398,10 +382,8 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 
-/datum/surgery_operation/limb/incise_organs/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/scalpel)
-	return base
+/datum/surgery_operation/limb/incise_organs/get_default_radial_image()
+	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/limb/incise_organs/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))

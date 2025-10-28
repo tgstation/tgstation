@@ -16,10 +16,8 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
-/datum/surgery_operation/limb/mechanical_incision/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/screwdriver)
-	return base
+/datum/surgery_operation/limb/mechanical_incision/get_default_radial_image()
+	return image(/obj/item/screwdriver)
 
 /datum/surgery_operation/limb/mechanical_incision/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
@@ -56,10 +54,8 @@
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
 
-/datum/surgery_operation/limb/mechanical_open/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(image('icons/hud/screen_gen.dmi', "arrow_large_still"))
-	return base
+/datum/surgery_operation/limb/mechanical_open/get_default_radial_image()
+	return image('icons/hud/screen_gen.dmi', "arrow_large_still")
 
 /datum/surgery_operation/limb/mechanical_open/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
@@ -96,10 +92,8 @@
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
 
-/datum/surgery_operation/limb/mechanical_close/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/screwdriver)
-	return base
+/datum/surgery_operation/limb/mechanical_close/get_default_radial_image()
+	return image(/obj/item/screwdriver)
 
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
@@ -141,10 +135,8 @@
 /datum/surgery_operation/limb/prepare_electronics/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
-/datum/surgery_operation/limb/prepare_electronics/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/multitool)
-	return base
+/datum/surgery_operation/limb/prepare_electronics/get_default_radial_image()
+	return image(/obj/item/multitool)
 
 /datum/surgery_operation/limb/prepare_electronics/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -180,10 +172,8 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/mechanic_unwrench/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/wrench)
-	return base
+/datum/surgery_operation/limb/mechanic_unwrench/get_default_radial_image()
+	return image(/obj/item/wrench)
 
 /datum/surgery_operation/limb/mechanic_unwrench/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -219,10 +209,8 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_operation/limb/mechanic_wrench/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/wrench)
-	return base
+/datum/surgery_operation/limb/mechanic_wrench/get_default_radial_image()
+	return image(/obj/item/wrench)
 
 /datum/surgery_operation/limb/mechanic_wrench/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

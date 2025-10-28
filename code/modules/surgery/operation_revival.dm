@@ -15,9 +15,9 @@
 	)
 	success_sound = 'sound/machines/defib/defib_zap.ogg'
 	required_biotype = NONE
-	carbon_zone = BODY_ZONE_HEAD
+	target_zone = BODY_ZONE_HEAD
 
-/datum/surgery_operation/basic/revival/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/basic/revival/state_check(mob/living/patient)
 	if(patient.stat != DEAD)
 		return FALSE
 	if(HAS_TRAIT(patient, TRAIT_SUICIDED) || HAS_TRAIT(patient, TRAIT_HUSK) || HAS_TRAIT(patient, TRAIT_DEFIB_BLACKLISTED))

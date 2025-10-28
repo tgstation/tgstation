@@ -10,17 +10,17 @@
 
 	var/list/zombie_chems = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 
-/datum/surgery_operation/limb/bionecrosis/is_available(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/bionecrosis/get_default_radial_image()
+	return get_dynamic_human_appearance(species_path = /datum/species/zombie)
+
+/datum/surgery_operation/limb/bionecrosis/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED))
 		return FALSE
 	if(locate(/obj/item/organ/zombie_infection) in limb)
 		return FALSE
 	if(!(locate(/obj/item/organ/brain) in limb))
 		return FALSE
-	// You can have the chems in the tool itself or pre-injected into the patient
 	for(var/chem in zombie_chems)
-		if(tool.reagents?.get_reagent_amount(chem) > 1)
-			return TRUE
 		if(limb.owner.reagents?.get_reagent_amount(chem) > 1)
 			return TRUE
 	return FALSE

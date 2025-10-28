@@ -17,7 +17,10 @@
 		/datum/reagent/toxin/formaldehyde,
 	)
 
-/datum/surgery_operation/basic/viral_bonding/is_available(mob/living/patient, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/basic/viral_bonding/get_default_radial_image()
+	return image(/obj/item/clothing/mask/surgical)
+
+/datum/surgery_operation/basic/viral_bonding/state_check(mob/living/patient)
 	if(!has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	for(var/chem in required_chems)

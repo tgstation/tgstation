@@ -59,16 +59,25 @@
 		linked_techweb = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/disk/surgery))
-		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."), \
-			span_notice("You begin to load a surgery protocol from \the [O]..."), \
-			span_hear("You hear the chatter of a floppy drive."))
-		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 1 SECONDS, target = src))
-			advanced_surgeries |= D.surgeries
-		return TRUE
-	return ..()
+/obj/machinery/computer/operating/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/disk/surgery))
+		return ..()
+	user.visible_message(
+		span_notice("[user] begins to load [tool] in [src]..."),
+		span_notice("You begin to load a surgery protocol from [tool]..."),
+		span_hear("You hear the chatter of a floppy drive."),
+	)
+	var/obj/item/disk/surgery/disky = tool
+	if(!do_after(user, 1 SECONDS, src))
+		return ITEM_INTERACT_BLOCKING
+	advanced_surgeries |= disky.surgeries
+	update_static_data_for_all_viewers()
+	playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+	balloon_alert(user, "surgeries loaded")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/computer/operating/on_set_is_operational(old_value)
+	update_static_data_for_all_viewers()
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/direction in GLOB.alldirs)
@@ -149,21 +158,23 @@
 		))
 
 	data["possible_next_operations"] = list()
-	if(table?.patient)
+	if(table?.patient && is_operational)
 		// Only show basic, unlocked operations and anything we have unlocked in this computer
 		for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(GLOB.operations.unlocked + advanced_surgeries))
 			if(!operation.show_as_next_step(table.patient, target_zone))
 				continue
 			data["possible_next_operations"] += list(list(
-				"name" = "[operation.name] ([operation.get_recommended_tool() || "nothing"])",
+				"name" = "[operation.name]",
 				"desc" = operation.desc,
+				"tool_rec" = operation.get_recommended_tool() || "error",
 			))
 
-		var/obj/item/releveant_bodypart = table.patient.get_bodypart(target_zone)
-		if(!length(data["possible_next_operations"]) && !HAS_TRAIT(releveant_bodypart, TRAIT_READY_TO_OPERATE))
+		var/atom/movable/releveant = table.patient.has_limbs ? table.patient.get_bodypart(target_zone) : table.patient
+		if(!length(data["possible_next_operations"]) && releveant && !HAS_TRAIT(releveant, TRAIT_READY_TO_OPERATE))
 			data["possible_next_operations"] += list(list(
-				"name" = "Prepare for surgery ([/obj/item/surgical_drapes::name])",
+				"name" = "Prepare for surgery",
 				"desc" = "Begin surgery by applying surgical drapes to the patient.",
+				"tool_rec" = /obj/item/surgical_drapes::name,
 			))
 
 	return data

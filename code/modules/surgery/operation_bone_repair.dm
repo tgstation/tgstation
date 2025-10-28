@@ -10,6 +10,9 @@
 	)
 	time = 4 SECONDS
 
+/datum/surgery_operation/limb/repair_hairline/get_default_radial_image()
+	return image(/obj/item/bonesetter)
+
 /datum/surgery_operation/limb/repair_hairline/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
 		return FALSE
@@ -60,6 +63,9 @@
 	)
 	time = 6 SECONDS
 
+/datum/surgery_operation/limb/reset_compound/get_default_radial_image()
+	return image(/obj/item/bonesetter)
+
 /datum/surgery_operation/limb/reset_compound/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
@@ -104,6 +110,9 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
+
+/datum/surgery_operation/limb/repair_compound/get_default_radial_image()
+	return image(/obj/item/stack/medical/bone_gel)
 
 /datum/surgery_operation/limb/repair_compound/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
@@ -154,6 +163,9 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
+/datum/surgery_operation/limb/prepare_cranium_repair/get_default_radial_image()
+	return image(/obj/item/hemostat)
+
 /datum/surgery_operation/limb/prepare_cranium_repair/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds
 	if(isnull(fissure) || fissure.prepped)
@@ -185,6 +197,9 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
+
+/datum/surgery_operation/limb/repair_cranium/get_default_radial_image()
+	return image(/obj/item/stack/medical/bone_gel)
 
 /datum/surgery_operation/limb/repair_cranium/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds

@@ -17,10 +17,8 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
-/datum/surgery_operation/limb/amputate/get_default_radial_image(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
-	var/image/base = ..()
-	base.overlays += add_radial_overlays(/obj/item/circular_saw)
-	return base
+/datum/surgery_operation/limb/amputate/get_default_radial_image()
+	return image(/obj/item/circular_saw)
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))

@@ -86,6 +86,7 @@ type PatientData = {
 type OperationData = {
   name: string;
   desc: string;
+  tool_rec: string;
 };
 
 type Data = {
@@ -97,7 +98,17 @@ type Data = {
   possible_next_operations: OperationData[];
 };
 
-const PatientStateView = (props) => {
+const constructToolList = (operations: OperationData[]) => {
+  const allTools = ['all tools'].concat(
+    operations
+      .map((operation) => operation.tool_rec)
+      .flatMap((tool) => tool.split(' / '))
+      .filter((tools, index, self) => self.indexOf(tools) === index),
+  );
+  return allTools;
+};
+
+const PatientStateView = () => {
   const { act, data } = useBackend<Data>();
   const { has_table, patient, target_zone, possible_next_operations } = data;
   if (!has_table) {
@@ -107,6 +118,12 @@ const PatientStateView = (props) => {
       </Section>
     );
   }
+
+  const allTools = Array.from(constructToolList(possible_next_operations));
+  const [filterByTool, setFilterByTool] = useSharedState<string>(
+    'filter_by_tool',
+    allTools[0],
+  );
 
   return (
     <Section title="Patient State">
@@ -191,27 +208,56 @@ const PatientStateView = (props) => {
             </Stack>
           </Stack.Item>
           <Stack.Item>
-            <Section title="Possible Operations">
+            <Section
+              title="Possible Operations"
+              buttons={
+                <Button
+                  tooltip="Filter by recommended tool. Right click to reset."
+                  tooltipPosition="top"
+                  selected={filterByTool !== allTools[0]}
+                  onClick={() =>
+                    setFilterByTool(
+                      allTools[
+                        (allTools.indexOf(filterByTool) + 1) % allTools.length
+                      ],
+                    )
+                  }
+                  onContextMenu={() => setFilterByTool(allTools[0])}
+                >
+                  {capitalizeFirst(filterByTool)}
+                </Button>
+              }
+            >
               <Stack vertical>
                 {possible_next_operations.length === 0 ? (
                   <Stack.Item>
                     <NoticeBox color="green">No operations available</NoticeBox>
                   </Stack.Item>
                 ) : (
-                  possible_next_operations.map((operation) => (
-                    <Stack.Item key={operation.name}>
-                      <Tooltip content={operation.desc}>
-                        <Box
-                          inline
-                          style={{
-                            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
-                          }}
-                        >
-                          - {capitalizeFirst(operation.name)}
-                        </Box>
-                      </Tooltip>
-                    </Stack.Item>
-                  ))
+                  possible_next_operations
+                    .filter((operation) =>
+                      filterByTool === allTools[0]
+                        ? true
+                        : operation.tool_rec.includes(filterByTool),
+                    )
+                    .map((operation) => (
+                      <Stack.Item key={operation.name}>
+                        <Tooltip content={operation.desc}>
+                          <Box
+                            inline
+                            style={{
+                              borderBottom:
+                                '2px dotted rgba(255, 255, 255, 0.8)',
+                            }}
+                          >
+                            -{' '}
+                            {capitalizeFirst(
+                              `${operation.name} (${operation.tool_rec})`,
+                            )}
+                          </Box>
+                        </Tooltip>
+                      </Stack.Item>
+                    ))
                 )}
               </Stack>
             </Section>
