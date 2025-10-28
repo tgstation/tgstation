@@ -2,25 +2,32 @@
 /datum/component/wall_mounted
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// The closed turf our object is currently linked to.
-	var/turf/closed/hanging_wall_turf
+	var/atom/hanging_support_atom
 
-/datum/component/wall_mounted/Initialize(target_wall, on_drop_callback)
+/datum/component/wall_mounted/Initialize(target_structure, on_drop_callback)
 	. = ..()
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
-	hanging_wall_turf = target_wall
+	hanging_support_atom = target_structure
 
 /datum/component/wall_mounted/RegisterWithParent()
 	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
-	RegisterSignal(hanging_wall_turf, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	if(isclosedturf(hanging_support_atom))
+		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+	else
+		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /datum/component/wall_mounted/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
-	UnregisterSignal(hanging_wall_turf, list(COMSIG_ATOM_EXAMINE, COMSIG_TURF_CHANGE))
+	UnregisterSignal(hanging_support_atom, list(COMSIG_ATOM_EXAMINE))
+	if(isclosedturf(hanging_support_atom))
+		UnregisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE)
+	else
+		UnregisterSignal(hanging_support_atom, COMSIG_QDELETING)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	hanging_wall_turf = null
+	hanging_support_atom = null
 
 /**
  * When the wall is examined, explains that it's supporting the linked object.
@@ -29,21 +36,21 @@
 	SIGNAL_HANDLER
 
 	if (parent in view(user.client?.view || world.view, user))
-		examine_list += span_notice("\The [hanging_wall_turf] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
+		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("[parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
-/**
- * When the type of turf changes, if it is changing into a floor we should drop our contents
- */
+/// When the type of turf changes, if it is changing into a floor we should drop our contents
 /datum/component/wall_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 
 	if(ispath(path, /turf/open))
 		drop_wallmount()
 
+/datum/component/wall_mounted/proc/on_structure_delete(datum/source, force)
+	SIGNAL_HANDLER
 
-/**
- * If we get dragged from our wall (by a singulo for instance) we should deconstruct
- */
+	drop_wallmount()
+
+/// If we get dragged from our wall (by a singulo for instance) we should deconstruct
 /datum/component/wall_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 	// If we're having our lighting messed with we're likely to get dragged about
@@ -55,14 +62,13 @@
 /**
  * Handles the dropping of the linked object. This is done via deconstruction, as that should be the most sane way to handle it for most objects.
  * Except for intercoms, which are handled by creating a new wallframe intercom, as they're apparently items.
- */
+*/
 /datum/component/wall_mounted/proc/drop_wallmount()
 	PRIVATE_PROC(TRUE)
 
 	var/obj/hanging_parent = parent
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
-
 
 ///Checks object direction and then verifies if there's a wall in that direction. Finally, applies a wall_mounted component to the object.
 /obj/proc/find_and_hang_on_wall()
