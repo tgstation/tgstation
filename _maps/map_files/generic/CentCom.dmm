@@ -126,12 +126,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
-"aH" = (
-/obj/structure/sign/directions/medical{
-	dir = 1
-	},
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/armory)
 "aK" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/package_wrap,
@@ -2505,6 +2499,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"ll" = (
+/obj/machinery/button/door/indestructible{
+	id = "CCFerry";
+	name = "Hanger Bay Shutters";
+	req_access = list("cent_general")
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/ferry)
 "ln" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
@@ -2729,6 +2731,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/ert)
+"mB" = (
+/obj/machinery/newscaster,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/armory)
 "mC" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/computer/operating,
@@ -3470,6 +3476,13 @@
 /obj/structure/flora/bush/pale/style_random,
 /turf/open/misc/asteroid,
 /area/centcom/tdome/observation)
+"pP" = (
+/obj/machinery/button/door/indestructible{
+	id = "CCcustoms1";
+	name = "CC Emergency Docks Control"
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/evacuation)
 "pQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -4334,22 +4347,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"tx" = (
-/obj/structure/sign/directions/security{
-	dir = 1
-	},
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/armory)
 "ty" = (
 /obj/structure/filingcabinet/security,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"tz" = (
-/obj/machinery/newscaster,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/armory)
 "tA" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "CCFerry";
@@ -5769,15 +5772,11 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/two)
 "zO" = (
-/obj/structure/chair{
-	dir = 8
+/obj/structure/sign/directions/security{
+	dir = 1
 	},
-/obj/item/radio/intercom/syndicate{
-	pixel_x = -32;
-	dir = 8
-	},
-/turf/open/floor/iron/grimy,
-/area/centcom/central_command_areas/courtroom)
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/armory)
 "zR" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -5988,6 +5987,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"AS" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/item/radio/intercom/syndicate{
+	pixel_x = -32;
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/courtroom)
 "AT" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/closed/indestructible/riveted,
@@ -6039,13 +6048,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/centcom/central_command_areas/evacuation)
-"Ba" = (
-/obj/machinery/button/door/indestructible{
-	id = "CCcustoms1";
-	name = "CC Emergency Docks Control"
-	},
-/turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/evacuation)
 "Bb" = (
 /obj/effect/turf_decal/stripes/line,
@@ -7049,21 +7051,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"Gh" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/light_emitter/thunderdome,
-/obj/machinery/camera/directional/north{
-	c_tag = "Red Team";
-	network = list("thunder");
-	pixel_x = 11;
-	pixel_y = -9;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
 "Gi" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/rack,
@@ -7344,21 +7331,6 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
-"HQ" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/light_emitter/thunderdome,
-/obj/machinery/camera/directional/north{
-	c_tag = "Green Team";
-	network = list("thunder");
-	pixel_x = 12;
-	pixel_y = -10;
-	resistance_flags = 64
-	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
 "HR" = (
 /obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
@@ -7559,13 +7531,20 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Jq" = (
-/obj/machinery/button/door/indestructible{
-	id = "CCFerry";
-	name = "Hanger Bay Shutters";
-	req_access = list("cent_general")
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/ferry)
+/obj/effect/light_emitter/thunderdome,
+/obj/machinery/camera/directional/north{
+	c_tag = "Green Team";
+	network = list("thunder");
+	pixel_x = 12;
+	pixel_y = -10;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena)
 "JC" = (
 /obj/machinery/modular_computer/preset/command{
 	dir = 8
@@ -8273,10 +8252,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/briefing)
-"Nc" = (
-/obj/structure/sign/directions/engineering,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/ferry)
 "Ne" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup,
@@ -8879,12 +8854,11 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/fore)
 "PE" = (
-/obj/effect/light_emitter/thunderdome,
-/obj/machinery/camera/motion/thunderdome{
-	pixel_x = 10
+/obj/structure/sign/directions/medical{
+	dir = 1
 	},
-/turf/open/floor/iron,
-/area/centcom/tdome/arena)
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/armory)
 "PF" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
@@ -9400,9 +9374,12 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "RQ" = (
-/obj/structure/sign/directions/command,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/ferry)
+/obj/effect/light_emitter/thunderdome,
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena)
 "RR" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9529,6 +9506,21 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
+"SA" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/light_emitter/thunderdome,
+/obj/machinery/camera/directional/north{
+	c_tag = "Red Team";
+	network = list("thunder");
+	pixel_x = 11;
+	pixel_y = -9;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
+/area/centcom/tdome/arena)
 "SB" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9978,6 +9970,10 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
+"UJ" = (
+/obj/structure/sign/directions/command,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/ferry)
 "UK" = (
 /obj/structure/closet/secure_closet/ert_med,
 /obj/machinery/wall_healer/directional/south{
@@ -10600,6 +10596,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"XN" = (
+/obj/structure/sign/directions/engineering,
+/turf/closed/indestructible/riveted,
+/area/centcom/central_command_areas/ferry)
 "XQ" = (
 /obj/machinery/computer/crew{
 	dir = 1
@@ -47934,7 +47934,7 @@ On
 On
 On
 PF
-Jq
+ll
 ww
 Fh
 wz
@@ -50508,7 +50508,7 @@ oe
 su
 fw
 ts
-Nc
+XN
 WG
 sE
 sE
@@ -50516,7 +50516,7 @@ bH
 sE
 Zv
 VZ
-aH
+PE
 aa
 aa
 aa
@@ -51564,7 +51564,7 @@ OO
 VT
 BY
 QC
-Gh
+SA
 HK
 HK
 HK
@@ -51793,7 +51793,7 @@ oe
 wB
 Fh
 xS
-RQ
+UJ
 wg
 oL
 fj
@@ -51801,7 +51801,7 @@ RM
 sE
 sE
 VM
-tx
+zO
 aa
 aa
 aa
@@ -52055,7 +52055,7 @@ Ya
 rY
 Ya
 Ya
-tz
+mB
 rY
 Ya
 Ya
@@ -54397,7 +54397,7 @@ fb
 Ji
 NY
 NY
-PE
+RQ
 uE
 mE
 qk
@@ -57218,7 +57218,7 @@ ym
 TV
 fg
 QC
-HQ
+Jq
 Mf
 Mf
 Mf
@@ -62078,7 +62078,7 @@ zm
 xt
 vZ
 AZ
-Ba
+pP
 fm
 cg
 cg
@@ -63080,7 +63080,7 @@ rM
 rM
 ct
 ps
-zO
+AS
 lW
 lW
 lV

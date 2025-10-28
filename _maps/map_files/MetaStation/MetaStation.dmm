@@ -11478,13 +11478,9 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "eax" = (
-/obj/structure/sign/poster/official/random/directional/south{
-	pixel_y = 0;
-	dir = 8;
-	pixel_x = -32
-	},
 /obj/machinery/light/small/directional/west,
 /obj/machinery/duct,
+/obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/plating,
 /area/station/commons/toilet/auxiliary)
 "eaA" = (
@@ -12865,9 +12861,9 @@
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "euT" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
-/area/station/maintenance/aft/greater)
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/exit/departure_lounge)
 "euX" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/white,
@@ -17445,7 +17441,7 @@
 "gda" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/station/hallway/secondary/exit/departure_lounge)
+/area/station/maintenance/aft/greater)
 "gdb" = (
 /turf/closed/wall/r_wall,
 /area/station/security/range)
@@ -46503,7 +46499,7 @@
 "pZW" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/station/maintenance/port/aft)
+/area/station/maintenance/port)
 "qaf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
@@ -58733,6 +58729,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"ugr" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/station/hallway/secondary/exit/departure_lounge)
 "ugP" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 4
@@ -61784,10 +61784,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
-"vig" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/exit/departure_lounge)
 "vip" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /obj/machinery/airalarm/directional/north,
@@ -69481,7 +69477,7 @@
 "xKd" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/station/maintenance/port)
+/area/station/maintenance/port/aft)
 "xKh" = (
 /obj/structure/railing{
 	dir = 10
@@ -83787,7 +83783,7 @@ pOa
 pOa
 pOa
 emN
-xKd
+pZW
 pOa
 aaa
 aaa
@@ -85606,7 +85602,7 @@ lMJ
 lMJ
 jUb
 kPQ
-pZW
+xKd
 jUb
 lMJ
 xjH
@@ -88965,7 +88961,7 @@ gmS
 drm
 tSw
 tSw
-euT
+gda
 tSw
 gAf
 sGL
@@ -97459,7 +97455,7 @@ iUm
 aAS
 kJB
 biA
-gda
+ugr
 lAu
 lMJ
 aaa
@@ -98998,7 +98994,7 @@ lYc
 tew
 iUm
 gRb
-vig
+euT
 iUm
 iUm
 iUm
