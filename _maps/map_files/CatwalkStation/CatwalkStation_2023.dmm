@@ -15140,6 +15140,9 @@
 	shuttle_id = "cargo_home";
 	width = 13
 	},
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
 "emn" = (
@@ -57487,6 +57490,12 @@
 /obj/effect/spawner/random/structure/shipping_container,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
+"qfl" = (
+/obj/effect/turf_decal/caution/stand_clear{
+	dir = 4
+	},
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "qfr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -197949,7 +197958,7 @@ hRj
 hRj
 emj
 hRj
-hRj
+qfl
 hRj
 hRj
 hRj
