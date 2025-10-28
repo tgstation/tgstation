@@ -1108,7 +1108,7 @@
 /atom/movable/screen/alert/status_effect/no_temp_reg
 	name = "Ineffective Thermoregulation"
 	desc = "You can't regulate your temperature! You can't heat up or cool down normally!"
-	icon_state = "frozen" //temporary
+	icon_state = "stasis"
 //effects handled in _species
 
 // Desginated Target - Applied typically by Flare lasers
