@@ -272,16 +272,16 @@
 		holder.data[type] = entries
 	entries |= value
 
+	if(progress_string)
+		to_chat(user, get_progress_string(progress_string))
+
 	var/sound/sound_pref = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
 	if(!sound_pref)
 		return
 	//send a copy cheevo sound but with its volume halved, since you're making a small progress and not unlocking an entire achievement.
-	var/sound/sound_to_send = sound(sound_pref.file, sound_pref.volume / 2)
+	var/sound/sound_to_send = sound(sound_pref.file, volume = sound_pref.volume / 2)
 	if(sound_to_send)
 		SEND_SOUND(user, sound_to_send)
-
-	to_chat(user, get_progress_string(progress_string))
-
 
 ///Compose the string to send to the user's chat when the progress is made. This one here is generic, but you should override it really.
 /datum/award/score/progress/proc/get_progress_string(progress_string)

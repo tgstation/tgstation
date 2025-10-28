@@ -71,7 +71,7 @@
 	return data
 
 /datum/award/score/progress/fish/get_progress_string(progress_string)
-	return span_greenannounce("This is the first time you've caught a <B>[progress_string]!")
+	return span_greenannounce("You've caught a <B>[progress_string]</B> for the first time!")
 
 /datum/award/score/progress/pda_themes
 	name = "Unlocked PDA Themes"
@@ -121,14 +121,8 @@
 
 /datum/award/score/progress/pda_themes/validate_entries(list/entries, list/validated_entries)
 	. = ..()
-	var/static/theme_ids
-	if(!theme_ids)
-		theme_ids = list()
-		for(var/datum/computer_file/program/maintenance/theme/theme as anything in typesof(/datum/computer_file/program/maintenance/theme))
-			if(theme::abstract_type != theme)
-				theme_ids[theme::theme_id] = TRUE
-
+	var/theme_ids = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
 	for(var/id in validated_entries)
-		if(!theme_ids[id])
+		if(!(id in theme_ids))
 			validated_entries -= id
 			. = FALSE
