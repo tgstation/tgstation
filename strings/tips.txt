@@ -33,7 +33,7 @@ As a Cook, most non-custom foods will have a secondary effect, ranging from heal
 As a Cook, you can create a very wide variety of food with the crafting menu. You can find it by looking for the hammer icon near your combat mode indicator.
 As a Cook, you can load your food into smartfridges and custom vending machines.
 As a Cook, you can rename your custom made food with a pen.
-As a Coroner, remember that your autopsy scanner also works as an advanced health analyzer on right-click, but only for corpses.
+As the Coroner, remember that your autopsy scanner also works as an advanced health analyzer on right-click, but only for corpses.
 As a Cultist, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
 As a Cultist, do not cause too much chaos before your objective is completed. If the shuttle gets called too soon, you may not have enough time to win.
 As a Cultist, if you manage to sacrifice a Heretic, you will unlock one of three powerful and unique items to be created in every one of your cult's forges, archives, or altars.
@@ -217,8 +217,8 @@ As the Head of Personnel, you are not higher ranking than other heads of staff, 
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
 As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
-As the Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
-As the Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
+As a Lawyer, try to negotiate with the Warden if sentences seem too high for the crime.
+As a Lawyer, you can try to convince the Captain and Head of Security to hold trials for prisoners in the courtroom.
 As the Malfunctioning AI, look into flooding the station with plasma fires to kill off large portions of the crew, letting you pick off the remaining few with space suits who escaped.
 As the Malfunctioning AI, you can shunt to an APC if the situation gets bad. This disables your doomsday device if it is active.
 As the Malfunctioning AI, you should either order your cyborgs to dismantle the robotics console or blow it up yourself in order to protect them.
