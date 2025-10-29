@@ -7827,7 +7827,7 @@
 /obj/item/geiger_counter,
 /obj/machinery/light/small/broken/directional/north,
 /obj/machinery/button/door/directional/north{
-	id = ddd"Beta Secure Storage"
+	id = "Beta Secure Storage"
 	},
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
