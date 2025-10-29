@@ -1,0 +1,5 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - bugfix: "Supermatter anomalies no longer drop anomaly cores."
+  - bugfix: "Fix supermatter flux anomalies from sm delam not emping or whatever."
