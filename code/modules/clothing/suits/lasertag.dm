@@ -17,13 +17,7 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	var/mob/living/carbon/human/wearer = equipper
-	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
-	if (!comp)
-		wearer.AddComponent(/datum/component/lasertag)
-		comp = wearer.GetComponent(/datum/component/lasertag)
-		comp.team_color = "blue"
-	comp.lasertag_granters += src
+	AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
 
 
 /obj/item/clothing/suit/bluetag/dropped(mob/living/user)
@@ -31,10 +25,7 @@
 	if(last_slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = null
-	var/mob/living/carbon/human/wearer = user
-	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
-	if (comp.should_delete(src))
-		qdel(comp)
+	RemoveComponentSource(REF(src), /datum/component/lasertag)
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
@@ -56,13 +47,7 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	var/mob/living/carbon/human/wearer = equipper
-	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
-	if (!comp)
-		wearer.AddComponent(/datum/component/lasertag)
-		comp = wearer.GetComponent(/datum/component/lasertag)
-		comp.team_color = "red"
-	comp.lasertag_granters += src
+	AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
 
 
 /obj/item/clothing/suit/redtag/dropped(mob/living/user)
@@ -70,7 +55,4 @@
 	if(last_slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = null
-	var/mob/living/carbon/human/wearer = user
-	var/datum/component/lasertag/comp = wearer.GetComponent(/datum/component/lasertag)
-	if (comp.should_delete(src))
-		qdel(comp)
+	RemoveComponentSource(REF(src), /datum/component/lasertag)

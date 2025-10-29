@@ -371,15 +371,7 @@
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	var/lasertag_team = "neutral"
-
-/obj/projectile/beam/lasertag/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/M = target
-		var/datum/component/lasertag/comp = M?.GetComponent(/datum/component/lasertag)
-		if(comp)
-			if(lasertag_team != comp.team_color)
-				M.adjustStaminaLoss(34)
+	var/lasertag_damage = 34
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"

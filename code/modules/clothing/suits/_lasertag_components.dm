@@ -1,18 +1,31 @@
+///lasertag team tracking component
 /datum/component/lasertag
+	dupe_mode = COMPONENT_DUPE_SOURCES
 	///What team the mob that this component is attached to is part of. This should be all lowercase and either a color or "neutral"
 	var/team_color = "neutral"
-	///Anything that makes a human a valid lasertag target should be added to this
-	var/list/lasertag_granters = list()
 
-/datum/component/lasertag/Initialize(...)
-	. = ..()
-	var/mob/living/carbon/human/H = parent
-	if (!H)
+/datum/component/lasertag/Initialize(datum/source, team_color)
+	if (!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
+	register_lasertag_signals()
+	src.team_color = team_color
 
-///call this proc before removing the component.
-/datum/component/lasertag/proc/should_delete(source)
-	lasertag_granters -= source
-	if(LAZYLEN(lasertag_granters))
-		return FALSE
-	return TRUE
+///For the sake of organization, put any new signals in here.
+/datum/component/lasertag/proc/register_lasertag_signals()
+	RegisterSignal(parent, COMSIG_LIVING_FIRING_PIN_CHECK, PROC_REF(team_color_match))
+	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_laser_hit))
+
+
+/datum/component/lasertag/proc/team_color_match(datum/source, color)
+	if (color == team_color)
+		return ALLOW_FIRE
+	return BLOCK_FIRE
+
+/datum/component/lasertag/proc/on_laser_hit(datum/source, projectile)
+	if(!istype(projectile, /obj/projectile/beam/lasertag))
+		return
+	var/obj/projectile/beam/lasertag/laser = projectile
+	if (laser.lasertag_team != team_color)
+		var/mob/living/carbon/human/laser_target = parent
+		laser_target.adjustStaminaLoss(laser.lasertag_damage)
+

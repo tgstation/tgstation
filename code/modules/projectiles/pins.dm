@@ -358,9 +358,8 @@
 
 /obj/item/firing_pin/tag/pin_auth(mob/living/user)
 	if(ishuman(user))
-		var/mob/living/carbon/human/M = user
-		var/datum/component/lasertag/comp = M.GetComponent(/datum/component/lasertag)
-		if(comp?.team_color == tagcolor)
+		var/result = SEND_SIGNAL(user, COMSIG_LIVING_FIRING_PIN_CHECK, tagcolor)
+		if(result & ALLOW_FIRE)
 			return TRUE
 	to_chat(user, span_warning("You need to be wearing [tagcolor] laser tag armor!"))
 	return FALSE
