@@ -744,7 +744,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	. = ..()
 	// register for radio system to receive AI emote signals
 	SSradio.add_object(src, frequency)
-	find_and_hang_on_atom()
+	if(mapload)
+		find_and_hang_on_atom()
 
 /obj/machinery/status_display/ai/Destroy()
 	SSradio.remove_object(src, frequency)

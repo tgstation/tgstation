@@ -39028,7 +39028,8 @@
 /obj/effect/landmark/start/depsec/medical,
 /obj/machinery/button/door/directional/east{
 	id = "medsecprivacy";
-	name = "Privacy Shutters Control"
+	name = "Privacy Shutters Control";
+	pixel_x = 22
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
@@ -70974,7 +70975,9 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "yhm" = (
-/obj/machinery/airalarm/directional/west,
+/obj/machinery/airalarm/directional/west{
+	pixel_y = -5
+	},
 /obj/structure/disposaloutlet{
 	dir = 4;
 	name = "Cargo Deliveries"
@@ -70983,6 +70986,10 @@
 /obj/effect/turf_decal/trimline/brown/warning,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 10;
+	pixel_x = -20
 	},
 /turf/open/floor/iron,
 /area/station/medical/medbay/lobby)
@@ -98333,7 +98340,7 @@ jgE
 jgE
 jgE
 jgE
-cRw
+njX
 njX
 njX
 njX
