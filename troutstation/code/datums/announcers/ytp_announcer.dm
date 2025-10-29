@@ -16,6 +16,6 @@
 		ANNOUNCER_RADIATION = 'troutstation/sound/announcer/ytp/radiation.ogg',
 		ANNOUNCER_SHUTTLECALLED = 'troutstation/sound/announcer/ytp/shuttlecalled.ogg',
 		ANNOUNCER_SHUTTLEDOCK = 'troutstation/sound/announcer/ytp/shuttledock.ogg',
-		ANNOUNCER_SHUTTLERECALLED = 'troutstation/sound/announcer/ytp/shuttlerecalled.ogg'
+		ANNOUNCER_SHUTTLERECALLED = 'troutstation/sound/announcer/ytp/shuttlerecalled.ogg',
 		ANNOUNCER_SPANOMALIES = 'troutstation/sound/announcer/ytp/spanomalies.ogg',
 		)
