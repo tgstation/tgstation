@@ -72,12 +72,17 @@
 
 ///Checks object direction and then verifies if there's a support atom. Finally.
 /obj/proc/find_and_hang_on_atom()
-	if(istype(get_area(src), /area/shuttle))
-		return FALSE //For now, we're going to keep the component off of shuttles to avoid the turf changing issue. We'll hit that later really;
+	var/area/location = get_area(src)
+	var/static/list/blacklisted = list(
+		/area/shuttle,
+		/area/space,
+	)
+	if(is_type_in_list(location, blacklisted))
+		return FALSE
 
 	var/msg
 	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
-		msg = "[type] Could not find attachable object at [astype(get_area(src), /area).type] "
+		msg = "[type] Could not find attachable object at [location.type] "
 
 	var/list/turf/attachable_turfs = list()
 	attachable_turfs += get_turf(src)
