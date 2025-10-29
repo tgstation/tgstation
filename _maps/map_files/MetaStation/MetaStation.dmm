@@ -21721,10 +21721,6 @@
 /turf/open/floor/iron,
 /area/station/service/bar)
 "hyZ" = (
-/obj/machinery/flasher/directional/east{
-	id = "AI";
-	pixel_y = 26
-	},
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/door/window/brigdoor/right/directional/east{
@@ -42367,6 +42363,9 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/flasher/directional/east{
+	pixel_y = -5
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "oDl" = (
@@ -51166,7 +51165,7 @@
 /area/station/maintenance/aft/lesser)
 "rzz" = (
 /obj/structure/sign/warning/cold_temp,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "rzJ" = (

@@ -3901,18 +3901,15 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/hotel)
 "TG" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 1
-	},
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 4;
 	icon_state = "roomnum";
 	name = "Room Number 3";
-	pixel_y = -24
+	pixel_y = 10
 	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_3)
 "TH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6565,8 +6562,8 @@ yY
 cf
 PF
 cf
+QH
 TG
-vy
 vx
 Xx
 Rl

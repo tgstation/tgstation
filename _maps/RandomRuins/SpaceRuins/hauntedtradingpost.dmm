@@ -1253,10 +1253,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
-"ky" = (
-/obj/structure/sign/warning,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "kz" = (
 /obj/item/food/badrecipe/moldy/bacteria{
 	pixel_x = 8;
@@ -6541,7 +6537,7 @@ Tp
 pS
 Nw
 DM
-ky
+DM
 Nw
 sT
 yb
