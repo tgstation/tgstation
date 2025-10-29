@@ -3246,7 +3246,8 @@
 	pixel_y = 0;
 	id = "paramedic_shutters";
 	name = "Shutters button";
-	pixel_x = 23
+	pixel_x = 23;
+	req_access = list("paramedic")
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
@@ -44738,9 +44739,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/medical/glass,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Paramedic Dispatch Room"
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "mGu" = (
@@ -59876,6 +59879,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "Atmospherics"
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "qNn" = (

@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - rscdel: "Removes circuit board recipe for vend a tray. Use 5 wood to create a \"display case chassis\" and insert a card reader to create the tray instead"
