@@ -113,6 +113,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/central)
+"aQ" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/aft)
 "aU" = (
 /obj/item/shard,
 /obj/structure/lattice,
@@ -10779,7 +10783,7 @@ qO
 wC
 WE
 OR
-MW
+Jr
 JJ
 Hi
 vb
@@ -11818,7 +11822,7 @@ Fa
 iT
 TW
 BM
-jV
+aQ
 Uo
 gG
 jV
