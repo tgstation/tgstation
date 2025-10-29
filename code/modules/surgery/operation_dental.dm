@@ -47,7 +47,7 @@
 		surgeon,
 		limb.owner,
 		span_notice("You wedge [tool] into [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] wedges \the [tool] into [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("[surgeon] wedges [tool] into [limb.owner]'s [limb.plaintext_zone]!"),
 		span_notice("[surgeon] wedges something into [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 
@@ -73,9 +73,32 @@
 	display_pain(limb.owner, "You feel fingers poke around at your teeth.")
 
 /datum/surgery_operation/limb/remove_dental_implant/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	pass()
-	// melbert todo
+	var/list/pills = list()
+	for(var/obj/item/reagent_containers/applicator/pill/dental in limb)
+		pills += dental
+	if(!length(pills))
+		display_results(
+			surgeon,
+			limb.owner,
+			span_notice("You don't find any dental implants in [limb.owner]'s [limb.plaintext_zone]."),
+			span_notice("[surgeon] doesn't find any dental implants in [limb.owner]'s [limb.plaintext_zone]."),
+			span_notice("[surgeon] finishes examining [limb.owner]'s [limb.plaintext_zone]."),
+		)
+		return
 
+	var/obj/item/reagent_containers/applicator/pill/yoinked = pick(pills)
+	for(var/datum/action/item_action/activate_pill/associated_action in limb.owner.actions)
+		if(associated_action.target == yoinked)
+			qdel(associated_action)
+
+	surgeon.put_in_hands(yoinked)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You carefully remove [yoinked] from [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[surgeon] carefully removes [yoinked] from [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[surgeon] carefully removes something from [limb.owner]'s [limb.plaintext_zone]."),
+	)
 
 // Teeth pill code
 /datum/action/item_action/activate_pill

@@ -31,12 +31,10 @@
 /datum/surgery_operation/limb/cavity_implant/tool_check(obj/item/tool)
 	if(tool.w_class > WEIGHT_CLASS_NORMAL && !is_type_in_typecache(tool, heavy_cavity_implants))
 		return FALSE
-	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
-		return FALSE
-	if(isorgan(tool)) // you rarely want to implant an organ
-		return FALSE
-	if(tool.tool_behaviour in GLOB.all_surgical_tool_behaviours) // you rarely want to implant a medical tool
-		return FALSE
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (SURGICAL_TOOL|ABSTRACT|DROPDEL|HAND_ITEM)))
+		return FALSE // besides the obvious, you never want to leave your scalpel into the patient
+	if(isorgan(tool))
+		return FALSE // use organ manipulation
 	return TRUE
 
 /datum/surgery_operation/limb/cavity_implant/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, list/operation_args)

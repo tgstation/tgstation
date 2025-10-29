@@ -3,11 +3,12 @@
 	if(combat_mode || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return NONE
 	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? patient : DOAFTER_SOURCE_SURGERY)))
-		patient.balloon_alert(surgeon, "already performing surgery!")
+		patient.balloon_alert(src, "already performing surgery!")
 		return ITEM_INTERACT_BLOCKING
 
+	// allow cyborgs to use "hands"
 	if(istype(potential_tool, /obj/item/borg/cyborghug))
-		potential_tool = IMPLEMENT_HAND // melbert todo
+		potential_tool = IMPLEMENT_HAND
 
 	// List of typepaths of operations we *can* do
 	var/list/possible_operations = GLOB.operations.unlocked.Copy()
@@ -35,16 +36,19 @@
 			if(radial_operations[radial_slice])
 				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation.type]'.")
 				continue
-			var/option_specific_info = list("[OPERATION_TARGET]" = operate_on) + (potential_options[radial_slice] || list("[OPERATION_ACTION]" = "default"))
-			operations[radial_slice] = list(operation, option_specific_info)
+			var/option_specific_info = potential_options[radial_slice] || list("[OPERATION_ACTION]" = "default")
+			operations[radial_slice] = list(operation, operate_on, option_specific_info)
 			radial_operations[radial_slice] = radial_slice
 
 	if(!length(operations))
+		// we failed to undertake any operations
 		if(isitem(potential_tool))
 			var/obj/item/realtool = potential_tool
+			// for surgical tools specifically, we give a message to indicate they should try something else
 			if(realtool.item_flags & SURGICAL_TOOL)
+				patient.balloon_alert(src, "nothing to do with [realtool.name]!")
 				return ITEM_INTERACT_BLOCKING
-
+		// but for every other item, we continue to strike the mob
 		return NONE
 
 	sortTim(radial_operations, GLOBAL_PROC_REF(cmp_name_asc))
@@ -62,11 +66,12 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/datum/surgery_operation/picked_op = operations[picked][1]
-	var/list/op_info = operations[picked][2]
+	var/atom/movable/operating_on = operations[picked][2]
+	var/list/op_info = operations[picked][3]
 	op_info[OPERATION_TARGET_ZONE] = operating_zone
 	op_info[OPERATION_FORCE_FAIL] = intentionally_fail
 
-	return picked_op.try_perform(op_info[OPERATION_TARGET], src, potential_tool, op_info)
+	return picked_op.try_perform(operating_on, src, potential_tool, op_info)
 
 /// Callback for checking if the surgery radial can be kept open
 /mob/living/proc/surgery_check(obj/item/tool)
@@ -143,7 +148,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/operation_holder/proc/get_instances(list/typepaths, filter_replaced = TRUE, flag_to_exclude = NONE)
 	var/list/result = list()
 	for(var/datum/surgery_operation/operation_type as anything in typepaths)
-		if(filter_replaced && (operation_type::replaced_by && (operation_type::replaced_by != operation_type) && (operation_type::replaced_by in typepaths)))
+		if(filter_replaced && operation_type::replaced_by && operation_type::replaced_by != operation_type && (operation_type::replaced_by in typepaths))
 			continue
 		if(flag_to_exclude && (operation_type::operation_flags & flag_to_exclude))
 			continue
@@ -878,10 +883,3 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	return TRUE
-
-// melbert todos
-// - figure out simplemobs
-// - do something with surgical drapes (+speed bonus, +safety?)
-// - wounds put you in certain bodypart states (limb bleeding -> vessels cut, broken bone -> bone drilled, etc)
-// - trait for mobs which require a saw to break skin
-// - tie organ fishing to an open cavity
