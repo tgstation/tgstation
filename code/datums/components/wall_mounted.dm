@@ -73,7 +73,7 @@
 ///Checks object direction and then verifies if there's a support atom. Finally.
 /obj/proc/find_and_hang_on_atom()
 	var/area/location = get_area(src)
-	if(istype(location, /area/shuttle) || location.type == /area/space)
+	if(!isarea(location) || istype(location, /area/shuttle))
 		return FALSE
 
 	var/msg
