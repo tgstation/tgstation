@@ -4,7 +4,7 @@
 	///What team the mob that this component is attached to is part of. This should be all lowercase and either a color or "neutral"
 	var/team_color = "neutral"
 
-/datum/component/lasertag/Initialize(datum/source, team_color)
+/datum/component/lasertag/Initialize(datum/source, datum/source_item, team_color)
 	if (!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	register_lasertag_signals()
@@ -17,11 +17,13 @@
 
 
 /datum/component/lasertag/proc/team_color_match(datum/source, color)
+	SIGNAL_HANDLER
 	if (color == team_color)
 		return ALLOW_FIRE
 	return BLOCK_FIRE
 
 /datum/component/lasertag/proc/on_laser_hit(datum/source, projectile)
+	SIGNAL_HANDLER
 	if(!istype(projectile, /obj/projectile/beam/lasertag))
 		return
 	var/obj/projectile/beam/lasertag/laser = projectile

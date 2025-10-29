@@ -17,7 +17,7 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
+	equipper.AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
 
 
 /obj/item/clothing/suit/bluetag/dropped(mob/living/user)
@@ -25,7 +25,7 @@
 	if(last_slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = null
-	RemoveComponentSource(REF(src), /datum/component/lasertag)
+	user.RemoveComponentSource(REF(src), /datum/component/lasertag)
 
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armor"
@@ -47,7 +47,7 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
+	equipper.AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
 
 
 /obj/item/clothing/suit/redtag/dropped(mob/living/user)
@@ -55,4 +55,4 @@
 	if(last_slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = null
-	RemoveComponentSource(REF(src), /datum/component/lasertag)
+	user.RemoveComponentSource(REF(src), /datum/component/lasertag)
