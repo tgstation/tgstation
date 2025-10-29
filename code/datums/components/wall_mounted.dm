@@ -77,7 +77,7 @@
 
 	var/msg
 	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
-		msg = "[type] Could not find attachable object at COORDS "
+		msg = "[type] Could not find attachable object at [get_area(src)] "
 
 	var/list/turf/attachable_turfs = list()
 	attachable_turfs += get_turf(src)
