@@ -1,0 +1,8 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - map: "Added two DeForest first aid stations to the syndicate bioweapons base"
+  - map: "Added silver bars to the syndicate bioweapons base for grinding"
+  - map: "Added meat and a food processor to the syndicate bioweapons base kitchen"
+  - map: "The syndicate bioweapons base kitchen now contains a range"
+  - map: "The syndicate bioweapons base kitchen contains less flour, rice, and sugar"
