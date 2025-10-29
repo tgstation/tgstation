@@ -35,7 +35,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/space
-	back = /obj/item/tank/jetpack/oxygen
+	back = /obj/item/tank/jetpack
 	head = /obj/item/clothing/head/helmet/space
 	mask = /obj/item/clothing/mask/breath
 
