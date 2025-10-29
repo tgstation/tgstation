@@ -43846,10 +43846,6 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /obj/machinery/scanner_gate/preset_guns,
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 10;
-	pixel_x = -20
-	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "pdT" = (
@@ -53817,7 +53813,8 @@
 /area/station/service/theater)
 "syc" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/fulltile,
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/plating,
 /area/station/security/brig)
 "syh" = (
