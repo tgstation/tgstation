@@ -122,7 +122,7 @@
 /obj/projectile/bullet/c38/iceblox //see /obj/projectile/temp for the original code
 	name = ".38 Iceblox bullet"
 	damage = 20
-	var/temperature = 100
+	var/temperature = 50 //its better than a laser
 	ricochets_max = 0
 
 /obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -130,6 +130,7 @@
 	if(isliving(target))
 		var/mob/living/criminal_scum = target
 		criminal_scum.adjust_bodytemperature(((100-blocked)/100)*(temperature - criminal_scum.bodytemperature))
+		criminal_scum.apply_status_effect(/datum/status_effect/ineffective_thermoregulation)
 
 // .357 (Syndie Revolver)
 
