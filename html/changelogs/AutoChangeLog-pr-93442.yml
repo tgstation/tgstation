@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "The strongarm implants now directly improves the unarmed power of the arm it is implanted into."
-  - balance: "The strongarm implant's super slam now uses similar calculations to normal unarmed attacks, including improvements from mutations and athletics."
-  - balance: "The strongarm always uses the super slam against nonhuman opponents. It will only go on cooldown, and care about that cooldown, when used against humans."

@@ -2166,6 +2166,15 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/chair/sofa/bench/left{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "azy" = (
@@ -5137,7 +5146,6 @@
 /area/station/command/gateway)
 "bmw" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -5153,6 +5161,7 @@
 /obj/machinery/door/airlock/medical{
 	name = "Paramedic Dispatch"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron,
 /area/station/medical/paramedic)
 "bmC" = (
@@ -6531,7 +6540,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/full,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "bFe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -8202,10 +8211,12 @@
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "bYc" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/status_display/ai/directional/east,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/machinery/computer/crew{
+	dir = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
@@ -9124,15 +9135,16 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
 "ckd" = (
-/obj/structure/chair/sofa/bench/left{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/machinery/light/small/directional/south,
+/obj/structure/chair/sofa/bench/right{
+	dir = 1
+	},
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/box/corners{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
@@ -10079,7 +10091,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "cvu" = (
 /obj/structure/disposalpipe/segment,
@@ -10129,6 +10141,19 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
+"cvX" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Desk"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
+/turf/open/floor/iron,
+/area/station/medical/paramedic)
 "cwe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -11787,6 +11812,17 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
+/obj/structure/table/glass,
+/obj/item/emergency_bed,
+/obj/item/emergency_bed{
+	pixel_y = 3
+	},
+/obj/item/emergency_bed{
+	pixel_y = 3
+	},
+/obj/item/wheelchair{
+	pixel_y = 15
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "cSi" = (
@@ -12584,7 +12620,6 @@
 	},
 /obj/machinery/digital_clock/directional/south,
 /obj/item/mod/module/signlang_radio,
-/obj/structure/fireaxecabinet/jawsofrecovery/directional/east,
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "dds" = (
@@ -16001,7 +16036,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "dWd" = (
 /obj/structure/cable,
@@ -25209,7 +25244,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "gjI" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -28519,9 +28554,11 @@
 /area/station/hallway/secondary/exit)
 "gXm" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/blue/half/contrasted,
-/turf/open/floor/iron/white,
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/south{
+	pixel_y = -26
+	},
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "gXn" = (
 /obj/structure/table,
@@ -34167,7 +34204,7 @@
 	id = "paramed_dispatch";
 	name = "Privacy Shutters";
 	pixel_x = 6;
-	req_access = list("medical")
+	req_access = list("paramedic")
 	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
@@ -34176,7 +34213,9 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/white,
+/obj/item/toy/figure/paramedic,
+/obj/item/surgicaldrill,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "ivz" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -37239,7 +37278,6 @@
 /area/station/security/lockers)
 "jhs" = (
 /obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -38195,17 +38233,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/aisat/exterior)
-"jtz" = (
-/obj/structure/chair/sofa/bench{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 4
-	},
-/obj/machinery/light/small/directional/east,
-/obj/machinery/firealarm/directional/east,
-/turf/open/floor/iron/white,
-/area/station/medical/medbay)
 "jtB" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -41212,17 +41239,8 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "keH" = (
-/obj/structure/chair/sofa/bench/right{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 1
-	},
-/obj/effect/turf_decal/box/corners{
-	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
@@ -46750,6 +46768,17 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/button/door/directional/east{
+	pixel_y = -4;
+	id = "paramed_dispatch_desk";
+	name = "Desk Shutter Control"
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = 6;
+	name = "Medbay Doors Control";
+	id = "MedbayFoyer"
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "lAs" = (
@@ -46783,7 +46812,6 @@
 "lAV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron,
 /area/station/medical/cryo)
 "lAW" = (
@@ -52399,22 +52427,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/abandoned_gambling_den)
 "mVr" = (
-/obj/machinery/computer/crew{
-	dir = 4
-	},
-/obj/machinery/button/door/directional/west{
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	normaldoorcontrol = 1;
-	pixel_y = 6;
-	req_access = list("medical")
-	},
-/obj/machinery/button/door/directional/west{
-	id = "paramed_dispatch_desk";
-	name = "Desk Shutter Control";
-	pixel_y = -4;
-	req_access = list("medical")
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
@@ -56768,15 +56780,15 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "odc" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/newscaster/directional/south,
 /obj/machinery/camera/directional/east{
 	c_tag = "Medbay - Paramedic Dispatch";
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
+/obj/machinery/suit_storage_unit/medical,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "odd" = (
 /obj/docking_port/stationary/random{
@@ -60096,7 +60108,7 @@
 	},
 /obj/effect/landmark/start/paramedic,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "oUM" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -65133,13 +65145,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "qdT" = (
-/obj/structure/table/wood,
-/obj/item/storage/medkit/emergency,
-/obj/item/toy/figure/paramedic,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/obj/structure/closet/secure_closet/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "qdV" = (
 /obj/machinery/flasher/directional/south{
@@ -74774,7 +74784,6 @@
 /area/station/science/ordnance/office)
 "sxG" = (
 /obj/machinery/door/firedoor,
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -74784,7 +74793,8 @@
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Desk"
 	},
-/turf/open/floor/iron,
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "sxK" = (
 /obj/effect/turf_decal/siding/wood,
@@ -80706,7 +80716,6 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/paramedic,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay)
@@ -80763,7 +80772,6 @@
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/effect/turf_decal/tile/blue/diagonal_edge,
 /obj/machinery/duct,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/iron/diagonal,
 /area/station/medical/break_room)
 "tWD" = (
@@ -81392,7 +81400,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
-/obj/structure/sign/warning/no_smoking/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "udf" = (
@@ -82142,7 +82150,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "umN" = (
 /turf/closed/wall,
@@ -83442,7 +83450,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/iron/white,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "uCp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -84742,12 +84751,17 @@
 /area/station/command/bridge)
 "uQF" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/effect/turf_decal/bot_red,
-/obj/machinery/suit_storage_unit/medical,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
 /obj/machinery/light/cold/directional/west,
+/obj/structure/table/reinforced,
+/obj/item/toy/figure/md{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/hypospray/medipen{
+	pixel_y = -4
+	},
 /turf/open/floor/iron/textured,
 /area/station/medical/storage)
 "uQN" = (
@@ -85741,18 +85755,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "vfA" = (
-/obj/structure/table/glass,
 /obj/item/radio/intercom/directional/south,
-/obj/item/clipboard,
-/obj/item/toy/figure/md{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/hypospray/medipen{
-	pixel_y = -4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
 "vfN" = (
@@ -91298,7 +91305,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "wAt" = (
 /obj/machinery/hydroponics/soil,
@@ -94973,9 +94980,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/landmark/start/medical_doctor,
 /obj/effect/turf_decal/tile/neutral/full,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
 "xxX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -139405,7 +139411,7 @@ fNm
 qeB
 uNY
 keH
-jtz
+yfM
 ckd
 veM
 hJn
@@ -139662,7 +139668,7 @@ rmo
 lnz
 uNY
 eQC
-gQl
+cvX
 eQC
 gQl
 ltz
@@ -141204,7 +141210,7 @@ xuI
 uNY
 uNY
 gQl
-gpq
+gQl
 gQl
 gQl
 gQl

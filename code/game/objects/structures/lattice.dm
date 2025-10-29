@@ -196,12 +196,11 @@
 /obj/structure/lattice/catwalk/boulder
 	name = "boulder platform"
 	desc = "A boulder, floating on the molten hot deadly lava. More like a BOATlder."
-	icon = 'icons/obj/ore.dmi'
-	icon_state = "boulder_platform"
+	icon = 'icons/obj/smooth_structures/boulder_platform.dmi'
+	icon_state = "boulder_platform-0"
 	base_icon_state = "boulder_platform"
-	smoothing_flags = NONE
-	smoothing_groups = null
-	canSmoothWith = null
+	smoothing_groups = SMOOTH_GROUP_BOULDER_PLATFORM
+	canSmoothWith = SMOOTH_GROUP_BOULDER_PLATFORM + SMOOTH_GROUP_FLOOR_LAVA
 	build_material = null
 	/// The type of particle to make before the platform collapses.
 	var/warning_particle = /particles/smoke/ash
@@ -224,10 +223,9 @@
 	. = ..()
 
 /obj/structure/lattice/catwalk/boulder/proc/pre_self_destruct()
-	if(istype(loc, /turf/open/lava/plasma))
-		add_overlay("plasma_cracks")
-	else
-		add_overlay("lava_cracks")
+	var/mutable_appearance/cracks_overlay = mutable_appearance('icons/obj/ore.dmi', istype(loc, /turf/open/lava/plasma) ? "plasma_cracks" : "lava_cracks", src)
+	cracks_overlay.blend_mode = BLEND_INSET_OVERLAY
+	add_overlay(cracks_overlay)
 	animate(src, alpha = 0, time = 2 SECONDS, pixel_y = -16, easing = QUAD_EASING|EASE_IN)
 	addtimer(CALLBACK(src, PROC_REF(self_destruct)), 2 SECONDS)
 

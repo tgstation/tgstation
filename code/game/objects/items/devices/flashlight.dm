@@ -25,6 +25,10 @@
 	light_range = 4
 	light_power = 1
 	light_on = FALSE
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
+
 	/// If we've been forcibly disabled for a temporary amount of time.
 	COOLDOWN_DECLARE(disabled_time)
 	/// Can we toggle this light on and off (used for contexual screentips only)

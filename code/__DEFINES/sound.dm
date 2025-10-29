@@ -312,6 +312,11 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_FIRE_MODE_SWITCH "fire_mode_switch"
 #define SFX_REMOTE_MODE_SWITCH "remote_mode_switch"
 #define SFX_REMOTE_ACTION "remote_action"
+#define SFX_GAS_MASK_PICKUP "gas_mask_pickup"
+#define SFX_GAS_MASK_DROP "gas_mask_drop"
+#define SFX_GAS_MASK_EQUIP "gas_mask_equip"
+#define SFX_GENERIC_DEVICE_PICKUP "generic_device_pickup"
+#define SFX_GENERIC_DEVICE_DROP "generic_device_drop"
 
 // Standard is 44.1khz
 #define MIN_EMOTE_PITCH 40000
