@@ -11,11 +11,33 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.aid_name = aid_name
+	RegisterSignal(target, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(on_context))
 	RegisterSignal(target, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_item_interaction))
+
+	var/obj/item/realtarget = target
+	realtarget.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
 
 /datum/element/surgery_aid/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ITEM_INTERACTING_WITH_ATOM)
+	UnregisterSignal(target, list(COMSIG_ITEM_INTERACTING_WITH_ATOM, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
+
+/datum/element/surgery_aid/proc/on_context(obj/item/source, list/context, atom/target, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return NONE
+
+	var/mob/living/target_mob = target
+	if(!target_mob.has_limbs)
+		context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(source, TRAIT_READY_TO_OPERATE) ? "Remove [aid_name]" : "Prepare for surgery"
+		return NONE
+
+	var/obj/item/bodypart/precise_part = target_mob.get_bodypart(deprecise_zone(user.zone_selected))
+	if(isnull(precise_part))
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = HAS_TRAIT(precise_part, TRAIT_READY_TO_OPERATE) ? "Remove [aid_name]" : "Prepare [precise_part.plaintext_zone] for surgery"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /datum/element/surgery_aid/proc/on_item_interaction(datum/source, mob/living/user, atom/target, ...)
 	SIGNAL_HANDLER

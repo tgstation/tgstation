@@ -1,5 +1,6 @@
 /datum/surgery_operation/limb/lipoplasty
-	name = "lipoplasty"
+	name = "excise excess fat"
+	rnd_name = "Lipoplasty"
 	desc = "Remove excess fat from a patient's body."
 	implements = list(
 		TOOL_SAW = 1,

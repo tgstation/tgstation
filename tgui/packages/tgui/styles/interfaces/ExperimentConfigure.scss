@@ -3,6 +3,10 @@
   background: var(--color-black);
   border: var(--border-thickness-tiny) solid var(--color-primary);
   margin: var(--space-s) 0;
+
+  &--selected {
+    border: var(--border-thickness-tiny) solid var(--button-background-selected);
+  }
 }
 
 .ExperimentTechwebServer__WebHeader {

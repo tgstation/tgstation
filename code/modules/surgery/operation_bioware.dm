@@ -31,7 +31,8 @@
 
 /datum/surgery_operation/limb/bioware/vein_threading
 	name = "thread veins"
-	desc = "Weave the patient's veins into a reinforced mesh, reducing blood loss from injuries."
+	rnd_name = "Symvasculardesis" // "together vessel fusion"
+	desc = "Weave a patient's veins into a reinforced mesh, reducing blood loss from injuries."
 	status_effect_gained = /datum/status_effect/bioware/heart/threaded_veins
 
 /datum/surgery_operation/limb/bioware/vein_threading/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
@@ -56,11 +57,14 @@
 	display_pain(limb.owner, "You can feel your blood pumping through reinforced veins!")
 
 /datum/surgery_operation/limb/bioware/vein_threading/mechanic
+	rnd_name = "Hydraulics Routing Optimization"
+	desc = "Optimize the routing of a robotic patient's hydraulic system, reducing fluid loss from leaks."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/muscled_veins
 	name = "muscled veins"
-	desc = "Add a muscled membrane to the patient's veins, allowing them to pump blood without a heart."
+	rnd_name = "Myovasculaplasty" // "muscle vessel reshaping"
+	desc = "Add a muscled membrane to a patient's veins, allowing them to pump blood without a heart."
 	status_effect_gained = /datum/status_effect/bioware/heart/muscled_veins
 
 /datum/surgery_operation/limb/bioware/muscled_veins/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
@@ -85,11 +89,14 @@
 	display_pain(limb.owner, "You can feel your heartbeat's powerful pulses ripple through your body!")
 
 /datum/surgery_operation/limb/bioware/muscled_veins/mechanic
+	rnd_name = "Hydraulics Redundancy Subroutine"
+	desc = "Add redundancies to a robotic patient's hydraulic system, allowing it to pump fluids without an engine or pump."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/nerve_splicing
 	name = "splice nerves"
-	desc = "Splice the patient's nerves to make them more resistant to stuns."
+	rnd_name = "Symneurodesis" // "together nerve fusion"
+	desc = "Splice a patient's nerves together to make them more resistant to stuns."
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/spliced
 
@@ -115,11 +122,14 @@
 	display_pain(limb.owner, "You regain feeling in your body; It feels like everything's happening around you in slow motion!")
 
 /datum/surgery_operation/limb/bioware/nerve_splicing/mechanic
+	rnd_name = "System Automatic Reset Subroutine"
+	desc = "Upgrade a robotic patient's automatic systems, allowing it to better resist stuns."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/nerve_grounding
 	name = "ground nerves"
-	desc = "Reroute the patient's nerves to act as grounding rods, protecting them from electrical shocks."
+	rnd_name = "Xathoneuroplasty" // "yellow nerve reshaping". see: yellow gloves
+	desc = "Reroute a patient's nerves to act as grounding rods, protecting them from electrical shocks."
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/grounded
 
@@ -145,11 +155,14 @@
 	display_pain(limb.owner, "You regain feeling in your body! You feel energzed!")
 
 /datum/surgery_operation/limb/bioware/nerve_grounding/mechanic
+	rnd_name = "System Shock Dampening"
+	desc = "Install grounding rods into a robotic patient's nervous system, protecting it from electrical shocks."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/ligament_hook
 	name = "reshape ligaments"
-	desc = "Reshape the patient's ligaments to allow limbs to be manually reattached if severed, at the cost of making them easier to detach."
+	rnd_name = "Arthroplasty" // "bone reshaping"
+	desc = "Reshape a patient's ligaments to allow limbs to be manually reattached if severed - at the cost of making them easier to detach."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/hooked
 
 /datum/surgery_operation/limb/bioware/ligament_hook/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
@@ -174,11 +187,15 @@
 	display_pain(limb.owner, "Your limbs feel... strangely loose.")
 
 /datum/surgery_operation/limb/bioware/ligament_hook/mechanic
+	rnd_name = "Anchor Point Snaplocks"
+	desc = "Refactor a robotic patient's limb joints to allow for rapid deatchment, allowing limbs to be manually reattached if severed - \
+		at the cost of making them easier to detach as well."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/ligament_reinforcement
 	name = "strengthen ligaments"
-	desc = "Strengthen the patient's ligaments to make dismemberment more difficult, at the cost of making nerve connections easier to interrupt."
+	rnd_name = "Arthroprrhaphy" // "bone strengthening" / "bone stitching"
+	desc = "Strengthen a patient's ligaments to make dismemberment more difficult, at the cost of making nerve connections easier to interrupt."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/reinforced
 
 /datum/surgery_operation/limb/bioware/ligament_reinforcement/on_preop(obj/item/bodypart/limb, mob/living/surgeon, tool)
@@ -203,11 +220,14 @@
 	display_pain(limb.owner, "Your limbs feel more secure, but also more frail.")
 
 /datum/surgery_operation/limb/bioware/ligament_reinforcement/mechanic
+	rnd_name = "Anchor Point Reinforcement"
+	desc = "Reinforce a robotic patient's limb joints to prevent dismemberment, at the cost of making nerve connections easier to interrupt."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/cortex_folding
 	name = "cortex folding"
-	desc = "A biological upgrade which folds the patient's cerebral cortex into a fractal pattern, increasing neural density and flexibility."
+	rnd_name = "Encephalofractoplasty" // it's a stretch - "brain fractal reshaping"
+	desc = "A biological upgrade which folds a patient's cerebral cortex into a fractal pattern, increasing neural density and flexibility."
 	status_effect_gained = /datum/status_effect/bioware/cortex/folded
 	required_zone = BODY_ZONE_HEAD
 
@@ -247,11 +267,14 @@
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/limb/bioware/cortex_folding/mechanic
+	rnd_name = "Wetware OS Labyrinthian Programming"
+	desc = "Reprogram a robotic patient's neural network in a downright eldritch programming language, giving space to non-standard neural patterns."
 	required_bodytype = BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/limb/bioware/cortex_imprint
 	name = "cortex imprinting"
-	desc = "A biological upgrade which carves the patient's cerebral cortex into a self-imprinting pattern, increasing neural density and resilience."
+	rnd_name = "Encephalopremoplasty" // it's a stretch - "brain print reshaping"
+	desc = "A biological upgrade which carves a patient's cerebral cortex into a self-imprinting pattern, increasing neural density and resilience."
 	status_effect_gained = /datum/status_effect/bioware/cortex/imprinted
 	required_zone = BODY_ZONE_HEAD
 
@@ -291,4 +314,7 @@
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/limb/bioware/cortex_imprint/mechanic
+	rnd_name = "Wetware OS Ver 2.0"
+	desc = "Update a robotic patient's operating system to a \"newer version\", improving overall performance and resilience. \
+		Shame about all the adware."
 	required_bodytype = BODYTYPE_ROBOTIC

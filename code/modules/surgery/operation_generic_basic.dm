@@ -1,5 +1,8 @@
+// Some operations that mirror basic carbon state-moving operations but for basic mobs
+/// Incision of skin for basic mobs
 /datum/surgery_operation/basic/incise_skin
 	name = "make incision"
+	// rnd_name = "Laparotomy / Craniotomy / Myotomy" // Maybe we keep this one simple
 	desc = "Make an incision in the patient's skin to access internals."
 	implements = list(
 		TOOL_SCALPEL = 1,
@@ -39,11 +42,13 @@
 	// Skip straight to open, basic mobs don't have vessels to bleed from
 	patient.apply_status_effect(/datum/status_effect/basic_surgery_state, SURGERY_SKIN_OPEN)
 
+// Closing of skin for basic mobs
 /datum/surgery_operation/basic/close_skin
 	name = "mend incision"
 	desc = "Mend the incision in the patient's skin, closing it up."
 	implements = list(
 		TOOL_CAUTERY = 1,
+		/obj/item/stack/medical/suture = 1,
 		/obj/item/gun/energy/laser = 1.15,
 		TOOL_WELDER = 1.5,
 		/obj/item = 3.33,

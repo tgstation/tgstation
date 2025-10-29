@@ -125,7 +125,7 @@
 			data["patient"]["stat"] = "Conscious"
 			data["patient"]["statstate"] = "good"
 		if(SOFT_CRIT)
-			data["patient"]["stat"] = "Conscious"
+			data["patient"]["stat"] = "Critical Condition"
 			data["patient"]["statstate"] = "average"
 		if(UNCONSCIOUS, HARD_CRIT)
 			data["patient"]["stat"] = "Unconscious"
@@ -150,31 +150,67 @@
 /obj/machinery/computer/operating/ui_static_data(mob/user)
 	var/list/data = list()
 
+	data["experiments"] = list()
+	data["techwebs"] = list()
 	data["surgeries"] = list()
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(advanced_surgeries))
-		data["surgeries"] += list(list(
-			"name" = operation.name,
-			"desc" = operation.desc,
+	if(!is_operational)
+		return data
+
+	if(linked_techweb)
+		data["techwebs"] += list(list(
+			"web_id" = linked_techweb.id,
+			"web_org" = linked_techweb.organization,
+			"selected" = TRUE,
+			"ref" = REF(linked_techweb),
+			"all_servers" = linked_techweb.techweb_servers,
 		))
 
-	data["possible_next_operations"] = list()
-	if(table?.patient && is_operational)
-		// Only show basic, unlocked operations and anything we have unlocked in this computer
-		for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(GLOB.operations.unlocked + advanced_surgeries))
-			if(!operation.show_as_next_step(table.patient, target_zone))
-				continue
-			data["possible_next_operations"] += list(list(
-				"name" = "[operation.name]",
-				"desc" = operation.desc,
-				"tool_rec" = operation.get_recommended_tool() || "error",
-			))
+		for(var/datum/experiment/experiment as anything in linked_techweb.available_experiments)
+			if(istype(experiment, /datum/experiment/autopsy))
+				data["experiments"] += list(experiment.to_ui_data())
 
-		var/atom/movable/releveant = table.patient.has_limbs ? table.patient.get_bodypart(target_zone) : table.patient
-		if(!length(data["possible_next_operations"]) && releveant && !HAS_TRAIT(releveant, TRAIT_READY_TO_OPERATE))
-			data["possible_next_operations"] += list(list(
+	var/list/operations = GLOB.operations.get_instances(GLOB.operations.unlocked + advanced_surgeries)
+	var/any_recommended = FALSE
+	for(var/datum/surgery_operation/operation as anything in operations)
+		var/recommend = FALSE
+		if(table?.patient && operation.show_as_next_step(table.patient, target_zone))
+			recommend = TRUE
+			any_recommended = TRUE
+
+		data["surgeries"] += list(list(
+			"name" = operation.rnd_name || operation.name,
+			"desc" = operation.rnd_desc || operation.desc,
+			"tool_rec" = operation.get_recommended_tool() || "error",
+			"show_as_next" = recommend,
+			"show_in_list" = TRUE,
+		))
+
+	if(!any_recommended && table?.patient)
+		var/obj/item/part = table.patient.get_bodypart(target_zone)
+		var/just_drapes = FALSE
+		if(table.patient.has_limbs)
+			if(isnull(part))
+				data["surgeries"] += list(list(
+					"name" = "Prepare for [/datum/surgery_operation/prosthetic_replacement::name]",
+					"desc" = "Prepare the patient's chest for prosthetic limb attachment.",
+					"tool_rec" = "operate on chest",
+					"show_as_next" = TRUE,
+					"show_in_list" = FALSE,
+				))
+
+			else if(!HAS_TRAIT(part, TRAIT_READY_TO_OPERATE))
+				just_drapes = TRUE
+
+		else if(!HAS_TRAIT(table.patient, TRAIT_READY_TO_OPERATE))
+			just_drapes = TRUE
+
+		if(just_drapes)
+			data["surgeries"] += list(list(
 				"name" = "Prepare for surgery",
 				"desc" = "Begin surgery by applying surgical drapes to the patient.",
 				"tool_rec" = /obj/item/surgical_drapes::name,
+				"show_as_next" = TRUE,
+				"show_in_list" = FALSE,
 			))
 
 	return data

@@ -75,7 +75,7 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 
-/datum/surgery_operation/limb/seal_veins/tool_check(mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/seal_veins/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0

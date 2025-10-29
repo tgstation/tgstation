@@ -16,6 +16,9 @@
 		/obj/item/transfer_valve,
 	))
 
+/datum/surgery_operation/limb/cavity_implant/get_recommended_tool()
+	return "Any item"
+
 /datum/surgery_operation/limb/cavity_implant/get_default_radial_image()
 	var/image/base = ..()
 	base.overlays += add_radial_overlays(image('icons/hud/screen_gen.dmi', "arrow_large_still"))

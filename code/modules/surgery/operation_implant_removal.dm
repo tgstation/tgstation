@@ -11,7 +11,7 @@
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
 /datum/surgery_operation/basic/implant_removal/get_default_radial_image()
-	return image('icons/obj/medical/syringe.dmi', "implantcase-1")
+	return image('icons/obj/medical/syringe.dmi', "implantcase-b")
 
 /datum/surgery_operation/basic/implant_removal/state_check(mob/living/patient)
 	return has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
@@ -20,9 +20,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_notice("You searches for implants in [patient]..."),
-		span_notice("[surgeon] searches for implants in [patient]."),
-		span_notice("[surgeon] searches for implants in [patient]."),
+		span_notice("You search for implants in [patient]..."),
+		span_notice("[surgeon] search for implants in [patient]."),
+		span_notice("[surgeon] search for implants in [patient]."),
 	)
 	if(LAZYLEN(patient.implants))
 		display_pain(surgeon, "You feel a serious pain as [surgeon] digs around inside you!")

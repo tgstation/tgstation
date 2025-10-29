@@ -42,16 +42,6 @@
 		span_notice("[surgeon] successfully repairs the fracture in [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 
-	if(isstack(tool))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)
-
-/datum/surgery_operation/limb/repair_hairline/on_failure(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
-	. = ..()
-	if(isstack(tool))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)
-
 /datum/surgery_operation/limb/reset_compound
 	name = "reset compound fracture"
 	desc = "Reset a compound fracture in a patient's bone, preparing it for proper healing."
@@ -96,10 +86,6 @@
 		span_notice("[surgeon] successfully resets the bone in [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 
-	if(isstack(tool))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)
-
 /datum/surgery_operation/limb/repair_compound
 	name = "repair compound fracture"
 	desc = "Mend a compound fracture in a patient's bone."
@@ -142,15 +128,6 @@
 		span_notice("[surgeon] successfully repairs the fracture in [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
 		span_notice("[surgeon] successfully repairs the fracture in [limb.owner]'s [limb.plaintext_zone]!"),
 	)
-	if(isstack(tool))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)
-
-/datum/surgery_operation/limb/repair_compound/on_failure(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
-	. = ..()
-	if(isstack(tool))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)
 
 /datum/surgery_operation/limb/prepare_cranium_repair
 	name = "discard skull debris"
@@ -229,7 +206,3 @@
 		span_notice("[surgeon] successfully repairs [limb.owner]'s skull with [tool]."),
 		span_notice("[surgeon] successfully repairs [limb.owner]'s skull.")
 	)
-
-	if(isstack(tool))
-		var/obj/item/stack/used_stack = tool
-		used_stack.use(1)

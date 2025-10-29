@@ -1,6 +1,8 @@
 /datum/surgery_operation/basic/dissection
 	name = "experimental dissection"
-	desc = "Perform an experimental dissection on a patient's body part to extract useful biological samples."
+	rnd_name = "Experimental Androtomy"
+	desc = "Perform an experimental dissection on a patient to obtain research points."
+	rnd_desc = 	"An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
 	implements = list(
 		/obj/item/autopsy_scanner = 1,
 		TOOL_SCALPEL = 1.66,

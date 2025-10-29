@@ -1,5 +1,6 @@
 /datum/surgery_operation/limb/debride
 	name = "debride infected flesh"
+	rnd_name = "Debridement"
 	desc = "Remove infected or necrotic flesh from a patient's wound to promote healing."
 	implements = list(
 		TOOL_HEMOSTAT = 1,

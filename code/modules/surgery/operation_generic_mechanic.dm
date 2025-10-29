@@ -1,5 +1,4 @@
 // Mechanical equivalents of basic surgical operations
-
 /// Mechanical equivalent of cutting skin
 /datum/surgery_operation/limb/mechanical_incision
 	name = "unscrew shell"

@@ -59,6 +59,12 @@
 		IMPLEMENT_HAND = 1,
 	)
 
+/datum/surgery_operation/limb/remove_dental_implant/get_time_modifiers(atom/movable/operating_on, mob/living/surgeon, tool)
+	. = ..()
+	for(var/obj/item/flashlight/light in surgeon)
+		if(light.light_on) // Hey I can see a better!
+			. *= 0.8
+
 /datum/surgery_operation/limb/remove_dental_implant/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
 

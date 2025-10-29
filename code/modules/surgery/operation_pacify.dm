@@ -1,6 +1,7 @@
 /datum/surgery_operation/organ/pacify
 	name = "pacification"
 	desc = "Remove aggressive tendencies from a patient's brain."
+	rnd_desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
 	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
 	implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -54,6 +55,8 @@
 
 /datum/surgery_operation/organ/pacify/mechanic
 	name = "delete aggression programming"
+	rnd_name = "Aggression Suppression Programming"
+	rnd_desc = "Install malware which permanently inhibits the aggression programming of the patient's neural network, making the patient unwilling to cause direct harm."
 	implements = list(
 		TOOL_MULTITOOL = 1,
 		TOOL_HEMOSTAT = 2.85,

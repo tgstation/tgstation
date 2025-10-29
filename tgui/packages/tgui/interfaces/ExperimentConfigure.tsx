@@ -8,11 +8,11 @@ import {
   Table,
   Tooltip,
 } from 'tgui-core/components';
-
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Techweb = {
+export type Techweb = {
   all_servers: string[];
   ref: string;
   selected: number;
@@ -20,13 +20,13 @@ type Techweb = {
   web_org: string;
 };
 
-type ExperimentData = {
+export type ExperimentData = {
   description: string;
   name: string;
   performance_hint: string;
   progress: Stage[];
   ref: string;
-  selected: number;
+  selected?: BooleanLike;
   tag: string;
 };
 
@@ -84,9 +84,14 @@ function ExperimentStageRow(props: ExperimentStageRowProps) {
   );
 }
 
-function TechwebServer(props) {
+type TechwebServerProps = {
+  techwebs: Techweb[];
+  can_select?: boolean;
+};
+
+export function TechwebServer(props: TechwebServerProps) {
   const { act } = useBackend<Data>();
-  const { techwebs } = props;
+  const { techwebs, can_select = true } = props;
 
   return techwebs.map((server, index) => (
     <Box key={index} m={1} className="ExperimentTechwebServer__Web">
@@ -98,19 +103,21 @@ function TechwebServer(props) {
         <Stack.Item className="ExperimentTechwebServer__WebName">
           {server.web_id} / {server.web_org}
         </Stack.Item>
-        <Stack.Item>
-          <Button
-            onClick={() =>
-              server.selected
-                ? act('clear_server')
-                : act('select_server', { ref: server.ref })
-            }
-            backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
-            className="ExperimentTechwebServer__ConnectButton"
-          >
-            {server.selected ? 'Disconnect' : 'Connect'}
-          </Button>
-        </Stack.Item>
+        {can_select && (
+          <Stack.Item>
+            <Button
+              onClick={() =>
+                server.selected
+                  ? act('clear_server')
+                  : act('select_server', { ref: server.ref })
+              }
+              backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
+              className="ExperimentTechwebServer__ConnectButton"
+            >
+              {server.selected ? 'Disconnect' : 'Connect'}
+            </Button>
+          </Stack.Item>
+        )}
       </Stack>
       <Box className="ExperimentTechwebServer__WebContent">
         <span>
@@ -133,7 +140,13 @@ export function Experiment(props) {
     exp;
 
   return (
-    <Box m={1} key={ref} className="ExperimentConfigure__ExperimentPanel">
+    <Box
+      m={1}
+      key={ref}
+      className={
+        'ExperimentConfigure__ExperimentPanel' + (selected ? '--selected' : '')
+      }
+    >
       <Button
         fluid
         onClick={() =>
@@ -141,7 +154,7 @@ export function Experiment(props) {
             ? act('clear_experiment')
             : act('select_experiment', { ref: ref })
         }
-        backgroundColor={selected ? 'good' : '#40628a'}
+        selected={selected}
         className="ExperimentConfigure__ExperimentName"
       >
         <Stack>

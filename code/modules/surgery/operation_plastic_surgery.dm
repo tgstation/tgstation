@@ -101,7 +101,7 @@
 
 /datum/surgery_operation/limb/add_plastic
 	name = "apply plastic"
-	desc = "Apply plastic to a patient's body part to to allow for greater customization in future plastic surgeries."
+	desc = "Apply plastic to a patient's body part to to allow for greater customization in following plastic surgery."
 	implements = list(
 		/obj/item/stack/sheet/plastic = 1,
 	)

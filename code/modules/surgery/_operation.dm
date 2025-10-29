@@ -74,7 +74,7 @@
 	return picked_op.try_perform(operating_on, src, potential_tool, op_info)
 
 /// Callback for checking if the surgery radial can be kept open
-/mob/living/proc/surgery_check(obj/item/tool)
+/mob/living/proc/surgery_check(target_zone, obj/item/tool)
 	PRIVATE_PROC(TRUE)
 	if(!is_holding(tool))
 		return FALSE
@@ -87,13 +87,13 @@
 	if(has_limbs)
 		var/obj/item/bodypart/part = get_bodypart(target_zone)
 		state = bitfield_to_list(part?.surgery_state, SURGERY_STATE_READABLE)
-		if(!length(state))
-			state += part ? (HAS_TRAIT(part, TRAIT_READY_TO_OPERATE) ? "Ready for surgery" : "State normal") : "Bodypart missing"
+		if(!length(state) && (isnull(part) || HAS_TRAIT(part, TRAIT_READY_TO_OPERATE)))
+			state += part ? "Ready for surgery" : "Bodypart missing"
 	else
 		var/datum/status_effect/basic_surgery_state/state_holder = has_status_effect(__IMPLIED_TYPE__)
 		state = bitfield_to_list(state_holder?.surgery_state, SURGERY_STATE_READABLE)
-		if(!length(state))
-			state += HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) ? "Ready for surgery" : "State normal"
+		if(!length(state) && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+			state += "Ready for surgery"
 	return state
 
 /**
@@ -159,10 +159,21 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /datum/surgery_operation
 	abstract_type = /datum/surgery_operation
-	/// Name of the operation
+	/// Name of the operation, keep it short and format it like an action - "amputate limb", "remove organ"
+	/// Don't capitalize it, it will be capitalized automatically where necessary.
 	var/name = "surgery operation"
-	/// Description of the operation, keep it short
+	/// Description of the operation, keep it short and format it like an action - "Amputate a patient's limb.", "Remove a patient's organ.".
+	// Use "a patient" instead of "the patient" to keep it generic.
 	var/desc = "A surgery operation that can be performed on a bodypart."
+
+	/// Optional - the name of the operation shown in RND consoles and the operating computer.
+	/// You can get fancier here, givin an official surgery name ("Lobectomy") or rephrase it to be more descriptive ("Brain Lobectomy").
+	/// Capitalize it as necessary.
+	var/rnd_name
+	/// Optional - the description of the operation shown in RND consoles and the operating computer.
+	/// Here is where you may want to provide more information on why an operation is done ("Fixes a broken liver") or special requirements ("Requires Synthflesh").
+	/// Use "the patient" instead of "a patient" to keep it specific.
+	var/rnd_desc
 
 	/**
 	 * What tool(s) can be used to perform this operation?
@@ -500,6 +511,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			result |= ITEM_INTERACT_SUCCESS
 			update_surgery_mood(patient, SURGERY_STATE_SUCCESS)
 
+		if(isstack(tool))
+			var/obj/item/stack/tool_stack = tool
+			tool_stack.use(1)
+
 	while ((operation_flags & OPERATION_LOOPING) && can_loop(patient, operating_on, surgeon, tool, operation_args))
 
 	SEND_SIGNAL(patient, COMSIG_LIVING_SURGERY_FINISHED, src, operating_on, tool)
@@ -517,7 +532,21 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /// Called during the do-after to check if the operation can continue
 /datum/surgery_operation/proc/operate_check(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	PROTECTED_PROC(TRUE)
-	return check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE])
+
+	if(isstack(tool))
+		var/obj/item/stack/tool_stack = tool
+		if(tool_stack.amount <= 0)
+			return FALSE
+
+	if(isitem(tool))
+		var/obj/item/realtool = tool
+		if(QDELETED(realtool) || !surgeon.is_holding(realtool))
+			return FALSE
+
+	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
+		return FALSE
+
+	return TRUE
 
 /**
  * Allows for any extra checks or setup when the operation starts
@@ -733,6 +762,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			screwedmessage = " This is hard to get right in these conditions..."
 		if(5 to INFINITY)
 			screwedmessage = " This is practically impossible in these conditions..."
+	if(operation_args["force_fail"])
+		screwedmessage = " Intentionally."
 
 	display_results(
 		surgeon,

@@ -17,6 +17,9 @@
 	/// Radial slice datums for every augment type
 	VAR_PRIVATE/list/cached_prosthetic_options
 
+/datum/surgery_operation/prosthetic_replacement/get_recommended_tool()
+	return "Any limb / Any item"
+
 /datum/surgery_operation/prosthetic_replacement/get_radial_options(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_prosthetic_options, tool.type)
 	if(!option)

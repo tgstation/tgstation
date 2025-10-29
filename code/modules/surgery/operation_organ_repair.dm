@@ -34,6 +34,7 @@
 
 /datum/surgery_operation/organ/repair/lobectomy
 	name = "excise damaged lung node"
+	rnd_name = "Lobectomy"
 	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
@@ -84,8 +85,8 @@
 /datum/surgery_operation/organ/repair/lobectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 1.05,
 		TOOL_WRENCH = 1.05,
+		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
 		/obj/item/knife = 2.25,
 		/obj/item/shard = 2.85,
@@ -96,6 +97,7 @@
 
 /datum/surgery_operation/organ/repair/hepatectomy
 	name = "remove damaged liver section"
+	rnd_name = "Hepatectomy"
 	desc = "Perform repairs to a patient's damaged liver by removing the most damaged section."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
@@ -147,8 +149,8 @@
 /datum/surgery_operation/organ/repair/hepatectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 1.05,
 		TOOL_WRENCH = 1.05,
+		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
 		/obj/item/knife = 2.25,
 		/obj/item/shard = 2.85,
@@ -159,6 +161,7 @@
 
 /datum/surgery_operation/organ/repair/coronary_bypass
 	name = "graft coronary bypass"
+	rnd_name = "Coronary Artery Bypass Graft"
 	desc = "Graft a bypass onto a a patient's damaged heart to restore proper blood flow."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -210,8 +213,8 @@
 /datum/surgery_operation/organ/repair/coronary_bypass/mechanic
 	name = "access engine internals"
 	implements = list(
-		TOOL_SCALPEL = 1.05,
 		TOOL_CROWBAR = 1.05,
+		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
 		/obj/item/knife = 2.25,
 		/obj/item/shard = 2.85,
@@ -222,6 +225,7 @@
 
 /datum/surgery_operation/organ/repair/gastrectomy
 	name = "remove lower duodenum"
+	rnd_name = "Gastrectomy"
 	desc = "Perform a patient's repairs to a damaged stomach by removing the lower duodenum."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
@@ -278,8 +282,8 @@
 /datum/surgery_operation/organ/repair/gastrectomy/mechanic
 	name = "perform maintenance"
 	implements = list(
-		TOOL_SCALPEL = 1.05,
 		TOOL_WRENCH = 1.05,
+		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
 		/obj/item/knife = 2.25,
 		/obj/item/shard = 2.85,
@@ -291,6 +295,7 @@
 
 /datum/surgery_operation/organ/repair/ears
 	name = "ear surgery"
+	rnd_name = "Ototomy" // source: i made it up
 	desc = "Repair a patient's damaged ears to restore hearing."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -355,6 +360,7 @@
 
 /datum/surgery_operation/organ/repair/eyes
 	name = "eye surgery"
+	rnd_name = "Octotomy" // source: i made it up
 	desc = "Repair a patient's damaged eyes to restore vision."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -423,6 +429,7 @@
 
 /datum/surgery_operation/organ/repair/brain
 	name = "brain surgery"
+	rnd_name = "Neurosurgery"
 	desc = "Repair a patient's damaged brain tissue to restore cognitive function."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -482,8 +489,8 @@
 /datum/surgery_operation/organ/repair/brain/mechanic
 	name = "perform neural debugging"
 	implements = list(
-		TOOL_HEMOSTAT = 1.05,
 		TOOL_MULTITOOL = 1.15,
+		TOOL_HEMOSTAT = 1.05,
 		TOOL_SCREWDRIVER = 2.85,
 		/obj/item/pen = 6.67,
 	)

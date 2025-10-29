@@ -1,6 +1,9 @@
 /datum/surgery_operation/organ/fix_wings
 	name = "repair wings"
+	rnd_name = "Pteroplasty"
 	desc = "Repair a patient's damaged wings to restore flight capability."
+	rnd_desc = "A surgical procedure that repairs damaged wings using Synthflesh. \
+		The patient must be dosed with Synthflesh."
 	implements = list(
 		TOOL_HEMOSTAT = 1.15,
 		TOOL_SCREWDRIVER = 2.85,
@@ -9,6 +12,9 @@
 	operation_flags = OPERATION_LOCKED
 	time = 20 SECONDS
 	target_type = /obj/item/organ/wings/moth
+
+/datum/surgery_operation/organ/fix_wings/get_recommended_tool()
+	return "[..()] + synthflesh"
 
 /datum/surgery_operation/organ/fix_wings/get_default_radial_image()
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")
@@ -20,7 +26,7 @@
 		return FALSE
 	if(!LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED))
 		return FALSE
-	if(organ.owner.reagents?.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) < 1)
+	if(organ.owner.reagents?.get_reagent_amount(/datum/reagent/medicine/c2/synthflesh) < 5)
 		return FALSE
 	return TRUE
 

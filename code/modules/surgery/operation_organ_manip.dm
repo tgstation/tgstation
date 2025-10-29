@@ -31,7 +31,7 @@
 	implements = remove_implements + insert_implements
 
 /datum/surgery_operation/limb/organ_manipulation/get_recommended_tool()
-	return "[..()] / organ"
+	return "[..()] / Organ"
 
 /// Checks that the passed organ can be inserted/removed
 /datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
@@ -77,7 +77,7 @@
 		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
 		if(!option)
 			option = new()
-			option.image = get_generic_limb_radial_image(limb)
+			option.image = get_generic_limb_radial_image(limb.body_zone)
 			option.image.overlays += add_radial_overlays(organ)
 			option.name = "remove [organ.name]"
 			option.info = "Remove [organ.name] from the patient."
@@ -98,7 +98,7 @@
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, organ.type)
 	if(!option)
 		option = new()
-		option.image = get_generic_limb_radial_image(limb)
+		option.image = get_generic_limb_radial_image(limb.body_zone)
 		option.image.overlays += add_radial_overlays(list(image('icons/hud/screen_gen.dmi', "arrow_large_still"), organ))
 		option.name = "insert [organ.name]"
 		option.info = "insert [organ.name] into the patient."
@@ -190,7 +190,7 @@
 
 /datum/surgery_operation/limb/organ_manipulation/internal
 	name = "internal organ manipulation"
-	desc = "Manipulate a patient's internal organs, such as a heart or lungs."
+	desc = "Manipulate a patient's internal organs."
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation/internal
 
 /datum/surgery_operation/limb/organ_manipulation/internal/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
@@ -232,7 +232,6 @@
 
 // Operating on non-chest organs requires bones be intact
 /datum/surgery_operation/limb/organ_manipulation/internal/other
-	name = "experimental organ manipulation"
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
@@ -257,7 +256,7 @@
 
 /// Abductor subtype that works through clothes
 /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
-	name = "experimental feature manipulation"
+	name = "experimental organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 
 // All external organ manipulation requires bones sawed
@@ -285,6 +284,7 @@
 
 /// Abductor subtype that works through clothes
 /datum/surgery_operation/limb/organ_manipulation/external/alien
+	name = "experimental feature manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 
 /datum/surgery_operation/limb/organ_manipulation/external/alien/state_check(obj/item/bodypart/limb)

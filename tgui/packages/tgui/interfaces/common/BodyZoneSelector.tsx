@@ -15,6 +15,10 @@ export enum BodyZone {
   Groin = 'groin',
 }
 
+const renderTogetherIfImprecise = {
+  [BodyZone.Chest]: [BodyZone.Groin],
+};
+
 function bodyZonePixelToZone(
   x: number,
   y: number,
@@ -56,6 +60,57 @@ function bodyZonePixelToZone(
   }
 
   return null;
+}
+
+type BodyImageProps = {
+  zone: BodyZone;
+  scale?: number;
+  theme?: string;
+  opacity?: number;
+  precise?: boolean;
+};
+
+function BodyImage(props: BodyImageProps) {
+  const {
+    zone,
+    scale = 3,
+    theme = 'midnight',
+    opacity = 1,
+    precise = true,
+  } = props;
+
+  return (
+    <>
+      <Image
+        src={resolveAsset(`body_zones.${zone}.png`)}
+        style={{
+          opacity: opacity,
+          pointerEvents: 'none',
+          position: 'absolute',
+          width: `${32 * scale}px`,
+          height: `${32 * scale}px`,
+        }}
+      />
+      {!precise &&
+        renderTogetherIfImprecise[zone]?.map((otherZone) => (
+          <Image
+            key={otherZone}
+            src={resolveAsset(`body_zones.${otherZone}.png`)}
+            style={{
+              opacity: opacity,
+              pointerEvents: 'none',
+              position: 'absolute',
+              width: `${32 * scale}px`,
+              height: `${32 * scale}px`,
+            }}
+          />
+        ))}
+    </>
+  );
+}
+
+function HoverImage(props: BodyImageProps) {
+  return <BodyImage {...props} opacity={0.5} />;
 }
 
 type BodyZoneSelectorProps = {
@@ -128,30 +183,9 @@ export class BodyZoneSelector extends Component<
             height: `${32 * scale}px`,
           }}
         />
-
-        {selectedZone && (
-          <Image
-            src={resolveAsset(`body_zones.${selectedZone}.png`)}
-            style={{
-              pointerEvents: 'none',
-              position: 'absolute',
-              width: `${32 * scale}px`,
-              height: `${32 * scale}px`,
-            }}
-          />
-        )}
-
+        {selectedZone && <BodyImage {...this.props} zone={selectedZone} />}
         {hoverZone && hoverZone !== selectedZone && (
-          <Image
-            src={resolveAsset(`body_zones.${hoverZone}.png`)}
-            style={{
-              opacity: '0.5',
-              pointerEvents: 'none',
-              position: 'absolute',
-              width: `${32 * scale}px`,
-              height: `${32 * scale}px`,
-            }}
-          />
+          <HoverImage {...this.props} zone={hoverZone} />
         )}
       </div>
     );

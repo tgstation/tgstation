@@ -1,8 +1,8 @@
 // Basic operations for moving back and forth between surgery states
-
 /// First step of every surgery, makes an incision in the skin
 /datum/surgery_operation/limb/incise_skin
 	name = "make incision"
+	// rnd_name = "Laparotomy / Craniotomy / Myotomy" // Maybe we keep this one simple
 	desc = "Make an incision in the patient's skin to access internal organs."
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
@@ -44,9 +44,10 @@
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
 /datum/surgery_operation/limb/incise_skin/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	limb.add_surgical_state(SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED) // ouch, cuts the vessels)
+	. = ..() // default success message
+	limb.add_surgical_state(SURGERY_SKIN_CUT|SURGERY_VESSELS_UNCLAMPED) // ouch, cuts the vessels
 	if(!limb.can_bleed())
-		return ..()
+		return
 
 	var/blood_name = limb.owner.get_bloodtype()?.get_blood_name() || "Blood"
 	display_results(
@@ -114,6 +115,7 @@
 	required_bodytype = BODYTYPE_ORGANIC
 	implements = list(
 		TOOL_CAUTERY = 1,
+		/obj/item/stack/medical/suture = 1,
 		/obj/item/gun/energy/laser = 1.15,
 		TOOL_WELDER = 1.5,
 		/obj/item = 3.33,
@@ -149,7 +151,7 @@
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] is being burned!")
 
-/datum/surgery_operation/limb/close_skin/on_success(obj/item/bodypart/limb)
+/datum/surgery_operation/limb/close_skin/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
 	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
 		limb.heal_damage(40)
