@@ -76,6 +76,7 @@
 	. = ..()
 
 	register_item_context()
+	add_deep_lore()
 
 /obj/item/melee/baton/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_baton_notes))
@@ -98,6 +99,9 @@
 
 	readout += "\nIt has a stun armor-piercing capability of [span_warning("[stun_armour_penetration]%")]."
 	return readout.Join("\n")
+
+/obj/item/melee/baton/proc/add_deep_lore()
+	return
 
 /// Checks if we can actually USE the baton. Impure
 /obj/item/melee/baton/proc/can_baton(mob/living/target, mob/living/user)
@@ -420,7 +424,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
-	desc = "A compact, specialised baton assigned to Syndicate contractors. Applies light electrical shocks to targets."
+	desc = "A high tech telescopic stun baton, as developed by Cybersun Industries. Delivers a precise shock to a target's central nervous system to incapacitate them."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
@@ -453,7 +457,7 @@
 
 /obj/item/melee/baton/security
 	name = "stun baton"
-	desc = "A stun baton for incapacitating people with."
+	desc = "The Secure Apprehension Device, as developed by Nanotrasen. Delivers a precise shock to a target's central nervous system to incapacitate them."
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "stunbaton"
@@ -792,6 +796,9 @@
 	unique_reskin_changes_inhand = TRUE
 	unique_reskin_changes_base_icon_state = TRUE
 
+/obj/item/melee/baton/security/stunsword/loaded/add_deep_lore()
+	return
+
 /obj/item/melee/baton/security/stunsword/loaded
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/bluespace // 40% stun_armour_penetration
 
@@ -824,6 +831,9 @@
 /obj/item/melee/baton/security/cattleprod/Initialize(mapload)
 	. = ..()
 	sparkler = new (src)
+
+/obj/item/melee/baton/security/cattleprod/add_deep_lore()
+	return
 
 /obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
 	if(!istype(item, /obj/item/stack))
@@ -887,6 +897,9 @@
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boomerang, throw_range + 2, TRUE)
+
+/obj/item/melee/baton/security/boomerang/add_deep_lore()
+	return
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/high
@@ -995,3 +1008,56 @@
 		melee_attack_chain(owner, attacker, LEFT_CLICK)
 
 	return ..()
+
+// Deep Lore //
+
+/obj/item/melee/baton/security/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is \
+		the unholy union of a mace and a cattleprod. This nonlethal device was designed to put a stop to ruffians, \
+		scoundrels, ne'er-do-wells and criminals wherever they may rear their ugly heads.<br>\
+		<br>\
+		A symbol of Nanotrasen security forces, the stun baton is the primary tool officers employ against the \
+		unlawful scum and villainy of the Spinward and abroad. Trained to 'baton first, interrogate later', \
+		Nanotrasen security has long since earned itself a mixed reputation. Able to rapidly shut down the \
+		central nervous system of a criminal with only a few direct applications of the conductive striking head \
+		of the device, few would-be troublemakers want to find themselves on the wrong end of an officer brandishing \
+		this baton.<br>\
+		<br>\
+		TerraGov law enforcement has avoided the adoption of stun batons due to various ethical dilemmas posed by \
+		their usage, largely because of the longterm physical and mental ramifications of being struck by a human cattleprod. \
+		Citizens' rights advocacy groups protest against the proliferation of stun batons as a policing tool, \
+		arguing that they are 'inhumane' and 'authoritarian'. Nanotrasen, on the other hand, has had no such qualms \
+		when deploying stun batons as a compliance measure across all of their existing stations and facilities against \
+		unruly members of staff." \
+	)
+
+// Contractor Baton
+
+/obj/item/melee/baton/telescopic/contractor_baton/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is \
+		one of the more frequently encountered examples of Cybersun Industries weaponry. Extremely similar to Nanotrasen's \
+		own Secure Apprehension Device (also simply known as the stun baton), the contractor baton is able to induce \
+		CNS disruption in a target to render them helpless. It is also capable of devastating blunt force trauma if \
+		used as a bludgeon. The contractor baton is also capable of telescopic deployment, allowing for discretion while \
+		making an approach towards a target.<br>\
+		<br>\
+		The contractor baton is famously associated with contractors, elite Cybersun field agents. While the standard \
+		agent would often be tasked with sabotage, terrorism, murder or theft, contractors have the critical task of \
+		kidnapping high value personnel. Anyone with the potential to possess classified or sensitive data about Nanotrasen \
+		security systems and devices could be a target for Cybersun. <br>\
+		<br>\
+		Extracting this information is most easily performed on living subjects. As such, the contractor baton was designed \
+		with nonlethal incapacitation in mind. However, Cybersun Industries has long since found workarounds for extracting \
+		data from the recently deceased, should the contractor find themselves with only a corpse left to send back. Death \
+		may not spare you from the machinations of Cybersun Industries if they deem you a valuable asset towards their goals.<br>\
+		<br>\
+		Nanotrasen utilizes a number of countermeasures to contractor insurgencies, such as employing selective memory wiping \
+		or falsified memory injection, the establishment of 'dummy' command staff through the artificial acceleration \
+		of otherwise incompetent but useful crewmembers (whose incompetence will often result in an acceptable degree \
+		of operational disruption), which provides convenient scapegoats in the event of a security breach as well as \
+		frequent staff turnover and reassignment." \
+	)

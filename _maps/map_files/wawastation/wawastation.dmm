@@ -1138,7 +1138,7 @@
 	},
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,
-/area/station/medical/paramedic)
+/area/station/medical/exam_room)
 "asZ" = (
 /turf/open/floor/glass/airless,
 /area/space/nearstation)
@@ -7512,7 +7512,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/paramedic)
+/area/station/medical/exam_room)
 "cJx" = (
 /obj/structure/closet/crate/preopen,
 /obj/effect/spawner/random/engineering/flashlight,
@@ -10042,7 +10042,7 @@
 	},
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/iron/white,
-/area/station/medical/paramedic)
+/area/station/medical/exam_room)
 "dAu" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 8
@@ -12345,7 +12345,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic,
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/holofloor/dark,
 /area/station/medical/exam_room)
 "epr" = (
@@ -22202,7 +22202,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic,
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "hIv" = (
@@ -26386,7 +26386,7 @@
 	},
 /obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/iron/white,
-/area/station/medical/paramedic)
+/area/station/medical/exam_room)
 "jkc" = (
 /obj/structure/bed{
 	dir = 1
@@ -39804,16 +39804,16 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "nKe" = (
-/obj/machinery/door/airlock/medical{
-	name = "Medical Breakroom and Paramedic Dispatch"
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic,
+/obj/machinery/door/airlock/medical{
+	name = "Paramedic Dispatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
 "nKi" = (
@@ -55556,7 +55556,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/medical/paramedic)
+/area/station/medical/exam_room)
 "sZs" = (
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/siding/wood,
@@ -61467,7 +61467,7 @@
 /obj/machinery/light/cold/directional/north,
 /obj/structure/closet/wardrobe/white/medical,
 /turf/open/floor/iron/white,
-/area/station/medical/paramedic)
+/area/station/medical/exam_room)
 "vdD" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -86677,7 +86677,7 @@ cqJ
 pCK
 lyF
 rgE
-cBb
+dgp
 jka
 sZl
 rnk
@@ -86934,7 +86934,7 @@ jSY
 dPt
 xdm
 pzo
-cBb
+dgp
 vdb
 cJh
 rnk
@@ -87191,7 +87191,7 @@ oBg
 eAJ
 vkn
 pGM
-cBb
+dgp
 dAr
 asP
 rnk

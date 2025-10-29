@@ -163,6 +163,10 @@
 	/* UI */
 	/// UI for station alerts
 	VAR_FINAL/datum/station_alert/alert_control
+	/// UI for AI status display picker
+	VAR_FINAL/datum/ai_status_display_picker/status_display_picker
+	/// UI for AI core display picker
+	VAR_FINAL/datum/ai_core_display_picker/core_display_picker
 
 	/* I'M DUMB AND CAN'T SORT */
 	/// Used as a fake multitool in tcomms machinery

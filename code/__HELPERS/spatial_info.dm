@@ -214,6 +214,16 @@
 	for(var/obj/item/radio/radio as anything in radios)
 		. |= get_hearers_in_LOS(radio.canhear_range, radio)
 
+/// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).
+/// Modifies input list.
+/proc/mob_only_listeners(list/atom/movable/hearers)
+	RETURN_TYPE(/list/mob)
+	for(var/hearer_index in 1 to hearers.len)
+		var/atom/movable/hearer = hearers[hearer_index]
+		hearers[hearer_index] = hearer.get_listening_mob()
+	list_clear_nulls(hearers)
+	return hearers
+
 //Used when converting pixels to tiles to make them accurate
 #define OFFSET_X (0.5 / ICON_SIZE_X)
 #define OFFSET_Y (0.5 / ICON_SIZE_Y)

@@ -175,6 +175,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	var/datum/exoscan/scan = GLOB.exoscanner_controller.create_scan(scan_type,target)
 	if(scan)
 		RegisterSignal(scan, COMSIG_EXOSCAN_INTERRUPTED, PROC_REF(scan_failed))
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 20, vary = TRUE)
 
 /obj/machinery/computer/exoscanner_control/proc/scan_failed()
 	SIGNAL_HANDLER

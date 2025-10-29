@@ -144,6 +144,7 @@
 	QDEL_NULL(malf_picker)
 	QDEL_NULL(doomsday_device)
 	QDEL_NULL(robot_control)
+	QDEL_NULL(status_display_picker)
 	QDEL_NULL(aiMulti)
 	QDEL_NULL(alert_control)
 	QDEL_NULL(ai_tracking_tool)
@@ -195,7 +196,9 @@
 		var/emote_choice = player_client.prefs.read_preference(/datum/preference/choiced/ai_emote_display)
 
 		if(emote_choice == "Random")
-			emote_choice = pick(GLOB.ai_status_display_emotes)
+			if(!length(GLOB.ai_status_display_all_options))
+				init_ai_status_display_options()
+			emote_choice = pick(GLOB.ai_status_display_all_options)
 
 		apply_emote_display(emote_choice)
 
@@ -208,29 +211,28 @@
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
+	set desc = "Choose what appears on your AI core display"
+
 	if(incapacitated)
-		return
-	icon = initial(icon)
-	icon_state = "ai"
-	cut_overlays()
-	var/list/iconstates = GLOB.ai_core_display_screens
-	for(var/option in iconstates)
-		if(option == "Random")
-			iconstates[option] = image(icon = src.icon, icon_state = "ai-random")
-			continue
-		if(option == "Portrait")
-			iconstates[option] = image(icon = src.icon, icon_state = "ai-portrait")
-			continue
-		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
-
-	view_core()
-	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)
-
-	if(!ai_core_icon || incapacitated)
+		to_chat(src, span_warning("You cannot access the core display controls in your current state."))
 		return
 
-	display_icon_override = ai_core_icon
-	set_core_display_icon(ai_core_icon)
+	if(!core_display_picker)
+		core_display_picker = new(src)
+	core_display_picker.ui_interact(src)
+
+/mob/living/silicon/ai/verb/pick_status_display()
+	set category = "AI Commands"
+	set name = "Set AI Status Display"
+	set desc = "Choose what appears on status displays around the station"
+
+	if(incapacitated)
+		to_chat(src, span_warning("You cannot access the status display controls in your current state."))
+		return
+
+	if(!status_display_picker)
+		status_display_picker = new(src)
+	status_display_picker.ui_interact(src)
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()

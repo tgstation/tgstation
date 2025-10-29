@@ -42,10 +42,6 @@
 		find_and_hang_on_wall()
 	GLOB.intercoms_list += src
 
-/obj/item/radio/intercom/find_and_hang_on_wall()
-	if(!unscrewed)
-		return ..()
-
 /obj/item/radio/intercom/Destroy()
 	GLOB.intercoms_list -= src
 	return ..()

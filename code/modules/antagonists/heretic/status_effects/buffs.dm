@@ -379,12 +379,12 @@
 
 /atom/movable/screen/alert/status_effect/heretic_lastresort
 	name = "Last Resort"
-	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
+	desc = "Your head spins, heart pumping as fast as it can!"
 	icon_state = "lastresort"
 
 /datum/status_effect/heretic_lastresort/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
-	to_chat(owner, span_userdanger("You won't give up that easily! Run to safety!"))
+	to_chat(owner, span_userdanger("You won't give up that easily!"))
 	return TRUE
 
 /datum/status_effect/heretic_lastresort/on_remove()

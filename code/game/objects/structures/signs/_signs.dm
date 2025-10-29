@@ -117,7 +117,6 @@
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 		unwrenched_sign.is_editable = is_editable
-	unwrenched_sign.update_integrity(get_integrity()) //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
 
 /obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inherit from the parent type.

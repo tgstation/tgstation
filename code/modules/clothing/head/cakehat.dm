@@ -18,6 +18,9 @@
 	wound_bonus = 10
 	exposed_wound_bonus = 5
 	dog_fashion = /datum/dog_fashion/head
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 	hitsound = 'sound/items/weapons/tap.ogg'
 	var/hitsound_on = 'sound/items/weapons/sear.ogg' //so we can differentiate between cakehat and energyhat
 	var/hitsound_off = 'sound/items/weapons/tap.ogg'
