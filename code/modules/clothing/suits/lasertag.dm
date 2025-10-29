@@ -17,7 +17,7 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	equipper.AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
+	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, "blue")
 
 
 /obj/item/clothing/suit/bluetag/dropped(mob/living/user)
@@ -47,7 +47,7 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	equipper.AddComponentFrom(/datum/component/lasertag, REF(src), "blue")
+	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, "blue")
 
 
 /obj/item/clothing/suit/redtag/dropped(mob/living/user)
