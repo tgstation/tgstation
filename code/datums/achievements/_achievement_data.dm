@@ -67,7 +67,7 @@
 		return
 	var/datum/award/award = SSachievements.awards[achievement_type]
 	get_data(achievement_type) //Get the current status first if necessary
-	var/list/unlock_args(user, src, value)
+	var/list/unlock_args = list(user, src, value)
 	if(length(args) > 3)
 		unlock_args += args.Copy(4)
 	award.unlock(arglist(unlock_args))

@@ -79,9 +79,10 @@
 	database_id = PDA_THEMES_SCORE
 	track_high_scores = FALSE //This is purely personal progress
 	var/list/cheevo_icons
+	var/list/unlockable_themes
 
 /datum/award/score/progress/pda_themes/New()
-	var/list/unlockable_themes = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
+	unlockable_themes = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
 
 	cheevo_icons = list()
 	for(var/datum/computer_file/program/maintenance/theme/theme as anything in unlockable_themes)
@@ -100,7 +101,6 @@
 		"entries" = list(),
 	)
 
-	var/list/unlockable_themes = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
 
 	var/list/unlocked_themes = holder.data[type]
 	var/unlocked_len = length(unlocked_themes)
@@ -114,15 +114,19 @@
 		data["entries"] += list(list(
 			"name" = entry_name,
 			"icon" = unlocked ? cheevo_icons[theme] : cheevo_icons["unknown"],
-			"height" = dimensions["height"] * 2,
-			"width" = dimensions["width"] * 2,
+			"height" = dimensions["height"],
+			"width" = dimensions["width"],
 		))
 	return data
 
 /datum/award/score/progress/pda_themes/validate_entries(list/entries, list/validated_entries)
 	. = ..()
-	var/theme_ids = valid_subtypesof(/datum/computer_file/program/maintenance/theme)
+	var/static/list/valid_themes
+	if(!valid_themes)
+		valid_themes = list()
+		for(var/datum/computer_file/program/maintenance/theme/theme as anything in unlockable_themes)
+			valid_themes[theme::theme_id] = TRUE
 	for(var/id in validated_entries)
-		if(!(id in theme_ids))
+		if(!valid_themes[id])
 			validated_entries -= id
 			. = FALSE
