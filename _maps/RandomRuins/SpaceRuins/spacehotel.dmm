@@ -629,16 +629,15 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel)
 "hg" = (
-/obj/effect/turf_decal/siding/wood,
 /obj/structure/sign/warning/fire{
 	desc = "A sign that states the labeled room's number.";
 	dir = 10;
 	icon_state = "roomnum";
 	name = "Room Number 6";
-	pixel_y = 24
+	pixel_y = -5
 	},
-/turf/open/floor/wood/tile,
-/area/ruin/space/has_grav/hotel)
+/turf/closed/wall,
+/area/ruin/space/has_grav/hotel/guestroom/room_6)
 "hh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -2011,10 +2010,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/button/door/directional/south{
-	id = "a3";
-	name = "privacy button";
-	pixel_y = 24
+/obj/machinery/button/door/directional/north{
+	id = "a3"
 	},
 /turf/open/floor/carpet/red,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
@@ -2095,7 +2092,7 @@
 	name = "shutters control";
 	pixel_x = 26;
 	pixel_y = 8;
-	dir = 8
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4058,7 +4055,8 @@
 	id = "hcb1";
 	name = "shutters control";
 	pixel_x = -25;
-	pixel_y = 8
+	pixel_y = 8;
+	dir = 8
 	},
 /turf/open/floor/catwalk_floor,
 /area/ruin/space/has_grav/hotel/dock)
@@ -5540,8 +5538,8 @@ ez
 Ka
 Xg
 XS
-xI
 hg
+yY
 Lj
 PF
 wr

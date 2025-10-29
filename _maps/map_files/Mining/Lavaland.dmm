@@ -7730,16 +7730,11 @@
 /turf/closed/wall,
 /area/mine/maintenance/labor)
 "RF" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
 /obj/structure/sign/directions/lavaland/directional/west{
-	pixel_x = 0;
-	pixel_y = 32
+	pixel_x = 0
 	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/lavaland/surface/outdoors)
+/turf/closed/wall,
+/area/mine/cafeteria)
 "RG" = (
 /obj/machinery/door/airlock/public/glass{
 	id_tag = "cellblock1";
@@ -9128,12 +9123,10 @@
 /area/mine/living_quarters)
 "Zx" = (
 /obj/structure/sign/directions/dorms/directional/west{
-	pixel_x = 0;
-	pixel_y = 24
+	pixel_x = 0
 	},
-/obj/effect/turf_decal/sand/plating/volcanic,
-/turf/open/floor/plating/lavaland_atmos,
-/area/lavaland/surface/outdoors)
+/turf/closed/wall,
+/area/mine/maintenance/production)
 "Zz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -37474,8 +37467,8 @@ zH
 kY
 kY
 Tc
-kY
 RF
+vd
 NL
 aj
 aj
@@ -45178,8 +45171,8 @@ FX
 FX
 nm
 iY
-nm
 Zx
+BP
 Yq
 aj
 aj
