@@ -1,4 +1,4 @@
-obj/item/tank/jetpack : @DELETE
+/obj/item/tank/jetpack : @DELETE
 
 /obj/item/tank/jetpack/oxygen : /obj/item/tank/jetpack{@OLD}
 
