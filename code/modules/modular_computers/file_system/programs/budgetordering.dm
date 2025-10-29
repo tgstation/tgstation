@@ -259,7 +259,7 @@
 				if(isnull(reason) || ..())
 					return
 
-			if(id_card_customer?.registered_account?.account_job) //Find a budget to pull from
+			if(id_card_customer?.registered_account?.account_job && !self_paid) //Find a budget to pull from
 				var/datum/bank_account/personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
 				if(!(personal_department.account_holder == "Cargo Budget"))
 					var/choice = tgui_alert(usr, "Which department are you requesting this for?", "Choose request department", list("Cargo Budget", "[personal_department.account_holder]"))

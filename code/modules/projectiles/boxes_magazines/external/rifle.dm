@@ -58,7 +58,7 @@
 
 /obj/item/ammo_box/magazine/m38/true
 	name = "battle rifle magazine (.38 True Strike)"
-	desc = parent_type::desc + " Bullets bounce towards new targets with surprising accuracy."
+	desc = parent_type::desc + " Bullets bounce towards new targets with surprising accuracy and can strike through armored target"
 	ammo_type = /obj/item/ammo_casing/c38/match/true
 	ammo_band_color = COLOR_AMMO_TRUESTRIKE
 

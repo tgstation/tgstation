@@ -23,14 +23,14 @@
 			continue
 		add_growth_component(path)
 		return
-	var/list/valid_subtypes = list()
+	var/list/valid_subtypesof = list()
 	var/static/list/all_subtypes = subtypesof(/mob/living/basic/raptor/baby_raptor)
 	for(var/path in all_subtypes)
 		var/mob/living/basic/raptor/baby_raptor/raptor_path = path
 		if(!prob(initial(raptor_path.roll_rate)))
 			continue
-		valid_subtypes += raptor_path
-	add_growth_component(pick(valid_subtypes))
+		valid_subtypesof += raptor_path
+	add_growth_component(pick(valid_subtypesof))
 
 /obj/item/food/egg/raptor_egg/proc/add_growth_component(growth_path)
 	if(length(GLOB.raptor_population) >= MAX_RAPTOR_POP)
