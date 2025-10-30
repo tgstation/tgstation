@@ -159,20 +159,22 @@
 /turf/open/floor/carpet/stellar,
 /area/station/maintenance/hallway/abandoned_recreation)
 "acx" = (
-/obj/structure/sign/directions/evac/directional/north{
-	dir = 8;
-	pixel_y = 0
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/sign/directions/medical/directional/north{
-	dir = 8;
-	pixel_y = 10
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 8
 	},
-/obj/structure/sign/directions/command{
+/obj/structure/sign/directions/engineering/directional/north{
 	dir = 8;
-	pixel_y = -10
+	pixel_y = 26
 	},
-/turf/closed/wall,
-/area/station/commons/storage/primary)
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 8;
+	pixel_y = 38
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "acI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -5374,12 +5376,14 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "bCD" = (
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 4;
+/obj/structure/sign/directions/evac/directional/north{
 	pixel_y = 0
 	},
+/obj/structure/sign/directions/vault/directional/north{
+	pixel_y = -5
+	},
 /turf/closed/wall,
-/area/station/maintenance/starboard/aft)
+/area/station/maintenance/port/fore)
 "bDm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance,
@@ -9361,11 +9365,9 @@
 "cGB" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/camera/autoname/directional/east,
-/obj/machinery/button/door/directional/south{
-	id = "lawyer_shutters";
+/obj/machinery/button/door/directional/east{
 	name = "law office shutter control";
-	pixel_x = 24;
-	pixel_y = 7
+	id = "lawyer_shutters"
 	},
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
@@ -12043,10 +12045,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "duE" = (
-/obj/machinery/light_switch/directional/west{
-	pixel_x = -24;
-	pixel_y = 27
-	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
@@ -22449,12 +22447,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "gti" = (
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 2;
-	pixel_y = 0
+/obj/effect/turf_decal/trimline/brown/filled/line{
+	dir = 4
 	},
-/turf/closed/wall,
-/area/station/commons/toilet/auxiliary)
+/obj/structure/sign/directions/supply/directional/east{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "gtk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -23721,12 +23721,15 @@
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "gLU" = (
-/obj/structure/sign/directions/supply/directional/east{
-	dir = 2;
-	pixel_x = 0
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/closed/wall,
-/area/station/maintenance/starboard/central)
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "gLW" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
@@ -25638,7 +25641,8 @@
 "hqh" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/station/ai_monitored/command/storage/eva)
@@ -34764,24 +34768,20 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "jOi" = (
-/obj/structure/sign/directions/engineering/directional/south{
-	dir = 4;
-	pixel_y = -22
-	},
-/obj/structure/sign/directions/dorms/directional/south{
-	dir = 4;
-	pixel_y = -28
-	},
-/obj/structure/sign/directions/security{
+/obj/structure/sign/directions/evac/directional/north{
 	dir = 8;
-	pixel_y = -40
+	pixel_y = 0
 	},
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_y = -34
+/obj/structure/sign/directions/medical/directional/north{
+	dir = 8;
+	pixel_y = 10
 	},
-/turf/open/floor/iron/large,
-/area/station/hallway/primary/central)
+/obj/structure/sign/directions/command{
+	dir = 8;
+	pixel_y = -10
+	},
+/turf/closed/wall,
+/area/station/commons/storage/primary)
 "jOE" = (
 /turf/closed/wall,
 /area/station/service/lawoffice)
@@ -36921,14 +36921,18 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "kuT" = (
-/obj/structure/sign/directions/evac/directional/north{
-	pixel_y = 0
+/obj/structure/sign/directions/engineering/directional/east{
+	pixel_y = -1
 	},
-/obj/structure/sign/directions/vault/directional/north{
-	pixel_y = 10
+/obj/structure/sign/directions/supply/directional/east{
+	pixel_y = -7
 	},
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
+/obj/structure/sign/directions/evac/directional/east{
+	dir = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/large,
+/area/station/hallway/primary/central)
 "kuX" = (
 /obj/structure/chair{
 	dir = 1
@@ -38567,7 +38571,8 @@
 	dir = 4
 	},
 /obj/structure/sign/plaques/kiddie{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -38690,6 +38695,16 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/atmos/upper)
+"kUg" = (
+/obj/structure/sign/directions/engineering{
+	dir = 4
+	},
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_y = -10
+	},
+/turf/closed/wall,
+/area/station/science/lab)
 "kUp" = (
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/segment,
@@ -39909,6 +39924,16 @@
 /area/station/security/detectives_office/private_investigators_office)
 "lnd" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/directions/science/directional/west{
+	pixel_y = -6
+	},
+/obj/structure/sign/directions/supply/directional/west{
+	dir = 1
+	},
+/obj/structure/sign/directions/engineering/directional/west{
+	dir = 1;
+	pixel_y = 6
+	},
 /obj/effect/landmark/start/hangover,
 /obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron,
@@ -40532,22 +40557,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
-"lyj" = (
-/obj/structure/sign/directions/engineering/directional/west{
-	dir = 1;
-	pixel_y = 6;
-	pixel_x = 0
-	},
-/obj/structure/sign/directions/supply/directional/west{
-	dir = 1;
-	pixel_x = 0
-	},
-/obj/structure/sign/directions/science/directional/west{
-	pixel_y = -6;
-	pixel_x = 0
-	},
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
 "lys" = (
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
@@ -42532,15 +42541,12 @@
 /area/station/maintenance/port/aft)
 "lZn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/structure/secure_safe/directional/north{
-	pixel_x = -23;
-	pixel_y = 0
-	},
 /obj/item/mod/module/longfall{
 	pixel_x = 8;
 	pixel_y = 20
 	},
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "lZM" = (
@@ -45166,14 +45172,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mNY" = (
-/obj/machinery/button/door/directional/north{
-	id = "gateshutter";
-	name = "Gateway Shutter Control";
-	pixel_x = 24;
-	pixel_y = 0;
-	req_access = list("command")
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/button/door/directional/east{
+	name = "Gateway Shutter Control";
+	id = "gateshutter"
+	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "mOg" = (
@@ -52621,14 +52624,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oTK" = (
-/obj/machinery/button/door/directional/north{
-	id = "gateshutter";
-	name = "Gateway Shutter Control";
-	pixel_x = 24;
-	pixel_y = 0;
-	req_access = list("command")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/button/door/directional/east{
+	name = "Gateway Shutter Control";
+	id = "gateshutter"
+	},
 /turf/open/floor/carpet,
 /area/station/command/gateway)
 "oTO" = (
@@ -52795,7 +52795,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/evac/directional/north{
 	dir = 8;
-	pixel_y = 28
+	pixel_y = 0
 	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
@@ -55941,7 +55941,7 @@
 "pPg" = (
 /obj/machinery/camera/preset/ordnance{
 	c_tag = "Glass Floor";
-	dir = 8
+	dir = 10
 	},
 /turf/open/floor/glass/airless,
 /area/station/maintenance/starboard/lesser)
@@ -58218,7 +58218,8 @@
 "qye" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood,
@@ -61246,21 +61247,22 @@
 /turf/open/floor/iron,
 /area/station/science/breakroom)
 "roY" = (
-/obj/structure/sign/directions/evac/directional/east{
-	dir = 1;
-	pixel_y = 5;
-	pixel_x = 0
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering/directional/east{
-	pixel_y = -1;
-	pixel_x = 0
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 4;
+	pixel_y = 38
 	},
-/obj/structure/sign/directions/supply/directional/east{
-	pixel_y = -7;
-	pixel_x = 0
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 4
 	},
-/turf/closed/wall,
-/area/station/commons/toilet/restrooms)
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 4;
+	pixel_y = 26
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "rpn" = (
 /obj/structure/railing{
 	dir = 8
@@ -66015,6 +66017,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/sign/directions/engineering/directional/west{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "sIW" = (
@@ -68992,7 +68997,8 @@
 	id = "justiceflash";
 	name = "Justice Flash Control";
 	pixel_x = -30;
-	pixel_y = -11
+	pixel_y = -11;
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/education)
@@ -71042,7 +71048,8 @@
 /obj/machinery/button/flasher{
 	id = "hopflash";
 	pixel_x = -24;
-	pixel_y = -4
+	pixel_y = -4;
+	dir = 8
 	},
 /obj/machinery/requests_console/directional/north{
 	department = "Head of Personnel's Desk";
@@ -78126,14 +78133,11 @@
 /obj/effect/turf_decal/arrows{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/south{
-	id = "gateshutter";
-	name = "Gateway Shutter Control";
-	pixel_x = -24;
-	pixel_y = 0;
-	req_access = list("command")
-	},
 /obj/machinery/light/directional/west,
+/obj/machinery/button/door/directional/west{
+	name = "Gateway Shutter Control";
+	id = "gateshutter"
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "wbJ" = (
@@ -81106,6 +81110,10 @@
 "wTU" = (
 /obj/structure/chair/comfy/brown,
 /obj/structure/cable,
+/obj/machinery/light_switch/directional/north{
+	name = "light switch";
+	pixel_y = 20
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "wUb" = (
@@ -85792,16 +85800,22 @@
 "yjM" = (
 /obj/structure/sign/directions/supply{
 	dir = 4;
-	pixel_x = 32;
-	pixel_y = 37
+	pixel_y = -12
 	},
-/obj/structure/sign/directions/engineering{
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_y = -6
+	},
+/obj/structure/sign/directions/dorms/directional/south{
 	dir = 4;
-	pixel_x = 32;
-	pixel_y = 27
+	pixel_y = 6
 	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
+/obj/structure/sign/directions/engineering/directional/south{
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central)
 "yjT" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
@@ -115837,7 +115851,7 @@ lDE
 lDE
 fLr
 pzy
-fLr
+obn
 fOe
 lPw
 qyy
@@ -117890,7 +117904,7 @@ weF
 qqz
 bOk
 bOk
-kuT
+bCD
 wrI
 fjt
 xDR
@@ -118664,8 +118678,8 @@ aFP
 jAT
 fLr
 fjt
-jOi
-qQd
+fLr
+yjM
 qQd
 qQd
 qQd
@@ -118983,7 +118997,7 @@ pHl
 pHl
 wgS
 uqo
-yjM
+pJS
 pJS
 pJS
 uqo
@@ -119239,7 +119253,7 @@ cPY
 tNP
 tNP
 fAl
-jkr
+kUg
 ruK
 szy
 djL
@@ -122016,7 +122030,7 @@ oHu
 fLr
 fLr
 fLr
-fLr
+kuT
 fLr
 wTx
 tNr
@@ -122273,7 +122287,7 @@ tPU
 uzs
 tPU
 tPU
-roY
+tPU
 rWE
 vai
 rWE
@@ -125406,7 +125420,7 @@ arT
 arT
 arT
 arT
-lyj
+arT
 arT
 nLp
 lDo
@@ -125614,7 +125628,7 @@ sKM
 ggj
 sKM
 nnH
-acx
+jOi
 xtG
 vPN
 glC
@@ -125690,8 +125704,8 @@ wKb
 mNN
 wKb
 wKb
-bCD
-koi
+wKb
+roY
 heC
 dcE
 dcE
@@ -126205,7 +126219,7 @@ wBO
 vij
 hri
 wKb
-koi
+acx
 heC
 dcE
 dcE
@@ -126390,7 +126404,7 @@ qrZ
 dko
 oDH
 oDH
-oDH
+gti
 oDH
 iYq
 caE
@@ -126647,7 +126661,7 @@ bgT
 edJ
 qHJ
 vBZ
-gLU
+qKO
 uln
 qKO
 qKO
@@ -127743,8 +127757,8 @@ uVg
 uVg
 pWZ
 uVg
-gti
-bDq
+uVg
+gLU
 foj
 koi
 wKb
