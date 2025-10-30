@@ -1151,21 +1151,21 @@
 	desc = "Automatically upgrades the effectiveness of all medibots linked to the research network."
 	id = "medibot_upgrade"
 	research_icon = 'icons/mob/silicon/aibots.dmi'
-	research_icon = "medbot_generic_idle"
+	research_icon_state = "medbot_generic_idle"
 	/// Medibot healing starts at a 1x multiplier. For every tech researched, it goes up by this amount additively.
 	var/additive_multiplier = 1
 
 /datum/design/medibot_upgrade/tier_two
 	id = "medibot_upgrade_two"
-	research_icon = "medbot_adv_idle"
+	research_icon_state = "medbot_adv_idle"
 
 /datum/design/medibot_upgrade/tier_three
 	id = "medibot_upgrade_three"
-	research_icon = "medbot_adv_idle"
+	research_icon_state = "medbot_adv_idle"
 
 /datum/design/medibot_upgrade/tier_four
 	id = "medibot_upgrade_four"
-	research_icon = "medbot_bezerk_idle" // alien tech
+	research_icon_state = "medbot_bezerk_idle" // alien tech
 
 /////////////////////
 ///Surgery Designs///
@@ -1220,7 +1220,7 @@
 
 /datum/design/surgery/tend_wounds_upgrade/femto
 	name = "Tend Wounds Upgrade"
-	surgery = /datum/surgery_operation/basic/tend_wounds/master
+	surgery = /datum/surgery_operation/basic/tend_wounds/upgraded/master
 	id = "surgery_heal_upgrade_femto"
 
 /datum/design/surgery/tend_wounds_combo
@@ -1228,6 +1228,7 @@
 	desc = "An alternative wound treatment operation that treats both bruises and burns at the same time, albeit less effectively than their individual counterparts."
 	surgery = /datum/surgery_operation/basic/tend_wounds/combo
 	id = "surgery_heal_combo"
+	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/tend_wounds_combo/upgrade
 	name = "Tend Wounds Combo Upgrade"
@@ -1237,7 +1238,7 @@
 /datum/design/surgery/tend_wounds_combo/upgrade/femto
 	name = "Tend Wounds Combo Upgrade"
 	desc = "The ultimate in wound treatment operations, treating both bruises and burns simultaneous and faster than their individual counterparts."
-	surgery = /datum/surgery_operation/basic/tend_wounds/combo/master
+	surgery = /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	id = "surgery_heal_combo_upgrade_femto"
 
 /datum/design/surgery/brainwashing

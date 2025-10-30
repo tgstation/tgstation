@@ -8,7 +8,7 @@
 	)
 	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
 
 /datum/surgery_operation/limb/repair_puncture/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
@@ -73,7 +73,7 @@
 	)
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
 
 /datum/surgery_operation/limb/seal_veins/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))

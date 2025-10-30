@@ -198,7 +198,7 @@
 
 /obj/projectile/organ/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(!isliving(target) || !(organ.organ_flags & ORGAN_UNUSABLE))
+	if(!isliving(target) || (organ.organ_flags & ORGAN_UNUSABLE))
 		organ.forceMove(drop_location())
 		return
 	var/mob/living/organ_receiver = target
@@ -391,7 +391,7 @@
 
 /obj/item/surgical_processor/mod/preloaded
 	loaded_surgeries = list(
-		/datum/surgery_operation/basic/tend_wounds/combo/master,
+		/datum/surgery_operation/basic/tend_wounds/combo/upgraded/master,
 		/datum/surgery_operation/limb/bioware/cortex_folding,
 		/datum/surgery_operation/limb/bioware/cortex_folding/mechanic,
 		/datum/surgery_operation/limb/bioware/cortex_imprint,
@@ -421,6 +421,6 @@
 
 /obj/item/surgical_processor/mod/emergency
 	loaded_surgeries = list(
-		/datum/surgery_operation/basic/tend_wounds/combo/master,
+		/datum/surgery_operation/basic/tend_wounds/combo/upgraded/master,
 		/datum/surgery_operation/organ/fix_wings,
 	)

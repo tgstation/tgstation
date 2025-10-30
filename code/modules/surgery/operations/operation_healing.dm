@@ -15,7 +15,7 @@
 		/obj/item/pen = 1.8,
 	)
 	time = 2.5 SECONDS
-	operation_flags = OPERATION_LOOPING
+	operation_flags = OPERATION_LOOPING | OPERATION_IGNORE_CLOTHES
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	required_biotype = MOB_ORGANIC|MOB_HUMANOID
@@ -214,12 +214,11 @@
 
 /datum/surgery_operation/basic/tend_wounds/upgraded
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
-	replaced_by = /datum/surgery_operation/basic/tend_wounds/master
+	replaced_by = /datum/surgery_operation/basic/tend_wounds/upgraded/master
 	healing_multiplier = 0.1
 
-/datum/surgery_operation/basic/tend_wounds/master
-	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
-	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/master
+/datum/surgery_operation/basic/tend_wounds/upgraded/master
+	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	healing_multiplier = 0.2
 
 /datum/surgery_operation/basic/tend_wounds/combo
@@ -231,10 +230,9 @@
 
 /datum/surgery_operation/basic/tend_wounds/combo/upgraded
 	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
-	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/master
+	replaced_by = /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	healing_multiplier = 0.1
 
-/datum/surgery_operation/basic/tend_wounds/combo/master
-	operation_flags = parent_type::operation_flags | OPERATION_LOCKED
+/datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	healing_amount = 1
 	healing_multiplier = 0.4

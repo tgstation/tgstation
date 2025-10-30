@@ -9,7 +9,7 @@
 		TOOL_WIRECUTTER = 2.5,
 	)
 	time = 3 SECONDS
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_LOOPING
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_LOOPING | OPERATION_PRIORITY_NEXT_STEP
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ1.ogg'

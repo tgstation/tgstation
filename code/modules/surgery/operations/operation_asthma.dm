@@ -4,6 +4,7 @@
 	// local doctors suggested "bronchial dilatation" instead
 	rnd_name = "Bronchial Dilatation (Asthmatic Bypass)"
 	desc = "Forcibly expand a patient's windpipe, relieving asthma symptoms."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_RETRACTOR = 1.25,
 		TOOL_WIRECUTTER = 2.25,

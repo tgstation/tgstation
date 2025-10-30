@@ -4,7 +4,7 @@
 		IMPLEMENT_HAND = 1,
 	)
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_MORBID | OPERATION_LOCKED
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	time = 12.5 SECONDS
 	/// What status effect is gained when the surgery is successful?
 	/// Used to check against other bioware types to prevent stacking.

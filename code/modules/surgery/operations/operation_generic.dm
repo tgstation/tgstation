@@ -4,7 +4,7 @@
 	name = "make incision"
 	// rnd_name = "Laparotomy / Craniotomy / Myotomy" // Maybe we keep this one simple
 	desc = "Make an incision in the patient's skin to access internal organs."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 1.33,
@@ -76,7 +76,7 @@
 /datum/surgery_operation/limb/retract_skin
 	name = "retract skin"
 	desc = "Retract the patient's skin to access their internal organs."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_RETRACTOR = 1,
 		TOOL_SCREWDRIVER = 2.25,
@@ -112,7 +112,7 @@
 /datum/surgery_operation/limb/close_skin
 	name = "mend incision"
 	desc = "Mend the incision in the patient's skin, closing it up."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/stack/medical/suture = 1,
@@ -161,7 +161,8 @@
 /datum/surgery_operation/limb/clamp_bleeders
 	name = "clamp bleeders"
 	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 1.67,
@@ -199,7 +200,7 @@
 /datum/surgery_operation/limb/unclamp_bleeders
 	name = "unclamp bleeders"
 	desc = "Unclamp blood vessels in the patient's body to allow blood flow again."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 1.67,
@@ -238,7 +239,7 @@
 /datum/surgery_operation/limb/saw_bones
 	name = "saw bone"
 	desc = "Saw through the patient's bones to access their internal organs."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SAW = 1,
 		/obj/item/shovel/serrated = 1.33,
@@ -301,7 +302,7 @@
 /datum/surgery_operation/limb/fix_bones
 	name = "fix bone"
 	desc = "Repair a patient's cut or broken bones."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -346,7 +347,7 @@
 /datum/surgery_operation/limb/drill_bones
 	name = "drill bone"
 	desc = "Drill through a patient's bones."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_DRILL = 1,
 		/obj/item/screwdriver/power = 1.25,
@@ -392,7 +393,7 @@
 /datum/surgery_operation/limb/incise_organs
 	name = "incise organs"
 	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair."
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 1.33,

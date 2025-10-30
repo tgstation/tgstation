@@ -81,6 +81,7 @@
 	. = ..()
 	track_surgery(target_zone)
 	LAZYOR(surgical_aids, aid_name)
+	ADD_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id)) // needs to happen after tracking starts
 
 /datum/status_effect/surgery_prepped/refresh(mob/living/new_owner, target_zone, aid_name = "things")
 	track_surgery(target_zone)
@@ -88,12 +89,15 @@
 
 /datum/status_effect/surgery_prepped/on_apply()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(owner, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(on_attach_limb))
+	RegisterSignal(owner, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(on_detach_limb))
 	return TRUE
 
 /datum/status_effect/surgery_prepped/on_remove()
 	for(var/zone in zones)
 		untrack_surgery(zone)
 	REMOVE_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
 
 /datum/status_effect/surgery_prepped/get_examine_text()
 	var/list/zones_readable = list()
@@ -119,6 +123,17 @@
 	owner.visible_message(span_warning("The [english_list(surgical_aids)] adorning [owner] fall off!"))
 	qdel(src)
 
+/datum/status_effect/surgery_prepped/proc/on_attach_limb(datum/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	if(LAZYACCESS(zones, limb.body_zone))
+		ADD_TRAIT(limb, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/surgery_prepped/proc/on_detach_limb(datum/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(limb, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
+
 /datum/status_effect/surgery_prepped/tick(seconds_between_ticks)
 	if(owner.body_position == LYING_DOWN && movement_counter > 0)
 		movement_counter -= 1
@@ -127,15 +142,16 @@
 	LAZYADD(zones, body_zone)
 	if(iscarbon(owner))
 		var/obj/item/bodypart/precise_part = owner.get_bodypart(body_zone)
-		ADD_TRAIT(precise_part, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
+		if(precise_part)
+			ADD_TRAIT(precise_part, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 	else if(body_zone != BODY_ZONE_CHEST)
 		stack_trace("Attempting to track surgery on a non-carbon mob with a non-chest body zone! This should not happen.")
-	ADD_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/surgery_prepped/proc/untrack_surgery(body_zone)
 	LAZYREMOVE(zones, body_zone)
 	if(iscarbon(owner))
 		var/obj/item/bodypart/precise_part = owner.get_bodypart(body_zone)
-		REMOVE_TRAIT(precise_part, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
+		if(precise_part)
+			REMOVE_TRAIT(precise_part, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 	if(!LAZYLEN(zones) && !QDELETED(src))
 		qdel(src) // no more zones to track, remove the status effect

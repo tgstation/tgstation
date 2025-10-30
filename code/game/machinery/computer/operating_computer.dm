@@ -170,7 +170,7 @@
 			if(istype(experiment, /datum/experiment/autopsy))
 				data["experiments"] += list(experiment.to_ui_data())
 
-	var/list/operations = GLOB.operations.get_instances(GLOB.operations.unlocked + advanced_surgeries)
+	var/list/operations = GLOB.operations.get_instances(GLOB.operations.unlocked | advanced_surgeries)
 	var/any_recommended = FALSE
 	for(var/datum/surgery_operation/operation as anything in operations)
 		var/recommend = FALSE
@@ -184,6 +184,7 @@
 			"tool_rec" = operation.get_recommended_tool() || "error",
 			"show_as_next" = recommend,
 			"show_in_list" = TRUE,
+			"priority" = operation.operation_flags & OPERATION_PRIORITY_NEXT_STEP,
 		))
 
 	if(!any_recommended && table?.patient)

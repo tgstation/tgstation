@@ -3,6 +3,7 @@
 	name = "organ manipulation"
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation
 	operation_flags = OPERATION_MORBID
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	/// Radial slice datums for every organ type we can manipulate
 	VAR_PRIVATE/list/cached_organ_manipulation_options
 
@@ -88,7 +89,7 @@
 	return options
 
 /datum/surgery_operation/limb/organ_manipulation/proc/get_insert_options(obj/item/bodypart/limb, mob/living/surgeon, obj/item/organ/organ)
-	if(!can_operate_on_organ(limb, organ, surgeon) || !(organ.organ_flags & ORGAN_UNUSABLE))
+	if(!can_operate_on_organ(limb, organ, surgeon) || (organ.organ_flags & ORGAN_UNUSABLE))
 		return null
 
 	for(var/obj/item/organ/existing_organ in limb)

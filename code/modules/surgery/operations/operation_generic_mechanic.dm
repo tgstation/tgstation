@@ -94,6 +94,10 @@
 /datum/surgery_operation/limb/mechanical_close/get_default_radial_image()
 	return image(/obj/item/screwdriver)
 
+/datum/surgery_operation/limb/mechanical_close/tool_check(obj/item/tool)
+	// Require sharpness OR a tool behavior match
+	return (tool.get_sharpness() || implements[tool.tool_behaviour])
+
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
 		return FALSE
@@ -132,7 +136,11 @@
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 
 /datum/surgery_operation/limb/prepare_electronics/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
+	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
+		return FALSE
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/prepare_electronics/get_default_radial_image()
 	return image(/obj/item/multitool)
@@ -153,8 +161,8 @@
 
 // Mechanical equivalent of sawing bone
 /datum/surgery_operation/limb/mechanic_unwrench
-	name = "unwrench"
-	desc = "Unwrench a mechanical patient to access its internals."
+	name = "unwrench endoskeleton"
+	desc = "Unwrench a mechanical patient's endoskeleton to access its internals."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,
@@ -190,8 +198,8 @@
 
 // Mechanical equivalent of unsawing bone
 /datum/surgery_operation/limb/mechanic_wrench
-	name = "wrench"
-	desc = "Wrench a mechanical patient back into place."
+	name = "wrench endoskeleton"
+	desc = "Wrench a mechanical's endoskeleton patient back into place."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,

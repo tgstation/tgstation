@@ -3,7 +3,7 @@
 	rnd_name = "Disarticulation (Amputation)"
 	desc = "Sever a limb from a patient's body."
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~(BODYTYPE_ROBOTIC|BODYTYPE_PEG)
 	implements = list(
 		/obj/item/shears = 0.33,
 		TOOL_SAW = 1,
@@ -20,6 +20,8 @@
 		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
+	/// State needed to amputate
+	var/amputate_state = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/limb/amputate/get_recommended_tool()
 	return TOOL_SAW
@@ -28,7 +30,7 @@
 	return image(/obj/item/circular_saw)
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))
+	if(amputate_state && !LIMB_HAS_SURGERY_STATE(limb, amputate_state))
 		return FALSE
 	if(limb.body_zone == BODY_ZONE_CHEST)
 		return FALSE
@@ -74,12 +76,10 @@
 	time = 2 SECONDS //WAIT I NEED THAT!!
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
+	amputate_state = SURGERY_SKIN_OPEN
 
 /datum/surgery_operation/limb/amputate/mechanic/get_recommended_tool()
 	return "[TOOL_WRENCH] / [TOOL_SAW]"
-
-/datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN)
 
 /datum/surgery_operation/limb/amputate/pegleg
 	name = "detach peg leg"
@@ -97,6 +97,4 @@
 		/obj/item = 'sound/items/weapons/bladeslice.ogg',
 	)
 	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
-
-/datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)
-	return TRUE
+	amputate_state = NONE

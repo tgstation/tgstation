@@ -11,7 +11,7 @@
 		/obj/item/knife = 3.33,
 		/obj/item = 5,
 	)
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',
 		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',

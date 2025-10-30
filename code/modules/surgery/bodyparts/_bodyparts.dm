@@ -1673,6 +1673,16 @@
 	if(!(surgery_state & removing_states))
 		return
 
+	// inherent to the biostate, don't remove them
+	if(!LIMB_HAS_SKIN(src))
+		removing_states &= ~(SURGERY_SKIN_OPEN)
+	if(!LIMB_HAS_BONES(src))
+		removing_states &= ~(SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+	if(!LIMB_HAS_VESSELS(src))
+		removing_states &= ~(SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT)
+	if(!removing_states)
+		return
+
 	var/old_states = surgery_state
 	surgery_state &= ~removing_states
 	update_surgical_state(old_states, removing_states)

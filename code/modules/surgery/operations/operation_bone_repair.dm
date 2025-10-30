@@ -1,6 +1,7 @@
 /datum/surgery_operation/limb/repair_hairline
 	name = "repair hairline fracture"
 	desc = "Mend a hairline fracture in a patient's bone."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/medical/bone_gel = 1,
@@ -45,6 +46,7 @@
 /datum/surgery_operation/limb/reset_compound
 	name = "reset compound fracture"
 	desc = "Reset a compound fracture in a patient's bone, preparing it for proper healing."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/sticky_tape/surgical = 1.66,
@@ -89,6 +91,7 @@
 /datum/surgery_operation/limb/repair_compound
 	name = "repair compound fracture"
 	desc = "Mend a compound fracture in a patient's bone."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,
@@ -132,6 +135,7 @@
 /datum/surgery_operation/limb/prepare_cranium_repair
 	name = "discard skull debris"
 	desc = "Clear away bone fragments and debris from a patient's cranial fissure in preparation for repair."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 2.5,
@@ -167,6 +171,7 @@
 /datum/surgery_operation/limb/repair_cranium
 	name = "repair cranium"
 	desc = "Mend a cranial fissure in a patient's skull."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
 		/obj/item/stack/sticky_tape/surgical = 1,

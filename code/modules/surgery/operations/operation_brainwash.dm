@@ -16,7 +16,7 @@
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	operation_flags = OPERATION_MORBID
 	target_type = /obj/item/organ/brain
-	required_biotype = ORGAN_ORGANIC
+	required_organ_flag = ~ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/brainwash/get_default_radial_image()
 	return image(/atom/movable/screen/alert/hypnosis)
@@ -89,7 +89,7 @@
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/brainwash/sleeper
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
@@ -140,4 +140,4 @@
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC

@@ -2,8 +2,10 @@ import '../styles/interfaces/OperatingComputer.scss';
 import { useState } from 'react';
 import {
   AnimatedNumber,
+  Blink,
   Box,
   Button,
+  Icon,
   Input,
   LabeledList,
   NoticeBox,
@@ -134,6 +136,7 @@ type OperationData = {
   name: string;
   desc: string;
   tool_rec: string;
+  priority: BooleanLike;
   // show operation as a recommended next step
   show_as_next: BooleanLike;
   // show operation in the full list
@@ -313,6 +316,7 @@ const PatientStateView = (props: PatientStateViewProps) => {
                 icon="filter"
                 tooltip="Filter by recommended tool. Right click to reset."
                 tooltipPosition="top"
+                selected={filterByTool !== allTools[0]}
                 onClick={() =>
                   setFilterByTool(
                     allTools[
@@ -340,6 +344,7 @@ const PatientStateView = (props: PatientStateViewProps) => {
                       ? true
                       : operation.tool_rec.includes(filterByTool),
                   )
+                  .sort((a, b) => (a.priority && !b.priority ? -1 : 1))
                   .map((operation) => {
                     const { name, tool } = formatSurgeryName(operation, false);
                     return (
@@ -348,12 +353,33 @@ const PatientStateView = (props: PatientStateViewProps) => {
                           fluid
                           disabled={!operation.show_in_list}
                           tooltip={operation.desc}
+                          color={operation.priority ? 'caution' : undefined}
                           onClick={() => {
                             setTab(ComputerTabs.OperationCatalog);
                             setSearchText(operation.name);
                           }}
                         >
-                          {`- ${name} (${tool})`}
+                          <Stack fill>
+                            <Stack.Item
+                              style={{
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden',
+                              }}
+                            >
+                              {name}
+                            </Stack.Item>
+                            {!!operation.priority && (
+                              <Stack.Item>
+                                <Blink interval={500} time={500}>
+                                  <Icon name="exclamation" />
+                                </Blink>
+                              </Stack.Item>
+                            )}
+                            <Stack.Item grow />
+                            <Stack.Item italic fontSize="0.9rem">
+                              {capitalizeAll(tool)}
+                            </Stack.Item>
+                          </Stack>
                         </Button>
                       </Stack.Item>
                     );
@@ -383,7 +409,7 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
   const searchFilter = createSearch(
     searchText,
     (surgery: OperationData) =>
-      surgery.name + ' ' + surgery.tool_rec + ' ' + surgery.desc,
+      `${surgery.name} ${surgery.desc} ${surgery.tool_rec}`,
   );
 
   // - filter unlisted surgeries

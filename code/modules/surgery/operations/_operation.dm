@@ -145,14 +145,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			unlocked += operation_type
 
 /// Takes in a list of operation typepaths and returns their singleton instances. Optionally can filter out replaced surgeries and by certain operation flags.
-/datum/operation_holder/proc/get_instances(list/typepaths, filter_replaced = TRUE, flag_to_exclude = NONE)
+/datum/operation_holder/proc/get_instances(list/typepaths, filter_replaced = TRUE)
 	var/list/result = list()
 	for(var/datum/surgery_operation/operation_type as anything in typepaths)
-		if(filter_replaced && operation_type::replaced_by && operation_type::replaced_by != operation_type && (operation_type::replaced_by in typepaths))
-			continue
-		if(flag_to_exclude && (operation_type::operation_flags & flag_to_exclude))
-			continue
 		if(!operations_by_typepath[operation_type])
+			continue
+		if(filter_replaced && operation_type::replaced_by && operation_type::replaced_by != operation_type && (operation_type::replaced_by in typepaths))
 			continue
 		result += operations_by_typepath[operation_type]
 	return result
@@ -887,7 +885,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ
 	abstract_type = /datum/surgery_operation/organ
 	/// Biotype required to perform this operation
-	var/required_biotype = ORGAN_ORGANIC
+	var/required_organ_flag = ORGAN_ORGANIC
 	/// The type of organ this operation can target
 	var/obj/item/organ/target_type
 
@@ -908,7 +906,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	if(organ.zone != body_zone)
 		return FALSE
-	if(required_biotype && !(organ.organ_flags & required_biotype))
+	if(required_organ_flag && !(organ.organ_flags & required_organ_flag))
 		return FALSE
 	if(!HAS_TRAIT(organ.bodypart_owner, TRAIT_READY_TO_OPERATE))
 		return FALSE

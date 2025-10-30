@@ -5,7 +5,7 @@
 	implements = list(/obj/item/autopsy_scanner = 1)
 	time = 10 SECONDS
 	success_sound = 'sound/machines/printer.ogg'
-	required_bodytype = BODYTYPE_ORGANIC
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	operation_flags = OPERATION_MORBID
 
 /datum/surgery_operation/limb/autopsy/get_default_radial_image()

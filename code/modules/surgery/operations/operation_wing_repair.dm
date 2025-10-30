@@ -1,6 +1,6 @@
 /datum/surgery_operation/organ/fix_wings
 	name = "repair wings"
-	rnd_name = "Pteroplasty"
+	rnd_name = "Pteroplasty (Wing Repair)"
 	desc = "Repair a patient's damaged wings to restore flight capability."
 	rnd_desc = "A surgical procedure that repairs damaged wings using Synthflesh. \
 		The patient must be dosed with Synthflesh."

@@ -138,7 +138,7 @@
 		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
 		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
 		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/external/alien
-		ayy_operations += /datum/surgery_operation/basic/tend_wounds/combo/master
+		ayy_operations += /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 		ayy_operations += /datum/surgery_operation/limb/add_plastic // unlocks advanced plastic surgery
 		ayy_operations += /datum/surgery_operation/limb/bionecrosis
 		ayy_operations += /datum/surgery_operation/organ/brainwash

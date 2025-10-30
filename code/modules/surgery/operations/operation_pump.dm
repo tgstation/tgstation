@@ -6,7 +6,7 @@
 		IMPLEMENT_HAND = 1,
 	)
 	time = 2 SECONDS
-	required_biotype = ORGAN_ORGANIC
+	required_organ_flag = ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/stomach
 
 /datum/surgery_operation/organ/stomach_pump/get_default_radial_image()
@@ -52,4 +52,4 @@
 
 /datum/surgery_operation/organ/stomach_pump/mechanic
 	name = "purge nutrient processor"
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC

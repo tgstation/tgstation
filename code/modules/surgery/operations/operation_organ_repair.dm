@@ -3,7 +3,7 @@
 	abstract_type = /datum/surgery_operation/organ/repair
 	name = "repair organ"
 	desc = "Repair a patient's damaged organ."
-	required_biotype = ORGAN_ORGANIC
+	required_organ_flag = ~ORGAN_ROBOTIC
 	/// What % damage do we heal the organ to on success
 	/// Note that 0% damage = 100% health
 	var/heal_to_percent = 0.6
@@ -93,7 +93,7 @@
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/repair/hepatectomy
 	name = "remove damaged liver section"
@@ -157,7 +157,7 @@
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/repair/coronary_bypass
 	name = "graft coronary bypass"
@@ -221,7 +221,7 @@
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/repair/gastrectomy
 	name = "remove lower duodenum"
@@ -291,11 +291,11 @@
 	)
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/repair/ears
 	name = "ear surgery"
-	rnd_name = "Ototomy" // source: i made it up
+	rnd_name = "Ototomy (Ear surgery)" // source: i made it up
 	desc = "Repair a patient's damaged ears to restore hearing."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -307,10 +307,12 @@
 	heal_to_percent = 0
 	repeatable = TRUE
 
-/datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/organ)
+/datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/ears/organ)
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(organ.bodypart_owner))
+		return FALSE
+	if(organ.damage <= 0 && organ.temporary_deafness <= 0)
 		return FALSE
 	return TRUE
 
@@ -360,7 +362,7 @@
 
 /datum/surgery_operation/organ/repair/eyes
 	name = "eye surgery"
-	rnd_name = "Octotomy" // source: i made it up
+	rnd_name = "Octotomy (Eye Surgery)" // source: i made it up
 	desc = "Repair a patient's damaged eyes to restore vision."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -376,6 +378,8 @@
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
 	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(organ.bodypart_owner))
+		return FALSE
+	if(organ.damage <= 0 && !organ.owner.has_status_effect(/datum/status_effect/temporary_blindness) && !organ.owner.has_status_effect(/datum/status_effect/eye_blur))
 		return FALSE
 	return TRUE
 
@@ -447,7 +451,11 @@
 	repeatable = TRUE
 
 /datum/surgery_operation/organ/repair/brain/state_check(obj/item/organ/brain/organ)
-	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED)
+	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))
+		return FALSE
+	if(organ.damage <= 0 && !length(organ.traumas))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/organ/repair/brain/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -496,4 +504,4 @@
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC

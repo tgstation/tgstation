@@ -1,6 +1,6 @@
 /datum/surgery_operation/limb/add_dental_implant
 	name = "add dental implant"
-	desc = "Implant a dental item into a patient's teeth."
+	desc = "Implant a pill into a patient's teeth."
 	implements = list(
 		/obj/item/reagent_containers/applicator/pill = 1,
 	)

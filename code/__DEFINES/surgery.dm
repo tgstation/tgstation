@@ -105,6 +105,8 @@
 #define OPERATION_ALWAYS_FAILABLE (1<<7)
 /// If set, the operation will ignore clothing when checking for access to the target body part.
 #define OPERATION_IGNORE_CLOTHES (1<<8)
+/// This operation should be prioritized as the next step in a surgery sequence
+#define OPERATION_PRIORITY_NEXT_STEP (1<<9)
 
 DEFINE_BITFIELD(operation_flags, list(
 	"AFFECTS MOOD" = OPERATION_AFFECTS_MOOD,
@@ -116,6 +118,7 @@ DEFINE_BITFIELD(operation_flags, list(
 	"STANDING ALLOWED" = OPERATION_STANDING_ALLOWED,
 	"ALWAYS FAILABLE" = OPERATION_ALWAYS_FAILABLE,
 	"IGNORE CLOTHES" = OPERATION_IGNORE_CLOTHES,
+	"PRIORITY NEXT STEP" = OPERATION_PRIORITY_NEXT_STEP,
 ))
 
 // Surgery related mood defines

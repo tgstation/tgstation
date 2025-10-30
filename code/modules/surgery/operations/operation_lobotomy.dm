@@ -12,7 +12,7 @@
 		/obj/item = 5,
 	)
 	target_type = /obj/item/organ/brain
-	required_biotype = ORGAN_ORGANIC
+	required_organ_flag = ~ORGAN_ROBOTIC
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
@@ -92,4 +92,4 @@
 	)
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC

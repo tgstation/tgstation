@@ -12,7 +12,7 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	required_biotype = ORGAN_ORGANIC
+	required_organ_flag = ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/brain
 
 /datum/surgery_operation/organ/pacify/get_default_radial_image()
@@ -66,4 +66,4 @@
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 	failure_sound = null
-	required_biotype = ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_ROBOTIC
