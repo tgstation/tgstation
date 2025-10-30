@@ -135,21 +135,24 @@
 	var/static/list/ayy_operations
 	if(!length(ayy_operations))
 		ayy_operations = list()
-		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
-		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
-		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/external/alien
 		ayy_operations += /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
+		ayy_operations += /datum/surgery_operation/basic/viral_bonding
 		ayy_operations += /datum/surgery_operation/limb/add_plastic // unlocks advanced plastic surgery
 		ayy_operations += /datum/surgery_operation/limb/bionecrosis
-		ayy_operations += /datum/surgery_operation/organ/brainwash
-		ayy_operations += /datum/surgery_operation/organ/brainwash/mechanic
+		ayy_operations += /datum/surgery_operation/limb/clamp_bleeders/alien
+		ayy_operations += /datum/surgery_operation/limb/close_skin/alien
+		ayy_operations += /datum/surgery_operation/limb/incise_organs/alien
+		ayy_operations += /datum/surgery_operation/limb/incise_skin/alien
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/external/alien
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
+		ayy_operations += /datum/surgery_operation/limb/retract_skin/alien
+		ayy_operations += /datum/surgery_operation/limb/unclamp_bleeders/alien
 		ayy_operations += /datum/surgery_operation/organ/fix_wings // i guess
-		ayy_operations += /datum/surgery_operation/organ/lobotomy
-		ayy_operations += /datum/surgery_operation/organ/lobotomy/mechanic
-		ayy_operations += /datum/surgery_operation/organ/pacify
-		ayy_operations += /datum/surgery_operation/organ/pacify/mechanic
-		ayy_operations += /datum/surgery_operation/basic/viral_bonding
-		ayy_operations += subtypesof(/datum/surgery_operation/limb/bioware)
+		ayy_operations += typesof(/datum/surgery_operation/limb/bioware)
+		ayy_operations += typesof(/datum/surgery_operation/organ/brainwash)
+		ayy_operations += typesof(/datum/surgery_operation/organ/lobotomy)
+		ayy_operations += typesof(/datum/surgery_operation/organ/pacify)
 
 	possible_operations |= ayy_operations
 
