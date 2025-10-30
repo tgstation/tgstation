@@ -65,12 +65,12 @@
 
 	var/datum/status_effect/unit_test_tick_counter/counter = user.apply_status_effect(/datum/status_effect/unit_test_tick_counter)
 
-	var/ticks_required = counter.duration / 10 / 0.2
+	var/ticks_required = counter.duration / 10 / 0.2 + 1
 
 	for (var/i in 1 to ticks_required)
 		counter.process(0.2)
 
-	var/expected_tick_count = counter.duration / counter.tick_interval
+	var/expected_tick_count = initial(counter.duration) / counter.tick_interval
 	if (counter.total_tick_count != expected_tick_count)
 		TEST_FAIL("Status effect tick count is not directly proportional to duration. Expected [expected_tick_count] ticks, got [counter.total_tick_count] ticks.")
 
@@ -83,6 +83,9 @@
 /datum/status_effect/unit_test_tick_counter
 	duration = 5 SECONDS
 	tick_interval = 0.4 SECONDS
+
+	id = "unit_test_tick_counter"
+	alert_type = null
 
 	var/total_tick_count = 0
 	var/total_seconds = 0

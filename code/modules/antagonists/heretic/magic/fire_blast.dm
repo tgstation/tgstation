@@ -157,7 +157,7 @@
 	id = "fire_blasted"
 	alert_type = null
 	duration = 5 SECONDS
-	tick_interval = 0.5 SECONDS
+	tick_interval = 0.6 SECONDS
 	/// How much fire / stam to do per tick (stamina damage is doubled this)
 	var/tick_damage = 1
 	/// How long does the animation of the appearance last? If 0 or negative, we make no overlay

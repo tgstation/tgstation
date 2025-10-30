@@ -273,7 +273,7 @@
 	id = "Hippocratic Oath"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = STATUS_EFFECT_PERMANENT
-	tick_interval = 2.5 SECONDS
+	tick_interval = 2.6 SECONDS
 	alert_type = null
 
 	var/datum/component/aura_healing/aura_healing
