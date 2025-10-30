@@ -9,13 +9,20 @@
 	circuit = /obj/item/circuitboard/computer/operating
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_REQUIRES_STANDING
 
-	var/obj/structure/table/optable/table
-	var/list/advanced_surgeries = list()
-	var/datum/techweb/linked_techweb
-	light_color = LIGHT_COLOR_BLUE
+	light_color = LIGHT_COLOR_GREEN
 
+	/// Linked operating table, if any
+	var/obj/structure/table/optable/table
+	/// List if surgery typepaths available on this computer
+	var/list/advanced_surgeries = list()
+	/// Techweb linked to this operating computer
+	var/datum/techweb/linked_techweb
+	/// Currently selected body zone for surgery
 	var/target_zone = BODY_ZONE_CHEST
+	/// Experiment handler component reference
 	var/datum/component/experiment_handler/experiment_handler
+	/// Lazyassoclist of mob weakrefs to the zone they had selected when opening the UI
+	/// When closing the UI we try to revert their zone selector to that zone
 	var/list/datum/weakref/zone_on_open
 
 /obj/machinery/computer/operating/Initialize(mapload)
