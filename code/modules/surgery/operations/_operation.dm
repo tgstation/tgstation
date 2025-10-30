@@ -488,6 +488,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		else
 			surgeon.add_mob_blood(patient)
 
+		// This will annoy doctors immensely
 		// if(isitem(tool))
 		// 	var/obj/item/realtool = tool
 		// 	realtool.add_mob_blood(patient)
