@@ -28057,7 +28057,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/machinery/light/small/empty/directional/north,
+/obj/machinery/light/small/built/directional/north,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "iXx" = (
@@ -58791,7 +58791,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/empty/directional/north,
+/obj/machinery/light/small/built/directional/north,
 /turf/open/floor/carpet,
 /area/station/commons/vacant_room/office)
 "tDn" = (
