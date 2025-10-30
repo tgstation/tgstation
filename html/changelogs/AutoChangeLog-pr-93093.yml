@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Thunder from weather will now smelt any mining ores it hits."
+  - balance: "Remove thunder exploding turfs and damaging objects however mobs will still be affected."
