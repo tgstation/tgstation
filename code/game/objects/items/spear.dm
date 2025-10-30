@@ -302,12 +302,11 @@
  * Bone Spear
  */
 /obj/item/spear/bonespear //Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+	name = "bone spear"
+	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	icon_state = "bone_spear0"
 	base_icon_state = "bone_spear0"
 	icon_prefix = "bone_spear"
-	name = "bone spear"
-	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-
 	throwforce = 22
 	armour_penetration = 20 //Enhanced armor piercing
 	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT * 7)
