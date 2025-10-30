@@ -413,6 +413,19 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
+"cD" = (
+/obj/structure/sign/directions/engineering{
+	dir = 1;
+	pixel_y = 7
+	},
+/obj/structure/sign/directions/supply{
+	dir = 4
+	},
+/obj/structure/sign/directions/evac{
+	pixel_y = -7
+	},
+/turf/closed/wall/r_wall,
+/area/station/commons/storage/primary)
 "cI" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -960,21 +973,18 @@
 /turf/open/floor/iron,
 /area/station/cargo/bitrunning/den)
 "fM" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = 32
-	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	pixel_x = 32;
 	pixel_y = 7
 	},
+/obj/structure/sign/directions/supply{
+	dir = 4
+	},
 /obj/structure/sign/directions/evac{
-	pixel_x = 32;
 	pixel_y = -7
 	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
+/turf/closed/wall/r_wall,
+/area/station/construction)
 "fO" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -985,9 +995,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "fQ" = (
 /obj/machinery/computer/communications,
-/obj/machinery/status_display/evac{
-	pixel_y = 32
-	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fS" = (
@@ -1035,19 +1043,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "gg" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = 32
-	},
-/obj/structure/sign/directions/engineering{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 7
-	},
-/obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -7
-	},
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "gi" = (
@@ -2154,7 +2150,6 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "JV" = (
-/obj/machinery/camera/autoname/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -6007,7 +6002,7 @@ eh
 eh
 eF
 HW
-fM
+eh
 eh
 eh
 eh
@@ -6099,7 +6094,7 @@ cN
 cN
 cN
 cN
-cN
+fM
 ef
 ef
 cN
@@ -8583,7 +8578,7 @@ cS
 cS
 cS
 cS
-cS
+cD
 Is
 Jd
 tz
