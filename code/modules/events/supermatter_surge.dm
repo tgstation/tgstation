@@ -37,14 +37,11 @@
 		/datum/event_admin_setup/input_number/surge_spiciness,
 	)
 
-// Troutstation invasive edit, fuck this event, I want it gone
 /datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE)
-	SHOULD_CALL_PARENT(FALSE)
-	return FALSE
-	// . = ..()
+	. = ..()
 
-	// if(!SSjob.has_minimum_jobs(crew_threshold = 3, jobs = JOB_GROUP_ENGINEERS, head_jobs = list(JOB_CHIEF_ENGINEER)))
-	// 	return FALSE
+	if(!SSjob.has_minimum_jobs(crew_threshold = 3, jobs = JOB_GROUP_ENGINEERS, head_jobs = list(JOB_CHIEF_ENGINEER)))
+		return FALSE
 
 /datum/round_event/supermatter_surge
 	announce_when = 4
