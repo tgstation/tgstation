@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - rscadd: "Added cybernetic cat ears"
+  - code_imp: "Wall-penetrating and whisper-sensitive ears now properly utilize organ traits"

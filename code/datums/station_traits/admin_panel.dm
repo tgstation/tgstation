@@ -28,9 +28,7 @@ ADMIN_VERB(station_traits_panel, R_FUN, "Modify Station Traits", "Modify the sta
 
 	var/list/valid_station_traits = list()
 
-	for (var/datum/station_trait/station_trait_path as anything in subtypesof(/datum/station_trait))
-		if(station_trait_path::abstract_type == station_trait_path)
-			continue
+	for (var/datum/station_trait/station_trait_path as anything in valid_subtypesof(/datum/station_trait))
 		valid_station_traits += list(list(
 			"name" = initial(station_trait_path.name),
 			"path" = station_trait_path,
