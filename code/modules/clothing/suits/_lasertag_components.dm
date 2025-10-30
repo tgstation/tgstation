@@ -18,7 +18,6 @@
 
 /datum/component/lasertag/proc/team_color_match(datum/source, color)
 	SIGNAL_HANDLER
-	to_chat(parent, span_yell("DEBUG: testing if [color] is the same as [team_color]")) //FIX: team_color is null for some reason
 	if (color == team_color)
 		return ALLOW_FIRE
 	return BLOCK_FIRE

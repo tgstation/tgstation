@@ -359,8 +359,7 @@
 /obj/item/firing_pin/tag/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/result = SEND_SIGNAL(user, COMSIG_LIVING_FIRING_PIN_CHECK, tagcolor)
-		to_chat(user, span_yell("DEBUG: result of SEND_SIGNAL is [result] and needs [ALLOW_FIRE]. tagcolor is [tagcolor]"))
-		if(result == ALLOW_FIRE) //FIX: always returns false
+		if(result == ALLOW_FIRE)
 			return TRUE
 	to_chat(user, span_warning("You need to be wearing [tagcolor] laser tag armor!"))
 	return FALSE
