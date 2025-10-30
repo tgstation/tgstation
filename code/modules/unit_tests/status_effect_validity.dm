@@ -28,6 +28,35 @@
 			else
 				TEST_FAIL("Invalid processing speed for status effect [checking] : [initial(checking.processing_speed)]")
 
+/// Validates status effect duration setup
+/datum/unit_test/status_effect_duration
+
+/datum/unit_test/status_effect_duration/Run()
+	for(var/datum/status_effect/checking as anything in subtypesof(/datum/status_effect))
+		if(initial(checking.id) == STATUS_EFFECT_ID_ABSTRACT)
+			continue
+		var/duration = initial(checking.duration)
+		if(duration == STATUS_EFFECT_PERMANENT)
+			continue
+		if(duration == INFINITY) // for some god forsaken reason, this is allowed
+			continue
+		if(duration < 0)
+			TEST_FAIL("Status effect [checking] has duration set to a negative value other than STATUS_EFFECT_PERMANENT, this is not how you make effects last forever - use duration = STATUS_EFFECT_PERMANENT instead.")
+			continue
+		switch(initial(checking.processing_speed))
+			if(STATUS_EFFECT_FAST_PROCESS)
+				if(duration % SSfastprocess.wait != 0)
+					TEST_FAIL("Status effect [checking] has duration set to [duration], which is not a multiple of SSfastprocess wait time ([SSfastprocess.wait]).")
+			if(STATUS_EFFECT_NORMAL_PROCESS)
+				if(duration % SSprocessing.wait != 0)
+					TEST_FAIL("Status effect [checking] has duration set to [duration], which is not a multiple of SSprocessing wait time ([SSprocessing.wait]).")
+			if(STATUS_EFFECT_PRIORITY)
+				var/priority_wait = world.tick_lag * SSpriority_effects.wait // SSpriority_effects has the SS_TICKER flag, so its wait is in ticks, so we have to convert it to deciseconds.
+				if(duration % priority_wait != 0)
+					TEST_FAIL("Status effect [checking] has duration set to [duration], which is not a multiple of SSpriority_effects wait time ([priority_wait]).")
+			else
+				TEST_FAIL("Invalid processing speed for status effect [checking] : [initial(checking.processing_speed)]")
+
 /// Validates status effect alert type setup
 /datum/unit_test/status_effect_alert
 
