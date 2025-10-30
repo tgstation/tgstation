@@ -1,2 +1,1 @@
 /obj/machinery/light/built/@SUBTYPES : /obj/machinery/light/empty/@SUBTYPES/{@OLD}
-/obj/machinery/light/small/built/@SUBTYPES : /obj/machinery/light/small/empty/@SUBTYPES/{@OLD}
