@@ -159,22 +159,20 @@
 /turf/open/floor/carpet/stellar,
 /area/station/maintenance/hallway/abandoned_recreation)
 "acx" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 8
-	},
-/obj/structure/sign/directions/engineering/directional/north{
+/obj/structure/sign/directions/evac/directional/north{
 	dir = 8;
-	pixel_y = 26
+	pixel_y = 0
 	},
-/obj/structure/sign/directions/engineering/directional/north{
+/obj/structure/sign/directions/medical/directional/north{
 	dir = 8;
-	pixel_y = 38
+	pixel_y = 10
 	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
+/obj/structure/sign/directions/command{
+	dir = 8;
+	pixel_y = -10
+	},
+/turf/closed/wall,
+/area/station/commons/storage/primary)
 "acI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -2195,16 +2193,12 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "aHe" = (
-/obj/machinery/button/door/directional/west{
-	id = "Cabin5";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 24;
-	specialfunctions = 4
-	},
 /obj/item/storage/box/lights/mixed,
 /obj/item/kirbyplants/random/dead{
 	name = "dead plant"
+	},
+/obj/machinery/button/door/directional/east{
+	id = "Cabin5"
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms)
@@ -5380,22 +5374,12 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "bCD" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 4;
+	pixel_y = 0
 	},
-/obj/structure/sign/directions/command{
-	dir = 8;
-	pixel_y = 38
-	},
-/obj/structure/sign/directions/medical/directional/north{
-	dir = 8
-	},
-/obj/structure/sign/directions/evac/directional/north{
-	dir = 8;
-	pixel_y = 26
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
+/turf/closed/wall,
+/area/station/maintenance/starboard/aft)
 "bDm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance,
@@ -22465,14 +22449,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "gti" = (
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 4
+/obj/structure/sign/directions/engineering/directional/north{
+	dir = 2;
+	pixel_y = 0
 	},
-/obj/structure/sign/directions/supply/directional/east{
-	dir = 2
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
+/turf/closed/wall,
+/area/station/commons/toilet/auxiliary)
 "gtk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -23739,15 +23721,12 @@
 /turf/open/floor/iron/textured,
 /area/station/cargo/storage)
 "gLU" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/sign/directions/supply/directional/east{
+	dir = 2;
+	pixel_x = 0
 	},
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 2
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
+/turf/closed/wall,
+/area/station/maintenance/starboard/central)
 "gLW" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
@@ -36942,18 +36921,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "kuT" = (
-/obj/structure/sign/directions/engineering/directional/east{
-	pixel_y = -1
+/obj/structure/sign/directions/evac/directional/north{
+	pixel_y = 0
 	},
-/obj/structure/sign/directions/supply/directional/east{
-	pixel_y = -7
+/obj/structure/sign/directions/vault/directional/north{
+	pixel_y = 10
 	},
-/obj/structure/sign/directions/evac/directional/east{
-	dir = 1;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/large,
-/area/station/hallway/primary/central)
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "kuX" = (
 /obj/structure/chair{
 	dir = 1
@@ -39934,16 +39909,6 @@
 /area/station/security/detectives_office/private_investigators_office)
 "lnd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/directions/science/directional/west{
-	pixel_y = -6
-	},
-/obj/structure/sign/directions/supply/directional/west{
-	dir = 1
-	},
-/obj/structure/sign/directions/engineering/directional/west{
-	dir = 1;
-	pixel_y = 6
-	},
 /obj/effect/landmark/start/hangover,
 /obj/effect/spawner/random/trash/grime,
 /turf/open/floor/iron,
@@ -40567,6 +40532,22 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal/incinerator)
+"lyj" = (
+/obj/structure/sign/directions/engineering/directional/west{
+	dir = 1;
+	pixel_y = 6;
+	pixel_x = 0
+	},
+/obj/structure/sign/directions/supply/directional/west{
+	dir = 1;
+	pixel_x = 0
+	},
+/obj/structure/sign/directions/science/directional/west{
+	pixel_y = -6;
+	pixel_x = 0
+	},
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology)
 "lys" = (
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/engine,
@@ -55960,7 +55941,7 @@
 "pPg" = (
 /obj/machinery/camera/preset/ordnance{
 	c_tag = "Glass Floor";
-	dir = 10
+	dir = 8
 	},
 /turf/open/floor/glass/airless,
 /area/station/maintenance/starboard/lesser)
@@ -61265,22 +61246,21 @@
 /turf/open/floor/iron,
 /area/station/science/breakroom)
 "roY" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/sign/directions/evac/directional/east{
+	dir = 1;
+	pixel_y = 5;
+	pixel_x = 0
 	},
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 4;
-	pixel_y = 38
+/obj/structure/sign/directions/engineering/directional/east{
+	pixel_y = -1;
+	pixel_x = 0
 	},
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 4
+/obj/structure/sign/directions/supply/directional/east{
+	pixel_y = -7;
+	pixel_x = 0
 	},
-/obj/structure/sign/directions/engineering/directional/north{
-	dir = 4;
-	pixel_y = 26
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
+/turf/closed/wall,
+/area/station/commons/toilet/restrooms)
 "rpn" = (
 /obj/structure/railing{
 	dir = 8
@@ -66034,9 +66014,6 @@
 "sIU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
-	},
-/obj/structure/sign/directions/engineering/directional/west{
-	dir = 2
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -79267,12 +79244,6 @@
 /area/station/hallway/secondary/entry)
 "wrI" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/directions/vault/directional/north{
-	pixel_y = 30
-	},
-/obj/structure/sign/directions/evac/directional/north{
-	pixel_y = 36
-	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "wrM" = (
@@ -117919,7 +117890,7 @@ weF
 qqz
 bOk
 bOk
-bOk
+kuT
 wrI
 fjt
 xDR
@@ -122045,7 +122016,7 @@ oHu
 fLr
 fLr
 fLr
-kuT
+fLr
 fLr
 wTx
 tNr
@@ -122302,7 +122273,7 @@ tPU
 uzs
 tPU
 tPU
-tPU
+roY
 rWE
 vai
 rWE
@@ -125435,7 +125406,7 @@ arT
 arT
 arT
 arT
-arT
+lyj
 arT
 nLp
 lDo
@@ -125643,8 +125614,8 @@ sKM
 ggj
 sKM
 nnH
-nnH
-bCD
+acx
+xtG
 vPN
 glC
 oCe
@@ -125719,8 +125690,8 @@ wKb
 mNN
 wKb
 wKb
-wKb
-roY
+bCD
+koi
 heC
 dcE
 dcE
@@ -126234,7 +126205,7 @@ wBO
 vij
 hri
 wKb
-acx
+koi
 heC
 dcE
 dcE
@@ -126419,7 +126390,7 @@ qrZ
 dko
 oDH
 oDH
-gti
+oDH
 oDH
 iYq
 caE
@@ -126676,7 +126647,7 @@ bgT
 edJ
 qHJ
 vBZ
-qKO
+gLU
 uln
 qKO
 qKO
@@ -127772,8 +127743,8 @@ uVg
 uVg
 pWZ
 uVg
-uVg
-gLU
+gti
+bDq
 foj
 koi
 wKb
