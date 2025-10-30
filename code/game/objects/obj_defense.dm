@@ -125,8 +125,9 @@
 /obj/fire_act(exposed_temperature, exposed_volume)
 	if(HAS_TRAIT(src, TRAIT_UNDERFLOOR))
 		return
-	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
-		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
+	var/potential_damage = 0.02 * exposed_temperature
+	if(exposed_temperature && !(resistance_flags & FIRE_PROOF) && (potential_damage > damage_deflection))
+		take_damage(clamp(potential_damage, 0, 20), BURN, FIRE, 0)
 	if(QDELETED(src)) // take_damage() can send our obj to an early grave, let's stop here if that happens
 		return
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))

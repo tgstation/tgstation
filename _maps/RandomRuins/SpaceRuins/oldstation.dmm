@@ -2291,8 +2291,8 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/ghost_role/human/oldsec,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mob_spawn/ghost_role/human/oldstation/sec,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "ks" = (
@@ -2393,18 +2393,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/decoration/glowstick,
 /obj/item/clothing/neck/link_scryer/loaded/charlie,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/dorms)
-"kO" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/ghost_role/human/oldsci,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "kP" = (
@@ -2545,7 +2533,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/ghost_role/human/oldeng,
+/obj/effect/mob_spawn/ghost_role/human/oldstation/sci,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "lq" = (
@@ -2563,7 +2551,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/ghost_role/human/oldsci,
+/obj/effect/mob_spawn/ghost_role/human/oldstation/eng,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "lw" = (
@@ -12496,9 +12484,9 @@ jJ
 cq
 Qg
 bN
-ln
+lr
 bN
-kO
+ln
 bN
 lr
 uX

@@ -42,8 +42,6 @@
 	var/metabolizing = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
-	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
-	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
 	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH, REAGENT_IMPURE
@@ -170,8 +168,6 @@
 
 ///Metabolizes a portion of the reagent after on_mob_life() is called
 /datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(length(reagent_removal_skip_list))
-		return
 	if(isnull(holder))
 		return
 
