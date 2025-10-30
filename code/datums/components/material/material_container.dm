@@ -245,7 +245,7 @@
 		if(!space_left)
 			return MATERIAL_INSERT_ITEM_NO_SPACE
 		var/material_per_sheet = material_amount / item_stack.amount
-		var/sheets_to_insert = round(space_left / material_per_sheet)
+		var/sheets_to_insert = floor(space_left / material_per_sheet)
 		if(!sheets_to_insert)
 			return MATERIAL_INSERT_ITEM_NO_SPACE
 		target = fast_split_stack(item_stack, sheets_to_insert)
@@ -690,7 +690,7 @@
 		return 0
 
 	//requested amount greater than available amount or just an invalid value
-	stack_amt = min(round(materials[material] / SHEET_MATERIAL_AMOUNT), stack_amt)
+	stack_amt = min(floor(materials[material] / SHEET_MATERIAL_AMOUNT), stack_amt)
 	if(stack_amt <= 0)
 		return 0
 	//auto drop location
