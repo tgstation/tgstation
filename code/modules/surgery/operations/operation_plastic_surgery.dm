@@ -1,3 +1,5 @@
+#define OPERATION_NEW_NAME [OPERATION_NEW_NAME]
+
 /datum/surgery_operation/limb/plastic_surgery
 	name = "plastic surgery"
 	desc = "Reshape or reconstruct a patient's body part for cosmetic or functional purposes."
@@ -44,8 +46,8 @@
 			for(var/i in 1 to 10)
 				names += limb.owner.generate_random_mob_name(TRUE)
 
-	operation_args["chosen_name"] = tgui_input_list(surgeon, "New name to assign", "Plastic Surgery", names)
-	return !!operation_args["chosen_name"]
+	operation_args[OPERATION_NEW_NAME] = tgui_input_list(surgeon, "New name to assign", "Plastic Surgery", names)
+	return !!operation_args[OPERATION_NEW_NAME]
 
 /datum/surgery_operation/limb/plastic_surgery/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -71,7 +73,7 @@
 		return
 
 	var/oldname = limb.owner.real_name
-	limb.owner.real_name = operation_args["chosen_name"]
+	limb.owner.real_name = operation_args[OPERATION_NEW_NAME]
 	var/newname = limb.owner.real_name //something about how the code handles names required that I use this instead of target.real_name
 	display_results(
 		surgeon,
@@ -98,6 +100,8 @@
 	)
 	display_pain(limb.owner, "Your face feels horribly scarred and deformed!")
 	ADD_TRAIT(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC)
+
+#undef OPERATION_NEW_NAME
 
 /datum/surgery_operation/limb/add_plastic
 	name = "apply plastic"

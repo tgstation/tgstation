@@ -505,7 +505,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		if(HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS) && !(operation_flags & OPERATION_ALWAYS_FAILABLE))
 			operation_args[OPERATION_SPEED] = 0
 
-		if(operation_args["force_fail"] || prob(clamp(GET_FAILURE_CHANCE(time, operation_args[OPERATION_SPEED]), 0, 99)))
+		if(operation_args[OPERATION_FORCE_FAIL] || prob(clamp(GET_FAILURE_CHANCE(time, operation_args[OPERATION_SPEED]), 0, 99)))
 			failure(operating_on, surgeon, tool, operation_args)
 			result |= ITEM_INTERACT_FAILURE
 			update_surgery_mood(patient, SURGERY_STATE_FAILURE)
@@ -765,7 +765,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			screwedmessage = " This is hard to get right in these conditions..."
 		if(5 to INFINITY)
 			screwedmessage = " This is practically impossible in these conditions..."
-	if(operation_args["force_fail"])
+	if(operation_args[OPERATION_FORCE_FAIL])
 		screwedmessage = " Intentionally."
 
 	display_results(

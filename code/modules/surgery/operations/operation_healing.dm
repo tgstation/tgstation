@@ -5,6 +5,11 @@
 /// Allow combo healing operation
 #define COMBO_SURGERY (1<<2)
 
+#define OPERATION_BRUTE_HEAL "brute_heal"
+#define OPERATION_BURN_HEAL "burn_heal"
+#define OPERATION_BRUTE_MULTIPLIER "brute_multiplier"
+#define OPERATION_BURN_MULTIPLIER "burn_multiplier"
+
 /datum/surgery_operation/basic/tend_wounds
 	name = "tend wounds"
 	desc = "Perform superficial wound care on a patient's bruises and burns."
@@ -94,16 +99,16 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(operation_args["brute_heal"] > 0 && patient.getBruteLoss() <= 0)
+	if(operation_args[OPERATION_BRUTE_HEAL] > 0 && patient.getBruteLoss() <= 0)
 		return FALSE
-	if(operation_args["burn_heal"] > 0 && patient.getFireLoss() <= 0)
+	if(operation_args[OPERATION_BURN_HEAL] > 0 && patient.getFireLoss() <= 0)
 		return FALSE
 	return TRUE
 
 /datum/surgery_operation/basic/tend_wounds/on_preop(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
 	var/woundtype
-	var/brute_heal = operation_args["brute_heal"] > 0
-	var/burn_heal = operation_args["burn_heal"] > 0
+	var/brute_heal = operation_args[OPERATION_BRUTE_HEAL] > 0
+	var/burn_heal = operation_args[OPERATION_BURN_HEAL] > 0
 	if(brute_heal && burn_heal)
 		woundtype = "wounds"
 	else if(brute_heal)
@@ -162,8 +167,8 @@
 	var/user_msg = "You succeed in fixing some of [patient]'s wounds" //no period, add initial space to "addons"
 	var/target_msg = "[surgeon] fixes some of [patient]'s wounds" //see above
 
-	var/brute_healed = operation_args["brute_heal"]
-	var/burn_healed = operation_args["burn_heal"]
+	var/brute_healed = operation_args[OPERATION_BRUTE_HEAL]
+	var/burn_healed = operation_args[OPERATION_BURN_HEAL]
 
 	var/dead_multiplier = patient.stat == DEAD ? 0.2 : 1.0
 	var/accessibility_modifier = 1.0
@@ -172,8 +177,8 @@
 		user_msg += " as best as you can while [patient.p_they()] [patient.p_have()] clothing on"
 		target_msg += " as best as [surgeon.p_they()] can while [patient.p_they()] [patient.p_have()] clothing on"
 
-	var/brute_multiplier = operation_args["brute_multiplier"] * dead_multiplier * accessibility_modifier
-	var/burn_multiplier = operation_args["burn_multiplier"] * dead_multiplier * accessibility_modifier
+	var/brute_multiplier = operation_args[OPERATION_BRUTE_MULTIPLIER] * dead_multiplier * accessibility_modifier
+	var/burn_multiplier = operation_args[OPERATION_BURN_MULTIPLIER] * dead_multiplier * accessibility_modifier
 
 	brute_healed += round(patient.getBruteLoss() * brute_multiplier, DAMAGE_PRECISION)
 	burn_healed += round(patient.getFireLoss() * burn_multiplier, DAMAGE_PRECISION)
@@ -202,10 +207,10 @@
 		span_notice("[surgeon] fixes some of [patient]'s wounds."),
 		target_detailed = TRUE,
 	)
-	var/brute_dealt = operation_args["brute_heal"] * 0.8
-	var/burn_dealt = operation_args["burn_heal"] * 0.8
-	var/brute_multiplier = operation_args["brute_multiplier"] * 0.5
-	var/burn_multiplier = operation_args["burn_multiplier"] * 0.5
+	var/brute_dealt = operation_args[OPERATION_BRUTE_HEAL] * 0.8
+	var/burn_dealt = operation_args[OPERATION_BURN_HEAL] * 0.8
+	var/brute_multiplier = operation_args[OPERATION_BRUTE_MULTIPLIER] * 0.5
+	var/burn_multiplier = operation_args[OPERATION_BURN_MULTIPLIER] * 0.5
 
 	brute_dealt += round(patient.getBruteLoss() * brute_multiplier, 0.1)
 	burn_dealt += round(patient.getFireLoss() * burn_multiplier, 0.1)
@@ -236,3 +241,12 @@
 /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
 	healing_amount = 1
 	healing_multiplier = 0.4
+
+#undef BRUTE_SURGERY
+#undef BURN_SURGERY
+#undef COMBO_SURGERY
+
+#undef OPERATION_BRUTE_HEAL
+#undef OPERATION_BURN_HEAL
+#undef OPERATION_BRUTE_MULTIPLIER
+#undef OPERATION_BURN_MULTIPLIER

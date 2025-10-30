@@ -1,3 +1,5 @@
+#define OPERATION_OBJECTIVE "objective"
+
 /datum/surgery_operation/organ/brainwash
 	name = "brainwash"
 	desc = "Implant a directive into the patient's brain, making it their absolute priority."
@@ -25,8 +27,8 @@
 	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
-	operation_args["objective"] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)
-	return !!operation_args["objective"]
+	operation_args[OPERATION_OBJECTIVE] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)
+	return !!operation_args[OPERATION_OBJECTIVE]
 
 /datum/surgery_operation/organ/brainwash/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -56,7 +58,7 @@
 	on_brainwash(organ.owner, surgeon, tool, operation_args)
 
 /datum/surgery_operation/organ/brainwash/proc/on_brainwash(mob/living/carbon/brainwashed, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/objective = operation_args["objective"] || "Oooo no objective set somehow report this to an admin"
+	var/objective = operation_args[OPERATION_OBJECTIVE] || "Oooo no objective set somehow report this to an admin"
 	to_chat(brainwashed, span_notice("A new thought forms in your mind: '[objective]'"))
 	brainwash(brainwashed, objective)
 	message_admins("[ADMIN_LOOKUPFLW(surgeon)] surgically brainwashed [ADMIN_LOOKUPFLW(brainwashed)] with the objective '[objective]'.")
@@ -112,7 +114,7 @@
 	)
 
 /datum/surgery_operation/organ/brainwash/sleeper/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
-	operation_args["objective"] = pick(possible_objectives)
+	operation_args[OPERATION_OBJECTIVE] = pick(possible_objectives)
 	return TRUE
 
 /datum/surgery_operation/organ/brainwash/sleeper/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -141,3 +143,5 @@
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 	required_organ_flag = ORGAN_ROBOTIC
+
+#undef OPERATION_OBJECTIVE

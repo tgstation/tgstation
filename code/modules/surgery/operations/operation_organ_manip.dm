@@ -1,3 +1,5 @@
+#define OPERATION_REMOVED_ORGAN "removed_organ"
+
 /// Adding or removing specific organs
 /datum/surgery_operation/limb/organ_manipulation
 	name = "organ manipulation"
@@ -115,7 +117,7 @@
 
 	switch(operation_args[OPERATION_ACTION])
 		if("remove")
-			var/obj/item/organ/organ = operation_args["organ"]
+			var/obj/item/organ/organ = operation_args[OPERATION_REMOVED_ORGAN]
 			if(QDELETED(organ) || !(organ in limb))
 				return FALSE
 		if("insert")
@@ -129,7 +131,7 @@
 /datum/surgery_operation/limb/organ_manipulation/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	switch(operation_args[OPERATION_ACTION])
 		if("remove")
-			var/obj/item/organ = operation_args["organ"]
+			var/obj/item/organ = operation_args[OPERATION_REMOVED_ORGAN]
 			play_operation_sound(limb, surgeon, tool, remove_preop_sound)
 			display_results(
 				surgeon,
@@ -154,7 +156,7 @@
 	switch(operation_args[OPERATION_ACTION])
 		if("remove")
 			play_operation_sound(limb, surgeon, tool, remove_success_sound)
-			on_success_remove_organ(limb, surgeon, operation_args["organ"], tool)
+			on_success_remove_organ(limb, surgeon, operation_args[OPERATION_REMOVED_ORGAN], tool)
 		if("insert")
 			play_operation_sound(limb, surgeon, tool, insert_success_sound)
 			on_success_insert_organ(limb, surgeon, tool)
@@ -290,3 +292,5 @@
 
 /datum/surgery_operation/limb/organ_manipulation/external/alien/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+
+#undef OPERATION_REMOVED_ORGAN

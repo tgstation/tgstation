@@ -1,3 +1,5 @@
+#define OPERATION_REJECTION_DAMAGE "tox_damage"
+
 // This surgery is so snowflake that it doesn't use any of the operation subtypes, it forges its own path
 /datum/surgery_operation/prosthetic_replacement
 	name = "prosthetic replacement"
@@ -80,7 +82,7 @@
 	return TRUE
 
 /datum/surgery_operation/prosthetic_replacement/on_preop(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/target_zone = operation_args["target_zone"]
+	var/target_zone = operation_args[OPERATION_TARGET_ZONE]
 	var/target_zone_readable = parse_zone(target_zone)
 	display_results(
 		surgeon,
@@ -91,23 +93,23 @@
 	)
 	display_pain(chest.owner, "You feel an uncomfortable sensation where your [target_zone_readable] should be!")
 
-	operation_args["tox_damage"] = 10
+	operation_args[OPERATION_REJECTION_DAMAGE] = 10
 	if(isbodypart(tool))
 		var/obj/item/bodypart/new_limb = tool
 		if(IS_ROBOTIC_LIMB(new_limb))
-			operation_args["tox_damage"] = 0
+			operation_args[OPERATION_REJECTION_DAMAGE] = 0
 		else if(new_limb.check_for_frankenstein(chest.owner))
-			operation_args["tox_damage"] = 30
+			operation_args[OPERATION_REJECTION_DAMAGE] = 30
 
 /datum/surgery_operation/prosthetic_replacement/on_success(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(!surgeon.temporarilyRemoveItemFromInventory(tool))
 		return // should never happen
-	if(operation_args["tox_damage"] > 0)
-		chest.owner.apply_damage(operation_args["tox_damage"], TOX)
+	if(operation_args[OPERATION_REJECTION_DAMAGE] > 0)
+		chest.owner.apply_damage(operation_args[OPERATION_REJECTION_DAMAGE], TOX)
 	if(isbodypart(tool))
 		handle_bodypart(chest.owner, surgeon, tool)
 		return
-	handle_arbitrary_prosthetic(chest.owner, surgeon, tool, operation_args["target_zone"])
+	handle_arbitrary_prosthetic(chest.owner, surgeon, tool, operation_args[OPERATION_TARGET_ZONE])
 
 /datum/surgery_operation/prosthetic_replacement/proc/handle_bodypart(mob/living/carbon/patient, mob/living/surgeon, obj/item/bodypart/bodypart_to_attach)
 	bodypart_to_attach.try_attach_limb(patient)
@@ -132,6 +134,8 @@
 		span_notice("[surgeon] finishes the attachment procedure!"),
 	)
 	display_pain(patient, "You feel a strange sensation as [thing_to_attach] takes place of an arm!", TRUE)
+
+#undef OPERATION_REJECTION_DAMAGE
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic
 	name = "secure prosthetic"
