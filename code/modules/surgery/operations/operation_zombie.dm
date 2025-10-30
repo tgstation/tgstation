@@ -61,3 +61,6 @@
 		return
 	var/obj/item/organ/zombie_infection/z_infection = new()
 	z_infection.Insert(limb.owner)
+	for(var/chem in zombie_chems)
+		tool.reagents?.remove_reagent(chem, 1)
+		limb.owner.reagents?.remove_reagent(chem, 1)

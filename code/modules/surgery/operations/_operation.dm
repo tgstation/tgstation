@@ -76,9 +76,13 @@
 /// Callback for checking if the surgery radial can be kept open
 /mob/living/proc/surgery_check(obj/item/tool)
 	PRIVATE_PROC(TRUE)
-	if(tool != get_active_held_item())
-		return FALSE
-	return TRUE
+	var/holding = get_active_held_item()
+	if(tool == holding)
+		return TRUE
+	if(istype(holding, /obj/item/borg/cyborg_omnitool))
+		var/obj/item/borg/cyborg_omnitool/omnitool = holding
+		return tool == omnitool.reference // this sucks but so do cyborgs
+	return FALSE
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
