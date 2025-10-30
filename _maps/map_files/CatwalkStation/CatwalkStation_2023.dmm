@@ -1973,15 +1973,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
-"aCI" = (
-/obj/structure/sign/directions/evac/directional/north{
-	pixel_y = 0
-	},
-/obj/structure/sign/directions/vault/directional/north{
-	pixel_y = -5
-	},
-/turf/closed/wall,
-/area/station/maintenance/port/fore)
 "aCO" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/plating,
@@ -3194,20 +3185,12 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/central)
 "aVy" = (
-/obj/structure/sign/directions/evac/directional/north{
-	dir = 8;
+/obj/structure/sign/directions/security/directional/north{
+	dir = 2;
 	pixel_y = 0
 	},
-/obj/structure/sign/directions/medical/directional/north{
-	dir = 8;
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/command{
-	dir = 8;
-	pixel_y = -10
-	},
-/turf/closed/wall,
-/area/station/commons/storage/primary)
+/turf/closed/wall/r_wall,
+/area/station/maintenance/port)
 "aVD" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
@@ -5396,9 +5379,14 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "bCD" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/central)
+/obj/structure/sign/directions/evac/directional/north{
+	pixel_y = 0
+	},
+/obj/structure/sign/directions/vault/directional/north{
+	pixel_y = -5
+	},
+/turf/closed/wall,
+/area/station/maintenance/port/fore)
 "bDm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance,
@@ -12212,16 +12200,6 @@
 "dxB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/button/door/directional/north{
-	pixel_x = 7;
-	name = "Privacy Shutters Control";
-	id = "hosprivacy"
-	},
-/obj/machinery/button/door/directional/north{
-	pixel_x = 7;
-	name = "Privacy Shutters Control";
-	id = "hosprivacy"
-	},
 /turf/open/floor/plating,
 /area/station/security/brig)
 "dxI" = (
@@ -24076,6 +24054,24 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"gQC" = (
+/obj/structure/sign/directions/medical/directional/east{
+	dir = 2;
+	pixel_y = 9;
+	pixel_x = 0
+	},
+/obj/structure/sign/directions/science/directional/east{
+	dir = 2;
+	pixel_y = 3;
+	pixel_x = 0
+	},
+/obj/structure/sign/directions/security/directional/east{
+	dir = 2;
+	pixel_y = -3;
+	pixel_x = 0
+	},
+/turf/closed/wall,
+/area/station/commons/vacant_room/office)
 "gQI" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24166,6 +24162,16 @@
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/lesser)
+"gRS" = (
+/obj/structure/sign/directions/engineering{
+	dir = 4
+	},
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_y = -10
+	},
+/turf/closed/wall,
+/area/station/science/lab)
 "gRT" = (
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
@@ -30625,13 +30631,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"iGL" = (
-/obj/structure/sign/directions/security/directional/north{
-	dir = 2;
-	pixel_y = 0
-	},
-/turf/closed/wall/r_wall,
-/area/station/maintenance/port)
 "iGP" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable/layer3,
@@ -31020,25 +31019,6 @@
 	},
 /turf/open/misc/asteroid,
 /area/station/science/robotics)
-"iLK" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_y = -12
-	},
-/obj/structure/sign/directions/security{
-	dir = 8;
-	pixel_y = -6
-	},
-/obj/structure/sign/directions/dorms/directional/south{
-	dir = 4;
-	pixel_y = 6
-	},
-/obj/structure/sign/directions/engineering/directional/south{
-	dir = 4;
-	pixel_y = 0
-	},
-/turf/closed/wall/r_wall,
-/area/station/maintenance/central)
 "iLL" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/transit_tube/horizontal,
@@ -34820,23 +34800,12 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "jOi" = (
-/obj/structure/sign/directions/medical/directional/east{
-	dir = 2;
-	pixel_y = 9;
-	pixel_x = 0
-	},
-/obj/structure/sign/directions/science/directional/east{
-	dir = 2;
-	pixel_y = 3;
-	pixel_x = 0
-	},
-/obj/structure/sign/directions/security/directional/east{
-	dir = 2;
-	pixel_y = -3;
-	pixel_x = 0
+/obj/structure/sign/directions/command/directional/north{
+	dir = 4;
+	pixel_y = 0
 	},
 /turf/closed/wall,
-/area/station/commons/vacant_room/office)
+/area/station/hallway/primary/port)
 "jOE" = (
 /turf/closed/wall,
 /area/station/service/lawoffice)
@@ -57967,12 +57936,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "qsM" = (
-/obj/structure/sign/directions/command/directional/north{
-	dir = 4;
-	pixel_y = 0
-	},
-/turf/closed/wall,
-/area/station/hallway/primary/port)
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "qsO" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
@@ -58409,6 +58375,10 @@
 "qzY" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/button/door/directional/south{
+	name = "Privacy Shutters Control";
+	id = "hosprivacy"
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "qzZ" = (
@@ -66973,6 +66943,10 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/restrooms)
+"sVs" = (
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/central)
 "sVA" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -82264,9 +82238,14 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/processing)
 "xkV" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
+/obj/structure/sign/directions/upload/directional/north{
+	desc = "It stands for Up Le Dable";
+	dir = 2;
+	name = "Button Indicator";
+	pixel_y = 10
+	},
+/turf/closed/wall,
+/area/station/service/kitchen)
 "xkZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -82894,14 +82873,24 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "xtf" = (
-/obj/structure/sign/directions/upload/directional/north{
-	desc = "It stands for Up Le Dable";
-	dir = 2;
-	name = "Button Indicator";
-	pixel_y = 10
+/obj/structure/sign/directions/supply{
+	dir = 4;
+	pixel_y = -12
 	},
-/turf/closed/wall,
-/area/station/service/kitchen)
+/obj/structure/sign/directions/security{
+	dir = 8;
+	pixel_y = -6
+	},
+/obj/structure/sign/directions/dorms/directional/south{
+	dir = 4;
+	pixel_y = 6
+	},
+/obj/structure/sign/directions/engineering/directional/south{
+	dir = 4;
+	pixel_y = 0
+	},
+/turf/closed/wall/r_wall,
+/area/station/maintenance/central)
 "xtC" = (
 /obj/structure/chair{
 	dir = 4
@@ -85811,15 +85800,20 @@
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "yjM" = (
-/obj/structure/sign/directions/engineering{
-	dir = 4
+/obj/structure/sign/directions/evac/directional/north{
+	dir = 8;
+	pixel_y = 0
 	},
-/obj/structure/sign/directions/supply{
-	dir = 4;
+/obj/structure/sign/directions/medical/directional/north{
+	dir = 8;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/command{
+	dir = 8;
 	pixel_y = -10
 	},
 /turf/closed/wall,
-/area/station/science/lab)
+/area/station/commons/storage/primary)
 "yjT" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
@@ -113533,7 +113527,7 @@ gPW
 egU
 gPW
 gPW
-xtf
+xkV
 neF
 lAW
 pbk
@@ -117908,7 +117902,7 @@ weF
 qqz
 bOk
 bOk
-aCI
+bCD
 wrI
 fjt
 xDR
@@ -118683,7 +118677,7 @@ jAT
 fLr
 fjt
 fLr
-iLK
+xtf
 qQd
 qQd
 qQd
@@ -119257,7 +119251,7 @@ cPY
 tNP
 tNP
 fAl
-yjM
+gRS
 ruK
 szy
 djL
@@ -122295,7 +122289,7 @@ tPU
 rWE
 vai
 rWE
-jOi
+gQC
 lSU
 fbv
 wMr
@@ -125632,7 +125626,7 @@ sKM
 ggj
 sKM
 nnH
-aVy
+yjM
 xtG
 vPN
 glC
@@ -132831,7 +132825,7 @@ qKO
 pTP
 pTP
 pTP
-bCD
+sVs
 qKO
 qKO
 dvs
@@ -133606,7 +133600,7 @@ sON
 sON
 qKO
 lYr
-xkV
+qsM
 lYr
 lYr
 lYr
@@ -172939,7 +172933,7 @@ lji
 cOS
 jQA
 sVJ
-iGL
+aVy
 oHH
 sRh
 cUf
@@ -175491,7 +175485,7 @@ aad
 uCF
 sjx
 sjx
-qsM
+jOi
 fhO
 bLN
 onV
