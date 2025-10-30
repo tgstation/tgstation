@@ -45,9 +45,9 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 	var/init_by = "Initiated by [user.holder.fakekey ? "Admin" : user.key]."
 	switch(result)
 		if(REGULAR_RESTART, REGULAR_RESTART_DELAYED, NO_EVENT_RESTART)
-			var/delay = result == REGULAR_RESTART_DELAYED
-				? (input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null)
-				: 1
+			var/delay = 1
+			if(result == REGULAR_RESTART_DELAYED)
+				delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
 			if(!delay)
 				return FALSE
 			if(!user.is_localhost())
