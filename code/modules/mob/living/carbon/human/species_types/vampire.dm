@@ -203,9 +203,9 @@
 	)
 
 	playsound(bloodbag, 'sound/items/drink.ogg', 50, TRUE) //slurp
-	bloodbag.reagents.trans_to(user, bloodbag.reagents.maximum_volume * 0.2, transferred_by = user, methods = INGEST)
+	bloodbag.reagents.trans_to(user, bloodbag.reagents.maximum_volume * 0.05, transferred_by = user, methods = INGEST)
 	if(bloodbag.reagents.total_volume > 0)
-		async_stab_bloodbag(user, bloodbag, 1.5 SECONDS)
+		async_stab_bloodbag(user, bloodbag, 1 SECONDS)
 
 /datum/action/item_action/organ_action/vampire
 	name = "Drain Victim"
