@@ -512,7 +512,7 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	for(var/obj/item/clothing/worn_item in get_equipped_items())
+	for(var/obj/item/clothing/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		tint += worn_item.tint
 
 	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -814,7 +814,10 @@
 	return ..()
 
 /mob/living/carbon/can_be_revived()
-	if(!get_organ_by_type(/obj/item/organ/brain) && (!IS_CHANGELING(src)) || HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
+	var/brainless_creature = IS_CHANGELING(src) || isdullahan(src)
+	if(!brainless_creature && !get_organ_by_type(/obj/item/organ/brain))
 		return FALSE
 	return ..()
 
@@ -842,6 +845,9 @@
 			return DEFIB_FAIL_FAILING_HEART
 
 	var/obj/item/organ/brain/current_brain = get_organ_by_type(/obj/item/organ/brain)
+	if(isdullahan(src))
+		var/datum/species/dullahan/dullahan_species = src.dna.species
+		current_brain = locate() in dullahan_species.my_head.loc
 
 	if (QDELETED(current_brain))
 		return DEFIB_FAIL_NO_BRAIN

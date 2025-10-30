@@ -458,6 +458,9 @@
 	else if (siemens_coefficient <= 0.5)
 		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
 
+	if(LAZYLEN(unique_reskin) && !current_skin)
+		.["reskinnable"] = "This item is able to be reskinned! Alt-Click to do so!"
+
 /obj/item/examine_descriptor(mob/user)
 	return "item"
 
@@ -972,7 +975,7 @@
 
 /obj/item/proc/update_slot_icon()
 	SIGNAL_HANDLER
-	if(!ismob(loc))
+	if(!ismob(loc) || QDELETED(loc))
 		return
 	var/mob/owner = loc
 	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))

@@ -16,7 +16,7 @@
 	var/process_interval = 30 SECONDS //! how frequently the quirk processes
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
-/datum/quirk/item_quirk/addict/add_unique(client/client_source)
+/datum/quirk/item_quirk/addict/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(!reagent_type)
@@ -27,6 +27,7 @@
 	for(var/addiction in reagent_instance.addiction_types)
 		human_holder.last_mind?.add_addiction_points(addiction, 1000)
 
+/datum/quirk/item_quirk/addict/add_unique(client/client_source)
 	var/current_turf = get_turf(quirk_holder)
 
 	if(!drug_container_type)
