@@ -12,6 +12,6 @@
 	var/datum/status_effect/fire_handler/fire_stacks/handler = locate() in dummy.status_effects
 	handler.tick_interval = STATUS_EFFECT_AUTO_TICK
 	for(var/i in 1 to 5)
-		handler.process()
+		handler.process(1)
 	TEST_ASSERT(dummy.fire_stacks < 20, "Dummy should have decayed firestacks, but did not. (Dummy stacks: [dummy.fire_stacks]).")
 	TEST_ASSERT(dummy.bodytemperature > initial_temp, "Dummy did not heat up despite being on fire. (Dummy temp: [dummy.bodytemperature], initial temp: [initial_temp])")

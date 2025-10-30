@@ -81,7 +81,7 @@
 	QDEL_NULL(counter)
 
 /datum/status_effect/unit_test_tick_counter
-	duration = 5 SECONDS
+	duration = 10 SECONDS
 	tick_interval = 0.4 SECONDS
 
 	id = "unit_test_tick_counter"
