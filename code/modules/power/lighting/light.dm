@@ -424,6 +424,8 @@
 			frame = new /obj/item/wallframe/light_fixture(drop_point)
 		if("bulb")
 			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
+		if("floor bulb")
+			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
 	if(!disassembled)
 		frame.take_damage(frame.max_integrity * 0.5, sound_effect = FALSE)
 		if(status != LIGHT_BROKEN)
