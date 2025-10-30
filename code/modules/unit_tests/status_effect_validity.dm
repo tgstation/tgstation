@@ -57,6 +57,40 @@
 			else
 				TEST_FAIL("Invalid processing speed for status effect [checking] : [initial(checking.processing_speed)]")
 
+/// Validates that status effect tick counts are directly proportional to duration, and that seconds_between_ticks added up is equal to duration.
+/datum/unit_test/status_effect_tick_counts
+
+/datum/unit_test/status_effect_tick_counts/Run()
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
+
+	var/datum/status_effect/unit_test_tick_counter/counter = user.apply_status_effect(/datum/status_effect/unit_test_tick_counter)
+
+	var/ticks_required = counter.duration / 10 / 0.2
+
+	for (var/i in 1 to ticks_required)
+		counter.process(0.2)
+
+	var/expected_tick_count = counter.duration / counter.tick_interval
+	if (counter.total_tick_count != expected_tick_count)
+		TEST_FAIL("Status effect tick count is not directly proportional to duration. Expected [expected_tick_count] ticks, got [counter.total_tick_count] ticks.")
+
+	var/expected_seconds = initial(counter.duration) / 10
+	if (counter.total_seconds != expected_seconds)
+		TEST_FAIL("Status effect seconds_between_ticks accumulated together does not equal duration. Expected [expected_seconds] seconds, got [counter.total_seconds] seconds.")
+
+	QDEL_NULL(counter)
+
+/datum/status_effect/unit_test_tick_counter
+	duration = 5 SECONDS
+	tick_interval = 0.4 SECONDS
+
+	var/total_tick_count = 0
+	var/total_seconds = 0
+
+/datum/status_effect/unit_test_tick_counter/tick(seconds_between_ticks)
+	total_tick_count++
+	total_seconds += seconds_between_ticks
+
 /// Validates status effect alert type setup
 /datum/unit_test/status_effect_alert
 
