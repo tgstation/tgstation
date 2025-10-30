@@ -236,7 +236,7 @@
 	var/skill_level_boost = (new_owner.mind?.get_skill_level(/datum/skill/athletics) - 1) * 2 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
-	var/exhaustion_limit = new_owner.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_VALUE_MODIFIER) + world.time
+	var/exhaustion_limit = new_owner.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_VALUE_MODIFIER)
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
