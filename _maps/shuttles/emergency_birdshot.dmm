@@ -214,7 +214,7 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "kZ" = (
