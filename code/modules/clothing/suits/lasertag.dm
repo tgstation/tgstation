@@ -17,7 +17,8 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, "blue")
+	to_chat(equipper, span_yell("Team color is [LASERTAG_TEAM_BLUE]"))
+	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, LASERTAG_TEAM_BLUE)
 
 
 /obj/item/clothing/suit/bluetag/dropped(mob/living/user)
@@ -47,7 +48,8 @@
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
 	last_slot = slot
-	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, "blue")
+	to_chat(equipper, span_yell("Team color is [LASERTAG_TEAM_RED]"))
+	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, LASERTAG_TEAM_RED)
 
 
 /obj/item/clothing/suit/redtag/dropped(mob/living/user)

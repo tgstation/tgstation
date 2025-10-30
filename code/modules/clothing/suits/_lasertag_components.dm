@@ -1,10 +1,10 @@
 ///lasertag team tracking component
 /datum/component/lasertag
 	dupe_mode = COMPONENT_DUPE_SOURCES
-	///What team the mob that this component is attached to is part of. This should be all lowercase and either a color or "neutral"
-	var/team_color = "neutral"
+	///What team the mob that this component is attached to is part of.
+	var/team_color = LASERTAG_TEAM_NEUTRAL
 
-/datum/component/lasertag/Initialize(datum/source, datum/source_item, team_color)
+/datum/component/lasertag/Initialize(team_color)
 	if (!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	register_lasertag_signals()
@@ -18,6 +18,7 @@
 
 /datum/component/lasertag/proc/team_color_match(datum/source, color)
 	SIGNAL_HANDLER
+	to_chat(parent, span_yell("DEBUG: testing if [color] is the same as [team_color]")) //FIX: team_color is null for some reason
 	if (color == team_color)
 		return ALLOW_FIRE
 	return BLOCK_FIRE

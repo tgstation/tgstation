@@ -354,12 +354,13 @@
 	name = "laser tag firing pin"
 	desc = "A recreational firing pin, used in laser tag units to ensure users have their vests on."
 	fail_message = "suit check failed!"
-	var/tagcolor = "neutral"
+	var/tagcolor = LASERTAG_TEAM_NEUTRAL
 
 /obj/item/firing_pin/tag/pin_auth(mob/living/user)
 	if(ishuman(user))
 		var/result = SEND_SIGNAL(user, COMSIG_LIVING_FIRING_PIN_CHECK, tagcolor)
-		if(result & ALLOW_FIRE) //FIX: always returns false
+		to_chat(user, span_yell("DEBUG: result of SEND_SIGNAL is [result] and needs [ALLOW_FIRE]. tagcolor is [tagcolor]"))
+		if(result == ALLOW_FIRE) //FIX: always returns false
 			return TRUE
 	to_chat(user, span_warning("You need to be wearing [tagcolor] laser tag armor!"))
 	return FALSE
@@ -367,12 +368,12 @@
 /obj/item/firing_pin/tag/red
 	name = "red laser tag firing pin"
 	icon_state = "firing_pin_red"
-	tagcolor = "red"
+	tagcolor = LASERTAG_TEAM_RED
 
 /obj/item/firing_pin/tag/blue
 	name = "blue laser tag firing pin"
 	icon_state = "firing_pin_blue"
-	tagcolor = "blue"
+	tagcolor = LASERTAG_TEAM_BLUE
 
 /obj/item/firing_pin/monkey
 	name = "monkeylock firing pin"
