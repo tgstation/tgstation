@@ -546,7 +546,7 @@
 * e.g. pick_n(list_of_stuff, 10) would return a list of 10 items from the list, chosen randomly.
 */
 /proc/pick_n(list/list_to_pick, n)
-	var/list_to_pick_length = list_to_pick.len
+	var/list_to_pick_length = length(list_to_pick)
 	if(!islist(list_to_pick) || !list_to_pick_length || n <= 0)
 		return list()
 
