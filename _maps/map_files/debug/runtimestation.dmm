@@ -413,19 +413,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/medical/chemistry)
-"cD" = (
-/obj/structure/sign/directions/engineering{
-	dir = 1;
-	pixel_y = 7
-	},
-/obj/structure/sign/directions/supply{
-	dir = 4
-	},
-/obj/structure/sign/directions/evac{
-	pixel_y = -7
-	},
-/turf/closed/wall/r_wall,
-/area/station/commons/storage/primary)
 "cI" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -984,7 +971,7 @@
 	pixel_y = -7
 	},
 /turf/closed/wall/r_wall,
-/area/station/construction)
+/area/station/commons/storage/primary)
 "fO" = (
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -1004,21 +991,18 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "fX" = (
-/obj/structure/sign/directions/supply{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	pixel_x = -32;
 	pixel_y = 7
 	},
+/obj/structure/sign/directions/supply{
+	dir = 4
+	},
 /obj/structure/sign/directions/evac{
-	pixel_x = -32;
 	pixel_y = -7
 	},
-/turf/open/floor/plating,
-/area/station/commons/storage/primary)
+/turf/closed/wall/r_wall,
+/area/station/construction)
 "fY" = (
 /obj/machinery/light/directional/west,
 /obj/structure/cable,
@@ -6094,7 +6078,7 @@ cN
 cN
 cN
 cN
-fM
+fX
 ef
 ef
 cN
@@ -7290,7 +7274,7 @@ cS
 cS
 cS
 cS
-cS
+fM
 dG
 dG
 cS
@@ -7382,7 +7366,7 @@ Zz
 dp
 dl
 dl
-fX
+dl
 dE
 dB
 dl
@@ -8578,7 +8562,7 @@ cS
 cS
 cS
 cS
-cD
+fM
 Is
 Jd
 tz
