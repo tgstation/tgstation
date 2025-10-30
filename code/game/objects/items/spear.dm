@@ -15,7 +15,7 @@
 	throw_speed = 4
 	demolition_mod = 0.75 // Note: This is significant, as this needs to be low enough that any possible force adjustments from better spears does not go over airlock deflection. See AIRLOCK_DAMAGE_DEFLECTION_N.
 	embed_type = /datum/embedding/spear
-	armour_penetration = 10
+	armour_penetration = 5
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "lacerates", "gores")
@@ -102,7 +102,6 @@
 			wound_bonus = -10
 			force_unwielded = 11
 			force_wielded = 19
-			armour_penetration = 15
 			AddComponent(/datum/component/two_handed, \
 				force_unwielded = force_unwielded, \
 				force_wielded = force_wielded, \
@@ -121,7 +120,7 @@
 			wound_bonus = -5
 			force_unwielded = 12
 			force_wielded = 20
-			armour_penetration = 20
+			armour_penetration = 10
 			icon_prefix = "speartitanium"
 			AddComponent(/datum/component/two_handed, \
 				force_unwielded = force_unwielded, \
@@ -142,7 +141,7 @@
 			exposed_wound_bonus = 20
 			force_unwielded = 13
 			force_wielded = 21
-			armour_penetration = 25
+			armour_penetration = 15
 			icon_prefix = "spearplastitanium"
 			AddComponent(/datum/component/two_handed, \
 				force_unwielded = force_unwielded, \
@@ -177,9 +176,11 @@
 
 /obj/item/spear/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	reach = 1
+	armour_penetration *= 2
 
 /obj/item/spear/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	reach = 2
+	armour_penetration /= 2
 
 /obj/item/spear/explosive
 	name = "explosive lance"
