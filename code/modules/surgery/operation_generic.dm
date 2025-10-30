@@ -422,9 +422,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to make an incision in the organs of [limb.owner]'s [limb.plaintext_zone]..."),
-		span_notice("[surgeon] begins to make an incision in the organs of [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] begins to make an incision in the organs of [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("You begin to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]..."),
+		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[surgeon] begins to make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
 	)
 	display_pain(limb.owner, "You feel a stabbing in your [limb.plaintext_zone].")
 
@@ -435,8 +435,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You make an incision in the organs of [limb.owner]'s [limb.plaintext_zone]."),
-		span_notice("[surgeon] makes an incision in the organs of [limb.owner]'s [limb.plaintext_zone]!"),
-		span_notice("[surgeon] makes an incision in the organs of [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("You make an incision in the organs within [limb.owner]'s [limb.plaintext_zone]."),
+		span_notice("[surgeon] makes an incision in the organs within [limb.owner]'s [limb.plaintext_zone]!"),
+		span_notice("[surgeon] makes an incision in the organs within [limb.owner]'s [limb.plaintext_zone]!"),
 	)
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")

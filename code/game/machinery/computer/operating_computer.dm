@@ -31,6 +31,7 @@
 	if(linked_techweb)
 		RegisterSignal(linked_techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_techweb_research))
 		RegisterSignal(linked_techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_techweb_unresearch))
+		RegisterSignal(linked_techweb, COMSIG_TECHWEB_EXPERIMENT_COMPLETED, PROC_REF(update_experiments))
 
 		for(var/datum/design/surgery/design in linked_techweb.get_researched_design_datums())
 			advanced_surgeries |= design.surgery
@@ -246,6 +247,11 @@
 		return
 
 	advanced_surgeries -= design.surgery
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers)), 0.1 SECONDS, TIMER_UNIQUE)
+
+/obj/machinery/computer/operating/proc/update_experiments(datum/source, datum/experiment/completed_experiment)
+	SIGNAL_HANDLER
+
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, update_static_data_for_all_viewers)), 0.1 SECONDS, TIMER_UNIQUE)
 
 #undef MENU_OPERATION

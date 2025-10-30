@@ -55,8 +55,8 @@ export const OperatingComputer = () => {
 
   return (
     <Window
-      width={tab === 1 ? 350 : 400}
-      height={600}
+      width={tab === 1 ? 345 : 415}
+      height={610}
       theme="operating_computer"
     >
       <Window.Content>
@@ -78,6 +78,12 @@ export const OperatingComputer = () => {
             {tab === 1 && <PatientStateView />}
             {tab === 2 && <SurgeryProceduresView />}
             {tab === 3 && <ExperimentView />}
+          </Stack.Item>
+          <Stack.Item textAlign="right" color="label" fontSize="0.7em">
+            <Section>
+              DefOS 1.0 &copy; Nanotrasen-Deforest Corporation. All rights
+              reserved.
+            </Section>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -363,6 +369,7 @@ const SurgeryProceduresView = (props) => {
             {capitalizeFirst(sortType)}
           </Button>
           <Input
+            width="150px"
             placeholder="Search..."
             value={searchText}
             onChange={setSearchText}
@@ -389,10 +396,11 @@ const ExperimentView = () => {
   const { techwebs, experiments } = data;
 
   return (
-    <Stack vertical>
-      <Stack.Item>
+    <Stack vertical fill>
+      <Stack.Item grow>
         <Section
           title="Servers"
+          fill
           buttons={
             <Button onClick={() => act('open_experiments')}>Open Config</Button>
           }
@@ -400,15 +408,17 @@ const ExperimentView = () => {
           <TechwebServer techwebs={techwebs} can_select={false} />
         </Section>
       </Stack.Item>
-      <Stack.Item>
-        <Stack vertical>
+      <Stack.Item grow>
+        <Stack vertical fill>
           {techwebs.some((e) => e.selected) && (
             <Stack.Item>
-              <Section title="Experiments" fill>
+              <Section title="Experiments" scrollable>
                 {experiments.length > 0 ? (
                   experiments
                     .sort((a, b) => (a.name > b.name ? 1 : -1))
-                    .map((exp, i) => <Experiment key={i} exp={exp} />)
+                    .map((exp, i) => (
+                      <Experiment key={i} exp={exp} can_select={false} />
+                    ))
                 ) : (
                   <NoticeBox color="yellow">No experiments found!</NoticeBox>
                 )}

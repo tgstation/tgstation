@@ -1,6 +1,6 @@
 /datum/surgery_operation/basic/revival
 	name = "shock brain"
-	rnd_name = "Brain Defibrillation"
+	rnd_name = "Brain Defibrillation (Revival)"
 	desc = "Use a defibrillator to shock a patient's brain back to life."
 	implements = list(
 		/obj/item/shockpaddles = 1,

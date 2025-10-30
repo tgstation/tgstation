@@ -2,7 +2,7 @@
 	name = "force open windpipe"
 	// google says the *actual* operation used to relieve asthma is called bronchial thermoplasty but this operation doesn't resemble that at all
 	// local doctors suggested "bronchial dilatation" instead
-	rnd_name = "Bronchial Dilatation"
+	rnd_name = "Bronchial Dilatation (Asthmatic Bypass)"
 	desc = "Forcibly expand a patient's windpipe, relieving asthma symptoms."
 	implements = list(
 		TOOL_RETRACTOR = 1.25,

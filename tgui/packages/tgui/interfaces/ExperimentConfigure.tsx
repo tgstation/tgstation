@@ -133,9 +133,49 @@ export function TechwebServer(props: TechwebServerProps) {
   ));
 }
 
-export function Experiment(props) {
+type ExperimentTitleElementProps = {
+  selected: boolean;
+  ref: string;
+  can_select?: boolean;
+  children?: React.ReactNode;
+};
+
+function ExperimentTitleElement(props: ExperimentTitleElementProps) {
   const { act } = useBackend<Data>();
-  const { exp } = props;
+  const { selected, ref, can_select = true, children } = props;
+
+  if (!can_select) {
+    return (
+      <Box className="ExperimentConfigure__ExperimentNameFakeButton">
+        {children}
+      </Box>
+    );
+  }
+
+  return (
+    <Button
+      fluid
+      onClick={() =>
+        selected
+          ? act('clear_experiment')
+          : act('select_experiment', { ref: ref })
+      }
+      selected={selected}
+      className="ExperimentConfigure__ExperimentName"
+    >
+      {children}
+    </Button>
+  );
+}
+
+type ExperimentProps = {
+  exp: ExperimentData;
+  children?: React.ReactNode;
+  can_select?: boolean;
+};
+
+export function Experiment(props: ExperimentProps) {
+  const { exp, children, can_select } = props;
   const { name, description, tag, selected, progress, performance_hint, ref } =
     exp;
 
@@ -147,15 +187,10 @@ export function Experiment(props) {
         'ExperimentConfigure__ExperimentPanel' + (selected ? '--selected' : '')
       }
     >
-      <Button
-        fluid
-        onClick={() =>
-          selected
-            ? act('clear_experiment')
-            : act('select_experiment', { ref: ref })
-        }
-        selected={selected}
-        className="ExperimentConfigure__ExperimentName"
+      <ExperimentTitleElement
+        selected={!!selected}
+        ref={ref}
+        can_select={can_select}
       >
         <Stack>
           <Stack.Item>{name}</Stack.Item>
@@ -173,10 +208,10 @@ export function Experiment(props) {
             </div>
           </Stack.Item>
         </Stack>
-      </Button>
+      </ExperimentTitleElement>
       <div className="ExperimentConfigure__ExperimentContent">
         <Box mb={1}>{description}</Box>
-        {props.children}
+        {children}
         <Table ml={2} className="ExperimentStage__Table">
           {progress.map((stage, idx) => (
             <ExperimentStageRow key={idx} stage={stage} />

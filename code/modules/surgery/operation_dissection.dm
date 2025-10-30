@@ -1,6 +1,6 @@
 /datum/surgery_operation/basic/dissection
 	name = "experimental dissection"
-	rnd_name = "Experimental Androtomy"
+	rnd_name = "Experimental Androtomy (Experimental Dissection and Autopsy)"
 	desc = "Perform an experimental dissection on a patient to obtain research points."
 	rnd_desc = 	"An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
 	implements = list(

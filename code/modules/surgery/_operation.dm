@@ -74,7 +74,7 @@
 	return picked_op.try_perform(operating_on, src, potential_tool, op_info)
 
 /// Callback for checking if the surgery radial can be kept open
-/mob/living/proc/surgery_check(target_zone, obj/item/tool)
+/mob/living/proc/surgery_check(obj/item/tool)
 	PRIVATE_PROC(TRUE)
 	if(!is_holding(tool))
 		return FALSE

@@ -1,6 +1,6 @@
 /datum/surgery_operation/organ/stomach_pump
 	name = "pump stomach"
-	rnd_name = "Gastric Lavage"
+	rnd_name = "Gastric Lavage (Stomach Pump)"
 	desc = "Manually pump a patient's stomach to induce vomiting and expel harmful chemicals."
 	implements = list(
 		IMPLEMENT_HAND = 1,

@@ -1,6 +1,6 @@
 /datum/surgery_operation/limb/autopsy
 	name = "autopsy"
-	rnd_name = "Androtomy"
+	rnd_name = "Androtomy (Dissection and Autopsy)"
 	desc = "Perform a detailed analysis of a deceased patient's body."
 	implements = list(/obj/item/autopsy_scanner = 1)
 	time = 10 SECONDS
