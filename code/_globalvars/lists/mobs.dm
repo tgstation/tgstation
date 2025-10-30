@@ -203,9 +203,7 @@ GLOBAL_LIST_INIT(dna_identity_blocks, init_identity_block_types())
 
 /proc/init_identity_block_types()
 	. = list()
-	for(var/datum/dna_block/identity/block_path as anything in subtypesof(/datum/dna_block/identity))
-		if(block_path == block_path::abstract_type)
-			continue
+	for(var/datum/dna_block/identity/block_path as anything in valid_subtypesof(/datum/dna_block/identity))
 		var/datum/dna_block/identity/new_block = new block_path()
 		.[block_path] = new_block
 
@@ -214,8 +212,6 @@ GLOBAL_LIST_INIT(dna_feature_blocks, init_feature_block_types())
 
 /proc/init_feature_block_types()
 	. = list()
-	for(var/datum/dna_block/feature/block_path as anything in subtypesof(/datum/dna_block/feature))
-		if(block_path == block_path::abstract_type)
-			continue
+	for(var/datum/dna_block/feature/block_path as anything in valid_subtypesof(/datum/dna_block/feature))
 		var/datum/dna_block/feature/new_block = new block_path()
 		.[block_path] = new_block
