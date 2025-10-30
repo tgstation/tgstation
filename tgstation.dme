@@ -3279,6 +3279,7 @@
 #include "code\modules\antagonists\blood_worm\actions\invade_corpse.dm"
 #include "code\modules\antagonists\blood_worm\actions\leave_host.dm"
 #include "code\modules\antagonists\blood_worm\actions\leech_blood.dm"
+#include "code\modules\antagonists\blood_worm\actions\mature.dm"
 #include "code\modules\antagonists\blood_worm\actions\revive_host.dm"
 #include "code\modules\antagonists\blood_worm\actions\spit_blood.dm"
 #include "code\modules\antagonists\blood_worm\actions\transfuse_blood.dm"

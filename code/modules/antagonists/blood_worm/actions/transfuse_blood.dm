@@ -104,20 +104,22 @@
 		worm_alert.maptext = linked_alert.maptext
 
 /datum/status_effect/blood_worm_transfuse/proc/heal_damage(delta_time)
-	var/brute = owner.getBruteLoss()
-	var/burn = owner.getFireLoss()
-	var/tox = owner.getToxLoss()
-	var/total_damage = brute + burn + tox
+	var/healing_left = damage_regen_rate * delta_time
 
-	if (total_damage <= 0)
-		return
+	if (owner.getBruteLoss() > 0 && healing_left > 0)
+		var/amount_healed = max(0, owner.adjustBruteLoss(-healing_left, forced = TRUE, updating_health = FALSE))
+		healing_left -= amount_healed
+		. |= amount_healed
 
-	if (brute > 0)
-		. |= owner.adjustBruteLoss(-damage_regen_rate * delta_time * (brute / total_damage), updating_health = FALSE)
-	if (burn > 0)
-		. |= owner.adjustFireLoss(-damage_regen_rate * delta_time * (burn / total_damage), updating_health = FALSE)
-	if (tox > 0)
-		. |= owner.adjustToxLoss(-damage_regen_rate * delta_time * (tox / total_damage), updating_health = FALSE)
+	if (owner.getFireLoss() > 0 && healing_left > 0)
+		var/amount_healed = max(0, owner.adjustFireLoss(-healing_left, forced = TRUE, updating_health = FALSE))
+		healing_left -= amount_healed
+		. |= amount_healed
+
+	if (owner.getToxLoss() > 0 && healing_left > 0)
+		var/amount_healed = max(0, owner.adjustToxLoss(-healing_left, forced = TRUE, updating_health = FALSE))
+		healing_left -= amount_healed
+		. |= amount_healed
 
 // I tried to set this up reasonably with SPT_PROB(), but it was too inconsistent, especially for wounds with high severity.
 // So I switched to an accumulation system instead. This way, the blood worm gets a consistent return on their health investment.

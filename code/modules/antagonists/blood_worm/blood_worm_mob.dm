@@ -27,49 +27,81 @@
 	icon_dead = "base_dead"
 	// TEMPORARY ICONS
 
+	/// Associative list of how much of each blood type the blood worm has consumed.
+	/// The format of this list is "list[blood_type.id] = amount_consumed"
+	/// This carries across growth stages.
 	var/list/consumed_blood = list()
 
+	/// The current host of the blood worm, if any.
+	/// You can use this to check if the blood worm has a host.
 	var/mob/living/carbon/human/host
+	/// The backseat mob for the mind of the current host, if any.
+	/// This mob is always dead as it's just a mind holder.
 	var/mob/living/blood_worm_host/backseat
 
+	/// The blood display on the left side of the screen, which is shown to the blood worm while in a host, if any.
 	var/atom/movable/screen/blood_level/blood_display
 
-	/// Typed, please initialize with a proper action subtype.
-	var/datum/action/cooldown/mob_cooldown/blood_worm_leech/leech_action
-	/// Typed, please initialize with a proper action subtype.
+	// Innate and shared actions
+
+	/// Typed, please initialize with a proper action subtype. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm_spit/spit_action
+	/// Typed, please initialize with a proper action subtype. (empty = no action)
+	var/datum/action/cooldown/mob_cooldown/blood_worm_leech/leech_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm_invade/invade_action
 
-	/// Typed, please initialize with a proper action subtype.
+	// Host actions
+
+	/// Typed, please initialize with a proper action subtype. (empty = no action)
 	var/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/transfuse_action
 	/// Not typed, please leave empty.
 	var/datum/action/blood_worm_eject/eject_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm_revive/revive_action
 
+	/// List of actions outside of a host.
 	var/list/innate_actions = list()
+	/// List of actions inside of a host.
 	var/list/host_actions = list()
 
+	/// Whether the blood worm has a host AND is currently in control of that host.
 	var/is_possessing_host = FALSE
 
+	/// The last amount of blood added to the host by blood dilution.
 	var/last_added_blood = 0
 
-	var/regen_rate = 0.5
+	/// How quickly the blood worm regenerates, in health per second.
+	var/regen_rate = 0
 
 /mob/living/basic/blood_worm/Initialize(mapload)
 	. = ..()
 
-	leech_action = new leech_action(src)
-	spit_action = new spit_action(src)
+	// Innate and shared actions
+
+	if (ispath(spit_action, /datum/action/cooldown/mob_cooldown/blood_worm_spit))
+		spit_action = new spit_action(src)
+		innate_actions += spit_action
+		host_actions += spit_action
+
+	if (ispath(leech_action, /datum/action/cooldown/mob_cooldown/blood_worm_leech))
+		leech_action = new leech_action(src)
+		innate_actions += leech_action
+
 	invade_action = new(src)
+	innate_actions += invade_action
 
-	transfuse_action = new transfuse_action(src)
+	// Host actions
+
+	if (ispath(transfuse_action, /datum/action/cooldown/mob_cooldown/blood_worm_transfuse))
+		transfuse_action = new transfuse_action(src)
+		host_actions += transfuse_action
+
 	eject_action = new(src)
-	revive_action = new(src)
+	host_actions += eject_action
 
-	innate_actions = list(leech_action, spit_action, invade_action)
-	host_actions = list(transfuse_action, spit_action, eject_action, revive_action)
+	revive_action = new(src)
+	host_actions += revive_action
 
 	grant_actions(src, innate_actions)
 
@@ -279,8 +311,8 @@
 
 	speed = 0
 
-	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/hatchling
 	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm_spit/hatchling
+	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/hatchling
 
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
 
