@@ -57,18 +57,22 @@
 	icon_state = "pistol_evil"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m10mm
 	empty_indicator = TRUE
-	suppressor_x_offset = 12
+	suppressor_x_offset = 17
+	suppressor_y_offset = 1
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher
 	name = "\improper Ansem/SC pistol"
 	desc = "A modified variant of the Ansem, spiritual successor to the Makarov, featuring an integral suppressor and push-button trigger on the grip \
 	for an underbarrel-mounted disruptor, similar in operation to the standalone SC/FISHER. Chambered in 10mm."
 	desc_controls = "Right-click to use the underbarrel disruptor. Two shots maximum between self-charges."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "pistol_evil_fisher"
 	suppressed = SUPPRESSED_QUIET
 	can_suppress = FALSE
 	can_unsuppress = FALSE
 	var/obj/item/gun/energy/recharge/fisher/underbarrel
+
+	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine/fisher/Initialize(mapload)
 	. = ..()
@@ -79,8 +83,10 @@
 		especially against people who like using lightbulbs.<br>\
 		<br>\
 		The slide is chopped down, with the front half of the handgun featuring a monolithic integral suppressor built around the barrel, \
-		and a compact kinetic light disruptor mounted underneath the barrel assembly. The integral suppressor is engineered to not affect \
-		ballistic performance nor affect the concealability of the handgun, leading to a surprisingly robust firearm.<br>\
+		and a compact kinetic light disruptor mounted underneath the barrel assembly, with a trigger wired to an \
+		auxiliary switch on the grip. \
+		The integral suppressor is, somehow, semi-collapsible, and engineered to not affect ballistic performance nor the concealability of the handgun. \
+		This leads to a surprisingly robust, stealth-oriented firearm, despite the visual bulk of the suppressor.<br>\
 		<br>\
 		Scarborough Arms has never actually addressed allegations of their involvement with the modification and/or manufacture \
 		of the SC/FISHER or similar disruptor weapons. Prospective operators are reminded that kinetic light disruptors do not actually physically harm targets.<br>\
