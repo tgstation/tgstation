@@ -10,7 +10,7 @@
 		/obj/item/shard = 10,
 	)
 	time = 12 SECONDS
-	operation_flags = OPERATION_LOCKED | OPERATION_ALWAYS_FAILABLE
+	operation_flags = OPERATION_LOCKED | OPERATION_ALWAYS_FAILABLE | OPERATION_MORBID | OPERATION_IGNORE_CLOTHES
 
 /datum/surgery_operation/basic/dissection/state_check(mob/living/patient)
 	return has_surgery_state(patient, SURGERY_SKIN_OPEN) && !HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT) && patient.stat == DEAD

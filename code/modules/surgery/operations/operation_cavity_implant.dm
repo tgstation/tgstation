@@ -1,6 +1,7 @@
 /datum/surgery_operation/limb/cavity_implant
 	name = "cavity implant"
 	desc = "Implant an item into a patient's body cavity."
+	operation_flags = OPERATION_NOTABLE
 	implements = list(
 		/obj/item = 1,
 	)

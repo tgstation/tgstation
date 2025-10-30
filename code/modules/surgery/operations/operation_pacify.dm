@@ -2,7 +2,7 @@
 	name = "pacification"
 	desc = "Remove aggressive tendencies from a patient's brain."
 	rnd_desc = "A surgical procedure which permanently inhibits the aggression center of the brain, making the patient unwilling to cause direct harm."
-	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
+	operation_flags = OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NOTABLE
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_SCREWDRIVER = 2.85,

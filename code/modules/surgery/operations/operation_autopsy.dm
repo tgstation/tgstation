@@ -6,7 +6,7 @@
 	time = 10 SECONDS
 	success_sound = 'sound/machines/printer.ogg'
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	operation_flags = OPERATION_MORBID
+	operation_flags = OPERATION_MORBID | OPERATION_IGNORE_CLOTHES
 
 /datum/surgery_operation/limb/autopsy/get_default_radial_image()
 	return image(/obj/item/autopsy_scanner)

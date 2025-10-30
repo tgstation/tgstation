@@ -2,6 +2,7 @@
 	name = "augment limb"
 	rnd_name = "Cybernetic Augmentation"
 	desc = "Replace a patient's limb with a robotic or prosthetic one."
+	operation_flags = OPERATION_NOTABLE
 	implements = list(
 		/obj/item/bodypart = 1,
 	)

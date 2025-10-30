@@ -2,6 +2,7 @@
 	name = "implant removal"
 	desc = "Attempt to find and remove an implant from a patient. \
 		Any implant found will be destroyed unless an implant case is held or nearby."
+	operation_flags = OPERATION_NOTABLE
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1.5,

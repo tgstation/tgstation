@@ -2,7 +2,7 @@
 /datum/surgery_operation/limb/organ_manipulation
 	name = "organ manipulation"
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation
-	operation_flags = OPERATION_MORBID
+	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	/// Radial slice datums for every organ type we can manipulate
 	VAR_PRIVATE/list/cached_organ_manipulation_options

@@ -4,6 +4,7 @@
 	name = "repair organ"
 	desc = "Repair a patient's damaged organ."
 	required_organ_flag = ~ORGAN_ROBOTIC
+	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	/// What % damage do we heal the organ to on success
 	/// Note that 0% damage = 100% health
 	var/heal_to_percent = 0.6
@@ -46,7 +47,6 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	target_type = /obj/item/organ/lungs
 	failure_damage_percent = 0.1
 
@@ -109,7 +109,6 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	target_type = /obj/item/organ/liver
 	heal_to_percent = 0.1
 	failure_damage_percent = 0.15
@@ -173,7 +172,6 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	target_type = /obj/item/organ/heart
 
 /datum/surgery_operation/organ/repair/coronary_bypass/on_preop(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -238,7 +236,6 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	target_type = /obj/item/organ/stomach
 	heal_to_percent = 0.2
 	failure_damage_percent = 0.15
@@ -297,6 +294,7 @@
 	name = "ear surgery"
 	rnd_name = "Ototomy (Ear surgery)" // source: i made it up
 	desc = "Repair a patient's damaged ears to restore hearing."
+	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
 		TOOL_SCREWDRIVER = 2.25,
@@ -364,6 +362,7 @@
 	name = "eye surgery"
 	rnd_name = "Octotomy (Eye Surgery)" // source: i made it up
 	desc = "Repair a patient's damaged eyes to restore vision."
+	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
 		TOOL_SCREWDRIVER = 2.25,
@@ -444,7 +443,7 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE | OPERATION_LOOPING
+	operation_flags = parent_type::operation_flags | OPERATION_LOOPING
 	target_type = /obj/item/organ/brain
 	heal_to_percent = 0.25
 	failure_damage_percent = 0.3

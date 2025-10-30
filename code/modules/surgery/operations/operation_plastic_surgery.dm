@@ -7,7 +7,7 @@
 		TOOL_WIRECUTTER = 2.85,
 	)
 	time = 6.4 SECONDS
-	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD
+	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 

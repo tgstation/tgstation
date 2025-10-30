@@ -9,7 +9,7 @@
 		TOOL_SCREWDRIVER = 2.85,
 		/obj/item/pen = 6.67,
 	)
-	operation_flags = OPERATION_LOCKED
+	operation_flags = OPERATION_LOCKED | OPERATION_NOTABLE
 	time = 20 SECONDS
 	target_type = /obj/item/organ/wings/moth
 

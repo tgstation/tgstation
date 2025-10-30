@@ -2,6 +2,7 @@
 	name = "excise excess fat"
 	rnd_name = "Lipoplasty"
 	desc = "Remove excess fat from a patient's body."
+	operation_flags = OPERATION_NOTABLE | OPERATION_AFFECTS_MOOD
 	implements = list(
 		TOOL_SAW = 1,
 		TOOL_SCALPEL = 1.25,
@@ -11,6 +12,7 @@
 		/obj/item/knife = 3.33,
 		/obj/item = 5,
 	)
+	time = 6.4 SECONDS
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	preop_sound = list(
 		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',

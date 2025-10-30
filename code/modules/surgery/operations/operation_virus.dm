@@ -12,7 +12,7 @@
 	time = 10 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
-	operation_flags = OPERATION_MORBID | OPERATION_LOCKED
+	operation_flags = OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NOTABLE
 
 	var/list/required_chems = list(
 		/datum/reagent/medicine/spaceacillin,

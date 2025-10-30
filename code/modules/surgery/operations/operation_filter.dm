@@ -5,6 +5,7 @@
 	implements = list(/obj/item/blood_filter = 1)
 	time = 2.5 SECONDS
 	operation_flags = OPERATION_LOOPING
+	required_bodytype = ~BODYTYPE_ROBOTIC
 	success_sound = 'sound/machines/card_slide.ogg'
 
 /datum/surgery_operation/limb/filter_blood/get_default_radial_image()
@@ -14,6 +15,8 @@
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
+	if(HAS_TRAIT(limb.owner, TRAIT_HUSK))
 		return FALSE
 	return TRUE
 
@@ -66,3 +69,7 @@
 			return TRUE
 
 	return FALSE
+
+/datum/surgery_operation/limb/filter_blood/mechanic
+	name = "purge hydraulics"
+	required_bodytype = BODYTYPE_ROBOTIC

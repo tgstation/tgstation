@@ -105,7 +105,7 @@
 #define OPERATION_ALWAYS_FAILABLE (1<<7)
 /// If set, the operation will ignore clothing when checking for access to the target body part.
 #define OPERATION_IGNORE_CLOTHES (1<<8)
-/// This operation should be prioritized as the next step in a surgery sequence
+/// This operation should be prioritized as the next step in a surgery sequence. (In the operating computer it will flash red)
 #define OPERATION_PRIORITY_NEXT_STEP (1<<9)
 
 DEFINE_BITFIELD(operation_flags, list(

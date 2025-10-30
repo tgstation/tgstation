@@ -8,7 +8,7 @@
 		/obj/item/melee/baton/security = 1.33,
 		/obj/item/gun/energy = 1.67,
 	)
-	operation_flags = OPERATION_MORBID
+	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
 	time = 5 SECONDS
 	preop_sound = list(
 		/obj/item/shockpaddles = 'sound/machines/defib/defib_charge.ogg',

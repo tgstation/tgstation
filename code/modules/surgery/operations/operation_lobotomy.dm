@@ -3,7 +3,7 @@
 	rnd_name = "Lobotomy"
 	desc = "Repair most of a patient's brain traumas, with the risk of causing new permanent traumas."
 	rnd_desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
-	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED
+	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED | OPERATION_NOTABLE
 	implements = list(
 		TOOL_SCALPEL = 1.15,
 		/obj/item/melee/energy/sword = 0.55,
