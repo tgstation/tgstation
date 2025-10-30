@@ -1,4 +1,4 @@
-#define OPERATION_NEW_NAME OPERATION_NEW_NAME
+#define OPERATION_NEW_NAME "chosen_name"
 
 /datum/surgery_operation/limb/plastic_surgery
 	name = "plastic surgery"
