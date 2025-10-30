@@ -76,7 +76,7 @@
 /// Callback for checking if the surgery radial can be kept open
 /mob/living/proc/surgery_check(obj/item/tool)
 	PRIVATE_PROC(TRUE)
-	if(!is_holding(tool))
+	if(tool != get_active_held_item())
 		return FALSE
 	return TRUE
 
