@@ -15,7 +15,10 @@
 		/obj/item/knife/butcher = 4,
 	)
 	time = 6.4 SECONDS
-	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	preop_sound = list(
+		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',
+		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',
+	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 
 /datum/surgery_operation/limb/amputate/get_recommended_tool()
@@ -89,7 +92,10 @@
 		TOOL_SCALPEL = 4,
 	)
 	time = 3 SECONDS
-	preop_sound = 'sound/items/handling/surgery/saw.ogg'
+	preop_sound = list(
+		/obj/item/circular_saw = 'sound/items/handling/surgery/saw.ogg',
+		/obj/item = 'sound/items/weapons/bladeslice.ogg',
+	)
 	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
 
 /datum/surgery_operation/limb/amputate/mechanic/state_check(obj/item/bodypart/limb)

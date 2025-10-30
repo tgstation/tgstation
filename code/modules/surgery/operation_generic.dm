@@ -29,7 +29,7 @@
 /datum/surgery_operation/limb/incise_skin/state_check(obj/item/bodypart/limb)
 	if(limb.biological_state & biostate_blacklist)
 		return FALSE
-	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT))
+	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
 		return FALSE
 	return TRUE
 
@@ -128,9 +128,9 @@
 	return image(/obj/item/cautery)
 
 /datum/surgery_operation/limb/close_skin/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
 		return FALSE
-	if(INNATELY_LACKING_SKIN(limb))
+	if(!LIMB_HAS_SKIN(limb))
 		return FALSE
 	return TRUE
 
@@ -215,7 +215,7 @@
 /datum/surgery_operation/limb/unclamp_bleeders/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_VESSELS_CLAMPED))
 		return FALSE
-	if(INNATELY_LACKING_VESSELS(limb))
+	if(!LIMB_HAS_VESSELS(limb))
 		return FALSE
 	return TRUE
 
@@ -324,7 +324,7 @@
 		return FALSE
 	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
 		return FALSE
-	if(INNATELY_LACKING_BONES(limb))
+	if(!LIMB_HAS_BONES(limb))
 		return FALSE
 	return TRUE
 

@@ -2,7 +2,6 @@ import '../styles/interfaces/OperatingComputer.scss';
 import { useState } from 'react';
 import {
   AnimatedNumber,
-  BlockQuote,
   Box,
   Button,
   Input,
@@ -12,10 +11,9 @@ import {
   Section,
   Stack,
   Tabs,
-  Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-import { capitalizeFirst, createSearch } from 'tgui-core/string';
+import { capitalizeAll, capitalizeFirst, createSearch } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
@@ -50,12 +48,19 @@ const damageTypes: damageType[] = [
   },
 ];
 
+enum ComputerTabs {
+  PatientState = 1,
+  OperationCatalog = 2,
+  Experiments = 3,
+}
+
 export const OperatingComputer = () => {
   const [tab, setTab] = useSharedState('tab', 1);
+  const [searchText, setSearchText] = useState('');
 
   return (
     <Window
-      width={tab === 1 ? 345 : 415}
+      width={tab === ComputerTabs.PatientState ? 345 : 415}
       height={610}
       theme="operating_computer"
     >
@@ -63,21 +68,37 @@ export const OperatingComputer = () => {
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>
-              <Tabs.Tab selected={tab === 1} onClick={() => setTab(1)}>
+              <Tabs.Tab
+                selected={tab === ComputerTabs.PatientState}
+                onClick={() => setTab(1)}
+              >
                 Patient State
               </Tabs.Tab>
-              <Tabs.Tab selected={tab === 2} onClick={() => setTab(2)}>
+              <Tabs.Tab
+                selected={tab === ComputerTabs.OperationCatalog}
+                onClick={() => setTab(2)}
+              >
                 Operation Catalog
               </Tabs.Tab>
-              <Tabs.Tab selected={tab === 3} onClick={() => setTab(3)}>
+              <Tabs.Tab
+                selected={tab === ComputerTabs.Experiments}
+                onClick={() => setTab(3)}
+              >
                 Experiments
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {tab === 1 && <PatientStateView />}
-            {tab === 2 && <SurgeryProceduresView />}
-            {tab === 3 && <ExperimentView />}
+            {tab === ComputerTabs.PatientState && (
+              <PatientStateView setTab={setTab} setSearchText={setSearchText} />
+            )}
+            {tab === ComputerTabs.OperationCatalog && (
+              <SurgeryProceduresView
+                searchText={searchText}
+                setSearchText={setSearchText}
+              />
+            )}
+            {tab === ComputerTabs.Experiments && <ExperimentView />}
           </Stack.Item>
           <Stack.Item textAlign="right" color="label" fontSize="0.7em">
             <Section>
@@ -129,8 +150,40 @@ type Data = {
   experiments: ExperimentData[];
 };
 
-const PatientStateView = () => {
+function formatSurgeryName(
+  operation: OperationData,
+  catalog: boolean,
+): { name: string; tool: string; true_name?: string } {
+  // operation names may be "make incision", "lobotomy", or "disarticulation (amputation)"
+  const { name, tool_rec } = operation;
+  const parenthesis = name.indexOf('(');
+  if (parenthesis === -1) {
+    return { name: capitalizeFirst(name), tool: tool_rec };
+  }
+  const in_parenthesis = name.slice(parenthesis + 1, name.indexOf(')')).trim();
+  if (!catalog) {
+    return {
+      name: capitalizeFirst(in_parenthesis),
+      tool: tool_rec,
+    };
+  }
+  const out_parenthesis = capitalizeFirst(name.slice(0, parenthesis).trim());
+  return {
+    name: capitalizeFirst(out_parenthesis),
+    tool: tool_rec,
+    true_name: capitalizeFirst(in_parenthesis),
+  };
+}
+
+type PatientStateViewProps = {
+  setTab: (tab: number) => void;
+  setSearchText: (text: string) => void;
+};
+
+const PatientStateView = (props: PatientStateViewProps) => {
   const { act, data } = useBackend<Data>();
+  const { setTab, setSearchText } = props;
+
   const { has_table, patient, target_zone, surgeries } = data;
   if (!has_table) {
     return (
@@ -287,23 +340,24 @@ const PatientStateView = () => {
                       ? true
                       : operation.tool_rec.includes(filterByTool),
                   )
-                  .map((operation) => (
-                    <Stack.Item key={operation.name}>
-                      <Tooltip content={operation.desc}>
-                        <Box
-                          inline
-                          style={{
-                            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+                  .map((operation) => {
+                    const { name, tool } = formatSurgeryName(operation, false);
+                    return (
+                      <Stack.Item key={operation.name}>
+                        <Button
+                          fluid
+                          disabled={!operation.show_in_list}
+                          tooltip={operation.desc}
+                          onClick={() => {
+                            setTab(ComputerTabs.OperationCatalog);
+                            setSearchText(operation.name);
                           }}
                         >
-                          -{' '}
-                          {capitalizeFirst(
-                            `${operation.name} (${operation.tool_rec})`,
-                          )}
-                        </Box>
-                      </Tooltip>
-                    </Stack.Item>
-                  ))
+                          {`- ${name} (${tool})`}
+                        </Button>
+                      </Stack.Item>
+                    );
+                  })
               )}
             </Stack>
           </Section>
@@ -313,11 +367,15 @@ const PatientStateView = () => {
   );
 };
 
-const SurgeryProceduresView = (props) => {
+type SurgeryProceduresViewProps = {
+  searchText: string;
+  setSearchText: (text: string) => void;
+};
+
+const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
   const { data } = useBackend<Data>();
   const { surgeries } = data;
-
-  const [searchText, setSearchText] = useState('');
+  const { searchText, setSearchText } = props;
   const [sortType, setSortType] = useState<'default' | 'name' | 'tool'>(
     'default',
   );
@@ -356,6 +414,7 @@ const SurgeryProceduresView = (props) => {
           <Button
             width="75px"
             icon="sort"
+            tooltip="Cycle between sorting methods."
             onClick={() =>
               setSortType(
                 sortType === 'default'
@@ -369,7 +428,7 @@ const SurgeryProceduresView = (props) => {
             {capitalizeFirst(sortType)}
           </Button>
           <Input
-            width="150px"
+            width="200px"
             placeholder="Search..."
             value={searchText}
             onChange={setSearchText}
@@ -377,16 +436,42 @@ const SurgeryProceduresView = (props) => {
         </>
       }
     >
-      {surgeryList.map((surgery) => (
-        <Section
-          title={capitalizeFirst(surgery.name)}
-          key={surgery.name}
-          level={2}
-          buttons={<Box italic>{capitalizeFirst(surgery.tool_rec)}</Box>}
-        >
-          <BlockQuote>{surgery.desc}</BlockQuote>
-        </Section>
-      ))}
+      {surgeryList.map((surgery) => {
+        const { name, tool, true_name } = formatSurgeryName(surgery, true);
+        return (
+          <Stack vertical key={surgery.name} pb={2}>
+            <Stack.Item>
+              <Stack align="center">
+                <Stack.Item bold>{name}</Stack.Item>
+                {!!true_name && (
+                  <Stack.Item italic fontSize="0.9rem">
+                    {`(${true_name})`}
+                  </Stack.Item>
+                )}
+                <Stack.Item grow />
+                <Stack.Item italic textAlign="right" fontSize="0.9rem">
+                  {capitalizeAll(tool)}
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+            <Stack.Item>
+              <Box
+                style={{
+                  borderStyle: 'solid',
+                  borderBottom: '0',
+                  borderRight: '0',
+                  borderWidth: '2px',
+                  paddingTop: '2px',
+                  paddingLeft: '4px',
+                }}
+                color="label"
+              >
+                {surgery.desc}
+              </Box>
+            </Stack.Item>
+          </Stack>
+        );
+      })}
     </Section>
   );
 };

@@ -111,6 +111,16 @@ DEFINE_BITFIELD(surgery_state, list(
 	"Prosthetic is unsecured" = SURGERY_PROSTHETIC_UNSECURED \
 )
 
+// Yes these are glorified bitflag manipulation macros, they're meant to make reading surgical operations a bit easier
+/// Checks if the input surgery state has all of the bitflags passed
+#define HAS_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)) == (check_state))
+/// Checks if the input surgery state has any of the bitflags passed
+#define HAS_ANY_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)))
+/// Checks if the limb has all of the bitflags passed
+#define LIMB_HAS_SURGERY_STATE(limb, check_state) HAS_SURGERY_STATE(limb?.surgery_state, check_state)
+/// Checks if the limb has any of the bitflags passed
+#define LIMB_HAS_ANY_SURGERY_STATE(limb, check_state) HAS_ANY_SURGERY_STATE(limb?.surgery_state, check_state)
+
 /// All states that concern itself with the skin
 #define SURGERY_SKIN_STATES (SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
 /// All states that concern itself with the blood vessels
@@ -126,9 +136,15 @@ DEFINE_BITFIELD(surgery_state, list(
 /// These states are automatically cleared when the surgery is closed for ease of use
 #define SURGERY_UNSET_ON_CLOSE (SURGERY_SKIN_STATES|SURGERY_VESSEL_STATES|SURGERY_BONE_STATES|SURGERY_ORGAN_STATES)
 
+/// Biological state that has some kind of skin that can be cut.
+#define BIOSTATE_HAS_SKIN (BIO_FLESH|BIO_METAL)
 /// Checks if a bodypart lacks both flesh and metal, meaning it has no skin to cut.
-#define INNATELY_LACKING_SKIN(limb) (!(BIO_FLESH|BIO_METAL))
+#define LIMB_HAS_SKIN(limb) (limb?.biological_state & BIOSTATE_HAS_SKIN)
+/// Biological state that has some kind of bones that can be sawed.
+#define BIOSTATE_HAS_BONES (BIO_BONE|BIO_METAL)
 /// Checks if a bodypart lacks both bone and metal, meaning it has no bones to saw.
-#define INNATELY_LACKING_BONES(limb) (!(BIO_BONE|BIO_METAL))
+#define LIMB_HAS_BONES(limb) (limb?.biological_state & BIOSTATE_HAS_BONES)
+/// Biological state that has some kind of vessels that can be clamped.
+#define BIOSTATE_HAS_VESSELS (BIO_BLOODED|BIO_WIRED)
 /// Checks if a bodypart lacks both blood and wires, meaning it has no vessels to manipulate.
-#define INNATELY_LACKING_VESSELS(limb) (!(BIO_BLOODED|BIO_WIRED))
+#define LIMB_HAS_VESSELS(limb) (limb?.biological_state & BIOSTATE_HAS_VESSELS)

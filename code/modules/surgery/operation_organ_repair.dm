@@ -310,7 +310,7 @@
 /datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/organ)
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
-	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))
+	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(organ.bodypart_owner))
 		return FALSE
 	return TRUE
 
@@ -375,7 +375,7 @@
 /datum/surgery_operation/organ/repair/eyes/state_check(obj/item/organ/organ)
 	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
 		return FALSE
-	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(organ.bodypart_owner))
+	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(organ.bodypart_owner))
 		return FALSE
 	return TRUE
 

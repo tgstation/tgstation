@@ -31,7 +31,7 @@
 
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
 	// We allow tend wounds with even just cut skin
-	if(!has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT))
+	if(!has_any_surgery_state(patient, SURGERY_SKIN_STATES))
 		return FALSE
 	// Nothing to treat
 	if(patient.getBruteLoss() <= 0 && patient.getFireLoss() <= 0)

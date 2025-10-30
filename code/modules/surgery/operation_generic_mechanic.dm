@@ -23,7 +23,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_incision/state_check(obj/item/bodypart/limb)
-	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
+	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES)
 
 /datum/surgery_operation/limb/mechanical_incision/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -95,10 +95,10 @@
 	return image(/obj/item/screwdriver)
 
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN))
+	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
 		return FALSE
 	// Nothing to repair, this is the limb's natural state
-	if(INNATELY_LACKING_SKIN(limb))
+	if(!LIMB_HAS_SKIN(limb))
 		return FALSE
 	return TRUE
 
@@ -204,7 +204,7 @@
 /datum/surgery_operation/limb/mechanic_wrench/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 		return FALSE
-	if(INNATELY_LACKING_BONES(limb))
+	if(!LIMB_HAS_BONES(limb))
 		return FALSE
 	return TRUE
 

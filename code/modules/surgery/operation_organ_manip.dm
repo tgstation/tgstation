@@ -237,7 +237,7 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
 	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
 		return FALSE
-	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && !INNATELY_LACKING_BONES(limb))
+	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(limb))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
