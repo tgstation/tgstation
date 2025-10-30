@@ -313,7 +313,6 @@
 	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT * 7)
 	force_unwielded = 12
 	force_wielded = 20
-	improvised_construction = FALSE
 	spear_leftovers = /obj/item/stack/sheet/bone
 
 /obj/item/spear/bonespear/add_headpike_component()
