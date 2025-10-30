@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Tox damage from allergic reactions is affected by tox damage modifiers"
-  - refactor: "Changed how allergic reactions to chem pause metabolism, report any oddities"

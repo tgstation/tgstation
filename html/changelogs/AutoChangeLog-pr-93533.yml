@@ -1,5 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - qol: "Agent IDs autofill the user's current age if they have one"
-  - bugfix: "Agent IDs can display custom jobs upon close examination"
