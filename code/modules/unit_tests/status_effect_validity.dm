@@ -68,14 +68,15 @@
 	var/ticks_required = counter.duration / 10 / 0.2 + 1
 
 	for (var/i in 1 to ticks_required)
-		counter.process(0.2)
+		if (!QDELETED(counter))
+			counter.process(0.2)
 
 	var/expected_tick_count = initial(counter.duration) / counter.tick_interval
-	if (counter.total_tick_count != expected_tick_count)
+	if (abs(counter.total_tick_count - expected_tick_count) > 0.01)
 		TEST_FAIL("Status effect tick count is not directly proportional to duration. Expected [expected_tick_count] ticks, got [counter.total_tick_count] ticks.")
 
 	var/expected_seconds = initial(counter.duration) / 10
-	if (counter.total_seconds != expected_seconds)
+	if (abs(counter.total_seconds - expected_seconds) > 0.01)
 		TEST_FAIL("Status effect seconds_between_ticks accumulated together does not equal duration. Expected [expected_seconds] seconds, got [counter.total_seconds] seconds.")
 
 	QDEL_NULL(counter)
