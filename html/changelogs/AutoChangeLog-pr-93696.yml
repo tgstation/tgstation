@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - server: "renamed feature_human_ears and feature_human_tail to feature_cat_ears and feature_cat_tail respectively"
