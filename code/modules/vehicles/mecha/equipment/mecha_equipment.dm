@@ -271,6 +271,5 @@
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return FALSE
 
-/// Returns the action type to use for this equipment. Override for custom action buttons.
-/obj/item/mecha_parts/mecha_equipment/proc/get_action_type()
-	return /datum/action/vehicle/sealed/mecha/equipment
+/// the action type to use for this equipment. Override for custom action buttons.
+/obj/item/mecha_parts/mecha_equipment/var/action_type = /datum/action/vehicle/sealed/mecha/equipment

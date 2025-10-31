@@ -207,23 +207,23 @@
 		return
 	if(!istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))
 		return
-	
+
 	var/obj/item/mecha_parts/mecha_equipment/ejector/cargo_hold = equipment
-	
+
 	// Right click - show radial menu
 	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
 		var/list/cargo_radial = list()
 		for(var/atom/movable/cargo_item in cargo_hold.contents)
 			cargo_radial[cargo_item] = cargo_item.appearance
-		
+
 		if(!length(cargo_radial))
 			chassis.balloon_alert(owner, "cargo hold empty!")
 			return
-		
+
 		var/atom/movable/picked_item = show_radial_menu(owner, chassis, cargo_radial, require_near = TRUE)
 		if(!picked_item || !(picked_item in cargo_hold.contents))
 			return
-		
+
 		to_chat(chassis.occupants, "[icon2html(cargo_hold, chassis.occupants)][span_notice("You unload [picked_item].")]")
 		picked_item.forceMove(cargo_hold.drop_location())
 		if(picked_item == chassis.ore_box)
@@ -231,7 +231,7 @@
 		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		cargo_hold.log_message("Unloaded [picked_item]. Cargo compartment capacity: [cargo_hold.cargo_capacity - cargo_hold.contents.len]", LOG_MECHA)
 		return
-	
+
 	// Left click - dispose first item
 	if(cargo_hold.contents.len)
 		var/atom/movable/first_item = cargo_hold.contents[1]
@@ -248,7 +248,7 @@
 	name = "Extinguisher"
 
 /datum/action/vehicle/sealed/mecha/equipment/extinguisher_action/set_equipment(passed_equipment)
-	..()
+	. = ..()
 	name = "[equipment.name]"
 
 /datum/action/vehicle/sealed/mecha/equipment/extinguisher_action/Trigger(mob/clicker, trigger_flags)
@@ -256,17 +256,17 @@
 		return
 	if(!istype(equipment, /obj/item/mecha_parts/mecha_equipment/extinguisher))
 		return
-	
+
 	var/obj/item/mecha_parts/mecha_equipment/extinguisher/extinguisher = equipment
-	
+
 	// Right click - refill
 	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
 		extinguisher.attempt_refill(owner)
 		return
-	
+
 	// Left click - spray
 	if(extinguisher.reagents.total_volume < extinguisher.required_amount)
 		chassis.balloon_alert(owner, "not enough water!")
 		return
-	
+
 	extinguisher.spray_extinguisher(owner)

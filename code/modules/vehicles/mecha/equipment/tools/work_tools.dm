@@ -162,6 +162,7 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	mech_flags = ALL
 	can_be_triggered = TRUE
+	action_type = /datum/action/vehicle/sealed/mecha/equipment/extinguisher_action
 	///Minimum amount of reagent needed to activate.
 	var/required_amount = 80
 
@@ -222,9 +223,6 @@
 		if("refill")
 			attempt_refill(usr)
 			return TRUE
-
-/obj/item/mecha_parts/mecha_equipment/extinguisher/get_action_type()
-	return /datum/action/vehicle/sealed/mecha/equipment/extinguisher_action
 
 ///Maximum range the RCD can construct at.
 #define RCD_RANGE 3

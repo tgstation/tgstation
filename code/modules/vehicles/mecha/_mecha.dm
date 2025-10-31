@@ -451,10 +451,9 @@
  * Creates a new action, sets up the chassis and equipment references, and grants it to the mob.
  */
 /obj/vehicle/sealed/mecha/proc/grant_equipment_action(mob/occupant, obj/item/mecha_parts/mecha_equipment/equipment)
-	var/action_type = call(equipment, "get_action_type")()
-	var/datum/action/vehicle/sealed/mecha/equipment/action = new action_type // We cannot use grant_action_type_to_mob() because:
-	action.set_chassis(src) 									  			// 1. grant_action_type_to_mob() works with a single predefined action type
-	action.set_equipment(equipment) 							 		   // 2. We create unique action instances for each equipment with specific equipment references
+	var/datum/action/vehicle/sealed/mecha/equipment/action = new equipment.action_type // We cannot use grant_action_type_to_mob() because:
+	action.set_chassis(src) 									  					  // 1. grant_action_type_to_mob() works with a single predefined action type
+	action.set_equipment(equipment) 							 					 // 2. We create unique action instances for each equipment with specific equipment references
 
 	action.Grant(occupant)
 	LAZYINITLIST(occupant_actions[occupant])
