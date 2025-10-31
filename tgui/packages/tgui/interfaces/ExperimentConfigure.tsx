@@ -27,6 +27,7 @@ export type ExperimentData = {
   progress: Stage[];
   ref: string;
   selected?: BooleanLike;
+  completed?: BooleanLike;
   tag: string;
 };
 

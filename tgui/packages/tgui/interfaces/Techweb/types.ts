@@ -1,4 +1,5 @@
 import type { BooleanLike } from 'tgui-core/react';
+import type { ExperimentData } from '../ExperimentConfigure';
 
 type StoredDesigns = Record<string, 1>;
 
@@ -8,17 +9,6 @@ type DesignDisk = {
 
 type TechDisk = {
   stored_research: StoredDesigns;
-};
-
-type ProgressTuple = [string, string, number, number];
-
-type Experiment = {
-  name: string;
-  description: string;
-  tag: string;
-  progress: ProgressTuple[];
-  completed: BooleanLike;
-  performance_hint: string;
 };
 
 // Base node type
@@ -56,7 +46,7 @@ type StaticData = {
 
 export type TechWebData = {
   d_disk: DesignDisk | null;
-  experiments: Record<string, Experiment>;
+  experiments: Record<string, ExperimentData>;
   locked: BooleanLike;
   nodes: TechwebNode[];
   point_types_abbreviations: Record<string, string>;

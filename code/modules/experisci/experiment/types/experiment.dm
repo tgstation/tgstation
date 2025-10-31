@@ -113,6 +113,7 @@
 		"description" = description,
 		"tag" = exp_tag,
 		"progress" = check_progress(),
+		"completed" = completed,
 		"performance_hint" = performance_hint,
 		"ref" = REF(src)
 	)
