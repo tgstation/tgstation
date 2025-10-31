@@ -1,0 +1,4 @@
+author: "Melber"
+delete-after: True
+changes:
+  - bugfix: "Vampires suck again, I mean, they can suck any bloodtype again"
