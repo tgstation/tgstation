@@ -601,6 +601,20 @@
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
+"fh" = (
+/obj/structure/cable/multilayer,
+/obj/structure/cable/layer1,
+/obj/structure/safe/floor,
+/obj/item/sticker/syndicate/apc,
+/obj/item/grenade/empgrenade,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/item/reagent_containers/condiment/donksauce,
+/mob/living/basic/cybersun_ai_core{
+	donk_ai_master = 1
+	},
+/turf/open/floor/plating/reinforced,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "fk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 4
@@ -869,6 +883,18 @@
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
+"hK" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/safe,
+/obj/item/mail/junkmail,
+/obj/item/market_uplink/blackmarket,
+/obj/item/clothing/suit/armor/bulletproof{
+	desc = "A Type II heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	},
+/obj/item/coin/gold,
+/obj/item/vending_refill/donksnackvendor,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/public)
 "hL" = (
 /obj/structure/cable/layer1,
 /obj/structure/sign/poster/official/moth_epi/directional/north,
@@ -1183,20 +1209,6 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
-"kk" = (
-/obj/structure/cable/multilayer,
-/obj/structure/cable/layer1,
-/obj/structure/safe/floor,
-/obj/item/sticker/syndicate/apc,
-/obj/item/grenade/empgrenade,
-/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
-/obj/item/ai_module/law/core/full/cybersun,
-/obj/item/reagent_containers/condiment/donksauce,
-/mob/living/basic/cybersun_ai_core{
-	donk_ai_master = 1
-	},
-/turf/open/floor/plating/reinforced,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "kl" = (
 /mob/living/basic/viscerator,
 /obj/effect/turf_decal/bot_red,
@@ -1427,12 +1439,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"mh" = (
-/obj/item/circuitboard/machine/vendatray{
-	pixel_y = 15
-	},
-/turf/open/floor/carpet/orange,
-/area/ruin/space/has_grav/hauntedtradingpost/public)
 "mn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/machinery/airalarm/directional/south,
@@ -1563,10 +1569,6 @@
 /obj/item/food/deadmouse,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"nm" = (
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/carpet/donk,
-/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "nu" = (
 /obj/structure/reagent_dispensers/plumbed{
 	dir = 8
@@ -3107,6 +3109,16 @@
 	},
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
+"AX" = (
+/obj/structure/cable/layer1,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/supplied/protect_station{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/machinery/light/red/dim/directional/east,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Bb" = (
 /obj/machinery/navbeacon{
 	location = "cybersun_ai_core"
@@ -3456,16 +3468,6 @@
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
-"EG" = (
-/obj/structure/cable/layer1,
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/law/supplied/protect_station{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/machinery/light/red/dim/directional/east,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "EK" = (
 /obj/item/coin/plastic{
 	pixel_y = -9;
@@ -4173,18 +4175,6 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
-"Kw" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/safe,
-/obj/item/mail/junkmail,
-/obj/item/market_uplink/blackmarket,
-/obj/item/clothing/suit/armor/bulletproof{
-	desc = "A Type II heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
-	},
-/obj/item/coin/gold,
-/obj/item/vending_refill/donksnackvendor,
-/turf/open/floor/catwalk_floor/iron_dark,
-/area/ruin/space/has_grav/hauntedtradingpost/public)
 "KC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
@@ -4347,6 +4337,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
+"LI" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/carpet/donk,
+/area/ruin/space/has_grav/hauntedtradingpost/employees)
 "LL" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/orange,
@@ -6751,7 +6745,7 @@ tl
 Ht
 uZ
 eE
-mh
+Ip
 He
 TY
 RX
@@ -6785,11 +6779,11 @@ iv
 iv
 ot
 XW
-kk
+fh
 MR
 tl
 YR
-nm
+LI
 aD
 Of
 tl
@@ -7017,7 +7011,7 @@ co
 nZ
 FT
 kI
-Kw
+hK
 vY
 bZ
 iC
@@ -7047,7 +7041,7 @@ hV
 vx
 tm
 Gg
-EG
+AX
 bu
 cv
 gb

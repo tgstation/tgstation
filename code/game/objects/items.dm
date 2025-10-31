@@ -975,7 +975,7 @@
 
 /obj/item/proc/update_slot_icon()
 	SIGNAL_HANDLER
-	if(!ismob(loc))
+	if(!ismob(loc) || QDELETED(loc))
 		return
 	var/mob/owner = loc
 	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))
