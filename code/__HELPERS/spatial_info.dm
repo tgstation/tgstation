@@ -218,9 +218,15 @@
 /// Modifies input list.
 /proc/mob_only_listeners(list/atom/movable/hearers)
 	RETURN_TYPE(/list/mob)
-	for(var/hearer_index in 1 to hearers.len)
+
+	if(isnull(hearers) || !hearers.len)
+		return list()
+
+	var/hearers_length = hearers.len
+	for(var/hearer_index in 1 to hearers_length)
 		var/atom/movable/hearer = hearers[hearer_index]
 		hearers[hearer_index] = hearer.get_listening_mob()
+
 	list_clear_nulls(hearers)
 	return hearers
 
