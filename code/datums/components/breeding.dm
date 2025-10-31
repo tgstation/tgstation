@@ -51,7 +51,7 @@
 	if(source.combat_mode)
 		return
 
-	if(!ismob(target)
+	if(!ismob(target))
 		return
 
 	if(source.client || target.client)
