@@ -57,10 +57,10 @@
 
 		options[all_healing] = list(
 			"[OPERATION_ACTION]" = "heal",
-			"brute_heal" = healing_amount,
-			"burn_heal" = healing_amount,
-			"brute_multiplier" = healing_multiplier,
-			"burn_multiplier" = healing_multiplier,
+			"[OPERATION_BRUTE_HEAL]" = healing_amount,
+			"[OPERATION_BURN_HEAL]" = healing_amount,
+			"[OPERATION_BRUTE_MULTIPLIER]" = healing_multiplier,
+			"[OPERATION_BURN_MULTIPLIER]" = healing_multiplier,
 		)
 
 	if((can_heal & BRUTE_SURGERY) && patient.getBruteLoss() > 0)
@@ -74,8 +74,8 @@
 
 		options[brute_healing] = list(
 			"[OPERATION_ACTION]" = "heal",
-			"brute_heal" = healing_amount,
-			"brute_multiplier" = healing_multiplier,
+			"[OPERATION_BRUTE_HEAL]" = healing_amount,
+			"[OPERATION_BRUTE_MULTIPLIER]" = healing_multiplier,
 		)
 
 	if((can_heal & BURN_SURGERY) && patient.getFireLoss() > 0)
@@ -89,8 +89,8 @@
 
 		options[burn_healing] = list(
 			"[OPERATION_ACTION]" = "heal",
-			"burn_heal" = healing_amount,
-			"burn_multiplier" = healing_multiplier,
+			"[OPERATION_BURN_HEAL]" = healing_amount,
+			"[OPERATION_BURN_MULTIPLIER]" = healing_multiplier,
 		)
 
 	return options

@@ -250,6 +250,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Snowflake checks for surgeries which need many interconnected conditions to be met
  */
 /datum/surgery_operation/proc/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+	PROTECTED_PROC(TRUE)
 	return TRUE
 
 /**
@@ -260,6 +261,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * 1 = standard quality
  */
 /datum/surgery_operation/proc/get_tool_quality(tool = IMPLEMENT_HAND)
+	PROTECTED_PROC(TRUE)
 	if(!length(implements))
 		return 1
 	if(!isitem(tool))
@@ -289,12 +291,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Checks to see if this operation can be performed on the provided target
  */
 /datum/surgery_operation/proc/is_available(atom/movable/operating_on, body_zone)
+	PROTECTED_PROC(TRUE)
 	return TRUE
 
 /**
  * Specifically concerns itself with checking the operated movable's state to see if the operation can be performed
  */
 /datum/surgery_operation/proc/state_check(atom/movable/operating_on)
+	PROTECTED_PROC(TRUE)
 	return FALSE
 
 /**
@@ -302,6 +306,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * You can override this to add more specific checks, such as checking sharpness
  */
 /datum/surgery_operation/proc/tool_check(obj/item/tool)
+	PROTECTED_PROC(TRUE)
 	return TRUE
 
 /**
@@ -320,11 +325,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
 /datum/surgery_operation/proc/get_default_radial_image()
+	PROTECTED_PROC(TRUE)
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
 
 /// Helper to get a generic limb radial image based on body zone
 /datum/surgery_operation/proc/get_generic_limb_radial_image(body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	if(body_zone == BODY_ZONE_HEAD || body_zone == BODY_ZONE_CHEST || body_zone == BODY_ZONE_PRECISE_EYES || body_zone == BODY_ZONE_PRECISE_MOUTH)
 		return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_[body_zone]")
@@ -346,6 +353,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/add_radial_overlays(list/overlay_icons)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	if(!islist(overlay_icons))
 		overlay_icons = list(overlay_icons)
@@ -368,6 +376,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Collates all time modifiers for this operation and returns the final modifier
  */
 /datum/surgery_operation/proc/get_time_modifiers(atom/movable/operating_on, mob/living/surgeon, tool)
+	PROTECTED_PROC(TRUE)
 	var/total_mod = 1.0
 	total_mod *= get_tool_quality(tool) || 1.0
 	// Ignore alllll the penalties (but also all the bonuses)
@@ -383,6 +392,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Returns a time modifier for morbid operations
 /datum/surgery_operation/proc/get_morbid_modifier(mob/living/surgeon, obj/item/tool)
+	PROTECTED_PROC(TRUE)
 	if(!(operation_flags & OPERATION_MORBID))
 		return 1.0
 	if(!HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
@@ -394,6 +404,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Returns a time modifier based on the mob's status
 /datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient)
+	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
 	for(var/mod in patient.mob_surgery_speed_mods)
 		basemod *= mod
@@ -405,6 +416,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Gets the surgery speed modifier for a given mob, based off what sort of table/bed/whatever is on their turf.
 /datum/surgery_operation/proc/get_location_modifier(turf/operation_turf)
+	PROTECTED_PROC(TRUE)
 	// Technically this IS a typecache, just not the usual kind :3
 	// The order of the modifiers matter, latter entries override earlier ones
 	var/static/list/modifiers = zebra_typecacheof(list(
@@ -561,11 +573,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Return TRUE to continue
  */
 /datum/surgery_operation/proc/pre_preop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+	PROTECTED_PROC(TRUE)
 	return TRUE
 
 /// Used to display messages to the surgeon and patient
 /datum/surgery_operation/proc/display_results(mob/living/surgeon, mob/living/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PROTECTED_PROC(TRUE)
+
 	surgeon.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(target_detailed)
 		return
@@ -582,6 +597,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /// Display pain message to the target based on their traits and condition
 /datum/surgery_operation/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PROTECTED_PROC(TRUE)
+
 	if(!pain_message)
 		return
 
@@ -601,6 +618,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Plays a sound for the operation based on the tool used
 /datum/surgery_operation/proc/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
+	PROTECTED_PROC(TRUE)
 	if(!isitem(tool))
 		return
 
@@ -645,6 +663,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Updates a patient's mood based on the surgery state and their traits
 /datum/surgery_operation/proc/update_surgery_mood(mob/living/patient, surgery_state)
+	PROTECTED_PROC(TRUE)
 	if(!(operation_flags & OPERATION_AFFECTS_MOOD))
 		return
 
@@ -674,6 +693,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/start_operation(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
 
 	var/preop_time = world.time
 	var/patient = get_patient(operating_on)
@@ -691,6 +711,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Used to customize behavior when the operation starts
  */
 /datum/surgery_operation/proc/on_preop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+	PROTECTED_PROC(TRUE)
 	var/mob/living/patient = get_patient(operating_on)
 
 	display_results(
@@ -707,6 +728,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/success(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
 
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
@@ -720,6 +742,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Used to customize behavior when the operation is successful
  */
 /datum/surgery_operation/proc/on_success(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+	PROTECTED_PROC(TRUE)
 	var/mob/living/patient = get_patient(operating_on)
 
 	display_results(
@@ -736,6 +759,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/failure(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	PRIVATE_PROC(TRUE)
 
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_failed", 1, type)
@@ -753,6 +777,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * At its lowest, it will be just above 2.5 (the threshold for success), and can go up to infinity (theoretically)
  */
 /datum/surgery_operation/proc/on_failure(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+	PROTECTED_PROC(TRUE)
 	var/mob/living/patient = get_patient(operating_on)
 
 	var/screwedmessage = ""
@@ -917,3 +942,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	return TRUE
+
+/datum/surgery_operation/organ/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
+	if(isitem(tool) && (required_organ_flag & ORGAN_ROBOTIC))
+		var/obj/item/realtool = tool
+		realtool.play_tool_sound(operating_on)
+		return
+
+	return ..()
