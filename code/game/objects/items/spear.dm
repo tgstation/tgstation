@@ -98,7 +98,7 @@
 			throwforce = 21
 			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plasmaglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			icon_prefix = "spearplasma"
-			max_integrity = 220
+			modify_max_integrity(220)
 			wound_bonus = -10
 			force_unwielded = 11
 			force_wielded = 19
@@ -116,7 +116,7 @@
 			throw_range = 8
 			throw_speed = 5
 			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/titaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
-			max_integrity = 230
+			modify_max_integrity(230)
 			wound_bonus = -5
 			force_unwielded = 12
 			force_wielded = 20
@@ -136,7 +136,7 @@
 			throw_range = 9
 			throw_speed = 5
 			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plastitaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
-			max_integrity = 240
+			modify_max_integrity(240)
 			wound_bonus = 0
 			exposed_wound_bonus = 20
 			force_unwielded = 13
