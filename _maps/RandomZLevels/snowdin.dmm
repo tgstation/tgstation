@@ -5428,7 +5428,8 @@
 /area/awaymission/snowdin/post/cavern1)
 "un" = (
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/plating/snowed/cavern,
