@@ -73,6 +73,9 @@
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/patient_one = allocate(/mob/living/carbon/human/consistent)
 
+	patient_zero.set_body_position(LYING_DOWN)
+	patient_one.set_body_position(LYING_DOWN)
+
 	ADD_TRAIT(patient_zero, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 	ADD_TRAIT(patient_one, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 
