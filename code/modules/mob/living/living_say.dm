@@ -310,8 +310,12 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(isliving(speaker))
 				var/mob/living/living_speaker = speaker
 				var/mouth_hidden = living_speaker.is_mouth_covered() || HAS_TRAIT(living_speaker, TRAIT_FACE_COVERED)
-				if(!HAS_TRAIT(src, TRAIT_EMPATH) && mouth_hidden) // Can't see them speak if their mouth is covered or hidden, unless we're an empath
-					return FALSE
+				var/datum/component/empathy/empath_status = src.GetComponent(/datum/component/empathy)
+				if(mouth_hidden) // Can't see them speak if their mouth is covered or hidden, unless we're an empath
+					if(!empath_status)
+						return FALSE
+					if(empath_status && !empath_status.sense_whisper)
+						return FALSE
 
 			deaf_message = "[span_name("[speaker]")] [speaker.verb_whisper] something, but you are too far away to hear [speaker.p_them()]."
 

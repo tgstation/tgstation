@@ -198,39 +198,12 @@
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		. += span_smallnoticeital("[t_He] [t_is] emitting a gentle blue glow!") // this should be signalized
 
+	var/mob/living/living_user = user
+	. += get_empathy_examine_info(living_user)
 	if(just_sleeping)
 		. += span_notice("[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.")
-
 	else if(!appears_dead)
-		var/mob/living/living_user = user
 		if(src != user)
-			if(HAS_TRAIT(user, TRAIT_EMPATH))
-				if (combat_mode)
-					. += "[t_He] seem[p_s()] to be on guard."
-				if (getOxyLoss() >= 10)
-					. += "[t_He] seem[p_s()] winded."
-				if (getToxLoss() >= 10)
-					. += "[t_He] seem[p_s()] sickly."
-				if(mob_mood.sanity <= SANITY_DISTURBED)
-					. += "[t_He] seem[p_s()] distressed."
-					living_user.add_mood_event("empath", /datum/mood_event/sad_empath, src)
-				if(is_blind())
-					. += "[t_He] appear[p_s()] to be staring off into space."
-				if (HAS_TRAIT(src, TRAIT_DEAF))
-					. += "[t_He] appear[p_s()] to not be responding to noises."
-				if (bodytemperature > dna.species.bodytemp_heat_damage_limit)
-					. += "[t_He] [t_is] flushed and wheezing."
-				if (bodytemperature < dna.species.bodytemp_cold_damage_limit)
-					. += "[t_He] [t_is] shivering."
-				if(HAS_TRAIT(src, TRAIT_EVIL))
-					. += "[t_His] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_his] soul."
-					if(living_user.mind?.holy_role >= HOLY_ROLE_PRIEST)
-						. += span_warning("PERFECT FOR SMITING!!")
-					else if(!living_user.empath_seen_it)
-						living_user.empath_seen_it = TRUE
-						living_user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
-						living_user.set_jitter_if_lower(15 SECONDS)
-
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.holy_role && user != src)
 				. += "[t_He] [t_has] a holy aura about [t_him]."
 				living_user.add_mood_event("religious_comfort", /datum/mood_event/religiously_comforted)
@@ -640,6 +613,55 @@
 			age_text = "withering away"
 
 	return span_notice("[p_They()] appear[p_s()] to be [age_text].")
+
+/mob/living/proc/get_empathy_examine_info(mob/living/user)
+	. = list()
+	var/datum/component/empathy/empath_status = user.GetComponent(/datum/component/empathy)
+	if(empath_status)
+		if(stat == DEAD)
+			return
+		if(HAS_TRAIT(src, TRAIT_FAKEDEATH))
+			if(empath_status.sense_dead)
+				. += "Something about this dead body doesn't look right..."
+			else
+				return
+		if(user == src && !empath_status.self_empath)
+			return
+		var/t_They = p_They()
+		var/t_their = p_their()
+		var/t_Their = p_Their()
+		var/t_are = p_are()
+		var/info_counter = empath_status.visible_info
+		var/increment = 0
+		// This breaks the big number down into the multiple boolean values it represents in binary.
+		for(var/i in 1 to 9)
+			increment = 2 ** (9 - i)
+			if(info_counter >= increment)
+				info_counter -= increment
+				if(i == 1 && combat_mode)
+					. += "[t_They] seem[p_s()] to be on guard."
+				if(i == 2 && getOxyLoss() >= 10)
+					. += "[t_They] seem[p_s()] winded."
+				if(i == 3 && getToxLoss() >= 10)
+					. += "[t_They] seem[p_s()] sickly."
+				if(i == 4 && mob_mood.sanity <= SANITY_DISTURBED)
+					. += "[t_They] seem[p_s()] distressed."
+				if(i == 5 && is_blind())
+					. += "[t_They] appear[p_s()] to be staring off into space."
+				if(i == 6 && HAS_TRAIT(src, TRAIT_DEAF))
+					. += "[t_They] appear[p_s()] to not be responding to noises."
+				if(i == 7 && bodytemperature > get_body_temp_heat_damage_limit())
+					. += "[t_They] [t_are] flushed and wheezing."
+				if(i == 8 && bodytemperature < get_body_temp_cold_damage_limit())
+					. += "[t_They] [t_are] shivering."
+				if(i == 9 && HAS_TRAIT(src, TRAIT_EVIL))
+					. += "[t_Their] eyes radiate with a unfeeling, cold detachment. There is nothing but darkness within [t_their] soul."
+					if(user.mind?.holy_role >= HOLY_ROLE_PRIEST)
+						. += span_warning("PERFECT FOR SMITING!!")
+					else if(!empath_status.seen_it)
+						empath_status.seen_it = TRUE
+						user.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
+						user.set_jitter_if_lower(15 SECONDS)
 
 #undef ADD_NEWLINE_IF_NECESSARY
 #undef CARBON_EXAMINE_EMBEDDING_MAX_DIST
