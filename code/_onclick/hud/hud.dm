@@ -840,4 +840,4 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/action_group/listed/refresh_actions()
 	. = ..()
-	owner.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
+	owner?.palette_actions.refresh_actions() // We effect them, so we gotta refresh em
