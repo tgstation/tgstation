@@ -70,6 +70,7 @@ ADMIN_VERB(restart, R_SERVER, "Reboot World", "Restarts the world immediately.",
 
 #undef REGULAR_RESTART
 #undef REGULAR_RESTART_DELAYED
+#undef NO_EVENT_RESTART
 #undef HARD_RESTART
 #undef HARDEST_RESTART
 #undef TGS_RESTART
