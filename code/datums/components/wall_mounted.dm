@@ -91,6 +91,7 @@
 			var/static/list/attachables = list(
 				/obj/structure/table,
 				/obj/structure/window,
+				/obj/structure/fence,
 			) //list of structures to mount on
 			for(var/obj/attachable in target)
 				if(is_type_in_list(attachable, attachables))
