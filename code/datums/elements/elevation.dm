@@ -57,9 +57,9 @@
 	if(!isturf(location))
 		return
 	if(!HAS_TRAIT(location, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift)))
+		reset_elevation(location)
 		RegisterSignal(location, COMSIG_TURF_RESET_ELEVATION, PROC_REF(check_elevation))
 		RegisterSignal(location, COMSIG_TURF_CHANGE, PROC_REF(pre_change_turf))
-		reset_elevation(location)
 	ADD_TRAIT(location, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), ref(source))
 
 /datum/element/elevation/proc/unregister_turf(atom/movable/source, atom/location)
