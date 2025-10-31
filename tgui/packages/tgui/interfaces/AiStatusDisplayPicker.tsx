@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import type { BooleanLike } from 'tgui-core/react';
 import {
   Box,
-  Button,
+  DmIcon,
   Flex,
   ImageButton,
   Input,
   Section,
   Stack,
-  DmIcon,
 } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -50,11 +49,13 @@ const AiStatusDisplayPickerContent = () => {
 
   // Filter options based on search term
   const filteredOptions = options.filter((option) =>
-    option.name.toLowerCase().includes(searchTerm.toLowerCase())
+    option.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   // Separate original emotions and new AI core options
-  const originalOptions = filteredOptions.filter((option) => option.is_original);
+  const originalOptions = filteredOptions.filter(
+    (option) => option.is_original,
+  );
   const newOptions = filteredOptions.filter((option) => !option.is_original);
 
   return (
@@ -69,7 +70,7 @@ const AiStatusDisplayPickerContent = () => {
                     border: '2px solid #4a9eff',
                     borderRadius: '4px',
                     backgroundColor: '#1a1a1a',
-                    padding: '8px'
+                    padding: '8px',
                   }}
                 >
                   <DmIcon
@@ -106,9 +107,7 @@ const AiStatusDisplayPickerContent = () => {
           {originalOptions.length > 0 && (
             <Stack.Item>
               <Section title="AI Emotions">
-                <OptionsList
-                  options={originalOptions}
-                />
+                <OptionsList options={originalOptions} />
               </Section>
             </Stack.Item>
           )}
@@ -116,9 +115,7 @@ const AiStatusDisplayPickerContent = () => {
           {newOptions.length > 0 && (
             <Stack.Item>
               <Section title="Additional Status Display Options">
-                <OptionsList
-                  options={newOptions}
-                />
+                <OptionsList options={newOptions} />
               </Section>
             </Stack.Item>
           )}
@@ -132,17 +129,11 @@ const AiStatusDisplayPickerContent = () => {
           )}
         </Stack>
       </Stack.Item>
-
-
     </Stack>
   );
 };
 
-const OptionsList = ({
-  options
-}: {
-  options: StatusDisplayOption[];
-}) => {
+const OptionsList = ({ options }: { options: StatusDisplayOption[] }) => {
   const { act } = useBackend<Data>();
 
   return (

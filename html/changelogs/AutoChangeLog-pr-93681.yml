@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "the ore refineries now drop stacks of materials below them if they are not linked to a silo instead of being sent to the shadow realm"

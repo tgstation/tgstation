@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import {
   Box,
-  Button,
+  DmIcon,
   Flex,
   ImageButton,
   Input,
   Section,
   Stack,
-  Table,
-  DmIcon,
 } from 'tgui-core/components';
-import { classes } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -50,7 +47,7 @@ const AiCoreDisplayPickerContent = () => {
 
   // Filter options based on search term
   const filteredOptions = options.filter((option) =>
-    option.name.toLowerCase().includes(searchTerm.toLowerCase())
+    option.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -65,7 +62,7 @@ const AiCoreDisplayPickerContent = () => {
                     border: '2px solid #4a9eff',
                     borderRadius: '4px',
                     backgroundColor: '#1a1a1a',
-                    padding: '8px'
+                    padding: '8px',
                   }}
                 >
                   <DmIcon
@@ -99,9 +96,7 @@ const AiCoreDisplayPickerContent = () => {
         <Stack fill vertical>
           <Stack.Item>
             <Section title="AI Core Display Options">
-              <OptionsList
-                options={filteredOptions}
-              />
+              <OptionsList options={filteredOptions} />
             </Section>
           </Stack.Item>
 
@@ -114,17 +109,11 @@ const AiCoreDisplayPickerContent = () => {
           )}
         </Stack>
       </Stack.Item>
-
-
     </Stack>
   );
 };
 
-const OptionsList = ({
-  options,
-}: {
-  options: CoreDisplayOption[];
-}) => {
+const OptionsList = ({ options }: { options: CoreDisplayOption[] }) => {
   const { act } = useBackend<Data>();
 
   return (

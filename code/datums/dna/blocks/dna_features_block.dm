@@ -20,6 +20,7 @@
 
 /// Features tied to a sprite accessory
 /datum/dna_block/feature/accessory
+	abstract_type = /datum/dna_block/feature/accessory
 
 /datum/dna_block/feature/accessory/create_unique_block(mob/living/carbon/human/target)
 	var/block_value = SSaccessories.feature_list[feature_key].Find(target.dna.features[feature_key])
@@ -33,7 +34,6 @@
 	target.dna.features[feature_key] = SSaccessories.feature_list[feature_key][deconstructed]
 
 /datum/dna_block/feature/accessory/ears
-	abstract_type = /datum/dna_block/feature/accessory
 	feature_key = FEATURE_EARS
 
 // One day, someone should consider merging all tails into one, this is stupid
