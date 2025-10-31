@@ -10,21 +10,16 @@
 	allowed = list (/obj/item/gun/energy/laser/bluetag)
 	resistance_flags = NONE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	var/last_slot
 
 /obj/item/clothing/suit/bluetag/equipped(mob/equipper, slot)
 	. = ..()
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
-	last_slot = slot
 	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, LASERTAG_TEAM_BLUE)
 
 
 /obj/item/clothing/suit/bluetag/dropped(mob/living/user)
 	. = ..()
-	if(last_slot != ITEM_SLOT_OCLOTHING)
-		return
-	last_slot = null
 	user.RemoveComponentSource(REF(src), /datum/component/lasertag)
 
 /obj/item/clothing/suit/redtag
@@ -39,20 +34,15 @@
 	allowed = list (/obj/item/gun/energy/laser/redtag)
 	resistance_flags = NONE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	var/last_slot
 
 
 /obj/item/clothing/suit/redtag/equipped(mob/equipper, slot)
 	. = ..()
 	if (slot != ITEM_SLOT_OCLOTHING)
 		return
-	last_slot = slot
 	equipper.AddComponentFrom(REF(src), /datum/component/lasertag, LASERTAG_TEAM_RED)
 
 
 /obj/item/clothing/suit/redtag/dropped(mob/living/user)
 	. = ..()
-	if(last_slot != ITEM_SLOT_OCLOTHING)
-		return
-	last_slot = null
 	user.RemoveComponentSource(REF(src), /datum/component/lasertag)

@@ -16,9 +16,10 @@
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_laser_hit))
 
 
-/datum/component/lasertag/proc/team_color_match(datum/source, color)
+/datum/component/lasertag/proc/team_color_match(datum/source, firing_pin)
 	SIGNAL_HANDLER
-	if (color == team_color)
+	var/obj/item/firing_pin/tag/pin = firing_pin
+	if (pin.tagcolor == team_color)
 		return ALLOW_FIRE
 	return BLOCK_FIRE
 
