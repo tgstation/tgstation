@@ -17,7 +17,7 @@
 
 /obj/machinery/camera/proc/getTargetList()
 	if(area_motion)
-		return area_motion?.motion_targets
+		return area_motion.motion_targets
 	return localMotionTargets
 
 /obj/machinery/camera/proc/new_target(mob/target)
