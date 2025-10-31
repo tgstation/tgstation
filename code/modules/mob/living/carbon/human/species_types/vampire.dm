@@ -189,8 +189,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user] stabs [bloodbag] with [user.p_their()] sharp teeth and drains its contents!"),
-		span_notice("You stab [bloodbag] with your sharp teeth and drain its contents!"),
+		span_notice("[user] stabs [used_item] with [user.p_their()] sharp teeth and drains its contents!"),
+		span_notice("You stab [bloodused_itembag] with your sharp teeth and drain its contents!"),
 		span_hear("You hear a stabbing sound! ...Followed by slurping?"),
 		COMBAT_MESSAGE_RANGE,
 	)
