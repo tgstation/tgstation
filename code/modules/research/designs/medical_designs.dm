@@ -1172,6 +1172,8 @@
 /////////////////////
 
 /datum/design/surgery
+	abstract_type = /datum/design/surgery
+	id = DESIGN_ID_IGNORE
 	name = null
 	desc = null
 	research_icon = 'icons/obj/medical/surgery_ui.dmi'
