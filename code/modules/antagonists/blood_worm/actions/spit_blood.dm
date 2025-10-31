@@ -8,7 +8,7 @@
 	unset_after_click = FALSE // Unsetting is handled explicitly.
 
 	var/health_cost = 0
-	var/minimum_health = 20
+	var/minimum_health = 10
 
 	var/projectile_type = null
 
@@ -88,9 +88,9 @@
 	color = "#5BDD04" // TEMP COLOR
 
 /datum/action/cooldown/mob_cooldown/blood_worm_spit/hatchling
-	health_cost = 3 // This is enough for 10 shots at full health.
+	health_cost = 4 // This is enough for 10 shots in a row at full health.
 	projectile_type = /obj/projectile/blood_worm_spit/hatchling
 
 /obj/projectile/blood_worm_spit/hatchling
-	damage = 15
+	damage = 18 // 180 damage total, assuming no armor. (acid armor is common though)
 	armour_penetration = 40

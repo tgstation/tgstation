@@ -12,7 +12,7 @@
 	check_flags = NONE
 
 	var/health_cost = 0
-	var/minimum_health = 20
+	var/minimum_health = 10
 
 	var/status_effect_type = null
 
@@ -168,7 +168,7 @@
 	desc = "The transfused blood is rapidly healing your host."
 
 /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
-	health_cost = 20 // One use, with 10s after the 40s cooldown to get another use, assuming no other health loss.
+	health_cost = 20 // Two uses, assuming no other health loss.
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/hatchling
 
 /datum/status_effect/blood_worm_transfuse/hatchling
