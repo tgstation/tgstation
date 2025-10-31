@@ -52,7 +52,7 @@
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_good("You successfully revive \the [host]!"))
+	to_chat(owner, span_green("You successfully revive \the [host]!"))
 
 	return ..()
 

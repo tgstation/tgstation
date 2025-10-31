@@ -83,6 +83,8 @@
 	return ..()
 
 /datum/status_effect/blood_worm_transfuse/tick(seconds_between_ticks)
+	var/need_mob_update = FALSE
+
 	need_mob_update |= heal_damage(seconds_between_ticks)
 	need_mob_update |= heal_wounds(seconds_between_ticks)
 
@@ -168,11 +170,30 @@
 	desc = "The transfused blood is rapidly healing your host."
 
 /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
-	health_cost = 20 // Two uses, assuming no other health loss.
+	health_cost = 20
+	cooldown_time = 30 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.667 hp/s, Worm max health is 4x less than host max health, Worm heals at 0.2 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/hatchling
 
 /datum/status_effect/blood_worm_transfuse/hatchling
-	damage_regen_rate = 6
+	damage_regen_rate = 6 // 20 s * 6 hp/s = 120 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 6 // One wound every 6 seconds, +30% per wound severity level.
+
+/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/juvenile
+	health_cost = 35
+	cooldown_time = 40 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.875 hp/s, Worm max health is 2x less than host max health, Worm heals at 0.3 hp/s
+	status_effect_type = /datum/status_effect/blood_worm_transfuse/juvenile
+
+/datum/status_effect/blood_worm_transfuse/juvenile
+	damage_regen_rate = 8 // 20 s * 8 hp/s = 160 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
+	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
+
+/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/adult
+	health_cost = 50
+	cooldown_time = 50 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 1 hp/s, Worm max health is 1.334x less than host max health, Worm heals at 0.4 hp/s
+	status_effect_type = /datum/status_effect/blood_worm_transfuse/adult
+
+/datum/status_effect/blood_worm_transfuse/adult
+	damage_regen_rate = 10 // 20 s * 10 hp/s = 200 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
+	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
 
 #undef REQUIRED_ACCUMULATION

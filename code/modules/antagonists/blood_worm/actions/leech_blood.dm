@@ -103,4 +103,10 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm_leech/hatchling
-	leech_rate = BLOOD_VOLUME_NORMAL * 0.05
+	leech_rate = BLOOD_VOLUME_NORMAL * 0.05 // 28 units of blood, 5 points of health, or 10% of a hatchling blood worm's health
+
+/datum/action/cooldown/mob_cooldown/blood_worm_leech/juvenile
+	leech_rate = BLOOD_VOLUME_NORMAL * 0.075 // 42 units of blood, 7.5 points of health, or 7.5% of a juvenile blood worm's health
+
+/datum/action/cooldown/mob_cooldown/blood_worm_leech/adult
+	leech_rate = BLOOD_VOLUME_NORMAL * 0.1 // 56 units of blood, 10 points of health, or 6.67% of an adult blood worm's health

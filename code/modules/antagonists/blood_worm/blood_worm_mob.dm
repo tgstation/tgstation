@@ -50,6 +50,8 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm_leech/leech_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm_invade/invade_action
+	/// Typed, please initialize with a proper action subtype. (empty = no action)
+	var/datum/action/cooldown/mob_cooldown/blood_worm_cocoon/cocoon_action
 
 	// Host actions
 
@@ -91,6 +93,10 @@
 	invade_action = new(src)
 	innate_actions += invade_action
 
+	if (ispath(cocoon_action, /datum/action/cooldown/mob_cooldown/blood_worm_cocoon))
+		cocoon_action = new cocoon_action(src)
+		innate_actions += cocoon_action
+
 	// Host actions
 
 	if (ispath(transfuse_action, /datum/action/cooldown/mob_cooldown/blood_worm_transfuse))
@@ -123,9 +129,14 @@
 	if (!host)
 		adjustBruteLoss(-regen_rate * seconds_per_tick)
 
-/mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, datum/blood_type/blood_type)
+/mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, datum/blood_type/blood_type, should_heal = TRUE)
+	if (!blood_type)
+		return
+
 	consumed_blood[blood_type.id] += blood_amount
-	adjustBruteLoss(-blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)
+
+	if (should_heal)
+		adjustBruteLoss(-blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)
 
 /mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host)
 	if (!mind || !key)
@@ -141,7 +152,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 	become_blind(BLOOD_WORM_HOST_TRAIT)
-	add_traits(list(TRAIT_DEAF, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_MUTE), BLOOD_WORM_HOST_TRAIT)
+	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_DEAF), BLOOD_WORM_HOST_TRAIT)
 
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
@@ -194,12 +205,15 @@
 	remove_actions(src, host_actions)
 	grant_actions(src, innate_actions)
 
+	ingest_blood(host.blood_volume, host.get_bloodtype(), should_heal = FALSE)
+
 	update_dilution()
 	sync_health()
 
-	host.blood_volume = 0
-
 	remove_host_hud()
+
+	host.blood_volume = 0
+	host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
 
 	host = null
 
@@ -300,7 +314,7 @@
 
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
-	desc = "A freshly hatched blood worm. It's small, hungry for blood and very deadly."
+	desc = "A freshly hatched blood worm. It looks hungry and somewhat weak, requiring blood to grow further."
 
 	maxHealth = 50
 	health = 50
@@ -311,8 +325,8 @@
 
 	speed = 0
 
-	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm_spit/hatchling
 	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/hatchling
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm_cocoon/hatchling
 
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
 
@@ -322,3 +336,29 @@
 	. = ..()
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+/mob/living/basic/blood_worm/juvenile
+	name = "juvenile blood worm"
+	desc = "A mid-sized blood worm. It looks bloodthirsty and has numerous long and extremely sharp teeth."
+
+	maxHealth = 100 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
+	health = 100
+
+	obj_damage = 25 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+
+	wound_bonus = 0// Juveniles can afford to heal wounds on their hosts, unlike hatchlings. Note that this can't cause critical wounds. (at least it didn't in testing)
+	sharpness = SHARP_POINTY
+
+	speed = 0.5
+
+	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm_spit/juvenile
+	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/juvenile
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm_cocoon/juvenile
+
+	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/juvenile
+
+	regen_rate = 0.3 // 333 seconds to recover from 0 to 100, or a little over 5 and a half minutes
+
+/mob/living/basic/blood_worm/adult

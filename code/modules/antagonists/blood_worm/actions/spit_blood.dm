@@ -77,7 +77,7 @@
 	icon_state = "neurotoxin" // TEMP ICON
 
 	damage_type = BURN
-	armor_flag = ACID
+	armor_flag = BULLET // I'm sorry. Acid armor is too nonsensical for combat, as its granted based on how easily acid should destroy objects.
 
 	hitsound = 'sound/items/weapons/sear.ogg'
 	hitsound_wall = 'sound/items/weapons/sear.ogg'
@@ -87,10 +87,10 @@
 /obj/effect/temp_visual/impact_effect/blood_worm_spit
 	color = "#5BDD04" // TEMP COLOR
 
-/datum/action/cooldown/mob_cooldown/blood_worm_spit/hatchling
-	health_cost = 4 // This is enough for 10 shots in a row at full health.
-	projectile_type = /obj/projectile/blood_worm_spit/hatchling
+/datum/action/cooldown/mob_cooldown/blood_worm_spit/juvenile
+	health_cost = 6 // This is enough for 15 shots in a row at full health.
+	projectile_type = /obj/projectile/blood_worm_spit/juvenile
 
-/obj/projectile/blood_worm_spit/hatchling
-	damage = 18 // 180 damage total, assuming no armor. (acid armor is common though)
-	armour_penetration = 40
+/obj/projectile/blood_worm_spit/juvenile
+	damage = 20 // 300 damage total, assuming no armor.
+	armour_penetration = 30 // So that sec cant just nullify half the kit of the blood worms with bulletproof armor.
