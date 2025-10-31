@@ -107,7 +107,7 @@
 	TEST_ASSERT(!surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was available on a damaged but unoperated patient")
 
 	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
-	chest.add_surgery_state(SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+	chest.add_surgical_state(SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
 	TEST_ASSERT(surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was not available on a damaged, operated patient")
 
 /datum/unit_test/tend_wounds/Run()
