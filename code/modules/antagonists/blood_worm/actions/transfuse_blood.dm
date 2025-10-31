@@ -83,14 +83,8 @@
 	return ..()
 
 /datum/status_effect/blood_worm_transfuse/tick(seconds_between_ticks)
-	// Calculate how much time has passed since our last tick, clamped to the remaining duration plus one second to account for the initial tick.
-	// Assuming no inaccuracy shenanigans, this makes it so the total amount healed is exactly [duration * 0.1 * damage_regen_rate]
-	// Somebody should really fix the fact that I have to go through all these hoops just to get accurate delta time.
-	var/delta_time = max(0, min((world.time - last_tick_time) * 0.1, (duration - world.time) * 0.1 + 1))
-	var/need_mob_update = FALSE
-
-	need_mob_update |= heal_damage(delta_time)
-	need_mob_update |= heal_wounds(delta_time)
+	need_mob_update |= heal_damage(seconds_between_ticks)
+	need_mob_update |= heal_wounds(seconds_between_ticks)
 
 	if (need_mob_update)
 		owner.updatehealth()
@@ -103,8 +97,8 @@
 	if (worm_alert && linked_alert)
 		worm_alert.maptext = linked_alert.maptext
 
-/datum/status_effect/blood_worm_transfuse/proc/heal_damage(delta_time)
-	var/healing_left = damage_regen_rate * delta_time
+/datum/status_effect/blood_worm_transfuse/proc/heal_damage(seconds_between_ticks)
+	var/healing_left = damage_regen_rate * seconds_between_ticks
 
 	if (owner.getBruteLoss() > 0 && healing_left > 0)
 		var/amount_healed = max(0, owner.adjustBruteLoss(-healing_left, forced = TRUE, updating_health = FALSE))
@@ -123,11 +117,11 @@
 
 // I tried to set this up reasonably with SPT_PROB(), but it was too inconsistent, especially for wounds with high severity.
 // So I switched to an accumulation system instead. This way, the blood worm gets a consistent return on their health investment.
-/datum/status_effect/blood_worm_transfuse/proc/heal_wounds(delta_time)
+/datum/status_effect/blood_worm_transfuse/proc/heal_wounds(seconds_between_ticks)
 	var/mob/living/carbon/human/host = owner
 
 	if (length(host.all_wounds))
-		wound_regen_accumulation += wound_regen_rate * delta_time
+		wound_regen_accumulation += wound_regen_rate * seconds_between_ticks
 	else
 		wound_regen_accumulation = 0
 		return
