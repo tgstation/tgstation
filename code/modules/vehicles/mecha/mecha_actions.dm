@@ -199,7 +199,7 @@
 	name = "Cargo Module"
 
 /datum/action/vehicle/sealed/mecha/equipment/cargo_module/set_equipment(passed_equipment)
-	..()
+	. = ..()
 	name = "[equipment.name]"
 
 /datum/action/vehicle/sealed/mecha/equipment/cargo_module/Trigger(mob/clicker, trigger_flags)
