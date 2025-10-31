@@ -70986,7 +70986,7 @@
 /area/station/command/heads_quarters/rd)
 "ufn" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	req_access = list("minisat")
@@ -83257,7 +83257,7 @@
 /area/station/maintenance/port/greater)
 "xyn" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai/upload/chamber";
 	name = "AI Upload Turret Control";
 	icon_state = "control_stun"
 	},

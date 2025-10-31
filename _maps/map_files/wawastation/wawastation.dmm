@@ -28976,7 +28976,7 @@
 /area/station/cargo/miningoffice)
 "kbv" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "AI Antechamber turret control";
 	pixel_x = 27
 	},
@@ -49381,7 +49381,7 @@
 /area/station/command/bridge)
 "rbs" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai/upload/chamber";
 	icon_state = "control_stun";
 	name = "AI Upload Turret Control";
 	pixel_x = -28
@@ -51083,7 +51083,7 @@
 "rBZ" = (
 /obj/structure/cable,
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "AI Antechamber turret control";
 	pixel_y = 27
 	},
@@ -69853,7 +69853,7 @@
 /area/station/science/ordnance/testlab)
 "yaw" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "AI Antechamber turret control";
 	pixel_y = -27
 	},

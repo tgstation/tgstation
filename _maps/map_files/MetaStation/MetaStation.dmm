@@ -3611,7 +3611,7 @@
 /area/station/ai/satellite/foyer)
 "bny" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	req_access = list("minisat")
@@ -37468,7 +37468,7 @@
 /area/station/maintenance/starboard/fore)
 "mSI" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai/upload/chamber";
 	icon_state = "control_stun";
 	name = "AI Upload Turret Control";
 	pixel_y = 28

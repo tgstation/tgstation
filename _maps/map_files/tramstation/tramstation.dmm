@@ -15853,7 +15853,7 @@
 	name = "AI Upload Turret Control";
 	pixel_x = 25;
 	req_access = list("minisat");
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload"
+	control_area = "/area/station/ai/upload/chamber"
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
@@ -36710,7 +36710,7 @@
 /obj/machinery/turretid{
 	name = "AI Antechamber turret control";
 	pixel_y = -25;
-	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior"
+	control_area = "/area/station/ai/satellite/interior"
 	},
 /turf/open/floor/iron/grimy,
 /area/station/ai/satellite/foyer)
