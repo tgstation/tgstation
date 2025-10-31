@@ -188,6 +188,12 @@
 		to_chat(user, span_warning("[src] is empty!"))
 		return ITEM_INTERACT_BLOCKING
 
+	user.visible_message(
+		span_notice("[user] stabs [bloodbag] with [user.p_their()] sharp teeth and drains its contents!"),
+		span_notice("You stab [bloodbag] with your sharp teeth and drain its contents!"),
+		span_hear("You hear a stabbing sound! ...Followed by slurping?"),
+		COMBAT_MESSAGE_RANGE,
+	)
 	INVOKE_ASYNC(src, PROC_REF(async_stab_bloodbag), user, used_item)
 	return ITEM_INTERACT_BLOCKING
 
@@ -195,13 +201,7 @@
 	if(!do_after(user, time, bloodbag))
 		return
 
-	user.visible_message(
-		span_notice("[user] stabs [bloodbag] with [user.p_their()] sharp teeth and drains its contents!"),
-		span_notice("You stab [bloodbag] with your sharp teeth and drain its contents!"),
-		span_hear("You hear a stabbing sound! ...Followed by slurping?"),
-		COMBAT_MESSAGE_RANGE,
-	)
-
+	to_chat(user, span_notice("You swallow a gulp of [src]."))
 	playsound(bloodbag, 'sound/items/drink.ogg', 50, TRUE) //slurp
 	bloodbag.reagents.trans_to(user, bloodbag.reagents.maximum_volume * 0.05, transferred_by = user, methods = INGEST)
 	if(bloodbag.reagents.total_volume > 0)
