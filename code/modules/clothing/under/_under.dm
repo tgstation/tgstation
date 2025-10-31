@@ -259,7 +259,6 @@
 
 	playsound(source = src, soundin = 'sound/effects/sparks/sparks4.ogg', vol = 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 	set_has_sensor(HAS_SENSORS)
-
 	return TRUE
 
 /// If the item is being worn, a gentle reminder every 3-5 minutes that the sensors are broken

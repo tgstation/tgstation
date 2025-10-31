@@ -87,4 +87,4 @@
 	ratingdesc = FALSE
 
 /obj/item/stock_parts/power_store/battery/infinite/use(used, force = FALSE)
-	return TRUE
+	return used
