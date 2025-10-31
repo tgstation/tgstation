@@ -77,7 +77,7 @@
 	ADD_TRAIT(patient_one, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 
 	var/obj/item/bodypart/chest/patient_zero_chest = patient_zero.get_bodypart(BODY_ZONE_CHEST)
-	var/obj/item/bodypart/chest/patient_one_chest = patient_one.get_bodypart
+	var/obj/item/bodypart/chest/patient_one_chest = patient_one.get_bodypart(BODY_ZONE_CHEST)
 
 	ADD_TRAIT(patient_zero_chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 	ADD_TRAIT(patient_one_chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
