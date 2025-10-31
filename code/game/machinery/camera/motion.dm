@@ -32,7 +32,7 @@
 /obj/machinery/camera/proc/lost_target(mob/target)
 	var/list/targets = getTargetList()
 	targets -= WEAKREF(target)
-	if (targets.len == 0)
+	if (!length(targets))
 		cancelAlarm()
 
 /obj/machinery/camera/Destroy()

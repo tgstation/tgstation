@@ -24,9 +24,11 @@
 		motion_group.untrack_camera(camera)
 
 /datum/component/monitored_area/proc/on_entered(area/_source, atom/movable/gain, area/_old_area)
+	SIGNAL_HANDLER
 	motion_group.track_mob(gain)
 
 /datum/component/monitored_area/proc/on_exited(area/_source, atom/movable/lost, _direction)
+	SIGNAL_HANDLER
 	motion_group.untrack_mob(lost)
 
 /// Handler for motion groups. Motion-sensitive cameras can optionally associate with one of these groups.
@@ -51,6 +53,8 @@
 	LAZYREMOVE(motion_cameras, lost_camera)
 	UnregisterSignal(lost_camera, COMSIG_QDELETING)
 	if(!LAZYLEN(motion_cameras))
+		// clear targets if we don't have any cameras so we don't have hanging references
+		// (they're weakrefs but still we should be doing this)
 		LAZYNULL(motion_targets)
 
 /datum/motion_group/proc/track_mob(mob/gain_mob)
