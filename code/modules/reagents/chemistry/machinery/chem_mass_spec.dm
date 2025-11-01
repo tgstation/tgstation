@@ -426,6 +426,18 @@
 			replace_beaker(ui.user, FALSE)
 			return TRUE
 
+		if("insert1")
+			var/obj/item/reagent_containers/container = usr.get_active_held_item()
+			if(container)
+				item_interaction(user = ui.user, item = container)
+			return TRUE
+
+		if("insert2")
+			var/obj/item/reagent_containers/container = usr.get_active_held_item()
+			if(container)
+				item_interaction(user = usr, item = container, modifiers = list(RIGHT_CLICK = TRUE))
+			return TRUE
+
 /obj/machinery/chem_mass_spec/click_alt(mob/living/user)
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")

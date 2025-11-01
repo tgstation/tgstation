@@ -306,6 +306,12 @@
 			replace_beaker(ui.user)
 			return TRUE
 
+		if("insert")
+			var/obj/item/reagent_containers/container = usr.get_active_held_item()
+			if(container)
+				item_interaction(user = usr, tool = container)
+			return TRUE
+
 		if("dispense_recipe")
 			if(!is_operational || QDELETED(cell))
 				return

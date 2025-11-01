@@ -26,6 +26,8 @@ type BeakerProps = {
   replace_contents?: BeakerReagent[];
   title_label?: string;
   showpH?: BooleanLike;
+  insertAction?: string;
+  showInsertButton?: boolean;
 };
 
 export const BeakerDisplay = (props: BeakerProps) => {
@@ -78,14 +80,23 @@ export const BeakerDisplay = (props: BeakerProps) => {
 
 export const BeakerSectionDisplay = (props: BeakerProps) => {
   const { act } = useBackend();
-  const { beaker, replace_contents, title_label, showpH } = props;
+  const {
+    beaker,
+    replace_contents,
+    title_label,
+    showpH,
+    insertAction = 'insert',
+    showInsertButton = false,
+  } = props;
+
   const beakerContents = replace_contents || beaker?.contents || [];
+  const isBeakerLoaded = !!beaker;
 
   return (
     <Section
       title={title_label || 'Beaker'}
       buttons={
-        !!beaker && (
+        isBeakerLoaded ? (
           <>
             <Box inline color="label" mr={2}>
               {beaker.currentVolume} / {beaker.maxVolume} units
@@ -94,6 +105,12 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
               Eject
             </Button>
           </>
+        ) : (
+          showInsertButton && (
+            <Button icon="eject" onClick={() => act(insertAction)}>
+              Insert
+            </Button>
+          )
         )
       }
     >

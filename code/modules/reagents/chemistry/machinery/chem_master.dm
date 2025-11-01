@@ -418,6 +418,12 @@
 			replace_beaker(ui.user)
 			return TRUE
 
+		if("insert")
+			var/obj/item/reagent_containers/container = usr.get_active_held_item()
+			if(container)
+				item_interaction(user = usr, tool = container)
+			return TRUE
+
 		if("transfer")
 			if(is_printing)
 				say("The buffer is locked while printing.")

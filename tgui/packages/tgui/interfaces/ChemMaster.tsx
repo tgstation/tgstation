@@ -119,7 +119,7 @@ const ChemMasterContent = (props: {
       <Section
         title="Beaker"
         buttons={
-          beaker && (
+          beaker ? (
             <Box>
               <Box inline color="label" mr={2}>
                 <AnimatedNumber value={beaker.currentVolume} initial={0} />
@@ -129,6 +129,10 @@ const ChemMasterContent = (props: {
                 Eject
               </Button>
             </Box>
+          ) : (
+            <Button icon="eject" onClick={() => act('insert')}>
+              Insert
+            </Button>
           )
         }
       >
