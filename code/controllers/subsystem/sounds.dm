@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(sounds)
 		"mp3" = TRUE, //MPeg Layer 3 Container (And usually, Codec.)
 	)
 
-	// Put more common extensions first to speed this up a bit
+	// Put more common extensions first to speed this up a bit (So only ogg and mp3 lol.)
 	var/list/byond_sound_extensions = list(
 		".ogg",
 		".mp3",
