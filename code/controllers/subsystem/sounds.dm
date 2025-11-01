@@ -49,7 +49,13 @@ SUBSYSTEM_DEF(sounds)
 		//since they completely lack all information. As a confusion based anti-footgun, I'm just going to wire this to FALSE for now. It's here though.
 		"wma" = TRUE, //Windows Media Audio container
 		"aiff" = TRUE, //Audio Interchange File Format, Apple's side of the 80s sound format pissing match. It's also (R)IFF in a trenchcoat.
-		"mp3" = TRUE, //MPeg Layer 3 Container (And usually, Codec.)
+		"mp3" = TRUE //MPeg Layer 3 Container (And usually, Codec.)
+	)
+
+	/// File types we can sniff the duration from using rustg.
+	var/list/safe_formats = list(
+		"ogg" = TRUE,
+		"mp3" = TRUE
 	)
 
 	// Put more common extensions first to speed this up a bit (So only ogg and mp3 lol.)
@@ -66,7 +72,7 @@ SUBSYSTEM_DEF(sounds)
 		".wav",
 		//".raw", See byond_sound_formats
 		".wma",
-		".aiff",
+		".aiff"
 	)
 
 	/// File types we can sniff the duration from using rustg.

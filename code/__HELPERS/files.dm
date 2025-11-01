@@ -153,6 +153,21 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		return TRUE
 
 /**
+ * Verifys wether a string or file ends with a given file type. Version for slightly faster speeds.
+ *
+ * Arguments:
+ * * file - A string or file. No checks for if this file ACCTALLY exists
+ * * file_types - A list of strings to check against [e.g. list("ogg" = TRUE, "mp3" = TRUE)]
+ */
+/proc/is_file_type_in_list_indexed(file, file_types = list())
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return FALSE
+	var/ext = copytext("[file]", extstart + 1)
+	if(file_types[ext])
+		return TRUE
+
+/**
  * Verifys wether a string or file ends with a given file type
  *
  * Arguments:
