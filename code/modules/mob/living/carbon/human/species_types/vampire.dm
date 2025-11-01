@@ -161,9 +161,6 @@
 	desc = "The only thing with which it's acceptable to say \"I will suck you dry!\""
 	icon_state = "tongue_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-<<<<<<< HEAD
-=======
-	color = COLOR_CRAYON_BLACK
 	organ_traits = list(
 		TRAIT_SPEAKS_CLEARLY,
 		TRAIT_DRINKS_BLOOD,
@@ -171,7 +168,6 @@
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
 	)
->>>>>>> upstream/master
 	COOLDOWN_DECLARE(drain_cooldown)
 
 /obj/item/organ/tongue/vampire/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
