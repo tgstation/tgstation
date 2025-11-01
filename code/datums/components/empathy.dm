@@ -2,6 +2,8 @@
 
 /datum/component/empathy
 
+	dupe_mode = COMPONENT_DUPE_SOURCES
+
 	// Whether or not we should get scared the next time we see an evil person.
 	var/seen_it = FALSE
 
