@@ -1,4 +1,5 @@
-The enclosed /sounds folder holds the sound files used for player selectable songs for an ingame jukebox. OGG and WAV are supported.
+The enclosed /sounds folder holds the sound files used for player selectable songs for an ingame jukebox.
+OGG is the recommended sound format but see code/controllers/subsystem/sounds.dm for the rest of the supported ones.
 
 Using unnecessarily huge sounds can cause client side lag and should be avoided.
 

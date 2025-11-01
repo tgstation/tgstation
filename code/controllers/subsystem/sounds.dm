@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(sounds)
 		".xm",
 		".oxm",
 		".wav",
-		// ".raw", See above
+		//".raw", See byond_sound_formats
 		".wma",
 		".aiff",
 	)
