@@ -386,7 +386,7 @@
 	var/datum/storage/holding_storage = mod.loc.atom_storage
 	if(!holding_storage || holding_storage.max_specific_storage >= mod.w_class)
 		return
-	mod.forceMove(drop_location())
+	mod.forceMove(mod.drop_location())
 
 /obj/item/mod/module/demoralizer
 	name = "MOD psi-echo demoralizer module"
@@ -500,7 +500,7 @@
 	var/list/things_to_disrupt = list(target)
 	if(isliving(target))
 		var/mob/living/live_target = target
-		things_to_disrupt += live_target.get_all_gear()
+		things_to_disrupt += live_target.get_all_gear(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT|INCLUDE_ACCESSORIES)
 
 	for(var/atom/disrupted as anything in things_to_disrupt)
 		if(disrupted.on_saboteur(src, 1 MINUTES))

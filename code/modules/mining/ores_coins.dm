@@ -112,6 +112,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
 	merge_type = /obj/item/stack/ore/glass
+	usable_for_construction = TRUE
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
@@ -124,7 +125,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	AddComponent(/datum/component/storm_hating)
 
 /obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
-	var/obj/item/stack/sheet/glass = new refined_type(drop_location(), amount, merge = FALSE) //The newly spawned glass should not merge with other stacks on the turf, else it could cause issues.
+	//If we spawn the sheet of glass on the turf the ORM is "listening" to, it'll get redeemed before we can use it as return value and weird stuff my happen.
+	var/obj/item/stack/sheet/glass = new refined_type(null, amount)
 	qdel(src)
 	return glass
 
@@ -212,6 +214,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 10
 	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
+
+/obj/item/stack/ore/diamond/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = string_list(list(/datum/raptor_color/yellow = 3)))
 
 /obj/item/stack/ore/diamond/five
 	amount = 5
@@ -439,7 +445,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value = 0
 	var/coinflip
-	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
 	var/override_material_worth = FALSE
 	/// The name of the heads side of the coin
@@ -483,7 +488,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else
-		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!"))
+		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!")) //Don't put it in your pocket. It's your lucky quarter.
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
@@ -548,36 +553,46 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/gold
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/gold = 4)
 
 /obj/item/coin/silver
 	custom_materials = list(/datum/material/silver = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/silver = 4)
 
 /obj/item/coin/diamond
 	custom_materials = list(/datum/material/diamond = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/carbon = 4)
 
 /obj/item/coin/plasma
 	custom_materials = list(/datum/material/plasma = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/toxin/plasma = 4)
 
 /obj/item/coin/uranium
 	custom_materials = list(/datum/material/uranium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/uranium = 4)
 
 /obj/item/coin/titanium
 	custom_materials = list(/datum/material/titanium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/flash_powder = 4)
 
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/consumable/nutriment/soup/clown_tears = 4)
 
 /obj/item/coin/adamantine
 	custom_materials = list(/datum/material/adamantine = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/mythril
 	custom_materials = list(/datum/material/mythril = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/medicine/omnizine/godblood = 4)
 
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/plastic_polymers = 4)
 
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/consumable/ethanol/ritual_wine = 2)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -592,11 +607,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	heads_name = "valid"
 	material_flags = NONE
 	override_material_worth = TRUE
+	grind_results = list(/datum/reagent/ants = 2, /datum/reagent/consumable/eggyolk = 2)
 
 /obj/item/coin/iron
+	grind_results = list(/datum/reagent/iron = 4)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
+	grind_results = list(/datum/reagent/gold/cursed = 4)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
@@ -634,11 +652,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "eldritch coin"
 	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
 	icon_state = "coin_heretic"
-	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
 	heads_name = "heretic"
 	has_action = TRUE
 	material_flags = NONE
+	grind_results = list(/datum/reagent/carbon = 5, /datum/reagent/toxin/plasma = 5, /datum/reagent/eldritch = 4)
 	/// The range at which airlocks are effected.
 	var/airlock_range = 5
 
@@ -663,18 +682,5 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			target_airlock.unlock()
 			continue
 		target_airlock.lock()
-
-/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/machinery/door/airlock))
-		return NONE
-	if(!IS_HERETIC(user))
-		user.adjustBruteLoss(5)
-		user.adjustFireLoss(5)
-		return ITEM_INTERACT_BLOCKING
-	var/obj/machinery/door/airlock/target_airlock = interacting_with
-	to_chat(user, span_warning("You insert [src] into the airlock."))
-	target_airlock.emag_act(user, src)
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
 
 #undef ORESTACK_OVERLAYS_MAX

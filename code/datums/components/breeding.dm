@@ -2,17 +2,17 @@
  * A component to allow us to breed
  */
 /datum/component/breed
-	/// additional mobs we can breed with
+	/// Additional mobs we can breed with
 	var/list/can_breed_with
-	///weighted list of the possible baby types
+	/// Weighted list of the possible baby types
 	var/list/baby_paths
-	///time to wait after breeding
+	/// Time to wait after breeding
 	var/breed_timer
-	///AI key we set when we're ready to breed
+	/// AI key we set when we're ready to breed
 	var/breed_key = BB_BREED_READY
-	///are we ready to breed?
+	/// Are we ready to breed?
 	var/ready_to_breed = TRUE
-	///callback after we give birth to the child
+	/// Callback after we give birth to the child
 	var/datum/callback/post_birth
 
 /datum/component/breed/Initialize(list/can_breed_with = list(), breed_timer = 40 SECONDS, baby_paths = list(), post_birth)
@@ -44,11 +44,13 @@
 	REMOVE_TRAIT(parent, TRAIT_MOB_BREEDER, REF(src))
 	post_birth = null
 
-
 /datum/component/breed/proc/breed_with_partner(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	if(source.combat_mode)
+		return
+
+	if(!ismob(target))
 		return
 
 	if(source.client || target.client)

@@ -630,3 +630,149 @@
   timothymtorres:
   - rscadd: Add cooking oil, nutraslop, and beer keg to cargo supply packs. Nutraslop
       serving trays and cooking oil vats can now be pushed and moved.
+2025-09-25:
+  Aliceee2ch:
+  - bugfix: Borg inducer can charge again
+  SmArtKar:
+  - bugfix: Fixed delayed viewport fitting on server join/init
+  necromanceranne:
+  - balance: Being frail or being more resistant to wounding is now more consistent
+      about how it hinders or benefits you.
+2025-09-26:
+  DaCoolBoss:
+  - bugfix: Luxury Shuttle windows now allow some projectiles to pass.
+  timothymtorres:
+  - qol: Climbable objects now show up as an examine tag.
+2025-09-27:
+  Aliceee2ch:
+  - bugfix: Cell charger now drops cell that it had inside after you destroy it
+  Cameron-The-Raven:
+  - bugfix: Omens properly transfer their damage modifier when multiple are applied.
+  DaCoolBoss:
+  - bugfix: Summon Guns event will no longer spawn guns with restricted firing pins.
+  - bugfix: Summon Guns event will now only spawn guns that are intended to harm people
+      (except the medbeam)
+  - balance: Added more guns to the Summon Guns event.
+  Melbert:
+  - rscdel: Bluespace Gas Vendors and the accompanying Bluespace Gas Sender have been
+      removed
+  - qol: Adds hotkey to close all open uis, bound to "home" by default
+  SmArtKar:
+  - bugfix: Fixed Select Equipment admin verb opening on a blank tab
+  lelandkemble:
+  - bugfix: The icebox sec entrance door controlling buttons are now usable.
+  - map: increases holopad coverage on wawastation
+  timothymtorres:
+  - qol: 'Add several new examine categories for objects descs that include: bomb-proof,
+      flammable, holograhic, crush-proof, and conductive. Also use hyphens for multi-word
+      examine tags.'
+  - bugfix: Fixes custom materials not appearing for things like structures when examined.
+  - bugfix: Fix custom materials on wood tables and racks
+2025-09-28:
+  ArcaneMusic:
+  - code_imp: Tweaked the animation curves on a number of different object/item/mob
+      animations. Report if anything feels/looks weird.
+  Gboster-0:
+  - bugfix: shuttle engines no longer provide negative power to your shuttles if you
+      unwrench them.
+  Ghommie:
+  - balance: Some sturdy objects that you cannot just grab drag around, like mechs,
+      are more resilient against being thrown around by weaker explosions.
+  - bugfix: Some things, like bolted AIs, aren't thrown around by explosions at all.
+  Melbert:
+  - refactor: Reagent containers like cups, beakers, bottles, syringes, droppers,
+      condiments packs, and iv bags have been refactored. Report any oddities, particularly
+      involved in transferring reagents from one to another.
+  necromanceranne:
+  - balance: Unarmed attacks deal more consistent damage and more impactful against
+      staggered opponents the more athletic you are.
+  - balance: The strength gene now improves your unarmed upper potential damage a
+      bit. It increases instability slightly more as a result.
+  theselfish:
+  - spellcheck: Clown mods are now properly capitalised.
+  timothymtorres:
+  - qol: Objects that are EMP-proof will now have it appear as a examine tag desc
+2025-09-29:
+  ArcaneMusic:
+  - rscdel: You can no longer obtain an emagged fishing portal board from treasure
+      chests. You can still, however, emag fishing portals.
+  - balance: Monocloning Jumpercable fish have had their export values decreased.
+      Their cloning capacity and electrical output remain the same.
+  Ghommie:
+  - balance: airlocks affected by dimensional anomalies retain their access, as well
+      as access-adjacent attributes such as emergency access and unrestricted sides.
+  Kashargul:
+  - bugfix: keycombo modal only allowing an input on the first opening
+  Krysonism:
+  - rscadd: Added poker chips.
+  - balance: ' The roulette machine now stylishly pays out poker chips instead of
+      coins.'
+  - balance: Coins can be redeemed for mats and ground for reagents.
+  - balance: The money bag can hold vastly more money and now also precious gems and
+      metals.
+  - bugfix: Fixed the roulette wheel result overlay lingering and obscuring the next
+      roll.
+  Melbert:
+  - balance: Reinforced floors will stop light and heavy explosions from affecting
+      objects beneath the floor, ie cabling and piping
+  - balance: Explosions affecting floors are no longer blocked by *any structure*,
+      such as posters. Only dense structures block them.
+  - balance: Machines can now block explosions from affecting floors, much like structures
+  Paxilmaniac:
+  - image: adds new sprites for bayonets on bolt action rifles
+  SmArtKar:
+  - bugfix: Fixed cell chargers runtiming and not updating their visuals when a cell
+      is taken out
+  timothymtorres:
+  - bugfix: Fix shower causing mood and status effects to non-carbon mobs
+2025-09-30:
+  Ezel.:
+  - map: Reduces the amount of general available Sec clothes vendors across all maps
+  FeudeyTF:
+  - qol: Moved paginating buttons of newspaper in top
+  - qol: Changed maximum article length to 1024
+  - bugfix: Fixed the deletion of articles in the newspaper after the article was
+      released in the channel
+  Iamgoofball:
+  - spellcheck: Adds Honorific support for Clowns and Mimes
+  Melbert:
+  - bugfix: Fixes dormant DNA activator
+  SmArtKar:
+  - rscadd: Mining MODsuit has gained a magnetic harness for all of your crusher stowing
+      needs.
+  - balance: Magnetic harnesses now take only 0.5 seconds to pick up your gun, and
+      can pick up crushers.
+  - balance: Mining MODsuit has regained it small slowdown, and lost 10 melee armor.
+  - balance: Mining drill MODule is no longer instant (outside of the sphere mode
+      of a mining MOD)
+  - balance: The mining sphere MODule now can break rocks when rolling into them,
+      gives 20 melee and bomb armor when active, and has a shorter bomb cooldown,
+      but bombs themselves have reduced damage and mining AOE.
+  - balance: Mining sphere MODule now requires an upgrade in form of two pieces of
+      bileworm skin to be able to traverse lava, as opposed to being able to do so
+      innately.
+  - bugfix: Fixed MODsuit ore bag sometimes breaking permanently when depositing ores
+      into the ORM.
+  - bugfix: Fixed filter cache being infinitely expanded every time a filter is added
+  lelandkemble:
+  - balance: The Transit Tube system no longer allows high-volume freight transport
+      via Temporary Transit Pods.
+  loganuk:
+  - map: Icebox - AI Core - Standard walls in core become reinforced,  standard windoor
+      becomes reinforced version
+  necromanceranne:
+  - balance: Concussive gauntlets grant hunter boxing, much like punching mitts.
+  - balance: Punching mitts are now an option from the mining voucher, and can be
+      bought in the mining vendor for 1000 points.
+  - balance: Consolidates mining loot into random spawners instead of switch cases.
+  - balance: Demonic portals drop locked chests rather than just flat out the loot.
+  - balance: Removes the ship in a bottle, transference potion, adamantine extract,
+      clown hulk mob and ice boots from the possible demonic portal spawn list. Ship
+      in a bottle still exists for necropolis tendril spawns.
+  - balance: Removes the cursed katana from the necropolis tendril spawn list.
+  - balance: In instances where you would spawn a design disk for a modkit, you instead...
+      just get the modkit. No middle manning with science.
+  paganiy:
+  - bugfix: containers no longer close unexpectedly when the HUD refreshes (e.g.,
+      when lying down/getting up)
+  - bugfix: the dye spray can dye the external body parts again

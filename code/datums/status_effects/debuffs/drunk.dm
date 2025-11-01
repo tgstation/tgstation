@@ -18,8 +18,8 @@
 	alert_type = null
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
-	/// If TRUE, drunk_value will be capped at 51, preventing serious damage 
-	var/iron_liver = FALSE 
+	/// If TRUE, drunk_value will be capped at 51, preventing serious damage
+	var/iron_liver = FALSE
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
@@ -108,6 +108,7 @@
 	. = ..()
 	owner.sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 	owner.add_mood_event(id, /datum/mood_event/drunk, drunk_value)
+	owner.clear_mood_event("[id]_after")
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(drunk_gun_fired))
 
 /datum/status_effect/inebriated/drunk/on_remove()
@@ -122,6 +123,8 @@
 /// Clears any side effects we set due to being drunk.
 /datum/status_effect/inebriated/drunk/proc/clear_effects()
 	owner.clear_mood_event(id)
+	if(!QDELING(owner) && HAS_PERSONALITY(owner, /datum/personality/bibulous))
+		owner.add_mood_event("[id]_after", /datum/mood_event/drunk_after)
 
 	if(owner.sound_environment_override == SOUND_ENVIRONMENT_PSYCHOTIC)
 		owner.sound_environment_override = SOUND_ENVIRONMENT_NONE
@@ -233,7 +236,8 @@
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, \
 		motor skills, and mental cognition. Make sure to act like it."
-	icon_state = "drunk"
+	use_user_hud_icon = TRUE
+	overlay_state = "drunk"
 
 #undef BALLMER_PEAK_LOW_END
 #undef BALLMER_PEAK_HIGH_END

@@ -1,12 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
+/obj/effect/mapping_helpers/no_atoms_ontop,
 /turf/template_noop,
 /area/template_noop)
 "l" = (
+/obj/effect/mapping_helpers/no_atoms_ontop,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
 "L" = (
 /obj/structure/ore_vent/random/icebox/lower,
+/obj/effect/mapping_helpers/no_atoms_ontop,
+/obj/effect/mapping_helpers/no_atoms_ontop,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
 

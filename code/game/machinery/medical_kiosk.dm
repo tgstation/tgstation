@@ -10,8 +10,6 @@
 /// Shows if the machine is being used for a reagent scan.
 #define KIOSK_SCANNING_REAGENTS (1<<3)
 
-
-
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
@@ -114,34 +112,40 @@
 
 	return board.custom_cost
 
-/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
-		return
-	else if(default_deconstruction_crowbar(O))
-		return
+/obj/machinery/medical_kiosk/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-	if(istype(O, /obj/item/scanner_wand))
-		var/obj/item/scanner_wand/W = O
-		if(scanner_wand)
-			balloon_alert(user, "already has a wand!")
-			return
-		if(HAS_TRAIT(O, TRAIT_NODROP) || !user.transferItemToLoc(O, src))
-			balloon_alert(user, "stuck to your hand!")
-			return
-		user.visible_message(span_notice("[user] snaps [O] onto [src]!"))
-		balloon_alert(user, "wand returned")
-		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
-		if(W.selected_target)
-			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
-			if(patient_ref != target_ref)
-				clearScans()
-			patient_ref = target_ref
-			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
-			W.selected_target = null
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		scanner_wand = O
-		return
-	return ..()
+/obj/machinery/medical_kiosk/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/medical_kiosk/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/scanner_wand))
+		return NONE
+
+	var/obj/item/scanner_wand/wand = tool
+	if(scanner_wand)
+		balloon_alert(user, "already has a wand!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		balloon_alert(user, "stuck to your hand!")
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] snaps [tool] onto [src]!"))
+	balloon_alert(user, "wand returned")
+	//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
+	if(wand.selected_target)
+		var/datum/weakref/target_ref = WEAKREF(wand.return_patient())
+		if(patient_ref != target_ref)
+			clearScans()
+		patient_ref = target_ref
+		user.visible_message(span_notice("[wand.return_patient()] has been set as the current patient."))
+		wand.selected_target = null
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	scanner_wand = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()

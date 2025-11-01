@@ -370,14 +370,14 @@ rough example of the "cone" made by the 3 dirs checked
 
 /// Returns an x and y value require to reverse the transformations made to center an oversized icon
 /atom/proc/get_oversized_icon_offsets()
-	if (pixel_x == 0 && pixel_y == 0)
+	if (!base_pixel_x && !base_pixel_y && !base_pixel_w && !base_pixel_z)
 		return list("x" = 0, "y" = 0)
 	var/list/icon_dimensions = get_icon_dimensions(icon)
 	var/icon_width = icon_dimensions["width"]
 	var/icon_height = icon_dimensions["height"]
 	return list(
-		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
-		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
+		"x" = icon_width > ICON_SIZE_X && (base_pixel_x || base_pixel_w) ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
+		"y" = icon_height > ICON_SIZE_Y && (base_pixel_y || base_pixel_z) ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
 	)
 
 /// Helper for easily adding blood from INSIDE a mob to an atom (NOT blood ON the mob)
