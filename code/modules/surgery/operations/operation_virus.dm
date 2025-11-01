@@ -3,7 +3,7 @@
 	rnd_name = "Viroplasty"
 	desc = "Force a symbiotic relationship between a patient and a virus it is infected with."
 	rnd_desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. \
-		The patient must be dosed with spaceacillin, virus food, and formaldehyde."
+		The patient will be completely immune to the effects of the virus, but will carry and spread it to others."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		TOOL_WELDER = 2,
@@ -21,12 +21,10 @@
 	)
 
 /datum/surgery_operation/basic/viral_bonding/all_required_strings()
-	return list("the patient must have a virus to bond") + ..()
-
-/datum/surgery_operation/basic/viral_bonding/any_required_strings()
 	. = ..()
+	. += "the patient must have a virus to bond"
 	for(var/datum/reagent/chem as anything in required_chems)
-		. += "patient must be dosed with [chem::name]"
+		. += "the patient must be dosed with >1u [chem::name]"
 
 /datum/surgery_operation/basic/viral_bonding/get_default_radial_image()
 	return image(/obj/item/clothing/mask/surgical)

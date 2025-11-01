@@ -10,7 +10,10 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/limb/filter_blood/all_required_strings()
-	return list("operate on chest") + ..() + list("the patient must not be husked")
+	. = list()
+	. += "operate on chest"
+	. += ..()
+	. += "the patient must not be husked"
 
 /datum/surgery_operation/limb/filter_blood/get_default_radial_image()
 	return image(/obj/item/blood_filter)

@@ -32,7 +32,7 @@
 /datum/surgery_operation/organ/repair/all_blocked_strings()
 	. = ..()
 	if(!repeatable)
-		. += "the organ must not have been repaired prior"
+		. += "the organ must not have been surgically repaired prior"
 
 /datum/surgery_operation/organ/repair/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	organ.set_organ_damage(organ.maxHealth * heal_to_percent)
@@ -316,7 +316,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/organ/repair/ears/all_blocked_strings()
-	return list("if the limb has bones, they must be intact") + ..()
+	return ..() + list("if the limb has bones, they must be intact")
 
 /datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/ears/organ)
 	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
@@ -385,7 +385,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/organ/repair/eyes/all_blocked_strings()
-	return list("if the limb has bones, they must be intact") + ..()
+	return ..() + list("if the limb has bones, they must be intact")
 
 /datum/surgery_operation/organ/repair/eyes/state_check(obj/item/organ/organ)
 	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)

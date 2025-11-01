@@ -367,12 +367,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Returns a list of strings indicating requirements for this operation
 /datum/surgery_operation/proc/all_required_strings()
+	SHOULD_CALL_PARENT(TRUE)
 	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
 	if(!(operation_flags & OPERATION_STANDING_ALLOWED))
 		. += "the patient must be lying down"
 
 /// Returns a list of strings indicating any of the requirements for this operation
 /datum/surgery_operation/proc/any_required_strings()
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	// grouped states are filtered down to make it more readable
 	var/parsed_any_flags = any_surgery_states_required
@@ -390,12 +392,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /// Returns a list of strings indicating optional conditions for this operation
 /datum/surgery_operation/proc/any_optional_strings()
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	if(operation_flags & OPERATION_SELF_OPERABLE)
 		. += "a surgeon may perform this on themselves"
 
 /// Returns a list of strings indicating blocked states for this operation
 /datum/surgery_operation/proc/all_blocked_strings()
+	SHOULD_CALL_PARENT(TRUE)
 	. = list()
 	// grouped states are filtered down to make it more readable
 	var/parsed_blocked_flags = any_surgery_states_blocked
@@ -908,11 +912,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/required_bodytype = BODYTYPE_ORGANIC
 
 /datum/surgery_operation/basic/all_required_strings()
-	var/list/requirements = list()
+	. = list()
 	if(required_biotype)
-		requirements += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")][target_zone ? " [parse_zone(target_zone)]" : ""]"
-
-	return requirements + ..()
+		. += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")][target_zone ? " [parse_zone(target_zone)]" : ""]"
+	else if(target_zone)
+		. += "operate on [parse_zone(target_zone)]"
+	. += ..()
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)

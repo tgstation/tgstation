@@ -13,7 +13,11 @@
 	return image(/obj/item/autopsy_scanner)
 
 /datum/surgery_operation/limb/autopsy/all_required_strings()
-	return ..() + list("the patient must be deceased", "the patient must not have been autopsied prior")
+	. = list()
+	. += "operate on chest"
+	. += ..()
+	. += "the patient must be deceased"
+	. += "the patient must not have been autopsied prior"
 
 /datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone != BODY_ZONE_CHEST)

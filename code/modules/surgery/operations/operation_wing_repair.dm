@@ -17,13 +17,10 @@
 	return image(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_monarch_BEHIND")
 
 /datum/surgery_operation/organ/fix_wings/all_required_strings()
-	return ..() + list(
-		"the wings must be burnt",
-		"the patient must be dosed with >5u [/datum/reagent/medicine/c2/synthflesh::name]",
-	)
+	return ..() + list("the wings must be burnt", "the patient must be dosed with >5u [/datum/reagent/medicine/c2/synthflesh::name]")
 
 /datum/surgery_operation/organ/fix_wings/all_blocked_strings()
-	return list("if the limb has bones, they must be intact") + ..()
+	return ..() + list("if the limb has bones, they must be intact")
 
 /datum/surgery_operation/organ/fix_wings/state_check(obj/item/organ/wings/moth/organ)
 	if(!organ.burnt)

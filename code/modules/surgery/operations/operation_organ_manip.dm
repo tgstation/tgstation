@@ -238,7 +238,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/all_blocked_strings()
-	return list("if the limb has bones, they must be intact") + ..()
+	return ..() + list("if the limb has bones, they must be intact")
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
 	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)

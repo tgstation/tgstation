@@ -16,7 +16,7 @@
 	return image('icons/obj/medical/syringe.dmi', "implantcase-b")
 
 /datum/surgery_operation/basic/implant_removal/any_optional_strings()
-	return list("have an implant case nearby or inhand to store removed implants")
+	return ..() + list("have an implant case below or inhand to store removed implants")
 
 /datum/surgery_operation/basic/implant_removal/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

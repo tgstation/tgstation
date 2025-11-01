@@ -25,11 +25,11 @@
 /datum/surgery_operation/limb/bionecrosis/any_required_strings()
 	. = ..()
 	for(var/datum/reagent/chem as anything in zombie_chems)
-		. += "patient or tool must contain >1u [chem::name]"
+		. += "the patient or tool must contain >1u [chem::name]"
 
 /datum/surgery_operation/limb/bionecrosis/all_blocked_strings()
 	. = ..()
-	. += "the limb must not already have a romerol tumor"
+	. += "the limb must not already have a Romerol tumor"
 
 /datum/surgery_operation/limb/bionecrosis/state_check(obj/item/bodypart/limb)
 	if(locate(/obj/item/organ/zombie_infection) in limb)

@@ -2,7 +2,7 @@
 	name = "experimental dissection"
 	rnd_name = "Experimental Androtomy (Experimental Dissection and Autopsy)"
 	desc = "Perform an experimental dissection on a patient to obtain research points."
-	rnd_desc = 	"An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
+	rnd_desc = "An experimental surgical procedure that dissects bodies in exchange for research points at ancient R&D consoles."
 	implements = list(
 		/obj/item/autopsy_scanner = 1,
 		TOOL_SCALPEL = 1.66,
@@ -11,10 +11,13 @@
 	)
 	time = 12 SECONDS
 	operation_flags = OPERATION_LOCKED | OPERATION_ALWAYS_FAILABLE | OPERATION_MORBID | OPERATION_IGNORE_CLOTHES
+	required_biotype = NONE
 	any_surgery_states_required = SURGERY_SKIN_STATES
 
 /datum/surgery_operation/basic/dissection/all_required_strings()
-	return list("the patient must be deceased", "the patient must not have been dissected prior") + ..()
+	. += ..()
+	. += "the patient must be deceased"
+	. += "the patient must not have been dissected prior"
 
 /datum/surgery_operation/basic/dissection/state_check(mob/living/patient)
 	return !HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, EXPERIMENTAL_SURGERY_TRAIT) && patient.stat == DEAD

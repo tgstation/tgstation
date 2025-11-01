@@ -20,7 +20,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/basic/revival/all_required_strings()
-	return list("the patient must be deceased", "the patient must be in a revivable state") + ..()
+	return ..() + list("the patient must be deceased", "the patient must be in a revivable state")
 
 /datum/surgery_operation/basic/revival/state_check(mob/living/patient)
 	if(patient.stat != DEAD)

@@ -25,7 +25,10 @@
 	return image(/obj/item/food/meat/slab/human)
 
 /datum/surgery_operation/limb/lipoplasty/all_required_strings()
-	return list("operate on chest") + ..() + list("the patient must excess fat to remove")
+	. = list()
+	. += "operate on chest"
+	. += ..()
+	. += "the patient must excess fat to remove"
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match

@@ -27,7 +27,7 @@
 	return list("operate on chest (but target the missing limb)") + ..()
 
 /datum/surgery_operation/prosthetic_replacement/any_required_strings()
-	return list("supply a replacement limb", "supply any suitable item if working on arms")
+	return list("supply a replacement limb", "supply any suitable item if working on arms") + ..()
 
 /datum/surgery_operation/prosthetic_replacement/get_radial_options(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_prosthetic_options, tool.type)

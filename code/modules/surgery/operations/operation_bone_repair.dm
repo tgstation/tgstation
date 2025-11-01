@@ -154,7 +154,7 @@
 	return image(/obj/item/hemostat)
 
 /datum/surgery_operation/limb/prepare_cranium_repair/all_required_strings()
-	return list("the cranium must be fractured")
+	return list("the cranium must be fractured") + ..()
 
 /datum/surgery_operation/limb/prepare_cranium_repair/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds
@@ -193,7 +193,7 @@
 	return image(/obj/item/stack/medical/bone_gel)
 
 /datum/surgery_operation/limb/repair_cranium/all_required_strings()
-	return list("the debris has been cleared from the cranial fissure")
+	return list("the debris has been cleared from the cranial fissure") + ..()
 
 /datum/surgery_operation/limb/repair_cranium/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds

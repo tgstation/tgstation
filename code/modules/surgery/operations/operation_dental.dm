@@ -8,7 +8,10 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_DRILLED
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
-	return list("operate on head", "target head must have teeth") + ..()
+	. = list()
+	. += "operate on head"
+	. += ..()
+	. += "he head must have teeth"
 
 /datum/surgery_operation/limb/add_dental_implant/get_default_radial_image()
 	return image('icons/hud/implants.dmi', "reagents")
