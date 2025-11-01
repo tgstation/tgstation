@@ -22,7 +22,7 @@
 	// without external aid (earmuffs, drugs)
 
 	/// Resistance against loud noises
-	var/bang_protect = 0
+	var/bang_protect = EAR_PROTECTION_NONE
 	/// Multiplier for both long term and short term ear damage
 	var/damage_multiplier = 1
 
@@ -276,7 +276,7 @@
 	name = "volume-adjusting cybernetic ears"
 	icon_state = "ears-c-u"
 	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
-	bang_protect = 1
+	bang_protect = EAR_PROTECTION_NORMAL
 	damage_multiplier = 0.5
 
 // "X-ray ears" that let you hear through walls

@@ -373,7 +373,7 @@
 			span_danger("The siren pierces your hearing!"),
 		)
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			if(carbon.get_ear_protection())
+			if(carbon.get_ear_protection() > 0)
 				continue
 			carbon.adjust_confusion(6 SECONDS)
 
@@ -386,18 +386,20 @@
 			to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
 	else
 		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
-		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			var/bang_effect = carbon.soundbang_act(2, 0, 0, 5)
+		for(var/mob/living/living in get_hearers_in_view(9, user))
+			var/bang_effect = living.soundbang_act(SOUNDBANG_STRONG, 0, 0, 5)
 			switch(bang_effect)
+				if(0)
+					continue
 				if(1)
-					carbon.adjust_confusion(5 SECONDS)
-					carbon.adjust_stutter(20 SECONDS)
-					carbon.adjust_jitter(20 SECONDS)
-				if(2)
-					carbon.Paralyze(40)
-					carbon.adjust_confusion(10 SECONDS)
-					carbon.adjust_stutter(30 SECONDS)
-					carbon.adjust_jitter(50 SECONDS)
+					living.adjust_confusion(5 SECONDS)
+					living.adjust_stutter(20 SECONDS)
+					living.adjust_jitter(20 SECONDS)
+				else
+					living.Paralyze(4 SECONDS)
+					living.adjust_confusion(10 SECONDS)
+					living.adjust_stutter(30 SECONDS)
+					living.adjust_jitter(50 SECONDS)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.log_message("used an emagged Cyborg Harm Alarm", LOG_ATTACK)

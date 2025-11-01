@@ -1,5 +1,5 @@
 /datum/component/wearertargeting/earprotection
-	signals = list(COMSIG_CARBON_SOUNDBANG)
+	signals = list(COMSIG_LIVING_GET_EAR_PROTECTION)
 	mobtype = /mob/living/carbon
 	proctype = PROC_REF(reducebang)
 	var/reduce_amount = 1
@@ -11,4 +11,4 @@
 		src.reduce_amount = reduce_amount
 
 /datum/component/wearertargeting/earprotection/proc/reducebang(datum/source, list/reflist)
-	reflist[1] -= reduce_amount
+	reflist[EAR_PROTECTION_ARG] -= reduce_amount

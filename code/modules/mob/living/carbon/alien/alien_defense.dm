@@ -1,9 +1,9 @@
 
 /mob/living/carbon/alien/get_eye_protection()
-	return ..() + 2 //potential cyber implants + natural eye protection
+	return ..() + FLASH_PROTECTION_WELDER //potential cyber implants + natural eye protection
 
-/mob/living/carbon/alien/get_ear_protection()
-	return 2 //no ears
+/mob/living/carbon/alien/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY //no ears
 
 /mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
@@ -86,10 +86,6 @@ In all, this is a lot like the monkey code. /N
 			sound_damage(15, 120 SECONDS)
 
 	return TRUE
-
-
-/mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
-	return 0
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)
 	return FALSE//aliens are immune to acid.

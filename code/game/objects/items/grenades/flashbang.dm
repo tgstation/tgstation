@@ -46,7 +46,7 @@
 	if(living_mob.stat == DEAD) //They're dead!
 		return
 	living_mob.show_message(span_warning("BANG"), MSG_AUDIBLE)
-	var/distance = max(0, get_dist(get_turf(src), turf))
+	var/distance = get_dist(get_turf(src), turf)
 	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
 
 //Flash
@@ -61,19 +61,19 @@
 		living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc)
-		living_mob.soundbang_act(2, 20 SECONDS, 10, 15)
+	if(!distance)
+		living_mob.soundbang_act(SOUNDBANG_OVERWHELMING, 20 SECONDS, 10, 15)
 		return
 
 	if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
-		living_mob.soundbang_act(2, 3 SECONDS, 5)
+		living_mob.soundbang_act(SOUNDBANG_STRONG, 3 SECONDS, 5)
 		return
 
 	if(distance <= sweetspot_range)
-		living_mob.soundbang_act(1, max(200 / max(1, distance), 60), rand(0, 5))
+		living_mob.soundbang_act(SOUNDBANG_NORMAL, max(20 SECONDS / max(1, distance), 60), rand(0, 5))
 		return
 
-	if(!living_mob.soundbang_act(1, 0, rand(0, 2)))
+	if(!living_mob.soundbang_act(SOUNDBANG_NORMAL, 0, rand(0, 2)))
 		return
 
 	living_mob.adjust_staggered_up_to(max(200/max(1, distance), 5), 10 SECONDS)
@@ -133,17 +133,17 @@
 	if(living_mob.stat == DEAD) //They're dead!
 		return
 	living_mob.show_message(span_warning("POP"), MSG_AUDIBLE)
-	var/distance = max(0, get_dist(get_turf(src), turf))
+	var/distance = get_dist(get_turf(src), turf)
 //Flash
 	if(living_mob.flash_act(affect_silicon = 1))
 		living_mob.Paralyze(max(10/max(1, distance), 5))
 		living_mob.Knockdown(max(100/max(1, distance), 60))
 
 //Bang
-	if(!distance || loc == living_mob || loc == living_mob.loc)
-		living_mob.Paralyze(20)
-		living_mob.Knockdown(200)
-		living_mob.soundbang_act(1, 200, 10, 15)
+	if(!distance)
+		living_mob.Paralyze(2 SECONDS)
+		living_mob.Knockdown(20 SECONDS)
+		living_mob.soundbang_act(SOUNDBANG_NORMAL, 200, 10, 15)
 		if(living_mob.apply_damages(brute = 10, burn = 10))
 			to_chat(living_mob, span_userdanger("The blast from \the [src] bruises and burns you!"))
 
