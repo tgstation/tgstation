@@ -5,7 +5,6 @@
 	desc = "A patch of dirt."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
-	gender = PLURAL
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
