@@ -271,13 +271,13 @@
 
 /* AI Turrets */
 /obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
-	if(ailock)
+	if(ai_block)
 		return CLICK_ACTION_BLOCKING
 	toggle_lethal(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/turretid/AICtrlClick(mob/living/silicon/ai/user) //turns off/on Turrets
-	if(ailock)
+	if(ai_block)
 		return
 	toggle_on(user)
 
