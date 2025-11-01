@@ -219,8 +219,8 @@
 /proc/mob_only_listeners(list/atom/movable/hearers)
 	RETURN_TYPE(/list/mob)
 
-	var/hearers_length = hearers.len
-	if(isnull(hearers) || !hearers_length)
+	var/hearers_length
+	if(isnull(hearers) || !(hearers_length = hearers.len))
 		return list()
 
 	for(var/hearer_index in 1 to hearers_length)
