@@ -138,28 +138,13 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		. += SANITIZE_FILENAME(node)
 
 /**
- * Verifys wether a string or file ends with a given file type. If you can its likely faster to use is_file_type_in_list_indexed
- *
- * Arguments:
- * * file - A string or file. No checks for if this file ACCTALLY exists
- * * file_types - A list of strings to check against [e.g. list(".ogg", ".wav")]
- */
-/proc/is_file_type_in_list(file, file_types = list())
-	var/extstart = findlasttext("[file]", ".")
-	if(!extstart)
-		return FALSE
-	var/ext = copytext("[file]", extstart)
-	if(ext in file_types)
-		return TRUE
-
-/**
- * Verifys wether a string or file ends with a given file type. Version for slightly faster speeds.
+ * Verifys wether a string or file ends with a given file type.
  *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
  * * file_types - A list of strings to check against [e.g. list("ogg" = TRUE, "mp3" = TRUE)]
  */
-/proc/is_file_type_in_list_indexed(file, file_types = list())
+/proc/is_file_type_in_list(file, file_types = list())
 	var/extstart = findlasttext("[file]", ".")
 	if(!extstart)
 		return FALSE

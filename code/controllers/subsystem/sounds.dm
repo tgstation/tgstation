@@ -75,9 +75,6 @@ SUBSYSTEM_DEF(sounds)
 		".aiff"
 	)
 
-	/// File types we can sniff the duration from using rustg.
-	var/list/safe_extensions = list(".ogg", ".mp3")
-
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
 	find_all_available_sounds()
