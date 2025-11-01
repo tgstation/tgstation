@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		. += SANITIZE_FILENAME(node)
 
 /**
- * Verifys wether a string or file ends with a given file type
+ * Verifys wether a string or file ends with a given file type. If you can its likely faster to use is_file_type_in_list_indexed
  *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
@@ -172,13 +172,13 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
  *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
- * * file_types - A list of strings to check against [e.g. ".ogg"]
+ * * file_type - A string to check against [e.g. "ogg"]
  */
 /proc/is_file_type(file, file_type)
 	var/extstart = findlasttext("[file]", ".")
 	if(!extstart)
 		return FALSE
-	var/ext = copytext("[file]", extstart)
+	var/ext = copytext("[file]", extstart + 1)
 	if(ext == file_type)
 		return TRUE
 

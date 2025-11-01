@@ -3,6 +3,6 @@
 
 #define IS_SOUND_FILE(file) is_file_type_in_list_indexed(##file, SSsounds.byond_sound_formats)
 
-#define IS_OGG_FILE(file) is_file_type(##file, ".ogg")
-#define IS_WAV_FILE(file) is_file_type(##file, ".wav")
-#define IS_MP3_FILE(file) is_file_type(##file, ".mp3")
+#define IS_OGG_FILE(file) is_file_type(##file, "ogg")
+#define IS_WAV_FILE(file) is_file_type(##file, "wav")
+#define IS_MP3_FILE(file) is_file_type(##file, "mp3")

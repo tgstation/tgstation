@@ -100,11 +100,8 @@ SUBSYSTEM_DEF(ticker)
 		music -= old_login_music
 
 	for(var/S in music)
-		var/list/L = splittext(S,".")
-		if(L.len >= 2)
-			var/ext = LOWER_TEXT(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
-			if(SSsounds.byond_sound_formats[ext])
-				continue
+		if(IS_SOUND_FILE(S))
+			continue
 		music -= S
 
 	if(!length(music))
