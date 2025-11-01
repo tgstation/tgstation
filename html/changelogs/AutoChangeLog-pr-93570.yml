@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored species unique organs slightly, particularly how they are set up at game start. Report any oddities, like invisible tails or wings"
