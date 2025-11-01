@@ -1936,7 +1936,7 @@
 /turf/template_noop,
 /area/template_noop)
 "qY" = (
-/obj/item/tank/jetpack/oxygen/security{
+/obj/item/tank/jetpack/security{
 	name = "red jetpack (oxygen)"
 	},
 /obj/item/tank/internals/oxygen/red,

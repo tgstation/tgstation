@@ -35082,8 +35082,8 @@
 "lgP" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/rack,
-/obj/item/tank/jetpack/oxygen,
-/obj/item/tank/jetpack/oxygen{
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack{
 	pixel_x = 3;
 	pixel_y = 3
 	},

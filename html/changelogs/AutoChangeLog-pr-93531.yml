@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Nohitting a combat bitrunning domain rewards a higher score."
