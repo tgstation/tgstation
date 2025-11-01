@@ -231,6 +231,10 @@
 	. = ..()
 	compatible_types = subtypesof(/datum/blood_type)
 
+/datum/blood_type/human/universal/vampire
+	name = BLOOD_TYPE_VAMPIRE
+	dna_string = "Hemovore DNA"
+
 /datum/blood_type/animal
 	name = BLOOD_TYPE_ANIMAL
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
@@ -289,10 +293,6 @@
 	// Replace only the default description
 	if (blood.desc == /obj/effect/decal/cleanable/blood::desc)
 		blood.desc = /obj/effect/decal/cleanable/blood/oil::desc
-
-/datum/blood_type/vampire
-	name = BLOOD_TYPE_VAMPIRE
-	dna_string = "Hemovore DNA"
 
 /datum/blood_type/meat // why does this exist
 	name = BLOOD_TYPE_MEAT

@@ -1077,6 +1077,36 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_ears/cat
+	name = "Basic Cybernetic Cat Ears"
+	desc = "A basic pair of cybernetic cat ears"
+	id = "cybernetic_ears_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic
+
+/datum/design/cybernetic_ears_u/cat
+	name = "Cybernetic Cat Ears"
+	desc = "A pair of cybernetic cat ears"
+	id = "cybernetic_ears_u_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/upgraded
+
+/datum/design/cybernetic_ears_whisper/cat
+	name = "Whisper-sensitive Cybernetic Cat Ears"
+	desc = "A pair of whisper-sensitive cybernetic cat ears"
+	id = "cybernetic_ears_whisper_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/whisper
+
+/datum/design/cybernetic_ears_volume/cat
+	name = "Volume-adjusting Cybernetic Cat Ears"
+	desc = "A pair of volume-adjusting cybernetic cat ears"
+	id = "cybernetic_ears_volume_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/volume
+
+/datum/design/cybernetic_ears_xray/cat
+	name = "Wall-penetrating Cybernetic Cat Ears"
+	desc = "A pair of wall-penetrating cybernetic cat ears"
+	id = "cybernetic_ears_xray_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/xray
+
 /datum/design/cybernetic_eyes
 	name = "Basic Cybernetic Eyes"
 	desc = "A basic pair of cybernetic eyes."

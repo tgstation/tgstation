@@ -88,9 +88,7 @@ GLOBAL_LIST_INIT(blood_types, init_blood_types())
 /// Initializes the list of blood type singletons
 /proc/init_blood_types()
 	. = list()
-	for(var/datum/blood_type/blood_type_path as anything in subtypesof(/datum/blood_type))
-		if(blood_type_path::abstract_type == blood_type_path) // Don't instantiate abstract blood types
-			continue
+	for(var/datum/blood_type/blood_type_path as anything in valid_subtypesof(/datum/blood_type))
 		var/datum/blood_type/new_type = new blood_type_path()
 		.[new_type.id] = new_type
 
@@ -172,7 +170,7 @@ GLOBAL_LIST_INIT(dna_identity_blocks, init_identity_block_types())
 
 /proc/init_identity_block_types()
 	. = list()
-	for(var/datum/dna_block/identity/block_path as anything in subtypesof(/datum/dna_block/identity))
+	for(var/datum/dna_block/identity/block_path as anything in valid_subtypesof(/datum/dna_block/identity))
 		var/datum/dna_block/identity/new_block = new block_path()
 		.[block_path] = new_block
 
@@ -181,6 +179,6 @@ GLOBAL_LIST_INIT(dna_feature_blocks, init_feature_block_types())
 
 /proc/init_feature_block_types()
 	. = list()
-	for(var/datum/dna_block/feature/block_path as anything in subtypesof(/datum/dna_block/feature))
+	for(var/datum/dna_block/feature/block_path as anything in valid_subtypesof(/datum/dna_block/feature))
 		var/datum/dna_block/feature/new_block = new block_path()
 		.[block_path] = new_block
