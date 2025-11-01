@@ -140,6 +140,8 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 /**
  * Verifys wether a string or file ends with a given file type.
  *
+ * this does not at all check the actual type of the file, a user could just rename it
+ *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
  * * file_types - A list of strings to check against [e.g. list("ogg" = TRUE, "mp3" = TRUE)]
@@ -154,6 +156,8 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 
 /**
  * Verifys wether a string or file ends with a given file type
+ *
+ * this does not at all check the actual type of the file, a user could just rename it
  *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
