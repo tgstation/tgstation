@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(sounds)
 	/// Any errors from precaching.
 	VAR_PRIVATE/list/precache_errors = list()
 
-	// Comments from https://github.com/DaedalusDock/daedalusdock We love Kapu.
+	// Comments from https://github.com/DaedalusDock/daedalusdock We love Francinum.
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE, //Midi, 8.3 File Name
 		"midi" = TRUE, //Midi, Long File Name
