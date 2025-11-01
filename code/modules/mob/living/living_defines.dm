@@ -251,6 +251,3 @@
 
 	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
 	var/reach_length = 1
-
-	///Whether or not an empath has seen an evil person before. Used to stop the jitter from happening again.
-	var/empath_seen_it = FALSE
