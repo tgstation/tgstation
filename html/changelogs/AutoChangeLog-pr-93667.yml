@@ -1,0 +1,11 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - map: "ALL - fix departmental maint access consistency"
+  - map: "CATWALK (MEDBAY) - add chemlab multitool, add unrestricted access helper in medbay lobby, unbolt chemlab door"
+  - map: "CATWALK, TRAM, META - syringegun consistency (now total 2)"
+  - map: "CATWALK, ICEBOX - add shower soap spawn chance"
+  - map: "NEBULASTATION -  add unrestricted access helpers in medbay"
+  - map: "DELTA - fix auxiliary tool storage access consistency"
+  - map: "ICEBOX - move syringeguns moved into windoors"
+  - map: "TRAM - add pharmacy igniters"
