@@ -354,12 +354,10 @@
 	var/delta_dam = . //for the sake of clarity
 	if(isnull(bodypart_owner))
 		update_brain_color()
-	if(delta_dam > 0)
+	if(delta_dam > 0 || damage < BRAIN_DAMAGE_MILD)
 		roll_for_brain_trauma(delta_dam)
 
 /obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
-	if(damage < BRAIN_DAMAGE_MILD)
-		return
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 
