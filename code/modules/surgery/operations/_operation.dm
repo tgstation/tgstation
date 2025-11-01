@@ -1054,10 +1054,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	return ..()
 
-/datum/surgery_operation/limb/has_surgery_state(obj/item/organ/organ, state)
+/datum/surgery_operation/organ/has_surgery_state(obj/item/organ/organ, state)
 	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, state)
 
-/datum/surgery_operation/limb/has_any_surgery_state(obj/item/organ/organ, state)
+/datum/surgery_operation/organ/has_any_surgery_state(obj/item/organ/organ, state)
 	return LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, state)
 
 /datum/surgery_operation/organ/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
