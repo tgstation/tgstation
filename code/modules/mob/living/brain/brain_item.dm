@@ -345,12 +345,21 @@
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
+/obj/item/organ/brain/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
+	. = ..()
+	update_brain_color()
+
 /obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	var/delta_dam = . //for the sake of clarity
-	if(delta_dam <= 0 || damage < BRAIN_DAMAGE_MILD)
-		return
+	if(isnull(bodypart_owner))
+		update_brain_color()
+	if(delta_dam > 0)
+		roll_for_brain_trauma(delta_dam)
 
+/obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
+	if(damage < BRAIN_DAMAGE_MILD)
+		return
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 
@@ -362,6 +371,22 @@
 			gain_trauma_type(BRAIN_TRAUMA_SPECIAL, is_boosted ? TRAUMA_RESILIENCE_SURGERY : null, natural_gain = TRUE)
 		else
 			gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
+
+#define BRAIND_DAMAGE_FILTER "brain_damage_color_filter"
+
+/obj/item/organ/brain/proc/update_brain_color()
+	if(damage <= 0)
+		if(get_filter(BRAIND_DAMAGE_FILTER))
+			transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter("#ffffff"), time = 1 SECONDS)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "brain_damage_color_filter"), 1.2 SECONDS, TIMER_UNIQUE)
+		return
+
+	var/gradient = hsv_gradient(clamp(damage / maxHealth, 0, 1), 0, "#ffffff", 1, "#7f7f7f")
+	if(!get_filter(BRAIND_DAMAGE_FILTER))
+		add_filter(BRAIND_DAMAGE_FILTER, 1, color_matrix_filter("#ffffff"))
+	transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter(gradient), time = 1 SECONDS)
+
+#undef BRAIND_DAMAGE_FILTER
 
 /obj/item/organ/brain/check_damage_thresholds()
 	. = ..()
