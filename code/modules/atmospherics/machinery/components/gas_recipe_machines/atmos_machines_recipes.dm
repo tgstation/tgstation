@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	min_temp = 5
 	max_temp = 20
 	energy_release = 2900000
-	requirements = list(/datum/gas/antinoblium = 5, /datum/gas/zauker = 20, /datum/gas/bz = 7.5)
+	requirements = list(/datum/gas/halon = 5, /datum/gas/zauker = 20, /datum/gas/bz = 7.5)
 	products = list(/obj/item/stack/sheet/mineral/zaukerite = 2)
 
 /datum/gas_recipe/crystallizer/fuel_pellet
