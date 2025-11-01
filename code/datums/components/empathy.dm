@@ -8,7 +8,7 @@
 	var/seen_it = FALSE
 
 	// What sort of information we can glean from examining someone, stored in binary (511 = everything)
-	var/visible_info = 511
+	var/visible_info = ALL
 
 	// Whether or not we can use empathy on ourselves
 	var/self_empath = FALSE
@@ -22,7 +22,7 @@
 	// Whether or not we can be smited by someoneone with the evil trait using the mending touch mutation
 	var/smite_target = TRUE
 
-/datum/component/empathy/Initialize(seen_it = FALSE, visible_info = 511, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = TRUE)
+/datum/component/empathy/Initialize(seen_it = FALSE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = TRUE)
 	if (!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -32,3 +32,10 @@
 	src.sense_dead = sense_dead
 	src.sense_whisper = sense_whisper
 	src.smite_target = smite_target
+	if(sense_whisper == TRUE)
+		ADD_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, src)
+
+/datum/component/empathy/Destroy(force = FALSE)
+	if(sense_whisper == TRUE)
+		REMOVE_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, src)
+	return ..()
