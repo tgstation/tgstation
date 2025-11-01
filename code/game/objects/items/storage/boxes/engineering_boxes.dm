@@ -18,33 +18,6 @@
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/chem_grenade/smart_metal_foam(src)
 
-/obj/item/storage/box/debugtools
-	name = "box of debug tools"
-	icon_state = "syndiebox"
-	storage_type = /datum/storage/box/debug
-
-/obj/item/storage/box/debugtools/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/card/emag=1,
-		/obj/item/construction/rcd/combat/admin=1,
-		/obj/item/disk/tech_disk/debug=1,
-		/obj/item/flashlight/emp/debug=1,
-		/obj/item/geiger_counter=1,
-		/obj/item/healthanalyzer/advanced=1,
-		/obj/item/modular_computer/pda/heads/captain=1,
-		/obj/item/pipe_dispenser=1,
-		/obj/item/stack/spacecash/c1000=50,
-		/obj/item/storage/box/beakers/bluespace=1,
-		/obj/item/storage/box/beakers/variety=1,
-		/obj/item/storage/bag/sheetsnatcher/debug=1,
-		/obj/item/uplink/debug=1,
-		/obj/item/uplink/nuclear/debug=1,
-		/obj/item/clothing/ears/earmuffs/debug=1,
-		/obj/item/gps/visible_debug=1,
-		/obj/item/clothing/glasses/meson/engine/admin=1,
-		)
-	generate_items_inside(items_inside, src)
-
 /obj/item/storage/box/plastic
 	name = "plastic box"
 	desc = "It's a solid, plastic shell box."

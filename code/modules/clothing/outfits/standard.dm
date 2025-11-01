@@ -434,7 +434,7 @@
 	mask = /obj/item/clothing/mask/gas/welding/up
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-	box = /obj/item/storage/box/debugtools
+	box = /obj/item/storage/box/debugbox/tools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/debug/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
@@ -466,7 +466,7 @@
 	mask = /obj/item/clothing/mask/gas/welding/up
 	shoes = /obj/item/clothing/shoes/magboots/advance
 
-	box = /obj/item/storage/box/debugtools
+	box = /obj/item/storage/box/debugbox/tools
 	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/admin/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
