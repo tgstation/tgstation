@@ -115,7 +115,8 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
       }
     >
       <Box color="label">
-        {(!beaker && 'N/A') || (beakerContents.length === 0 && 'Nothing')}
+        {(!beaker && 'No beaker loaded') ||
+          (beakerContents.length === 0 && 'Nothing')}
       </Box>
       {beakerContents.map((chemical) => (
         <Box key={chemical.name} color="label">
