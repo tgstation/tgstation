@@ -91,12 +91,12 @@
 	ASYNC
 		user.perform_surgery(patient_zero, scalpel)
 
-	TEST_ASSERT(DOING_INTERACTION(user, patient_zero), "User is not performing surgery on patient zero as expected")
+	TEST_ASSERT(DOING_INTERACTION(user, DOAFTER_SOURCE_SURGERY), "User is not performing surgery on patient zero as expected")
 
 	ASYNC
 		user.perform_surgery(patient_zero, scalpel)
 
-	TEST_ASSERT(!DOING_INTERACTION(user, patient_one), "User is performing surgery on patient one, despite already operating on patient zero")
+	TEST_ASSERT(!DOING_INTERACTION(user, DOAFTER_SOURCE_SURGERY), "User is performing surgery on patient one, despite already operating on patient zero")
 	ADD_TRAIT(user, TRAIT_HIPPOCRATIC_OATH, TRAIT_SOURCE_UNIT_TESTS)
 
 	ASYNC
