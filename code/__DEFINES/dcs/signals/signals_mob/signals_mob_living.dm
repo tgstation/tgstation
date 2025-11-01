@@ -365,3 +365,6 @@
 #define COMSIG_LIVING_DROP_LOOT "living_drop_loot"
 	/// Prevent loot from being dropped
 	#define COMPONENT_NO_LOOT_DROP (1<<0)
+
+/// From /mob/living/proc/mob_pickup() : (mob/living/user, obj/item/mob_holder/holder)
+#define COMSIG_LIVING_SCOOPED_UP "living_scooped_up"
