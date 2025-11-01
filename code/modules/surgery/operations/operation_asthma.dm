@@ -13,11 +13,12 @@
 	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	target_type = /obj/item/organ/lungs
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 	/// The amount of inflammation a failure or success of this surgery will reduce.
 	var/inflammation_reduction = 75
 
-/datum/surgery_operation/organ/asthmatic_bypass/state_check(obj/item/organ/organ)
-	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
+/datum/surgery_operation/organ/asthmatic_bypass/all_required_strings()
+	return list("the patient must be asthmatic") + ..()
 
 /datum/surgery_operation/organ/asthmatic_bypass/state_check(obj/item/organ/organ)
 	if(!organ.owner.has_quirk(/datum/quirk/item_quirk/asthma))

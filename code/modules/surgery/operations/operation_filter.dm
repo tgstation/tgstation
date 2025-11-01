@@ -7,18 +7,16 @@
 	operation_flags = OPERATION_LOOPING
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	success_sound = 'sound/machines/card_slide.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/filter_blood/all_required_strings()
+	return list("operate on chest") + ..() + list("the patient must not be husked")
 
 /datum/surgery_operation/limb/filter_blood/get_default_radial_image()
 	return image(/obj/item/blood_filter)
 
 /datum/surgery_operation/limb/filter_blood/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
-		return FALSE
-	if(limb.body_zone != BODY_ZONE_CHEST)
-		return FALSE
-	if(HAS_TRAIT(limb.owner, TRAIT_HUSK))
-		return FALSE
-	return TRUE
+	return limb.body_zone == BODY_ZONE_CHEST && !HAS_TRAIT(limb.owner, TRAIT_HUSK)
 
 /datum/surgery_operation/limb/filter_blood/can_loop(mob/living/patient, obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	return ..() && has_filterable_chems(limb.owner, tool)

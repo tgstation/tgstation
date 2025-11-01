@@ -14,12 +14,10 @@
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	required_organ_flag = ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/brain
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/organ/pacify/get_default_radial_image()
 	return image(/atom/movable/screen/alert/status_effect/high)
-
-/datum/surgery_operation/organ/pacify/state_check(obj/item/organ/brain/organ)
-	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/pacify/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

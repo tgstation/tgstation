@@ -5,6 +5,7 @@
 	desc = "Repair a patient's damaged organ."
 	required_organ_flag = ~ORGAN_ROBOTIC
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 	/// What % damage do we heal the organ to on success
 	/// Note that 0% damage = 100% health
 	var/heal_to_percent = 0.6
@@ -19,11 +20,19 @@
 		repeatable = TRUE // if it's looping it would necessitate being repeatable
 
 /datum/surgery_operation/organ/repair/state_check(obj/item/organ/organ)
-	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
-		return FALSE
 	if(organ.damage < (organ.maxHealth * heal_to_percent) || (!repeatable && HAS_TRAIT(organ, TRAIT_ORGAN_OPERATED_ON)))
-		return FALSE
+		return FALSE // conditionally available so we don't spam the radial with useless options, alas
 	return TRUE
+
+/datum/surgery_operation/organ/repair/all_required_strings()
+	. = ..()
+	if(!repeatable)
+		. += "the organ must be moderately damaged"
+
+/datum/surgery_operation/organ/repair/all_blocked_strings()
+	. = ..()
+	if(!repeatable)
+		. += "the organ must not have been repaired prior"
 
 /datum/surgery_operation/organ/repair/on_success(obj/item/organ/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	organ.set_organ_damage(organ.maxHealth * heal_to_percent)
@@ -304,15 +313,16 @@
 	time = 6.4 SECONDS
 	heal_to_percent = 0
 	repeatable = TRUE
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+
+/datum/surgery_operation/organ/repair/ears/all_blocked_strings()
+	return list("if the limb has bones, they must be intact") + ..()
 
 /datum/surgery_operation/organ/repair/ears/state_check(obj/item/organ/ears/organ)
-	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
-		return FALSE
+	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
 	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(organ.bodypart_owner))
 		return FALSE
-	if(organ.damage <= 0 && organ.temporary_deafness <= 0)
-		return FALSE
-	return TRUE
+	return TRUE // always available so you can intentionally fail it
 
 /datum/surgery_operation/organ/repair/ears/on_preop(obj/item/organ/ears/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -372,15 +382,16 @@
 	target_type = /obj/item/organ/eyes
 	heal_to_percent = 0
 	repeatable = TRUE
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+
+/datum/surgery_operation/organ/repair/eyes/all_blocked_strings()
+	return list("if the limb has bones, they must be intact") + ..()
 
 /datum/surgery_operation/organ/repair/eyes/state_check(obj/item/organ/organ)
-	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
-		return FALSE
+	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
 	if(LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(organ.bodypart_owner))
 		return FALSE
-	if(organ.damage <= 0 && !organ.owner.has_status_effect(/datum/status_effect/temporary_blindness) && !organ.owner.has_status_effect(/datum/status_effect/eye_blur))
-		return FALSE
-	return TRUE
+	return TRUE // always available so you can intentionally fail it
 
 /datum/surgery_operation/organ/repair/eyes/get_default_radial_image()
 	return image(icon = 'icons/obj/medical/surgery_ui.dmi', icon_state = "surgery_eyes")
@@ -448,13 +459,10 @@
 	heal_to_percent = 0.25
 	failure_damage_percent = 0.3
 	repeatable = TRUE
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/organ/repair/brain/state_check(obj/item/organ/brain/organ)
-	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED))
-		return FALSE
-	if(organ.damage <= 0 && !length(organ.traumas))
-		return FALSE
-	return TRUE
+	return TRUE // always available so you can intentionally fail it
 
 /datum/surgery_operation/organ/repair/brain/on_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

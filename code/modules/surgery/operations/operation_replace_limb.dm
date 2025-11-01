@@ -7,6 +7,7 @@
 		/obj/item/bodypart = 1,
 	)
 	time = 3.2 SECONDS
+	all_surgery_states_required = SURGERY_SKIN_OPEN
 	/// Radial slice datums for every augment type
 	VAR_PRIVATE/list/cached_augment_options
 
@@ -32,13 +33,7 @@
 	return TRUE
 
 /datum/surgery_operation/limb/replace_limb/state_check(obj/item/bodypart/limb)
-	if(HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS))
-		return FALSE
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
-		return FALSE
-	if(limb.bodypart_flags & BODYPART_UNREMOVABLE)
-		return FALSE
-	return TRUE
+	return !HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS) && !(limb.bodypart_flags & BODYPART_UNREMOVABLE)
 
 /datum/surgery_operation/limb/replace_limb/tool_check(obj/item/bodypart/tool)
 	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))

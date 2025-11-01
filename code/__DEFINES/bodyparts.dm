@@ -99,6 +99,7 @@ DEFINE_BITFIELD(surgery_state, list(
 	"PROSTHETIC UNSECURED" = SURGERY_PROSTHETIC_UNSECURED,
 ))
 
+/// For use in translating bitfield to human readable strings. Keep in the correct order!
 #define SURGERY_STATE_READABLE list(\
 	"Skin is cut" = SURGERY_SKIN_CUT, \
 	"Skin is open" = SURGERY_SKIN_OPEN, \
@@ -110,6 +111,20 @@ DEFINE_BITFIELD(surgery_state, list(
 	"Plastic is applied" = SURGERY_PLASTIC_APPLIED, \
 	"Prosthetic is unsecured" = SURGERY_PROSTHETIC_UNSECURED \
 )
+
+/// For use in translating bitfield to steps required for surgery. Keep in the correct order!
+#define SURGERY_STATE_GUIDES(must_must_not) list(\
+	"the skin [must_must_not] be cut" = SURGERY_SKIN_CUT, \
+	"the skin [must_must_not] be open" = SURGERY_SKIN_OPEN, \
+	"the blood vessels [must_must_not] be unclamped" = SURGERY_VESSELS_UNCLAMPED, \
+	"the blood vessels [must_must_not] be clamped" = SURGERY_VESSELS_CLAMPED, \
+	"the organs [must_must_not] be cut" = SURGERY_ORGANS_CUT, \
+	"the bone [must_must_not] be drilled" = SURGERY_BONE_DRILLED, \
+	"the bone [must_must_not] be sawed" = SURGERY_BONE_SAWED, \
+	"plastic [must_must_not] be applied" = SURGERY_PLASTIC_APPLIED, \
+	"the prosthetic [must_must_not] be unsecured" = SURGERY_PROSTHETIC_UNSECURED, \
+)
+
 
 // Yes these are glorified bitflag manipulation macros, they're meant to make reading surgical operations a bit easier
 /// Checks if the input surgery state has all of the bitflags passed

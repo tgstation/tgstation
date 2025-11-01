@@ -19,17 +19,19 @@
 		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/limb/lipoplasty/get_default_radial_image()
 	return image(/obj/item/food/meat/slab/human)
+
+/datum/surgery_operation/limb/lipoplasty/all_required_strings()
+	return list("operate on chest") + ..() + list("the patient must excess fat to remove")
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/lipoplasty/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
-		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
 	if(!HAS_TRAIT_FROM(limb.owner, TRAIT_FAT, OBESITY) && limb.owner.nutrition < NUTRITION_LEVEL_WELL_FED)

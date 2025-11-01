@@ -19,6 +19,9 @@
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5 // just enough to stop infestation from worsening
 
+/datum/surgery_operation/limb/debride/all_required_strings()
+	return list("the limb must have a second degree or worse burn")
+
 /datum/surgery_operation/limb/debride/state_check(obj/item/bodypart/limb)
 	return !!(locate(/datum/wound/burn/flesh) in limb.wounds)
 

@@ -15,13 +15,13 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
+	any_surgery_states_blocked = SURGERY_SKIN_STATES
 
 /datum/surgery_operation/basic/incise_skin/get_default_radial_image()
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/basic/incise_skin/state_check(mob/living/patient)
-	// Only for limbless mobs
-	return !patient.has_limbs && has_any_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_SKIN_CUT)
+	return !patient.has_limbs // Only for limbless mobs
 
 /datum/surgery_operation/basic/incise_skin/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
@@ -56,13 +56,13 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
+	any_surgery_states_required = SURGERY_UNSET_ON_CLOSE // we're not picky and allow this if almost any surgical state is detected
 
 /datum/surgery_operation/basic/close_skin/get_default_radial_image()
 	return image(/obj/item/cautery)
 
 /datum/surgery_operation/basic/close_skin/state_check(mob/living/patient)
-	// Only for limbless mobs. Also we're not picky and allow this if any surgical state is detected
-	return !patient.has_limbs && has_any_surgery_state(patient)
+	return !patient.has_limbs // Only for limbless mobs
 
 /datum/surgery_operation/basic/close_skin/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))

@@ -20,8 +20,7 @@
 		/obj/item = 'sound/items/handling/surgery/scalpel1.ogg',
 	)
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
-	/// State needed to amputate
-	var/amputate_state = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/limb/amputate/get_recommended_tool()
 	return TOOL_SAW
@@ -30,8 +29,6 @@
 	return image(/obj/item/circular_saw)
 
 /datum/surgery_operation/limb/amputate/state_check(obj/item/bodypart/limb)
-	if(amputate_state && !LIMB_HAS_SURGERY_STATE(limb, amputate_state))
-		return FALSE
 	if(limb.body_zone == BODY_ZONE_CHEST)
 		return FALSE
 	if(limb.bodypart_flags & BODYPART_UNREMOVABLE)
@@ -76,7 +73,7 @@
 	time = 2 SECONDS //WAIT I NEED THAT!!
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	preop_sound = 'sound/machines/airlock/doorclick.ogg'
-	amputate_state = SURGERY_SKIN_OPEN
+	all_surgery_states_required = SURGERY_SKIN_OPEN
 
 /datum/surgery_operation/limb/amputate/mechanic/get_recommended_tool()
 	return "[TOOL_WRENCH] / [TOOL_SAW]"
@@ -97,4 +94,4 @@
 		/obj/item = 'sound/items/weapons/bladeslice.ogg',
 	)
 	success_sound = 'sound/items/handling/materials/wood_drop.ogg'
-	amputate_state = NONE
+	all_surgery_states_required = NONE

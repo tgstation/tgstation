@@ -8,6 +8,7 @@
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 	/// Items that bypass normal size restrictions for cavity implantation
 	var/list/heavy_cavity_implants
 
@@ -18,7 +19,10 @@
 	))
 
 /datum/surgery_operation/limb/cavity_implant/get_recommended_tool()
-	return "Any item"
+	return "any item"
+
+/datum/surgery_operation/limb/cavity_implant/all_required_strings()
+	return list("operate on chest") + ..()
 
 /datum/surgery_operation/limb/cavity_implant/get_default_radial_image()
 	var/image/base = ..()
@@ -26,11 +30,7 @@
 	return base
 
 /datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
-		return FALSE
-	if(limb.body_zone != BODY_ZONE_CHEST)
-		return FALSE
-	return TRUE
+	return limb.body_zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/limb/cavity_implant/tool_check(obj/item/tool)
 	if(tool.w_class > WEIGHT_CLASS_NORMAL && !is_type_in_typecache(tool, heavy_cavity_implants))
@@ -84,6 +84,10 @@
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/undo_cavity_implant/all_required_strings()
+	return list("operate on chest") + ..()
 
 /datum/surgery_operation/limb/undo_cavity_implant/get_radial_options(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
 	// Not bothering to cache this as the chance of hitting the same cavity item in the same round is rather low
@@ -95,8 +99,6 @@
 	return option
 
 /datum/surgery_operation/limb/undo_cavity_implant/state_check(obj/item/bodypart/chest/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
-		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
 	// unlike implant removal, don't show the surgery as an option unless something is actually implanted

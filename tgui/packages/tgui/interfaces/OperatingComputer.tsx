@@ -5,6 +5,7 @@ import {
   Blink,
   Box,
   Button,
+  Collapsible,
   Icon,
   Input,
   LabeledList,
@@ -62,7 +63,7 @@ export const OperatingComputer = () => {
 
   return (
     <Window
-      width={tab === ComputerTabs.PatientState ? 345 : 415}
+      width={tab === ComputerTabs.PatientState ? 350 : 430}
       height={610}
       theme="operating_computer"
     >
@@ -137,6 +138,7 @@ type OperationData = {
   desc: string;
   tool_rec: string;
   priority: BooleanLike;
+  requirements: string[][];
   // show operation as a recommended next step
   show_as_next: BooleanLike;
   // show operation in the full list
@@ -393,6 +395,74 @@ const PatientStateView = (props: PatientStateViewProps) => {
   );
 };
 
+type SurgeryRequirementsInnerProps = {
+  cat_text: string;
+  cat_contents: string[];
+};
+
+const SurgeryRequirementsInner = (props: SurgeryRequirementsInnerProps) => {
+  const { cat_text, cat_contents } = props;
+
+  return (
+    <Stack.Item>
+      <Stack.Item italic pb={1}>
+        {cat_text}
+      </Stack.Item>
+      <Stack.Item>
+        <Stack vertical>
+          {cat_contents.map((req, i) => (
+            <Stack.Item key={i}>- {capitalizeFirst(req)}</Stack.Item>
+          ))}
+        </Stack>
+      </Stack.Item>
+    </Stack.Item>
+  );
+};
+
+function extractRequirementMap(
+  surgery: OperationData,
+): Record<string, string[]> {
+  const hard_requirements = surgery.requirements[0];
+  const soft_requirements = surgery.requirements[1];
+  const optional_requirements = surgery.requirements[2];
+  const blocked_requirements = surgery.requirements[3];
+
+  // you *have* to have one of the soft requirements, so if there's only one...
+  if (soft_requirements.length === 1) {
+    hard_requirements.push(soft_requirements[0]);
+    soft_requirements.length = 0;
+  }
+
+  const optional_title = () => {
+    if (optional_requirements.length === 1) {
+      if (hard_requirements.length === 0) return 'The following is optional:';
+      return 'Additionally, the following is optional:';
+    }
+    if (hard_requirements.length === 0)
+      return 'All of the following are optional:';
+    return 'Additionally, all of the following are optional:';
+  };
+
+  const blocked_title = () => {
+    if (blocked_requirements.length === 1) {
+      if (hard_requirements.length === 0)
+        return 'The following would block the procedure:';
+      return 'However, the following would block the procedure:';
+    }
+    if (hard_requirements.length === 0)
+      return 'Any of the following would block the procedure:';
+    return 'However, any of the following would block the procedure:';
+  };
+
+  return {
+    [`${hard_requirements.length === 1 ? 'The' : 'All of the'} following are required:`]:
+      hard_requirements,
+    'Additionally, one of the following is required:': soft_requirements,
+    [optional_title()]: optional_requirements,
+    [blocked_title()]: blocked_requirements,
+  };
+}
+
 type SurgeryProceduresViewProps = {
   searchText: string;
   setSearchText: (text: string) => void;
@@ -464,6 +534,7 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
     >
       {surgeryList.map((surgery) => {
         const { name, tool, true_name } = formatSurgeryName(surgery, true);
+
         return (
           <Stack vertical key={surgery.name} pb={2}>
             <Stack.Item>
@@ -492,7 +563,36 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
                 }}
                 color="label"
               >
-                {surgery.desc}
+                <Stack vertical>
+                  <Stack.Item bold>{surgery.desc}</Stack.Item>
+                  <Stack.Item>
+                    <Collapsible title="Requirements">
+                      <Stack
+                        pl={1}
+                        ml={0.5}
+                        style={{
+                          borderStyle: 'dashed',
+                          borderBottom: '0',
+                          borderRight: '0',
+                          borderTop: '0',
+                          borderWidth: '2px',
+                          flexDirection: 'column',
+                        }}
+                      >
+                        {Object.entries(extractRequirementMap(surgery)).map(
+                          ([cat_text, cat_contents], i) =>
+                            cat_contents.length > 0 ? (
+                              <SurgeryRequirementsInner
+                                key={i}
+                                cat_text={cat_text}
+                                cat_contents={cat_contents}
+                              />
+                            ) : null,
+                        )}
+                      </Stack>
+                    </Collapsible>
+                  </Stack.Item>
+                </Stack>
               </Box>
             </Stack.Item>
           </Stack>

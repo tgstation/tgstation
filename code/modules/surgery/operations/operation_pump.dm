@@ -9,16 +9,16 @@
 	time = 2 SECONDS
 	required_organ_flag = ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/stomach
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/organ/stomach_pump/get_default_radial_image()
 	return image(/atom/movable/screen/alert/disgusted)
 
-/datum/surgery_operation/organ/stomach_pump/state_check(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool)
-	if(!LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
-		return FALSE
-	if(HAS_TRAIT(organ.owner, TRAIT_HUSK))
-		return FALSE
-	return TRUE
+/datum/surgery_operation/organ/stomach_pump/all_required_strings()
+	return ..() + list("the patient must not be husked")
+
+/datum/surgery_operation/organ/stomach_pump/state_check(obj/item/organ/stomach/organ)
+	return !HAS_TRAIT(organ.owner, TRAIT_HUSK)
 
 /datum/surgery_operation/organ/stomach_pump/on_preop(obj/item/organ/stomach/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

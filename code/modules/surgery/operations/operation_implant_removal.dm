@@ -10,12 +10,13 @@
 	)
 	time = 6.4 SECONDS
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/basic/implant_removal/get_default_radial_image()
 	return image('icons/obj/medical/syringe.dmi', "implantcase-b")
 
-/datum/surgery_operation/basic/implant_removal/state_check(mob/living/patient)
-	return has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+/datum/surgery_operation/basic/implant_removal/any_optional_strings()
+	return list("have an implant case nearby or inhand to store removed implants")
 
 /datum/surgery_operation/basic/implant_removal/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

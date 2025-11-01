@@ -14,6 +14,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
+	any_surgery_states_blocked = SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/mechanical_incision/get_default_radial_image()
 	return image(/obj/item/screwdriver)
@@ -21,9 +22,6 @@
 /datum/surgery_operation/limb/mechanical_incision/tool_check(obj/item/tool)
 	// Require sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
-
-/datum/surgery_operation/limb/mechanical_incision/state_check(obj/item/bodypart/limb)
-	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES)
 
 /datum/surgery_operation/limb/mechanical_incision/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -52,12 +50,10 @@
 	time = 1 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
 	success_sound = 'sound/machines/airlock/doorclick.ogg'
+	all_surgery_states_required = SURGERY_SKIN_CUT
 
 /datum/surgery_operation/limb/mechanical_open/get_default_radial_image()
 	return image('icons/hud/screen_gen.dmi', "arrow_large_still")
-
-/datum/surgery_operation/limb/mechanical_open/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_CUT)
 
 /datum/surgery_operation/limb/mechanical_open/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -90,6 +86,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
+	any_surgery_states_required = SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/mechanical_close/get_default_radial_image()
 	return image(/obj/item/screwdriver)
@@ -99,12 +96,7 @@
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
-		return FALSE
-	// Nothing to repair, this is the limb's natural state
-	if(!LIMB_HAS_SKIN(limb))
-		return FALSE
-	return TRUE
+	return LIMB_HAS_SKIN(limb)
 
 /datum/surgery_operation/limb/mechanical_close/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -134,13 +126,8 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-
-/datum/surgery_operation/limb/prepare_electronics/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
-		return FALSE
-	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
-		return FALSE
-	return TRUE
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	any_surgery_states_blocked = SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/limb/prepare_electronics/get_default_radial_image()
 	return image(/obj/item/multitool)
@@ -171,13 +158,8 @@
 	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-
-/datum/surgery_operation/limb/mechanic_unwrench/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
-		return FALSE
-	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED))
-		return FALSE
-	return TRUE
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED
 
 /datum/surgery_operation/limb/mechanic_unwrench/get_default_radial_image()
 	return image(/obj/item/wrench)
@@ -208,13 +190,13 @@
 	operation_flags = OPERATION_SELF_OPERABLE
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
+	any_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/limb/mechanic_wrench/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
-		return FALSE
-	if(!LIMB_HAS_BONES(limb))
-		return FALSE
-	return TRUE
+	return LIMB_HAS_BONES(limb)
+
+/datum/surgery_operation/limb/mechanic_wrench/all_required_strings()
+	return ..() + list("the limb must have bones")
 
 /datum/surgery_operation/limb/mechanic_wrench/get_default_radial_image()
 	return image(/obj/item/wrench)

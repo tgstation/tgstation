@@ -9,7 +9,8 @@
 		/obj/item = 1,
 	)
 	time = 3.2 SECONDS
-	operation_flags = OPERATION_STANDING_ALLOWED | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NOTABLE
+	operation_flags = OPERATION_STANDING_ALLOWED | OPERATION_PRIORITY_NEXT_STEP | OPERATION_NOTABLE | OPERATION_IGNORE_CLOTHES
+	all_surgery_states_required = SURGERY_SKIN_OPEN | SURGERY_VESSELS_CLAMPED
 	/// List of items that are always allowed to be an arm replacement, even if they fail another requirement.
 	var/list/always_accepted_prosthetics = list(
 		/obj/item/chainsaw, // the OG, too large otherwise
@@ -20,7 +21,13 @@
 	VAR_PRIVATE/list/cached_prosthetic_options
 
 /datum/surgery_operation/prosthetic_replacement/get_recommended_tool()
-	return "Any limb / Any item"
+	return "any limb / any item"
+
+/datum/surgery_operation/prosthetic_replacement/all_required_strings()
+	return list("operate on chest (but target the missing limb)") + ..()
+
+/datum/surgery_operation/prosthetic_replacement/any_required_strings()
+	return list("supply a replacement limb", "supply any suitable item if working on arms")
 
 /datum/surgery_operation/prosthetic_replacement/get_radial_options(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_prosthetic_options, tool.type)
@@ -46,16 +53,10 @@
 	// Tthe actual missing limb has to be... missing
 	if(chest.owner.get_bodypart(body_zone))
 		return FALSE
-	return TRUE
-
-/datum/surgery_operation/prosthetic_replacement/state_check(obj/item/bodypart/chest/chest)
-	return LIMB_HAS_SURGERY_STATE(chest, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+	return ..()
 
 /datum/surgery_operation/prosthetic_replacement/get_patient(obj/item/bodypart/chest/chest)
 	return chest.owner
-
-/datum/surgery_operation/prosthetic_replacement/get_working_zone(obj/item/bodypart/chest/chest)
-	return BODY_ZONE_CHEST
 
 /datum/surgery_operation/prosthetic_replacement/snowflake_check_availability(obj/item/bodypart/chest, mob/living/surgeon, obj/item/tool, body_zone)
 	// check bodyshape compatibility for real bodyparts
@@ -146,9 +147,7 @@
 		/obj/item/stack/sticky_tape = 2,
 	)
 	time = 4.8 SECONDS
-
-/datum/surgery_operation/limb/secure_arbitrary_prosthetic/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_PROSTHETIC_UNSECURED)
+	all_surgery_states_required = SURGERY_PROSTHETIC_UNSECURED
 
 /datum/surgery_operation/limb/secure_arbitrary_prosthetic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/stack/tool, list/operation_args)
 	display_results(

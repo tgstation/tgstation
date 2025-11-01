@@ -17,13 +17,15 @@
 	success_sound = 'sound/machines/defib/defib_zap.ogg'
 	required_biotype = NONE
 	target_zone = BODY_ZONE_HEAD
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
+
+/datum/surgery_operation/basic/revival/all_required_strings()
+	return list("the patient must be deceased", "the patient must be in a revivable state") + ..()
 
 /datum/surgery_operation/basic/revival/state_check(mob/living/patient)
 	if(patient.stat != DEAD)
 		return FALSE
 	if(HAS_TRAIT(patient, TRAIT_SUICIDED) || HAS_TRAIT(patient, TRAIT_HUSK) || HAS_TRAIT(patient, TRAIT_DEFIB_BLACKLISTED))
-		return FALSE
-	if(!has_surgery_state(patient, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED))
 		return FALSE
 	var/obj/item/organ/brain/brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(patient.has_limbs && (isnull(brain) || !brain_check(brain)))

@@ -34,7 +34,7 @@
 	implements = remove_implements + insert_implements
 
 /datum/surgery_operation/limb/organ_manipulation/get_recommended_tool()
-	return "[..()] / Organ"
+	return "[..()] / organ"
 
 /// Checks that the passed organ can be inserted/removed
 /datum/surgery_operation/limb/organ_manipulation/proc/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
@@ -202,9 +202,10 @@
 // Operating on chest organs requires bones be sawed
 /datum/surgery_operation/limb/organ_manipulation/internal/chest
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED) && limb.body_zone == BODY_ZONE_CHEST
+	return limb.body_zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/mechanic
 	name = "prosthetic organ manipulation"
@@ -220,9 +221,7 @@
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
 	name = "experimental organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
-
-/datum/surgery_operation/limb/organ_manipulation/internal/chest/alien/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT)
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien/can_operate_on_organ(obj/item/bodypart/limb, obj/item/organ/organ, mob/living/surgeon)
 	if(!..())
@@ -236,10 +235,13 @@
 // Operating on non-chest organs requires bones be intact
 /datum/surgery_operation/limb/organ_manipulation/internal/other
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/organ_manipulation/internal/other/all_blocked_strings()
+	return list("if the limb has bones, they must be intact") + ..()
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT))
-		return FALSE
+	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
 	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(limb))
 		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
@@ -267,12 +269,10 @@
 	name = "feature manipulation"
 	desc = "Manipulate features of the patient, such as a moth's wings or a lizard's tail."
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/external/alien
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/limb/organ_manipulation/external/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return (organ.organ_flags & ORGAN_EXTERNAL)
-
-/datum/surgery_operation/limb/organ_manipulation/external/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/limb/organ_manipulation/external/mechanic
 	name = "prosthetic feature manipulation"
@@ -289,8 +289,6 @@
 /datum/surgery_operation/limb/organ_manipulation/external/alien
 	name = "experimental feature manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
-
-/datum/surgery_operation/limb/organ_manipulation/external/alien/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 #undef OPERATION_REMOVED_ORGAN

@@ -5,13 +5,15 @@
 		/obj/item/reagent_containers/applicator/pill = 1,
 	)
 	time = 1.6 SECONDS
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_DRILLED
+
+/datum/surgery_operation/limb/add_dental_implant/all_required_strings()
+	return list("operate on head", "target head must have teeth") + ..()
 
 /datum/surgery_operation/limb/add_dental_implant/get_default_radial_image()
 	return image('icons/hud/implants.dmi', "reagents")
 
-/datum/surgery_operation/limb/add_dental_implant/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
-		return FALSE
+/datum/surgery_operation/limb/add_dental_implant/state_check(obj/item/bodypart/head/limb)
 	var/obj/item/bodypart/head/teeth_receptangle = limb
 	if(!istype(teeth_receptangle))
 		return FALSE
@@ -58,15 +60,14 @@
 		TOOL_HEMOSTAT = 1,
 		IMPLEMENT_HAND = 1,
 	)
+	time = 3.2 SECONDS
+	all_surgery_states_required = SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/limb/remove_dental_implant/get_time_modifiers(atom/movable/operating_on, mob/living/surgeon, tool)
 	. = ..()
 	for(var/obj/item/flashlight/light in surgeon)
 		if(light.light_on) // Hey I can see a better!
 			. *= 0.8
-
-/datum/surgery_operation/limb/remove_dental_implant/state_check(obj/item/bodypart/limb)
-	return LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
 
 /datum/surgery_operation/limb/remove_dental_implant/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

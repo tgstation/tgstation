@@ -10,13 +10,15 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
+	any_surgery_states_required = SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/repair_hairline/get_default_radial_image()
 	return image(/obj/item/bonesetter)
 
+/datum/surgery_operation/limb/repair_hairline/all_required_strings()
+	return list("the limb must have a hairline fracture") + ..()
+
 /datum/surgery_operation/limb/repair_hairline/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
-		return FALSE
 	if(!(locate(/datum/wound/blunt/bone/severe) in limb.wounds))
 		return FALSE
 	return TRUE
@@ -54,13 +56,15 @@
 		/obj/item/stack/sticky_tape = 5,
 	)
 	time = 6 SECONDS
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
 /datum/surgery_operation/limb/reset_compound/get_default_radial_image()
 	return image(/obj/item/bonesetter)
 
+/datum/surgery_operation/limb/reset_compound/all_required_strings()
+	return list("the limb must have a compound fracture") + ..()
+
 /datum/surgery_operation/limb/reset_compound/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED))
-		return FALSE
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
 	if(isnull(fracture) || fracture.reset)
 		return FALSE
@@ -99,13 +103,15 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
+	any_surgery_states_required = SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/repair_compound/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)
 
+/datum/surgery_operation/limb/reset_compound/all_required_strings()
+	return list("the limb's compound fracture has been reset") + ..()
+
 /datum/surgery_operation/limb/repair_compound/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_SKIN_STATES))
-		return FALSE
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
 	if(isnull(fracture) || !fracture.reset)
 		return FALSE
@@ -147,6 +153,9 @@
 /datum/surgery_operation/limb/prepare_cranium_repair/get_default_radial_image()
 	return image(/obj/item/hemostat)
 
+/datum/surgery_operation/limb/prepare_cranium_repair/all_required_strings()
+	return list("the cranium must be fractured")
+
 /datum/surgery_operation/limb/prepare_cranium_repair/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds
 	if(isnull(fissure) || fissure.prepped)
@@ -182,6 +191,9 @@
 
 /datum/surgery_operation/limb/repair_cranium/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)
+
+/datum/surgery_operation/limb/repair_cranium/all_required_strings()
+	return list("the debris has been cleared from the cranial fissure")
 
 /datum/surgery_operation/limb/repair_cranium/state_check(obj/item/bodypart/limb)
 	var/datum/wound/cranial_fissure/fissure = locate() in limb.wounds

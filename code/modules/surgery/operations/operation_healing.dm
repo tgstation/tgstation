@@ -24,6 +24,8 @@
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	required_biotype = MOB_ORGANIC|MOB_HUMANOID
+	required_bodytype = NONE
+	any_surgery_states_required = SURGERY_SKIN_STATES
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/upgraded
 	/// Radial slice datums for every healing option we can provide
 	VAR_PRIVATE/list/cached_healing_options
@@ -34,14 +36,11 @@
 	/// The amount of damage healed scales based on how much damage the patient has times this multiplier
 	var/healing_multiplier = 0.07
 
+/datum/surgery_operation/basic/tend_wounds/all_required_strings()
+	return ..() + list("the patient must have brute or burn damage")
+
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
-	// We allow tend wounds with even just cut skin
-	if(!has_any_surgery_state(patient, SURGERY_SKIN_STATES))
-		return FALSE
-	// Nothing to treat
-	if(patient.getBruteLoss() <= 0 && patient.getFireLoss() <= 0)
-		return FALSE
-	return TRUE
+	return patient.getBruteLoss() > 0 && patient.getFireLoss() > 0
 
 /datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	var/list/options = list()

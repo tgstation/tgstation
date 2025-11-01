@@ -9,12 +9,14 @@
 	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/repair_puncture/all_required_strings()
+	return list("the limb must have an unoperated puncture wound") + ..()
 
 /datum/surgery_operation/limb/repair_puncture/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
 	if(isnull(pierce_wound) || pierce_wound.blood_flow <= 0 || pierce_wound.mend_state)
-		return FALSE
-	if(!HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
 		return FALSE
 	return TRUE
 
@@ -64,7 +66,7 @@
 
 /datum/surgery_operation/limb/seal_veins
 	name = "seal blood vessels"
-	desc = "Seal a patient's realigned blood vessels."
+	desc = "Seal a patient's now-realigned blood vessels."
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/gun/energy/laser = 1.12,
@@ -74,6 +76,10 @@
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_PRIORITY_NEXT_STEP
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/seal_veins/all_required_strings()
+	return list("the limb must have an operated puncture wound") + ..()
 
 /datum/surgery_operation/limb/seal_veins/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/gun/energy/laser))
@@ -85,8 +91,6 @@
 /datum/surgery_operation/limb/seal_veins/state_check(obj/item/bodypart/limb)
 	var/datum/wound/pierce/bleed/pierce_wound = locate() in limb.wounds
 	if(isnull(pierce_wound) || pierce_wound.blood_flow <= 0 || !pierce_wound.mend_state)
-		return FALSE
-	if(!HAS_SURGERY_STATE(limb, SURGERY_ORGANS_CUT))
 		return FALSE
 	return TRUE
 

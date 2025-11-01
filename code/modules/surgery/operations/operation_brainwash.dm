@@ -19,12 +19,10 @@
 	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
 	target_type = /obj/item/organ/brain
 	required_organ_flag = ~ORGAN_ROBOTIC
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/organ/brainwash/get_default_radial_image()
 	return image(/atom/movable/screen/alert/hypnosis)
-
-/datum/surgery_operation/organ/brainwash/state_check(obj/item/organ/organ)
-	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED)
 
 /datum/surgery_operation/organ/brainwash/pre_preop(obj/item/organ/brain/organ, mob/living/surgeon, obj/item/tool, list/operation_args)
 	operation_args[OPERATION_OBJECTIVE] = tgui_input_text(surgeon, "Choose the objective to imprint on your patient's brain", "Brainwashing", max_length = MAX_MESSAGE_LEN)

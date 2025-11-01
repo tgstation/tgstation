@@ -198,7 +198,15 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	/// How long to perform this operation
 	var/time = 1 SECONDS
 
+	/// Flags modifying the behavior of this operation
 	var/operation_flags = NONE
+
+	/// The target must have ALL of these surgery states for the operation to be available
+	var/all_surgery_states_required = NONE
+	/// The target must have ANY of these surgery states for the operation to be available
+	var/any_surgery_states_required = NONE
+	/// The target must NOT have ANY of these surgery states for the operation to be available
+	var/any_surgery_states_blocked = NONE
 
 	/// Typepath of a surgical operation that supersedes this one
 	var/replaced_by
@@ -236,12 +244,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	if(!is_available(operating_on, body_zone))
-		return FALSE
-
-	if(!state_check(operating_on))
-		return FALSE
-
-	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(get_working_zone(operating_on)))
 		return FALSE
 
 	return snowflake_check_availability(operating_on, surgeon, tool, body_zone)
@@ -292,10 +294,38 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/is_available(atom/movable/operating_on, body_zone)
 	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(all_surgery_states_required && !has_surgery_state(operating_on, all_surgery_states_required))
+		return FALSE
+
+	if(any_surgery_states_required && !has_any_surgery_state(operating_on, any_surgery_states_required))
+		return FALSE
+
+	if(any_surgery_states_blocked && has_any_surgery_state(operating_on, any_surgery_states_blocked))
+		return FALSE
+
+	if(!state_check(operating_on))
+		return FALSE
+
+	var/mob/living/patient = get_patient(operating_on)
+	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(body_zone))
+		return FALSE
+
 	return TRUE
 
+/// Check if the movable being operated on has all the passed surgery states
+/datum/surgery_operation/proc/has_surgery_state(atom/movable/operating_on, state)
+	PROTECTED_PROC(TRUE)
+	return FALSE
+
+/// Check if the movable being operated on has any of the passed surgery states
+/datum/surgery_operation/proc/has_any_surgery_state(atom/movable/operating_on, state)
+	PROTECTED_PROC(TRUE)
+	return FALSE
+
 /**
- * Specifically concerns itself with checking the operated movable's state to see if the operation can be performed
+ * Any operation specific state checks, such as checking for traits or more complex state requirements
  */
 /datum/surgery_operation/proc/state_check(atom/movable/operating_on)
 	PROTECTED_PROC(TRUE)
@@ -322,6 +352,66 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		var/obj/item/tool = recommendation
 		return tool::name
 	return null
+
+/**
+ * Return a list of lists of strings indicating the various requirements for this operation
+ */
+/datum/surgery_operation/proc/get_requirements()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	return list(
+		all_required_strings(),
+		any_required_strings(),
+		any_optional_strings(),
+		all_blocked_strings(),
+	)
+
+/// Returns a list of strings indicating requirements for this operation
+/datum/surgery_operation/proc/all_required_strings()
+	. = bitfield_to_list(all_surgery_states_required, SURGERY_STATE_GUIDES("must"))
+	if(!(operation_flags & OPERATION_STANDING_ALLOWED))
+		. += "the patient must be lying down"
+
+/// Returns a list of strings indicating any of the requirements for this operation
+/datum/surgery_operation/proc/any_required_strings()
+	. = list()
+	// grouped states are filtered down to make it more readable
+	var/parsed_any_flags = any_surgery_states_required
+	if((parsed_any_flags & SURGERY_BONE_STATES) == SURGERY_BONE_STATES)
+		parsed_any_flags &= ~SURGERY_BONE_STATES
+		. += "the bone must be sawed or drilled"
+	if((parsed_any_flags & SURGERY_SKIN_STATES) == SURGERY_SKIN_STATES)
+		parsed_any_flags &= ~SURGERY_SKIN_STATES
+		. += "the skin must be cut or opened"
+	if((parsed_any_flags & SURGERY_VESSEL_STATES) == SURGERY_VESSEL_STATES)
+		parsed_any_flags &= ~SURGERY_VESSEL_STATES
+		. += "the blood vessels must be clamped or unclamped" // weird phrasing but whatever
+
+	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
+
+/// Returns a list of strings indicating optional conditions for this operation
+/datum/surgery_operation/proc/any_optional_strings()
+	. = list()
+	if(operation_flags & OPERATION_SELF_OPERABLE)
+		. += "a surgeon may perform this on themselves"
+
+/// Returns a list of strings indicating blocked states for this operation
+/datum/surgery_operation/proc/all_blocked_strings()
+	. = list()
+	// grouped states are filtered down to make it more readable
+	var/parsed_blocked_flags = any_surgery_states_blocked
+	if((parsed_blocked_flags & SURGERY_BONE_STATES) == SURGERY_BONE_STATES)
+		parsed_blocked_flags &= ~SURGERY_BONE_STATES
+		. += "the bone must be intact"
+	if((parsed_blocked_flags & SURGERY_SKIN_STATES) == SURGERY_SKIN_STATES)
+		parsed_blocked_flags &= ~SURGERY_SKIN_STATES
+		. += "the skin must be intact"
+	if((parsed_blocked_flags & SURGERY_VESSEL_STATES) == SURGERY_VESSEL_STATES)
+		parsed_blocked_flags &= ~SURGERY_VESSEL_STATES
+		. += "the blood vessels must be intact"
+
+	. += bitfield_to_list(parsed_blocked_flags, SURGERY_STATE_GUIDES("must not"))
+	if(!(operation_flags & OPERATION_IGNORE_CLOTHES))
+		. += "the operation site must not be obstructed by clothing"
 
 /// Returns what icon this surgery uses by default on the radial wheel, if it doesn't implement its own radial options
 /datum/surgery_operation/proc/get_default_radial_image()
@@ -450,7 +540,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/show_as_next_step(mob/living/potential_patient, body_zone)
 	var/atom/movable/operate_on = get_operation_target(potential_patient, body_zone)
-	return !isnull(operate_on) && is_available(operate_on, body_zone) && state_check(operate_on)
+	return !isnull(operate_on) && is_available(operate_on, body_zone)
 
 
 /**
@@ -641,11 +731,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_patient(atom/movable/operating_on) as /mob/living
 	return operating_on
 
-/// Helper for getting what body zone we are ultimately operating on, given the movable that is truly being operated on.
-/// For example in limb surgeries this would return the body zone of the limb being operated on.
-/datum/surgery_operation/proc/get_working_zone(atom/movable/operating_on)
-	return BODY_ZONE_CHEST
-
 /// Helper for getting an operating compupter the patient is linked to
 /datum/surgery_operation/proc/locate_operating_computer(atom/movable/operating_on)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -696,7 +781,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	PRIVATE_PROC(TRUE)
 
 	var/preop_time = world.time
-	var/patient = get_patient(operating_on)
+	var/mob/living/patient = get_patient(operating_on)
 	if(!pre_preop(operating_on, surgeon, tool, operation_args))
 		return FALSE
 	// if pre_preop slept, sanity check that everything is still valid
@@ -819,11 +904,15 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/required_biotype = MOB_ORGANIC
 	/// The zone we are expected to be working on, even if the target is a non-carbon mob
 	var/target_zone = BODY_ZONE_CHEST
-	/// When working on carbons, what bodypart are we working on
-	var/required_bodytype = NONE
+	/// When working on carbons, what bodypart are we working on? Keep it representative of the required biotype
+	var/required_bodytype = BODYTYPE_ORGANIC
 
-/datum/surgery_operation/basic/get_working_zone(atom/movable/operating_on)
-	return target_zone
+/datum/surgery_operation/basic/all_required_strings()
+	var/list/requirements = list()
+	if(required_biotype)
+		requirements += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")][target_zone ? " [parse_zone(target_zone)]" : ""]"
+
+	return requirements + ..()
 
 /datum/surgery_operation/basic/is_available(mob/living/patient, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -835,7 +924,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(required_biotype && !(patient.mob_biotypes & required_biotype))
 		return FALSE
 	if(!patient.has_limbs)
-		return TRUE
+		return ..()
 
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part))
@@ -844,9 +933,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 	if(required_bodytype && !(carbon_part.bodytype & required_bodytype))
 		return FALSE
-	return TRUE
+	return ..()
 
-/datum/surgery_operation/basic/proc/has_surgery_state(mob/living/patient, state = SURGERY_SKIN_OPEN)
+/datum/surgery_operation/basic/has_surgery_state(mob/living/patient, state)
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
@@ -854,7 +943,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	return LIMB_HAS_SURGERY_STATE(carbon_part, state)
 
-/datum/surgery_operation/basic/proc/has_any_surgery_state(mob/living/patient, state = ALL)
+/datum/surgery_operation/basic/has_any_surgery_state(mob/living/patient, state)
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
@@ -875,6 +964,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	/// Body type required to perform this operation
 	var/required_bodytype = NONE
 
+/datum/surgery_operation/limb/all_blocked_strings()
+	. = ..()
+	if(required_bodytype & BODYTYPE_ROBOTIC)
+		. += "the limb must not be organic"
+	else
+		. += "the limb must not be cybernetic"
+
 /datum/surgery_operation/limb/get_operation_target(mob/living/patient, body_zone)
 	return patient.get_bodypart(body_zone)
 
@@ -888,13 +984,16 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE))
 		return FALSE
 
-	return TRUE
+	return ..()
+
+/datum/surgery_operation/limb/has_surgery_state(obj/item/bodypart/limb, state)
+	return LIMB_HAS_SURGERY_STATE(limb, state)
+
+/datum/surgery_operation/limb/has_any_surgery_state(obj/item/bodypart/limb, state)
+	return LIMB_HAS_ANY_SURGERY_STATE(limb, state)
 
 /datum/surgery_operation/limb/get_patient(obj/item/bodypart/limb)
 	return limb.owner
-
-/datum/surgery_operation/limb/get_working_zone(obj/item/bodypart/limb)
-	return limb.body_zone
 
 /datum/surgery_operation/limb/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
 	if(isitem(tool) && (required_bodytype & BODYTYPE_ROBOTIC))
@@ -919,6 +1018,16 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	/// The type of organ this operation can target
 	var/obj/item/organ/target_type
 
+/datum/surgery_operation/organ/all_required_strings()
+	return list("operate on [target_type::name]") + ..()
+
+/datum/surgery_operation/organ/all_blocked_strings()
+	. = ..()
+	if(required_organ_flag & BODYTYPE_ROBOTIC)
+		. += "the organ must not be organic"
+	else
+		. += "the organ must not be cybernetic"
+
 /datum/surgery_operation/organ/get_default_radial_image()
 	return get_generic_limb_radial_image(target_type::zone)
 
@@ -927,9 +1036,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /datum/surgery_operation/organ/get_patient(obj/item/organ/organ)
 	return organ.owner
-
-/datum/surgery_operation/organ/get_working_zone(obj/item/organ/organ)
-	return organ.zone
 
 /datum/surgery_operation/organ/is_available(obj/item/organ/organ, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -941,7 +1047,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(!HAS_TRAIT(organ.bodypart_owner, TRAIT_READY_TO_OPERATE))
 		return FALSE
 
-	return TRUE
+	return ..()
+
+/datum/surgery_operation/limb/has_surgery_state(obj/item/organ/organ, state)
+	return LIMB_HAS_SURGERY_STATE(organ.bodypart_owner, state)
+
+/datum/surgery_operation/limb/has_any_surgery_state(obj/item/organ/organ, state)
+	return LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, state)
 
 /datum/surgery_operation/organ/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
 	if(isitem(tool) && (required_organ_flag & ORGAN_ROBOTIC))

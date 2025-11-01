@@ -2,28 +2,36 @@
 	name = "induce bionecrosis"
 	rnd_name = "Bionecroplasty (Necrotic Revival)"
 	desc = "Inject reagents that stimulate the growth of a Romerol tumor inside the patient's brain."
-	rnd_desc = "An experimental procedure which induces the growth of a Romerol tumor inside the patient's brain. \
-		The patient must be dosed or the syringe must be loaded with Zombie Powder or Rezadone for it to take effect."
+	rnd_desc = "An experimental procedure which induces the growth of a Romerol tumor inside the patient's brain."
 	implements = list(
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/pen = 3.33,
 	)
 	time = 5 SECONDS
 	operation_flags = OPERATION_MORBID | OPERATION_LOCKED | OPERATION_NOTABLE
-
-	var/list/zombie_chems = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
-
-/datum/surgery_operation/limb/bionecrosis/get_recommended_tool()
-	. = ..()
-	for(var/datum/reagent/chem as anything in zombie_chems)
-		. += " / [chem::name]"
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
+	var/list/zombie_chems = list(
+		/datum/reagent/medicine/rezadone,
+		/datum/reagent/toxin/zombiepowder,
+	)
 
 /datum/surgery_operation/limb/bionecrosis/get_default_radial_image()
 	return get_dynamic_human_appearance(species_path = /datum/species/zombie)
 
+/datum/surgery_operation/limb/bionecrosis/all_required_strings()
+	. = ..()
+	. += "the limb must have a brain present"
+
+/datum/surgery_operation/limb/bionecrosis/any_required_strings()
+	. = ..()
+	for(var/datum/reagent/chem as anything in zombie_chems)
+		. += "patient or tool must contain >1u [chem::name]"
+
+/datum/surgery_operation/limb/bionecrosis/all_blocked_strings()
+	. = ..()
+	. += "the limb must not already have a romerol tumor"
+
 /datum/surgery_operation/limb/bionecrosis/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED))
-		return FALSE
 	if(locate(/obj/item/organ/zombie_infection) in limb)
 		return FALSE
 	if(!(locate(/obj/item/organ/brain) in limb))

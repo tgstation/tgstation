@@ -12,16 +12,16 @@
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+
+/datum/surgery_operation/limb/plastic_surgery/all_required_strings()
+	return list("operate on head") + ..()
 
 /datum/surgery_operation/limb/plastic_surgery/get_default_radial_image()
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/limb/plastic_surgery/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
-		return FALSE
-	if(limb.body_zone != BODY_ZONE_HEAD)
-		return FALSE
-	return TRUE
+	return limb.body_zone == BODY_ZONE_HEAD
 
 /datum/surgery_operation/limb/plastic_surgery/pre_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	if(HAS_TRAIT_FROM(limb.owner, TRAIT_DISFIGURED, TRAIT_GENERIC))
@@ -114,18 +114,14 @@
 	preop_sound = 'sound/effects/blob/blobattack.ogg'
 	success_sound = 'sound/effects/blob/attackblob.ogg'
 	failure_sound = 'sound/effects/blob/blobattack.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	any_surgery_states_blocked = SURGERY_PLASTIC_APPLIED
 
 /datum/surgery_operation/limb/add_plastic/get_default_radial_image()
 	return image(/obj/item/stack/sheet/plastic)
 
 /datum/surgery_operation/limb/add_plastic/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
-		return FALSE
-	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_PLASTIC_APPLIED))
-		return FALSE
-	if(limb.body_zone != BODY_ZONE_HEAD)
-		return FALSE
-	return TRUE
+	return limb.body_zone == BODY_ZONE_HEAD
 
 /datum/surgery_operation/limb/add_plastic/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

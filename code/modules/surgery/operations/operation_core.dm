@@ -7,12 +7,18 @@
 		TOOL_CROWBAR = 1,
 	)
 	time = 1.6 SECONDS
+	operation_flags = OPERATION_IGNORE_CLOTHES | OPERATION_STANDING_ALLOWED
+	any_surgery_states_required = SURGERY_SKIN_STATES
+	required_biotype = NONE
 
 /datum/surgery_operation/basic/core_removal/get_default_radial_image()
 	return image(/mob/living/basic/slime)
 
+/datum/surgery_operation/basic/core_removal/all_required_strings()
+	return list("operate on a deceased slime") + ..()
+
 /datum/surgery_operation/basic/core_removal/state_check(mob/living/patient)
-	return isslime(patient) && patient.stat == DEAD && has_surgery_state(patient, SURGERY_SKIN_OPEN)
+	return isslime(patient) && patient.stat == DEAD
 
 /datum/surgery_operation/basic/core_removal/on_preop(mob/living/basic/slime/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

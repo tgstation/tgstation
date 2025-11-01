@@ -7,13 +7,15 @@
 	success_sound = 'sound/machines/printer.ogg'
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	operation_flags = OPERATION_MORBID | OPERATION_IGNORE_CLOTHES
+	all_surgery_states_required = SURGERY_SKIN_OPEN
 
 /datum/surgery_operation/limb/autopsy/get_default_radial_image()
 	return image(/obj/item/autopsy_scanner)
 
+/datum/surgery_operation/limb/autopsy/all_required_strings()
+	return ..() + list("the patient must be deceased", "the patient must not have been autopsied prior")
+
 /datum/surgery_operation/limb/autopsy/state_check(obj/item/bodypart/limb)
-	if(!LIMB_HAS_SURGERY_STATE(limb, SURGERY_SKIN_OPEN))
-		return FALSE
 	if(limb.body_zone != BODY_ZONE_CHEST)
 		return FALSE
 	if(limb.owner.stat != DEAD)
