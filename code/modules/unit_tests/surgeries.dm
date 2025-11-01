@@ -96,7 +96,7 @@
 	TEST_ASSERT(DOING_INTERACTION(user, patient_zero), "User is not performing surgery on patient zero as expected")
 
 	ASYNC
-		user.perform_surgery(patient_zero, scalpel)
+		user.perform_surgery(patient_one, scalpel)
 
 	TEST_ASSERT(DOING_INTERACTION(user, patient_one), "User is not able to perform surgery on two patients at once despite having the Hippocratic Oath trait")
 
