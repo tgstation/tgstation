@@ -253,7 +253,7 @@
 					continue
 
 				var/obj/item/boulder/produced = produce_boulder(FALSE)
-				var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, wave_timer)
+				var/obj/structure/lattice/catwalk/boulder/platform = produced.create_platform(rock, null, (wave_timer/5) * 60 SECONDS)
 
 				if(!platform || !QDELETED(produced))
 					qdel(produced)
