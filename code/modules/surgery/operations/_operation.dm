@@ -163,10 +163,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	abstract_type = /datum/surgery_operation
 	/// Name of the operation, keep it short and format it like an action - "amputate limb", "remove organ"
 	/// Don't capitalize it, it will be capitalized automatically where necessary.
-	var/name = "surgery operation"
+	var/name
 	/// Description of the operation, keep it short and format it like an action - "Amputate a patient's limb.", "Remove a patient's organ.".
 	// Use "a patient" instead of "the patient" to keep it generic.
-	var/desc = "A surgery operation that can be performed on a bodypart."
+	var/desc
 
 	/// Optional - the name of the operation shown in RND consoles and the operating computer.
 	/// You can get fancier here, givin an official surgery name ("Lobectomy") or rephrase it to be more descriptive ("Brain Lobectomy").

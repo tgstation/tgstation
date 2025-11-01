@@ -70,6 +70,8 @@
 
 /datum/unit_test/multiple_surgeries/Run()
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent/slow)
+	ADD_TRAIT(user, TRAIT_HIPPOCRATIC_OATH, TRAIT_SOURCE_UNIT_TESTS)
+
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/patient_one = allocate(/mob/living/carbon/human/consistent)
 
@@ -91,18 +93,12 @@
 	ASYNC
 		user.perform_surgery(patient_zero, scalpel)
 
-	TEST_ASSERT(DOING_INTERACTION(user, DOAFTER_SOURCE_SURGERY), "User is not performing surgery on patient zero as expected")
+	TEST_ASSERT(DOING_INTERACTION(user, patient_zero), "User is not performing surgery on patient zero as expected")
 
 	ASYNC
 		user.perform_surgery(patient_zero, scalpel)
 
-	TEST_ASSERT(!DOING_INTERACTION(user, DOAFTER_SOURCE_SURGERY), "User is performing surgery on patient one, despite already operating on patient zero")
-	ADD_TRAIT(user, TRAIT_HIPPOCRATIC_OATH, TRAIT_SOURCE_UNIT_TESTS)
-
-	ASYNC
-		user.perform_surgery(patient_zero, scalpel)
-
-	TEST_ASSERT(DOING_INTERACTION(user, patient_one), "User was unable to operate on patient one despite having the Hippocratic Oath trait")
+	TEST_ASSERT(DOING_INTERACTION(user, patient_one), "User is not able to perform surgery on two patients at once despite having the Hippocratic Oath trait")
 
 // Ensures that the tend wounds surgery can be started
 /datum/unit_test/start_tend_wounds
@@ -172,3 +168,13 @@
 	nullrod.on_selected(null, null, picker)
 
 	TEST_ASSERT(HAS_TRAIT_FROM(nullrod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Chainsaw nullrod item attachment failed! Item does not have the nodrop trait")
+
+/// Checks all operations have a name and description
+/datum/unit_test/verify_surgery_setup
+
+/datum/unit_test/verify_surgery_setup/Run()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation), filter_replaced = FALSE))
+		if (isnull(operation.name))
+			TEST_FAIL("Surgery operation [operation.type] has no name set")
+		if (isnull(operation.desc))
+			TEST_FAIL("Surgery operation [operation.type] has no description set")

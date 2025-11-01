@@ -1186,9 +1186,7 @@
 	if(isnull(name))
 		name = surgery::rnd_name || capitalize(surgery::name)
 	if(isnull(desc))
-		if(isnull(surgery::rnd_desc))
-			stack_trace("Surgery design without a description set or inferrable ([type])")
-		desc = surgery::rnd_desc || "If you're reading this, someone forgot to set a default description! Who knows what this surgery does?"
+		desc = surgery::rnd_desc || surgery::desc
 
 /datum/design/surgery/lobotomy
 	id = "surgery_lobotomy"
