@@ -36,24 +36,6 @@
 	find_and_hang_on_wall()
 	update_overlays()
 
-/obj/machinery/turretid/update_overlays()
-	. = ..()
-	overlays.Cut()
-
-	if(enabled)
-		add_overlay(mutable_appearance(icon, "button_left"))
-		add_overlay(emissive_appearance(icon, "emissive_button_left", src))
-		switch(status)
-			if(STATUS_STUN)
-				add_overlay(mutable_appearance(icon, "stun"))
-			if(STATUS_KILL)
-				add_overlay(mutable_appearance(icon, "kill"))
-				add_overlay(mutable_appearance(icon, "button_right"))
-				add_overlay(emissive_appearance(icon, "emissive_button_right", src))
-	else
-		add_overlay(mutable_appearance(icon, "standby"))
-	add_overlay(emissive_appearance(icon, "emissive_screen", src))
-
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
 	return ..()
@@ -74,6 +56,35 @@
 
 	for(var/obj/machinery/porta_turret/T in control_area_instance)
 		turrets |= WEAKREF(T)
+
+/obj/machinery/turretid/update_overlays()
+  . = ..()
+  overlays.Cut()
+
+  if(machine_stat & NOPOWER)
+    if(enabled)
+      add_overlay(mutable_appearance(icon, "button_left"))
+      if(status == STATUS_KILL)
+        add_overlay(mutable_appearance(icon, "button_right"))
+    return
+
+  if(enabled)
+    add_overlay(mutable_appearance(icon, "button_left"))
+    add_overlay(emissive_appearance(icon, "emissive_button_left", src))
+    switch(status)
+      if(STATUS_STUN)
+        add_overlay(mutable_appearance(icon, "stun"))
+      if(STATUS_KILL)
+        add_overlay(mutable_appearance(icon, "kill"))
+        add_overlay(mutable_appearance(icon, "button_right"))
+        add_overlay(emissive_appearance(icon, "emissive_button_right", src))
+  else
+    add_overlay(mutable_appearance(icon, "standby"))
+  add_overlay(emissive_appearance(icon, "emissive_screen", src))
+
+/obj/machinery/turretid/power_change()
+  . = ..()
+  update_appearance()
 
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
