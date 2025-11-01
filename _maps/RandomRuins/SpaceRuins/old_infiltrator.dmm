@@ -562,11 +562,9 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/unpowered)
 "Mw" = (
-/obj/machinery/status_display/ai{
-	pixel_x = 32
-	},
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/unpowered)
 "MB" = (

@@ -104,9 +104,8 @@
 		if(turf_area.allow_shuttle_docking)
 			if(!GLOB.custom_areas[turf_area] && turf_area.apc)
 				var/obj/machinery/power/apc/apc = turf_area.apc
-				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
 				var/turf/apc_turf = get_turf(apc)
-				if(target == apc_turf || target == wallmount_comp.hanging_wall_turf)
+				if(target == apc_turf)
 					holder.image_state = "red"
 		else
 			holder.image_state = "red"
@@ -115,9 +114,8 @@
 		if(GLOB.custom_areas[turf_area] && HAS_TRAIT(turf_area, TRAIT_HAS_SHUTTLE_CONSTRUCTION_TURF))
 			if(turf_area.apc)
 				var/obj/machinery/power/apc/apc = turf_area.apc
-				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
 				var/turf/apc_turf = get_turf(apc)
-				if(HAS_TRAIT(apc_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF) || HAS_TRAIT(wallmount_comp.hanging_wall_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF))
+				if(HAS_TRAIT(apc_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF))
 					holder.image_state = "red"
 	holder.regenerate_image()
 

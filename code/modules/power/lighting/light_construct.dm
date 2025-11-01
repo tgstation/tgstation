@@ -31,7 +31,7 @@
 /obj/structure/light_construct/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
@@ -145,7 +145,7 @@
 					if("bulb")
 						new_light = new /obj/machinery/light/small/built(loc)
 				new_light.setDir(dir)
-				new_light.find_and_hang_on_wall()
+				new_light.find_and_hang_on_atom()
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell

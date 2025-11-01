@@ -156,11 +156,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "qi" = (
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_y = 26
-	},
-/turf/open/floor/iron/airless,
+/obj/structure/sign/directions/medical/directional/east,
+/turf/closed/wall,
 /area/ruin/space/has_grav)
 "rt" = (
 /obj/item/stack/rods,
@@ -614,7 +611,7 @@ dV
 (7,1,1) = {"
 rN
 eP
-eP
+qi
 AY
 JI
 IE
@@ -630,7 +627,7 @@ IR
 eP
 ea
 eP
-qi
+nf
 fc
 Nw
 eP

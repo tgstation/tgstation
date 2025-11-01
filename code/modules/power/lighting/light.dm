@@ -119,9 +119,9 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 
-/obj/machinery/light/find_and_hang_on_wall()
+/obj/machinery/light/find_and_hang_on_atom()
 	if(break_if_moved)
 		return ..()
 
@@ -731,6 +731,9 @@
 	fitting = "bulb"
 	nightshift_brightness = 4
 	fire_brightness = 4.5
+
+/obj/machinery/light/floor/find_and_hang_on_atom()
+	return //its a floor light not a wall light
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)

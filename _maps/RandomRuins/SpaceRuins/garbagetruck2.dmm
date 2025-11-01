@@ -134,10 +134,8 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "mZ" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "nW" = (

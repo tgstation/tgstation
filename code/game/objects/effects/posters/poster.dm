@@ -18,7 +18,7 @@
 	force = 0
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
-	var/poster_type
+	var/obj/structure/sign/poster/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
 /obj/item/poster/examine(mob/user)
@@ -39,19 +39,9 @@
 		new_poster_structure.forceMove(src) //The poster structure *must* be in the item's contents for the exited() proc to properly clean up when placing the poster
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
-		poster_structure = new poster_type(src)
-
-	// posters store what name and description they would like their
-	// rolled up form to take.
-	if(poster_structure)
-		if(QDELETED(poster_structure))
-			stack_trace("A poster was initialized with a qdeleted poster_structure, something's gone wrong")
-			return INITIALIZE_HINT_QDEL
-		name = poster_structure.poster_item_name
-		desc = poster_structure.poster_item_desc
-		icon_state = poster_structure.poster_item_icon_state
-
-		name = "[name] - [poster_structure.original_name]"
+		name = "[poster_type::poster_item_name] - [poster_type::original_name]"
+		desc = poster_type::poster_item_desc
+		icon_state = poster_type::poster_item_icon_state
 
 /obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))
@@ -252,7 +242,7 @@
 
 	flick("poster_being_set", placed_poster)
 	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
-	placed_poster.find_and_hang_on_wall()
+	placed_poster.find_and_hang_on_atom()
 	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
