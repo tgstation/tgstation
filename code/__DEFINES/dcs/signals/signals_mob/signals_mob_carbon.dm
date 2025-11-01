@@ -182,3 +182,6 @@
 
 //from base of [/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob]: (seconds_per_tick)
 #define COMSIG_CARBON_EXPOSED_TO_SMOKE "carbon_exposed_to_smoke"
+
+/// From /mob/living/carbon/human/proc/update_mob_height() : (old_height)
+#define COMSIG_HUMAN_HEIGHT_UPDATED "human_height_updated"

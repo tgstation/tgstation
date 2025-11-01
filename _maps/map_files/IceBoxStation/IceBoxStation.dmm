@@ -59879,6 +59879,7 @@
 	codes_txt = "delivery;dir=4";
 	location = "Atmospherics"
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "qNn" = (

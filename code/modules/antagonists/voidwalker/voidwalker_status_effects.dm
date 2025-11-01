@@ -13,7 +13,8 @@
 /atom/movable/screen/alert/status_effect/veryhighgravity
 	name = "Crushing Gravity"
 	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"
 
 /datum/status_effect/void_eatered
 	id = "void_eatered"
