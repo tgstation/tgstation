@@ -108,7 +108,7 @@
 /datum/surgery_operation/limb/repair_compound/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)
 
-/datum/surgery_operation/limb/reset_compound/all_required_strings()
+/datum/surgery_operation/limb/repair_compound/all_required_strings()
 	return list("the limb's compound fracture has been reset") + ..()
 
 /datum/surgery_operation/limb/repair_compound/state_check(obj/item/bodypart/limb)

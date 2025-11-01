@@ -155,7 +155,7 @@ type Data = {
   experiments: ExperimentData[];
 };
 
-function formatSurgeryName(
+function extractSurgeryName(
   operation: OperationData,
   catalog: boolean,
 ): { name: string; tool: string; true_name?: string } {
@@ -348,7 +348,7 @@ const PatientStateView = (props: PatientStateViewProps) => {
                   )
                   .sort((a, b) => (a.priority && !b.priority ? -1 : 1))
                   .map((operation) => {
-                    const { name, tool } = formatSurgeryName(operation, false);
+                    const { name, tool } = extractSurgeryName(operation, false);
                     return (
                       <Stack.Item key={operation.name}>
                         <Button
@@ -533,13 +533,15 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
       }
     >
       {surgeryList.map((surgery) => {
-        const { name, tool, true_name } = formatSurgeryName(surgery, true);
+        const { name, tool, true_name } = extractSurgeryName(surgery, true);
 
         return (
           <Stack vertical key={surgery.name} pb={2}>
             <Stack.Item>
               <Stack align="center">
-                <Stack.Item bold>{name}</Stack.Item>
+                <Stack.Item bold fontSize="1.2rem">
+                  {name}
+                </Stack.Item>
                 {!!true_name && (
                   <Stack.Item italic fontSize="0.9rem">
                     {`(${true_name})`}
