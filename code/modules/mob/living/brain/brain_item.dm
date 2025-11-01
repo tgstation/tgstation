@@ -347,12 +347,12 @@
 
 /obj/item/organ/brain/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
 	. = ..()
-	update_brain_color()
+	update_brain_color(animate = FALSE) // once it's out in the world we need to make sure it's the right color
 
 /obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	var/delta_dam = . //for the sake of clarity
-	if(isnull(bodypart_owner))
+	if(isnull(bodypart_owner)) // no need to animate if it's in someone's noggin
 		update_brain_color()
 	if(delta_dam > 0 || damage < BRAIN_DAMAGE_MILD)
 		roll_for_brain_trauma(delta_dam)
@@ -372,17 +372,25 @@
 
 #define BRAIND_DAMAGE_FILTER "brain_damage_color_filter"
 
-/obj/item/organ/brain/proc/update_brain_color()
+/obj/item/organ/brain/proc/update_brain_color(animate = TRUE)
 	if(damage <= 0)
 		if(get_filter(BRAIND_DAMAGE_FILTER))
-			transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter("#ffffff"), time = 1 SECONDS)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "brain_damage_color_filter"), 1.2 SECONDS, TIMER_UNIQUE)
+			if(animate)
+				transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter("#ffffff"), time = 1 SECONDS)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "brain_damage_color_filter"), 1.2 SECONDS, TIMER_UNIQUE)
+			else
+				remove_filter(BRAIND_DAMAGE_FILTER)
 		return
 
-	var/gradient = hsv_gradient(clamp(damage / maxHealth, 0, 1), 0, "#ffffff", 1, "#7f7f7f")
-	if(!get_filter(BRAIND_DAMAGE_FILTER))
-		add_filter(BRAIND_DAMAGE_FILTER, 1, color_matrix_filter("#ffffff"))
-	transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter(gradient), time = 1 SECONDS)
+	var/gradient = rgb_gradient(clamp(damage / maxHealth, 0, 1), 0, "#ffffff", 1, "#7f7f7f")
+	if(animate)
+		if(!get_filter(BRAIND_DAMAGE_FILTER))
+			add_filter(BRAIND_DAMAGE_FILTER, 1, color_matrix_filter("#ffffff"))
+		transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter(gradient), time = 1 SECONDS)
+	else if(get_filter(BRAIND_DAMAGE_FILTER))
+		modify_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter(gradient))
+	else
+		add_filter(BRAIND_DAMAGE_FILTER, 1, color_matrix_filter(gradient))
 
 #undef BRAIND_DAMAGE_FILTER
 
