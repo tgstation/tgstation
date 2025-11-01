@@ -36,6 +36,8 @@
 	var/list/list/datum/callback/earlyadds = list()
 	///assoc list of minimap objects that are hashed so we have to update as few as possible
 	var/list/hashed_minimaps = list()
+	///list of names of tiles
+	var/list/map_position_to_name = list()
 
 /// Initialized only when needed
 /datum/tactical_map/proc/Initialize()
@@ -75,14 +77,20 @@
 
 	var/level = z_level.z_value
 	minimaps_by_z["[level]"] = new /datum/hud_displays
-	if(!is_station_level(level)) //todo: maybe move this around
-		return
+	//if(!is_station_level(level)) //todo: maybe move this around XANTODO Somehow filter specific z levels
+	//	return
 	var/icon/icon_gen = new('icons/ui_icons/minimap/minimap.dmi') //480x480 blank icon template for drawing on the map
 	for(var/xval = 1 to world.maxx)
 		for(var/yval = 1 to world.maxy) //Scan all the turfs and draw as needed
 			var/turf/location = locate(xval,yval,level)
 			if(isspaceturf(location))
 				continue
+			if(isshuttleturf(location))
+				continue
+			if(istype(location, /turf/open/floor/iron/solarpanel))
+				continue
+			var/area/arealoc = get(location, /area)
+			map_position_to_name["[level]:[xval]:[yval]"] = arealoc?.name
 			if(location.density)
 				icon_gen.DrawBox(location.tacmap_color, xval, yval)
 				continue
@@ -90,9 +98,8 @@
 			if(alttarget)
 				icon_gen.DrawBox(alttarget.tacmap_color, xval, yval)
 				continue
-			var/area/turfloc = location.loc
-			if(turfloc.tacmap_color)
-				icon_gen.DrawBox(BlendRGB(location.tacmap_color, turfloc.tacmap_color, 0.5), xval, yval)
+			if(arealoc.tacmap_color)
+				icon_gen.DrawBox(BlendRGB(location.tacmap_color, arealoc.tacmap_color, 0.5), xval, yval)
 				continue
 			icon_gen.DrawBox(location.tacmap_color, xval, yval)
 	icon_gen.Scale(480*2,480*2) //scale it up x2 to make it easer to see
@@ -371,7 +378,7 @@
 	icon_state = ""
 	layer = MINIMAP_IMAGE_LAYER
 	screen_loc = "1,1"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT XANTODO See if this becomes clickable
 	///assoc list of mob choices by clicking on coords. only exists fleetingly for the wait loop in [/proc/get_coords_from_click]
 	var/list/mob/choices_by_mob
 	///assoc list to determine if get_coords_from_click should stop waiting for an input for that specific mob
@@ -380,10 +387,13 @@
 	var/tracked_z
 	///ref to the minimap we follow
 	var/datum/tactical_map/my_map
+	///overlay image that displays the name of an area when hovered
+	var/image/hover_overlay
 
 /atom/movable/screen/minimap/Initialize(mapload, datum/hud/hud_owner, target, flags, tactical_map)
 	. = ..()
 	my_map = tactical_map
+	hover_overlay = image('icons/ui_icons/minimap/minimap.dmi')
 	tracked_z = target
 	if(!my_map.minimaps_by_z["[target]"])
 		return
@@ -403,14 +413,41 @@
  * note: sleeps until the user makes a choice, stop_polling is set to TRUE for this specific user or they disconnect
  */
 /atom/movable/screen/minimap/proc/get_coords_from_click(mob/user)
-	RegisterSignal(user, COMSIG_MOB_CLICKON, PROC_REF(on_click))
+	RegisterSignal(src, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_click))
 	while(!(choices_by_mob[user] || stop_polling[user]) && user.client && islist(stop_polling))
 		stoplag(1)
-	UnregisterSignal(user, COMSIG_MOB_CLICKON)
+	UnregisterSignal(src, COMSIG_SCREEN_ELEMENT_CLICK)
 	. = choices_by_mob[user]
 	choices_by_mob -= user
 	// I have an extra layer of shitcode for you
 	stop_polling -= user
+
+/atom/movable/screen/minimap/MouseEntered(location, control, params)
+	. = ..()
+	MouseMove(location, control, params)
+
+/atom/movable/screen/minimap/MouseMove(location, control, params)
+	var/list/modifiers = params2list(params)
+	var/list/pixel_coords = params2screenpixel(modifiers["screen-loc"])
+	var/zlevel = my_map.updators_by_datum[src].ztarget
+	var/x = (pixel_coords[1] - my_map.minimaps_by_z["[zlevel]"].x_offset) / 2
+	var/y = (pixel_coords[2] - my_map.minimaps_by_z["[zlevel]"].y_offset) / 2
+	var/c_x = clamp(CEILING(x, 1), 1, world.maxx)
+	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
+
+	var/list/position_to_name = my_map.map_position_to_name
+	if(!position_to_name || !usr.hud_used)
+		return
+
+	var/text_for_screentip = position_to_name["[zlevel]:[c_x]:[c_y]"]
+	if(isnull(text_for_screentip))
+		return
+
+	maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[text_for_screentip]</span>")
+	maptext_x = pixel_coords[1]
+	maptext_y = pixel_coords[2]
+	maptext_width = 96
+	maptext_height = 96
 
 /**
  * Handles fetching the targetted coordinates when the mob tries to click on this map
@@ -420,7 +457,7 @@
  * x and y minimap centering is reverted, then the x2 scaling of the map is removed
  * round up to correct if an odd pixel was clicked and make sure its valid
  */
-/atom/movable/screen/minimap/proc/on_click(datum/source, atom/A, params)
+/atom/movable/screen/minimap/proc/on_click(datum/source, location, control, params, mob/user)
 	SIGNAL_HANDLER
 	var/list/modifiers = params2list(params)
 	// we only care about absolute coords because the map is fixed to 1,1 so no client stuff
@@ -430,8 +467,7 @@
 	var/y = (pixel_coords[2] - my_map.minimaps_by_z["[zlevel]"].y_offset) / 2
 	var/c_x = clamp(CEILING(x, 1), 1, world.maxx)
 	var/c_y = clamp(CEILING(y, 1), 1, world.maxy)
-	choices_by_mob[source] = list(c_x, c_y)
-	return COMSIG_MOB_CANCEL_CLICKON
+	choices_by_mob[user] = list(c_x, c_y)
 
 /atom/movable/screen/minimap_locator
 	name = "You are here"

@@ -4,6 +4,7 @@
 /area/station/ai_monitored
 
 /area/station/ai_monitored/turret_protected
+	tacmap_color = TACMAP_AREA_COMMAND
 
 // AI
 /area/station/ai_monitored
@@ -105,6 +106,9 @@
 // Station specific ai monitored rooms, move here for consistency
 
 //Command - AI Monitored
+/area/station/ai_monitored/command
+	tacmap_color = TACMAP_AREA_COMMAND
+
 /area/station/ai_monitored/command/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
@@ -124,6 +128,7 @@
 	icon_state = "armory"
 	ambience_index = AMBIENCE_DANGER
 	airlock_wires = /datum/wires/airlock/security
+	tacmap_color = TACMAP_AREA_SECURITY
 
 /area/station/ai_monitored/security/armory/upper
 	name = "Upper Armory"

@@ -240,6 +240,7 @@
 /area/station/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/maintenance/space_hut
 	name = "\improper Space Hut"

@@ -13,6 +13,7 @@
 		'sound/ambience/misc/signal.ogg',
 		)
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	tacmap_color = TACMAP_AREA_MAINTENANCE
 
 /area/station/medical/medbay/central
 	name = "Medbay Central"
