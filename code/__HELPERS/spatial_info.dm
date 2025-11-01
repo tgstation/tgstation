@@ -220,7 +220,7 @@
 	RETURN_TYPE(/list/mob)
 
 	var/hearers_length
-	if(isnull(hearers) || !(hearers_length = hearers.len))
+	if(isnull(hearers) || !(hearers_length = hearers.len)) // note onvar assignment in the conditional: this is a micro op so we do not have to do a length() check before assigning hearers.len and so we only have to isnull() once.
 		return list()
 
 	for(var/hearer_index in 1 to hearers_length)
