@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - refactor: "Refactored screen alerts a little. Most should now fit the player's hud style. Report any issue."
