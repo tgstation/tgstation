@@ -178,7 +178,8 @@
 /atom/movable/screen/alert/status_effect/cursed
 	name = "Cursed!"
 	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
-	icon_state = "cursed_by_slots"
+	use_user_hud_icon = TRUE
+	overlay_state = "cursed_by_slots"
 
 /atom/movable/screen/alert/status_effect/cursed/update_desc()
 	. = ..()

@@ -560,7 +560,7 @@
 	allowed = list(
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack/captain,
 		/obj/item/storage/belt/holster,
 		//new
 		/obj/item/toy/clockwork_watch,
