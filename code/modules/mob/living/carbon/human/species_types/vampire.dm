@@ -190,7 +190,7 @@
 
 	user.visible_message(
 		span_notice("[user] stabs [used_item] with [user.p_their()] sharp teeth and drains its contents!"),
-		span_notice("You stab [bloodused_itembag] with your sharp teeth and drain its contents!"),
+		span_notice("You stab [used_item] with your sharp teeth and drain its contents!"),
 		span_hear("You hear a stabbing sound! ...Followed by slurping?"),
 		COMBAT_MESSAGE_RANGE,
 	)
