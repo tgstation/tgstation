@@ -2982,6 +2982,7 @@
 #include "code\game\objects\structures\lavaland\geyser.dm"
 #include "code\game\objects\structures\lavaland\necropolis_tendril.dm"
 #include "code\game\objects\structures\lavaland\vent_mining\boss_vent.dm"
+#include "code\game\objects\structures\lavaland\vent_mining\gulag_vent.dm"
 #include "code\game\objects\structures\lavaland\vent_mining\ore_vent.dm"
 #include "code\game\objects\structures\lavaland\vent_mining\vent_misc.dm"
 #include "code\game\objects\structures\plaques\_plaques.dm"
