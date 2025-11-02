@@ -554,7 +554,7 @@
 /obj/machinery/door/window/right/directional/south{
 	name = "Weapon Storage"
 	},
-/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser/soul,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/ruin/caravan/pirate)

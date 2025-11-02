@@ -157,6 +157,9 @@
 	ammo_x_offset = 2
 	shaded_charge = FALSE
 
+/obj/item/gun/energy/laser/instakill/add_deep_lore()
+	return
+
 /obj/item/gun/energy/laser/instakill/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)

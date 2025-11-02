@@ -110,7 +110,7 @@
 
 /datum/crafting_recipe/xraylaser
 	name = "X-ray Laser Gun"
-	result = /obj/item/gun/energy/xray
+	result = /obj/item/gun/energy/laser/xray
 	reqs = list(
 		/obj/item/gun/energy/laser = 1,
 		/obj/item/weaponcrafting/gunkit/xray = 1,
