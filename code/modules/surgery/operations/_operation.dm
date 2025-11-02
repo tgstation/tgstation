@@ -329,7 +329,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  */
 /datum/surgery_operation/proc/state_check(atom/movable/operating_on)
 	PROTECTED_PROC(TRUE)
-	return FALSE
+	return TRUE
 
 /**
  * Checks to see if the provided tool is valid for this operation
