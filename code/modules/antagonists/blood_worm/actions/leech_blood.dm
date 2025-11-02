@@ -11,21 +11,33 @@
 
 	var/leech_rate = 0
 
+	var/is_actively_leeching = FALSE
+
+	/// Associative list of all blood type ids that are compatible for leeching from reagent containers. Format is "list[blood_type_id] = TRUE"
 	var/static/list/compatible_container_blood_types = list(
-		BLOOD_TYPE_A_MINUS,
-		BLOOD_TYPE_A_PLUS,
-		BLOOD_TYPE_B_MINUS,
-		BLOOD_TYPE_B_PLUS,
-		BLOOD_TYPE_AB_MINUS,
-		BLOOD_TYPE_AB_PLUS,
-		BLOOD_TYPE_O_MINUS,
-		BLOOD_TYPE_O_PLUS,
-		BLOOD_TYPE_UNIVERSAL,
-		BLOOD_TYPE_LIZARD,
-		BLOOD_TYPE_VAMPIRE,
-		BLOOD_TYPE_ANIMAL,
-		BLOOD_TYPE_ETHEREAL
+		BLOOD_TYPE_A_MINUS = TRUE,
+		BLOOD_TYPE_A_PLUS = TRUE,
+		BLOOD_TYPE_B_MINUS = TRUE,
+		BLOOD_TYPE_B_PLUS = TRUE,
+		BLOOD_TYPE_AB_MINUS = TRUE,
+		BLOOD_TYPE_AB_PLUS = TRUE,
+		BLOOD_TYPE_O_MINUS = TRUE,
+		BLOOD_TYPE_O_PLUS = TRUE,
+		BLOOD_TYPE_UNIVERSAL = TRUE,
+		BLOOD_TYPE_LIZARD = TRUE,
+		BLOOD_TYPE_VAMPIRE = TRUE,
+		BLOOD_TYPE_ANIMAL = TRUE,
+		BLOOD_TYPE_ETHEREAL = TRUE
 	)
+
+	/// Associative list of all reagent types that are compatible for leeching from reagent containers. Format is "list[reagent_type] = blood_type_id"
+	var/list/compatible_container_reagent_types = list()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/New(Target, original)
+	. = ..()
+	for (var/blood_type_id in compatible_container_blood_types)
+		var/datum/blood_type/blood_type = get_blood_type(blood_type_id)
+		compatible_container_reagent_types[blood_type.reagent_type] = blood_type_id
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/IsAvailable(feedback)
 	if (!istype(owner, /mob/living/basic/blood_worm))
@@ -34,6 +46,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/InterceptClickOn(mob/living/clicker, params, atom/target)
 	..()
+	owner.face_atom(target)
 	return TRUE // Necessary to intercept the attack chain.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/Activate(atom/target)
@@ -45,12 +58,20 @@
 	if (!target.IsReachableBy(owner))
 		target.balloon_alert(owner, "can't reach!")
 		return FALSE
-	if (isliving(target))
-		return leech_living(owner, target)
-	if (is_reagent_container(target))
-		return leech_container(owner, target)
+	if (is_actively_leeching)
+		target.balloon_alert(owner, "busy leeching!")
+		return FALSE
 
-	target.balloon_alert(owner, "can't bite this!")
+	is_actively_leeching = TRUE
+
+	if (isliving(target))
+		. = leech_living(owner, target)
+	else if (is_reagent_container(target))
+		. = leech_container(owner, target)
+	else
+		target.balloon_alert(owner, "can't leech from this!")
+
+	is_actively_leeching = FALSE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living(mob/living/basic/blood_worm/leech, mob/living/target)
 	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
@@ -82,7 +103,7 @@
 	leech.visible_message(
 		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
 		self_message = span_danger("You bite into \the [target]!"),
-		blind_message = span_hear("You hear a sickening crunch!"),
+		blind_message = span_hear("You hear a bite, followed by a sickening crunch!"),
 		ignored_mobs = list(target)
 	)
 
@@ -93,20 +114,18 @@
 		alt_type = MSG_AUDIBLE
 	)
 
+	playsound(target, 'sound/items/weapons/bite.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 	playsound(target, 'sound/effects/wounds/pierce3.ogg', vol = 100, vary = TRUE, ignore_walls = FALSE)
 
-	var/start_time = world.time
 	while (do_after(leech, 1 SECONDS, target, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(leech_living_active_check), leech, target)))
-		var/delta_time = (world.time - start_time) * 0.1
-		var/leech_amount = leech_rate * delta_time
 		var/original_volume = target.blood_volume
 
-		target.blood_volume = max(0, target.blood_volume - leech_amount)
-		leech.ingest_blood(original_volume - target.blood_volume, target.get_bloodtype())
+		var/datum/blood_type/blood_type = target.get_bloodtype()
+
+		target.blood_volume = max(0, target.blood_volume - leech_rate)
+		leech.ingest_blood(original_volume - target.blood_volume, blood_type.id)
 
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
-
-		start_time = world.time
 
 	if (leech.pulling == target && leech.grab_state >= GRAB_AGGRESSIVE)
 		leech.setGrabState(GRAB_PASSIVE)
@@ -121,21 +140,96 @@
 		return FALSE
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target, feedback = FALSE)
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (HAS_TRAIT(target, TRAIT_NOBLOOD) || target.blood_volume <= 0 || !target.get_bloodtype())
-		if (feedback)
-			target.balloon_alert(leech, "no more blood!")
+		target.balloon_alert(leech, "no more blood!")
 		return FALSE
 	if (!leech.Adjacent(target) || leech.pulling != target || leech.grab_state < GRAB_AGGRESSIVE)
-		if (feedback)
-			target.balloon_alert(leech, "interrupted!")
+		target.balloon_alert(leech, "interrupted!")
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
 	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the target is invalid.
 
+	if (!leech_container_start_check(leech, target, feedback = TRUE))
+		return FALSE
+
+	leech.visible_message(
+		message = span_danger("\The [leech] start[leech.p_s()] trying to bite into \the [target]!"),
+		self_message = span_danger("You start trying to bite into \the [target]!")
+	)
+
+	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_start_check), leech, target)))
+		target.balloon_alert(leech, "interrupted!")
+		return FALSE
+
+	leech.visible_message(
+		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
+		self_message = span_danger("You bite into \the [target]!"),
+		blind_message = span_hear("You hear a bite!"),
+		ignored_mobs = list(target)
+	)
+
+	playsound(target, 'sound/items/weapons/bite.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
+
+	while (do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_active_check), leech, target)))
+		var/list/blood = get_blood_in_container(target)
+
+		var/total_volume = 0
+		for (var/reagent_type as anything in blood)
+			total_volume += blood[reagent_type]
+
+		for (var/reagent_type as anything in blood)
+			var/volume = blood[reagent_type]
+			var/datum/reagent/reagent = target.reagents.has_reagent(reagent_type)
+
+			var/blood_type_id
+			if (istype(reagent, /datum/reagent/blood))
+				var/datum/blood_type/blood_type = reagent.data["blood_type"]
+				blood_type_id = blood_type.id
+			else
+				blood_type_id = compatible_container_reagent_types[reagent_type]
+
+			var/amount_consumed = target.reagents.remove_reagent(reagent_type, leech_rate * (volume / total_volume))
+			leech.ingest_blood(amount_consumed, blood_type_id)
+
+		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
+
+	StartCooldown()
+	return TRUE
+
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
+	if (!length(get_blood_in_container(target)))
+		if (feedback)
+			target.balloon_alert(leech, "no blood!")
+		return FALSE
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_active_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
+	if (!length(get_blood_in_container(target)))
+		target.balloon_alert(leech, "no more blood!")
+		return FALSE
+	return TRUE
+
+/// Returns all of the blood in the given container. Format is "list[reagent_type] = volume"
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/get_blood_in_container(obj/item/reagent_containers/target)
+	. = list()
+
+	if (target.reagents.total_volume <= 0)
+		return
+
+	for (var/datum/reagent/reagent as anything in target.reagents.reagent_list)
+		if (reagent.volume <= 0)
+			continue
+		if (!compatible_container_reagent_types[reagent.type])
+			continue
+		if (istype(reagent, /datum/reagent/blood))
+			var/datum/blood_type/blood_type = reagent.data["blood_type"]
+			if (!blood_type || !compatible_container_blood_types[blood_type.id])
+				continue
+
+		.[reagent.type] = reagent.volume
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/hatchling
 	leech_rate = BLOOD_VOLUME_NORMAL * 0.05 // 28 units of blood, 5 points of health, or 10% of a hatchling blood worm's health

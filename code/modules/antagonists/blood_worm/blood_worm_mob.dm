@@ -147,11 +147,11 @@
 	if (host && loc != host)
 		unregister_host()
 
-/mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, datum/blood_type/blood_type, should_heal = TRUE)
-	if (!blood_type)
+/mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, blood_type_id, should_heal = TRUE)
+	if (!blood_type_id)
 		return
 
-	consumed_blood[blood_type.id] += blood_amount
+	consumed_blood[blood_type_id] += blood_amount
 
 	if (should_heal)
 		adjustBruteLoss(-blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)

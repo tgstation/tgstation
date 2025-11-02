@@ -13,9 +13,9 @@
 /datum/antagonist/blood_worm/greet()
 	. = ..()
 
-	to_chat(owner, span_bold("A species of space-faring leech, massive in size and ferocious in hunting.\
-							Your origins are unknown to most, but to some, you are among their greatest creations.\
-							A failed Syndicate bioweapons project, snuffed out by benefactors after a \"lack of results\", and yet...\
+	to_chat(owner, span_bold("A species of space-faring leech, massive in size and ferocious in hunting. \
+							Your origins are unknown to most, but to some, you are among their greatest creations. \
+							A failed Syndicate bioweapons project, snuffed out by benefactors after a \"lack of results\", and yet... \
 							Here you find yourself. On a NanoTrasen space station. What a fitting habitat for you, isn't it?"))
 	to_chat(owner, span_bolddanger("KILL, CONSUME, MULTIPLY, CONQUER."))
 
