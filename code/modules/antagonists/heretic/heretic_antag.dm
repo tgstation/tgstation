@@ -88,6 +88,8 @@
 	var/rewards_given = 0
 	/// Our heretic passive level. Tracked here in case of body moving shenanigans
 	var/passive_level = 1
+	/// How many points are needed to gain a visible heretic aura
+	var/points_to_aura = 8
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
@@ -181,6 +183,7 @@
 
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
+	data["points_to_aura"] = points_to_aura
 
 	var/list/tree_data = list()
 	var/list/shop_knowledge = list()
@@ -775,7 +778,7 @@
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
 	knowledge_gained += max(0, amount)
-	if(knowledge_gained > 8 && !unlimited_blades)
+	if(knowledge_gained > points_to_aura && !unlimited_blades)
 		disable_blade_breaking()
 	if(update)
 		update_data_for_all_viewers()
