@@ -6099,6 +6099,9 @@
 	pixel_y = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/flasher/directional/south{
+	id = "AI"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "bAM" = (
@@ -6604,7 +6607,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "bFT" = (
-/obj/effect/landmark/start/ai,
 /obj/item/radio/intercom/directional/west{
 	freerange = 1;
 	listening = 0;
@@ -6635,6 +6637,7 @@
 	pixel_x = 24;
 	req_access = list("ai_upload")
 	},
+/obj/effect/landmark/start/ai,
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
 "bFV" = (
@@ -8400,10 +8403,6 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "cak" = (
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = -26
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
@@ -15255,7 +15254,6 @@
 "dMh" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Atmospherics - Project Room Fore";
-	dir = 5;
 	name = "atmospherics camera"
 	},
 /obj/machinery/status_display/evac/directional/south,
@@ -19839,14 +19837,10 @@
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "eUq" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = 26
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "eUu" = (
@@ -28216,8 +28210,8 @@
 "gSB" = (
 /obj/structure/cable,
 /obj/machinery/button/door/incinerator_vent_atmos_main{
-	pixel_x = -8;
-	pixel_y = 36
+	pixel_y = 36;
+	pixel_x = -8
 	},
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -8;
@@ -29927,6 +29921,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
+	},
+/obj/machinery/flasher/directional/south{
+	id = "AI";
+	pixel_x = 6
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
@@ -41025,7 +41023,8 @@
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/sign/warning/secure_area/directional/west,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/engine/atmos)
@@ -53639,9 +53638,6 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nmU" = (
 /obj/structure/cable,
-/obj/machinery/firealarm/directional/south{
-	pixel_x = -32
-	},
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -24
 	},
@@ -65151,15 +65147,6 @@
 /obj/structure/closet/secure_closet/paramedic,
 /turf/open/floor/iron/dark,
 /area/station/medical/paramedic)
-"qdV" = (
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = -26
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "qdW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -73133,6 +73120,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/flasher/directional/south{
+	id = "AI"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "sde" = (
@@ -73304,6 +73294,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "sfs" = (
@@ -76904,7 +76895,8 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/lattice/catwalk,
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -82364,7 +82356,8 @@
 	control_area = "/area/station/ai_monitored/turret_protected/aisat_interior";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
-	req_access = list("minisat")
+	req_access = list("minisat");
+	dir = 8
 	},
 /obj/machinery/camera/directional/west{
 	c_tag = "AI Satellite - Teleporter";
@@ -83270,7 +83263,8 @@
 /area/station/service/library)
 "uzZ" = (
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -84670,7 +84664,8 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
@@ -90112,15 +90107,18 @@
 /obj/structure/cable,
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -8;
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /obj/machinery/button/door/incinerator_vent_atmos_main{
 	pixel_x = -8;
-	pixel_y = 36
+	pixel_y = 36;
+	dir = 1
 	},
 /obj/machinery/button/ignition/incinerator/atmos{
 	pixel_x = 8;
-	pixel_y = 36
+	pixel_y = 36;
+	dir = 1
 	},
 /obj/structure/closet/radiation,
 /obj/item/analyzer,
@@ -105975,7 +105973,7 @@ hmU
 sdK
 xpt
 sdK
-qdV
+sdK
 qGs
 cdt
 idU
