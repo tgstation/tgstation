@@ -73,8 +73,8 @@
 	add_overlay(emissive_appearance(icon, "emissive_screen", src))
 
 /obj/machinery/turretid/power_change()
-  . = ..()
-  update_appearance()
+	. = ..()
+	update_appearance()
 
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
