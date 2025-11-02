@@ -32,8 +32,8 @@
 	if(!mapload)
 		locked = FALSE
 	else
-		find_and_hang_on_wall()
-		power_change()
+		find_and_hang_on_atom()
+	power_change()
 
 	var/area/control_area_instance
 
