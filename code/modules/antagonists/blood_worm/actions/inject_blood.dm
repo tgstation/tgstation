@@ -1,8 +1,10 @@
 #define REQUIRED_ACCUMULATION(wound) (1 + (wound.severity - 1) * 0.3)
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse
-	name = "Transfuse Blood"
-	desc = "Transfuse blood into your host, healing them in exchange for your own health."
+/datum/action/cooldown/mob_cooldown/blood_worm/inject
+	name = "Inject Blood"
+	desc = "Inject your blood into the damaged tissues of your host, healing them in exchange for your own health."
+
+	button_icon_state = "inject_blood"
 
 	cooldown_time = 30 SECONDS
 	shared_cooldown = NONE
@@ -16,15 +18,15 @@
 
 	var/status_effect_type = null
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/New(Target, original)
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/New(Target, original)
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/Destroy()
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/Destroy()
 	UnregisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/IsAvailable(feedback)
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/IsAvailable(feedback)
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
 
@@ -37,7 +39,7 @@
 
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/Activate(atom/target)
 	var/mob/living/basic/blood_worm/worm = src.target
 	var/mob/living/carbon/human/host = worm.host
 
@@ -48,7 +50,7 @@
 		ignored_mobs = owner
 	)
 
-	to_chat(owner, span_danger("You transfuse blood into your host."))
+	to_chat(owner, span_notice("You inject blood into the damaged tissues of your host."))
 
 	host.blood_volume -= health_cost * BLOOD_WORM_HEALTH_TO_BLOOD
 
@@ -166,10 +168,10 @@
 	worm = null
 
 /atom/movable/screen/alert/status_effect/blood_worm_transfuse
-	name = "Blood Transfusion"
-	desc = "The transfused blood is rapidly healing your host."
+	name = "Blood Injection"
+	desc = "The injected blood is rapidly healing your host."
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/hatchling
 	health_cost = 20
 	cooldown_time = 30 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.667 hp/s, Worm max health is 4x less than host max health, Worm heals at 0.2 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/hatchling
@@ -178,7 +180,7 @@
 	damage_regen_rate = 6 // 20 s * 6 hp/s = 120 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 6 // One wound every 6 seconds, +30% per wound severity level.
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/juvenile
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 	health_cost = 35
 	cooldown_time = 40 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.875 hp/s, Worm max health is 2x less than host max health, Worm heals at 0.3 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/juvenile
@@ -187,7 +189,7 @@
 	damage_regen_rate = 8 // 20 s * 8 hp/s = 160 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
 
-/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/adult
+/datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 	health_cost = 50
 	cooldown_time = 50 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 1 hp/s, Worm max health is 1.334x less than host max health, Worm heals at 0.4 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/adult

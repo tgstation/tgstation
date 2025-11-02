@@ -23,6 +23,7 @@
 #define ROLE_ALIEN "Xenomorph"
 #define ROLE_BLOB "Blob"
 #define ROLE_BLOB_INFECTION "Blob Infection"
+#define ROLE_BLOOD_WORM "Blood Worm"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
 #define ROLE_FUGITIVE "Fugitive"
 #define ROLE_LONE_OPERATIVE "Lone Operative"

@@ -1,4 +1,6 @@
 /mob/living/basic/blood_worm
+	icon = 'icons/mob/nonhuman-player/blood_worm.dmi'
+
 	mob_biotypes = MOB_ORGANIC | MOB_BUG
 	basic_mob_flags = FLAMMABLE_MOB
 
@@ -20,13 +22,6 @@
 
 	habitable_atmos = null
 
-	// TEMPORARY ICONS
-	icon = 'icons/mob/simple/carp.dmi'
-	icon_state = "base"
-	icon_living = "base"
-	icon_dead = "base_dead"
-	// TEMPORARY ICONS
-
 	/// Associative list of how much of each blood type the blood worm has consumed.
 	/// The format of this list is "list[blood_type.id] = amount_consumed"
 	/// This carries across growth stages.
@@ -45,22 +40,22 @@
 	// Innate and shared actions
 
 	/// Typed, please initialize with a proper action subtype. (empty = no action)
-	var/datum/action/cooldown/mob_cooldown/blood_worm_spit/spit_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/spit/spit_action
 	/// Typed, please initialize with a proper action subtype. (empty = no action)
-	var/datum/action/cooldown/mob_cooldown/blood_worm_leech/leech_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/leech/leech_action
 	/// Not typed, please leave empty.
-	var/datum/action/cooldown/mob_cooldown/blood_worm_invade/invade_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/invade/invade_action
 	/// Typed, please initialize with a proper action subtype. (empty = no action)
-	var/datum/action/cooldown/mob_cooldown/blood_worm_cocoon/cocoon_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/cocoon_action
 
 	// Host actions
 
 	/// Typed, please initialize with a proper action subtype. (empty = no action)
-	var/datum/action/cooldown/mob_cooldown/blood_worm_transfuse/transfuse_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/inject/transfuse_action
 	/// Not typed, please leave empty.
-	var/datum/action/blood_worm_eject/eject_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/eject/eject_action
 	/// Not typed, please leave empty.
-	var/datum/action/cooldown/mob_cooldown/blood_worm_revive/revive_action
+	var/datum/action/cooldown/mob_cooldown/blood_worm/revive/revive_action
 
 	/// List of actions outside of a host.
 	var/list/innate_actions = list()
@@ -81,25 +76,25 @@
 
 	// Innate and shared actions
 
-	if (ispath(spit_action, /datum/action/cooldown/mob_cooldown/blood_worm_spit))
+	if (ispath(spit_action, /datum/action/cooldown/mob_cooldown/blood_worm/spit))
 		spit_action = new spit_action(src)
 		innate_actions += spit_action
 		host_actions += spit_action
 
-	if (ispath(leech_action, /datum/action/cooldown/mob_cooldown/blood_worm_leech))
+	if (ispath(leech_action, /datum/action/cooldown/mob_cooldown/blood_worm/leech))
 		leech_action = new leech_action(src)
 		innate_actions += leech_action
 
 	invade_action = new(src)
 	innate_actions += invade_action
 
-	if (ispath(cocoon_action, /datum/action/cooldown/mob_cooldown/blood_worm_cocoon))
+	if (ispath(cocoon_action, /datum/action/cooldown/mob_cooldown/blood_worm/cocoon))
 		cocoon_action = new cocoon_action(src)
 		innate_actions += cocoon_action
 
 	// Host actions
 
-	if (ispath(transfuse_action, /datum/action/cooldown/mob_cooldown/blood_worm_transfuse))
+	if (ispath(transfuse_action, /datum/action/cooldown/mob_cooldown/blood_worm/inject))
 		transfuse_action = new transfuse_action(src)
 		host_actions += transfuse_action
 
@@ -129,6 +124,18 @@
 	if (!host)
 		adjustBruteLoss(-regen_rate * seconds_per_tick)
 
+/mob/living/basic/blood_worm/set_stat(new_stat)
+	. = ..()
+
+	if (host && stat != CONSCIOUS)
+		leave_host()
+
+/mob/living/basic/blood_worm/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	if (host && loc != host)
+		unregister_host()
+
 /mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, datum/blood_type/blood_type, should_heal = TRUE)
 	if (!blood_type)
 		return
@@ -141,6 +148,14 @@
 /mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host)
 	if (!mind || !key)
 		return
+
+	playsound(src, 'sound/effects/magic/enter_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
+
+	visible_message(
+		message = span_bolddanger("\The [src] enter[p_s()] \the [new_host]!"),
+		self_message = span_notice("You enter \the [new_host]."),
+		blind_message = span_hear("You hear a squelch.")
+	)
 
 	host = new_host
 
@@ -166,6 +181,8 @@
 		backseat.death(gibbed = TRUE) // Same thing that the corpse mob spawners do to stop deathgasps and such.
 		host.mind.transfer_to(backseat)
 
+	ingest_blood(host.blood_volume, host.get_bloodtype(), should_heal = FALSE)
+
 	start_dilution()
 	sync_health()
 
@@ -180,9 +197,15 @@
 	if (!host)
 		return
 
-	forceMove(get_turf(host))
+	visible_message(
+		message = span_bolddanger("\The [src] emerge[p_s()] from \the [host]!"),
+		self_message = span_notice("You emerge from \the [host]."),
+		blind_message = span_hear("You hear a squelch.")
+	)
 
-	unregister_host()
+	forceMove(get_turf(host)) // This will call unregister_host() via Moved()
+
+	playsound(src, 'sound/effects/magic/exit_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
 /mob/living/basic/blood_worm/proc/unregister_host()
 	if (!host)
@@ -204,8 +227,6 @@
 
 	remove_actions(src, host_actions)
 	grant_actions(src, innate_actions)
-
-	ingest_blood(host.blood_volume, host.get_bloodtype(), should_heal = FALSE)
 
 	update_dilution()
 	sync_health()
@@ -314,7 +335,14 @@
 
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
-	desc = "A freshly hatched blood worm. It looks hungry and somewhat weak, requiring blood to grow further."
+	desc = "A freshly hatched blood worm. It looks hungry and weak, requiring blood to grow further."
+
+	icon_state = "hatchling"
+	icon_living = "hatchling"
+	icon_dead = "hatchling-dead"
+
+	mob_size = MOB_SIZE_TINY
+	pass_flags = PASSTABLE | PASSMOB // The benefits of being a tiny little bastard.
 
 	maxHealth = 50
 	health = 50
@@ -322,15 +350,16 @@
 	obj_damage = 10
 	melee_damage_lower = 8
 	melee_damage_upper = 12
+	armour_penetration = 10
 
 	speed = 0
 
-	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/hatchling
-	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm_cocoon/hatchling
+	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm/leech/hatchling
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling
 
-	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/hatchling
+	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/hatchling
 
-	regen_rate = 0.2 // 250 seconds to recover from 0 to 50, or a little over 4 minutes
+	regen_rate = 0.2 // 250 seconds to recover from 0 to 50, or a little over 4 minutes.
 
 /mob/living/basic/blood_worm/hatchling/Initialize(mapload)
 	. = ..()
@@ -341,24 +370,63 @@
 	name = "juvenile blood worm"
 	desc = "A mid-sized blood worm. It looks bloodthirsty and has numerous long and extremely sharp teeth."
 
+	icon_state = "juvenile"
+	icon_living = "juvenile"
+	icon_dead = "juvenile-dead"
+
+	mob_size = MOB_SIZE_SMALL
+
 	maxHealth = 100 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
 	health = 100
 
 	obj_damage = 25 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
 	melee_damage_lower = 15
 	melee_damage_upper = 20
+	armour_penetration = 25
 
 	wound_bonus = 0// Juveniles can afford to heal wounds on their hosts, unlike hatchlings. Note that this can't cause critical wounds. (at least it didn't in testing)
 	sharpness = SHARP_POINTY
 
 	speed = 0.5
 
-	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm_spit/juvenile
-	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm_leech/juvenile
-	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm_cocoon/juvenile
+	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm/spit/juvenile
+	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm/leech/juvenile
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile
 
-	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm_transfuse/juvenile
+	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 
-	regen_rate = 0.3 // 333 seconds to recover from 0 to 100, or a little over 5 and a half minutes
+	regen_rate = 0.3 // 333 seconds to recover from 0 to 100, or a little over 5 and a half minutes.
 
 /mob/living/basic/blood_worm/adult
+	name = "adult blood worm"
+	desc = "A monstrosity of a blood worm. It'd probably be better to put your head in an industrial shredder rather than its maw."
+
+	icon_state = "adult"
+	icon_living = "adult"
+	icon_dead = "adult-dead"
+
+	mob_size = MOB_SIZE_HUGE
+
+	maxHealth = 150
+	health = 150
+
+	obj_damage = 40 // You are not getting away.
+	melee_damage_lower = 20
+	melee_damage_upper = 25 // Basically a wielded plastitanium glass spear, plus 0-5 extra damage.
+	armour_penetration = 40
+
+	wound_bonus = 5 // Able to cause critical wounds.
+	sharpness = SHARP_POINTY
+
+	attack_verb_simple = "gore"
+	attack_verb_continuous = "gores"
+
+	speed = 0.8
+
+	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm/spit/adult
+	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm/leech/adult
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult
+
+	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
+
+	regen_rate = 0.4 // 375 seconds to recover from 0 to 150, or a little over 6 minutes.

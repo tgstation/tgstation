@@ -1,6 +1,8 @@
-/datum/action/cooldown/mob_cooldown/blood_worm_revive
+/datum/action/cooldown/mob_cooldown/blood_worm/revive
 	name = "Revive Host"
 	desc = "Restart the blood circulation of your host, bringing them back to life."
+
+	button_icon_state = "revive_host"
 
 	cooldown_time = 30 SECONDS
 	shared_cooldown = NONE
@@ -9,7 +11,23 @@
 
 	check_flags = NONE
 
-/datum/action/cooldown/mob_cooldown/blood_worm_revive/IsAvailable(feedback)
+/datum/action/cooldown/mob_cooldown/blood_worm/revive/Grant(mob/granted_to)
+	. = ..()
+
+	var/mob/living/basic/blood_worm/worm = target
+	var/mob/living/carbon/human/host = worm.host
+
+	RegisterSignal(host, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/mob_cooldown/blood_worm/revive/Remove(mob/removed_from)
+	var/mob/living/basic/blood_worm/worm = target
+	var/mob/living/carbon/human/host = worm.host
+
+	RegisterSignal(host, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/revive/IsAvailable(feedback)
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
 
@@ -21,18 +39,20 @@
 
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm_revive/Activate(atom/target)
+/datum/action/cooldown/mob_cooldown/blood_worm/revive/Activate(atom/target)
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
-	to_chat(owner, span_danger("You begin restarting \the [host]'s blood circulation..."))
+	to_chat(owner, span_notice("You begin restarting \the [host]'s blood circulation..."))
 
 	for (var/i in 1 to 3)
 		if (!do_after(owner, 2 SECONDS, host, timed_action_flags = IGNORE_INCAPACITATED | IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(run_checks), worm, host)))
 			host.balloon_alert(owner, "interrupted!")
 			return FALSE
 
-		playsound(host, 'sound/effects/singlebeat.ogg', vol = 50, vary = TRUE)
+		REMOVE_TRAIT(worm, TRAIT_DEAF, BLOOD_WORM_HOST_TRAIT)
+		playsound(host, 'sound/effects/singlebeat.ogg', vol = 50, vary = TRUE, ignore_walls = FALSE)
+		ADD_TRAIT(worm, TRAIT_DEAF, BLOOD_WORM_HOST_TRAIT)
 
 		var/original_transform = host.transform
 		animate(host, transform = host.transform.Translate(0, 3), time = 0.2 SECONDS, easing = CUBIC_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
@@ -56,7 +76,7 @@
 
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm_revive/proc/run_checks(mob/living/basic/blood_worm/worm, mob/living/carbon/human/host, feedback = FALSE)
+/datum/action/cooldown/mob_cooldown/blood_worm/revive/proc/run_checks(mob/living/basic/blood_worm/worm, mob/living/carbon/human/host, feedback = FALSE)
 	if (!worm.host)
 		return FALSE
 	if (host.stat != DEAD)
