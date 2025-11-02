@@ -65,7 +65,7 @@
 			. += mutable_appearance(icon, "button_right")
 			. += emissive_appearance(icon, "emissive_button_right", src)
 		else
-			. += (mutable_appearance(icon, "stun")
+			. += mutable_appearance(icon, "stun")
 	else
 		. += mutable_appearance(icon, "standby")
 	. += emissive_appearance(icon, "emissive_screen", src)
