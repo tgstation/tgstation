@@ -11,6 +11,8 @@
 	var/datum/weakref/server_ref
 	/// The netpod the avatar is in
 	var/datum/weakref/netpod_ref
+	/// If we've taken any damage, is set to FALSE - for tracking nohit bonus
+	var/nohit = TRUE
 
 /datum/component/avatar_connection/Initialize(
 	datum/mind/old_mind,
@@ -180,6 +182,7 @@
 	if(old_body.stat > SOFT_CRIT) // KO!
 		full_avatar_disconnect(cause_damage = TRUE)
 
+	nohit = FALSE
 
 /// Handles minds being swapped around in subsequent avatars
 /datum/component/avatar_connection/proc/on_mind_transfer(datum/mind/source, mob/living/previous_body)

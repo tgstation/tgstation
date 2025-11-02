@@ -25,8 +25,6 @@
 	var/mob/living/brain/brainmob = null
 	/// If it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
 	var/decoy_override = FALSE
-	/// Two variables necessary for calculating whether we get a brain trauma or not
-	var/damage_delta = 0
 
 
 	var/list/datum/brain_trauma/traumas = list()
@@ -48,6 +46,8 @@
 	var/variant_traits_added
 	/// Variance in brain traits removed by subtypes
 	var/variant_traits_removed
+	/// The color of this brain. Fluff, only used when repairing (shade of...).
+	var/shade_color = "pink"
 
 /obj/item/organ/brain/Initialize(mapload)
 	. = ..()
@@ -222,8 +222,8 @@
 		if(!do_after(user, 3 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
 			return TRUE
-
-		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
+		var/and_bright_shade = !shade_color ? "" : " and turn a slightly brighter shade of [shade_color]"
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."))
 		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
@@ -345,32 +345,40 @@
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
-/obj/item/organ/brain/check_damage_thresholds(mob/M)
+/obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
+	var/delta_dam = . //for the sake of clarity
+	if(delta_dam <= 0 || damage < BRAIN_DAMAGE_MILD)
+		return
+
+	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
+		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
+
+	var/is_boosted = (owner && HAS_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST))
+	if(damage < BRAIN_DAMAGE_SEVERE)
+		return
+	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
+		if(prob(20 + (is_boosted * 30)))
+			gain_trauma_type(BRAIN_TRAUMA_SPECIAL, is_boosted ? TRAUMA_RESILIENCE_SURGERY : null, natural_gain = TRUE)
+		else
+			gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
+
+/obj/item/organ/brain/check_damage_thresholds()
+	. = ..()
+	if(!owner)
+		return
 	// If we crossed blinking brain damage thresholds either way, update our blinking
-	if (owner && ((prev_damage > BRAIN_DAMAGE_ASYNC_BLINKING && damage < BRAIN_DAMAGE_ASYNC_BLINKING) || (prev_damage < BRAIN_DAMAGE_ASYNC_BLINKING && damage > BRAIN_DAMAGE_ASYNC_BLINKING)))
+	if((prev_damage >= BRAIN_DAMAGE_ASYNC_BLINKING && damage < BRAIN_DAMAGE_ASYNC_BLINKING) || (prev_damage < BRAIN_DAMAGE_ASYNC_BLINKING && damage >= BRAIN_DAMAGE_ASYNC_BLINKING))
 		var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 		if(eyes?.blink_animation)
 			eyes.animate_eyelids(owner)
+	if(damage >= 60 && prev_damage < 60)
+		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
+	else if(prev_damage >= 60 && damage < 60)
+		owner.clear_mood_event("brain_damage")
 
 	// If we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
-		return
-
-	damage_delta = damage - prev_damage
-	if(damage > BRAIN_DAMAGE_MILD)
-		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
-			gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
-
-	var/is_boosted = (owner && HAS_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST))
-	if(damage > BRAIN_DAMAGE_SEVERE)
-		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
-			if(prob(20 + (is_boosted * 30)))
-				gain_trauma_type(BRAIN_TRAUMA_SPECIAL, is_boosted ? TRAUMA_RESILIENCE_SURGERY : null, natural_gain = TRUE)
-			else
-				gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
-
-	if (!owner || owner.stat > UNCONSCIOUS)
 		return
 
 	// Conscious or soft-crit
@@ -444,12 +452,14 @@
 	icon_state = "brain-x"
 	variant_traits_added = list(TRAIT_PRIMITIVE)
 	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	shade_color = "green"
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
 	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	shade_color = "green"
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
@@ -470,6 +480,7 @@
 	icon_state = "adamantine_resonator"
 	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
+	shade_color = "teal"
 	organ_flags = ORGAN_MINERAL
 	variant_traits_added = list(TRAIT_ROCK_METAMORPHIC)
 
@@ -478,6 +489,7 @@
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
+	shade_color = null
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
@@ -519,6 +531,7 @@
 	icon_state = "brain-ghost"
 	movement_type = PHASING
 	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+	shade_color = "ectoplasmic white"
 
 /obj/item/organ/brain/abductor
 	name = "grey brain"
@@ -526,6 +539,7 @@
 	icon_state = "brain-x"
 	brain_size = 1.3
 	variant_traits_added = list(TRAIT_REMOTE_TASTING)
+	shade_color = "grey"
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
@@ -665,15 +679,6 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
-	. = ..()
-	if(!owner)
-		return FALSE
-	if(damage >= 60)
-		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
-	else
-		owner.clear_mood_event("brain_damage")
-
 /// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
 /obj/item/organ/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
 	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
@@ -699,3 +704,4 @@
 	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+	shade_color = "lime"

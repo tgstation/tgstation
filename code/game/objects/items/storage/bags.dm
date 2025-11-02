@@ -357,6 +357,9 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
+	sound_vary = TRUE
+	pickup_sound = SFX_TRAY_PICKUP
+	drop_sound = SFX_TRAY_DROP
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -563,7 +566,7 @@
 		return
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.attackby(ammo_to_load, user)
+	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"

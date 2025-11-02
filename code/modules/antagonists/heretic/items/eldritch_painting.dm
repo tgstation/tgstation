@@ -28,7 +28,7 @@
 	/// The range of the paintings effect
 	var/range = 7
 
-/obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/Initialize(mapload)
 	. = ..()
 	if(ispath(applied_status_effect))
 		var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_status_effect))
@@ -177,7 +177,7 @@
 		/obj/item/food/grown/harebell,
 	)
 
-/obj/structure/sign/painting/eldritch/vines/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/eldritch/vines/Initialize(mapload)
 	. = ..()
 	new /datum/spacevine_controller(get_turf(src), mutations, 0, 10)
 

@@ -1,0 +1,15 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Raptors now have a new youngling in-between growth stage"
+  - balance: "Mining base raptors now spawn as younglings, and can be grown up by feeding them some meat or plants"
+  - balance: "Some of the raptor colors, such as purple, white and blue, had their effects changed around"
+  - balance: "Raptors no longer can lavawalk by default, this has been turned into blue raptors' unique ability instead"
+  - balance: "Raptors no longer eat projectiles aimed at their owner, but have lost 50 HP. Green and black raptors remain at 400 HP, and red raptors have been buffed to 300 HP"
+  - balance: "Raptors can now heal by eating meat and lavaland plants"
+  - rscdel: "Icebox raptors lost their unique sprites"
+  - bugfix: "Dogs no longer consider all corgis to be puppies"
+  - bugfix: "Fixed dragging storage containers onto your hand slot sometimes behaving oddly"
+  - bugfix: "Fixed progress bars and cogs sometimes showing offset to the side of you / the mob you're interacting with"
+  - bugfix: "Mounts and vehicles no longer move x1.4 times as fast diagonally"
+  - refactor: "Rewrote the happiness component"

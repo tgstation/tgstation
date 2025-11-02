@@ -12,6 +12,9 @@
 /// Checks that every overlay passed into build_appearance_list exists in the icon
 /datum/unit_test/focus_only/invalid_overlays
 
+/// Checks that every screen alert with an overlay icon state is valid
+/datum/unit_test/focus_only/screen_alert_overlay
+
 /// Checks that every icon sent to the research_designs spritesheet is valid
 /datum/unit_test/focus_only/invalid_research_designs
 
@@ -47,6 +50,13 @@
 
 /// Checks that the contents of the fish_counts list are also present in fish_table
 /datum/unit_test/focus_only/fish_sources_tables
+
+/**
+ * This will tell us if we forgot to properly set the stable population for any fish.
+ * Fish with a stable population of one or less need to have either the mateless or crossbreeder trait, or be compatible with
+ * other fish types with a higher stable population.
+ */
+/datum/unit_test/focus_only/fish_population
 
 /// Checks that maploaded mobs with either the `atmos_requirements` or `body_temp_sensitive`
 /datum/unit_test/focus_only/atmos_and_temp_requirements
