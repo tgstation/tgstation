@@ -245,14 +245,6 @@
 	mood_change = -15
 	event_flags = MOOD_EVENT_PAIN
 
-/datum/mood_event/sad_empath
-	description = "Someone seems upset..."
-	mood_change = -1
-	timeout = 60 SECONDS
-
-/datum/mood_event/sad_empath/add_effects(mob/sadtarget)
-	description = "[sadtarget.name] seems upset..."
-
 /datum/mood_event/sacrifice_bad
 	description = "Those darn savages!"
 	mood_change = -5
