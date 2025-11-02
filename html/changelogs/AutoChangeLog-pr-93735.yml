@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Synthflesh feedback messages properly reflect the method of application"
+  - bugfix: "Synthflesh feedback messages won't spam the chat log"
