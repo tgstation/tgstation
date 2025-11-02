@@ -1109,6 +1109,18 @@
 	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon()
 
+/datum/status_effect/ineffective_thermoregulation
+	id = "no_temp_reg"
+	alert_type = /atom/movable/screen/alert/status_effect/no_temp_reg
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/no_temp_reg
+	name = "Ineffective Thermoregulation"
+	desc = "You can't regulate your temperature! You can't heat up or cool down normally!"
+	icon_state = "stasis"
+//effects handled in _species
+
 // Desginated Target - Applied typically by Flare lasers
 
 /atom/movable/screen/alert/status_effect/designated_target
