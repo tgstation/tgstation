@@ -38,12 +38,13 @@ type Data = {
   recordingRecipe: string[];
   recipeReagents: string[];
   beaker: TransferableBeaker;
+  hasBeakerInHand: BooleanLike;
 };
 
 export const ChemDispenser = (props) => {
   const { act, data } = useBackend<Data>();
   const recording = !!data.recordingRecipe;
-  const { recipeReagents = [], recipes = [], beaker } = data;
+  const { recipeReagents = [], recipes = [], beaker, hasBeakerInHand } = data;
   const [showPhCol, setShowPhCol] = useState(false);
 
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
@@ -230,7 +231,19 @@ export const ChemDispenser = (props) => {
                 </Button>
               ))
             ) : (
-              <Button icon="eject" onClick={() => act('insert')}>
+              <Button
+                icon="eject"
+                onClick={() => act('insert')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  hasBeakerInHand
+                    ? 'Insert container from your hand'
+                    : 'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
                 Insert
               </Button>
             )

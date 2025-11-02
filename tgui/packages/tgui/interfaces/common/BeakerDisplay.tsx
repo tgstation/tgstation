@@ -28,6 +28,7 @@ type BeakerProps = {
   showpH?: BooleanLike;
   insertAction?: string;
   showInsertButton?: boolean;
+  hasBeakerInHand?: BooleanLike;
 };
 
 export const BeakerDisplay = (props: BeakerProps) => {
@@ -87,6 +88,7 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
     showpH,
     insertAction = 'insert',
     showInsertButton = false,
+    hasBeakerInHand,
   } = props;
 
   const beakerContents = replace_contents || beaker?.contents || [];
@@ -107,7 +109,19 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
           </>
         ) : (
           showInsertButton && (
-            <Button icon="eject" onClick={() => act(insertAction)}>
+            <Button
+              icon="eject"
+              onClick={() => act('insert')}
+              style={{
+                opacity: hasBeakerInHand ? 1 : 0.5,
+              }}
+              tooltip={
+                hasBeakerInHand
+                  ? 'Insert container from your hand'
+                  : 'You need to hold a container in your hand'
+              }
+              tooltipPosition="bottom-start"
+            >
               Insert
             </Button>
           )

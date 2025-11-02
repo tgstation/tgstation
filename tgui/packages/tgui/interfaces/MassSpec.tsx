@@ -37,6 +37,7 @@ type Data = {
   peakHeight: number;
   beaker1: Beaker;
   beaker2: Beaker;
+  hasBeakerInHand: BooleanLike;
 };
 
 const GRAPH_MAX_WIDTH = 1060;
@@ -53,6 +54,7 @@ export const MassSpec = (props) => {
     peakHeight,
     beaker1,
     beaker2,
+    hasBeakerInHand,
   } = data;
 
   const centerValue = (lowerRange + upperRange) / 2;
@@ -116,7 +118,19 @@ export const MassSpec = (props) => {
                 </Button>
               </>
             ) : (
-              <Button icon="eject" onClick={() => act('insert1')}>
+              <Button
+                icon="eject"
+                onClick={() => act('insert1')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  hasBeakerInHand
+                    ? 'Insert container from your hand'
+                    : 'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
                 Insert
               </Button>
             )
@@ -144,7 +158,19 @@ export const MassSpec = (props) => {
                 </Button>
               </>
             ) : (
-              <Button icon="eject" onClick={() => act('insert2')}>
+              <Button
+                icon="eject"
+                onClick={() => act('insert2')}
+                style={{
+                  opacity: hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  hasBeakerInHand
+                    ? 'Insert container from your hand'
+                    : 'You need to hold a container in your hand'
+                }
+                tooltipPosition="bottom-start"
+              >
                 Insert
               </Button>
             )
