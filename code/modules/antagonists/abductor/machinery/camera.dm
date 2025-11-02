@@ -66,7 +66,7 @@
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
-	if(istype(target_area, /area/station/ai_monitored))
+	if(target_area.motion_monitored)
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
@@ -110,7 +110,7 @@
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
-	if(istype(target_area, /area/station/ai_monitored))
+	if(target_area.motion_monitored)
 		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 

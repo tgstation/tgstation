@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	///List of areas that grant discounts. "heads_quarters" will match any head of staff office.
 	var/list/discount_areas = list(
 		/area/station/command/heads_quarters,
-		/area/station/ai_monitored/command/nuke_storage
+		/area/station/command/vault
 	)
 	///List of hacked head of staff office areas. Includes the vault too. Provides a 20 PT discount per (Min 50 PT cost)
 	var/list/hacked_command_areas = list()

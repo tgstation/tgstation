@@ -92,14 +92,7 @@
 	desc = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
 
 	telegraph_message = span_danger("A magical rain cloud appears above. You hear droplets falling down.")
-	protected_areas = list(
-		/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload,
-		/area/station/ai_monitored/turret_protected/ai_upload_foyer, /area/station/ai_monitored/turret_protected/aisat/maint,
-		/area/station/ai_monitored/command/storage/satellite, /area/station/ai_monitored/turret_protected/ai,
-		/area/station/commons/storage/emergency/starboard, /area/station/commons/storage/emergency/port,
-		/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance,
-		/area/icemoon/underground, /area/ruin/comms_agent/maint
-	)
+	protected_areas = /datum/weather/rad_storm::protected_areas
 
 	// same time durations as floor_is_lava event
 	telegraph_duration = 15 SECONDS

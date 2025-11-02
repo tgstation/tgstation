@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	var/static/list/restricted_areas = typecacheof(list(
 		/area/station/security,
 		/area/station/command,
-		/area/station/ai_monitored,
+		/area/station/ai,
 		/area/station/maintenance,
 		/area/station/solars,
 	))

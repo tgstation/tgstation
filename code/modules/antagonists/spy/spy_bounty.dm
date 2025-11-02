@@ -460,7 +460,7 @@
 		/obj/machinery/teleport,
 		/obj/machinery/computer/teleporter,
 	)
-	location_type = /area/station/ai_monitored/aisat
+	location_type = /area/station/ai/satellite
 
 /// Subtype for a bounty that targets a specific crew member
 /datum/spy_bounty/targets_person
