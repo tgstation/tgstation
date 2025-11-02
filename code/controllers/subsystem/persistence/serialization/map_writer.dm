@@ -91,9 +91,6 @@
 				// Unique, will be checked for existing later
 				var/list/current_header = list()
 
-// Save current_headers until the end when the list is joined
-//				current_header += "(\n"
-
 				//====Saving Shuttles==========
 				var/is_shuttle_area = ispath(saved_area, /area/shuttle)
 				var/is_custom_shuttle_area = ispath(saved_area, /area/shuttle/custom)
@@ -126,14 +123,8 @@
 					if(!is_custom_shuttle_area) // only save the docking ports for default shuttles (arrivals/cargo/mining/etc.)
 						var/obj/docking_port/stationary/shuttle_port = locate(/obj/docking_port/stationary) in pull_from
 						if(shuttle_port)
-/*
-							current_header += TGM_MAP_SEPARATOR(data)
-							var/metadata = generate_tgm_metadata(shuttle_port)
-							current_header += "[empty ? "" : ",\n"][shuttle_port.type][metadata]"
-							data = TRUE
-*/
-
-							TGM_MAP_BLOCK(current_header, shuttle_port.type, generate_tgm_metadata(shuttle_port))
+							var/shuttle_metadata = generate_tgm_metadata(shuttle_port)
+							TGM_MAP_BLOCK(current_header, shuttle_port.type, shuttle_metadata)
 
 
 					pull_from = null
@@ -158,8 +149,10 @@
 						continue
 					if(obj_blacklist[target_atom.type])
 						continue
+					// add check for abstract objects that aren't supposed to save (UI blocked hands)
 
-					var/typepath = target_atom.get_save_substitute_type() || target_atom.type
+					var/substitute_type = target_atom.get_save_substitute_type()
+					var/typepath = substitute_type || target_atom.type
 
 					//====SAVING OBJECTS====
 					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
@@ -173,41 +166,26 @@
 */
 
 						var/metadata
-						if(save_flag & SAVE_OBJECTS_VARIABLES)
+						if(!substitute_type && (save_flag & SAVE_OBJECTS_VARIABLES))
 							metadata = generate_tgm_metadata(target_obj)
-
-//						current_header += "[empty ? "" : ",\n"][typepath][metadata]"
-//						data = TRUE
 						TGM_MAP_BLOCK(current_header, typepath, metadata)
 
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
-						if(save_flag & SAVE_OBJECTS_PROPERTIES)
-
-
-							var/custom_data = target_obj.on_object_saved(pull_from)
-							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
+						if(!substitute_type && (save_flag & SAVE_OBJECTS_PROPERTIES))
+							target_obj.on_object_saved(current_header, pull_from)
 
 					//====SAVING MOBS====
 					if((save_flag & SAVE_MOBS) && isliving(target_atom))
 						var/mob/living/target_mob = target_atom
 						CHECK_TICK
-
 /*
 						if(TGM_MAX_MOB_CHECK)
 							continue
 						TGM_MOB_INCREMENT
 */
-
-/*
-						var/metadata = generate_tgm_metadata(target_mob)
-						current_header += "[empty ? "" : ",\n"][target_mob.type][metadata]"
-						data = TRUE
-*/
 						TGM_MAP_BLOCK(current_header, typepath, generate_tgm_metadata(target_mob))
 
-
-				current_header += "[empty ? "" : ",\n"][saved_turf]"
 				var/turf_metadata
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
@@ -217,20 +195,12 @@
 					// - Space: Gas is constantly purged and temperature is immutable
 					// - Planetary: Atmos slowly reverts to its default gas mix
 					if(isopenturf(atmos_turf) && !isspaceturf(atmos_turf) && !atmos_turf.planetary_atmos)
-/*
-						var/metadata = generate_tgm_metadata(atmos_turf)
-						current_header += "[metadata]"
-*/
 						turf_metadata = generate_tgm_metadata(atmos_turf)
 
 				TGM_MAP_BLOCK(current_header, saved_turf.type, turf_metadata)
 
-
-
 				total_mobs_saved += GLOB.TGM_objs
 				total_objs_saved += GLOB.TGM_mobs
-
-//				current_header += ",\n[saved_area]"
 				TGM_MAP_BLOCK(current_header, saved_area.type, null) // no metadata for now
 
 				//====Fill the contents file====
