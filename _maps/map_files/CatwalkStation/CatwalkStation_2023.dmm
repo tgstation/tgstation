@@ -51563,14 +51563,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
-"oDs" = (
-/obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/central)
 "oDC" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -126740,7 +126732,7 @@ jwa
 qKO
 qKO
 qKO
-oDs
+uln
 cpQ
 uDd
 bgT
