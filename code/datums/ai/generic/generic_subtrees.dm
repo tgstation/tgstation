@@ -80,7 +80,7 @@
 	// it's been moved since we found it
 	else if(!isturf(food_target.loc))
 		// someone took it. we will fight over it!
-		if(ismob(food_target.loc) && !controller.blackboard[BB_MONKEY_TAMED] && (prob(33) || controller.blackboard[BB_MONKEY_AGGRESSIVE]))
+		if(isliving(food_target.loc) && will_fight_for_food(food_target.loc, living_pawn, controller))
 			controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, food_target.loc, MONKEY_FOOD_HATRED_AMOUNT)
 		// eh, find something else
 		else
@@ -89,3 +89,10 @@
 	else
 		controller.queue_behavior(/datum/ai_behavior/navigate_to_and_pick_up, BB_FOOD_TARGET, TRUE)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/generic_hunger/proc/will_fight_for_food(mob/living/thief, mob/living/monkey, datum/ai_controller/controller)
+	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
+		return TRUE
+	if(controller.blackboard[BB_MONKEY_TAMED])
+		return FALSE
+	return prob(100 * ((NUTRITION_LEVEL_HUNGRY - monkey.nutrition) / NUTRITION_LEVEL_HUNGRY))
