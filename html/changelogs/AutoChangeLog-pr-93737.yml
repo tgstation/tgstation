@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - bugfix: "Reversed bear trap now correctly displays name of person who put it on you."
