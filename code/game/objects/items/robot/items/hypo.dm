@@ -114,7 +114,7 @@
 	 */
 	var/max_volume_per_reagent = 25
 	/// Cell cost for charging a reagent
-	var/charge_cost = 0.75 * STANDARD_CELL_CHARGE
+	var/charge_cost = 0.075 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
