@@ -174,6 +174,7 @@
 		max_spawned = 3,\
 		spawn_text = "peels itself off from",\
 		faction = faction,\
+		spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR,\
 	)
 
 /// Create what we want to drop on death, in proc form so we can always return a static list

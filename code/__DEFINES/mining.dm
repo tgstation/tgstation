@@ -27,12 +27,12 @@
 #define GIBTONITE_QUALITY_LOW 1
 
 // Timers for the ore vents to perform wave defense.
-/// Duration for wave defense for a small vent.
-#define WAVE_DURATION_SMALL 60 SECONDS
-/// Duration for wave defense for a medium vent.
-#define WAVE_DURATION_MEDIUM 90 SECONDS
-/// Duration for wave defense for a large vent.
-#define WAVE_DURATION_LARGE 150 SECONDS
+/// Number of waves players will need to defeat for a small vent.
+#define WAVE_DURATION_SMALL 5
+/// Number of waves players will need to defeat for a medium vent.
+#define WAVE_DURATION_MEDIUM 10
+/// Number of waves players will need to defeat for a large vent.
+#define WAVE_DURATION_LARGE 15
 
 /// Proximity to a vent that a wall ore needs to be for 5 ore to be mined.
 #define VENT_PROX_VERY_HIGH 3
@@ -83,3 +83,8 @@
 //String defines to use with CaveGenerator presets for what ore breakdown to use.
 #define OREGEN_PRESET_LAVALAND "lavaland"
 #define OREGEN_PRESET_TRIPLE_Z "triple_z"
+
+/// When assigned, spawners will continue to spawn a mob repeatedly until reaching max_spawned. New mobs will be spawned regardless of how many exist under that cap.
+#define SPAWN_CONTINUOUS_BEHAVIOR "continuous"
+/// When assigned, spawners will spawn a group of mobs as defined by max_spawn_per_attempt, and will only spawn a new wave after
+#define SPAWN_BY_WAVE_BEHAVIOR "complete_wave"
