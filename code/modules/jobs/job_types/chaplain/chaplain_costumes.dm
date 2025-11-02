@@ -107,6 +107,7 @@
 	inhand_icon_state = null
 	body_parts_covered = GROIN|LEGS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/suit/chaplainsuit/whiterobe
 	name = "white robe"
