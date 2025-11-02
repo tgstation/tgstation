@@ -575,6 +575,7 @@ Moving interrupts
 
 /obj/structure/carving_block/proc/build_statue_cost_table()
 	. = list()
+
 	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
 		var/obj/structure/statue/fake_statue = new statue_type()
 		if(!fake_statue.icon_state || fake_statue.abstract_type == fake_statue.type || fake_statue.uncarveable || !fake_statue.custom_materials)
