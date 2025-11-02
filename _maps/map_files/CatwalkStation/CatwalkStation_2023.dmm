@@ -65250,7 +65250,7 @@
 "smX" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2";
-	name = "Trash Conveyor"
+	name = "Belt Conveyor"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
