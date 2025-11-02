@@ -62,7 +62,7 @@
  *
  * Returns: Null or array list of additional object data to be included on turf
  */
-/obj/proc/on_object_saved()
+/obj/proc/on_object_saved(map_string, turf/current_loc)
 	return null
 
 /**
@@ -88,20 +88,18 @@
 /**
  * Check if an atom type has a substitute type for map export serialization.
  *
- * Substitution compacts map data by replacing with a more specific or parent type, which can improve
- * serialization speed. Ensure the substitute type has compatible vars and data. Data transfer is attempted
- * via get_save_vars(), get_custom_save_vars(), and on_object_saved(). Override these procs with an empty
- * list if data transfer is not desired.
+ * Substitution compacts map data by replacing the object with a typepath, which can improve
+ * serialization speed. Any variables or data on the old object will not transfer over to the substitution.
  *
  * Examples:
- * ORIGINAL: /obj/machinery/atmospherics/pipe/smart/simple {color="#FF0000", hide=TRUE, pipe_layer=4}
- * SUBSTITUTE: /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubber/hidden/layer4
- * ORIGINAL: /obj/machinery/light/built {icon_state="tube", status=LIGHT_OK}
- * SUBSTITUTE: /obj/machinery/light
- * ORIGINAL: /obj/machinery/atmospherics/components/unary/vent_scrubber {on=TRUE, layer=2}
- * SUBSTITUTE: /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2
+ * - ORIGINAL /obj/machinery/atmospherics/pipe/smart/simple {color="#FF0000", hide=TRUE, pipe_layer=4}
+ * - SUBSTITUTE /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubber/hidden/layer4
+ * - ORIGINAL /obj/machinery/light/built {icon_state="tube", status=LIGHT_OK}
+ * - SUBSTITUTE /obj/machinery/light
+ * - ORIGINAL /obj/machinery/atmospherics/components/unary/vent_scrubber {on=TRUE, layer=2}
+ * - SUBSTITUTE /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2
  *
- * Returns: The typepath for the substitution, or FALSE if no substitute is used.
+ * Returns: The typepath for the substitution if possible or FALSE
  */
 /atom/proc/get_save_substitute_type()
 	return FALSE
