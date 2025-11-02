@@ -21,18 +21,16 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	var/list/custom_var_names = list()
 
 	for(var/variable in custom_vars)
-		CHECK_TICK
 		var/custom_value = custom_vars[variable]
 		TGM_ENCODE(custom_value)
 		if(!custom_value)
 			continue
-		data_to_add += "[variable] = [custom_value]"
+		data_to_add += TGM_VAR_LINE(variable, custom_value) // "[variable] = [custom_value]"
 		custom_var_names[variable] = TRUE
 
 	while(vars_to_save.len)
 		var/variable = vars_to_save[vars_to_save.len]
 		vars_to_save.len--
-		CHECK_TICK
 		if(custom_var_names[variable]) // skip variables that use custom serialization
 			continue
 
@@ -47,11 +45,30 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		TGM_ENCODE(value)
 		if(!value)
 			continue
-		data_to_add += "[variable] = [value]"
+
+		data_to_add += TGM_VAR_LINE(variable, value) // "[variable] = [value]"
 
 	if(!length(data_to_add))
 		return
-	return "{\n\t[data_to_add.Join(";\n\t")]\n\t}"
+
+	return TGM_VARS_BLOCK(data_to_add.Join(";\n\t")) //"{\n\t[data_to_add.Join(";\n\t")]\n\t}"
+
+
+/proc/generate_tgm_typepath_metadata(list/data_to_seralize)
+	var/list/data_to_add = list()
+
+	for(var/variable in data_to_seralize)
+		var/value = data_to_seralize[variable]
+
+		TGM_ENCODE(value)
+		if(!value)
+			continue
+		data_to_add += TGM_VAR_LINE(variable, value)
+
+	if(!length(data_to_add))
+		return
+
+	return TGM_VARS_BLOCK(data_to_add.Join(";\n\t"))
 
 // cannot macro this due to infinite recursion TGM_ENCODE & TO_LIST_STRING call each other
 // also handles converting nested lists into strings
