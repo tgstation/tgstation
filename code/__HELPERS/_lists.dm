@@ -558,7 +558,7 @@
 
 	// Shuffle and slice the first n indices
 	var/list/copy_to_shuffle = list_to_pick.Copy()
-	shuffle_in_place(copy_to_shuffle)
+	shuffle_inplace(copy_to_shuffle)
 
 	return copy_to_shuffle.Copy(1, n + 1)
 
