@@ -79,7 +79,7 @@
 
 	if((can_heal & BURN_SURGERY) && patient.getFireLoss() > 0)
 		var/datum/radial_menu_choice/burn_healing = LAZYACCESS(cached_healing_options, "[BURN_SURGERY]")
-		if(burn_healing)
+		if(!burn_healing)
 			burn_healing = new()
 			burn_healing.image = image(/obj/item/storage/medkit/fire)
 			burn_healing.name = "tend burns"
