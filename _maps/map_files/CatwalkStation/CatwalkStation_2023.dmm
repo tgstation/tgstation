@@ -53383,9 +53383,6 @@
 /obj/structure/sign/warning/vacuum/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"pcQ" = (
-/turf/open/space/basic,
-/area/station/maintenance/starboard/lesser)
 "pcR" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -129846,7 +129843,7 @@ jBn
 nSS
 hIA
 rKA
-pcQ
+mJi
 rKA
 rKA
 rKA
