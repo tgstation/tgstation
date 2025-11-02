@@ -56,8 +56,8 @@
 	)
 
 // Give our owner shock touch when entering the digital realm
-/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, external_load_flags)
-	if(external_load_flags & DOMAIN_FORBIDS_ABILITIES)
+/obj/item/stock_parts/power_store/cell/lead/proc/shockingly_improve_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)
+	if(domain_flags & DOMAIN_FORBIDS_ABILITIES)
 		return BITRUNNER_GEAR_LOAD_BLOCKED
 
 	if(!avatar.can_mutate())

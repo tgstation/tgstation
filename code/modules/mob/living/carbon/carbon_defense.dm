@@ -718,14 +718,15 @@
 		new_organ.replace_into(src)
 		new_organ.organ_flags |= ORGAN_MUTANT
 
-	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
-	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
-	if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
-		changed_something = TRUE
-		new_part = new new_part()
-		new_part.replace_limb(src, special = TRUE)
-		if (picked_user_part)
-			qdel(picked_user_part)
+	if (!HAS_TRAIT(src, TRAIT_NODISMEMBER))
+		var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
+		var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
+		if (picked_user_part && BODYTYPE_CAN_BE_BIOSCRAMBLED(picked_user_part.bodytype))
+			changed_something = TRUE
+			new_part = new new_part()
+			new_part.replace_limb(src, special = TRUE)
+			if (picked_user_part)
+				qdel(picked_user_part)
 
 	if (!changed_something)
 		to_chat(src, span_notice("Your augmented body protects you from [scramble_source]!"))

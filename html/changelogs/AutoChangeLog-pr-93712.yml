@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "animal AI no longer mistakes rocks for a valid breeding partner"
