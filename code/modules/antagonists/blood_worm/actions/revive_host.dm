@@ -23,7 +23,7 @@
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
-	RegisterSignal(host, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+	UnregisterSignal(host, COMSIG_MOB_STATCHANGE)
 
 	return ..()
 

@@ -64,8 +64,7 @@
 
 	worm.forceMove(cocoon)
 
-	worm.become_blind(REF(src))
-	worm.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_DEAF, TRAIT_MUTE), REF(src))
+	worm.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
 
 	RegisterSignal(worm, COMSIG_MOVABLE_MOVED, PROC_REF(on_worm_moved))
 	RegisterSignal(cocoon, COMSIG_QDELETING, PROC_REF(on_cocoon_qdel))
@@ -141,8 +140,7 @@
 	UnregisterSignal(worm, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(cocoon, COMSIG_QDELETING)
 
-	worm.cure_blind(REF(src))
-	worm.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_DEAF, TRAIT_MUTE), REF(src))
+	worm.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
 
 	if (!QDELETED(worm))
 		worm.forceMove(get_turf(cocoon))
@@ -271,6 +269,9 @@
 
 	var/num_candidates = length(candidates)
 
+	if (num_candidates <= 0)
+		owner.balloon_alert(owner, "no candidates!")
+		return
 	if (num_candidates < num_hatchlings && tgui_alert(owner, "There are only [num_candidates]/[num_hatchlings] candidates for hatchlings, want to proceed anyway?", "Ghost Shortage", list("Yes", "No"), 10 SECONDS) != "Yes")
 		StartCooldown() // So that you can't spam the ghosts.
 		return
@@ -285,6 +286,7 @@
 		// The crew now has 4 new problems to deal with.
 		var/mob/living/basic/blood_worm/hatchling/new_hatchling = new(get_turf(cocoon))
 		var/datum/mind/fresh_mind = new(candidate.key)
+
 		fresh_mind.transfer_to(new_hatchling, force_key_move = TRUE)
 		fresh_mind.add_antag_datum(/datum/antagonist/blood_worm)
 
@@ -292,7 +294,12 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
 	. = ..()
+
 	new_worm.consumed_blood = list()
+
+	var/datum/antagonist/blood_worm/antag_datum = new_worm.mind?.has_antag_datum(/datum/antagonist/blood_worm)
+
+	antag_datum?.has_reached_adulthood = TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/cancel(mob/living/basic/blood_worm/worm)
 	for (var/mob/candidate as anything in candidates)

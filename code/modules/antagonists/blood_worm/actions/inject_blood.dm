@@ -64,8 +64,11 @@
 	status_type = STATUS_EFFECT_REPLACE
 
 	var/damage_regen_rate = 0
+
 	var/wound_regen_rate = 0
 	var/wound_regen_accumulation = 0
+
+	var/organ_regen_rate = 0
 
 	var/atom/movable/screen/alert/status_effect/worm_alert = null
 	var/mob/living/basic/blood_worm/worm = null
@@ -89,6 +92,7 @@
 
 	need_mob_update |= heal_damage(seconds_between_ticks)
 	need_mob_update |= heal_wounds(seconds_between_ticks)
+	need_mob_update |= heal_organs(seconds_between_ticks)
 
 	if (need_mob_update)
 		owner.updatehealth()
@@ -145,6 +149,14 @@
 		wound_to_heal.remove_wound()
 		. = TRUE
 
+/datum/status_effect/blood_worm_transfuse/proc/heal_organs(seconds_between_ticks)
+	var/mob/living/carbon/human/host = owner
+
+	for (var/obj/item/organ/organ in host.organs)
+		// I thought about making this require ORGAN_ORGANIC, but changelings can heal robotic organs, so why not blood worms?
+		// In addition, none of the other blood worm code gives a shit about targets being organic, so this is more consistent.
+		. |= organ.apply_organ_damage(-organ_regen_rate * seconds_between_ticks)
+
 /datum/status_effect/blood_worm_transfuse/proc/attach_to_worm(mob/living/basic/blood_worm/new_worm)
 	worm = new_worm
 
@@ -179,6 +191,7 @@
 /datum/status_effect/blood_worm_transfuse/hatchling
 	damage_regen_rate = 6 // 20 s * 6 hp/s = 120 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 6 // One wound every 6 seconds, +30% per wound severity level.
+	organ_regen_rate = 2.5 // 20 s * 2.5 hp/s = 50 hp
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 	health_cost = 35
@@ -188,6 +201,7 @@
 /datum/status_effect/blood_worm_transfuse/juvenile
 	damage_regen_rate = 8 // 20 s * 8 hp/s = 160 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
+	organ_regen_rate = 4 // 20 s * 4 hp/s = 80 hp
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 	health_cost = 50
@@ -197,5 +211,6 @@
 /datum/status_effect/blood_worm_transfuse/adult
 	damage_regen_rate = 10 // 20 s * 10 hp/s = 200 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
+	organ_regen_rate = 5 // 20 s * 5 hp/s = 100 hp, which is also the standard organ health threshold.
 
 #undef REQUIRED_ACCUMULATION

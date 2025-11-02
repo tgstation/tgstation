@@ -36,6 +36,11 @@
 
 	var/mob/living/basic/blood_worm/worm = target
 
+	if (worm.host?.is_mouth_covered())
+		if (feedback)
+			owner.balloon_alert(owner, "mouth is covered!")
+		return FALSE
+
 	if (worm.health - health_cost < minimum_health)
 		if (feedback)
 			owner.balloon_alert(owner, "out of blood!")

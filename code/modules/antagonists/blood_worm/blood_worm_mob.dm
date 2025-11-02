@@ -7,7 +7,6 @@
 
 	mob_biotypes = MOB_ORGANIC | MOB_BUG
 	basic_mob_flags = FLAMMABLE_MOB
-	status_flags = CANPUSH
 
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
 
@@ -26,6 +25,13 @@
 	maximum_survivable_temperature = T0C + 100
 
 	habitable_atmos = null
+
+	/// Effect name for stuff like "invade-[effect_name]".
+	/// Should correspond to the growth stage, like "adult".
+	var/effect_name = ""
+
+	/// How long the leave host animation lasts for this type, in deciseconds.
+	var/leave_host_duration = 0
 
 	/// Associative list of how much of each blood type the blood worm has consumed.
 	/// The format of this list is "list[blood_type.id] = amount_consumed"
@@ -162,6 +168,12 @@
 		blind_message = span_hear("You hear a squelch.")
 	)
 
+	var/image/invade_image = image(icon = icon, icon_state = "invade-[effect_name]", pixel_y = 8)
+	invade_image.plane = new_host.plane + 1
+	invade_image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	new_host.flick_overlay_view(invade_image, 2 SECONDS) // The last frame is invisible, so the duration just has to be longer than the animation.
+
 	host = new_host
 
 	RegisterSignal(host, COMSIG_QDELETING, PROC_REF(on_host_qdel))
@@ -171,12 +183,11 @@
 
 	START_PROCESSING(SSfastprocess, src)
 
-	become_blind(BLOOD_WORM_HOST_TRAIT)
-	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_DEAF), BLOOD_WORM_HOST_TRAIT)
+	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), BLOOD_WORM_HOST_TRAIT)
 
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
-	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE), BLOOD_WORM_HOST_TRAIT)
+	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions)
@@ -212,6 +223,11 @@
 
 	playsound(src, 'sound/effects/magic/exit_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
+	Immobilize(leave_host_duration)
+	incapacitate(leave_host_duration)
+
+	flick("leave-[effect_name]", src)
+
 /mob/living/basic/blood_worm/proc/unregister_host()
 	if (!host)
 		return
@@ -222,11 +238,10 @@
 		backseat.mind?.transfer_to(host)
 		QDEL_NULL(backseat)
 
-	UnregisterSignal(host, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_LIFE))
+	UnregisterSignal(host, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_LIFE, COMSIG_MOB_HUD_CREATED))
 
 	STOP_PROCESSING(SSfastprocess, src)
 
-	cure_blind(BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
 
@@ -363,6 +378,9 @@
 
 	speed = 0
 
+	effect_name = "hatchling"
+	leave_host_duration = 0.6 SECONDS
+
 	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm/leech/hatchling
 	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling
 
@@ -398,6 +416,9 @@
 
 	speed = 0.5
 
+	effect_name = "juvenile"
+	leave_host_duration = 1 SECONDS
+
 	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm/spit/juvenile
 	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm/leech/juvenile
 	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile
@@ -431,6 +452,9 @@
 	attack_verb_continuous = "gores"
 
 	speed = 0.8
+
+	effect_name = "adult"
+	leave_host_duration = 1.4 SECONDS
 
 	spit_action = /datum/action/cooldown/mob_cooldown/blood_worm/spit/adult
 	leech_action = /datum/action/cooldown/mob_cooldown/blood_worm/leech/adult

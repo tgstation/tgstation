@@ -25,8 +25,6 @@
 		worm.host.balloon_alert(owner, "interrupted!")
 		return
 
-	to_chat(worm, span_notice("You leave your host behind, taking [worm.host.p_their()] blood with you."))
-
 	worm.leave_host()
 
 	return ..()

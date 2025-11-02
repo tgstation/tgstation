@@ -48,6 +48,10 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/invade/proc/invade_check(mob/living/basic/blood_worm/worm, mob/living/carbon/human/victim, feedback = FALSE)
+	if (HAS_TRAIT(victim, TRAIT_BLOOD_WORM_HOST))
+		if (feedback)
+			victim.balloon_alert(worm, "already a host!")
+		return FALSE
 	if (victim.stat != DEAD)
 		if (feedback)
 			victim.balloon_alert(worm, "still alive!")

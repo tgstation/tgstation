@@ -6,20 +6,45 @@
 	antag_hud_name = "blood_worm"
 	antag_moodlet = /datum/mood_event/blood_worm
 	show_to_ghosts = TRUE
+	stinger_sound = 'sound/effects/magic/exit_blood.ogg'
+
+	var/has_reached_adulthood = FALSE
 
 /datum/antagonist/blood_worm/greet()
 	. = ..()
 
-	to_chat(owner, span_bold("A species of space-faring leech, massive in size and ferocious in hunting.\n\
-							Your origins are unknown to most, but to some, you are among their greatest creations.\n\
-							A failed Syndicate bioweapons project, snuffed out by benefactors after a \"lack of results\", and yet.\n\
+	to_chat(owner, span_bold("A species of space-faring leech, massive in size and ferocious in hunting.\
+							Your origins are unknown to most, but to some, you are among their greatest creations.\
+							A failed Syndicate bioweapons project, snuffed out by benefactors after a \"lack of results\", and yet...\
 							Here you find yourself. On a NanoTrasen space station. What a fitting habitat for you, isn't it?"))
 	to_chat(owner, span_bolddanger("KILL, CONSUME, MULTIPLY, CONQUER."))
 
 	owner.announce_objectives()
-	owner.current.playsound_local(get_turf(owner), 'sound/effects/magic/exit_blood.ogg', vol = 80, vary = FALSE)
+
+/datum/antagonist/blood_worm/forge_objectives()
+	var/datum/objective/blood_worm/reach_adulthood/adulthood_objective = new()
+
+	adulthood_objective.owner = owner
+	objectives += adulthood_objective
+
+	var/roundend_objective_type = pick(list(
+		/datum/objective/blood_worm/specific_host,
+		/datum/objective/blood_worm/department_host/security,
+		/datum/objective/blood_worm/department_host/command,
+		/datum/objective/blood_worm/infiltrate_centcom,
+		/datum/objective/blood_worm/infiltrate_centcom/host
+	))
+
+	var/datum/objective/roundend_objective = new roundend_objective_type()
+
+	roundend_objective.owner = owner
+	objectives += roundend_objective
+
+	if (roundend_objective.target_amount > 0)
+		roundend_objective.find_target()
 
 /datum/antagonist/blood_worm/on_gain()
+	forge_objectives()
 	owner.set_assigned_role(SSjob.get_job_type(/datum/job/blood_worm))
 	return ..()
 
@@ -53,7 +78,8 @@
 /datum/antagonist/blood_worm/get_preview_icon()
 	var/icon/icon = icon('icons/mob/nonhuman-player/blood_worm.dmi', "juvenile")
 
-	icon.Crop(1, 1, 32, 28)
+	icon.Crop(1, 1, 32, 32)
+	icon.Shift(SOUTH, 4)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon

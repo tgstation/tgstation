@@ -482,7 +482,7 @@
 	preview_antag_datum = /datum/antagonist/blood_worm
 	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
-	pref_flag = ROLE_NIGHTMARE
+	pref_flag = ROLE_BLOOD_WORM
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,

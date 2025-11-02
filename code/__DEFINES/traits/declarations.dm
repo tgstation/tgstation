@@ -1579,4 +1579,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob is artificially spawned rather than being created through more natural means - applied to monkey cubes and such
 #define TRAIT_SPAWNED_MOB "spawned_mob"
 
+/// Mob is the host of a living blood worm.
+#define TRAIT_BLOOD_WORM_HOST "blood_worm_host"
+
 // END TRAIT DEFINES

@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/leech
 	name = "Leech Blood"
-	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on inorganic targets like blood bags."
+	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on reagent containers like blood packs."
 
 	button_icon_state = "leech_blood"
 
@@ -10,6 +10,22 @@
 	unset_after_click = FALSE // Unsetting is handled explicitly.
 
 	var/leech_rate = 0
+
+	var/static/list/compatible_container_blood_types = list(
+		BLOOD_TYPE_A_MINUS,
+		BLOOD_TYPE_A_PLUS,
+		BLOOD_TYPE_B_MINUS,
+		BLOOD_TYPE_B_PLUS,
+		BLOOD_TYPE_AB_MINUS,
+		BLOOD_TYPE_AB_PLUS,
+		BLOOD_TYPE_O_MINUS,
+		BLOOD_TYPE_O_PLUS,
+		BLOOD_TYPE_UNIVERSAL,
+		BLOOD_TYPE_LIZARD,
+		BLOOD_TYPE_VAMPIRE,
+		BLOOD_TYPE_ANIMAL,
+		BLOOD_TYPE_ETHEREAL
+	)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/IsAvailable(feedback)
 	if (!istype(owner, /mob/living/basic/blood_worm))
@@ -31,6 +47,8 @@
 		return FALSE
 	if (isliving(target))
 		return leech_living(owner, target)
+	if (is_reagent_container(target))
+		return leech_container(owner, target)
 
 	target.balloon_alert(owner, "can't bite this!")
 
@@ -113,6 +131,11 @@
 			target.balloon_alert(leech, "interrupted!")
 		return FALSE
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
+	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the target is invalid.
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/hatchling
 	leech_rate = BLOOD_VOLUME_NORMAL * 0.05 // 28 units of blood, 5 points of health, or 10% of a hatchling blood worm's health
