@@ -80,7 +80,7 @@
 	// it's been moved since we found it
 	else if(!isturf(food_target.loc))
 		// someone took it. we will fight over it!
-		if(ismob(food_target.loc) && !controller.blackboard[BB_MONKEY_TAMED])
+		if(ismob(food_target.loc) && !controller.blackboard[BB_MONKEY_TAMED] && (prob(33) || controller.blackboard[BB_MONKEY_AGGRESSIVE]))
 			controller.add_blackboard_key_assoc(BB_MONKEY_ENEMIES, food_target.loc, MONKEY_FOOD_HATRED_AMOUNT)
 		// eh, find something else
 		else
