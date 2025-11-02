@@ -352,11 +352,12 @@
 /obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	var/delta_dam = . //for the sake of clarity
-	if(isnull(bodypart_owner)) // no need to animate if it's in someone's noggin
+	if(isnull(bodypart_owner)) // no need to color it if it's in someone's noggin
 		update_brain_color()
-	if(delta_dam > 0 || damage < BRAIN_DAMAGE_MILD)
+	if(delta_dam > 0 && damage > BRAIN_DAMAGE_MILD)
 		roll_for_brain_trauma(delta_dam)
 
+/// Rolls a random chance to gain a brain trauma based on damage taken and current damage level
 /obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
@@ -370,29 +371,30 @@
 		else
 			gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
 
-#define BRAIND_DAMAGE_FILTER "brain_damage_color_filter"
+#define BRAIN_DAMAGE_FILTER "brain_damage_color_filter"
 
+/// Updates the brain's color based on damage level - the more damaged, the darker and grayer it gets
 /obj/item/organ/brain/proc/update_brain_color(animate = TRUE)
 	if(damage <= 0)
-		if(get_filter(BRAIND_DAMAGE_FILTER))
+		if(get_filter(BRAIN_DAMAGE_FILTER))
 			if(animate)
-				transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter("#ffffff"), time = 1 SECONDS)
+				transition_filter(BRAIN_DAMAGE_FILTER, color_matrix_filter("#ffffff"), time = 1 SECONDS)
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "brain_damage_color_filter"), 1.2 SECONDS, TIMER_UNIQUE)
 			else
-				remove_filter(BRAIND_DAMAGE_FILTER)
+				remove_filter(BRAIN_DAMAGE_FILTER)
 		return
 
-	var/gradient = rgb_gradient(clamp(damage / maxHealth, 0, 1), 0, "#ffffff", 1, "#7f7f7f")
+	var/gradient = rgb_gradient(round(damage / maxHealth, 0.01), 0, "#ffffff", 1, "#7f7f7f")
 	if(animate)
-		if(!get_filter(BRAIND_DAMAGE_FILTER))
-			add_filter(BRAIND_DAMAGE_FILTER, 1, color_matrix_filter("#ffffff"))
-		transition_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter(gradient), time = 1 SECONDS)
-	else if(get_filter(BRAIND_DAMAGE_FILTER))
-		modify_filter(BRAIND_DAMAGE_FILTER, color_matrix_filter(gradient))
+		if(!get_filter(BRAIN_DAMAGE_FILTER))
+			add_filter(BRAIN_DAMAGE_FILTER, 1, color_matrix_filter("#ffffff"))
+		transition_filter(BRAIN_DAMAGE_FILTER, color_matrix_filter(gradient), time = 1 SECONDS)
+	else if(get_filter(BRAIN_DAMAGE_FILTER))
+		modify_filter(BRAIN_DAMAGE_FILTER, color_matrix_filter(gradient))
 	else
-		add_filter(BRAIND_DAMAGE_FILTER, 1, color_matrix_filter(gradient))
+		add_filter(BRAIN_DAMAGE_FILTER, 1, color_matrix_filter(gradient))
 
-#undef BRAIND_DAMAGE_FILTER
+#undef BRAIN_DAMAGE_FILTER
 
 /obj/item/organ/brain/check_damage_thresholds()
 	. = ..()
