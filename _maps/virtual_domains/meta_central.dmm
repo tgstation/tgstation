@@ -94,6 +94,11 @@
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"aH" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/frame/machine/secured,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "aO" = (
 /obj/structure/toilet{
 	pixel_y = 13
@@ -210,15 +215,6 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
 	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"bQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "bR" = (
@@ -1589,6 +1585,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"no" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ai_module/law/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "nq" = (
@@ -6005,11 +6010,6 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
-"YB" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/frame/machine/secured,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "YD" = (
 /obj/item/clothing/head/cone{
 	pixel_x = 6;
@@ -6919,7 +6919,7 @@ Kh
 yq
 WF
 uS
-YB
+aH
 uS
 TH
 nS
@@ -7001,7 +7001,7 @@ HM
 ps
 hV
 Hd
-bQ
+no
 hZ
 ii
 SN

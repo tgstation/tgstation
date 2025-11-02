@@ -160,7 +160,7 @@
 /mob/living/silicon/robot/model
 	var/set_model = /obj/item/robot_model
 
-/mob/living/silicon/robot/model/Initialize(mapload)
+/mob/living/silicon/robot/model/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync, lawsync)
 	. = ..()
 	INVOKE_ASYNC(model, TYPE_PROC_REF(/obj/item/robot_model, transform_to), set_model, TRUE)
 
@@ -212,11 +212,13 @@
 	cell = /obj/item/stock_parts/power_store/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
-/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
-	laws = new /datum/ai_laws/syndicate_override()
-	laws.associate(src)
+/mob/living/silicon/robot/model/syndicate/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync, lawsync)
+	aisync = FALSE
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
+
+/mob/living/silicon/robot/model/syndicate/make_laws()
+	laws = new /datum/ai_laws/syndicate_override()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
