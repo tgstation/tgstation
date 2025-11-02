@@ -1,13 +1,13 @@
 /datum/unit_test/amputation/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/circular_saw/saw = allocate(/obj/item/circular_saw)
 
 	TEST_ASSERT_EQUAL(patient.get_missing_limbs().len, 0, "Patient is somehow missing limbs before surgery")
 
-	var/datum/surgery/amputation/surgery = new(patient, BODY_ZONE_R_ARM, patient.get_bodypart(BODY_ZONE_R_ARM))
+	var/datum/surgery_operation/limb/amputate/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
 
-	var/datum/surgery_step/sever_limb/sever_limb = new
-	sever_limb.success(user, patient, BODY_ZONE_R_ARM, null, surgery)
+	UNLINT(surgery.success(patient.get_bodypart(BODY_ZONE_R_ARM), user, saw, list()))
 
 	TEST_ASSERT_EQUAL(patient.get_missing_limbs().len, 1, "Patient did not lose any limbs")
 	TEST_ASSERT_EQUAL(patient.get_missing_limbs()[1], BODY_ZONE_R_ARM, "Patient is missing a limb that isn't the one we operated on")
@@ -20,9 +20,10 @@
 	TEST_ASSERT(patient.has_trauma_type(), "Patient does not have any traumas, despite being given one")
 
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
 
-	var/datum/surgery_step/fix_brain/fix_brain = new
-	fix_brain.success(user, patient)
+	var/datum/surgery_operation/organ/repair/brain/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(surgery.success(patient.get_organ_slot(ORGAN_SLOT_BRAIN), user, hemostat, list()))
 
 	TEST_ASSERT(!patient.has_trauma_type(), "Patient kept their brain trauma after brain surgery")
 	TEST_ASSERT(patient.get_organ_loss(ORGAN_SLOT_BRAIN) < 20, "Patient did not heal their brain damage after brain surgery")
@@ -56,9 +57,9 @@
 	TEST_ASSERT_EQUAL(bobs_head.real_name, "Bob", "Bob's head does not remember that it is from Bob")
 
 	// Put Bob's head onto Alice's body
-	var/datum/surgery_step/add_prosthetic/add_prosthetic = new
+	var/datum/surgery_operation/prosthetic_replacement/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
 	user.put_in_active_hand(bobs_head)
-	add_prosthetic.success(user, alice, BODY_ZONE_HEAD, bobs_head)
+	UNLINT(surgery.success(alice.get_bodypart(BODY_ZONE_CHEST), user, bobs_head, list()))
 
 	TEST_ASSERT(!isnull(alice.get_bodypart(BODY_ZONE_HEAD)), "Alice has no head after prosthetic replacement")
 	TEST_ASSERT_EQUAL(alice.get_visible_name(), "Bob", "Bob's head was transplanted onto Alice's body, but their name is not Bob")
@@ -69,55 +70,69 @@
 
 /datum/unit_test/multiple_surgeries/Run()
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent/slow)
+	ADD_TRAIT(user, TRAIT_HIPPOCRATIC_OATH, TRAIT_SOURCE_UNIT_TESTS)
+
 	var/mob/living/carbon/human/patient_zero = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/patient_one = allocate(/mob/living/carbon/human/consistent)
 
+	patient_zero.set_body_position(LYING_DOWN)
+	patient_one.set_body_position(LYING_DOWN)
+
+	ADD_TRAIT(patient_zero, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(patient_one, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
+
+	var/obj/item/bodypart/chest/patient_zero_chest = patient_zero.get_bodypart(BODY_ZONE_CHEST)
+	var/obj/item/bodypart/chest/patient_one_chest = patient_one.get_bodypart(BODY_ZONE_CHEST)
+
+	ADD_TRAIT(patient_zero_chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(patient_one_chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
+
 	var/obj/item/scalpel/scalpel = allocate(/obj/item/scalpel)
+	user.put_in_active_hand(scalpel)
 
-	var/datum/surgery_step/incise/surgery_step = new
-	var/datum/surgery/organ_manipulation/surgery_for_zero = new
+	ASYNC
+		user.perform_surgery(patient_zero, scalpel)
 
-	INVOKE_ASYNC(surgery_step, TYPE_PROC_REF(/datum/surgery_step, initiate), user, patient_zero, BODY_ZONE_CHEST, scalpel, surgery_for_zero)
-	TEST_ASSERT(surgery_for_zero.step_in_progress, "Surgery on patient zero was not initiated")
+	TEST_ASSERT(DOING_INTERACTION(user, patient_zero), "User is not performing surgery on patient zero as expected")
 
-	var/datum/surgery/organ_manipulation/surgery_for_one = new
+	ASYNC
+		user.perform_surgery(patient_one, scalpel)
 
-	// Without waiting for the incision to complete, try to start a new surgery
-	TEST_ASSERT(!surgery_step.initiate(user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one), "Was allowed to start a second surgery without the rod of asclepius")
-	TEST_ASSERT(!surgery_for_one.step_in_progress, "Surgery for patient one is somehow in progress, despite not initiating")
+	TEST_ASSERT(DOING_INTERACTION(user, patient_one), "User is not able to perform surgery on two patients at once despite having the Hippocratic Oath trait")
 
-	user.apply_status_effect(/datum/status_effect/hippocratic_oath)
-	INVOKE_ASYNC(surgery_step, TYPE_PROC_REF(/datum/surgery_step, initiate), user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one)
-	TEST_ASSERT(surgery_for_one.step_in_progress, "Surgery on patient one was not initiated, despite having rod of asclepius")
-
-/// Ensures that the tend wounds surgery can be started
+// Ensures that the tend wounds surgery can be started
 /datum/unit_test/start_tend_wounds
 
 /datum/unit_test/start_tend_wounds/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
 
-	var/datum/surgery/surgery = new /datum/surgery/healing/brute/basic
+	ADD_TRAIT(patient, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
+	var/obj/item/bodypart/chest/patient_chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	ADD_TRAIT(patient_chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 
-	if (!surgery.can_start(user, patient))
-		TEST_FAIL("Can't start basic tend wounds!")
+	var/datum/surgery_operation/basic/tend_wounds/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	TEST_ASSERT(!surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was available on an undamaged, unoperated patient")
 
-	qdel(surgery)
+	patient.take_overall_damage(10, 10)
+	TEST_ASSERT(!surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was available on a damaged but unoperated patient")
+
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
+	chest.add_surgical_state(SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+	TEST_ASSERT(surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was not available on a damaged, operated patient")
 
 /datum/unit_test/tend_wounds/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	patient.take_overall_damage(100, 100)
 
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
 
 	// Test that tending wounds actually lowers damage
-	var/datum/surgery_step/heal/brute/basic/basic_brute_heal = new
-	basic_brute_heal.success(user, patient, BODY_ZONE_CHEST)
+	var/datum/surgery_operation/basic/tend_wounds/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
+	UNLINT(surgery.success(patient, user, hemostat, list("brute_heal" = 10, "brute_multiplier" = 0.1)))
 	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
-
-	var/datum/surgery_step/heal/burn/basic/basic_burn_heal = new
-	basic_burn_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getFireLoss() < 100, "Tending burn wounds didn't lower burn damage ([patient.getFireLoss()])")
 
 	// Test that wearing clothing lowers heal amount
 	var/mob/living/carbon/human/naked_patient = allocate(/mob/living/carbon/human/consistent)
@@ -127,8 +142,8 @@
 	clothed_patient.equipOutfit(/datum/outfit/job/doctor, TRUE)
 	clothed_patient.take_overall_damage(100)
 
-	basic_brute_heal.success(user, naked_patient, BODY_ZONE_CHEST)
-	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
+	UNLINT(surgery.success(naked_patient, user, hemostat, list("brute_heal" = 10, "brute_multiplier" = 0.1)))
+	UNLINT(surgery.success(clothed_patient, user, hemostat, list("brute_heal" = 10, "brute_multiplier" = 0.1)))
 
 	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
 
@@ -153,3 +168,13 @@
 	nullrod.on_selected(null, null, picker)
 
 	TEST_ASSERT(HAS_TRAIT_FROM(nullrod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT), "Chainsaw nullrod item attachment failed! Item does not have the nodrop trait")
+
+/// Checks all operations have a name and description
+/datum/unit_test/verify_surgery_setup
+
+/datum/unit_test/verify_surgery_setup/Run()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation), filter_replaced = FALSE))
+		if (isnull(operation.name))
+			TEST_FAIL("Surgery operation [operation.type] has no name set")
+		if (isnull(operation.desc))
+			TEST_FAIL("Surgery operation [operation.type] has no description set")

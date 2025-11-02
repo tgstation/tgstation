@@ -283,28 +283,22 @@
 /**
  * Proc that gets called when the organ is surgically removed by someone, can be used for special effects
  */
-/obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
+/obj/item/organ/proc/on_surgical_removal(mob/living/user, obj/item/bodypart/limb, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
-	RemoveElement(/datum/element/decal/blood, _color = old_owner.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, limb.owner, limb.body_zone, tool)
+	RemoveElement(/datum/element/decal/blood, _color = limb.owner.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
+
 /**
  * Proc that gets called when the organ is surgically inserted by someone. Seem familiar?
  */
-/obj/item/organ/proc/on_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
+/obj/item/organ/proc/on_surgical_insertion(mob/living/user, obj/item/bodypart/limb)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_INSERTED, user, new_owner, target_zone, tool)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_INSERTED, user, limb.owner, limb.body_zone)
 
 /// Proc that gets called when someone starts surgically inserting the organ
 /obj/item/organ/proc/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
-	if (!valid_zones)
-		return TRUE
-
-	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
-	if (!valid_zones[target_zone])
-		return FALSE
-
-	swap_zone(target_zone)
-	return TRUE
+	if (valid_zones)
+		swap_zone(target_zone)
 
 /// Readjusts the organ to fit into a different body zone/slot
 /obj/item/organ/proc/swap_zone(target_zone)
