@@ -112,13 +112,13 @@
 	 * In most places we add + 1 because we're secretly keeping [max_volume_per_reagent + 1]
 	 * units, so that when this reagent runs out it's not wholesale removed from the reagents
 	 */
-	var/max_volume_per_reagent = 30
+	var/max_volume_per_reagent = 25
 	/// Cell cost for charging a reagent
-	var/charge_cost = 0.05 * STANDARD_CELL_CHARGE
+	var/charge_cost = 0.075 * STANDARD_CELL_CHARGE
 	/// Counts up to the next time we charge
 	var/charge_timer = 0
 	/// Time it takes for shots to recharge (in seconds)
-	var/recharge_time = 10
+	var/recharge_time = 12
 	///Optional variable to override the temperature add_reagent() will use
 	var/dispensed_temperature = DEFAULT_REAGENT_TEMPERATURE
 	/// If the hypospray can go through armor or thick material
