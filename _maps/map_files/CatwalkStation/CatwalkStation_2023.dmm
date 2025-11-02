@@ -36358,11 +36358,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
-"kmY" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/spawner/random/maintenance,
-/turf/open/space/basic,
-/area/space/nearstation)
 "kmZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -132896,7 +132891,7 @@ heR
 heR
 dcE
 heR
-kmY
+bWY
 qKO
 qKO
 pTP
