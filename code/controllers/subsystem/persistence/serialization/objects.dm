@@ -5,8 +5,7 @@
 
 ///  O R E   S I L O  ///
 
-/obj/machinery/ore_silo/on_object_saved()
-	var/data
+/obj/machinery/ore_silo/on_object_saved(map_string, turf/current_loc)
 	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
 	for(var/each in material_holder.materials)
 		var/amount = material_holder.materials[each] / 100
@@ -18,12 +17,13 @@
 			TGM_OBJ_INCREMENT
 */
 
-			var/obj/item/stack/stack = material_datum.sheet_type
-			var/amount_var = NAMEOF_TYPEPATH(stack, amount)
+			var/obj/item/stack/typepath = material_datum.sheet_type
 			var/amount_in_stack = max(1, min(50, amount))
 			amount -= amount_in_stack
-			data += "[data ? ",\n" : ""][stack.type]{\n\t[amount_var] = [amount_in_stack]\n\t}"
-	return data
+
+			var/list/variables = list()
+			TGM_ADD_TYPEPATH_VAR(variables, typepath, amount, amount_in_stack)
+			TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
 
 /obj/machinery/ore_silo/PersistentInitialize()
 	. = ..()
@@ -90,12 +90,14 @@
 	. -= NAMEOF(src, icon_state)
 	return .
 
-/obj/machinery/atmospherics/pipe/smart/simple/get_save_vars()
+/*
+/obj/machinery/atmospherics/pipe/smart/get_save_vars()
 	. = ..()
-	. -= NAMEOF(src, dir)
+	//. -= NAMEOF(src, dir)
 	return .
+*/
 
-/obj/machinery/atmospherics/pipe/smart/simple/get_save_substitute_type()
+/obj/machinery/atmospherics/pipe/smart/get_save_substitute_type()
 	var/base_type = /obj/machinery/atmospherics/pipe/smart/manifold4w
 
 	var/cache_key = "[base_type]-[pipe_color]-[hide]-[piping_layer]"
@@ -413,36 +415,33 @@
 	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
 	return .
 
-/obj/machinery/door/airlock/on_object_saved()
-	var/data
-
+/obj/machinery/door/airlock/on_object_saved(map_string, turf/current_loc)
 	if(abandoned)
-		data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/abandoned]"
+		TGM_MAP_BLOCK(map_string, /obj/effect/mapping_helpers/airlock/abandoned, null)
 	else // Only save these if not abandoned
 		if(welded)
-			data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/welded]"
-
+			TGM_MAP_BLOCK(map_string, /obj/effect/mapping_helpers/airlock/welded, null)
 		if(locked && !cycle_pump) // cycle pumps has funky bolt behavior that needs to be ignored
-			data += "[data ? ",\n" : ""][/obj/effect/mapping_helpers/airlock/locked]"
-
+			TGM_MAP_BLOCK(map_string, /obj/effect/mapping_helpers/airlock/locked, null)
 	if(cyclelinkeddir)
-		var/obj/effect/mapping_helpers/airlock/cyclelink_helper/helper_path = /obj/effect/mapping_helpers/airlock/cyclelink_helper
-		var/dir_var = NAMEOF_TYPEPATH(helper_path, dir)
-		data += "[data ? ",\n" : ""][helper_path]{\n\t[dir_var] = [cyclelinkeddir]\n\t}"
+		var/obj/effect/mapping_helpers/airlock/cyclelink_helper/typepath = /obj/effect/mapping_helpers/airlock/cyclelink_helper
+		var/list/variables = list()
+		TGM_ADD_TYPEPATH_VAR(variables, typepath, dir, cyclelinkeddir)
+		TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
 
 	if(closeOtherId)
-		var/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/helper_path = /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
-		var/cycle_id_var = NAMEOF_TYPEPATH(helper_path, cycle_id)
-		data += "[data ? ",\n" : ""][helper_path]{\n\t[cycle_id_var] = \"[closeOtherId]\"\n\t}"
+		var/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/typepath = /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
+		var/list/variables = list()
+		TGM_ADD_TYPEPATH_VAR(variables, typepath, cycle_id, closeOtherId)
+		TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
 
 	if(unres_sides)
 		for(var/heading in list(NORTH, SOUTH, EAST, WEST))
 			if(unres_sides & heading)
-				var/obj/effect/mapping_helpers/airlock/unres/helper_path = /obj/effect/mapping_helpers/airlock/unres
-				var/dir_var = NAMEOF_TYPEPATH(helper_path, dir)
-				data += "[data ? ",\n" : ""][helper_path]{\n\t[dir_var] = [heading]\n\t}"
-
-	return data
+				var/obj/effect/mapping_helpers/airlock/unres/typepath = /obj/effect/mapping_helpers/airlock/unres
+				var/list/variables = list()
+				TGM_ADD_TYPEPATH_VAR(variables, typepath, dir, heading)
+				TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
 
 /obj/machinery/door/password/get_save_vars()
 	. = ..()
@@ -531,9 +530,7 @@
 
 ///  N O T I C E   B O A R D  ///
 
-/obj/structure/noticeboard/on_object_saved()
-	var/data
-
+/obj/structure/noticeboard/on_object_saved(map_string, turf/current_loc)
 	for(var/obj/item/paper/paper in contents)
 /*
 		if(TGM_MAX_OBJ_CHECK)
@@ -541,9 +538,7 @@
 		TGM_OBJ_INCREMENT
 */
 
-		var/metadata = generate_tgm_metadata(paper)
-		data += "[data ? ",\n" : ""][paper.type][metadata]"
-	return data
+		TGM_MAP_BLOCK(map_string, paper.type, generate_tgm_metadata(paper))
 
 
 ///  F A L S E   W A L L  ///
@@ -623,8 +618,7 @@
 */
 
 // these are for public elevators
-/obj/structure/transport/linear/public/on_object_saved(turf/current_loc)
-	var/data
+/obj/structure/transport/linear/public/on_object_saved(map_string, turf/current_loc)
 	var/datum/transport_controller/linear/transport = transport_controller_datum
 
 	if(!transport || !transport.specific_transport_id || !length(transport.transport_modules))
@@ -635,37 +629,29 @@
 	if(transport.transport_modules[middle_section] != src)
 		return
 
-	var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
-	var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
-	data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
+	var/obj/effect/landmark/transport/transport_id/landmark_typepath = /obj/effect/landmark/transport/transport_id
+	var/list/landmark_variables = list()
+	TGM_ADD_TYPEPATH_VAR(landmark_variables, landmark_typepath, specific_transport_id, transport.specific_transport_id)
+	TGM_MAP_BLOCK(map_string, landmark_typepath, generate_tgm_typepath_metadata(landmark_variables))
 
 	var/obj/effect/abstract/elevator_music_zone/elevator_music_path = /obj/effect/abstract/elevator_music_zone
-	var/elevator_id_var = NAMEOF_TYPEPATH(elevator_music_path, linked_elevator_id)
-	data += "[data ? ",\n" : ""][elevator_music_path]{\n\t[elevator_id_var] = \"[transport.specific_transport_id]\"\n\t}"
-	return data
+	var/list/elevator_variables = list()
+	TGM_ADD_TYPEPATH_VAR(elevator_variables, elevator_music_path, linked_elevator_id, transport.specific_transport_id)
+	TGM_MAP_BLOCK(map_string, elevator_music_path, generate_tgm_typepath_metadata(elevator_variables))
 
 // these are for the tram
-/obj/structure/transport/linear/tram/on_object_saved(turf/current_loc)
+/obj/structure/transport/linear/tram/on_object_saved(map_string, turf/current_loc)
 	// only save the landmark to the bottom left turf of the bounding box since
 	// the tram is considered a multi-tile object
 	if(src.loc != current_loc)
 		return
 
-	var/data
 	var/datum/transport_controller/linear/transport = transport_controller_datum
 	if(transport?.specific_transport_id)
-		var/obj/effect/landmark/transport/transport_id/landmark_path = /obj/effect/landmark/transport/transport_id
-		var/specific_transport_id_var = NAMEOF_TYPEPATH(landmark_path, specific_transport_id)
-		data += "[data ? ",\n" : ""][landmark_path]{\n\t[specific_transport_id_var] = \"[transport.specific_transport_id]\"\n\t}"
-
-
-// example test
-	TGM_MAP_BLOCK(data, landmark_path, content)
-	content = TGM_WRAPPER("var = [TGM_ENCODE(value)]")
-
-	return data
-
-//obj/structure/transport/linear/public
+		var/obj/effect/landmark/transport/transport_id/landmark_typepath = /obj/effect/landmark/transport/transport_id
+		var/list/landmark_variables = list()
+		TGM_ADD_TYPEPATH_VAR(landmark_variables, landmark_typepath, specific_transport_id, transport.specific_transport_id)
+		TGM_MAP_BLOCK(map_string, landmark_typepath, generate_tgm_typepath_metadata(landmark_variables))
 
 /obj/machinery/elevator_control_panel/get_save_vars()
 	. = ..()
@@ -764,8 +750,6 @@
 
 	. -= NAMEOF(src, name)
 	return .
-
-
 
 ///  L I G H T I N G  ///
 
@@ -915,6 +899,13 @@
 
 /obj/item/food/grown/get_save_vars()
 	return list()
+
+/obj/machinery/camera/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, network)
+	. += NAMEOF(src, c_tag)
+
+	return .
 
 /*
 /obj/item/card/id/on_object_saved()
