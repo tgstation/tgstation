@@ -65,6 +65,7 @@
 	ricochet_shoots_firer = FALSE
 	shrapnel_type = null
 	embed_type = null
+	armour_penetration = 30
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum

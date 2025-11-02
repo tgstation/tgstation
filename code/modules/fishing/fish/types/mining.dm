@@ -182,6 +182,7 @@
 		/datum/fish_trait/carnivore,
 		/datum/fish_trait/heavy,
 	)
+	stable_population = 5
 	compatible_types = list(/obj/item/fish/lavaloop/plasma_river)
 	evolution_types = list(/datum/fish_evolution/plasmaloop)
 	hitsound = null
@@ -204,6 +205,7 @@
 		sound_on_success = 'sound/items/weapons/parry.ogg',\
 		effect_on_success = /obj/effect/temp_visual/guardian/phase,\
 	)
+	AddElement(/datum/element/raptor_food, attack_modifier = 1.5, growth_modifier = -0.075)
 
 /obj/item/fish/lavaloop/get_fish_taste()
 	return list("chewy fish" = 2)

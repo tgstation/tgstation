@@ -262,6 +262,7 @@
 	if (QDELETED(food))
 		return
 	food.apply_status_effect(/datum/status_effect/slime_food, user)
+	ADD_TRAIT(food, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 
 	stored_monkeys--
 	stored_monkeys = round(stored_monkeys, 0.1) //Prevents rounding errors

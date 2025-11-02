@@ -60,8 +60,6 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/empowerment = SCYTHE_WEAK
 	///Our bonus to force after we have death knelled. Lasts approximately 2 minutes.
 	var/bonus_force_multiplier = 2
-	///Our initial force before empowerment. For tracking on the item, and in case the item somehow gains more force for some reason before we death knelled.
-	var/original_force
 
 /obj/item/vorpalscythe/examine(mob/user)
 	. = ..()
@@ -79,20 +77,13 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "TO DUST WITH YE!! AWAY!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
-	)
+	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
 	AddComponent(
 		/datum/component/butchering, \
 		speed = 3 SECONDS, \
 		effectiveness = 125, \
 	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing revenants, much better at killing plants
+	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //also good at killing plants
 
 /obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
@@ -100,6 +91,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 	if(target.stat < DEAD && target != user)
 		scythe_empowerment(SCYTHE_SATED)
+
+	return ..()
+
+/obj/item/vorpalscythe/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(empowerment == SCYTHE_EMPOWERED)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, bonus_force_multiplier)
 
 	return ..()
 
@@ -180,32 +177,14 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
 	var/allow_timer_set = FALSE
 
-	if(potential_empowerment == SCYTHE_EMPOWERED)
-		if(empowerment != SCYTHE_EMPOWERED) //We only empower our stats if we beheaded a human with a mind.
-			original_force = force
-			force *= bonus_force_multiplier
-			empowerment = potential_empowerment
+	if(empowerment < potential_empowerment || empowerment == potential_empowerment) //Reset the timer only if our potential empowerment is equivalent or stronger than our current empowerment
 		allow_timer_set = TRUE
-	else if(empowerment < potential_empowerment) //so we don't end up weakening our scythe somehow and creating an infinite empowerment loop, only update empowerment if it is better
-		empowerment = potential_empowerment
-		allow_timer_set = TRUE
+	empowerment = potential_empowerment
 	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()
-	if(empowerment == SCYTHE_EMPOWERED)
-		force = original_force
-		original_force = null
 	empowerment = SCYTHE_WEAK
-
-/obj/item/vorpalscythe/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 #undef SCYTHE_WEAK
 #undef SCYTHE_SATED

@@ -7,8 +7,8 @@
 	icon_state = "classic"
 	base_icon_state = "classic"
 	power_channel = AREA_USAGE_EQUIP
-	density = TRUE
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION // Becomes undense when the unit is open
+	density = TRUE	// Becomes undense when the unit is open
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION | UNIQUE_RENAME | RENAME_NO_DESC
 	interaction_flags_mouse_drop = NEED_DEXTERITY
 	max_integrity = 250
 	req_access = list()
@@ -80,12 +80,12 @@
 
 /obj/machinery/suit_storage_unit/captain
 	mask_type = /obj/item/clothing/mask/gas/atmos/captain
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/captain
 	mod_type = /obj/item/mod/control/pre_equipped/magnate
 
 /obj/machinery/suit_storage_unit/centcom
 	mask_type = /obj/item/clothing/mask/gas/atmos/centcom
-	storage_type = /obj/item/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/captain
 	mod_type = /obj/item/mod/control/pre_equipped/corporate
 
 /obj/machinery/suit_storage_unit/engine
@@ -137,7 +137,7 @@
 
 /obj/machinery/suit_storage_unit/syndicate
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/tank/jetpack/oxygen/harness
+	storage_type = /obj/item/tank/jetpack/harness
 	mod_type = /obj/item/mod/control/pre_equipped/nuclear
 
 /obj/machinery/suit_storage_unit/syndicate/lavaland
@@ -697,33 +697,6 @@
 			balloon_alert(user, "set to [choice]")
 		return ITEM_INTERACT_SUCCESS
 
-	if(!state_open && IS_WRITING_UTENSIL(tool))
-		if(locked)
-			balloon_alert(user, "unlock first!")
-			return ITEM_INTERACT_BLOCKING
-		if(isnull(id_card))
-			balloon_alert(user, "not yours to rename!")
-			return ITEM_INTERACT_BLOCKING
-
-		var/name_set = FALSE
-		var/desc_set = FALSE
-		var/str = tgui_input_text(user, "Personal Unit Name", "Unit Name", max_length = MAX_NAME_LEN)
-		if(!isnull(str))
-			name = str
-			name_set = TRUE
-		str = tgui_input_text(user, "Personal Unit Description", "Unit Description", max_length = MAX_DESC_LEN)
-		if(!isnull(str))
-			desc = str
-			desc_set = TRUE
-		var/bit_flag = NONE
-		if(name_set)
-			bit_flag |= UPDATE_NAME
-		if(desc_set)
-			bit_flag |= UPDATE_DESC
-		if(bit_flag)
-			update_appearance(bit_flag)
-		return ITEM_INTERACT_SUCCESS
-
 	if(state_open && is_operational)
 		if(istype(tool, /obj/item/clothing/suit))
 			if(suit)
@@ -803,6 +776,15 @@
 	. = (!locked && panel_open && crowbar.tool_behaviour == TOOL_CROWBAR)
 	if(.)
 		return ..()
+
+/obj/machinery/suit_storage_unit/rename_checks(mob/living/user)
+	. = TRUE
+	if(locked)
+		balloon_alert(user, "unlock first!")
+		return FALSE
+	if(!access_check(user))
+		balloon_alert(user, "not yours to rename!")
+		return FALSE
 
 /// If the SSU needs to have any communications wires cut.
 /obj/machinery/suit_storage_unit/proc/disable_modlink()
