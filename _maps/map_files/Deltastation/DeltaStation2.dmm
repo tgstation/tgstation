@@ -65,7 +65,8 @@
 "aaY" = (
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/west,
 /obj/structure/closet/emcloset,
@@ -821,7 +822,8 @@
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
@@ -1166,7 +1168,8 @@
 /area/station/medical/medbay)
 "anZ" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -2771,10 +2774,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/disposal/bin,
-/obj/structure/sign/directions/arrival{
-	dir = 1;
-	pixel_y = -22
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central/fore)
@@ -3561,7 +3560,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -6253,7 +6253,8 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -7880,7 +7881,8 @@
 	name = "curtain control";
 	pixel_x = -24;
 	pixel_y = -8;
-	req_access = list("theatre")
+	req_access = list("theatre");
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/theater)
@@ -8900,7 +8902,8 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -13425,6 +13428,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
+"doP" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall/r_wall,
+/area/station/command/bridge)
 "dpf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
 /turf/closed/wall,
@@ -14800,7 +14807,6 @@
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Service - Cafeteria Aft";
-	dir = 5;
 	name = "service camera"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -17201,6 +17207,9 @@
 	pixel_y = 10
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/flasher/directional/south{
+	id = "AI"
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "enw" = (
@@ -20425,25 +20434,16 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "fcP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/hangover,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/directions/lavaland{
-	dir = 1;
-	pixel_x = 1;
-	pixel_y = 38
-	},
 /obj/structure/sign/directions/arrival{
-	dir = 8;
-	pixel_x = 1;
-	pixel_y = 28
+	dir = 1;
+	pixel_y = -4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/structure/sign/directions/lavaland{
+	dir = 4;
+	pixel_y = 10
 	},
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
+/turf/closed/wall,
+/area/station/service/janitor)
 "fcR" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -20577,7 +20577,8 @@
 	name = "curtain control";
 	pixel_x = 24;
 	pixel_y = -8;
-	req_access = list("theatre")
+	req_access = list("theatre");
+	dir = 4
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/wood,
@@ -21807,11 +21808,6 @@
 	},
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/directions/arrival{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = -4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -24563,7 +24559,6 @@
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/camera/directional/east{
 	c_tag = "Service - Hydroponics Front Fore";
-	dir = 6;
 	name = "service camera"
 	},
 /obj/effect/turf_decal/tile/green/opposingcorners,
@@ -26186,7 +26181,6 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Service - Janitorial Closet";
-	dir = 9;
 	name = "service camera"
 	},
 /mob/living/basic/lizard/eats_the_roaches,
@@ -28211,7 +28205,8 @@
 /obj/structure/cable,
 /obj/machinery/button/door/incinerator_vent_atmos_main{
 	pixel_y = 36;
-	pixel_x = -8
+	pixel_x = -8;
+	dir = 1
 	},
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_x = -8;
@@ -30262,7 +30257,8 @@
 	dir = 8
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -32792,7 +32788,8 @@
 /area/station/maintenance/department/electrical)
 "idD" = (
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -37737,6 +37734,20 @@
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"jmX" = (
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/vault{
+	dir = 1
+	},
+/obj/structure/sign/directions/engineering{
+	dir = 8;
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/station/commons/storage/primary)
 "jni" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/science/robotics,
@@ -39230,7 +39241,8 @@
 	},
 /obj/item/bedsheet/medical,
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 8
 	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 5
@@ -40468,11 +40480,13 @@
 	},
 /obj/structure/sign/picture_frame/showroom/three{
 	pixel_x = -20;
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/sign/picture_frame/showroom/four{
 	pixel_x = 2;
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood/large,
 /area/station/command/corporate_showroom)
@@ -40774,18 +40788,6 @@
 /turf/open/floor/iron,
 /area/station/commons/vacant_room)
 "jZs" = (
-/obj/structure/sign/directions/science{
-	pixel_x = -32
-	},
-/obj/structure/sign/directions/medical{
-	pixel_x = -32;
-	pixel_y = -8
-	},
-/obj/structure/sign/directions/upload{
-	dir = 8;
-	pixel_x = -32;
-	pixel_y = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -42197,7 +42199,8 @@
 	dir = 1
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -43553,7 +43556,8 @@
 /area/station/maintenance/department/electrical)
 "kKY" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -49616,7 +49620,8 @@
 /area/station/ai_monitored/command/storage/eva)
 "mlW" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/railing{
 	dir = 1
@@ -51605,7 +51610,8 @@
 "mJi" = (
 /obj/structure/sign/departments/science{
 	name = "ROBOTICS";
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -53638,9 +53644,6 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nmU" = (
 /obj/structure/cable,
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -24
-	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -54138,11 +54141,13 @@
 	},
 /obj/structure/sign/picture_frame/showroom/one{
 	pixel_x = -2;
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/sign/picture_frame/showroom/four{
 	pixel_x = 19;
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood/large,
 /area/station/command/corporate_showroom)
@@ -55852,6 +55857,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"nPT" = (
+/obj/structure/lattice,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32;
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "nPU" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -58087,7 +58100,8 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -62042,7 +62056,6 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/directional/west{
 	c_tag = "Service - Hydroponics Back";
-	dir = 10;
 	name = "hallway camera"
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -65916,6 +65929,10 @@
 "qoo" = (
 /obj/structure/table/wood,
 /obj/item/pai_card,
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32;
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "qoA" = (
@@ -71967,6 +71984,10 @@
 /obj/structure/sign/directions/science{
 	pixel_y = 2
 	},
+/obj/structure/sign/directions/arrival{
+	dir = 1;
+	pixel_y = 10
+	},
 /turf/closed/wall,
 /area/station/commons/vacant_room/office)
 "rPJ" = (
@@ -73076,7 +73097,8 @@
 	},
 /obj/effect/turf_decal/bot/left,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/machinery/modular_computer/preset/cargochat/science{
 	dir = 4
@@ -73316,7 +73338,8 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth_large,
@@ -73704,13 +73727,6 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
 	},
-/obj/machinery/button/door{
-	id = "rdordnance";
-	name = "Ordnance Containment Control";
-	pixel_x = 8;
-	pixel_y = 26;
-	req_access = list("science")
-	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -73719,6 +73735,13 @@
 	c_tag = "Science - Ordnance Lab Access";
 	name = "science camera";
 	network = list("ss13","rd")
+	},
+/obj/machinery/button/door/directional/north{
+	pixel_x = 7;
+	pixel_y = 26;
+	id = "rdordnance";
+	name = "Ordnance Containment Contro";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/office)
@@ -75289,7 +75312,8 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -75697,27 +75721,17 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "sIZ" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sign/directions/engineering{
+/obj/structure/sign/directions/arrival{
 	dir = 8;
-	pixel_x = -32;
-	pixel_y = -8
+	pixel_x = 1
 	},
-/obj/structure/sign/directions/command{
+/obj/structure/sign/directions/lavaland{
 	dir = 1;
-	pixel_x = -32;
-	pixel_y = 8
+	pixel_x = 1;
+	pixel_y = 10
 	},
-/obj/structure/sign/directions/vault{
-	dir = 1;
-	pixel_x = -32
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/turf/closed/wall,
+/area/station/hallway/secondary/entry)
 "sJb" = (
 /obj/effect/spawner/random/trash/mess,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -78995,7 +79009,8 @@
 /area/station/command/heads_quarters/captain/private)
 "tAL" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/railing{
 	dir = 1
@@ -79335,13 +79350,20 @@
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "tEd" = (
-/obj/machinery/flasher/directional/south{
-	id = "AI";
-	pixel_x = 26
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: BLAST DOORS";
+	pixel_y = 32;
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/kirbyplants/organic/plant22,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/ai_upload)
+/area/station/command/bridge)
 "tEh" = (
 /obj/structure/sign/directions/evac{
 	pixel_y = -8
@@ -86115,7 +86137,8 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/west,
@@ -87320,12 +87343,16 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "vAl" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	pixel_y = 32
+/obj/structure/sign/directions/upload{
+	dir = 8;
+	pixel_y = 8
 	},
-/turf/open/floor/wood,
-/area/station/command/meeting_room/council)
+/obj/structure/sign/directions/science,
+/obj/structure/sign/directions/medical{
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/station/service/barber)
 "vAs" = (
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
@@ -88600,10 +88627,6 @@
 "vRU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/directions/lavaland{
-	dir = 4;
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -91169,7 +91192,8 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
@@ -95396,7 +95420,8 @@
 /area/station/tcommsat/server)
 "xCf" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -96396,7 +96421,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Service - Kitchen Coldroom";
-	dir = 10;
 	name = "service camera"
 	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
@@ -107001,7 +107025,7 @@ hmU
 sdK
 tDB
 hmU
-tEd
+hmU
 cJh
 cdt
 idU
@@ -128924,7 +128948,7 @@ msu
 deV
 kpa
 ydW
-pOQ
+nPT
 efQ
 qYo
 efQ
@@ -131919,11 +131943,11 @@ ilJ
 iyq
 iyq
 fHI
-fHI
+jmX
 mvA
 rtO
 rtO
-qAQ
+vAl
 sAh
 sAh
 qAQ
@@ -132176,7 +132200,7 @@ sYU
 sYU
 sYU
 giC
-sIZ
+cpr
 hAc
 ctw
 lSl
@@ -133156,7 +133180,7 @@ sjt
 dyi
 iWA
 vRU
-tCs
+fcP
 tCs
 tCs
 bJf
@@ -133195,7 +133219,7 @@ xms
 xms
 xms
 diL
-uQD
+tEd
 drj
 bog
 xEg
@@ -133451,7 +133475,7 @@ xms
 aaa
 qYo
 aaa
-diL
+doP
 nBJ
 eVb
 jYX
@@ -133806,7 +133830,7 @@ xPc
 sTV
 xPc
 tgT
-pOQ
+nPT
 aaa
 aaa
 qYo
@@ -135257,7 +135281,7 @@ yil
 obc
 sQA
 qoo
-vAl
+mGw
 mGw
 qHx
 awc
@@ -138281,8 +138305,8 @@ sjt
 qld
 qld
 sjt
-sjt
-fcP
+sIZ
+qso
 sde
 nSF
 koM
