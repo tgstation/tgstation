@@ -213,15 +213,22 @@
 		pai_card.set_personality(src)
 	card = pai_card
 	forceMove(pai_card)
-	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
+	toggle_leash()
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	update_appearance(UPDATE_DESC)
-
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
 	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
+
+/mob/living/silicon/pai/proc/toggle_leash()
+	if(isnull(card))
+		return
+	if(leash)
+		QDEL_NULL(leash)
+	else
+		leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 
 /mob/living/silicon/pai/create_modularInterface()
 	if(!modularInterface)
@@ -335,9 +342,7 @@
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
 	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
-	QDEL_NULL(leash) // Freedom!!!
 	to_chat(src, span_danger("ALERT: Foreign software detected."))
-	to_chat(src, span_danger("WARN: Holochasis range restrictions disabled."))
 	return TRUE
 
 /mob/living/silicon/pai/on_saboteur(datum/source, disrupt_duration)
@@ -465,9 +470,6 @@
 
 /// Updates the distance we can be from our pai card
 /mob/living/silicon/pai/proc/increment_range(increment_amount)
-	if(emagged)
-		return
-
 	var/new_distance = leash.distance + increment_amount
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return

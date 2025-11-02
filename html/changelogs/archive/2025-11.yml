@@ -1,0 +1,83 @@
+2025-11-01:
+  Aliceee2ch:
+  - spellcheck: Adds missing space in gullion description.
+  ArcaneMusic:
+  - rscadd: Leaving a can of soda exposed to the elements at low pressure will now
+      burst.
+  FalloutFalcon:
+  - spellcheck: Lawyer and Coroner round tips now reflect how many job slots they
+      have.
+  Gboster-0:
+  - bugfix: the ore refineries now drop stacks of materials below them if they are
+      not linked to a silo instead of being sent to the shadow realm
+  Ghommie:
+  - refactor: Refactored screen alerts a little. Most should now fit the player's
+      hud style. Report any issue.
+  Melber:
+  - bugfix: Vampires suck again, I mean, they can suck any bloodtype again
+  Melbert:
+  - bugfix: Fix open wing sprite
+  TealSeer:
+  - server: renamed feature_human_ears and feature_human_tail to feature_cat_ears
+      and feature_cat_tail respectively
+  theselfish:
+  - spellcheck: Clown Op shoe description no longer starts with a lower case.
+2025-11-02:
+  ArchBTW:
+  - map: ALL - fix departmental maint access consistency
+  - map: CATWALK (MEDBAY) - add chemlab multitool, add unrestricted access helper
+      in medbay lobby, unbolt chemlab door
+  - map: CATWALK, TRAM, META - syringegun consistency (now total 2)
+  - map: CATWALK, ICEBOX - add shower soap spawn chance
+  - map: NEBULASTATION -  add unrestricted access helpers in medbay
+  - map: DELTA - fix auxiliary tool storage access consistency
+  - map: ICEBOX - move syringeguns moved into windoors
+  - map: TRAM - add pharmacy igniters
+  Fghj240:
+  - bugfix: Bioscramble effects no longer swap body parts of that can't lose limbs
+  - bugfix: Abductor heal gland no longer ejects limbs of carbons that can't lose
+      limbs
+  Melbert:
+  - spellcheck: Replaced mentions of "Vey-Medical" with "DeForest Corporation"
+  - rscadd: Nohitting a combat bitrunning domain rewards a higher score.
+  - qol: Vampires can drink straight outta blood bags
+  - bugfix: Blackout drunk / Split personality no longer ghosts you
+  NiklasNeighbor:
+  - refactor: refactored Lasertag equipment to use components, therefore making it
+      scalable. Please report any issues.
+  SmArtKar:
+  - rscadd: Raptors now have a new youngling in-between growth stage
+  - balance: Mining base raptors now spawn as younglings, and can be grown up by feeding
+      them some meat or plants
+  - balance: Some of the raptor colors, such as purple, white and blue, had their
+      effects changed around
+  - balance: Raptors no longer can lavawalk by default, this has been turned into
+      blue raptors' unique ability instead
+  - balance: Raptors no longer eat projectiles aimed at their owner, but have lost
+      50 HP. Green and black raptors remain at 400 HP, and red raptors have been buffed
+      to 300 HP
+  - balance: Raptors can now heal by eating meat and lavaland plants
+  - rscdel: Icebox raptors lost their unique sprites
+  - bugfix: Dogs no longer consider all corgis to be puppies
+  - bugfix: Fixed dragging storage containers onto your hand slot sometimes behaving
+      oddly
+  - bugfix: Fixed progress bars and cogs sometimes showing offset to the side of you
+      / the mob you're interacting with
+  - bugfix: Mounts and vehicles no longer move x1.4 times as fast diagonally
+  - refactor: Rewrote the happiness component
+  TealSeer:
+  - bugfix: fixed neck items using belt offset
+  arbuzik456:
+  - rscadd: Added UI buttons for mech cargo module, left click to dispose first item
+      in the list and right click to select an item to drop.
+  - rscadd: Added UI button for mech fire extinguisher, left click to splash and right
+      click to refill.
+  - balance: Mech fire extinguisher module now goes on any mech, combat slips with
+      a press of a button!
+  lelandkemble:
+  - spellcheck: Examine text for soil no longer refers to it as "They"
+  tontyGH:
+  - spellcheck: Repairing a brain will now have it turn a brighter shade of a more
+      accurate color.
+  vinylspiders:
+  - bugfix: animal AI no longer mistakes rocks for a valid breeding partner

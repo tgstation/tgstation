@@ -569,6 +569,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/suit/chaplainsuit/habit = 1,
 		/obj/item/clothing/head/chaplain/habit_veil = 1,
+		/obj/item/storage/box/purity_seal_box = 2,
 	)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,

@@ -1,0 +1,10 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Completely reworks Sleeping Carp, again."
+  - balance: "The return of Stomach Knee (Kraken Wrack) and Wrist Wrench (Gnashing Teeth). Time is a flat circle."
+  - balance: "Sleeping Carp has better grabs (no instant aggro grabs)"
+  - balance: "Sleeping Carp integrates normal unarmed punch by not overriding your normal punches."
+  - balance: "Sleeping Carp's deflection weakens if you wear armored headwear and body armor, or while carrying objects. However, by wearing martial arts (or carp) themed outfits, you can improve your defenses instead, allowing you to not just dodge bullets, but also incoming melee attacks."
+  - balance: "Some objects are exempt, like staff weapons (such as mops or the monk's staff), short blades (like knives and shortswords), club-like (baseball bats and toolboxes), or thematic (like extendo hands and carp plushies)"
+  - balance: "You can also get these improvements by being a literal carp or being a carp person."

@@ -11,6 +11,7 @@
 	panel_type = "panel20"
 	refill_canister = /obj/item/vending_refill/custom
 	fish_source_path = /datum/fish_source/vending/custom
+	obj_flags = UNIQUE_RENAME
 
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
@@ -199,34 +200,24 @@
 			if(!linked_account)
 				linked_account = card_used.registered_account
 				speak("\The [src] has been linked to [card_used].")
+				return ITEM_INTERACT_SUCCESS
 			else if(linked_account == card_used.registered_account)
 				linked_account = null
 				speak("account unlinked.")
+				return ITEM_INTERACT_SUCCESS
 			else
 				to_chat(user, "verification failed. unlinking process has been cancelled.")
-			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_FAILURE
+	return ..()
 
-	if(!compartmentLoadAccessCheck(user) || !IS_WRITING_UTENSIL(attack_item))
-		return ..()
-
-	. ITEM_INTERACT_FAILURE
-	var/new_name = reject_bad_name(tgui_input_text(user, "Set name", "Name", name, max_length = 20), allow_numbers = TRUE, strict = TRUE, cap_after_symbols = FALSE)
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_name)
-		name = new_name
-	var/new_desc = reject_bad_text(tgui_input_text(user, "Set description", "Description", desc, max_length = 60))
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	if (new_desc)
-		desc = new_desc
+/obj/machinery/vending/custom/descformat(input, mob/living/user)
+	. = input
 	var/new_slogan = reject_bad_text(tgui_input_text(user, "Set slogan", "Slogan", "Epic", max_length = 60))
 	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if (new_slogan)
 		slogan_list += new_slogan
 		last_slogan = world.time + rand(0, slogan_delay)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/vending/custom/collect_records_for_static_data(list/records, list/categories, premium)
 	. = list()

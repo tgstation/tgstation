@@ -70,7 +70,7 @@
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/mob/thrown_by = throwingdatum?.get_thrower()
-	if(thrown_by)
+	if(istype(thrown_by))
 		diceroll(thrown_by)
 	return ..()
 
@@ -355,7 +355,7 @@
 		if(4)
 			//Destroy Equipment
 			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))
-			var/list/belongings = user.get_all_gear()
+			var/list/belongings = user.get_all_gear(NONE) //don't delete prosthetics or abstract items.
 			QDEL_LIST(belongings)
 		if(5)
 			//Monkeying

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed ``\"Return Value of Proccall\"`` breaking on list returns when an admin calls a proc"
