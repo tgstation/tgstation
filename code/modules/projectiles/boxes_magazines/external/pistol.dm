@@ -66,9 +66,9 @@
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A 10mm handgun magazine, suitable for the Ansem pistol."
-	icon_state = "9x19p"
-	base_icon_state = "9x19p"
-	ammo_band_icon = "+9x19ab"
+	icon_state = "10mm_p"
+	base_icon_state = "10mm_p"
+	ammo_band_icon = "+10mm_p-ab"
 	ammo_band_color = null
 
 	ammo_type = /obj/item/ammo_casing/c10mm
@@ -76,6 +76,10 @@
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/m10mm/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
 
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
