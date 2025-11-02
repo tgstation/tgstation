@@ -444,20 +444,16 @@
 			return TRUE
 
 		if("insert1")
-			var/mob/ui_user = ui.user
-			var/obj/item/reagent_containers/container = ui_user.get_active_held_item()
-
-			if(can_insert_beaker(ui_user, container))
-				replace_beaker(ui_user, TRUE, container)
+			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
+			if(can_insert_beaker(ui.user, container))
+				replace_beaker(ui.user, TRUE, container)
 
 			return TRUE
 
 		if("insert2")
-			var/mob/ui_user = ui.user
-			var/obj/item/reagent_containers/container = ui_user.get_active_held_item()
-
-			if(can_insert_beaker(ui_user, container))
-				replace_beaker(ui_user, FALSE, container)
+			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
+			if(can_insert_beaker(ui.user, container))
+				replace_beaker(ui.user, FALSE, container)
 
 			return TRUE
 
