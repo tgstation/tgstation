@@ -102,6 +102,7 @@
 #include "code\__DEFINES\explosions.dm"
 #include "code\__DEFINES\external_organs.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
+#include "code\__DEFINES\files.dm"
 #include "code\__DEFINES\firealarm.dm"
 #include "code\__DEFINES\fish.dm"
 #include "code\__DEFINES\font_awesome_icons.dm"

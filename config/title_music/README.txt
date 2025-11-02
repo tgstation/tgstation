@@ -1,4 +1,5 @@
-The enclosed /sounds folder holds the sound files used as the title music for the game. OGG and WAV are supported.
+The enclosed /sounds folder holds the sound files used as the title music for the game.
+OGG is the recommended sound format but see code/controllers/subsystem/sounds.dm for the rest of the supported ones.
 
 Using unnecessarily huge sounds can cause client side lag and should be avoided.
 
@@ -23,7 +24,7 @@ Map Title Sounds:
 
 Map sounds are tied to a specific in game map. To make a map title you format the name like this "(name of a map)+(name of your sound)"
 
-The spelling of the map name is important. It must match exactly the define MAP_NAME found in the relevant .DM file in the /_maps folder in 
+The spelling of the map name is important. It must match exactly the define MAP_NAME found in the relevant .DM file in the /_maps folder in
 the root directory. It can also be seen in game in the status menu. Note that there are no spaces between the two names.
 
 It is absolutely fine to have more than one sound tied to the same map. It's also fine to have a rare map sound.
