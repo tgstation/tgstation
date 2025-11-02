@@ -95,7 +95,7 @@
 #define HEADINTERNALS (1<<16)
 /// Prevents masks from getting adjusted from enabling internals
 #define INTERNALS_ADJUST_EXEMPT (1<<17)
-/// Determines if our piece of clothing is carpy or martial arty Sleeping Carp's style factor.
+/// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
 #define CARP_STYLE_FACTOR (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
