@@ -26,7 +26,6 @@ type BeakerProps = {
   replace_contents?: BeakerReagent[];
   title_label?: string;
   showpH?: BooleanLike;
-  insertAction?: string;
   showInsertButton?: boolean;
   hasBeakerInHand?: BooleanLike;
 };
@@ -86,7 +85,6 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
     replace_contents,
     title_label,
     showpH,
-    insertAction = 'insert',
     showInsertButton = false,
     hasBeakerInHand,
   } = props;
