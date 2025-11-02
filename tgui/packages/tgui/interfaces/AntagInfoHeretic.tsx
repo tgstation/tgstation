@@ -234,12 +234,17 @@ const GuideSection = () => {
         </Stack.Item>
         <Stack.Item>
           <span style={hereticRed}>WARNING!</span>
-          It will take a total of <b>{points_to_aura}</b>&nbsp;
-          <span style={hereticGreen}>knowledge points</span>
+          <br /> Accumulating a total of <b>{points_to_aura}</b>&nbsp;
+          <span style={hereticBlue}>knowledge points</span>
           &nbsp;to manifest a visible aura of&nbsp;
           <span style={hereticPurple}>Mansus energy</span> around you. This aura
-          will be visible to all players and will mark you as a heretic.
-          Consider the risks before accumulating too much knowledge!
+          will be visible to all those around you and will mark you as a
+          heretic. Consider the risks before accumulating too much knowledge!
+          <br />
+          Keep in mind that using a&nbsp;
+          <span style={hereticPurple}>Codex Cicatrix</span> will also make you
+          very obvious as a heretic when draining&nbsp;
+          <span style={hereticYellow}>influences</span>
         </Stack.Item>
       </Stack>
     </Stack.Item>
