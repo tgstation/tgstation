@@ -72,7 +72,7 @@
 
 /obj/machinery/turretid/power_change()
 	. = ..()
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
