@@ -308,9 +308,12 @@
 			return TRUE
 
 		if("insert")
-			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
-				replace_beaker(ui.user, container)
+			var/mob/ui_user = ui.user
+			var/obj/item/reagent_containers/container = ui_user.get_active_held_item()
+
+			if(can_insert_beaker(ui_user, container))
+				replace_beaker(ui_user, container)
+
 			return TRUE
 
 		if("dispense_recipe")

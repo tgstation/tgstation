@@ -444,15 +444,21 @@
 			return TRUE
 
 		if("insert1")
-			var/obj/item/reagent_containers/container = usr.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
-				replace_beaker(ui.user, TRUE, container)
+			var/mob/ui_user = ui.user
+			var/obj/item/reagent_containers/container = ui_user.get_active_held_item()
+
+			if(can_insert_beaker(ui_user, container))
+				replace_beaker(ui_user, TRUE, container)
+
 			return TRUE
 
 		if("insert2")
-			var/obj/item/reagent_containers/container = usr.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
-				replace_beaker(ui.user, FALSE, container)
+			var/mob/ui_user = ui.user
+			var/obj/item/reagent_containers/container = ui_user.get_active_held_item()
+
+			if(can_insert_beaker(ui_user, container))
+				replace_beaker(ui_user, FALSE, container)
+
 			return TRUE
 
 /obj/machinery/chem_mass_spec/click_alt(mob/living/user)
