@@ -237,7 +237,7 @@ Nothing else in the console has ID requirements.
 	for (var/e in stored_research.completed_experiments)
 		exp_to_process += stored_research.completed_experiments[e]
 	for (var/datum/experiment/ex as anything in exp_to_process)
-		data["experiments"][ex.type] = list(ex.to_ui_data())
+		data["experiments"][ex.type] = ex.to_ui_data()
 	return data
 
 /**
