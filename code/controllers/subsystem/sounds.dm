@@ -34,6 +34,23 @@ SUBSYSTEM_DEF(sounds)
 	/// Any errors from precaching.
 	VAR_PRIVATE/list/precache_errors = list()
 
+	// Put more common extensions first to speed this up a bit
+	var/list/valid_file_extensions = list(
+		".ogg",
+		".wav",
+		".mid",
+		".mp3",
+		".midi",
+		".mod",
+		".it",
+		".s3m",
+		".xm",
+		".oxm",
+		".raw",
+		".wma",
+		".aiff",
+	)
+
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
 	find_all_available_sounds()
@@ -63,22 +80,6 @@ SUBSYSTEM_DEF(sounds)
 
 /datum/controller/subsystem/sounds/proc/find_all_available_sounds()
 	all_sounds = list()
-	// Put more common extensions first to speed this up a bit
-	var/static/list/valid_file_extensions = list(
-		".ogg",
-		".wav",
-		".mid",
-		".midi",
-		".mod",
-		".it",
-		".s3m",
-		".xm",
-		".oxm",
-		".raw",
-		".wma",
-		".aiff",
-	)
-
 	all_sounds = pathwalk("sound/", valid_file_extensions)
 
 /// Removes a channel from using list.
