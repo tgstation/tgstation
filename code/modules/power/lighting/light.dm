@@ -424,6 +424,8 @@
 			frame = new /obj/item/wallframe/light_fixture(drop_point)
 		if("bulb")
 			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
+		if("floor bulb")
+			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
 	if(!disassembled)
 		frame.take_damage(frame.max_integrity * 0.5, sound_effect = FALSE)
 		if(status != LIGHT_BROKEN)
@@ -728,7 +730,7 @@
 	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
-	fitting = "bulb"
+	fitting = "floor bulb"
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
@@ -738,6 +740,15 @@
 /obj/machinery/light/floor/broken
 	status = LIGHT_BROKEN
 	icon_state = "floor-broken"
+
+/obj/machinery/light/floor/burned
+	status = LIGHT_BURNED
+	icon_state = "floor-burned"
+
+/obj/machinery/light/floor/empty
+	icon_state = "floor-empty"
+	start_with_cell = FALSE
+	status = LIGHT_EMPTY
 
 /obj/machinery/light/floor/transport
 	name = "transport light"

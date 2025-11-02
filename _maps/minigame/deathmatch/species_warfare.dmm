@@ -34,7 +34,7 @@
 /area/deathmatch)
 "cd" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /obj/machinery/computer{
 	dir = 4
 	},
@@ -574,7 +574,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /turf/open/indestructible,
 /area/deathmatch)
 "wb" = (
@@ -700,7 +700,7 @@
 /area/deathmatch)
 "zt" = (
 /obj/effect/turf_decal/tile/dark_blue/full,
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /obj/machinery/computer{
 	dir = 8
 	},
@@ -867,7 +867,7 @@
 /obj/item/ammo_casing/rebar,
 /obj/item/ammo_casing/rebar,
 /obj/item/ammo_casing/rebar,
-/obj/machinery/light/built/directional/north,
+/obj/machinery/light/empty/directional/north,
 /turf/open/indestructible,
 /area/deathmatch)
 "EC" = (
@@ -963,7 +963,7 @@
 /obj/effect/turf_decal/tile/dark_blue/full,
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun/mini/practice_phaser,
-/obj/machinery/light/built/directional/north,
+/obj/machinery/light/empty/directional/north,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "Iu" = (
@@ -1164,7 +1164,7 @@
 /obj/structure/rack,
 /obj/item/cane,
 /obj/structure/fireaxecabinet/directional/south,
-/obj/machinery/light/built/directional/south,
+/obj/machinery/light/empty/directional/south,
 /turf/open/indestructible/dark/smooth_large,
 /area/deathmatch)
 "ON" = (
