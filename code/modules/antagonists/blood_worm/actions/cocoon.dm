@@ -77,22 +77,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/finalize(mob/living/basic/blood_worm/worm)
 	var/mob/living/basic/blood_worm/new_worm = new new_worm_type(get_turf(cocoon))
 
-	worm.mind?.transfer_to(new_worm)
-
-	new_worm.consumed_blood = worm.consumed_blood
-
-	new_worm.spit_action?.full_key = worm.spit_action?.full_key
-	new_worm.leech_action?.full_key = worm.leech_action?.full_key
-	new_worm.invade_action?.full_key = worm.invade_action?.full_key
-	new_worm.cocoon_action?.full_key = worm.cocoon_action?.full_key
-
-	new_worm.transfuse_action?.full_key = worm.transfuse_action?.full_key
-	new_worm.eject_action?.full_key = worm.eject_action?.full_key
-	new_worm.revive_action?.full_key = worm.revive_action?.full_key
-
-	new_worm.cocoon_action?.StartCooldown()
-
-	qdel(worm)
+	transfer(worm, new_worm)
 
 	for (var/mob/living/unfortunate_observer in view(3, cocoon))
 		if (istype(unfortunate_observer, /mob/living/basic/blood_worm))
@@ -117,6 +102,24 @@
 	playsound(cocoon, 'sound/effects/splat.ogg', vol = 100, vary = TRUE, ignore_walls = FALSE)
 
 	shared_unregister_cocoon(worm)
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
+	old_worm.mind?.transfer_to(new_worm)
+
+	new_worm.consumed_blood = old_worm.consumed_blood
+
+	new_worm.spit_action?.full_key = old_worm.spit_action?.full_key
+	new_worm.leech_action?.full_key = old_worm.leech_action?.full_key
+	new_worm.invade_action?.full_key = old_worm.invade_action?.full_key
+	new_worm.cocoon_action?.full_key = old_worm.cocoon_action?.full_key
+
+	new_worm.transfuse_action?.full_key = old_worm.transfuse_action?.full_key
+	new_worm.eject_action?.full_key = old_worm.eject_action?.full_key
+	new_worm.revive_action?.full_key = old_worm.revive_action?.full_key
+
+	new_worm.cocoon_action?.StartCooldown()
+
+	qdel(old_worm)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/cancel(mob/living/basic/blood_worm/worm)
 	cocoon.visible_message(
@@ -286,6 +289,10 @@
 		fresh_mind.add_antag_datum(/datum/antagonist/blood_worm)
 
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
+	. = ..()
+	new_worm.consumed_blood = list()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/cancel(mob/living/basic/blood_worm/worm)
 	for (var/mob/candidate as anything in candidates)

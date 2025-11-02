@@ -49,3 +49,11 @@
 		qdel(old_mob)
 
 	return ..()
+
+/datum/antagonist/blood_worm/get_preview_icon()
+	var/icon/icon = icon('icons/mob/nonhuman-player/blood_worm.dmi', "juvenile")
+
+	icon.Crop(1, 1, 32, 28)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+
+	return icon

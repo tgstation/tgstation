@@ -477,10 +477,12 @@
 	return vents
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms
-	name = "Blood Worms"
-	config_tag = "Blood Worms"
+	name = "Blood Worm"
+	config_tag = "Blood Worm"
+	preview_antag_datum = /datum/antagonist/blood_worm
 	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
+	pref_flag = ROLE_NIGHTMARE
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
