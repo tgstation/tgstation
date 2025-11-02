@@ -824,6 +824,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	active_changes_inhand = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
@@ -913,6 +914,7 @@
 	inhand_icon_state = "teleprod"
 	slot_flags = null
 	can_upgrade = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/melee/baton/security/cattleprod/teleprod/clumsy_check(mob/living/carbon/human/user)
 	. = ..()

@@ -1195,7 +1195,7 @@
 	desc = "A box that contains the equipment to control a tram. Just secure to the tram wall."
 	icon = 'icons/obj/tram/tram_controllers.dmi'
 	icon_state = "tram-controller"
-	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 	result_path = /obj/machinery/transport/tram_controller
 	pixel_shift = 32
 

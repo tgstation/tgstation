@@ -228,6 +228,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	icon_state = "mobile"
 	anchored = FALSE
 	density = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.15, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 /obj/machinery/defibrillator_mount/mobile/Initialize(mapload)
 	. = ..()

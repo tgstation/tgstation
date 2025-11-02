@@ -13,6 +13,7 @@
 	maxnutri = 15
 	tray_flags = SOIL
 	armor_type = /datum/armor/obj_soil
+	custom_materials = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 3)
 	//which type of sack to create when shovled.
 	var/sack_type = /obj/item/soil_sack
 

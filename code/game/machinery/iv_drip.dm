@@ -24,6 +24,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 	/// Information and effects about where the IV drip is attached to
 	var/datum/iv_drip_attachment/attachment
