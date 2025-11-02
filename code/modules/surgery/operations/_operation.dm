@@ -1045,7 +1045,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/is_available(obj/item/organ/organ, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(organ.zone != body_zone)
+	if(deprecise_zone(organ.zone) != body_zone)
 		return FALSE
 	if(required_organ_flag && !(organ.organ_flags & required_organ_flag))
 		return FALSE
