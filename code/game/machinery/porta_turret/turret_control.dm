@@ -1,40 +1,27 @@
-#define STATUS_STUN "Non-lethal"
-#define STATUS_KILL "Lethal"
-
 /obj/machinery/turretid
 	name = "turret control panel"
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control"
+	base_icon_state = "control"
 	density = FALSE
 	req_access = list(ACCESS_AI_UPLOAD)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	interaction_flags_click = ALLOW_SILICON_REACH
-
-	/// Are the turrets enabled and will shoot at targets?
+	/// Variable dictating if linked turrets are active and will shoot targets
 	var/enabled = TRUE
-	/// The status of the lethal/non-lethal equipment
-	var/status = STATUS_STUN
-	/// Should linked turrets shoot cyborgs?
-	var/shoot_cyborgs = FALSE
-
-	/// An area where linked turrets are located
-	var/area/control_area = null
-	/// Are the controls locked?
+	/// Variable dictating if linked turrets will shoot lethal projectiles
+	var/lethal = FALSE
+	/// Variable dictating if the panel is locked, preventing changes to turret settings
 	var/locked = TRUE
-	/// Is this blocked for the AI?
-	var/ai_block = FALSE
-
-	/// Weakrefs to controlled turrets
+	/// An area in which linked turrets are located, it can be an area name, path or nothing
+	var/control_area = null
+	/// AI is unable to use this machine if set to TRUE
+	var/ailock = FALSE
+	/// Variable dictating if linked turrets will shoot cyborgs
+	var/shoot_cyborgs = FALSE
+	/// List of weakrefs to all turrets
 	var/list/turrets = list()
-
-/obj/machinery/turretid/Initialize(mapload, ndir = 0, built = 0)
-	. = ..()
-	if(built)
-		locked = FALSE
-	power_change()
-	find_and_hang_on_wall()
-	update_overlays()
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
@@ -43,7 +30,10 @@
 /obj/machinery/turretid/Initialize(mapload)
 	. = ..()
 	if(!mapload)
-		return
+		locked = FALSE
+	else
+		find_and_hang_on_wall()
+		power_change()
 
 	var/area/control_area_instance
 
@@ -51,6 +41,7 @@
 		control_area_instance = get_area_instance_from_text(control_area)
 		if(!control_area_instance)
 			log_mapping("Bad control_area path for [src] at [AREACOORD(src)]: [control_area]")
+
 	if(!control_area_instance)
 		control_area_instance = get_area(src)
 
@@ -58,29 +49,28 @@
 		turrets |= WEAKREF(T)
 
 /obj/machinery/turretid/update_overlays()
-  . = ..()
-  overlays.Cut()
+	. = ..()
+	overlays.Cut()
 
-  if(machine_stat & NOPOWER)
-    if(enabled)
-      add_overlay(mutable_appearance(icon, "button_left"))
-      if(status == STATUS_KILL)
-        add_overlay(mutable_appearance(icon, "button_right"))
-    return
+	if(machine_stat & NOPOWER)
+		if(enabled)
+			add_overlay(mutable_appearance(icon, "button_left"))
+			if(lethal)
+				add_overlay(mutable_appearance(icon, "button_right"))
+		return
 
-  if(enabled)
-    add_overlay(mutable_appearance(icon, "button_left"))
-    add_overlay(emissive_appearance(icon, "emissive_button_left", src))
-    switch(status)
-      if(STATUS_STUN)
-        add_overlay(mutable_appearance(icon, "stun"))
-      if(STATUS_KILL)
-        add_overlay(mutable_appearance(icon, "kill"))
-        add_overlay(mutable_appearance(icon, "button_right"))
-        add_overlay(emissive_appearance(icon, "emissive_button_right", src))
-  else
-    add_overlay(mutable_appearance(icon, "standby"))
-  add_overlay(emissive_appearance(icon, "emissive_screen", src))
+	if(enabled)
+		add_overlay(mutable_appearance(icon, "button_left"))
+		add_overlay(emissive_appearance(icon, "emissive_button_left", src))
+		if(lethal)
+			add_overlay(mutable_appearance(icon, "kill"))
+			add_overlay(mutable_appearance(icon, "button_right"))
+			add_overlay(emissive_appearance(icon, "emissive_button_right", src))
+		else
+			add_overlay(mutable_appearance(icon, "stun"))
+	else
+		add_overlay(mutable_appearance(icon, "standby"))
+	add_overlay(emissive_appearance(icon, "emissive_screen", src))
 
 /obj/machinery/turretid/power_change()
   . = ..()
@@ -90,7 +80,7 @@
 	. += ..()
 	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
-		      [span_notice("Alt-click [src] to set turrets to [ status == STATUS_KILL ? "stun" : "kill"].")]"}
+					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
 
 /obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = NONE
@@ -116,11 +106,11 @@
 
 	if (check_access(id))
 		if(obj_flags & EMAGGED)
-			to_chat(user, span_warning("[src] is unresponsive!"))
+			to_chat(user, span_warning("The turret control is unresponsive!"))
 			return
 
 		locked = !locked
-		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the panel."))
+		to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the panel."))
 	else
 		to_chat(user, span_alert("Access denied."))
 
@@ -133,7 +123,7 @@
 	return TRUE
 
 /obj/machinery/turretid/attack_ai(mob/user)
-	if(!ai_block || isAdminGhostAI(user))
+	if(!ailock || isAdminGhostAI(user))
 		return attack_hand(user)
 	else
 		to_chat(user, span_warning("There seems to be a firewall preventing you from accessing this device!"))
@@ -149,7 +139,7 @@
 	data["locked"] = locked
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["enabled"] = enabled
-	data["lethal"] = (status == STATUS_KILL)
+	data["lethal"] = lethal
 	data["shootCyborgs"] = shoot_cyborgs
 	return data
 
@@ -180,9 +170,9 @@
 			return TRUE
 
 /obj/machinery/turretid/proc/toggle_lethal(mob/user)
-	status = (status == STATUS_STUN) ? STATUS_KILL : STATUS_STUN
+	lethal = !lethal
 	if (user)
-		var/enabled_or_disabled = (status == STATUS_KILL) ? "disabled" : "enabled"
+		var/enabled_or_disabled = lethal ? "disabled" : "enabled"
 		balloon_alert(user, "safeties [enabled_or_disabled]")
 		add_hiddenprint(user)
 		log_combat(user, src, "[enabled_or_disabled] lethals on")
@@ -200,10 +190,10 @@
 /obj/machinery/turretid/proc/shoot_silicons(mob/user)
 	shoot_cyborgs = !shoot_cyborgs
 	if (user)
-		var/status_text = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
-		balloon_alert(user, LOWER_TEXT(status_text))
+		var/status = shoot_cyborgs ? "Shooting Borgs" : "Not Shooting Borgs"
+		balloon_alert(user, LOWER_TEXT(status))
 		add_hiddenprint(user)
-		log_combat(user, src, "[status_text]")
+		log_combat(user, src, "[status]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
@@ -212,8 +202,18 @@
 		if(!turret)
 			turrets -= turret_ref
 			continue
-		turret.setState(enabled, (status == STATUS_KILL), shoot_cyborgs)
+		turret.setState(enabled, lethal, shoot_cyborgs)
 	update_appearance()
+
+/obj/machinery/turretid/update_icon_state()
+	if(machine_stat & NOPOWER)
+		icon_state = "[base_icon_state]_off"
+		return ..()
+	if (enabled)
+		icon_state = "[base_icon_state]_[lethal ? "kill" : "stun"]"
+		return ..()
+	icon_state = "[base_icon_state]_standby"
+	return ..()
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
@@ -222,4 +222,3 @@
 	icon_state = "control_frame"
 	result_path = /obj/machinery/turretid
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT)
-	pixel_shift = 22
