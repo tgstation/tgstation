@@ -476,6 +476,45 @@
 		vents += temp_vent
 	return vents
 
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms
+	name = "Blood Worms"
+	config_tag = "Blood Worms"
+	midround_type = HEAVY_MIDROUND
+	false_alarm_able = TRUE
+	ruleset_flags = RULESET_INVADER
+	weight = list(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 1,
+		DYNAMIC_TIER_MEDIUMHIGH = 2,
+		DYNAMIC_TIER_HIGH = 3,
+	)
+	min_pop = 20 // Blood worms are limited by resources, so low pop means they have a harder time getting their tail in the door.
+	min_antag_cap = 1
+	max_antag_cap = 2
+	signup_atom_appearance = /mob/living/basic/blood_worm/juvenile
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/can_be_selected()
+	// Since blood worms ignore all atmos conditions except for heat, we're just praying that the spot isn't on fire or boiling, LOL.
+	// Somebody should expand find_maintenance_spawn() to take into account the needs of a specific mob to fix this.
+	// I already fixed all our status effects in the process of making this, I'm tired of refactoring shit ;-;
+	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = FALSE, require_darkness = TRUE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/execute()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(announce_worms)), rand(450, 750) SECONDS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/create_ruleset_body()
+	return new /mob/living/basic/blood_worm/hatchling(find_maintenance_spawn(atmos_sensitive = FALSE, require_darkness = TRUE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/assign_role(datum/mind/candidate)
+	candidate.add_antag_datum(/datum/antagonist/blood_worm)
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/proc/announce_worms()
+	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/blood_worms/false_alarm()
+	announce_worms()
+
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare
 	name = "Nightmare"
 	config_tag = "Nightmare"

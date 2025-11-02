@@ -1,8 +1,13 @@
 /mob/living/basic/blood_worm
 	icon = 'icons/mob/nonhuman-player/blood_worm.dmi'
 
+	faction = list(FACTION_BLOOD_WORM)
+
+	initial_language_holder = /datum/language_holder/blood_worm
+
 	mob_biotypes = MOB_ORGANIC | MOB_BUG
 	basic_mob_flags = FLAMMABLE_MOB
+	status_flags = CANPUSH
 
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
 
@@ -249,6 +254,8 @@
 	remove_actions(src, host_actions)
 	grant_actions(host, host_actions)
 
+	host.grant_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
+
 /mob/living/basic/blood_worm/proc/possess_worm()
 	if (!host || !is_possessing_host)
 		return
@@ -259,6 +266,8 @@
 
 	remove_actions(host, host_actions)
 	grant_actions(src, host_actions)
+
+	host.remove_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
 
 /mob/living/basic/blood_worm/proc/on_host_qdel(datum/source, force)
 	SIGNAL_HANDLER

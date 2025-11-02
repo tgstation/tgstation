@@ -268,6 +268,11 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/blood_worm
+	description = "KILL, CONSUME, MULTIPLY, CONQUER."
+	mood_change = 12 // They have a purpose and they're fulfilling it... perhaps that's not such a bad life after all?
+	hidden = TRUE
+
 /datum/mood_event/family_heirloom
 	description = "My family heirloom is safe with me."
 	mood_change = 1

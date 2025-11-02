@@ -281,7 +281,9 @@
 
 		// The crew now has 4 new problems to deal with.
 		var/mob/living/basic/blood_worm/hatchling/new_hatchling = new(get_turf(cocoon))
-		new_hatchling.PossessByPlayer(candidate.key)
+		var/datum/mind/fresh_mind = new(candidate.key)
+		fresh_mind.transfer_to(new_hatchling, force_key_move = TRUE)
+		fresh_mind.add_antag_datum(/datum/antagonist/blood_worm)
 
 	return ..()
 
