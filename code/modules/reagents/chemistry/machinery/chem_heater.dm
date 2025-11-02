@@ -322,6 +322,12 @@
 			//Eject doesn't turn it off, so you can preheat for beaker swapping
 			return replace_beaker(ui.user)
 
+		if("insert")
+			var/obj/item/reagent_containers/container = usr.get_active_held_item()
+			if(container)
+				item_interaction(user = usr, held_item = container)
+			return TRUE
+
 		if("acidBuffer")
 			var/target = params["target"]
 			if(!target)

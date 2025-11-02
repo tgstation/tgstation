@@ -217,23 +217,35 @@ export const ChemDispenser = (props) => {
         </Section>
         <Section
           title="Beaker"
-          buttons={beakerTransferAmounts.map((amount) => (
-            <Button
-              key={amount}
-              icon="minus"
-              disabled={recording}
-              onClick={() => act('remove', { amount })}
-            >
-              {amount}
-            </Button>
-          ))}
+          buttons={
+            beaker ? (
+              beakerTransferAmounts.map((amount) => (
+                <Button
+                  key={amount}
+                  icon="minus"
+                  disabled={recording}
+                  onClick={() => act('remove', { amount })}
+                >
+                  {amount}
+                </Button>
+              ))
+            ) : (
+              <Button icon="eject" onClick={() => act('insert')}>
+                Insert
+              </Button>
+            )
+          }
         >
-          <BeakerDisplay
-            beaker={beaker}
-            title_label={recording && 'Virtual beaker'}
-            replace_contents={recordedContents}
-            showpH={data.showpH}
-          />
+          {beaker ? (
+            <BeakerDisplay
+              beaker={beaker}
+              title_label={recording && 'Virtual beaker'}
+              replace_contents={recordedContents}
+              showpH={data.showpH}
+            />
+          ) : (
+            <Box color="label">No beaker loaded.</Box>
+          )}
         </Section>
       </Window.Content>
     </Window>

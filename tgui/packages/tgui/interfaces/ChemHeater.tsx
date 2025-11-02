@@ -355,7 +355,11 @@ export const ChemHeater = (props) => {
             highDangerDisplay={upgradeLevel >= 2}
           />
         )}
-        <BeakerSectionDisplay beaker={beaker} showpH={false} />
+        <BeakerSectionDisplay
+          beaker={beaker}
+          showpH={false}
+          showInsertButton={true}
+        />
       </Window.Content>
     </Window>
   );
