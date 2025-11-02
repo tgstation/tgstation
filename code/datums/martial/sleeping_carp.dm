@@ -82,7 +82,7 @@
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
 		span_danger("[attacker] violently twists [defender]'s [affecting]!"),
-		span_userdanger("[attacker] violently twists you [affecting]!"),
+		span_userdanger("[attacker] violently twists your [affecting]!"),
 		span_hear("You hear a sickening sound of bone snapping!"),
 		null,
 		attacker,
@@ -134,7 +134,7 @@
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	defender.visible_message(
-		span_warning("[attacker] violent slams [attacker.p_their()] knee into [defender]!"),
+		span_warning("[attacker] violently slams [attacker.p_their()] knee into [defender]!"),
 		span_userdanger("You slam your knee straight into [defender]!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
