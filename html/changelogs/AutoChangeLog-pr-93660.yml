@@ -1,5 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - bugfix: "Bioscramble effects no longer swap body parts of that can't lose limbs"
-  - bugfix: "Abductor heal gland no longer ejects limbs of carbons that can't lose limbs"
