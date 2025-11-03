@@ -12284,7 +12284,7 @@
 	id = "xenobio8";
 	name = "Xenobio Pen 8 Blast Door"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "eln" = (
@@ -20498,7 +20498,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "hdI" = (
@@ -23347,7 +23347,7 @@
 "idA" = (
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "idL" = (
@@ -26646,7 +26646,7 @@
 	id = "xenobio1";
 	name = "Xenobio Pen 1 Blast Door"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "jfU" = (
@@ -35209,7 +35209,7 @@
 "mez" = (
 /obj/structure/cable,
 /obj/structure/sign/warning/electric_shock,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/cytology)
 "meJ" = (
@@ -36039,7 +36039,7 @@
 	name = "Test Chamber Blast Door"
 	},
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "mtO" = (
@@ -38724,10 +38724,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
-"nns" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/exit/departure_lounge)
 "nnt" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
@@ -51169,7 +51165,7 @@
 /area/station/maintenance/aft/lesser)
 "rzz" = (
 /obj/structure/sign/warning/cold_temp,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "rzJ" = (
@@ -99157,12 +99153,12 @@ lYc
 tew
 iUm
 gRb
-nns
+gRb
 iUm
 iUm
 iUm
 gRb
-nns
+gRb
 iUm
 giw
 aaa

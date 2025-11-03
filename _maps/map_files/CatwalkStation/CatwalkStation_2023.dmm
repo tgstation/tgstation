@@ -22470,10 +22470,6 @@
 "gtd" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"gti" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/tcommsat/server)
 "gtk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -25157,7 +25153,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/explab)
 "hhT" = (
@@ -25227,10 +25223,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"hja" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "hjG" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -25786,10 +25778,6 @@
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/station/solars/starboard/aft)
-"hso" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/security/checkpoint/supply)
 "hsx" = (
 /obj/effect/landmark/start/roboticist,
 /turf/open/floor/iron/white/textured_large,
@@ -41452,10 +41440,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"lJW" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/central)
 "lKb" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -57953,10 +57937,6 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
-"qsM" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/security/medical)
 "qsO" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/firecloset,
@@ -60752,7 +60732,7 @@
 	id = "qm_cargobay";
 	dir = 8
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "riR" = (
@@ -69032,10 +69012,6 @@
 	},
 /turf/open/openspace,
 /area/station/command/bridge)
-"tDn" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating/airless,
-/area/station/maintenance/port/aft)
 "tDv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/purple/line{
@@ -71574,10 +71550,6 @@
 "umH" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
-"umX" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/science/research)
 "ung" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -82332,7 +82304,7 @@
 /area/station/security/processing)
 "xkV" = (
 /obj/structure/cable,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/rd)
 "xkZ" = (
@@ -82963,10 +82935,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
-"xtf" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/station/command/heads_quarters/captain/private)
 "xtC" = (
 /obj/structure/chair{
 	dir = 4
@@ -118507,7 +118475,7 @@ lzk
 sAm
 wtz
 iXw
-xtf
+lll
 heR
 gmE
 czp
@@ -132897,7 +132865,7 @@ qKO
 pTP
 pTP
 pTP
-lJW
+pTP
 qKO
 qKO
 dvs
@@ -133672,7 +133640,7 @@ sON
 sON
 qKO
 lYr
-hja
+lYr
 lYr
 lYr
 lYr
@@ -171459,7 +171427,7 @@ rOq
 bKK
 bKK
 tlL
-qsM
+jhO
 muJ
 qFA
 xot
@@ -180765,7 +180733,7 @@ lIr
 lIr
 lIr
 iIu
-tDn
+vAe
 lIr
 lIr
 drI
@@ -186900,7 +186868,7 @@ rLA
 dTc
 vsK
 ibj
-umX
+lqg
 pLx
 bYz
 soU
@@ -192798,7 +192766,7 @@ avc
 avc
 avc
 acx
-hso
+iju
 igc
 lDj
 nWV
@@ -208183,7 +208151,7 @@ cxE
 mJa
 cxE
 hUs
-gti
+wtO
 daC
 xNV
 odW

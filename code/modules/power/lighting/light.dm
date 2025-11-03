@@ -119,7 +119,7 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_hang_on_atom(mark_for_late_init = TRUE)
 
 /obj/machinery/light/find_and_hang_on_atom()
 	if(break_if_moved)

@@ -48336,7 +48336,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/captain/private)
 "lTC" = (
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/service/library/artgallery)
 "lTG" = (

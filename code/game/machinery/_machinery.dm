@@ -209,6 +209,8 @@
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
+	find_and_hang_on_atom(late_init = TRUE)
+
 	power_change()
 	if(use_power == NO_POWER_USE)
 		return

@@ -70,8 +70,21 @@
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
 
-///Checks object direction and then verifies if there's a support atom. Finally.
-/obj/proc/find_and_hang_on_atom()
+/**
+ * Finds an support atom to hang this object on. If you need to mount the object on Late Initialize
+ * then pass TRUE inside Initialize() but not in LateInitialize().
+ * The flag is only applied if no support atom could be found during Initialize() as a last resort
+ *
+ * Arguments
+ * * mark_for_late_init - if TRUE will apply the MOUNT_ON_LATE_INITIALIZE which gets cleared on every call
+ * * late_init - should only be passed as TRUE from inside LateInitialize()
+*/
+/obj/proc/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+	if(obj_flags & MOUNT_ON_LATE_INITIALIZE)
+		obj_flags &= ~MOUNT_ON_LATE_INITIALIZE
+	else if(late_init)
+		return TRUE
+
 	var/area/location = get_area(src)
 	if(!isarea(location) || istype(location, /area/shuttle))
 		return FALSE
@@ -105,4 +118,6 @@
 	if(msg)
 		stack_trace(msg)
 
+	if(mark_for_late_init)
+		obj_flags |= MOUNT_ON_LATE_INITIALIZE
 	return FALSE

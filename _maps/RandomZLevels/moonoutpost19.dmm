@@ -3847,10 +3847,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/awaymission/moonoutpost19/arrivals)
-"yT" = (
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
 "yV" = (
 /turf/open/misc/asteroid/moon,
 /area/awaymission/moonoutpost19/main)
@@ -35449,7 +35445,7 @@ hI
 My
 My
 My
-yT
+iM
 mJ
 iM
 My
