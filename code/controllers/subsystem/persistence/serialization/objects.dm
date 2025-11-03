@@ -916,8 +916,6 @@
 	. += NAMEOF(src, stored_lock_code)
 	return .
 
-
-
 /obj/item/wallframe/secure_safe/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, stored_lock_code)
