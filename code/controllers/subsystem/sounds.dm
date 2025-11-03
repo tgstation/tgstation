@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(sounds)
 	VAR_PRIVATE/list/precache_errors = list()
 
 	// Comments from https://github.com/DaedalusDock/daedalusdock We love Francinum.
-	var/list/byond_sound_formats = list(
+	var/static/list/byond_sound_formats = list(
 		"mid" = TRUE, //Midi, 8.3 File Name
 		"midi" = TRUE, //Midi, Long File Name
 		"mod" = TRUE, //Module, Original Amiga Tracker format
@@ -53,13 +53,14 @@ SUBSYSTEM_DEF(sounds)
 	)
 
 	/// File types we can sniff the duration from using rustg.
-	var/list/safe_formats = list(
+	var/static/list/safe_formats = list(
 		"ogg" = TRUE,
 		"mp3" = TRUE
 	)
 
+	// Currently set to private as I would prefer you use byond_sound_formats but you can unprivate it if you have a valid use!
 	// Put more common extensions first to speed this up a bit (So only ogg and mp3 lol.)
-	var/list/byond_sound_extensions = list(
+	VAR_PRIVATE/static/list/byond_sound_extensions = list(
 		".ogg",
 		".mp3",
 		".mid",
