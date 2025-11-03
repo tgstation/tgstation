@@ -117,7 +117,7 @@
 
 /datum/techweb_node/mod_engi_adv
 	id = TECHWEB_NODE_MOD_ENGI_ADV
-	display_name = "Advanced Engineering Modular Suit"
+	display_name = "Advanced Engineering Modular Suits"
 	description = "Advanced Engineering suits, for advanced powered engineers."
 	prereq_ids = list(TECHWEB_NODE_MOD_ENGI)
 	design_ids = list(

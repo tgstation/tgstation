@@ -51,6 +51,8 @@
 #define MODLINK_FREQ_CENTCOM "CC"
 
 //Default text for different messages for the user.
+#define GLASSES_UNSEAL_MESSAGE "moves away from your eyes"
+#define GLASSES_SEAL_MESSAGE "settle onto your eyes"
 #define HELMET_UNSEAL_MESSAGE "hisses open"
 #define HELMET_SEAL_MESSAGE "hisses closed"
 #define CHESTPLATE_UNSEAL_MESSAGE "releases your chest"
