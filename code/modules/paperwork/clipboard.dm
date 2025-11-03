@@ -1,3 +1,4 @@
+// Clipboard skins
 /datum/atom_skin/clipboard
 	change_inhand_icon_state = TRUE
 

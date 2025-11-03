@@ -177,6 +177,7 @@
 	time = 3 SECONDS
 	category = CAT_TOOLS
 
+// Skins for captain's fountain pen
 /datum/atom_skin/cap_pen
 	new_desc = "It's an expensive %NEW_SKIN% fountain pen. The nib is quite sharp."
 

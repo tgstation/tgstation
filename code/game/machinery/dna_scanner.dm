@@ -159,6 +159,7 @@
 	SIGNAL_HANDLER
 	set_linked_console(null)
 
+// Disk skins
 /datum/atom_skin/dna_disk
 
 /datum/atom_skin/dna_disk/red
@@ -204,7 +205,7 @@
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, TRUE)
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, infinite = TRUE)
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
 	if(length(genetic_makeup_buffer))

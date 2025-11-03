@@ -177,6 +177,7 @@
 	name = "Pre-Approved Cyborg Candidate dogtag"
 	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
 
+// Pride pin skins
 /datum/atom_skin/pride_pin
 
 /datum/atom_skin/pride_pin/gay
@@ -219,7 +220,7 @@
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/pride_pin, TRUE)
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/pride_pin, infinite = TRUE)
 
 /obj/item/clothing/accessory/deaf_pin
 	name = "deaf personnel pin"

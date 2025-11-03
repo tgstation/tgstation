@@ -111,6 +111,7 @@
 	base_icon_state = "c38"
 	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 
+// 38 special skins
 /datum/atom_skin/det_revolver
 	change_base_icon_state = TRUE
 

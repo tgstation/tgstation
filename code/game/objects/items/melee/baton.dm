@@ -764,6 +764,7 @@
 /obj/item/melee/baton/security/loaded/hos
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/super
 
+// Stunsword Skins
 /datum/atom_skin/stunsword
 	change_inhand_icon_state = TRUE
 	change_base_icon_state = TRUE

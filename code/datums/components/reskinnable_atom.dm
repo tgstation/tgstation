@@ -1,6 +1,22 @@
 /// Global list of available atom skins
 GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/datum/atom_skin))
 
+/// Sets the atom's varname to newvalue if newvalue is not null, otherwise resets it to its initial value if resetcondition is true
+#define APPLY_VAR_OR_RESET_INITIAL(atom, varname, newvalue, resetcondition) \
+	if(newvalue) {atom.##varname = (##newvalue) } else if(resetcondition) { atom.##varname = initial(atom.##varname) }
+
+/// Sets the atom's varname to newvalue if newvalue is not null, otherwise sets it to resetvalue if resetcondition is true
+#define APPLY_VAR_OR_RESET_TO(atom, varname, newvalue, resetcondition, resetvalue) \
+	if(newvalue) {atom.##varname = (##newvalue) } else if(resetcondition) { atom.##varname = (resetvalue) }
+
+/// Resets the atom's varname to its initial value if oldvalue is not null
+#define RESET_INITIAL_IF_SET(atom, varname, oldvalue) \
+	if(oldvalue) { atom.##varname = initial(atom.##varname) }
+
+/// Sets the atom's varname to resetvalue if oldvalue is not null
+#define RESET_TO_IF_SET(atom, varname, oldvalue, resetvalue) \
+	if(oldvalue) { atom.##varname = (resetvalue) }
+
 /**
  * ### Atom skin singleton datum
  *
@@ -9,56 +25,62 @@ GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/
 /datum/atom_skin
 	abstract_type = /datum/atom_skin
 
-	/// Name shown in the radial menu
+	/// Required, name shown in the radial menu
 	var/preview_name
 
 	/// If true, changing the reskin also changes the base_icon_state of the atom
-	var/change_base_icon_state
+	var/change_base_icon_state = FALSE
 	/// If true, changing the reskin also changes the inhand_icon_state of the atom
-	var/change_inhand_icon_state
+	var/change_inhand_icon_state = FALSE
+	/// If true, unset vars are reset to their original values when applying this skin
+	var/reset_missing = TRUE
 
 	/// Optional, name to change the atom to when applied
 	var/new_name
-
 	/// Optional, description to change the atom to when applied
 	/// You can use %NEW_SKIN% in the description to insert the preview_name of the new skin
 	var/new_desc
-
 	/// Optional, icon to change the atom to when applied
 	var/new_icon
-
 	/// Optional, icon_state to change the atom to when applied
 	var/new_icon_state
 
-/datum/atom_skin/proc/apply(atom/apply_to, reset_missing = FALSE)
-	if(new_name)
-		apply_to.name = new_name
-	else if(reset_missing)
-		apply_to.name = initial(apply_to.name)
-	if(new_desc)
-		apply_to.desc = replacetext(new_desc, "%NEW_SKIN%", preview_name)
-	else if(reset_missing)
-		apply_to.desc = initial(apply_to.desc)
-	if(new_icon)
-		apply_to.icon = new_icon
-	else if(reset_missing)
-		apply_to.icon = initial(apply_to.icon)
-	if(new_icon_state)
-		apply_to.icon_state = new_icon_state
-	else if(reset_missing)
-		apply_to.icon_state = initial(apply_to.post_init_icon_state) || initial(apply_to.icon_state)
-
+/**
+ * Applies all relevant skin changes to the given atom
+ * Can be overridden to add additional behavior, such as registering signals or altering other vars.
+ *
+ * * apply_to: The atom to apply the skin to
+ */
+/datum/atom_skin/proc/apply(atom/apply_to)
+	SHOULD_CALL_PARENT(TRUE)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, name, new_name, reset_missing)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, desc, replacetext(new_desc, "%NEW_SKIN%", preview_name), reset_missing)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, icon, new_icon, reset_missing)
+	APPLY_VAR_OR_RESET_TO(apply_to, icon_state, new_icon_state, reset_missing, initial(apply_to.post_init_icon_state) || initial(apply_to.icon_state))
 	if(change_base_icon_state)
-		apply_to.base_icon_state = new_icon_state
-	else if(reset_missing)
-		apply_to.base_icon_state = initial(apply_to.base_icon_state)
-
-	if(isitem(apply_to))
+		APPLY_VAR_OR_RESET_INITIAL(apply_to, base_icon_state, new_icon_state, reset_missing)
+	if(change_inhand_icon_state && isitem(apply_to))
 		var/obj/item/item_apply_to = apply_to
-		if(change_inhand_icon_state)
-			item_apply_to.inhand_icon_state = new_icon_state
-		else if(reset_missing)
-			item_apply_to.inhand_icon_state = initial(item_apply_to.inhand_icon_state)
+		APPLY_VAR_OR_RESET_INITIAL(item_apply_to, inhand_icon_state, new_icon_state, reset_missing)
+
+/**
+ * Resets all changes this skin would have made to the given atom
+ * Does not verify that the skin was actually applied to the atom beforehand.
+ * Can be overridden to add additional behavior, such as unregistering signals or altering other vars.
+ *
+ * * clear_from: The atom to clear the skin from
+ */
+/datum/atom_skin/proc/clear_skin(atom/clear_from)
+	SHOULD_CALL_PARENT(TRUE)
+	RESET_INITIAL_IF_SET(clear_from, name, new_name)
+	RESET_INITIAL_IF_SET(clear_from, desc, new_desc)
+	RESET_INITIAL_IF_SET(clear_from, icon, new_icon)
+	RESET_TO_IF_SET(clear_from, icon_state, new_icon_state, initial(clear_from.post_init_icon_state) || initial(clear_from.icon_state))
+	if(change_base_icon_state)
+		RESET_INITIAL_IF_SET(clear_from, base_icon_state, new_icon_state)
+	if(change_inhand_icon_state && isitem(clear_from))
+		var/obj/item/item_clear_from = clear_from
+		RESET_INITIAL_IF_SET(item_clear_from, inhand_icon_state, new_icon_state)
 
 /**
  * ### Reskinnable atoms
@@ -66,19 +88,27 @@ GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/
  * Simple component which lets an atom be alt-clicked to open a radial menu to choose a new skin to apply.
  */
 /datum/component/reskinable_item
-	/// Base reskin type to pull options from - all subtypes are valid options
+	dupe_mode = COMPONENT_DUPE_SELECTIVE
+	/// Base reskin type to pull options from - all subtypes except those blacklisted are valid options
 	VAR_PRIVATE/base_reskin_type
 	/// If TRUE, the reskin option is infinite-use. If FALSE, the component is deleted on use (so you're stuck with that skin).
 	VAR_PRIVATE/infinite_reskin = FALSE
+	/// List of subtypes of /datum/atom_skin that are not allowed to be used for this item
+	VAR_PRIVATE/list/blacklisted_subtypes
+
 	/// Currently applied skin preview_name
 	VAR_PRIVATE/current_skin
 
-/datum/component/reskinable_item/Initialize(base_reskin_type, infinite = FALSE)
+/datum/component/reskinable_item/Initialize(base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes = list())
 	if(!isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.base_reskin_type = base_reskin_type
 	src.infinite_reskin = infinite
+	src.blacklisted_subtypes = blacklisted_subtypes
+
+	if(initial_skin)
+		set_skin_by_name(initial_skin)
 
 	var/atom/atom_parent = parent
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -92,6 +122,44 @@ GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/
 	UnregisterSignal(parent, COMSIG_CLICK_ALT)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE_TAGS)
 	UnregisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM)
+
+/datum/component/reskinable_item/CheckDupeComponent(datum/component/comp, base_reskin_type, infinite = FALSE, initial_skin, list/blacklisted_subtypes = list())
+	if(src.base_reskin_type != base_reskin_type)
+		return FALSE // new comp - though the alt-click behavior will collide
+
+	src.infinite_reskin = infinite
+	src.blacklisted_subtypes = blacklisted_subtypes
+
+	set_skin_by_name(initial_skin)
+	return TRUE // same comp
+
+/datum/component/reskinable_item/proc/get_skins_by_name()
+	var/list/reskin_options = list()
+	for(var/datum/atom_skin/reskin_option as anything in valid_subtypesof(base_reskin_type) - blacklisted_subtypes)
+		reskin_options[reskin_option::preview_name] = reskin_option
+
+	return reskin_options
+
+/datum/component/reskinable_item/proc/set_skin_by_name(input_name)
+	var/list/reskin_options = get_skins_by_name()
+	if(current_skin)
+		var/datum/atom_skin/previous_skin = GLOB.atom_skins[reskin_options[current_skin]]
+		previous_skin.clear_skin(parent)
+
+	if(input_name)
+		var/datum/atom_skin/reskin_to_apply = GLOB.atom_skins[reskin_options[input_name]]
+		reskin_to_apply.apply(parent)
+
+	current_skin = input_name
+
+	var/atom/atom_parent = parent
+	atom_parent.update_appearance()
+
+	if(isitem(parent))
+		var/obj/item/item_parent = parent
+		item_parent.update_slot_icon()
+
+	SEND_SIGNAL(parent, COMSIG_OBJ_RESKIN, input_name)
 
 /datum/component/reskinable_item/proc/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
@@ -121,34 +189,21 @@ GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/
  * * user The mob choosing a reskin option
  */
 /datum/component/reskinable_item/proc/reskin_obj(mob/user)
-	var/list/items = list()
-	var/list/reskin_datums = list()
-	for(var/reskin_option in subtypesof(base_reskin_type))
-		var/datum/atom_skin/reskin = GLOB.atom_skins[reskin_option]
+	var/atom/atom_parent = parent
 
-		items += list("[reskin.preview_name]" = image(icon = reskin.new_icon, icon_state = reskin.new_icon_state))
-		reskin_datums[reskin.preview_name] = reskin
+	var/list/items = list()
+	for(var/reskin_name, reskin_typepath in get_skins_by_name())
+		var/datum/atom_skin/reskin = GLOB.atom_skins[reskin_typepath]
+		items[reskin_name] = image(icon = reskin.new_icon || atom_parent.icon, icon_state = reskin.new_icon_state || atom_parent.icon_state)
 
 	sort_list(items)
 
 	var/pick = show_radial_menu(user, parent, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user), radius = 38, require_near = TRUE)
-	if(!pick || !reskin_datums[pick])
+	if(!pick || !items[pick])
 		return
 
-	var/datum/atom_skin/reskin_to_apply = reskin_datums[pick]
-	reskin_to_apply.apply(parent, !!current_skin)
-
-	current_skin = pick
-
+	set_skin_by_name(pick)
 	to_chat(user, span_info("[parent] is now skinned as '[pick].'"))
-	SEND_SIGNAL(parent, COMSIG_OBJ_RESKIN, user, pick)
-
-	var/atom/atom_parent = parent
-	atom_parent.update_appearance()
-
-	if(isitem(parent))
-		var/obj/item/item_parent = parent
-		item_parent.update_slot_icon()
 
 	if(!infinite_reskin)
 		qdel(src)

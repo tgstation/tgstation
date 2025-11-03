@@ -1,3 +1,4 @@
+// Mask skins
 /datum/atom_skin/joy_mask
 	change_base_icon_state = TRUE
 
@@ -31,7 +32,7 @@
 
 /obj/item/clothing/mask/joy/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/joy_mask/base, TRUE)
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/joy_mask/base, infinite = TRUE)
 
 /obj/item/clothing/mask/mummy
 	name = "mummy mask"

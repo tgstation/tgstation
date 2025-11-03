@@ -285,7 +285,7 @@
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
 
-
+// Double barrel shotgun skins
 /datum/atom_skin/bar_shotgun
 	change_base_icon_state = TRUE
 

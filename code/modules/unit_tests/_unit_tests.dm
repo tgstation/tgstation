@@ -262,6 +262,7 @@
 #include "reagent_transfer.dm"
 #include "required_map_items.dm"
 #include "resist.dm"
+#include "reskin_validation.dm"
 #include "reta_system.dm"
 #include "say.dm"
 #include "screenshot_airlocks.dm"

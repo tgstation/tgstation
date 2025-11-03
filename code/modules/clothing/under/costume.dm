@@ -271,6 +271,7 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
+// Mech suit skins
 /datum/atom_skin/mech_suit
 
 /datum/atom_skin/mech_suit/red

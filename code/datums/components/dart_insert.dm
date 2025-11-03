@@ -60,7 +60,7 @@
 	add_to_dart(dart, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/dart_insert/proc/on_reskin(datum/source, mob/user, skin)
+/datum/component/dart_insert/proc/on_reskin(datum/source, skin)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(parent, COMSIG_DART_INSERT_PARENT_RESKINNED, skin)
 
