@@ -110,6 +110,9 @@
 	set_ioned(FALSE)
 	laws = saved_laws
 	saved_laws = null
+	if(istype(loc, /obj/machinery/ai_law_rack))
+		var/obj/machinery/ai_law_rack/rack = loc
+		rack.update_lawset()
 	return ITEM_INTERACT_SUCCESS
 
 /// Updates the "ioned" stat of the module
