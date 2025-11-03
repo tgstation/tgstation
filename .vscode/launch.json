@@ -62,6 +62,14 @@
 		{
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamDaemon (absolute minimum)",
+			"preLaunchTask": "Build All (absolute minimum)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+		{
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamDaemon (testing)",
 			"preLaunchTask": "Build All (testing)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",

@@ -81,3 +81,41 @@
       accurate color.
   vinylspiders:
   - bugfix: animal AI no longer mistakes rocks for a valid breeding partner
+2025-11-03:
+  Aliceee2ch:
+  - bugfix: Reversed bear trap now correctly displays name of person who put it on
+      you.
+  Cirrial:
+  - admin: Made the buttons asking you for anonymity when you select/approve a Play
+      Internet Sound request actually do what they say, instead of the opposite.
+  Fghj240:
+  - bugfix: Scientist jumpsuits have minor bomb protection and less biohazard protection
+  - bugfix: Scientist winter jackets no longer have bomb protection
+  L0pz:
+  - rscadd: Vampire tongues are now vampire teeth.
+  - image: Vampire hearts and tongues have unique sprites. Also their one ability
+      icon too.
+  LT3:
+  - bugfix: Synthflesh feedback messages properly reflect the method of application
+  - bugfix: Synthflesh feedback messages won't spam the chat log
+  SmArtKar:
+  - bugfix: Fixed ``"Return Value of Proccall"`` breaking on list returns when an
+      admin calls a proc
+  mcbalaam:
+  - image: New sprites for turret control
+  necromanceranne:
+  - balance: Completely reworks Sleeping Carp, again.
+  - balance: The return of Stomach Knee (Kraken Wrack) and Wrist Wrench (Gnashing
+      Teeth). Time is a flat circle.
+  - balance: Sleeping Carp has better grabs (no instant aggro grabs)
+  - balance: Sleeping Carp integrates normal unarmed punch by not overriding your
+      normal punches.
+  - balance: Sleeping Carp's deflection weakens if you wear armored headwear and body
+      armor, or while carrying objects. However, by wearing martial arts (or carp)
+      themed outfits, you can improve your defenses instead, allowing you to not just
+      dodge bullets, but also incoming melee attacks.
+  - balance: Some objects are exempt, like staff weapons (such as mops or the monk's
+      staff), short blades (like knives and shortswords), club-like (baseball bats
+      and toolboxes), or thematic (like extendo hands and carp plushies)
+  - balance: You can also get these improvements by being a literal carp or being
+      a carp person.
