@@ -26,18 +26,29 @@
 	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
 	design_ids = list(
 		"modlink_scryer",
-		"mod_clamp",
 		"mod_tether",
 		"mod_welding",
-		"mod_safety",
-		"mod_mouthhole",
 		"mod_longfall",
 		"mod_thermal_regulator",
 		"mod_sign_radio",
-		"mod_mister_janitor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/mod_service
+	id = TECHWEB_NODE_MOD_SERVICE
+	display_name = "Civilian Modular Suit"
+	description = "Civilian MODsuits for dignified living."
+	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
+	design_ids = list(
+		"mod_clamp",
+		"mod_safety",
+		"mod_mouthhole",
+		"mod_mister_janitor",
+		"mod_plating_portable_suit"
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
+	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/mod_entertainment
 	id = TECHWEB_NODE_MOD_ENTERTAINMENT

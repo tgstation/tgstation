@@ -245,6 +245,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_deployed = 0
+	inbuilt_modules = list(/obj/item/mod/module/selfcleaner)
 	variants = list(
 		"psuit" = list(
 			/obj/item/clothing/glasses/mod = list(
