@@ -169,10 +169,10 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 ADMIN_VERB(mass_modify_traits, R_ADMIN, "Mass Modify Traits", "Adds or removes a trait from every mob.", ADMIN_CATEGORY_FUN)
 
 	var/choice = tgui_alert(user, "Add or Remove Trait?", "Mass Add/Remove Trait", list("Add", "Remove"))
-	if(!choice)
+	if(isnull(choice))
 		return
 	var/is_add = (choice == "Add")
-	var/lower_choice = lowertext(choice)
+	var/lower_choice = LOWER_TEXT(choice)
 
 	// Build list of valid traits that can be applied to mobs
 	var/list/available_traits = list()
