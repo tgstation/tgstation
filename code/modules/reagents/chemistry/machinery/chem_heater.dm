@@ -160,12 +160,12 @@
 
 	if(!QDELETED(new_beaker))
 		if(!user.transferItemToLoc(new_beaker, src))
-			update_appearance(UPDATE_OVERLAYS)
+			update_appearance()
 			return FALSE
 		beaker = new_beaker
 		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, PROC_REF(on_reaction_step))
 
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 	return TRUE
 
