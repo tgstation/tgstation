@@ -30,8 +30,11 @@
 
 /obj/structure/light_construct/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		find_and_hang_on_atom()
+	if(mapload && !find_and_hang_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/light_construct/LateInitialize()
+	find_and_hang_on_atom(late_init = TRUE)
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
