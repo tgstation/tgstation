@@ -207,6 +207,7 @@
 #include "code\__DEFINES\regex.dm"
 #include "code\__DEFINES\religion.dm"
 #include "code\__DEFINES\research.dm"
+#include "code\__DEFINES\reskin.dm"
 #include "code\__DEFINES\resonator.dm"
 #include "code\__DEFINES\revolution.dm"
 #include "code\__DEFINES\robots.dm"
