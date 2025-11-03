@@ -368,21 +368,14 @@
 	hitsound = null
 	damage = 0
 	damage_type = STAMINA
-	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
-
-/obj/projectile/beam/lasertag/on_hit(atom/target, blocked = 0, pierce_hit)
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/M = target
-		if(istype(M.wear_suit))
-			if(M.wear_suit.type in suit_types)
-				M.adjustStaminaLoss(34)
+	var/lasertag_team = LASERTAG_TEAM_NEUTRAL
+	var/lasertag_damage = 34
 
 /obj/projectile/beam/lasertag/redtag
 	icon_state = "laser"
-	suit_types = list(/obj/item/clothing/suit/bluetag)
+	lasertag_team = LASERTAG_TEAM_RED
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = COLOR_SOFT_RED
 	tracer_type = /obj/effect/projectile/tracer/laser
@@ -395,7 +388,7 @@
 
 /obj/projectile/beam/lasertag/bluetag
 	icon_state = "bluelaser"
-	suit_types = list(/obj/item/clothing/suit/redtag)
+	lasertag_team = LASERTAG_TEAM_BLUE
 	tracer_type = /obj/effect/projectile/tracer/laser/blue
 	muzzle_type = /obj/effect/projectile/muzzle/laser/blue
 	impact_type = /obj/effect/projectile/impact/laser/blue
