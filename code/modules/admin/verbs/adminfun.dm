@@ -235,9 +235,8 @@ ADMIN_VERB(mass_modify_traits, R_ADMIN, "Mass Modify Traits", "Adds or removes a
 				applied_successfully = TRUE
 
 	if(applied_successfully)
-		var/msg_string = "[key_name_admin(user)] mass [lowertext(add_or_remove)][add_or_remove == "Add" ? "ed" : "d" [GLOB.admin_trait_name_map[chosen_trait] || chosen_trait] \
+		var/msg_string = "[key_name_admin(user)] mass [lowertext(add_or_remove)][add_or_remove == "Add" ? "ed" : "d"] [GLOB.admin_trait_name_map[chosen_trait] || chosen_trait] \
 			[add_or_remove == "Add" ? "to" : "from"] every [cliented_only ? "cliented" : ""] mob."
-
 		message_admins(msg_string)
 		log_admin(msg_string )
 
