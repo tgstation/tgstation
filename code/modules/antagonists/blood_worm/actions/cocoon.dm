@@ -145,7 +145,10 @@
 	if (!QDELETED(worm))
 		worm.forceMove(get_turf(cocoon))
 
-	QDEL_NULL(cocoon)
+	if (!QDELETED(cocoon))
+		qdel(cocoon)
+
+	cocoon = null
 
 	if (timer_id)
 		deltimer(timer_id)
@@ -203,6 +206,12 @@
 
 	total_blood_required = 1000
 
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/Activate(atom/target)
+	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become a juvenile, gaining stat increases and the ability to spit corrosive blood, but losing the ability to ventcrawl.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
+		return
+
+	return ..()
+
 /obj/structure/blood_worm_cocoon/hatchling
 	name = "small blood cocoon"
 	desc = "The incubation cocoon of a hatchling blood worm. Its surface is slowly shifting."
@@ -226,6 +235,12 @@
 
 	total_blood_required = 2500
 
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/Activate(atom/target)
+	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become an adult, gaining stat increases and the ability to spit bursts of corrosive blood by right-clicking with Spit Blood while outside of a host.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
+		return
+
+	return ..()
+
 /obj/structure/blood_worm_cocoon/juvenile
 	name = "medium blood cocoon"
 	desc = "The incubation cocoon of a juvenile blood worm. Its surface is slowly shifting."
@@ -240,11 +255,11 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult
 	name = "Reproduce"
-	desc = "Enter incubation in a cocoon, sacrificing your adult form to create 4 - 6 new hatchlings, including yourself."
+	desc = "Enter incubation in a cocoon, creating 5 new hatchlings including yourself."
 
 	button_icon_state = "reproduce"
 
-	cocoon_type = /obj/structure/blood_worm_cocoon/juvenile
+	cocoon_type = /obj/structure/blood_worm_cocoon/adult
 	new_worm_type = /mob/living/basic/blood_worm/hatchling
 
 	total_blood_required = 0
@@ -254,6 +269,9 @@
 	var/list/candidates = null
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Activate(atom/target)
+	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will create [num_hatchlings + 1] new hatchlings, including yourself.", "Reproduce", list("Yes", "No"), 30 SECONDS) != "Yes")
+		return
+
 	owner.balloon_alert(owner, "polling ghosts")
 
 	candidates = SSpolling.poll_ghost_candidates(
