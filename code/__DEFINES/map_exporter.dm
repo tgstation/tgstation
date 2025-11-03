@@ -37,7 +37,7 @@
 		};\
 	};
 
-/** Takes a constant, encodes it into a TGM valid string.
+/** Encodes a value into a TGM valid string.
  * not handled:
  * - pops: /obj{name="foo"}
  * - new(), newlist(), icon(), matrix(), sound()
@@ -62,32 +62,45 @@
 		value = "\"[value]\"";\
 	};
 
-#define TGM_MAP_SEPARATOR(map_data) (map_data ? ",\n" : "")
-#define TGM_MAP_STRUCTURE(key, content) "[key]{\n\t[content]\n\t}"
+/// Generates a TGM string for an object's variables "{variables}"
+#define TGM_VARS_BLOCK(variables) ("{\n\t[variables]\n\t}")
 
-/*
-#define TGM_ADD_BLOCK(map_data, key, content)\
-    map_data += (map_data ? ",\n" : "");\
-    map_data += "[key]{\n\t[content]\n\t}";
-*/
+/// Generates a TGM string for a single variable assignment line "[variable] = [value]"
+#define TGM_VAR_LINE(variable, value) ("[variable] = [value]")
 
-#define TGM_VARS_BLOCK(content) ("{\n\t[content]\n\t}")
-
-#define TGM_MAP_BLOCK(map_string, typepath, content)\
-	map_string += (length(map_string) ? "" : ",\n");\
+/**
+ * Adds a TGM object to the map string with optional variables.
+ *
+ * Arguments:
+ * map_string: The current map string being assembled (will be modified in-place).
+ * typepath: The typepath to save
+ * variables_metadata: The variables that will be included on the typepath that must be formatted via generate_tgm_metadata()
+ */
+#define TGM_MAP_BLOCK(map_string, typepath, variables_metadata)\
+	if(length(map_string)) {\
+		map_string += ",\n";\
+	};\
 	map_string += "[typepath]";\
-	map_string += "[content]"; // maybe skip adding this to the list if empty?
+	if(length(variables_metadata)) {\
+		map_string += "[variables_metadata]";\
+	};
 
-// for on_object_saved()
-TGM_ADD_BLOCK(data, obj_typepath, variable_content, data???/empty?)
-// for map_writer.dm
-TGM_ADD_BLOCK(current_header, obj_typepath, metadata, empty)
+/**
+ * Adds a variable/value pair to a provided list ONLY if the value is not the typepath's default value. This will also compile time check variable names on the typepath to make sure the variable is valid and exists.
+ *
+ * Arguments:
+ * variables_to_add: An associated list of variables/values to be added during serilization
+ * typepath: The type of the object
+ * var: The name of the variable on the typepath
+ * value: The value of the var that will be inserted during serilization
+ */
+#define TGM_ADD_TYPEPATH_VAR(variables_to_add, typepath, var, value)\
+	if(!IS_TYPEPATH_DEFAULT_VAR(typepath, var, value)) {\
+		variables_to_add[NAMEOF_TYPEPATH(typepath, var)] = value;\
+	};
 
-// the ,\n only gets added at the start
-// on_object_saved = ,\n[typepath]{\n\t[blah] = [blah_value]\n\t}
-
-// the ,\n only gets added at the start
-// ,\n[typepath]{metadata}
+/// Checks if a given value matches the compile-time default value of a typepath variable
+#define IS_TYPEPATH_DEFAULT_VAR(datum, variable, new_var) (##datum::variable == new_var)
 
 #define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
 #define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)

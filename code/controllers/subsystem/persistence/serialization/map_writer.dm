@@ -149,7 +149,6 @@
 						continue
 					if(obj_blacklist[target_atom.type])
 						continue
-					// add check for abstract objects that aren't supposed to save (UI blocked hands)
 
 					var/substitute_type = target_atom.get_save_substitute_type()
 					var/typepath = substitute_type || target_atom.type
