@@ -26,6 +26,11 @@
 
 	habitable_atmos = null
 
+	// A vivid red.
+	lighting_cutoff_red = 40
+	lighting_cutoff_green = 20
+	lighting_cutoff_blue = 20
+
 	/// Effect name for stuff like "invade-[effect_name]".
 	/// Should correspond to the growth stage, like "adult".
 	var/effect_name = ""
