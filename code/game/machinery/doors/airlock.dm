@@ -509,13 +509,16 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
-/// Checks if this door would be affected by any currently active RETA grants
+/**
+ * Checks if this door would be affected by any currently active RETA grants
+ * If a grant is active, return the authorized department
+ */
 /obj/machinery/door/airlock/proc/has_active_reta_access()
 	if(!CONFIG_GET(flag/reta_enabled))
-		return FALSE
+		return null
 
 	if(!length(req_access) && !length(req_one_access))
-		return FALSE
+		return null
 
 	// Check if this door belongs to a department providing access via RETA
 	for(var/target_dept in GLOB.reta_active_grants)
@@ -527,13 +530,13 @@
 
 			for(var/required_access in req_access)
 				if(required_access in origin_dept_access)
-					return TRUE
+					return target_dept
 
 			for(var/required_access in req_one_access)
 				if(required_access in origin_dept_access)
-					return TRUE
+					return target_dept
 
-	return FALSE
+	return null
 
 /**
  * Set the airlock state to a new value, change the icon state
@@ -741,6 +744,10 @@
 			. += "It looks a bit stronger."
 		else
 			. += "It looks very robust."
+
+	var/active_reta = has_active_reta_access()
+	if(active_reta)
+		. += span_nicegreen("Emergency Temporary Access is enabled for [EXAMINE_HINT(active_reta)].")
 
 	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += span_notice("Shift-click [src] to [ density ? "open" : "close"] it.")
