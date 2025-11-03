@@ -2832,20 +2832,6 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 8
-	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
@@ -9236,18 +9222,6 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
@@ -11172,20 +11146,6 @@
 /turf/open/openspace,
 /area/station/medical/medbay/central)
 "dbZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/obj/machinery/door/airlock/medical,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13207,18 +13167,6 @@
 /turf/open/floor/engine,
 /area/station/service/hydroponics)
 "dJN" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
 	},
@@ -16700,16 +16648,6 @@
 /obj/machinery/door/airlock/medical{
 	name = "Abandoned Room"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/medical{
-	name = "Abandoned Room"
-	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/iron/textured_large,
 /area/station/maintenance/department/medical)
@@ -17297,22 +17235,6 @@
 /turf/open/floor/plating,
 /area/station/science/cytology)
 "eSq" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance"
-	},
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance"
 	},
@@ -19950,19 +19872,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Storage Room"
-	},
-/obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -20814,9 +20723,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/abandoned)
-"fQp" = (
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/turret_protected/ai_upload)
 "fQI" = (
 /obj/structure/table,
 /obj/machinery/cell_charger{
@@ -26590,24 +26496,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "huW" = (
-/obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/highsecurity{
-	name = "Controlled Hazard Chamber"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
-/obj/effect/turf_decal/stripes/end{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock_note_placer{
-	note_info = "Access with authorization only. The Controlled Hazard Chamber is designed to withstand incidents you cannot. Essential safety equipment has been provided to ensure your work may continue without compromising station integrity";
-	note_name = "Projects"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/highsecurity{
 	name = "Controlled Hazard Chamber"
@@ -43483,18 +43371,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/full,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay Entrance"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue/full,
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 8
 	},
@@ -50396,25 +50272,6 @@
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/wrench/medical,
 /obj/structure/table/reinforced/rglass,
-/obj/item/gun/syringe{
-	desc = "The Holy Syringe Gun. Identical to the regular syringe gun. You have a feeling that you shouldn't touch this.";
-	name = "Holy Syringe Gun";
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/door/window/right/directional/west{
-	name = "First Aid Supplies";
-	req_access = list("medical")
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/item/clothing/gloves/latex/nitrile,
-/obj/item/wrench/medical,
-/obj/structure/table/reinforced/rglass,
 /obj/machinery/door/window/right/directional/west{
 	name = "First Aid Supplies";
 	req_access = list("medical")
@@ -50610,13 +50467,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "oaO" = (
-/obj/machinery/door/airlock/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
@@ -59481,6 +59331,7 @@
 	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "qCe" = (
@@ -59554,16 +59405,6 @@
 /turf/open/openspace,
 /area/station/commons/dorms)
 "qDz" = (
-/obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
-	name = "AI Upload Turret Control";
-	icon_state = "control_stun"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/turretid{
 	control_area = "/area/station/ai/upload/chamber";
 	name = "AI Upload Turret Control";
@@ -61250,7 +61091,7 @@
 "rbW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/engine/hull/reinforced,
-/area/station/ai_monitored/turret_protected/ai_upload)
+/area/station/ai/upload/chamber)
 "rce" = (
 /obj/item/clothing/head/cone{
 	pixel_x = 6;
@@ -62559,50 +62400,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "ruf" = (
-/obj/effect/turf_decal/tile/neutral/opposingcorners{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 7
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/stack/ducts/fifty{
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/dropper,
-/obj/item/stack/cable_coil{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/stack/cable_coil{
-	pixel_x = -12
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
@@ -64319,19 +64116,6 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/command)
 "rTX" = (
-/obj/machinery/door/airlock/medical{
-	name = "Abandoned Room"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/door/airlock/medical{
 	name = "Abandoned Room"
 	},
@@ -68918,16 +68702,6 @@
 	name = "Medbay Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/unres,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance"
-	},
-/obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
@@ -71974,19 +71748,6 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "udP" = (
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
@@ -116867,8 +116628,8 @@ kEJ
 wxg
 wxg
 kEJ
-fQp
-fQp
+kEJ
+kEJ
 dOg
 wiv
 bYn
@@ -119175,7 +118936,7 @@ mka
 ejw
 pdO
 fXP
-fQp
+kEJ
 rcS
 rcS
 xSG
@@ -182398,12 +182159,12 @@ vwf
 kzx
 teQ
 kqv
-fQp
+kEJ
 rbW
 rbW
 rbW
 rbW
-fQp
+kEJ
 kqv
 ata
 lxl
