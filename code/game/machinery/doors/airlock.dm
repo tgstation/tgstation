@@ -515,10 +515,10 @@
  */
 /obj/machinery/door/airlock/proc/has_active_reta_access()
 	if(!CONFIG_GET(flag/reta_enabled))
-		return null
+		return FALSE
 
 	if(!length(req_access) && !length(req_one_access))
-		return null
+		return FALSE
 
 	// Check if this door belongs to a department providing access via RETA
 	for(var/target_dept in GLOB.reta_active_grants)
@@ -536,7 +536,7 @@
 				if(required_access in origin_dept_access)
 					return target_dept
 
-	return null
+	return FALSE
 
 /**
  * Set the airlock state to a new value, change the icon state
