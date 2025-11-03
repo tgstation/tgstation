@@ -235,7 +235,7 @@
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
-	AddComponent(
+	AddComponent( \
 		/datum/component/butchering, \
 		speed = 20 SECONDS, \
 		effectiveness = 115, \
