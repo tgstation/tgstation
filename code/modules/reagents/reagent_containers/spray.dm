@@ -421,6 +421,7 @@
 	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
 
 /datum/atom_skin/med_spray
+	abstract_type = /datum/atom_skin/med_spray
 	change_inhand_icon_state = TRUE
 
 /datum/atom_skin/med_spray/red

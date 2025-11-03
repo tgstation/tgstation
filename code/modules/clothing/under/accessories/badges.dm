@@ -179,6 +179,7 @@
 
 // Pride pin skins
 /datum/atom_skin/pride_pin
+	abstract_type = /datum/atom_skin/pride_pin
 
 /datum/atom_skin/pride_pin/gay
 	preview_name = "Rainbow Pride"

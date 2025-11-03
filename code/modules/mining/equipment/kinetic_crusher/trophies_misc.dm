@@ -46,13 +46,13 @@
 	RESET_INITIAL_IF_SET(clear_from, inhand_y_dimension, new_inhandy)
 
 /datum/atom_skin/crusher_skin/sword
-	new_name = "sword"
+	new_name = "proto-kinetic sword"
 	preview_name = "Sword"
 	new_icon_state = "crusher_sword"
 	new_inhand_icon = "crusher_sword"
 
 /datum/atom_skin/crusher_skin/harpoon
-	new_name = "harpoon"
+	new_name = "proto-kinetic harpoon"
 	preview_name = "Harpoon"
 	new_icon_state = "crusher_harpoon"
 	new_inhand_icon = "crusher_harpoon"
@@ -74,7 +74,7 @@
 		animation_override += ATTACK_ANIMATION_PIERCE
 
 /datum/atom_skin/crusher_skin/dagger
-	new_name = "dual dagger and blaster"
+	new_name = "proto-kinetic dual dagger and blaster"
 	preview_name = "Dagger and Blaster"
 	new_icon_state = "crusher_dagger"
 	new_inhand_icon = "crusher_dagger"
@@ -119,7 +119,7 @@
 		user.do_item_attack_animation(target, used_item = source)
 
 /datum/atom_skin/crusher_skin/glaive
-	new_name = "glaive"
+	new_name = "proto-kinetic glaive"
 	preview_name = "Glaive"
 	new_icon_state = "crusher_glaive"
 	new_inhand_icon = "crusher_glaive"

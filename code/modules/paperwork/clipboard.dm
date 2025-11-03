@@ -1,5 +1,6 @@
 // Clipboard skins
 /datum/atom_skin/clipboard
+	abstract_type = /datum/atom_skin/clipboard
 	change_inhand_icon_state = TRUE
 
 /datum/atom_skin/clipboard/brown

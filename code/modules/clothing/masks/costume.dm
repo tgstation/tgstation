@@ -1,5 +1,6 @@
 // Mask skins
 /datum/atom_skin/joy_mask
+	abstract_type = /datum/atom_skin/joy_mask
 	change_base_icon_state = TRUE
 
 /datum/atom_skin/joy_mask/base

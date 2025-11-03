@@ -113,6 +113,7 @@
 
 // 38 special skins
 /datum/atom_skin/det_revolver
+	abstract_type = /datum/atom_skin/det_revolver
 	change_base_icon_state = TRUE
 
 /datum/atom_skin/det_revolver/default

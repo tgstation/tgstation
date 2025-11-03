@@ -179,6 +179,7 @@
 
 // Skins for captain's fountain pen
 /datum/atom_skin/cap_pen
+	abstract_type = /datum/atom_skin/cap_pen
 
 /datum/atom_skin/cap_pen/apply(atom/apply_to)
 	. = ..()

@@ -287,6 +287,7 @@
 
 // Double barrel shotgun skins
 /datum/atom_skin/bar_shotgun
+	abstract_type = /datum/atom_skin/bar_shotgun
 	change_base_icon_state = TRUE
 
 /datum/atom_skin/bar_shotgun/default

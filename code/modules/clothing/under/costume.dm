@@ -273,6 +273,7 @@
 
 // Mech suit skins
 /datum/atom_skin/mech_suit
+	abstract_type = /datum/atom_skin/mech_suit
 
 /datum/atom_skin/mech_suit/red
 	preview_name = "Red Mech Suit"

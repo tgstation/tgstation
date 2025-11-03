@@ -161,6 +161,7 @@
 
 // Disk skins
 /datum/atom_skin/dna_disk
+	abstract_type = /datum/atom_skin/dna_disk
 
 /datum/atom_skin/dna_disk/red
 	preview_name = "Red DNA Data Disk"

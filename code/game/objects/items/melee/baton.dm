@@ -766,15 +766,16 @@
 
 // Stunsword Skins
 /datum/atom_skin/stunsword
+	abstract_type = /datum/atom_skin/stunsword
 	change_inhand_icon_state = TRUE
 	change_base_icon_state = TRUE
 
 /datum/atom_skin/stunsword/default
-	new_name = "Default"
+	preview_name = "Default"
 	new_icon_state = "stunsword"
 
 /datum/atom_skin/stunsword/energy
-	new_name = "Energy Stunsword"
+	preview_name = "Energy Stunsword"
 	new_icon_state = "stunsword_energy"
 
 ///Stun Sword

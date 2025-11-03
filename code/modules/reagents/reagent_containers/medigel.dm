@@ -1,5 +1,6 @@
 // Gel skins
 /datum/atom_skin/med_gel
+	abstract_type = /datum/atom_skin/med_gel
 
 /datum/atom_skin/med_gel/blue
 	preview_name = "Blue"
