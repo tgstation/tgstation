@@ -79,6 +79,15 @@
 	icon_state = "evidence"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/security/armory
+	name = "\improper Armory"
+	icon_state = "armory"
+	ambience_index = AMBIENCE_DANGER
+	motion_monitored = TRUE
+
+/area/station/security/armory/upper
+	name = "Upper Armory"
+
 /area/station/security/detectives_office
 	name = "\improper Detective's Office"
 	icon_state = "detective"

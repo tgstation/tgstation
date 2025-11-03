@@ -1190,7 +1190,9 @@
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
 		if(grabbing_bodypart)
-			damage_on_resist_fail += rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)
+			damage_on_resist_fail += (rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)) + grabbing_bodypart.unarmed_grab_damage_bonus
+			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
+			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
 
 		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
 		var/puller_drunkenness = human_puller.get_drunk_amount()
@@ -1963,7 +1965,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
-	var/obj/item/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
 

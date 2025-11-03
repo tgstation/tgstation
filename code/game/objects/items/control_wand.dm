@@ -14,6 +14,8 @@
 	name = "control wand"
 	desc = "A remote for controlling a set of airlocks."
 	w_class = WEIGHT_CLASS_TINY
+	drop_sound = 'sound/items/door_remote/door_remote_drop1.ogg'
+	pickup_sound = 'sound/items/door_remote/door_remote_pick_up1.ogg'
 
 	var/department = "civilian"
 	var/mode = WAND_OPEN
@@ -28,12 +30,15 @@
 	var/static/list/area/restricted_areas = list(
 		/area/station/command/bridge, 									/*so Captain's remote isn't totally useless*/
 		/area/station/security, 										/*so antag RD/HoP/QM/CMO can't easily screw up the brig doors*/
-		/area/station/ai_monitored/command/nuke_storage, 				/*aka Vault since it's QM's special thing*/
-		/area/station/ai_monitored/turret_protected/ai,					// these are areas exclusive to RD
-		/area/station/ai_monitored/turret_protected/ai_upload_foyer,	// but sometimes mappers might misconfig
-		/area/station/ai_monitored/turret_protected/ai_upload,			// their doors with our several dozen access helpers
+		/area/station/command/vault, 									/*aka Vault since it's QM's special thing*/
+		/area/station/ai/satellite/chamber,	// these are areas exclusive to RD
+		/area/station/ai/upload,			// but sometimes mappers might misconfig their doors with our several dozen access helpers
 	)
 	COOLDOWN_DECLARE(shock_cooldown)
+	/// sound played when mode is switched
+	var/mode_switch_sound = SFX_REMOTE_MODE_SWITCH
+	/// sound played when an action is done
+	var/action_sound = SFX_REMOTE_ACTION
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()
@@ -80,6 +85,8 @@
 			mode = WAND_OPEN
 	update_icon_state()
 	balloon_alert(user, "mode: [ops[mode]]")
+	if(mode_switch_sound)
+		playsound(src, mode_switch_sound, 50, TRUE)
 
 /obj/item/door_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/door) && !isturf(interacting_with))
@@ -119,9 +126,8 @@
 	region_access = REGION_RESEARCH
 	owner_trim = /datum/id_trim/job/research_director
 	our_domain = list(
-		/area/station/ai_monitored/turret_protected/ai,
-		/area/station/ai_monitored/turret_protected/ai_upload_foyer,
-		/area/station/ai_monitored/turret_protected/ai_upload,
+		/area/station/ai/satellite/chamber,
+		/area/station/ai/upload,
 	)
 
 /obj/item/door_remote/head_of_security
@@ -139,7 +145,7 @@
 	department = "cargo"
 	region_access = REGION_SUPPLY
 	owner_trim = /datum/id_trim/job/quartermaster
-	our_domain = list( /area/station/ai_monitored/command/nuke_storage )
+	our_domain = list( /area/station/command/vault )
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"
@@ -159,6 +165,8 @@
 
 /obj/item/door_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/door/door
+	if(action_sound)
+		playsound(src, action_sound, 50, TRUE)
 
 	if (istype(interacting_with, /obj/machinery/door))
 		door = interacting_with

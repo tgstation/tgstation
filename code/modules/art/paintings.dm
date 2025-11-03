@@ -713,11 +713,9 @@
 /obj/structure/sign/painting/get_save_vars()
 	return ..() - NAMEOF(src, icon)
 
-/obj/structure/sign/painting/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/Initialize(mapload)
 	. = ..()
 	SSpersistent_paintings.painting_frames += src
-	if(dir)
-		setDir(dir)
 
 /obj/structure/sign/painting/Destroy()
 	. = ..()
@@ -732,12 +730,8 @@
 	else
 		return ..()
 
-/obj/structure/sign/painting/knock_down(mob/living/user)
-	var/turf/drop_turf
-	if(user)
-		drop_turf = get_turf(user)
-	else
-		drop_turf = drop_location()
+/obj/structure/sign/painting/atom_deconstruct(disassembled)
+	var/turf/drop_turf = drop_location()
 	current_canvas?.forceMove(drop_turf)
 	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
 	frame.update_integrity(get_integrity()) //Transfer how damaged it is.

@@ -226,7 +226,7 @@
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, seconds_per_tick)
 	return ..() || .
 
-/datum/reagent/milk/used_on_fish(obj/item/fish/fish)
+/datum/reagent/consumable/milk/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
 		fish.repair_damage(fish.max_integrity * max(fish.get_hunger() * 0.5, 0.12))
 		fish.sate_hunger()
@@ -1360,12 +1360,14 @@
 /atom/movable/screen/alert/fruit_punch_good
 	name = "Fruit Punch Blessing"
 	desc = "The sweetness of the fruit punch and the friendly company of the liquid cooler are slowly restoring your health..."
-	icon_state = "punch_blessing"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_blessing"
 
 /atom/movable/screen/alert/fruit_punch_bad
 	name = "Fruit Punishment"
 	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a liquid cooler! Your body is going into shock!"
-	icon_state = "punch_punishment"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_punishment"
 
 /datum/reagent/consumable/ethanol/bitters_soda
 	name = "Bitters and Soda"

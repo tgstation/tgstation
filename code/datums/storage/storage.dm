@@ -791,8 +791,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return NONE
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		if(real_location.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+		if(parent.loc != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return NONE
+
 		if(isitem(parent))
 			var/obj/item/item_parent = parent
 			if(!item_parent.can_mob_unequip(user))
@@ -803,15 +804,20 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		parent.add_fingerprint(user)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	if(ismob(over_object))
-		if(over_object != user || !user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+	if(over_object == user)
+		if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
 			return NONE
+
+		if(isliving(parent) && user.pulling == parent)
+			var/mob/living/as_living = parent
+			if(as_living.can_be_held)
+				return
 
 		parent.add_fingerprint(user)
 		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return COMPONENT_CANCEL_MOUSEDROP_ONTO
 
-	if(istype(over_object, /atom/movable/screen))
+	if(istype(over_object, /atom/movable/screen) || ismob(over_object))
 		return NONE
 
 	if(!user.can_perform_action(over_object, FORBID_TELEKINESIS_REACH))
@@ -1182,8 +1188,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/contents_changed_w_class(datum/source, obj/item/changed, old_w_class, new_w_class)
 	SIGNAL_HANDLER
 
-	if(new_w_class <= max_specific_storage && new_w_class + get_total_weight() <= max_total_storage)
+	// If old weight already overloaded the storage, don't drop the item out just in case we're inside of a premade box
+	if(new_w_class <= max_specific_storage && (get_total_weight() <= max_total_storage || get_total_weight() - new_w_class + old_w_class > max_total_storage))
 		return
+
 	if(!attempt_remove(changed, parent.drop_location()))
 		return
 
