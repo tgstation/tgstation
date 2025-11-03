@@ -77,13 +77,22 @@
  * Returns: Boolean
  */
 /atom/proc/is_saveable(turf/current_loc)
+	if(flags_1 & HOLOGRAM_1)
+		return FALSE
+
 	return TRUE
 
 /atom/movable/is_saveable(turf/current_loc)
 	if(is_multi_tile_object(src) && (src.loc != current_loc))
 		return FALSE
 
-	return TRUE
+	return ..()
+
+/obj/item/is_saveable(turf/current_loc)
+	if(item_flags & ABSTRACT)
+		return FALSE
+
+	return ..()
 
 /**
  * Check if an atom type has a substitute type for map export serialization.
