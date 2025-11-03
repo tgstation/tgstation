@@ -237,9 +237,11 @@ const GuideSection = () => {
           <br /> Accumulating a total of <b>{points_to_aura}</b>&nbsp;
           <span style={hereticBlue}>knowledge points</span>
           &nbsp;to manifest a visible aura of&nbsp;
-          <span style={hereticPurple}>Mansus energy</span> around you. This aura
-          will be visible to all those around you and will mark you as a
-          heretic. Consider the risks before accumulating too much knowledge!
+          <span style={hereticPurple}>Mansus energy</span> around you. Simply
+          gaining the points is sufficent, spending them will not trigger it.
+          <br />
+          This aura will be visible to all those around you and will mark you as
+          a heretic. Consider the risks before accumulating too much knowledge!
           <br />
           Keep in mind that using a&nbsp;
           <span style={hereticPurple}>Codex Cicatrix</span> will also make you
