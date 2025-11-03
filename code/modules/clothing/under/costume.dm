@@ -276,19 +276,19 @@
 	abstract_type = /datum/atom_skin/mech_suit
 
 /datum/atom_skin/mech_suit/red
-	preview_name = "Red Mech Suit"
+	preview_name = "Red"
 	new_icon_state = "red_mech_suit"
 
 /datum/atom_skin/mech_suit/white
-	preview_name = "White Mech Suit"
+	preview_name = "White"
 	new_icon_state = "white_mech_suit"
 
 /datum/atom_skin/mech_suit/blue
-	preview_name = "Blue Mech Suit"
+	preview_name = "Blue"
 	new_icon_state = "blue_mech_suit"
 
 /datum/atom_skin/mech_suit/black
-	preview_name = "Black Mech Suit"
+	preview_name = "Black"
 	new_icon_state = "black_mech_suit"
 
 /obj/item/clothing/under/costume/mech_suit

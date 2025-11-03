@@ -3,7 +3,7 @@
 	abstract_type = /datum/atom_skin/joy_mask
 	change_base_icon_state = TRUE
 
-/datum/atom_skin/joy_mask/base
+/datum/atom_skin/joy_mask/joy
 	preview_name = "Joy"
 	new_icon_state = "joy"
 

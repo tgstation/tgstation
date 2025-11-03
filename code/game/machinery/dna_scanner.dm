@@ -164,35 +164,35 @@
 	abstract_type = /datum/atom_skin/dna_disk
 
 /datum/atom_skin/dna_disk/red
-	preview_name = "Red DNA Data Disk"
+	preview_name = "Red"
 	new_icon_state = "datadisk0"
 
 /datum/atom_skin/dna_disk/dark_blue
-	preview_name = "Dark Blue DNA Data Disk"
+	preview_name = "Dark Blue"
 	new_icon_state = "datadisk1"
 
 /datum/atom_skin/dna_disk/yellow
-	preview_name = "Yellow DNA Data Disk"
+	preview_name = "Yellow"
 	new_icon_state = "datadisk2"
 
 /datum/atom_skin/dna_disk/black
-	preview_name = "Black DNA Data Disk"
+	preview_name = "Black"
 	new_icon_state = "datadisk3"
 
 /datum/atom_skin/dna_disk/green
-	preview_name = "Green DNA Data Disk"
+	preview_name = "Green"
 	new_icon_state = "datadisk4"
 
 /datum/atom_skin/dna_disk/purple
-	preview_name = "Purple DNA Data Disk"
+	preview_name = "Purple"
 	new_icon_state = "datadisk5"
 
 /datum/atom_skin/dna_disk/grey
-	preview_name = "Grey DNA Data Disk"
+	preview_name = "Grey"
 	new_icon_state = "datadisk6"
 
 /datum/atom_skin/dna_disk/light_blue
-	preview_name = "Light Blue DNA Data Disk"
+	preview_name = "Light Blue"
 	new_icon_state = "datadisk7"
 
 //Just for transferring between genetics machines.

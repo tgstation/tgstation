@@ -4,15 +4,15 @@
 	change_inhand_icon_state = TRUE
 
 /datum/atom_skin/clipboard/brown
-	preview_name = "Brown Clipboard"
+	preview_name = "Brown"
 	new_icon_state = "clipboard"
 
 /datum/atom_skin/clipboard/black
-	preview_name = "Black Clipboard"
+	preview_name = "Black"
 	new_icon_state = "clipboard_black"
 
 /datum/atom_skin/clipboard/white
-	preview_name = "White Clipboard"
+	preview_name = "White"
 	new_icon_state = "clipboard_white"
 
 /**

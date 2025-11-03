@@ -775,7 +775,7 @@
 	new_icon_state = "stunsword"
 
 /datum/atom_skin/stunsword/energy
-	preview_name = "Energy Stunsword"
+	preview_name = "Energy"
 	new_icon_state = "stunsword_energy"
 
 ///Stun Sword
