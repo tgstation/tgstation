@@ -5973,7 +5973,9 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
 /area/station/cargo/storage)
 "bJA" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -16739,7 +16741,9 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
 /area/station/cargo/storage)
 "eLp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26839,7 +26843,9 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
 /area/station/cargo/storage)
 "hBw" = (
 /obj/structure/railing{
@@ -54324,7 +54330,9 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/warning{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_large,
+/turf/open/floor/iron/dark/textured_half{
+	dir = 1
+	},
 /area/station/cargo/storage)
 "pgh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
