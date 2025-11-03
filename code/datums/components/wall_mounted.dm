@@ -90,7 +90,7 @@
 		return FALSE
 
 	var/msg
-	if(PERFORM_ALL_TESTS(focus_only/wall_mounted))
+	if(PERFORM_ALL_TESTS(focus_only/wall_mounted) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
 	var/list/turf/attachable_turfs = list()
