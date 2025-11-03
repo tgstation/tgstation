@@ -179,7 +179,14 @@
 
 // Skins for captain's fountain pen
 /datum/atom_skin/cap_pen
-	new_desc = "It's an expensive %NEW_SKIN% fountain pen. The nib is quite sharp."
+
+/datum/atom_skin/cap_pen/apply(atom/apply_to)
+	. = ..()
+	apply_to.desc = "It's an expensive [preview_name] fountain pen. The nib is quite sharp."
+
+/datum/atom_skin/cap_pen/clear_skin(atom/clear_from)
+	. = ..()
+	clear_from.desc = initial(clear_from.desc)
 
 /datum/atom_skin/cap_pen/oak
 	preview_name = "Oak"

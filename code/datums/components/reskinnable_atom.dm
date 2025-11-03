@@ -38,7 +38,6 @@ GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/
 	/// Optional, name to change the atom to when applied
 	var/new_name
 	/// Optional, description to change the atom to when applied
-	/// You can use %NEW_SKIN% in the description to insert the preview_name of the new skin
 	var/new_desc
 	/// Optional, icon to change the atom to when applied
 	var/new_icon
@@ -54,7 +53,7 @@ GLOBAL_LIST_INIT_TYPED(atom_skins, /datum/atom_skin, init_subtypes_w_path_keys(/
 /datum/atom_skin/proc/apply(atom/apply_to)
 	SHOULD_CALL_PARENT(TRUE)
 	APPLY_VAR_OR_RESET_INITIAL(apply_to, name, new_name, reset_missing)
-	APPLY_VAR_OR_RESET_INITIAL(apply_to, desc, replacetext(new_desc, "%NEW_SKIN%", preview_name), reset_missing)
+	APPLY_VAR_OR_RESET_INITIAL(apply_to, desc, new_desc, reset_missing)
 	APPLY_VAR_OR_RESET_INITIAL(apply_to, icon, new_icon, reset_missing)
 	APPLY_VAR_OR_RESET_TO(apply_to, icon_state, new_icon_state, reset_missing, initial(apply_to.post_init_icon_state) || initial(apply_to.icon_state))
 	if(change_base_icon_state)
