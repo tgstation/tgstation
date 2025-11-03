@@ -396,7 +396,7 @@
 		total_blood_consumed += get_blood_volume_after_curve(consumed_blood[blood_type_id])
 
 	var/growth_string = ""
-	if (total_blood_consumed < cocoon_action.total_blood_required)
+	if (total_blood_consumed < cocoon_action?.total_blood_required)
 		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
 		if (rounded_growth > 0)
 			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
