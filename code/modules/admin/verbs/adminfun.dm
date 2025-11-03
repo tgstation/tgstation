@@ -167,78 +167,92 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 
 /// Allow admin to mass add or remove a trait across all mobs
 ADMIN_VERB(mass_modify_traits, R_ADMIN, "Mass Modify Traits", "Adds or removes a trait from every mob.", ADMIN_CATEGORY_FUN)
-	var/add_or_remove = tgui_alert(user, "Add or Remove Trait?", "Mass Add/Remove Trait", list("Add", "Remove"))
-	if(!add_or_remove)
-		return
 
+	var/choice = tgui_alert(user, "Add or Remove Trait?", "Mass Add/Remove Trait", list("Add", "Remove"))
+	if(!choice) return
+	var/is_add = (choice == "Add")
+	var/lower_choice = lowertext(choice)
+
+	// Build list of valid traits that can be applied to mobs
 	var/list/available_traits = list()
 	for(var/key in GLOB.admin_visible_traits)
-		if(ispath(/mob, key))
+		if(ispath(/mob, key)) // so we get atom and atom/movable traits too, which doing (istype(key, /mob)) would skip
 			available_traits += GLOB.admin_visible_traits[key]
-
-	available_traits = sort_list(available_traits, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	var/chosen_trait = tgui_input_list(user, "Select a trait to [lowertext(add_or_remove)].", "Mass [add_or_remove] Trait", available_traits)
-	chosen_trait = available_traits[chosen_trait]
-	if(isnull(chosen_trait))
+	if(!length(available_traits))
 		return
 
-	var/all_or_cliented = tgui_alert(user, "[add_or_remove] [add_or_remove == "Add" ? "to" : "from"] all mobs, or only cliented ones?", "Mass [add_or_remove] Trait", list("All", "Cliented"))
-	if(isnull(all_or_cliented))
+	available_traits = sort_list(available_traits, GLOBAL_PROC_REF(cmp_typepaths_asc)) // sort alphabetically
+
+	var/mob_trait = tgui_input_list(user, "Select a trait to [lower_choice].", "Mass [choice] Trait", available_traits)
+	if(isnull(mob_trait))
 		return
+	mob_trait = available_traits[mob_trait]
 
-	var/cliented_only
-	if(all_or_cliented == "Cliented")
-		cliented_only = TRUE
+	var/target_scope = tgui_alert(user, "[choice] [lower_choice == "add" ? "to" : "from"] all mobs, or only cliented ones?", "Scope", list("All", "Cliented"))
+	if(!target_scope)
+		return
+	var/cliented_only = (target_scope == "Cliented")
 
+	// So we get readable trait name to display in the uis
 	if(!GLOB.admin_trait_name_map)
 		GLOB.admin_trait_name_map = generate_admin_trait_name_map()
+	var/trait_name = GLOB.admin_trait_name_map[mob_trait] || mob_trait
 
+	// Ask for confirmation first
+	var/action_word = is_add ? "to" : "from"
 	var/confirm = tgui_alert(
 		user,
-		"Please confirm you want to mass [lowertext(add_or_remove)] [GLOB.admin_trait_name_map[chosen_trait] || chosen_trait] \
-			[add_or_remove == "Add" ? "to" : "from"] every [cliented_only ? "cliented" : ""] mob?",
-		"Confirm Mass [add_or_remove] Trait",
+		"Please confirm you want to [lower_choice] [trait_name] [action_word] every [cliented_only ? "cliented" : ""] mob?",
+		"Confirm Mass [choice] Trait",
 		list("Yes", "No")
 	)
 	if(confirm != "Yes")
 		return
 
-	var/source = TRAIT_ADMIN_GRANTED
-	var/applied_successfully = FALSE
-	switch(add_or_remove)
-		if("Add")
-			var/add_required_element
-			if(GLOB.movement_type_trait_to_flag[chosen_trait]) //include the required element.
-				add_required_element = TRUE
-			for(var/mob/mob_to_modify as anything in GLOB.alive_mob_list)
-				if(cliented_only && !mob_to_modify.client)
-					continue
-				if(add_required_element)
-					mob_to_modify.AddElement(/datum/element/movetype_handler)
-				ADD_TRAIT(mob_to_modify, chosen_trait, source)
-				applied_successfully = TRUE
-		if("Remove")
-			var/specific = tgui_alert(user, "Remove from specific source?", "Mass [add_or_remove] Trait", list("All", "Admin-Granted Traits", "Specific"))
-			if(isnull(specific))
-				return
-			switch(specific)
-				if("All")
-					source = null
-				if("Specific")
-					source = lowertext(tgui_input_text(user, "Please enter a source to be removed from", "Mass [add_or_remove] Trait", max_length = MAX_NAME_LEN))
-					if(isnull(source))
-						return
-			for(var/mob/mob_to_modify as anything in GLOB.alive_mob_list)
-				if(cliented_only && !mob_to_modify.client)
-					continue
-				REMOVE_TRAIT(mob_to_modify, chosen_trait, source)
-				applied_successfully = TRUE
+	// Perform operation
+	var/affected = 0
+	if(is_add) // Adding trait
+		var/needs_movetype = GLOB.movement_type_trait_to_flag[mob_trait]
+		for(var/mob/mob_to_modify as anything in GLOB.alive_mob_list)
+			if(cliented_only && !mob_to_modify.client)
+				continue
+			if(needs_movetype)
+				mob_to_modify.AddElement(/datum/element/movetype_handler)
+			ADD_TRAIT(mob_to_modify, mob_trait, TRAIT_ADMIN_GRANTED)
+			affected++
 
-	if(applied_successfully)
-		var/msg_string = "[key_name_admin(user)] mass [lowertext(add_or_remove)][add_or_remove == "Add" ? "ed" : "d"] [GLOB.admin_trait_name_map[chosen_trait] || chosen_trait] \
-			[add_or_remove == "Add" ? "to" : "from"] every [cliented_only ? "cliented" : ""] mob."
-		message_admins(msg_string)
-		log_admin(msg_string )
+	else // Removing trait
+		var/source = null
+		var/remove_mode = tgui_alert(user, "Remove from specific source?", "Mass Remove Trait", list("All", "Admin-Granted Traits", "Specific"))
+		if(isnull(remove_mode))
+			return
+
+		switch(remove_mode)
+			if("Admin-Granted Traits") source = TRAIT_ADMIN_GRANTED
+			if("Specific")
+				source = lowertext(tgui_input_text(user, "Enter source", "Mass Remove Trait", max_length = MAX_NAME_LEN))
+				if(isnull(source))
+					return
+
+		for(var/mob/mob_to_modify as anything in GLOB.alive_mob_list)
+			if(cliented_only && !mob_to_modify.client)
+				continue
+			REMOVE_TRAIT(mob_to_modify, mob_trait, source)
+			affected++
+
+	if(affected)
+		var/plural = affected == 1 ? "mob" : "mobs"
+		var/log_msg = "[key_name_admin(user)] mass [lower_choice][is_add ? "ed" : "d"] [trait_name] [action_word] [affected] [plural]."
+		message_admins(log_msg)
+		log_admin(log_msg)
+
+/// Returns only traits that apply to mobs
+/proc/get_mob_admin_traits()
+	var/list/out = list()
+	for(var/key in GLOB.admin_visible_traits)
+		if(ispath(key, /mob)) // key is a mob type or subtype
+			out += GLOB.admin_visible_traits[key]
+	return out
 
 ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player with divine power.", ADMIN_CATEGORY_FUN, mob/living/target in world)
 	var/punishment = tgui_input_list(user, "Choose a punishment", "DIVINE SMITING", GLOB.smites)
