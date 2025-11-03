@@ -112,8 +112,8 @@
 
 /obj/item/mod/module/selfcleaner
 	name = "MOD perfumer module"
-	desc = "A small spray to clean onself up. Has a pleasant scent"
-	icon_state = "self_cleaner"
+	desc = "A small spray to clean onself up. Has a pleasant scent."
+	icon_state = "cleaner"
 	module_type = MODULE_USABLE
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	complexity = 1
