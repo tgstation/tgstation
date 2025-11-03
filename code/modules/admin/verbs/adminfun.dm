@@ -231,7 +231,7 @@ ADMIN_VERB(mass_modify_traits, R_ADMIN, "Mass Modify Traits", "Adds or removes a
 		switch(remove_mode)
 			if("Admin-Granted Traits") source = TRAIT_ADMIN_GRANTED
 			if("Specific")
-				source = lowertext(tgui_input_text(user, "Enter source", "Mass Remove Trait", max_length = MAX_NAME_LEN))
+				source = LOWER_TEXT(tgui_input_text(user, "Enter source", "Mass Remove Trait", max_length = MAX_NAME_LEN))
 				if(isnull(source))
 					return
 
