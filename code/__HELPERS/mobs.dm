@@ -205,8 +205,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * @param {icon} icon - The icon file of the cog. Default: 'icons/effects/progressbar.dmi'
  *
  * @param {iconstate} iconstate - The icon state of the cog. Default: "Cog"
+ *
+ * @param {mob} bar_override - Mob which should see the bar instead of the user
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog")
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog", mob/bar_override = null)
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -229,6 +231,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 
 	var/holding = user.get_active_held_item()
 
+#ifdef UNIT_TESTS
+	timed_action_flags &= ~IGNORE_SLOWDOWNS //it shouldn't stop unit test dummies from being fast as hell
+#endif
+
 	if(!(timed_action_flags & IGNORE_SLOWDOWNS))
 		delay *= user.cached_multiplicative_actions_slowdown
 
@@ -236,11 +242,11 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/datum/cogbar/cog
 
 	if(progress)
-		if(user.client)
-			progbar = new(user, delay, target || user)
+		if(user.client || bar_override?.client)
+			progbar = new(bar_override || user, delay, target || user)
 
 		if(!hidden && delay >= 1 SECONDS)
-			cog = new(user, icon, iconstate)
+			cog = new(bar_override || user, icon, iconstate)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 

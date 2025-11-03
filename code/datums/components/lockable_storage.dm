@@ -34,13 +34,8 @@
 			canthold = list(/obj/item/storage/briefcase/secure),
 		)
 
-
-	src.lock_code = lock_code
-	if(!isnull(lock_code))
-		atom_parent.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 	src.can_hack_open = can_hack_open
-
-	atom_parent.update_appearance()
+	set_lock_code(lock_code)
 
 /datum/component/lockable_storage/RegisterWithParent()
 	. = ..()
@@ -144,7 +139,17 @@
 	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
 	source.balloon_alert(user, "hacked")
+	set_lock_code(null)
+
+/datum/component/lockable_storage/proc/break_lock()
+	can_hack_open = FALSE // since it's broken for good
 	lock_code = null
+
+	var/obj/source = parent
+	source.obj_flags |= EMAGGED
+	source.atom_storage.locked = STORAGE_NOT_LOCKED
+	SEND_SIGNAL(source, COMSIG_LOCKABLE_STORAGE_SET_CODE, lock_code)
+	source.update_appearance()
 
 /datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
 	SIGNAL_HANDLER
@@ -154,16 +159,35 @@
 
 	if(source.obj_flags & EMAGGED)
 		return FALSE
-	source.obj_flags |= EMAGGED
-	can_hack_open = FALSE // since it's broken for good
 
 	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
 	source.balloon_alert(user, "lock destroyed")
 	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	lock_code = null
-	source.atom_storage.locked = STORAGE_NOT_LOCKED
-	source.update_appearance()
+	break_lock()
 	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Sets the lock code for this storage and updates the locked state accordingly
+ * Arguments:
+ * * new_code - The new lock code to set, can be null to remove the code
+ */
+/datum/component/lockable_storage/proc/set_lock_code(new_code, mob/living/user)
+	var/obj/source = parent
+
+	// Can't set lock code if the electronics are emagged
+	if(source.obj_flags & EMAGGED)
+		return FALSE
+
+	lock_code = new_code
+	SEND_SIGNAL(source, COMSIG_LOCKABLE_STORAGE_SET_CODE, new_code)
+	var/lock_state = lock_code ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED
+	source.atom_storage.set_locked(lock_state)
+	source.update_appearance()
+
+	if(istype(user) && new_code)
+		to_chat(user, span_notice("You set the [source] pincode to [lock_code]."))
+
+	return TRUE
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
@@ -219,7 +243,7 @@
 			if(!lock_code)
 				if(length(numeric_input) != 5)
 					return TRUE
-				lock_code = numeric_input
+				set_lock_code(numeric_input, usr)
 				numeric_input = ""
 				return TRUE
 			//unlocking the current code.

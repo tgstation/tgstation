@@ -148,6 +148,8 @@
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
+///a mob has just dropped an item
+#define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
@@ -635,3 +637,9 @@
 
 /// Sent from /obj/machinert/console/camera_advanced/attack_hand() : (mob/eye/camera/remote/new_camera)
 #define COMSIG_ADVANCED_CAMERA_EYE_CREATED "advanced_camera_eye_created"
+
+/// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
+#define COMSIG_RAPTOR_WINGS_OPENED "raptor_wings_opened"
+
+/// Sent from /obj/item/mob_holder/purple_raptor/proc/toggle_wings() : (mob/living/carbon/human/user)
+#define COMSIG_RAPTOR_WINGS_CLOSED "raptor_wings_closed"

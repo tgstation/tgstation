@@ -87,13 +87,11 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	fire = 90
 	acid = 30
 
-/obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
+/obj/machinery/airalarm/Initialize(mapload)
 	. = ..()
 	set_wires(new /datum/wires/airalarm(src))
-	if(ndir)
-		setDir(ndir)
 
-	if(nbuild)
+	if(!mapload)
 		buildstage = AIR_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 
@@ -128,7 +126,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	))
 
 	GLOB.air_alarms += src
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 	register_context()
 	check_enviroment()
 

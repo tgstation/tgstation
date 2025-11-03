@@ -26,7 +26,7 @@
 		)
 	var/allergy_string
 
-/datum/quirk/item_quirk/allergic/add_unique(client/client_source)
+/datum/quirk/item_quirk/allergic/add(client/client_source)
 	var/list/chem_list = subtypesof(/datum/reagent/medicine) - blacklist
 	var/list/allergy_chem_names = list()
 	for(var/i in 0 to 5)
@@ -38,33 +38,34 @@
 	name = "Extreme [allergy_string] Allergies"
 	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
 
+/datum/quirk/item_quirk/allergic/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(human_holder), allergy_string)
 
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK, LOCATION_HANDS), flavour_text = "Make sure medical staff can see this...", notify_player = TRUE)
 
+/datum/quirk/item_quirk/allergic/add()
+	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(block_metab))
+
+/datum/quirk/item_quirk/allergic/remove()
+	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
+
 /datum/quirk/item_quirk/allergic/post_add()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
 
-/datum/quirk/item_quirk/allergic/process(seconds_per_tick)
-	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
-	//Just halts the progression, I'd suggest you run to medbay asap to get it fixed
-	if(carbon_quirk_holder.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
-		for(var/allergy in allergies)
-			var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(allergy)
-			if(!instantiated_med)
-				continue
-			instantiated_med.reagent_removal_skip_list |= ALLERGIC_REMOVAL_SKIP
-		return //block damage so long as epinephrine exists
+/datum/quirk/item_quirk/allergic/proc/block_metab(mob/living/carbon/source, datum/reagent/chem, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
 
-	for(var/allergy in allergies)
-		var/datum/reagent/instantiated_med = carbon_quirk_holder.reagents.has_reagent(allergy)
-		if(!instantiated_med)
-			continue
-		instantiated_med.reagent_removal_skip_list -= ALLERGIC_REMOVAL_SKIP
-		carbon_quirk_holder.adjustToxLoss(3 * seconds_per_tick)
-		carbon_quirk_holder.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)
-		if(SPT_PROB(10, seconds_per_tick))
-			carbon_quirk_holder.vomit(VOMIT_CATEGORY_DEFAULT)
-			carbon_quirk_holder.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_APPENDIX,ORGAN_SLOT_LUNGS,ORGAN_SLOT_HEART,ORGAN_SLOT_LIVER,ORGAN_SLOT_STOMACH),10)
+	if(!is_type_in_list(chem, allergies))
+		return NONE
+	// Having epinephrine stops metabolization of an allergen, but doesn't remove it from the system
+	if(source.reagents.has_reagent(/datum/reagent/medicine/epinephrine))
+		return COMSIG_MOB_STOP_REAGENT_METABOLISM
+	// Otherwise the allergen causes a ton of damage though otherwise processes normally
+	source.apply_damage(3 * seconds_per_tick, TOX)
+	source.reagents.add_reagent(/datum/reagent/toxin/histamine, 3 * seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick))
+		source.vomit(VOMIT_CATEGORY_DEFAULT)
+		source.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN, ORGAN_SLOT_APPENDIX, ORGAN_SLOT_LUNGS, ORGAN_SLOT_HEART, ORGAN_SLOT_LIVER, ORGAN_SLOT_STOMACH), 10)
+	return NONE
