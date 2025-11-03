@@ -250,17 +250,15 @@
 			/obj/item/clothing/glasses/mod = list(
 				UNSEALED_MESSAGE = GLASSES_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GLASSES_SEAL_MESSAGE,
-				SEALED_INVISIBILITY = HIDEEYES,
-				SEALED_COVER = HEADCOVERSEYES,
 			),
 			/obj/item/clothing/suit/mod = list(
 				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
 			),
-			/obj/item/clothing/gloves/mod = list(
+			/obj/item/clothing/neck/mod = list(
 				CAN_OVERSLOT = TRUE,
-				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
-				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+				UNSEALED_MESSAGE = NECKWEAR_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = NECKWEAR_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				CAN_OVERSLOT = TRUE,
@@ -271,14 +269,7 @@
 	)
 
 /datum/armor/mod_theme_portable_suit
-	melee = 5
-	bullet = 5
-	laser = 5
-	energy = 5
 	bio = 50
-	fire = 25
-	acid = 25
-	wound = 5
 
 /datum/mod_theme/engineering
 	name = "engineering"

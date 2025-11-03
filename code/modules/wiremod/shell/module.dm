@@ -288,6 +288,8 @@
 				part_name = "Boots"
 			else if(istype(part, /obj/item/clothing/glasses/mod))
 				part_name = "Glasses"
+			else if(istype(part, /obj/item/clothing/neck/mod))
+				part_name = "Tie"
 			string_list += part_name
 	deployed_parts.set_output(string_list)
 	deployed.set_output(is_deployed)
