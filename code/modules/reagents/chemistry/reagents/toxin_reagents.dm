@@ -90,7 +90,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
-	var/healing = 0.2//10 of everything per sheet
+	var/healing = 0.3//15 of everything per sheet
 	material = /datum/material/plasma
 	penetrates_skin = NONE
 	ph = 4
