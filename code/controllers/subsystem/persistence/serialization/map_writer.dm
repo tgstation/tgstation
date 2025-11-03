@@ -143,11 +143,9 @@
 				GLOB.TGM_mobs = 0
 
 				for(var/atom/movable/target_atom as anything in pull_from)
-					if(target_atom.flags_1 & HOLOGRAM_1)
+					if(obj_blacklist[target_atom.type])
 						continue
 					if(!target_atom.is_saveable(pull_from))
-						continue
-					if(obj_blacklist[target_atom.type])
 						continue
 
 					var/substitute_type = target_atom.get_save_substitute_type()
