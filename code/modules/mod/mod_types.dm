@@ -60,7 +60,6 @@
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/paper_dispenser,
 		/obj/item/mod/module/stamp,
-		/obj/item/mod/module/selfcleaner,
 	)
 	default_pins = list(
 		/obj/item/mod/module/stamp,
