@@ -271,6 +271,24 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
+/datum/atom_skin/mech_suit
+
+/datum/atom_skin/mech_suit/red
+	preview_name = "Red Mech Suit"
+	new_icon_state = "red_mech_suit"
+
+/datum/atom_skin/mech_suit/white
+	preview_name = "White Mech Suit"
+	new_icon_state = "white_mech_suit"
+
+/datum/atom_skin/mech_suit/blue
+	preview_name = "Blue Mech Suit"
+	new_icon_state = "blue_mech_suit"
+
+/datum/atom_skin/mech_suit/black
+	preview_name = "Black Mech Suit"
+	new_icon_state = "black_mech_suit"
+
 /obj/item/clothing/under/costume/mech_suit
 	name = "mech pilot's suit"
 	desc = "A mech pilot's suit. Might make your butt look big."
@@ -282,13 +300,9 @@
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-	unique_reskin = list(
-						"Red" = "red_mech_suit",
-						"White" = "white_mech_suit",
-						"Blue" = "blue_mech_suit",
-						"Black" = "black_mech_suit",
-						)
-
+/obj/item/clothing/under/costume/mech_suit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/mech_suit)
 
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
@@ -505,4 +519,3 @@
 	desc = "A padded medieval gambeson. Has enough woolen layers to dull a strike from any small weapon."
 	armor_type = /datum/armor/clothing_under/rank_security
 	has_sensor = NO_SENSORS
-

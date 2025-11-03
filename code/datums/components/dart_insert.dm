@@ -62,7 +62,7 @@
 
 /datum/component/dart_insert/proc/on_reskin(datum/source, mob/user, skin)
 	SIGNAL_HANDLER
-	SEND_SIGNAL(parent, COMSIG_DART_INSERT_PARENT_RESKINNED)
+	SEND_SIGNAL(parent, COMSIG_DART_INSERT_PARENT_RESKINNED, skin)
 
 /datum/component/dart_insert/proc/add_to_dart(obj/item/ammo_casing/dart, mob/user)
 	var/obj/projectile/dart_projectile = dart.loaded_projectile

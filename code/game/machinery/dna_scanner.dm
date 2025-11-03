@@ -159,6 +159,39 @@
 	SIGNAL_HANDLER
 	set_linked_console(null)
 
+/datum/atom_skin/dna_disk
+
+/datum/atom_skin/dna_disk/red
+	preview_name = "Red DNA Data Disk"
+	new_icon_state = "datadisk0"
+
+/datum/atom_skin/dna_disk/dark_blue
+	preview_name = "Dark Blue DNA Data Disk"
+	new_icon_state = "datadisk1"
+
+/datum/atom_skin/dna_disk/yellow
+	preview_name = "Yellow DNA Data Disk"
+	new_icon_state = "datadisk2"
+
+/datum/atom_skin/dna_disk/black
+	preview_name = "Black DNA Data Disk"
+	new_icon_state = "datadisk3"
+
+/datum/atom_skin/dna_disk/green
+	preview_name = "Green DNA Data Disk"
+	new_icon_state = "datadisk4"
+
+/datum/atom_skin/dna_disk/purple
+	preview_name = "Purple DNA Data Disk"
+	new_icon_state = "datadisk5"
+
+/datum/atom_skin/dna_disk/grey
+	preview_name = "Grey DNA Data Disk"
+	new_icon_state = "datadisk6"
+
+/datum/atom_skin/dna_disk/light_blue
+	preview_name = "Light Blue DNA Data Disk"
+	new_icon_state = "datadisk7"
 
 //Just for transferring between genetics machines.
 /obj/item/disk/data
@@ -168,20 +201,10 @@
 	var/list/mutations = list()
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
-	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
-	unique_reskin = list(
-			"Red" = "datadisk0",
-			"Dark Blue" = "datadisk1",
-			"Yellow" = "datadisk2",
-			"Black" = "datadisk3",
-			"Green" = "datadisk4",
-			"Purple" = "datadisk5",
-			"Grey" = "datadisk6",
-			"Light Blue" = "datadisk7",
-	)
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/dna_disk, TRUE)
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
 	if(length(genetic_makeup_buffer))
