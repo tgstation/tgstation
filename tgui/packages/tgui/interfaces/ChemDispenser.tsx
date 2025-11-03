@@ -219,33 +219,22 @@ export const ChemDispenser = (props) => {
         <Section
           title="Beaker"
           buttons={
-            beaker ? (
-              beakerTransferAmounts.map((amount) => (
-                <Button
-                  key={amount}
-                  icon="minus"
-                  disabled={recording}
-                  onClick={() => act('remove', { amount })}
-                >
-                  {amount}
-                </Button>
-              ))
-            ) : (
-              <Button
-                icon="eject"
-                onClick={() => act('insert')}
-                style={{
-                  opacity: hasBeakerInHand ? 1 : 0.5,
-                }}
-                tooltip={
-                  hasBeakerInHand
-                    ? 'Insert container from your hand'
-                    : 'You need to hold a container in your hand'
-                }
-                tooltipPosition="bottom-start"
-              >
-                Insert
-              </Button>
+            beaker && (
+              <>
+                <Box inline color="label" mr={1}>
+                  {beaker.currentVolume}/{beaker.maxVolume}u
+                </Box>
+                {beakerTransferAmounts.map((amount) => (
+                  <Button
+                    key={amount}
+                    icon="minus"
+                    disabled={recording}
+                    onClick={() => act('remove', { amount })}
+                  >
+                    {amount}
+                  </Button>
+                ))}
+              </>
             )
           }
         >
@@ -257,7 +246,29 @@ export const ChemDispenser = (props) => {
               showpH={data.showpH}
             />
           ) : (
-            <Box color="label">No beaker loaded.</Box>
+            <Box
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Box color="label">No beaker loaded.</Box>
+              <Button
+                icon="eject"
+                onClick={() => act('insert')}
+                style={{
+                  opacity: data.hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  data.hasBeakerInHand &&
+                  'You need to hold a container in your hand'
+                }
+                tooltipPosition="left-start"
+              >
+                Insert
+              </Button>
+            </Box>
           )}
         </Section>
       </Window.Content>

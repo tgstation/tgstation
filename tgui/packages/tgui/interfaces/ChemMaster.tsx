@@ -139,9 +139,7 @@ const ChemMasterContent = (props: {
                 opacity: hasBeakerInHand ? 1 : 0.5,
               }}
               tooltip={
-                hasBeakerInHand
-                  ? 'Insert container from your hand'
-                  : 'You need to hold a container in your hand'
+                !hasBeakerInHand && 'You need to hold a container in your hand'
               }
               tooltipPosition="bottom-start"
             >
