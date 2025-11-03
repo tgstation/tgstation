@@ -1,7 +1,7 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	abstract_type = /mob/living
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,BLOOD_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 	hud_type = /datum/hud/living
 	interaction_flags_click = ALLOW_RESTING

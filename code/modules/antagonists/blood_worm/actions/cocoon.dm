@@ -143,7 +143,7 @@
 	worm.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
 
 	if (!QDELETED(worm))
-		worm.forceMove(get_turf(cocoon))
+		worm.forceMove(cocoon.drop_location())
 
 	if (!QDELETED(cocoon))
 		qdel(cocoon)
@@ -302,7 +302,7 @@
 			continue
 
 		// The crew now has 4 new problems to deal with.
-		var/mob/living/basic/blood_worm/hatchling/new_hatchling = new(get_turf(cocoon))
+		var/mob/living/basic/blood_worm/hatchling/new_hatchling = new(cocoon.drop_location())
 		var/datum/mind/fresh_mind = new(candidate.key)
 
 		fresh_mind.transfer_to(new_hatchling, force_key_move = TRUE)

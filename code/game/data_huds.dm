@@ -68,6 +68,9 @@
 /datum/atom_hud/data/malf_apc
 	hud_icons = list(MALF_APC_HUD)
 
+/datum/atom_hud/data/human/blood
+	hud_icons = list(BLOOD_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
@@ -149,6 +152,21 @@ Medical HUD! Basic mode needs suit sensors on.
 			return "health-85"
 		else
 			return "health-100"
+
+/// A helper for getting the appropriate blood status for the blood worm blood hud.
+/proc/round_blood_for_hud(mob/living/bloodbag)
+	var/blood_level = (bloodbag.blood_volume / BLOOD_VOLUME_NORMAL) * 100
+	switch(blood_level)
+		if(87.5 to INFINITY)
+			return "blood100"
+		if(62.5 to 87.5)
+			return "blood75"
+		if(37.5 to 62.5)
+			return "blood50"
+		if(12.5 to 37.5)
+			return "blood25"
+		if(-INFINITY to 12.5)
+			return "blood0"
 
 //HOOKS
 
@@ -495,6 +513,21 @@ Diagnostic HUDs!
 	holder.loc = get_turf(src)
 	SET_PLANE(holder,ABOVE_LIGHTING_PLANE,src)
 	set_hud_image_active(MALF_APC_HUD)
+
+/*~~~~~~~~~~~~
+	BLOOD FOR THE BLOOD GOD!!!
+~~~~~~~~~~~~~*/
+
+/mob/living/proc/blood_hud_set_status()
+	// It's annoying for basic mobs that don't have blood to show this.
+	if (blood_volume <= 0)
+		set_hud_image_inactive(BLOOD_HUD)
+	else
+		set_hud_image_active(BLOOD_HUD)
+		set_hud_image_state(BLOOD_HUD, "hud[round_blood_for_hud(src)]")
+
+/mob/living/carbon/blood_hud_set_status()
+	set_hud_image_state(BLOOD_HUD, "hud[round_blood_for_hud(src)]")
 
 #define CACHED_WIDTH_INDEX "width"
 #define CACHED_HEIGHT_INDEX "height"

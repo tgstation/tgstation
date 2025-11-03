@@ -8,6 +8,8 @@
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/human/blood/blood_hud = GLOB.huds[DATA_HUD_BLOOD]
+	blood_hud.add_atom_to_hud(src)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
@@ -23,6 +25,7 @@
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
 	med_hud_set_status()
+	blood_hud_set_status()
 
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)

@@ -122,6 +122,8 @@
 
 	grant_actions(src, innate_actions)
 
+	ADD_TRAIT(src, TRAIT_BLOOD_HUD, INNATE_TRAIT)
+
 /mob/living/basic/blood_worm/Destroy()
 	. = ..()
 
@@ -192,7 +194,7 @@
 
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
-	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
+	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions)
@@ -224,7 +226,7 @@
 		blind_message = span_hear("You hear a squelch.")
 	)
 
-	forceMove(get_turf(host)) // This will call unregister_host() via Moved()
+	forceMove(host.drop_location()) // This will call unregister_host() via Moved()
 
 	playsound(src, 'sound/effects/magic/exit_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 

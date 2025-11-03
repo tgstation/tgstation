@@ -65,6 +65,8 @@
 		hud_used?.hunger?.update_hunger_bar()
 		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
+	blood_hud_set_status()
+
 	if(stat != DEAD)
 		return TRUE
 

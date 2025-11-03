@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/spit
 	name = "Spit Blood"
-	desc = "Spit corrosive blood at your target in exchange for your own health."
+	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to melt restraints while in a host."
 
 	button_icon_state = "spit_blood"
 
@@ -17,8 +17,6 @@
 	var/can_burst = FALSE
 	var/burst_count = 5
 
-	var/set_message = "You fill your maw with blood. <b>Click to spit corrosive blood!</b>"
-
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/New(Target, original)
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
@@ -29,11 +27,12 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/set_click_ability(mob/on_who)
 	. = ..()
-	to_chat(owner, span_notice(set_message))
+	var/right_click_message = ishuman(owner) ? ", right-click to melt restraints" : (can_burst ? ", right-click for a burst" : "")
+	to_chat(owner, span_notice("You fill your [ishuman(owner) ? "mouth" : "maw"] with blood. <b>Left-click to spit corrosive blood[right_click_message]!</b>"))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/unset_click_ability(mob/on_who, refund_cooldown)
 	. = ..()
-	to_chat(owner, span_notice("You empty your maw of blood."))
+	to_chat(owner, span_notice("You empty your [ishuman(owner) ? "mouth" : "maw"] of blood."))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/IsAvailable(feedback)
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
@@ -69,18 +68,22 @@
 
 	var/mob/living/basic/blood_worm/worm = src.target
 
-	if (can_burst && worm.host)
-		owner.balloon_alert(owner, "no burst while in a host!")
-
-	if (modifiers[RIGHT_CLICK] && can_burst && !worm.host)
+	if (modifiers[RIGHT_CLICK] && worm.host)
+		melt_restraints()
+	else if (modifiers[RIGHT_CLICK] && can_burst)
 		fire_burst(clicker, modifiers, target)
 	else
 		fire_normal(clicker, modifiers, target)
+
+	return TRUE // Intercepts the attack chain.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/Activate(atom/target)
 	return TRUE // Has to return true, as otherwise the parent proc of InterceptClickOn will return false, canceling the firing of the projectile.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_normal(mob/living/clicker, modifiers, atom/target)
+	if (target == owner)
+		return
+
 	owner.visible_message(
 		message = span_danger("\The [owner] spit[owner.p_s()] corrosive blood!"),
 		self_message = span_danger("You spit corrosive blood!"),
@@ -92,6 +95,8 @@
 	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 25, vary = TRUE)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_burst(mob/living/clicker, modifiers, atom/target)
+	if (target == owner)
+		return
 	if (!fire_burst_checks(feedback = TRUE))
 		return
 
@@ -115,7 +120,7 @@
 	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 40, vary = TRUE)
 	playsound(owner, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', vol = 40, vary = TRUE)
 
-	StartCooldown()
+	StartCooldown(10 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/spit(target, modifiers, count = 1, spread = 0)
 	for (var/i in 1 to count)
@@ -123,7 +128,7 @@
 
 		spit.firer = owner
 		spit.fired_from = owner
-		spit.aim_projectile(target, owner, modifiers, deviation = lerp(-spread, spread, (i - 1) / (count - 1)))
+		spit.aim_projectile(target, owner, modifiers, deviation = count == 1 ? 0 : lerp(-spread, spread, (i - 1) / (count - 1)))
 		spit.fire()
 
 	owner.newtonian_move(get_angle(target, owner), instant = TRUE, drift_force = count)
@@ -135,7 +140,7 @@
 	else
 		worm.adjustBruteLoss(health_cost * count)
 
-/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_burst_checks(feedback)
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_burst_checks(feedback = FALSE)
 	if (!IsAvailable(feedback))
 		return FALSE
 
@@ -146,6 +151,112 @@
 		return FALSE
 
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_restraints()
+	var/mob/living/carbon/human/host = owner
+
+	var/melted_something = FALSE
+	var/something_to_melt = FALSE
+
+	if (host.handcuffed)
+		something_to_melt = TRUE
+		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_HANDCUFFED)
+	if (host.legcuffed)
+		something_to_melt = TRUE
+		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_LEGCUFFED)
+	if (host.wear_suit?.breakouttime)
+		something_to_melt = TRUE
+		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_OCLOTHING)
+	if (host.shoes?.tied == SHOES_KNOTTED)
+		something_to_melt = TRUE
+		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_FEET)
+	if (istype(host.loc, /obj/structure/closet))
+		something_to_melt = TRUE
+		melted_something |= melt_closet(host, host.loc)
+	if (istype(host.loc, /obj/structure/spider/cocoon))
+		something_to_melt = TRUE
+		melted_something |= melt_cocoon(host, host.loc)
+
+	if (melted_something)
+		playsound(host, SFX_SIZZLE, vol = 80, vary = TRUE, ignore_walls = FALSE)
+		StartCooldown(20 SECONDS)
+	if (!something_to_melt)
+		host.balloon_alert(host, "not restrained!")
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_restraints_in_slot(mob/living/carbon/human/host, slot)
+	var/obj/restraints = host.get_item_by_slot(slot)
+
+	if (!istype(restraints))
+		return FALSE
+	if (restraints.resistance_flags & (INDESTRUCTIBLE | UNACIDABLE | ACID_PROOF))
+		host.balloon_alert(host, "\the [restraints] [restraints.p_are()] too tough!")
+		return FALSE
+
+	host.visible_message(
+		message = span_danger("\The [host] spit[host.p_s()] corrosive blood all over \the [restraints]!"),
+		self_message = span_danger("You spit corrosive blood all over \the [restraints]!"),
+		blind_message = span_hear("You hear sizzling.")
+	)
+
+	log_combat(host, restraints, "melted", addition = "(Spit Blood)")
+
+	addtimer(CALLBACK(src, PROC_REF(finish_melting_restraints), restraints), 5 SECONDS)
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/finish_melting_restraints(obj/restraints)
+	restraints.visible_message(span_danger("\The [restraints] melt[restraints.p_s()] into a pile of goopy blood!"))
+	new /obj/effect/decal/cleanable/blood/old(get_turf(restraints))
+	qdel(restraints)
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_closet(mob/living/carbon/human/host, obj/structure/closet/closet)
+	if (closet.resistance_flags & (INDESTRUCTIBLE | UNACIDABLE | ACID_PROOF))
+		host.balloon_alert(host, "\the [closet] [closet.p_are()] too tough!")
+		return FALSE
+
+	closet.visible_message(
+		message = span_danger("\The [closet]'s hinges overflow with corrosive blood and begin to melt!"),
+		blind_message = span_hear("You hear sizzling."),
+		ignored_mobs = host
+	)
+
+	to_chat(host, span_danger("You spit corrosive blood all over \the [closet]'s interior hinges!"))
+
+	log_combat(host, closet, "melted", addition = "(Spit Blood)")
+
+	addtimer(CALLBACK(src, PROC_REF(finish_melting_closet), closet), 5 SECONDS)
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/finish_melting_closet(obj/structure/closet/closet)
+	closet.visible_message(span_danger("\The [closet]'s hinges melt into a pile of goopy blood!"))
+	new /obj/effect/decal/cleanable/blood/old(get_turf(closet))
+
+	closet.welded = FALSE
+	closet.locked = FALSE
+	closet.broken = TRUE
+	closet.open()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_cocoon(mob/living/carbon/human/host, obj/structure/spider/cocoon/cocoon)
+	if (cocoon.resistance_flags & (INDESTRUCTIBLE | UNACIDABLE | ACID_PROOF))
+		host.balloon_alert(host, "\the [cocoon] [cocoon.p_are()] too tough!")
+		return FALSE
+
+	cocoon.visible_message(
+		message = span_danger("\The [cocoon]'s threads begin to fall apart!"),
+		blind_message = span_hear("You hear sizzling."),
+		ignored_mobs = host
+	)
+
+	to_chat(host, span_danger("You spit corrosive blood all over the inside of \the [cocoon]!"))
+
+	log_combat(host, cocoon, "melted", addition = "(Spit Blood)")
+
+	addtimer(CALLBACK(src, PROC_REF(finish_melting_cocoon), cocoon), 5 SECONDS)
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/finish_melting_cocoon(obj/structure/spider/cocoon/cocoon)
+	cocoon.visible_message(span_danger("\The [cocoon] melt[cocoon.p_s()] into a pile of goopy blood!"))
+	new /obj/effect/decal/cleanable/blood/old(get_turf(cocoon))
+	qdel(cocoon)
 
 /obj/projectile/blood_worm_spit
 	name = "corrosive blood spit"
@@ -172,12 +283,10 @@
 	wound_bonus = 0 // Juveniles can afford to fix wounds on their hosts. This doesn't cause critical wounds. (at least not in testing)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/adult
-	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to fire a burst while outside of a host."
-	cooldown_time = 10 SECONDS // Only applies to burst.
+	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to melt restraints while in a host, or fire a burst while out of a host."
 	health_cost = 7.5 // This is enough for 20 shots in a row at full health.
 	projectile_type = /obj/projectile/blood_worm_spit/adult
 	can_burst = TRUE
-	set_message = "You fill your maw with blood. <b>Left-click to spit once, right-click to fire a burst!</b>"
 
 /obj/projectile/blood_worm_spit/adult
 	damage = 25 // 500 damage total, assuming no armor.

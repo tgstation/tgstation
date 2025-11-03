@@ -440,6 +440,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MEDICAL_HUD_SENSOR_ONLY "med_hud_lesser"
 #define TRAIT_SECURITY_HUD "sec_hud"
 #define TRAIT_SECURITY_HUD_ID_ONLY "sec_hud_lesser"
+#define TRAIT_BLOOD_HUD "blood_hud"
 #define TRAIT_ABDUCTOR_HUD "abductor_hud"
 /// Stop the user from seeing the sechud. Only works for trait handled sechuds.
 #define TRAIT_BLOCK_SECHUD "block_sechud"
