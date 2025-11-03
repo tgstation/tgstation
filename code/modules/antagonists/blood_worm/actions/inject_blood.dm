@@ -62,6 +62,7 @@
 	show_duration = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/blood_worm_transfuse
 	status_type = STATUS_EFFECT_REPLACE
+	processing_speed = STATUS_EFFECT_PRIORITY
 
 	var/damage_regen_rate = 0
 
@@ -182,6 +183,12 @@
 /atom/movable/screen/alert/status_effect/blood_worm_transfuse
 	name = "Blood Injection"
 	desc = "The injected blood is rapidly healing your host."
+	icon = 'icons/mob/actions/actions_blood_worm.dmi'
+	icon_state = "inject_blood"
+
+/atom/movable/screen/alert/status_effect/blood_worm_transfuse/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	underlays += mutable_appearance('icons/mob/actions/backgrounds.dmi', "bg_demon", layer = layer, offset_spokesman = src, plane = plane)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/hatchling
 	health_cost = 20
