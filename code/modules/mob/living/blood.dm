@@ -39,7 +39,6 @@
 
 	//Effects of bloodloss
 	if(sigreturn & HANDLE_BLOOD_NO_OXYLOSS)
-		blood_hud_set_status()
 		return
 
 	// Some effects are halved mid-combat.
@@ -114,8 +113,6 @@
 		// At roughly half blood this equals to 3 oxyloss per tick. At 90% blood it's close to 0.5
 		var/rounded_oxyloss = round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.25) * seconds_per_tick
 		adjustOxyLoss(rounded_oxyloss, updating_health = TRUE)
-
-	blood_hud_set_status()
 
 /// Has each bodypart update its bleed/wound overlay icon states
 /mob/living/carbon/proc/update_bodypart_bleed_overlays()

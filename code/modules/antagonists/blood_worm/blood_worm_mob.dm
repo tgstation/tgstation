@@ -124,6 +124,8 @@
 
 	ADD_TRAIT(src, TRAIT_BLOOD_HUD, INNATE_TRAIT)
 
+	RegisterSignal(src, COMSIG_MOB_EXAMINING, PROC_REF(on_examining))
+
 /mob/living/basic/blood_worm/Destroy()
 	. = ..()
 
@@ -195,6 +197,7 @@
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
 	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
+	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions)
@@ -251,6 +254,7 @@
 
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
+	host.RemoveElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, host_actions)
 	grant_actions(src, innate_actions)
@@ -363,6 +367,59 @@
 
 /mob/living/basic/blood_worm/proc/get_dilution_multiplier()
 	return BLOOD_VOLUME_NORMAL / (maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD)
+
+/mob/living/basic/blood_worm/proc/on_examining(datum/source, atom/target, list/examine_strings)
+	SIGNAL_HANDLER
+
+	if (!isliving(target))
+		return
+
+	var/mob/living/bloodbag = target
+
+	if (bloodbag.blood_volume <= 0)
+		return
+
+	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
+
+	if (!blood_type)
+		return
+
+	var/unscaled_blood = consumed_blood[blood_type.id]
+	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
+	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + bloodbag.blood_volume)
+	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
+
+	var/rounded_volume = CEILING(bloodbag.blood_volume, 1)
+
+	var/total_blood_consumed = 0
+	for (var/blood_type_id as anything in consumed_blood)
+		total_blood_consumed += get_blood_volume_after_curve(consumed_blood[blood_type_id])
+
+	var/growth_string = ""
+	if (total_blood_consumed < cocoon_action.total_blood_required)
+		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
+		if (rounded_growth > 0)
+			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+		else
+			growth_string = ", but consuming it wouldn't contribute to your growth"
+	else
+		if (!istype(src, /mob/living/basic/blood_worm/adult))
+			growth_string = ". You are already ready to mature"
+		else
+			growth_string = ". You are already fully grown"
+
+	examine_strings += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
+
+/// This is why you can't just drain the same dude to reach adulthood in 10 seconds flat.
+/mob/living/basic/blood_worm/proc/get_blood_volume_after_curve(initial_volume)
+	var/starting_point = BLOOD_VOLUME_NORMAL
+	var/maximum_point = starting_point * 2
+	var/clamped_volume = clamp(initial_volume, 0, maximum_point)
+	var/volume_past_starting_point = max(0, clamped_volume - starting_point)
+
+	// To put this in laymans terms, after you reach BLOOD_VOLUME_NORMAL, any further blood of the same type has a lower and lower effect.
+	// This ends after you've consumed BLOOD_VOLUME_NORMAL * 2 of any blood type, after which consuming any more of that type is useless.
+	return max(0, clamped_volume - (volume_past_starting_point * volume_past_starting_point) / maximum_point)
 
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"

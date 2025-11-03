@@ -11,9 +11,6 @@
 
 	var/total_blood_required = 0
 
-	var/curve_max_point = BLOOD_VOLUME_NORMAL * 2
-	var/curve_half_point = BLOOD_VOLUME_NORMAL
-
 	var/timer_id = null
 
 	var/cocoon_time = 30 SECONDS
@@ -182,10 +179,7 @@
 	var/total_consumed_blood = 0
 
 	for (var/blood_type as anything in worm.consumed_blood)
-		var/base_amount = worm.consumed_blood[blood_type]
-
-		// Michaelis-Menten curve. Output increases rapidly and then begins to fall off after reaching the half point.
-		total_consumed_blood += (curve_max_point * base_amount) / (curve_half_point + base_amount)
+		total_consumed_blood += worm.get_blood_volume_after_curve(worm.consumed_blood[blood_type])
 
 	return total_consumed_blood
 

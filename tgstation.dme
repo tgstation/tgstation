@@ -1566,6 +1566,7 @@
 #include "code\datums\elements\give_turf_traits.dm"
 #include "code\datums\elements\glass_pacifist.dm"
 #include "code\datums\elements\gravedigger.dm"
+#include "code\datums\elements\hand_organ_insertion.dm"
 #include "code\datums\elements\hat_wearer.dm"
 #include "code\datums\elements\haunted.dm"
 #include "code\datums\elements\high_fiver.dm"

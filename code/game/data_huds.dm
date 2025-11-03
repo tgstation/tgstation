@@ -153,20 +153,20 @@ Medical HUD! Basic mode needs suit sensors on.
 		else
 			return "health-100"
 
-/// A helper for getting the appropriate blood status for the blood worm blood hud.
+/// A helper for getting the appropriate icon state for the blood hud.
 /proc/round_blood_for_hud(mob/living/bloodbag)
 	var/blood_level = (bloodbag.blood_volume / BLOOD_VOLUME_NORMAL) * 100
 	switch(blood_level)
 		if(87.5 to INFINITY)
-			return "blood100"
+			return "hudblood100"
 		if(62.5 to 87.5)
-			return "blood75"
+			return "hudblood75"
 		if(37.5 to 62.5)
-			return "blood50"
+			return "hudblood50"
 		if(12.5 to 37.5)
-			return "blood25"
+			return "hudblood25"
 		if(-INFINITY to 12.5)
-			return "blood0"
+			return "hudblood0"
 
 //HOOKS
 
@@ -524,10 +524,10 @@ Diagnostic HUDs!
 		set_hud_image_inactive(BLOOD_HUD)
 	else
 		set_hud_image_active(BLOOD_HUD)
-		set_hud_image_state(BLOOD_HUD, "hud[round_blood_for_hud(src)]")
+		set_hud_image_state(BLOOD_HUD, round_blood_for_hud(src))
 
 /mob/living/carbon/blood_hud_set_status()
-	set_hud_image_state(BLOOD_HUD, "hud[round_blood_for_hud(src)]")
+	set_hud_image_state(BLOOD_HUD, round_blood_for_hud(src))
 
 #define CACHED_WIDTH_INDEX "width"
 #define CACHED_HEIGHT_INDEX "height"

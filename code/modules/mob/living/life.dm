@@ -65,7 +65,9 @@
 		hud_used?.hunger?.update_hunger_bar()
 		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
-	blood_hud_set_status()
+	var/image/hud_image = active_hud_list?[BLOOD_HUD]
+	if(hud_image && hud_image.icon_state != round_blood_for_hud(src))
+		blood_hud_set_status()
 
 	if(stat != DEAD)
 		return TRUE
