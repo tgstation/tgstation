@@ -12,6 +12,9 @@
 /// Checks that every overlay passed into build_appearance_list exists in the icon
 /datum/unit_test/focus_only/invalid_overlays
 
+/// Checks that every screen alert with an overlay icon state is valid
+/datum/unit_test/focus_only/screen_alert_overlay
+
 /// Checks that every icon sent to the research_designs spritesheet is valid
 /datum/unit_test/focus_only/invalid_research_designs
 

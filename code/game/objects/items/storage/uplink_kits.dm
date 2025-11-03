@@ -751,7 +751,7 @@
 	new spess_suit(src) // Above allows me to get the helmet from a variable on the object
 	var/obj/item/clothing/head/helmet/space/syndicate/spess_helmet = GLOB.syndicate_space_suits_to_helmets[spess_suit]
 	new spess_helmet(src) // 4 TC for the space gear
-	new /obj/item/tank/jetpack/oxygen/harness(src) // They kinda need this to fly to the cruiser.
+	new /obj/item/tank/jetpack/harness(src) // They kinda need this to fly to the cruiser.
 	// Tacticool gear
 	new /obj/item/clothing/shoes/combat(src)
 	new /obj/item/clothing/under/syndicate(src)
@@ -891,6 +891,12 @@
 	new /obj/item/food/monkeycube/dangerous_horse(src)
 	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
 	new /obj/item/food/grown/apple(src)
+
+/obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()
+	new /obj/item/book/granter/martial/carp(src)
+	new /obj/item/clothing/head/costume/snakeeater(src)
+	new /obj/item/clothing/under/costume/gi(src)
+	new /obj/item/clothing/shoes/sandal(src)
 
 #undef KIT_RECON
 #undef KIT_BLOODY_SPAI

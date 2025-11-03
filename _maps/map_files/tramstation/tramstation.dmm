@@ -35082,8 +35082,8 @@
 "lgP" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/rack,
-/obj/item/tank/jetpack/oxygen,
-/obj/item/tank/jetpack/oxygen{
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -54009,6 +54009,7 @@
 /obj/item/mod/module/signlang_radio,
 /obj/item/mod/module/thermal_regulator,
 /obj/item/gun/syringe,
+/obj/item/gun/syringe,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "rSb" = (
@@ -67267,6 +67268,9 @@
 /obj/item/book/manual/wiki/grenades,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
+/obj/item/assembly/igniter,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "wsb" = (

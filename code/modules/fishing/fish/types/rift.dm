@@ -350,7 +350,7 @@
 /obj/item/fish/gullion
 	name = "gullion"
 	fish_id = "gullion"
-	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
+	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms. \
 		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
 		How xenomorphs manage is a complete mystery bordering on bullshit."
 	icon = 'icons/obj/aquarium/rift.dmi'
