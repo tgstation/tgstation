@@ -252,7 +252,7 @@
 	playsound(source, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	source.do_attack_animation(target, ATTACK_EFFECT_KICK)
 	target.apply_damage(round(damage/3,1), attack_type, affecting, final_armor_block, wound_bonus = damage) //Ostensibly, apply a third of our damage again // We're not being too fussy about limb bonuses for this
-	log_combat(attacker, defender, "auto-followup strike (Kaza Ruk)")
+	log_combat(source, target, "auto-followup strike (Kaza Ruk)")
 
 //Kaza Ruk Gloves
 
