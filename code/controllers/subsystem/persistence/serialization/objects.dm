@@ -131,6 +131,8 @@
 			color_path = "/scrubbers"
 		if(COLOR_BLUE)
 			color_path = "/supply"
+		else
+			color_path = "/general"
 
 	var/visible_path = hide ? "/hidden" : "/visible"
 
@@ -162,7 +164,8 @@
 /obj/machinery/atmospherics/components/unary/is_saveable()
 	if(locate(/obj/machinery/cryo_cell) in loc)
 		return FALSE
-	. = ..()
+
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/get_save_vars()
 	. = ..()
@@ -700,7 +703,8 @@
 /obj/machinery/power/terminal/is_saveable()
 	if(locate(/obj/machinery/power/apc) in loc)
 		return FALSE
-	. = ..()
+
+	return ..()
 
 /obj/machinery/power/apc/get_save_vars()
 	. = ..()
@@ -906,6 +910,41 @@
 	. += NAMEOF(src, c_tag)
 
 	return .
+
+/obj/item/storage/briefcase/secure/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, stored_lock_code)
+	return .
+
+
+
+/obj/item/wallframe/secure_safe/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, stored_lock_code)
+	return .
+
+/obj/structure/secure_safe/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, stored_lock_code)
+	return .
+
+/obj/structure/safe/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, open)
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, tumblers)
+	. += NAMEOF(src, explosion_count)
+	return .
+
+/obj/structure/safe/get_custom_save_vars()
+	. = ..()
+	// we don't need to set new tumblers otherwise the tumblers list grows out of control
+	.[NAMEOF(src, number_of_tumblers)] = 0
+	return .
+
+/obj/structure/safe/PersistentInitialize()
+	. = ..()
+	update_appearance()
 
 /*
 /obj/item/card/id/on_object_saved()
