@@ -251,7 +251,7 @@
 			beaker2 = new_beaker
 			log.Cut()
 
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 	return TRUE
 
