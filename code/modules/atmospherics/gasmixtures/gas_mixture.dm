@@ -492,13 +492,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/fires = list()
 	var/list/gas_reactions = SSair.gas_reactions
 	for(var/gas_id in cached_gases)
-		var/list/reaction_set = gas_reactions[gas_id]
+		var/alist/reaction_set = gas_reactions[gas_id]
 		if(!reaction_set)
 			continue
-		pre_formation += reaction_set[1]
-		mid_formation += reaction_set[2]
-		post_formation += reaction_set[3]
-		fires += reaction_set[4]
+		pre_formation += reaction_set[PRIORITY_PRE_FORMATION]
+		mid_formation += reaction_set[PRIORITY_FORMATION]
+		post_formation += reaction_set[PRIORITY_POST_FORMATION]
+		fires += reaction_set[PRIORITY_FIRE]
 
 	var/list/reactions = pre_formation + mid_formation + post_formation + fires
 

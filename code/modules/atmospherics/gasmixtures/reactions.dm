@@ -6,7 +6,7 @@
 
 	//Builds a list of gas id to reaction group
 	for(var/gas_id in GLOB.meta_gas_info)
-		priority_reactions[gas_id] = list(
+		priority_reactions[gas_id] = alist(
 			PRIORITY_PRE_FORMATION = list(),
 			PRIORITY_FORMATION = list(),
 			PRIORITY_POST_FORMATION = list(),
@@ -29,8 +29,8 @@
 	//Culls empty gases
 	for(var/gas_id in GLOB.meta_gas_info)
 		var/passed = FALSE
-		for(var/list/priority_grouping in priority_reactions[gas_id])
-			if(length(priority_grouping))
+		for(var/priority_group,reactions in priority_reactions[gas_id])
+			if(length(reactions))
 				passed = TRUE
 				break
 		if(passed)
