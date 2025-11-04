@@ -146,12 +146,12 @@
 		cms_coefficient /= laser.tier
 
 /obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(!item.can_insert_container(user, src))
-		return NONE
-
 	if(processing_reagents)
 		balloon_alert(user, "still processing!")
 		return ITEM_INTERACT_BLOCKING
+
+	if(!item.can_insert_container(user, src))
+		return NONE
 
 	var/is_right_clicking = LAZYACCESS(modifiers, RIGHT_CLICK)
 	if(!replace_beaker(user, !is_right_clicking, item))

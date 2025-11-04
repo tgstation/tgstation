@@ -90,14 +90,14 @@
 		heater_coefficient *= micro_laser.tier
 
 /obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
-	if(!held_item.can_insert_container(user, src))
-		return NONE
-
 	if(!QDELETED(beaker))
 		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 			var/obj/item/reagent_containers/injector = held_item
 			injector.interact_with_atom(beaker, user, modifiers)
 			return ITEM_INTERACT_SUCCESS
+
+	if(!held_item.can_insert_container(user, src))
+		return NONE
 
 	if(!replace_beaker(user, held_item))
 		return ITEM_INTERACT_BLOCKING
