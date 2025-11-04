@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "refactored code for ear/soundbang protection. Flashbangs and other things can now affect simple/basic mobs as well, not just carbon and occasionally silicons."
+  - balance: "Aliens are no longer impervious to soundbang_act. Still very resistant to it due to their hardcoded ear protection"
+  - balance: "How the resonant shriek changeling ability works is now slightly more consistent with the ear/soundbang protection, meaning it won't work well in a vacuum, but at least it works on simple mobs now."
+  - bugfix: "Everyone can now hear a changeling shriek, unless they're already deafened or in a vacuum."
