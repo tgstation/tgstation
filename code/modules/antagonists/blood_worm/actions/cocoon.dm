@@ -91,7 +91,7 @@
 		var/range = 4 - get_dist(cocoon, unfortunate_observer)
 		unfortunate_observer.throw_at(get_ranged_target_turf_direct(cocoon, unfortunate_observer, range), range = range, speed = 2)
 
-	for (var/turf/turf as anything in view(3, cocoon))
+	for (var/turf/turf in view(3, cocoon))
 		if (prob(100 - get_dist(cocoon, turf) * 20))
 			new /obj/effect/decal/cleanable/blood(turf)
 

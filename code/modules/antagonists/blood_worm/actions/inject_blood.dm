@@ -71,6 +71,9 @@
 
 	var/organ_regen_rate = 0
 
+	var/trauma_regen_rate = 0
+	var/trauma_regen_accumulation = 0
+
 	var/atom/movable/screen/alert/status_effect/worm_alert = null
 	var/mob/living/basic/blood_worm/worm = null
 
@@ -94,6 +97,7 @@
 	need_mob_update |= heal_damage(seconds_between_ticks)
 	need_mob_update |= heal_wounds(seconds_between_ticks)
 	need_mob_update |= heal_organs(seconds_between_ticks)
+	heal_traumas(seconds_between_ticks)
 
 	if (need_mob_update)
 		owner.updatehealth()
@@ -158,6 +162,19 @@
 		// In addition, none of the other blood worm code gives a shit about targets being organic, so this is more consistent.
 		. |= organ.apply_organ_damage(-organ_regen_rate * seconds_between_ticks)
 
+/datum/status_effect/blood_worm_transfuse/proc/heal_traumas(seconds_between_ticks)
+	var/mob/living/carbon/human/host = owner
+
+	if (host.has_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY))
+		trauma_regen_accumulation += trauma_regen_rate * seconds_between_ticks
+	else
+		trauma_regen_accumulation = 0
+		return
+
+	while (trauma_regen_accumulation >= 1 && host.has_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY))
+		host.cure_trauma_type(resilience = TRAUMA_RESILIENCE_SURGERY)
+		trauma_regen_accumulation = max(0, trauma_regen_accumulation - 1)
+
 /datum/status_effect/blood_worm_transfuse/proc/attach_to_worm(mob/living/basic/blood_worm/new_worm)
 	worm = new_worm
 
@@ -199,6 +216,7 @@
 	damage_regen_rate = 6 // 20 s * 6 hp/s = 120 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 6 // One wound every 6 seconds, +30% per wound severity level.
 	organ_regen_rate = 2.5 // 20 s * 2.5 hp/s = 50 hp
+	trauma_regen_rate = 1 / 6 // One trauma every 6 seconds.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 	health_cost = 35
@@ -209,6 +227,7 @@
 	damage_regen_rate = 8 // 20 s * 8 hp/s = 160 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
 	organ_regen_rate = 4 // 20 s * 4 hp/s = 80 hp
+	trauma_regen_rate = 1 / 5 // One trauma every 5 seconds.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 	health_cost = 50
@@ -219,5 +238,6 @@
 	damage_regen_rate = 10 // 20 s * 10 hp/s = 200 hp, note that major host healing is expected as the worm itself is very vulnerable to bleeding.
 	wound_regen_rate = 1 / 5 // One wound every 5 seconds, +30% per wound severity level.
 	organ_regen_rate = 5 // 20 s * 5 hp/s = 100 hp, which is also the standard organ health threshold.
+	trauma_regen_rate = 1 / 6 // One trauma every 4 seconds.
 
 #undef REQUIRED_ACCUMULATION

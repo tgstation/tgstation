@@ -472,12 +472,12 @@
 
 /mob/living/basic/blood_worm/proc/get_scaled_total_consumed_blood()
 	. = 0
-	for (var/blood_type_id as anything in consumed_blood)
+	for (var/blood_type_id in consumed_blood)
 		. += get_blood_volume_after_curve(consumed_blood[blood_type_id])
 
 /mob/living/basic/blood_worm/proc/get_unscaled_total_consumed_blood()
 	. = 0
-	for (var/blood_type_id as anything in consumed_blood)
+	for (var/blood_type_id in consumed_blood)
 		. += consumed_blood[blood_type_id]
 
 /// This is why you can't just drain the same dude to reach adulthood in 10 seconds flat.

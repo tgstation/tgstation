@@ -177,10 +177,10 @@
 		var/list/blood = get_blood_in_container(target)
 
 		var/total_volume = 0
-		for (var/reagent_type as anything in blood)
+		for (var/reagent_type in blood)
 			total_volume += blood[reagent_type]
 
-		for (var/reagent_type as anything in blood)
+		for (var/reagent_type in blood)
 			var/volume = blood[reagent_type]
 			var/datum/reagent/reagent = target.reagents.has_reagent(reagent_type)
 
