@@ -9,7 +9,7 @@
 	description = ""
 	keybind_signal = COMSIG_KB_MOB_STOPPULLING_DOWN
 
-/datum/keybinding/mob/stop_pulling/down(client/user, turf/target)
+/datum/keybinding/mob/stop_pulling/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -27,7 +27,7 @@
 	description = ""
 	keybind_signal = COMSIG_KB_MOB_SWAPHANDS_DOWN
 
-/datum/keybinding/mob/swap_hands/down(client/user, turf/target)
+/datum/keybinding/mob/swap_hands/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -52,7 +52,7 @@
 	keybind_signal = COMSIG_KB_MOB_SELECTLEFTHAND_DOWN
 	hand_index = LEFT_HANDS
 
-/datum/keybinding/mob/select_hand/down(client/user, turf/target)
+/datum/keybinding/mob/select_hand/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -72,7 +72,7 @@
 	description = "Uses whatever item you have inhand"
 	keybind_signal = COMSIG_KB_MOB_ACTIVATEINHAND_DOWN
 
-/datum/keybinding/mob/activate_inhand/down(client/user, turf/target)
+/datum/keybinding/mob/activate_inhand/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
@@ -87,21 +87,29 @@
 	description = ""
 	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
 
-/datum/keybinding/mob/drop_item/down(client/user, turf/target)
+/datum/keybinding/mob/drop_item/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
 	if(iscyborg(user.mob)) //cyborgs can't drop items
 		return FALSE
-	var/mob/M = user.mob
-	var/obj/item/I = M.get_active_held_item()
-	if(!I)
+	var/mob/user_mob = user.mob
+	var/obj/item/item_dropped = user_mob.get_active_held_item()
+	if(!item_dropped)
 		to_chat(user, span_warning("You have nothing to drop in your hand!"))
-	else
-		user.mob.dropItemToGround(I)
+		return TRUE
+	if(!user.prefs.read_preference(/datum/preference/toggle/specific_dropping))
+		user.mob.dropItemToGround(item_dropped)
+		return TRUE
+	if(!user_mob.Adjacent(target) || target.is_blocked_turf(source_atom = item_dropped))
+		user_mob.throw_item(target)
+		return TRUE
+	var/x_value = (mousepos_x >= 0) ? mousepos_x - ICON_SIZE_X / 2 : mousepos_x + ICON_SIZE_X / 2
+	var/y_value = (mousepos_y >= 0) ? mousepos_y - ICON_SIZE_Y / 2 : mousepos_y + ICON_SIZE_Y / 2
+	user_mob.transfer_item_to_turf(item_dropped, target, x_value, y_value)
 	return TRUE
 
-/datum/keybinding/mob/target/down(client/user, turf/target)
+/datum/keybinding/mob/target/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return .
@@ -210,7 +218,7 @@
 	description = "Prevents you from moving"
 	keybind_signal = COMSIG_KB_MOB_BLOCKMOVEMENT_DOWN
 
-/datum/keybinding/mob/prevent_movement/down(client/user, turf/target)
+/datum/keybinding/mob/prevent_movement/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
