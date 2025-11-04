@@ -20694,7 +20694,8 @@
 	dir = 1
 	},
 /obj/structure/sign/departments/cargo{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -64538,7 +64539,7 @@
 /area/station/hallway/secondary/construction/engineering)
 "vvd" = (
 /obj/machinery/camera{
-	dir = 10;
+	dir = 8;
 	c_tag = "Hallway - Starboard Tram Platform South-West"
 	},
 /obj/machinery/firealarm/directional/west,
