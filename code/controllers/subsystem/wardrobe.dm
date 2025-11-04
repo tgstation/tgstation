@@ -209,7 +209,7 @@ SUBSYSTEM_DEF(wardrobe)
 
 /// Take an existing object, and insert it into our storage
 /// If we can't or won't take it, it's deleted. You do not own this object after passing it in
-/datum/controller/subsystem/wardrobe/proc/stash_object(obj/object)
+/datum/controller/subsystem/wardrobe/proc/stash_object(obj/item/object)
 	if(object.item_flags & DO_NOT_WARDROBE)
 		return
 	var/object_type = object.type
