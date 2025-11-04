@@ -52,13 +52,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/checking = items_to_check[i]
 		if(QDELETED(checking)) //Nulls in the list, depressing
 			continue
+		if(checking.item_flags & DO_NOT_WARDROBE)
+			continue
 		if(!isitem(checking)) //What the fuck are you on
 			to_nuke += checking
 			continue
 
 		var/list/contents = checking.contents
 		if(length(contents))
-			if(checking.item_flags & MODSUIT_PART) // Skip any MOD parts, which are created indirectly + reside in the suit's contents, and should be managed by the suit itself
+			if(checking.item_flags & DO_NOT_WARDROBE) // Skip any items like MOD parts, which are created in the contents of a stashed item and should not be destroyed
 				continue
 			items_to_check |= contents //Please don't make an infinite loop somehow thx
 			to_nuke += checking //Goodbye
