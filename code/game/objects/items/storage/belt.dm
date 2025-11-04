@@ -647,7 +647,7 @@
 	inhand_icon_state = "gladius_sheath"
 	worn_icon_state = "gladius_sheath"
 	storage_type = /datum/storage/gladius_belt
-	stored_blade = /obj/item/melee/gladius
+	stored_blade = /obj/item/claymore/gladius
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"

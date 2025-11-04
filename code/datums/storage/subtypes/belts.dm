@@ -302,7 +302,7 @@
 
 /datum/storage/gladius_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
-	set_holdable(/obj/item/melee/gladius)
+	set_holdable(/obj/item/claymore/gladius)
 
 ///Plant belt
 /datum/storage/plant_belt
