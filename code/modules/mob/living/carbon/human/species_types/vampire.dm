@@ -44,7 +44,7 @@
 	. = ..()
 	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
 	if(blood_display)
-		old_vampire.hud_used.infodisplay-= blood_display
+		old_vampire.hud_used.infodisplay -= blood_display
 		QDEL_NULL(blood_display)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
