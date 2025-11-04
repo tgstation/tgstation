@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Small dullahan code cleanup post Halloween"

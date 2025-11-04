@@ -185,3 +185,7 @@
 
 /// From /mob/living/carbon/human/proc/update_mob_height() : (old_height)
 #define COMSIG_HUMAN_HEIGHT_UPDATED "human_height_updated"
+
+/// From /mob/living/carbon/proc/can_defib() : ()
+/// Return a defib result flag to override default defib brain check
+#define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
