@@ -102,7 +102,6 @@
 		user.mob.dropItemToGround(item_dropped)
 		return TRUE
 	if(!user_mob.Adjacent(target) || target.is_blocked_turf(source_atom = item_dropped))
-		user_mob.throw_item(target)
 		return TRUE
 	var/x_value = (mousepos_x >= 0) ? mousepos_x - ICON_SIZE_X / 2 : mousepos_x + ICON_SIZE_X / 2
 	var/y_value = (mousepos_y >= 0) ? mousepos_y - ICON_SIZE_Y / 2 : mousepos_y + ICON_SIZE_Y / 2
