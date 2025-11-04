@@ -45598,7 +45598,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/turretid{
-	control_area = "/area/station/ai/satellite";
+	control_area = "/area/station/ai/satellite/hallway";
 	name = "Chamber Hallway Turret Control";
 	pixel_y = -24;
 	req_access = list("minisat")
@@ -73034,7 +73034,7 @@
 /area/station/science/research)
 "uxG" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai/satellite";
+	control_area = "/area/station/ai/satellite/service";
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
 	req_access = list("minisat");
@@ -73115,7 +73115,7 @@
 	start_active = 1
 	},
 /obj/machinery/turretid{
-	control_area = "/area/station/ai/satellite";
+	control_area = "/area/station/ai/satellite/atmos";
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
 	req_access = list("minisat");
