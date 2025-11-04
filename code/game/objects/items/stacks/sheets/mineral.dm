@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	var/absorb_zone = check_zone(user.zone_selected)
 	if(!try_absorb_checks(absorbing_mob, user, absorb_zone))
 		return FALSE
-	absorbing_mob.balloon_alert(user, "Absorbing plasma...")
+	absorbing_mob.balloon_alert(user, "absorbing plasma...")
 	try_absorb(absorbing_mob, user, absorb_zone, FALSE)
 	return TRUE
 
