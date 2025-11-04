@@ -166,7 +166,7 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
 /// Allow admin to mass add or remove a trait across all mobs
-ADMIN_VERB(mass_modify_traits, R_ADMIN, "Mass Modify Traits", "Adds or removes a trait from every mob.", ADMIN_CATEGORY_FUN)
+ADMIN_VERB(mass_modify_traits, R_FUN, "Mass Modify Traits", "Adds or removes a trait from every mob.", ADMIN_CATEGORY_FUN)
 
 	var/choice = tgui_alert(user, "Add or Remove Trait?", "Mass Add/Remove Trait", list("Add", "Remove"))
 	if(isnull(choice))
