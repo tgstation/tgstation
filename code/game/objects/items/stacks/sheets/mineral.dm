@@ -201,18 +201,10 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 		return
 	if(DOING_INTERACTION_WITH_TARGET(user, interacting_with))
 		return ITEM_INTERACT_BLOCKING
-	if(begin_absorb(interacting_with, user))
+	if(try_absorb(interacting_with, user, FALSE))
 		return ITEM_INTERACT_SUCCESS
 	else
 		return ITEM_INTERACT_BLOCKING
-
-/obj/item/stack/sheet/mineral/plasma/proc/begin_absorb(mob/living/carbon/human/absorbing_mob, mob/living/user)
-	var/absorb_zone = check_zone(user.zone_selected)
-	if(!try_absorb_checks(absorbing_mob, user, absorb_zone))
-		return FALSE
-	absorbing_mob.balloon_alert(user, "absorbing plasma...")
-	try_absorb(absorbing_mob, user, absorb_zone, FALSE)
-	return TRUE
 
 /obj/item/stack/sheet/mineral/plasma/proc/try_absorb_checks(mob/living/carbon/human/absorbing_mob, mob/living/user, absorb_zone)
 	if(!(absorb_zone in absorbing_mob.get_all_limbs()))
@@ -224,9 +216,14 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 		return FALSE
 	return TRUE
 
-/obj/item/stack/sheet/mineral/plasma/proc/try_absorb(mob/living/carbon/human/absorbing_mob, mob/living/user, absorb_zone, silent = FALSE)
+/obj/item/stack/sheet/mineral/plasma/proc/try_absorb(mob/living/carbon/human/absorbing_mob, mob/living/user, silent = FALSE)
 	if(absorb_sound != null)
 		playsound(absorbing_mob, absorb_sound, 100, TRUE)
+	var/absorb_zone = check_zone(user.zone_selected)
+	if(!try_absorb_checks(absorbing_mob, user, absorb_zone))
+		return FALSE
+	absorbing_mob.balloon_alert(user, "absorbing plasma...")
+	return TRUE
 	if(absorbing_mob == user)
 		if(!silent)
 			user.visible_message(
@@ -234,19 +231,8 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 				span_notice("You begin aborbing the plasma..."),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-		if(!do_after(
-			user,
-			delay,
-			absorbing_mob,
-		))
-			return FALSE
-		if(!try_absorb_checks(absorbing_mob, user, absorb_zone))
-			return FALSE
-		if(!use(1))
-			return FALSE
-		absorbing_mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 20)
-		return TRUE
-	if(!silent)
+	else
+		if(!silent)
 		user.visible_message(
 			span_notice("[user] starts to apply a sheet of plasma on [absorbing_mob]..."),
 			span_notice("You begin applying the plasma on [absorbing_mob]..."),
