@@ -210,7 +210,8 @@
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "robe_cape"
 	greyscale_config = /datum/greyscale_config/robe_cape
-	greyscale_colors = "#555555"
+	greyscale_colors = "#2a2844"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
