@@ -9,6 +9,7 @@
 		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 	)
+	abstract_parent_type = /datum/heretic_knowledge/armor
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 	cost = 1
 
