@@ -206,9 +206,9 @@
 	name = "robe cape"
 	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
 	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = "robe_cape_item"
-	worn_icon_state = "robe_cape"
-	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
+	icon_state = 'robe_cape_item'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	color = "#272546"
 
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
