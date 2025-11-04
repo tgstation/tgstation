@@ -1,4 +1,0 @@
-author: "Cirrial"
-delete-after: True
-changes:
-  - admin: "Made the buttons asking you for anonymity when you select/approve a Play Internet Sound request actually do what they say, instead of the opposite."

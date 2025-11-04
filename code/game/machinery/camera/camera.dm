@@ -85,7 +85,7 @@
 
 	var/list/datum/weakref/localMotionTargets = list()
 	var/detectTime = 0
-	var/area/station/ai_monitored/area_motion = null
+	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
@@ -178,8 +178,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	SIGNAL_HANDLER
 	proximity_monitor = null
 
-/obj/machinery/camera/proc/set_area_motion(area/A)
-	area_motion = A
+/obj/machinery/camera/proc/set_area_motion(datum/motion_group/group)
+	area_motion = group
 	create_prox_monitor()
 
 /obj/machinery/camera/examine(mob/user)
