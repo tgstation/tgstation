@@ -71629,7 +71629,7 @@
 /area/station/command/heads_quarters/rd)
 "ufn" = (
 /obj/machinery/turretid{
-	control_area = "area/station/ai/satellite/interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "Antechamber Turret Control";
 	pixel_x = 30;
 	req_access = list("minisat");

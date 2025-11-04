@@ -77476,7 +77476,7 @@
 /area/mine/production)
 "vQz" = (
 /obj/machinery/turretid{
-	control_area = "area/station/ai/satellite/interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "Antechamber Turret Control";
 	pixel_y = -24;
 	req_access = list("minisat")

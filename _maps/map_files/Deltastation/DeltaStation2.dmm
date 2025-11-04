@@ -82336,7 +82336,7 @@
 "upp" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/turretid{
-	control_area = "area/station/ai/satellite/interior";
+	control_area = "/area/station/ai/satellite/interior";
 	name = "Antechamber Turret Control";
 	pixel_x = -32;
 	req_access = list("minisat");
