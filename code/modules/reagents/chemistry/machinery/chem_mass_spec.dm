@@ -61,7 +61,7 @@
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
 		return
 
-	if(is_valid_container(held_item))
+	if(held_item.is_chem_container())
 		if(QDELETED(beaker1))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert input beaker"
 		else
@@ -146,7 +146,7 @@
 		cms_coefficient /= laser.tier
 
 /obj/machinery/chem_mass_spec/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(!can_insert_beaker(user, item))
+	if(!item.can_insert_container(user, src))
 		return NONE
 
 	if(processing_reagents)
@@ -255,14 +255,6 @@
 
 	return TRUE
 
-/// Checks if user can interact with beaker slot and container is valid
-/obj/machinery/chem_mass_spec/proc/can_insert_beaker(mob/living/user, obj/item/reagent_containers/container)
-	return is_valid_container(container) && can_interact(user) && user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH)
-
-/// Checks if container can be used with this machine
-/obj/machinery/chem_mass_spec/proc/is_valid_container(obj/item/reagent_containers/container)
-	return is_reagent_container(container) && container.is_open_container() && !(container.item_flags & ABSTRACT) && !(container.flags_1 & HOLOGRAM_1)
-
 ///Computes time to purity reagents
 /obj/machinery/chem_mass_spec/proc/estimate_time()
 	PRIVATE_PROC(TRUE)
@@ -303,7 +295,8 @@
 	.["processing"] = processing_reagents
 	.["eta"] = delay_time - progress_time
 	.["peakHeight"] = 0
-	.["hasBeakerInHand"] = is_valid_container(user.get_active_held_item())
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	//input reagents
 	var/list/beaker1Data = null
@@ -445,14 +438,14 @@
 
 		if("insert1")
 			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
+			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, TRUE, container)
 
 			return TRUE
 
 		if("insert2")
 			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
+			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, FALSE, container)
 
 			return TRUE

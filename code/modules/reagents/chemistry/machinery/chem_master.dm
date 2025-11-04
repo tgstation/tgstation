@@ -61,7 +61,7 @@
 			. = CONTEXTUAL_SCREENTIP_SET
 		return .
 
-	if(is_valid_container(held_item))
+	if(held_item.is_chem_container())
 		if(!QDELETED(beaker))
 			context[SCREENTIP_CONTEXT_LMB] = "Replace beaker"
 		else
@@ -169,7 +169,7 @@
 	return containers
 
 /obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!can_insert_beaker(user, tool))
+	if(!tool.can_insert_container(user, src))
 		return NONE
 	if(!replace_beaker(user, tool))
 		return ITEM_INTERACT_BLOCKING
@@ -236,14 +236,6 @@
 
 	return TRUE
 
-/// Checks if user can interact with beaker slot and container is valid
-/obj/machinery/chem_master/proc/can_insert_beaker(mob/living/user, obj/item/reagent_containers/container)
-	return is_valid_container(container) && can_interact(user) && user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH)
-
-/// Checks if container can be used with this machine
-/obj/machinery/chem_master/proc/is_valid_container(obj/item/reagent_containers/container)
-	return is_reagent_container(container) && container.is_open_container() && !(container.item_flags & ABSTRACT) && !(container.flags_1 & HOLOGRAM_1)
-
 /obj/machinery/chem_master/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -301,7 +293,8 @@
 	.["printingProgress"] = printing_progress
 	.["printingTotal"] = printing_total
 	.["selectedPillDuration"] = pill_layers
-	.["hasBeakerInHand"] = is_valid_container(user.get_active_held_item())
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	//contents of source beaker
 	var/list/beaker_data = null
@@ -430,7 +423,7 @@
 
 		if("insert")
 			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
+			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, container)
 
 			return TRUE

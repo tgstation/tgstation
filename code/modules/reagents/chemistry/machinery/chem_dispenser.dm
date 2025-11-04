@@ -214,7 +214,8 @@
 	.["displayedUnits"] = cell.charge ? (cell.charge / power_cost) : 0
 	.["displayedMaxUnits"] = cell.maxcharge / power_cost
 	.["showpH"] = isnull(recording_recipe) ? show_ph : FALSE //virtual beakers have no ph to compute & display
-	.["hasBeakerInHand"] = is_valid_container(user.get_active_held_item())
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	var/list/chemicals = list()
 	var/is_hallucinating = FALSE
@@ -309,7 +310,7 @@
 
 		if("insert")
 			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
+			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, container)
 
 			return TRUE
@@ -408,7 +409,7 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!can_insert_beaker(user, tool))
+	if(!tool.can_insert_container(user, src))
 		return NONE
 	if(!replace_beaker(user, tool))
 		return ITEM_INTERACT_BLOCKING
@@ -480,14 +481,6 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 	return TRUE
-
-/// Checks if user can interact with beaker slot and container is valid
-/obj/machinery/chem_dispenser/proc/can_insert_beaker(mob/living/user, obj/item/reagent_containers/container)
-	return is_valid_container(container) && can_interact(user) && user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH)
-
-/// Checks if container can be used with this machine
-/obj/machinery/chem_dispenser/proc/is_valid_container(obj/item/reagent_containers/container)
-	return is_reagent_container(container) && container.is_open_container() && !(container.item_flags & ABSTRACT) && !(container.flags_1 & HOLOGRAM_1)
 
 /obj/machinery/chem_dispenser/on_deconstruction(disassembled)
 	cell = null

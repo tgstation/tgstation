@@ -46,10 +46,10 @@
 		if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 			context[SCREENTIP_CONTEXT_LMB] = "Inject"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(is_valid_container(held_item))
+		if(held_item.is_chem_container())
 			context[SCREENTIP_CONTEXT_LMB] = "Replace beaker"
 			return CONTEXTUAL_SCREENTIP_SET
-	else if(is_valid_container(held_item))
+	else if(held_item.is_chem_container())
 		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -90,7 +90,7 @@
 		heater_coefficient *= micro_laser.tier
 
 /obj/machinery/chem_heater/item_interaction(mob/living/user, obj/item/held_item, list/modifiers)
-	if(!can_insert_beaker(user, held_item))
+	if(!held_item.can_insert_container(user, src))
 		return NONE
 
 	if(!QDELETED(beaker))
@@ -169,14 +169,6 @@
 
 	return TRUE
 
-/// Checks if user can interact with beaker slot and container is valid
-/obj/machinery/chem_heater/proc/can_insert_beaker(mob/living/user, obj/item/reagent_containers/container)
-	return is_valid_container(container) && can_interact(user) && user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH)
-
-/// Checks if container can be used with this machine
-/obj/machinery/chem_heater/proc/is_valid_container(obj/item/reagent_containers/container)
-	return is_reagent_container(container) && container.is_open_container() && !(container.item_flags & ABSTRACT) && !(container.flags_1 & HOLOGRAM_1)
-
 /**
  * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
  * Arguments
@@ -229,7 +221,8 @@
 	.["targetTemp"] = target_temperature
 	.["isActive"] = on
 	.["upgradeLevel"] = heater_coefficient * 10
-	.["hasBeakerInHand"] = is_valid_container(user.get_active_held_item())
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	var/list/beaker_data = null
 	var/chem_temp = 0
@@ -333,7 +326,7 @@
 
 		if("insert")
 			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
-			if(can_insert_beaker(ui.user, container))
+			if(container?.can_insert_container(ui.user, src))
 				replace_beaker(ui.user, container)
 
 			return TRUE

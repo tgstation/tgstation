@@ -261,7 +261,7 @@ export const ChemDispenser = (props) => {
                   opacity: data.hasBeakerInHand ? 1 : 0.5,
                 }}
                 tooltip={
-                  data.hasBeakerInHand &&
+                  !data.hasBeakerInHand &&
                   'You need to hold a container in your hand'
                 }
                 tooltipPosition="left-start"
