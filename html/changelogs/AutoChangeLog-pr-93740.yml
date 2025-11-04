@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - qol: "The GMM Spotlight station trait will not create a lightbeam if there's not more than 1 player alive."
