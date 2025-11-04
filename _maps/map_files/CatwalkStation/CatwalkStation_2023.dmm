@@ -18896,6 +18896,9 @@
 	dir = 8;
 	id = "HoPsToy"
 	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
 /turf/open/openspace,
 /area/station/command/heads_quarters/hop)
 "fmw" = (
@@ -54894,6 +54897,10 @@
 /obj/effect/turf_decal/tile/dark_blue,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
+"pfm" = (
+/obj/effect/landmark/firealarm_sanity,
+/turf/open/openspace,
+/area/station/command/heads_quarters/hop)
 "pfp" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/textured_large,
@@ -72554,12 +72561,6 @@
 "ujb" = (
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
-"ujm" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/command/heads_quarters/hop)
 "ujr" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
@@ -182906,7 +182907,7 @@ dUb
 fDE
 vuO
 hrD
-hrD
+pfm
 hrD
 hrD
 qQd
@@ -183420,7 +183421,7 @@ dUb
 fDE
 fOb
 hqL
-ujm
+hrD
 hqL
 hqL
 qQd
