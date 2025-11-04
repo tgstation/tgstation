@@ -101,6 +101,7 @@
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
+#ifndef HALT_ATMOS
 	SSair.hotspots += src
 	if(!isnull(starting_volume))
 		volume = starting_volume
@@ -108,6 +109,7 @@
 		temperature = starting_temperature
 		if(temperature <= FREON_MAXIMUM_BURN_TEMPERATURE)
 			cold_fire = TRUE
+#else
 
 	var/turf/open/our_turf = loc
 	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
@@ -135,6 +137,8 @@
 
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
+	qdel(src)
+#endif
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 		COMSIG_ATOM_ABSTRACT_ENTERED = PROC_REF(on_entered),
