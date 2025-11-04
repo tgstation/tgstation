@@ -33,7 +33,7 @@
 	src.sense_whisper = sense_whisper
 	src.smite_target = smite_target
 	if(sense_whisper == TRUE)
-		ADD_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, src)
+		ADD_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, REF(src))
 
 /datum/component/empathy/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_EMPATHY_EXAMINE, PROC_REF(get_empath_info))
@@ -93,5 +93,5 @@
 
 /datum/component/empathy/Destroy(force = FALSE)
 	if(sense_whisper == TRUE)
-		REMOVE_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, src)
+		REMOVE_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, REF(src))
 	return ..()
