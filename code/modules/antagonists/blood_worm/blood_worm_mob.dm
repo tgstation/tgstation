@@ -490,6 +490,7 @@
 
 /obj/effect/temp_visual/blood_worm_invade_host
 	icon = 'icons/mob/nonhuman-player/blood_worm_32x32.dmi'
+	icon_state = "invade-hatchling" // Not actually used for anything, it's just a default because otherwise the unit tests scream about it.
 	duration = 2 SECONDS
 
 /obj/effect/temp_visual/blood_worm_invade_host/Initialize(mapload, effect_name)
