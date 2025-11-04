@@ -209,7 +209,7 @@
 	icon_state = "robe_cape"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "robe_cape"
-	greyscale_config = 'datum/greyscale_config/robe_cape'
+	greyscale_config = 'datums\greyscale\config_types\greyscale_configs\greyscale_clothes.dm'
 	greyscale_colors = "#272546"
 
 /obj/item/clothing/neck/tie/disco
