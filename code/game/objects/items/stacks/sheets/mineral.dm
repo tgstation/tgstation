@@ -223,7 +223,6 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 	if(!try_absorb_checks(absorbing_mob, user, absorb_zone))
 		return FALSE
 	absorbing_mob.balloon_alert(user, "absorbing plasma...")
-	return TRUE
 	if(absorbing_mob == user)
 		if(!silent)
 			user.visible_message(
