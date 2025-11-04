@@ -229,7 +229,7 @@ export const ChemDispenser = (props) => {
             </Button>
           ))}
         >
-          {beaker ? (
+          {beaker || recording ? (
             <BeakerDisplay
               beaker={beaker}
               title_label={recording && 'Virtual beaker'}
