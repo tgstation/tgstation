@@ -13786,19 +13786,18 @@
 	},
 /area/station/security/processing)
 "dKW" = (
-/obj/structure/sign/directions/evac{
-	dir = 4;
-	pixel_y = -10
-	},
-/obj/structure/sign/directions/medical{
-	dir = 4;
+/obj/structure/sign/directions/command{
 	pixel_y = 10
 	},
-/obj/structure/sign/directions/security{
-	dir = 1
+/obj/structure/sign/directions/vault{
+	dir = 8;
+	pixel_y = -10
+	},
+/obj/structure/sign/directions/supply{
+	dir = 8
 	},
 /turf/closed/wall,
-/area/station/maintenance/fore)
+/area/station/hallway/primary/central)
 "dLe" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood/large,
@@ -37444,7 +37443,8 @@
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/painting/library{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -41210,18 +41210,18 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "lDo" = (
-/obj/structure/sign/directions/command{
+/obj/structure/sign/directions/engineering{
 	pixel_y = 10
 	},
-/obj/structure/sign/directions/vault{
-	dir = 8;
+/obj/structure/sign/directions/science{
+	dir = 4;
 	pixel_y = -10
 	},
-/obj/structure/sign/directions/supply{
-	dir = 8
+/obj/structure/sign/directions/medical{
+	dir = 4
 	},
 /turf/closed/wall,
-/area/station/hallway/primary/central)
+/area/station/medical/pharmacy)
 "lDq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -47543,7 +47543,8 @@
 /area/station/service/hydroponics)
 "nwD" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
@@ -48815,7 +48816,8 @@
 "nMT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/painting/library{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -54947,7 +54949,8 @@
 /area/station/maintenance/aft/greater)
 "ptS" = (
 /obj/structure/sign/painting/library{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -60231,11 +60234,19 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "qRv" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
+/obj/structure/sign/directions/evac{
+	dir = 4;
+	pixel_y = -10
 	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/less_spawns)
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/security{
+	dir = 1
+	},
+/turf/closed/wall,
+/area/station/maintenance/fore)
 "qRE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -68593,18 +68604,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"tjn" = (
-/obj/structure/sign/directions/evac{
-	dir = 4;
-	pixel_y = -10
-	},
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/engineering,
-/turf/closed/wall,
-/area/station/commons/storage/mining)
 "tjo" = (
 /turf/open/genturf,
 /area/icemoon/underground/unexplored/rivers)
@@ -70652,18 +70651,17 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "tMa" = (
-/obj/structure/sign/directions/engineering{
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/science{
+/obj/structure/sign/directions/evac{
 	dir = 4;
 	pixel_y = -10
 	},
 /obj/structure/sign/directions/medical{
-	dir = 4
+	dir = 4;
+	pixel_y = 10
 	},
+/obj/structure/sign/directions/engineering,
 /turf/closed/wall,
-/area/station/medical/pharmacy)
+/area/station/commons/storage/mining)
 "tMc" = (
 /obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -84172,7 +84170,8 @@
 /area/station/cargo/storage)
 "xKk" = (
 /obj/structure/sign/plaques/kiddie/gameoflife{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
@@ -85611,7 +85610,8 @@
 	name = "Forbidden Knowledge"
 	},
 /obj/structure/sign/painting/library_private{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /turf/open/floor/engine/cult,
 /area/station/service/library)
@@ -245351,7 +245351,7 @@ wEb
 sIZ
 pfe
 pfe
-lDo
+dKW
 mxM
 qLt
 uom
@@ -245386,7 +245386,7 @@ hcL
 isx
 iuv
 dnq
-tjn
+tMa
 kta
 kta
 kYS
@@ -246379,7 +246379,7 @@ skl
 skl
 skl
 skl
-dKW
+qRv
 pDt
 tsk
 wLX
@@ -250509,7 +250509,7 @@ krv
 lFb
 qRE
 lFb
-tMa
+lDo
 azw
 mao
 azw
@@ -267031,7 +267031,7 @@ tmR
 cnx
 bln
 sFJ
-qRv
+sby
 utC
 txl
 txl
@@ -268570,7 +268570,7 @@ tmR
 sUN
 bln
 sFJ
-qRv
+sby
 utC
 utC
 utC
@@ -268748,7 +268748,7 @@ tsP
 jZM
 vYw
 dFt
-qRv
+sby
 utC
 utC
 dFt
@@ -268756,7 +268756,7 @@ tsP
 jZM
 vYw
 dFt
-qRv
+sby
 utC
 utC
 utC
