@@ -81,7 +81,7 @@
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 	/// The probability we fall our our arse
-	var/fall_over_prob = 20
+	var/fall_over_prob = 60
 	/// The direction we spin in. TRUE means clockwise, FALSE means counter-clockwise.
 	var/clockwise_spin = TRUE
 
@@ -103,7 +103,7 @@
 				span_notice("[flippy_mcgee] attempts to do a flip and falls over, what a doofus!"),
 				span_notice("You attempt to do a flip while still off balance from the last flip and fall down!")
 			)
-			if(prob(50))
+			if(prob(fall_over_prob/2))
 				flippy_mcgee.adjustBruteLoss(1)
 		else
 			flippy_mcgee.visible_message(
@@ -114,7 +114,7 @@
 /datum/emote/flip/backflip
 	key = "backflip"
 	key_third_person = "backflips"
-	fall_over_prob = 60
+	fall_over_prob = 20
 	clockwise_spin = FALSE
 
 /datum/emote/spin
