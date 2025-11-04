@@ -176,7 +176,7 @@
 	return TRUE
 
 /obj/structure/blood_worm_cocoon
-	icon = 'icons/mob/nonhuman-player/blood_worm.dmi'
+	icon = 'icons/mob/nonhuman-player/blood_worm_32x32.dmi'
 
 	density = TRUE
 	anchored = TRUE

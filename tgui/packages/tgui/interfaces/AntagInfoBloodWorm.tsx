@@ -101,6 +101,10 @@ export const AntagInfoBloodWorm = (props) => {
                   Sec got you and you're jailed? You can break any restraints on your host, including lockers and such, by right-clicking with Spit Blood active.
                   You can also just leave your host behind and use your worm body to either ventcrawl out or break straight through the door, optionally re-entering them after.
                   </LabeledList.Item>
+                  <LabeledList.Item label="Jumpstart">
+                  As an adult, it can be incredibly useful to gather a bunch of corpses using your strong abilities. Once gathered, any hatchlings you create will immediately have hosts available.
+                  This can also be used to jumpstart the growth of your hatchlings all the way to juveniles or even adulthood.
+                  </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Stack.Item>

@@ -1,5 +1,5 @@
 /mob/living/basic/blood_worm
-	icon = 'icons/mob/nonhuman-player/blood_worm.dmi'
+	icon = 'icons/mob/nonhuman-player/blood_worm_32x32.dmi'
 
 	faction = list(FACTION_BLOOD_WORM)
 
@@ -192,11 +192,7 @@
 		blind_message = span_hear("You hear a squelch.")
 	)
 
-	var/image/invade_image = image(icon = icon, icon_state = "invade-[effect_name]", pixel_y = 8)
-	invade_image.plane = new_host.plane + 1
-	invade_image.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
-	new_host.flick_overlay_view(invade_image, 2 SECONDS) // The last frame is invisible, so the duration just has to be longer than the animation.
+	new /obj/effect/temp_visual/blood_worm_invade_host(get_turf(new_host), effect_name)
 
 	host = new_host
 
@@ -251,6 +247,7 @@
 	Immobilize(leave_host_duration)
 	incapacitate(leave_host_duration)
 
+	// Uses the icon file of the current mob. This means the animation is 32x48 for the adults.
 	flick("leave-[effect_name]", src)
 
 /mob/living/basic/blood_worm/proc/unregister_host()
@@ -491,6 +488,14 @@
 	// This ends after you've consumed BLOOD_VOLUME_NORMAL * 2 of any blood type, after which consuming any more of that type is useless.
 	return max(0, clamped_volume - (volume_past_starting_point * volume_past_starting_point) / maximum_point)
 
+/obj/effect/temp_visual/blood_worm_invade_host
+	icon = 'icons/mob/nonhuman-player/blood_worm_32x32.dmi'
+	duration = 2 SECONDS
+
+/obj/effect/temp_visual/blood_worm_invade_host/Initialize(mapload, effect_name)
+	. = ..()
+	icon_state = "invade-[effect_name]"
+
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
 	desc = "A freshly hatched blood worm. It looks hungry and weak, requiring blood to grow further."
@@ -568,6 +573,8 @@
 /mob/living/basic/blood_worm/adult
 	name = "adult blood worm"
 	desc = "A monstrosity of a blood worm. It'd probably be better to put your head in an industrial shredder rather than its maw."
+
+	icon = 'icons/mob/nonhuman-player/blood_worm_32x48.dmi'
 
 	icon_state = "adult"
 	icon_living = "adult"

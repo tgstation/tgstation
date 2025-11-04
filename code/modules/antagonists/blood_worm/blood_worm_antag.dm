@@ -77,7 +77,7 @@
 	return ..()
 
 /datum/antagonist/blood_worm/get_preview_icon()
-	var/icon/icon = icon('icons/mob/nonhuman-player/blood_worm.dmi', "juvenile")
+	var/icon/icon = icon('icons/mob/nonhuman-player/blood_worm_32x32.dmi', "juvenile")
 
 	icon.Crop(1, 1, 32, 32)
 	icon.Shift(SOUTH, 4)

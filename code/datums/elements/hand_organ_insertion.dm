@@ -1,5 +1,6 @@
 /datum/element/hand_organ_insertion
 	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 
 	var/insertion_time = 0 SECONDS
 
