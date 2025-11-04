@@ -13786,18 +13786,17 @@
 	},
 /area/station/security/processing)
 "dKW" = (
-/obj/structure/sign/directions/command{
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/vault{
-	dir = 8;
+/obj/structure/sign/directions/evac{
+	dir = 4;
 	pixel_y = -10
 	},
-/obj/structure/sign/directions/supply{
-	dir = 8
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 10
 	},
+/obj/structure/sign/directions/engineering,
 /turf/closed/wall,
-/area/station/hallway/primary/central)
+/area/station/commons/storage/mining)
 "dLe" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood/large,
@@ -13892,7 +13891,8 @@
 /area/station/medical/morgue)
 "dMn" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/unexplored/rivers/deep/shoreline)
@@ -36707,15 +36707,18 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "krv" = (
-/obj/structure/sign/directions/evac{
-	dir = 4;
+/obj/structure/sign/directions/command{
 	pixel_y = 10
 	},
-/obj/structure/sign/directions/security{
-	dir = 1
+/obj/structure/sign/directions/vault{
+	dir = 8;
+	pixel_y = -10
+	},
+/obj/structure/sign/directions/supply{
+	dir = 8
 	},
 /turf/closed/wall,
-/area/station/hallway/primary/starboard)
+/area/station/hallway/primary/central)
 "kry" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41210,18 +41213,19 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "lDo" = (
-/obj/structure/sign/directions/engineering{
-	pixel_y = 10
-	},
-/obj/structure/sign/directions/science{
+/obj/structure/sign/directions/evac{
 	dir = 4;
 	pixel_y = -10
 	},
 /obj/structure/sign/directions/medical{
-	dir = 4
+	dir = 4;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/security{
+	dir = 1
 	},
 /turf/closed/wall,
-/area/station/medical/pharmacy)
+/area/station/maintenance/fore)
 "lDq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -60236,17 +60240,13 @@
 "qRv" = (
 /obj/structure/sign/directions/evac{
 	dir = 4;
-	pixel_y = -10
-	},
-/obj/structure/sign/directions/medical{
-	dir = 4;
 	pixel_y = 10
 	},
 /obj/structure/sign/directions/security{
 	dir = 1
 	},
 /turf/closed/wall,
-/area/station/maintenance/fore)
+/area/station/hallway/primary/starboard)
 "qRE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -70651,17 +70651,18 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "tMa" = (
-/obj/structure/sign/directions/evac{
+/obj/structure/sign/directions/engineering{
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/science{
 	dir = 4;
 	pixel_y = -10
 	},
 /obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_y = 10
+	dir = 4
 	},
-/obj/structure/sign/directions/engineering,
 /turf/closed/wall,
-/area/station/commons/storage/mining)
+/area/station/medical/pharmacy)
 "tMc" = (
 /obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -245351,7 +245352,7 @@ wEb
 sIZ
 pfe
 pfe
-dKW
+krv
 mxM
 qLt
 uom
@@ -245386,7 +245387,7 @@ hcL
 isx
 iuv
 dnq
-tMa
+dKW
 kta
 kta
 kYS
@@ -246379,7 +246380,7 @@ skl
 skl
 skl
 skl
-qRv
+lDo
 pDt
 tsk
 wLX
@@ -250505,11 +250506,11 @@ exw
 hmb
 hmb
 exw
-krv
+qRv
 lFb
 qRE
 lFb
-lDo
+tMa
 azw
 mao
 azw
