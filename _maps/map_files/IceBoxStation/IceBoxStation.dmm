@@ -2734,7 +2734,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/structure/sign/poster/contraband/random/directional/north{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "aMr" = (
@@ -2823,7 +2825,8 @@
 /area/mine/eva/lower)
 "aNE" = (
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -7695,7 +7698,8 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/structure/sign/picture_frame/portrait/bar{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood/large,
 /area/station/service/bar/atrium)
@@ -13782,19 +13786,19 @@
 	},
 /area/station/security/processing)
 "dKW" = (
-/obj/structure/sign/directions/security{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 36
-	},
 /obj/structure/sign/directions/evac{
 	dir = 4;
-	pixel_x = 32;
-	pixel_y = 28
+	pixel_y = -10
 	},
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/security{
+	dir = 1
+	},
+/turf/closed/wall,
+/area/station/maintenance/fore)
 "dLe" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood/large,
@@ -19267,7 +19271,8 @@
 	c_tag = "Starboard Primary Hallway West"
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -19492,7 +19497,8 @@
 /area/station/maintenance/starboard/aft)
 "ftY" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -25509,7 +25515,8 @@
 "hho" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -28544,7 +28551,8 @@
 /area/station/maintenance/port/greater)
 "hZu" = (
 /obj/structure/sign/warning/secure_area{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -29034,7 +29042,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/plaques/kiddie/library{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
@@ -34091,7 +34100,8 @@
 /area/station/security/checkpoint/medical)
 "jHb" = (
 /obj/structure/sign/warning/secure_area{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
@@ -34397,7 +34407,6 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
-/obj/structure/sign/plaques/kiddie,
 /turf/open/floor/iron/dark,
 /area/station/ai/upload/chamber)
 "jKN" = (
@@ -34417,7 +34426,8 @@
 /area/station/maintenance/port/greater)
 "jKQ" = (
 /obj/structure/sign/warning/fire{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
@@ -36698,22 +36708,15 @@
 /turf/open/floor/plating,
 /area/mine/eva/lower)
 "krv" = (
-/obj/structure/sign/directions/engineering{
-	pixel_x = -32;
-	pixel_y = -40
-	},
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = -24
-	},
 /obj/structure/sign/directions/evac{
 	dir = 4;
-	pixel_x = -32;
-	pixel_y = -32
+	pixel_y = 10
 	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
+/obj/structure/sign/directions/security{
+	dir = 1
+	},
+/turf/closed/wall,
+/area/station/hallway/primary/starboard)
 "kry" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37691,7 +37694,8 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
@@ -41167,7 +41171,8 @@
 "lCI" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -41205,21 +41210,17 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "lDo" = (
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = -24
+/obj/structure/sign/directions/command{
+	pixel_y = 10
 	},
-/obj/structure/sign/directions/science{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = -32
+/obj/structure/sign/directions/vault{
+	dir = 8;
+	pixel_y = -10
 	},
-/obj/structure/sign/directions/engineering{
-	pixel_x = 32;
-	pixel_y = -40
+/obj/structure/sign/directions/supply{
+	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/closed/wall,
 /area/station/hallway/primary/central)
 "lDq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -44102,17 +44103,6 @@
 "mxM" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Central Hallway North"
-	},
-/obj/structure/sign/directions/supply{
-	dir = 8;
-	pixel_y = 32
-	},
-/obj/structure/sign/directions/vault{
-	dir = 8;
-	pixel_y = 24
-	},
-/obj/structure/sign/directions/command{
-	pixel_y = 40
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -49409,7 +49399,8 @@
 "nTX" = (
 /obj/structure/flora/grass/both/style_random,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
@@ -58132,7 +58123,8 @@
 /area/station/maintenance/department/medical/morgue)
 "qmN" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -58376,7 +58368,8 @@
 /area/station/command/meeting_room)
 "qpU" = (
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -59634,21 +59627,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "qJV" = (
-/obj/structure/sign/directions/security{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 40
-	},
-/obj/structure/sign/directions/medical{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/obj/structure/sign/directions/evac{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 24
-	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -63325,7 +63303,8 @@
 /area/station/maintenance/port/aft)
 "rLl" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -68614,6 +68593,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
+"tjn" = (
+/obj/structure/sign/directions/evac{
+	dir = 4;
+	pixel_y = -10
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/engineering,
+/turf/closed/wall,
+/area/station/commons/storage/mining)
 "tjo" = (
 /turf/open/genturf,
 /area/icemoon/underground/unexplored/rivers)
@@ -70661,11 +70652,18 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "tMa" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
+/obj/structure/sign/directions/engineering{
+	pixel_y = 10
 	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/structure/sign/directions/science{
+	dir = 4;
+	pixel_y = -10
+	},
+/obj/structure/sign/directions/medical{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/station/medical/pharmacy)
 "tMc" = (
 /obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -72165,7 +72163,8 @@
 	dir = 1
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/command/eva)
@@ -75331,7 +75330,8 @@
 	dir = 8
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -85469,7 +85469,8 @@
 /obj/machinery/computer/security/mining,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
@@ -243130,7 +243131,7 @@ utC
 fri
 tkU
 liV
-qRv
+sby
 tkU
 utC
 utC
@@ -244159,7 +244160,7 @@ gka
 gka
 aao
 liV
-qRv
+sby
 utC
 utC
 txl
@@ -245350,7 +245351,7 @@ wEb
 sIZ
 pfe
 pfe
-jII
+lDo
 mxM
 qLt
 uom
@@ -245385,7 +245386,7 @@ hcL
 isx
 iuv
 dnq
-kta
+tjn
 kta
 kta
 kYS
@@ -245641,7 +245642,7 @@ fwf
 hcL
 isx
 nlT
-krv
+dnq
 hyc
 fdy
 fdy
@@ -246378,7 +246379,7 @@ skl
 skl
 skl
 skl
-skl
+dKW
 pDt
 tsk
 wLX
@@ -247757,7 +247758,7 @@ gka
 gka
 aao
 liV
-qRv
+sby
 utC
 utC
 txl
@@ -250248,9 +250249,9 @@ oTu
 oTu
 srw
 kfr
-dKW
+bep
 ylU
-lDo
+dnq
 dnq
 iuu
 dnq
@@ -250326,7 +250327,7 @@ fri
 utC
 utC
 liV
-qRv
+sby
 utC
 utC
 utC
@@ -250504,11 +250505,11 @@ exw
 hmb
 hmb
 exw
-tLF
+krv
 lFb
 qRE
 lFb
-azw
+tMa
 azw
 mao
 azw
@@ -253153,7 +253154,7 @@ uAL
 uAL
 hHG
 liV
-qRv
+sby
 sMy
 tkU
 utC
@@ -256877,7 +256878,7 @@ txl
 txl
 txl
 sAd
-tMa
+xgm
 uei
 tmR
 uei
@@ -259447,7 +259448,7 @@ txl
 txl
 utC
 sAd
-tMa
+xgm
 uei
 tmR
 uei

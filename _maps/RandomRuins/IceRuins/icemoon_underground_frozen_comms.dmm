@@ -200,7 +200,8 @@
 	name = "Garage Door Button";
 	pixel_x = -23;
 	pixel_y = 0;
-	req_access = list("research")
+	req_access = list("research");
+	dir = 8
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
