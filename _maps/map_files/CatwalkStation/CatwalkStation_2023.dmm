@@ -84044,7 +84044,7 @@
 /area/station/maintenance/port/greater)
 "xyn" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai/upload/chamber";
 	name = "AI Upload Turret Control";
 	icon_state = "control_stun"
 	},

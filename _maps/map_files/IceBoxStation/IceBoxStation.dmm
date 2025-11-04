@@ -66485,7 +66485,7 @@
 /area/station/maintenance/department/medical/central)
 "sDV" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai/upload/chamber";
 	name = "AI Upload Turret Control";
 	pixel_y = -25
 	},
