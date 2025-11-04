@@ -233,11 +233,11 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 			)
 	else
 		if(!silent)
-		user.visible_message(
-			span_notice("[user] starts to apply a sheet of plasma on [absorbing_mob]..."),
-			span_notice("You begin applying the plasma on [absorbing_mob]..."),
-			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-		)
+			user.visible_message(
+				span_notice("[user] starts to apply a sheet of plasma on [absorbing_mob]..."),
+				span_notice("You begin applying the plasma on [absorbing_mob]..."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
 	if(!do_after(
 		user,
 		delay,
