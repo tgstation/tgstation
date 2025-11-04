@@ -37,6 +37,7 @@
 
 /datum/component/empathy/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_EMPATHY_EXAMINE, PROC_REF(get_empath_info))
+	RegisterSignal(parent, COMSIG_ON_LAY_ON_HANDS, PROC_REF(on_hands_laid))
 
 /datum/component/empathy/proc/get_empath_info(datum/source, mob/living/target, list/examine_list)
 	SIGNAL_HANDLER
@@ -64,7 +65,6 @@
 		examine_list += "[t_They] seem[p_s()] distressed."
 	if((visible_info & EMPATH_SEE_BLIND) && target.is_blind())
 		examine_list += "[t_They] appear[p_s()] to be staring off into space."
-	else
 	if((visible_info & EMPATH_SEE_DEAF) && HAS_TRAIT(target, TRAIT_DEAF))
 		examine_list += "[t_They] appear[p_s()] to not be responding to noises."
 	if((visible_info & EMPATH_SEE_HOT) && target.bodytemperature > target.get_body_temp_heat_damage_limit())
@@ -79,6 +79,14 @@
 			seen_it = TRUE
 			living_parent.add_mood_event("encountered_evil", /datum/mood_event/encountered_evil)
 			living_parent.set_jitter_if_lower(15 SECONDS)
+
+/datum/component/empathy/proc/on_hands_laid(datum/source, mob/living/carbon/smiter)
+	if iscarbon(parent)
+		var/mob/living/carbon/carbon_parent = parent
+		if(carbon_parent.mob_biotypes & MOB_UNDEAD)
+			return FALSE
+	if(smite_target && HAS_TRAIT(smiter, TRAIT_EVIL))
+		return SMITE_AWAY
 
 /datum/component/empathy/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_EMPATHY_EXAMINE)
