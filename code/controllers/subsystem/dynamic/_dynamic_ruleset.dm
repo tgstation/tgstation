@@ -33,7 +33,7 @@
 	 * Or
 	 * - A single weight for all tiers.
 	 */
-	var/list/weight = 0
+	var/alist/weight = 0
 	/**
 	 * The min population for which this ruleset is available.
 	 *
