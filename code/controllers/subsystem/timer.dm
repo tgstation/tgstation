@@ -376,7 +376,7 @@ SUBSYSTEM_DEF(timer)
 	var/spent = 0
 	/// Holds info about this timer, stored from the moment it was created
 	/// Used to create a visible "name" whenever the timer is stringified
-	var/list/timer_info
+	var/alist/timer_info
 	/// Next timed event in the bucket
 	var/datum/timedevent/next
 	/// Previous timed event in the bucket
@@ -518,7 +518,7 @@ SUBSYSTEM_DEF(timer)
 /datum/timedevent/proc/bucketJoin()
 #if defined(TIMER_DEBUG)
 	// Generate debug-friendly list for timer, more complex but also more expensive
-	timer_info = list(
+	timer_info = alist(
 		1 = id,
 		2 = timeToRun,
 		3 = wait,
@@ -533,7 +533,7 @@ SUBSYSTEM_DEF(timer)
 	)
 #else
 	// Generate a debuggable list for the timer, simpler but wayyyy cheaper, string generation (and ref/copy memes) is a bitch and this saves a LOT of time
-	timer_info = list(
+	timer_info = alist(
 		1 = id,
 		2 = timeToRun,
 		3 = wait,
