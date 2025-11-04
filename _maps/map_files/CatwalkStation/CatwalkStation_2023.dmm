@@ -5168,15 +5168,15 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/execution/transfer)
 "byE" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Abandoned Hallway"
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 9
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
-/area/station/hallway/secondary/construction)
+/area/station/hallway/primary/starboard)
 "byJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/tank/internals/oxygen,
@@ -12003,6 +12003,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/cigarette,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "drk" = (
@@ -31750,6 +31751,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/digital_clock/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "iTn" = (
@@ -48376,10 +48378,16 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "nCg" = (
-/obj/item/kirbyplants/random,
-/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/public/glass{
+	name = "Abandoned Hallway"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
+/area/station/hallway/secondary/construction)
 "nCo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/dark_blue{
@@ -48542,9 +48550,9 @@
 /area/station/maintenance/starboard/central)
 "nEO" = (
 /obj/machinery/piratepad/civilian,
-/obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/status_display/ai/directional/west,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "nEQ" = (
@@ -69073,8 +69081,6 @@
 /turf/open/floor/engine/hull/air,
 /area/station/maintenance/port/aft)
 "txz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/graffiti,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
@@ -126298,9 +126304,9 @@ cLL
 mYd
 iYK
 shs
-nCg
-nEO
 tSp
+nEO
+byE
 abT
 tGN
 rmw
@@ -126567,12 +126573,12 @@ aCa
 upr
 qMi
 aCa
-djL
-uzj
-txz
+nLp
+nLp
+kgr
 tjR
 kxY
-nLp
+txz
 dOk
 hFi
 lim
@@ -126824,9 +126830,9 @@ qMi
 qMi
 qMi
 fok
-byE
 aXa
-epi
+aXa
+nCg
 aXa
 tjA
 aXa
