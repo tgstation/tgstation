@@ -206,7 +206,7 @@
 	name = "robe cape"
 	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
 	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = 'robe_cape_item'
+	icon_state = 'robe_cape'
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	color = "#272546"
 
