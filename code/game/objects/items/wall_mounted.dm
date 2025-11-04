@@ -6,9 +6,12 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	///The final object to construct after mount
 	var/result_path
-	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
-	var/pixel_shift //The amount of pixels
+	/// For frames that are external to the wall they are placed on, like light fixtures and cameras.
+	var/wall_external = FALSE
+	//The amount of pixels to shift when mounted
+	var/pixel_shift
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user) > 1)
