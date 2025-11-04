@@ -202,6 +202,13 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+/obj/item/clothing/neck/robe_cape
+	name = "robe cape"
+	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
+	icon = 'icons/obj/clothing/neck/robe_cape.dmi'
+	icon_state = "robe_cape"
+	body_parts_covered = CHEST|ARMS
+
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
 	icon = 'icons/obj/clothing/neck.dmi'
