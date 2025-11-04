@@ -1,11 +1,10 @@
 {
-  "robe_cape": [
-    {
-      "type": "icon_state",
-      "icon_state": "robe_cape",
-      "blend_mode": "overlay",
-      "color_ids": [1],
-      "aliases": ["robe_cape_back", "robe_cape_left", "robe_cape_right"]
-    }
-  ]
+	"robe_cape": [
+		{
+			"type": "icon_state",
+			"icon_state": "robe_cape",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
 }
