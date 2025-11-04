@@ -75,6 +75,9 @@
 	else
 		fire_normal(clicker, modifiers, target)
 
+	if (!IsAvailable(feedback = FALSE))
+		unset_click_ability(owner, refund_cooldown = FALSE)
+
 	return TRUE // Intercepts the attack chain.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/Activate(atom/target)

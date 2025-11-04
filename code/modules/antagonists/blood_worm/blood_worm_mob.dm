@@ -420,7 +420,7 @@
 	. += "Blood Consumed: [unscaled_rounded]u[scaled_rounded == unscaled_rounded ? "" : " ([scaled_rounded]u)"]"
 
 	if (cocoon_action?.total_blood_required > 0)
-		. += "Growth: [FLOOR(scaled / cocoon_action.total_blood_required, 1)]%"
+		. += "Growth: [FLOOR(scaled / cocoon_action.total_blood_required * 100, 1)]%"
 
 	if (!length(consumed_blood))
 		return
