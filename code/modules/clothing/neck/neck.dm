@@ -209,7 +209,8 @@
 	icon_state = "robe_cape"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "robe_cape"
-	color = "#272546"
+	greyscale_config = 'datum/greyscale_config/robe_cape'
+	greyscale_colors = "#272546"
 
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
