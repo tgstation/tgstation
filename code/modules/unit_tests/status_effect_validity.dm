@@ -65,6 +65,8 @@
 
 	var/datum/status_effect/unit_test_tick_counter/counter = user.apply_status_effect(/datum/status_effect/unit_test_tick_counter)
 
+	// The 0.2 here and in the for loop is arbitrary and can be any value that divides evenly into the duration and tick interval of the unit test status effect.
+	// I chose 0.2 specifically because it just happens to be the SSfastprocess.wait in seconds, which basically simulates this status effect running on SSfastprocess.
 	var/ticks_required = counter.duration / 10 / 0.2 + 1
 
 	for (var/i in 1 to ticks_required)
