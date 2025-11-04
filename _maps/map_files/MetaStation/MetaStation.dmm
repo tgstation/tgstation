@@ -17484,7 +17484,7 @@
 /obj/structure/cable,
 /obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/plating,
-/area/station/ai_monitored/command/nuke_storage)
+/area/station/command/vault)
 "gdb" = (
 /turf/closed/wall/r_wall,
 /area/station/security/range)
@@ -71204,7 +71204,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/station/ai_monitored/command/nuke_storage)
+/area/station/command/vault)
 
 (1,1,1) = {"
 aaa
