@@ -58,6 +58,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 		var/list/contents = checking.contents
 		if(length(contents))
+			if(checking.item_flags & MODSUIT_PART) // Skip any MOD parts, which are created indirectly + reside in the suit's contents, and should be managed by the suit itself
+				continue
 			items_to_check |= contents //Please don't make an infinite loop somehow thx
 			to_nuke += checking //Goodbye
 			continue
