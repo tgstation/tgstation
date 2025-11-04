@@ -12,7 +12,7 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	required_organ_flag = ~ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/brain
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED|SURGERY_BONE_SAWED
 

@@ -39,6 +39,9 @@
 /// The organ has been chomped or otherwise rendered unusable.
 #define ORGAN_UNUSABLE (1<<16)
 
+/// Organ flags that correspond to bodytypes
+#define ORGAN_TYPE_FLAGS (ORGAN_ORGANIC | ORGAN_ROBOTIC | ORGAN_MINERAL | ORGAN_GHOST)
+
 /// Scarring on the right eye
 #define RIGHT_EYE_SCAR (1<<0)
 /// Scarring on the left eye

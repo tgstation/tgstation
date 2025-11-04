@@ -181,6 +181,8 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 	switch(def_zone)
 		if(BODY_ZONE_CHEST)
 			return CHEST|GROIN
+		if(BODY_ZONE_PRECISE_GROIN)
+			return GROIN
 		if(BODY_ZONE_HEAD)
 			return HEAD
 		if(BODY_ZONE_L_ARM)
@@ -201,10 +203,12 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		return covered_parts
 
 	if(bpc & HEAD)
-		covered_parts |= BODY_ZONE_HEAD
+		covered_parts |= list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH)
 
-	if(bpc & (CHEST|GROIN))
-		covered_parts |= BODY_ZONE_CHEST
+	if(bpc & CHEST)
+		covered_parts |= list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN)
+	else if(bpc & GROIN)
+		covered_parts |= BODY_ZONE_PRECISE_GROIN
 
 	if(bpc & HAND_LEFT)
 		covered_parts |= list(BODY_ZONE_L_ARM, BODY_ZONE_PRECISE_L_HAND)

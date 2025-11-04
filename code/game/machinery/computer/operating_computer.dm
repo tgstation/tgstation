@@ -152,7 +152,7 @@
 	data["patient"]["blood_level"] = patient.blood_volume
 	data["patient"]["standard_blood_level"] = BLOOD_VOLUME_NORMAL
 	data["patient"]["has_limbs"] = patient.has_limbs // used for allowing zone selection
-	data["patient"]["surgery_state"] = patient.get_surgery_state_as_list(target_zone)
+	data["patient"]["surgery_state"] = patient.get_surgery_state_as_list(deprecise_zone(target_zone))
 	return data
 
 /obj/machinery/computer/operating/ui_static_data(mob/user)
@@ -196,7 +196,7 @@
 		))
 
 	if(!any_recommended && table?.patient)
-		var/obj/item/part = table.patient.get_bodypart(target_zone)
+		var/obj/item/part = table.patient.get_bodypart(deprecise_zone(target_zone))
 		var/just_drapes = FALSE
 		if(table.patient.has_limbs)
 			if(isnull(part))

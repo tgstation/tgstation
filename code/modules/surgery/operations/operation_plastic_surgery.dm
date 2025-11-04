@@ -15,9 +15,7 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 
 /datum/surgery_operation/limb/plastic_surgery/all_required_strings()
-	. = list()
-	. += "operate on head"
-	. += ..()
+	return list("operate on head") + ..()
 
 /datum/surgery_operation/limb/plastic_surgery/get_default_radial_image()
 	return image(/obj/item/scalpel)

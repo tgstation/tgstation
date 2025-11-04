@@ -44,13 +44,19 @@
 	// We always operate on the chest even if we're targeting left leg or w/e
 	return patient.get_bodypart(BODY_ZONE_CHEST)
 
+/datum/surgery_operation/prosthetic_replacement/has_surgery_state(obj/item/bodypart/chest/chest, state)
+	return LIMB_HAS_SURGERY_STATE(chest, state)
+
+/datum/surgery_operation/prosthetic_replacement/has_any_surgery_state(obj/item/bodypart/chest/chest, state)
+	return LIMB_HAS_ANY_SURGERY_STATE(chest, state)
+
 /datum/surgery_operation/prosthetic_replacement/is_available(obj/item/bodypart/chest/chest, body_zone)
 	if(!HAS_TRAIT(chest, TRAIT_READY_TO_OPERATE))
 		return FALSE
 	// Operate on the chest but target another zone
 	if(body_zone == BODY_ZONE_CHEST)
 		return FALSE
-	// Tthe actual missing limb has to be... missing
+	// The actual missing limb has to be... missing
 	if(chest.owner.get_bodypart(body_zone))
 		return FALSE
 	return ..()
@@ -59,6 +65,8 @@
 	return chest.owner
 
 /datum/surgery_operation/prosthetic_replacement/snowflake_check_availability(obj/item/bodypart/chest, mob/living/surgeon, obj/item/tool, body_zone)
+	if(surgeon.canUnEquip(tool))
+		return FALSE
 	// check bodyshape compatibility for real bodyparts
 	if(isbodypart(tool))
 		var/obj/item/bodypart/new_limb = tool
@@ -70,7 +78,7 @@
 	return TRUE
 
 /datum/surgery_operation/prosthetic_replacement/tool_check(obj/item/tool)
-	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
+	if(tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM))
 		return FALSE
 	if(isbodypart(tool))
 		return TRUE // auto pass - "intended" use case

@@ -43,6 +43,7 @@
 /// Checks that the passed organ can be inserted/removed in the specified zones
 /datum/surgery_operation/limb/organ_manipulation/proc/zone_check(obj/item/organ/organ, limb_zone, operated_zone)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if(organ.valid_zones)
 		// allows arm implants to be inserted into either arm
 		if(!(limb_zone in organ.valid_zones))
@@ -86,7 +87,7 @@
 			option.info = "Remove [organ.name] from the patient."
 			LAZYSET(cached_organ_manipulation_options, organ.type, option)
 
-		options[option] = list("[OPERATION_ACTION]" = "remove", "organ" = organ)
+		options[option] = list("[OPERATION_ACTION]" = "remove", "[OPERATION_REMOVED_ORGAN]" = organ)
 
 	return options
 
@@ -192,7 +193,7 @@
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain as your new [organ.name] comes to life!")
 
 /datum/surgery_operation/limb/organ_manipulation/internal
-	name = "internal organ manipulation"
+	name = "internal chest organ manipulation"
 	desc = "Manipulate a patient's internal organs."
 	abstract_type = /datum/surgery_operation/limb/organ_manipulation/internal
 
@@ -201,6 +202,7 @@
 
 // Operating on chest organs requires bones be sawed
 /datum/surgery_operation/limb/organ_manipulation/internal/chest
+	name = "internal chest organ manipulation"
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 
@@ -208,7 +210,7 @@
 	return limb.body_zone == BODY_ZONE_CHEST
 
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/mechanic
-	name = "prosthetic organ manipulation"
+	name = "prosthetic chest organ manipulation"
 	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -219,7 +221,7 @@
 
 /// Abductor subtype that works through clothes and lets you extract the heart without sawing bones
 /datum/surgery_operation/limb/organ_manipulation/internal/chest/alien
-	name = "experimental organ manipulation"
+	name = "experimental chest organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
@@ -234,6 +236,7 @@
 
 // Operating on non-chest organs requires bones be intact
 /datum/surgery_operation/limb/organ_manipulation/internal/other
+	name = "internal limb organ manipulation"
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
@@ -244,12 +247,12 @@
 	// If bones are sawed, prevent the operation (unless we're operating on a limb with no bones)
 	if(LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED) && LIMB_HAS_BONES(limb))
 		return FALSE
-	if(limb.body_zone != BODY_ZONE_CHEST)
+	if(limb.body_zone == BODY_ZONE_CHEST)
 		return FALSE
 	return TRUE
 
 /datum/surgery_operation/limb/organ_manipulation/internal/other/mechanic
-	name = "prosthetic organ manipulation"
+	name = "prosthetic limb organ manipulation"
 	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
 		TOOL_HEMOSTAT = 1,
@@ -261,7 +264,7 @@
 
 /// Abductor subtype that works through clothes
 /datum/surgery_operation/limb/organ_manipulation/internal/other/alien
-	name = "experimental organ manipulation"
+	name = "experimental limb organ manipulation"
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 
 // All external organ manipulation requires bones sawed

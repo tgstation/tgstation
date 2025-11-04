@@ -16,9 +16,9 @@
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
-	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE
+	operation_flags = OPERATION_MORBID | OPERATION_NOTABLE | OPERATION_LOCKED
 	target_type = /obj/item/organ/brain
-	required_organ_flag = ~ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/organ/brainwash/get_default_radial_image()
@@ -92,6 +92,8 @@
 	required_organ_flag = ORGAN_ROBOTIC
 
 /datum/surgery_operation/organ/brainwash/sleeper
+	name = "install sleeper agent directive"
+	rnd_name = "Sleeper Agent Implantation"
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
@@ -130,7 +132,8 @@
 	brainwashed.gain_trauma(new /datum/brain_trauma/mild/phobia/conspiracies(), TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/organ/brainwash/sleeper/mechanic
-	name = "reprogramming"
+	name = "install sleeper agent programming"
+	rnd_name = "Sleeper Agent Programming"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,
 		TOOL_HEMOSTAT = 2,

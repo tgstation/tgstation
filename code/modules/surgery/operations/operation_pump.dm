@@ -7,7 +7,7 @@
 		IMPLEMENT_HAND = 1,
 	)
 	time = 2 SECONDS
-	required_organ_flag = ~ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	target_type = /obj/item/organ/stomach
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 

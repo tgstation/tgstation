@@ -414,15 +414,27 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
+
+/datum/surgery_operation/limb/incise_organs/state_check(obj/item/bodypart/limb)
+	if(limb.body_zone != BODY_ZONE_CHEST)
+		return TRUE
+	if(!LIMB_HAS_BONES(limb))
+		return TRUE
+	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
+		return TRUE
+	return FALSE
+
+/datum/surgery_operation/limb/incise_organs/all_required_strings()
+	return ..() + list("if operating on the chest, the bone must be sawed")
 
 /datum/surgery_operation/limb/incise_organs/get_default_radial_image()
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/limb/incise_organs/tool_check(obj/item/tool)
-	// Require sharpness OR a tool behavior match
-	return (tool.get_sharpness() || implements[tool.tool_behaviour])
+	// Require sharpness OR a tool behavior match. Also saws are a no-go, you'll rip up the organs
+	return (tool.get_sharpness() || implements[tool.tool_behaviour]) && tool.tool_behaviour != TOOL_SAW
 
 /datum/surgery_operation/limb/incise_organs/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -450,5 +462,3 @@
 /datum/surgery_operation/limb/incise_organs/alien
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
-	all_surgery_states_required = SURGERY_SKIN_OPEN
-	any_surgery_states_blocked = SURGERY_ORGANS_CUT

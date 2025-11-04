@@ -3,7 +3,7 @@
 	abstract_type = /datum/surgery_operation/organ/repair
 	name = "repair organ"
 	desc = "Repair a patient's damaged organ."
-	required_organ_flag = ~ORGAN_ROBOTIC
+	required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_BONE_SAWED
 	/// What % damage do we heal the organ to on success

@@ -32,10 +32,13 @@
 /datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
 	return limb.body_zone == BODY_ZONE_CHEST
 
+/datum/surgery_operation/limb/cavity_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+	return surgeon.canUnEquip(tool)
+
 /datum/surgery_operation/limb/cavity_implant/tool_check(obj/item/tool)
 	if(tool.w_class > WEIGHT_CLASS_NORMAL && !is_type_in_typecache(tool, heavy_cavity_implants))
 		return FALSE
-	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (SURGICAL_TOOL|ABSTRACT|DROPDEL|HAND_ITEM)))
+	if(tool.item_flags & (SURGICAL_TOOL|ABSTRACT|DROPDEL|HAND_ITEM))
 		return FALSE // besides the obvious, you never want to leave your scalpel into the patient
 	if(isorgan(tool))
 		return FALSE // use organ manipulation

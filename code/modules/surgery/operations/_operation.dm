@@ -18,7 +18,7 @@
 
 	var/list/operations = list()
 	var/list/radial_operations = list()
-	var/operating_zone = deprecise_zone(zone_selected)
+	var/operating_zone = zone_selected
 	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
 		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && patient.body_position != LYING_DOWN)
 			continue
@@ -46,7 +46,12 @@
 			var/obj/item/realtool = potential_tool
 			// for surgical tools specifically, we give a message to indicate they should try something else
 			if(realtool.item_flags & SURGICAL_TOOL)
-				patient.balloon_alert(src, "nothing to do with [realtool.name]!")
+				if(!patient.is_location_accessible(zone_selected))
+					patient.balloon_alert(src, "operation site is obstructed!")
+				else if(patient.body_position != LYING_DOWN)
+					patient.balloon_alert(src, "not lying down!")
+				else
+					patient.balloon_alert(src, "nothing to do with [realtool.name]!")
 				return ITEM_INTERACT_BLOCKING
 		// but for every other item, we continue to strike the mob
 		return NONE
@@ -142,6 +147,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	for(var/operation_type in valid_subtypesof(/datum/surgery_operation))
 		var/datum/surgery_operation/operation = new operation_type()
+		if(isnull(operation.name))
+			stack_trace("Surgery operation '[operation_type]' is missing a name!")
+
 		operations_by_typepath[operation_type] = operation
 		if(operation.operation_flags & OPERATION_LOCKED)
 			locked += operation_type
@@ -159,12 +167,39 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		result += operations_by_typepath[operation_type]
 	return result
 
+/**
+ * ## Surgery operation datum
+ *
+ * A singleton datum which represents a surgical operation that can be performed on a mob.
+ *
+ * Surgery operations can be something simple, like moving between surgery states (tend wounds, clamp vessels),
+ * or more complex, like outright replacing limbs or organs. As such the datum is very flexible.
+ *
+ * At most basic, you must implement the vars:
+ * * - [name][/datum/surgery_operation/var/name]
+ * * - [desc][/datum/surgery_operation/var/desc]
+ * * - [implements][/datum/surgery_operation/var/implements]
+ * And the procs:
+ * * - [on success][/datum/surgery_operation/proc/on_success] - put the effects of the operation here
+ * Other noteworthy vars and procs you probably want to implement or override:
+ * * - [operation flags][/datum/surgery_operation/var/operation_flags] - flags modifying the behavior of the operation
+ * * - [required surgery state][/datum/surgery_operation/var/all_surgery_states_required] - target must have ALL of these states to be eligible for the operation
+ * * - [blocked surgery state][/datum/surgery_operation/var/any_surgery_states_blocked] - target must NOT have ANY these states to be eligible for the operation
+ * * - [state check][/datum/surgery_operation/proc/state_check] - extra checks for if the operating target is valid
+ * * - [get default radial image][/datum/surgery_operation/proc/get_default_radial_image] - what icon to use for this operation on the radial menu
+ *
+ * It's recommended to work off of [/datum/surgery_operation/limb] or [/datum/surgery_operation/organ]
+ * as they implement a lot of common functionality for targeting limbs or organs for you.
+ *
+ * See also [/datum/surgery_operation/basic], which is a bit more complex to use
+ * but allows for operations to target any mob type, rather than only those with limbs or organs.
+ */
 /datum/surgery_operation
 	abstract_type = /datum/surgery_operation
-	/// Name of the operation, keep it short and format it like an action - "amputate limb", "remove organ"
+	/// Required - Name of the operation, keep it short and format it like an action - "amputate limb", "remove organ"
 	/// Don't capitalize it, it will be capitalized automatically where necessary.
 	var/name
-	/// Description of the operation, keep it short and format it like an action - "Amputate a patient's limb.", "Remove a patient's organ.".
+	/// Required - Description of the operation, keep it short and format it like an action - "Amputate a patient's limb.", "Remove a patient's organ.".
 	// Use "a patient" instead of "the patient" to keep it generic.
 	var/desc
 
@@ -195,7 +230,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	 * some will have its main tool's multiplier above or below 1x to represent an innately easier or harder operation
 	 */
 	var/list/implements
-	/// How long to perform this operation
+	/// Base time to perform this operation
 	var/time = 1 SECONDS
 
 	/// Flags modifying the behavior of this operation
@@ -209,23 +244,32 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/any_surgery_states_blocked = NONE
 
 	/// Typepath of a surgical operation that supersedes this one
-	var/replaced_by
+	/// If this operation and the replaced_by operation are both available, only the replaced_by one will be usable
+	var/datum/surgery_operation/replaced_by
 
 	/// SFX played before the do-after begins
+	/// Can be a sound path or an assoc list of item typepath to sound path to make different sounds for different tools
 	var/preop_sound
 	/// SFX played on success, after the do-after
+	/// Can be a sound path or an assoc list of item typepath to sound path to make different sounds for different tools
 	var/success_sound
 	/// SFX played on failure, after the do-after
+	/// Can be a sound path or an assoc list of item typepath to sound path to make different sounds for different tools
 	var/failure_sound
 
-	/// Option displayed when this operation is available
+	/// The default radial menu choice for this operation, lazily created on first use
+	/// Some subtypes won't have this set as they provide their own options
 	VAR_PRIVATE/datum/radial_menu_choice/main_option
 
-	///Which mood event to give the patient when surgery is starting while they're conscious. This should be permanent/not have a timer until the surgery either succeeds or fails, as those states will immediately replace it. Mostly just flavor text.
+	/// Which mood event to give the patient when surgery is starting while they're conscious.
+	/// This should be permanent/not have a timer until the surgery either succeeds or fails, as those states will immediately replace it.
+	/// Mostly just flavor text.
 	var/datum/mood_event/surgery/surgery_started_mood_event = /datum/mood_event/surgery
-	///Which mood event to give the conscious patient when surgery succeeds. Lasts far shorter than if it failed.
+	/// Which mood event to give the conscious patient when surgery succeeds.
+	/// Lasts far shorter than if it failed.
 	var/datum/mood_event/surgery/surgery_success_mood_event = /datum/mood_event/surgery/success
-	///Which mood event to give the consious patient when surgery fails. Lasts muuuuuch longer.
+	/// Which mood event to give the consious patient when surgery fails.
+	/// Lasts muuuuuch longer.
 	var/datum/mood_event/surgery/surgery_failure_mood_event = /datum/mood_event/surgery/failure
 
 /**
@@ -818,6 +862,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/success(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
@@ -849,6 +894,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/failure(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	if(operation_flags & OPERATION_NOTABLE)
 		SSblackbox.record_feedback("tally", "surgeries_failed", 1, type)
@@ -914,7 +960,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/all_required_strings()
 	. = list()
 	if(required_biotype)
-		. += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")][target_zone ? " [parse_zone(target_zone)]" : ""]"
+		. += "operate on \a [english_list(bitfield_to_list(required_biotype, MOB_TYPE_TO_NAME), and_text = " or ")] [target_zone ? "[parse_zone(target_zone)]" : "patient"]"
 	else if(target_zone)
 		. += "operate on [parse_zone(target_zone)]"
 	. += ..()
@@ -922,7 +968,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/is_available(mob/living/patient, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(body_zone != target_zone)
+	if(target_zone != body_zone)
 		return FALSE
 	if(!HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return FALSE
@@ -973,16 +1019,18 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. = ..()
 	if(required_bodytype & BODYTYPE_ROBOTIC)
 		. += "the limb must not be organic"
-	else
+	// Every limb (currently) that isn't organic is cybernetic, so we keep the messages simple here
+	else if(required_bodytype)
 		. += "the limb must not be cybernetic"
 
 /datum/surgery_operation/limb/get_operation_target(mob/living/patient, body_zone)
-	return patient.get_bodypart(body_zone)
+	return patient.get_bodypart(deprecise_zone(body_zone))
 
 /datum/surgery_operation/limb/is_available(obj/item/bodypart/limb, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(limb.body_zone != body_zone)
+	// targeting groin will redirect you to the chest
+	if(limb.body_zone != deprecise_zone(body_zone))
 		return FALSE
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
@@ -1019,7 +1067,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ
 	abstract_type = /datum/surgery_operation/organ
 	/// Biotype required to perform this operation
-	var/required_organ_flag = ORGAN_ORGANIC
+	var/required_organ_flag = ORGAN_TYPE_FLAGS & ~ORGAN_ROBOTIC
 	/// The type of organ this operation can target
 	var/obj/item/organ/target_type
 
@@ -1030,7 +1078,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. = ..()
 	if(required_organ_flag & BODYTYPE_ROBOTIC)
 		. += "the organ must not be organic"
-	else
+	else if(required_organ_flag & ORGAN_TYPE_FLAGS)
 		. += "the organ must not be cybernetic"
 
 /datum/surgery_operation/organ/get_default_radial_image()
@@ -1045,6 +1093,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/is_available(obj/item/organ/organ, body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	// this deprecise_zone check is what makes it so you can do eye surgery targeting head
+	// if you want that behavior back, remove it - it'll work out of the box (i think)
 	if(deprecise_zone(organ.zone) != body_zone)
 		return FALSE
 	if(required_organ_flag && !(organ.organ_flags & required_organ_flag))

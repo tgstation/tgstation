@@ -40,7 +40,7 @@
 	return ..() + list("the patient must have brute or burn damage")
 
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
-	return patient.getBruteLoss() > 0 && patient.getFireLoss() > 0
+	return patient.getBruteLoss() > 0 || patient.getFireLoss() > 0
 
 /datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, mob/living/surgeon, obj/item/tool)
 	var/list/options = list()

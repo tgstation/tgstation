@@ -32,11 +32,14 @@
 		return FALSE
 	return TRUE
 
+/datum/surgery_operation/limb/replace_limb/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+	return surgeon.canUnEquip(tool)
+
 /datum/surgery_operation/limb/replace_limb/state_check(obj/item/bodypart/limb)
 	return !HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS) && !(limb.bodypart_flags & BODYPART_UNREMOVABLE)
 
 /datum/surgery_operation/limb/replace_limb/tool_check(obj/item/bodypart/tool)
-	if(HAS_TRAIT(tool, TRAIT_NODROP) || (tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM)))
+	if(tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM))
 		return FALSE
 	if(!isbodypart(tool))
 		return FALSE

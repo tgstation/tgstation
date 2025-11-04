@@ -137,8 +137,8 @@ type OperationData = {
   name: string;
   desc: string;
   tool_rec: string;
-  priority: BooleanLike;
-  requirements: string[][];
+  priority?: BooleanLike;
+  requirements?: string[][];
   // show operation as a recommended next step
   show_as_next: BooleanLike;
   // show operation in the full list
@@ -161,6 +161,9 @@ function extractSurgeryName(
 ): { name: string; tool: string; true_name?: string } {
   // operation names may be "make incision", "lobotomy", or "disarticulation (amputation)"
   const { name, tool_rec } = operation;
+  if (!name) {
+    return { name: 'Error Surgery', tool: 'Error' };
+  }
   const parenthesis = name.indexOf('(');
   if (parenthesis === -1) {
     return { name: capitalizeFirst(name), tool: tool_rec };
@@ -283,7 +286,6 @@ const PatientStateView = (props: PatientStateViewProps) => {
           <Stack>
             <Stack.Item>
               <BodyZoneSelector
-                precise={false}
                 theme="slimecore"
                 onClick={
                   // no limbs = don't allow changing zones
@@ -422,6 +424,9 @@ const SurgeryRequirementsInner = (props: SurgeryRequirementsInnerProps) => {
 function extractRequirementMap(
   surgery: OperationData,
 ): Record<string, string[]> {
+  if (surgery.requirements?.length !== 4) {
+    return {}; // we can assert this never happens, but just in case...
+  }
   const hard_requirements = surgery.requirements[0];
   const soft_requirements = surgery.requirements[1];
   const optional_requirements = surgery.requirements[2];
