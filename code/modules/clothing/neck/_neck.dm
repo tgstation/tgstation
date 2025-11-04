@@ -209,6 +209,7 @@
 	icon_state = "robe_cape"
 	worn_icon = 'icons/mob/clothing/neck.dmi'
 	worn_icon_state = "robe_cape"
+	abstract_type = /obj/item/clothing/neck
 	greyscale_config = /datum/greyscale_config/robe_cape
 	greyscale_config_worn = /datum/greyscale_config/robe_cape/worn
 	greyscale_colors = "#2a2844"
