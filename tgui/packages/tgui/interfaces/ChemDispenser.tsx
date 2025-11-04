@@ -218,25 +218,16 @@ export const ChemDispenser = (props) => {
         </Section>
         <Section
           title="Beaker"
-          buttons={
-            beaker && (
-              <>
-                <Box inline color="label" mr={1}>
-                  {beaker.currentVolume}/{beaker.maxVolume}u
-                </Box>
-                {beakerTransferAmounts.map((amount) => (
-                  <Button
-                    key={amount}
-                    icon="minus"
-                    disabled={recording}
-                    onClick={() => act('remove', { amount })}
-                  >
-                    {amount}
-                  </Button>
-                ))}
-              </>
-            )
-          }
+          buttons={beakerTransferAmounts.map((amount) => (
+            <Button
+              key={amount}
+              icon="minus"
+              disabled={recording}
+              onClick={() => act('remove', { amount })}
+            >
+              {amount}
+            </Button>
+          ))}
         >
           {beaker ? (
             <BeakerDisplay
