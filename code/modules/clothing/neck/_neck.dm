@@ -208,8 +208,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "robe_cape_item"
 	worn_icon_state = "robe_cape"
-	body_parts_covered = CHEST
-	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
+		alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
 
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
