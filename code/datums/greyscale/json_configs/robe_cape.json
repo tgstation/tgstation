@@ -1,10 +1,28 @@
 {
-	"robe_cape": [
-		{
-			"type": "icon_state",
-			"icon_state": "robe_cape",
-			"blend_mode": "overlay",
-			"color_ids": [1]
-		}
-	]
+  "robe_cape": [
+    {
+      "type": "icon_state",
+      "icon_state": "robe_cape_front",
+      "blend_mode": "overlay",
+      "color_ids": [1]
+    },
+    {
+      "type": "icon_state",
+      "icon_state": "robe_cape_back",
+      "blend_mode": "overlay",
+      "color_ids": [1]
+    },
+    {
+      "type": "icon_state",
+      "icon_state": "robe_cape_left",
+      "blend_mode": "overlay",
+      "color_ids": [1]
+    },
+    {
+      "type": "icon_state",
+      "icon_state": "robe_cape_right",
+      "blend_mode": "overlay",
+      "color_ids": [1]
+    }
+  ]
 }
