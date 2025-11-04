@@ -53756,9 +53756,6 @@
 	pixel_y = 4
 	},
 /obj/item/melee/chainofcommand,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "oSo" = (
