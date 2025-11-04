@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed raptor eggs runtiming when spawned by non-raptors"
