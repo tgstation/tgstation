@@ -23,6 +23,7 @@
 
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = T0C + 100
+	unsuitable_cold_damage = 0
 
 	habitable_atmos = null
 
@@ -87,6 +88,8 @@
 	/// How quickly the blood worm regenerates, in health per second.
 	var/regen_rate = 0
 
+	COOLDOWN_DECLARE(host_heat_alert_cooldown)
+
 /mob/living/basic/blood_worm/Initialize(mapload)
 	. = ..()
 
@@ -143,6 +146,18 @@
 
 	if (!host)
 		adjustBruteLoss(-regen_rate * seconds_per_tick)
+	else
+		bodytemperature = T20C
+
+/mob/living/basic/blood_worm/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	if (host)
+		bodytemperature = T20C
+	else
+		return ..()
+
+/mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
+	if (host)
+		return 0 // No.
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
@@ -310,8 +325,21 @@
 
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
 	host.blood_volume += regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD // Regen beforehand, meaning we can still reach 0 exactly.
+
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
 		host.handle_blood(seconds_per_tick, times_fired)
+		handle_host_temperature(seconds_per_tick, times_fired)
+
+/mob/living/basic/blood_worm/proc/handle_host_temperature(seconds_per_tick, times_fired)
+	if (host.coretemperature <= maximum_survivable_temperature)
+		return
+
+	var/burn_coeff = damage_coeff[BURN]
+	host.blood_volume = max(0, host.blood_volume - unsuitable_heat_damage * BLOOD_WORM_HEALTH_TO_BLOOD * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
+
+	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
+		to_chat(is_possessing_host ? host : src, span_userdanger("Your blood is burning up!"))
+		COOLDOWN_START(src, host_heat_alert_cooldown, 10 SECONDS)
 
 /mob/living/basic/blood_worm/proc/create_host_hud(datum/source)
 	SIGNAL_HANDLER
@@ -477,6 +505,8 @@
 	maxHealth = 50
 	health = 50
 
+	unsuitable_heat_damage = 1
+
 	obj_damage = 10
 	melee_damage_lower = 8
 	melee_damage_upper = 12
@@ -512,6 +542,8 @@
 	maxHealth = 100 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
 	health = 100
 
+	unsuitable_heat_damage = 1.5
+
 	obj_damage = 25 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
 	melee_damage_lower = 15
 	melee_damage_upper = 20
@@ -545,6 +577,8 @@
 
 	maxHealth = 150
 	health = 150
+
+	unsuitable_heat_damage = 2
 
 	obj_damage = 40 // You are not getting away.
 	melee_damage_lower = 20
