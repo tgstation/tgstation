@@ -60,7 +60,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 		var/list/contents = checking.contents
 		if(length(contents))
-			if(checking.item_flags & DO_NOT_WARDROBE) // Skip any items like MOD parts, which are created in the contents of a stashed item and should not be destroyed
+			if(istype(checking) && checking.item_flags & DO_NOT_WARDROBE) // Skip any items like MOD parts, which are created in the contents of a stashed item and should not be destroyed, as well as non-items
 				continue
 			items_to_check |= contents //Please don't make an infinite loop somehow thx
 			to_nuke += checking //Goodbye
