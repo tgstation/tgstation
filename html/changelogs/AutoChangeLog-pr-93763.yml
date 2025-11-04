@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - rscadd: "adds some missing info to the heretic UI related to the heretic aura, codex cicatrix and moon amulet and it's effects"
