@@ -206,7 +206,8 @@
 	name = "robe cape"
 	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
 	icon = 'icons/obj/clothing/neck.dmi'
-	icon_state = "robe_cape"
+	icon_state = "robe_cape_item"
+	worn_icon_state = "robe_cape"
 	body_parts_covered = CHEST
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
 
