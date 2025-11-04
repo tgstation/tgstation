@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
+#ifndef HALT_ATMOS
 	if(!giver)
 		return FALSE
 
@@ -168,8 +169,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/giver_id in giver_gases)
 		ASSERT_GAS_IN_LIST(giver_id, cached_gases)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
-
 	SEND_SIGNAL(src, COMSIG_GASMIX_MERGED)
+#endif
 	return TRUE
 
 ///Proportionally removes amount of gas from the gas_mixture.
@@ -189,9 +190,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
+#ifndef HALT_ATMOS //This behaves like a proportional copy() if we don't want atmos to change shit
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
-
+#endif
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
 
@@ -211,10 +213,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
 		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
+#ifndef HALT_ATMOS //This behaves like a proportional copy() if we don't want atmos to change shit
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 
 	garbage_collect()
-
+#endif
 	SEND_SIGNAL(src, COMSIG_GASMIX_REMOVED)
 	return removed
 
@@ -230,9 +233,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	ADD_GAS(gas_id, removed.gases)
 	removed_gases[gas_id][MOLES] = amount
+#ifndef HALT_ATMOS //This behaves like a proportional copy() if we don't want atmos to change shit
 	cached_gases[gas_id][MOLES] -= amount
 
 	garbage_collect(list(gas_id))
+#endif
 	return removed
 
 /datum/gas_mixture/proc/remove_specific_ratio(gas_id, ratio)
@@ -247,15 +252,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	ADD_GAS(gas_id, removed.gases)
 	removed_gases[gas_id][MOLES] = QUANTIZE(cached_gases[gas_id][MOLES] * ratio)
+#ifndef HALT_ATMOS //This behaves like a proportional copy() if we don't want atmos to change shit
 	cached_gases[gas_id][MOLES] -= removed_gases[gas_id][MOLES]
 
 	garbage_collect(list(gas_id))
-
+#endif
 	return removed
 
 ///Distributes the contents of two mixes equally between themselves
 //Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+#ifndef HALT_ATMOS
 	. = FALSE
 	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		. = TRUE
@@ -277,6 +284,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
 			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
+#endif
 	garbage_collect()
 	other.garbage_collect()
 

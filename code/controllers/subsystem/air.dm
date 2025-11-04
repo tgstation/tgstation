@@ -56,6 +56,9 @@ SUBSYSTEM_DEF(air)
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
+	#ifdef HALT_ATMOS
+	can_fire = FALSE
+	#endif
 	var/display_all_groups = FALSE
 
 	var/list/reaction_handbook
@@ -90,7 +93,7 @@ SUBSYSTEM_DEF(air)
 	msg += "}"
 	return ..()
 
-
+#ifdef HALT_ATMOS
 /datum/controller/subsystem/air/Initialize()
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
@@ -103,7 +106,7 @@ SUBSYSTEM_DEF(air)
 	process_adjacent_rebuild()
 	atmos_handbooks_init()
 	return SS_INIT_SUCCESS
-
+#endif
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
