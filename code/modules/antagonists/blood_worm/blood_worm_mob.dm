@@ -157,7 +157,7 @@
 		unregister_host()
 
 /mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, blood_type_id, should_heal = TRUE)
-	if (!blood_type_id)
+	if (!blood_type_id || !blood_amount)
 		return
 
 	consumed_blood[blood_type_id] += blood_amount
@@ -390,13 +390,10 @@
 	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
 
 	var/rounded_volume = CEILING(bloodbag.blood_volume, 1)
-
-	var/total_blood_consumed = 0
-	for (var/blood_type_id as anything in consumed_blood)
-		total_blood_consumed += get_blood_volume_after_curve(consumed_blood[blood_type_id])
+	var/total_consumed_blood = get_scaled_total_consumed_blood()
 
 	var/growth_string = ""
-	if (total_blood_consumed < cocoon_action?.total_blood_required)
+	if (total_consumed_blood < cocoon_action?.total_blood_required)
 		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
 		if (rounded_growth > 0)
 			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
@@ -409,6 +406,51 @@
 			growth_string = ". You are already fully grown"
 
 	examine_strings += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
+
+/mob/living/basic/blood_worm/get_status_tab_items()
+	. = ..()
+
+	var/unscaled = get_unscaled_total_consumed_blood()
+	var/scaled = get_scaled_total_consumed_blood()
+
+	var/unscaled_rounded = CEILING(unscaled, 1)
+	var/scaled_rounded = CEILING(scaled, 1)
+
+	. += ""
+	. += "Blood Consumed: [unscaled_rounded]u[scaled_rounded == unscaled_rounded ? "" : " ([scaled_rounded]u)"]"
+
+	if (cocoon_action?.total_blood_required > 0)
+		. += "Growth: [FLOOR(scaled / cocoon_action.total_blood_required, 1)]%"
+
+	if (!length(consumed_blood))
+		return
+
+	var/list/efficiency_strings = list()
+
+	for (var/blood_type_id in consumed_blood)
+		var/base_amount = consumed_blood[blood_type_id]
+		var/efficiency = CEILING(get_blood_volume_after_curve(base_amount) / base_amount * 100, 1)
+
+		if (efficiency < 100)
+			efficiency_strings += "[blood_type_id]: [efficiency]%"
+
+	if (!length(efficiency_strings))
+		return
+
+	. += ""
+	. += "Blood Efficiency"
+	for (var/efficiency_string in efficiency_strings)
+		. += efficiency_string
+
+/mob/living/basic/blood_worm/proc/get_scaled_total_consumed_blood()
+	. = 0
+	for (var/blood_type_id as anything in consumed_blood)
+		. += get_blood_volume_after_curve(consumed_blood[blood_type_id])
+
+/mob/living/basic/blood_worm/proc/get_unscaled_total_consumed_blood()
+	. = 0
+	for (var/blood_type_id as anything in consumed_blood)
+		. += consumed_blood[blood_type_id]
 
 /// This is why you can't just drain the same dude to reach adulthood in 10 seconds flat.
 /mob/living/basic/blood_worm/proc/get_blood_volume_after_curve(initial_volume)

@@ -166,22 +166,14 @@
 	cancel(owner)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/check_consumed_blood(feedback = FALSE)
-	var/total_consumed_blood = get_total_consumed_blood()
+	var/mob/living/basic/blood_worm/worm = owner
+	var/total_consumed_blood = worm.get_scaled_total_consumed_blood()
+
 	if (total_consumed_blood < total_blood_required)
 		if (feedback)
 			owner.balloon_alert(owner, "only at [FLOOR(total_consumed_blood / total_blood_required * 100, 1)]% of required growth!")
 		return FALSE
 	return TRUE
-
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/get_total_consumed_blood()
-	var/mob/living/basic/blood_worm/worm = owner
-
-	var/total_consumed_blood = 0
-
-	for (var/blood_type as anything in worm.consumed_blood)
-		total_consumed_blood += worm.get_blood_volume_after_curve(worm.consumed_blood[blood_type])
-
-	return total_consumed_blood
 
 /obj/structure/blood_worm_cocoon
 	icon = 'icons/mob/nonhuman-player/blood_worm.dmi'

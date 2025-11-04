@@ -7,6 +7,7 @@
 	antag_moodlet = /datum/mood_event/blood_worm
 	show_to_ghosts = TRUE
 	stinger_sound = 'sound/effects/magic/exit_blood.ogg'
+	ui_name = "AntagInfoBloodWorm"
 
 	var/has_reached_adulthood = FALSE
 
