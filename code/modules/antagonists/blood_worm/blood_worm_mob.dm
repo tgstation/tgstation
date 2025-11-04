@@ -306,10 +306,10 @@
 		possess_worm()
 
 /mob/living/basic/blood_worm/proc/on_host_handle_blood(datum/source, seconds_per_tick, times_fired)
-	host.blood_volume += regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD
 	return HANDLE_BLOOD_NO_OXYLOSS | HANDLE_BLOOD_NO_NUTRITION_DRAIN
 
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
+	host.blood_volume += regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD // Regen beforehand, meaning we can still reach 0 exactly.
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
 		host.handle_blood(seconds_per_tick, times_fired)
 
