@@ -380,8 +380,9 @@
 		return
 	if(!hook.can_be_hooked(target_atom))
 		return
+	if(!create_fishing_line(target_atom, user))
+		return
 	currently_hooked = target_atom
-	create_fishing_line(target_atom, user)
 	hook.hook_attached(target_atom, src)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
