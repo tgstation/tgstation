@@ -289,11 +289,14 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 
-	world.TgsTriggerEvent("tg-Roundend", wait_for_completion = TRUE)
+	TriggerRoundEndTgsEvent()
 
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	standard_reboot()
+
+/datum/controller/subsystem/ticker/proc/TriggerRoundEndTgsEvent()
+	world.TgsTriggerEvent("tg-Roundend", wait_for_completion = TRUE)
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)

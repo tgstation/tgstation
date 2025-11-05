@@ -746,7 +746,7 @@
 /obj/item/coin/plastic,
 /obj/structure/safe,
 /obj/structure/spider/stickyweb,
-/obj/item/tank/jetpack/oxygen{
+/obj/item/tank/jetpack{
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. It's blue, and has a triangle chiselled into the paint."
 	},
 /obj/item/switchblade,

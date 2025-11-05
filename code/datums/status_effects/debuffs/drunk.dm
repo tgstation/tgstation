@@ -18,8 +18,8 @@
 	alert_type = null
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
-	/// If TRUE, drunk_value will be capped at 51, preventing serious damage 
-	var/iron_liver = FALSE 
+	/// If TRUE, drunk_value will be capped at 51, preventing serious damage
+	var/iron_liver = FALSE
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
@@ -236,7 +236,8 @@
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, \
 		motor skills, and mental cognition. Make sure to act like it."
-	icon_state = "drunk"
+	use_user_hud_icon = TRUE
+	overlay_state = "drunk"
 
 #undef BALLMER_PEAK_LOW_END
 #undef BALLMER_PEAK_HIGH_END

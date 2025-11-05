@@ -215,6 +215,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
 
+/obj/item/stack/ore/diamond/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = string_list(list(/datum/raptor_color/yellow = 3)))
+
 /obj/item/stack/ore/diamond/five
 	amount = 5
 

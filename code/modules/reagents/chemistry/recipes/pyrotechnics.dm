@@ -414,8 +414,8 @@
 	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/3, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	required_reagents = list(/datum/reagent/sonic_powder = 1)
@@ -425,8 +425,8 @@
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/10, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	results = list(/datum/reagent/phlogiston = 3)

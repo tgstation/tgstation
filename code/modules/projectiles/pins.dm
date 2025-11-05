@@ -19,6 +19,7 @@
 	///Can be removed from the gun using tools or replaced by a pin with force_replace
 	var/pin_removable = TRUE
 	var/obj/item/gun/gun
+	var/default_pin_auth = TRUE
 
 /obj/item/firing_pin/Destroy()
 	if(gun)
@@ -72,7 +73,12 @@
 	return
 
 /obj/item/firing_pin/proc/pin_auth(mob/living/user)
-	return TRUE
+	var/result = SEND_SIGNAL(user, COMSIG_LIVING_FIRING_PIN_CHECK, src)
+	if(result & ALLOW_FIRE)
+		return TRUE
+	if(result & BLOCK_FIRE)
+		return FALSE
+	return default_pin_auth
 
 /obj/item/firing_pin/proc/auth_fail(mob/living/user)
 	if(user)
@@ -354,28 +360,22 @@
 	name = "laser tag firing pin"
 	desc = "A recreational firing pin, used in laser tag units to ensure users have their vests on."
 	fail_message = "suit check failed!"
-	var/obj/item/clothing/suit/suit_requirement = null
-	var/tagcolor = ""
+	default_pin_auth = FALSE
+	var/tagcolor = LASERTAG_TEAM_NEUTRAL
 
-/obj/item/firing_pin/tag/pin_auth(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/M = user
-		if(istype(M.wear_suit, suit_requirement))
-			return TRUE
+/obj/item/firing_pin/tag/auth_fail(mob/living/user)
+	. = ..()
 	to_chat(user, span_warning("You need to be wearing [tagcolor] laser tag armor!"))
-	return FALSE
 
 /obj/item/firing_pin/tag/red
 	name = "red laser tag firing pin"
 	icon_state = "firing_pin_red"
-	suit_requirement = /obj/item/clothing/suit/redtag
-	tagcolor = "red"
+	tagcolor = LASERTAG_TEAM_RED
 
 /obj/item/firing_pin/tag/blue
 	name = "blue laser tag firing pin"
 	icon_state = "firing_pin_blue"
-	suit_requirement = /obj/item/clothing/suit/bluetag
-	tagcolor = "blue"
+	tagcolor = LASERTAG_TEAM_BLUE
 
 /obj/item/firing_pin/monkey
 	name = "monkeylock firing pin"

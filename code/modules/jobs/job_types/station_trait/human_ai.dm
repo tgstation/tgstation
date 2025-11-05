@@ -163,7 +163,7 @@
 /obj/item/secure_camera_console_pod/attack_self(mob/user, modifiers)
 	. = ..()
 	var/area/current_area = get_area(user)
-	var/static/list/allowed_areas = typecacheof(list(/area/station/ai_monitored/turret_protected/ai))
+	var/static/list/allowed_areas = typecacheof(list(/area/station/ai/satellite/chamber))
 	if(!is_type_in_typecache(current_area, allowed_areas))
 		user.balloon_alert(user, "not in the sat!")
 		return

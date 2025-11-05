@@ -350,7 +350,7 @@
 /obj/item/fish/gullion
 	name = "gullion"
 	fish_id = "gullion"
-	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms.\
+	desc = "This crystalline fish is actually one of only two known silicon-based lifeforms. \
 		It avoids death via oxygen-silicate reactions by organically shielding its exterior, allowing the thick scales to calcify into quartz and diamond, at the cost of rendering the fish functionally blind. \
 		How xenomorphs manage is a complete mystery bordering on bullshit."
 	icon = 'icons/obj/aquarium/rift.dmi'
@@ -705,7 +705,7 @@
 	now_fixed = span_noticealien("The psychic noise starts to fade.")
 	low_threshold_cleared = span_noticealien("The whispers leave you alone.")
 
-	bang_protect = 5
+	bang_protect = EAR_PROTECTION_VACUUM
 	damage_multiplier = 0.1
 	visual = TRUE
 	/// Overlay for the mob sprite because actual organ overlays are a fucking unusable nightmare

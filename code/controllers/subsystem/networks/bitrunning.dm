@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(bitrunning)
 	var/list/levels = list()
 
 	for(var/datum/lazy_template/virtual_domain/domain as anything in all_domains)
-		if(domain.test_only)
+		if(domain.domain_flags & DOMAIN_TEST_ONLY)
 			continue
 		var/can_view = domain.difficulty < scanner_tier && domain.cost <= points + 5
 		var/can_view_reward = domain.difficulty < (scanner_tier + 1) && domain.cost <= points + 3

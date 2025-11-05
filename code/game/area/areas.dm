@@ -58,6 +58,8 @@
 
 	/// For space, the asteroid, lavaland, etc. Used with blueprints or with weather to determine if we are adding a new area (vs editing a station room)
 	var/outdoors = FALSE
+	/// Whether or not this area unifies all of its motion sensors.
+	var/motion_monitored = FALSE
 
 	/// Size of the area in open turfs, only calculated for indoors areas.
 	var/areasize = 0
@@ -210,6 +212,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize()
 	power_change() // all machines set to current power level, also updates icon
 	update_beauty()
+	if(motion_monitored)
+		AddComponent(/datum/component/monitored_area)
 
 /// Generate turfs, including cool cave wall gen
 /area/proc/RunTerrainGeneration()

@@ -7,7 +7,7 @@
 	var/mob/baby = controller.pawn
 
 	if(QDELETED(target))
-		controller.queue_behavior(/datum/ai_behavior/find_mom, BB_FIND_MOM_TYPES, BB_IGNORE_MOM_TYPES, BB_FOUND_MOM)
+		find_mom(controller)
 		return
 
 	if(get_dist(target, baby) > minimum_distance)
@@ -23,3 +23,9 @@
 		controller.queue_behavior(/datum/ai_behavior/perform_emote, "dances around their parent!")
 
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/look_for_adult/proc/find_mom(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/find_mom, BB_FIND_MOM_TYPES, BB_IGNORE_MOM_TYPES, BB_FOUND_MOM)
+
+/datum/ai_planning_subtree/look_for_adult/raptor/find_mom(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/find_mom/raptor, BB_FIND_MOM_TYPES, BB_FOUND_MOM)

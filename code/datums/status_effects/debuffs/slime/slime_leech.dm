@@ -1,7 +1,8 @@
 /atom/movable/screen/alert/status_effect/slime_leech
 	name = "Covered in Slime"
 	desc = "A slime is draining your very lifeforce! Remove it by hand, by hitting it, or by water."
-	icon_state = "slime_leech"
+	use_user_hud_icon = TRUE
+	overlay_state = "slime_leech"
 
 /datum/status_effect/slime_leech
 	id = "slime_leech"

@@ -107,6 +107,7 @@ type Info = {
   knowledge_shop: Knowledge[];
   knowledge_tiers: KnowledgeTier[];
   passive_level: number;
+  points_to_aura: number;
 };
 
 const IntroductionSection = (props) => {
@@ -180,6 +181,8 @@ const FlavorSection = () => {
 };
 
 const GuideSection = () => {
+  const { data } = useBackend<Info>();
+  const { points_to_aura } = data;
   return (
     <Stack.Item>
       <Stack vertical fontSize="12px">
@@ -228,6 +231,22 @@ const GuideSection = () => {
           - Accomplish all of your objectives to be able to learn the{' '}
           <span style={hereticYellow}>final ritual</span>. Complete the ritual
           to become all powerful!
+        </Stack.Item>
+        <Stack.Item>
+          <span style={hereticRed}>WARNING!</span>
+          <br /> Accumulating a total of <b>{points_to_aura}</b>&nbsp;
+          <span style={hereticBlue}>knowledge points</span>
+          &nbsp;to manifest a visible aura of&nbsp;
+          <span style={hereticPurple}>Mansus energy</span> around you. Simply
+          gaining the points is sufficent, spending them will not trigger it.
+          <br />
+          This aura will be visible to all those around you and will mark you as
+          a heretic. Consider the risks before accumulating too much knowledge!
+          <br />
+          Keep in mind that using a&nbsp;
+          <span style={hereticPurple}>Codex Cicatrix</span> will also make you
+          very obvious as a heretic when draining&nbsp;
+          <span style={hereticYellow}>influences</span>
         </Stack.Item>
       </Stack>
     </Stack.Item>

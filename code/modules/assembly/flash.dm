@@ -276,6 +276,7 @@
 		return FALSE
 	if(!AOE_flash(user = user))
 		return FALSE
+	return TRUE
 
 /obj/item/assembly/flash/emp_act(severity)
 	. = ..()
@@ -293,12 +294,14 @@
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	. = ..()
+	if (.)
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
-	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	. = ..()
+	if (.)
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return

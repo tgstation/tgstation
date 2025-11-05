@@ -46,6 +46,8 @@
 	var/variant_traits_added
 	/// Variance in brain traits removed by subtypes
 	var/variant_traits_removed
+	/// The color of this brain. Fluff, only used when repairing (shade of...).
+	var/shade_color = "pink"
 
 /obj/item/organ/brain/Initialize(mapload)
 	. = ..()
@@ -220,8 +222,8 @@
 		if(!do_after(user, 3 SECONDS, src))
 			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
 			return TRUE
-
-		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
+		var/and_bright_shade = !shade_color ? "" : " and turn a slightly brighter shade of [shade_color]"
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape[and_bright_shade]."))
 		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
 		var/healto = max(0, damage - amount * 2)
 		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
@@ -343,12 +345,20 @@
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
+/obj/item/organ/brain/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
+	. = ..()
+	update_brain_color(animate = FALSE) // once it's out in the world we need to make sure it's the right color
+
 /obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	var/delta_dam = . //for the sake of clarity
-	if(delta_dam <= 0 || damage < BRAIN_DAMAGE_MILD)
-		return
+	if(isnull(bodypart_owner)) // no need to color it if it's in someone's noggin
+		update_brain_color()
+	if(delta_dam > 0 && damage > BRAIN_DAMAGE_MILD)
+		roll_for_brain_trauma(delta_dam)
 
+/// Rolls a random chance to gain a brain trauma based on damage taken and current damage level
+/obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 
@@ -360,6 +370,31 @@
 			gain_trauma_type(BRAIN_TRAUMA_SPECIAL, is_boosted ? TRAUMA_RESILIENCE_SURGERY : null, natural_gain = TRUE)
 		else
 			gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
+
+#define BRAIN_DAMAGE_FILTER "brain_damage_color_filter"
+
+/// Updates the brain's color based on damage level - the more damaged, the darker and grayer it gets
+/obj/item/organ/brain/proc/update_brain_color(animate = TRUE)
+	if(damage <= 0)
+		if(get_filter(BRAIN_DAMAGE_FILTER))
+			if(animate)
+				transition_filter(BRAIN_DAMAGE_FILTER, color_matrix_filter("#ffffff"), time = 1 SECONDS)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "brain_damage_color_filter"), 1.2 SECONDS, TIMER_UNIQUE)
+			else
+				remove_filter(BRAIN_DAMAGE_FILTER)
+		return
+
+	var/gradient = rgb_gradient(round(damage / maxHealth, 0.01), 0, "#ffffff", 1, "#7f7f7f")
+	if(animate)
+		if(!get_filter(BRAIN_DAMAGE_FILTER))
+			add_filter(BRAIN_DAMAGE_FILTER, 1, color_matrix_filter("#ffffff"))
+		transition_filter(BRAIN_DAMAGE_FILTER, color_matrix_filter(gradient), time = 1 SECONDS)
+	else if(get_filter(BRAIN_DAMAGE_FILTER))
+		modify_filter(BRAIN_DAMAGE_FILTER, color_matrix_filter(gradient))
+	else
+		add_filter(BRAIN_DAMAGE_FILTER, 1, color_matrix_filter(gradient))
+
+#undef BRAIN_DAMAGE_FILTER
 
 /obj/item/organ/brain/check_damage_thresholds()
 	. = ..()
@@ -450,12 +485,14 @@
 	icon_state = "brain-x"
 	variant_traits_added = list(TRAIT_PRIMITIVE)
 	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	shade_color = "green"
 
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
 	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
+	shade_color = "green"
 
 /obj/item/organ/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
@@ -476,6 +513,7 @@
 	icon_state = "adamantine_resonator"
 	can_smoothen_out = FALSE
 	color = COLOR_GOLEM_GRAY
+	shade_color = "teal"
 	organ_flags = ORGAN_MINERAL
 	variant_traits_added = list(TRAIT_ROCK_METAMORPHIC)
 
@@ -484,6 +522,7 @@
 	desc = "This is your brain on bluespace dust. Not even once."
 	icon_state = "random_fly_4"
 	can_smoothen_out = FALSE
+	shade_color = null
 
 // This fixes an edge case from species/regenerate_organs that would transfer the brain trauma before organ/on_mob_remove can remove it
 // Prevents wizards from using the magic mirror to gain bluespace_prophet trauma and then switching to another race
@@ -525,6 +564,7 @@
 	icon_state = "brain-ghost"
 	movement_type = PHASING
 	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+	shade_color = "ectoplasmic white"
 
 /obj/item/organ/brain/abductor
 	name = "grey brain"
@@ -532,6 +572,7 @@
 	icon_state = "brain-x"
 	brain_size = 1.3
 	variant_traits_added = list(TRAIT_REMOTE_TASTING)
+	shade_color = "grey"
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
@@ -696,3 +737,4 @@
 	desc = "The brain of a pod person, it's a bit more plant-like than a human brain."
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
+	shade_color = "lime"

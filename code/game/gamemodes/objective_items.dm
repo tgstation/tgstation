@@ -401,15 +401,15 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
-	targetitem = /obj/item/tank/jetpack/oxygen/captain
+	targetitem = /obj/item/tank/jetpack/captain
 	excludefromjob = list(JOB_CAPTAIN)
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
 	steal_hint = "A special yellow jetpack found in the Suit Storage Unit in the Captain's Quarters."
 
-/obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
-	return add_item_to_steal(src, /obj/item/tank/jetpack/oxygen/captain)
+/obj/item/tank/jetpack/captain/add_stealing_item_objective()
+	return add_item_to_steal(src, /obj/item/tank/jetpack/captain)
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"

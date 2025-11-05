@@ -13,8 +13,6 @@
 	var/filename = "virtual_domain.dmm"
 	/// The start time of the map. Used to calculate time taken
 	var/start_time
-	/// This map is specifically for unit tests. Shouldn't display in game
-	var/test_only = FALSE
 
 	/**
 	 * Generic settings / UI
@@ -32,13 +30,13 @@
 	var/name = "Virtual Domain"
 	/// Points to reward for completion. Used to purchase new domains and calculate ore rewards.
 	var/reward_points = BITRUNNER_REWARD_MIN
+	/// Any additional flags for this domain
+	var/domain_flags = NONE
 
 	/**
 	 * Player customization
 	 */
 
-	/// Any restrictions this domain has on what external sources can load in
-	var/external_load_flags = NONE
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
 

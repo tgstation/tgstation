@@ -242,7 +242,8 @@
 	name = "Shapeshifted"
 	desc = "Your form is not your own... you're shapeshifted into another creature! \
 		A wizard could turn you back - or maybe you're stuck like this for good?"
-	icon_state = "shapeshifted"
+	use_user_hud_icon = TRUE
+	overlay_state = "shapeshifted"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/shapeshifted/Click(location, control, params)

@@ -513,24 +513,20 @@
 
 	if(need_mob_update)
 		carbies.updatehealth()
-
-	if(show_message && carbies.stat != DEAD)
-		to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
-
-	carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
+		if(show_message)
+			carbies.visible_message(span_nicegreen("A rubbery liquid partially coats [carbies]'s burns."))
+			if(carbies.stat != DEAD)
+				to_chat(carbies, span_danger("You feel your burns and bruises healing! It stings like hell!"))
+				carbies.add_mood_event("painful_medicine", /datum/mood_event/painful_medicine)
 
 	//don't unhusked non husked mobs
 	if (!HAS_TRAIT_FROM(exposed_mob, TRAIT_HUSK, BURN))
 		return
 
 	//don't try to unhusk mobs above burn damage threshold
-	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
-		if (show_message)
+	if(carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+		if(show_message && !need_mob_update)
 			carbies.visible_message(span_minoralert("The liquid fails to properly stick on [carbies]. [carbies]'s burns need to be repaired first!"))
-		return
-	else if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
-		if (show_message)
-			carbies.visible_message(span_boldnotice("A rubbery liquid partially coats [carbies]'s burns... It seems more is required to fully unhusk!"))
 		return
 
 	var/datum/reagent/synthflesh = carbies.reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
@@ -547,8 +543,15 @@
 		carbies.reagents.remove_reagent(/datum/reagent/medicine/c2/synthflesh, current_volume) // consume the synthflesh, it won't do anything in their blood
 		//we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!"))
-	else if (show_message)
-		carbies.visible_message(span_boldnotice("A rubbery liquid partially coats [carbies]'s burns... It seems more is required to fully unhusk!"))
+	else if(show_message && !need_mob_update)
+		// if they are laying in a pool of synthflesh, we don't want it sending a message every tick
+		if(methods & TOUCH)
+			if(TIMER_COOLDOWN_RUNNING(carbies, REF(carbies)))
+				return
+			TIMER_COOLDOWN_START(carbies, REF(carbies), 16 SECONDS)
+			carbies.visible_message(span_boldnotice("The liquid fails to properly stick on [carbies]. There isn't enough to unhusk!"))
+		else
+			carbies.visible_message(span_nicegreen("A rubbery liquid partially mends [carbies]... It seems more is required to fully unhusk!"))
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
@@ -582,7 +585,9 @@
 /atom/movable/screen/alert/penthrite
 	name = "Strong Heartbeat"
 	desc = "Your heart beats with great force!"
-	icon_state = "penthrite"
+	use_user_hud_icon = TRUE
+	overlay_icon = 'icons/obj/medical/syringe.dmi'
+	overlay_state = "luxpen"
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()

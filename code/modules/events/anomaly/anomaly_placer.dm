@@ -59,8 +59,8 @@
 /datum/anomaly_placer/proc/generateAllowedAreas()
 	//Places that shouldn't explode
 	var/static/list/safe_area_types = typecacheof(list(
-		/area/station/ai_monitored/turret_protected/ai,
-		/area/station/ai_monitored/turret_protected/ai_upload,
+		/area/station/ai/satellite/chamber,
+		/area/station/ai/upload/chamber,
 		/area/station/engineering,
 		/area/station/science/ordnance/bomb,
 		/area/station/solars,

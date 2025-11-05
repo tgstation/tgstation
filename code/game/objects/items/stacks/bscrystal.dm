@@ -28,6 +28,7 @@
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
+	AddElement(/datum/element/raptor_food, ability_modifier = 0.05, attack_modifier = 0.5, color_chances = string_list(list(/datum/raptor_color/black = 1)))
 
 /obj/item/stack/ore/bluespace_crystal/get_part_rating()
 	return 1

@@ -208,6 +208,20 @@
 	)
 	result = /obj/item/food/rootdough/egg
 	removed_foodtypes = RAW
+	/**
+	 * So, at some point, we've had some mean issues with crafting with empty containers.
+	 * Bugs happen and we fix them all the time, so let's make sure stuff like this won't happen again.
+	 * Let's make his recipe spawn a bunch of unneeded containers and something else as well.
+	 * If this breaks the CI, then something is wrong with crafting.
+	 */
+	unit_test_spawn_extras = list(
+		/obj/item/food/rootdough/egg = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/reagent_containers/condiment = 1,
+		/obj/item/reagent_containers/cup/bottle = 2,
+		/obj/item/reagent_containers/cup/beaker/slime = 1,
+		/obj/item/reagent_containers/applicator/patch/synthflesh = 1,
+	)
 	crafting_flags = CRAFT_CLEARS_REAGENTS
 
 /datum/crafting_recipe/food/snail_nizaya
