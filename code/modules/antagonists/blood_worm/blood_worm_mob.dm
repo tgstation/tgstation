@@ -7,6 +7,7 @@
 
 	mob_biotypes = MOB_ORGANIC | MOB_BUG
 	basic_mob_flags = FLAMMABLE_MOB
+	status_flags = CANPUSH // No CANSTUN, blood worms are immune to stuns by design.
 
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
 
@@ -244,8 +245,8 @@
 
 	playsound(src, 'sound/effects/magic/exit_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
-	Immobilize(leave_host_duration)
-	incapacitate(leave_host_duration)
+	Immobilize(leave_host_duration, ignore_canstun = TRUE)
+	incapacitate(leave_host_duration, ignore_canstun = TRUE)
 
 	// Uses the icon file of the current mob. This means the animation is 32x48 for the adults.
 	flick("leave-[effect_name]", src)
