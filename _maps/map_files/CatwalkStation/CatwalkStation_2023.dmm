@@ -47895,7 +47895,9 @@
 /area/space/nearstation)
 "nnW" = (
 /obj/machinery/computer/security/telescreen/normal/directional/west,
-/obj/structure/chair/comfy/carp,
+/obj/structure/chair/comfy/carp{
+	name = "Captain's Chair"
+	},
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -73875,12 +73877,6 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
-"uCT" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/end,
-/turf/open/floor/iron/edge{
-	dir = 1
-	},
-/area/station/hallway/primary/central)
 "uCV" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
@@ -77726,12 +77722,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"vGN" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/iron/edge{
-	dir = 1
-	},
-/area/station/hallway/primary/central)
 "vGQ" = (
 /obj/structure/table,
 /obj/item/clothing/under/costume/seifuku/tan{
@@ -118705,7 +118695,7 @@ tBo
 tBo
 deJ
 vNo
-vGN
+qps
 iLm
 eLr
 prV
@@ -119219,7 +119209,7 @@ eLc
 jzP
 xwl
 hXc
-uCT
+qps
 iLm
 lkC
 fBQ
@@ -192500,7 +192490,7 @@ uKt
 kKw
 uKt
 uKt
-uKt
+mQh
 gsm
 ubs
 ubs
@@ -192757,7 +192747,7 @@ ubs
 ubs
 ubs
 ubs
-uKt
+mQh
 gsm
 gsm
 gsm
@@ -193014,7 +193004,7 @@ ubs
 ubs
 ubs
 ubs
-uKt
+mQh
 ubs
 ubs
 ubs
@@ -193271,7 +193261,7 @@ ubs
 ubs
 ubs
 uKt
-uKt
+mQh
 uKt
 ubs
 ubs
