@@ -3309,6 +3309,7 @@
 #include "code\modules\antagonists\changeling\powers\darkness_adaptation.dm"
 #include "code\modules\antagonists\changeling\powers\defib_grasp.dm"
 #include "code\modules\antagonists\changeling\powers\digitalcamo.dm"
+#include "code\modules\antagonists\changeling\powers\expel_worm.dm"
 #include "code\modules\antagonists\changeling\powers\fakedeath.dm"
 #include "code\modules\antagonists\changeling\powers\fleshmend.dm"
 #include "code\modules\antagonists\changeling\powers\headcrab.dm"

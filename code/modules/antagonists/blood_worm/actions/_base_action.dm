@@ -1,4 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm
+	abstract_type = /datum/action/cooldown/mob_cooldown/blood_worm
+
 	background_icon = 'icons/mob/actions/backgrounds.dmi'
 	background_icon_state = "bg_demon"
 

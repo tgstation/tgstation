@@ -217,7 +217,9 @@
 	if (host.mind)
 		backseat = new(host)
 		backseat.death(gibbed = TRUE) // Same thing that the corpse mob spawners do to stop deathgasps and such.
-		host.mind.transfer_to(backseat)
+
+		// If the host is a changeling, then we forcibly move their client to the backseat so they can use Expel Worm if they wish to.
+		host.mind.transfer_to(backseat, force_key_move = host.mind.has_antag_datum(/datum/antagonist/changeling))
 
 	ingest_blood(host.blood_volume, host.get_bloodtype(), should_heal = FALSE)
 
