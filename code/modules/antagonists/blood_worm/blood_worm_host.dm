@@ -10,7 +10,7 @@
 		return
 
 	if (IS_CHANGELING(src))
-		to_chat(key, span_good("The blood worm in your body is vulnerable to your genetic prowess!"))
+		to_chat(src, span_good("The blood worm in your body is vulnerable to your genetic prowess!"))
 
 		if (!expel_worm_action)
 			expel_worm_action = new(src)
