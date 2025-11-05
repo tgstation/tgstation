@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - admin: "added new admin verb, 'Mass Modify Traits', which can be used to add or remove a trait to/from every living mob."
