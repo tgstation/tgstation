@@ -212,7 +212,7 @@
 	abstract_type = /obj/item/clothing/neck
 	greyscale_config = /datum/greyscale_config/robe_cape
 	greyscale_config_inhand_left = /datum/greyscale_config/robe_cape/lefthand
-    greyscale_config_inhand_right = /datum/greyscale_config/robe_cape/righthand
+	greyscale_config_inhand_right = /datum/greyscale_config/robe_cape/righthand
 	greyscale_config_worn = /datum/greyscale_config/robe_cape/worn
 	greyscale_colors = "#2a2844"
 	flags_1 = IS_PLAYER_COLORABLE_1
