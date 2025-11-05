@@ -376,7 +376,7 @@ SUBSYSTEM_DEF(timer)
 	var/spent = 0
 	/// Holds info about this timer, stored from the moment it was created
 	/// Used to create a visible "name" whenever the timer is stringified
-	var/alist/timer_info
+	var/list/timer_info
 	/// Next timed event in the bucket
 	var/datum/timedevent/next
 	/// Previous timed event in the bucket
@@ -518,31 +518,31 @@ SUBSYSTEM_DEF(timer)
 /datum/timedevent/proc/bucketJoin()
 #if defined(TIMER_DEBUG)
 	// Generate debug-friendly list for timer, more complex but also more expensive
-	timer_info = alist(
-		1 = id,
-		2 = timeToRun,
-		3 = wait,
-		4 = flags,
-		5 = callBack, /* Safe to hold this directly because it's never del'd */
-		6 = "[callBack.object]",
-		7 = text_ref(callBack.object),
-		8 = getcallingtype(),
-		9 = callBack.delegate,
-		10 = callBack.arguments ? callBack.arguments.Copy() : null,
-		11 = "[source]"
+	timer_info = list(
+		/* 1 = */ id,
+		/* 2 = */ timeToRun,
+		/* 3 = */ wait,
+		/* 4 = */ flags,
+		/* 5 = */ callBack, /* Safe to hold this directly because it's never del'd */
+		/* 6 = */ "[callBack.object]",
+		/* 7 = */ text_ref(callBack.object),
+		/* 8 = */ getcallingtype(),
+		/* 9 = */ callBack.delegate,
+		/* 10 = */ callBack.arguments ? callBack.arguments.Copy() : null,
+		/* 11 = */ "[source]"
 	)
 #else
 	// Generate a debuggable list for the timer, simpler but wayyyy cheaper, string generation (and ref/copy memes) is a bitch and this saves a LOT of time
-	timer_info = alist(
-		1 = id,
-		2 = timeToRun,
-		3 = wait,
-		4 = flags,
-		5 = callBack, /* Safe to hold this directly because it's never del'd */
-		6 = "[callBack.object]",
-		7 = getcallingtype(),
-		8 = callBack.delegate,
-		9 = "[source]"
+	timer_info = list(
+		/* 1 = */ id,
+		/* 2 = */ timeToRun,
+		/* 3 = */ wait,
+		/* 4 = */ flags,
+		/* 5 = */ callBack, /* Safe to hold this directly because it's never del'd */
+		/* 6 = */ "[callBack.object]",
+		/* 7 = */ getcallingtype(),
+		/* 8 = */ callBack.delegate,
+		/* 9 = */ "[source]"
 	)
 #endif
 

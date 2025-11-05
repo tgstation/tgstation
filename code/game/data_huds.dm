@@ -8,11 +8,11 @@
 /* DATA HUD DATUMS */
 
 /atom/proc/add_to_all_human_data_huds()
-	for(var/hud_key,hud_type in GLOB.huds)
+	for(var/hud_key, hud_type in GLOB.huds)
 		astype(hud_type, /datum/atom_hud/data/human)?.add_atom_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/hud_key,hud_type in GLOB.huds)
+	for(var/hud_key, hud_type in GLOB.huds)
 		astype(hud_type, /datum/atom_hud/data)?.remove_atom_from_hud(src)
 
 /datum/atom_hud/data
