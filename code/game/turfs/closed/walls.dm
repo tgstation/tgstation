@@ -199,7 +199,7 @@
 	add_fingerprint(user)
 
 	//the istype cascade has been spread among various procs for easy overriding
-	if(try_clean(tool, user) || try_wallmount(tool, user) || try_decon(tool, user))
+	if(try_clean(tool, user) || try_decon(tool, user))
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -219,20 +219,6 @@
 				cut_overlay(dent_decals)
 				dent_decals.Cut()
 			return TRUE
-
-	return FALSE
-
-/turf/closed/wall/proc/try_wallmount(obj/item/W, mob/user)
-	//check for wall mounted frames
-	if(istype(W, /obj/item/wallframe))
-		var/obj/item/wallframe/F = W
-		if(F.try_build(src, user))
-			F.attach(src, user)
-			return TRUE
-		return FALSE
-	//Poster stuff
-	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
-		return place_poster(W,user)
 
 	return FALSE
 
@@ -287,7 +273,8 @@
 		if(RCD_WALLFRAME)
 			var/obj/item/wallframe/wallmount = rcd_data["[RCD_DESIGN_PATH]"]
 			var/obj/item/wallframe/new_wallmount = new wallmount(user.drop_location())
-			return try_wallmount(new_wallmount, user, src)
+			if(new_wallmount.interact_with_atom(src, user) == ITEM_INTERACT_SUCCESS)
+				return TRUE
 		if(RCD_DECONSTRUCT)
 			ScrapeAway()
 			return TRUE

@@ -6,6 +6,16 @@
 	result_path = /obj/structure/light_construct
 	wall_external = TRUE
 
+/obj/item/wallframe/light_fixture/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/window) ? structure : ..()
+
+/obj/item/wallframe/light_fixture/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()
+
 /obj/item/wallframe/light_fixture/small
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"

@@ -14,6 +14,9 @@
 	result_path = /obj/machinery/camera/autoname/deconstructed
 	wall_external = TRUE
 
+/obj/item/wallframe/camera/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/window) ? structure : ..()
+
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."

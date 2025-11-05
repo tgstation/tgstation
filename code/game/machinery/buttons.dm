@@ -523,3 +523,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	pixel_shift = 24
+
+/obj/item/wallframe/button/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/table) ? structure : ..()

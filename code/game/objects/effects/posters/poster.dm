@@ -21,10 +21,6 @@
 	var/obj/structure/sign/poster/poster_type
 	var/obj/structure/sign/poster/poster_structure
 
-/obj/item/poster/examine(mob/user)
-	. = ..()
-	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
-
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 
@@ -38,10 +34,18 @@
 	if(new_poster_structure && (new_poster_structure.loc != src))
 		new_poster_structure.forceMove(src) //The poster structure *must* be in the item's contents for the exited() proc to properly clean up when placing the poster
 	poster_structure = new_poster_structure
-	if(!new_poster_structure && poster_type)
+	if(poster_type)
 		name = "[poster_type::poster_item_name] - [poster_type::original_name]"
 		desc = poster_type::poster_item_desc
 		icon_state = poster_type::poster_item_icon_state
+
+/obj/item/poster/Destroy(force)
+	QDEL_NULL(poster_structure)
+	return ..()
+
+/obj/item/poster/examine(mob/user)
+	. = ..()
+	. += span_notice("You can booby-trap the poster by using a glass shard on it before you put it up.")
 
 /obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(I, /obj/item/shard))
@@ -57,22 +61,47 @@
 	poster_structure.trap = WEAKREF(I)
 	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
 
-/obj/item/poster/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone == poster_structure)
-		poster_structure = null
-		if(!QDELING(src))
-			qdel(src) //we're now a poster, huzzah!
+/obj/item/poster/interact_with_atom(turf/closed/wall_structure, mob/living/user, list/modifiers)
+	if(!isclosedturf(wall_structure))
+		return NONE
 
-/obj/item/poster/Destroy(force)
-	QDEL_NULL(poster_structure)
-	return ..()
+	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
+	if (wall_structure.smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
+		for(var/overlay in wall_structure.overlays)
+			var/image/new_image = overlay
+			if(copytext(new_image.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
+				to_chat(user, span_warning("Cannot place on diagonal wall!"))
+				return ITEM_INTERACT_FAILURE
 
-// The poster sign/structure
+	var/stuff_on_wall = 0
+	for(var/obj/contained_object in wall_structure.contents) //Let's see if it already has a poster on it or too much stuff
+		if(istype(contained_object, /obj/structure/sign/poster))
+			balloon_alert(user, "no room!")
+			return ITEM_INTERACT_FAILURE
+		stuff_on_wall++
+		if(stuff_on_wall == 3)
+			balloon_alert(user, "no room!")
+			return ITEM_INTERACT_FAILURE
+
+	var/turf/user_drop_location = get_turf(user)
+	balloon_alert(user, "hanging poster...")
+	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
+	placed_poster.forceMove(user_drop_location)
+	flick("poster_being_set", placed_poster)
+	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
+	qdel(src)
+
+	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), wall_structure)))
+		placed_poster.roll_and_drop(user_drop_location, user)
+		return ITEM_INTERACT_FAILURE
+
+	placed_poster.setDir(get_dir(user_drop_location, wall_structure))
+	placed_poster.find_and_hang_on_atom()
+	placed_poster.on_placed_poster(user)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * The structure form of a poster.
- *
  * These are what get placed on maps as posters. They are also what gets created when a player places a poster on a wall.
  * For the item form that can be spawned for players, see [/obj/item/poster]
  */
@@ -213,45 +242,6 @@
 /// Re-creates the poster item from the poster structure
 /obj/structure/sign/poster/proc/return_to_poster_item(atom/location)
 	return new poster_item_type(location, src)
-
-//separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/closed/proc/place_poster(obj/item/poster/rolled_poster, mob/user)
-	if(!rolled_poster.poster_structure)
-		to_chat(user, span_warning("[rolled_poster] has no poster... inside it? Inform a coder!"))
-		return
-
-	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
-	if (smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
-		for (var/overlay in overlays)
-			var/image/new_image = overlay
-			if(copytext(new_image.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
-				return
-
-	var/stuff_on_wall = 0
-	for(var/obj/contained_object in contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(contained_object, /obj/structure/sign/poster))
-			balloon_alert(user, "no room!")
-			return
-		stuff_on_wall++
-		if(stuff_on_wall == 3)
-			balloon_alert(user, "no room!")
-			return
-
-	balloon_alert(user, "hanging poster...")
-	var/obj/structure/sign/poster/placed_poster = rolled_poster.poster_structure
-
-	flick("poster_being_set", placed_poster)
-	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
-	placed_poster.find_and_hang_on_atom()
-	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
-
-	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
-	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), src)))
-		placed_poster.roll_and_drop(user_drop_location, user)
-		return
-
-	placed_poster.on_placed_poster(user)
-	return TRUE
 
 /obj/structure/sign/poster/proc/snowflake_closed_turf_check(atom/hopefully_still_a_closed_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
 	return isclosedturf(hopefully_still_a_closed_turf)
