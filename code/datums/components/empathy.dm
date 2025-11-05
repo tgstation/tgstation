@@ -32,11 +32,11 @@
 	src.sense_dead = sense_dead
 	src.sense_whisper = sense_whisper
 	src.smite_target = smite_target
-	if(sense_whisper == TRUE)
+	if(sense_whisper)
 		ADD_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, REF(src))
 
 /datum/component/empathy/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_EMPATHY_EXAMINE, PROC_REF(get_empath_info))
+	RegisterSignal(parent, COMSIG_CARBON_MID_EXAMINE, PROC_REF(get_empath_info))
 	RegisterSignal(parent, COMSIG_ON_LAY_ON_HANDS, PROC_REF(on_hands_laid))
 
 /datum/component/empathy/proc/get_empath_info(datum/source, mob/living/target, list/examine_list)
@@ -45,7 +45,7 @@
 		return
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH))
 		if(sense_dead)
-			. += "Something about this dead body doesn't look right..."
+			examine_list += "Something about this dead body doesn't look right..."
 		else
 			return
 	var/mob/living/living_parent = parent
@@ -81,17 +81,18 @@
 			living_parent.set_jitter_if_lower(15 SECONDS)
 
 /datum/component/empathy/proc/on_hands_laid(datum/source, mob/living/carbon/smiter)
-	if iscarbon(parent)
+	SIGNAL_HANDLER
+	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
 		if(carbon_parent.mob_biotypes & MOB_UNDEAD)
-			return FALSE
+			return NONE
 	if(smite_target && HAS_TRAIT(smiter, TRAIT_EVIL))
 		return SMITE_AWAY
+	return NONE
 
 /datum/component/empathy/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_EMPATHY_EXAMINE)
+	UnregisterSignal(parent, COMSIG_CARBON_MID_EXAMINE)
 
 /datum/component/empathy/Destroy(force = FALSE)
-	if(sense_whisper == TRUE)
-		REMOVE_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, REF(src))
+	REMOVE_TRAIT(parent, TRAIT_SEE_MASK_WHISPER, REF(src))
 	return ..()
