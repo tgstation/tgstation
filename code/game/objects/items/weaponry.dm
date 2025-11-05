@@ -374,6 +374,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_POINTY
 	attack_verb_continuous = list("stabs", "cuts")
 	attack_verb_simple = list("stab", "cut")
+	slot_flags = null
 	sound_vary = TRUE
 	block_sound = 'sound/items/weapons/parry.ogg'
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
