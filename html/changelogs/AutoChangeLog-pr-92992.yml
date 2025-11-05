@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Special versions of hulk, such as the wizard's transformation spell and the pirate warlord's superhuman powers, no longer suffer from arm breakage like normal hulks do."
-  - balance: "Hulk arm breaking now uses natural wound determination over forced wound effects at arm health thresholds."
-  - code_imp: "Cleans up some of the mutation code."

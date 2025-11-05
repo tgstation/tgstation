@@ -2,6 +2,7 @@
 	description = "Heh heh. \"It's on the mouse\". What a play on words."
 	mood_change = 1
 	timeout = 2 MINUTES
+	event_flags = MOOD_EVENT_WHIMSY
 
 /datum/mood_event/gondola_serenity
 	description = "There's a lot that could be on your mind right now. But this feeling of contentedness, a universal calling to simply sit back and observe is washing over you..."

@@ -223,6 +223,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(obj_flags & UNIQUE_RENAME)
 		.["renameable"] = "Use a pen on it to rename it or change its description."
+	if(obj_flags & CONDUCTS_ELECTRICITY)
+		.["conductive"] = "It appears to be a good conductor of electricity."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -345,3 +347,19 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
+
+/// Checks performed by a renamable object(through UNIQUE_RENAME obj_flag) before renaming begins.
+/obj/proc/rename_checks(mob/living/user)
+	return TRUE
+
+/// Returns the final name of the object, and does any side effects of renaming, such as sounds.
+/obj/proc/nameformat(input, mob/living/user)
+	return input
+
+/// Same as nameformat, but for desc.
+/obj/proc/descformat(input, mob/living/user)
+	return input
+
+/// Called when UNIQUE_RENAME is reset
+/obj/proc/rename_reset()
+	return

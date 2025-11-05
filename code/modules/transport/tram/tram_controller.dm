@@ -1198,3 +1198,12 @@
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/machinery/transport/tram_controller
 	pixel_shift = 32
+
+/obj/item/wallframe/tram/try_build(obj/structure/tram/on_tram, mob/user)
+	var/turf/tram_turf = get_turf(user)
+	var/obj/structure/thermoplastic/tram_floor = locate() in tram_turf
+	if(!istype(tram_floor))
+		balloon_alert(user, "needs tram!")
+		return FALSE
+
+	return ..()

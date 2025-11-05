@@ -1,4 +1,0 @@
-author: "mcbalaam, Ez-Briz"
-delete-after: True
-changes:
-  - admin: "Added a new TGUI spawn panel, removing it's ancestors - HTML \"Create X\" panels"

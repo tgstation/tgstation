@@ -90,7 +90,6 @@
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
-	new /obj/item/wallframe/defib_mount(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
 	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
@@ -139,3 +138,23 @@
 	new /obj/item/storage/box/syringes/variety(src)
 	new /obj/item/storage/box/beakers/variety(src)
 	new /obj/item/clothing/glasses/science(src)
+
+/obj/structure/closet/secure_closet/paramedic
+	name = "emergency medical team locker"
+	req_access = list(ACCESS_PARAMEDIC)
+	icon_state = "paramed_secure"
+
+/obj/structure/closet/secure_closet/paramedic/PopulateContents()
+	..()
+
+	var/static/items_inside = list(
+		/obj/item/storage/medkit/emergency = 1,
+		/obj/item/storage/box/bandages = 1,
+		/obj/item/pinpointer/crew = 1,
+		/obj/item/storage/belt/medical/paramedic = 1,
+		/obj/item/radio/headset/headset_med = 2,
+		/obj/item/emergency_bed = 2,
+		/obj/item/storage/bag/garment/paramedic = 2,
+	)
+	generate_items_inside(items_inside,src)
+

@@ -420,10 +420,9 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 /client/proc/attempt_auto_fit_viewport()
 	if (!prefs?.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
+	// No need to attempt to fit the viewport on non-initialized clients as they'll auto-fit viewport right before finishing init
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
-	else //Delayed to avoid wingets from Login calls.
-		addtimer(CALLBACK(src, VERB_REF(fit_viewport), 1 SECONDS))
 
 /client/verb/policy()
 	set name = "Show Policy"

@@ -55,7 +55,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(is_explosion_shielded(severity))
 		return FALSE
 
 	switch(severity)

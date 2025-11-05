@@ -66,7 +66,8 @@
 /atom/movable/screen/alert/status_effect/commanded
 	name = "Commanded"
 	desc = "You are inspired to do things faster!"
-	icon_state = "commanded"
+	use_user_hud_icon = TRUE
+	overlay_state = "commanded"
 
 /obj/item/melee/chainofcommand/tailwhip
 	name = "liz o' nine tails"

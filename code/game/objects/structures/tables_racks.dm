@@ -534,7 +534,7 @@
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/glass
 	smoothing_groups = SMOOTH_GROUP_GLASS_TABLES
 	canSmoothWith = SMOOTH_GROUP_GLASS_TABLES
@@ -608,7 +608,7 @@
 	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmaglass
 	glass_shard_type = /obj/item/shard/plasma
 	max_integrity = 100
@@ -630,6 +630,7 @@
 	max_integrity = 70
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/table/wood/after_smash(mob/living/smashed)
 	if(QDELETED(src) || prob(66))
@@ -862,7 +863,7 @@
 	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
-	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/rglass
 	max_integrity = 150
 
@@ -872,7 +873,7 @@
 	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
-	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plasmarglass
 
 /obj/structure/table/reinforced/titaniumglass
@@ -881,7 +882,7 @@
 	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
-	custom_materials = list(/datum/material/alloy/titaniumglass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/titaniumglass
 	max_integrity = 250
 
@@ -891,7 +892,7 @@
 	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
-	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT)
 	buildstack = /obj/item/stack/sheet/plastitaniumglass
 	max_integrity = 300
 
@@ -1144,7 +1145,7 @@
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "mask detached")
 	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
-	if (user.CanReach(breath_mask))
+	if (breath_mask.IsReachableBy(user))
 		user.put_in_hands(breath_mask)
 	breath_mask = null
 	update_appearance()
@@ -1159,7 +1160,7 @@
 	air_tank.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
 	balloon_alert(user, "tank detached")
-	if (user.CanReach(air_tank))
+	if (air_tank.IsReachableBy(user))
 		user.put_in_hands(air_tank)
 	if (patient?.external && patient.external == air_tank)
 		patient.close_externals()
@@ -1191,7 +1192,7 @@
 		. += span_notice("There's a port for a breathing mask tube on its side.")
 
 /obj/structure/table/optable/proc/detach_mask(mob/living/user)
-	if (!istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+	if (!istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
 		return FALSE
 
 	if (!breath_mask)
@@ -1207,7 +1208,7 @@
 	return TRUE
 
 /obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
-	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+	if (over != patient || !istype(user) || !IsReachableBy(user) || !user.can_interact_with(src))
 		return
 
 	if (!air_tank)
@@ -1292,12 +1293,14 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW //You can throw objects over this, despite its density.
 	max_integrity = 20
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/rack/skeletal
 	name = "skeletal minibar"
 	desc = "Rattle me boozes!"
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "minibar"
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/rack/Initialize(mapload)
 	. = ..()
@@ -1387,7 +1390,7 @@
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	obj_flags = CONDUCTS_ELECTRICITY
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/building = FALSE
 
 /obj/item/rack_parts/Initialize(mapload)
