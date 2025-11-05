@@ -27,6 +27,7 @@
 		. += NAMEOF(src, damage_deflection)
 		. += NAMEOF(src, resistance_flags)
 
+	GLOB.map_export_save_vars_cache[type] = .
 	return .
 
 /atom/movable/get_save_vars()

@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
-	var/list/vars_to_save = object.get_save_vars()
+	var/list/vars_to_save = GLOB.map_export_save_vars_cache[object.type] || object.get_save_vars()
 	var/list/custom_vars = object.get_custom_save_vars()
 	// Tracks variables handled by get_custom_save_vars() This ensures the default variable saving loop
 	// correctly skips these names. A separate list is necessary because custom_vars can contain null or FALSE values.
