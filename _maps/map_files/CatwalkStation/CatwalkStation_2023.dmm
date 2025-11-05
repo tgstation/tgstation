@@ -63830,6 +63830,7 @@
 	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "rTk" = (
