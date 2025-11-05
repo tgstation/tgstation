@@ -195,6 +195,8 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become a juvenile, gaining stat increases and the ability to spit corrosive blood, but losing the ability to ventcrawl.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
+	if (!IsAvailable(feedback = TRUE))
+		return
 
 	return ..()
 
@@ -223,6 +225,8 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become an adult, gaining stat increases and the ability to spit bursts of corrosive blood by right-clicking with Spit Blood while outside of a host.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
+		return
+	if (!IsAvailable(feedback = TRUE))
 		return
 
 	return ..()
@@ -257,6 +261,8 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will create [num_hatchlings + 1] new hatchlings, including yourself.", "Reproduce", list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
+	if (!IsAvailable(feedback = TRUE))
+		return
 
 	owner.balloon_alert(owner, "polling ghosts")
 
@@ -278,6 +284,8 @@
 		return
 	if (num_candidates < num_hatchlings && tgui_alert(owner, "There are only [num_candidates]/[num_hatchlings] candidates for hatchlings, want to proceed anyway?", "Ghost Shortage", list("Yes", "No"), 10 SECONDS) != "Yes")
 		StartCooldown() // So that you can't spam the ghosts.
+		return
+	if (!IsAvailable(feedback = TRUE))
 		return
 
 	return ..()

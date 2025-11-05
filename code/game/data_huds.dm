@@ -518,16 +518,19 @@ Diagnostic HUDs!
 	BLOOD FOR THE BLOOD GOD!!!
 ~~~~~~~~~~~~~*/
 
-/mob/living/proc/blood_hud_set_status()
-	// It's annoying for basic mobs that don't have blood to show this.
-	if (blood_volume <= 0)
-		set_hud_image_inactive(BLOOD_HUD)
-	else
+/mob/living/proc/blood_hud_set_status(icon_state_override = null)
+	if (initial(blood_volume))
+		set_hud_image_state(BLOOD_HUD, icon_state_override || round_blood_for_hud(src))
 		set_hud_image_active(BLOOD_HUD)
-		set_hud_image_state(BLOOD_HUD, round_blood_for_hud(src))
+	else
+		set_hud_image_inactive(BLOOD_HUD)
 
-/mob/living/carbon/blood_hud_set_status()
-	set_hud_image_state(BLOOD_HUD, round_blood_for_hud(src))
+/mob/living/carbon/blood_hud_set_status(icon_state_override = null)
+	if (!HAS_TRAIT(src, TRAIT_NOBLOOD))
+		set_hud_image_state(BLOOD_HUD, icon_state_override || round_blood_for_hud(src))
+		set_hud_image_active(BLOOD_HUD)
+	else
+		set_hud_image_inactive(BLOOD_HUD)
 
 #define CACHED_WIDTH_INDEX "width"
 #define CACHED_HEIGHT_INDEX "height"

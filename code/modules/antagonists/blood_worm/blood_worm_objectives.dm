@@ -65,7 +65,7 @@
 	name = "department infiltration"
 	explanation_text = "Survive until the end with a member of the ERROR: CONTACT ADMINS department as your host."
 
-	var/department_type
+	var/department_bitflag = NONE
 
 /datum/objective/blood_worm/department_host/check_completion()
 	if (completed)
@@ -74,17 +74,17 @@
 	var/mob/living/carbon/human/host = get_host()
 	var/mob/living/basic/blood_worm/worm = get_worm()
 
-	return host && worm.backseat?.mind?.assigned_role?.departments_list?.Find(department_type)
+	return host && (worm.backseat?.mind?.assigned_role?.departments_bitflags & department_bitflag)
 
 /datum/objective/blood_worm/department_host/security
 	name = "security infiltration"
 	explanation_text = "Survive until the end with a member of the security department as your host."
-	department_type = /datum/job_department/security
+	department_bitflag = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/objective/blood_worm/department_host/command
 	name = "command infiltration"
 	explanation_text = "Survive until the end with a member of station command as your host."
-	department_type = /datum/job_department/command
+	department_bitflag = DEPARTMENT_BITFLAG_COMMAND
 
 /datum/objective/blood_worm/infiltrate_centcom
 	name = "freeform infiltration"
