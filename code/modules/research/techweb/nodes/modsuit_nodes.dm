@@ -1,7 +1,7 @@
 /datum/techweb_node/mod_suit
 	id = TECHWEB_NODE_MOD_SUIT
 	starting_node = TRUE
-	display_name = "Modular Suit"
+	display_name = "Modular Suits"
 	description = "Specialized back mounted power suits with various different modules."
 	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
 	design_ids = list(
@@ -37,7 +37,7 @@
 
 /datum/techweb_node/mod_service
 	id = TECHWEB_NODE_MOD_SERVICE
-	display_name = "Civilian Modular Suit"
+	display_name = "Civilian Modular Suits"
 	description = "Civilian MODsuits for dignified living."
 	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
 	design_ids = list(
@@ -52,7 +52,7 @@
 
 /datum/techweb_node/mod_entertainment
 	id = TECHWEB_NODE_MOD_ENTERTAINMENT
-	display_name = "Entertainment Modular Suit"
+	display_name = "Entertainment Modular Suits"
 	description = "Powered suits for protection against low-humor environments."
 	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
 	design_ids = list(
@@ -66,7 +66,7 @@
 
 /datum/techweb_node/mod_medical
 	id = TECHWEB_NODE_MOD_MEDICAL
-	display_name = "Medical Modular Suit"
+	display_name = "Medical Modular Suits"
 	description = "Medical MODsuits for quick rescue purposes."
 	prereq_ids = list(TECHWEB_NODE_MOD_SUIT, TECHWEB_NODE_CHEM_SYNTHESIS)
 	design_ids = list(
@@ -148,7 +148,7 @@
 
 /datum/techweb_node/mod_anomaly
 	id = TECHWEB_NODE_MOD_ANOMALY
-	display_name = "Anomalock Modular Suit"
+	display_name = "Anomalock Modular Suits"
 	description = "Modules for MODsuits that require anomaly cores to function."
 	prereq_ids = list(TECHWEB_NODE_MOD_ENGI_ADV, TECHWEB_NODE_ANOMALY_RESEARCH)
 	design_ids = list(

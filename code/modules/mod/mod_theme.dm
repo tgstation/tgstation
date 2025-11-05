@@ -237,7 +237,7 @@
 	desc = "A one-piece three-piece suit designed for maximum negotiating power. Provides no meaningful protection."
 	extended_desc = "The \"secret weapon\" of the Moonrakers Conglomerate, designed for maximum bureaucratic efficiency. \
 		While giving practically no protection against any physical threat, the aura of affluence it exudes is said to ward off \
-		bear markets. "
+		bear markets."
 	default_skin = "psuit"
 	armor_type = /datum/armor/mod_theme_portable_suit
 	charge_drain = DEFAULT_CHARGE_DRAIN / 2
@@ -257,7 +257,6 @@
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/neck/mod = list(
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = NECKWEAR_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = NECKWEAR_SEAL_MESSAGE,
 			),
