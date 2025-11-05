@@ -13,7 +13,7 @@
 
 /atom/proc/remove_from_all_data_huds()
 	for(var/hud_key,hud_type in GLOB.huds)
-		astype(hud_type, /datum/atom_hud/data/human)?.remove_atom_from_hud(src)
+		astype(hud_type, /datum/atom_hud/data)?.remove_atom_from_hud(src)
 
 /datum/atom_hud/data
 
