@@ -723,20 +723,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 /datum/holiday/vegan/getStationPrefix()
 	return pick("Tofu", "Tempeh", "Seitan", "Tofurkey")
 
-/datum/holiday/october_revolution
-	name = "October Revolution"
-	begin_day = 6
-	begin_month = NOVEMBER
-	end_day = 7
-	holiday_colors = list(
-		COLOR_MEDIUM_DARK_RED,
-		COLOR_GOLD,
-		COLOR_MEDIUM_DARK_RED,
-	)
-
-/datum/holiday/october_revolution/getStationPrefix()
-	return pick("Communist", "Soviet", "Bolshevik", "Socialist", "Red", "Workers'")
-
 /datum/holiday/remembrance_day
 	name = "Remembrance Day"
 	begin_month = NOVEMBER
