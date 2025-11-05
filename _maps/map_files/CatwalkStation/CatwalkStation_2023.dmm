@@ -335,7 +335,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "afo" = (
@@ -1342,10 +1344,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	req_access = list("command");
-	name = "Conference Room"
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "asA" = (
@@ -3797,7 +3795,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
+	id = "bridge blast-2";
 	name = "Bridge Blast Door"
 	},
 /obj/machinery/door/airlock/command/glass{
@@ -5306,15 +5304,15 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "byR" = (
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/flora/bush/pale/style_random,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
 	name = "Bridge Blast Door"
 	},
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/command/bridge)
 "byU" = (
@@ -6684,7 +6682,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/red/full,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "bSM" = (
@@ -8684,7 +8682,6 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/prison)
 "cvP" = (
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -8693,6 +8690,7 @@
 	id = "bridge blast";
 	name = "Bridge Blast Door"
 	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/station/command/bridge)
 "cvV" = (
@@ -9439,6 +9437,15 @@
 /obj/machinery/holopad,
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
+"cEF" = (
+/obj/machinery/door/window/brigdoor/right/directional/north{
+	req_access = list("command");
+	name = "Conference Room"
+	},
+/turf/open/floor/iron/stairs/medium{
+	dir = 1
+	},
+/area/station/hallway/secondary/command)
 "cEH" = (
 /obj/structure/table,
 /obj/item/stock_parts/power_store/cell/high{
@@ -15816,10 +15823,10 @@
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
 "etY" = (
-/obj/effect/turf_decal/tile/brown/full,
 /obj/structure/chair/office{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eug" = (
@@ -16732,8 +16739,8 @@
 /area/station/security/checkpoint/medical)
 "eJC" = (
 /obj/structure/table/reinforced/rglass,
-/obj/effect/turf_decal/tile/blue/full,
 /obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eJT" = (
@@ -19202,7 +19209,7 @@
 	pixel_x = 6;
 	pixel_y = 2
 	},
-/obj/effect/turf_decal/tile/yellow/full,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fro" = (
@@ -19627,6 +19634,10 @@
 /turf/open/floor/wood,
 /area/station/command/teleporter)
 "fwP" = (
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	req_access = list("command");
+	name = "Conference Room"
+	},
 /turf/open/floor/iron/stairs/medium{
 	dir = 1
 	},
@@ -20041,6 +20052,18 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/edge,
 /area/station/hallway/primary/central)
+"fDh" = (
+/obj/structure/flora/bush/pale/style_random,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/grass,
+/area/station/command/bridge)
 "fDk" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner,
@@ -22405,7 +22428,9 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "giT" = (
@@ -24493,11 +24518,11 @@
 /obj/item/storage/briefcase/secure{
 	pixel_y = 3
 	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_y = 9;
 	pixel_x = -6
 	},
-/obj/effect/turf_decal/tile/brown/full,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gNX" = (
@@ -25130,7 +25155,7 @@
 /obj/machinery/computer/atmos_alert/station_only{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/full,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "gYG" = (
@@ -25315,7 +25340,7 @@
 /obj/machinery/computer/accounting{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green/full,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hbc" = (
@@ -26195,7 +26220,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/purple/full,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hns" = (
@@ -26719,10 +26744,6 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	req_access = list("command");
-	name = "Conference Room"
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "hui" = (
@@ -27165,7 +27186,7 @@
 /obj/machinery/computer/cargo/request{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/brown/full,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "hAE" = (
@@ -30689,8 +30710,8 @@
 /area/station/security/prison/rec)
 "ixS" = (
 /obj/machinery/computer/records/medical,
-/obj/effect/turf_decal/tile/blue/full,
 /obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iyb" = (
@@ -30821,7 +30842,9 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "izk" = (
@@ -31340,8 +31363,8 @@
 	name = "bridge power monitoring console";
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/full,
 /obj/machinery/light/warm/dim/directional/east,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iFU" = (
@@ -31431,10 +31454,10 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "iGI" = (
-/obj/structure/railing/corner{
+/obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/blue/corner{
+/obj/structure/railing/corner{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -31575,7 +31598,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "iJu" = (
@@ -33211,7 +33236,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/effect/turf_decal/tile/red/full,
 /obj/structure/table/reinforced/rglass,
 /obj/item/assembly/flash/handheld{
 	pixel_x = 7;
@@ -33224,6 +33248,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jgt" = (
@@ -35491,7 +35516,7 @@
 "jKo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/dark_blue/full,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jKp" = (
@@ -35642,13 +35667,13 @@
 /area/station/service/kitchen)
 "jMa" = (
 /obj/structure/table/reinforced/rglass,
-/obj/effect/turf_decal/tile/purple/full,
 /obj/item/aicard{
 	pixel_x = 5
 	},
 /obj/item/assembly/timer{
 	pixel_x = -7
 	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jMi" = (
@@ -36270,10 +36295,10 @@
 /turf/open/floor/glass,
 /area/station/maintenance/starboard/fore)
 "jWP" = (
-/obj/effect/turf_decal/tile/brown/full,
 /obj/machinery/computer/security/mining{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "jWT" = (
@@ -41420,7 +41445,7 @@
 "lvj" = (
 /obj/machinery/status_display/ai/directional/north,
 /obj/machinery/computer/rdconsole,
-/obj/effect/turf_decal/tile/purple/full,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "lvv" = (
@@ -44036,14 +44061,20 @@
 /obj/structure/table/reinforced/rglass,
 /obj/machinery/button/door/directional/south{
 	id = "bridge blast";
-	name = "Bridge Access Blast Door Control";
+	name = "Bridge Window Blast Doors";
 	req_access = list("command");
-	pixel_y = 0
+	pixel_y = 5
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/turf_decal/tile/dark_blue/full,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/machinery/button/door/directional/south{
+	id = "bridge blast-2";
+	name = "Bridge Access Blast Doors";
+	req_access = list("command");
+	pixel_y = -5
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
@@ -44056,10 +44087,10 @@
 /obj/structure/table/reinforced/rglass,
 /obj/structure/secure_safe/caps_spare,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/turf_decal/tile/dark_blue/full,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mga" = (
@@ -45194,7 +45225,6 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "mxM" = (
 /obj/structure/table/reinforced/rglass,
-/obj/effect/turf_decal/tile/green/full,
 /obj/item/paper_bin{
 	pixel_x = -1;
 	pixel_y = 11
@@ -45210,6 +45240,7 @@
 	pixel_x = -1;
 	pixel_y = 13
 	},
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mxO" = (
@@ -46418,11 +46449,11 @@
 /obj/machinery/light/floor,
 /obj/structure/table/reinforced/rglass,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/effect/turf_decal/tile/dark_blue/full,
 /obj/item/food/chocolatebar{
 	pixel_x = 6;
 	pixel_y = -3
 	},
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mPV" = (
@@ -47865,7 +47896,7 @@
 "nnW" = (
 /obj/machinery/computer/security/telescreen/normal/directional/west,
 /obj/structure/chair/comfy/carp,
-/obj/effect/turf_decal/tile/dark_blue/full,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "nog" = (
@@ -51016,10 +51047,6 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	req_access = list("command");
-	name = "Conference Room"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
@@ -51233,7 +51260,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/yellow/full,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ojE" = (
@@ -53059,7 +53086,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
-	id = "bridge blast";
+	id = "bridge blast-2";
 	name = "Bridge Blast Door"
 	},
 /obj/structure/disposalpipe/segment,
@@ -55261,7 +55288,7 @@
 /area/station/maintenance/port/fore)
 "pmX" = (
 /obj/machinery/modular_computer/preset/civilian,
-/obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pna" = (
@@ -55630,7 +55657,9 @@
 	dir = 9
 	},
 /obj/structure/bookcase/random/reference,
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "pvF" = (
@@ -55748,9 +55777,9 @@
 /area/station/hallway/primary/fore)
 "pxd" = (
 /obj/machinery/computer/mecha,
-/obj/effect/turf_decal/tile/purple/full,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/camera/autoname/directional/west,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "pxv" = (
@@ -61312,7 +61341,7 @@
 /obj/machinery/computer/shuttle/mining{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/brown/full,
+/obj/effect/turf_decal/tile/brown/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "rbl" = (
@@ -63387,7 +63416,7 @@
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green/full,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "rHk" = (
@@ -64216,6 +64245,7 @@
 	name = "Morgue"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
 /turf/open/floor/iron/dark/small,
 /area/station/medical/morgue)
 "rTk" = (
@@ -67368,7 +67398,7 @@
 /obj/machinery/computer/security{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/full,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "sMa" = (
@@ -69161,8 +69191,8 @@
 /area/station/security/armory)
 "tnf" = (
 /obj/machinery/computer/robotics,
-/obj/effect/turf_decal/tile/purple/full,
 /obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "tnh" = (
@@ -70704,6 +70734,18 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/virology)
+"tKz" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/flora/bush/pale/style_random,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/grass,
+/area/station/command/bridge)
 "tKB" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/siding/brown/corner,
@@ -70826,8 +70868,8 @@
 /obj/machinery/computer/prisoner/management{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/full,
 /obj/machinery/light/warm/dim/directional/west,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "tMD" = (
@@ -72608,9 +72650,9 @@
 /area/station/medical/psychology)
 "umI" = (
 /obj/machinery/computer/crew,
-/obj/effect/turf_decal/tile/blue/full,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/camera/autoname/directional/east,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ung" = (
@@ -72662,7 +72704,7 @@
 /obj/machinery/recharger,
 /obj/item/restraints/handcuffs,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/turf_decal/tile/dark_blue/full,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "uox" = (
@@ -73161,7 +73203,9 @@
 /obj/effect/turf_decal/siding/blue{
 	dir = 9
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "uvh" = (
@@ -73384,7 +73428,9 @@
 	dir = 5
 	},
 /obj/structure/bookcase/random/reference,
-/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/railing{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/meeting_room/council)
 "uxt" = (
@@ -73829,6 +73875,12 @@
 /obj/effect/landmark/carpspawn,
 /turf/open/space/basic,
 /area/space)
+"uCT" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/station/hallway/primary/central)
 "uCV" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
@@ -77674,6 +77726,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"vGN" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/iron/edge{
+	dir = 1
+	},
+/area/station/hallway/primary/central)
 "vGQ" = (
 /obj/structure/table,
 /obj/item/clothing/under/costume/seifuku/tan{
@@ -77739,8 +77797,8 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/full,
 /obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vIg" = (
@@ -78079,7 +78137,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue/full,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vNz" = (
@@ -78574,8 +78632,8 @@
 /obj/machinery/computer/records/security{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/red/full,
 /obj/item/radio/intercom/directional/west,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "vSS" = (
@@ -81460,7 +81518,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/green/full,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wJU" = (
@@ -83186,7 +83244,7 @@
 /obj/machinery/modular_computer/preset/id{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green/full,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "xiI" = (
@@ -84445,6 +84503,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron/smooth_large,
 /area/station/maintenance/department/medical)
+"xAP" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/flora/bush/pale/style_random,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/grass,
+/area/station/command/bridge)
 "xAQ" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -84599,19 +84669,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
-"xCG" = (
-/obj/effect/turf_decal/siding/blue{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	req_access = list("command");
-	name = "Conference Room"
-	},
-/turf/open/floor/iron/dark,
-/area/station/command/meeting_room/council)
 "xCJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -118648,7 +118705,7 @@ tBo
 tBo
 deJ
 vNo
-qps
+vGN
 iLm
 eLr
 prV
@@ -118889,7 +118946,7 @@ vzB
 rmM
 ojx
 ecw
-fwP
+cEF
 sjC
 iis
 mYf
@@ -119162,7 +119219,7 @@ eLc
 jzP
 xwl
 hXc
-qps
+uCT
 iLm
 lkC
 fBQ
@@ -120688,7 +120745,7 @@ wIu
 qcB
 eZA
 tXS
-fwP
+cEF
 sjC
 iis
 nFA
@@ -184440,7 +184497,7 @@ jvB
 etY
 gNU
 cHV
-cvP
+xAP
 dfn
 dUb
 dUb
@@ -184697,7 +184754,7 @@ rbb
 hAC
 jWP
 cHV
-cvP
+fDh
 dfn
 dUb
 pPL
@@ -184954,7 +185011,7 @@ mfO
 mPP
 ivr
 cHV
-cvP
+fDh
 dfn
 dUb
 dfn
@@ -185211,7 +185268,7 @@ jKo
 nnW
 aia
 cHV
-cvP
+fDh
 dfn
 lqB
 dfn
@@ -185468,7 +185525,7 @@ mfS
 uow
 jsh
 cHV
-cvP
+fDh
 dfn
 dUb
 dfn
@@ -185725,7 +185782,7 @@ haU
 xiu
 rHg
 cHV
-cvP
+fDh
 dfn
 dUb
 pPL
@@ -185982,7 +186039,7 @@ jvB
 wJO
 mxM
 cHV
-cvP
+tKz
 dfn
 dUb
 gWM
@@ -186226,7 +186283,7 @@ oPM
 iTa
 sCx
 sCx
-xCG
+asz
 sSc
 exS
 xYk
