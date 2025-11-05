@@ -235,6 +235,7 @@
 /datum/greyscale_config/robe_cape/worn
 	name = "Robe Cape"
 	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape_worn.json'
 //
 // GLOVES
 //
