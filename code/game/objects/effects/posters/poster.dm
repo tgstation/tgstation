@@ -83,14 +83,14 @@
 			balloon_alert(user, "no room!")
 			return ITEM_INTERACT_FAILURE
 
-	var/turf/user_drop_location = get_turf(user)
 	balloon_alert(user, "hanging poster...")
 	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
-	placed_poster.forceMove(user_drop_location)
+	placed_poster.forceMove(wall_structure)
 	flick("poster_being_set", placed_poster)
 	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 	qdel(src)
 
+	var/turf/user_drop_location = get_turf(user)
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), wall_structure)))
 		placed_poster.roll_and_drop(user_drop_location, user)
 		return ITEM_INTERACT_FAILURE
