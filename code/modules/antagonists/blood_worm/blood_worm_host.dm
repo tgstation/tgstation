@@ -14,4 +14,4 @@
 
 		if (!expel_worm_action)
 			expel_worm_action = new(src)
-			action.Grant(src)
+			expel_worm_action.Grant(src)
