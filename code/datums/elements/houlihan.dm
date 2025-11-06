@@ -1,6 +1,10 @@
 /// Teleports interactors back onto the station.
 /datum/element/houlihan
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
+	/// Text that will appear in the alert prompt.
 	var/question = "Travel back?"
+	/// List of z-levels that the user can teleport to.
 	var/list/zlevels
 
 /datum/element/houlihan/Attach(datum/target, question, zlevels)
@@ -9,12 +13,12 @@
 		return ELEMENT_INCOMPATIBLE
 
 	if(!isnull(question) && (!istext(question) || !length(question)))
-		stack_trace("recieved bad question argument, falling back to default")
+		stack_trace("received bad question argument, falling back to default")
 		question = null
 	src.question = question || initial(src.question)
 
 	if(!isnull(zlevels) && (!islist(zlevels) || !length(zlevels)))
-		stack_trace("recieved bad zlevels argument, falling back to default")
+		stack_trace("received bad zlevels argument, falling back to default")
 		zlevels = null
 	src.zlevels = zlevels || SSmapping.levels_by_trait(ZTRAIT_STATION)
 
