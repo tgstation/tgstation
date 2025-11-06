@@ -199,7 +199,7 @@
 		. += span_smallnoticeital("[t_He] [t_is] emitting a gentle blue glow!") // this should be signalized
 
 	var/mob/living/living_user = user
-	SEND_SIGNAL(living_user, COMSIG_CARBON_MID_EXAMINE, src, .) // Empathy text comes before the other stuff and requires different arguments
+	SEND_SIGNAL(living_user, COMSIG_CARBON_MID_EXAMINE, src, .) // Adds examine text after clothing and wounds but before death and scars
 	if(just_sleeping)
 		. += span_notice("[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.")
 	else if(!appears_dead)

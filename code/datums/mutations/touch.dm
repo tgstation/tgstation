@@ -367,9 +367,9 @@
 	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) //Is the guy evil and we're not evil? If so, hurt.
 		return TRUE
 
-	if(hurtguy_smiteable & SMITE_AWAY) //Is some other property of the target (like the empath component) causing them to be smited? If so, hurt.
+	if(hurtguy_smiteable) //Is some other property of the target (like the empath component) causing them to be smited? If so, hurt.
 		return TRUE
-	return FALSE
+	return (FALSE)
 
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
 

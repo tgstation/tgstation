@@ -7,7 +7,7 @@
 	// Whether or not we should get scared the next time we see an evil person.
 	var/seen_it = FALSE
 
-	// What sort of information we can glean from examining someone, stored in binary (511 = everything)
+	// What sort of information we can glean from examining someone
 	var/visible_info = ALL
 
 	// Whether or not we can use empathy on ourselves
@@ -85,10 +85,10 @@
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
 		if(carbon_parent.mob_biotypes & MOB_UNDEAD)
-			return NONE
+			return FALSE
 	if(smite_target && HAS_TRAIT(smiter, TRAIT_EVIL))
-		return SMITE_AWAY
-	return NONE
+		return TRUE
+	return FALSE
 
 /datum/component/empathy/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_CARBON_MID_EXAMINE)
