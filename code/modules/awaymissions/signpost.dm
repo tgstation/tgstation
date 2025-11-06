@@ -11,7 +11,7 @@
 	/// Optional replacement for the teleport question.
 	var/question = null
 	/// Optional list of z-levels that the Houlihan element can send us to. Modify this on Initialize().
-	var/final/list/zlevels = null
+	VAR_FINAL/list/zlevels = null
 
 /obj/structure/signpost/Initialize(mapload)
 	. = ..()
