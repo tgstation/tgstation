@@ -32,11 +32,11 @@
 	if (!can_insert_organ(user, organ, feedback = TRUE))
 		return
 
-	var/obj/item/bodypart/bodypart = user.get_bodypart(organ.zone)
+	var/zone_name = user.parse_zone_with_bodypart(organ.zone)
 
 	user.visible_message(
-		message = span_danger("\The [user] begin[user.p_s()] inserting \the [organ] into [user.p_their()] [bodypart.plaintext_zone]!"),
-		self_message = span_danger("You begin inserting \the [organ] into your [bodypart.plaintext_zone]!"),
+		message = span_danger("\The [user] begin[user.p_s()] inserting \the [organ] into [user.p_their()] [zone_name]!"),
+		self_message = span_danger("You begin inserting \the [organ] into your [zone_name]!"),
 		blind_message = span_hear("You hear squelching!")
 	)
 
@@ -48,11 +48,11 @@
 		user.balloon_alert(user, "interrupted!")
 		return
 
-	bodypart = user.get_bodypart(organ.zone)
+	zone_name = user.parse_zone_with_bodypart(organ.zone)
 
 	user.visible_message(
-		message = span_danger("\The [user] insert[user.p_s()] \the [organ] into [user.p_their()] [bodypart.plaintext_zone]!"),
-		self_message = span_danger("You insert \the [organ] into your [bodypart.plaintext_zone]!"),
+		message = span_danger("\The [user] insert[user.p_s()] \the [organ] into [user.p_their()] [zone_name]!"),
+		self_message = span_danger("You insert \the [organ] into your [zone_name]!"),
 		blind_message = span_hear("You hear a loud, final squelch!")
 	)
 
@@ -65,7 +65,7 @@
 	organ.on_surgical_insertion(user, user, organ.zone, organ)
 
 /datum/element/hand_organ_insertion/proc/can_insert_organ(mob/living/carbon/user, obj/item/organ/organ, feedback = FALSE)
-	if (!user.get_bodypart(organ.zone))
+	if (!user.get_bodypart(deprecise_zone(organ.zone)))
 		user.balloon_alert(user, "you don't have a [parse_zone(organ.zone)]!")
 		return FALSE
 
