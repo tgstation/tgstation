@@ -357,9 +357,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Can the empath see if living mob has the fundamentally evil trait
 #define EMPATH_SEE_EVIL (1<<8)
 
-// Flags for mending touch smite
-#define SMITE_AWAY (1<<0)
-
 // Flags for using your static for a ghost role
 #define GHOSTROLE_ALLOW_NAME (1<<0)
 #define GHOSTROLE_ALLOW_OTHER (1<<1)
