@@ -237,15 +237,7 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 				span_notice("You begin applying the plasma on [absorbing_mob]..."),
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
-	if(!do_after(
-		user,
-		delay,
-		absorbing_mob,
-	))
-		return FALSE
-	if(!try_absorb_checks(absorbing_mob, user, absorb_zone))
-		return FALSE
-	if(!use(1))
+	if(!use_tool(absorbing_mob, user, delay, 1, extra_checks = CALLBACK(src, PROC_REF(try_absorb_checks), absorbing_mob, user, absorb_zone)))
 		return FALSE
 	absorbing_mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 20)
 	return TRUE
