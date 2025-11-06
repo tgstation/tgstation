@@ -176,3 +176,18 @@
   vinylspiders:
   - admin: added new admin verb, 'Mass Modify Traits', which can be used to add or
       remove a trait to/from every living mob.
+2025-11-06:
+  Melbert:
+  - bugfix: You must be adjacent to mirrors to use them
+  Vishenka0704:
+  - bugfix: yellow stabilized/regenerative extract, glowshroom cap, voltaic cybernetic
+      heart now recharges cells of mob equipment
+  necromanceranne:
+  - bugfix: Makes sure that Sleeping Carp's harm combos can be properly blocked.
+  - spellcheck: Krav Maga has been renamed to Kaza Ruk, themed around being a Tiziran
+      martial art.
+  - balance: Kaza Ruk no longer overrides normal punches.
+  - balance: Kaza Ruk now sometimes performs a rapid followup attack after a normal
+      punch, dealing less damage but with decent wounding power.
+  - balance: Kaza Ruk causes more damage when a grabbed target fails to escape their
+      grab, and it is harder to escape their grabs.
