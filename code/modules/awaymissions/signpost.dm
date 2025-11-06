@@ -6,7 +6,7 @@
 	anchored = TRUE
 	density = TRUE
 
-	/// Whether or not this enables the Houlihan (teleport) element.
+	/// Whether or not this enables the Houlihan element.
 	var/teleports = FALSE
 	/// Optional replacement for the teleport question.
 	var/question = null
@@ -20,7 +20,7 @@
 /obj/structure/signpost/LateInitialize()
 	// This is here cause we wanna be super sure zlevels is properly initialized
 	if(teleports)
-		AddElement(/datum/element/houlihan, question, zlevels)
+		AddElement(/datum/element/houlihan_teleport, question, zlevels)
 
 /* ----------------- */
 

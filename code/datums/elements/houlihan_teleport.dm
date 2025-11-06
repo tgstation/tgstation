@@ -1,5 +1,5 @@
 /// Teleports interactors back onto the station.
-/datum/element/houlihan
+/datum/element/houlihan_teleport
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	/// Text that will appear in the alert prompt.
@@ -7,7 +7,7 @@
 	/// List of z-levels that the user can teleport to.
 	var/list/zlevels
 
-/datum/element/houlihan/Attach(datum/target, question, zlevels)
+/datum/element/houlihan_teleport/Attach(datum/target, question, zlevels)
 	. = ..()
 	if(!isstructure(target))
 		return ELEMENT_INCOMPATIBLE
@@ -26,7 +26,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(handle_attack_hand))
 	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 
-/datum/element/houlihan/proc/get_me_outta_here(obj/structure/source, mob/living/user)
+/datum/element/houlihan_teleport/proc/get_me_outta_here(obj/structure/source, mob/living/user)
 	var/said_yes = (tgui_alert(user, question, source.name, list("Yes", "No")) == "Yes")
 	if(!said_yes || !source.Adjacent(user))
 		return
@@ -51,7 +51,7 @@
 	user.emote("blink")
 	astype(dragged, /mob)?.emote("blink") // shhhhh just let it happen
 
-/datum/element/houlihan/proc/handle_generic_attack(obj/structure/source, mob/living/user, list/modifiers)
+/datum/element/houlihan_teleport/proc/handle_generic_attack(obj/structure/source, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(user.combat_mode)
@@ -63,7 +63,7 @@
 	INVOKE_ASYNC(src, PROC_REF(get_me_outta_here), source, user)
 	return COMPONENT_NO_AFTERATTACK
 
-/datum/element/houlihan/proc/handle_attack_hand(obj/structure/source, mob/user, list/modifiers)
+/datum/element/houlihan_teleport/proc/handle_attack_hand(obj/structure/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!isliving(user))
@@ -76,7 +76,7 @@
 	INVOKE_ASYNC(src, PROC_REF(get_me_outta_here), source, living_user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/element/houlihan/proc/handle_attackby(obj/structure/source, obj/item/item, mob/living/user, list/modifiers)
+/datum/element/houlihan_teleport/proc/handle_attackby(obj/structure/source, obj/item/item, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(user.combat_mode)
