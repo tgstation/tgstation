@@ -1,10 +1,10 @@
-/// Teleports interactors back onto the station.
+/// Teleports interactors onto a safe turf randomly picked from a list of z-levels.
 /datum/element/houlihan_teleport
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
 	/// Text that will appear in the alert prompt.
 	var/question = "Travel back?"
-	/// List of z-levels that the user can teleport to.
+	/// List of z-levels that the user can teleport to. By default, this is station z-levels.
 	var/list/zlevels
 
 /datum/element/houlihan_teleport/Attach(datum/target, question, zlevels)

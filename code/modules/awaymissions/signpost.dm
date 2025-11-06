@@ -14,8 +14,9 @@
 	VAR_FINAL/list/zlevels = null
 
 /obj/structure/signpost/Initialize(mapload)
-	. = ..()
+	..()
 	set_light(2)
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/signpost/LateInitialize()
 	// This is here cause we wanna be super sure zlevels is properly initialized
