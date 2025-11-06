@@ -8,7 +8,7 @@
 	)
 	time = 1.6 SECONDS
 	operation_flags = OPERATION_IGNORE_CLOTHES | OPERATION_STANDING_ALLOWED
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 	required_biotype = NONE
 
 /datum/surgery_operation/basic/core_removal/get_default_radial_image()

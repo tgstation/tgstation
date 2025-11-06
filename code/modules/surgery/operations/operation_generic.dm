@@ -5,7 +5,7 @@
 	// rnd_name = "Laparotomy / Craniotomy / Myotomy" // Maybe we keep this one simple
 	desc = "Make an incision in the patient's skin to access internal organs."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	replaced_by = /datum/surgery_operation/limb/incise_skin/alien
+	replaced_by = /datum/surgery_operation/limb/incise_skin/abductor
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 1.33,
@@ -17,7 +17,7 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
-	any_surgery_states_blocked = SURGERY_SKIN_STATES
+	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
 	/// We can't cut mobs with this biostate
 	var/biostate_blacklist = BIO_CHITIN
 
@@ -71,7 +71,7 @@
 /datum/surgery_operation/limb/incise_skin/thick/tool_check(obj/item/tool)
 	return ..() && tool.force >= 10
 
-/datum/surgery_operation/limb/incise_skin/alien
+/datum/surgery_operation/limb/incise_skin/abductor
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
 	biostate_blacklist = NONE // they got laser scalpels
@@ -81,7 +81,7 @@
 	name = "retract skin"
 	desc = "Retract the patient's skin to access their internal organs."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	replaced_by = /datum/surgery_operation/limb/retract_skin/alien
+	replaced_by = /datum/surgery_operation/limb/retract_skin/abductor
 	implements = list(
 		TOOL_RETRACTOR = 1,
 		TOOL_SCREWDRIVER = 2.25,
@@ -111,7 +111,7 @@
 	limb.add_surgical_state(SURGERY_SKIN_OPEN)
 	limb.remove_surgical_state(SURGERY_SKIN_CUT)
 
-/datum/surgery_operation/limb/retract_skin/alien
+/datum/surgery_operation/limb/retract_skin/abductor
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
 
@@ -120,7 +120,7 @@
 	name = "mend skin incision"
 	desc = "Mend the incision in the patient's skin, closing it up."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	replaced_by = /datum/surgery_operation/limb/close_skin/alien
+	replaced_by = /datum/surgery_operation/limb/close_skin/abductor
 	implements = list(
 		TOOL_CAUTERY = 1,
 		/obj/item/stack/medical/suture = 1,
@@ -131,7 +131,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/close_skin/get_default_radial_image()
 	return image(/obj/item/cautery)
@@ -163,9 +163,9 @@
 	. = ..()
 	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
 		limb.heal_damage(40)
-	limb.remove_surgical_state(SURGERY_UNSET_ON_CLOSE)
+	limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
 
-/datum/surgery_operation/limb/close_skin/alien
+/datum/surgery_operation/limb/close_skin/abductor
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
 
@@ -175,7 +175,7 @@
 	desc = "Clamp bleeding blood vessels in the patient's body to prevent blood loss."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP
-	replaced_by = /datum/surgery_operation/limb/clamp_bleeders/alien
+	replaced_by = /datum/surgery_operation/limb/clamp_bleeders/abductor
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 1.67,
@@ -207,7 +207,7 @@
 	limb.add_surgical_state(SURGERY_VESSELS_CLAMPED)
 	limb.remove_surgical_state(SURGERY_VESSELS_UNCLAMPED)
 
-/datum/surgery_operation/limb/clamp_bleeders/alien
+/datum/surgery_operation/limb/clamp_bleeders/abductor
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
 
@@ -216,7 +216,7 @@
 	name = "unclamp bleeders"
 	desc = "Unclamp blood vessels in the patient's body to allow blood flow again."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	replaced_by = /datum/surgery_operation/limb/unclamp_bleeders/alien
+	replaced_by = /datum/surgery_operation/limb/unclamp_bleeders/abductor
 	implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_WIRECUTTER = 1.67,
@@ -251,7 +251,7 @@
 	limb.add_surgical_state(SURGERY_VESSELS_UNCLAMPED)
 	limb.remove_surgical_state(SURGERY_VESSELS_CLAMPED)
 
-/datum/surgery_operation/limb/unclamp_bleeders/alien
+/datum/surgery_operation/limb/unclamp_bleeders/abductor
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
 
@@ -403,7 +403,7 @@
 	name = "incise organs"
 	desc = "Make an incision in patient's internal organ tissue to allow for manipulation or repair."
 	required_bodytype = ~BODYTYPE_ROBOTIC
-	replaced_by = /datum/surgery_operation/limb/incise_organs/alien
+	replaced_by = /datum/surgery_operation/limb/incise_organs/abductor
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/melee/energy/sword = 1.33,
@@ -459,6 +459,9 @@
 	)
 	display_pain(limb.owner, "You feel a sharp pain from inside your [limb.plaintext_zone]!")
 
-/datum/surgery_operation/limb/incise_organs/alien
+/datum/surgery_operation/limb/incise_organs/abductor
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	required_bodytype = NONE
+
+/datum/surgery_operation/limb/incise_organs/abductor/state_check(obj/item/bodypart/limb)
+	return TRUE // You can incise chests without sawing ribs

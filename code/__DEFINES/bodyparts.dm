@@ -125,7 +125,6 @@ DEFINE_BITFIELD(surgery_state, list(
 	"the prosthetic [must_must_not] be unsecured" = SURGERY_PROSTHETIC_UNSECURED, \
 )
 
-
 // Yes these are glorified bitflag manipulation macros, they're meant to make reading surgical operations a bit easier
 /// Checks if the input surgery state has all of the bitflags passed
 #define HAS_SURGERY_STATE(input_state, check_state) ((input_state & (check_state)) == (check_state))
@@ -137,19 +136,26 @@ DEFINE_BITFIELD(surgery_state, list(
 #define LIMB_HAS_ANY_SURGERY_STATE(limb, check_state) HAS_ANY_SURGERY_STATE(limb?.surgery_state, check_state)
 
 /// All states that concern itself with the skin
-#define SURGERY_SKIN_STATES (SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
+#define ALL_SURGERY_SKIN_STATES (SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN)
 /// All states that concern itself with the blood vessels
-#define SURGERY_VESSEL_STATES (SURGERY_VESSELS_UNCLAMPED|SURGERY_VESSELS_CLAMPED)
+#define ALL_SURGERY_VESSEL_STATES (SURGERY_VESSELS_UNCLAMPED|SURGERY_VESSELS_CLAMPED)
 /// All states that concern itself with the bones
-#define SURGERY_BONE_STATES (SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+#define ALL_SURGERY_BONE_STATES (SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
 /// All states that concern itself with internal organs
-#define SURGERY_ORGAN_STATES (SURGERY_ORGANS_CUT)
-
-/// Surgery state required for a limb with a certain zone to... be... fished... in...
-#define SURGERY_FISH_STATE(for_zone) (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|(for_zone == BODY_ZONE_CHEST ? SURGERY_BONE_SAWED : NONE))
+#define ALL_SURGERY_ORGAN_STATES (SURGERY_ORGANS_CUT)
 
 /// These states are automatically cleared when the surgery is closed for ease of use
-#define SURGERY_UNSET_ON_CLOSE (SURGERY_SKIN_STATES|SURGERY_VESSEL_STATES|SURGERY_BONE_STATES|SURGERY_ORGAN_STATES)
+#define ALL_SURGERY_STATES_UNSET_ON_CLOSE (ALL_SURGERY_SKIN_STATES|ALL_SURGERY_VESSEL_STATES|ALL_SURGERY_BONE_STATES|ALL_SURGERY_ORGAN_STATES)
+/// Surgery state required for a limb with a certain zone to... be... fished... in...
+#define ALL_SURGERY_FISH_STATES(for_zone) (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|(for_zone == BODY_ZONE_CHEST ? SURGERY_BONE_SAWED : NONE))
+
+/// Surgery states flipped on automatically if the bodypart lacks a form of skin
+#define SKINLESS_SURGERY_STATES (SURGERY_SKIN_OPEN)
+// (These are normally mutually exclusive, but as a bonus for lacking bones, you can do drill and saw operations simultaneously!)
+/// Surgery states flipped on automatically if the bodypart lacks bones
+#define BONELESS_SURGERY_STATES (SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+/// Surgery states flipped on automatically if the bodypart lacks vessels
+#define VESSELLESS_SURGERY_STATES (SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT)
 
 /// Biological state that has some kind of skin that can be cut.
 #define BIOSTATE_HAS_SKIN (BIO_FLESH|BIO_METAL)

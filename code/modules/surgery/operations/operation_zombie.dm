@@ -38,7 +38,7 @@
 		return FALSE
 	return FALSE
 
-/datum/surgery_operation/limb/bionecrosis/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, body_zone)
+/datum/surgery_operation/limb/bionecrosis/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, operated_zone)
 	for(var/chem in zombie_chems)
 		if(tool.reagents?.get_reagent_amount(chem) > 1)
 			return TRUE

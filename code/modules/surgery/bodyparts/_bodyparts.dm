@@ -262,12 +262,11 @@
 
 	var/innate_state = NONE
 	if(!LIMB_HAS_SKIN(src))
-		innate_state |= SURGERY_SKIN_OPEN
+		innate_state |= SKINLESS_SURGERY_STATES
 	if(!LIMB_HAS_BONES(src))
-		// These are normally mutually exclusive, but as a bonus for lacking bones, you can do drill and saw operations simultaneously!
-		innate_state |= SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED
+		innate_state |= BONELESS_SURGERY_STATES
 	if(!LIMB_HAS_VESSELS(src))
-		innate_state |= SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT
+		innate_state |= VESSELLESS_SURGERY_STATES
 	if(innate_state)
 		add_surgical_state(innate_state)
 
@@ -429,31 +428,36 @@
 /// Returns surgery self-check information for this bodypart
 /obj/item/bodypart/proc/get_surgery_self_check()
 	var/list/surgery_message = list()
-	if(LIMB_HAS_SKIN(src))
-		if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_CUT))
-			surgery_message += "skin has been incised"
-		if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
-			surgery_message += "skin is opened"
+	var/reported_state = surgery_state
+	if(!LIMB_HAS_SKIN(src))
+		reported_state &= ~SKINLESS_SURGERY_STATES
+	if(!LIMB_HAS_BONES(src))
+		reported_state &= ~BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(src))
+		reported_state &= ~VESSELLESS_SURGERY_STATES
+
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
+		surgery_message += "skin has been incised"
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_OPEN))
+		surgery_message += "skin is opened"
 
 	// We can only see these if the skin is open
+	// And we check the real state rather than reported_state
 	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
-		if(LIMB_HAS_VESSELS(src))
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_VESSELS_UNCLAMPED))
-				surgery_message += "blood vessels are unclamped and bleeding"
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_VESSELS_CLAMPED))
-				surgery_message += "blood vessels are clamped shut"
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_ORGANS_CUT))
-				surgery_message += "organs have been incised"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
+			surgery_message += "blood vessels are unclamped and bleeding"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_CLAMPED))
+			surgery_message += "blood vessels are clamped shut"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_ORGANS_CUT))
+			surgery_message += "organs have been incised"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_SAWED))
+			surgery_message += "bones have been sawed apart"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_DRILLED))
+			surgery_message += "bones have been drilled through"
 
-		if(LIMB_HAS_BONES(src))
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_BONE_SAWED))
-				surgery_message += "bones have been sawed apart"
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_BONE_DRILLED))
-				surgery_message += "bones have been drilled through"
-
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_PROSTHETIC_UNSECURED))
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PROSTHETIC_UNSECURED))
 		surgery_message += "prosthetic item is unsecured"
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_PLASTIC_APPLIED))
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
 		surgery_message += "got a layer of plastic applied to it"
 
 	if(length(surgery_message))
@@ -466,39 +470,44 @@
 	var/t_His = owner.p_Their()
 	var/single_message = ""
 	var/list/sub_messages = list()
-	if(LIMB_HAS_SKIN(src))
-		if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_CUT))
-			sub_messages += "skin has been incised"
-			single_message = "The skin on [t_his] [plaintext_zone] has been incised."
-		if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
-			sub_messages += "skin is opened"
-			single_message = "The skin on [t_his] [plaintext_zone] is opened."
+	var/reported_state = surgery_state
+	if(!LIMB_HAS_SKIN(src))
+		reported_state &= ~SKINLESS_SURGERY_STATES
+	if(!LIMB_HAS_BONES(src))
+		reported_state &= ~BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(src))
+		reported_state &= ~VESSELLESS_SURGERY_STATES
+
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
+		sub_messages += "skin has been incised"
+		single_message = "The skin on [t_his] [plaintext_zone] has been incised."
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_OPEN))
+		sub_messages += "skin is opened"
+		single_message = "The skin on [t_his] [plaintext_zone] is opened."
 
 	// We can only see these if the skin is open
+	// And we check the real state rather than reported_state
 	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
-		if(LIMB_HAS_VESSELS(src))
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_VESSELS_UNCLAMPED))
-				sub_messages += "blood vessels are unclamped[cached_bleed_rate ? " and bleeding" : ""]"
-				single_message = "The blood vessels in [t_his] [plaintext_zone] are unclamped[cached_bleed_rate ? " and bleeding!" : "."]"
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_VESSELS_CLAMPED))
-				sub_messages += "blood vessels are clamped shut"
-				single_message = "The blood vessels in [t_his] [plaintext_zone] are clamped shut."
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_ORGANS_CUT))
-				sub_messages += "the organs within have been incised"
-				single_message = "The organs in [t_his] [plaintext_zone] have been incised."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
+			sub_messages += "blood vessels are unclamped[cached_bleed_rate ? " and bleeding" : ""]"
+			single_message = "The blood vessels in [t_his] [plaintext_zone] are unclamped[cached_bleed_rate ? " and bleeding!" : "."]"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_CLAMPED))
+			sub_messages += "blood vessels are clamped shut"
+			single_message = "The blood vessels in [t_his] [plaintext_zone] are clamped shut."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_ORGANS_CUT))
+			sub_messages += "the organs within have been incised"
+			single_message = "The organs in [t_his] [plaintext_zone] have been incised."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_SAWED))
+			sub_messages += "the bones within have been sawed apart"
+			single_message = "The bones in [t_his] [plaintext_zone] have been sawed apart."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_DRILLED))
+			sub_messages += "the bones within have been drilled through"
+			single_message = "The bones in [t_his] [plaintext_zone] have been drilled through."
 
-		if(LIMB_HAS_BONES(src))
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_BONE_SAWED))
-				sub_messages += "the bones within have been sawed apart"
-				single_message = "The bones in [t_his] [plaintext_zone] have been sawed apart."
-			if(LIMB_HAS_SURGERY_STATE(src, SURGERY_BONE_DRILLED))
-				sub_messages += "the bones within have been drilled through"
-				single_message = "The bones in [t_his] [plaintext_zone] have been drilled through."
-
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_PROSTHETIC_UNSECURED))
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PROSTHETIC_UNSECURED))
 		sub_messages += "prosthetic item is unsecured"
 		single_message = "[t_His] [plaintext_zone] is unsecured and loose!"
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_PLASTIC_APPLIED))
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
 		sub_messages += "got a layer of plastic applied to it"
 		single_message = "A layer of plastic has been applied to [t_his] [plaintext_zone]."
 
@@ -942,7 +951,7 @@
 
 	UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_SET_BODY_POSITION))
 
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_FISH_STATE(body_zone)))
+	if(LIMB_HAS_SURGERY_STATE(src, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(old_owner.GetComponent(/datum/component/fishing_spot))
 
 /// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
@@ -978,7 +987,7 @@
 	forceMove(owner)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal)) //this must be set after we moved, or we insta gib
 
-	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_FISH_STATE(body_zone)))
+	if(LIMB_HAS_SURGERY_STATE(src, ALL_SURGERY_FISH_STATES(body_zone)))
 		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
 
 /// Called on addition of a bodypart
@@ -1675,11 +1684,11 @@
 
 	// inherent to the biostate, don't remove them
 	if(!LIMB_HAS_SKIN(src))
-		removing_states &= ~(SURGERY_SKIN_OPEN)
+		removing_states &= ~SKINLESS_SURGERY_STATES
 	if(!LIMB_HAS_BONES(src))
-		removing_states &= ~(SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED)
+		removing_states &= ~BONELESS_SURGERY_STATES
 	if(!LIMB_HAS_VESSELS(src))
-		removing_states &= ~(SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT)
+		removing_states &= ~VESSELLESS_SURGERY_STATES
 	if(!removing_states)
 		return
 
@@ -1689,12 +1698,12 @@
 
 /// Called when surgical state changes so we can react to it
 /obj/item/bodypart/proc/update_surgical_state(old_state, changed_states)
-	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_ORGANS_CUT|SURGERY_VESSEL_STATES))
+	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_ORGANS_CUT|ALL_SURGERY_VESSEL_STATES))
 		refresh_bleed_rate()
 
 	if(isnull(owner))
 		return
-	if(HAS_SURGERY_STATE(surgery_state, SURGERY_FISH_STATE(body_zone)))
+	if(HAS_SURGERY_STATE(surgery_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery) // no-op if they already have one
-	else if(HAS_SURGERY_STATE(old_state, SURGERY_FISH_STATE(body_zone)))
+	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))

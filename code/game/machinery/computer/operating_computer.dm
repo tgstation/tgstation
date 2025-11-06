@@ -233,7 +233,7 @@
 		if("open_experiments")
 			experiment_handler.ui_interact(usr)
 		if("change_zone")
-			if(params["new_zone"] in GLOB.all_body_zones)
+			if(params["new_zone"] in (GLOB.all_body_zones + GLOB.all_precise_body_zones))
 				target_zone = params["new_zone"]
 				var/atom/movable/screen/zone_sel/selector = ui.user.hud_used?.zone_select
 				selector?.set_selected_zone(params["new_zone"], ui.user, FALSE)

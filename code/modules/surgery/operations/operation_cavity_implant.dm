@@ -32,7 +32,7 @@
 /datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
 	return limb.body_zone == BODY_ZONE_CHEST
 
-/datum/surgery_operation/limb/cavity_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+/datum/surgery_operation/limb/cavity_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool, operated_zone)
 	return surgeon.canUnEquip(tool)
 
 /datum/surgery_operation/limb/cavity_implant/tool_check(obj/item/tool)
@@ -92,7 +92,7 @@
 /datum/surgery_operation/limb/undo_cavity_implant/all_required_strings()
 	return list("operate on chest") + ..()
 
-/datum/surgery_operation/limb/undo_cavity_implant/get_radial_options(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/undo_cavity_implant/get_radial_options(obj/item/bodypart/chest/limb, obj/item/tool, operating_zone)
 	// Not bothering to cache this as the chance of hitting the same cavity item in the same round is rather low
 	var/datum/radial_menu_choice/option = new()
 	option.name = "remove [limb.cavity_item]"

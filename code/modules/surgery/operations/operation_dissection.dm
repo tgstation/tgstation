@@ -12,7 +12,7 @@
 	time = 12 SECONDS
 	operation_flags = OPERATION_LOCKED | OPERATION_ALWAYS_FAILABLE | OPERATION_MORBID | OPERATION_IGNORE_CLOTHES
 	required_biotype = NONE
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/basic/dissection/all_required_strings()
 	. += ..()

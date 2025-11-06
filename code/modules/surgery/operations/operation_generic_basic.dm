@@ -15,7 +15,7 @@
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
-	any_surgery_states_blocked = SURGERY_SKIN_STATES
+	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/basic/incise_skin/get_default_radial_image()
 	return image(/obj/item/scalpel)
@@ -56,7 +56,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
-	any_surgery_states_required = SURGERY_UNSET_ON_CLOSE // we're not picky and allow this if almost any surgical state is detected
+	any_surgery_states_required = ALL_SURGERY_STATES_UNSET_ON_CLOSE // we're not picky
 
 /datum/surgery_operation/basic/close_skin/get_default_radial_image()
 	return image(/obj/item/cautery)

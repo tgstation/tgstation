@@ -14,26 +14,19 @@
 /datum/surgery_operation/limb/replace_limb/get_recommended_tool()
 	return "cybernetic limb"
 
-/datum/surgery_operation/limb/replace_limb/get_radial_options(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/limb/replace_limb/get_radial_options(obj/item/bodypart/limb, obj/item/tool, operating_zone)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_augment_options, tool.type)
 	if(!option)
 		option = new()
-		option.name = "augment with [tool.name]"
-		option.info = "Replace the patient's [limb.name] with [tool.name]."
-		option.image = image(tool)
+		option.name = "augment with [initial(tool.name)]"
+		option.info = "Replace the patient's [initial(limb.name)] with [initial(tool.name)]."
+		option.image = image(tool.type)
 		LAZYSET(cached_augment_options, tool.type, option)
 
 	return option
 
-/datum/surgery_operation/limb/replace_limb/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, body_zone)
-	if(limb.body_zone != body_zone)
-		return FALSE
-	if(limb.body_zone != tool.body_zone)
-		return FALSE
-	return TRUE
-
-/datum/surgery_operation/limb/replace_limb/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
-	return surgeon.canUnEquip(tool)
+/datum/surgery_operation/limb/replace_limb/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, operated_zone)
+	return limb.body_zone == tool.body_zone && surgeon.canUnEquip(tool)
 
 /datum/surgery_operation/limb/replace_limb/state_check(obj/item/bodypart/limb)
 	return !HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS) && !(limb.bodypart_flags & BODYPART_UNREMOVABLE)

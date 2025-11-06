@@ -14,7 +14,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
-	any_surgery_states_blocked = SURGERY_SKIN_STATES
+	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/mechanical_incision/get_default_radial_image()
 	return image(/obj/item/screwdriver)
@@ -86,7 +86,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/screwdriver.ogg'
 	success_sound = 'sound/items/tools/screwdriver2.ogg'
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/mechanical_close/get_default_radial_image()
 	return image(/obj/item/screwdriver)
@@ -110,7 +110,7 @@
 
 /datum/surgery_operation/limb/mechanical_close/on_success(obj/item/bodypart/limb)
 	. = ..()
-	limb.remove_surgical_state(SURGERY_UNSET_ON_CLOSE)
+	limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
 	limb.refresh_bleed_rate()
 
 // Mechanical equivalent of cutting vessels and organs

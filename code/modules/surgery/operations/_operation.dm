@@ -29,7 +29,7 @@
 			continue
 		if(!operation.check_availability(patient, operate_on, src, potential_tool, operating_zone))
 			continue
-		var/potential_options = operation.get_radial_options(operate_on, src, potential_tool)
+		var/potential_options = operation.get_radial_options(operate_on, potential_tool, operating_zone)
 		if(!islist(potential_options))
 			potential_options = list(potential_options)
 		for(var/datum/radial_menu_choice/radial_slice as anything in potential_options)
@@ -95,14 +95,33 @@
 	var/list/state = list()
 	if(has_limbs)
 		var/obj/item/bodypart/part = get_bodypart(target_zone)
-		state = bitfield_to_list(part?.surgery_state, SURGERY_STATE_READABLE)
-		if(!length(state) && (isnull(part) || HAS_TRAIT(part, TRAIT_READY_TO_OPERATE)))
-			state += part ? "Ready for surgery" : "Bodypart missing"
-	else
-		var/datum/status_effect/basic_surgery_state/state_holder = has_status_effect(__IMPLIED_TYPE__)
-		state = bitfield_to_list(state_holder?.surgery_state, SURGERY_STATE_READABLE)
-		if(!length(state) && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+		if(isnull(part))
+			return list("Bodypart missing")
+
+		if(HAS_TRAIT(part, TRAIT_READY_TO_OPERATE))
 			state += "Ready for surgery"
+
+		var/part_state = part?.surgery_state || NONE
+
+		if(!LIMB_HAS_BONES(part))
+			part_state &= ~BONELESS_SURGERY_STATES
+			state += "Bodypart lacks bones (counts as [jointext(bitfield_to_list(BONELESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
+		if(!LIMB_HAS_VESSELS(part))
+			part_state &= ~VESSELLESS_SURGERY_STATES
+			state += "Bodypart lacks blood vessels (counts as [jointext(bitfield_to_list(VESSELLESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
+		if(!LIMB_HAS_SKIN(part))
+			part_state &= ~SKINLESS_SURGERY_STATES
+			state += "Bodypart lacks skin (counts as [jointext(bitfield_to_list(SKINLESS_SURGERY_STATES, SURGERY_STATE_READABLE), ", ")])"
+
+		state += bitfield_to_list(part_state, SURGERY_STATE_READABLE)
+
+	else
+		if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
+			state += "Ready for surgery"
+
+		var/datum/status_effect/basic_surgery_state/state_holder = has_status_effect(__IMPLIED_TYPE__)
+		state += bitfield_to_list(state_holder?.surgery_state, SURGERY_STATE_READABLE)
+
 	return state
 
 /**
@@ -276,7 +295,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Checks to see if this operation can be performed
  * This is the main entry point for checking availability
  */
-/datum/surgery_operation/proc/check_availability(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+/datum/surgery_operation/proc/check_availability(mob/living/patient, atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_BE_PURE(TRUE)
@@ -287,15 +306,15 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(get_tool_quality(tool) <= 0)
 		return FALSE
 
-	if(!is_available(operating_on, body_zone))
+	if(!is_available(operating_on, operated_zone))
 		return FALSE
 
-	return snowflake_check_availability(operating_on, surgeon, tool, body_zone)
+	return snowflake_check_availability(operating_on, surgeon, tool, operated_zone)
 
 /**
  * Snowflake checks for surgeries which need many interconnected conditions to be met
  */
-/datum/surgery_operation/proc/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, body_zone)
+/datum/surgery_operation/proc/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
 	PROTECTED_PROC(TRUE)
 	return TRUE
 
@@ -324,7 +343,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * By default it returns a single option with the operation name and description,
  * but you can override this proc to return multiple options for one operation, like selecting which organ to operate on.
  */
-/datum/surgery_operation/proc/get_radial_options(atom/movable/operating_on, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/proc/get_radial_options(atom/movable/operating_on, obj/item/tool, operating_zone)
 	if(!main_option)
 		main_option = new()
 		main_option.image = get_default_radial_image()
@@ -336,7 +355,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /**
  * Checks to see if this operation can be performed on the provided target
  */
-/datum/surgery_operation/proc/is_available(atom/movable/operating_on, body_zone)
+/datum/surgery_operation/proc/is_available(atom/movable/operating_on, operated_zone)
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -353,7 +372,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	var/mob/living/patient = get_patient(operating_on)
-	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(body_zone))
+	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(operated_zone))
 		return FALSE
 
 	return TRUE
@@ -422,14 +441,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. = list()
 	// grouped states are filtered down to make it more readable
 	var/parsed_any_flags = any_surgery_states_required
-	if((parsed_any_flags & SURGERY_BONE_STATES) == SURGERY_BONE_STATES)
-		parsed_any_flags &= ~SURGERY_BONE_STATES
+	if((parsed_any_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
+		parsed_any_flags &= ~ALL_SURGERY_BONE_STATES
 		. += "the bone must be sawed or drilled"
-	if((parsed_any_flags & SURGERY_SKIN_STATES) == SURGERY_SKIN_STATES)
-		parsed_any_flags &= ~SURGERY_SKIN_STATES
+	if((parsed_any_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
+		parsed_any_flags &= ~ALL_SURGERY_SKIN_STATES
 		. += "the skin must be cut or opened"
-	if((parsed_any_flags & SURGERY_VESSEL_STATES) == SURGERY_VESSEL_STATES)
-		parsed_any_flags &= ~SURGERY_VESSEL_STATES
+	if((parsed_any_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
+		parsed_any_flags &= ~ALL_SURGERY_VESSEL_STATES
 		. += "the blood vessels must be clamped or unclamped" // weird phrasing but whatever
 
 	. += bitfield_to_list(parsed_any_flags, SURGERY_STATE_GUIDES("must"))
@@ -447,14 +466,14 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	. = list()
 	// grouped states are filtered down to make it more readable
 	var/parsed_blocked_flags = any_surgery_states_blocked
-	if((parsed_blocked_flags & SURGERY_BONE_STATES) == SURGERY_BONE_STATES)
-		parsed_blocked_flags &= ~SURGERY_BONE_STATES
+	if((parsed_blocked_flags & ALL_SURGERY_BONE_STATES) == ALL_SURGERY_BONE_STATES)
+		parsed_blocked_flags &= ~ALL_SURGERY_BONE_STATES
 		. += "the bone must be intact"
-	if((parsed_blocked_flags & SURGERY_SKIN_STATES) == SURGERY_SKIN_STATES)
-		parsed_blocked_flags &= ~SURGERY_SKIN_STATES
+	if((parsed_blocked_flags & ALL_SURGERY_SKIN_STATES) == ALL_SURGERY_SKIN_STATES)
+		parsed_blocked_flags &= ~ALL_SURGERY_SKIN_STATES
 		. += "the skin must be intact"
-	if((parsed_blocked_flags & SURGERY_VESSEL_STATES) == SURGERY_VESSEL_STATES)
-		parsed_blocked_flags &= ~SURGERY_VESSEL_STATES
+	if((parsed_blocked_flags & ALL_SURGERY_VESSEL_STATES) == ALL_SURGERY_VESSEL_STATES)
+		parsed_blocked_flags &= ~ALL_SURGERY_VESSEL_STATES
 		. += "the blood vessels must be intact"
 
 	. += bitfield_to_list(parsed_blocked_flags, SURGERY_STATE_GUIDES("must not"))
@@ -574,9 +593,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
  * Determines what gets passed into the try_perform() proc
  * If null is returned, the operation cannot be performed
  *
- * * surgeon - The mob performing the operation
  * * patient - The mob being operated on
- * * tool - The tool being used to perform the operation
+ * * body_zone - The body zone being operated on
  *
  * Returns the atom/movable being operated on
  */
@@ -586,9 +604,9 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /**
  * Called by operating computers to hint that this surgery could come next given the target's current state
  */
-/datum/surgery_operation/proc/show_as_next_step(mob/living/potential_patient, body_zone)
-	var/atom/movable/operate_on = get_operation_target(potential_patient, body_zone)
-	return !isnull(operate_on) && is_available(operate_on, body_zone)
+/datum/surgery_operation/proc/show_as_next_step(mob/living/potential_patient, operated_zone)
+	var/atom/movable/operate_on = get_operation_target(potential_patient, operated_zone)
+	return !isnull(operate_on) && is_available(operate_on, operated_zone)
 
 
 /**
@@ -965,10 +983,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		. += "operate on [parse_zone(target_zone)]"
 	. += ..()
 
-/datum/surgery_operation/basic/is_available(mob/living/patient, body_zone)
+/datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(target_zone != body_zone)
+	if(target_zone != operated_zone)
 		return FALSE
 	if(!HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return FALSE
@@ -990,7 +1008,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)
 	if(isnull(carbon_part)) // non-carbon
 		var/datum/status_effect/basic_surgery_state/state_holder = patient.has_status_effect(__IMPLIED_TYPE__)
-		return HAS_SURGERY_STATE(state_holder?.surgery_state, state & SURGERY_SKIN_STATES) // right now we only support skin states. update this if that changes
+		return HAS_SURGERY_STATE(state_holder?.surgery_state, state & ALL_SURGERY_SKIN_STATES) // right now we only support skin states. update this if that changes
 
 	return LIMB_HAS_SURGERY_STATE(carbon_part, state)
 
@@ -1026,11 +1044,11 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/get_operation_target(mob/living/patient, body_zone)
 	return patient.get_bodypart(deprecise_zone(body_zone))
 
-/datum/surgery_operation/limb/is_available(obj/item/bodypart/limb, body_zone)
+/datum/surgery_operation/limb/is_available(obj/item/bodypart/limb, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	// targeting groin will redirect you to the chest
-	if(limb.body_zone != deprecise_zone(body_zone))
+	if(limb.body_zone != deprecise_zone(operated_zone))
 		return FALSE
 	if(required_bodytype && !(limb.bodytype & required_bodytype))
 		return FALSE
@@ -1090,12 +1108,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/organ/get_patient(obj/item/organ/organ)
 	return organ.owner
 
-/datum/surgery_operation/organ/is_available(obj/item/organ/organ, body_zone)
+/datum/surgery_operation/organ/is_available(obj/item/organ/organ, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	// this deprecise_zone check is what makes it so you can do eye surgery targeting head
-	// if you want that behavior back, remove it - it'll work out of the box (i think)
-	if(deprecise_zone(organ.zone) != body_zone)
+	if(organ.zone != operated_zone)
 		return FALSE
 	if(required_organ_flag && !(organ.organ_flags & required_organ_flag))
 		return FALSE

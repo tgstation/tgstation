@@ -25,7 +25,7 @@
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	required_biotype = MOB_ORGANIC|MOB_HUMANOID
 	required_bodytype = NONE
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 	replaced_by = /datum/surgery_operation/basic/tend_wounds/upgraded
 	/// Radial slice datums for every healing option we can provide
 	VAR_PRIVATE/list/cached_healing_options
@@ -42,7 +42,7 @@
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
 	return patient.getBruteLoss() > 0 || patient.getFireLoss() > 0
 
-/datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, obj/item/tool, operating_zone)
 	var/list/options = list()
 
 	if(can_heal & COMBO_SURGERY)

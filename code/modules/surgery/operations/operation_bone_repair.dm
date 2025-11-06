@@ -10,7 +10,7 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/repair_hairline/get_default_radial_image()
 	return image(/obj/item/bonesetter)
@@ -103,7 +103,7 @@
 		/obj/item/stack/sticky_tape = 3.33,
 	)
 	time = 4 SECONDS
-	any_surgery_states_required = SURGERY_SKIN_STATES
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
 
 /datum/surgery_operation/limb/repair_compound/get_default_radial_image()
 	return image(/obj/item/stack/medical/bone_gel)

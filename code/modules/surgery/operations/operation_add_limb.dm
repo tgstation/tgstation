@@ -27,15 +27,15 @@
 	return list("operate on chest (but target the missing limb)") + ..()
 
 /datum/surgery_operation/prosthetic_replacement/any_required_strings()
-	return list("supply a replacement limb", "supply any suitable item if working on arms") + ..()
+	return list("arms may receive any suitable item in lieu of a replacement limb") + ..()
 
-/datum/surgery_operation/prosthetic_replacement/get_radial_options(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool)
+/datum/surgery_operation/prosthetic_replacement/get_radial_options(obj/item/bodypart/chest/chest, obj/item/tool, operating_zone)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_prosthetic_options, tool.type)
 	if(!option)
 		option = new()
-		option.name = "attach [tool.name]"
-		option.info = "Replace the patient's missing limb with [tool.name]."
-		option.image = image(tool)
+		option.name = "attach [initial(tool.name)]"
+		option.info = "Replace the patient's missing limb with [initial(tool.name)]."
+		option.image = image(tool.type)
 		LAZYSET(cached_prosthetic_options, tool.type, option)
 
 	return option
@@ -50,30 +50,29 @@
 /datum/surgery_operation/prosthetic_replacement/has_any_surgery_state(obj/item/bodypart/chest/chest, state)
 	return LIMB_HAS_ANY_SURGERY_STATE(chest, state)
 
-/datum/surgery_operation/prosthetic_replacement/is_available(obj/item/bodypart/chest/chest, body_zone)
-	if(!HAS_TRAIT(chest, TRAIT_READY_TO_OPERATE))
-		return FALSE
-	// Operate on the chest but target another zone
-	if(body_zone == BODY_ZONE_CHEST)
-		return FALSE
-	// The actual missing limb has to be... missing
-	if(chest.owner.get_bodypart(body_zone))
-		return FALSE
-	return ..()
-
 /datum/surgery_operation/prosthetic_replacement/get_patient(obj/item/bodypart/chest/chest)
 	return chest.owner
 
-/datum/surgery_operation/prosthetic_replacement/snowflake_check_availability(obj/item/bodypart/chest, mob/living/surgeon, obj/item/tool, body_zone)
-	if(surgeon.canUnEquip(tool))
+/datum/surgery_operation/prosthetic_replacement/is_available(obj/item/bodypart/chest/chest, operated_zone)
+	var/real_operated_zone = deprecise_zone(operated_zone)
+	// Operate on the chest but target another zone
+	if(!HAS_TRAIT(chest, TRAIT_READY_TO_OPERATE) || real_operated_zone == BODY_ZONE_CHEST)
+		return FALSE
+	// The actual missing limb has to be... missing
+	if(chest.owner.get_bodypart(real_operated_zone))
+		return FALSE
+	return ..()
+
+/datum/surgery_operation/prosthetic_replacement/snowflake_check_availability(obj/item/bodypart/chest, mob/living/surgeon, obj/item/tool, operated_zone)
+	if(!surgeon.canUnEquip(tool))
 		return FALSE
 	// check bodyshape compatibility for real bodyparts
 	if(isbodypart(tool))
 		var/obj/item/bodypart/new_limb = tool
 		if(!new_limb.can_attach_limb(chest.owner))
 			return FALSE
-	// arbitrary prosthetics can only be used on arms for now
-	else if(body_zone != BODY_ZONE_L_ARM && body_zone != BODY_ZONE_R_ARM)
+	// arbitrary prosthetics can only be used on arms (for now)
+	else if(!(deprecise_zone(operated_zone) in GLOB.arm_zones))
 		return FALSE
 	return TRUE
 
@@ -90,9 +89,13 @@
 		return FALSE
 	return TRUE
 
+/datum/surgery_operation/prosthetic_replacement/pre_preop(atom/movable/operating_on, mob/living/surgeon, tool, list/operation_args)
+	. = ..()
+	// always operate on absolute body zones
+	operation_args[OPERATION_TARGET_ZONE] = deprecise_zone(operation_args[OPERATION_TARGET_ZONE])
+
 /datum/surgery_operation/prosthetic_replacement/on_preop(obj/item/bodypart/chest/chest, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/target_zone = operation_args[OPERATION_TARGET_ZONE]
-	var/target_zone_readable = parse_zone(target_zone)
+	var/target_zone_readable = parse_zone(operation_args[OPERATION_TARGET_ZONE])
 	display_results(
 		surgeon,
 		chest.owner,
