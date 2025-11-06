@@ -17,6 +17,7 @@
 	var/hunger_loss = HUNGER_FACTOR / 10
 	if(move_intent == MOVE_INTENT_RUN)
 		hunger_loss *= 2
+		adjustStaminaLoss(1)
 	adjust_nutrition(-1 * hunger_loss)
 
 /mob/living/carbon/set_usable_legs(new_value)

@@ -36,8 +36,8 @@
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
 
-	/// The movement intent of the mob (run/wal)
-	var/move_intent = MOVE_INTENT_RUN
+	/// The movement intent of the mob (run/walk)
+	var/move_intent = MOVE_INTENT_WALK
 
 	/// Rate at which fire stacks should decay from this mob
 	var/fire_stack_decay_rate = -0.05
