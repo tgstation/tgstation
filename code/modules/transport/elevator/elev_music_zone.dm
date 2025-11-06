@@ -27,6 +27,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 
 /obj/effect/abstract/elevator_music_zone/Destroy(force)
 	GLOB.elevator_music -= src
+	QDEL_NULL(sound_player)
 	return ..()
 
 /obj/effect/abstract/elevator_music_zone/proc/link_to_panel(atom/elevator_panel)
