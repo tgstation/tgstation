@@ -235,6 +235,8 @@
 	return TRUE
 
 /atom/proc/attack_larva(mob/user, list/modifiers)
+	// i'm lazy
+	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_LARVA, user, modifiers)
 	return
 
 /**

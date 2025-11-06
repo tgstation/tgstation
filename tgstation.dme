@@ -1571,6 +1571,7 @@
 #include "code\datums\elements\high_fiver.dm"
 #include "code\datums\elements\honkspam.dm"
 #include "code\datums\elements\hostile_machine.dm"
+#include "code\datums\elements\houlihan.dm"
 #include "code\datums\elements\human_biter.dm"
 #include "code\datums\elements\ignites_matches.dm"
 #include "code\datums\elements\immerse.dm"
