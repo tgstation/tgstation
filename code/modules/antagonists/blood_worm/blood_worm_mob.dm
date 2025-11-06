@@ -169,8 +169,7 @@
 		return ..()
 
 /mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
-	if (host)
-		return 0 // No.
+	return host ? 0 : ..() // Prevents damage from adjustXLoss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust [var/host.blood_volume] instead.
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
@@ -595,6 +594,7 @@
 	icon_state = "adult"
 	icon_living = "adult"
 	icon_dead = "adult-dead"
+	health_doll_icon = "adult_blood_worm"
 
 	mob_size = MOB_SIZE_HUGE
 
