@@ -1,6 +1,6 @@
 /datum/surgery_operation/limb/lipoplasty
 	name = "excise excess fat"
-	rnd_name = "Lipoplasty"
+	rnd_name = "Lipoplasty (Excise Fat)"
 	desc = "Remove excess fat from a patient's body."
 	operation_flags = OPERATION_NOTABLE | OPERATION_AFFECTS_MOOD
 	implements = list(
@@ -83,6 +83,7 @@
 
 /datum/surgery_operation/limb/lipoplasty/mechanic
 	name = "engage expulsion valve" //gross
+	rnd_name = "Nutrient Reserve Expulsion (Excise Fat)"
 	implements = list(
 		TOOL_WRENCH = 1.05,
 		TOOL_CROWBAR = 1.05,

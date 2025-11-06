@@ -9,12 +9,15 @@
 
 /datum/surgery_operation/limb/add_dental_implant/all_required_strings()
 	. = list()
-	. += "operate on head"
+	. += "operate on mouth"
 	. += ..()
-	. += "he head must have teeth"
+	. += "the mouth must have teeth"
 
 /datum/surgery_operation/limb/add_dental_implant/get_default_radial_image()
 	return image('icons/hud/implants.dmi', "reagents")
+
+/datum/surgery_operation/limb/add_dental_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
+	return ..() && surgeon.canUnEquip(tool) && operated_zone == BODY_ZONE_PRECISE_MOUTH
 
 /datum/surgery_operation/limb/add_dental_implant/state_check(obj/item/bodypart/head/limb)
 	var/obj/item/bodypart/head/teeth_receptangle = limb
@@ -65,6 +68,9 @@
 	)
 	time = 3.2 SECONDS
 	all_surgery_states_required = SURGERY_BONE_DRILLED|SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
+
+/datum/surgery_operation/limb/remove_dental_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
+	return ..() && operated_zone == BODY_ZONE_PRECISE_MOUTH
 
 /datum/surgery_operation/limb/remove_dental_implant/get_time_modifiers(atom/movable/operating_on, mob/living/surgeon, tool)
 	. = ..()

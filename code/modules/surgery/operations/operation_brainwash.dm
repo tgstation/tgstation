@@ -3,7 +3,7 @@
 /datum/surgery_operation/organ/brainwash
 	name = "brainwash"
 	desc = "Implant a directive into the patient's brain, making it their absolute priority."
-	rnd_name = "Neural Brainwashing"
+	rnd_name = "Neural Brainwashing (Brainwash)"
 	rnd_desc = "A surgical procedure which directly implants a directive into the patient's brain, \
 		making it their absolute priority. It can be cleared using a mindshield implant."
 	implements = list(
@@ -77,7 +77,7 @@
 
 /datum/surgery_operation/organ/brainwash/mechanic
 	name = "reprogram"
-	rnd_name = "Neural Reprogramming"
+	rnd_name = "Neural Reprogramming (Brainwash)"
 	rnd_desc = "Install malware which directly implants a directive into the robotic patient's operating system, \
 		making it their absolute priority. It can be cleared using a mindshield implant."
 	implements = list(
@@ -93,7 +93,7 @@
 
 /datum/surgery_operation/organ/brainwash/sleeper
 	name = "install sleeper agent directive"
-	rnd_name = "Sleeper Agent Implantation"
+	rnd_name = "Sleeper Agent Implantation (Brainwash)"
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
@@ -133,7 +133,7 @@
 
 /datum/surgery_operation/organ/brainwash/sleeper/mechanic
 	name = "install sleeper agent programming"
-	rnd_name = "Sleeper Agent Programming"
+	rnd_name = "Sleeper Agent Programming (Brainwash)"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,
 		TOOL_HEMOSTAT = 2,

@@ -1,6 +1,6 @@
 /datum/surgery_operation/limb/replace_limb
 	name = "augment limb"
-	rnd_name = "Cybernetic Augmentation"
+	rnd_name = "Augmentation"
 	desc = "Replace a patient's limb with a robotic or prosthetic one."
 	operation_flags = OPERATION_NOTABLE
 	implements = list(

@@ -53,4 +53,5 @@
 
 /datum/surgery_operation/organ/stomach_pump/mechanic
 	name = "purge nutrient processor"
+	rnd_name = "Nutrient Processor Purge (Stomach Pump)"
 	required_organ_flag = ORGAN_ROBOTIC

@@ -2,7 +2,7 @@
 /// First step of every surgery, makes an incision in the skin
 /datum/surgery_operation/limb/incise_skin
 	name = "make skin incision"
-	// rnd_name = "Laparotomy / Craniotomy / Myotomy" // Maybe we keep this one simple
+	// rnd_name = "Laparotomy / Craniotomy / Myotomy (Make Incision)" // Maybe we keep this one simple
 	desc = "Make an incision in the patient's skin to access internal organs."
 	required_bodytype = ~BODYTYPE_ROBOTIC
 	replaced_by = /datum/surgery_operation/limb/incise_skin/abductor

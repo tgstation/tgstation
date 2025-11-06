@@ -1,6 +1,6 @@
 /datum/surgery_operation/organ/lobotomy
 	name = "lobotomize"
-	rnd_name = "Lobotomy"
+	rnd_name = "Lobotomy (Lobotomy)"
 	desc = "Repair most of a patient's brain traumas, with the risk of causing new permanent traumas."
 	rnd_desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_LOCKED | OPERATION_NOTABLE
@@ -80,7 +80,7 @@
 
 /datum/surgery_operation/organ/lobotomy/mechanic
 	name = "execute neural defragging"
-	rnd_name = "Wetware OS Destructive Defragmentation"
+	rnd_name = "Wetware OS Destructive Defragmentation (Lobotomy)"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,
 		/obj/item/melee/energy/sword = 0.55,

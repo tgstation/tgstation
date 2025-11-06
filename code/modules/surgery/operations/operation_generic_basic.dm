@@ -2,7 +2,7 @@
 /// Incision of skin for basic mobs
 /datum/surgery_operation/basic/incise_skin
 	name = "make incision"
-	// rnd_name = "Laparotomy / Craniotomy / Myotomy" // Maybe we keep this one simple
+	// rnd_name = "Laparotomy / Craniotomy / Myotomy (Make Incision)" // Maybe we keep this one simple
 	desc = "Make an incision in the patient's skin to access internals."
 	implements = list(
 		TOOL_SCALPEL = 1,

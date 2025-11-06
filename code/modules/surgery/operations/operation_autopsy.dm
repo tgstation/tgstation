@@ -50,4 +50,6 @@
 
 /datum/surgery_operation/limb/autopsy/mechanic
 	name = "system failure analysis"
+	rnd_name = "System Failure Analysis (Dissection and Autopsy)"
+	desc = "Perform a detailed analysis of a robotic patient's deactivated systems."
 	required_bodytype = BODYTYPE_ROBOTIC

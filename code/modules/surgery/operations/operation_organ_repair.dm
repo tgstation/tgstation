@@ -44,7 +44,7 @@
 
 /datum/surgery_operation/organ/repair/lobectomy
 	name = "excise damaged lung node"
-	rnd_name = "Lobectomy"
+	rnd_name = "Lobectomy (Lung Surgery)"
 	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
@@ -93,6 +93,7 @@
 
 /datum/surgery_operation/organ/repair/lobectomy/mechanic
 	name = "perform maintenance"
+	rnd_name = "Air Filtration Diagnostic (Lung Surgery)"
 	implements = list(
 		TOOL_WRENCH = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -106,7 +107,7 @@
 
 /datum/surgery_operation/organ/repair/hepatectomy
 	name = "remove damaged liver section"
-	rnd_name = "Hepatectomy"
+	rnd_name = "Hepatectomy (Liver Surgery)"
 	desc = "Perform repairs to a patient's damaged liver by removing the most damaged section."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
@@ -156,6 +157,7 @@
 
 /datum/surgery_operation/organ/repair/hepatectomy/mechanic
 	name = "perform maintenance"
+	rnd_name = "Impurity Management System Diagnostic (Liver Surgery)"
 	implements = list(
 		TOOL_WRENCH = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -169,7 +171,7 @@
 
 /datum/surgery_operation/organ/repair/coronary_bypass
 	name = "graft coronary bypass"
-	rnd_name = "Coronary Artery Bypass Graft"
+	rnd_name = "Coronary Artery Bypass Graft (Heart Surgery)"
 	desc = "Graft a bypass onto a a patient's damaged heart to restore proper blood flow."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -219,6 +221,7 @@
 
 /datum/surgery_operation/organ/repair/coronary_bypass/mechanic
 	name = "access engine internals"
+	rnd_name = "Engine Diagnostic (Heart Surgery)"
 	implements = list(
 		TOOL_CROWBAR = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -232,7 +235,7 @@
 
 /datum/surgery_operation/organ/repair/gastrectomy
 	name = "remove lower duodenum"
-	rnd_name = "Gastrectomy"
+	rnd_name = "Gastrectomy (Stomach Surgery)"
 	desc = "Perform a patient's repairs to a damaged stomach by removing the lower duodenum."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
@@ -287,6 +290,7 @@
 
 /datum/surgery_operation/organ/repair/gastrectomy/mechanic
 	name = "perform maintenance"
+	rnd_name = "Nutrient Processing System Diagnostic (Stomach Surgery)"
 	implements = list(
 		TOOL_WRENCH = 1.05,
 		TOOL_SCALPEL = 1.05,
@@ -443,7 +447,7 @@
 
 /datum/surgery_operation/organ/repair/brain
 	name = "brain surgery"
-	rnd_name = "Neurosurgery"
+	rnd_name = "Neurosurgery (Brain Surgery)"
 	desc = "Repair a patient's damaged brain tissue to restore cognitive function."
 	implements = list(
 		TOOL_HEMOSTAT = 1.05,
@@ -503,6 +507,7 @@
 
 /datum/surgery_operation/organ/repair/brain/mechanic
 	name = "perform neural debugging"
+	rnd_name = "Wetware OS Diagnostics (Brain Surgery)"
 	implements = list(
 		TOOL_MULTITOOL = 1.15,
 		TOOL_HEMOSTAT = 1.05,

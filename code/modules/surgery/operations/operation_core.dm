@@ -1,6 +1,6 @@
 /datum/surgery_operation/basic/core_removal
-	name = "remove core"
-	rnd_name = "Corectomy" // source: i made it up
+	name = "extract core"
+	rnd_name = "Corectomy (Extract Core)" // source: i made it up
 	desc = "Remove the core from a slime."
 	implements = list(
 		TOOL_HEMOSTAT = 1,
