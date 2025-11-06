@@ -22,6 +22,11 @@
 
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_worm_stat_changed), override = TRUE)
 
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Remove(mob/removed_from)
+	if (!QDELETED(cocoon))
+		cancel()
+	return ..()
+
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/IsAvailable(feedback)
 	if (!istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
@@ -31,49 +36,51 @@
 		return FALSE
 	if (!check_consumed_blood(feedback))
 		return FALSE
-	if (cocoon != null)
+	if (!QDELETED(cocoon))
 		return FALSE
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Activate(atom/target)
-	var/mob/living/basic/blood_worm/worm = owner
-
-	worm.visible_message(
-		message = span_danger("\The [worm] start[worm.p_s()] growing a cocoon!"),
+	owner.visible_message(
+		message = span_danger("\The [owner] start[owner.p_s()] growing a cocoon!"),
 		self_message = span_notice("You start growing a cocoon."),
 		blind_message = span_hear("You start hearing fleshy knitting!")
 	)
 
-	if (!do_after(worm, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(check_consumed_blood))))
-		worm.balloon_alert(worm, "interrupted!")
+	if (!do_after(owner, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(check_consumed_blood))))
+		owner.balloon_alert(owner, "interrupted!")
 		return FALSE
 
-	worm.visible_message(
-		message = span_danger("\The [worm] enter[worm.p_s()] a cocoon!"),
+	owner.visible_message(
+		message = span_danger("\The [owner] enter[owner.p_s()] a cocoon!"),
 		self_message = span_green("You enter your freshly grown cocoon!"),
 		blind_message = span_hear("You stop hearing fleshy knitting!")
 	)
 
-	cocoon = new cocoon_type(get_turf(worm))
+	cocoon = new cocoon_type(get_turf(owner))
 
 	playsound(cocoon, 'sound/effects/blob/blobattack.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
-	worm.playsound_local(get_turf(cocoon), 'sound/effects/blob/blobattack.ogg', vol = 60, vary = TRUE)
 
-	worm.forceMove(cocoon)
+	owner.forceMove(cocoon)
 
-	worm.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
+	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
 
-	RegisterSignal(worm, COMSIG_MOVABLE_MOVED, PROC_REF(on_worm_moved))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_worm_moved))
 	RegisterSignal(cocoon, COMSIG_QDELETING, PROC_REF(on_cocoon_qdel))
 
-	timer_id = addtimer(CALLBACK(src, PROC_REF(finalize), worm), cocoon_time, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_DELETE_ME)
+	INVOKE_ASYNC(src, PROC_REF(handle_timer))
 
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/finalize(mob/living/basic/blood_worm/worm)
+/// Override this if you want special timer behaviors like polling ghosts for hatchling candidates.
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/handle_timer()
+	timer_id = addtimer(CALLBACK(src, PROC_REF(finalize)), cocoon_time, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/// Called upon successfully finishing the incubation process.
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/finalize()
 	var/mob/living/basic/blood_worm/new_worm = new new_worm_type(get_turf(cocoon))
 
-	transfer(worm, new_worm)
+	transfer(owner, new_worm)
 
 	for (var/mob/living/unfortunate_observer in view(3, cocoon))
 		if (istype(unfortunate_observer, /mob/living/basic/blood_worm))
@@ -97,8 +104,11 @@
 
 	playsound(cocoon, 'sound/effects/splat.ogg', vol = 100, vary = TRUE, ignore_walls = FALSE)
 
-	shared_unregister_cocoon(worm)
+	shared_unregister_cocoon()
 
+	qdel(owner)
+
+/// Transfers the owning blood worm from one worm mob to another.
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
 	old_worm.mind?.transfer_to(new_worm)
 
@@ -115,32 +125,33 @@
 
 	new_worm.cocoon_action?.StartCooldown()
 
-	qdel(old_worm)
-
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/cancel(mob/living/basic/blood_worm/worm)
+/// Cancels the incubation process, destroying the cocoon early.
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/cancel()
 	cocoon.visible_message(
-		message = span_danger("\The [cocoon] fall[cocoon.p_s()] apart, expelling \the [worm] within."),
+		message = span_danger("\The [cocoon] fall[cocoon.p_s()] apart, expelling \the [owner] within."),
 		blind_message = span_danger("You hear a splat!"),
-		ignored_mobs = worm
+		ignored_mobs = owner
 	)
 
-	if (worm.stat != DEAD)
-		to_chat(worm, span_userdanger("Your cocoon falls apart!"))
+	if (!QDELETED(owner) && owner.stat != DEAD)
+		to_chat(owner, span_userdanger("Your cocoon falls apart!"))
 
 	playsound(cocoon, 'sound/effects/splat.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
-	StartCooldown()
+	// A little less punishing since you need a do_after to set it up again after anyway, and because this can occur due to adults canceling Reproduce for meta reasons outside of their control.
+	StartCooldown(10 SECONDS)
 
-	shared_unregister_cocoon(worm)
+	shared_unregister_cocoon()
 
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/shared_unregister_cocoon(mob/living/basic/blood_worm/worm)
-	UnregisterSignal(worm, COMSIG_MOVABLE_MOVED)
+/// Unregisters the cocoon. Used by both [proc/cancel] and [proc/finalize].
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/shared_unregister_cocoon()
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(cocoon, COMSIG_QDELETING)
 
-	worm.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
+	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
 
-	if (!QDELETED(worm))
-		worm.forceMove(cocoon.drop_location())
+	if (!QDELETED(owner))
+		owner.forceMove(cocoon.drop_location())
 
 	if (!QDELETED(cocoon))
 		qdel(cocoon)
@@ -154,24 +165,25 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/on_worm_stat_changed(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 	if (cocoon && old_stat != DEAD && new_stat == DEAD) // Alive -> Dead
-		cancel(owner)
+		cancel()
 	update_status_on_signal(source, new_stat, old_stat)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/on_worm_moved(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
-	cancel(owner)
+	cancel()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/on_cocoon_qdel(datum/source)
 	SIGNAL_HANDLER
-	cancel(owner)
+	cancel()
 
+/// Checks if the blood worm has consumed enough blood to use this action.
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/check_consumed_blood(feedback = FALSE)
 	var/mob/living/basic/blood_worm/worm = owner
 	var/total_consumed_blood = worm.get_scaled_total_consumed_blood()
 
 	if (total_consumed_blood < total_blood_required)
 		if (feedback)
-			owner.balloon_alert(owner, "only at [FLOOR(total_consumed_blood / total_blood_required * 100, 1)]% of required growth!")
+			worm.balloon_alert(worm, "only at [FLOOR(total_consumed_blood / total_blood_required * 100, 1)]% of required growth!")
 		return FALSE
 	return TRUE
 
@@ -258,19 +270,45 @@
 
 	var/list/candidates = null
 
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Grant(mob/granted_to)
+	. = ..()
+	if (!owner)
+		return
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Remove(mob/removed_from)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, PROC_REF(update_status_on_signal))
+
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/IsAvailable(feedback)
+	if (!length(GLOB.dead_player_list))
+		if (feedback)
+			owner.balloon_alert(owner, "no candidates!")
+		return FALSE
+	if (!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		if (feedback)
+			owner.balloon_alert(owner, "disabled by ghost role config!")
+		return FALSE
+	return ..()
+
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will create [num_hatchlings + 1] new hatchlings, including yourself.", "Reproduce", list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
 	if (!IsAvailable(feedback = TRUE))
 		return
 
-	owner.balloon_alert(owner, "polling ghosts")
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/handle_timer()
+	cocoon.balloon_alert(owner, "polling ghosts")
 
 	candidates = SSpolling.poll_ghost_candidates(
 		question = "Would you like to become a newly hatched blood worm? (x[num_hatchlings])",
 		role = ROLE_BLOOD_WORM,
 		check_jobban = ROLE_BLOOD_WORM,
-		poll_time = 10 SECONDS,
+		poll_time = cocoon_time,
 		ignore_category = POLL_IGNORE_BLOOD_WORM,
 		jump_target = cocoon,
 		role_name_text = "blood worm",
@@ -279,18 +317,20 @@
 
 	var/num_candidates = length(candidates)
 
+	if (QDELETED(cocoon))
+		send_apology_to_candidates() // If this is reached, then [proc/cancel], which normally handles apologizing to the candidates, has already been called before the poll was finished.
+		return
 	if (num_candidates <= 0)
-		owner.balloon_alert(owner, "no candidates!")
+		cancel()
+		owner.balloon_alert(owner, "no candidates!") // We can't host this balloon alert on a deleted cocoon.
 		return
 	if (num_candidates < num_hatchlings && tgui_alert(owner, "There are only [num_candidates]/[num_hatchlings] candidates for hatchlings, want to proceed anyway?", "Ghost Shortage", list("Yes", "No"), 10 SECONDS) != "Yes")
-		StartCooldown() // So that you can't spam the ghosts.
-		return
-	if (!IsAvailable(feedback = TRUE))
+		cancel()
 		return
 
-	return ..()
+	finalize() // The poll is the timer.
 
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/finalize(mob/living/basic/blood_worm/worm)
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/finalize()
 	for (var/mob/candidate as anything in candidates)
 		if (isnull(candidate) || isnull(candidate.key) || isnull(candidate.client))
 			continue
@@ -313,20 +353,23 @@
 
 	antag_datum?.has_reached_adulthood = TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/cancel(mob/living/basic/blood_worm/worm)
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/cancel()
+	send_apology_to_candidates()
+
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/shared_unregister_cocoon()
+	candidates = null
+
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/proc/send_apology_to_candidates()
 	for (var/mob/candidate as anything in candidates)
 		if (isnull(candidate) || isnull(candidate.key) || isnull(candidate.client))
 			continue
 
 		// Sucks, but that's just how it is sometimes.
 		to_chat(candidate, span_warning("The blood worm cocoon you rolled a hatchling spot for was canceled. Sorry."))
-
-	return ..()
-
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/shared_unregister_cocoon(mob/living/basic/blood_worm/worm)
-	candidates = null
-
-	return ..()
 
 /obj/structure/blood_worm_cocoon/adult
 	name = "large blood cocoon"

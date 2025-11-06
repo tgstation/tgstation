@@ -131,9 +131,21 @@
 	RegisterSignal(src, COMSIG_MOB_EXAMINING, PROC_REF(on_examining))
 
 /mob/living/basic/blood_worm/Destroy()
-	. = ..()
-
 	unregister_host()
+
+	spit_action = null
+	leech_action = null
+	invade_action = null
+	cocoon_action = null
+
+	transfuse_action = null
+	eject_action = null
+	revive_action = null
+
+	innate_actions = null
+	host_actions = null
+
+	return ..()
 
 /mob/living/basic/blood_worm/process(seconds_per_tick, times_fired)
 	if (!host)
