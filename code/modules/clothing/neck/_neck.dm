@@ -216,6 +216,10 @@
 	greyscale_colors = "#2a2844"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/neck/robe_cape/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
+
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
 	icon = 'icons/obj/clothing/neck.dmi'
