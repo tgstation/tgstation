@@ -12,7 +12,6 @@
 	dir = 8
 	},
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	pixel_y = -24;

@@ -59408,7 +59408,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/station/ai/upload/chamber";
 	name = "AI Upload Turret Control";
-	icon_state = "control_stun"
 	},
 /turf/closed/wall/r_wall,
 /area/station/ai/upload/foyer)
