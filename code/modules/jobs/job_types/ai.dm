@@ -28,8 +28,8 @@
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
-			if(!R.connected_ai)
-				R.try_connect_to_ai()
+			if(!R.connected_ai && R.lawupdate)
+				R.try_connect_to_ai(spawned)
 	var/mob/living/silicon/ai/ai_spawn = spawned
 	if(player_client)
 		ai_spawn.set_gender(player_client)
