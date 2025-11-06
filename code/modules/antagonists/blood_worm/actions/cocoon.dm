@@ -48,7 +48,6 @@
 	)
 
 	if (!do_after(owner, 5 SECONDS, extra_checks = CALLBACK(src, PROC_REF(check_consumed_blood))))
-		owner.balloon_alert(owner, "interrupted!")
 		return FALSE
 
 	owner.visible_message(

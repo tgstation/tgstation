@@ -109,7 +109,6 @@
 	)
 
 	if (!do_after(owner, 1 SECONDS, owner, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fire_burst_checks))))
-		owner.balloon_alert(owner, "interrupted!")
 		return
 
 	owner.visible_message(

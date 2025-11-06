@@ -91,7 +91,6 @@
 	)
 
 	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_living_start_check), leech, target)))
-		target.balloon_alert(leech, "interrupted!")
 		return FALSE
 
 	if (leech.pulling != target && !leech.grab(target))
@@ -145,7 +144,7 @@
 		target.balloon_alert(leech, "no more blood!")
 		return FALSE
 	if (!leech.Adjacent(target) || leech.pulling != target || leech.grab_state < GRAB_AGGRESSIVE)
-		target.balloon_alert(leech, "interrupted!")
+		target.balloon_alert(leech, "grab lost!")
 		return FALSE
 	return TRUE
 
@@ -161,7 +160,6 @@
 	)
 
 	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_start_check), leech, target)))
-		target.balloon_alert(leech, "interrupted!")
 		return FALSE
 
 	leech.visible_message(

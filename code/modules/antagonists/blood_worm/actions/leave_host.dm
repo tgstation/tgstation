@@ -22,7 +22,6 @@
 	to_chat(worm, span_notice("You begin leaving your host..."))
 
 	if (!do_after(owner, 5 SECONDS, worm.host, timed_action_flags = IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE | IGNORE_INCAPACITATED, extra_checks = CALLBACK(src, PROC_REF(make_sure_shit_doesnt_go_wack), worm)))
-		worm.host.balloon_alert(owner, "interrupted!")
 		return
 
 	worm.leave_host()

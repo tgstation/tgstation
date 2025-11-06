@@ -40,7 +40,6 @@
 	)
 
 	if (!do_after(worm, 5 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(invade_check), worm, victim)))
-		target.balloon_alert(worm, "interrupted!")
 		return TRUE // Don't bite the victim.
 
 	worm.enter_host(victim)

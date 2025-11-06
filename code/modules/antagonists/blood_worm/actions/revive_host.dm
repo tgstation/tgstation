@@ -47,7 +47,6 @@
 
 	for (var/i in 1 to 3)
 		if (!do_after(owner, 2 SECONDS, host, timed_action_flags = IGNORE_INCAPACITATED | IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(run_checks), worm, host)))
-			host.balloon_alert(owner, "interrupted!")
 			return FALSE
 
 		REMOVE_TRAIT(worm, TRAIT_DEAF, BLOOD_WORM_HOST_TRAIT)
