@@ -11,8 +11,8 @@
 
 	weather_message = span_userdanger("<i>Harsh winds pick up as dense snow begins to fall from the sky! Seek shelter!</i>")
 	weather_overlay = "snow_storm"
-	weather_duration_lower = 1 MINUTES
-	weather_duration_upper = 2.5 MINUTES
+	weather_duration_lower = 10 MINUTES
+	weather_duration_upper = 20.5 MINUTES
 	use_glow = FALSE
 
 	end_duration = 10 SECONDS
@@ -26,7 +26,7 @@
 	immunity_type = TRAIT_SNOWSTORM_IMMUNE
 
 	// snowstorms should be colder than default icebox atmos
-	weather_temperature = ICEBOX_MIN_TEMPERATURE - 40
+	weather_temperature = 10
 	// snowstorms temperature ignores any clothing insulation
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_TEMPERATURE_BYPASS_CLOTHING)
 
