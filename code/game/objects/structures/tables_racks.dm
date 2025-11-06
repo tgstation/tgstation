@@ -1046,7 +1046,7 @@
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient), TRUE)
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.
