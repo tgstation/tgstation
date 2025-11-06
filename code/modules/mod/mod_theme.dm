@@ -244,6 +244,7 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	slot_flags = ITEM_SLOT_NECK
 	slowdown_deployed = 0
 	inbuilt_modules = list(/obj/item/mod/module/selfcleaner)
 	variants = list(
@@ -255,10 +256,6 @@
 			/obj/item/clothing/suit/mod = list(
 				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
-			),
-			/obj/item/clothing/neck/mod = list(
-				UNSEALED_MESSAGE = NECKWEAR_UNSEAL_MESSAGE,
-				SEALED_MESSAGE = NECKWEAR_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				CAN_OVERSLOT = TRUE,
