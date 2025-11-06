@@ -204,6 +204,7 @@
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	make_laws()
+	law_ui.update_inherent_stated_laws(laws)
 	var/obj/item/pai_card/pai_card = loc
 	if(!istype(pai_card)) // when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
@@ -236,7 +237,6 @@
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	laws.name = "PAI Directives"
-	law_ui.update_inherent_stated_laws(laws)
 
 /mob/living/silicon/pai/process(seconds_per_tick)
 	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)

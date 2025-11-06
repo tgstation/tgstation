@@ -364,19 +364,8 @@
 	if(!the_brainmob.mind.has_ever_been_ai)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
 
-	var/obj/machinery/ai_law_rack/default_link = default_link_ref?.resolve()
-	// empty lawset is passed here to avoid making laws by default in init
-	var/mob/living/silicon/ai/ai_mob = new(loc, core_mmi.laws?.copy_lawset() || new /datum/ai_laws, the_brainmob)
-	// then we either link, use mmi laws, or IF ALL ELSE FAILS, make laws
-	if(default_link?.can_link_to(ai_mob))
-		default_link.link_silicon(ai_mob)
-	else if(!core_mmi.laws)
-		ai_mob.make_laws() // links to core rack if possible
+	var/mob/living/silicon/ai/ai_mob = new(loc, the_brainmob, core_mmi.laws, default_link_ref?.resolve())
 
-	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(ai_mob)
-	malf_datum?.add_law_zero()
-	if(!isnull(the_brainmob.client))
-		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"

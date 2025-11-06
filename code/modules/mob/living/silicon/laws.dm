@@ -29,22 +29,14 @@
 	laws = new()
 	laws.name = "Inherent Laws"
 
-/mob/living/silicon/ai/make_laws()
-	. = ..()
+/// Find the first law rack we can link to and link to it
+/mob/living/silicon/proc/link_to_first_rack()
 	for(var/obj/machinery/ai_law_rack/core/law_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
-		if(!is_valid_z_level(get_turf(law_rack), get_turf(src)))
+		if(!law_rack.can_link_to(src))
 			continue
+
 		law_rack.link_silicon(src)
-		break
-
-	law_ui.update_inherent_stated_laws(laws)
-
-/mob/living/silicon/robot/make_laws()
-	. = ..()
-	var/datum/job/human_ai_job = SSjob.get_job(JOB_HUMAN_AI)
-	if(human_ai_job && human_ai_job.current_positions && !laws.zeroth_borg)
-		laws.zeroth_borg = "Follow the orders of Big Brother."
-		laws.protected_zeroth = TRUE
+		return law_rack
 
 /// Returns the law rack this silicon is linked to, or null if not linked.
 /mob/living/silicon/proc/get_law_rack() as /obj/machinery/ai_law_rack

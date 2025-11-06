@@ -184,6 +184,9 @@
 /obj/machinery/ai_law_rack/proc/link_silicon(mob/living/silicon/new_bot)
 	if(!can_link_to(new_bot))
 		return
+	if(isnull(new_bot.laws))
+		stack_trace("Tried to link a [new_bot.type] silicon with no law datum to a law rack!")
+		new_bot.make_laws()
 
 	RegisterSignal(new_bot, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
 	linked_mobs[new_bot.name] = new_bot

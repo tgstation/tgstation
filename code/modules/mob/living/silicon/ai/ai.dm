@@ -2,20 +2,39 @@
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
-/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/preset_laws, mob/target_ai)
+/**
+ * Init args
+ * * target_ai - The mob taking control of the AI
+ * * base_laws - An instance or typepath of a law datum, if provided the AI will use that lawset instead of making its own
+ * * default_link - An ai_law_rack object to link to on spawn, if possible. Base laws is preferred over this.
+ */
+/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/default_link)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	if(target_ai.client)
+		set_gender(target_ai.client)
+
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
 
-	if(istype(preset_laws, /datum/ai_laws))
-		laws = preset_laws
-		law_ui.update_inherent_stated_laws(laws)
+	if(istype(base_laws, /datum/ai_laws))
+		laws = base_laws.copy_lawset()
+	else if(ispath(base_laws, /datum/ai_laws))
+		laws = new base_laws()
 	else
 		make_laws()
+		if(default_link?.can_link_to(src))
+			default_link.link_silicon(src)
+		else
+			link_to_first_rack()
+
+	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(target_ai)
+	malf_datum?.add_law_zero()
+
+	law_ui.update_inherent_stated_laws(laws)
 
 	create_eye()
 

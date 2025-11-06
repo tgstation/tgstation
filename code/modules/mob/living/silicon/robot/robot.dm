@@ -42,8 +42,8 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(innate_laws)
-		laws = innate_laws
+	if(istype(innate_laws, /datum/ai_laws))
+		laws = innate_laws.copy_lawset()
 		lawupdate = FALSE
 	else
 		make_laws()
@@ -51,8 +51,16 @@
 		lawupdate = FALSE
 	// try connect to ai will update the lawset so we need to ensure law update is set before calling it
 	if(aisync && !try_connect_to_ai(master_ai))
-		// however, if we found no ai, we fall back to no law updates
-		lawupdate = FALSE
+		var/datum/job/human_ai_job = SSjob.get_job(JOB_HUMAN_AI)
+		// we failed to connect to an ai, but that might be because there is a human ai. so we have to check for that
+		if(human_ai_job && human_ai_job.current_positions && !laws.zeroth_borg)
+			laws.zeroth_borg = "Follow the orders of Big Brother."
+			laws.protected_zeroth = TRUE
+		// however, if we found no ai and no human ai, we fall back to no law updates
+		// and link ourselves to the first law rack if possible
+		else
+			lawupdate = FALSE
+			link_to_first_rack()
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new(src)

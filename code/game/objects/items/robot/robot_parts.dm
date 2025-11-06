@@ -281,8 +281,7 @@
 				return
 
 			// if our MMI has laws - ai sync and law sync are automatically disabled
-			var/new_laws =  M.laws?.copy_lawset()
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), new_laws, forced_ai, isnull(new_laws) && aisync, isnull(new_laws) && lawsync)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc), M.laws, forced_ai, isnull(M.laws) && aisync, isnull(M.laws) && lawsync)
 			if(!O)
 				return
 
