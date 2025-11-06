@@ -18501,10 +18501,6 @@
 /turf/open/floor/wood/large,
 /area/station/hallway/secondary/service)
 "fho" = (
-/obj/machinery/keycard_auth/wall_mounted/directional/north{
-	pixel_x = -26;
-	pixel_y = 0
-	},
 /obj/machinery/camera/autoname/directional/west,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 8
