@@ -671,7 +671,7 @@ export const BigManipulator = () => {
                   height: '100%',
                   width: `${progressValue}%`,
                   backgroundColor: '#40668c',
-                  transition: `width ${current_task_duration}s linear`,
+                  transition: `width ${current_task_duration / 10}s linear`,
                   zIndex: 1,
                 }}
               />

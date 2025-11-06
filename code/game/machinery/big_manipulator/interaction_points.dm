@@ -207,10 +207,7 @@
 	if(index == 1)
 		return FALSE
 
-	var/datum/manipulator_priority/target_priority = interaction_priorities[index]
-	var/datum/manipulator_priority/other_priority = interaction_priorities[index - 1] // a one step higher priority
-	interaction_priorities[index - 1] = target_priority
-	interaction_priorities[index] = other_priority
+	interaction_priorities.Swap(index, index - 1)
 
 	return TRUE
 

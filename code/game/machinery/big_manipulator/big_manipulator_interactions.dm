@@ -308,6 +308,9 @@
 		check_for_cycle_end_drop(destination_point, FALSE)
 		return FALSE
 
+	if(isitem(type_to_use) && !destination_point.check_filters_for_atom(type_to_use))
+		return FALSE
+
 	var/original_loc = held_item.loc
 
 	monkey_resolve.put_in_active_hand(held_item)

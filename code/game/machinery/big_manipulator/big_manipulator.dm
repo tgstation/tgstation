@@ -223,8 +223,8 @@
 		diag_hud.remove_atom_from_hud(src)
 
 	QDEL_NULL(manipulator_arm)
-	QDEL_NULL(monkey_worker.resolve())
-	QDEL_NULL(held_object.resolve())
+	// QDEL_NULL(monkey_worker.resolve())
+	// QDEL_NULL(held_object.resolve())
 	id_lock = null
 	. = ..()
 
