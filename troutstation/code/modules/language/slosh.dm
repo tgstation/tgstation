@@ -1,7 +1,7 @@
 /datum/language/wawa
 	name = "Slosh"
 	desc = "The language of the slugcats. They have mastered the art of conveying complex thoughts just using one versatile syllable."
-	key = "w"
+	key = "q"
 	space_chance = 30
 	sentence_chance = 0
 	between_word_sentence_chance = 10
