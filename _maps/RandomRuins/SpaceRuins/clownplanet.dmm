@@ -118,7 +118,9 @@
 /turf/open/floor/iron/bluespace,
 /area/ruin/space/has_grav/powered/clownplanet)
 "az" = (
-/obj/structure/signpost,
+/obj/structure/signpost{
+	teleports = 1
+	},
 /turf/open/floor/grass{
 	color = "#1eff00"
 	},
