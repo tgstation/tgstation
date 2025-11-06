@@ -31,8 +31,8 @@
 	. += "the patient must excess fat to remove"
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
-	// Require sharpness OR a tool behavior match
-	return (tool.get_sharpness() || implements[tool.tool_behaviour])
+	// Require edged sharpness OR a tool behavior match
+	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/lipoplasty/state_check(obj/item/bodypart/limb)
 	if(limb.body_zone != BODY_ZONE_CHEST)

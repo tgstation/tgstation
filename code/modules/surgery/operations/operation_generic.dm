@@ -25,8 +25,8 @@
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/limb/incise_skin/tool_check(obj/item/tool)
-	// Require sharpness OR a tool behavior match
-	return (tool.get_sharpness() || implements[tool.tool_behaviour])
+	// Require edged sharpness OR a tool behavior match
+	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/incise_skin/state_check(obj/item/bodypart/limb)
 	return !(limb.biological_state & biostate_blacklist)
@@ -287,8 +287,8 @@
 	return image(/obj/item/circular_saw)
 
 /datum/surgery_operation/limb/saw_bones/tool_check(obj/item/tool)
-	// Require sharpness and sufficient force OR a tool behavior match
-	return ((tool.get_sharpness() && tool.force >= 10) || implements[tool.tool_behaviour])
+	// Require edged sharpness and sufficient force OR a tool behavior match
+	return (((tool.get_sharpness() & SHARP_EDGED) && tool.force >= 10) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/saw_bones/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -368,6 +368,7 @@
 		/obj/item/pickaxe/drill = 1.67,
 		TOOL_SCREWDRIVER = 4,
 		/obj/item/kitchen/spoon = 5,
+		/obj/item = 6.67,
 	)
 	time = 3 SECONDS
 	preop_sound = 'sound/items/handling/surgery/saw.ogg'
@@ -377,6 +378,10 @@
 
 /datum/surgery_operation/limb/drill_bones/get_default_radial_image()
 	return image(/obj/item/surgicaldrill)
+
+/datum/surgery_operation/limb/drill_bones/tool_check(obj/item/tool)
+	// Require pointy sharpness and sufficient force OR a tool behavior match
+	return (((tool.get_sharpness() & SHARP_POINTY) && tool.force >= 10) || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/drill_bones/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(
@@ -433,8 +438,8 @@
 	return image(/obj/item/scalpel)
 
 /datum/surgery_operation/limb/incise_organs/tool_check(obj/item/tool)
-	// Require sharpness OR a tool behavior match. Also saws are a no-go, you'll rip up the organs
-	return (tool.get_sharpness() || implements[tool.tool_behaviour]) && tool.tool_behaviour != TOOL_SAW
+	// Require edged sharpness OR a tool behavior match. Also saws are a no-go, you'll rip up the organs!
+	return ((tool.get_sharpness() & SHARP_EDGED) || implements[tool.tool_behaviour]) && tool.tool_behaviour != TOOL_SAW
 
 /datum/surgery_operation/limb/incise_organs/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

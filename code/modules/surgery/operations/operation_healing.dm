@@ -98,11 +98,15 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(operation_args[OPERATION_BRUTE_HEAL] > 0 && patient.getBruteLoss() <= 0)
-		return FALSE
-	if(operation_args[OPERATION_BURN_HEAL] > 0 && patient.getFireLoss() <= 0)
-		return FALSE
-	return TRUE
+	var/brute_heal = operation_args[OPERATION_BRUTE_HEAL] > 0
+	var/burn_heal = operation_args[OPERATION_BURN_HEAL] > 0
+	if(brute_heal && burn_heal)
+		return patient.getBruteLoss() > 0 || patient.getFireLoss() > 0
+	else if(brute_heal)
+		return patient.getBruteLoss() > 0
+	else if(burn_heal)
+		return patient.getFireLoss() > 0
+	return FALSE
 
 /datum/surgery_operation/basic/tend_wounds/on_preop(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
 	var/woundtype

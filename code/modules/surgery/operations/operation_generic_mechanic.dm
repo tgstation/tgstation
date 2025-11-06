@@ -20,7 +20,7 @@
 	return image(/obj/item/screwdriver)
 
 /datum/surgery_operation/limb/mechanical_incision/tool_check(obj/item/tool)
-	// Require sharpness OR a tool behavior match
+	// Require any sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_incision/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
@@ -92,7 +92,7 @@
 	return image(/obj/item/screwdriver)
 
 /datum/surgery_operation/limb/mechanical_close/tool_check(obj/item/tool)
-	// Require sharpness OR a tool behavior match
+	// Require any sharpness OR a tool behavior match
 	return (tool.get_sharpness() || implements[tool.tool_behaviour])
 
 /datum/surgery_operation/limb/mechanical_close/state_check(obj/item/bodypart/limb)
