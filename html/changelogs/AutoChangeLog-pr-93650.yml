@@ -1,4 +1,0 @@
-author: "NiklasNeighbor"
-delete-after: True
-changes:
-  - refactor: "refactored Lasertag equipment to use components, therefore making it scalable. Please report any issues."

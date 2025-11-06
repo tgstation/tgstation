@@ -157,9 +157,10 @@
 	return to_add
 
 /obj/item/organ/tongue/vampire
-	name = "vampire tongue"
+	name = "vampire teeth"
+	desc = "The only thing with which it's acceptable to say \"I will suck you dry!\""
+	icon_state = "tongue_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-	color = COLOR_CRAYON_BLACK
 	organ_traits = list(
 		TRAIT_SPEAKS_CLEARLY,
 		TRAIT_DRINKS_BLOOD,
@@ -210,6 +211,9 @@
 /datum/action/item_action/organ_action/vampire
 	name = "Drain Victim"
 	desc = "Leech blood from any carbon victim you are passively grabbing."
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "drain_victim"
+	background_icon_state = "bg_vampire"
 
 /datum/action/item_action/organ_action/vampire/do_effect(trigger_flags)
 	if(!iscarbon(owner))
@@ -262,7 +266,8 @@
 
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
-	color = COLOR_CRAYON_BLACK
+	icon_state = "heart_vampire"
+	desc = "Some guy stabbed his brother 6,000 years ago so now you have this."
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

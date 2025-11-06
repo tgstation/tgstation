@@ -50,37 +50,35 @@
 
 /obj/machinery/turretid/update_overlays()
 	. = ..()
-	overlays.Cut()
-
 	if(machine_stat & NOPOWER)
 		if(enabled)
-			add_overlay(mutable_appearance(icon, "button_left"))
+			. += mutable_appearance(icon, "button_left")
 			if(lethal)
-				add_overlay(mutable_appearance(icon, "button_right"))
+				. += mutable_appearance(icon, "button_right")
 		return
 
 	if(enabled)
-		add_overlay(mutable_appearance(icon, "button_left"))
-		add_overlay(emissive_appearance(icon, "emissive_button_left", src))
+		. += mutable_appearance(icon, "button_left")
+		. += emissive_appearance(icon, "emissive_button_left", src)
 		if(lethal)
-			add_overlay(mutable_appearance(icon, "kill"))
-			add_overlay(mutable_appearance(icon, "button_right"))
-			add_overlay(emissive_appearance(icon, "emissive_button_right", src))
+			. += mutable_appearance(icon, "kill")
+			. += mutable_appearance(icon, "button_right")
+			. += emissive_appearance(icon, "emissive_button_right", src)
 		else
-			add_overlay(mutable_appearance(icon, "stun"))
+			. += mutable_appearance(icon, "stun")
 	else
-		add_overlay(mutable_appearance(icon, "standby"))
-	add_overlay(emissive_appearance(icon, "emissive_screen", src))
+		. += mutable_appearance(icon, "standby")
+	. += emissive_appearance(icon, "emissive_screen", src)
 
 /obj/machinery/turretid/power_change()
 	. = ..()
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && !(machine_stat & BROKEN))
-		. += {"[span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")]
-					[span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")]"}
+		. += span_notice("Ctrl-click [src] to [ enabled ? "disable" : "enable"] turrets.")
+		. += span_notice("Alt-click [src] to set turrets to [ lethal ? "stun" : "kill"].")
 
 /obj/machinery/turretid/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	. = NONE
