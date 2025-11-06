@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMPATH_SEE_DEAF (1<<5)
 /// Can the empath see if living mob's body temperature is too hot for their species
 #define EMPATH_SEE_HOT (1<<6)
-/// Can the empath see if living mob's body temperature is too lowfor their species
+/// Can the empath see if living mob's body temperature is too low for their species
 #define EMPATH_SEE_COLD (1<<7)
 /// Can the empath see if living mob has the fundamentally evil trait
 #define EMPATH_SEE_EVIL (1<<8)
