@@ -68,21 +68,26 @@
 	return TRUE
 
 /obj/machinery/computer/operating/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/disk/surgery))
-		return ..()
-	user.visible_message(
-		span_notice("[user] begins to load [tool] in [src]..."),
-		span_notice("You begin to load a surgery protocol from [tool]..."),
-		span_hear("You hear the chatter of a floppy drive."),
-	)
-	var/obj/item/disk/surgery/disky = tool
-	if(!do_after(user, 1 SECONDS, src))
-		return ITEM_INTERACT_BLOCKING
-	advanced_surgeries |= disky.surgeries
-	update_static_data_for_all_viewers()
-	playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
-	balloon_alert(user, "surgeries loaded")
-	return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/disk/surgery))
+		user.visible_message(
+			span_notice("[user] begins to load [tool] in [src]..."),
+			span_notice("You begin to load a surgery protocol from [tool]..."),
+			span_hear("You hear the chatter of a floppy drive."),
+		)
+		var/obj/item/disk/surgery/disky = tool
+		if(!do_after(user, 1 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
+		advanced_surgeries |= disky.surgeries
+		update_static_data_for_all_viewers()
+		playsound(src, 'sound/machines/compiler/compiler-stage2.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+		balloon_alert(user, "surgeries loaded")
+		return ITEM_INTERACT_SUCCESS
+
+	if((tool.item_flags & SURGICAL_TOOL) && !user.combat_mode)
+		ui_interact(user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/computer/operating/on_set_is_operational(old_value)
 	update_static_data_for_all_viewers()
