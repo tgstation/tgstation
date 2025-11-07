@@ -1,0 +1,5 @@
+author: "paganiy"
+delete-after: True
+changes:
+  - qol: " Added Insert beaker buttons to chemistry machines."
+  - code_imp: "Minor code update for interacting with chemical machines"
