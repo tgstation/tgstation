@@ -191,3 +191,19 @@
       punch, dealing less damage but with decent wounding power.
   - balance: Kaza Ruk causes more damage when a grabbed target fails to escape their
       grab, and it is harder to escape their grabs.
+2025-11-07:
+  Aliceee2ch:
+  - bugfix: Added missing gas sensors in SM chamber on WawaStation.
+  - image: Updated old sprites for fauna health huds and spacesuit cell status.
+  Fghj240:
+  - qol: empaths are only scared by evil people the first time they see one
+  - balance: empaths no longer get a mood debuff from seeing an evil person
+  - code_imp: empath is now a component instead of a trait
+  - balance: moon heretic empaths can't be smited or scared by evil people
+  LT3:
+  - bugfix: Fixed Clockwork, Glass, and Detective tooltip styling
+  - bugfix: Fixed Trasen-Knox and Detective UI highlighting
+  hry-gh:
+  - bugfix: you should experience less stutters every 10 seconds
+  - server: server operators can now configure an alternative storage domain for clientside
+      data storage, read the example configuration for more

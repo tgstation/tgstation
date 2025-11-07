@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Fixed Clockwork, Glass, and Detective tooltip styling"
-  - bugfix: "Fixed Trasen-Knox and Detective UI highlighting"
