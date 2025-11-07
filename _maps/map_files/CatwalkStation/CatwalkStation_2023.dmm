@@ -21024,6 +21024,7 @@
 "fRi" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fRA" = (
