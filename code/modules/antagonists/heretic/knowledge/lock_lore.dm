@@ -77,7 +77,9 @@
 	. = ..()
 
 	var/obj/item/clothing/under/suit = target.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(istype(suit) && suit.adjusted == NORMAL_STYLE && suit.can_adjust)
+	if(!suit.can_adjust)
+		return
+	if(istype(suit) && suit.adjusted == NORMAL_STYLE)
 		suit.toggle_jumpsuit_adjust()
 		suit.update_appearance()
 
