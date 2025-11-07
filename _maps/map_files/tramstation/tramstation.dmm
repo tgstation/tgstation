@@ -14114,7 +14114,6 @@
 "dLS" = (
 /obj/machinery/turretid{
 	name = "AI Chamber turret control";
-	icon_state = "control_stun";
 	pixel_x = 3;
 	pixel_y = -23
 	},
@@ -66411,7 +66410,6 @@
 	},
 /obj/machinery/turretid{
 	name = "AI Hallway turret control";
-	icon_state = "control_stun";
 	pixel_x = 3;
 	pixel_y = 28
 	},
