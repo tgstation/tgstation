@@ -96,10 +96,7 @@
 	new /obj/item/flamethrower(get_turf(src))
 	var/obj/item/tank/internals/plasma/ptank = new /obj/item/tank/internals/plasma(get_turf(src))
 	ptank.air_contents.gases[/datum/gas/plasma][MOLES] = (0)
-	for(var/datum/material/material as anything in custom_materials)
-		var/sheets_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1)
-		if(sheets_to_spawn > 0 && material.sheet_type)
-			new material.sheet_type(loc, sheets_to_spawn)
+	drop_costum_materials()
 	qdel(src)
 	return TRUE
 

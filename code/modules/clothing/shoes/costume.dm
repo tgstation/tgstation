@@ -68,6 +68,7 @@
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
 	inhand_icon_state = null
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/shoes/glow
 	name = "glow shoes"

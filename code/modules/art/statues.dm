@@ -20,6 +20,8 @@
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
+	/// Set to true to prevent it from being carved out of a block
+	var/uncarveable = FALSE
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
@@ -280,7 +282,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30, /datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT * 20, /datum/material/zaukerite = SHEET_MATERIAL_AMOUNT * 15)
 	max_integrity = 1000
 	impressiveness = 100
-	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
+	uncarveable = TRUE
 
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
@@ -347,6 +349,7 @@ Moving interrupts
 /obj/item/chisel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(sculpting)
 		return ITEM_INTERACT_BLOCKING
+
 	if(istype(interacting_with, /obj/structure/carving_block))
 		var/obj/structure/carving_block/sculpt_block = interacting_with
 
@@ -443,15 +446,16 @@ Moving interrupts
 	for(var/statue_path in prepared_block.get_possible_statues())
 		var/obj/structure/statue/abstract_statue = statue_path
 		choices[statue_path] = image(icon = initial(abstract_statue.icon), icon_state = initial(abstract_statue.icon_state))
+
 	if(!choices.len)
-		user.balloon_alert(user, "no abstract statues for material!")
+		user.balloon_alert(user, "no statues for material!")
 
 	var/choice = show_radial_menu(user, prepared_block, choices, require_near = TRUE)
 	if(choice)
 		prepared_block.current_preset_type = choice
 		var/image/chosen_looks = choices[choice]
 		prepared_block.current_target = chosen_looks.appearance
-		user.balloon_alert(user, "abstract statue selected")
+		user.balloon_alert(user, "statue selected")
 
 /obj/structure/carving_block
 	name = "block"
@@ -572,11 +576,11 @@ Moving interrupts
 /obj/structure/carving_block/proc/build_statue_cost_table()
 	. = list()
 	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
-		var/obj/structure/statue/S = new statue_type()
-		if(!S.icon_state || S.abstract_type == S.type || !S.custom_materials)
+		var/obj/structure/statue/fake_statue = new statue_type()
+		if(!fake_statue.icon_state || fake_statue.abstract_type == fake_statue.type || fake_statue.uncarveable || !fake_statue.custom_materials)
 			continue
-		.[S.type] = S.custom_materials
-		qdel(S)
+		.[fake_statue.type] = fake_statue.custom_materials
+		qdel(fake_statue)
 
 /obj/structure/statue/custom
 	name = "custom statue"

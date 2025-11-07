@@ -975,7 +975,7 @@
 
 /obj/item/proc/update_slot_icon()
 	SIGNAL_HANDLER
-	if(!ismob(loc))
+	if(!ismob(loc) || QDELETED(loc))
 		return
 	var/mob/owner = loc
 	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))
@@ -1215,9 +1215,13 @@
 			if("operative")
 				outline_color = COLOR_THEME_OPERATIVE
 			if("clockwork")
-				outline_color = COLOR_THEME_CLOCKWORK //if you want free gbp go fix the fact that clockwork's tooltip css is glass'
+				outline_color = COLOR_THEME_CLOCKWORK
 			if("glass")
 				outline_color = COLOR_THEME_GLASS
+			if("trasen-knox")
+				outline_color = COLOR_THEME_TRASENKNOX
+			if("detective")
+				outline_color = COLOR_THEME_DETECTIVE
 			else //this should never happen, hopefully
 				outline_color = COLOR_WHITE
 	if(color)

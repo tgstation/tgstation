@@ -235,10 +235,7 @@
 
 /obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
 	dump_contents()
-	for(var/datum/material/material as anything in custom_materials)
-		var/sheets_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT, 1)
-		if(sheets_to_spawn > 0 && material.sheet_type)
-			new material.sheet_type(loc, sheets_to_spawn)
+	drop_costum_materials()
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 

@@ -1,5 +1,5 @@
 /obj/item/tank/jetpack
-	name = "jetpack (empty)"
+	name = "jetpack (oxygen)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	inhand_icon_state = "jetpack"
@@ -208,13 +208,7 @@
 	icon_state = "jetpack-void"
 	inhand_icon_state = "jetpack-void"
 
-/obj/item/tank/jetpack/oxygen
-	name = "jetpack (oxygen)"
-	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
-	icon_state = "jetpack"
-	inhand_icon_state = "jetpack"
-
-/obj/item/tank/jetpack/oxygen/harness
+/obj/item/tank/jetpack/harness
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
 	icon_state = "jetpack-mini"
@@ -223,7 +217,7 @@
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/tank/jetpack/oxygen/captain
+/obj/item/tank/jetpack/captain
 	name = "captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
@@ -235,13 +229,11 @@
 	drift_force = 2 NEWTONS
 	stabilizer_force = 2 NEWTONS
 
-/obj/item/tank/jetpack/oxygen/security
+/obj/item/tank/jetpack/security
 	name = "security jetpack (oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
 	icon_state = "jetpack-sec"
 	inhand_icon_state = "jetpack-sec"
-
-
 
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"

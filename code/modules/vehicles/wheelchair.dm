@@ -8,7 +8,7 @@
 	armor_type = /datum/armor/ridden_wheelchair
 	density = FALSE
 	interaction_flags_mouse_drop = ALLOW_RESTING
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	/// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7

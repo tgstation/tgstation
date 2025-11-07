@@ -415,7 +415,7 @@
 #undef FULL_LIST
 
 /// Makes the item with the given recipe.
-/obj/item/stack/proc/make_item(mob/builder, datum/stack_recipe/recipe, multiplier)
+/obj/item/stack/proc/make_item(mob/builder, datum/stack_recipe/recipe, multiplier = 1)
 	if(get_amount() < 1 && !is_cyborg) //sanity check as this shouldn't happen
 		qdel(src)
 		return
@@ -454,8 +454,6 @@
 			return
 		created = covered_turf.place_on_top(recipe.result_type, flags = CHANGETURF_INHERIT_AIR)
 		builder.balloon_alert(builder, "placed [ispath(recipe.result_type, /turf/open) ? "floor" : "wall"]")
-		if(LAZYLEN(mats_per_unit))
-			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
 
 	else
 		created = new recipe.result_type(builder.drop_location())
@@ -466,17 +464,30 @@
 	if(ismovable(created))
 		created.setDir(builder.dir)
 	created.on_craft_completion(list(used_stack), null, builder)
-	qdel(used_stack) //you've outlived your purpose
 
 	builder.investigate_log("crafted [recipe.title]", INVESTIGATE_CRAFTING)
 
 	// Apply mat datums
 	if(LAZYLEN(mats_per_unit) && !(recipe.crafting_flags & CRAFT_NO_MATERIALS))
+		var/list/result_mats = mats_per_unit.Copy()
+		for(var/mat in recipe.removed_mats)
+			var/to_remove = recipe.removed_mats[mat]
+			var/datum/material/ref_mat = locate(mat) in result_mats
+			if(!ref_mat)
+				continue
+			if(result_mats[ref_mat] < to_remove)
+				result_mats -= ref_mat
+			else
+				result_mats[ref_mat] -= to_remove
+
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.set_custom_materials(mats_per_unit, (recipe.req_amount / recipe.res_amount) * crafted_stack.amount)
+			crafted_stack.mats_per_unit = SSmaterials.FindOrCreateMaterialCombo(result_mats)
+			update_custom_materials()
 		else
-			created.set_custom_materials(mats_per_unit, recipe.req_amount / recipe.res_amount)
+			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)
+
+	qdel(used_stack) //you've outlived your purpose
 
 	// We could be qdeleted - like if it's a stack and has already been merged
 	if(QDELETED(created))
@@ -761,7 +772,7 @@
 	loc.atom_storage?.refresh_views()
 	is_zero_amount(delete_if_zero = TRUE)
 	return new_stack
-z
+
 /**
  * Splits amount items from stack, attempts to place new stack in user's hands.
  * Returns the new stack.

@@ -106,6 +106,8 @@
 	src.placement_checks = stack_recipe.placement_checks
 	src.crafting_flags = stack_recipe.crafting_flags
 
+	src.removed_mats = stack_recipe.removed_mats
+
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client
  *

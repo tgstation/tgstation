@@ -60,6 +60,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_EQUIPMENT
+	removed_mats = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /datum/crafting_recipe/motorized_wheelchair
 	name = "Motorized Wheelchair"

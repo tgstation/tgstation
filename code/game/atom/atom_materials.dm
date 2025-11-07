@@ -396,6 +396,16 @@
 	return isnull(custom_materials) ? 0 : counterlist_sum(custom_materials)
 
 
+///A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
+/atom/proc/drop_costum_materials(multiplier = 1)
+	for(var/datum/material/material as anything in custom_materials)
+		var/stack_type = material.sheet_type || material.ore_type
+		if(!stack_type)
+			continue
+		var/amount_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT * multiplier, 1)
+		if(amount_to_spawn > 0)
+			new stack_type(loc, amount_to_spawn)
+
 /**
  * A bit of leeway when comparing the amount of material of two items.
  * This was made to test the material composition of items spawned via crafting/processable component and an items of the same type spawned

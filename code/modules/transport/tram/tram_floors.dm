@@ -186,7 +186,7 @@
 	plane = GAME_PLANE
 	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
-	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	var/secured = TRUE
 	var/floor_tile = /obj/item/stack/thermoplastic
 	var/mutable_appearance/damage_overlay

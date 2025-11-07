@@ -5,7 +5,6 @@
 	desc = "A patch of dirt."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil"
-	gender = PLURAL
 	circuit = null
 	density = FALSE
 	use_power = NO_POWER_USE
@@ -75,6 +74,7 @@
 	name = "hydrogel beads"
 	desc = "A plant bed made of superabsorbent polymer beads.\n\nThese types of water gel beads can hold onto an incredible amount of water and reduces evaporative losses to almost nothing."
 	icon_state = "soil_gel"
+	gender = PLURAL
 	maxwater = 300
 	tray_flags = SOIL | HYDROPONIC | SUPERWATER
 	plant_offset_y = 2
