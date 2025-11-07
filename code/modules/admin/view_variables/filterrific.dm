@@ -10,7 +10,7 @@
 /datum/filter_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Filteriffic")
+		ui = new(user, src, "Filterrific")
 		ui.open()
 
 /datum/filter_editor/ui_static_data(mob/user)
@@ -59,7 +59,7 @@
 			target.modify_filter(params["name"], params["new_data"])
 			. = TRUE
 		if("modify_color_value")
-			var/new_color = input(usr, "Pick new filter color", "Filteriffic Colors!") as color|null
+			var/new_color = input(usr, "Pick new filter color", "Filterrific Colors!") as color|null
 			if(new_color)
 				target.transition_filter(params["name"], list("color" = new_color), 4)
 				. = TRUE

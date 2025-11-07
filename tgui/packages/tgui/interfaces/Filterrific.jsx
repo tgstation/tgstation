@@ -315,7 +315,7 @@ const FilterEntry = (props) => {
   );
 };
 
-export const Filteriffic = (props) => {
+export const Filterrific = (props) => {
   const { act, data } = useBackend();
   const name = data.target_name || 'Unknown Object';
   const filters = data.target_filter_data || {};
@@ -325,7 +325,7 @@ export const Filteriffic = (props) => {
   const [hiddenSecret, setHiddenSecret] = useState(false);
 
   return (
-    <Window title="Filteriffic" width={500} height={500}>
+    <Window title="Filterrific" width={500} height={500}>
       <Window.Content scrollable>
         <NoticeBox danger>
           DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES.
