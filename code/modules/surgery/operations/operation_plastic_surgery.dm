@@ -2,7 +2,7 @@
 
 /datum/surgery_operation/limb/plastic_surgery
 	name = "plastic surgery"
-	desc = "Reshape or reconstruct a patient's body part for cosmetic or functional purposes."
+	desc = "Reshape or reconstruct a patient's face for cosmetic or functional purposes."
 	implements = list(
 		TOOL_SCALPEL = 1,
 		/obj/item/knife = 2,
@@ -105,7 +105,7 @@
 
 /datum/surgery_operation/limb/add_plastic
 	name = "apply plastic"
-	desc = "Apply plastic to a patient's body part to to allow for greater customization in following plastic surgery."
+	desc = "Apply plastic to a patient's face to to allow for greater customization in following plastic surgery."
 	implements = list(
 		/obj/item/stack/sheet/plastic = 1,
 	)

@@ -66,6 +66,7 @@
 
 /datum/surgery_operation/limb/seal_veins
 	name = "seal blood vessels"
+	// rnd_name = "Anastomosis (Seal Blood Vessels)" // doctor says this is the term to use but it fits awkwardly
 	desc = "Seal a patient's now-realigned blood vessels."
 	implements = list(
 		TOOL_CAUTERY = 1,

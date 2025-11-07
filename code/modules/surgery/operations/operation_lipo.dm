@@ -28,7 +28,7 @@
 	. = list()
 	. += "operate on chest"
 	. += ..()
-	. += "the patient must excess fat to remove"
+	. += "the patient must have excess fat to remove"
 
 /datum/surgery_operation/limb/lipoplasty/tool_check(obj/item/tool)
 	// Require edged sharpness OR a tool behavior match

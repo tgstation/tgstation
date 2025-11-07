@@ -38,7 +38,7 @@
 		span_notice("[surgeon] begins to make an incision in [patient]."),
 		span_notice("[surgeon] begins to make an incision in [patient]."),
 	)
-	display_pain(patient, "You feel a stabbing feeling!")
+	display_pain(patient, "You feel a sharp stabbing sensation!")
 
 /datum/surgery_operation/basic/incise_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -71,6 +71,9 @@
 	return !patient.has_limbs // Only for limbless mobs
 
 /datum/surgery_operation/basic/close_skin/tool_check(obj/item/tool)
+	if(istype(tool, /obj/item/stack/medical/suture))
+		return TRUE
+
 	if(istype(tool, /obj/item/gun/energy/laser))
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
@@ -85,7 +88,7 @@
 		span_notice("[surgeon] begins to mend the incision in [patient]."),
 		span_notice("[surgeon] begins to mend the incision in [patient]."),
 	)
-	display_pain(patient, "You are being burned!")
+	display_pain(patient, "You are being [istype(tool, /obj/item/stack/medical/suture) ? "pinched" : "burned"]!")
 
 /datum/surgery_operation/basic/close_skin/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()

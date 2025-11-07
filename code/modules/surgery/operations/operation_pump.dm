@@ -26,7 +26,7 @@
 		organ.owner,
 		span_notice("You begin to pump [organ.owner]'s stomach..."),
 		span_notice("[surgeon] begins to pump [organ.owner]'s stomach."),
-		span_notice("[surgeon] begins to press on [organ.owner]'s chest."),
+		span_notice("[surgeon] begins to press on [organ.owner]'s abdomen."),
 	)
 	display_pain(organ.owner, "You feel a horrible sloshing feeling in your gut! You're going to be sick!")
 

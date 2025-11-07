@@ -27,7 +27,7 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to make an unscrew the shell of [limb.owner]'s [limb.plaintext_zone]..."),
+		span_notice("You begin to unscrew the shell of [limb.owner]'s [limb.plaintext_zone]..."),
 		span_notice("[surgeon] begins to unscrew the shell of [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[surgeon] begins to unscrew the shell of [limb.owner]'s [limb.plaintext_zone]."),
 	)
@@ -181,7 +181,7 @@
 // Mechanical equivalent of unsawing bone
 /datum/surgery_operation/limb/mechanic_wrench
 	name = "wrench endoskeleton"
-	desc = "Wrench a mechanical's endoskeleton patient back into place."
+	desc = "Wrench a mechanical patient's endoskeleton back into place."
 	required_bodytype = BODYTYPE_ROBOTIC
 	implements = list(
 		TOOL_WRENCH = 1,

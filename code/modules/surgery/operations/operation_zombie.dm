@@ -50,7 +50,7 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to grow a romerol tumor on [limb.owner]'s brain..."),
+		span_notice("You begin to grow a romerol tumor in [limb.owner]'s brain..."),
 		span_notice("[surgeon] begins to tinker with [limb.owner]'s brain..."),
 		span_notice("[surgeon] begins to perform surgery on [limb.owner]'s brain."),
 	)
@@ -60,8 +60,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You succeed in growing a romerol tumor on [limb.owner]'s brain."),
-		span_notice("[surgeon] successfully grows a romerol tumor on [limb.owner]'s brain!"),
+		span_notice("You succeed in growing a romerol tumor in [limb.owner]'s brain."),
+		span_notice("[surgeon] successfully grows a romerol tumor in [limb.owner]'s brain!"),
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
 	display_pain(limb.owner, "Your head goes totally numb for a moment, the pain is overwhelming!")

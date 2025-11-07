@@ -43,7 +43,7 @@
 	organ.apply_organ_damage(organ.maxHealth * failure_damage_percent)
 
 /datum/surgery_operation/organ/repair/lobectomy
-	name = "excise damaged lung node"
+	name = "excise damaged lung lobe"
 	rnd_name = "Lobectomy (Lung Surgery)"
 	desc = "Perform repairs to a patient's damaged lung by excising the most damaged lobe."
 	implements = list(
@@ -237,9 +237,9 @@
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 
 /datum/surgery_operation/organ/repair/gastrectomy
-	name = "remove lower duodenum"
+	name = "remove damaged stomach section"
 	rnd_name = "Gastrectomy (Stomach Surgery)"
-	desc = "Perform a patient's repairs to a damaged stomach by removing the lower duodenum."
+	desc = "Perform repairs to a patient's stomach by removing a damaged section."
 	implements = list(
 		TOOL_SCALPEL = 1.05,
 		/obj/item/melee/energy/sword = 1.5,
@@ -309,7 +309,7 @@
 
 /datum/surgery_operation/organ/repair/ears
 	name = "ear surgery"
-	rnd_name = "Ototomy (Ear surgery)" // source: i made it up
+	rnd_name = "Vitrectomy (Ear surgery)"
 	desc = "Repair a patient's damaged ears to restore hearing."
 	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(

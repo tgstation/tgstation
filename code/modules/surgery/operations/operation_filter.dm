@@ -1,6 +1,6 @@
 /datum/surgery_operation/limb/filter_blood
 	name = "blood filtration"
-	rnd_name = "Hemodialysis (Blood Filteration)"
+	rnd_name = "Hemodialysis (Blood Filtration)"
 	desc = "Remove unwanted chemicals from a patient's bloodstream."
 	implements = list(/obj/item/blood_filter = 1)
 	time = 2.5 SECONDS
@@ -51,7 +51,7 @@
 		surgeon,
 		limb.owner,
 		span_warning("You screw up, bruising [limb.owner]'s chest!"),
-		span_warning("[surgeon] screws up, brusing [limb.owner]'s chest!"),
+		span_warning("[surgeon] screws up, bruising [limb.owner]'s chest!"),
 		span_warning("[surgeon] screws up!"),
 	)
 	limb.receive_damage(5, damage_source = tool)
@@ -73,6 +73,6 @@
 
 /datum/surgery_operation/limb/filter_blood/mechanic
 	name = "purge hydraulics"
-	rnd_name = "Hydraulics Purge (Blood Filteration)"
+	rnd_name = "Hydraulics Purge (Blood Filtration)"
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC

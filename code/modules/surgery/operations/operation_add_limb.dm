@@ -145,7 +145,7 @@
 		span_notice("[surgeon] finishes attaching [thing_to_attach]!"),
 		span_notice("[surgeon] finishes the attachment procedure!"),
 	)
-	display_pain(patient, "You feel a strange sensation as [thing_to_attach] takes place of an arm!", TRUE)
+	display_pain(patient, "You feel a strange sensation as [thing_to_attach] takes the place of your arm!", TRUE)
 
 #undef OPERATION_REJECTION_DAMAGE
 
@@ -175,9 +175,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You finish [tool.singular_name]ing [limb] to [limb.owner]'s body."),
-		span_notice("[surgeon] finishes [tool.singular_name]ing [limb] to [limb.owner]'s body."),
-		span_notice("[surgeon] finishes the [tool.singular_name]ing procedure!"),
+		span_notice("You finish [tool.apply_verb] [limb] to [limb.owner]'s body."),
+		span_notice("[surgeon] finishes [tool.apply_verb] [limb] to [limb.owner]'s body."),
+		span_notice("[surgeon] finishes the [tool.apply_verb] procedure!"),
 	)
 	var/obj/item/bodypart/chest = limb.owner.get_bodypart(BODY_ZONE_CHEST)
 	display_pain(limb.owner, "You feel more secure as your prosthetic is firmly attached to your body!", IS_ROBOTIC_LIMB(chest))

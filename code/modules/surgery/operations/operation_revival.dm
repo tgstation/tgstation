@@ -97,9 +97,9 @@
 	display_results(
 		surgeon,
 		patient,
-		span_warning("You shock [patient]'s brain with [tool], but [patient] don't react."),
-		span_warning("[surgeon] shocks [patient]'s brain with [tool], but [patient] don't react."),
-		span_warning("[surgeon] shocks [patient]'s brain with [tool], but [patient] don't react."),
+		span_warning("You shock [patient]'s brain with [tool], but [patient.p_they()] don't react."),
+		span_warning("[surgeon] shocks [patient]'s brain with [tool], but [patient.p_they()] don't react."),
+		span_warning("[surgeon] shocks [patient]'s brain with [tool], but [patient.p_they()] don't react."),
 	)
 
 /datum/surgery_operation/basic/revival/mechanic

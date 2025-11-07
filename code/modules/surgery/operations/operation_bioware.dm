@@ -44,7 +44,7 @@
 
 /datum/surgery_operation/limb/bioware/vein_threading
 	name = "thread veins"
-	rnd_name = "Symvasculardesis (Vein Threading)" // "together vessel fusion"
+	rnd_name = "Symvasculodesis (Vein Threading)" // "together vessel fusion"
 	desc = "Weave a patient's veins into a reinforced mesh, reducing blood loss from injuries."
 	status_effect_gained = /datum/status_effect/bioware/heart/threaded_veins
 
@@ -52,9 +52,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You start weaving [limb.owner]'s circulatory system."),
-		span_notice("[surgeon] starts weaving [limb.owner]'s circulatory system."),
-		span_notice("[surgeon] starts manipulating [limb.owner]'s circulatory system."),
+		span_notice("You start weaving [limb.owner]'s blood vessels."),
+		span_notice("[surgeon] starts weaving [limb.owner]'s blood vessels."),
+		span_notice("[surgeon] starts manipulating [limb.owner]'s blood vessels."),
 	)
 	display_pain(limb.owner, "Your entire body burns in agony!")
 
@@ -63,9 +63,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You weave [limb.owner]'s circulatory system into a resistant mesh!"),
-		span_notice("[surgeon] weaves [limb.owner]'s circulatory system into a resistant mesh!"),
-		span_notice("[surgeon] finishes manipulating [limb.owner]'s circulatory system."),
+		span_notice("You weave [limb.owner]'s blood vessels into a resistant mesh!"),
+		span_notice("[surgeon] weaves [limb.owner]'s blood vessels into a resistant mesh!"),
+		span_notice("[surgeon] finishes manipulating [limb.owner]'s blood vessels."),
 	)
 	display_pain(limb.owner, "You can feel your blood pumping through reinforced veins!")
 
@@ -77,7 +77,7 @@
 
 /datum/surgery_operation/limb/bioware/muscled_veins
 	name = "muscled veins"
-	rnd_name = "Myovasculaplasty (Muscled Veins)" // "muscle vessel reshaping"
+	rnd_name = "Myovasculoplasty (Muscled Veins)" // "muscle vessel reshaping"
 	desc = "Add a muscled membrane to a patient's veins, allowing them to pump blood without a heart."
 	status_effect_gained = /datum/status_effect/bioware/heart/muscled_veins
 
@@ -85,9 +85,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You start wrapping muscles around [limb.owner]'s circulatory system."),
-		span_notice("[surgeon] starts wrapping muscles around [limb.owner]'s circulatory system."),
-		span_notice("[surgeon] starts manipulating [limb.owner]'s circulatory system."),
+		span_notice("You start wrapping muscles around [limb.owner]'s blood vessels."),
+		span_notice("[surgeon] starts wrapping muscles around [limb.owner]'s blood vessels."),
+		span_notice("[surgeon] starts manipulating [limb.owner]'s blood vessels."),
 	)
 	display_pain(limb.owner, "Your entire body burns in agony!")
 
@@ -96,9 +96,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You reshape [limb.owner]'s circulatory system, adding a muscled membrane!"),
-		span_notice("[surgeon] reshapes [limb.owner]'s circulatory system, adding a muscled membrane!"),
-		span_notice("[surgeon] finishes manipulating [limb.owner]'s circulatory system."),
+		span_notice("You reshape [limb.owner]'s blood vessels, adding a muscled membrane!"),
+		span_notice("[surgeon] reshapes [limb.owner]'s blood vessels, adding a muscled membrane!"),
+		span_notice("[surgeon] finishes manipulating [limb.owner]'s blood vessels."),
 	)
 	display_pain(limb.owner, "You can feel your heartbeat's powerful pulses ripple through your body!")
 
@@ -144,7 +144,7 @@
 
 /datum/surgery_operation/limb/bioware/nerve_grounding
 	name = "ground nerves"
-	rnd_name = "Xathoneuroplasty (Grounded Nerves)" // "yellow nerve reshaping". see: yellow gloves
+	rnd_name = "Xanthoneuroplasty (Grounded Nerves)" // "yellow nerve reshaping". see: yellow gloves
 	desc = "Reroute a patient's nerves to act as grounding rods, protecting them from electrical shocks."
 	time = 15.5 SECONDS
 	status_effect_gained = /datum/status_effect/bioware/nerves/grounded
@@ -168,7 +168,7 @@
 		span_notice("[surgeon] successfully reroutes [limb.owner]'s nervous system!"),
 		span_notice("[surgeon] finishes manipulating [limb.owner]'s nervous system."),
 	)
-	display_pain(limb.owner, "You regain feeling in your body! You feel energzed!")
+	display_pain(limb.owner, "You regain feeling in your body! You feel energized!")
 
 /datum/surgery_operation/limb/bioware/nerve_grounding/mechanic
 	rnd_name = "System Shock Dampening (Grounded Nerves)"
@@ -178,7 +178,7 @@
 
 /datum/surgery_operation/limb/bioware/ligament_hook
 	name = "reshape ligaments"
-	rnd_name = "Arthroplasty (Ligament Hooks)" // "bone reshaping"
+	rnd_name = "Arthroplasty (Ligament Hooks)" // "joint reshaping"
 	desc = "Reshape a patient's ligaments to allow limbs to be manually reattached if severed - at the cost of making them easier to detach."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/hooked
 
@@ -212,7 +212,7 @@
 
 /datum/surgery_operation/limb/bioware/ligament_reinforcement
 	name = "strengthen ligaments"
-	rnd_name = "Arthroprrhaphy (Ligament Reinforcement)" // "bone strengthening" / "bone stitching"
+	rnd_name = "Arthrorrhaphy (Ligament Reinforcement)" // "joint strengthening" / "joint stitching"
 	desc = "Strengthen a patient's ligaments to make dismemberment more difficult, at the cost of making nerve connections easier to interrupt."
 	status_effect_gained = /datum/status_effect/bioware/ligaments/reinforced
 
@@ -221,7 +221,7 @@
 		surgeon,
 		limb.owner,
 		span_notice("You start reinforcing [limb.owner]'s ligaments."),
-		span_notice("[surgeon] starts reinforce [limb.owner]'s ligaments."),
+		span_notice("[surgeon] starts reinforcing [limb.owner]'s ligaments."),
 		span_notice("[surgeon] starts manipulating [limb.owner]'s ligaments."),
 	)
 	display_pain(limb.owner, "Your limbs burn with severe pain!")
@@ -269,7 +269,7 @@
 		span_notice("[surgeon] folds [limb.owner]'s cerebral cortex into a fractal pattern!"),
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
-	display_pain(limb.owner, "Your brain feels stronger... more flexible!")
+	display_pain(limb.owner, "Your brain feels stronger... and more flexible!")
 
 /datum/surgery_operation/limb/bioware/cortex_folding/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))
@@ -317,7 +317,7 @@
 		span_notice("[surgeon] reshapes [limb.owner]'s outer cerebral cortex into a self-imprinting pattern!"),
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
-	display_pain(limb.owner, "Your brain feels stronger... more resillient!")
+	display_pain(limb.owner, "Your brain feels stronger... and more resilient!")
 
 /datum/surgery_operation/limb/bioware/cortex_imprint/on_failure(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	if(!limb.owner.get_organ_slot(ORGAN_SLOT_BRAIN))

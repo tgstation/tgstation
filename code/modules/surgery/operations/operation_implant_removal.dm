@@ -23,11 +23,11 @@
 		surgeon,
 		patient,
 		span_notice("You search for implants in [patient]..."),
-		span_notice("[surgeon] search for implants in [patient]."),
-		span_notice("[surgeon] search for implants in [patient]."),
+		span_notice("[surgeon] searches for implants in [patient]."),
+		span_notice("[surgeon] searches for something in [patient]."),
 	)
 	if(LAZYLEN(patient.implants))
-		display_pain(surgeon, "You feel a serious pain as [surgeon] digs around inside you!")
+		display_pain(patient, "You feel a serious pain as [surgeon] digs around inside you!")
 
 /datum/surgery_operation/basic/implant_removal/on_success(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	var/obj/item/implant/implant = LAZYACCESS(patient.implants, 1)

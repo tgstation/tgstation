@@ -143,6 +143,9 @@
 	return LIMB_HAS_SKIN(limb)
 
 /datum/surgery_operation/limb/close_skin/tool_check(obj/item/tool)
+	if(istype(tool, /obj/item/stack/medical/suture))
+		return TRUE
+
 	if(istype(tool, /obj/item/gun/energy/laser))
 		var/obj/item/gun/energy/laser/lasergun = tool
 		return lasergun.cell?.charge > 0
@@ -157,7 +160,7 @@
 		span_notice("[surgeon] begins to mend the incision in [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[surgeon] begins to mend the incision in [limb.owner]'s [limb.plaintext_zone]."),
 	)
-	display_pain(limb.owner, "Your [limb.plaintext_zone] is being burned!")
+	display_pain(limb.owner, "Your [limb.plaintext_zone] is being [istype(tool, /obj/item/stack/medical/suture) ? "pinched" : "burned"]!")
 
 /datum/surgery_operation/limb/close_skin/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	. = ..()
@@ -351,7 +354,7 @@
 		span_notice("[surgeon] begins to fix the bones in [limb.owner]'s [limb.plaintext_zone]."),
 		span_notice("[surgeon] begins to fix the bones in [limb.owner]'s [limb.plaintext_zone]."),
 	)
-	display_pain(limb.owner, "You feel a grinding sensation in your [limb.plaintext_zone] as the bones is being set back in place.")
+	display_pain(limb.owner, "You feel a grinding sensation in your [limb.plaintext_zone] as the bones are set back in place.")
 
 /datum/surgery_operation/limb/fix_bones/on_success(obj/item/bodypart/limb)
 	. = ..()

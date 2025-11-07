@@ -39,7 +39,7 @@
 		lore = "Most forms of plastic surgery became obsolete due in no small part to advances in genetics technology. \
 			Very basic methods still remain in use, but scarcely, and primarily to reverse a patient's disfigurements. \
 			As a consequence, this item became an antique to many collectors - \
-			though some black alley surgeons still seek one out for its now uncommon knowledge." \
+			though some back alley surgeons still seek one out for its now uncommon knowledge." \
 	)
 
 /obj/item/disk/surgery/brainwashing

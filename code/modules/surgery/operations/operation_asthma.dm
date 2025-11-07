@@ -45,8 +45,8 @@
 	display_results(
 		surgeon,
 		organ.owner,
-		span_notice("You stretch [organ.owner]'s windpipe with [tool], managing to avoid the nearby blood vessels and arteries."),
-		span_notice("[surgeon] succeeds at stretching [organ.owner]'s windpipe with [tool], avoiding the nearby blood vessels and arteries."),
+		span_notice("You stretch [organ.owner]'s windpipe with [tool], managing to avoid the nearby blood vessels."),
+		span_notice("[surgeon] succeeds at stretching [organ.owner]'s windpipe with [tool], avoiding the nearby blood vessels."),
 		span_notice("[surgeon] finishes stretching [organ.owner]'s windpipe.")
 	)
 

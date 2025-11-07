@@ -62,7 +62,7 @@
 	return TRUE
 
 /// Get a list of organs that can be removed from the limb in the specified zone
-/datum/surgery_operation/limb/organ_manipulation/proc/get_removable_oragns(obj/item/bodypart/limb, operated_zone)
+/datum/surgery_operation/limb/organ_manipulation/proc/get_removable_organs(obj/item/bodypart/limb, operated_zone)
 	var/list/removable_organs = list()
 	for(var/obj/item/organ/organ in limb)
 		if(!organ_check(limb, organ) || (organ.organ_flags & ORGAN_UNREMOVABLE))
@@ -75,7 +75,7 @@
 
 /// Check if removing an organ is possible
 /datum/surgery_operation/limb/organ_manipulation/proc/is_remove_available(obj/item/bodypart/limb, operated_zone)
-	return length(get_removable_oragns(limb, operated_zone)) > 0
+	return length(get_removable_organs(limb, operated_zone)) > 0
 
 /// Check if inserting an organ is possible
 /datum/surgery_operation/limb/organ_manipulation/proc/is_insert_available(obj/item/bodypart/limb, obj/item/organ/organ, operated_zone)
@@ -99,7 +99,7 @@
 
 /datum/surgery_operation/limb/organ_manipulation/proc/get_remove_options(obj/item/bodypart/limb, operating_zone)
 	var/list/options = list()
-	for(var/obj/item/organ/organ as anything in get_removable_oragns(limb, operating_zone))
+	for(var/obj/item/organ/organ as anything in get_removable_organs(limb, operating_zone))
 		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, "[organ.type]_remove")
 		if(!option)
 			option = new()
