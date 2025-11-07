@@ -276,21 +276,21 @@
 	color = "#ff1313"
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/juvenile
-	health_cost = 6 // This is enough for 15 shots in a row at full health.
+	health_cost = 5.5 // This is enough for 20 shots in a row at full health. (keep in mind that health is VERY important)
 	projectile_type = /obj/projectile/blood_worm_spit/juvenile
 
 /obj/projectile/blood_worm_spit/juvenile
 	damage = 20 // 300 damage total, assuming no armor.
-	armour_penetration = 25 // So that sec cant just nullify half the kit of the blood worms with bulletproof armor.
+	armour_penetration = 30 // So that sec cant just nullify half the kit of the blood worms with bulletproof armor.
 	wound_bonus = 0 // Juveniles can afford to fix wounds on their hosts. This doesn't cause critical wounds. (at least not in testing)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/adult
 	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to melt restraints while in a host, or fire a burst while out of a host."
-	health_cost = 7.5 // This is enough for 20 shots in a row at full health.
+	health_cost = 6.5 // This is enough for 26 shots in a row at full health. (keep in mind that health is VERY important)
 	projectile_type = /obj/projectile/blood_worm_spit/adult
 	can_burst = TRUE
 
 /obj/projectile/blood_worm_spit/adult
 	damage = 25 // 500 damage total, assuming no armor.
-	armour_penetration = 40 // Yeah no your armor isn't saving you from this.
+	armour_penetration = 50 // Yeah no your armor isn't saving you from this.
 	wound_bonus = 5 // Okay, now we're talking.

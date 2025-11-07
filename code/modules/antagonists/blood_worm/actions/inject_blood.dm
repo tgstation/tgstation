@@ -209,7 +209,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/hatchling
 	health_cost = 20
-	cooldown_time = 30 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.667 hp/s, Worm max health is 4x less than host max health, Worm heals at 0.2 hp/s
+	cooldown_time = 30 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.667 hp/s, Worm max health is 2.5x less than host max health, Worm heals at 0.3 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/hatchling
 
 /datum/status_effect/blood_worm_transfuse/hatchling
@@ -220,7 +220,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 	health_cost = 35
-	cooldown_time = 40 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.875 hp/s, Worm max health is 2x less than host max health, Worm heals at 0.3 hp/s
+	cooldown_time = 40 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 0.875 hp/s, Worm max health is 1.66x less than host max health, Worm heals at 0.4 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/juvenile
 
 /datum/status_effect/blood_worm_transfuse/juvenile
@@ -231,7 +231,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 	health_cost = 50
-	cooldown_time = 50 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 1 hp/s, Worm max health is 1.334x less than host max health, Worm heals at 0.4 hp/s
+	cooldown_time = 50 SECONDS // Effective host healing rate is 4 hp/s, Effective worm consumption rate is 1 hp/s, Worm max health is 1.11x less than host max health, Worm heals at 0.5 hp/s
 	status_effect_type = /datum/status_effect/blood_worm_transfuse/adult
 
 /datum/status_effect/blood_worm_transfuse/adult

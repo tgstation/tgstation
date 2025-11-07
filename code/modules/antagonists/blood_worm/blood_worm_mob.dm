@@ -128,6 +128,13 @@
 
 	ADD_TRAIT(src, TRAIT_BLOOD_HUD, INNATE_TRAIT)
 
+	// Move speed delays at min health
+	// Hatchling goes from 1.5 up to 2 deciseconds
+	// Juvenile goes from 1.8 up to 2.3 deciseconds
+	// Adult goes from 2 up to 2.5 deciseconds
+	// For reference, a cyborg has a move speed delay of 1.5 deciseconds
+	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 0.5)
+
 /mob/living/basic/blood_worm/Destroy()
 	unregister_host()
 
@@ -518,14 +525,14 @@
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSMOB // The benefits of being a tiny little bastard.
 
-	maxHealth = 50
-	health = 50
+	maxHealth = 80 // In practice, escaping into a vent from someone who could 3 hit you with a basic bitch welder was really hard. This used to be 50, and was buffed to 80, but speed was slowed a bit.
+	health = 80
 
 	unsuitable_heat_damage = 1
 
-	obj_damage = 10
-	melee_damage_lower = 8
-	melee_damage_upper = 12
+	obj_damage = 15 // 10 -> 15, in testing 10 proved to be way too slow at breaking morgue trays and such. Make sure that this doesn't go above airlock damage deflection.
+	melee_damage_lower = 12
+	melee_damage_upper = 14
 	armour_penetration = 10
 
 	speed = 0
@@ -538,7 +545,7 @@
 
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/hatchling
 
-	regen_rate = 0.2 // 250 seconds to recover from 0 to 50, or a little over 4 minutes.
+	regen_rate = 0.3 // 266 seconds to recover from 0 to 80, or almost 4 and a half minutes.
 
 /mob/living/basic/blood_worm/hatchling/Initialize(mapload)
 	. = ..()
@@ -555,20 +562,20 @@
 
 	mob_size = MOB_SIZE_SMALL
 
-	maxHealth = 100 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
-	health = 100
+	maxHealth = 120 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
+	health = 120
 
 	unsuitable_heat_damage = 1.5
 
-	obj_damage = 25 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
-	melee_damage_lower = 15
-	melee_damage_upper = 20
-	armour_penetration = 25
+	obj_damage = 35 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
+	melee_damage_lower = 18 // Juveniles can't run away nearly as easily, so they are expected to do direct combat against normal crew. (but lose hard to well-equipped sec)
+	melee_damage_upper = 22
+	armour_penetration = 30
 
-	wound_bonus = 0// Juveniles can afford to heal wounds on their hosts, unlike hatchlings. Note that this can't cause critical wounds. (at least it didn't in testing)
+	wound_bonus = 0 // Juveniles can afford to heal wounds on their hosts, unlike hatchlings. Note that this can't cause critical wounds. (at least it didn't in testing)
 	sharpness = SHARP_POINTY
 
-	speed = 0.5
+	speed = 0.3
 
 	effect_name = "juvenile"
 	leave_host_duration = 1 SECONDS
@@ -579,7 +586,7 @@
 
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 
-	regen_rate = 0.3 // 333 seconds to recover from 0 to 100, or a little over 5 and a half minutes.
+	regen_rate = 0.4 // 300 seconds to recover from 0 to 120, or exactly 5 minutes.
 
 /mob/living/basic/blood_worm/adult
 	name = "adult blood worm"
@@ -594,23 +601,23 @@
 
 	mob_size = MOB_SIZE_HUGE
 
-	maxHealth = 150
-	health = 150
+	maxHealth = 180 // Used to be 150, turns out their lack of armor and weakness to burn made them too squishy. People kited them using lasguns, leaving them with no way to fight back at all.
+	health = 180
 
 	unsuitable_heat_damage = 2
 
-	obj_damage = 40 // You are not getting away.
-	melee_damage_lower = 20
-	melee_damage_upper = 25 // Basically a wielded plastitanium glass spear, plus 0-5 extra damage.
-	armour_penetration = 40
+	obj_damage = 50 // You are not getting away.
+	melee_damage_lower = 25
+	melee_damage_upper = 30 // Turns out adults regularly end up encountering advanced weapons like cap's sabre, lasguns + armor, eswords, etc. They need a strong melee.
+	armour_penetration = 50 // Adults will 100% encounter sec, they are shit out of luck without proper armor pen.
 
-	wound_bonus = 5 // Able to cause critical wounds.
+	wound_bonus = 0 // Able to cause critical wounds.
 	sharpness = SHARP_POINTY
 
 	attack_verb_simple = "gore"
 	attack_verb_continuous = "gores"
 
-	speed = 0.8
+	speed = 0.5
 
 	effect_name = "adult"
 	leave_host_duration = 1.4 SECONDS
@@ -621,4 +628,4 @@
 
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 
-	regen_rate = 0.4 // 375 seconds to recover from 0 to 150, or a little over 6 minutes.
+	regen_rate = 0.5 // 360 seconds to recover from 0 to 180, or exactly 6 minutes.
