@@ -3487,7 +3487,6 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_blue/filled/end{
 	dir = 8
 	},
@@ -6377,6 +6376,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/corner{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "bPC" = (
@@ -14990,6 +14990,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "efZ" = (
@@ -15380,7 +15381,6 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_blue/filled/end{
 	dir = 4
 	},
@@ -51609,6 +51609,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "one" = (
@@ -66194,7 +66195,6 @@
 	dir = 1
 	},
 /obj/machinery/holopad,
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 1
@@ -71529,6 +71529,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "tPF" = (
