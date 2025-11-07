@@ -62,7 +62,7 @@
 
 	var/selection = show_radial_menu(redeemer, source, cached_options, custom_check = CALLBACK(src, PROC_REF(check_menu), voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!selection)
-		return
+		return ITEM_INTERACT_FAILURE
 
 	var/datum/voucher_set/chosen_set = set_instances[selection]
 	chosen_set.spawn_set(source.drop_location())
@@ -70,6 +70,7 @@
 		SSblackbox.record_feedback("tally", chosen_set.blackbox_key, 1, selection)
 	source.balloon_alert(redeemer, "redeemed [LOWER_TEXT(selection)]")
 	qdel(voucher)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/element/voucher_redeemer/proc/check_menu(obj/item/voucher, mob/living/redeemer)
 	if(!istype(redeemer))
