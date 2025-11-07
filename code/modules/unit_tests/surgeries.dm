@@ -178,3 +178,15 @@
 			TEST_FAIL("Surgery operation [operation.type] has no name set")
 		if (isnull(operation.desc))
 			TEST_FAIL("Surgery operation [operation.type] has no description set")
+
+/datum/unit_test/location_accessibility
+
+/datum/unit_test/location_accessibility/Run()
+	var/mob/living/carbon/human/test_mob = allocate(/mob/living/carbon/human/consistent)
+
+	test_mob.equipOutfit(/datum/outfit/job/assistant/consistent)
+	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be inaccessible when wearing a jumpsuit")
+
+	var/obj/item/clothing/under/jumpsuit = test_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	jumpsuit.adjust_to_alt()
+	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible after rolling jumpsuit down")

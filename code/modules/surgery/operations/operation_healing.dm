@@ -175,7 +175,7 @@
 
 	var/dead_multiplier = patient.stat == DEAD ? 0.2 : 1.0
 	var/accessibility_modifier = 1.0
-	if(!patient.is_location_accessible(BODY_ZONE_CHEST))
+	if(!patient.is_location_accessible(BODY_ZONE_CHEST, IGNORED_OPERATION_CLOTHING_SLOTS))
 		accessibility_modifier = 0.55
 		user_msg += " as best as you can while [patient.p_they()] [patient.p_have()] clothing on"
 		target_msg += " as best as [surgeon.p_they()] can while [patient.p_they()] [patient.p_have()] clothing on"

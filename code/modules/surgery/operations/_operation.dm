@@ -46,7 +46,7 @@
 			var/obj/item/realtool = potential_tool
 			// for surgical tools specifically, we give a message to indicate they should try something else
 			if(realtool.item_flags & SURGICAL_TOOL)
-				if(!patient.is_location_accessible(zone_selected))
+				if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
 					patient.balloon_alert(src, "operation site is obstructed!")
 				else if(patient.body_position != LYING_DOWN)
 					patient.balloon_alert(src, "not lying down!")
@@ -79,15 +79,15 @@
 	return picked_op.try_perform(operating_on, src, potential_tool, op_info)
 
 /// Callback for checking if the surgery radial can be kept open
-/mob/living/proc/surgery_check(obj/item/tool)
-	PRIVATE_PROC(TRUE)
-	var/holding = get_active_held_item()
-	if(tool == holding)
-		return TRUE
-	if(istype(holding, /obj/item/borg/cyborg_omnitool))
-		var/obj/item/borg/cyborg_omnitool/omnitool = holding
-		return tool == omnitool.reference // this sucks but so do cyborgs
-	return FALSE
+/mob/living/proc/surgery_check(obj/item/tool, mob/living/patient, mob/living/surgeon)
+	var/obj/item/holding = get_active_held_item()
+
+	if(tool == IMPLEMENT_HAND)
+		return isnull(holding) // still holding nothing
+	if(QDELETED(holding))
+		return FALSE // i dunno, a stack item? not our problem
+
+	return tool == holding.get_proxy_attacker_for(patient, surgeon) // tool (or its proxy) is still being held
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
@@ -100,6 +100,8 @@
 
 		if(HAS_TRAIT(part, TRAIT_READY_TO_OPERATE))
 			state += "Ready for surgery"
+		if(!is_location_accessible(target_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
+			state += "Bodypart is obstructed by clothing"
 
 		var/part_state = part?.surgery_state || NONE
 
@@ -372,7 +374,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return FALSE
 
 	var/mob/living/patient = get_patient(operating_on)
-	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(operated_zone))
+	if(!(operation_flags & OPERATION_IGNORE_CLOTHES) && !patient.is_location_accessible(operated_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
 		return FALSE
 
 	return TRUE
@@ -537,7 +539,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/total_mod = 1.0
 	total_mod *= get_tool_quality(tool) || 1.0
 	// Ignore alllll the penalties (but also all the bonuses)
-	if(HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS))
+	if(!HAS_TRAIT(surgeon, TRAIT_IGNORE_SURGERY_MODIFIERS))
 		var/mob/living/patient = get_patient(operating_on)
 		total_mod *= get_location_modifier(get_turf(patient))
 		total_mod *= get_morbid_modifier(surgeon, tool)
@@ -585,7 +587,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	))
 	var/mod = 2.0
 	for(var/obj/thingy in operation_turf)
-		mod = min(mod, modifiers[thingy.type])
+		mod = min(mod, modifiers[thingy.type] || 2.0)
 	return mod
 
 /**
@@ -709,10 +711,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		if(tool_stack.amount <= 0)
 			return FALSE
 
-	if(isitem(tool))
-		var/obj/item/realtool = tool
-		if(QDELETED(realtool) || !surgeon.is_holding(realtool))
-			return FALSE
+	if(!surgeon.surgery_check(tool, patient, surgeon))
+		return FALSE
 
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
 		return FALSE

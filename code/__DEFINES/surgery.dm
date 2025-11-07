@@ -124,6 +124,9 @@ DEFINE_BITFIELD(operation_flags, list(
 	"PRIORITY NEXT STEP" = OPERATION_PRIORITY_NEXT_STEP,
 ))
 
+/// All of these equipment slots are ignored when checking for clothing coverage during surgery
+#define IGNORED_OPERATION_CLOTHING_SLOTS (ITEM_SLOT_NECK)
+
 // Surgery related mood defines
 #define SURGERY_STATE_STARTED "surgery_started"
 #define SURGERY_STATE_FAILURE "surgery_failed"

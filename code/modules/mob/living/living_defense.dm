@@ -95,8 +95,18 @@
 /mob/living/proc/is_ears_covered()
 	return null
 
-/// Check if the passed body zone is covered by some clothes
-/mob/living/proc/is_location_accessible(location)
+/**
+ * Check if the passed body zone is covered by some clothes
+ *
+ * * location: body zone to check
+ * ([BODY_ZONE_CHEST], [BODY_ZONE_HEAD], etc)
+ * * exluded_equipment_slots: equipment slots to ignore when checking coverage
+ * (for example, if you want to ignore helmets, pass [ITEM_SLOT_HEAD])
+ *
+ * Returns TRUE if the location is accessible (not covered)
+ * Returns FALSE if the location is covered by something
+ */
+/mob/living/proc/is_location_accessible(location, exluded_equipment_slots = NONE)
 	return TRUE
 
 /mob/living/bullet_act(obj/projectile/proj, def_zone, piercing_hit = FALSE, blocked = 0)
