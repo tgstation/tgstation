@@ -20,8 +20,7 @@
 	. += NAMEOF(src, opacity)
 
 	if(uses_integrity)
-		if(atom_integrity != max_integrity) // Only save if atom_integrity differs from max_integrity to avoid redundant saving
-			. += NAMEOF(src, atom_integrity)
+		. += NAMEOF(src, atom_integrity)
 		. += NAMEOF(src, max_integrity)
 		. += NAMEOF(src, integrity_failure)
 		. += NAMEOF(src, damage_deflection)
