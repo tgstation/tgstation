@@ -48,4 +48,4 @@
 /mob/living/basic/drone/proc/drone_chat(message, list/spans = list(), list/message_mods = list())
 	log_sayverb_talk(message, message_mods, tag = "drone chat")
 	var/message_part = generate_messagepart(message, spans, message_mods)
-	alert_drones("<i>Drone Chat: [span_name("[name]")] <span class='message'>[message_part]</span></i>", TRUE)
+	alert_drones(span_drone("Drone Chat: [span_name("[name]")] [span_message(message_part)]"), TRUE)
