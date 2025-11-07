@@ -186,7 +186,7 @@ type PatientStateNextOperationsViewProps = {
 const PatientStateNextOperationsView = (
   props: PatientStateNextOperationsViewProps,
 ) => {
-  const { act, data } = useBackend<OperatingComputerData>();
+  const { data } = useBackend<OperatingComputerData>();
   const { surgeries } = data;
   const { pinnedOperations, setPinnedOperations, setTab, setSearchText } =
     props;
@@ -206,12 +206,6 @@ const PatientStateNextOperationsView = (
     'filter_by_tool',
     allTools[0],
   );
-
-  if (filterByTool !== allTools[0]) {
-    possible_next_operations.filter((operation) =>
-      operation.tool_rec.includes(filterByTool),
-    );
-  }
 
   if (pinnedOperations.length > 0) {
     possible_next_operations.sort((a, b) => {
@@ -243,6 +237,8 @@ const PatientStateNextOperationsView = (
           icon="filter"
           tooltip="Filter by recommended tool. Right click to reset."
           tooltipPosition="top"
+          width="100px"
+          ellipsis
           selected={filterByTool !== allTools[0]}
           onClick={() =>
             setFilterByTool(
@@ -263,90 +259,98 @@ const PatientStateNextOperationsView = (
             </NoticeBox>
           </Stack.Item>
         ) : (
-          possible_next_operations.map((operation) => {
-            const { name, tool } = extractSurgeryName(operation, false);
-            return (
-              <Stack.Item key={operation.name}>
-                <Button
-                  fluid
-                  disabled={!operation.show_in_list}
-                  tooltip={
-                    <Stack vertical>
+          possible_next_operations
+            .filter(
+              (operation) =>
+                filterByTool === allTools[0] ||
+                operation.tool_rec.includes(filterByTool),
+            )
+            .map((operation) => {
+              const { name, tool } = extractSurgeryName(operation, false);
+              return (
+                <Stack.Item key={operation.name}>
+                  <Button
+                    fluid
+                    disabled={!operation.show_in_list}
+                    tooltip={
+                      <Stack vertical>
+                        {!!operation.priority && (
+                          <Stack.Item color="orange">
+                            <Icon name="exclamation" mr={1} />
+                            Recommended next step
+                          </Stack.Item>
+                        )}
+                        {pinnedOperations.includes(operation.name) && (
+                          <Stack.Item color="yellow">
+                            <Icon name="thumbtack" mr={1} />
+                            Pinned
+                          </Stack.Item>
+                        )}
+                        <Stack.Item>{operation.desc}</Stack.Item>
+                        <Stack.Item italic fontSize="0.9rem">
+                          {`Left click ${
+                            pinnedOperations.includes(operation.name)
+                              ? 'unpins operation from'
+                              : 'pins operation to'
+                          } the top.`}
+                        </Stack.Item>
+                        <Stack.Item italic fontSize="0.9rem">
+                          Right click opens operation info.
+                        </Stack.Item>
+                      </Stack>
+                    }
+                    tooltipPosition="bottom"
+                    color={
+                      operation.priority
+                        ? 'caution'
+                        : pinnedOperations.includes(operation.name)
+                          ? 'danger'
+                          : undefined
+                    }
+                    onContextMenu={() => {
+                      setTab(ComputerTabs.OperationCatalog);
+                      setSearchText(operation.name);
+                    }}
+                    onClick={() => {
+                      setPinnedOperations(
+                        pinnedOperations.includes(operation.name)
+                          ? pinnedOperations.filter(
+                              (op) => op !== operation.name,
+                            )
+                          : pinnedOperations.concat(operation.name),
+                      );
+                    }}
+                  >
+                    <Stack fill>
+                      <Stack.Item
+                        style={{
+                          textOverflow: 'ellipsis',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {name}
+                      </Stack.Item>
                       {!!operation.priority && (
-                        <Stack.Item color="orange">
-                          <Icon name="exclamation" mr={1} />
-                          Recommended next step
+                        <Stack.Item>
+                          <Blink interval={500} time={500}>
+                            <Icon name="exclamation" />
+                          </Blink>
                         </Stack.Item>
                       )}
                       {pinnedOperations.includes(operation.name) && (
-                        <Stack.Item color="yellow">
-                          <Icon name="thumbtack" mr={1} />
-                          Pinned
+                        <Stack.Item>
+                          <Icon name="thumbtack" />
                         </Stack.Item>
                       )}
-                      <Stack.Item>{operation.desc}</Stack.Item>
+                      <Stack.Item grow />
                       <Stack.Item italic fontSize="0.9rem">
-                        {`Left click ${
-                          pinnedOperations.includes(operation.name)
-                            ? 'unpins operation from'
-                            : 'pins operation to'
-                        } the top.`}
-                      </Stack.Item>
-                      <Stack.Item italic fontSize="0.9rem">
-                        Right click opens operation info.
+                        {capitalizeAll(tool)}
                       </Stack.Item>
                     </Stack>
-                  }
-                  tooltipPosition="bottom"
-                  color={
-                    operation.priority
-                      ? 'caution'
-                      : pinnedOperations.includes(operation.name)
-                        ? 'danger'
-                        : undefined
-                  }
-                  onContextMenu={() => {
-                    setTab(ComputerTabs.OperationCatalog);
-                    setSearchText(operation.name);
-                  }}
-                  onClick={() => {
-                    setPinnedOperations(
-                      pinnedOperations.includes(operation.name)
-                        ? pinnedOperations.filter((op) => op !== operation.name)
-                        : pinnedOperations.concat(operation.name),
-                    );
-                  }}
-                >
-                  <Stack fill>
-                    <Stack.Item
-                      style={{
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {name}
-                    </Stack.Item>
-                    {!!operation.priority && (
-                      <Stack.Item>
-                        <Blink interval={500} time={500}>
-                          <Icon name="exclamation" />
-                        </Blink>
-                      </Stack.Item>
-                    )}
-                    {pinnedOperations.includes(operation.name) && (
-                      <Stack.Item>
-                        <Icon name="thumbtack" />
-                      </Stack.Item>
-                    )}
-                    <Stack.Item grow />
-                    <Stack.Item italic fontSize="0.9rem">
-                      {capitalizeAll(tool)}
-                    </Stack.Item>
-                  </Stack>
-                </Button>
-              </Stack.Item>
-            );
-          })
+                  </Button>
+                </Stack.Item>
+              );
+            })
         )}
       </Stack>
     </Section>
