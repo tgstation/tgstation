@@ -1,3 +1,25 @@
+/obj/structure/cable/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, cable_color)
+	. += NAMEOF(src, cable_layer)
+
+	. -= NAMEOF(src, icon_state)
+	. -= NAMEOF(src, color)
+	return .
+
+/obj/item/stack/cable_coil/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, cable_color)
+
+	// wires modify several vars immediately after init which results
+	// in excessive save data that should be omitted
+	. -= NAMEOF(src, name)
+	. -= NAMEOF(src, icon_state)
+	. -= NAMEOF(src, pixel_x)
+	. -= NAMEOF(src, pixel_y)
+	. -= NAMEOF(src, color)
+	return .
+
 // these spawn underneath apc's but are created by them in Initilization()
 /obj/machinery/power/terminal/is_saveable()
 	if(locate(/obj/machinery/power/apc) in loc)

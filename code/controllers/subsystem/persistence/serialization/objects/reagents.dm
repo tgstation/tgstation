@@ -30,3 +30,15 @@
 		.[NAMEOF(src, initial_reagent_flags)] = reagents.flags
 
 	return .
+
+/obj/machinery/duct/get_save_vars()
+	. = ..()
+	// idk shit about plumbing but i think these are correct?
+	. += NAMEOF(src, lock_layers)
+	. += NAMEOF(src, duct_layer)
+	. += NAMEOF(src, ignore_colors)
+	. += NAMEOF(src, duct_color)
+
+	. -= NAMEOF(src, icon_state)
+	. -= NAMEOF(src, color)
+	return .

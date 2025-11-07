@@ -3,59 +3,6 @@
 /// Save and load persistence for essential machinery and items (Ore Silos, Airlocks, APCs, Atmospherics, etc.)
 /// To ensure their unique runtime state persists across round restarts
 
-///  O R E   S I L O  ///
-
-/obj/machinery/ore_silo/on_object_saved(map_string, turf/current_loc)
-	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
-	for(var/each in material_holder.materials)
-		var/amount = material_holder.materials[each] / 100
-		var/datum/material/material_datum = each
-		while((amount > 0))
-/*
-			if(TGM_MAX_OBJ_CHECK)
-				continue
-			TGM_OBJ_INCREMENT
-*/
-
-			var/obj/item/stack/typepath = material_datum.sheet_type
-			var/amount_in_stack = max(1, min(50, amount))
-			amount -= amount_in_stack
-
-			var/list/variables = list()
-			TGM_ADD_TYPEPATH_VAR(variables, typepath, amount, amount_in_stack)
-			TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
-
-/obj/machinery/ore_silo/PersistentInitialize()
-	. = ..()
-	var/datum/component/material_container/silo_container = materials
-
-	// transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
-	top_level:
-		for(var/obj/item/stack/target_stack in loc)
-			var/total_amount = 0
-			for(var/mat_type, per_unit_amount in target_stack.mats_per_unit)
-				if(!silo_container.can_hold_material(mat_type))
-					continue top_level
-				total_amount += (per_unit_amount * target_stack.amount)
-
-			if(!silo_container.has_space(total_amount))
-				continue top_level
-
-			// yes, a double loop is really neccessary
-			for(var/mat_type, per_unit_amount in target_stack.mats_per_unit)
-				silo_container.materials[mat_type] += (per_unit_amount * target_stack.amount)
-
-			qdel(target_stack)
-
-///  M A T E R I A L   S T A C K S  ///
-
-/obj/item/stack/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, amount)
-	return .
-
-///  D O C K I N G   P O R T  ///
-
 /obj/structure/extinguisher_cabinet/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, icon_state)
@@ -80,28 +27,6 @@
 	return .
 /// SEE ABOVE
 
-
-/obj/structure/cable/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, cable_color)
-	. += NAMEOF(src, cable_layer)
-
-	. -= NAMEOF(src, icon_state)
-	. -= NAMEOF(src, color)
-	return .
-
-/obj/machinery/duct/get_save_vars()
-	. = ..()
-	// idk shit about plumbing but i think these are correct?
-	. += NAMEOF(src, lock_layers)
-	. += NAMEOF(src, duct_layer)
-	. += NAMEOF(src, ignore_colors)
-	. += NAMEOF(src, duct_color)
-
-	. -= NAMEOF(src, icon_state)
-	. -= NAMEOF(src, color)
-	return .
-
 /obj/machinery/microwave/get_save_vars()
 	. = ..()
 	. -= NAMEOF(src, icon_state)
@@ -122,17 +47,9 @@
 	. -= NAMEOF(src, icon_state)
 	return .
 
-/obj/item/stack/cable_coil/get_save_vars()
+/obj/effect/decal/cleanable/crayon/get_save_vars()
 	. = ..()
-	. += NAMEOF(src, cable_color)
-
-	// wires modify several vars immediately after init which results
-	// in excessive save data that should be omitted
-	. -= NAMEOF(src, name)
-	. -= NAMEOF(src, icon_state)
-	. -= NAMEOF(src, pixel_x)
-	. -= NAMEOF(src, pixel_y)
-	. -= NAMEOF(src, color)
+	. += NAMEOF(src, icon_state)
 	return .
 
 /obj/machinery/light_switch/get_save_vars()
