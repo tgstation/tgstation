@@ -242,7 +242,7 @@
 		TOOL_CROWBAR = 1,
 		/obj/item/kitchen/fork = 2.85,
 	)
-	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE
+	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE | OPERATION_MECHANIC
 
 /// Abductor subtype that works through clothes and lets you extract the heart without sawing bones
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor

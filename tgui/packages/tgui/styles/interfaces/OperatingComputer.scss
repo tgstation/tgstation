@@ -15,6 +15,11 @@
   --button-background-caution: hsl(29.5, 90.95%, 39.02%);
   --button-background-danger: hsl(61.15, 100%, 30.78%);
   --button-border-radius: 0;
+
+  --collapsible-background-selected: hsl(0, 90.3%, 32.35%);
+  --collapsible-background-caution: hsl(29.5, 90.95%, 39.02%);
+  --collapsible-background-danger: hsl(61.15, 100%, 30.78%);
+
   --progress-bar-background: hsla(0, 0%, 0%, 0.5);
   --tab-background-selected: var(--color-base);
 }

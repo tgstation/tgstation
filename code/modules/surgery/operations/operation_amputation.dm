@@ -63,6 +63,7 @@
 /datum/surgery_operation/limb/amputate/mechanic
 	name = "disassemble limb"
 	required_bodytype = BODYTYPE_ROBOTIC
+	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
 	implements = list(
 		/obj/item/shovel/giant_wrench = 0.33,
 		TOOL_WRENCH = 1,

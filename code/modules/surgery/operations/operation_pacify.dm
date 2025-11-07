@@ -66,3 +66,4 @@
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
 	failure_sound = null
 	required_organ_flag = ORGAN_ROBOTIC
+	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC

@@ -198,6 +198,7 @@
 			"show_as_next" = recommend,
 			"show_in_list" = TRUE,
 			"priority" = operation.operation_flags & OPERATION_PRIORITY_NEXT_STEP,
+			"mechanic" = operation.operation_flags & OPERATION_MECHANIC,
 		))
 
 	if(!any_recommended && table?.patient)

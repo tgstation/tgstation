@@ -110,6 +110,8 @@
 #define OPERATION_IGNORE_CLOTHES (1<<8)
 /// This operation should be prioritized as the next step in a surgery sequence. (In the operating computer it will flash red)
 #define OPERATION_PRIORITY_NEXT_STEP (1<<9)
+/// Operation is a mechanic / robotic surgery
+#define OPERATION_MECHANIC (1<<10)
 
 DEFINE_BITFIELD(operation_flags, list(
 	"AFFECTS MOOD" = OPERATION_AFFECTS_MOOD,
@@ -122,6 +124,7 @@ DEFINE_BITFIELD(operation_flags, list(
 	"ALWAYS FAILABLE" = OPERATION_ALWAYS_FAILABLE,
 	"IGNORE CLOTHES" = OPERATION_IGNORE_CLOTHES,
 	"PRIORITY NEXT STEP" = OPERATION_PRIORITY_NEXT_STEP,
+	"MECHANIC" = OPERATION_MECHANIC,
 ))
 
 /// All of these equipment slots are ignored when checking for clothing coverage during surgery

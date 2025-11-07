@@ -53,3 +53,4 @@
 	rnd_name = "System Failure Analysis (Dissection and Autopsy)"
 	desc = "Perform a detailed analysis of a robotic patient's deactivated systems."
 	required_bodytype = BODYTYPE_ROBOTIC
+	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC

@@ -44,15 +44,23 @@
 		// we failed to undertake any operations
 		if(isitem(potential_tool))
 			var/obj/item/realtool = potential_tool
-			// for surgical tools specifically, we give a message to indicate they should try something else
+			// for surgical tools specifically, we have some special handling
 			if(realtool.item_flags & SURGICAL_TOOL)
+				// first try to treat wounds - that way you can always cauterize or suture a cut
+				var/obj/item/bodypart/operating = patient.get_bodypart(operating_zone)
+				for(var/datum/wound/wound as anything in shuffle(operating?.wounds))
+					if(wound.try_treating(realtool, src))
+						return ITEM_INTERACT_SUCCESS
+				// if they have no wounds to treat, give a specialized feedback message
 				if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
 					patient.balloon_alert(src, "operation site is obstructed!")
 				else if(patient.body_position != LYING_DOWN)
 					patient.balloon_alert(src, "not lying down!")
 				else
 					patient.balloon_alert(src, "nothing to do with [realtool.name]!")
+				// then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
 				return ITEM_INTERACT_BLOCKING
+
 		// but for every other item, we continue to strike the mob
 		return NONE
 
@@ -775,7 +783,10 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /// Plays a sound for the operation based on the tool used
 /datum/surgery_operation/proc/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
 	PROTECTED_PROC(TRUE)
-	if(!isitem(tool))
+
+	if(isitem(tool) && (operation_flags & OPERATION_MECHANIC))
+		var/obj/item/realtool = tool
+		realtool.play_tool_sound(operating_on)
 		return
 
 	var/sound_to_play
@@ -1066,14 +1077,6 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/limb/get_patient(obj/item/bodypart/limb)
 	return limb.owner
 
-/datum/surgery_operation/limb/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
-	if(isitem(tool) && (required_bodytype & BODYTYPE_ROBOTIC))
-		var/obj/item/realtool = tool
-		realtool.play_tool_sound(operating_on)
-		return
-
-	return ..()
-
 /**
  * Organ operations are a base focused on a specific organ typepath
  *
@@ -1125,11 +1128,3 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 /datum/surgery_operation/organ/has_any_surgery_state(obj/item/organ/organ, state)
 	return LIMB_HAS_ANY_SURGERY_STATE(organ.bodypart_owner, state)
-
-/datum/surgery_operation/organ/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
-	if(isitem(tool) && (required_organ_flag & ORGAN_ROBOTIC))
-		var/obj/item/realtool = tool
-		realtool.play_tool_sound(operating_on)
-		return
-
-	return ..()

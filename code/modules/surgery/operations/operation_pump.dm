@@ -55,3 +55,4 @@
 	name = "purge nutrient processor"
 	rnd_name = "Nutrient Processor Purge (Stomach Pump)"
 	required_organ_flag = ORGAN_ROBOTIC
+	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC

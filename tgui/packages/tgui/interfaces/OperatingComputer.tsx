@@ -15,8 +15,9 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 import type { BooleanLike } from 'tgui-core/react';
-import { capitalizeAll, capitalizeFirst, createSearch } from 'tgui-core/string';
+import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { BodyZone, BodyZoneSelector } from './common/BodyZoneSelector';
@@ -59,7 +60,19 @@ enum ComputerTabs {
 
 export const OperatingComputer = () => {
   const [tab, setTab] = useSharedState('tab', 1);
-  const [searchText, setSearchText] = useState('');
+  const { data } = useBackend<Data>();
+  const { surgeries } = data;
+
+  const { query, setQuery, results } = useFuzzySearch({
+    searchArray: surgeries,
+    matchStrategy: 'aggressive',
+    getSearchString: (item: OperationData) => `${item.name} ${item.tool_rec}`,
+  });
+
+  const [pinnedOperations, setPinnedOperations] = useSharedState<string[]>(
+    'pinned_operation',
+    [],
+  );
 
   return (
     <Window
@@ -93,12 +106,20 @@ export const OperatingComputer = () => {
           </Stack.Item>
           <Stack.Item grow>
             {tab === ComputerTabs.PatientState && (
-              <PatientStateView setTab={setTab} setSearchText={setSearchText} />
+              <PatientStateView
+                setTab={setTab}
+                setSearchText={setQuery}
+                pinnedOperations={pinnedOperations}
+                setPinnedOperations={setPinnedOperations}
+              />
             )}
             {tab === ComputerTabs.OperationCatalog && (
               <SurgeryProceduresView
-                searchText={searchText}
-                setSearchText={setSearchText}
+                searchedSurgeries={results}
+                searchText={query}
+                setSearchText={setQuery}
+                pinnedOperations={pinnedOperations}
+                setPinnedOperations={setPinnedOperations}
               />
             )}
             {tab === ComputerTabs.Experiments && <ExperimentView />}
@@ -138,6 +159,7 @@ type OperationData = {
   desc: string;
   tool_rec: string;
   priority?: BooleanLike;
+  mechanic?: BooleanLike;
   requirements?: string[][];
   // show operation as a recommended next step
   show_as_next: BooleanLike;
@@ -186,11 +208,14 @@ function extractSurgeryName(
 type PatientStateViewProps = {
   setTab: (tab: number) => void;
   setSearchText: (text: string) => void;
+  pinnedOperations: string[];
+  setPinnedOperations: (text: string[]) => void;
 };
 
 const PatientStateView = (props: PatientStateViewProps) => {
   const { act, data } = useBackend<Data>();
-  const { setTab, setSearchText } = props;
+  const { setTab, setSearchText, pinnedOperations, setPinnedOperations } =
+    props;
 
   const { has_table, patient, target_zone, surgeries } = data;
   if (!has_table) {
@@ -226,6 +251,32 @@ const PatientStateView = (props: PatientStateViewProps) => {
     'filter_by_tool',
     allTools[0],
   );
+
+  if (filterByTool !== allTools[0]) {
+    possible_next_operations.filter((operation) =>
+      operation.tool_rec.includes(filterByTool),
+    );
+  }
+
+  if (pinnedOperations.length > 0) {
+    possible_next_operations.sort((a, b) => {
+      if (
+        pinnedOperations.includes(a.name) &&
+        !pinnedOperations.includes(b.name)
+      ) {
+        return -1;
+      }
+      if (
+        !pinnedOperations.includes(a.name) &&
+        pinnedOperations.includes(b.name)
+      ) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  possible_next_operations.sort((a, b) => (a.priority && !b.priority ? -1 : 1));
 
   return (
     <Section fill>
@@ -342,52 +393,92 @@ const PatientStateView = (props: PatientStateViewProps) => {
                   </NoticeBox>
                 </Stack.Item>
               ) : (
-                possible_next_operations
-                  .filter((operation) =>
-                    filterByTool === allTools[0]
-                      ? true
-                      : operation.tool_rec.includes(filterByTool),
-                  )
-                  .sort((a, b) => (a.priority && !b.priority ? -1 : 1))
-                  .map((operation) => {
-                    const { name, tool } = extractSurgeryName(operation, false);
-                    return (
-                      <Stack.Item key={operation.name}>
-                        <Button
-                          fluid
-                          disabled={!operation.show_in_list}
-                          tooltip={operation.desc}
-                          color={operation.priority ? 'caution' : undefined}
-                          onClick={() => {
-                            setTab(ComputerTabs.OperationCatalog);
-                            setSearchText(operation.name);
-                          }}
-                        >
-                          <Stack fill>
-                            <Stack.Item
-                              style={{
-                                textOverflow: 'ellipsis',
-                                overflow: 'hidden',
-                              }}
-                            >
-                              {name}
-                            </Stack.Item>
+                possible_next_operations.map((operation) => {
+                  const { name, tool } = extractSurgeryName(operation, false);
+                  return (
+                    <Stack.Item key={operation.name}>
+                      <Button
+                        fluid
+                        disabled={!operation.show_in_list}
+                        tooltip={
+                          <Stack vertical>
                             {!!operation.priority && (
-                              <Stack.Item>
-                                <Blink interval={500} time={500}>
-                                  <Icon name="exclamation" />
-                                </Blink>
+                              <Stack.Item color="orange">
+                                <Icon name="exclamation" mr={1} />
+                                Recommended next step
                               </Stack.Item>
                             )}
-                            <Stack.Item grow />
+                            {pinnedOperations.includes(operation.name) && (
+                              <Stack.Item color="yellow">
+                                <Icon name="thumbtack" mr={1} />
+                                Pinned
+                              </Stack.Item>
+                            )}
+                            <Stack.Item>{operation.desc}</Stack.Item>
                             <Stack.Item italic fontSize="0.9rem">
-                              {capitalizeAll(tool)}
+                              {`Left click ${
+                                pinnedOperations.includes(operation.name)
+                                  ? 'unpins operation from'
+                                  : 'pins operation to'
+                              } the top.`}
+                            </Stack.Item>
+                            <Stack.Item italic fontSize="0.9rem">
+                              Right click opens operation info.
                             </Stack.Item>
                           </Stack>
-                        </Button>
-                      </Stack.Item>
-                    );
-                  })
+                        }
+                        tooltipPosition="bottom"
+                        color={
+                          operation.priority
+                            ? 'caution'
+                            : pinnedOperations.includes(operation.name)
+                              ? 'danger'
+                              : undefined
+                        }
+                        onContextMenu={() => {
+                          setTab(ComputerTabs.OperationCatalog);
+                          setSearchText(operation.name);
+                        }}
+                        onClick={() => {
+                          setPinnedOperations(
+                            pinnedOperations.includes(operation.name)
+                              ? pinnedOperations.filter(
+                                  (op) => op !== operation.name,
+                                )
+                              : pinnedOperations.concat(operation.name),
+                          );
+                        }}
+                      >
+                        <Stack fill>
+                          <Stack.Item
+                            style={{
+                              textOverflow: 'ellipsis',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {name}
+                          </Stack.Item>
+                          {!!operation.priority && (
+                            <Stack.Item>
+                              <Blink interval={500} time={500}>
+                                <Icon name="exclamation" />
+                              </Blink>
+                            </Stack.Item>
+                          )}
+                          {pinnedOperations.includes(operation.name) && (
+                            <Stack.Item>
+                              <Icon name="thumbtack" />
+                            </Stack.Item>
+                          )}
+                          <Stack.Item grow />
+                          <Stack.Item italic fontSize="0.9rem">
+                            {capitalizeAll(tool)}
+                          </Stack.Item>
+                        </Stack>
+                      </Button>
+                    </Stack.Item>
+                  );
+                })
               )}
             </Stack>
           </Section>
@@ -469,40 +560,60 @@ function extractRequirementMap(
 }
 
 type SurgeryProceduresViewProps = {
+  searchedSurgeries: OperationData[];
   searchText: string;
   setSearchText: (text: string) => void;
+  pinnedOperations: string[];
+  setPinnedOperations: (text: string[]) => void;
 };
 
 const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
   const { data } = useBackend<Data>();
   const { surgeries } = data;
-  const { searchText, setSearchText } = props;
+  const {
+    searchedSurgeries,
+    searchText,
+    setSearchText,
+    pinnedOperations,
+    setPinnedOperations,
+  } = props;
   const [sortType, setSortType] = useState<'default' | 'name' | 'tool'>(
     'default',
   );
+  const [filterRobotic, setFilterRobotic] = useState(false);
+  const rawSurgeryList =
+    searchedSurgeries.length > 0 ? searchedSurgeries : surgeries;
 
-  const searchFilter = createSearch(
-    searchText,
-    (surgery: OperationData) =>
-      `${surgery.name} ${surgery.desc} ${surgery.tool_rec}`,
-  );
-
-  // - filter unlisted surgeries
-  // - then filter dupe names (for surgeries which may have subtypes)
-  // - then finally filter by search
-  // and then apply sorting
-  const surgeryList = surgeries
+  const surgeryList = rawSurgeryList
     .filter((surgery) => surgery.show_in_list)
+    .filter((surgery) => !filterRobotic || !surgery.mechanic)
     .filter(
       (surgery, index, self) =>
         index === self.findIndex((s) => s.name === surgery.name),
-    )
-    .filter((surgery) => searchFilter(surgery));
+    );
 
   if (sortType === 'name') {
     surgeryList.sort((a, b) => (a.name > b.name ? 1 : -1));
   } else if (sortType === 'tool') {
     surgeryList.sort((a, b) => (a.tool_rec > b.tool_rec ? 1 : -1));
+  }
+
+  if (pinnedOperations.length > 0) {
+    surgeryList.sort((a, b) => {
+      if (
+        pinnedOperations.includes(a.name) &&
+        !pinnedOperations.includes(b.name)
+      ) {
+        return -1;
+      }
+      if (
+        !pinnedOperations.includes(a.name) &&
+        pinnedOperations.includes(b.name)
+      ) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   return (
@@ -512,6 +623,14 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
       fill
       buttons={
         <>
+          <Button
+            icon="filter"
+            tooltip="Filter out robotic surgeries."
+            onClick={() => setFilterRobotic((state) => !state)}
+            selected={filterRobotic}
+          >
+            Hide Mechanic
+          </Button>
           <Button
             width="75px"
             icon="sort"
@@ -544,8 +663,32 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
           <Stack vertical key={surgery.name} pb={2}>
             <Stack.Item>
               <Stack align="center">
-                <Stack.Item bold fontSize="1.2rem">
-                  {name}
+                <Stack.Item>
+                  <Stack>
+                    <Stack.Item>
+                      <Button
+                        icon="thumbtack"
+                        tooltipPosition="top"
+                        color={
+                          pinnedOperations.includes(surgery.name)
+                            ? 'danger'
+                            : undefined
+                        }
+                        onClick={() =>
+                          setPinnedOperations(
+                            pinnedOperations.includes(surgery.name)
+                              ? pinnedOperations.filter(
+                                  (op) => op !== surgery.name,
+                                )
+                              : pinnedOperations.concat(surgery.name),
+                          )
+                        }
+                      />
+                    </Stack.Item>
+                    <Stack.Item bold fontSize="1.2rem">
+                      {name}
+                    </Stack.Item>
+                  </Stack>
                 </Stack.Item>
                 {!!true_name && (
                   <Stack.Item italic fontSize="0.9rem">
@@ -573,7 +716,10 @@ const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
                 <Stack vertical>
                   <Stack.Item bold>{surgery.desc}</Stack.Item>
                   <Stack.Item>
-                    <Collapsible title="Requirements">
+                    <Collapsible
+                      title="Requirements"
+                      open={pinnedOperations.includes(surgery.name)}
+                    >
                       <Stack
                         pl={1}
                         ml={0.5}
