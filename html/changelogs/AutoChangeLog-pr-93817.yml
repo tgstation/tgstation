@@ -1,0 +1,5 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed elevator music starting every time you took a step"
+  - bugfix: "fixed elevator music not stopping when you left the elevator"

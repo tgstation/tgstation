@@ -50,7 +50,7 @@
 	if(ispath(frozen_status_effect_path) && unfreeze_mob_duration > 0 SECONDS) // 0 duration = don't apply the status effect
 		var/datum/status_effect/freeze = target_mob.apply_status_effect(frozen_status_effect_path)
 		if(unfreeze_mob_duration != INFINITY)
-			freeze.duration = world.time + unfreeze_mob_duration
+			freeze.duration = unfreeze_mob_duration
 
 	if(on_freeze_brute_damage || on_freeze_burn_damage)
 		target_mob.take_overall_damage(on_freeze_brute_damage, on_freeze_burn_damage)
