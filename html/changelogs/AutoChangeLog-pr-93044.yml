@@ -1,5 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - bugfix: "you should experience less stutters every 10 seconds"
-  - server: "server operators can now configure an alternative storage domain for clientside data storage, read the example configuration for more"

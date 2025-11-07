@@ -1,0 +1,4 @@
+author: "Cat"
+delete-after: True
+changes:
+  - bugfix: "Plasmaman EVA suits from cargo can have their extinguisher refueled fully now"
