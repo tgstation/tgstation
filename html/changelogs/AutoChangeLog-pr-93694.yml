@@ -1,0 +1,5 @@
+author: "RikuTheKiller"
+delete-after: True
+changes:
+  - bugfix: "Status effects now tick consistently, with Fleshmend and such giving a consistent total healing amount. Report any oddities."
+  - refactor: "Status effect code is now easier to read and makes more sense. Again, report any oddities, the changes are major."

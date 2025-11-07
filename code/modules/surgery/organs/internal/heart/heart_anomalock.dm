@@ -108,7 +108,7 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_cells())
+	for(var/obj/item/stock_parts/power_store/cell in assoc_to_values(owner.get_all_cells()))
 		if(cell.used_charge())
 			batteries += cell
 

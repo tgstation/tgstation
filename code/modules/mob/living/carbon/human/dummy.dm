@@ -55,6 +55,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(!isitem(checking)) //What the fuck are you on
 			to_nuke += checking
 			continue
+		if(checking.item_flags & DO_NOT_WARDROBE) // Skip any items like MOD parts, which are created in the contents of a stashed item and should not be destroyed
+			continue
 
 		var/list/contents = checking.contents
 		if(length(contents))

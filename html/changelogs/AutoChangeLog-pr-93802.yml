@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Fixed a timing issue with SS_KEEP_TIMING subsystems, which impacts exactly SSticker. TLDR is roundstart will now actually take the time it says it does, instead of 75% of it."
+  - config: "The roundstart delay config is now accurate, so you may want to decrease it to not overlengthen lobby time. IDK you decide."

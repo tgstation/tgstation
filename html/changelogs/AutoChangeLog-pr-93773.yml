@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - spellcheck: "Krav Maga has been renamed to Kaza Ruk, themed around being a Tiziran martial art."
-  - balance: "Kaza Ruk no longer overrides normal punches."
-  - balance: "Kaza Ruk now sometimes performs a rapid followup attack after a normal punch, dealing less damage but with decent wounding power."
-  - balance: "Kaza Ruk causes more damage when a grabbed target fails to escape their grab, and it is harder to escape their grabs."

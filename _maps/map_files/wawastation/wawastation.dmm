@@ -38350,6 +38350,10 @@
 /obj/machinery/atmospherics/components/binary/valve/digital/on{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "engine"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "ngp" = (
@@ -51023,6 +51027,10 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
+"rBr" = (
+/obj/machinery/air_sensor/engine_chamber,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "rBt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -114178,7 +114186,7 @@ neE
 uXw
 bhv
 qaZ
-vUh
+rBr
 hoM
 rGq
 vUh

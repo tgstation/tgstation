@@ -608,7 +608,7 @@
 	TEST_ASSERT_NOTNULL(tox_effect, "Dummy didn't get tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
 	// Clear the toxin damage away, and force a status effect tick: It should delete itself
 	dummy.setToxLoss(0)
-	tox_effect.tick(initial(tox_effect.tick_interval))
+	tox_effect.tick(tox_effect.tick_interval)
 	TEST_ASSERT(QDELETED(tox_effect), "Dummy still has tox_vomit status effect despite at [dummy.getToxLoss()] toxin damage (Method: SET)!")
 	// Test another method of gaining tox damage, use an entirely clean slate just to be sure
 	var/mob/living/carbon/human/dummy_two = allocate(/mob/living/carbon/human/consistent)

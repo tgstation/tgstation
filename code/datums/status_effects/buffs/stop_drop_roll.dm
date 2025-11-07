@@ -8,8 +8,7 @@
 	if(!iscarbon(owner))
 		return FALSE
 
-	var/actual_interval = initial(tick_interval)
-	if(!owner.Knockdown(actual_interval * 2, ignore_canstun = TRUE) || owner.body_position != LYING_DOWN)
+	if(!owner.Knockdown(tick_interval * 2, ignore_canstun = TRUE) || owner.body_position != LYING_DOWN)
 		to_chat(owner, span_warning("You try to stop, drop, and roll - but you can't get on the ground!"))
 		return FALSE
 
@@ -40,12 +39,11 @@
 		qdel(src)
 		return
 
-	var/actual_interval = initial(tick_interval)
-	if(!owner.Knockdown(actual_interval * 1.2, ignore_canstun = TRUE))
+	if(!owner.Knockdown(tick_interval * 1.2, ignore_canstun = TRUE))
 		stop_rolling()
 		return
 
-	owner.spin(spintime = actual_interval, speed = actual_interval / 4)
+	owner.spin(spintime = tick_interval, speed = tick_interval / 4)
 	if(!reduce_firestacks(1))
 		return
 
