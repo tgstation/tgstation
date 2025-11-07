@@ -128,8 +128,6 @@
 
 	ADD_TRAIT(src, TRAIT_BLOOD_HUD, INNATE_TRAIT)
 
-	RegisterSignal(src, COMSIG_MOB_EXAMINING, PROC_REF(on_examining))
-
 /mob/living/basic/blood_worm/Destroy()
 	unregister_host()
 
@@ -182,6 +180,43 @@
 
 	if (host && loc != host)
 		unregister_host()
+
+/mob/living/basic/blood_worm/examining(atom/target, list/result)
+	if (!isliving(target))
+		return
+
+	var/mob/living/bloodbag = target
+
+	if (bloodbag.blood_volume <= 0)
+		return
+
+	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
+
+	if (!blood_type)
+		return
+
+	var/unscaled_blood = consumed_blood[blood_type.id]
+	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
+	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + bloodbag.blood_volume)
+	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
+
+	var/rounded_volume = CEILING(bloodbag.blood_volume, 1)
+	var/total_consumed_blood = get_scaled_total_consumed_blood()
+
+	var/growth_string = ""
+	if (total_consumed_blood < cocoon_action?.total_blood_required)
+		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
+		if (rounded_growth > 0)
+			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+		else
+			growth_string = ", but consuming it wouldn't contribute to your growth"
+	else
+		if (!istype(src, /mob/living/basic/blood_worm/adult))
+			growth_string = ". You are already ready to mature"
+		else
+			growth_string = ". You are already fully grown"
+
+	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
 
 /mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, blood_type_id, should_heal = TRUE)
 	if (!blood_type_id || !blood_amount)
@@ -406,45 +441,6 @@
 
 /mob/living/basic/blood_worm/proc/get_dilution_multiplier()
 	return BLOOD_VOLUME_NORMAL / (maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD)
-
-/mob/living/basic/blood_worm/proc/on_examining(datum/source, atom/target, list/examine_strings)
-	SIGNAL_HANDLER
-
-	if (!isliving(target))
-		return
-
-	var/mob/living/bloodbag = target
-
-	if (bloodbag.blood_volume <= 0)
-		return
-
-	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
-
-	if (!blood_type)
-		return
-
-	var/unscaled_blood = consumed_blood[blood_type.id]
-	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
-	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + bloodbag.blood_volume)
-	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
-
-	var/rounded_volume = CEILING(bloodbag.blood_volume, 1)
-	var/total_consumed_blood = get_scaled_total_consumed_blood()
-
-	var/growth_string = ""
-	if (total_consumed_blood < cocoon_action?.total_blood_required)
-		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
-		if (rounded_growth > 0)
-			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
-		else
-			growth_string = ", but consuming it wouldn't contribute to your growth"
-	else
-		if (!istype(src, /mob/living/basic/blood_worm/adult))
-			growth_string = ". You are already ready to mature"
-		else
-			growth_string = ". You are already fully grown"
-
-	examine_strings += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
 
 /mob/living/basic/blood_worm/get_status_tab_items()
 	. = ..()
