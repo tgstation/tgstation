@@ -10,6 +10,7 @@
 	unset_after_click = FALSE // Unsetting is handled explicitly.
 
 	var/leech_rate = 0
+	var/oxyloss_rate = 0
 
 	var/is_actively_leeching = FALSE
 
@@ -124,6 +125,8 @@
 		target.blood_volume = max(0, target.blood_volume - leech_rate)
 		leech.ingest_blood(original_volume - target.blood_volume, blood_type.id)
 
+		target.adjustOxyLoss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
+
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
 	if (leech.pulling == target && leech.grab_state >= GRAB_AGGRESSIVE)
@@ -230,10 +233,13 @@
 		.[reagent.type] = reagent.volume
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/hatchling
-	leech_rate = BLOOD_VOLUME_NORMAL * 0.05 // 28 units of blood, 5 points of health, or 10% of a hatchling blood worm's health
+	leech_rate = BLOOD_VOLUME_NORMAL * 0.05 // 28 units of blood, 5 points of health, or 6.25% of a hatchling blood worm's health
+	oxyloss_rate = 6
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/juvenile
-	leech_rate = BLOOD_VOLUME_NORMAL * 0.075 // 42 units of blood, 7.5 points of health, or 7.5% of a juvenile blood worm's health
+	leech_rate = BLOOD_VOLUME_NORMAL * 0.075 // 42 units of blood, 7.5 points of health, or 6.25% of a juvenile blood worm's health
+	oxyloss_rate = 8
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/adult
-	leech_rate = BLOOD_VOLUME_NORMAL * 0.1 // 56 units of blood, 10 points of health, or 6.67% of an adult blood worm's health
+	leech_rate = BLOOD_VOLUME_NORMAL * 0.1 // 56 units of blood, 10 points of health, or 5.55% of an adult blood worm's health
+	oxyloss_rate = 10
