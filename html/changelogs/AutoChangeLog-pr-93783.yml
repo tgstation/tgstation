@@ -1,0 +1,4 @@
+author: "theselfish"
+delete-after: True
+changes:
+  - rscadd: "Clown Ops now have a unique SecHud icon."
