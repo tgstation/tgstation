@@ -1,0 +1,7 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - qol: "empaths are only scared by evil people the first time they see one"
+  - balance: "empaths no longer get a mood debuff from seeing an evil person"
+  - code_imp: "empath is now a component instead of a trait"
+  - balance: "moon heretic empaths can't be smited or scared by evil people"
