@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] tried to set announcement line for nonexisting line in the [config.name] for AAS. Probably href injection. Received line: [html_encode(params["lineKey"])]")
 				log_game("[key_name(usr)] tried to mess with AAS. For [config.name] he tried to edit nonexistend [params["lineKey"]]")
 				return
-			var/new_message = trim(html_encode(params["newText"]), MAX_PLAQUE_LEN)
+			var/new_message = trim(html_encode(params["newText"]), MAX_AAS_LENGTH)
 			if(new_message)
 				config.announcement_lines_map[params["lineKey"]] = new_message
 				usr.log_message("updated [params["lineKey"]] line in the [config.name] to: [new_message]", LOG_GAME)
