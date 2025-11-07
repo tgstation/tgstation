@@ -13,25 +13,22 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 ))
 
 /proc/generate_tgm_metadata(atom/object)
-	var/list/data_to_add = list()
+	var/list/data_to_add
 	var/list/vars_to_save = GLOB.map_export_save_vars_cache[object.type] || object.get_save_vars()
-	var/list/custom_vars = object.get_custom_save_vars()
+	var/alist/custom_vars = object.get_custom_save_vars()
 	// Tracks variables handled by get_custom_save_vars() This ensures the default variable saving loop
 	// correctly skips these names. A separate list is necessary because custom_vars can contain null or FALSE values.
-	var/list/custom_var_names = list()
+	var/list/custom_var_names
 
-	for(var/variable in custom_vars)
-		var/custom_value = custom_vars[variable]
+	for(var/custom_variable, custom_value in custom_vars)
 		TGM_ENCODE(custom_value)
 		if(!custom_value)
 			continue
-		data_to_add += TGM_VAR_LINE(variable, custom_value) // "[variable] = [custom_value]"
-		custom_var_names[variable] = TRUE
+		LAZYADD(data_to_add, TGM_VAR_LINE(custom_variable, custom_value))
+		LAZYSET(custom_var_names, custom_variable, TRUE)
 
-	while(vars_to_save.len)
-		var/variable = vars_to_save[vars_to_save.len]
-		vars_to_save.len--
-		if(custom_var_names[variable]) // skip variables that use custom serialization
+	for(var/variable in vars_to_save)
+		if(LAZYACCESS(custom_var_names, variable)) // skip variables that use custom serialization
 			continue
 
 		var/value = object.vars[variable]
@@ -46,13 +43,12 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(!value)
 			continue
 
-		data_to_add += TGM_VAR_LINE(variable, value) // "[variable] = [value]"
+		LAZYADD(data_to_add, TGM_VAR_LINE(variable, value))
 
 	if(!length(data_to_add))
 		return
 
 	return TGM_VARS_BLOCK(data_to_add.Join(";\n\t")) //"{\n\t[data_to_add.Join(";\n\t")]\n\t}"
-
 
 /proc/generate_tgm_typepath_metadata(list/data_to_seralize)
 	var/list/data_to_add = list()
