@@ -76,6 +76,23 @@
 	new /obj/effect/decal/cleanable/ants/fire(loc)
 	qdel(src)
 
+/obj/effect/decal/cleanable/ants/welder_act(mob/living/user, obj/item/tool)
+	if(!tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user.name] starts to burn \the [src] with \the [tool]"), \
+		span_notice("You start to burn \the [src]..."))
+	if(!tool.use_tool(src, user, 0.2 SECONDS * reagent_amount))
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(user, TRAIT_EVIL))
+		to_chat(user, span_notice("You gleefully burn \the [src] to ash!"))
+		user.add_mood_event("ant burning", /datum/mood_event/ants_burned_evil)
+	else if(HAS_PERSONALITY(user, /datum/personality/compassionate))
+		to_chat(user, span_notice("You feel a pang of guilt as you burn \the [src] to ashes."))
+		user.add_mood_event("ant burning", /datum/mood_event/ants_burned_nice)
+	else
+		to_chat(user, span_notice("You burn \the [src] away."))
+	qdel(src)
+
 /obj/effect/decal/cleanable/ants/fire
 	name = "space fire ants"
 	desc = "A small colony no longer. We are the fire nation."
@@ -88,3 +105,16 @@
 
 /obj/effect/decal/cleanable/ants/fire/fire_act(exposed_temperature, exposed_volume)
 	return
+
+/obj/effect/decal/cleanable/ants/fire/welder_act(mob/living/user, obj/item/tool)
+	return
+
+/datum/mood_event/ants_burned_evil
+	description = "I feel powerful having burned those pathetic ants."
+	mood_change = 2
+	timeout = 1 MINUTES
+
+/datum/mood_event/ants_burned_nice
+	description = "I feel awful having burned those defenseless ants."
+	mood_change = -2
+	timeout = 1 MINUTES
