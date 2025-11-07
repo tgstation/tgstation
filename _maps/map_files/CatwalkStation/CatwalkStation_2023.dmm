@@ -5493,6 +5493,7 @@
 "bCC" = (
 /obj/machinery/suit_storage_unit/captain,
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "bCD" = (
@@ -16958,6 +16959,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "eLp" = (
@@ -23085,6 +23087,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "gqT" = (
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "grd" = (
@@ -31867,6 +31870,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "iLy" = (
@@ -45651,6 +45655,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "mDk" = (
@@ -46246,6 +46251,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mLH" = (
@@ -69784,7 +69790,6 @@
 /obj/item/bedsheet/captain,
 /obj/structure/bed,
 /obj/effect/landmark/start/captain,
-/obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -71485,6 +71490,7 @@
 /obj/item/pen/fountain/captain{
 	pixel_y = -6
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "tPe" = (
@@ -75108,6 +75114,7 @@
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/effect/landmark/navigate_destination/bridge,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "uLL" = (
@@ -87890,7 +87897,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "yme" = (
-/obj/effect/landmark/navigate_destination/bridge,
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark,
