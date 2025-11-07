@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 /obj/structure/secure_safe/Initialize(mapload)
 	. = ..()
 	//this will create the storage for us.
-	AddComponent(/datum/component/lockable_storage, , stored_lock_code)
+	AddComponent(/datum/component/lockable_storage, stored_lock_code)
 	if(mapload)
 		PopulateContents()
 		find_and_hang_on_wall()
