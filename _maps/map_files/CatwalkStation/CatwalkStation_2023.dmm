@@ -5347,6 +5347,10 @@
 	dir = 1
 	},
 /obj/structure/bookcase/random/reference,
+/obj/item/book/manual/wiki/research_and_development{
+	pixel_x = 12;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "bAW" = (
@@ -7826,6 +7830,7 @@
 /area/station/medical/psychology)
 "cjE" = (
 /obj/machinery/computer/rdconsole,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "cjL" = (
@@ -8573,6 +8578,10 @@
 	dir = 8
 	},
 /obj/structure/bookcase/random/reference,
+/obj/item/book/manual/wiki/surgery{
+	pixel_x = -14;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "ctN" = (
@@ -8595,7 +8604,10 @@
 /obj/item/flashlight/lamp/green{
 	pixel_x = 1
 	},
-/obj/item/assembly/timer,
+/obj/item/cigarette/cigar{
+	pixel_x = 3;
+	pixel_y = 6
+	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room/council)
 "cuQ" = (
@@ -15441,8 +15453,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "emU" = (
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/camera/autoname/directional/south,
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
 	dir = 8
 	},
@@ -15452,6 +15462,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 6
 	},
+/obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/textured,
 /area/station/command/eva)
 "ene" = (
@@ -30357,6 +30368,13 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/wood/large,
 /area/station/medical/psychology)
+"ipV" = (
+/obj/effect/turf_decal/stripes{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/open/floor/iron/textured,
+/area/station/command/eva)
 "ipW" = (
 /obj/machinery/computer/telecomms/server{
 	dir = 1;
@@ -38459,6 +38477,10 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 1
 	},
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_x = 9;
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "kAV" = (
@@ -42384,16 +42406,15 @@
 /turf/open/floor/glass,
 /area/station/maintenance/starboard/fore)
 "lId" = (
-/obj/structure/chair/comfy/beige{
-	dir = 1;
-	name = "Bench"
-	},
 /obj/machinery/light/warm/dim/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair/comfy/beige{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "lIi" = (
@@ -44842,6 +44863,7 @@
 	},
 /obj/effect/turf_decal/trimline/dark_blue/filled/line,
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "mrj" = (
@@ -46222,9 +46244,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark,
@@ -61158,10 +61177,6 @@
 /obj/item/flashlight/lamp/green{
 	pixel_x = 1
 	},
-/obj/item/cigarette/cigar{
-	pixel_x = 3;
-	pixel_y = 6
-	},
 /obj/item/lighter{
 	pixel_x = 7;
 	pixel_y = -5
@@ -68379,6 +68394,9 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
 	dir = 1
 	},
+/obj/item/book/manual/wiki/engineering_construction{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
 "sUi" = (
@@ -72544,15 +72562,14 @@
 /turf/open/floor/iron/edge,
 /area/station/hallway/primary/central)
 "ufe" = (
-/obj/structure/chair/comfy/beige{
-	dir = 1;
-	name = "Bench"
-	},
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/structure/chair/comfy/beige{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "ufi" = (
@@ -73673,9 +73690,6 @@
 	},
 /obj/item/crowbar{
 	pixel_y = 5
-	},
-/obj/machinery/light_switch/directional/east{
-	pixel_y = -5
 	},
 /obj/machinery/firealarm/directional/east{
 	pixel_y = 5
@@ -122430,7 +122444,7 @@ oTa
 rEB
 uIZ
 vtG
-szb
+ipV
 iOu
 rxg
 rZw
@@ -188507,7 +188521,7 @@ dfn
 htH
 htH
 htH
-iHy
+leL
 kpz
 dNP
 ctb
