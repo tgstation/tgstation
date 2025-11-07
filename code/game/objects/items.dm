@@ -2103,4 +2103,4 @@
 
 /// Checks if this container is valid for use with chemistry machinery.
 /obj/item/proc/is_chem_container()
-	return is_reagent_container(src) && is_open_container() && !(item_flags & ABSTRACT) && !(flags_1 & HOLOGRAM_1)
+	return FALSE
