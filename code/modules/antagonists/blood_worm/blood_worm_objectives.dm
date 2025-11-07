@@ -50,6 +50,7 @@
 		return
 
 	target_ref = WEAKREF(target.current)
+	update_explanation_text()
 
 /datum/objective/blood_worm/specific_host/is_valid_target(datum/mind/possible_target)
 	return ..()
