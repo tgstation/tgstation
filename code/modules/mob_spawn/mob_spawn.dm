@@ -114,7 +114,7 @@
 	/// A list of the ckeys that currently are trying to access this spawner, so that they can't try to spawn more than once (in case there's sleeps).
 	/// Static because you only really want to be able to spawn in one spawner at a time, obviously.
 	var/static/list/ckeys_trying_to_spawn
-	///if true, players can spawn in as their statics
+	///bitflag that determines if players can spawn in as their statics
 	var/allow_custom_character = NONE
 
 	////descriptions
@@ -221,7 +221,7 @@
 	if(user_species.inherent_respiration_type == RESPIRATION_PLASMA) // Stupid flammable skeletons...
 		user.started_as_observer = null
 	else if(user.started_as_observer && allow_custom_character)
-		if(tgui_alert(user, "Because you haven't taken a role so far, you may spawn in as your customized character. Would you like to?", "Custom Character", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, "Because you haven't taken a role so far, you may spawn in as [(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || user_species == /datum/species/human) ? "" : "a human version of"] your customized character. Would you like to?", "Custom Character", list("Yes", "No")) != "Yes")
 			user.started_as_observer = null
 
 	var/created = create(user)
@@ -253,11 +253,10 @@
 			var/old_name = spawned_mob.real_name
 			if(allow_custom_character & GHOSTROLE_ALLOW_OTHER)
 				mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
-				if(!(allow_custom_character & GHOSTROLE_ALLOW_NAME))
-					spawned_mob.fully_replace_character_name(newname = old_name)
-			else if(allow_custom_character & GHOSTROLE_ALLOW_NAME) // Yes this is pretty messy but seemingly better than the alternatives
-				var/newname = mob_possessor.client.prefs.read_preference(/datum/preference/name/real_name)
+				spawned_mob.fully_replace_character_name(newname = old_name)
 				spawned_mob.fully_replace_character_name(newname = newname)
+			if(!(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || ishumanbasic(spawned_mob)))
+				spawned_mob.set_species(/datum/species/human)
 		if(mob_possessor.mind)
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
 		else
