@@ -57,13 +57,14 @@
 
 /obj/structure/ai_core/atom_deconstruct(disassembled = TRUE)
 	if(state >= CORE_STATE_GLASSED)
-		new /obj/item/stack/sheet/rglass(loc, 2)
+		new /obj/item/stack/sheet/rglass(drop_location(), 2)
 	if(state >= CORE_STATE_CABLED)
-		new /obj/item/stack/cable_coil(loc, 5)
+		new /obj/item/stack/cable_coil(drop_location(), 5)
 	if(circuit)
-		circuit.forceMove(loc)
-		circuit = null
-	new /obj/item/stack/sheet/plasteel(loc, 4)
+		circuit.forceMove(drop_location())
+	if(core_mmi)
+		core_mmi.forceMove(drop_location())
+	new /obj/item/stack/sheet/plasteel(drop_location(), 4)
 
 /obj/structure/ai_core/Destroy()
 	if(istype(remote_ai))
@@ -76,30 +77,29 @@
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
 	if(!anchored)
-		if(state != CORE_STATE_EMPTY)
-			. += span_notice("It has some <b>bolts</b> that could be tightened.")
-		else
-			. += span_notice("It has some <b>bolts</b> that could be tightened. The frame can be <b>melted</b> down.")
+		. += span_notice("It has some <b>bolts</b> that look loosened.")
 	else
-		switch(state)
-			if(CORE_STATE_EMPTY)
-				. += span_notice("There is a <b>slot</b> for a circuit board, its <b>bolts</b> can be loosened.")
-			if(CORE_STATE_CIRCUIT)
-				. += span_notice("The circuit board can be <b>screwed</b> into place or <b>pried</b> out.")
-			if(CORE_STATE_SCREWED)
-				. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
-			if(CORE_STATE_CABLED)
-				if(!core_mmi)
-					. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
-				else
-					var/accept_laws = TRUE
-					if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
-						accept_laws = FALSE
-					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
-			if(CORE_STATE_GLASSED)
-				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
-			if(CORE_STATE_FINISHED)
-				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
+		. += span_notice("It has some <b>bolts</b> that look tightened.")
+
+	switch(state)
+		if(CORE_STATE_EMPTY)
+			. += span_notice("There is a <b>slot</b> for a circuit board, the frame can be <b>melted</b> down.")
+		if(CORE_STATE_CIRCUIT)
+			. += span_notice("The circuit board can be <b>screwed</b> into place or <b>pried</b> out.")
+		if(CORE_STATE_SCREWED)
+			. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
+		if(CORE_STATE_CABLED)
+			if(!core_mmi)
+				. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
+			else
+				var/accept_laws = TRUE
+				if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
+					accept_laws = FALSE
+				. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
+		if(CORE_STATE_GLASSED)
+			. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
+		if(CORE_STATE_FINISHED)
+			. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
 
 // could be a signal?
 /obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
