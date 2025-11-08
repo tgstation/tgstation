@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Changing your species from vampire to not vampire will no longer brick your plane masters/rendering after 3 minutes or so."
