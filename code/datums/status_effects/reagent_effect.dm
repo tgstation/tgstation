@@ -1,5 +1,7 @@
 /// Status effect that is tied to the existence of a reagent in a mob's system
 /datum/status_effect/reagent_effect
+	abstract_type = /datum/status_effect/reagent_effect
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	tick_interval = STATUS_EFFECT_NO_TICK
 	/// We need this reagent type
