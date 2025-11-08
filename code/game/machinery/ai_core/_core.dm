@@ -20,6 +20,25 @@
 	laws = new
 	laws.set_laws_config()
 
+/obj/structure/ai_core/update_icon_state()
+	switch(state)
+		if(CORE_STATE_EMPTY)
+			icon_state = "0"
+		if(CORE_STATE_CIRCUIT)
+			icon_state = "1"
+		if(CORE_STATE_SCREWED)
+			icon_state = "2"
+		if(CORE_STATE_CABLED)
+			if(core_mmi)
+				icon_state = "3b"
+			else
+				icon_state = "3"
+		if(CORE_STATE_GLASSED)
+			icon_state = "4"
+		if(CORE_STATE_FINISHED)
+			icon_state = "ai-empty"
+	return ..()
+
 /obj/structure/ai_core/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == circuit)
@@ -47,25 +66,6 @@
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
-	return ..()
-
-/obj/structure/ai_core/update_icon_state()
-	switch(state)
-		if(CORE_STATE_EMPTY)
-			icon_state = "0"
-		if(CORE_STATE_CIRCUIT)
-			icon_state = "1"
-		if(CORE_STATE_SCREWED)
-			icon_state = "2"
-		if(CORE_STATE_CABLED)
-			if(core_mmi)
-				icon_state = "3b"
-			else
-				icon_state = "3"
-		if(CORE_STATE_GLASSED)
-			icon_state = "4"
-		if(CORE_STATE_FINISHED)
-			icon_state = "ai-empty"
 	return ..()
 
 /obj/structure/ai_core/examine(mob/user)
@@ -101,6 +101,12 @@
 	. = ..()
 	if(. > 0 && istype(remote_ai))
 		to_chat(remote_ai, span_danger("Your core is under attack!"))
+
+/obj/structure/ai_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(state < CORE_STATE_FINISHED)
+		return construction_item_interaction(user, tool, modifiers)
+
+	EMPTY_BLOCK_GUARD
 
 /obj/structure/ai_core/deactivated
 	icon_state = "ai-empty"

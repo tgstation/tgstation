@@ -1,10 +1,5 @@
 #define AI_CORE_BRAIN(X) X.braintype == "Android" ? "brain" : "MMI"
 
-/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(state == CORE_STATE_FINISHED)
@@ -211,3 +206,12 @@
 					update_appearance()
 					return
 	return ..()
+
+/obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+
+/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+	
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
