@@ -309,6 +309,7 @@
 		check_jobban = ROLE_BLOOD_WORM,
 		poll_time = cocoon_time,
 		ignore_category = POLL_IGNORE_BLOOD_WORM,
+		alert_pic = cocoon_type, // The hatchling icon is too small, and a well-cropped juvenile icon is already used for the main spawn event.
 		jump_target = cocoon,
 		role_name_text = "blood worm",
 		amount_to_pick = num_hatchlings
