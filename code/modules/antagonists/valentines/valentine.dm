@@ -25,6 +25,7 @@
 			"Be a good wingman for your master AI. Assist them in protecting [ai_lover.p_their()] date, [date].",
 		)
 		ai_lover.laws.show_laws()
+		ai_lover.try_sync_laws()
 
 	if(iscyborg(owner.current))
 		var/mob/living/silicon/robot/borg_lover = owner.current

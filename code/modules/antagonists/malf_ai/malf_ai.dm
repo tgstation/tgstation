@@ -156,6 +156,7 @@
 	malf_ai.laws.set_zeroth_law(law, law_borg, force = TRUE)
 	malf_ai.laws.protected_zeroth = TRUE
 	malf_ai.set_syndie_radio()
+	malf_ai.try_sync_laws()
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
