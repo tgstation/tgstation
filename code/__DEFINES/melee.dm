@@ -4,7 +4,7 @@
 #define MARTIALART_CQC "CQC"
 #define MARTIALART_EVIL_BOXING "evil boxing"
 #define MARTIALART_HUNTER_BOXING "hunter boxing"
-#define MARTIALART_KRAVMAGA "krav maga"
+#define MARTIALART_KAZA_RUK "Kaza Ruk"
 #define MARTIALART_MUSHPUNCH "mushroom punch"
 #define MARTIALART_PLASMAFIST "plasma fist"
 #define MARTIALART_PSYCHOBRAWL "psychotic brawling"

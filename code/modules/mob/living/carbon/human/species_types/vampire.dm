@@ -40,10 +40,12 @@
 	else
 		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
-/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/old_vampire, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
-	QDEL_NULL(blood_display)
+	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
+	if(blood_display)
+		old_vampire.hud_used.infodisplay -= blood_display
+		QDEL_NULL(blood_display)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
