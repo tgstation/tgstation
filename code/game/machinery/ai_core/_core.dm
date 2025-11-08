@@ -19,6 +19,7 @@
 	. = ..()
 	laws = new
 	laws.set_laws_config()
+	// debugging stuff, if this is still here i owe you 50 bucks
 	new /obj/item/circuitboard/aicore(loc)
 	new /obj/item/stack/cable_coil(loc, 5)
 	new /obj/item/mmi(loc)
@@ -100,11 +101,16 @@
 			if(CORE_STATE_FINISHED)
 				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
 
-
+// could be a signal?
 /obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	. = ..()
 	if(. > 0 && istype(remote_ai))
 		to_chat(remote_ai, span_danger("Your core is under attack!"))
+
+// could be a signal?
+/obj/structure/ai_core/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
+	. = ..()
 
 /obj/structure/ai_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(state < CORE_STATE_FINISHED)

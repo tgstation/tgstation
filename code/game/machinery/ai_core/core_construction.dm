@@ -2,47 +2,6 @@
 #define UPDATE_STATE(new_state) state = new_state; update_appearance(UPDATE_ICON_STATE)
 #define CHECK_STATE_CALLBACK(maintained_state) CALLBACK(src, PROC_REF(check_state), maintained_state)
 
-/obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(state == CORE_STATE_FINISHED)
-		if(!core_mmi)
-			balloon_alert(user, "no brain installed!")
-			return ITEM_INTERACT_SUCCESS
-		else if(!core_mmi.brainmob?.mind || suicide_check())
-			balloon_alert(user, "brain is inactive!")
-			return ITEM_INTERACT_SUCCESS
-		else
-			balloon_alert(user, "connecting neural network...")
-			if(!tool.use_tool(src, user, 10 SECONDS))
-				return ITEM_INTERACT_SUCCESS
-			if(!ai_structure_to_mob())
-				return ITEM_INTERACT_SUCCESS
-			balloon_alert(user, "connected neural network")
-			return ITEM_INTERACT_SUCCESS
-
-/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(remote_ai)
-		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
-	if(!anchored)
-		if(!user.combat_mode)
-			balloon_alert(user, "bolt it down first!")
-			return
-		else
-			return ..()
-	else
-		switch(state)
-			if(CORE_STATE_FINISHED)
-				if(istype(tool, /obj/item/aicard))
-					return //handled by /obj/structure/ai_core/transfer_ai()
-
-				if(tool.tool_behaviour == TOOL_WIRECUTTER)
-					tool.play_tool_sound(src)
-					balloon_alert(user, "disconnected monitor")
-					state = CORE_STATE_GLASSED
-					update_appearance()
-					return
-	return ..()
-
 /obj/structure/ai_core/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return NONE
@@ -64,6 +23,11 @@
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return NONE
+
+	if(state >= CORE_STATE_FINISHED)
+		set_anchored(TRUE) //teehee
+		balloon_alert(user, "can't!")
+		return ITEM_INTERACT_BLOCKING
 
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
@@ -87,19 +51,49 @@
 			balloon_alert(user, "board unsecured")
 			UPDATE_STATE(CORE_STATE_CIRCUIT)
 			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_CABLED)
+			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_GLASSED)
+			if(!anchored)
+				balloon_alert(user, "isn't anchored!")
+				return ITEM_INTERACT_BLOCKING
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_GLASSED)))
 				return ITEM_INTERACT_BLOCKING
 			if(suicide_check())
 				balloon_alert(user, "nothing happened?")
 				return ITEM_INTERACT_BLOCKING
 
-			var/atom/alert_source = src
+			var/atom/movable/alert_source = src
 			if(core_mmi.brainmob?.mind)
 				alert_source = ai_structure_to_mob() || alert_source
 			else
 				UPDATE_STATE(CORE_STATE_FINISHED)
 			alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
+			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_FINISHED)
+			if(!core_mmi?.brainmob?.mind || suicide_check())
+				tool.play_tool_sound(src, 50)
+				balloon_alert(user, "nothing happened?")
+				return ITEM_INTERACT_BLOCKING
+
+			if(!anchored)
+				balloon_alert(user, "anchor it first!")
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, "connecting neural network...")
+			if(!tool.use_tool(src, user, 10 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_FINISHED)))
+				return ITEM_INTERACT_BLOCKING
+
+			if(!core_mmi?.brainmob?.mind || suicide_check())
+				balloon_alert(user, "nothing happened?")
+				return ITEM_INTERACT_BLOCKING
+
+			var/atom/movable/alert_source = ai_structure_to_mob()
+			if(!alert_source)
+				balloon_alert(user, "nothing happened")
+				return ITEM_INTERACT_BLOCKING
+
+			alert_source.balloon_alert(user, "connected neural network")
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
@@ -163,7 +157,16 @@
 			new /obj/item/stack/cable_coil(drop_location(), 5)
 			UPDATE_STATE(CORE_STATE_SCREWED)
 			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_GLASSED)
+			return ITEM_INTERACT_BLOCKING
+		if(CORE_STATE_FINISHED)
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_FINISHED)))
+				return ITEM_INTERACT_BLOCKING
 
+			UPDATE_STATE(CORE_STATE_GLASSED)
+			return ITEM_INTERACT_SUCCESS
+
+/// Handles the interaction chain the same as item_interaction. Exists to isolate construction behaviour from other item behaviour.
 /obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard/aicore))
 		return install_board(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
