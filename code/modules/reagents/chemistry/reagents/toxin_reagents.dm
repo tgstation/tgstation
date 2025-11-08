@@ -282,15 +282,11 @@
 
 	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
-		holder_mob.fakedeath(type)
+		holder_mob.apply_status_effect(/datum/status_effect/reagent_effect/fakedeath, type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
 	zombify(holder_mob)
-
-/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/affected_mob)
-	. = ..()
-	affected_mob.cure_fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
