@@ -90,6 +90,7 @@
 	var/regen_rate = 0
 
 	COOLDOWN_DECLARE(host_heat_alert_cooldown)
+	COOLDOWN_DECLARE(host_bleed_alert_cooldown)
 
 /mob/living/basic/blood_worm/Initialize(mapload)
 	. = ..()
@@ -234,6 +235,8 @@
 	if (should_heal)
 		adjustBruteLoss(-blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)
 
+	SEND_SIGNAL(src, COMSIG_BLOOD_WORM_INGEST_BLOOD, blood_amount, blood_type_id, should_heal)
+
 /mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host)
 	if (!mind || !key)
 		return
@@ -254,6 +257,7 @@
 	RegisterSignal(host, COMSIG_MOB_STATCHANGE, PROC_REF(on_host_stat_changed))
 	RegisterSignal(host, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(on_host_handle_blood))
 	RegisterSignal(host, COMSIG_LIVING_LIFE, PROC_REF(on_host_life))
+	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -261,7 +265,7 @@
 
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
-	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
+	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_UNCONVERTABLE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
@@ -316,7 +320,7 @@
 		backseat.mind?.transfer_to(host)
 		QDEL_NULL(backseat)
 
-	UnregisterSignal(host, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_LIFE, COMSIG_MOB_HUD_CREATED))
+	UnregisterSignal(host, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_LIFE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_MOB_HUD_CREATED))
 
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -380,8 +384,17 @@
 	host.blood_volume += regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD // Regen beforehand, meaning we can still reach 0 exactly.
 
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
-		host.handle_blood(seconds_per_tick, times_fired)
+		handle_host_blood(seconds_per_tick, times_fired)
 		handle_host_temperature(seconds_per_tick, times_fired)
+
+/mob/living/basic/blood_worm/proc/handle_host_blood(seconds_per_tick, times_fired)
+	if (host.stat == DEAD)
+		host.handle_blood(seconds_per_tick, times_fired)
+
+	// Ignored while possessing a host, as [carbon/proc/bleed_warn] handles it instead.
+	if (!is_possessing_host && COOLDOWN_FINISHED(src, host_bleed_alert_cooldown) && get_bleed_rate() > 0)
+		to_chat(src, span_userdanger("Your blood is leaking out!"))
+		COOLDOWN_START(src, host_bleed_alert_cooldown, 15 SECONDS)
 
 /mob/living/basic/blood_worm/proc/handle_host_temperature(seconds_per_tick, times_fired)
 	if (host.coretemperature <= maximum_survivable_temperature)
@@ -392,7 +405,10 @@
 
 	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
 		to_chat(is_possessing_host ? host : src, span_userdanger("Your blood is burning up!"))
-		COOLDOWN_START(src, host_heat_alert_cooldown, 10 SECONDS)
+		COOLDOWN_START(src, host_heat_alert_cooldown, 15 SECONDS)
+
+/mob/living/basic/blood_worm/proc/on_host_adjust_oxy_damage(datum/source, type, amount, forced)
+	return COMPONENT_IGNORE_CHANGE // Functionally, this unimplements oxy damage from hosts altogether. Which is exactly what we want.
 
 /mob/living/basic/blood_worm/proc/create_host_hud(datum/source)
 	SIGNAL_HANDLER

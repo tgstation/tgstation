@@ -21,10 +21,12 @@
 		return
 
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_worm_stat_changed), override = TRUE)
+	RegisterSignal(owner, COMSIG_BLOOD_WORM_INGEST_BLOOD, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Remove(mob/removed_from)
 	if (!QDELETED(cocoon))
 		cancel()
+	UnregisterSignal(owner, COMSIG_BLOOD_WORM_INGEST_BLOOD)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/IsAvailable(feedback)
