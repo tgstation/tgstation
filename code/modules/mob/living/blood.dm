@@ -43,18 +43,28 @@
 	return amount
 
 /// Sets the base blood volume of the mob.
-/mob/living/proc/set_blood_volume(amount, maximum = BLOOD_VOLUME_MAXIMUM)
+/mob/living/proc/set_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM)
 	if (!can_have_blood())
 		return
-	blood_volume = clamp(amount, 0, BLOOD_VOLUME_MAXIMUM)
+	blood_volume = clamp(amount, minimum, maximum)
 	living_flags |= QUEUE_BLOOD_UPDATE
 
 /// Adjusts the base blood volume of the mob and returns the change.
 /// Increases in blood volume give a positive return value and vice versa.
-/mob/living/proc/adjust_blood_volume(amount, maximum = BLOOD_VOLUME_MAXIMUM)
-	var/amount_before = get_blood_volume()
-	set_blood_volume(amount_before + amount)
-	return get_blood_volume() - amount_before
+/// Maximum only applies on positive amounts and vice versa.
+/mob/living/proc/adjust_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM)
+	if (!amount)
+		return 0
+
+	var/cached_blood_volume = get_blood_volume()
+
+	if (amount < 0 && cached_blood_volume <= minimum)
+		return
+	if (amount > 0 && cached_blood_volume >= maximum)
+		return
+
+	set_blood_volume(cached_blood_volume + amount)
+	return get_blood_volume() - cached_blood_volume
 
 /// Updates effects that rely on blood volume, like blood HUDs.
 /mob/living/proc/update_blood_effects()
