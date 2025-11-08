@@ -80,13 +80,14 @@
 	flavour_text = "Ch'yea. You came here, like, on spring break, hopin' to pick up some bangin' hot chicks, y'knaw?"
 	spawner_job_path = /datum/job/beach_bum
 	outfit = /datum/outfit/beachbum
-	allow_custom_character = ALL
+	allow_custom_character = GHOSTROLE_ALLOW_OTHER
 
 /obj/effect/mob_spawn/ghost_role/human/beach/lifeguard
 	you_are_text = "You're a spunky lifeguard!"
 	flavour_text = "It's up to you to make sure nobody drowns or gets eaten by sharks and stuff."
 	name = "lifeguard sleeper"
 	outfit = /datum/outfit/beachbum/lifeguard
+	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/beach/lifeguard/special(mob/living/carbon/human/lifeguard, mob/mob_possessor)
 	. = ..()
