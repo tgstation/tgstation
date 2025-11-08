@@ -38348,6 +38348,10 @@
 /obj/machinery/atmospherics/components/binary/valve/digital/on{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "engine"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "ngp" = (
@@ -42665,7 +42669,6 @@
 	req_access = list("ai_upload")
 	},
 /obj/machinery/turretid{
-	icon_state = "control_stun";
 	name = "AI Chamber turret control";
 	pixel_x = 3;
 	pixel_y = -23
@@ -49355,7 +49358,6 @@
 "rbs" = (
 /obj/machinery/turretid{
 	control_area = "/area/station/ai/upload/chamber";
-	icon_state = "control_stun";
 	name = "AI Upload Turret Control";
 	pixel_x = -28
 	},
@@ -50995,6 +50997,10 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
+"rBr" = (
+/obj/machinery/air_sensor/engine_chamber,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "rBt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -114206,7 +114212,7 @@ neE
 uXw
 bhv
 qaZ
-vUh
+rBr
 hoM
 rGq
 vUh
