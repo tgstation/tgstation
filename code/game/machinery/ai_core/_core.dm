@@ -8,7 +8,7 @@
 	icon_state = "0"
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
-	var/state = EMPTY_CORE
+	var/state = CORE_STATE_EMPTY
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
@@ -24,17 +24,17 @@
 	. = ..()
 	if(gone == circuit)
 		circuit = null
-		if((state != GLASS_CORE) && (state != AI_READY_CORE))
-			state = EMPTY_CORE
+		if((state != CORE_STATE_GLASSED) && (state != CORE_STATE_FINISHED))
+			state = CORE_STATE_EMPTY
 			update_appearance()
 	if(gone == core_mmi)
 		core_mmi = null
 		update_appearance()
 
 /obj/structure/ai_core/atom_deconstruct(disassembled = TRUE)
-	if(state >= GLASS_CORE)
+	if(state >= CORE_STATE_GLASSED)
 		new /obj/item/stack/sheet/rglass(loc, 2)
-	if(state >= CABLED_CORE)
+	if(state >= CORE_STATE_CABLED)
 		new /obj/item/stack/cable_coil(loc, 5)
 	if(circuit)
 		circuit.forceMove(loc)
@@ -48,42 +48,42 @@
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
 	return ..()
-	
+
 /obj/structure/ai_core/update_icon_state()
 	switch(state)
-		if(EMPTY_CORE)
+		if(CORE_STATE_EMPTY)
 			icon_state = "0"
-		if(CIRCUIT_CORE)
+		if(CORE_STATE_CIRCUIT)
 			icon_state = "1"
-		if(SCREWED_CORE)
+		if(CORE_STATE_SCREWED)
 			icon_state = "2"
-		if(CABLED_CORE)
+		if(CORE_STATE_CABLED)
 			if(core_mmi)
 				icon_state = "3b"
 			else
 				icon_state = "3"
-		if(GLASS_CORE)
+		if(CORE_STATE_GLASSED)
 			icon_state = "4"
-		if(AI_READY_CORE)
+		if(CORE_STATE_FINISHED)
 			icon_state = "ai-empty"
 	return ..()
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
 	if(!anchored)
-		if(state != EMPTY_CORE)
+		if(state != CORE_STATE_EMPTY)
 			. += span_notice("It has some <b>bolts</b> that could be tightened.")
 		else
 			. += span_notice("It has some <b>bolts</b> that could be tightened. The frame can be <b>melted</b> down.")
 	else
 		switch(state)
-			if(EMPTY_CORE)
+			if(CORE_STATE_EMPTY)
 				. += span_notice("There is a <b>slot</b> for a circuit board, its <b>bolts</b> can be loosened.")
-			if(CIRCUIT_CORE)
+			if(CORE_STATE_CIRCUIT)
 				. += span_notice("The circuit board can be <b>screwed</b> into place or <b>pried</b> out.")
-			if(SCREWED_CORE)
+			if(CORE_STATE_SCREWED)
 				. += span_notice("The frame can be <b>wired</b>, the circuit board can be <b>unfastened</b>.")
-			if(CABLED_CORE)
+			if(CORE_STATE_CABLED)
 				if(!core_mmi)
 					. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
 				else
@@ -91,9 +91,9 @@
 					if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
 						accept_laws = FALSE
 					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
-			if(GLASS_CORE)
+			if(CORE_STATE_GLASSED)
 				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
-			if(AI_READY_CORE)
+			if(CORE_STATE_FINISHED)
 				. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
 
 
@@ -105,7 +105,7 @@
 /obj/structure/ai_core/deactivated
 	icon_state = "ai-empty"
 	anchored = TRUE
-	state = AI_READY_CORE
+	state = CORE_STATE_FINISHED
 	var/mob/living/silicon/ai/attached_ai
 
 /obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE, linked_ai)
@@ -137,7 +137,7 @@
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
 	icon_state = "ai-empty"
 	anchored = TRUE
-	state = AI_READY_CORE
+	state = CORE_STATE_FINISHED
 	var/available = TRUE
 	var/safety_checks = TRUE
 	var/active = TRUE
@@ -237,7 +237,7 @@ That prevents a few funky behaviors.
 	return TRUE
 
 /obj/structure/ai_core/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
-	if(state != AI_READY_CORE || !..())
+	if(state != CORE_STATE_FINISHED || !..())
 		return
 	if(core_mmi && core_mmi.brainmob)
 		if(core_mmi.brainmob.mind)

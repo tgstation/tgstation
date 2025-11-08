@@ -7,7 +7,7 @@
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(state == AI_READY_CORE)
+	if(state == CORE_STATE_FINISHED)
 		if(!core_mmi)
 			balloon_alert(user, "no brain installed!")
 			return ITEM_INTERACT_SUCCESS
@@ -28,7 +28,7 @@
 		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
 	if(!anchored)
 		if(tool.tool_behaviour == TOOL_WELDER)
-			if(state != EMPTY_CORE)
+			if(state != CORE_STATE_EMPTY)
 				balloon_alert(user, "core must be empty to deconstruct it!")
 				return
 
@@ -36,7 +36,7 @@
 				return
 
 			balloon_alert(user, "deconstructing frame...")
-			if(tool.use_tool(src, user, 20, volume=50) && state == EMPTY_CORE)
+			if(tool.use_tool(src, user, 20, volume=50) && state == CORE_STATE_EMPTY)
 				balloon_alert(user, "deconstructed frame")
 				deconstruct(TRUE)
 			return
@@ -48,34 +48,34 @@
 				return ..()
 	else
 		switch(state)
-			if(EMPTY_CORE)
+			if(CORE_STATE_EMPTY)
 				if(istype(tool, /obj/item/circuitboard/aicore))
 					if(!user.transferItemToLoc(tool, src))
 						return
 					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 					balloon_alert(user, "circuit board inserted")
 					update_appearance()
-					state = CIRCUIT_CORE
+					state = CORE_STATE_CIRCUIT
 					circuit = tool
 					return
-			if(CIRCUIT_CORE)
+			if(CORE_STATE_CIRCUIT)
 				if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 					tool.play_tool_sound(src)
 					balloon_alert(user, "board screwed into place")
-					state = SCREWED_CORE
+					state = CORE_STATE_SCREWED
 					update_appearance()
 					return
 				if(tool.tool_behaviour == TOOL_CROWBAR)
 					tool.play_tool_sound(src)
 					balloon_alert(user, "circuit board removed")
-					state = EMPTY_CORE
+					state = CORE_STATE_EMPTY
 					circuit.forceMove(loc)
 					return
-			if(SCREWED_CORE)
+			if(CORE_STATE_SCREWED)
 				if(tool.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 					tool.play_tool_sound(src)
 					balloon_alert(user, "circuit board unfastened")
-					state = CIRCUIT_CORE
+					state = CORE_STATE_CIRCUIT
 					update_appearance()
 					return
 				if(istype(tool, /obj/item/stack/cable_coil))
@@ -83,21 +83,21 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 2 SECONDS, target = src) && state == CORE_STATE_SCREWED && C.use(5))
 							balloon_alert(user, "added cables to frame.")
-							state = CABLED_CORE
+							state = CORE_STATE_CABLED
 							update_appearance()
 					else
 						balloon_alert(user, "need five lengths of cable!")
 					return
-			if(CABLED_CORE)
+			if(CORE_STATE_CABLED)
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					if(core_mmi)
 						balloon_alert(user, "remove the [AI_CORE_BRAIN(core_mmi)] first!")
 					else
 						tool.play_tool_sound(src)
 						balloon_alert(user, "cables removed")
-						state = SCREWED_CORE
+						state = CORE_STATE_SCREWED
 						update_appearance()
 						new /obj/item/stack/cable_coil(drop_location(), 5)
 					return
@@ -110,9 +110,9 @@
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
+						if(do_after(user, 2 SECONDS, target = src) && state == CORE_STATE_CABLED && G.use(2))
 							balloon_alert(user, "added glass panel")
-							state = GLASS_CORE
+							state = CORE_STATE_GLASSED
 							update_appearance()
 					else
 						balloon_alert(user, "need two sheets of reinforced glass!")
@@ -176,11 +176,11 @@
 					core_mmi.forceMove(loc) //if they're malf, just drops a blank MMI, or if it's an incomplete shell
 					return					//it drops the mmi that was put in before it was finished
 
-			if(GLASS_CORE)
+			if(CORE_STATE_GLASSED)
 				if(tool.tool_behaviour == TOOL_CROWBAR)
 					tool.play_tool_sound(src)
 					balloon_alert(user, "removed glass panel")
-					state = CABLED_CORE
+					state = CORE_STATE_CABLED
 					update_appearance()
 					new /obj/item/stack/sheet/rglass(loc, 2)
 					return
@@ -195,19 +195,19 @@
 					if(core_mmi.brainmob?.mind)
 						alert_source = ai_structure_to_mob() || alert_source
 					else
-						state = AI_READY_CORE
+						state = CORE_STATE_FINISHED
 						update_appearance()
 					alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
 					return
 
-			if(AI_READY_CORE)
+			if(CORE_STATE_FINISHED)
 				if(istype(tool, /obj/item/aicard))
 					return //handled by /obj/structure/ai_core/transfer_ai()
 
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					tool.play_tool_sound(src)
 					balloon_alert(user, "disconnected monitor")
-					state = GLASS_CORE
+					state = CORE_STATE_GLASSED
 					update_appearance()
 					return
 	return ..()
