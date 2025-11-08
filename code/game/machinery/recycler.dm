@@ -165,7 +165,7 @@
 		if(isliving(thing))
 			LAZYADD(crunchy_nom, thing)
 			if(!issilicon(thing))
-				LAZYADD(to_eat, thing.contents)
+				LAZYOR(to_eat, thing.contents)
 			continue
 
 		if(!isobj(thing))
@@ -185,7 +185,7 @@
 				continue
 
 		LAZYADD(nom, thing)
-		LAZYADD(to_eat, thing.contents)
+		LAZYOR(to_eat, thing.contents)
 
 	for(var/mob/living/living_mob in crunchy_nom)
 		if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
