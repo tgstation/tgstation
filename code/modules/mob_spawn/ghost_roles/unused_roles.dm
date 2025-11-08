@@ -192,7 +192,7 @@
 	you_are_text = "You are a Nanotrasen Commander!"
 	flavour_text = "Upper-crusty of Nanotrasen. You should be given the respect you're owed."
 	outfit = /datum/outfit/nanotrasencommander
-	// custom characters not allowed here because NT doesn't take possible non humans for command positions
+	allow_custom_character = GHOSTROLE_ALLOW_OTHER
 
 //space doctor, a rat with cancer, and bessie from an old removed lavaland ruin.
 
