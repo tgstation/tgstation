@@ -34,8 +34,6 @@
 	name = "Slashing (Cut) Flesh Wound"
 	threshold_penalty = 5
 	processes = TRUE
-	treatable_by = list(/obj/item/stack/medical/suture)
-	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)

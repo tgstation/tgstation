@@ -63,8 +63,6 @@
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
 	var/list/treatable_by
-	/// Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher
-	var/list/treatable_by_grabbed
 	/// Any tools with any of the flags in this list will be usable to try directly treating this wound
 	var/list/treatable_tools
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
@@ -522,8 +520,6 @@
 
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
-		return TRUE
-	if((TOOL_CAUTERY in treatable_tools) && potential_treater.get_temperature() && (user == victim)) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
 	if((user == victim || (user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)) && check_grab_treatments(potential_treater, user))
