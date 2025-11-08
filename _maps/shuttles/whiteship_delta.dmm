@@ -781,7 +781,6 @@
 /area/shuttle/abandoned/engine)
 "bR" = (
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	locked = 0;
 	pixel_x = -28;

@@ -363,6 +363,25 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot/process()
 	loc.layer = ABOVE_ALL_MOB_LAYER
 
+/obj/item/claymore/gladius
+	name = "gladius"
+	desc = "A short but formidable sword, favored by recently-reanimated ancient warriors."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "gladius"
+	inhand_icon_state = "gladius"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	sharpness = SHARP_POINTY
+	attack_verb_continuous = list("stabs", "cuts")
+	attack_verb_simple = list("stab", "cut")
+	slot_flags = null
+	sound_vary = TRUE
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	pickup_sound = SFX_KNIFE_PICKUP
+	drop_sound = SFX_KNIFE_DROP
+
+
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
