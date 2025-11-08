@@ -526,7 +526,7 @@
 	if((TOOL_CAUTERY in treatable_tools) && potential_treater.get_temperature() && (user == victim)) // allow improvised cauterization on yourself without an aggro grab
 		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
-	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
+	if((user == victim || (user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)) && check_grab_treatments(potential_treater, user))
 		return TRUE
 	// failing THAT, we check if we have a generally allowed item
 	if(is_type_in_list(potential_treater, treatable_by))
