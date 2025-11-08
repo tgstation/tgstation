@@ -1,4 +1,5 @@
 #define AI_CORE_BRAIN(X) X.braintype == "Android" ? "brain" : "MMI"
+#define CHECK_STATE_CALLBACK(maintained_state) CALLBACK(src, PROC_REF(check_state), maintained_state)
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -22,25 +23,11 @@
 	if(remote_ai)
 		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
 	if(!anchored)
-		if(tool.tool_behaviour == TOOL_WELDER)
-			if(state != CORE_STATE_EMPTY)
-				balloon_alert(user, "core must be empty to deconstruct it!")
-				return
-
-			if(!tool.tool_start_check(user, amount=1))
-				return
-
-			balloon_alert(user, "deconstructing frame...")
-			if(tool.use_tool(src, user, 20, volume=50) && state == CORE_STATE_EMPTY)
-				balloon_alert(user, "deconstructed frame")
-				deconstruct(TRUE)
+		if(!user.combat_mode)
+			balloon_alert(user, "bolt it down first!")
 			return
 		else
-			if(!user.combat_mode)
-				balloon_alert(user, "bolt it down first!")
-				return
-			else
-				return ..()
+			return ..()
 	else
 		switch(state)
 			if(CORE_STATE_EMPTY)
@@ -209,9 +196,29 @@
 
 /obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 
+/obj/structure/ai_core/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	if(state != CORE_STATE_EMPTY)
+		balloon_alert(user, "too much stuff!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_start_check(user, 1))
+		balloon_alert(user, "[tool] won't work!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.use_tool(src, user, 2 SECONDS, 1, 50, CHECK_STATE_CALLBACK(CORE_STATE_EMPTY)))
+		return ITEM_INTERACT_BLOCKING
+
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return NONE
-	
+
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+#undef AI_CORE_BRAIN

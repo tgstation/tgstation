@@ -108,6 +108,10 @@
 
 	EMPTY_BLOCK_GUARD
 
+/// Exists to be used for callbacks.
+/obj/structure/ai_core/proc/check_state(state_to_check)
+	return (state == state_to_check)
+
 /obj/structure/ai_core/deactivated
 	icon_state = "ai-empty"
 	anchored = TRUE
