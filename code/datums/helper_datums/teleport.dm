@@ -126,10 +126,10 @@
 		effect.start()
 
 // Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
-	if(!zlevels)
-		if (zlevel)
-			zlevels = list(zlevel)
+/proc/find_safe_turf(list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
+	if(!islist(zlevels))
+		if(zlevels)
+			zlevels = list(zlevels)
 		else
 			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	var/cycles = 1000
