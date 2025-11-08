@@ -32,28 +32,61 @@
 	crate_name = "beekeeping starter crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
+/datum/supply_pack/organic/randomized
+	test_ignored = TRUE
+	crate_name = "food crate"
+
+/datum/supply_pack/organic/randomized/fill(obj/structure/closet/crate/C)
+	for(var/i in 1 to 15)
+		var/item = pick(contains)
+		new item(C)
+
 /datum/supply_pack/organic/randomized/chef
 	name = "Excellent Meat Crate"
 	desc = "The best cuts in the whole galaxy. Contains a random assortment of exotic meats."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/food/meat/slab/human/mutant/slime,
-					/obj/item/food/meat/slab/killertomato,
-					/obj/item/food/meat/slab/bear,
-					/obj/item/food/meat/slab/xeno,
-					/obj/item/food/meat/slab/spider,
-					/obj/item/food/meat/rawbacon,
-					/obj/item/food/meat/slab/penguin,
-					/obj/item/food/spiderleg,
-					/obj/item/food/fishmeat/carp,
-					/obj/item/food/meat/slab/human,
-					/obj/item/food/meat/slab/grassfed,
-				)
-	crate_name = "food crate"
+	contains = list(
+		/obj/item/food/meat/slab/human/mutant/slime,
+		/obj/item/food/meat/slab/killertomato,
+		/obj/item/food/meat/slab/bear,
+		/obj/item/food/meat/slab/xeno,
+		/obj/item/food/meat/slab/spider,
+		/obj/item/food/meat/rawbacon,
+		/obj/item/food/meat/slab/penguin,
+		/obj/item/food/spiderleg,
+		/obj/item/food/fishmeat/carp,
+		/obj/item/food/meat/slab/human,
+		/obj/item/food/meat/slab/grassfed,
+	)
 
-/datum/supply_pack/organic/randomized/chef/fill(obj/structure/closet/crate/C)
-	for(var/i in 1 to 15)
-		var/item = pick(contains)
-		new item(C)
+/datum/supply_pack/organic/randomized/fruits
+	name = "Fruit Crate"
+	desc = "Rich in vitamins. Contains a lime, orange, watermelon, apple, berries and a lemon."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(
+		/obj/item/food/grown/citrus/lime,
+		/obj/item/food/grown/citrus/orange,
+		/obj/item/food/grown/watermelon,
+		/obj/item/food/grown/apple,
+		/obj/item/food/grown/berries,
+		/obj/item/food/grown/citrus/lemon,
+	)
+
+/datum/supply_pack/organic/randomized/vegetables
+	name = "Vegetables Crate"
+	desc = "Grown in vats. Contains a chili, corn, tomato, potato, carrot, chanterelle, onion, pumpkin, and cucumber."
+	cost = CARGO_CRATE_VALUE * 1.8
+	contains = list(
+		/obj/item/food/grown/chili,
+		/obj/item/food/grown/corn,
+		/obj/item/food/grown/tomato,
+		/obj/item/food/grown/potato,
+		/obj/item/food/grown/carrot,
+		/obj/item/food/grown/mushroom/chanterelle,
+		/obj/item/food/grown/onion,
+		/obj/item/food/grown/pumpkin,
+		/obj/item/food/grown/cucumber,
+	)
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
@@ -95,20 +128,6 @@
 					/obj/item/reagent_containers/condiment/sugar,
 					/obj/item/food/meat/slab/monkey,
 					/obj/item/food/grown/banana = 3,
-				)
-	crate_name = "food crate"
-
-/datum/supply_pack/organic/randomized/chef/fruits
-	name = "Fruit Crate"
-	desc = "Rich in vitamins. Contains a lime, orange, watermelon, apple, \
-		berries and a lemon."
-	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/food/grown/citrus/lime,
-					/obj/item/food/grown/citrus/orange,
-					/obj/item/food/grown/watermelon,
-					/obj/item/food/grown/apple,
-					/obj/item/food/grown/berries,
-					/obj/item/food/grown/citrus/lemon,
 				)
 	crate_name = "food crate"
 
@@ -276,23 +295,6 @@
 	crate_name = "seeds crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/organic/randomized/chef/vegetables
-	name = "Vegetables Crate"
-	desc = "Grown in vats. Contains a chili, corn, tomato, potato, carrot, \
-		chanterelle, onion, pumpkin, and cucumber."
-	cost = CARGO_CRATE_VALUE * 1.8
-	contains = list(/obj/item/food/grown/chili,
-					/obj/item/food/grown/corn,
-					/obj/item/food/grown/tomato,
-					/obj/item/food/grown/potato,
-					/obj/item/food/grown/carrot,
-					/obj/item/food/grown/mushroom/chanterelle,
-					/obj/item/food/grown/onion,
-					/obj/item/food/grown/pumpkin,
-					/obj/item/food/grown/cucumber,
-				)
-	crate_name = "food crate"
-
 /datum/supply_pack/organic/grill
 	name = "Grilling Starter Kit"
 	desc = "Hey dad I'm Hungry. Hi Hungry I'm THE NEW GRILLING STARTER KIT \
@@ -331,6 +333,7 @@
 				)
 	crate_name = "\improper Tiziran Supply box"
 	crate_type = /obj/structure/closet/crate/cardboard/tiziran
+	test_ignored = TRUE
 
 /datum/supply_pack/organic/mothic_supply
 	name = "Mothic Supply Box"

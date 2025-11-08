@@ -230,6 +230,7 @@
 			else
 				spawned_mob = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
 			spawned_mob.faction |= mob_faction
+			ADD_TRAIT(spawned_mob, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 			if(prob(50))
 				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
@@ -347,8 +348,8 @@
 /datum/chemical_reaction/proc/explode_deafen(datum/reagents/holder, datum/equilibrium/equilibrium, power = 3, stun = 20, range = 2)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/carbon_mob in get_hearers_in_view(range, location))
-		carbon_mob.soundbang_act(1, stun, power)
+	for(var/mob/living/living in get_hearers_in_view(range, location))
+		living.soundbang_act(SOUNDBANG_NORMAL, stun, power)
 
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)

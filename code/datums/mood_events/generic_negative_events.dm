@@ -245,14 +245,6 @@
 	mood_change = -15
 	event_flags = MOOD_EVENT_PAIN
 
-/datum/mood_event/sad_empath
-	description = "Someone seems upset..."
-	mood_change = -1
-	timeout = 60 SECONDS
-
-/datum/mood_event/sad_empath/add_effects(mob/sadtarget)
-	description = "[sadtarget.name] seems upset..."
-
 /datum/mood_event/sacrifice_bad
 	description = "Those darn savages!"
 	mood_change = -5
@@ -565,14 +557,30 @@
 	var/pet_message = "%DEAD_MOB% just died!!"
 	/// Message variant for desensitized people (security, medical, cult with halo, etc)
 	var/desensitized_message = "I saw %DEAD_MOB% die."
+	/// Standard message variant
 	var/normal_message = "I just saw %DEAD_MOB% die. How horrible..."
+	/// Naive mobs are immune to the effect
+	var/naive_immune = TRUE
 
 /datum/mood_event/see_death/add_effects(mob/dead_mob)
 	if(isnull(dead_mob))
 		return
+	if(HAS_TRAIT(owner, TRAIT_NAIVE) && naive_immune)
+		description = "Have a good nap, [dead_mob.name]."
+		mood_change = 0
+		timeout *= 0.2
+		return
+	if(HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
+		mood_change *= 0.25
+		timeout *= 0.2
+	if(istype(owner.mind?.assigned_role, /datum/job/bitrunning_glitch) || istype(owner.mind?.assigned_role, /datum/job/bit_avatar))
+		// Digital beings shouldn't care about death it's just gaming
+		mood_change *= -0.25
+		description = "Another one bites the dust!"
+		return
 	if(HAS_TRAIT(owner, TRAIT_CULT_HALO) && !HAS_TRAIT(dead_mob, TRAIT_CULT_HALO))
 		// When cultists get halos, they stop caring about death
-		mood_change = 4
+		mood_change *= -0.5
 		description = "More souls for the Geometer!"
 		return
 
@@ -603,9 +611,9 @@
 
 	description = replacetext(normal_message, "%DEAD_MOB%", get_descriptor(dead_mob))
 
-/datum/mood_event/see_death/be_refreshed(datum/mood/home, ...)
+/datum/mood_event/see_death/be_refreshed(datum/mood/home, mob/dead_mob, ...)
 	// Every time we get refreshed we get worse if not desensitized
-	if(!HAS_TRAIT(owner, TRAIT_DESENSITIZED))
+	if(!HAS_TRAIT(owner, TRAIT_DESENSITIZED) && !HAS_TRAIT(dead_mob, TRAIT_SPAWNED_MOB))
 		mood_change *= 1.5
 	return ..()
 
@@ -634,6 +642,7 @@
 	pet_message = "%DEAD_MOB% just exploded!!"
 	desensitized_message = "I saw %DEAD_MOB% explode."
 	normal_message = "%DEAD_MOB% just exploded in front of me!!"
+	naive_immune = FALSE
 
 /datum/mood_event/see_death/dusted
 	description = "Someone was just vaporized in front of me!! I don't feel so good..."
@@ -643,6 +652,7 @@
 	pet_message = "%DEAD_MOB% just vaporized!!"
 	desensitized_message = "I saw %DEAD_MOB% get vaporized."
 	normal_message = "%DEAD_MOB% was just vaporized in front of me!!"
+	naive_immune = FALSE
 
 /datum/mood_event/slots/loss
 	description = "Aww dang it!"

@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "If the bartender is absent, PunPun will serve filled drink glasses to patrons that don't have one."
+  - rscadd: "PunPun will now ignore filled drinks and items being held when looking for stuff to eat."
+  - rscadd: "Monkeys can eat soup."
+  - rscadd: "Monkeys will no longer seek out food if they are not hungry."
+  - rscadd: "Hungry monkeys might fight you over the food you are holding. The hungrier the monkey, the angrier the monkey."
+  - bugfix: "Monkeys can no longer teleport items out of your hands to eat."

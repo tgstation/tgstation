@@ -108,6 +108,7 @@
 	body_parts_covered = CHEST|GROIN
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR //weebs are going to lvoe this
 
 /obj/item/clothing/under/rank/civilian/lawyer
 	name = "Lawyer suit"

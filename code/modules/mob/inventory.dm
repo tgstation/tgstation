@@ -95,8 +95,14 @@
 /mob/proc/get_num_held_items()
 	. = 0
 	for(var/i in 1 to held_items.len)
-		if(held_items[i])
-			.++
+		if(!held_items[i])
+			continue
+		var/obj/item/gripped_item = held_items[i]
+		if(HAS_TRAIT_FROM(gripped_item, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)) //prostetic limbs are not held items, they are part of the body.
+			continue
+		if(gripped_item.item_flags & ABSTRACT) //not really flavoured as items
+			continue
+		.++
 
 //Sad that this will cause some overhead, but the alias seems necessary
 //*I* may be happy with a million and one references to "indexes" but others won't be
@@ -343,8 +349,11 @@
 	if(isnull(to_drop))
 		return
 
-	var/x_offset = rand(-6, 6)
-	var/y_offset = rand(-6, 6)
+	var/x_offset = 0
+	var/y_offset = 0
+	if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
+		x_offset += rand(-6, 6)
+		y_offset += rand(-6, 6)
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
 	if(!transfer_item_to_turf(to_drop, drop_location(), x_offset, y_offset, force, silent, invdrop))
 		return
@@ -373,11 +382,13 @@
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE, animated = null)
 	. = doUnEquip(I, force, newloc, FALSE, silent = silent)
-	//This proc wears a lot of hats for moving items around in different ways,
-	//so we assume unhandled cases for checking to animate can safely be handled
-	//with the same logic we handle animating putting items in container (container on your person isn't animated)
+	if(!.)
+		return
+	// This proc wears a lot of hats for moving items around in different ways,
+	// so we assume unhandled cases for checking to animate can safely be handled
+	// with the same logic we handle animating putting items in container (container on your person isn't animated)
 	if(isnull(animated))
-		//if the item's ultimate location is us, we don't animate putting it wherever
+		// If the item's ultimate location is us, we don't animate putting it wherever
 		animated = !(get(newloc, /mob) == src)
 	if(animated)
 		I.do_pickup_animation(newloc, src)
@@ -451,9 +462,14 @@
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
+			if(!(include_flags & INCLUDE_PROSTHETICS) && HAS_TRAIT_FROM(item_contents, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)) //prostetic limbs are not equipped items, they are part of the body.
+				continue
+			if(!(include_flags & INCLUDE_ABSTRACT) && (item_contents.item_flags & ABSTRACT)) //not really flavoured as items
+				continue
 			items += item_contents
 	if (!(include_flags & INCLUDE_HELD))
 		items -= held_items
+
 	return items
 
 /**
@@ -652,8 +668,8 @@
 		hud_used.build_hand_slots()
 
 //GetAllContents that is reasonable and not stupid
-/mob/living/proc/get_all_gear(accessories = TRUE, recursive = TRUE)
-	var/list/processing_list = get_equipped_items(INCLUDE_POCKETS | INCLUDE_HELD | (accessories ? INCLUDE_ACCESSORIES : NONE))
+/mob/living/proc/get_all_gear(equipment_flags = INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS, recursive = TRUE)
+	var/list/processing_list = get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD|equipment_flags)
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
 	while(i < length(processing_list))
@@ -663,8 +679,8 @@
 	return processing_list
 
 /// Returns a list of things that the provided mob has, including any storage-capable implants.
-/mob/living/proc/gather_belongings(accessories = TRUE, recursive = TRUE)
-	var/list/belongings = get_all_gear(accessories, recursive)
+/mob/living/proc/gather_belongings(equipment_flags = INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS, recursive = TRUE)
+	var/list/belongings = get_all_gear(equipment_flags, recursive)
 	for (var/obj/item/implant/storage/internal_bag in implants)
 		belongings += internal_bag.contents
 	return belongings
@@ -673,7 +689,7 @@
 /mob/living/proc/drop_everything(del_on_drop, force, del_if_nodrop)
 	. = list() //list of items that were successfully dropped
 
-	var/list/all_gear = get_all_gear(recursive = FALSE)
+	var/list/all_gear = get_all_gear(INCLUDE_ACCESSORIES, recursive = FALSE)
 	for(var/obj/item/item in all_gear)
 		if(dropItemToGround(item, force))
 			if(QDELETED(item)) //DROPDEL can cause this item to be deleted
@@ -682,7 +698,7 @@
 				qdel(item)
 				continue
 			. += item
-		else if(del_if_nodrop && !(item.item_flags & ABSTRACT))
+		else if(del_if_nodrop)
 			qdel(item)
 
 /**

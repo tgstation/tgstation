@@ -67,7 +67,8 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	icon_state = "in_love"
+	use_user_hud_icon = TRUE
+	overlay_state = "in_love"
 
 /datum/status_effect/in_love
 	id = "in_love"
@@ -169,7 +170,8 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	icon_state = "aimed"
+	use_user_hud_icon = TRUE
+	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
 	owner.apply_status_effect(/datum/status_effect/grouped/surrender, REF(src))
@@ -190,7 +192,8 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	icon_state = "aimed"
+	use_user_hud_icon = TRUE
+	overlay_state = "aimed"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/holdup/Click(location, control, params)
@@ -265,7 +268,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/taker)
 	SIGNAL_HANDLER
-	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
+	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
 		return
 
 	to_chat(taker, span_warning("You moved out of range of [owner]!"))
@@ -276,7 +279,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/checking_taker as anything in possible_takers)
-		if(!istype(checking_taker) || !owner.CanReach(checking_taker) || IS_DEAD_OR_INCAP(checking_taker))
+		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || IS_DEAD_OR_INCAP(checking_taker))
 			remove_candidate(checking_taker)
 
 /// We lost the item, give it up
@@ -291,7 +294,7 @@
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
 /datum/status_effect/offering/proc/is_taker_elligible(mob/living/taker)
-	return owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+	return taker.IsReachableBy(owner) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
 
 /**
  * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
@@ -373,7 +376,8 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	icon_state = "surrender"
+	use_user_hud_icon = TRUE
+	overlay_state = "surrender"
 	clickable_glow = TRUE
 
 /atom/movable/screen/alert/status_effect/surrender/Click(location, control, params)

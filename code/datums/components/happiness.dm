@@ -62,7 +62,7 @@
 /datum/component/happiness/proc/on_eat(datum/source)
 	SIGNAL_HANDLER
 
-	increase_happiness_level(on_eat_change)
+	change_happiness_level(on_eat_change)
 
 /datum/component/happiness/proc/on_clean(mob/living/source)
 	SIGNAL_HANDLER
@@ -74,7 +74,7 @@
 		return NONE
 
 	COOLDOWN_START(src, groom_cooldown, GROOM_COOLDOWN)
-	increase_happiness_level(on_groom_change)
+	change_happiness_level(on_groom_change)
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/component/happiness/proc/on_petted(datum/source, mob/living/petter, list/modifiers)
@@ -91,42 +91,55 @@
 /datum/component/happiness/proc/pet_animal()
 	if(!COOLDOWN_FINISHED(src, pet_cooldown))
 		return
-	increase_happiness_level(on_petted_change)
+	change_happiness_level(on_petted_change)
 	COOLDOWN_START(src, pet_cooldown, PET_COOLDOWN)
 
 
-/datum/component/happiness/proc/increase_happiness_level(amount)
-	happiness_level = min(happiness_level + amount, maximum_happiness)
-	if(!HAS_TRAIT(parent, TRAIT_MOB_HIDE_HAPPINESS))
-		var/mob/living/living_parent = parent
-		new /obj/effect/temp_visual/heart(living_parent.loc)
-		living_parent.spin(spintime = 2 SECONDS, speed = 1)
-	START_PROCESSING(SSprocessing, src)
+/datum/component/happiness/proc/change_happiness_level(amount)
+	var/old_happiness = happiness_level
+	happiness_level = clamp(happiness_level + amount, 0, maximum_happiness)
+	var/happiness_percentage = happiness_level / maximum_happiness
+	var/old_percentage = old_happiness / maximum_happiness
 
-/datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
-	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !clicker.CanReach(source))
-		return
-	var/y_position = source.get_cached_height() + 1
-	var/obj/effect/overlay/happiness_overlay/hearts = new
-	hearts.pixel_y = y_position
-	hearts.set_hearts(happiness_level/maximum_happiness)
-	source.vis_contents += hearts
-	COOLDOWN_START(src, happiness_inspect, INSPECT_TIMER)
+	var/old_threshold = 0
+	var/new_threshold = 0
+	for(var/check_percentage in callback_percentages)
+		if (check_percentage <= old_percentage)
+			old_threshold = check_percentage
+		if (check_percentage <= happiness_percentage)
+			new_threshold = check_percentage
 
-
-/datum/component/happiness/process()
-	var/mob/living/living_parent = parent
-	var/happiness_percentage = happiness_level/maximum_happiness
-	living_parent.ai_controller?.set_blackboard_key(blackboard_key, happiness_percentage)
-	var/check_percentage_in_list = round(happiness_percentage * 100, 1)
-	if(check_percentage_in_list in callback_percentages)
+	if (old_threshold != new_threshold)
 		SEND_SIGNAL(parent, COMSIG_MOB_HAPPINESS_CHANGE, happiness_percentage)
 		happiness_callback?.Invoke(happiness_percentage)
 
+	var/mob/living/living_parent = parent
+	living_parent.ai_controller?.set_blackboard_key(blackboard_key, happiness_percentage)
+
+	if(!HAS_TRAIT(parent, TRAIT_MOB_HIDE_HAPPINESS) && amount > 0)
+		new /obj/effect/temp_visual/heart(living_parent.loc)
+		living_parent.spin(spintime = 2 SECONDS, speed = 1)
+
+	if (happiness_level > 0)
+		START_PROCESSING(SSprocessing, src)
+
+/datum/component/happiness/proc/view_happiness(mob/living/source, mob/living/clicker)
+	if(HAS_TRAIT(source, TRAIT_MOB_HIDE_HAPPINESS) || !istype(clicker) || !COOLDOWN_FINISHED(src, happiness_inspect) || !source.IsReachableBy(clicker))
+		return
+	var/y_position = source.get_cached_height() + 1
+	var/obj/effect/overlay/happiness_overlay/hearts = new
+	hearts.pixel_w -= source.base_pixel_x + source.base_pixel_w
+	hearts.pixel_y = y_position
+	hearts.set_hearts(happiness_level / maximum_happiness)
+	source.vis_contents += hearts
+	COOLDOWN_START(src, happiness_inspect, INSPECT_TIMER)
+
+/datum/component/happiness/process()
 	if(happiness_level <= 0)
 		return PROCESS_KILL
+	var/mob/living/living_parent = parent
 	var/modifier = living_parent.ai_controller?.blackboard[BB_BASIC_DEPRESSED] ? 2 : 1
-	happiness_level = max(0, happiness_level - modifier)
+	change_happiness_level(-modifier)
 
 /obj/effect/overlay/happiness_overlay
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

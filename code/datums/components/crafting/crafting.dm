@@ -372,21 +372,21 @@
 	if(recipe.structures)
 		requirements += recipe.structures
 
+	var/list/surroundings = get_environment(atom, recipe.blacklist)
 	for(var/path_key in requirements)
-		var/list/surroundings
 		var/amount = recipe.reqs?[path_key] || recipe.machinery?[path_key] || recipe.structures?[path_key]
 		if(!amount)//since machinery & structures can have 0 aka CRAFTING_MACHINERY_USE - i.e. use it, don't consume it!
 			continue
-		surroundings = get_environment(atom, recipe.blacklist)
-		surroundings -= return_list
 		if(ispath(path_key, /datum/reagent))
 			if(!holder)
 				holder = new(INFINITY, NO_REACT) //an infinite volume holder than can store reagents without reacting
 				return_list += holder
+			var/list/checked = list()
 			while(amount > 0)
-				var/obj/item/reagent_containers/container = locate() in surroundings
+				var/obj/item/reagent_containers/container = locate() in ((surroundings | return_list) - checked)
 				if(isnull(container)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(container)) //it's deleting...
 					surroundings -= container
 					continue
@@ -394,7 +394,7 @@
 				if(reagent_volume)
 					container.reagents.trans_to(holder, min(amount, reagent_volume), target_id = path_key, no_react = TRUE)
 					amount -= reagent_volume
-				surroundings -= container
+				checked += container
 				container.update_appearance(UPDATE_ICON)
 		else if(ispath(path_key, /obj/item/stack))
 			var/obj/item/stack/tally_stack
@@ -402,6 +402,7 @@
 				var/obj/item/stack/origin_stack = locate(path_key) in surroundings
 				if(isnull(origin_stack)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(origin_stack))
 					continue
 				var/amount_to_give = min(origin_stack.amount, amount)
@@ -420,6 +421,7 @@
 				var/atom/movable/item = locate(path_key) in surroundings
 				if(isnull(item)) //This would only happen if the previous checks for contents and tools were flawed.
 					stack_trace("couldn't fulfill the required amount for [path_key]. Dangit")
+					break
 				if(QDELING(item))
 					continue
 				return_list += item

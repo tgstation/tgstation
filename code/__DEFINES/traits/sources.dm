@@ -30,6 +30,8 @@
 #define PERSONALITY_TRAIT "personality_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
+/// Traits that were granted via modify_traits in vv or the mass_modify_traits verb
+#define TRAIT_ADMIN_GRANTED "adminabuse"
 /// Any traits given through a smite.
 #define SMITE_TRAIT "smite"
 #define CHANGELING_TRAIT "changeling"
@@ -59,8 +61,6 @@
 #define SHOES_TRAIT "shoes"
 /// Trait inherited by implants
 #define IMPLANT_TRAIT "implant"
-/// Traits given by the heretic arena spell
-#define HERETIC_ARENA_TRAIT "heretic_arena"
 #define GLASSES_TRAIT "glasses"
 /// inherited from riding vehicles
 #define VEHICLE_TRAIT "vehicle"
@@ -103,6 +103,10 @@
 #define SWORDPLAY_TRAIT "swordplay"
 /// Trait given by being recruited as a nuclear operative
 #define NUKE_OP_MINION_TRAIT "nuke-op-minion"
+
+//---- Heretic Traits Sources
+/// Traits given by the heretic arena spell
+#define HERETIC_ARENA_TRAIT "heretic_arena"
 
 /// Trait given to you by shapeshifting
 #define SHAPESHIFT_TRAIT "shapeshift_trait"

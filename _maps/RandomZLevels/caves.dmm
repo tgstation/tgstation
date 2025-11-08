@@ -152,7 +152,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "ba" = (
 /obj/structure/table/wood/fancy,
-/obj/item/clothing/gloves/krav_maga/combatglovesplus,
+/obj/item/clothing/gloves/kaza_ruk/combatglovesplus,
 /turf/open/floor/engine/cult,
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bf" = (

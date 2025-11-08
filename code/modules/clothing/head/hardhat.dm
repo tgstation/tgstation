@@ -1,6 +1,10 @@
 /obj/item/clothing/head/utility
 	icon = 'icons/obj/clothing/head/utility.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
+	sound_vary = TRUE
+	pickup_sound = SFX_HARD_HAT_PICKUP
+	drop_sound = SFX_HARD_HAT_DROP
+	equip_sound = SFX_HARD_HAT_EQUIP
 
 /obj/item/clothing/head/utility/hardhat
 	name = "hard hat"
@@ -243,6 +247,9 @@
 	worn_y_offset = 1
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 	clothing_traits = list()
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
 	. = ..()

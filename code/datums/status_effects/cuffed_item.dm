@@ -109,7 +109,7 @@
 	if(LAZYACCESS(user.do_afters, interaction_key))
 		return FALSE
 
-	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !user.CanReach(owner)))
+	if(!(user.mobility_flags & MOBILITY_USE) || (user != owner && !owner.IsReachableBy(user)))
 		owner.balloon_alert(user, "can't do it right now!")
 		return FALSE
 
@@ -143,7 +143,6 @@
 /atom/movable/screen/alert/status_effect/cuffed_item
 	name = "Cuffed Item"
 	desc = "You've an item firmly cuffed to your arm. You probably won't be accidentally dropping it somewhere anytime soon."
-	icon_state = "template"
 	use_user_hud_icon = TRUE
 	clickable_glow = TRUE
 	click_master = FALSE

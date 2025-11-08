@@ -85,7 +85,7 @@
 	for(var/atom/movable/movable in orange(victim, 1))
 		if(movable == victim)
 			continue
-		if(!victim.CanReach(movable) || movable.invisibility > victim.see_invisible)
+		if(!movable.IsReachableBy(victim) || movable.invisibility > victim.see_invisible)
 			continue
 		candidates += movable
 	if(!length(candidates))
@@ -181,7 +181,7 @@
 /mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, special, dismembered)
 	SIGNAL_HANDLER
 	unregister_from_limb(old_owner)
-	addtimer(CALLBACK(src, PROC_REF(wake_up), source), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wake_up), source), 2 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /mob/living/basic/living_limb_flesh/proc/register_to_limb(obj/item/bodypart/part)
 	current_bodypart = part
@@ -199,6 +199,8 @@
 	current_bodypart = null
 
 /mob/living/basic/living_limb_flesh/proc/wake_up(atom/limb)
+	if(QDELETED(src))
+		return
 	visible_message(span_warning("[src] begins flailing around!"))
 	Shake(6, 6, 0.5 SECONDS)
 	ai_controller.set_ai_status(AI_STATUS_ON)

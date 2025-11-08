@@ -9,6 +9,8 @@
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON "atom_init_success_on"
 ///from base of atom/examine(): (/mob, list/examine_text)
 #define COMSIG_ATOM_EXAMINE "atom_examine"
+/// from base of atom/examine(): (/mob, list/examine_text)
+#define COMSIG_CARBON_MID_EXAMINE "carbon_mid_examine"
 ///from base of atom/examine_tags(): (/mob, list/examine_tags)
 #define COMSIG_ATOM_EXAMINE_TAGS "atom_examine_tags"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
@@ -76,9 +78,6 @@
 #define COMSIG_ATOM_BUMPED "atom_bumped"
 ///from base of atom/has_gravity(): (turf/location, list/forced_gravities)
 #define COMSIG_ATOM_HAS_GRAVITY "atom_has_gravity"
-///from internal loop in atom/movable/proc/CanReach(): (list/next)
-#define COMSIG_ATOM_CANREACH "atom_can_reach"
-	#define COMPONENT_ALLOW_REACH (1<<0)
 ///for when an atom has been created through processing (atom/original_atom, list/chosen_processing_option)
 #define COMSIG_ATOM_CREATEDBY_PROCESSING "atom_createdby_processing"
 ///when an atom is processed (mob/living/user, obj/item/process_item, list/atom/results)
@@ -134,9 +133,6 @@
 #define COMSIG_ATOM_PRE_CLEAN "atom_pre_clean"
 	///cancel clean
 	#define COMSIG_ATOM_CANCEL_CLEAN (1<<0)
-
-/// From /obj/item/stack/make_item()
-#define COMSIG_ATOM_CONSTRUCTED "atom_constructed"
 
 /// From /obj/effect/particle_effect/sparks/proc/sparks_touched(datum/source, atom/movable/singed)
 #define COMSIG_ATOM_TOUCHED_SPARKS "atom_touched_sparks"

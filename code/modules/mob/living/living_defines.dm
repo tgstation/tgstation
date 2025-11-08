@@ -204,6 +204,8 @@
 	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
+	/// Typepath of the holder created when we're picked up
+	var/inhand_holder_type = /obj/item/mob_holder
 
 	///If combat mode is on or not
 	var/combat_mode = FALSE
@@ -248,3 +250,6 @@
 	/// First element is the current martial art - any other elements are "saved" for if they unlearn the first one
 	/// Reference handling is done by the martial arts themselves
 	var/list/datum/martial_art/martial_arts
+
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
+	var/reach_length = 1

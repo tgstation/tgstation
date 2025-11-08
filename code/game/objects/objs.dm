@@ -64,10 +64,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
@@ -347,3 +351,19 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
+
+/// Checks performed by a renamable object(through UNIQUE_RENAME obj_flag) before renaming begins.
+/obj/proc/rename_checks(mob/living/user)
+	return TRUE
+
+/// Returns the final name of the object, and does any side effects of renaming, such as sounds.
+/obj/proc/nameformat(input, mob/living/user)
+	return input
+
+/// Same as nameformat, but for desc.
+/obj/proc/descformat(input, mob/living/user)
+	return input
+
+/// Called when UNIQUE_RENAME is reset
+/obj/proc/rename_reset()
+	return

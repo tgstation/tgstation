@@ -360,7 +360,7 @@
 /obj/item/canvas/proc/can_select_frame(mob/user)
 	if(!istype(loc, /obj/structure/sign/painting))
 		return FALSE
-	if(!user?.CanReach(loc) || IS_DEAD_OR_INCAP(user))
+	if(!loc.IsReachableBy(user) || IS_DEAD_OR_INCAP(user))
 		return FALSE
 	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
 		return FALSE
@@ -713,11 +713,9 @@
 /obj/structure/sign/painting/get_save_vars()
 	return ..() - NAMEOF(src, icon)
 
-/obj/structure/sign/painting/Initialize(mapload, dir, building)
+/obj/structure/sign/painting/Initialize(mapload)
 	. = ..()
 	SSpersistent_paintings.painting_frames += src
-	if(dir)
-		setDir(dir)
 
 /obj/structure/sign/painting/Destroy()
 	. = ..()
@@ -732,12 +730,8 @@
 	else
 		return ..()
 
-/obj/structure/sign/painting/knock_down(mob/living/user)
-	var/turf/drop_turf
-	if(user)
-		drop_turf = get_turf(user)
-	else
-		drop_turf = drop_location()
+/obj/structure/sign/painting/atom_deconstruct(disassembled)
+	var/turf/drop_turf = drop_location()
 	current_canvas?.forceMove(drop_turf)
 	var/obj/item/wallframe/frame = new wallframe_type(drop_turf)
 	frame.update_integrity(get_integrity()) //Transfer how damaged it is.
@@ -930,7 +924,7 @@
 	var/our_dir = get_dir(user, on_wall)
 	var/check_dir = our_dir & (EAST|WEST) ? NORTH : EAST
 	var/turf/closed/wall/second_wall = get_step(on_wall, check_dir)
-	if(!istype(second_wall) || !user.CanReach(second_wall))
+	if(!istype(second_wall) || !second_wall.IsReachableBy(user))
 		to_chat(user, span_warning("You need a reachable wall to the [check_dir == EAST ? "right" : "left"] of this one to mount this frame!"))
 		return FALSE
 	if(check_wall_item(second_wall, our_dir, wall_external))
