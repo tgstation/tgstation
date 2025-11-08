@@ -236,7 +236,7 @@
 	)
 
 /*
- * Anti-dragon spear
+ * Anti-big monster spear
  * "WHERES MY DRAGONATOR?!"
  */
 /obj/item/spear/dragonator
@@ -246,14 +246,19 @@
 	base_icon_state = "speardragon0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	name = "Anti-Dragon Spear"
-	desc = "A spear specifically designed to fight space dragons, though it is a fine weapon for other functions. Capable of being launched from a ballista."
+	name = "Dragon-Slayer Spear"
+	desc = "A spear specifically designed to large hostile fauna, though it is a fine weapon for other functions. Capable of being launched from a ballista."
 
 	throwforce = 22
 	armour_penetration = 15 //Enhanced armor piercing
 	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT * 7)
 	force_unwielded = 15
 	force_wielded = 30
+
+/obj/item/spear/dragonator/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL|MOB_MINING, damage_multiplier = 2.5) //
+
 
 /*
  * Bone Spear
