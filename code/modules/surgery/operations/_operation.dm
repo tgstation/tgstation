@@ -573,8 +573,8 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
-	for(var/mod in patient.mob_surgery_speed_mods)
-		basemod *= mod
+	for(var/mod_id, mod_amt in patient.mob_surgery_speed_mods)
+		basemod *= mod_amt
 	if(HAS_TRAIT(patient, TRAIT_SURGICALLY_ANALYZED))
 		basemod *= 0.8
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA))
