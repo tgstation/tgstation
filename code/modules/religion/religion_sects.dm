@@ -387,9 +387,9 @@
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
 			if(transferred_blood_amount && target.get_blood_compatibility(chaplain))
-				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, ignore_low_blood = TRUE)
 		else if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, ignore_low_blood = TRUE)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()

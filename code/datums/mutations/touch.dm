@@ -319,7 +319,7 @@
 			return .
 
 		// We ignore incompatibility here.
-		if(!mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE))
+		if(!mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, ignore_low_blood = TRUE, ignore_incompatibility = TRUE))
 			return
 
 		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
@@ -341,7 +341,7 @@
 	// mender always gonna have blood
 
 	// We ignore incompatibility here.
-	if(!hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE))
+	if(!hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, ignore_low_blood = TRUE, ignore_incompatibility = TRUE))
 		return
 
 	to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
