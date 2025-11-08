@@ -13,6 +13,7 @@
 	all_products_free = TRUE
 	/// Spawns coders by default
 	var/type_to_vend = /obj/item/food/grown/citrus
+	allow_custom = FALSE
 
 /obj/machinery/vending/subtype_vendor/Initialize(mapload, type_to_vend)
 	if(type_to_vend)
@@ -22,7 +23,7 @@
 ///Adds the subtype to the product list
 /obj/machinery/vending/subtype_vendor/RefreshParts()
 	products.Cut()
-	for(var/type in typesof(type_to_vend))
+	for(var/type in get_sane_item_types(type_to_vend))
 		LAZYADDASSOC(products, type, 50)
 
 	//no refill canister so we fill the records with their max amounts directly

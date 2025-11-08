@@ -33,9 +33,10 @@
 	var/theme = THEME_CULT
 	/// The different flavors of goop shades can drop, depending on theme.
 	var/static/list/remains_by_theme = list(
-		THEME_CULT = list(/obj/item/ectoplasm/construct),
-		THEME_HOLY = list(/obj/item/ectoplasm/angelic),
-		THEME_WIZARD = list(/obj/item/ectoplasm/mystic),
+		THEME_CULT = /obj/item/ectoplasm/construct,
+		THEME_HOLY = /obj/item/ectoplasm/angelic,
+		THEME_WIZARD = /obj/item/ectoplasm/mystic,
+		THEME_HERETIC = /obj/item/ectoplasm/construct,
 	)
 
 /mob/living/basic/shade/Initialize(mapload)
@@ -45,8 +46,8 @@
 	if(isnull(theme))
 		return
 	icon_state = "shade_[theme]"
-	var/list/remains = string_list(remains_by_theme[theme])
-	if(length(remains))
+	var/remains = remains_by_theme[theme]
+	if(remains)
 		AddElement(/datum/element/death_drops, remains)
 
 /mob/living/basic/shade/update_icon_state()

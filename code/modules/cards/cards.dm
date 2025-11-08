@@ -30,7 +30,7 @@
 		return .
 
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	if(!istype(thrower)) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
 	if(count_cards() == 0)
@@ -102,7 +102,10 @@
 		card_atoms += card
 
 	if(istype(card_item, /obj/item/toy/cards/cardhand))
-		qdel(card_item)
+		var/obj/item/toy/cards/cardhand/recycled_cardhand = card_item
+		recycled_cardhand.card_atoms -= cards_to_add
+		if (!length(recycled_cardhand.fetch_card_atoms()))
+			qdel(card_item)
 
 	update_appearance()
 	return cards_to_add
@@ -110,15 +113,16 @@
 /**
  * Draws a card from the deck or hand of cards.
  *
- * Draws the top card unless a card arg is supplied then it picks that specific card
- * and returns it (the card arg is used by the radial menu for cardhands to select
- * specific cards out of the cardhand)
+ * Draws the top card, removing it from the associated card atoms list,
+ * unless a card arg is supplied; then it picks that specific card, removes it from the
+ * associated card atoms list, and returns it (the card arg is used by the radial menu for cardhands to select
+ * specific cards out of the cardhand).
  * Arguments:
  * * mob/living/user - The user drawing the card.
  * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
 **/
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
-	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY| FORBID_TELEKINESIS_REACH))
+	if(!isliving(user) || !user.can_perform_action(src, NEED_DEXTERITY | FORBID_TELEKINESIS_REACH))
 		return
 
 	if(count_cards() == 0)
@@ -127,12 +131,17 @@
 
 	var/list/cards = fetch_card_atoms()
 
-	card = card || cards[1] //draw the card on top
+	card ||= pick_card(user, cards)
 	cards -= card
 
 	update_appearance()
 	playsound(src, 'sound/items/cards/cardflip.ogg', 50, TRUE)
 	return card
+
+/// Picks what card the user draws from the deck
+/obj/item/toy/cards/proc/pick_card(mob/living/user, list/obj/item/toy/singlecard/cards)
+	// By default just pick the top card
+	return cards[1]
 
 /// Returns the cards in this deck.
 /// Lazily generates the cards if they haven't already been made.

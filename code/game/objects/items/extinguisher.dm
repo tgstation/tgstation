@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The max amount of water this extinguisher can hold.
-	var/max_water = 50
+	var/max_water = 100
 	/// Does the welder extinguisher start with water.
 	var/starting_water = TRUE
 	/// Cooldown between uses.
@@ -207,7 +207,6 @@
 	)
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
-	max_water = 100
 
 /obj/item/extinguisher/advanced/empty
 	starting_water = FALSE
@@ -359,7 +358,7 @@
 
 /obj/item/extinguisher/click_alt(mob/user)
 	if(!user.is_holding(src))
-		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
+		to_chat(user, span_notice("You must be holding [src] in your hands to do this!"))
 		return CLICK_ACTION_BLOCKING
 	EmptyExtinguisher(user)
 	return CLICK_ACTION_SUCCESS
@@ -368,7 +367,7 @@
 	if(loc == user && reagents.total_volume)
 		reagents.expose(user.loc, TOUCH)
 		reagents.clear_reagents()
-		user.visible_message(span_notice("[user] empties out \the [src] onto the floor using the release valve."), span_info("You quietly empty out \the [src] using its release valve."))
+		user.visible_message(span_notice("[user] empties out [src] onto the floor using the release valve."), span_info("You quietly empty out [src] using its release valve."))
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, list/modifiers, list/attack_modifiers)

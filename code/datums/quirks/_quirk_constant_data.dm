@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 /// A singleton datum representing constant data and procs used by quirks.
 /datum/quirk_constant_data
 	/// Abstract in OOP terms. If this is our type, we will not be instantiated.
-	var/abstract_type = /datum/quirk_constant_data
+	abstract_type = /datum/quirk_constant_data
 
 	/// The typepath of the quirk we will be associated with in the global list. This is what we represent.
 	var/datum/quirk/associated_typepath

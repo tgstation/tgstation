@@ -77,6 +77,32 @@
 	e.start(holder.my_atom)
 	holder.clear_reagents()
 
+/datum/chemical_reaction/meth_crystal //Since the meth is a cooled pharmaceutical solvent, this precipitates it into a solid.
+	results = list(/datum/reagent/consumable/ethanol = 1) //we don't care what this reagent is. We only need to record its purity
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 10, /datum/reagent/toxin/acid = 2)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DRUG | REACTION_TAG_ORGAN | REACTION_TAG_DAMAGING
+
+/datum/chemical_reaction/meth_crystal/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+
+	var/datum/reagent/consumable/ethanol/dummy_reagent = holder.has_reagent(/datum/reagent/consumable/ethanol)
+	for(var/i in 1 to round(created_volume, CHEMICAL_VOLUME_ROUNDING))
+		var/obj/item/food/drug/meth_crystal/new_crystal = new(location)
+		new_crystal.pixel_x = rand(-6, 6)
+		new_crystal.pixel_y = rand(-6, 6)
+		new_crystal.color = gradient("#FAFAFA", "#78C8FA", dummy_reagent.creation_purity)
+
+		var/meth_amt = 10
+		new_crystal.reagents.add_reagent(/datum/reagent/drug/methamphetamine, meth_amt)
+		var/imp_amt = round(meth_amt * (1 - dummy_reagent.creation_purity) * 0.25, 0.1)
+		if(imp_amt > 0)
+			new_crystal.reagents.add_reagent(/datum/reagent/consumable/failed_reaction, imp_amt)
+
+	dummy_reagent.volume = 0
+	holder.update_total()
+
 /datum/chemical_reaction/bath_salts
 	results = list(/datum/reagent/drug/bath_salts = 7)
 	required_reagents = list(/datum/reagent/toxin/bad_food = 1, /datum/reagent/saltpetre = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/consumable/enzyme = 1, /datum/reagent/consumable/tea = 1, /datum/reagent/mercury = 1)

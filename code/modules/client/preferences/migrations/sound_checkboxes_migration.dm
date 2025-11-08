@@ -31,7 +31,7 @@
 		/datum/preference/numeric/volume/sound_radio_noise = savefile.get_entry("sound_radio_noise"),
 
 	)
-	for(var/entry as anything in entries)
+	for(var/entry in entries)
 		var/pref_data = entries[entry]
 		if(pref_data <= 1)
 			pref_data *= 100

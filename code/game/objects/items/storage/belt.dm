@@ -7,6 +7,7 @@
 	worn_icon_state = "utility"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
+	abstract_type = /obj/item/storage/belt
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb_continuous = list("whips", "lashes", "disciplines")
 	attack_verb_simple = list("whip", "lash", "discipline")
@@ -54,24 +55,23 @@
 	preload = TRUE
 
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
-	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
-	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
-	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
+	SSwardrobe.provide_type(/obj/item/screwdriver, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool/hugetank, src)
+	SSwardrobe.provide_type(/obj/item/crowbar, src)
+	SSwardrobe.provide_type(/obj/item/wirecutters, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
-	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
-	SSwardrobe.provide_type(/obj/item/analyzer, src)
-	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
-	to_preload += /obj/item/screwdriver/power
-	to_preload += /obj/item/crowbar/power
-	to_preload += /obj/item/weldingtool/experimental
+	to_preload += /obj/item/screwdriver
+	to_preload += /obj/item/wrench
+	to_preload += /obj/item/weldingtool/hugetank
+	to_preload += /obj/item/crowbar
+	to_preload += /obj/item/wirecutters
 	to_preload += /obj/item/multitool
 	to_preload += /obj/item/stack/cable_coil
-	to_preload += /obj/item/extinguisher/mini
-	to_preload += /obj/item/analyzer
 	return to_preload
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -599,13 +599,13 @@
 		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/belt/sheath/click_alt(mob/user)
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
+	if(!length(contents))
 		balloon_alert(user, "it's empty!")
+		return CLICK_ACTION_BLOCKING
+	var/obj/item/stored_item = contents[1]
+	user.visible_message(span_notice("[user] takes [stored_item] out of [src]."), span_notice("You take [stored_item] out of [src]."))
+	user.put_in_hands(stored_item)
+	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/belt/sheath/update_icon_state()
@@ -639,6 +639,15 @@
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
 	storage_type = /datum/storage/green_sabre_belt
+
+/obj/item/storage/belt/sheath/gladius
+	name = "gladius scabbard"
+	desc = "A fun-sized sheath for a fun-sized sword."
+	icon_state = "gladius_sheath"
+	inhand_icon_state = "gladius_sheath"
+	worn_icon_state = "gladius_sheath"
+	storage_type = /datum/storage/gladius_belt
+	stored_blade = /obj/item/claymore/gladius
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"

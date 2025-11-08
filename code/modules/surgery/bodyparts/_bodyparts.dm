@@ -1,6 +1,7 @@
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
+	abstract_type = /obj/item/bodypart
 	force = 3
 	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
@@ -182,19 +183,27 @@
 	/// Sounds when this bodypart is used in an umarmed attack
 	var/sound/unarmed_attack_sound = 'sound/items/weapons/punch1.ogg'
 	var/sound/unarmed_miss_sound = 'sound/items/weapons/punchmiss.ogg'
-	///Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
+	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
 	var/unarmed_damage_low = 1
-	///Highest possible punch damage this bodypart can ive.
+	/// Highest possible punch damage this bodypart can ive.
 	var/unarmed_damage_high = 1
-	///Determines the accuracy bonus, armor penetration and knockdown probability.
+	/// Determines the accuracy bonus, armor penetration and knockdown probability.
 	var/unarmed_effectiveness = 10
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
 	var/unarmed_pummeling_bonus = 1
+	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb? Every integer above or below 0 is one effective grab level. Higher is a bonus, lower is a malus.
+	/// This is more powerful than adjusting grab escape chance. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
+	var/unarmed_grab_state_bonus = 0
+	/// If this limb is used to grab (which is only arms right now), how much additional damage does it deal to the grabbed individual when they fail to escape the grab?
+	var/unarmed_grab_damage_bonus = 0
+	/// If this limb is used to grab (which is only arms right now), how much more difficult is it to escape the grab, before accounting for grab state? Values above 0 is a malus, values below 0 is a bonus.
+	/// This is less powerful than adjusting grab state. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
+	var/unarmed_grab_escape_chance_bonus = 0
 	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
 	var/unarmed_sharpness = NONE
 
 	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
-	var/list/bodypart_traits = list()
+	var/list/bodypart_traits
 	/// The name of the trait source that the organ gives. Should not be altered during the events of gameplay, and will cause problems if it is.
 	var/bodypart_trait_source = BODYPART_TRAIT
 	/// List of the above datums which have actually been instantiated, managed automatically
@@ -609,7 +618,7 @@
 
 	var/bio_status = NONE
 
-	for (var/state as anything in GLOB.bio_state_anatomy)
+	for (var/state in GLOB.bio_state_anatomy)
 		var/flag = text2num(state)
 		if (!(biological_state & flag))
 			continue
@@ -665,20 +674,34 @@
 /obj/item/bodypart/proc/update_wound_theory()
 	// We put this here so we dont increase init time by doing this all at once on initialization
 	// Effectively, we "lazy load"
-	if (isnull(any_existing_wound_can_mangle_our_interior) || isnull(any_existing_wound_can_mangle_our_exterior))
-		any_existing_wound_can_mangle_our_interior = FALSE
-		any_existing_wound_can_mangle_our_exterior = FALSE
-		for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
-			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
-			if (!pregen_data.can_be_applied_to(src, random_roll = TRUE)) // we only consider randoms because non-randoms are usually really specific
-				continue
-			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_EXTERIOR)
-				any_existing_wound_can_mangle_our_exterior = TRUE
-			if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_INTERIOR)
-				any_existing_wound_can_mangle_our_interior = TRUE
+	if (!isnull(any_existing_wound_can_mangle_our_interior) && !isnull(any_existing_wound_can_mangle_our_exterior))
+		return
 
-			if (any_existing_wound_can_mangle_our_interior && any_existing_wound_can_mangle_our_exterior)
-				break
+	any_existing_wound_can_mangle_our_interior = FALSE
+	any_existing_wound_can_mangle_our_exterior = FALSE
+
+	if (!is_woundable())
+		return
+
+	for (var/datum/wound/wound_type as anything in GLOB.all_wound_pregen_data)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound_type]
+		/// We only consider randoms because non-randoms are usually really specific
+		if (!pregen_data.can_be_applied_to(src, random_roll = TRUE, duplicates_allowed = TRUE, care_about_existing_wounds = FALSE))
+			continue
+		if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_EXTERIOR)
+			any_existing_wound_can_mangle_our_exterior = TRUE
+		if (initial(pregen_data.wound_path_to_generate.wound_flags) & MANGLES_INTERIOR)
+			any_existing_wound_can_mangle_our_interior = TRUE
+		if (any_existing_wound_can_mangle_our_interior && any_existing_wound_can_mangle_our_exterior)
+			break
+
+/// Check if a bodypart can be wounded
+/obj/item/bodypart/proc/is_woundable()
+	if (!owner)
+		return FALSE
+	if (HAS_TRAIT(owner, TRAIT_NEVER_WOUNDED) || HAS_TRAIT(owner, TRAIT_GODMODE))
+		return FALSE
+	return TRUE
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
@@ -811,15 +834,15 @@
 
 	if(speed_modifier)
 		old_owner.update_bodypart_speed_modifier()
-	if(length(bodypart_traits))
+	if(LAZYLEN(bodypart_traits))
 		old_owner.remove_traits(bodypart_traits, bodypart_trait_source)
 
 	UnregisterSignal(old_owner, list(
 		SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
-	SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
+		SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
 		SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD),
 		SIGNAL_ADDTRAIT(TRAIT_NOBLOOD),
-		))
+	))
 
 	UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_SET_BODY_POSITION))
 
@@ -831,7 +854,7 @@
 
 	if(speed_modifier)
 		owner.update_bodypart_speed_modifier()
-	if(length(bodypart_traits))
+	if(LAZYLEN(bodypart_traits))
 		owner.add_traits(bodypart_traits, bodypart_trait_source)
 
 	if(initial(can_be_disabled))
@@ -872,7 +895,7 @@
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 
-	if(!length(bodypart_traits))
+	if(!LAZYLEN(bodypart_traits))
 		return
 
 	owner.remove_traits(bodypart_traits, bodypart_trait_source)
@@ -1086,42 +1109,43 @@
 	if(dropped && dmg_overlay_type)
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
-			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
+			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, dir = SOUTH)
 			brute_blood_overlay.color = get_color_from_blood_list(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 			if(brute_damage_overlay)
 				brute_blood_overlay.overlays += brute_damage_overlay
 			. += brute_blood_overlay
 		if(burnstate)
-			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER)
+			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)
 
-	var/image/limb = image(layer = -BODYPARTS_LAYER)
-	var/image/aux
+	var/image_dir = null
+	if (dropped)
+		image_dir = SOUTH
 
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
-		limb.icon = icon_invisible
-		limb.icon_state = "invisible_[body_zone]"
-		. += limb
+		. += image(icon_invisible, "invisible_[body_zone]", -BODYPARTS_LAYER, dir = image_dir)
 		return .
 
 	// Normal non-husk handling
-		// This is the MEAT of limb icon code
-	limb.icon = icon_greyscale
+	// This is the MEAT of limb icon code
+	var/used_icon = icon_greyscale
 	if(!should_draw_greyscale || !icon_greyscale)
-		limb.icon = icon_static
+		used_icon = icon_static
 
-	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
-		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
-	else
-		limb.icon_state = "[limb_id]_[body_zone]"
+	var/used_state = "[limb_id]_[body_zone]"
+	if(is_dimorphic) // Does this type of limb have sexual dimorphism?
+		used_state = "[limb_id]_[body_zone]_[limb_gender]"
+
+	var/image/limb = image(used_icon, used_state, -BODYPARTS_LAYER, dir = image_dir)
+	var/image/aux = null
 
 	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
 	. += limb
 
 	if(aux_zone) //Hand shit
-		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer)
+		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, dir = image_dir)
 		. += aux
 
 	if(is_husked)
@@ -1137,51 +1161,67 @@
 		if(aux_zone)
 			aux.color = "[draw_color]"
 
-	//EMISSIVE CODE START
-	// For some reason this was applied as an overlay on the aux image and limb image before.
-	// I am very sure that this is unnecessary, and i need to treat it as part of the return list
-	// to be able to mask it proper in case this limb is a leg.
-	if(!is_husked)
-		var/atom/location = loc || owner || src
-		if(blocks_emissive != EMISSIVE_BLOCK_NONE)
-			var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
-			. += limb_em_block
+	var/atom/location = loc || owner || src
+	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
+		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
+		if (dropped)
+			limb_em_block = image(limb_em_block, dir = SOUTH)
+		. += limb_em_block
 
-			if(aux_zone)
-				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
-				. += aux_em_block
+		if(aux_zone)
+			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
+			if (dropped)
+				aux_em_block = image(aux_em_block, dir = SOUTH)
+			. += aux_em_block
 
-		if(is_emissive)
-			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
-			. += limb_em
+	if(!is_husked && is_emissive)
+		var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
+		if (dropped)
+			limb_em = image(limb_em, dir = SOUTH)
+		. += limb_em
 
-			if(aux_zone)
-				var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
-				. += aux_em
-	//EMISSIVE CODE END
+		if(aux_zone)
+			var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
+			if (dropped)
+				aux_em = image(aux_em, dir = SOUTH)
+			. += aux_em
 
-	//No need to handle leg layering if dropped, we only face south anyways
+	// No need to handle leg layering if dropped, we only face south anyways
 	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
-		//Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
+		// Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		var/obj/item/bodypart/leg/leg_source = src
 		for(var/image/limb_image in .)
-			//remove the old, unmasked image
+			// Remove the old, unmasked image
 			. -= limb_image
-			//add two masked images based on the old one
+			// Add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image)
 
 	// And finally put bodypart_overlays on if not husked
 	if(is_husked)
 		return .
 
-	//Draw external organs like horns and frills
+	// Draw external organs like horns and frills
 	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
-		//Some externals have multiple layers for background, foreground and between
+
+		// Some externals have multiple layers for background, foreground and between
 		for(var/external_layer in overlay.all_layers)
-			if(overlay.layers & external_layer)
-				. += overlay.get_overlay(external_layer, src)
+			if(!(overlay.layers & external_layer))
+				continue
+
+			var/external_overlay = overlay.get_overlay(external_layer, src)
+			if (!dropped)
+				. += external_overlay
+				continue
+
+			if (!islist(external_overlay))
+				. += image(external_overlay, dir = SOUTH)
+				continue
+
+			for (var/mutable_appearance/actual_overlay as anything in external_overlay)
+				. += image(actual_overlay, dir = SOUTH)
+
 		for(var/datum/layer in .)
 			overlay.modify_bodypart_appearance(layer)
 	return .
@@ -1488,3 +1528,17 @@
 		return "metal"
 
 	return "error"
+
+/// Add a trait to the bodypart traits list, then applies the trait if necessary
+/obj/item/bodypart/proc/add_bodypart_trait(new_trait)
+	LAZYOR(bodypart_traits, new_trait)
+	if(isnull(owner))
+		return
+	ADD_TRAIT(owner, new_trait, bodypart_trait_source)
+
+/// Remove a trait from the bodypart traits list, then removes the trait if necessary
+/obj/item/bodypart/proc/remove_bodypart_trait(old_trait)
+	LAZYREMOVE(bodypart_traits, old_trait)
+	if(isnull(owner))
+		return
+	REMOVE_TRAIT(owner, old_trait, bodypart_trait_source)

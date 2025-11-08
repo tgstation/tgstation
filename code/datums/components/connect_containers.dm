@@ -1,6 +1,6 @@
 /// This component behaves similar to connect_loc_behalf, but it's nested and hooks a signal onto all MOVABLES containing this atom.
 /datum/component/connect_containers
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	dupe_mode = COMPONENT_DUPE_SELECTIVE
 
 	/// An assoc list of signal -> procpath to register to the loc this object is on.
 	var/list/connections
@@ -22,13 +22,13 @@
 	set_tracked(null)
 	return ..()
 
-/datum/component/connect_containers/InheritComponent(datum/component/component, original, atom/movable/tracked, list/connections)
+/datum/component/connect_containers/CheckDupeComponent(datum/component/connect_containers/new_component, atom/movable/tracked, list/connections)
 	// Not equivalent. Checks if they are not the same list via shallow comparison.
 	if(!compare_list(src.connections, connections))
-		stack_trace("connect_containers component attached to [parent] tried to inherit another connect_containers component with different connections")
-		return
+		return FALSE // Different set of connections.
 	if(src.tracked != tracked)
-		set_tracked(tracked)
+		set_tracked(tracked) // Different target for the same set of connections, track the new target.
+	return TRUE // No new component.
 
 /datum/component/connect_containers/proc/set_tracked(atom/movable/new_tracked)
 	if(tracked)

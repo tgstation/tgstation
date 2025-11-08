@@ -27,7 +27,7 @@
 	id = "c38"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3)
-	build_path = /obj/item/ammo_box/c38
+	build_path = /obj/item/ammo_box/speedloader/c38
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,

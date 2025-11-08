@@ -1,10 +1,11 @@
-#define BATON_BASH_COOLDOWN (3 SECONDS)
+#define WEAPON_BASH_COOLDOWN (3 SECONDS)
 
 /obj/item/shield
 	name = "shield"
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	abstract_type = /obj/item/shield
 	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK
 	force = 10
@@ -25,7 +26,7 @@
 	/// sound the shield makes when it breaks
 	var/shield_break_sound = 'sound/effects/bang.ogg'
 	/// baton bash cooldown
-	COOLDOWN_DECLARE(baton_bash)
+	COOLDOWN_DECLARE(weapon_bash)
 	/// is shield bashable?
 	var/is_bashable = TRUE
 	/// sound when a shield is bashed
@@ -42,6 +43,7 @@
 /obj/item/shield/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/disarm_attack)
+	AddElement(/datum/element/cuffable_item) //I mean, it has a closed handle, right?
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/effective_block_chance = final_block_chance
@@ -73,13 +75,14 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	if(!istype(tool, /obj/item/melee/baton) || !is_bashable)
+	if(!istype(tool, /obj/item/melee) || !is_bashable)
 		return .
-	if(!COOLDOWN_FINISHED(src, baton_bash))
+	if(!COOLDOWN_FINISHED(src, weapon_bash))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_warning("[user] bashes [src] with [tool]!"))
 	playsound(src, shield_bash_sound, 50, TRUE)
-	COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
+	user.manual_emote("bashes [src] with [tool]!")
+	COOLDOWN_START(src, weapon_bash, WEAPON_BASH_COOLDOWN)
+	user.Shake(3, 3, 0.5 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
@@ -343,7 +346,7 @@
 	var/effective_block_chance = final_block_chance
 	if(attack_type == OVERWHELMING_ATTACK)
 		effective_block_chance -= 25
-	
+
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/our_projectile = hitby
 
@@ -482,4 +485,4 @@
 	armor_type = /datum/armor/item_shield/improvised
 	block_sound = 'sound/items/trayhit/trayhit2.ogg'
 
-#undef BATON_BASH_COOLDOWN
+#undef WEAPON_BASH_COOLDOWN

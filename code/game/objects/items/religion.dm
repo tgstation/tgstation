@@ -299,6 +299,7 @@
 	icon_state = null
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	inhand_icon_state = null
+	abstract_type = /obj/item/clothing/head/helmet/plate/crusader/prophet
 	flags_1 = 0
 	armor_type = /datum/armor/crusader_prophet
 	worn_y_offset = 6
@@ -403,8 +404,8 @@
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."
-	force = 24
-	armour_penetration = 10
+	force = 30
+	armour_penetration = 15
 
 /obj/item/claymore/weak/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -9)

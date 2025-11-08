@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /proc/populate_spontaneous_fish_traits()
 	var/list/list = list()
-	for(var/trait_path as anything in GLOB.fish_traits)
+	for(var/trait_path in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_path]
 		if(isnull(trait.spontaneous_manifest_types))
 			continue
@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "If crossbred, offsprings will always be of the mate species, unless it also possess the trait."
 	inheritability = 0
 
-/datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/recessive/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_RECESSIVE, FISH_TRAIT_DATUM)
 

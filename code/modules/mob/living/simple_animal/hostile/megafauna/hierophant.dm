@@ -60,7 +60,7 @@ Difficulty: Hard
 	ranged_cooldown_time = 4 SECONDS
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
-	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
+	crusher_loot = /obj/item/crusher_trophy/vortex_talisman
 	wander = FALSE
 	gps_name = "Zealous Signal"
 	achievement_type = /datum/award/achievement/boss/hierophant_kill
@@ -366,14 +366,14 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(1, source))
 		var/obj/effect/temp_visual/hierophant/blast/damaging/B = new(t, src, FALSE)
 		B.damage = 30
-	animate(src, alpha = 0, time = 2, easing = EASE_OUT) //fade out
+	animate(src, alpha = 0, time = 2, easing = SINE_EASING|EASE_OUT) //fade out
 	SLEEP_CHECK_DEATH(1, src)
 	visible_message(span_hierophant_warning("[src] fades out!"))
 	ADD_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	SLEEP_CHECK_DEATH(2, src)
 	forceMove(T)
 	SLEEP_CHECK_DEATH(1, src)
-	animate(src, alpha = 255, time = 2, easing = EASE_IN) //fade IN
+	animate(src, alpha = 255, time = 2, easing = SINE_EASING|EASE_IN) //fade IN
 	SLEEP_CHECK_DEATH(1, src)
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, VANISHING_TRAIT)
 	visible_message(span_hierophant_warning("[src] fades in!"))
@@ -437,17 +437,14 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
 	if(health > 0 || stat == DEAD)
 		return
-	else
-		set_stat(DEAD)
-		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
-		visible_message(span_hierophant("\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\""))
-		visible_message(span_hierophant_warning("[src] shrinks, releasing a massive burst of energy!"))
-		var/list/stored_nearby = list()
-		for(var/mob/living/L in view(7,src))
-			stored_nearby += L // store the people to grant the achievements to once we die
-		hierophant_burst(null, get_turf(src), 10)
-		set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
-		..(force_grant = stored_nearby)
+
+	set_stat(DEAD)
+	blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
+	visible_message(span_hierophant("\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\""))
+	visible_message(span_hierophant_warning("[src] shrinks, releasing a massive burst of energy!"))
+	hierophant_burst(null, get_turf(src), 10)
+	set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/celebrate_kill(mob/living/L)
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))

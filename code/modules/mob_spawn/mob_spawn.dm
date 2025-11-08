@@ -53,7 +53,7 @@
 	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
-/obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/proc/special(mob/living/spawned_mob, mob/mob_possessor)
 	SHOULD_CALL_PARENT(TRUE)
 	if(faction)
 		spawned_mob.faction = faction
@@ -296,7 +296,7 @@
 			if(mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))
 				INVOKE_ASYNC(src, PROC_REF(create))
 
-/obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.death(TRUE)
 	spawned_mob.adjustOxyLoss(oxy_damage)
@@ -331,6 +331,7 @@
 		spawned_human.Drain()
 	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
 		spawned_human.cure_husk()
+	spawned_human.job = name
 
 /obj/effect/mob_spawn/corpse/human/equip(mob/living/carbon/human/spawned_human)
 	. = ..()
@@ -344,8 +345,7 @@
 		// Or on crew monitors
 		var/obj/item/clothing/under/sensor_clothes = spawned_human.w_uniform
 		if(istype(sensor_clothes))
-			sensor_clothes.sensor_mode = SENSOR_OFF
-			spawned_human.update_suit_sensors()
+			sensor_clothes.set_sensor_mode(SENSOR_OFF)
 
 //don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist
 /obj/effect/mob_spawn/corpse/human/damaged

@@ -106,8 +106,8 @@
 	var/backup_power_timer = 0
 	/// Paired with backup_power_timer. Records its remaining time when something happens to interrupt power regen
 	var/backup_power_time
-	/// Bolt lights show by default
-	var/lights = TRUE
+	/// Lights and sounds enabled by default
+	var/feedback = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
 	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
@@ -185,13 +185,19 @@
 	diag_hud_set_electrified()
 
 	// Click on the floor to close airlocks
-	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(drag_check)))
 
 	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+
+// if dragging, block 'Click on the floor to close airlocks'
+/obj/machinery/door/airlock/proc/drag_check(mob/user)
+	if (user.pulling)
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
@@ -504,6 +510,35 @@
 	return (security_level > 0)
 
 /**
+ * Checks if this door would be affected by any currently active RETA grants
+ * If a grant is active, return the authorized department
+ */
+/obj/machinery/door/airlock/proc/has_active_reta_access()
+	if(!CONFIG_GET(flag/reta_enabled))
+		return FALSE
+
+	if(!length(req_access) && !length(req_one_access))
+		return FALSE
+
+	// Check if this door belongs to a department providing access via RETA
+	for(var/target_dept in GLOB.reta_active_grants)
+		var/list/active_origins = GLOB.reta_active_grants[target_dept]
+		for(var/origin_dept in active_origins)
+			var/list/origin_dept_access = GLOB.reta_dept_grants[origin_dept]
+			if(!origin_dept_access)
+				continue
+
+			for(var/required_access in req_access)
+				if(required_access in origin_dept_access)
+					return target_dept
+
+			for(var/required_access in req_one_access)
+				if(required_access in origin_dept_access)
+					return target_dept
+
+	return FALSE
+
+/**
  * Set the airlock state to a new value, change the icon state
  * and run the associated animation if required.
  */
@@ -547,6 +582,8 @@
 				light_state = AIRLOCK_LIGHT_BOLTS
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
+			else if(has_active_reta_access())
+				light_state = AIRLOCK_LIGHT_RETA
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
@@ -565,7 +602,7 @@
 	else
 		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
-	if(lights && hasPower() && light_state)
+	if(feedback && hasPower() && light_state)
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
@@ -635,7 +672,8 @@
 			use_energy(50 JOULES)
 			playsound(src, soundin = doorClose, vol = 30, vary = TRUE)
 		if(DOOR_DENY_ANIMATION)
-			playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
+			if(feedback)
+				playsound(src, soundin = doorDeni, vol = 50, vary = FALSE, extrarange = 3)
 			addtimer(CALLBACK(src, PROC_REF(handle_deny_end)), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/proc/handle_deny_end()
@@ -706,6 +744,10 @@
 			. += "It looks a bit stronger."
 		else
 			. += "It looks very robust."
+
+	var/active_reta = has_active_reta_access()
+	if(active_reta)
+		. += span_nicegreen("Emergency Temporary Access is enabled for [EXAMINE_HINT(active_reta)].")
 
 	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += span_notice("Shift-click [src] to [ density ? "open" : "close"] it.")
@@ -914,7 +956,7 @@
 		security_level = AIRLOCK_SECURITY_PLASTEEL_O
 		return .
 	if(note)
-		if(user.CanReach(src))
+		if(IsReachableBy(user))
 			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
 		else //telekinesis
 			visible_message(span_notice("[tool] cuts down [note] from [src]."))
@@ -1122,7 +1164,7 @@
 			return
 
 		if(atom_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=1))
+			if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return
 			user.visible_message(span_notice("[user] begins welding the airlock."), \
 							span_notice("You begin repairing the airlock..."), \
@@ -1137,7 +1179,7 @@
 			to_chat(user, span_notice("The airlock doesn't need repairing."))
 
 /obj/machinery/door/airlock/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
-	if(!tool.tool_start_check(user, amount=1))
+	if(!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	user.visible_message(span_notice("[user] begins [welded ? "unwelding":"welding"] the airlock."), \
 		span_notice("You begin [welded ? "unwelding":"welding"] the airlock..."), \
@@ -1259,6 +1301,11 @@
 		prying_so_hard = FALSE
 		return
 
+	if(!isnull(tool))
+		if(SEND_SIGNAL(tool, COMSIG_TOOL_FORCE_OPEN_AIRLOCK, user, src) & COMPONENT_TOOL_DO_NOT_ALLOW_FORCE_OPEN)
+			prying_so_hard = FALSE
+			return
+
 	prying_so_hard = FALSE
 
 	if(check_electrified && shock(user, 100))
@@ -1309,10 +1356,9 @@
 	set_airlock_state(AIRLOCK_OPENING, animated = TRUE, force_type = forced)
 	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
 	sleep(transparent_delay)
-	set_opacity(0)
+	set_opacity(FALSE)
 	if(multi_tile)
 		filler.set_opacity(FALSE)
-	update_freelook_sight()
 	var/passable_delay = animation_segment_delay(AIRLOCK_OPENING_PASSABLE) - transparent_delay
 	sleep(passable_delay)
 	set_density(FALSE)
@@ -1399,7 +1445,6 @@
 		set_opacity(TRUE)
 		if(multi_tile)
 			filler.set_opacity(TRUE)
-	update_freelook_sight()
 	var/close_delay = animation_segment_delay(AIRLOCK_CLOSING_FINISHED) - unpassable_delay - opaque_delay
 	sleep(close_delay)
 	set_airlock_state(AIRLOCK_CLOSED, animated = FALSE)
@@ -1488,7 +1533,7 @@
 	if(!open())
 		set_airlock_state(AIRLOCK_CLOSED)
 	obj_flags |= EMAGGED
-	lights = FALSE
+	feedback = FALSE
 	locked = TRUE
 	loseMainPower()
 	loseBackupPower()
@@ -1683,7 +1728,7 @@
 	data["id_scanner"] = !aiDisabledIdScanner
 	data["emergency"] = emergency // access
 	data["locked"] = locked // bolted
-	data["lights"] = lights // bolt lights
+	data["feedback"] = feedback // lights and sounds
 	data["safe"] = safe // safeties
 	data["speed"] = normalspeed // safe speed
 	data["welded"] = welded // welded
@@ -1697,7 +1742,7 @@
 	wire["shock"] = !wires.is_cut(WIRE_SHOCK)
 	wire["id_scanner"] = !wires.is_cut(WIRE_IDSCAN)
 	wire["bolts"] = !wires.is_cut(WIRE_BOLTS)
-	wire["lights"] = !wires.is_cut(WIRE_BOLTLIGHT)
+	wire["feedback"] = !wires.is_cut(WIRE_FEEDBACK)
 	wire["safe"] = !wires.is_cut(WIRE_SAFETY)
 	wire["timing"] = !wires.is_cut(WIRE_TIMING)
 
@@ -1745,7 +1790,7 @@
 			toggle_bolt(usr)
 			. = TRUE
 		if("light-toggle")
-			lights = !lights
+			feedback = !feedback
 			update_appearance()
 			. = TRUE
 		if("safe-toggle")

@@ -117,13 +117,14 @@ export function RecipeLibrary(props: ReagentsProps) {
             onClick={() => setPage(Math.max(page - 1, 1))}
           />
           <NumberInput
+            tickWhileDragging
             width="25px"
             step={1}
             stepPixelSize={3}
             value={page}
             minValue={1}
             maxValue={pageIndexMax}
-            onDrag={(value) => setPage(value)}
+            onChange={(value) => setPage(value)}
           />
           <Button
             icon="plus"

@@ -34,10 +34,6 @@
 	///List of all Races that can be chosen, decided by its Initialize.
 	var/list/selectable_races = list()
 
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	update_choices()
-
 /obj/structure/mirror/Destroy()
 	mirror_options = null
 	selectable_races = null
@@ -58,6 +54,10 @@
 		update_signals = list(COMSIG_ATOM_BREAK), \
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
+	if(mapload)
+		find_and_hang_on_wall()
+	update_choices()
+	register_context()
 
 /obj/structure/mirror/proc/can_reflect(atom/movable/target)
 	///I'm doing it this way too, because the signal is sent before the broken variable is set to TRUE.
@@ -68,11 +68,6 @@
 	return TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
-
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	find_and_hang_on_wall()
-	register_context()
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
@@ -85,14 +80,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/attack_hand(mob/living/carbon/human/user)
 	. = ..()
-
 	if(. || !ishuman(user) || broken)
 		return TRUE
 
-	if(!istype(src, /obj/structure/mirror/magic) && !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return TRUE //no tele-grooming (if nonmagical)
-
-	return display_radial_menu(user)
+	display_radial_menu(user)
+	return TRUE
 
 /obj/structure/mirror/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstructable)
@@ -111,9 +103,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	new /obj/item/wallframe/mirror(loc, 1)
 
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
+	if(!can_use_mirror(user))
+		return
+
 	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
-	if(!pick)
-		return TRUE //get out
+	if(!pick || !can_use_mirror(user) || !pre_change(user, pick))
+		return
 
 	switch(pick)
 		if(CHANGE_HAIR)
@@ -129,45 +124,53 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		if(CHANGE_EYES)
 			change_eyes(user)
 
-	return display_radial_menu(user)
+	display_radial_menu(user)
+
+/// Ran before we dive into any changes, can be used to block changes by returning FALSE
+/obj/structure/mirror/proc/pre_change(mob/living/carbon/human/user, picked)
+	return TRUE
+
+/// Checks if the mob can continue to use the mirror
+/obj/structure/mirror/proc/can_use_mirror(mob/living/carbon/human/user)
+	return !QDELETED(src) && !QDELETED(user) && user.can_perform_action(src, FORBID_TELEKINESIS_REACH)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
 	if(beard_dresser.physique == FEMALE)
 		if(beard_dresser.facial_hairstyle == "Shaved")
 			balloon_alert(beard_dresser, "nothing to shave!")
-			return TRUE
+			return
 		var/shave_beard = tgui_alert(beard_dresser, "Shave your beard?", "Grooming", list("Yes", "No"))
-		if(shave_beard == "Yes")
+		if(shave_beard == "Yes" && can_use_mirror(beard_dresser))
 			beard_dresser.set_facial_hairstyle("Shaved", update = TRUE)
-		return TRUE
+		return
 
 	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 
-	if(isnull(new_style))
-		return TRUE
+	if(isnull(new_style) || !can_use_mirror(beard_dresser))
+		return
 
 	if(HAS_TRAIT(beard_dresser, TRAIT_SHAVED))
 		to_chat(beard_dresser, span_notice("If only growing back facial hair were that easy for you... The reminder makes you feel terrible."))
 		beard_dresser.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
-		return TRUE
+		return
 
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_hair(mob/living/carbon/human/hairdresser)
 	var/new_style = tgui_input_list(hairdresser, "Select a hairstyle", "Grooming", SSaccessories.hairstyles_list)
-	if(isnull(new_style))
-		return TRUE
+	if(isnull(new_style) || !can_use_mirror(hairdresser))
+		return
 	if(HAS_TRAIT(hairdresser, TRAIT_BALD))
 		to_chat(hairdresser, span_notice("If only growing back hair were that easy for you... The reminder makes you feel terrible."))
 		hairdresser.add_mood_event("bald_hair_day", /datum/mood_event/bald_reminder)
-		return TRUE
+		return
 
 	hairdresser.set_hairstyle(new_style, update = TRUE)
 
 /obj/structure/mirror/proc/change_name(mob/living/carbon/human/user)
 	var/newname = sanitize_name(tgui_input_text(user, "Who are we again?", "Name change", user.name, MAX_NAME_LEN), allow_numbers = TRUE) //It's magic so whatever.
-	if(!newname)
-		return TRUE
+	if(!newname || !can_use_mirror(user))
+		return
 	user.real_name = newname
 	user.name = newname
 	if(user.dna)
@@ -178,42 +181,46 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 // Erm ackshually the proper term is species. Get it right??
 /obj/structure/mirror/proc/change_race(mob/living/carbon/human/race_changer)
 	var/racechoice = tgui_input_list(race_changer, "What are we again?", "Race change", selectable_races)
-	if(isnull(racechoice))
-		return TRUE
+	if(isnull(racechoice) || !can_use_mirror(race_changer))
+		return
 
 	var/new_race_path = selectable_races[racechoice]
 	if(!ispath(new_race_path, /datum/species))
-		return TRUE
+		return
 
-	var/datum/species/newrace = new new_race_path()
+	var/datum/species/newrace = GLOB.species_prototypes[new_race_path]
 	var/attributes_desc = newrace.get_physical_attributes()
 
 	var/answer = tgui_alert(race_changer, attributes_desc, "Become a [newrace]?", list("Yes", "No"))
+	if(!answer || !can_use_mirror(race_changer))
+		return
 	if(answer != "Yes")
-		qdel(newrace)
 		change_race(race_changer) // try again
 		return
 
-	race_changer.set_species(newrace, icon_update = FALSE)
+	on_species_change(race_changer, newrace)
+	race_changer.set_species(new_race_path, icon_update = FALSE)
 	if(HAS_TRAIT(race_changer, TRAIT_USES_SKINTONES))
 		var/new_s_tone = tgui_input_list(race_changer, "Choose your skin tone", "Race change", GLOB.skin_tones)
-		if(new_s_tone)
+		if(new_s_tone && can_use_mirror(race_changer))
 			race_changer.skin_tone = new_s_tone
 			race_changer.dna.update_ui_block(/datum/dna_block/identity/skin_tone)
 	else if(HAS_TRAIT(race_changer, TRAIT_MUTANT_COLORS) && !HAS_TRAIT(race_changer, TRAIT_FIXED_MUTANT_COLORS))
 		var/new_mutantcolor = input(race_changer, "Choose your skin color:", "Race change", race_changer.dna.features[FEATURE_MUTANT_COLOR]) as color|null
-		if(new_mutantcolor)
+		if(new_mutantcolor && can_use_mirror(race_changer))
 			var/list/mutant_hsv = rgb2hsv(new_mutantcolor)
-
 			if(mutant_hsv[3] >= 50) // mutantcolors must be bright
 				race_changer.dna.features[FEATURE_MUTANT_COLOR] = sanitize_hexcolor(new_mutantcolor)
 				race_changer.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 			else
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
-				return TRUE
 
 	race_changer.update_body(is_creating = TRUE)
 	race_changer.update_mutations_overlay() // no hulk lizard
+
+/// Hook for mirrors to do stuff on species change
+/obj/structure/mirror/proc/on_species_change(mob/living/carbon/human/race_changer, datum/species/newrace)
+	return
 
 // possible Genders: MALE, FEMALE, PLURAL, NEUTER
 // possible Physique: MALE, FEMALE
@@ -221,6 +228,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/proc/change_sex(mob/living/carbon/human/sexy)
 
 	var/chosen_sex = tgui_input_list(sexy, "Become a..", "Confirmation", list("Warlock", "Witch", "Wizard", "Itzard")) // YOU try coming up with the 'it' version of wizard
+	if(!chosen_sex || !can_use_mirror(sexy))
+		return
 
 	switch(chosen_sex)
 		if("Warlock")
@@ -238,7 +247,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	var/chosen_physique = tgui_input_list(sexy, "Alter your physique as well?", "Confirmation", list("Warlock Physique", "Witch Physique", "Wizards Don't Need Gender"))
 
-	if(chosen_physique && chosen_physique != "Wizards Don't Need Gender")
+	if(chosen_physique && chosen_physique != "Wizards Don't Need Gender" && can_use_mirror(sexy))
 		sexy.physique = (chosen_physique == "Warlock Physique") ? MALE : FEMALE
 
 	sexy.dna.update_ui_block(/datum/dna_block/identity/gender)
@@ -248,8 +257,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
-	if(isnull(new_eye_color))
-		return TRUE
+	if(isnull(new_eye_color) || !can_use_mirror(user))
+		return
 	user.set_eye_color(sanitize_hexcolor(new_eye_color))
 	user.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
 	user.update_body()
@@ -367,41 +376,42 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
 	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
-	if(isnull(new_style))
-		return TRUE
+	if(isnull(new_style) || !can_use_mirror(beard_dresser))
+		return
+
 	beard_dresser.set_facial_hairstyle(new_style, update = TRUE)
-	return TRUE
 
 //Magic mirrors can change hair color as well
 /obj/structure/mirror/magic/change_hair(mob/living/carbon/human/user)
 	var/hairchoice = tgui_alert(user, "Hairstyle or hair color?", "Change Hair", list("Style", "Color"))
+	if(!can_use_mirror(user))
+		return
 	if(hairchoice == "Style") //So you just want to use a mirror then?
 		return ..()
 
 	var/new_hair_color = input(user, "Choose your hair color", "Hair Color", user.hair_color) as color|null
-
+	if(!new_hair_color || !can_use_mirror(user))
+		return
 	if(new_hair_color)
 		user.set_haircolor(sanitize_hexcolor(new_hair_color))
 		user.dna.update_ui_block(/datum/dna_block/identity/hair_color)
 	if(user.physique == MALE)
 		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
-		if(new_face_color)
+		if(new_face_color && can_use_mirror(user))
 			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
 			user.dna.update_ui_block(/datum/dna_block/identity/facial_color)
 
-/obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
-	. = ..()
-	if(.)
-		return TRUE
+/// Hook for mirrors to do stuff on species change
+/obj/structure/mirror/magic/on_species_change(mob/living/carbon/human/race_changer, datum/species/newrace)
+	if(HAS_TRAIT(race_changer, TRAIT_ADVANCEDTOOLUSER) && HAS_TRAIT(race_changer, TRAIT_LITERATE))
+		return
 
-	if(HAS_TRAIT(user, TRAIT_ADVANCEDTOOLUSER) && HAS_TRAIT(user, TRAIT_LITERATE))
-		return TRUE
-
-	to_chat(user, span_alert("You feel quite intelligent."))
+	to_chat(race_changer, span_alert("You feel quite intelligent."))
 	// Prevents wizards from being soft locked out of everything
 	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
-	user.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
-	return TRUE
+	race_changer.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
+
+/obj/structure/mirror/magic/lesser
 
 /obj/structure/mirror/magic/lesser/Initialize(mapload)
 	// Roundstart species don't have a flag, so it has to be set on Initialize.
@@ -419,32 +429,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	/// If the last user has altered anything about themselves
 	var/changed = FALSE
 
-/obj/structure/mirror/magic/pride/display_radial_menu(mob/living/carbon/human/user)
-	var/pick = show_radial_menu(user, src, mirror_options, user, radius = 36, require_near = TRUE, tooltips = TRUE)
-	if(!pick)
-		return TRUE //get out
-
+/obj/structure/mirror/magic/pride/pre_change(mob/living/carbon/human/user, picked)
+	. = ..()
 	changed = TRUE
-	switch(pick)
-		if(CHANGE_HAIR)
-			change_hair(user)
-		if(CHANGE_BEARD)
-			change_beard(user)
-		if(CHANGE_RACE)
-			change_race(user)
-		if(CHANGE_SEX) // sex: yes
-			change_sex(user)
-		if(CHANGE_NAME)
-			change_name(user)
-		if(CHANGE_EYES)
-			change_eyes(user)
-
-	return display_radial_menu(user)
 
 /obj/structure/mirror/magic/pride/attack_hand(mob/living/carbon/human/user)
 	changed = FALSE
 	. = ..()
-	if (!changed)
+	if (!changed || QDELETED(user) || !IN_GIVEN_RANGE(user, src, 3)) // 3 range gives a tiny bit of leeway if you try to run away after using it
 		return
 	user.visible_message(
 		span_bolddanger("The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!"),

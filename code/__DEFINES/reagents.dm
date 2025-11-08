@@ -27,8 +27,8 @@
 //Special properties
 ///If the holder is a sealed container - Used if you don't want reagent contents boiling out (plasma, specifically, in which case it only bursts out when at ignition temperatures)
 #define SEALED_CONTAINER (1<<10)
-/// Prevents spilling and splashing but does prevent pouring and drinking reagents like the badly named spillable var.
-#define SMART_CAP (1<<11)
+/// Prevents splashing for open reagent containers
+#define NO_SPLASH (1<<11)
 // Is an open container for all intents and purposes.
 #define OPENCONTAINER (REFILLABLE | DRAINABLE | TRANSPARENT)
 
@@ -45,7 +45,7 @@
 #define INJECT (1<<4)
 /// Exclusive to just plumbing. if set we use the round robin technique else we use proportional
 #define LINEAR (1<<5)
-/// Used by smoke or inhaling from a source. Smoke and cigarettes.
+/// Used by smoke or inhaling from a source. Smoke, cigarettes, and inhalers.
 #define INHALE (1<<6)
 
 ///Smoke machines are both touch and inhaling

@@ -59,11 +59,11 @@
 	if (!istype(tool, /obj/item/extinguisher_refill))
 		return
 
-	if (extinguishes_left == 5)
+	if (extinguishes_left == initial(extinguishes_left))
 		to_chat(user, span_notice("The inbuilt extinguisher is full."))
 		return ITEM_INTERACT_BLOCKING
 
-	extinguishes_left = 5
+	extinguishes_left = initial(extinguishes_left)
 	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
 	check_fire_state()
 	qdel(tool)
@@ -123,8 +123,8 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/clothing/head/helmet/space/plasmaman/click_alt(mob/user)
-	if(user.can_perform_action(src))
-		adjust_visor(user)
+	adjust_visor(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/head/helmet/space/plasmaman/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_welding_screen))

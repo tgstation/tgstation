@@ -380,8 +380,9 @@
 		return
 	if(!hook.can_be_hooked(target_atom))
 		return
+	if(!create_fishing_line(target_atom, user))
+		return
 	currently_hooked = target_atom
-	create_fishing_line(target_atom, user)
 	hook.hook_attached(target_atom, src)
 	SEND_SIGNAL(src, COMSIG_FISHING_ROD_HOOKED_ITEM, target_atom, user)
 
@@ -543,13 +544,13 @@
 	var/list/data = list()
 
 	data["bait_name"] = format_text(bait?.name)
-	data["bait_icon"] = bait != null ? icon2base64(icon(bait.icon, bait.icon_state)) : null
+	data["bait_icon"] = bait != null ? icon2base64(icon(bait.icon, bait.icon_state, frame = 1)) : null
 
 	data["line_name"] = format_text(line?.name)
-	data["line_icon"] = line != null ? icon2base64(icon(line.icon, line.icon_state)) : null
+	data["line_icon"] = line != null ? icon2base64(icon(line.icon, line.icon_state, frame = 1)) : null
 
 	data["hook_name"] = format_text(hook?.name)
-	data["hook_icon"] = hook != null ? icon2base64(icon(hook.icon, hook.icon_state)) : null
+	data["hook_icon"] = hook != null ? icon2base64(icon(hook.icon, hook.icon_state, frame = 1)) : null
 
 	data["busy"] = fishing_line
 

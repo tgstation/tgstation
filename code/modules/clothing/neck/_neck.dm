@@ -1,6 +1,7 @@
 /obj/item/clothing/neck
 	name = "necklace"
 	icon = 'icons/obj/clothing/neck.dmi'
+	abstract_type = /obj/item/clothing/neck
 	body_parts_covered = NECK
 	slot_flags = ITEM_SLOT_NECK
 	interaction_flags_click = NEED_DEXTERITY
@@ -248,7 +249,7 @@
 
 	var/heart_strength
 	var/pulse_pressure
-
+	var/having_heart_attack = carbon_patient.has_status_effect(/datum/status_effect/heart_attack)
 	var/heart_noises = TRUE
 
 	var/obj/item/organ/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
@@ -292,6 +293,8 @@
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
 					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
 					heart_noises = FALSE
+				else if(having_heart_attack)
+					render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
 				else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
 				else
@@ -304,28 +307,25 @@
 			user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)
 
 			//assess abdominal organs
-			if(body_part == BODY_ZONE_PRECISE_GROIN)
-				var/appendix_okay = TRUE
-				var/liver_okay = TRUE
-				if(!liver)//sanity check, ensure the patient actually has a liver
-					render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] liver would be.</span>\n"
+			var/appendix_okay = TRUE
+			var/liver_okay = TRUE
+			if(!liver)//sanity check, ensure the patient actually has a liver
+				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] liver would be.</span>\n"
+				liver_okay = FALSE
+			else
+				if(liver.damage > 10)
+					render_list += "<span class='danger ml-1'>[target.p_Their()] liver feels firm.</span>\n"//their liver is damaged
 					liver_okay = FALSE
-				else
-					if(liver.damage > 10)
-						render_list += "<span class='danger ml-1'>[target.p_Their()] liver feels firm.</span>\n"//their liver is damaged
-						liver_okay = FALSE
-
-				if(!appendix)//sanity check, ensure the patient actually has an appendix
-					render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
+			if(!appendix)//sanity check, ensure the patient actually has an appendix
+				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
+				appendix_okay = FALSE
+			else
+				if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
+					render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
+					target.emote("scream")
 					appendix_okay = FALSE
-				else
-					if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
-						render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
-						target.emote("scream")
-						appendix_okay = FALSE
-
-				if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
-					render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
+			if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
+				render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
 
 		if(BODY_ZONE_PRECISE_EYES)
 			balloon_alert(user, "can't do that!")
@@ -347,12 +347,14 @@
 			if(isnull(heart) || !heart.is_beating() || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
 				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
 			else
-				if(heart.damage > 10)
-					heart_strength = span_danger("irregular")//their heart is damaged
+				if(having_heart_attack)
+					heart_strength = span_danger("irregular")
+				else if(heart.damage > 10)
+					heart_strength = span_danger("weak")//their heart is damaged
 				else
 					heart_strength = span_notice("regular")//they're okay :D
 
-				if(carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY)
+				if((carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY) || having_heart_attack)
 					pulse_pressure = span_danger("thready")//low blood
 				else
 					pulse_pressure = span_notice("strong")//they're okay :D

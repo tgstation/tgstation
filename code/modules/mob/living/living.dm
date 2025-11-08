@@ -15,7 +15,6 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 	gravity_setup()
-	ADD_TRAIT(src, TRAIT_UNIQUE_IMMERSE, INNATE_TRAIT)
 
 /mob/living/prepare_huds()
 	..()
@@ -34,8 +33,9 @@
 		else
 			effect.be_replaced()
 
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+	clear_personalities() // must be done for the personalities which process
+
+	buckled?.unbuckle_mob(src,force=1)
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
@@ -44,7 +44,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
-	QDEL_LIST(quirks)
+	QDEL_LAZYLIST(quirks)
 	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
@@ -1055,7 +1055,7 @@
 
 	if(active_storage)
 		var/storage_is_important_recurisve = (active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
-		var/can_reach_active_storage = CanReach(active_storage.parent, view_only = TRUE)
+		var/can_reach_active_storage = active_storage.parent.IsReachableBy(src)
 		if(!storage_is_important_recurisve && !can_reach_active_storage)
 			active_storage.hide_contents(src)
 
@@ -1190,7 +1190,9 @@
 		var/mob/living/carbon/human/human_puller = pulledby
 		var/obj/item/bodypart/grabbing_bodypart = human_puller.get_active_hand()
 		if(grabbing_bodypart)
-			damage_on_resist_fail += rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)
+			damage_on_resist_fail += (rand(grabbing_bodypart.unarmed_damage_low, grabbing_bodypart.unarmed_damage_high)) + grabbing_bodypart.unarmed_grab_damage_bonus
+			effective_grab_state += grabbing_bodypart.unarmed_grab_state_bonus
+			escape_chance += grabbing_bodypart.unarmed_grab_escape_chance_bonus
 
 		//If our puller is a drunken brawler, they add more damage based on their own damage taken so long as they're drunk and treat the grab state as one higher
 		var/puller_drunkenness = human_puller.get_drunk_amount()
@@ -1254,7 +1256,7 @@
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
-				animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+				animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = SINE_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 				add_offsets(NEGATIVE_GRAVITY_TRAIT, y_add = 4)
 		if(NEGATIVE_GRAVITY + 0.01 to 0)
 			if(!istype(gravity_alert, /atom/movable/screen/alert/weightless))
@@ -1279,7 +1281,7 @@
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
-		animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+		animate(src, transform = flipped_matrix, time = 0.5 SECONDS, easing = SINE_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 		remove_offsets(NEGATIVE_GRAVITY_TRAIT)
 
 /mob/living/singularity_pull(atom/singularity, current_size)
@@ -1326,7 +1328,7 @@
 	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!GLOB.cameranet.checkCameraVis(src))
+	if(!SScameras.is_visible_by_cameras(src))
 		return FALSE
 	return TRUE
 
@@ -1375,7 +1377,7 @@
 		to_chat(src, span_warning("Your holochasis does not allow you to do this!"))
 		return FALSE
 
-	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !CanReach(target))
+	if(!(action_bitflags & BYPASS_ADJACENCY) && ((action_bitflags & NOT_INSIDE_TARGET) || !recursive_loc_check(src, target)) && !target.IsReachableBy(src))
 		if(HAS_SILICON_ACCESS(src) && !ispAI(src))
 			if(!(action_bitflags & ALLOW_SILICON_REACH)) // silicons can ignore range checks (except pAIs)
 				if(!(action_bitflags & SILENT_ADJACENCY))
@@ -1963,7 +1965,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
-	var/obj/item/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
 
@@ -2478,11 +2481,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(GRAB_KILL)
 			add_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown/kill)
 
-
-/// Only defined for carbons who can wear masks and helmets, we just assume other mobs have visible faces
-/mob/living/proc/is_face_visible()
-	return TRUE
-
 /// Sprite to show for photocopying mob butts
 /mob/living/proc/get_butt_sprite()
 	return null
@@ -2958,7 +2956,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /// Create a report string about how strong this person looks, generated in a somewhat arbitrary fashion
 /mob/living/proc/compare_fitness(mob/living/scouter)
-	if (HAS_TRAIT(src, TRAIT_UNKNOWN))
+	if (HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return span_warning("It's impossible to tell whether this person lifts.")
 
 	var/our_fitness_level = calculate_fitness()

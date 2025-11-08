@@ -8,7 +8,7 @@
 	abstract = TRUE
 	required_limb_biostate = BIO_BONE
 
-	required_wounding_types = list(WOUND_BLUNT)
+	required_wounding_type = WOUND_BLUNT
 
 	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
 

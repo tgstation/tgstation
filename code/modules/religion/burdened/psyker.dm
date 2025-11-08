@@ -8,6 +8,7 @@
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
 	w_class = WEIGHT_CLASS_NORMAL
+	shade_color = "blue"
 	var/does_it_blind = FALSE
 	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 
@@ -40,7 +41,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
-	head_flags = HEAD_DEBRAIN
+	head_flags = HEAD_DEBRAIN | HEAD_NO_DISFIGURE // ignore disfigurement by damage, as we're always disfigured
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
 /mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)

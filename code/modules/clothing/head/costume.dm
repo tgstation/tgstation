@@ -1,6 +1,7 @@
 /obj/item/clothing/head/costume
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	abstract_type = /obj/item/clothing/head/costume
 
 /obj/item/clothing/head/costume/powdered_wig
 	name = "powdered wig"
@@ -63,6 +64,7 @@
 	greyscale_config_inhand_right = /datum/greyscale_config/maid_headband_inhands_right
 	inhand_icon_state = "maid"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/chicken
 	name = "chicken suit head"
@@ -221,7 +223,7 @@
 	desc = "A delicate hairpin normally paired with traditional clothing"
 	icon_state = "hairpin_fancy"
 	inhand_icon_state = "hairpin_fancy"
-
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/snakeeater
 	name = "strange bandana"
@@ -229,6 +231,7 @@
 	icon_state = "snake_eater"
 	inhand_icon_state = null
 	clothing_traits = list(TRAIT_FISH_EATER)
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/head/costume/knight
 	name = "fake medieval helmet"
