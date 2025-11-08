@@ -132,9 +132,6 @@
 		return
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
 		return
-	if(triggers_safety_shutdown(morsel))
-		emergency_stop()
-		return
 
 	/// Queue of objects to process.
 	var/list/atom/to_eat = list(morsel)
@@ -199,12 +196,14 @@
 		crush_living(living_mob)
 		use_energy(active_power_usage)
 
+	var/nom_length = LAZYLEN(nom)
+
 	/**
 	 * we process the list in reverse so that atoms without parents/contents are deleted first & their parents are deleted next & so on.
 	 * this is the reverse order in which get_all_contents() returns its list
 	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
 	 */
-	for(var/i = LAZYLEN(nom); i >= 1; i--)
+	for(var/i = nom_length; i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
 
@@ -221,16 +220,20 @@
 
 		use_energy(active_power_usage / (full_power_usage ? 1 : 2))
 
-	if(LAZYLEN(nom) && sound)
-		playsound(src, item_recycle_sound, (50 + LAZYLEN(nom) * 5), TRUE, LAZYLEN(nom), ignore_walls = (LAZYLEN(nom) - 10)) // As a substitute for playing 50 sounds at once.
+	if(nom_length && sound)
+		var/sound_volume = clamp(nom_length * 5, 50, 100)
+		var/walls_ignoring = max(nom_length - 10, 0)
+		playsound(src, item_recycle_sound, sound_volume, TRUE, nom_length, ignore_walls = walls_ignoring) // As a substitute for playing 50 sounds at once.
 
 	if(not_eaten)
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+		var/sound_volume = clamp(not_eaten * 5, 50, 100)
+		var/walls_ignoring = max(not_eaten - 10, 0)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', sound_volume, FALSE, not_eaten, ignore_walls = walls_ignoring) // Ditto.
 
 /// Determines if the target should trigger an emergency stop due to safety concerns.
 /obj/machinery/recycler/proc/triggers_safety_shutdown(atom/movable/target)
 	if(obj_flags & EMAGGED)
-		return FALSE
+		return FALSE // emagged recycler ignores all safety checks.
 
 	if(isliving(target))
 		return TRUE
@@ -240,8 +243,7 @@
 
 	if(istype(target, /obj/item/mmi))
 		var/obj/item/mmi/mmi_thing = target
-		if(mmi_thing.brain)
-			return TRUE
+		return !!(mmi_thing.brain)
 
 	return FALSE
 
@@ -274,8 +276,6 @@
 	update_appearance()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/living_mob)
-	living_mob.forceMove(loc)
-
 	if(issilicon(living_mob))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 	else
