@@ -19,6 +19,10 @@
 	. = ..()
 	laws = new
 	laws.set_laws_config()
+	new /obj/item/circuitboard/aicore(loc)
+	new /obj/item/stack/cable_coil(loc, 5)
+	new /obj/item/mmi(loc)
+	new /obj/item/stack/sheet/rglass(loc, 2)
 
 /obj/structure/ai_core/update_icon_state()
 	switch(state)

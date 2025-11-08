@@ -31,92 +31,6 @@
 			return ..()
 	else
 		switch(state)
-			if(CORE_STATE_CABLED)
-				if(tool.tool_behaviour == TOOL_WIRECUTTER)
-					if(core_mmi)
-						balloon_alert(user, "remove the [AI_CORE_BRAIN(core_mmi)] first!")
-					else
-						tool.play_tool_sound(src)
-						balloon_alert(user, "cables removed")
-						state = CORE_STATE_SCREWED
-						update_appearance()
-						new /obj/item/stack/cable_coil(drop_location(), 5)
-					return
-
-				if(istype(tool, /obj/item/stack/sheet/rglass))
-					if(!core_mmi)
-						balloon_alert(user, "add a brain first!")
-						return
-					var/obj/item/stack/sheet/rglass/G = tool
-					if(G.get_amount() >= 2)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 2 SECONDS, target = src) && state == CORE_STATE_CABLED && G.use(2))
-							balloon_alert(user, "added glass panel")
-							state = CORE_STATE_GLASSED
-							update_appearance()
-					else
-						balloon_alert(user, "need two sheets of reinforced glass!")
-					return
-
-				if(istype(tool, /obj/item/ai_module))
-					if(!core_mmi)
-						balloon_alert(user, "no brain installed!")
-						return
-					if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
-						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
-						return
-					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
-						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
-						return
-					var/obj/item/ai_module/module = tool
-					module.install(laws, user)
-					return
-
-				if(istype(tool, /obj/item/mmi) && !core_mmi)
-					var/obj/item/mmi/M = tool
-					if(!M.brain_check(user))
-						var/install = tgui_alert(user, "This [AI_CORE_BRAIN(M)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(M)]", list("Yes", "No"))
-						if(install != "Yes")
-							return
-						if(M.brainmob && HAS_TRAIT(M.brainmob, TRAIT_SUICIDED))
-							to_chat(user, span_warning("[M.name] is completely useless!"))
-							return
-						if(!user.transferItemToLoc(M, src))
-							return
-						core_mmi = M
-						balloon_alert(user, "added [AI_CORE_BRAIN(core_mmi)] to frame")
-						update_appearance()
-						return
-
-					var/mob/living/brain/B = M.brainmob
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
-						if(!QDELETED(M))
-							to_chat(user, span_warning("This [M.name] does not seem to fit!"))
-						return
-					if(!user.transferItemToLoc(M,src))
-						return
-
-					core_mmi = M
-					balloon_alert(user, "added [AI_CORE_BRAIN(core_mmi)] to frame")
-					update_appearance()
-					return
-
-				if(tool.tool_behaviour == TOOL_CROWBAR && core_mmi)
-					tool.play_tool_sound(src)
-					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
-					if(remote_ai)
-						var/mob/living/silicon/ai/remoted_ai = remote_ai
-						remoted_ai.break_core_link()
-						if(!IS_MALF_AI(remoted_ai))
-							//don't pull back shunted malf AIs
-							remoted_ai.death(gibbed = TRUE, drop_mmi = FALSE)
-							///the drop_mmi param determines whether the MMI is dropped at their current location
-							///which in this case would be somewhere else, so we drop their MMI at the core instead
-							remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
-					core_mmi.forceMove(loc) //if they're malf, just drops a blank MMI, or if it's an incomplete shell
-					return					//it drops the mmi that was put in before it was finished
-
 			if(CORE_STATE_GLASSED)
 				if(tool.tool_behaviour == TOOL_CROWBAR)
 					tool.play_tool_sound(src)
@@ -186,13 +100,13 @@
 		if(CORE_STATE_EMPTY)
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CIRCUIT)
-			if(!tool.use_tool(src, user, 0 SECONDS, 1, 50))
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
 				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "board secured")
 			UPDATE_STATE(CORE_STATE_SCREWED)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_SCREWED)
-			if(!tool.use_tool(src, user, 0 SECONDS, 1, 50))
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_SCREWED)))
 				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "board unsecured")
 			UPDATE_STATE(CORE_STATE_CIRCUIT)
@@ -207,21 +121,66 @@
 		if(CORE_STATE_EMPTY)
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CIRCUIT)
-			if(!tool.use_tool(src, user, 0 SECONDS, 1, 50))
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
 				return ITEM_INTERACT_BLOCKING
 
-			circuit.forceMove(loc)
+			circuit.forceMove(drop_location())
 			UPDATE_STATE(CORE_STATE_EMPTY)
+			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_SCREWED)
+			balloon_alert(user, "won't budge!")
+			return ITEM_INTERACT_BLOCKING
+		if(CORE_STATE_CABLED)
+			if(!core_mmi)
+				return ITEM_INTERACT_BLOCKING
+
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
+				return ITEM_INTERACT_BLOCKING
+			if(remote_ai)
+				var/mob/living/silicon/ai/remoted_ai = remote_ai
+				remoted_ai.break_core_link()
+				if(!IS_MALF_AI(remoted_ai))	//don't pull back shunted malf AIs
+					remoted_ai.death(gibbed = TRUE, drop_mmi = FALSE)
+					///the drop_mmi param determines whether the MMI is dropped at their current location
+					///which in this case would be somewhere else, so we drop their MMI at the core instead
+					remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
+
+			core_mmi.forceMove(drop_location())
+			UPDATE_STATE(CORE_STATE_CABLED)
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wirecutter_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
 
+	switch(state)
+		if(CORE_STATE_EMPTY to CORE_STATE_CIRCUIT)
+			return ITEM_INTERACT_BLOCKING
+		if(CORE_STATE_CABLED)
+			if(core_mmi)
+				balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] in the way!")
+				return ITEM_INTERACT_BLOCKING
+
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || core_mmi)
+				return ITEM_INTERACT_BLOCKING
+
+			new /obj/item/stack/cable_coil(drop_location(), 5)
+			UPDATE_STATE(CORE_STATE_SCREWED)
+			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard/aicore))
 		return install_board(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
 	if(istype(tool, /obj/item/stack/cable_coil))
 		return add_cabling(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	if(istype(tool, /obj/item/mmi))
+		return install_mmi(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/ai_module))
+		return update_laws(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/stack/sheet/rglass))
+		return install_glass(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	return NONE
 
@@ -240,17 +199,75 @@
 	if(state != CORE_STATE_SCREWED)
 		return FALSE
 
-	if(!cable.get_amount() < 5)
+	if(cable.get_amount() < 5)
 		balloon_alert(user, "not enough cable!")
 		return FALSE
 
 	balloon_alert(user, "adding cable...")
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(!cable.use_tool(src, user, 2 SECONDS, 5, 50, CHECK_STATE_CALLBACK(CORE_STATE_SCREWED)))
 		return FALSE
 
-	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	UPDATE_STATE(CORE_STATE_CABLED)
+	return TRUE
+
+/obj/structure/ai_core/proc/install_mmi(mob/living/user, obj/item/mmi/mmi)
+	if(state != CORE_STATE_CABLED)
+		return FALSE
+
+	if(!mmi.brain_check(user))
+		var/wants_install = (tgui_alert(user, "This [AI_CORE_BRAIN(mmi)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(mmi)]", list("Yes", "No")) == "Yes")
+		if(!wants_install)
+			return FALSE
+		if(mmi.brainmob && HAS_TRAIT(mmi.brainmob, TRAIT_SUICIDED))
+			balloon_alert(user, "[mmi] is useless!")
+			return FALSE
+	else
+		var/mob/living/brain/mmi_brainmob = mmi.brainmob
+		if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(mmi_brainmob.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(mmi) && !QDELETED(user) && Adjacent(user)))
+			balloon_alert(user, "[mmi] won't fit!")
+			return FALSE
+
+	if(state != CORE_STATE_CABLED)
+		return FALSE
+	if(!user.transferItemToLoc(mmi, src))
+		return FALSE
+
+	core_mmi = mmi
+	UPDATE_STATE(CORE_STATE_CABLED)
+	return TRUE
+
+/obj/structure/ai_core/proc/update_laws(mob/living/user, obj/item/ai_module/module)
+	if(!core_mmi)
+		balloon_alert(user, "no brain installed!")
+		return FALSE
+	if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
+		balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
+		return FALSE
+	if(core_mmi.laws.id != DEFAULT_AI_LAWID)
+		balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
+		return FALSE
+
+	module.install(laws, user)
+	return TRUE
+
+/obj/structure/ai_core/proc/install_glass(mob/living/user, obj/item/stack/sheet/rglass/glass)
+	if(state != CORE_STATE_CABLED)
+		return FALSE
+
+	if(!core_mmi)
+		balloon_alert(user, "needs a processor!")
+		return FALSE
+
+	if(glass.get_amount() < 2)
+		balloon_alert(user, "not enough [glass.name]!")
+		return FALSE
+
+	// playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE
+	if(!glass.use_tool(src, user, 2 SECONDS, 2, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
+		return FALSE
+
+	// playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	UPDATE_STATE(CORE_STATE_GLASSED)
 	return TRUE
 
 #undef AI_CORE_BRAIN
