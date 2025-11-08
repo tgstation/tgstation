@@ -21,10 +21,6 @@
 		zlevels = null
 	src.zlevels = zlevels || SSmapping.levels_by_trait(ZTRAIT_STATION)
 
-	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_ROBOT, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_LARVA), PROC_REF(handle_generic_attack))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(handle_attack_hand))
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
-
 /datum/component/houlihan_teleport/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_ROBOT, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_LARVA), PROC_REF(handle_generic_attack))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(handle_attack_hand))
