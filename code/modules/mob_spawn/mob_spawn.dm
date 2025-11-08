@@ -254,7 +254,6 @@
 			if(allow_custom_character & GHOSTROLE_ALLOW_OTHER)
 				mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
 				spawned_mob.fully_replace_character_name(newname = old_name)
-				spawned_mob.fully_replace_character_name(newname = newname)
 			if(!(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || ishumanbasic(spawned_mob)))
 				spawned_mob.set_species(/datum/species/human)
 		if(mob_possessor.mind)
