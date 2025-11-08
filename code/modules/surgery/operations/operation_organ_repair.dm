@@ -309,7 +309,7 @@
 
 /datum/surgery_operation/organ/repair/ears
 	name = "ear surgery"
-	rnd_name = "Vitrectomy (Ear surgery)"
+	rnd_name = "Ototomy (Ear surgery)" // source: i made it up
 	desc = "Repair a patient's damaged ears to restore hearing."
 	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(
@@ -378,7 +378,7 @@
 
 /datum/surgery_operation/organ/repair/eyes
 	name = "eye surgery"
-	rnd_name = "Octotomy (Eye Surgery)" // source: i made it up
+	rnd_name = "Vitrectomy (Eye Surgery)"
 	desc = "Repair a patient's damaged eyes to restore vision."
 	operation_flags = parent_type::operation_flags & ~OPERATION_AFFECTS_MOOD
 	implements = list(
