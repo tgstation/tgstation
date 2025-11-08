@@ -85759,6 +85759,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/closet/crate/rcd,
 /turf/open/floor/wood,
 /area/station/command/eva)
 "xVy" = (

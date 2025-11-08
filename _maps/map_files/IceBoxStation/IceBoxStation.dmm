@@ -21216,6 +21216,9 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/structure/closet/crate/engineering{
+	name = "RCD crate"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fVo" = (
@@ -42986,10 +42989,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/warden)
 "meG" = (
-/obj/item/kirbyplants/random,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/structure/closet/crate/rcd,
 /turf/open/floor/iron/dark,
 /area/station/command/eva)
 "meH" = (

@@ -34178,10 +34178,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "kQP" = (
-/obj/structure/table,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
+/obj/structure/closet/crate/rcd,
 /turf/open/floor/iron,
 /area/station/command/eva)
 "kQR" = (

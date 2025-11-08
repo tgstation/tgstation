@@ -10183,19 +10183,11 @@
 /area/station/service/chapel)
 "dCu" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 14
-	},
 /obj/machinery/requests_console/directional/east{
 	department = "EVA";
 	name = "EVA Requests Console"
 	},
+/obj/structure/closet/crate/rcd,
 /turf/open/floor/iron/dark,
 /area/station/command/eva)
 "dCv" = (
@@ -32791,6 +32783,14 @@
 /obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/machinery/airalarm/directional/east,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 14
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark,
 /area/station/command/eva)
 "loa" = (
