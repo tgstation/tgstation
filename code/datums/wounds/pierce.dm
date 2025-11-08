@@ -131,13 +131,14 @@
 		to_chat(victim, span_green("The holes on your [limb.plaintext_zone] have [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
 		qdel(src)
 
-/datum/wound/pierce/bleed/check_grab_treatments(obj/item/I, mob/user)
-	if(I.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
-		return TRUE
+/datum/wound/pierce/bleed/check_grab_treatments(obj/item/tool, mob/user)
+	// if we're using something hot but not a cautery, we need to be aggro grabbing them first,
+	// so we don't try treating someone we're eswording
+	return tool.get_temperature()
 
-/datum/wound/pierce/bleed/treat(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		return tool_cauterize(I, user)
+/datum/wound/pierce/bleed/treat(obj/item/tool, mob/user)
+	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature())
+		tool_cauterize(tool, user)
 
 /datum/wound/pierce/bleed/on_xadone(power)
 	. = ..()
@@ -179,8 +180,7 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > 0)
-		return try_treating(I, user)
-	return TRUE
+		try_treating(I, user)
 
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE
