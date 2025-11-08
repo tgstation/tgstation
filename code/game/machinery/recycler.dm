@@ -76,7 +76,7 @@
 	return SUCCESSFUL_UNFASTEN
 
 /obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_pry_open(tool, close_after_pry = TRUE))
+	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
@@ -125,135 +125,142 @@
 	INVOKE_ASYNC(src, PROC_REF(eat), enterer)
 
 /obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
-	if(machine_stat & (BROKEN|NOPOWER))
-		return
-	if(safety_mode)
-		return
-	if(iseffect(morsel))
+	if(machine_stat & (BROKEN|NOPOWER) || safety_mode)
 		return
 	if(!isturf(morsel.loc))
-		return //I don't know how you called Crossed() but stop it.
+		stack_trace("on_entered() called with invalid location: [morsel.loc]") // I don't know how you called Entered() but stop it.
+		return
 	if(morsel.resistance_flags & INDESTRUCTIBLE)
 		return
-	if(morsel.flags_1 & HOLOGRAM_1)
-		visible_message(span_notice("[morsel] fades away!"))
-		qdel(morsel)
+	if(triggers_safety_shutdown(morsel))
+		emergency_stop()
 		return
 
+	/// Queue of objects to process.
 	var/list/atom/to_eat = list(morsel)
-
-	var/living_detected = FALSE //technically includes silicons as well but eh
+	/// Regular items to be recycled.
 	var/list/nom = list()
-	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
+	/// Living mobs to be crushed.
+	var/list/crunchy_nom = list() // Mobs have to be handled differently so they get a different list instead of checking them multiple times.
+	/// Count of items that couldn't be processed.
 	var/not_eaten = 0
 
-	while (to_eat.len)
-		var/atom/movable/thing = to_eat[1]
-		to_eat -= thing
+	while(LAZYLEN(to_eat))
+		var/atom/movable/thing = popleft(to_eat)
 
-		if (thing.flags_1 & HOLOGRAM_1)
+		if(triggers_safety_shutdown(thing))
+			emergency_stop()
+			return
+
+		if(thing.resistance_flags & INDESTRUCTIBLE)
+			if(!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
+				thing.forceMove(loc)
+			not_eaten++
+			continue
+
+		if(thing.flags_1 & HOLOGRAM_1)
+			for(var/atom/movable/hologram_content as anything in thing.contents)
+				hologram_content.forceMove(loc) // we shouldn't qdel() the non-holographic content of the hologram.
+			visible_message(span_notice("[thing] fades away!"))
 			qdel(thing)
 			continue
 
-		if (thing.resistance_flags & INDESTRUCTIBLE)
-			if (!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
-				thing.forceMove(loc)
-			not_eaten += 1
+		if(isliving(thing))
+			LAZYADD(crunchy_nom, thing)
+			if(!issilicon(thing))
+				LAZYADD(to_eat, thing.contents)
 			continue
 
-		if (isliving(thing))
-			living_detected = TRUE
-			crunchy_nom += thing
-			if (!issilicon(thing))
-				to_eat |= thing.contents
+		if(!isobj(thing))
+			not_eaten++
 			continue
 
-		if (!isobj(thing))
-			not_eaten += 1
-			continue
-
-		if (isitem(thing))
-			var/obj/item/as_item = thing
-			if (as_item.item_flags & ABSTRACT)
-				not_eaten += 1
+		if(isitem(thing))
+			var/obj/item/item_thing = thing
+			if(item_thing.item_flags & ABSTRACT)
+				not_eaten++
 				continue
 
-		// Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
-		// unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
-		if (iscloset(thing))
-			var/obj/structure/closet/as_closet = thing
-			if (as_closet.secure && as_closet.locked)
-				not_eaten += 1
+		if(iscloset(thing))
+			var/obj/structure/closet/closet_thing = thing
+			if(closet_thing.secure && closet_thing.locked) // Prevent blindly deconstructing locked secure closets (head closets, important departmental orders, etc.)
+				not_eaten++                                // unless they have already been unlocked to prevent exploiting the recycler to bypass closet access.
 				continue
 
-		if (istype(thing, /obj/item/organ/brain) || istype(thing, /obj/item/dullahan_relay))
-			living_detected = TRUE
+		LAZYADD(nom, thing)
+		LAZYADD(to_eat, thing.contents)
 
-		if (istype(thing, /obj/item/mmi))
-			var/obj/item/mmi/mmi = thing
-			if (!isnull(mmi.brain))
-				living_detected = TRUE
+	for(var/mob/living/living_mob in crunchy_nom)
+		if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
+			break
+		if(living_mob.incorporeal_move)
+			continue
 
-		nom += thing
-		to_eat |= thing.contents
-
-	if(living_detected) // First, check if we have any living beings detected.
-		if(obj_flags & EMAGGED)
-			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
-				if(!isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
-					continue
-
-				var/mob/living/living_mob = CRUNCH
-				if(living_mob.incorporeal_move)
-					continue
-
-				if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
-					break
-				crush_living(CRUNCH)
-				use_energy(active_power_usage)
-		else // Stop processing right now without eating anything.
-			emergency_stop()
-			return
+		crush_living(living_mob)
+		use_energy(active_power_usage)
 
 	/**
 	 * we process the list in reverse so that atoms without parents/contents are deleted first & their parents are deleted next & so on.
 	 * this is the reverse order in which get_all_contents() returns its list
 	 * if we delete an atom containing stuff then all its stuff are deleted with it as well so we will end recycling deleted items down the list and gain nothing from them
 	 */
-	for(var/i = length(nom); i >= 1; i--)
+	for(var/i = LAZYLEN(nom); i >= 1; i--)
 		if(!is_operational) //we ran out of power after recycling a large amount to items, time to stop
 			break
+
 		var/full_power_usage = TRUE
 		var/obj/nom_obj = nom[i]
-		if (isitem(nom_obj))
+
+		if(isitem(nom_obj))
 			// Whether or not items consume full power depends on if they produced a material when recycled.
 			full_power_usage = recycle_item(nom_obj)
 		else
 			// When a non-item is eaten, we deconstruct it with dismantled = FALSE so that
 			// it and its contents aren't just deleted. These always consume full power.
 			nom_obj.deconstruct(FALSE)
+
 		use_energy(active_power_usage / (full_power_usage ? 1 : 2))
 
-	if(nom.len && sound)
-		playsound(src, item_recycle_sound, (50 + nom.len * 5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+	if(LAZYLEN(nom) && sound)
+		playsound(src, item_recycle_sound, (50 + LAZYLEN(nom) * 5), TRUE, LAZYLEN(nom), ignore_walls = (LAZYLEN(nom) - 10)) // As a substitute for playing 50 sounds at once.
+
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', (50 + not_eaten * 5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 
-/obj/machinery/recycler/proc/recycle_item(obj/item/weapon)
-	. = FALSE
-	var/obj/item/grown/log/wood = weapon
-	if(istype(wood))
-		var/seed_modifier = 0
-		if(wood.seed)
-			seed_modifier = round(wood.seed.potency / 25)
-		new wood.plank_type(loc, 1 + seed_modifier)
-		. = TRUE
-	else
-		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100))
-		if(retrieved > 0) //item was salvaged i.e. deleted
-			materials.retrieve_all()
+/// Determines if the target should trigger an emergency stop due to safety concerns.
+/obj/machinery/recycler/proc/triggers_safety_shutdown(atom/movable/target)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	if(isliving(target))
+		return TRUE
+
+	if(isbrain(target) || istype(target, /obj/item/dullahan_relay))
+		return TRUE
+
+	if(istype(target, /obj/item/mmi))
+		var/obj/item/mmi/mmi_thing = target
+		if(mmi_thing.brain)
 			return TRUE
-	qdel(weapon)
+
+	return FALSE
+
+/obj/machinery/recycler/proc/recycle_item(obj/item/target)
+	if(istype(target, /obj/item/grown/log))
+		var/obj/item/grown/log/wood = target
+		var/seed_modifier = wood.seed ? round(wood.seed.potency / 25) : 0
+		new wood.plank_type(loc, 1 + seed_modifier)
+		qdel(target)
+		return TRUE
+
+	var/retrieved = materials.insert_item(target, multiplier = (amount_produced / 100))
+	if(retrieved > 0) //item was salvaged i.e. deleted
+		materials.retrieve_all()
+		qdel(target)
+		return TRUE
+
+	qdel(target)
+	return FALSE
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -274,16 +281,13 @@
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	if(iscarbon(living_mob))
-		if(living_mob.stat == CONSCIOUS)
-			living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
+	if(iscarbon(living_mob) && living_mob.stat == CONSCIOUS)
+		living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
 
 	if(!issilicon(living_mob))
 		add_mob_blood(living_mob)
 		bloody = TRUE
 
-	// Instantly lie down, also go unconscious from the pain, before you die.
-	living_mob.Unconscious(100)
 	living_mob.adjustBruteLoss(crush_damage)
 	update_appearance()
 
