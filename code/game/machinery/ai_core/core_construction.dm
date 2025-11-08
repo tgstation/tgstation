@@ -1,4 +1,5 @@
 #define AI_CORE_BRAIN(X) X.braintype == "Android" ? "brain" : "MMI"
+#define UPDATE_STATE(new_state) state = new_state; update_appearance(UPDATE_ICON_STATE)
 #define CHECK_STATE_CALLBACK(maintained_state) CALLBACK(src, PROC_REF(check_state), maintained_state)
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
@@ -30,16 +31,6 @@
 			return ..()
 	else
 		switch(state)
-			if(CORE_STATE_EMPTY)
-				if(istype(tool, /obj/item/circuitboard/aicore))
-					if(!user.transferItemToLoc(tool, src))
-						return
-					playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-					balloon_alert(user, "circuit board inserted")
-					update_appearance()
-					state = CORE_STATE_CIRCUIT
-					circuit = tool
-					return
 			if(CORE_STATE_CIRCUIT)
 				if(tool.tool_behaviour == TOOL_SCREWDRIVER)
 					tool.play_tool_sound(src)
@@ -194,8 +185,6 @@
 					return
 	return ..()
 
-/obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-
 /obj/structure/ai_core/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return NONE
@@ -220,5 +209,22 @@
 
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/circuitboard/aicore))
+		return install_board(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+
+	return NONE
+
+/obj/structure/ai_core/proc/install_board(mob/living/user, obj/item/circuitboard/aicore/circuit)
+	if(state != CORE_STATE_EMPTY)
+		return FALSE
+	if(!user.transferItemToLoc(circuit, src))
+		return FALSE
+
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	src.circuit = circuit
+	UPDATE_STATE(CORE_STATE_CIRCUIT)
+	return TRUE
 
 #undef AI_CORE_BRAIN
