@@ -2241,6 +2241,7 @@
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
 #include "code\game\machinery\ai_core\_core.dm"
+#include "code\game\machinery\ai_core\core_construction.dm"
 #include "code\game\machinery\camera\camera.dm"
 #include "code\game\machinery\camera\camera_construction.dm"
 #include "code\game\machinery\camera\motion.dm"
