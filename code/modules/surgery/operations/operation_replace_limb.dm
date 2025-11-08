@@ -26,7 +26,13 @@
 	return option
 
 /datum/surgery_operation/limb/replace_limb/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/bodypart/tool, operated_zone)
-	return limb.body_zone == tool.body_zone && surgeon.canUnEquip(tool)
+	if(!surgeon.canUnEquip(tool))
+		return FALSE
+	if(limb.body_zone != tool.body_zone)
+		return FALSE
+	if(!tool.can_attach_limb(limb.owner))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/replace_limb/state_check(obj/item/bodypart/limb)
 	return !HAS_TRAIT(limb.owner, TRAIT_NO_AUGMENTS) && !(limb.bodypart_flags & BODYPART_UNREMOVABLE)
@@ -46,9 +52,9 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You begin to augment [limb.owner]'s [limb] with [tool]..."),
-		span_notice("[surgeon] begins to augment [limb.owner]'s [limb] with [tool]."),
-		span_notice("[surgeon] begins to augment [limb.owner]'s [limb]."),
+		span_notice("You begin to augment [limb.owner]'s [limb.name] with [tool]..."),
+		span_notice("[surgeon] begins to augment [limb.owner]'s [limb.name] with [tool]."),
+		span_notice("[surgeon] begins to augment [limb.owner]'s [limb.name]."),
 	)
 	display_pain(limb.owner, "You feel a horrible pain in your [limb.plaintext_zone]!")
 
@@ -56,25 +62,27 @@
 	if(!surgeon.temporarilyRemoveItemFromInventory(tool))
 		return // should never happen
 
-	if(!tool.replace_limb(limb))
+	var/mob/living/patient = limb.owner // owner's about to be nulled
+	if(!tool.replace_limb(patient))
 		display_results(
 			surgeon,
-			limb.owner,
-			span_warning("You can't seem to fit [tool] onto [limb.owner]'s body!"),
-			span_warning("[surgeon] can't seem to fit [tool] onto [limb.owner]'s body!"),
-			span_warning("[surgeon] can't seem to fit [tool] onto [limb.owner]'s body!"),
+			patient,
+			span_warning("You can't seem to fit [tool] onto [patient]'s body!"),
+			span_warning("[surgeon] can't seem to fit [tool] onto [patient]'s body!"),
+			span_warning("[surgeon] can't seem to fit [tool] onto [patient]'s body!"),
 		)
+		tool.forceMove(patient.drop_location())
 		return // could possibly happen
 
-	if(tool.check_for_frankenstein(limb.owner))
+	if(tool.check_for_frankenstein(patient))
 		tool.bodypart_flags |= BODYPART_IMPLANTED
 
 	display_results(
 		surgeon,
-		limb.owner,
-		span_notice("You successfully augment [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] successfully augments [limb.owner]'s [limb.plaintext_zone] with [tool]!"),
-		span_notice("[surgeon] finishes augmenting [limb.owner]'s [limb.plaintext_zone]."),
+		patient,
+		span_notice("You successfully augment [patient]'s [limb.plaintext_zone] with [tool]!"),
+		span_notice("[surgeon] successfully augments [patient]'s [limb.plaintext_zone] with [tool]!"),
+		span_notice("[surgeon] finishes augmenting [patient]'s [limb.plaintext_zone]."),
 	)
-	display_pain(limb.owner, "Your [limb.plaintext_zone] comes awash with synthetic sensation!", TRUE)
-	log_combat(surgeon, limb.owner, "augmented", addition = "by giving him new [tool]")
+	display_pain(patient, "Your [limb.plaintext_zone] comes awash with synthetic sensation!", TRUE)
+	log_combat(surgeon, patient, "augmented", addition = "by giving him new [tool]")

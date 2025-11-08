@@ -46,19 +46,22 @@
 			var/obj/item/realtool = potential_tool
 			// for surgical tools specifically, we have some special handling
 			if(realtool.item_flags & SURGICAL_TOOL)
-				// first try to treat wounds - that way you can always cauterize or suture a cut
+				// first try to treat wounds - this allows people to, say, cauterize wounds mid surgery
 				var/obj/item/bodypart/operating = patient.get_bodypart(operating_zone)
 				for(var/datum/wound/wound as anything in shuffle(operating?.wounds))
 					if(wound.try_treating(realtool, src))
 						return ITEM_INTERACT_SUCCESS
-				// if they have no wounds to treat, give a specialized feedback message
+				// now if the targeted limb isn't prepped for surgery, i suppose we can allow an attack
+				if(operating && !HAS_TRAIT(operating, TRAIT_PREPARED_FOR_SURGERY))
+					return NONE
+				// at this point we can be relatively sure they messed up so let's give a feedback message...
 				if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
 					patient.balloon_alert(src, "operation site is obstructed!")
 				else if(patient.body_position != LYING_DOWN)
 					patient.balloon_alert(src, "not lying down!")
 				else
 					patient.balloon_alert(src, "nothing to do with [realtool.name]!")
-				// then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
+				//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
 				return ITEM_INTERACT_BLOCKING
 
 		// but for every other item, we continue to strike the mob

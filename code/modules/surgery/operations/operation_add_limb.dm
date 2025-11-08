@@ -58,7 +58,6 @@
 	// Operate on the chest but target another zone
 	if(!HAS_TRAIT(chest, TRAIT_READY_TO_OPERATE) || real_operated_zone == BODY_ZONE_CHEST)
 		return FALSE
-	// The actual missing limb has to be... missing
 	if(chest.owner.get_bodypart(real_operated_zone))
 		return FALSE
 	return ..()
@@ -66,13 +65,16 @@
 /datum/surgery_operation/prosthetic_replacement/snowflake_check_availability(obj/item/bodypart/chest, mob/living/surgeon, obj/item/tool, operated_zone)
 	if(!surgeon.canUnEquip(tool))
 		return FALSE
+	var/real_operated_zone = deprecise_zone(operated_zone)
 	// check bodyshape compatibility for real bodyparts
 	if(isbodypart(tool))
 		var/obj/item/bodypart/new_limb = tool
+		if(real_operated_zone != new_limb.body_zone)
+			return FALSE
 		if(!new_limb.can_attach_limb(chest.owner))
 			return FALSE
 	// arbitrary prosthetics can only be used on arms (for now)
-	else if(!(deprecise_zone(operated_zone) in GLOB.arm_zones))
+	else if(!(real_operated_zone in GLOB.arm_zones))
 		return FALSE
 	return TRUE
 
