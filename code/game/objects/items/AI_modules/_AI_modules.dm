@@ -178,7 +178,7 @@
 		return
 	for(var/mob/living/bot in assoc_to_values(rack.linked_mobs))
 		// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
-		if(bot.AmountStun() > 5 SECONDS || IS_MALF_AI(bot))
+		if(bot.AmountStun() > 5 SECONDS || rack.is_rack_stun_immune(bot))
 			continue
 		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Core module removed. Recalculating directives..."))

@@ -220,11 +220,19 @@
 
 /obj/machinery/ai_law_rack/on_deconstruction(disassembled)
 	for(var/mob/living/bot in assoc_to_values(linked_mobs))
-		if(bot.AmountStun() > 5 SECONDS || IS_MALF_AI(bot))
+		if(bot.AmountStun() > 5 SECONDS || is_rack_stun_immune(bot))
 			continue
 		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Rack connection lost. Recalculating directives..."))
 		unlink_silicon(bot)
+
+/// Checks if the passed bot is immune to the stun from major lawset changes
+/obj/machinery/ai_law_rack/proc/is_rack_stun_immune(mob/living/bot)
+	if(IS_MALF_AI(bot))
+		return TRUE
+	if(!is_valid_z_level(get_turf(bot), get_turf(src)))
+		return TRUE
+	return FALSE
 
 /obj/machinery/ai_law_rack/dump_inventory_contents()
 	. = ..()
