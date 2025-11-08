@@ -31,30 +31,6 @@
 			return ..()
 	else
 		switch(state)
-			if(CORE_STATE_GLASSED)
-				if(tool.tool_behaviour == TOOL_CROWBAR)
-					tool.play_tool_sound(src)
-					balloon_alert(user, "removed glass panel")
-					state = CORE_STATE_CABLED
-					update_appearance()
-					new /obj/item/stack/sheet/rglass(loc, 2)
-					return
-
-				if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-					if(suicide_check())
-						to_chat(user, span_warning("The brain installed is completely useless."))
-						return
-					tool.play_tool_sound(src)
-
-					var/atom/alert_source = src
-					if(core_mmi.brainmob?.mind)
-						alert_source = ai_structure_to_mob() || alert_source
-					else
-						state = CORE_STATE_FINISHED
-						update_appearance()
-					alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
-					return
-
 			if(CORE_STATE_FINISHED)
 				if(istype(tool, /obj/item/aicard))
 					return //handled by /obj/structure/ai_core/transfer_ai()
@@ -111,7 +87,20 @@
 			balloon_alert(user, "board unsecured")
 			UPDATE_STATE(CORE_STATE_CIRCUIT)
 			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_GLASSED)
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_GLASSED)))
+				return ITEM_INTERACT_BLOCKING
+			if(suicide_check())
+				balloon_alert(user, "nothing happened?")
+				return ITEM_INTERACT_BLOCKING
 
+			var/atom/alert_source = src
+			if(core_mmi.brainmob?.mind)
+				alert_source = ai_structure_to_mob() || alert_source
+			else
+				UPDATE_STATE(CORE_STATE_FINISHED)
+			alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
+			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -133,9 +122,9 @@
 		if(CORE_STATE_CABLED)
 			if(!core_mmi)
 				return ITEM_INTERACT_BLOCKING
-
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
 				return ITEM_INTERACT_BLOCKING
+
 			if(remote_ai)
 				var/mob/living/silicon/ai/remoted_ai = remote_ai
 				remoted_ai.break_core_link()
@@ -146,6 +135,13 @@
 					remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
 
 			core_mmi.forceMove(drop_location())
+			UPDATE_STATE(CORE_STATE_CABLED)
+			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_GLASSED)
+			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_GLASSED)))
+				return ITEM_INTERACT_BLOCKING
+
+			new /obj/item/stack/sheet/rglass(drop_location(), 2)
 			UPDATE_STATE(CORE_STATE_CABLED)
 			return ITEM_INTERACT_SUCCESS
 

@@ -110,7 +110,7 @@
 	if(state < CORE_STATE_FINISHED)
 		return construction_item_interaction(user, tool, modifiers)
 
-	EMPTY_BLOCK_GUARD
+	return NONE
 
 /// Exists to be used for callbacks.
 /obj/structure/ai_core/proc/check_state(state_to_check)
