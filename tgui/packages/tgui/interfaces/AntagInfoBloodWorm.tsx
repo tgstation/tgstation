@@ -25,28 +25,40 @@ export const AntagInfoBloodWorm = (props) => {
             <Stack.Item>
               <Section fill title="Powers">
                 <LabeledList>
+                  <LabeledList.Item label="Space Immunity">
+                  You are immune to low temperature, low pressure and don't need to breathe.
+                  Your hosts don't have to breathe either, but their bodies remain vulnerable to space.
+                  </LabeledList.Item>
                   <LabeledList.Item label="Blood Consumption">
-                  You can consume blood to heal and grow. Only blood consumed via Leech Blood or Invade Corpse will count towards growth,
-                  and growth contribution is scaled per blood type. You can detect blood information by examining living targets, or at a glance via your HUD.
+                  You can grow by using Leech Blood or Invade Corpse to consume blood,
+                  but overfeeding on one blood type yields diminishing returns.
+                  You can see blood levels at a glance using your HUD,
+                  and examining targets yields advanced information on their blood.
                   </LabeledList.Item>
                   <LabeledList.Item label="Growth Stages">
-                  As you grow, you will gain and lose various abilities. Hatchlings can ventcrawl, juveniles can spit blood and adults have ridiculous offensive power.
-                  Each growth stage requires an incubation period in a cocoon and a lot of consumed blood. You can track this in your status tab.
+                  You can track your growth in your status tab. Once you're fully grown,
+                  you can incubate in a cocoon to reach the next growth stage.
+                  Reaching juvenile lets you spit blood, and adults are extremely strong.
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Ventcrawling">
+                  Hatchlings can ventcrawl. Once you grow up, you lose the ability to ventcrawl,
+                  becoming reliant on breaking doors and the ID cards of your hosts to move around.
+                  Secure a good spot or a host before maturing.
                   </LabeledList.Item>
                   <LabeledList.Item label="Reproduction">
                   Once you enter your final stage of growth as an adult, you can reproduce to create 4 new hatchlings, in exchange for reverting into one yourself.
                   </LabeledList.Item>
                   <LabeledList.Item label="Parasitism">
-                  As a highly advanced blood parasite engineered by the Syndicate, you have the supernatural ability to turn into blood upon command.
+                  You have the supernatural ability to turn into blood upon command.
                   This allows you to enter a corpse, taking it as your host.
                   </LabeledList.Item>
                   <LabeledList.Item label="Regeneration">
-                  Both inside and outside of a host, you have potent regeneration abilities. Your body slowly heals from damage over time, even while in a host.
-                  While in a host, you can insert organs into them by simply right-clicking on them with an organ in hand. Inject Blood heals almost everything, from organ damage to injuries.
+                  You slowly heal over time, taking roughly 5 minutes to fully heal from near-death. While in a host, this translates to recovering blood volume over time.
+                  You can inject blood into the damaged tissues of your host to rapidly heal them in exchange for your own health.
                   </LabeledList.Item>
                   <LabeledList.Item label="Life Support">
-                  While inside of a host, your host doesn't need a heart, a set of lungs nor a liver to survive. Lungs are still useful for speaking, and livers are good for booze and chems.
-                  If you end up gutting your host by hitting them a bit too hard, you can reinsert their organs by picking them up and right-clicking on your host with them. This even works for cybernetics.
+                  While inside of a host, your host doesn't need vital organs to survive, except for a brain. Lungs let you speak, and a liver lets you process chems.
+                  You can insert organs into your host by picking them up and right-clicking on your host with them. This works for cybernetics too.
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
@@ -60,11 +72,11 @@ export const AntagInfoBloodWorm = (props) => {
                   </LabeledList.Item>
                   <LabeledList.Item label="Bleeding">
                   While in a host, you are transformed entirely into blood. This renders you extremely vulnerable to bleeding wounds.
-                  Any bloodloss while inside of a host will directly damage you and your hosts can also bleed even while dead.
+                  When your host bleeds, it directly damages you, and your hosts continue bleeding even while dead.
                   </LabeledList.Item>
                   <LabeledList.Item label="Inferior Biology">
-                  Hosts don't have your advanced eyesight and hearing, leaving them vulnerable to ordinary threats like darkness and flashbangs.
-                  Still, you can always evacuate your host in a pinch, which is especially effective if you're an adult, since a surprise attack from one is very lethal.
+                  Your hosts lack your advanced senses, leaving them vulnerable to ordinary impediments like darkness and flashbangs.
+                  You can use human tools like night-vision goggles, eye protection and ear protection to circumvent this.
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
@@ -72,38 +84,41 @@ export const AntagInfoBloodWorm = (props) => {
             <Stack.Item>
               <Section fill title="Tips">
                 <LabeledList>
+                  <LabeledList.Item label="Stealthy Healing">
+                  Using medbay to heal your host instead of spending blood will avoid leaving your host with deathly pale skin.
+                  As a bonus, you get to have more blood for spitting and healing later.
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Surprise Worms">
+                  You can leave your host to surprise attack people, which is especially effective as an adult. Be sure to block
+                  off any paths of escape first, as it takes 3 seconds to leave your host.
+                  </LabeledList.Item>
                   <LabeledList.Item label="Meatshields">
                   Hosts are practically meatshields for you, just keep track of any fires, bleeding wounds, cremators or gibbing mechanisms.
                   Remember to also heal your host periodically using Inject Blood whenever they get too low.
                   </LabeledList.Item>
                   <LabeledList.Item label="Medbay Buffet">
-                  Medbay's blood freezers are practically all-you-can-eat buffets for you! Multiple blood types and high volumes grant you a lot of growth.
-                  Just be careful of any nearby crew while breaking the freezer and drinking the contents dry. Your drinking noises don't go through walls.
+                  Medbay's blood freezers are all-you-can-eat buffets for you! Multiple blood types and high volumes grant you a lot of growth.
+                  Be careful of nearby crew, as breaking freezers can alert them through walls.
                   </LabeledList.Item>
                   <LabeledList.Item label="Fast Food">
-                  Any time you need to leech from the blood of a humanoid corpse, you can instead use Invade Corpse to consume all of it at once.
-                  Note that blood gained while already inside of a host doesn't count towards your growth at all. Consuming duplicated blood does, but blood type falloff still applies.
+                  You can enter corpses to consume all of their blood extremely quickly. Blood gained while already in a host doesn't affect your growth.
+                  Duplicated blood does, but you'll need multiple blood types for your growth.
                   </LabeledList.Item>
-                  <LabeledList.Item label="Sec and Worm">
-                  Whenever security is on your tail, just escape into maintenance or hide in a host! You have night vision and no territory, meaning you can go anywhere.
-                  After reaching the juvenile stage, you can break doors and other highly resistant obstacles with your bare teeth. Nowhere is safe from you!
+                  <LabeledList.Item label="Nomadic">
+                  You have night vision and no territory, meaning you can thrive anywhere. Hatchlings can ventcrawl, while
+                  juveniles and adults can break doors and other obstacles with their bare teeth. Nowhere is safe from you!
                   </LabeledList.Item>
                   <LabeledList.Item label="Team Up">
-                  Other members of your species are almost always ready to work with you, especially when they're your offspring. You have your own language, Wormspeak,
-                  which can't be understood by others. You can also easily tell if someone is a blood worm host via a HUD icon.
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Surprise Worms">
-                  There's no way for outsiders to tell when you're in a host, apart from contextual clues like them knowing that your host died to you.
-                  While you can't use burst spit in a host, you can surprise attack people by leaving your host and using your raw power to secure kills.
-                  Hiding in a host is an effective way of remaining undetected.
+                  Your kin often share your goals and are willing to work together. You have your own language, Wormspeak,
+                  which is only understandable to your kin. You can tell if someone is a blood worm host via a HUD icon.
                   </LabeledList.Item>
                   <LabeledList.Item label="Jail Time">
-                  Sec got you and you're jailed? You can break any restraints on your host, including lockers and such, by right-clicking with Spit Blood active.
-                  You can also just leave your host behind and use your worm body to either ventcrawl out or break straight through the door, optionally re-entering them after.
+                  Sec got you? You can break any restraints on your host, including lockers and such, by right-clicking with Spit Blood active.
+                  You can also leave your host and ventcrawl out or break through the door.
                   </LabeledList.Item>
                   <LabeledList.Item label="Jumpstart">
-                  As an adult, it can be incredibly useful to gather a bunch of corpses using your strong abilities. Once gathered, any hatchlings you create will immediately have hosts available.
-                  This can also be used to jumpstart the growth of your hatchlings all the way to juveniles or even adulthood.
+                  As an adult, you can gather corpses for your offspring to use as hosts. Gathering blood can jumpstart the growth of your
+                  hatchlings to juveniles, or even send them all the way to adulthood.
                   </LabeledList.Item>
                 </LabeledList>
               </Section>

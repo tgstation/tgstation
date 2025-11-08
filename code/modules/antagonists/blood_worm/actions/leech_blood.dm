@@ -77,7 +77,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living(mob/living/basic/blood_worm/leech, mob/living/target)
 	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
 
-	if (!leech_living_start_check(leech, target, feedback = TRUE))
+	if (!leech_living_start_check(leech, target))
 		return FALSE
 
 	leech.visible_message(
@@ -125,7 +125,8 @@
 		target.blood_volume = max(0, target.blood_volume - leech_rate)
 		leech.ingest_blood(original_volume - target.blood_volume, blood_type.id)
 
-		target.adjustOxyLoss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
+		if (target.stat != DEAD)
+			target.adjustOxyLoss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
 
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
@@ -135,16 +136,21 @@
 	StartCooldown()
 	return TRUE
 
-/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target, feedback = FALSE)
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (HAS_TRAIT(target, TRAIT_NOBLOOD) || target.blood_volume <= 0 || !target.get_bloodtype())
-		if (feedback)
-			target.balloon_alert(leech, "no blood!")
+		target.balloon_alert(leech, "no blood!")
+		return FALSE
+	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
+		target.balloon_alert(leech, "occupied by our kin!")
 		return FALSE
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (HAS_TRAIT(target, TRAIT_NOBLOOD) || target.blood_volume <= 0 || !target.get_bloodtype())
 		target.balloon_alert(leech, "no more blood!")
+		return FALSE
+	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
+		target.balloon_alert(leech, "occupied by our kin!")
 		return FALSE
 	if (!leech.Adjacent(target) || leech.pulling != target || leech.grab_state < GRAB_AGGRESSIVE)
 		target.balloon_alert(leech, "grab lost!")
