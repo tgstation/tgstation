@@ -52,7 +52,7 @@
 					if(wound.try_treating(realtool, src))
 						return ITEM_INTERACT_SUCCESS
 				// now if the targeted limb isn't prepped for surgery, i suppose we can allow an attack
-				if(operating && !HAS_TRAIT(operating, TRAIT_PREPARED_FOR_SURGERY))
+				if(operating && !HAS_TRAIT(operating, TRAIT_READY_TO_OPERATE))
 					return NONE
 				// at this point we can be relatively sure they messed up so let's give a feedback message...
 				if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
