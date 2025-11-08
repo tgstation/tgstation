@@ -99,8 +99,31 @@
 			table.computer = src
 			break
 
-/obj/machinery/computer/operating/ui_state(mob/user)
-	return GLOB.standing_state
+/obj/machinery/computer/operating/ui_status(mob/user, datum/ui_state/state)
+	. = ..()
+	if(isliving(user))
+		. = min(., ui_check(user))
+
+/// Checks for special ui state conditions
+/obj/machinery/computer/operating/proc/ui_check(mob/living/user)
+	// lower states should be checked first
+
+	// normally machines revert to "disabled" when non-operational,
+	// but here we outright close it so people can't gleam extra info
+	if(!is_operational)
+		return UI_CLOSE
+	// if you're knocked out, ie anesthetic... definitely a no-go
+	if(user.stat >= UNCONSCIOUS || HAS_TRAIT(user, TRAIT_KNOCKEDOUT))
+		return UI_CLOSE
+	// the patient itself should be blocked from viewing the computer
+	if(user.body_position == LYING_DOWN)
+		return (user.loc == table?.loc) ? UI_CLOSE : UI_DISABLED
+	// we have a tight range check so people can't spy on surgeries from across the room
+	// likewise it'd be pretty lame if you could see what was going on while incapacitated
+	if(get_dist(user, src) > 2 || user.incapacitated)
+		return UI_DISABLED
+
+	return UI_INTERACTIVE
 
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
