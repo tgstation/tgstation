@@ -271,7 +271,6 @@ const PatientStateNextOperationsView = (
                 <Stack.Item key={operation.name}>
                   <Button
                     fluid
-                    disabled={!operation.show_in_list}
                     tooltip={
                       <Stack vertical>
                         {!!operation.priority && (
@@ -294,9 +293,11 @@ const PatientStateNextOperationsView = (
                               : 'pins operation to'
                           } the top.`}
                         </Stack.Item>
-                        <Stack.Item italic fontSize="0.9rem">
-                          Right click opens operation info.
-                        </Stack.Item>
+                        {!!operation.show_in_list && (
+                          <Stack.Item italic fontSize="0.9rem">
+                            Right click opens operation info.
+                          </Stack.Item>
+                        )}
                       </Stack>
                     }
                     tooltipPosition="bottom"
@@ -308,8 +309,10 @@ const PatientStateNextOperationsView = (
                           : undefined
                     }
                     onContextMenu={() => {
-                      setTab(ComputerTabs.OperationCatalog);
-                      setSearchText(operation.name);
+                      if (operation.show_in_list) {
+                        setTab(ComputerTabs.OperationCatalog);
+                        setSearchText(operation.name);
+                      }
                     }}
                     onClick={() => {
                       setPinnedOperations(
