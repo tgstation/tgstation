@@ -12,6 +12,8 @@
 #define STOP_OVERLAY_UPDATE_BODY_PARTS (1<<2)
 /// Nutrition changed last life tick, so we should bulk update this tick
 #define QUEUE_NUTRITION_UPDATE (1<<3)
+/// Blood volume has changed since the last [proc/update_blood_effects] call
+#define QUEUE_BLOOD_UPDATE (1<<4)
 
 /// Getter for a mob/living's lying angle, otherwise protected
 #define GET_LYING_ANGLE(mob) (UNLINT(mob.lying_angle))

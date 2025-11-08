@@ -291,11 +291,17 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	taste_description = "sweetness and salt"
-	var/last_added = 0
-	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10 //So that normal blood regeneration can continue with salglu active
-	var/extra_regen = 0.25 // in addition to acting as temporary blood, also add about half this much to their actual blood per second
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+	/// Add about this much extra blood regen per second.
+	var/extra_regen = 0.25
+
+	/// Add many extra units of blood per unit of saline.
+	var/dilution_per_unit = 5
+
+	/// Doesn't dilute blood beyond this point.
+	var/dilution_cap = BLOOD_VOLUME_NORMAL
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -307,14 +313,6 @@
 	// Only suppliments base blood types
 	if(blood_type?.restoration_chem != /datum/reagent/iron)
 		return need_mob_update ? UPDATE_MOB_HEALTH : null
-	if(last_added)
-		affected_mob.blood_volume -= last_added
-		last_added = 0
-	if(affected_mob.blood_volume < maximum_reachable) //Can only up to double your effective blood level.
-		var/amount_to_add = min(affected_mob.blood_volume, 5*volume)
-		var/new_blood_level = min(affected_mob.blood_volume + amount_to_add, maximum_reachable)
-		last_added = new_blood_level - affected_mob.blood_volume
-		affected_mob.blood_volume = new_blood_level + (extra_regen * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
