@@ -221,7 +221,7 @@
 	if(user_species.inherent_respiration_type == RESPIRATION_PLASMA) // Stupid flammable skeletons...
 		user.started_as_observer = null
 	else if(user.started_as_observer && allow_custom_character)
-		if(tgui_alert(user, "Because you haven't taken a role so far, you may spawn in as [(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || user_species == /datum/species/human) ? "" : "a human version of"] your customized character. Would you like to?", "Custom Character", list("Yes", "No")) != "Yes")
+		if(tgui_alert(user, "Because you haven't taken a role so far, you may spawn in as [(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || user_species == /datum/species/human) ? "" : "a human version of"] your customized character with a random name. Would you like to?", "Custom Character", list("Yes", "No")) != "Yes")
 			user.started_as_observer = null
 
 	var/created = create(user)
