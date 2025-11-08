@@ -288,6 +288,8 @@
 		add_mob_blood(living_mob)
 		bloody = TRUE
 
+	// Instantly lie down, also go unconscious from the pain, before you die.
+	living_mob.Unconscious(100)
 	living_mob.adjustBruteLoss(crush_damage)
 	update_appearance()
 
