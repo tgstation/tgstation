@@ -118,3 +118,7 @@
 		return
 
 	return ..()
+
+/datum/reagent/inverse/cryostylane/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/freeze)
