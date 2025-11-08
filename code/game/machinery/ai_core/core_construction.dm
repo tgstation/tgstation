@@ -31,19 +31,6 @@
 			return ..()
 	else
 		switch(state)
-			if(CORE_STATE_CIRCUIT)
-				if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-					tool.play_tool_sound(src)
-					balloon_alert(user, "board screwed into place")
-					state = CORE_STATE_SCREWED
-					update_appearance()
-					return
-				if(tool.tool_behaviour == TOOL_CROWBAR)
-					tool.play_tool_sound(src)
-					balloon_alert(user, "circuit board removed")
-					state = CORE_STATE_EMPTY
-					circuit.forceMove(loc)
-					return
 			if(CORE_STATE_SCREWED)
 				if(tool.tool_behaviour == TOOL_SCREWDRIVER && circuit)
 					tool.play_tool_sound(src)
@@ -209,6 +196,38 @@
 
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	switch(state)
+		if(CORE_STATE_EMPTY)
+			return ITEM_INTERACT_BLOCKING
+		if(CORE_STATE_CIRCUIT)
+			if(!tool.use_tool(src, user, 0 SECONDS, 1, 50))
+				return ITEM_INTERACT_BLOCKING
+			balloon_alert(user, "board secured")
+			UPDATE_STATE(CORE_STATE_SCREWED)
+			return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	switch(state)
+		if(CORE_STATE_EMPTY)
+			return ITEM_INTERACT_BLOCKING
+		if(CORE_STATE_CIRCUIT)
+			if(!tool.use_tool(src, user, 0 SECONDS, 1, 50))
+				return ITEM_INTERACT_BLOCKING
+
+			circuit.forceMove(loc)
+			UPDATE_STATE(CORE_STATE_EMPTY)
+			return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/wirecutter_act(mob/living/user, obj/item/tool)
+
 
 /obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard/aicore))
