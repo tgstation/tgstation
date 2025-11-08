@@ -21,7 +21,7 @@
 /obj/structure/signpost/LateInitialize()
 	// This is here cause we wanna be super sure zlevels is properly initialized
 	if(teleports)
-		AddElement(/datum/element/houlihan_teleport, question, zlevels)
+		AddComponent(/datum/component/houlihan_teleport, question, zlevels)
 
 /* ----------------- */
 
