@@ -111,8 +111,6 @@ const ConfigRow = (props: ConfigRowProps) => {
   const { label, content, onClick, ...rest } = props;
   const { tooltip = '', selected = false } = rest;
 
-  console.log('ConfigRow render:', { label, content, selected });
-
   return (
     <Table.Row
       className="candystripe"
@@ -132,12 +130,9 @@ const ConfigRow = (props: ConfigRowProps) => {
           textAlign: 'right',
         }}
       >
-        <Button
-          content={content}
-          tooltip={tooltip}
-          onClick={onClick}
-          selected={!!selected}
-        />
+        <Button tooltip={tooltip} onClick={onClick} selected={!!selected}>
+          {content}
+        </Button>
       </Table.Cell>
     </Table.Row>
   );
@@ -447,7 +442,7 @@ const PointSection = (props: {
                         tooltip="Toggle filter usage"
                       />
                       <ConfigRow
-                        label="Alternative Worker Action"
+                        label="Alt Worker Action"
                         content={editingPoint.worker_use_rmb ? 'TRUE' : 'FALSE'}
                         onClick={() =>
                           adjustPoint(editingPoint.id, 'toggle_worker_rmb')
@@ -455,7 +450,7 @@ const PointSection = (props: {
                         tooltip="Toggle RMB-like attack"
                       />
                       <ConfigRow
-                        label="Worker Combat Stance"
+                        label="Combat Stance"
                         content={
                           editingPoint.worker_combat_mode ? 'TRUE' : 'FALSE'
                         }
@@ -481,7 +476,7 @@ const PointSection = (props: {
                           onClick={() =>
                             adjustPoint(
                               editingPoint.id,
-                              'ycle_post_interaction',
+                              'cycle_post_interaction',
                             )
                           }
                           tooltip="Cycle what to do when no interaction is avaliable"
@@ -560,9 +555,7 @@ const PointSection = (props: {
                       disabled={index === 0}
                       onClick={() =>
                         index > 0 &&
-                        adjustPoint(editingPoint.id, 'priority_move_up', {
-                          name: setting.name,
-                        })
+                        adjustPoint(editingPoint.id, 'priority_move_up', index)
                       }
                     />
                   </Table.Cell>

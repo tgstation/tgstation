@@ -575,7 +575,7 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
-		point_data["throw_range"] = throw_range
+		point_data["throw_range"] = point.throw_range
 
 		var/list/settings_list_pick = list()
 		for(var/datum/manipulator_priority/pr_pick in point.interaction_priorities)
@@ -605,7 +605,8 @@
 		point_data["overflow_status"] = point.overflow_status
 		point_data["worker_use_rmb"] = point.worker_use_rmb
 		point_data["worker_combat_mode"] = point.worker_combat_mode
-		point_data["throw_range"] = throw_range
+		point_data["throw_range"] = point.throw_range
+		point_data["use_post_interaction"] = point.use_post_interaction
 
 		var/list/settings_list_drop = list()
 		for(var/datum/manipulator_priority/pr_drop in point.interaction_priorities)
@@ -722,6 +723,10 @@
 
 		if("cycle_throw_range")
 			target_point.throw_range = cycle_value(target_point.throw_range, list(1, 2, 3, 4, 5, 6, 7))
+			return TRUE
+
+		if("cycle_post_interaction")
+			target_point.use_post_interaction = cycle_value(target_point.use_post_interaction, list(POST_INTERACTION_DROP_AT_POINT, POST_INTERACTION_DROP_AT_MACHINE, POST_INTERACTION_DROP_NEXT_FITTING, POST_INTERACTION_WAIT))
 			return TRUE
 
 		if("add_atom_filter_from_held")

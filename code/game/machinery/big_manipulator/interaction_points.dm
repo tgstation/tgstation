@@ -204,16 +204,16 @@
 
 /// Moves the priority for a given index 1 step higher.
 /datum/interaction_point/proc/move_priority_up_by_index(index)
-	if(index == 1)
+	if(!index) // also handles index being 0
 		return FALSE
 
-	interaction_priorities.Swap(index, index - 1)
+	interaction_priorities.Swap(index, index + 1)
 
 	return TRUE
 
 /// Toggles the priority's `active` param. Sets to TRUE if `reset` is TRUE.
 /datum/interaction_point/proc/tick_priority_by_index(index, reset = FALSE)
-	var/datum/manipulator_priority/target_priority = interaction_priorities[index]
+	var/datum/manipulator_priority/target_priority = interaction_priorities[index + 1]
 
 	if(reset)
 		target_priority.active = TRUE
