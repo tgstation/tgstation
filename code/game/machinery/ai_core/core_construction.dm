@@ -31,25 +31,6 @@
 			return ..()
 	else
 		switch(state)
-			if(CORE_STATE_SCREWED)
-				if(tool.tool_behaviour == TOOL_SCREWDRIVER && circuit)
-					tool.play_tool_sound(src)
-					balloon_alert(user, "circuit board unfastened")
-					state = CORE_STATE_CIRCUIT
-					update_appearance()
-					return
-				if(istype(tool, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/C = tool
-					if(C.get_amount() >= 5)
-						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 2 SECONDS, target = src) && state == CORE_STATE_SCREWED && C.use(5))
-							balloon_alert(user, "added cables to frame.")
-							state = CORE_STATE_CABLED
-							update_appearance()
-					else
-						balloon_alert(user, "need five lengths of cable!")
-					return
 			if(CORE_STATE_CABLED)
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					if(core_mmi)
@@ -210,6 +191,13 @@
 			balloon_alert(user, "board secured")
 			UPDATE_STATE(CORE_STATE_SCREWED)
 			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_SCREWED)
+			if(!tool.use_tool(src, user, 0 SECONDS, 1, 50))
+				return ITEM_INTERACT_BLOCKING
+			balloon_alert(user, "board unsecured")
+			UPDATE_STATE(CORE_STATE_CIRCUIT)
+			return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
@@ -232,6 +220,8 @@
 /obj/structure/ai_core/proc/construction_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/circuitboard/aicore))
 		return install_board(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/stack/cable_coil))
+		return add_cabling(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 	return NONE
 
@@ -244,6 +234,23 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	src.circuit = circuit
 	UPDATE_STATE(CORE_STATE_CIRCUIT)
+	return TRUE
+
+/obj/structure/ai_core/proc/add_cabling(mob/living/user, obj/item/stack/cable_coil/cable)
+	if(state != CORE_STATE_SCREWED)
+		return FALSE
+
+	if(!cable.get_amount() < 5)
+		balloon_alert(user, "not enough cable!")
+		return FALSE
+
+	balloon_alert(user, "adding cable...")
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if(!cable.use_tool(src, user, 2 SECONDS, 5, 50, CHECK_STATE_CALLBACK(CORE_STATE_SCREWED)))
+		return FALSE
+
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	UPDATE_STATE(CORE_STATE_CABLED)
 	return TRUE
 
 #undef AI_CORE_BRAIN
