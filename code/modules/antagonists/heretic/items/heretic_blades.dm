@@ -54,7 +54,7 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	if(heretic_datum?.unlimited_blades)
 		return
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
@@ -168,7 +168,7 @@
 	. = ..()
 	if(!infused || target == user || !isliving(target))
 		return
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/mob/living/living_target = target
 	if(!heretic_datum)
 		return
