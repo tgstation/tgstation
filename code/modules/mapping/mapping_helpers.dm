@@ -702,7 +702,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/obj_flag
 	name = "Obj Flag Injector"
-	icon_state = "objflag_helper"
+	icon_state = "objflag"
 	var/inject_flags = NONE
 
 /obj/effect/mapping_helpers/atom_injector/obj_flag/inject(atom/target)
