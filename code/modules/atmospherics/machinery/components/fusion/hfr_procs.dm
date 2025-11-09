@@ -560,7 +560,7 @@
 			epicenter = loc,
 			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
 			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
-			log = TRUE
+			emp_source = src
 			)
 
 	qdel(src)

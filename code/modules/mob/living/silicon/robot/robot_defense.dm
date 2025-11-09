@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!tool.use_tool(src, user, delay = 5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 	else
-		if(!tool.use_tool(src, user, delay = 0 SECONDS, amount = 1, volume = 50))
+		if(!tool.use_tool(src, user, delay = 0.5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 
 	adjustBruteLoss(-30)

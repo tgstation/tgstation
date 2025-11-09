@@ -553,9 +553,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/can_lay_cable()
 	return can_have_cabling() && underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
 
-/turf/proc/visibilityChanged()
-	GLOB.cameranet.updateVisibility(src)
-
 /turf/proc/burn_tile()
 	return
 

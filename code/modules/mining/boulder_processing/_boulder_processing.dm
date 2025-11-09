@@ -103,6 +103,8 @@
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE
+	if(istype(mover, /obj/item/stack/sheet))
+		return TRUE
 	if(istype(mover, /obj/item/boulder))
 		return can_process_boulder(mover)
 	if(isgolem(mover))
@@ -350,8 +352,8 @@
 				rejected_mats[possible_mat] = quantity
 				continue
 			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
-			if(!silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
-				rejected_mats[possible_mat] = quantity
+			if(isnull(silo_materials.silo) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
+				new possible_mat.sheet_type(drop_location(), floor(quantity / SHEET_MATERIAL_AMOUNT))
 
 		//puts back materials that couldn't be processed
 		chosen_boulder.set_custom_materials(rejected_mats, refining_efficiency)

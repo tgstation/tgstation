@@ -346,6 +346,20 @@
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/cup/bottle/epinephrine,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5;
+	pixel_x = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5;
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5;
+	pixel_y = 4;
+	pixel_x = -3
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -795,18 +809,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/chemistry)
 "gv" = (
-/obj/structure/closet/crate,
-/obj/item/vending_refill/snack{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/vending_refill/snack{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/vending_refill/coffee,
-/obj/item/vending_refill/cola,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/kitchen/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "gO" = (
@@ -2003,9 +2008,11 @@
 	},
 /area/ruin/syndicate_lava_base/medbay)
 "qA" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/bar)
+/obj/machinery/wall_healer/free/directional/north,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/ruin/syndicate_lava_base/medbay)
 "qN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2218,7 +2225,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "tB" = (
@@ -2330,7 +2336,8 @@
 /area/ruin/syndicate_lava_base/bar)
 "vo" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/duct,
+/obj/structure/table/reinforced,
+/obj/machinery/microwave,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "vy" = (
@@ -2394,7 +2401,6 @@
 	ailock = 1;
 	control_area = "/area/ruin/syndicate_lava_base/main";
 	dir = 1;
-	icon_state = "control_kill";
 	lethal = 1;
 	name = "Base turret controls";
 	pixel_y = 30;
@@ -2469,8 +2475,9 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "xX" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/food/chocolatebar,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "ye" = (
@@ -2613,7 +2620,42 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/cargo)
 "zy" = (
-/obj/machinery/duct,
+/obj/structure/closet/crate/freezer{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/rationpack,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/food/canned/beans,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 0;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "zC" = (
@@ -2670,6 +2712,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/syndicate_access,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "Ab" = (
@@ -3157,8 +3200,8 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/syndicate_lava_base/main)
 "GG" = (
-/obj/machinery/microwave,
 /obj/structure/table/reinforced,
+/obj/machinery/processor,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "GI" = (
@@ -3455,7 +3498,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "KX" = (
@@ -3789,6 +3831,11 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/syndicate_lava_base/arrivals)
+"Qp" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/wall_healer/free/directional/south,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/main)
 "Qu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -3866,19 +3913,18 @@
 /turf/open/floor/engine/plasma,
 /area/ruin/syndicate_lava_base/engineering)
 "RG" = (
-/obj/structure/sink/kitchen/directional/west,
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
-	req_access = null
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
+/obj/item/storage/box/donkpockets{
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /obj/item/storage/box/donkpockets{
-	pixel_x = 2
+	pixel_y = 0;
+	pixel_x = 0
 	},
 /obj/item/storage/box/donkpockets{
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = -2;
-	pixel_y = 6
+	pixel_x = 0;
+	pixel_y = 0
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
@@ -3911,9 +3957,6 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "SN" = (
-/obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/condiment/enzyme,
-/obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
@@ -4318,36 +4361,9 @@
 /turf/open/floor/engine/co2,
 /area/ruin/syndicate_lava_base/engineering)
 "Xz" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/rationpack,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/food/canned/beans,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
-/obj/item/reagent_containers/cup/glass/waterbottle/large,
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance{
+	req_access = null
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "XE" = (
@@ -4517,8 +4533,18 @@
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/cargo)
 "ZA" = (
-/obj/structure/reagent_dispensers/plumbed,
 /obj/machinery/light/small/directional/north,
+/obj/structure/closet/crate,
+/obj/item/vending_refill/snack{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/vending_refill/snack{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/cola,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/bar)
 "ZH" = (
@@ -5753,7 +5779,7 @@ Mr
 EC
 jd
 IX
-he
+Qp
 hz
 UX
 Xi
@@ -5865,9 +5891,9 @@ Vj
 BH
 rV
 jy
-qA
-gv
 mN
+gv
+jZ
 tA
 SN
 jy
@@ -6067,7 +6093,7 @@ hz
 wx
 ha
 kQ
-ln
+qA
 lJ
 pW
 lI

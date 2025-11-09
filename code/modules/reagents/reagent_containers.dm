@@ -424,3 +424,6 @@
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/is_chem_container()
+	return is_open_container() && !(item_flags & ABSTRACT) && !(flags_1 & HOLOGRAM_1)

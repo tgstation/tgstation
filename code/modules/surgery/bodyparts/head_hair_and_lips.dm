@@ -3,7 +3,6 @@
 /// Part of `update_limb()`, basically does all the head specific icon stuff.
 /obj/item/bodypart/head/proc/update_hair_and_lips(dropping_limb, is_creating)
 	var/mob/living/carbon/human/human_head_owner = owner
-	var/datum/species/owner_species = human_head_owner?.dna.species
 
 	//HIDDEN CHECKS START
 	hair_hidden = FALSE
@@ -43,18 +42,40 @@
 
 	if(!is_creating || !owner)
 		return
+	copy_appearance_from(human_head_owner)
 
-	lip_style = human_head_owner.lip_style
-	lip_color = human_head_owner.lip_color
-	hairstyle = human_head_owner.hairstyle
-	hair_alpha = owner_species.hair_alpha
-	hair_color = human_head_owner.hair_color
-	facial_hairstyle = human_head_owner.facial_hairstyle
-	facial_hair_alpha = owner_species.facial_hair_alpha
-	facial_hair_color = human_head_owner.facial_hair_color
-	fixed_hair_color = owner_species.get_fixed_hair_color(human_head_owner) //Can be null
-	gradient_styles = human_head_owner.grad_style.Copy()
-	gradient_colors = human_head_owner.grad_color.Copy()
+/obj/item/bodypart/head/proc/copy_appearance_from(mob/living/carbon/human/target, overwrite_eyes = FALSE)
+	var/datum/species/target_species = target.dna.species
+
+	lip_style = target.lip_style
+	lip_color = target.lip_color
+	hairstyle = target.hairstyle
+	hair_alpha = target_species.hair_alpha
+	hair_color = target.hair_color
+	facial_hairstyle = target.facial_hairstyle
+	facial_hair_alpha = target_species.facial_hair_alpha
+	facial_hair_color = target.facial_hair_color
+	fixed_hair_color = target_species.get_fixed_hair_color(target) //Can be null
+	gradient_styles = target.grad_style.Copy()
+	gradient_colors = target.grad_color.Copy()
+	var/obj/item/organ/eyes/peepers = locate() in src
+	if(peepers)
+		if(overwrite_eyes || isnull(initial(peepers.eye_color_left)))
+			peepers.eye_color_left = target.eye_color_left
+		if(overwrite_eyes || isnull(initial(peepers.eye_color_right)))
+			peepers.eye_color_right = target.eye_color_right
+
+	if(HAS_TRAIT(target, TRAIT_USES_SKINTONES))
+		skin_tone = target.skin_tone
+	else if(HAS_TRAIT(target, TRAIT_MUTANT_COLORS))
+		skin_tone = ""
+		if(target_species.fixed_mut_color)
+			species_color = target_species.fixed_mut_color
+		else
+			species_color = target.dna.features["mcolor"]
+	else
+		skin_tone = ""
+		species_color = ""
 
 /obj/item/bodypart/head/proc/get_hair_and_lips_icon(dropped)
 	SHOULD_CALL_PARENT(TRUE)

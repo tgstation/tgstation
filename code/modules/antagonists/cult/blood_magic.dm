@@ -183,7 +183,7 @@
 	owner.whisper(invocation, language = /datum/language/common, forced = "cult invocation")
 	owner.visible_message(span_warning("[owner]'s hand flashes a bright blue!"), \
 		span_cult_italic("You speak the cursed words, emitting an EMP blast from your hand."))
-	empulse(owner, 2, 5)
+	empulse(owner, 2, 5, emp_source = src)
 	charges--
 	SSblackbox.record_feedback("tally", "cult_spell_invoke", 1, "[name]")
 	if(charges <= 0)

@@ -10,9 +10,6 @@
 	examine_limb_id = SPECIES_HUMAN
 	inherent_traits = list(
 		TRAIT_BLOOD_CLANS,
-		TRAIT_DRINKS_BLOOD,
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
 		TRAIT_USES_SKINTONES,
 		TRAIT_NO_MIRROR_REFLECTION,
 	)
@@ -43,10 +40,12 @@
 	else
 		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
-/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+/datum/species/human/vampire/on_species_loss(mob/living/carbon/human/old_vampire, datum/species/new_species, pref_load)
 	. = ..()
-	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
-	QDEL_NULL(blood_display)
+	UnregisterSignal(old_vampire, COMSIG_ATOM_ATTACKBY)
+	if(blood_display)
+		old_vampire.hud_used.infodisplay -= blood_display
+		QDEL_NULL(blood_display)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
@@ -160,14 +159,63 @@
 	return to_add
 
 /obj/item/organ/tongue/vampire
-	name = "vampire tongue"
+	name = "vampire teeth"
+	desc = "The only thing with which it's acceptable to say \"I will suck you dry!\""
+	icon_state = "tongue_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
-	color = COLOR_CRAYON_BLACK
+	organ_traits = list(
+		TRAIT_SPEAKS_CLEARLY,
+		TRAIT_DRINKS_BLOOD,
+		// future todo : tie nobreath and nohunger to a vampire organ set bonus
+		TRAIT_NOBREATH,
+		TRAIT_NOHUNGER,
+	)
 	COOLDOWN_DECLARE(drain_cooldown)
+
+/obj/item/organ/tongue/vampire/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
+	. = ..()
+	RegisterSignal(receiver, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(stab_bloodbag))
+
+/obj/item/organ/tongue/vampire/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_ATOM_ITEM_INTERACTION)
+
+/obj/item/organ/tongue/vampire/proc/stab_bloodbag(mob/living/source, mob/living/user,  obj/item/used_item, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(user != source)
+		return NONE
+	if(!istype(used_item, /obj/item/reagent_containers/blood))
+		return NONE
+	if(used_item.reagents?.total_volume <= 0)
+		to_chat(user, span_warning("[src] is empty!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(
+		span_notice("[user] stabs [used_item] with [user.p_their()] sharp teeth and drains its contents!"),
+		span_notice("You stab [used_item] with your sharp teeth and drain its contents!"),
+		span_hear("You hear a stabbing sound! ... Followed by slurping?"),
+		COMBAT_MESSAGE_RANGE,
+	)
+	INVOKE_ASYNC(src, PROC_REF(async_stab_bloodbag), user, used_item)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/organ/tongue/vampire/proc/async_stab_bloodbag(mob/living/carbon/user, obj/item/reagent_containers/blood/bloodbag, time = 0.5 SECONDS)
+	if(!do_after(user, time, bloodbag))
+		return
+
+	to_chat(user, span_notice("You swallow a gulp of [src]."))
+	playsound(bloodbag, 'sound/items/drink.ogg', 50, TRUE) //slurp
+	bloodbag.reagents.trans_to(user, bloodbag.reagents.maximum_volume * 0.05, transferred_by = user, methods = INGEST)
+	if(bloodbag.reagents.total_volume > 0)
+		async_stab_bloodbag(user, bloodbag, 1 SECONDS)
 
 /datum/action/item_action/organ_action/vampire
 	name = "Drain Victim"
 	desc = "Leech blood from any carbon victim you are passively grabbing."
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "drain_victim"
+	background_icon_state = "bg_vampire"
 
 /datum/action/item_action/organ_action/vampire/do_effect(trigger_flags)
 	if(!iscarbon(owner))
@@ -220,7 +268,8 @@
 
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
-	color = COLOR_CRAYON_BLACK
+	icon_state = "heart_vampire"
+	desc = "Some guy stabbed his brother 6,000 years ago so now you have this."
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

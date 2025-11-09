@@ -333,7 +333,7 @@
 /datum/wound/burn/flesh/tea_life_process()
 	// Sanitizes and heals, but with a limit
 	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
-	infestation_rate = max(infestation_rate - 0.005, 0)
+	infection_rate = max(infection_rate - 0.005, 0)
 	return TRUE
 
 /datum/reagent/consumable/lemonade
@@ -1360,12 +1360,14 @@
 /atom/movable/screen/alert/fruit_punch_good
 	name = "Fruit Punch Blessing"
 	desc = "The sweetness of the fruit punch and the friendly company of the liquid cooler are slowly restoring your health..."
-	icon_state = "punch_blessing"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_blessing"
 
 /atom/movable/screen/alert/fruit_punch_bad
 	name = "Fruit Punishment"
 	desc = "The unbearable sweetness of the fruit punch is too much to bear without the soothing aura of a liquid cooler! Your body is going into shock!"
-	icon_state = "punch_punishment"
+	use_user_hud_icon = TRUE
+	overlay_state = "punch_punishment"
 
 /datum/reagent/consumable/ethanol/bitters_soda
 	name = "Bitters and Soda"
