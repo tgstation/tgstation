@@ -88,6 +88,7 @@
 	force = 3
 	throwforce = 4
 	embed_type = /datum/embedding/meth
+	food_reagents = list(/datum/reagent/drug/methamphetamine = 10)
 
 /datum/embedding/meth // lmao
 	embed_chance = 9
@@ -118,7 +119,6 @@
 	. = ..()
 	icon_state = pick("meth_crystal1", "meth_crystal2", "meth_crystal3", "meth_crystal4", "meth_crystal5")
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
-	reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10)
 
 /obj/item/food/drug/opium
 	name = "opium"
