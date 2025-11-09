@@ -13,15 +13,20 @@
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
 
-/obj/structure/ai_core/Initialize(mapload)
+/obj/structure/ai_core/Initialize(mapload, state = src.state, posibrain = FALSE)
 	. = ..()
 	laws = new
 	laws.set_laws_config()
-	// debugging stuff, if this is still here i owe you 50 bucks
-	new /obj/item/circuitboard/aicore(loc)
-	new /obj/item/stack/cable_coil(loc, 5)
-	new /obj/item/mmi(loc)
-	new /obj/item/stack/sheet/rglass(loc, 2)
+
+	src.state = state
+	if(state >= CORE_STATE_CIRCUIT)
+		circuit = new(src)
+	if(state >= CORE_STATE_CABLED)
+		var/mmi_type = posibrain ? /obj/item/mmi : /obj/item/mmi/posibrain
+		core_mmi = new mmi_type(src)
+		core_mmi.brain = new(core_mmi)
+		core_mmi.update_appearance()
+		set_anchored(TRUE)
 
 /obj/structure/ai_core/update_icon_state()
 	switch(state)
@@ -58,10 +63,8 @@
 		new /obj/item/stack/sheet/rglass(drop_location(), 2)
 	if(state >= CORE_STATE_CABLED)
 		new /obj/item/stack/cable_coil(drop_location(), 5)
-	if(circuit)
-		circuit.forceMove(drop_location())
-	if(core_mmi)
-		core_mmi.forceMove(drop_location())
+	core_mmi?.forceMove(drop_location())
+	circuit?.forceMove(drop_location())
 	new /obj/item/stack/sheet/plasteel(drop_location(), 4)
 
 /obj/structure/ai_core/Destroy()
@@ -107,39 +110,17 @@
 /obj/structure/ai_core/proc/check_state(state_to_check)
 	return (state == state_to_check)
 
-/obj/structure/ai_core/deactivated
-	icon_state = "ai-empty"
-	anchored = TRUE
-	state = CORE_STATE_FINISHED
-
-/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
-	. = ..()
-	circuit = new(src)
-	if(skip_mmi_creation)
-		return
-	if(posibrain)
-		core_mmi = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
-	else
-		core_mmi = new(src)
-		core_mmi.brain = new(core_mmi)
-		core_mmi.update_appearance()
-
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"
 	desc = "This AI core is connected by bluespace transmitters to NTNet, allowing for an AI personality to be downloaded to it on the fly mid-shift."
-	icon_state = "ai-empty"
 	anchored = TRUE
 	state = CORE_STATE_FINISHED
 	var/available = TRUE
 	var/safety_checks = TRUE
 	var/active = TRUE
 
-/obj/structure/ai_core/latejoin_inactive/Initialize(mapload)
+/obj/structure/ai_core/latejoin_inactive/Initialize(mapload, state, posibrain)
 	. = ..()
-	circuit = new(src)
-	core_mmi = new(src)
-	core_mmi.brain = new(core_mmi)
-	core_mmi.update_appearance()
 	GLOB.latejoin_ai_cores += src
 
 /obj/structure/ai_core/latejoin_inactive/Destroy()
@@ -170,10 +151,19 @@
 		return FALSE
 	return TRUE
 
+/obj/structure/ai_core/latejoin_inactive/multitool_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	if(!tool.use_tool(src, user, 0 SECONDS, 0, 50))
+		return ITEM_INTERACT_BLOCKING
+
+	active = !active
+	balloon_alert(user, "[active ? "activated" : "deactivated"] transmitters")
+	return ITEM_INTERACT_SUCCESS
+
 /obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(tool.tool_behaviour == TOOL_MULTITOOL)
-		active = !active
-		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
 		return
 	return ..()
 

@@ -5,7 +5,7 @@
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
-		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
+		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
@@ -366,7 +366,7 @@
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
+	var/obj/structure/ai_core/ai_core = new(get_turf(src), CORE_STATE_FINISHED, posibrain_inside)
 	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
 		qdel(src)
 	return ai_core
@@ -782,7 +782,7 @@
 		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
+	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, posibrain_inside)//Spawns a deactivated terminal at AI location.
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
 	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!

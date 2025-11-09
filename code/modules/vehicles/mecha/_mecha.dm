@@ -332,6 +332,7 @@
 	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
+			//FIXME: Nothiing about this block works
 			var/mob/living/silicon/ai/ai = occupant
 			if(!ai.linked_core && !ai.can_shunt) // we probably shouldnt gib AIs with a core or shunting abilities
 				unlucky_ai = occupant

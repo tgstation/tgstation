@@ -111,7 +111,9 @@
 	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
 
+
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
+	// FIXME: this code is really bad (shocker). Needs a refactor
 	var/atom/movable/mob_container
 	var/turf/newloc = get_turf(src)
 	if(ishuman(M))
