@@ -1,30 +1,30 @@
 // Unit tests for recycler machine.
 
-/// Tests that holographic items are properly processed - deleted while preserving real contents.
+/// Tests that holographic item are properly processed - deleted while preserving real contents.
 /datum/unit_test/recycler_hologram
 
-/datum/unit_test/recycler_hologram_processing/Run()
+/datum/unit_test/recycler_hologram/Run()
 	var/obj/machinery/recycler/recycler = allocate(/obj/machinery/recycler/deathtrap, get_step(run_loc_floor_bottom_left, EAST))
-	var/obj/item/storage/box/hologram_container = allocate(/obj/item, run_loc_floor_bottom_left)
-	// Create a holographic box with real contents.
-	hologram_container.flags_1 |= HOLOGRAM_1
+	var/obj/structure/closet/hologram_closet = allocate(/obj/structure/closet, run_loc_floor_bottom_left)
+	// Create a holographic closet with real contents.
+	hologram_closet.flags_1 |= HOLOGRAM_1
 	// Add real, non-holographic cookie to the hologram box.
-	var/obj/item/food/cookie/real_cookie = allocate(/obj/item/food/cookie, hologram_container)
+	var/obj/item/food/cookie/real_cookie = allocate(/obj/item/food/cookie, hologram_closet)
 	// Process the hologram through the recycler.
-	hologram_container.forceMove(get_turf(recycler))
+	hologram_closet.forceMove(get_turf(recycler))
 	// Check that hologram was properly deleted.
-	TEST_ASSERT(QDELETED(hologram_container), "Hologram item was not deleted after processing")
+	TEST_ASSERT(QDELETED(hologram_closet), "Hologram item was not deleted after processing")
 	// Check that real items were moved to recycler location (not deleted).
 	TEST_ASSERT(!QDELETED(real_cookie), "Non-holographic contents of holographic item was incorrectly deleted with hologram")
 	TEST_ASSERT_EQUAL(real_cookie.loc, get_turf(recycler), "Non-holographic contents of holographic item was not moved to recycler location")
 
-/// Tests that recycler properly handles indestructible items.
+/// Tests that recycler properly handles indestructible item.
 /datum/unit_test/recycler_indestructible_item
 
-/datum/unit_test/recycler_indestructible_items/Run()
+/datum/unit_test/recycler_indestructible_item/Run()
 	var/obj/machinery/recycler/recycler = allocate(/obj/machinery/recycler/deathtrap, get_step(run_loc_floor_bottom_left, EAST))
 	// Create indestructible cookie.
-	var/obj/item/food/cookie/indestructible_cookie = allocate(/obj/item, run_loc_floor_bottom_left)
+	var/obj/item/food/cookie/indestructible_cookie = allocate(/obj/item/food/cookie, run_loc_floor_bottom_left)
 	indestructible_cookie.resistance_flags |= INDESTRUCTIBLE
 	// Try to process indestructible cookie.
 	indestructible_cookie.forceMove(get_turf(recycler))
@@ -50,7 +50,7 @@
 /datum/unit_test/recycler_mmi_with_brain_safety/Run()
 	var/obj/machinery/recycler/recycler = allocate(/obj/machinery/recycler,  get_step(run_loc_floor_bottom_left, EAST))
 	var/obj/item/mmi/test_mmi = allocate(/obj/item/mmi, run_loc_floor_bottom_left)
-	var/mob/living/brain/test_brain = allocate(/mob/living/brain)
+	var/mob/living/brain/test_brain = allocate(/mob/living/brain, run_loc_floor_bottom_left)
 	test_mmi.brain = test_brain
 	test_brain.forceMove(test_mmi)
 	// Process MMI with brain - should trigger safety mode.
