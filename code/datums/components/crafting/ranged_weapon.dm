@@ -330,15 +330,29 @@
 	crafting_flags = CRAFT_CHECK_DENSITY
 
 /datum/crafting_recipe/Ratvarian_Repeater
-	name = "Ratvarian_Repeater"
-	tool_behaviors = list(TOOL_WELDER)
+	name = "Emplaced Ratvarian_Repeater"
+	tool_behaviors = list(TOOL_SCREWDRIVER,TOOL_WRENCH)
 	result = /obj/structure/mounted_gun/ratvarian_repeater
 	reqs = list(
-		/obj/item/gun/energy/laser/musket = 2,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 2,
 		/obj/item/stack/sheet/bronze = 5,
 		/obj/item/stack/rods = 10,
 	)
 	time = 15 SECONDS
+	category = CAT_WEAPON_RANGED
+	crafting_flags = CRAFT_CHECK_DENSITY
+
+/datum/crafting_recipe/Ratvarian_Repeater
+	name = "Detached Ratvarian_Repeater"
+	tool_behaviors = list(TOOL_WELDER)
+	result = /obj/item/gun/energy/laser/musket/repeater
+	reqs = list(
+		/obj/structure/mounted_gun/ratvarian_repeater
+	)
+	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
