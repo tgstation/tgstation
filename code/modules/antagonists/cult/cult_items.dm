@@ -1118,19 +1118,19 @@ Striking a noncultist, however, will tear their flesh."}
 				illusions--
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 				if(prob(60))
-					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
+					var/mob/living/basic/illusion/M = new(owner.loc)
 					M.faction = list(FACTION_CULT)
 					M.Copy_Parent(owner, 70, 10, 5)
 					M.move_to_delay = owner.cached_multiplicative_slowdown
 				else
-					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
+					var/mob/living/basic/illusion/escape/E = new(owner.loc)
 					E.Copy_Parent(owner, 70, 10)
 					E.GiveTarget(owner)
 					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
 			return TRUE
 	else
 		if(prob(50))
-			var/mob/living/simple_animal/hostile/illusion/H = new(owner.loc)
+			var/mob/living/basic/illusion/H = new(owner.loc)
 			H.Copy_Parent(owner, 100, 20, 5)
 			H.faction = list(FACTION_CULT)
 			H.GiveTarget(owner)

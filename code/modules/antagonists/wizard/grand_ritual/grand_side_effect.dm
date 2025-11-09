@@ -356,7 +356,7 @@
 		/mob/living/basic/killer_tomato,
 		/mob/living/basic/skeleton,
 		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/illusion,
+		/mob/living/basic/illusion,
 		/mob/living/simple_animal/hostile/ooze,
 	)
 
