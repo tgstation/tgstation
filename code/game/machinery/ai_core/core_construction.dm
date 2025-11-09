@@ -247,16 +247,13 @@
 	if(!core_mmi)
 		balloon_alert(user, "needs a processor!")
 		return FALSE
-
 	if(glass.get_amount() < 2)
 		balloon_alert(user, "not enough [glass.name]!")
 		return FALSE
 
-	// playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE
 	if(!glass.use_tool(src, user, 2 SECONDS, 2, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
 		return FALSE
 
-	// playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	UPDATE_STATE(CORE_STATE_GLASSED)
 	return TRUE
 

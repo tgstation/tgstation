@@ -698,7 +698,8 @@
 	if(!istype(apc))
 		to_chat(owner, span_notice("You are already in your Main Core."))
 		return
-	if(SEND_SIGNAL(owner, COMSIG_SILICON_AI_CORE_STATUS) & COMPONENT_CORE_ALL_GOOD)
+	var/mob/living/silicon/ai/ai_owner = astype(owner, /mob/living/silicon/ai)
+	if(ai_owner?.linked_core)
 		apc.malfvacate()
 	else
 		to_chat(owner, span_danger("Linked core not detected!"))
@@ -782,7 +783,7 @@
 		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, posibrain_inside)//Spawns a deactivated terminal at AI location.
+	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, posibrain_inside)
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
 	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
