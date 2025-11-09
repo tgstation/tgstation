@@ -32,7 +32,7 @@
 		return
 
 	update_mob()
-	var/flashbang_turf = get_turf(src)
+	var/turf/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
 
