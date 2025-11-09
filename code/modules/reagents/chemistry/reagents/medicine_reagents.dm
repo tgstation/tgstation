@@ -294,7 +294,7 @@
 	ph = 5.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-	/// Add about this much extra blood regen per second.
+	/// Add about half this much extra blood regen per second.
 	var/extra_regen = 0.25
 
 	/// Add many extra units of blood per unit of saline.
@@ -313,6 +313,7 @@
 	// Only suppliments base blood types
 	if(blood_type?.restoration_chem != /datum/reagent/iron)
 		return need_mob_update ? UPDATE_MOB_HEALTH : null
+	affected_mob.adjust_blood_volume(extra_regen * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
