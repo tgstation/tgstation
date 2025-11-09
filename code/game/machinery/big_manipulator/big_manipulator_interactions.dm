@@ -284,7 +284,7 @@
 ///
 /// If the interaction turf has an atom that corresponds to the priority settings,
 /// it will attempt to use the held item. If it doesn't, it will simply drop the item.
-/obj/machinery/big_manipulator/proc/try_use_thing(datum/interaction_point/destination_point, atom/movable/target, hand_is_empty = FALSE)
+/obj/machinery/big_manipulator/proc/try_use_thing(datum/interaction_point/destination_point, work_done_at_point = FALSE)
 	var/obj/obj_resolve = held_object?.resolve()
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	var/destination_turf = destination_point.interaction_turf
@@ -305,10 +305,11 @@
 	var/atom/type_to_use = destination_point.find_type_priority()
 
 	if(isnull(type_to_use))
-		check_for_cycle_end_drop(destination_point, FALSE)
+		check_for_cycle_end_drop(destination_point, FALSE, work_done_at_point)
 		return FALSE
 
 	if(isitem(type_to_use) && !destination_point.check_filters_for_atom(type_to_use))
+		check_for_cycle_end_drop(destination_point, FALSE, work_done_at_point)
 		return FALSE
 
 	var/original_loc = held_item.loc
@@ -339,22 +340,18 @@
 		return TRUE
 
 	held_item.forceMove(src)
-	check_for_cycle_end_drop(destination_point, TRUE)
+	check_for_cycle_end_drop(destination_point, TRUE, TRUE)
 
 /// Checks what should we do with the `held_object` after `USE`-ing it.
-/obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/interaction_point/drop_point, item_used = TRUE)
+/obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/interaction_point/drop_point, item_used_this_iteration, work_done_at_point = FALSE)
 	var/obj/obj_resolve = held_object?.resolve()
 	var/turf/drop_turf = drop_point.interaction_turf
 
-	if(!obj_resolve || obj_resolve.loc != src)
+	if(!obj_resolve || obj_resolve.loc != src || QDELETED(obj_resolve))
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
-	if(QDELETED(obj_resolve))
-		finish_manipulation(TRANSFER_TYPE_DROPOFF)
-		return
-
-	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used)
+	if(drop_point.worker_interaction == WORKER_SINGLE_USE && item_used_this_iteration)
 		obj_resolve.forceMove(drop_turf)
 		obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
@@ -364,26 +361,23 @@
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return
 
-	if(item_used)
-		if(!obj_resolve || obj_resolve.loc != src)
-			finish_manipulation(TRANSFER_TYPE_DROPOFF)
-			return
-		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME * 2)
+	if(item_used_this_iteration)
+		addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point, TRUE), BASE_INTERACTION_TIME * 2)
 		return
 
-	// If item was NOT used and we still hold it, act according to use_post_interaction
 	switch(drop_point.use_post_interaction)
 		if(POST_INTERACTION_DROP_AT_POINT)
 			obj_resolve.forceMove(drop_turf)
 			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
+
 		if(POST_INTERACTION_DROP_AT_MACHINE)
-			obj_resolve.forceMove(src)
+			obj_resolve.forceMove(get_turf(src))
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
+
 		if(POST_INTERACTION_DROP_NEXT_FITTING)
-			// Try to find a fitting turf nearby and drop there
 			var/turf/fitting_turf = null
 			for(var/dir in list(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
 				var/turf/check = get_step(drop_turf, dir)
@@ -396,12 +390,12 @@
 				obj_resolve.forceMove(drop_turf)
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
+
 		if(POST_INTERACTION_WAIT)
-			// Continue cycle, do not drop
-			addtimer(CALLBACK(src, PROC_REF(try_use_thing), drop_point), BASE_INTERACTION_TIME * 2)
+			schedule_next_cycle()
 			return
-	// Default: just finish
-	finish_manipulation(TRANSFER_TYPE_DROPOFF)
+
+	schedule_next_cycle()
 
 /// Throws the held object in the direction of the interaction point.
 /obj/machinery/big_manipulator/proc/throw_thing(datum/interaction_point/drop_point)
