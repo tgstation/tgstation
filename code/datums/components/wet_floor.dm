@@ -64,16 +64,14 @@
 		return
 
 	var/intended
-	if(!parent_turf.tiled_turf)
-		intended = generic_turf_overlay
-	else
-		switch(highest_strength)
-			if(TURF_WET_PERMAFROST)
-				intended = permafrost_overlay
-			if(TURF_WET_ICE)
-				intended = ice_overlay
-			else
-				intended = water_overlay
+	switch(highest_strength)
+		if(TURF_WET_PERMAFROST)
+			intended = permafrost_overlay
+		if(TURF_WET_ICE)
+			// Should really get someone to make a generic_ice_overlay.
+			intended = parent_turf.tiled_turf ? ice_overlay : generic_turf_overlay
+		else
+			intended = parent_turf.tiled_turf ? water_overlay : generic_turf_overlay
 	if(current_overlay != intended)
 		parent_turf.cut_overlay(current_overlay)
 		parent_turf.add_overlay(intended)
