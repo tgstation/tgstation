@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - bugfix: "Extreme Medicine Allergy quirk will no longer lead to you being allergic to nothing"
