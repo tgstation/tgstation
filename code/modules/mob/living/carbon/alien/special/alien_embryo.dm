@@ -23,7 +23,7 @@
 	else
 		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
 		if(prob(10))
-			attempt_grow(gib_on_success = FALSE)
+			attempt_grow(mangle_on_success = FALSE)
 
 /obj/item/organ/body_egg/alien_embryo/on_life(seconds_per_tick, times_fired)
 	. = ..()
@@ -37,7 +37,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				owner.emote("cough")
 			if(SPT_PROB(1, seconds_per_tick))
-				to_chat(owner, span_danger("Your throat feels sore."))
+				to_chat(owner, span_danger("Your chest feels sore."))
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(owner, span_danger("Mucous runs down the back of your throat."))
 		if(5)
@@ -55,7 +55,7 @@
 					owner.adjustToxLoss(1)
 		if(6)
 			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
-			owner.adjustToxLoss(5 * seconds_per_tick) // Why is this [TOX]?
+			owner.adjustBruteLoss(5 * seconds_per_tick)
 
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
@@ -70,7 +70,7 @@
 				slowdown *= 2 // spaceacillin doubles the time it takes to grow
 			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
 				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
-			if(HAS_TRAIT(owner, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+			if(HAS_TRAIT(owner, TRAIT_IMMUNODEFICIENCY))
 				slowdown *= 0.5 //terrible immune system = doubled parasite growth
 
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
@@ -82,12 +82,12 @@
 				continue
 			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
 				continue
-			attempt_grow(gib_on_success = FALSE)
+			attempt_grow(mangle_on_success = FALSE)
 			return
 		attempt_grow()
 
 /// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
-/obj/item/organ/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
+/obj/item/organ/body_egg/alien_embryo/proc/attempt_grow(mangle_on_success = TRUE)
 	if(QDELETED(owner) || bursting)
 		return
 
@@ -103,10 +103,10 @@
 		role_name_text = "alien larva",
 		chat_text_border_icon = /mob/living/carbon/alien/larva,
 	)
-	on_poll_concluded(gib_on_success, chosen_one)
+	on_poll_concluded(mangle_on_success, chosen_one)
 
 /// Poll has concluded with a suitor
-/obj/item/organ/body_egg/alien_embryo/proc/on_poll_concluded(gib_on_success, mob/dead/observer/ghost)
+/obj/item/organ/body_egg/alien_embryo/proc/on_poll_concluded(mangle_on_success, mob/dead/observer/ghost)
 	if(QDELETED(owner))
 		return
 
@@ -136,13 +136,18 @@
 		new_xeno.remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type)
 		new_xeno.RemoveInvisibility(type)
 
-	if(gib_on_success)
+	if(mangle_on_success)
 		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
-		owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS)
-		owner.gib(DROP_ORGANS|DROP_BODYPARTS)
+		owner.investigate_log("has been disembowled by an alien larva.", INVESTIGATE_DEATHS)
+		var/obj/item/bodypart/chest/owner_chest = owner.get_bodypart(BODY_ZONE_CHEST)
+		owner_chest.receive_damage(owner_chest.max_damage, wound_bonus = CANT_WOUND)
+		owner.cause_wound_of_type_and_severity(WOUND_PIERCE, owner_chest, WOUND_SEVERITY_CRITICAL)
+		owner.cause_wound_of_type_and_severity(WOUND_BLUNT, owner_chest, WOUND_SEVERITY_CRITICAL)
+		owner.cut_overlay(overlay)
+		owner_chest.dismember() //Do this last because after dismemberment the floor is our owner.
 	else
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
-		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
+		owner.log_message("had an alien larva within them escape (without being disembowled).", LOG_ATTACK, log_globally = FALSE)
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
 	qdel(src)
