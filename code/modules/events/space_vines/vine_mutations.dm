@@ -84,26 +84,32 @@
 	var/required_coverage = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(isvineimmune(crosser) || issilicon(crosser) || HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
+	if(isvineimmune(crosser) || issilicon(crosser))
 		return
 	if(!prob(TOXICITY_MUTATION_PROB))
 		return
 
 	var/datum/spacevine_mutation/thorns/thorns = locate() in holder.mutations
-	if(!thorns)
-		var/body_parts_covered = 0
-		for(var/obj/item/clothing/worn_item in crosser.get_equipped_items())
-			if(!(worn_item.clothing_flags & THICKMATERIAL))
-				continue
-			body_parts_covered |= worn_item.body_parts_covered
+	var/crosser_pierce_immune = HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE)
 
-			if((body_parts_covered & required_coverage) == required_coverage)
-				return
-
-	if(thorns)
+	if(thorns && !crosser_pierce_immune)
 		to_chat(crosser, span_alert("You are pricked by thorns and feel a strange sensation."))
-	else
+		crosser.apply_damage(20, TOX)
+		return
+
+	var/body_parts_covered = 0
+	for(var/obj/item/clothing/worn_item in crosser.get_equipped_items())
+		if(!(worn_item.clothing_flags & THICKMATERIAL))
+			continue
+		body_parts_covered |= worn_item.body_parts_covered
+
+		if((body_parts_covered & required_coverage) == required_coverage)
+			return
+
+	if(thorns && crosser_pierce_immune)
 		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
+	else
+		to_chat(crosser, span_alert("You are pricked by thorns and feel a strange sensation."))
 
 	crosser.apply_damage(20, TOX)
 
