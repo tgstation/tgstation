@@ -32,6 +32,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(check_mode))
 
+/mob/living/basic/illusion/examine(mob/user)
+	var/mob/living/parent_mob = parent_mob_ref?.resolve()
+	if(parent_mob)
+		return parent_mob.examine(user)
+	return ..()
+
 /// Called before trying to attack something
 /mob/living/basic/illusion/proc/check_mode(mob/living/source, atom/attacked_target)
 	SIGNAL_HANDLER
@@ -60,22 +66,7 @@
 	src.attack_mode = attack_mode
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, death)), life)
 
-/mob/living/basic/illusion/examine(mob/user)
-	var/mob/living/parent_mob = parent_mob_ref?.resolve()
-	if(parent_mob)
-		return parent_mob.examine(user)
-	return ..()
-
-/mob/living/basic/illusion/AttackingTarget()
-	. = ..()
-	if(!. || !isliving(target) || !prob(multiply_chance))
-		return
-	var/mob/living/hitting_target = target
-	if(hitting_target.stat == DEAD)
-		return
-	var/mob/living/parent_mob = parent_mob_ref?.resolve()
-	if(isnull(parent_mob))
-		return
+/mob/living/basic/illusion/proc/replicate()
 	var/mob/living/basic/illusion/new_clone = new(loc)
 	new_clone.mock_as(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
 	new_clone.faction = faction.Copy()
