@@ -162,11 +162,6 @@
 	balloon_alert(user, "[active ? "activated" : "deactivated"] transmitters")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(tool.tool_behaviour == TOOL_MULTITOOL)
-		return
-	return ..()
-
 /obj/structure/ai_core/proc/ai_structure_to_mob()
 	var/mob/living/brain/the_brainmob = core_mmi.brainmob
 	if(!the_brainmob.mind || suicide_check())
