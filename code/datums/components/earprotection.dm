@@ -7,7 +7,7 @@
 	var/protection_amount = 1
 	valid_slots = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 
-/datum/component/wearertargeting/earprotection/Initialize(protection_amount = 1)
+/datum/component/wearertargeting/earprotection/Initialize(protection_amount = EAR_PROTECTION_NORMAL)
 	. = ..()
 	if(protection_amount)
 		src.protection_amount = protection_amount
