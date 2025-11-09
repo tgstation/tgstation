@@ -20782,13 +20782,6 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"fNI" = (
-/obj/machinery/camera/autoname/directional/west,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/wood/large,
-/area/station/hallway/primary/central)
 "fNL" = (
 /obj/structure/railing{
 	dir = 1
@@ -41241,6 +41234,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "lpY" = (
@@ -42150,7 +42144,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/item/reagent_containers/cup/glass/mug/tea,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "lEe" = (
@@ -47469,6 +47462,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
 "nen" = (
@@ -47815,6 +47809,8 @@
 /obj/structure/chair{
 	dir = 1
 	},
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "njY" = (
@@ -48549,6 +48545,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "nuw" = (
@@ -53505,7 +53502,6 @@
 /obj/structure/chair,
 /obj/effect/landmark/start/hangover,
 /obj/machinery/light/directional/east,
-/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "oOz" = (
@@ -56232,7 +56228,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/item/reagent_containers/cup/glass/mug/tea,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/central)
 "pCw" = (
@@ -59276,6 +59271,14 @@
 "quJ" = (
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
+"quN" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/paper/fluff/junkmail_redpill,
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "quO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -63503,6 +63506,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "rFm" = (
@@ -122502,7 +122506,7 @@ wkt
 cPf
 aWV
 xVc
-fNI
+qaA
 rWd
 lDI
 lpO
@@ -122758,7 +122762,7 @@ gZn
 czk
 aPV
 aWV
-deQ
+quN
 gdN
 dEN
 dEN
