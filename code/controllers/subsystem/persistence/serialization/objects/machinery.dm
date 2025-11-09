@@ -39,6 +39,11 @@
 	. -= NAMEOF(src, name)
 	return .
 
+/obj/item/vending_refill/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, name)
+	return .
+
 /// CHECK IF ID_TAGS ARE NEEDED FOR FIREDOOR/FIREALARMS
 /obj/machinery/door/firedoor/get_save_vars()
 	. = ..()
