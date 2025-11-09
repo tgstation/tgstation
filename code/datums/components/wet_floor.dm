@@ -54,17 +54,17 @@
 	return ..()
 
 /datum/component/wet_floor/proc/update_overlay()
+	var/turf/parent_turf = parent
 	if(!should_display_overlay)
 		if(!current_overlay)
 			return
 
-		var/turf/parent_turf = parent
 		parent_turf.cut_overlay(current_overlay)
 		current_overlay = null
 		return
 
 	var/intended
-	if(!parent.tiled_turf)
+	if(!parent_turf.tiled_turf)
 		intended = generic_turf_overlay
 	else
 		switch(highest_strength)
@@ -75,7 +75,6 @@
 			else
 				intended = water_overlay
 	if(current_overlay != intended)
-		var/turf/parent_turf = parent
 		parent_turf.cut_overlay(current_overlay)
 		parent_turf.add_overlay(intended)
 		current_overlay = intended
