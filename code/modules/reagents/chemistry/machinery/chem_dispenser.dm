@@ -214,6 +214,8 @@
 	.["displayedUnits"] = cell.charge ? (cell.charge / power_cost) : 0
 	.["displayedMaxUnits"] = cell.maxcharge / power_cost
 	.["showpH"] = isnull(recording_recipe) ? show_ph : FALSE //virtual beakers have no ph to compute & display
+	var/obj/item/held_item = user.get_active_held_item()
+	.["hasBeakerInHand"] = held_item?.is_chem_container() || FALSE
 
 	var/list/chemicals = list()
 	var/is_hallucinating = FALSE
@@ -304,6 +306,13 @@
 
 		if("eject")
 			replace_beaker(ui.user)
+			return TRUE
+
+		if("insert")
+			var/obj/item/reagent_containers/container = ui.user.get_active_held_item()
+			if(container?.can_insert_container(ui.user, src))
+				replace_beaker(ui.user, container)
+
 			return TRUE
 
 		if("dispense_recipe")
@@ -400,14 +409,13 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
-		if(!user.transferItemToLoc(tool, src))
-			return ITEM_INTERACT_BLOCKING
-		replace_beaker(user, tool)
-		ui_interact(user)
-		return ITEM_INTERACT_SUCCESS
+	if(!tool.can_insert_container(user, src))
+		return NONE
+	if(!replace_beaker(user, tool))
+		return ITEM_INTERACT_BLOCKING
 
-	return NONE
+	ui_interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
@@ -453,15 +461,25 @@
 		parts_rating += servo.tier
 	power_cost = max(new_power_cost, 0.1 KILO WATTS)
 
+/**
+ * Insert, remove, replace the existig beaker. Returns TRUE on success.
+ * Arguments:
+ *
+ * * mob/living/user - the player trying to replace the beaker
+ * * obj/item/reagent_containers/new_beaker - the beaker we are trying to insert, swap with existing or remove if null
+ */
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	if(!user)
-		return FALSE
-	if(beaker)
+	if(!QDELETED(beaker))
 		try_put_in_hand(beaker, user)
-		beaker = null
-	if(new_beaker)
+	if(!QDELETED(new_beaker))
+		if(!user.transferItemToLoc(new_beaker, src))
+			update_appearance(UPDATE_OVERLAYS)
+			return FALSE
+
 		beaker = new_beaker
-	update_appearance()
+
+	update_appearance(UPDATE_OVERLAYS)
+
 	return TRUE
 
 /obj/machinery/chem_dispenser/on_deconstruction(disassembled)
