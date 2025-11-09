@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Accounting console shows paycheck with a % rather than via a vague modifier"
+  - bugfix: "Accounting console can scroll again"
