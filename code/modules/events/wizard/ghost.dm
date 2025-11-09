@@ -10,7 +10,7 @@
 
 /datum/round_event/wizard/ghost/start()
 	var/msg = span_warning("You suddenly feel extremely obvious...")
-	set_observer_default_invisibility(30, msg) // SEE_INVISIBLE_LIVING
+	set_observer_default_invisibility(30, msg) // SEE_INVISIBLE_GHOSTS
 
 
 //--//
