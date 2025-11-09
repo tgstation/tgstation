@@ -64,7 +64,7 @@
 		return
 
 	var/intended
-	if(!isfloorturf(parent))
+	if(!parent.tiled_turf)
 		intended = generic_turf_overlay
 	else
 		switch(highest_strength)
