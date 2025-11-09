@@ -617,8 +617,9 @@
 	if(cached_blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - max(bleeding_rate, brute_ratio)), 0))
 		return
 
-	// Every four steps you take is equivalent to one second of bleeding.
-	var/blood_to_add = base_bleed_rate / 4
+	// Every six steps you take is equivalent to one second of bleeding.
+	// This comes out to roughly doubling your bleed rate. Bandage or epi first, THEN move!
+	var/blood_to_add = base_bleed_rate / 6
 
 	if(body_position == LYING_DOWN)
 		blood_to_add += bleed_drag_amount()
