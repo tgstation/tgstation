@@ -21,7 +21,14 @@
 /datum/filter_editor/ui_data()
 	var/list/data = list()
 	data["target_name"] = target.name
-	data["target_filter_data"] = target.filter_data
+	var/list/target_filter_data = list()
+	for (var/list/filter_info as anything in target.filter_data)
+		filter_info = deep_copy_list(filter_info)
+		if (filter_info["transform"])
+			var/matrix/filter_transform = filter_info["transform"]
+			filter_info["transform"] = list("a" = filter_transform.a, "b" = filter_transform.b, "c" = filter_transform.c, "d" = filter_transform.d, "e" = filter_transform.e, "f" = filter_transform.f)
+		target_filter_data += list(filter_info)
+	data["target_filter_data"] = target_filter_data
 	return data
 
 /datum/filter_editor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -68,6 +75,16 @@
 			if(new_icon)
 				target.modify_filter(params["name"], list("icon" = new_icon))
 				. = TRUE
+		if("modify_transform_value")
+			var/list/filter_info = target.get_filter_data(params["name"])
+			if (!filter_info)
+				return
+			var/matrix/new_transform = matrix(filter_info[params["field_name"]])
+			if (!(params["transform_key"] in list("a", "b", "c", "d", "e", "f")))
+				return
+			new_transform.vars[params["transform_key"]] = text2num(params["transform_value"])
+			target.modify_filter(params["name"], list(params["field_name"] = new_transform))
+			. = TRUE
 		if("mass_apply")
 			if(!check_rights_for(usr.client, R_FUN))
 				to_chat(usr, span_userdanger("Stay in your lane, jannie."))
