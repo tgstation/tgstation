@@ -1110,7 +1110,7 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
-	if(!can_have_blood())
+	if(!CAN_HAVE_BLOOD(src))
 		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(part.cached_bleed_rate)
@@ -1118,7 +1118,7 @@
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
-	if(!can_have_blood())
+	if(!CAN_HAVE_BLOOD(src))
 		return FALSE
 
 	var/total_bleed_rate = 0

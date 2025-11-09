@@ -752,7 +752,7 @@
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/human_bloodbag = target
-	if(!human_bloodbag.can_have_blood())
+	if(!CAN_HAVE_BLOOD(human_bloodbag))
 		human_bloodbag.balloon_alert(user, "no blood!")
 		return
 	if(human_bloodbag.stat == DEAD)

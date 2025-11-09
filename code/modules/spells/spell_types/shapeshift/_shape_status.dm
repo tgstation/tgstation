@@ -175,7 +175,7 @@
 
 			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			// Only transfer blood if both mobs are supposed to have a blood volume
-			if (owner.can_have_blood() && caster_mob.can_have_blood())
+			if (CAN_HAVE_BLOOD(owner) && CAN_HAVE_BLOOD(caster_mob))
 				owner.set_blood_volume(caster_mob.get_blood_volume())
 
 	for(var/datum/action/bodybound_action as anything in caster_mob.actions)
@@ -215,7 +215,7 @@
 	var/damage_to_apply = caster_mob.maxHealth * (owner.get_total_damage() / owner.maxHealth)
 	caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 	// Only transfer blood if both mobs are supposed to have a blood volume
-	if (owner.can_have_blood() && caster_mob.can_have_blood())
+	if (CAN_HAVE_BLOOD(owner) && CAN_HAVE_BLOOD(caster_mob))
 		caster_mob.set_blood_volume(owner.get_blood_volume())
 
 /datum/status_effect/shapechange_mob/from_spell/on_shape_death(datum/source, gibbed)

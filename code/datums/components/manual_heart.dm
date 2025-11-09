@@ -57,7 +57,7 @@
 
 	var/mob/living/carbon/carbon_parent = parent
 	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
-	if(parent_heart && carbon_parent.can_have_blood() && carbon_parent.stat != DEAD)
+	if(parent_heart && CAN_HAVE_BLOOD(carbon_parent) && carbon_parent.stat != DEAD)
 		START_PROCESSING(SSdcs, src)
 		COOLDOWN_START(src, heart_timer, pump_delay)
 
@@ -95,7 +95,7 @@
 
 	var/mob/living/carbon/carbon_owner = owner
 
-	if(!carbon_owner.can_have_blood())
+	if(!CAN_HAVE_BLOOD(carbon_owner))
 		return
 	carbon_owner.adjust_blood_volume(blood_loss * 0.5)
 	carbon_owner.remove_client_colour(REF(src))
@@ -151,7 +151,7 @@
 /datum/component/manual_heart/proc/check_valid()
 	var/mob/living/carbon/carbon_parent = parent
 	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
-	return !isnull(parent_heart) && carbon_parent.can_have_blood() && carbon_parent.stat != DEAD
+	return !isnull(parent_heart) && CAN_HAVE_BLOOD(carbon_parent) && carbon_parent.stat != DEAD
 
 ///Action to pump your heart. Cooldown will always be set to 1 second less than the pump delay.
 /datum/action/cooldown/manual_heart
@@ -169,7 +169,7 @@
 ///The action button is only available when you're a living carbon with blood and a heart.
 /datum/action/cooldown/manual_heart/IsAvailable(feedback = FALSE)
 	var/mob/living/carbon/heart_haver = owner
-	if(!istype(heart_haver) || !heart_haver.can_have_blood() || heart_haver.stat == DEAD)
+	if(!istype(heart_haver) || !CAN_HAVE_BLOOD(heart_haver) || heart_haver.stat == DEAD)
 		return FALSE
 	var/obj/item/organ/heart/heart_havers_heart = heart_haver.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(heart_havers_heart))

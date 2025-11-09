@@ -802,7 +802,7 @@
 /mob/living/carbon/proc/needs_heart()
 	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
-	if(dna && dna.species && (!can_have_blood() || isnull(dna.species.mutantheart))) //not all carbons have species!
+	if(dna && dna.species && (!CAN_HAVE_BLOOD(src) || isnull(dna.species.mutantheart))) //not all carbons have species!
 		return FALSE
 	return TRUE
 

@@ -306,7 +306,7 @@
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
 
-	if(!mendicant.can_have_blood() || !hurtguy.can_have_blood())
+	if(!CAN_HAVE_BLOOD(mendicant) || !CAN_HAVE_BLOOD(hurtguy))
 		return .
 
 	// 10% base

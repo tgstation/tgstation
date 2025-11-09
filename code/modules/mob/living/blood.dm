@@ -7,6 +7,8 @@
 ****************************************************/
 
 /// Returns whether this mob can have blood.
+/// Use the CAN_HAVE_BLOOD(mob) macro instead.
+/// Unless you're the one updating blood status.
 /mob/living/proc/can_have_blood()
 	return get_default_blood_volume() > 0
 
@@ -23,7 +25,7 @@
 /// Gets the base blood volume of the mob, before scalars like Saline-Glucose Solution are applied.
 /// For effects like oxyloss damage from blood volume, use [proc/get_modified_blood_volume] instead.
 /mob/living/proc/get_blood_volume()
-	return can_have_blood() ? blood_volume : 0
+	return CAN_HAVE_BLOOD(src) ? blood_volume : 0
 
 /// Gets the blood volume of the mob, after scalars like Saline-Glucose Solution have been applied.
 /// For anything reliant on real blood, such as drawing blood, use [proc/get_blood_volume] instead.
@@ -45,33 +47,72 @@
 
 	return amount
 
-/// Sets the base blood volume of the mob.
-/mob/living/proc/set_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM)
-	if (!can_have_blood())
-		return
+/// Sets the base blood volume of the mob, returns the blood volume of the mob after.
+/mob/living/proc/set_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM, cached_blood_volume = null)
+	if (!isnum(cached_blood_volume))
+		cached_blood_volume = get_blood_volume()
+
+	if (!CAN_HAVE_BLOOD(src) && amount != 0)
+		return cached_blood_volume
+
+	if (amount == cached_blood_volume)
+		return cached_blood_volume
+
 	blood_volume = clamp(amount, minimum, maximum)
-	living_flags |= QUEUE_BLOOD_UPDATE
+
+	var/updated_blood_volume = get_blood_volume()
+
+	if (cached_blood_volume != updated_blood_volume)
+		living_flags |= QUEUE_BLOOD_UPDATE
+
+	return updated_blood_volume
 
 /// Adjusts the base blood volume of the mob and returns the change.
 /// Increases in blood volume give a positive return value and vice versa.
 /// Maximum only applies on positive amounts and vice versa.
 /mob/living/proc/adjust_blood_volume(amount, minimum = 0, maximum = BLOOD_VOLUME_MAXIMUM)
-	if (!amount)
+	if (!CAN_HAVE_BLOOD(src) || amount == 0)
 		return 0
 
 	var/cached_blood_volume = get_blood_volume()
 
-	if (amount < 0 && cached_blood_volume <= minimum)
-		return
-	if (amount > 0 && cached_blood_volume >= maximum)
-		return
+	if (amount < 0)
+		if (cached_blood_volume <= minimum)
+			return 0
+		else
+			amount = max(amount, minimum - cached_blood_volume)
+	if (amount > 0)
+		if (cached_blood_volume >= maximum)
+			return 0
+		else
+			amount = min(amount, maximum - cached_blood_volume)
 
-	set_blood_volume(cached_blood_volume + amount)
-	return get_blood_volume() - cached_blood_volume
+	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
+
+	return updated_blood_volume - cached_blood_volume
 
 /// Updates effects that rely on blood volume, like blood HUDs.
 /mob/living/proc/update_blood_effects()
-	return
+	living_flags &= ~QUEUE_BLOOD_UPDATE
+
+/// Updates effects that rely on whether the mob can have blood.
+/mob/living/proc/update_blood_status()
+	var/had_blood = CAN_HAVE_BLOOD(src)
+
+	living_flags = can_have_blood() ? (living_flags | LIVING_CAN_HAVE_BLOOD) : (living_flags & ~LIVING_CAN_HAVE_BLOOD)
+
+	var/has_blood = CAN_HAVE_BLOOD(src)
+
+	if (had_blood == has_blood)
+		return
+
+	var/old_blood_volume = get_blood_volume()
+
+	set_blood_volume(has_blood ? get_default_blood_volume() : 0)
+
+	var/new_blood_volume = get_blood_volume()
+
+	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume, new_blood_volume)
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)
@@ -81,7 +122,7 @@
 
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
-	if((sigreturn & HANDLE_BLOOD_HANDLED) || !can_have_blood())
+	if((sigreturn & HANDLE_BLOOD_HANDLED) || !CAN_HAVE_BLOOD(src))
 		return
 
 	//Blood regeneration if there is some space
@@ -97,18 +138,10 @@
 		if (blood_restored > 0)
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick * (blood_restored / blood_to_restore))
 
-	//Bloodloss from wounds
-	var/temp_bleed = 0
-	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		temp_bleed += iter_part.cached_bleed_rate * seconds_per_tick
-
-		if(iter_part.generic_bleedstacks) // If you don't have any bleedstacks, don't try and heal them
-			iter_part.adjustBleedStacks(-1, 0)
-
 	var/bleed_rate = get_bleed_rate()
 
 	if(bleed_rate)
-		bleed(bleed_rate)
+		bleed(bleed_rate * seconds_per_tick)
 		bleed_warn(bleed_rate)
 
 	for (var/obj/item/bodypart/bodypart as anything in bodyparts)
@@ -127,15 +160,12 @@
 
 	var/word = pick("dizzy","woozy","faint")
 	switch(modified_blood_volume)
+		// Way too much blood!
 		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
 			if(SPT_PROB(7.5, seconds_per_tick))
 				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
 				investigate_log("has been gibbed by having too much blood.", INVESTIGATE_DEATHS)
 				inflate_gib()
-		// Way too much blood!
-		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(src, span_warning("You feel your skin swelling."))
 		// Too much blood
 		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
 			if(SPT_PROB(5, seconds_per_tick))
@@ -234,16 +264,17 @@
  * bleed_warn() is used to for carbons with an active client to occasionally receive messages warning them about their bleeding status (if applicable)
  *
  * Arguments:
- * * bleed_rate_override - When we run this from [/mob/living/carbon/human/proc/handle_blood] we already know how much blood we're losing this tick, so we can skip tallying it again with this
+ * * bleed_rate - When we run this from [/mob/living/carbon/human/proc/handle_blood] we already know how much blood we're losing per second, so we can skip tallying it again with this.
  * * skip_cooldown - Skips caring about the bleed message cooldown.
  */
-/mob/living/carbon/proc/bleed_warn(bleed_rate_override = null, skip_cooldown = FALSE)
+/mob/living/carbon/proc/bleed_warn(bleed_rate = null, skip_cooldown = FALSE)
 	if(!get_blood_volume() || !client)
 		return
 	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !skip_cooldown)
 		return
 
-	var/bleed_rate = isnull(bleed_rate_override) ? get_bleed_rate() : bleed_rate_override
+	if(!isnum(bleed_rate))
+		bleed_rate = get_bleed_rate()
 
 	var/bleeding_severity = ""
 	var/next_cooldown = BLEEDING_MESSAGE_BASE_CD
@@ -286,10 +317,6 @@
 
 	to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
-
-/mob/living/carbon/human/bleed_warn(bleed_amt = 0, forced = FALSE)
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return ..()
 
 /mob/living/proc/restore_blood()
 	set_blood_volume(get_default_blood_volume())
@@ -432,7 +459,7 @@
 
 /mob/living/proc/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
-	if (!can_have_blood())
+	if (!CAN_HAVE_BLOOD(src))
 		return
 
 	if (!(mob_biotypes & MOB_ORGANIC))
@@ -462,7 +489,7 @@
 
 /// Check if a mob can bleed, and possibly if they're capable of leaving decals on turfs/mobs/items
 /mob/living/proc/can_bleed(bleed_flag = NONE)
-	if (!can_have_blood())
+	if (!CAN_HAVE_BLOOD(src))
 		return BLEED_NONE
 
 	if (!bleed_flag)
