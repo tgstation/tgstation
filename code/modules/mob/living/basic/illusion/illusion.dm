@@ -30,7 +30,6 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(attack_override))
 	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_changed))
-	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /mob/living/basic/illusion/examine(mob/user)
 	var/mob/living/parent_mob = parent_mob_ref?.resolve()
@@ -50,14 +49,6 @@
 		return
 
 	replicate()
-
-/// Send a small balloon alert on death since the death_message thing is a little lackluster
-/mob/living/basic/illusion/proc/on_death(mob/living/source, gibbed)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/basic/illusion, send_death_message), get_turf(src))
-
-/mob/living/basic/illusion/proc/send_death_message(turf/death_turf)
-	balloon_alert_to_viewers(death_turf, "disappears!")
 
 /// Gives the illusion a target to focus on. By default it's the attack key
 /mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
