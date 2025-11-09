@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "The surplus energy sword and holy energy swords now require throw speed boosters to embed into people."
+  - balance: "The surplus energy sword now loses charge whenever it successfully blocks an attack."
