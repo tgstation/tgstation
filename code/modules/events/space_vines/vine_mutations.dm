@@ -92,11 +92,12 @@
 	var/body_parts_covered = 0
 
 	for(var/obj/item/clothing/worn_item in crosser.get_equipped_items())
-		if(worn_item.clothing_flags & THICKMATERIAL)
-			body_parts_covered |= worn_item.body_parts_covered
+		if(!(worn_item.clothing_flags & THICKMATERIAL))
+			continue
+		body_parts_covered |= worn_item.body_parts_covered
 
-	if((body_parts_covered & required_coverage) == required_coverage)
-		return
+		if((body_parts_covered & required_coverage) == required_coverage)
+			return
 
 	to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
 	crosser.apply_damage(20, TOX)
