@@ -80,12 +80,12 @@
 				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
 	// If you're on saline, you don't feel the effects of bloodloss.
-	if(slime.get_modified_blood_volume() < BLOOD_VOLUME_OKAY)
+	if(slime.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_OKAY)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_danger("You feel drained!"))
 
 	// Saline can prevent you from cannibalizing yourself.
-	if(slime.get_modified_blood_volume() < BLOOD_VOLUME_BAD)
+	if(slime.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(slime)
 
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)

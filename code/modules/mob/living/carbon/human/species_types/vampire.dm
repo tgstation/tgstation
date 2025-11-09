@@ -58,7 +58,7 @@
 			vampire.updatehealth()
 		return
 	vampire.adjust_blood_volume(-0.125 * seconds_per_tick)
-	if(vampire.get_modified_blood_volume() <= BLOOD_VOLUME_SURVIVE)
+	if(vampire.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
 		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()

@@ -165,7 +165,7 @@
 	var/butcher_difficulty = 0
 
 	/// How much blood the mob currently has.
-	/// Don't read directly, use get_blood_volume() and get_modified_blood_volume().
+	/// Don't read directly, use get_blood_volume() and get_blood_volume(apply_modifiers = TRUE).
 	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
 	/// Also don't initialize this. Initialize default_blood_volume instead.
 	var/blood_volume = 0

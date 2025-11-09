@@ -343,7 +343,7 @@
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
 				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
 
-			var/cached_blood_volume = carbon_patient.get_modified_blood_volume()
+			var/cached_blood_volume = carbon_patient.get_blood_volume(apply_modifiers = TRUE)
 
 			//assess pulse (heart & blood level)
 			if(isnull(heart) || !heart.is_beating() || cached_blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)

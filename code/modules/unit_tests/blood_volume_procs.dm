@@ -10,7 +10,7 @@
 	// Test initial blood volume.
 	TEST_ASSERT_EQUAL(dummy.default_blood_volume, BLOOD_VOLUME_NORMAL, "Default blood volume is incorrect.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), dummy.default_blood_volume, "Blood volume isn't initialized properly.")
-	TEST_ASSERT_EQUAL(dummy.get_modified_blood_volume(), dummy.get_blood_volume(), "Blood volume is modified on initialization.")
+	TEST_ASSERT_EQUAL(dummy.get_blood_volume(apply_modifiers = TRUE), dummy.get_blood_volume(), "Blood volume is modified on initialization.")
 
 	var/set_amount = 100
 
@@ -56,14 +56,14 @@
 	dummy.set_blood_volume(saline.dilution_cap)
 
 	// Test if saline dilutes blood volume beyond the dilution cap.
-	TEST_ASSERT_EQUAL(dummy.get_modified_blood_volume(), saline.dilution_cap, "Saline goes above or below its dilution cap.")
+	TEST_ASSERT_EQUAL(dummy.get_blood_volume(apply_modifiers = TRUE), saline.dilution_cap, "Saline goes above or below its dilution cap.")
 
 	dummy.set_blood_volume(BLOOD_VOLUME_BAD)
 	var/expected_dilution = saline.volume * saline.dilution_per_unit
 	expected_final_volume = dummy.get_blood_volume() + expected_dilution
 
 	// Test if saline dilutes low blood volume properly.
-	TEST_ASSERT_EQUAL(dummy.get_modified_blood_volume(), expected_final_volume, "Saline didn't dilute low blood by the expected amount.")
+	TEST_ASSERT_EQUAL(dummy.get_blood_volume(apply_modifiers = TRUE), expected_final_volume, "Saline didn't dilute low blood by the expected amount.")
 
 	ADD_TRAIT(dummy, TRAIT_NOBLOOD, TRAIT_GENERIC)
 

@@ -149,7 +149,7 @@
 		return
 
 	// Takes into account modifiers like saline-glucose solution in the blood
-	var/modified_blood_volume = get_modified_blood_volume()
+	var/modified_blood_volume = get_blood_volume(apply_modifiers = TRUE)
 
 	// Some effects are halved mid-combat.
 	var/determined_mod = has_status_effect(/datum/status_effect/determined) ? 0.5 : 0
