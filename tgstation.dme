@@ -6801,6 +6801,7 @@
 #include "troutstation\code\modules\food_and_drinks\recipes\tablecraft\recipes_io.dm"
 #include "troutstation\code\modules\food_and_drinks\recipes\tablecraft\recipes_misc.dm"
 #include "troutstation\code\modules\hydroponics\grown\coconut.dm"
+#include "troutstation\code\modules\instruments\instrument_data\organ.dm"
 #include "troutstation\code\modules\language\_language_holder.dm"
 #include "troutstation\code\modules\language\flock.dm"
 #include "troutstation\code\modules\language\myrtongue.dm"
