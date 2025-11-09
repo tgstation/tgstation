@@ -10,17 +10,10 @@
 /// Use the CAN_HAVE_BLOOD(mob) macro instead.
 /// Unless you're the one updating blood status.
 /mob/living/proc/can_have_blood()
-	return get_default_blood_volume() > 0
+	return default_blood_volume > 0
 
 /mob/living/carbon/can_have_blood()
 	return !HAS_TRAIT(src, TRAIT_NOBLOOD)
-
-/// Returns the default blood volume of this mob. Useful for healing bloodloss.
-/mob/living/proc/get_default_blood_volume()
-	return initial(blood_volume)
-
-/mob/living/carbon/get_default_blood_volume()
-	return BLOOD_VOLUME_NORMAL
 
 /// Gets the base blood volume of the mob, before scalars like Saline-Glucose Solution are applied.
 /// For effects like oxyloss damage from blood volume, use [proc/get_modified_blood_volume] instead.
@@ -31,13 +24,13 @@
 /// For anything reliant on real blood, such as drawing blood, use [proc/get_blood_volume] instead.
 /mob/living/proc/get_modified_blood_volume()
 	if (HAS_TRAIT(src, TRAIT_GODMODE))
-		return get_default_blood_volume()
+		return default_blood_volume
 
 	return get_blood_volume()
 
 /mob/living/carbon/get_modified_blood_volume()
 	if (HAS_TRAIT(src, TRAIT_GODMODE))
-		return get_default_blood_volume()
+		return default_blood_volume
 
 	var/amount = get_blood_volume()
 
@@ -108,7 +101,7 @@
 
 	var/old_blood_volume = get_blood_volume()
 
-	set_blood_volume(has_blood ? get_default_blood_volume() : 0)
+	set_blood_volume(has_blood ? default_blood_volume : 0)
 
 	var/new_blood_volume = get_blood_volume()
 
@@ -319,7 +312,7 @@
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
 
 /mob/living/proc/restore_blood()
-	set_blood_volume(get_default_blood_volume())
+	set_blood_volume(default_blood_volume)
 
 /mob/living/carbon/restore_blood()
 	. = ..()

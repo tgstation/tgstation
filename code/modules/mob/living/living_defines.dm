@@ -164,8 +164,12 @@
 	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 	var/butcher_difficulty = 0
 
-	///how much blood the mob has
+	/// How much blood the mob currently has.
+	/// Don't read directly, use get_blood_volume() and get_modified_blood_volume().
+	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
 	var/blood_volume = 0
+	/// The default blood volume of the mob. Used primarily for healing bloodloss.
+	var/default_blood_volume = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects

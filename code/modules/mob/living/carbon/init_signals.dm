@@ -45,7 +45,6 @@
 	SIGNAL_HANDLER
 
 	update_blood_status()
-	set_blood_volume(0)
 
 /**
  * On removal of TRAIT_NOBLOOD
@@ -55,7 +54,6 @@
 /mob/living/carbon/proc/on_noblood_trait_loss(datum/source)
 	SIGNAL_HANDLER
 
-	set_blood_volume(get_default_blood_volume())
 	update_blood_status()
 
 /**
