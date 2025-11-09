@@ -37,7 +37,7 @@
 		return
 
 	//Check that there's enough pressure on the detonation turf for the 'bang' part of the flashbang to work.
-	var/datum/gas_mixture/environment = current_turf.return_air()
+	var/datum/gas_mixture/environment = flashbang_turf.return_air()
 	var/pressure = environment?.return_pressure()
 	var/soundbang = pressure >= SOUND_MINIMUM_PRESSURE
 
