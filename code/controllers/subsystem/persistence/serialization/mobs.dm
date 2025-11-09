@@ -24,8 +24,6 @@
 	. += NAMEOF(src, health)
 
 	. -= NAMEOF(src, density)
-	. -= NAMEOF(src, icon)
-	. -= NAMEOF(src, icon_state)
 	return .
 
 /mob/living/simple_animal/PersistentInitialize()
