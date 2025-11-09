@@ -1133,7 +1133,7 @@ Striking a noncultist, however, will tear their flesh."}
 			apparation.faction = list(FACTION_CULT)
 			apparation.mock_as(owner, 7 SECONDS, damage = 10, replicate = 5)
 			apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
-		else // normal apparation
+		else // normal apparation designed to escape
 			var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
 			decoy.mock_as(owner, 7 SECONDS, damage = 10)
 			decoy.set_target(owner)
