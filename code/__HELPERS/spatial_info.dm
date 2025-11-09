@@ -218,9 +218,15 @@
 /// Modifies input list.
 /proc/mob_only_listeners(list/atom/movable/hearers)
 	RETURN_TYPE(/list/mob)
-	for(var/hearer_index in 1 to hearers.len)
+
+	var/hearers_length
+	if(isnull(hearers) || !(hearers_length = hearers.len)) // note on var assignment in the conditional: this is a micro op so we do not have to do a length() check before assigning hearers.len and so we only have to isnull() once.
+		return list()
+
+	for(var/hearer_index in 1 to hearers_length)
 		var/atom/movable/hearer = hearers[hearer_index]
 		hearers[hearer_index] = hearer.get_listening_mob()
+
 	list_clear_nulls(hearers)
 	return hearers
 
@@ -395,6 +401,15 @@
 	source.luminosity = 6
 
 	. = view(range, source)
+	source.luminosity = lum
+
+/// get_hear that only gets turfs so we can use as_anything
+/proc/get_hear_turfs(range, atom/source)
+	var/lum = source.luminosity
+	source.luminosity = 6
+	. = list()
+	for(var/turf/turf in view(range, source))
+		. += turf
 	source.luminosity = lum
 
 ///Returns the open turf next to the center in a specific direction

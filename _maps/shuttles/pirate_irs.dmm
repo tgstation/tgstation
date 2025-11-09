@@ -1379,7 +1379,6 @@
 	dir = 4
 	},
 /obj/machinery/turretid{
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_y = -24;
 	req_access = list("syndicate")

@@ -2,10 +2,10 @@
 	icon = 'icons/obj/clothing/under/rnd.dmi'
 	worn_icon = 'icons/mob/clothing/under/rnd.dmi'
 	abstract_type = /obj/item/clothing/under/rank/rnd
-	armor_type = /datum/armor/clothing_under/science
 
 /datum/armor/clothing_under/science
-	bio = 50
+	bomb = 10
+	bio = 40
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."

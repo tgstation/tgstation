@@ -87,4 +87,5 @@
 /atom/movable/screen/alert/status_effect/bugkiller_death
 	name = "Overwhelming Toxicity"
 	desc = "Don't go into the light!"
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"

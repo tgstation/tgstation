@@ -918,3 +918,21 @@
   projectkepler-ru:
   - rscadd: True Strike is also now AP, making detective more scary and BR-38 much
       more effective against highly armoured target
+2025-10-31:
+  Aliceee2ch:
+  - qol: You can now use bow with big fingers.
+  Fghj240:
+  - rscadd: Added cybernetic cat ears
+  - code_imp: Wall-penetrating and whisper-sensitive ears now properly utilize organ
+      traits
+  Melbert:
+  - refactor: Refactored species unique organs slightly, particularly how they are
+      set up at game start. Report any oddities, like invisible tails or wings
+  timothymtorres:
+  - rscadd: Thunder from weather will now smelt any mining ores it hits.
+  - balance: Remove thunder exploding turfs and damaging objects however mobs will
+      still be affected.
+  tonyhawq:
+  - bugfix: fixes permanent soul binding between golf carts and riders
+  vinylspiders:
+  - code_imp: optimizes space vine spawning to create less lag.
