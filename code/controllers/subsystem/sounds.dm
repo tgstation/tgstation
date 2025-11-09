@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(sounds)
 	VAR_PRIVATE/list/precache_errors = list()
 
 	// Comments from https://github.com/DaedalusDock/daedalusdock We love Francinum.
+	/// A list of sound formats that work in byond. Indexed for direct accesing rather then loop itteration or usage of `in`
 	var/static/list/byond_sound_formats = list(
 		"mid" = TRUE, //Midi, 8.3 File Name
 		"midi" = TRUE, //Midi, Long File Name
@@ -60,6 +61,7 @@ SUBSYSTEM_DEF(sounds)
 
 	// Currently set to private as I would prefer you use byond_sound_formats but you can unprivate it if you have a valid use!
 	// Put more common extensions first to speed this up a bit (So only ogg and mp3 lol.)
+	/// Similar to byond_sound_formats, a list of sound formats that work in byond.
 	VAR_PRIVATE/static/list/byond_sound_extensions = list(
 		".ogg",
 		".mp3",
