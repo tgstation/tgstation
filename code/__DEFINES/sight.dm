@@ -6,6 +6,10 @@
 
 #define SEE_INVISIBLE_LIVING 25
 
+/// Used for toggle_ghosts
+#define SEE_INVISIBLE_GHOSTS 30
+#define INVISIBILITY_GHOSTS 30
+
 //#define SEE_INVISIBLE_LEVEL_ONE 35 //currently unused
 //#define INVISIBILITY_LEVEL_ONE 35 //currently unused
 

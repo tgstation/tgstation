@@ -7,6 +7,8 @@ GLOBAL_DATUM(summon_guns, /datum/summon_things_controller/item)
 GLOBAL_DATUM(summon_magic, /datum/summon_things_controller/item)
 /// A global singleton datum used to store a "summon things controller" for Mass Teaching, to grant a specific spellbook entry to stationgoers and latejoiners
 GLOBAL_DATUM(mass_teaching, /datum/summon_things_controller/spellbook_entry)
+/// A global singleton datum used to store a "summon things controller" for Toggle Ghosts, to grant a specific spellbook entry to stationgoers and latejoiners
+GLOBAL_DATUM(summon_ghosts, /datum/summon_things_controller/toggleGhosts)
 
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
@@ -188,7 +190,9 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		stack_trace("Unable to run summon ghosts, due to being unable to locate the associated event.")
 		if(user)
 			to_chat(user, span_warning("You... try to summon ghosts, but nothing seems to happen. Shame."))
-
+	if (!GLOB.summon_ghosts)
+		GLOB.summon_ghosts = new /datum/summon_things_controller/toggleGhosts()
+		GLOB.summon_ghosts.equip_all_affected()
 /**
  * Triggers Summon Magic from [user].
  * Can optionally be passed [survivor_probability], to set the chance of creating survivalists.
@@ -379,3 +383,18 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	// Makes staffs and related items usable without penalty
 	ADD_TRAIT(to_who.mind, TRAIT_MAGICALLY_GIFTED, INNATE_TRAIT)
+
+/datum/summon_things_controller/toggleGhosts
+	var/datum/action/cooldown/spell/toggle_ghosts/toggle_ghosts
+
+/datum/summon_things_controller/toggleGhosts/equip_all_affected()
+	for (var/mob/living/living_mob as anything in GLOB.mob_living_list)
+		living_mob.set_invis_see(SEE_INVISIBLE_GHOSTS)
+		INVOKE_ASYNC(src, PROC_REF(show_button), living_mob)
+
+/datum/summon_things_controller/toggleGhosts/equip_latejoiner(mob/living/new_mob)
+	show_button(new_mob)
+
+/datum/summon_things_controller/toggleGhosts/proc/show_button(mob/to_who)
+	toggle_ghosts = new(to_who.mind || to_who)
+	toggle_ghosts.Grant(to_who)
