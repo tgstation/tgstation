@@ -1120,18 +1120,18 @@ Striking a noncultist, however, will tear their flesh."}
 				if(prob(60))
 					var/mob/living/basic/illusion/apparation = new(owner.loc)
 					apparation.faction = list(FACTION_CULT)
-					apparation.mock_as(owner, 70, 10, 5)
+					apparation.mock_as(owner, 7 SECONDS, damage = 10, replicate = 5)
 					apparation.move_to_delay = owner.cached_multiplicative_slowdown
 				else
 					var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
-					decoy.mock_as(owner, 70, 10)
+					decoy.mock_as(owner, 7 SECONDS, damage = 10)
 					decoy.GiveTarget(owner)
 					decoy.Goto(owner, owner.cached_multiplicative_slowdown, decoy.minimum_distance)
 			return TRUE
 	else
 		if(prob(50))
 			var/mob/living/basic/illusion/bizarro = new(owner.loc)
-			bizarro.mock_as(owner, 100, 20, 5)
+			bizarro.mock_as(owner, 10 SECONDS, damage = 20, replicate = 5)
 			bizarro.faction = list(FACTION_CULT)
 			bizarro.GiveTarget(owner)
 			bizarro.move_to_delay = owner.cached_multiplicative_slowdown

@@ -1,6 +1,3 @@
-#define ATTACK_MODE_ATTACK "attack_mode"
-#define ATTACK_MODE_SHOVE "shove_mode"
-
 /mob/living/basic/illusion
 	name = "illusion"
 	desc = "It's a fake!"
@@ -19,18 +16,19 @@
 	health = 100
 	speed = 0
 	faction = list(FACTION_ILLUSION)
-	del_on_death = TRUE
+	basic_mob_flags = DEL_ON_DEATH
 	death_message = "vanishes into thin air! It was a fake!"
+	ai_controller = /datum/ai_controller/basic_controller/illusion
 	/// Weakref to what we're copying
 	var/datum/weakref/parent_mob_ref
 	/// Prob of getting a clone on attack
 	var/multiply_chance = 0
-	/// Decides how the clones attack people
-	var/attack_mode = ATTACK_MODE_ATTACK
+	/// The blackboard key we want to set for our target
+	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
 
 /mob/living/basic/illusion/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(check_mode))
+
 
 /mob/living/basic/illusion/examine(mob/user)
 	var/mob/living/parent_mob = parent_mob_ref?.resolve()
@@ -38,15 +36,15 @@
 		return parent_mob.examine(user)
 	return ..()
 
-/// Called before trying to attack something
-/mob/living/basic/illusion/proc/check_mode(mob/living/source, atom/attacked_target)
-	SIGNAL_HANDLER
-	if(attack_mode != ATTACK_MODE_SHOVE)
-		return
-	if(disarm(attacked_target))
-		return COMPONENT_HOSTILE_NO_ATTACK
+/// Gives the illusion a target to focus on. By default it's the attack key
+/mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
+	ai_controller.set_blackboard_key(target_key, target_mob)
 
-/mob/living/basic/illusion/proc/mock_as(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0, attack_mode = ATTACK_MODE_ATTACK)
+/// Does the actual work of setting up the illusion's appearance and some other functionality.
+/mob/living/basic/illusion/proc/mock_as(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
+	if(QDELETED(original))
+		return
+
 	parent_mob_ref = WEAKREF(original)
 	appearance = original.appearance
 	setDir(original.dir)
@@ -63,17 +61,15 @@
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
 
-	src.attack_mode = attack_mode
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, death)), life)
 
+/// Some illusions can replicate as they attack. Cool.
 /mob/living/basic/illusion/proc/replicate()
+	var/mob/living/parent_mob = parent_mob_ref.resolve()
+	if(QDELETED(parent_mob))
+		return
 	var/mob/living/basic/illusion/new_clone = new(loc)
 	new_clone.mock_as(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
 	new_clone.faction = faction.Copy()
-	new_clone.GiveTarget(target)
+	new_clone.set_target(ai_controller.blackboard[target_key])
 
-///////Actual Types/////////
-
-
-#undef ATTACK_MODE_ATTACK
-#undef ATTACK_MODE_SHOVE
