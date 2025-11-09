@@ -690,7 +690,7 @@
 
 	switch(param)
 		if("set_name")
-			target_point.name = reject_bad_name(value, allow_numbers = TRUE, strict = TRUE)
+			target_point.name = sanitize_name(value, allow_numbers = TRUE)
 			return TRUE
 
 		if("toggle_priority")

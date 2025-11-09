@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Icon,
+  Input,
   Modal,
   Section,
   Slider,
@@ -158,6 +159,8 @@ const PointSection = (props: {
     null,
   );
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingNameId, setEditingNameId] = useState<string | null>(null);
+  const [newName, setNewName] = useState('');
 
   const isPickup = title === 'Pickup Points';
   const currentTasking = isPickup ? data.pickup_tasking : data.dropoff_tasking;
@@ -175,6 +178,12 @@ const PointSection = (props: {
 
   const adjustPoint = (pointId: string, param: string, value?: any) => {
     act('adjust_point_param', { pointId, param, value });
+  };
+
+  const handleSaveName = (pointId: string) => {
+    adjustPoint(pointId, 'set_name', newName);
+    setEditingNameId(null);
+    setNewName('');
   };
 
   const handleEditPoint = (point: InteractionPoint, index: number) => {
@@ -289,7 +298,37 @@ const PointSection = (props: {
                   <Stack.Item grow>
                     <Box>
                       <Box bold>
-                        {point.name} <Button icon="edit" color="transparent" />
+                        {editingNameId === point.id ? (
+                          <Stack>
+                            <Stack.Item>
+                              <Input
+                                value={newName}
+                                onChange={(value) => setNewName(value)}
+                                onEnter={() => handleSaveName(point.id)}
+                                maxLength={20}
+                                autoFocus
+                              />
+                            </Stack.Item>
+                            <Stack.Item>
+                              <Button
+                                icon="check"
+                                onClick={() => handleSaveName(point.id)}
+                              />
+                            </Stack.Item>
+                          </Stack>
+                        ) : (
+                          <>
+                            {point.name}{' '}
+                            <Button
+                              icon="edit"
+                              color="transparent"
+                              onClick={() => {
+                                setEditingNameId(point.id);
+                                setNewName(point.name);
+                              }}
+                            />
+                          </>
+                        )}
                       </Box>
                       <Box color="label">Mode: {point.mode.toUpperCase()}</Box>
                       <Box
