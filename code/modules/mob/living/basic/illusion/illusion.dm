@@ -28,8 +28,8 @@
 
 /mob/living/basic/illusion/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(attack_override))
-	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_changed))
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_preattack))
+	RegisterSignal(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_damage_taken))
 
 /mob/living/basic/illusion/examine(mob/user)
 	var/mob/living/parent_mob = parent_mob_ref?.resolve()
@@ -37,17 +37,15 @@
 		return parent_mob.examine(user)
 	return ..()
 
-/// Can cancel attack on subtypes, but check if we might want to replicate as well
+/// Signal handler for when we attack something. Hook for replicating on standard behavior, with additional behavior on subtypes.
 /mob/living/basic/illusion/proc/on_preattack(mob/living/source, atom/attacked_target)
 	SIGNAL_HANDLER
-	if(prob(multiply_chance))
-		replicate()
+	try_replicate()
 
-/// When our health changes, maybe replicate
-/mob/living/basic/illusion/proc/on_health_changed(mob/living/source)
+/// Signal handler for when we are attacked.
+/mob/living/basic/illusion/proc/on_damage_taken(mob/living/source)
 	SIGNAL_HANDLER
-	if(prob(multiply_chance))
-		replicate()
+	try_replicate()
 
 /// Gives the illusion a target to focus on. By default it's the attack key
 /mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
@@ -76,7 +74,12 @@
 
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, death)), life)
 
-/// Some illusions can replicate as they attack. Cool.
+/// See if we are able to replicate, and if so, do it.
+/mob/living/basic/illusion/proc/try_replicate()
+	if(prob(multiply_chance))
+		replicate()
+
+/// Actually perform the replication of this illusion.
 /mob/living/basic/illusion/proc/replicate()
 	var/mob/living/parent_mob = parent_mob_ref.resolve()
 	if(QDELETED(parent_mob))
