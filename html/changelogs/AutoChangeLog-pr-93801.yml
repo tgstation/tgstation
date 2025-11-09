@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - refactor: "rewrote all cases of numbers being used as keys in non-alist associative lists"

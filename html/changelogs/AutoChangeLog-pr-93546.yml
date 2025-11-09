@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Added a new easy difficulty bitrunning domain, \"Heretical Hunt\""
-  - rscadd: "Digital mobs receive positive moodlets for killing people rather than negative"
-  - bugfix: "Madness Mask no longer affects corpses"
-  - bugfix: "Fixed some heretic runtimes"
