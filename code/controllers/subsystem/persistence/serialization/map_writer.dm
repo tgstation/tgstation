@@ -38,9 +38,20 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
 
-	// we want to keep decals from crayon writings, blood splatters, cobwebs, etc.
-	// most landmarks get deleted except for latejoin arrivals shuttle
-	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile, /obj/machinery/gravity_generator/part, /obj/structure/fluff/airlock_filler, /mob/living/carbon)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
+	if(!length(GLOB.save_object_blacklist))
+		GLOB.save_object_blacklist += typecacheof(list(
+			/obj/effect,
+			/obj/projectile,
+			/obj/machinery/gravity_generator/part,
+			/obj/structure/fluff/airlock_filler,
+			/mob/living/carbon,
+		))
+
+		GLOB.save_object_blacklist -= typecacheof(list(
+			/obj/effect/decal, // keep decals from crayon writings, blood splatters, cobwebs, etc.
+			/obj/effect/turf_decal,
+			/obj/effect/landmark, // most landmarks get deleted except for latejoin arrivals shuttle
+		))
 
 	if(!obj_blacklist)
 		obj_blacklist = GLOB.save_object_blacklist
@@ -213,6 +224,11 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 					header_data[textiftied_header] = key
 				contents += "[key]\n"
 			contents += "\"}"
+
+	// These always need to be reset between saves so old child/parents storages dont get mixed up
+	GLOB.save_containers_parents.Cut()
+	GLOB.save_containers_children.Cut()
+
 	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
 
 // Could be inlined, not a massive cost tho so it's fine
