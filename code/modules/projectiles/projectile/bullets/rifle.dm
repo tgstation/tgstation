@@ -248,7 +248,7 @@
 
 /obj/projectile/bullet/Large_Ballista_Spear/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/projectile_drop, /obj/item/spear)
+	AddElement(/datum/element/projectile_drop, shrapnel_type)
 	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 
 /obj/projectile/bullet/Large_Ballista_Spear/proc/handle_drop(datum/source, /obj/item/spear/spear)
@@ -271,7 +271,7 @@
 
 /obj/projectile/bullet/Large_Ballista_Spear_Dragonator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/projectile_drop, /obj/item/spear/dragonator)
+	AddElement(/datum/element/projectile_drop, shrapnel_type)
 	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
 	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL|MOB_MINING, damage_multiplier = 2) //because anything
 
