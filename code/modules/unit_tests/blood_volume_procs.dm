@@ -12,6 +12,15 @@
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), dummy.default_blood_volume, "Blood volume isn't initialized properly.")
 	TEST_ASSERT_EQUAL(dummy.get_modified_blood_volume(), dummy.get_blood_volume(), "Blood volume is modified on initialization.")
 
+	var/set_amount = 100
+
+	// Test setting blood volume.
+	TEST_ASSERT_EQUAL(dummy.set_blood_volume(set_amount), set_amount, "Set proc return value is incorrect.")
+	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), set_amount, "Final blood volume is different from what was expected.")
+
+	// Reset it so adjustments work with a clean slate.
+	dummy.set_blood_volume(dummy.default_blood_volume)
+
 	var/adjustment_amount = 100
 	var/expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 
