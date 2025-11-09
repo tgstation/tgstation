@@ -132,8 +132,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 			item.forceMove(new_safe)
 
 /obj/structure/secure_safe/proc/PopulateContents()
-	new /obj/item/paper(src)
-	new /obj/item/pen(src)
+	if(!(obj_flags & CONTENTS_INITIALIZED))
+		new /obj/item/paper(src)
+		new /obj/item/pen(src)
 
 /obj/structure/secure_safe/proc/update_lock_code(obj/structure/secure_safe/safe, new_code)
 	SIGNAL_HANDLER

@@ -805,6 +805,7 @@
 #include "code\controllers\subsystem\persistence\serialization\objects\puzzle.dm"
 #include "code\controllers\subsystem\persistence\serialization\objects\reagents.dm"
 #include "code\controllers\subsystem\persistence\serialization\objects\shuttle.dm"
+#include "code\controllers\subsystem\persistence\serialization\objects\storage.dm"
 #include "code\controllers\subsystem\persistence\serialization\objects\structure.dm"
 #include "code\controllers\subsystem\processing\acid.dm"
 #include "code\controllers\subsystem\processing\ai_basic_avoidance.dm"
