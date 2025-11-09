@@ -467,7 +467,7 @@
 	)
 
 /obj/singularity/proc/emp_area()
-	empulse(src, 8, 10, log = FALSE)
+	empulse(src, 8, 10)
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)
