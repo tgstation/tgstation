@@ -81,15 +81,25 @@
 	hue = "#9B3675"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	var/required_coverage = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(isvineimmune(crosser) || issilicon(crosser))
+	if(isvineimmune(crosser) || issilicon(crosser) || HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
 		return
 	if(!prob(TOXICITY_MUTATION_PROB))
 		return
-	if(crosser.run_armor_check(attack_flag = BIO, silent = TRUE) < 100)
-		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
-		crosser.apply_damage(20, TOX)
+
+	var/body_parts_covered = 0
+
+	for(var/obj/item/clothing/worn_item in crosser.get_equipped_items())
+		if(worn_item.clothing_flags & THICKMATERIAL)
+			body_parts_covered |= worn_item.body_parts_covered
+
+	if((body_parts_covered & required_coverage) == required_coverage)
+		return
+
+	to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
+	crosser.apply_damage(20, TOX)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
 	if(!isvineimmune(eater))
