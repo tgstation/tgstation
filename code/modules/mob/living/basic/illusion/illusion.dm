@@ -28,7 +28,12 @@
 
 /mob/living/basic/illusion/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(attack_override))
 
+/// Override the attack with custom behavior. Implemented on subtypes
+/mob/living/basic/illusion/proc/attack_override(mob/living/source, atom/attacked_target)
+	SIGNAL_HANDLER
+	return
 
 /mob/living/basic/illusion/examine(mob/user)
 	var/mob/living/parent_mob = parent_mob_ref?.resolve()
@@ -69,7 +74,7 @@
 	if(QDELETED(parent_mob))
 		return
 	var/mob/living/basic/illusion/new_clone = new(loc)
-	new_clone.mock_as(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
+	new_clone.mock_as(parent_mob, 8 SECONDS, hp = health / 2, damage = melee_damage_upper, replicate = multiply_chance / 2)
 	new_clone.faction = faction.Copy()
 	new_clone.set_target(ai_controller.blackboard[target_key])
 

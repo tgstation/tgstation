@@ -42,12 +42,12 @@
 	return stuff
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
-	var/mob/living/basic/illusion/fake_clone = new(pick(RANGE_TURFS(2, victim)))
-	fake_clone.faction = caster.faction.Copy()
-	fake_clone.mock_as(caster, 30 SECONDS, caster.health, 1, 0, "shove_mode")
-	fake_clone.GiveTarget(victim)
-	fake_clone.AddElement(/datum/element/relay_attackers)
-	RegisterSignal(fake_clone, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	var/mob/living/basic/illusion/shover/shove_clone = new(pick(RANGE_TURFS(2, victim)))
+	shove_clone.faction = caster.faction.Copy()
+	shove_clone.mock_as(caster, 30 SECONDS, caster.health, damage = 1, replicate = 0)
+	shove_clone.set_target(victim)
+	shove_clone.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(shove_clone, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 /// Used by Ringleaders Rise, illusions created by this spell will explode when they are interacted with
 /datum/action/cooldown/spell/aoe/moon_ringleader/proc/on_attacked(mob/victim, atom/attacker)

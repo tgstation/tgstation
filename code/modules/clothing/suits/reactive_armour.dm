@@ -193,9 +193,8 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
-	decoy.mock_as(owner, 50)
-	decoy.GiveTarget(owner) //so it starts running right away
-	decoy.Goto(owner, decoy.move_to_delay, decoy.minimum_distance)
+	decoy.mock_as(owner, 5 SECONDS)
+	decoy.set_target(owner)
 	owner.alpha = 0
 	in_stealth = TRUE
 	owner.visible_message(span_danger("[owner] is hit by [attack_text] in the chest!")) //We pretend to be hit, since blocking it would stop the message otherwise
