@@ -12,8 +12,8 @@
 
 	/// Is the manipulator turned on?
 	var/on = FALSE
-	/// Is a cycle timer already running?
-	var/cycle_timer_running = FALSE
+	/// Was the next cycle already scheduled?
+	var/next_cycle_scheduled = FALSE
 
 	/// How quickly the manipulator will process it's actions.
 	var/speed_multiplier = 1
@@ -487,7 +487,7 @@
 	else
 		drop_held_atom()
 		on = newly_on
-		cycle_timer_running = FALSE
+		next_cycle_scheduled = FALSE
 		// Set stopping task instead of ending current task immediately
 		if(current_task != CURRENT_TASK_NONE && current_task != CURRENT_TASK_STOPPING)
 			start_task(CURRENT_TASK_STOPPING, 0)
@@ -644,10 +644,12 @@
 
 		if("reset_tasking_Pickup Points")
 			pickup_strategy.current_index = 1
+			balloon_alert(ui.user, "index reset")
 			return TRUE
 
 		if("reset_tasking_Dropoff Points")
 			dropoff_strategy.current_index = 1
+			balloon_alert(ui.user, "index reset")
 			return TRUE
 
 		if("cycle_tasking_schedule")
@@ -668,6 +670,11 @@
 				return FALSE
 
 			speed_multiplier = clamp(new_speed, min_speed_multiplier, max_speed_multiplier)
+			return TRUE
+
+		if("unbuckle")
+			unbuckle_all_mobs()
+			monkey_worker = null
 			return TRUE
 
 		if("adjust_point_param")
@@ -801,11 +808,10 @@
 
 /// Completes the stopping task and transitions to TASK_NONE
 /obj/machinery/big_manipulator/proc/complete_stopping_task()
-	if(current_task == CURRENT_TASK_STOPPING)
-		on = FALSE
-		cycle_timer_running = FALSE
-		end_current_task()
-		SStgui.update_uis(src)
+	on = FALSE
+	next_cycle_scheduled = FALSE
+	end_current_task()
+	SStgui.update_uis(src)
 
 /obj/machinery/big_manipulator/proc/remove_all_huds()
 	var/image/main_hud = hud_list[BIG_MANIP_HUD]

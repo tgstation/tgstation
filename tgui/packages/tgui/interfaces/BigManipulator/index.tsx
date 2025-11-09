@@ -47,7 +47,6 @@ const MasterControls = () => {
   } = data;
   return (
     <Stack>
-      <Stack.Item>Speed:</Stack.Item>
       <Stack.Item>
         <Button
           icon="backward-step"
@@ -93,6 +92,15 @@ const MasterControls = () => {
           onClick={() => act('drop_held_atom')}
         >
           Drop
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="eject"
+          tooltip="Unbuckle the worker"
+          onClick={() => act('unbuckle')}
+        >
+          Unbuckle
         </Button>
       </Stack.Item>
     </Stack>
@@ -441,24 +449,6 @@ const PointSection = (props: {
                         }
                         tooltip="Toggle filter usage"
                       />
-                      <ConfigRow
-                        label="Alt Worker Action"
-                        content={editingPoint.worker_use_rmb ? 'TRUE' : 'FALSE'}
-                        onClick={() =>
-                          adjustPoint(editingPoint.id, 'toggle_worker_rmb')
-                        }
-                        tooltip="Toggle RMB-like attack"
-                      />
-                      <ConfigRow
-                        label="Combat Stance"
-                        content={
-                          editingPoint.worker_combat_mode ? 'TRUE' : 'FALSE'
-                        }
-                        onClick={() =>
-                          adjustPoint(editingPoint.id, 'toggle_worker_combat')
-                        }
-                        tooltip="Toggle using Combat Mode for interactions"
-                      />
                       {editingPoint.mode.toUpperCase() === 'THROW' && (
                         <ConfigRow
                           label="Throw Range"
@@ -470,17 +460,42 @@ const PointSection = (props: {
                         />
                       )}
                       {editingPoint.mode.toUpperCase() === 'USE' && (
-                        <ConfigRow
-                          label="No Uses Left"
-                          content={editingPoint.use_post_interaction}
-                          onClick={() =>
-                            adjustPoint(
-                              editingPoint.id,
-                              'cycle_post_interaction',
-                            )
-                          }
-                          tooltip="Cycle what to do when no interaction is avaliable"
-                        />
+                        <>
+                          <ConfigRow
+                            label="Alt Worker Action"
+                            content={
+                              editingPoint.worker_use_rmb ? 'TRUE' : 'FALSE'
+                            }
+                            onClick={() =>
+                              adjustPoint(editingPoint.id, 'toggle_worker_rmb')
+                            }
+                            tooltip="Toggle RMB-like attack"
+                          />
+                          <ConfigRow
+                            label="Combat Stance"
+                            content={
+                              editingPoint.worker_combat_mode ? 'TRUE' : 'FALSE'
+                            }
+                            onClick={() =>
+                              adjustPoint(
+                                editingPoint.id,
+                                'toggle_worker_combat',
+                              )
+                            }
+                            tooltip="Toggle using Combat Mode for interactions"
+                          />
+                          <ConfigRow
+                            label="No Uses Left"
+                            content={editingPoint.use_post_interaction}
+                            onClick={() =>
+                              adjustPoint(
+                                editingPoint.id,
+                                'cycle_post_interaction',
+                              )
+                            }
+                            tooltip="Cycle what to do when no interaction is avaliable"
+                          />
+                        </>
                       )}
                     </>
                   )}
@@ -607,32 +622,29 @@ export const BigManipulator = () => {
           <Section
             title="Action Panel"
             buttons={
-              <>
-                <Button icon="id-card">Lock</Button>
-                <Button
-                  icon={
-                    current_task === 'NO TASK'
-                      ? 'play'
-                      : current_task === 'STOPPING'
-                        ? 'hourglass-start'
-                        : 'stop'
-                  }
-                  color={
-                    current_task === 'NO TASK'
-                      ? 'good'
-                      : current_task === 'STOPPING'
-                        ? 'blue'
-                        : 'bad'
-                  }
-                  onClick={() => act('run_cycle')}
-                >
-                  {current_task === 'NO TASK'
-                    ? 'Run'
+              <Button
+                icon={
+                  current_task === 'NO TASK'
+                    ? 'play'
                     : current_task === 'STOPPING'
-                      ? 'Stopping'
-                      : 'Stop'}
-                </Button>
-              </>
+                      ? 'hourglass-start'
+                      : 'stop'
+                }
+                color={
+                  current_task === 'NO TASK'
+                    ? 'good'
+                    : current_task === 'STOPPING'
+                      ? 'blue'
+                      : 'bad'
+                }
+                onClick={() => act('run_cycle')}
+              >
+                {current_task === 'NO TASK'
+                  ? 'Run'
+                  : current_task === 'STOPPING'
+                    ? 'Stopping'
+                    : 'Stop'}
+              </Button>
             }
           >
             <Box

@@ -49,14 +49,7 @@
 
 /// Attempts to launch the work cycle. Should only be ran on pressing the "Run" button.
 /obj/machinery/big_manipulator/proc/try_kickstart(mob/user)
-	if(!on)
-		return FALSE
-
-	if(!anchored)
-		return FALSE
-
-	// Check if manipulator is already busy with a task
-	if(current_task != CURRENT_TASK_NONE)
+	if(!on || !anchored || IS_BUSY)
 		return FALSE
 
 	if(!use_energy(active_power_usage, force = FALSE))
@@ -64,23 +57,19 @@
 		balloon_alert_to_viewers("not enough power!")
 		return FALSE
 
-	cycle_timer_running = FALSE
+	next_cycle_scheduled = FALSE
 	run_pickup_phase()
 
 /// Safely schedules the next cycle attempt to prevent overlapping.
 /obj/machinery/big_manipulator/proc/schedule_next_cycle()
-	if(cycle_timer_running)
-		return
-
-	// Don't schedule cycles during stopping task
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(next_cycle_scheduled || IS_STOPPING)
 		return
 
 	// Allow scheduling if manipulator is idle, none, or if we have a held object (need to drop it off)
 	if(current_task != CURRENT_TASK_IDLE && current_task != CURRENT_TASK_NONE && !held_object)
 		return
 
-	cycle_timer_running = TRUE
+	next_cycle_scheduled = TRUE
 	if(held_object)
 		run_dropoff_phase()
 	else
@@ -89,9 +78,11 @@
 /// Handles the common pattern of waiting and scheduling next cycle when no work can be done.
 /obj/machinery/big_manipulator/proc/handle_no_work_available()
 	// If we're stopping, don't schedule next cycle
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(IS_STOPPING)
 		complete_stopping_task()
 		return FALSE
+
+	current_task = CURRENT_TASK_IDLE
 
 	addtimer(CALLBACK(src, PROC_REF(schedule_next_cycle)), CYCLE_SKIP_TIMEOUT)
 	return FALSE
@@ -115,10 +106,10 @@
 
 /// Attempts to run the pickup phase. Selects the next origin point and attempts to pick up an item from it.
 /obj/machinery/big_manipulator/proc/run_pickup_phase()
-	if(!on)
+	if(!on || IS_STOPPING)
 		return
 
-	cycle_timer_running = FALSE
+	next_cycle_scheduled = FALSE
 
 	var/datum/interaction_point/origin_point = find_next_point(TRANSFER_TYPE_PICKUP)
 
@@ -131,7 +122,7 @@
 /// Attempts to interact with the origin point (pick up the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_origin_point(datum/interaction_point/origin_point, hand_is_empty = FALSE)
 	// If we're stopping, just finish the task and shut down
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(IS_STOPPING)
 		complete_stopping_task()
 		return
 
@@ -168,7 +159,7 @@
 	// Find the next available destination point that can accept the held item
 	var/datum/interaction_point/destination_point = find_next_point(TRANSFER_TYPE_DROPOFF)
 
-	cycle_timer_running = FALSE
+	next_cycle_scheduled = FALSE
 
 	if(!destination_point)
 		return handle_no_work_available()
@@ -179,7 +170,7 @@
 /// Attempts to interact with the destination point (drop/use/throw the object)
 /obj/machinery/big_manipulator/proc/try_interact_with_destination_point(datum/interaction_point/destination_point, hand_is_empty = FALSE)
 	// If we're stopping, just finish the task and shut down
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(IS_STOPPING)
 		complete_stopping_task()
 		return
 
@@ -201,6 +192,9 @@
 
 /// Rotates the manipulator arm to face the target point.
 /obj/machinery/big_manipulator/proc/rotate_to_point(datum/interaction_point/target_point, callback, type)
+	if(IS_STOPPING)
+		return
+
 	if(!target_point)
 		return FALSE
 
@@ -227,6 +221,9 @@
 
 /// Does a 45 degree step, animating the claw
 /obj/machinery/big_manipulator/proc/do_step_rotation(datum/interaction_point/target_point, callback, current_angle, target_angle, rotation_step, elapsed_time, total_time)
+	if(IS_STOPPING)
+		return
+
 	// Just making sure we're not there already
 	var/angle_diff = closer_angle_difference(current_angle, target_angle)
 	if(abs(angle_diff) < abs(rotation_step))
@@ -285,6 +282,9 @@
 /// If the interaction turf has an atom that corresponds to the priority settings,
 /// it will attempt to use the held item. If it doesn't, it will simply drop the item.
 /obj/machinery/big_manipulator/proc/try_use_thing(datum/interaction_point/destination_point, work_done_at_point = FALSE)
+	if(IS_STOPPING)
+		return
+
 	var/obj/obj_resolve = held_object?.resolve()
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	var/destination_turf = destination_point.interaction_turf
@@ -378,16 +378,12 @@
 			return
 
 		if(POST_INTERACTION_DROP_NEXT_FITTING)
-			var/turf/fitting_turf = null
-			for(var/dir in list(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST))
-				var/turf/check = get_step(drop_turf, dir)
-				if(check && !isclosedturf(check))
-					fitting_turf = check
-					break
-			if(fitting_turf)
-				obj_resolve.forceMove(fitting_turf)
-			else
-				obj_resolve.forceMove(drop_turf)
+			var/datum/interaction_point/next = find_next_point(TRANSFER_TYPE_DROPOFF)
+			if(next)
+				rotate_to_point(next, PROC_REF(try_interact_with_destination_point), CURRENT_TASK_MOVING_DROPOFF)
+				return
+			obj_resolve.forceMove(drop_turf)
+			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
 			finish_manipulation(TRANSFER_TYPE_DROPOFF)
 			return
 
@@ -400,7 +396,7 @@
 /// Throws the held object in the direction of the interaction point.
 /obj/machinery/big_manipulator/proc/throw_thing(datum/interaction_point/drop_point)
 	var/drop_turf = drop_point.interaction_turf
-	var/throw_range = drop_point.throw_range
+	var/item_throw_range = drop_point.throw_range
 	var/atom/movable/held_atom = held_object?.resolve()
 
 	if((!(isitem(held_atom) || isliving(held_atom))) && !(obj_flags & EMAGGED))
@@ -410,7 +406,7 @@
 		return
 
 	held_atom.forceMove(drop_turf)
-	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(held_atom), get_turf(src))), throw_range, 2)
+	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(held_atom), get_turf(src))), item_throw_range, 2)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
@@ -462,7 +458,7 @@
 
 	end_current_task()
 
-	if(current_task == CURRENT_TASK_STOPPING)
+	if(IS_STOPPING)
 		complete_stopping_task()
 		return
 

@@ -61,3 +61,7 @@
 #define POST_INTERACTION_DROP_AT_MACHINE "AT MACHINE"
 #define POST_INTERACTION_DROP_NEXT_FITTING "AT ANY FITTING"
 #define POST_INTERACTION_WAIT "CONTINUE"
+
+// Some macros for interaction checks
+#define IS_STOPPING (current_task == CURRENT_TASK_STOPPING)
+#define IS_BUSY (current_task != CURRENT_TASK_NONE)
