@@ -27,7 +27,7 @@
 	if(IS_HERETIC_OR_MONSTER(cast_on))
 		return FALSE
 
-	if(!cast_on.blood_volume)
+	if(!cast_on.get_blood_volume())
 		return FALSE
 
 	if(cast_on.can_block_magic(antimagic_flags))

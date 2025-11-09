@@ -197,15 +197,16 @@
 	else
 		var/datum/blood_type/blood_type = scanned.get_bloodtype()
 		if(blood_type)
-			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+			var/cached_blood_volume = scanned.get_modified_blood_volume()
+			var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 			var/blood_type_format
 			var/level_format
-			if(scanned.blood_volume <= BLOOD_VOLUME_SAFE && scanned.blood_volume > BLOOD_VOLUME_OKAY)
-				level_format = "LOW [blood_percent]%, [scanned.blood_volume] cl"
-			else if(scanned.blood_volume <= BLOOD_VOLUME_OKAY)
-				level_format = "<u>CRITICAL [blood_percent]%</u>, [scanned.blood_volume] cl"
+			if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
+				level_format = "LOW [blood_percent]%, [cached_blood_volume] cl"
+			else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
+				level_format = "<u>CRITICAL [blood_percent]%</u>, [cached_blood_volume] cl"
 			else
-				level_format = "[blood_percent]%, [scanned.blood_volume] cl"
+				level_format = "[blood_percent]%, [cached_blood_volume] cl"
 			if(blood_type.get_type())
 				blood_type_format = "type: [blood_type.get_type()]"
 			autopsy_information += "<b>[blood_type.get_blood_name()] level:</b> [level_format], [blood_type_format]</br>"

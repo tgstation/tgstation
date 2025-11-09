@@ -1830,7 +1830,7 @@
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!affected_mob.blood_volume || !affected_mob.all_wounds)
+	if(!affected_mob.get_blood_volume() || !affected_mob.all_wounds)
 		return
 
 	var/datum/wound/bloodiest_wound
@@ -1851,7 +1851,7 @@
 
 /datum/reagent/medicine/coagulant/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!affected_mob.blood_volume)
+	if(!affected_mob.get_blood_volume())
 		return
 
 	if(SPT_PROB(7.5, seconds_per_tick))

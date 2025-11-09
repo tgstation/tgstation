@@ -17,6 +17,9 @@
 /mob/living/proc/get_default_blood_volume()
 	return initial(blood_volume)
 
+/mob/living/carbon/get_default_blood_volume()
+	return BLOOD_VOLUME_NORMAL
+
 /// Gets the base blood volume of the mob, before scalars like Saline-Glucose Solution are applied.
 /// For effects like oxyloss damage from blood volume, use [proc/get_modified_blood_volume] instead.
 /mob/living/proc/get_blood_volume()
@@ -78,7 +81,7 @@
 
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_HUMAN_ON_HANDLE_BLOOD, seconds_per_tick, times_fired)
-	if((sigreturn & HANDLE_BLOOD_HANDLED) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if((sigreturn & HANDLE_BLOOD_HANDLED) || !can_have_blood())
 		return
 
 	//Blood regeneration if there is some space
@@ -300,19 +303,20 @@
 				BLOOD TRANSFERS
 ****************************************************/
 
-//Gets blood from mob to a container or other mob, preserving all data in it.
-/mob/living/proc/transfer_blood_to(atom/movable/receiver, amount, ignore_low_blood, ignore_incompatibility)
+// Transfers blood from mob to a container or another mob, preserving all data in it.
+// Returns how much blood was able to be transferred.
+/mob/living/proc/transfer_blood_to(atom/movable/receiver, amount, ignore_low_blood = FALSE, ignore_incompatibility = FALSE, transfer_viruses = TRUE)
 	var/cached_blood_volume = get_blood_volume()
 
-	if(!cached_blood_volume || !receiver.reagents)
-		return FALSE
+	if(!cached_blood_volume || !receiver.reagents || amount <= 0)
+		return 0
 
 	if(cached_blood_volume < BLOOD_VOLUME_BAD && !ignore_low_blood)
-		return FALSE
+		return 0
 
 	var/datum/blood_type/blood_type = get_bloodtype()
 	if (!blood_type)
-		return FALSE
+		return 0
 
 	var/blood_reagent = get_blood_reagent()
 	var/list/blood_data = get_blood_data()
@@ -320,26 +324,33 @@
 	// Caps the amount to how much blood we have.
 	amount = min(amount, get_blood_volume())
 
+	if (!ignore_low_blood)
+		// Caps the amount to how much we can transfer before reaching low blood.
+		amount = min(amount, get_blood_volume() - BLOOD_VOLUME_BAD)
+
 	var/mob/living/target = receiver
 	if (!isliving(receiver) || target.get_blood_reagent() != blood_reagent)
 		// Further caps the amount to how much blood we were able to add to the target.
 		amount = receiver.reagents.add_reagent(blood_reagent, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
 		adjust_blood_volume(-amount)
-		return TRUE
+		return amount
 
-	if(blood_data["viruses"])
+	if(blood_data["viruses"] && transfer_viruses)
 		for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
 			if((blood_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (blood_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 			target.ForceContractDisease(blood_disease)
 
 	if(!ignore_incompatibility && !(blood_type.type_key() in target.get_bloodtype().compatible_types))
-		target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
-		return TRUE
+		// Yes, we cap it to the amount of toxin. This is ridiculously niche, but we do it anyway.
+		amount = target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5) * 2
+		adjust_blood_volume(-amount)
+		return amount
 
+	// And, obviously, cap it to how much blood the target can take if they're living.
 	amount = target.adjust_blood_volume(amount, maximum = BLOOD_VOLUME_MAX_LETHAL)
 	adjust_blood_volume(-amount)
-	return TRUE
+	return amount
 
 /// Callback that adds blood_reagent to any blood extracted from ourselves
 /mob/living/proc/on_blood_created(datum/blood_type/blood_type, datum/reagent/new_blood)
@@ -535,7 +546,7 @@
 
 /// Create a small visual-only blood splatter
 /mob/living/proc/create_splatter(splatter_dir = pick(GLOB.cardinals))
-	// Check for husking and TRAIT_NOBLOOD
+	// Check for TRAIT_NOBLOOD
 	if (!can_bleed()) // Even if we can't cover turfs, we still can add DNA to everything our blood hits
 		return
 	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splatter_dir, get_bloodtype()?.get_color())
@@ -554,7 +565,7 @@
 	if (!splatter_turf)
 		return
 
-	// Check for husking and TRAIT_NOBLOOD
+	// Check for TRAIT_NOBLOOD
 	switch (can_bleed(BLOOD_COVER_TURFS))
 		if (BLEED_NONE)
 			return

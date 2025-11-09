@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			user.adjust_nutrition(50)
-			user.blood_volume += 50
+			user.adjust_blood_volume(50)
 			to_chat(user, span_notice("You activate [src], and your body is refilled with fresh slime jelly!"))
 			return 150
 
