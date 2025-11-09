@@ -1101,10 +1101,9 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!IS_CULTIST(owner))
 		if(prob(50))
 			var/mob/living/basic/illusion/bizarro = new(owner.loc)
-			bizarro.mock_as(owner, 10 SECONDS, damage = 20, replicate = 5)
-			bizarro.faction = list(FACTION_CULT)
-			bizarro.set_target(owner)
-			to_chat(owner, span_bolddanger("[src] betrays you!"))
+			bizarro.full_setup(owner, target_mob = owner, faction = list(FACTION_CULT), life = 10 SECONDS, damage = 20, replicate = 5)
+
+			to_chat(owner, span_bolddanger("You're betrayed by \"yourself\"!"))
 		return FALSE
 
 	if(attack_type == PROJECTILE_ATTACK)
@@ -1130,13 +1129,11 @@ Striking a noncultist, however, will tear their flesh."}
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 		if(prob(60)) // make a potentially slower, but replicable apparation
 			var/mob/living/basic/illusion/apparation = new(owner.loc)
-			apparation.faction = list(FACTION_CULT)
-			apparation.mock_as(owner, 7 SECONDS, damage = 10, replicate = 5)
+			apparation.full_setup(owner, target_mob = null, faction = list(FACTION_CULT), life = 7 SECONDS, damage = 10, replicate = 5)
 			apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 		else // normal apparation designed to escape
 			var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
-			decoy.mock_as(owner, 7 SECONDS, damage = 10)
-			decoy.set_target(owner)
+			decoy.full_setup(owner, target_mob = owner, faction = list(FACTION_CULT), life = 7 SECONDS, damage = 10) // Damage for retaliation
 	return TRUE
 
 

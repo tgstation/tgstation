@@ -16,6 +16,7 @@
 	)
 
 /// Escape subtype of illusions are made to flee from threats rather than attack them. They do not undergo any retaliation behavior.
+/// We also want to account for the possibility of new threats attacking us and fleeing from those too, more randomness is ideal.
 /datum/ai_controller/basic_controller/illusion/escape
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // we don't need the special illusion one here
@@ -26,5 +27,16 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/target_retaliate/to_flee,
+		/datum/ai_planning_subtree/flee_target/from_flee_key,
 	)
+
+/// Retaliate subtypes of escape illusions can fight back against threats that attack them, making them more dangerous.
+/datum/ai_controller/basic_controller/illusion/escape/retaliate
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)
+

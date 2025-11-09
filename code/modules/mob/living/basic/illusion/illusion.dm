@@ -47,12 +47,26 @@
 	SIGNAL_HANDLER
 	try_replicate()
 
-/// Gives the illusion a target to focus on. By default it's the attack key
+/// Full setup for illusion mobs to lessen code duplication in the individual files.
+/mob/living/basic/illusion/proc/full_setup(mob/living/original, mob/living/target_mob = null, list/faction = null, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
+	mock_as(original, life, hp, damage, replicate)
+	set_faction(faction)
+	set_target(target_mob)
+
+/// Gives the illusion a target to focus on in whatever behavior it wants to engage as.
 /mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
+	if(target_mob == null)
+		return
 	ai_controller.set_blackboard_key(target_key, target_mob)
 
+/// Sets the faction of the illusion
+/mob/living/basic/illusion/proc/set_faction(list/new_faction)
+	if(!new_faction) // can be list with no length or null
+		return
+	faction = new_faction.Copy()
+
 /// Does the actual work of setting up the illusion's appearance and some other functionality.
-/mob/living/basic/illusion/proc/mock_as(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0)
+/mob/living/basic/illusion/proc/mock_as(mob/living/original, life, hp, damage, replicate)
 	if(QDELETED(original))
 		return
 
@@ -85,7 +99,12 @@
 	if(QDELETED(parent_mob))
 		return
 	var/mob/living/basic/illusion/new_clone = new(loc)
-	new_clone.mock_as(parent_mob, 8 SECONDS, hp = health / 2, damage = melee_damage_upper, replicate = multiply_chance / 2)
-	new_clone.faction = faction.Copy()
-	new_clone.set_target(ai_controller.blackboard[target_key])
-
+	new_clone.full_setup(
+		parent_mob,
+		target_mob = ai_controller.blackboard[target_key],
+		faction = faction,
+		life = 8 SECONDS,
+		hp = health / 2,
+		damage = melee_damage_upper,
+		replicate = multiply_chance / 2,
+	)
