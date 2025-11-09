@@ -190,6 +190,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		stack_trace("Unable to run summon ghosts, due to being unable to locate the associated event.")
 		if(user)
 			to_chat(user, span_warning("You... try to summon ghosts, but nothing seems to happen. Shame."))
+
 	if (!GLOB.summon_ghosts)
 		GLOB.summon_ghosts = new /datum/summon_things_controller/toggleGhosts()
 		GLOB.summon_ghosts.equip_all_affected()
