@@ -252,6 +252,7 @@
 #include "projectiles.dm"
 #include "quirks.dm"
 #include "range_return.dm"
+#include "recycle_recycling.dm"
 #include "rcd.dm"
 #include "reachable_soup.dm"
 #include "reagent_container_defaults.dm"

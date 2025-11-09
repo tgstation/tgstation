@@ -233,7 +233,7 @@
 /// Determines if the target should trigger an emergency stop due to safety concerns.
 /obj/machinery/recycler/proc/triggers_safety_shutdown(atom/movable/target)
 	if(obj_flags & EMAGGED)
-		return FALSE // emagged recycler ignores all safety checks.
+		return FALSE // Emagged recycler ignores all safety checks.
 
 	if(isliving(target))
 		return TRUE
