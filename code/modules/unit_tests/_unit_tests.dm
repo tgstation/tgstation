@@ -87,6 +87,7 @@
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
+#include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
