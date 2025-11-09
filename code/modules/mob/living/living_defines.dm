@@ -167,6 +167,7 @@
 	/// How much blood the mob currently has.
 	/// Don't read directly, use get_blood_volume() and get_modified_blood_volume().
 	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
+	/// Also don't initialize this. Initialize default_blood_volume instead.
 	var/blood_volume = 0
 	/// The default blood volume of the mob. Used primarily for healing bloodloss.
 	var/default_blood_volume = 0

@@ -256,7 +256,7 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
-	blood_volume = MAX_BLOOD_LEVEL
+	default_blood_volume = MAX_BLOOD_LEVEL
 	hud_type = /datum/hud/soulscythe
 
 /mob/living/basic/soulscythe/Initialize(mapload)
