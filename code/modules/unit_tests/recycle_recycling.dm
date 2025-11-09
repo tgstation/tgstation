@@ -10,8 +10,7 @@
 	hologram_closet.flags_1 |= HOLOGRAM_1
 	// Add real, non-holographic cookie to the hologram box.
 	var/obj/item/food/cookie/real_cookie = allocate(/obj/item/food/cookie, hologram_closet)
-	// Process the hologram through the recycler.
-	hologram_closet.forceMove(get_turf(recycler))
+	recycler.eat(hologram_closet, sound = FALSE)
 	// Check that hologram was properly deleted.
 	TEST_ASSERT(QDELETED(hologram_closet), "Hologram item was not deleted after processing")
 	// Check that real items were moved to recycler location (not deleted).
