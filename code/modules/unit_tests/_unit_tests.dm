@@ -109,6 +109,7 @@
 #include "binary_insert.dm"
 #include "bitrunning.dm"
 #include "blindness.dm"
+#include "blood_volume_procs.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
 #include "buckle.dm"
