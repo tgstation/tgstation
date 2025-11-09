@@ -42,7 +42,5 @@
 	SSblackbox.ReportDeath(src)
 
 /mob/living/silicon/ai/proc/ShutOffDoomsdayDevice()
-	if(nuking)
-		nuking = FALSE
-	if(doomsday_device)
-		qdel(doomsday_device)
+	nuking = FALSE
+	QDEL_NULL(doomsday_device)

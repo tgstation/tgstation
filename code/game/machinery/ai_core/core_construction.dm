@@ -119,15 +119,6 @@
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
 				return ITEM_INTERACT_BLOCKING
 
-			if(remote_ai)
-				var/mob/living/silicon/ai/remoted_ai = remote_ai
-				remoted_ai.break_core_link()
-				if(!IS_MALF_AI(remoted_ai))	//don't pull back shunted malf AIs
-					remoted_ai.death(gibbed = TRUE, drop_mmi = FALSE)
-					///the drop_mmi param determines whether the MMI is dropped at their current location
-					///which in this case would be somewhere else, so we drop their MMI at the core instead
-					remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
-
 			core_mmi.forceMove(drop_location())
 			UPDATE_STATE(CORE_STATE_CABLED)
 			return ITEM_INTERACT_SUCCESS

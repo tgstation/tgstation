@@ -147,9 +147,7 @@
 		if(!forced && !silent)
 			to_chat(AI, span_notice("Returning to core..."))
 		mecha_flags &= ~SILICON_PILOT
-		newloc = get_turf(AI.linked_core)
-		qdel(AI.linked_core)
-		AI.forceMove(newloc)
+		AI.resolve_core_link()
 		if(forced)
 			to_chat(AI, span_danger("ZZUZULU.ERR--ERRR-NEUROLOG-- PERCEP--- DIST-B**@"))
 			for(var/count in 1 to 5)

@@ -12,8 +12,6 @@
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
-	/// only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
-	var/mob/living/silicon/ai/remote_ai = null
 
 /obj/structure/ai_core/Initialize(mapload)
 	. = ..()
@@ -67,8 +65,6 @@
 	new /obj/item/stack/sheet/plasteel(drop_location(), 4)
 
 /obj/structure/ai_core/Destroy()
-	if(istype(remote_ai))
-		remote_ai = null
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
@@ -101,17 +97,6 @@
 		if(CORE_STATE_FINISHED)
 			. += span_notice("The monitor's connection can be <b>cut</b>[core_mmi?.brainmob?.mind && !suicide_check() ? " the neural interface can be <b>screwed</b> in." : "."]")
 
-// could be a signal?
-/obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
-	. = ..()
-	if(. > 0 && istype(remote_ai))
-		to_chat(remote_ai, span_danger("Your core is under attack!"))
-
-// could be a signal?
-/obj/structure/ai_core/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
-	. = ..()
-
 /obj/structure/ai_core/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(state < CORE_STATE_FINISHED)
 		return construction_item_interaction(user, tool, modifiers)
@@ -126,13 +111,10 @@
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = CORE_STATE_FINISHED
-	var/mob/living/silicon/ai/attached_ai
 
-/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE, linked_ai)
+/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
 	. = ..()
 	circuit = new(src)
-	if(linked_ai)
-		attached_ai = linked_ai
 	if(skip_mmi_creation)
 		return
 	if(posibrain)
@@ -141,16 +123,6 @@
 		core_mmi = new(src)
 		core_mmi.brain = new(core_mmi)
 		core_mmi.update_appearance()
-
-/obj/structure/ai_core/deactivated/Destroy()
-	if(attached_ai)
-		attached_ai.linked_core = null
-		attached_ai = null
-	. = ..()
-
-/obj/structure/ai_core/deactivated/proc/disable_doomsday(datum/source)
-	SIGNAL_HANDLER
-	attached_ai.ShutOffDoomsdayDevice()
 
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"

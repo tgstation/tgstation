@@ -152,7 +152,7 @@
 	current = null
 	bot_ref = null
 	controlled_equipment = null
-	linked_core = null
+	break_core_link()
 	apc_override = null
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
@@ -370,10 +370,6 @@
 	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
 		qdel(src)
 	return ai_core
-
-/mob/living/silicon/ai/proc/break_core_link()
-	to_chat(src, span_danger("Your core has been destroyed!"))
-	linked_core = null
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
@@ -1108,6 +1104,83 @@
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
 	src.control_disabled = control_disabled
+
+/mob/living/silicon/ai/proc/create_core_link(obj/structure/ai_core/core)
+	if(linked_core) //uh oh
+		break_core_link(linked_core)
+	linked_core = core
+	RegisterSignals(linked_core, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_core_destroyed))
+	RegisterSignals(linked_core, list(
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_TOOL_ACT(TOOL_CROWBAR),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
+	), PROC_REF(on_core_item_interaction))
+	RegisterSignal(linked_core, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_core_take_damage))
+	RegisterSignal(linked_core, COMSIG_ATOM_EXITED, PROC_REF(on_core_exited))
+
+/// Returns the AI back to their core and severs the core link.
+/mob/living/silicon/ai/proc/resolve_core_link()
+	if(!linked_core) //oh no bro
+		CRASH("tried to resolve a core link with no core!!!!")
+
+	var/atom/core_loc = linked_core.loc
+	forceMove(core_loc)
+	break_core_link()
+	qdel(linked_core)
+	cancel_camera()
+
+/mob/living/silicon/ai/proc/break_core_link()
+	if(!linked_core)
+		return
+
+	UnregisterSignal(linked_core, list(
+		COMSIG_QDELETING, COMSIG_ATOM_DESTRUCTION, //on_core_destroyed
+		//on_core_item_interaction
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_TOOL_ACT(TOOL_CROWBAR),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
+		COMSIG_ATOM_TAKE_DAMAGE, //on_core_take_damage
+		COMSIG_ATOM_EXITED, //on_core_exited
+		))
+	linked_core = null
+
+/mob/living/silicon/ai/proc/on_core_item_interaction(datum/source, mob/living/user, obj/item/tool, list/processing_recipes)
+	SIGNAL_HANDLER
+	if(user.combat_mode)
+		return NONE
+
+	to_chat(src, span_danger("CORE TAMPERING DETECTED!"))
+	return NONE
+
+/mob/living/silicon/ai/proc/on_core_take_damage(datum/source, ...) // not writing allat
+	SIGNAL_HANDLER
+
+	to_chat(src, span_danger("CORE DAMAGE DETECTED!"))
+	return NONE
+
+/mob/living/silicon/ai/proc/on_core_destroyed(datum/source, damage_flag)
+	SIGNAL_HANDLER
+
+	to_chat(src, span_danger("Your core has been destroyed!"))
+	ShutOffDoomsdayDevice()
+	break_core_link()
+
+/mob/living/silicon/ai/proc/on_core_exited(datum/source, atom/movable/gone, direction)
+	SIGNAL_HANDLER
+
+	on_core_destroyed(source, NONE)
+	if(istype(gone, /obj/item/mmi) && !IS_MALF_AI(src)) //don't pull back shunted malf AIs
+		death(gibbed = TRUE, drop_mmi = FALSE)
+		///the drop_mmi param determines whether the MMI is dropped at their current location
+		///which in this case would be somewhere else, so we drop their MMI at the core instead
+		make_mmi_drop_and_transfer(gone, source)
+		qdel(src)
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF
