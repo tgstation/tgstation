@@ -1,5 +1,5 @@
 /// Standard Illusion behavior is primarily dependent on their context, whether they exist as a decoy or someone meant to retaliate against a threat (of varied origin)
-/// For the time being however, the AI is very simple and doesn't rely on any advanced tactics. Just go to thing it was assigned to attack and attack it.
+/// For the time being however, the AI is very simple and doesn't rely on any advanced tactics. Just go to thing it was assigned to attack and attack it (if assigned, else wander around)
 /// However, the action we undergo is based on the subtype of illusion we are and that's done on the mob subtype level.
 /datum/ai_controller/basic_controller/illusion
 	blackboard = list(

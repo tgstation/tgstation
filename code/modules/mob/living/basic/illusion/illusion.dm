@@ -57,7 +57,7 @@
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/basic/illusion, send_death_message), get_turf(src))
 
 /mob/living/basic/illusion/proc/send_death_message(turf/death_turf)
-	balloon_alert(death_turf, "disappears!")
+	balloon_alert_to_viewers(death_turf, "disappears!")
 
 /// Gives the illusion a target to focus on. By default it's the attack key
 /mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
