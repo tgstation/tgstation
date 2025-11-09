@@ -935,7 +935,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/shuttle/escape";
 	desc = "Used to control the Lance's automated defenses.";
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_y = -26;
 	req_access = list("command")
