@@ -1098,36 +1098,7 @@ Striking a noncultist, however, will tear their flesh."}
 	var/illusions = 2
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(IS_CULTIST(owner))
-		if(attack_type == PROJECTILE_ATTACK)
-			if(damage_type == BRUTE || damage_type == BURN)
-				if(damage >= 30)
-					var/turf/T = get_turf(owner)
-					T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
-					new /obj/effect/temp_visual/cult/sparks(T)
-					playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
-					owner.Paralyze(25)
-					qdel(src)
-					return FALSE
-			var/obj/projectile/projectile = hitby
-			if(projectile.reflectable)
-				return FALSE //To avoid reflection chance double-dipping with block chance
-		. = ..()
-		if(.)
-			if(illusions > 0)
-				illusions--
-				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
-				if(prob(60)) // make a potentially slower, but replicable apparation
-					var/mob/living/basic/illusion/apparation = new(owner.loc)
-					apparation.faction = list(FACTION_CULT)
-					apparation.mock_as(owner, 7 SECONDS, damage = 10, replicate = 5)
-					apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
-				else // normal apparation
-					var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
-					decoy.mock_as(owner, 7 SECONDS, damage = 10)
-					decoy.set_target(owner)
-			return TRUE
-	else
+	if(!IS_CULTIST(owner))
 		if(prob(50))
 			var/mob/living/basic/illusion/bizarro = new(owner.loc)
 			bizarro.mock_as(owner, 10 SECONDS, damage = 20, replicate = 5)
@@ -1135,6 +1106,39 @@ Striking a noncultist, however, will tear their flesh."}
 			bizarro.set_target(owner)
 			to_chat(owner, span_bolddanger("[src] betrays you!"))
 		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK)
+		if(damage_type == BRUTE || damage_type == BURN)
+			if(damage >= 30)
+				var/turf/T = get_turf(owner)
+				T.visible_message(span_warning("The sheer force from [hitby] shatters the mirror shield!"))
+				new /obj/effect/temp_visual/cult/sparks(T)
+				playsound(T, 'sound/effects/glass/glassbr3.ogg', 100)
+				owner.Paralyze(25)
+				qdel(src)
+				return FALSE
+		var/obj/projectile/projectile = hitby
+		if(projectile.reflectable)
+			return FALSE //To avoid reflection chance double-dipping with block chance
+
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(illusions > 0)
+		illusions--
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
+		if(prob(60)) // make a potentially slower, but replicable apparation
+			var/mob/living/basic/illusion/apparation = new(owner.loc)
+			apparation.faction = list(FACTION_CULT)
+			apparation.mock_as(owner, 7 SECONDS, damage = 10, replicate = 5)
+			apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
+		else // normal apparation
+			var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
+			decoy.mock_as(owner, 7 SECONDS, damage = 10)
+			decoy.set_target(owner)
+	return TRUE
+
 
 /obj/item/shield/mirror/proc/readd()
 	illusions++
