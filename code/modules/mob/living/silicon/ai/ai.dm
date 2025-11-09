@@ -1127,10 +1127,10 @@
 	if(!linked_core) //oh no bro
 		CRASH("tried to resolve a core link with no core!!!!")
 
-	var/atom/core_loc = linked_core.loc
-	forceMove(core_loc)
+	forceMove(linked_core.loc)
+	var/obj/structure/ai_core/unlinked_core = linked_core
 	break_core_link()
-	qdel(linked_core)
+	qdel(unlinked_core)
 	cancel_camera()
 
 /mob/living/silicon/ai/proc/break_core_link()
@@ -1159,10 +1159,11 @@
 	to_chat(src, span_danger("CORE TAMPERING DETECTED!"))
 	return NONE
 
-/mob/living/silicon/ai/proc/on_core_take_damage(datum/source, ...) // not writing allat
+/mob/living/silicon/ai/proc/on_core_take_damage(datum/source, damage_taken, ...) // not writing allat
 	SIGNAL_HANDLER
 
-	to_chat(src, span_danger("CORE DAMAGE DETECTED!"))
+	if(damage_taken > 0)
+		to_chat(src, span_danger("CORE DAMAGE DETECTED!"))
 	return NONE
 
 /mob/living/silicon/ai/proc/on_core_destroyed(datum/source, damage_flag)
@@ -1175,13 +1176,14 @@
 /mob/living/silicon/ai/proc/on_core_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	on_core_destroyed(source, NONE)
-	if(istype(gone, /obj/item/mmi) && !IS_MALF_AI(src)) //don't pull back shunted malf AIs
-		death(gibbed = TRUE, drop_mmi = FALSE)
-		///the drop_mmi param determines whether the MMI is dropped at their current location
-		///which in this case would be somewhere else, so we drop their MMI at the core instead
-		make_mmi_drop_and_transfer(gone, source)
-		qdel(src)
+	if(istype(gone, /obj/item/mmi))
+		on_core_destroyed(source, NONE)
+		if(!IS_MALF_AI(src)) //don't pull back shunted malf AIs
+			death(gibbed = TRUE, drop_mmi = FALSE)
+			///the drop_mmi param determines whether the MMI is dropped at their current location
+			///which in this case would be somewhere else, so we drop their MMI at the core instead
+			make_mmi_drop_and_transfer(gone, source) //FIXME: This just re-inserts a new MMI into the core!
+			qdel(src)
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

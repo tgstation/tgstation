@@ -28,6 +28,8 @@
 		core_mmi.update_appearance()
 		set_anchored(TRUE)
 
+	update_appearance(UPDATE_ICON_STATE)
+
 /obj/structure/ai_core/update_icon_state()
 	switch(state)
 		if(CORE_STATE_EMPTY)
