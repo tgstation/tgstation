@@ -1,7 +1,8 @@
 /// instead of hitting with heavy object, we shove 'em
 /mob/living/basic/illusion/shover
 
-/mob/living/basic/illusion/shover/attack_override(mob/living/source, atom/attacked_target)
+/mob/living/basic/illusion/shover/on_preattack(mob/living/source, atom/attacked_target)
+	. = ..()
 	if(disarm(attacked_target))
 		return COMPONENT_HOSTILE_NO_ATTACK
 

@@ -37,10 +37,11 @@
 		return parent_mob.examine(user)
 	return ..()
 
-/// Override the attack with custom behavior. Implemented on subtypes
-/mob/living/basic/illusion/proc/attack_override(mob/living/source, atom/attacked_target)
+/// Can cancel attack on subtypes, but check if we might want to replicate as well
+/mob/living/basic/illusion/proc/on_preattack(mob/living/source, atom/attacked_target)
 	SIGNAL_HANDLER
-	return
+	if(prob(multiply_chance))
+		replicate()
 
 /// When our health changes, maybe replicate
 /mob/living/basic/illusion/proc/on_health_changed(mob/living/source)
