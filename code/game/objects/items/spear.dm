@@ -207,8 +207,8 @@
 	if(stabbed.stat == CONSCIOUS && prob(50))
 		var/mob/living/basic/illusion/fake_clone = new(user.loc)
 		fake_clone.faction = user.faction.Copy()
-		fake_clone.mock_as(user, 10 SECONDS, user.health / 2.5, 12, 30)
-		fake_clone.GiveTarget(stabbed)
+		fake_clone.mock_as(user, 10 SECONDS, hp = user.health / 2.5, damage = 12, replicate = 30)
+		fake_clone.set_target(stabbed)
 
 //MILITARY
 /obj/item/spear/military

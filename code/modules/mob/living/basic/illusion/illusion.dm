@@ -29,17 +29,26 @@
 /mob/living/basic/illusion/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(attack_override))
-
-/// Override the attack with custom behavior. Implemented on subtypes
-/mob/living/basic/illusion/proc/attack_override(mob/living/source, atom/attacked_target)
-	SIGNAL_HANDLER
-	return
+	RegisterSignal(src, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_changed))
 
 /mob/living/basic/illusion/examine(mob/user)
 	var/mob/living/parent_mob = parent_mob_ref?.resolve()
 	if(parent_mob)
 		return parent_mob.examine(user)
 	return ..()
+
+/// Override the attack with custom behavior. Implemented on subtypes
+/mob/living/basic/illusion/proc/attack_override(mob/living/source, atom/attacked_target)
+	SIGNAL_HANDLER
+	return
+
+/// When our health changes, maybe replicate
+/mob/living/basic/illusion/proc/on_health_changed(mob/living/source)
+	SIGNAL_HANDLER
+	if(multiply_chance <= 0)
+		return
+
+	replicate()
 
 /// Gives the illusion a target to focus on. By default it's the attack key
 /mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
