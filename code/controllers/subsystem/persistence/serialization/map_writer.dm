@@ -8,6 +8,7 @@
 * elsewhere in code if you ever need to get a file in the .dmm format
 **/
 
+GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
@@ -42,7 +43,7 @@
 	var/static/list/default_blacklist = typecacheof(list(/obj/effect, /obj/projectile, /obj/machinery/gravity_generator/part, /obj/structure/fluff/airlock_filler, /mob/living/carbon)) - typecacheof(list(/obj/effect/decal, /obj/effect/turf_decal, /obj/effect/landmark))
 
 	if(!obj_blacklist)
-		obj_blacklist = default_blacklist
+		obj_blacklist = GLOB.save_object_blacklist
 
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
@@ -143,9 +144,7 @@
 				GLOB.TGM_mobs = 0
 
 				for(var/atom/movable/target_atom as anything in pull_from)
-					if(obj_blacklist[target_atom.type])
-						continue
-					if(!target_atom.is_saveable(pull_from))
+					if(!target_atom.is_saveable(pull_from, obj_blacklist))
 						continue
 
 					var/substitute_type = target_atom.get_save_substitute_type()
@@ -165,7 +164,7 @@
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
 						if(!substitute_type && (save_flag & SAVE_OBJECTS_PROPERTIES))
-							target_obj.on_object_saved(current_header, pull_from)
+							target_obj.on_object_saved(current_header, pull_from, obj_blacklist)
 
 						var/metadata
 						if(!substitute_type && (save_flag & SAVE_OBJECTS_VARIABLES))

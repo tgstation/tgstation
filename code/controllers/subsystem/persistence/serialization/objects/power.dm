@@ -21,7 +21,7 @@
 	return .
 
 // these spawn underneath apc's but are created by them in initialization
-/obj/machinery/power/terminal/is_saveable()
+/obj/machinery/power/terminal/is_saveable(turf/current_loc, list/obj_blacklist)
 	if(locate(/obj/machinery/power/apc) in loc)
 		return FALSE
 

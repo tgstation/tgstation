@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
  *
  * Returns: Null or array list of additional object data to be included on turf
  */
-/obj/proc/on_object_saved(map_string, turf/current_loc)
+/obj/proc/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	// these always need to be reset
 	//save_container_parent_id = null
 	//save_container_child_id = null
@@ -95,9 +95,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 		GLOB.save_containers_parents[src] = parent_container_id_tag
 
 	for(var/obj/target_obj in contents)
-		//if(obj_blacklist[target_atom.type]) // this needs to be a GLOB
-		//	continue
-		if(!target_obj.is_saveable(current_loc))
+		if(!target_obj.is_saveable(current_loc, obj_blacklist))
 			continue
 
 		// links the stored child object to the id of the parent container
@@ -140,19 +138,21 @@ GLOBAL_LIST_EMPTY(save_containers_children)
  *
  * Returns: Boolean
  */
-/atom/proc/is_saveable(turf/current_loc)
+/atom/proc/is_saveable(turf/current_loc, list/obj_blacklist)
+	if(obj_blacklist[type])
+		return FALSE
 	if(flags_1 & HOLOGRAM_1)
 		return FALSE
 
 	return TRUE
 
-/atom/movable/is_saveable(turf/current_loc)
+/atom/movable/is_saveable(turf/current_loc, list/obj_blacklist)
 	if(is_multi_tile_object(src) && (src.loc != current_loc))
 		return FALSE
 
 	return ..()
 
-/obj/item/is_saveable(turf/current_loc)
+/obj/item/is_saveable(turf/current_loc, list/obj_blacklist)
 	if(item_flags & ABSTRACT)
 		return FALSE
 

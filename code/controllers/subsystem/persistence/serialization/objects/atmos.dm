@@ -90,7 +90,7 @@
 	return FALSE
 
 // these spawn underneath cryo machines and will duplicate after every save
-/obj/machinery/atmospherics/components/unary/is_saveable()
+/obj/machinery/atmospherics/components/unary/is_saveable(turf/current_loc, list/obj_blacklist)
 	if(locate(/obj/machinery/cryo_cell) in loc)
 		return FALSE
 

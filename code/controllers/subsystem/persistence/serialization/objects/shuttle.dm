@@ -18,7 +18,7 @@
 // Then we lookup the landmark from the datum and insert it on the same turf that has the bottom left transport structure
 // Without these fixes the tram will runtime on any map or ruins that has it setup
 
-/obj/structure/transport/linear/tram/is_saveable(turf/current_loc)
+/obj/structure/transport/linear/tram/is_saveable(turf/current_loc, list/obj_blacklist)
 	return TRUE // skip multi-tile object checks
 
 /obj/structure/transport/linear/tram/get_save_vars()
