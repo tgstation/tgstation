@@ -141,11 +141,10 @@
 	var/list/zlevels
 	if(islist(zlevel_or_levels))
 		zlevels = zlevel_or_levels
+	else if(zlevel_or_levels)
+		zlevels = list(zlevel_or_levels)
 	else
-		if(zlevel_or_levels)
-			zlevels = list(zlevel_or_levels)
-		else
-			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+		zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 
 	for(var/cycle in 1 to 1000)
 		var/x = rand(1, world.maxx)
