@@ -45,10 +45,8 @@
 /// When our health changes, maybe replicate
 /mob/living/basic/illusion/proc/on_health_changed(mob/living/source)
 	SIGNAL_HANDLER
-	if(multiply_chance <= 0)
-		return
-
-	replicate()
+	if(prob(multiply_chance))
+		replicate()
 
 /// Gives the illusion a target to focus on. By default it's the attack key
 /mob/living/basic/illusion/proc/set_target(mob/living/target_mob)
