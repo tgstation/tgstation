@@ -1,3 +1,25 @@
+/*
+/obj/item/storage/on_object_saved(map_string, turf/current_loc)
+	. = ..()
+
+	var/parent_container_id_tag
+	if(length(contents))
+		parent_container_id_tag = assign_random_name()
+		GLOB.save_containers_parents[src] = parent_container_id_tag
+
+	for(var/obj/target_obj in contents)
+		//if(obj_blacklist[target_atom.type]) // this needs to be a GLOB
+		//	continue
+		if(!target_obj.is_saveable(current_loc))
+			continue
+
+		GLOB.save_containers_children[target_obj] = parent_container_id_tag
+
+		target_obj.on_object_saved(map_string, current_loc)
+		var/metadata = generate_tgm_metadata(target_obj)
+		TGM_MAP_BLOCK(map_string, target_obj.type, metadata)
+*/
+
 /obj/item/storage/briefcase/secure/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, stored_lock_code)

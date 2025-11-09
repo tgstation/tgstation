@@ -1,3 +1,22 @@
+/atom
+	// These vars help insert objects inside containers by matching and linking the parent containers id to the children
+	// example:
+	// backpack with var/save_container_parent_id = "foo123"
+	// pen with var/save_container_child_id = "foo123"
+	// This will cause the pen to be inserted into the backpack during initialization
+
+	/// This is the parent id linked to the child object
+	/// Used to determine which parent container to insert the object into during map loading
+	var/save_container_child_id
+	/// This is the generated id of the parent object that holds children inside
+	/// Used to link children and parent objects together during map loading
+	var/save_container_parent_id
+
+/// A list of all parent containers storing objects inside (used via map save/load)
+GLOBAL_LIST_EMPTY(save_containers_parents)
+/// A list of all children that are stored inside parent containers (used via map save/load)
+GLOBAL_LIST_EMPTY(save_containers_children)
+
 /**
  * List of variables to include when it is serialized.
  *
@@ -13,17 +32,15 @@
 	. += NAMEOF(src, dir)
 	//. += NAMEOF(src, icon)
 	//. += NAMEOF(src, icon_state)
-	. += NAMEOF(src, name)
+	. += NAMEOF(src, name) // should probably disable this and use a whitelist of objs
 	. += NAMEOF(src, pixel_x)
 	. += NAMEOF(src, pixel_y)
 	. += NAMEOF(src, density)
 	. += NAMEOF(src, opacity)
+	. += NAMEOF(src, save_container_child_id)
+	. += NAMEOF(src, save_container_parent_id)
 
 	if(uses_integrity)
-		. += NAMEOF(src, atom_integrity)
-		. += NAMEOF(src, max_integrity)
-		. += NAMEOF(src, integrity_failure)
-		. += NAMEOF(src, damage_deflection)
 		. += NAMEOF(src, resistance_flags)
 
 	GLOB.map_export_save_vars_cache[type] = .
@@ -38,6 +55,7 @@
 	. = ..()
 	. += NAMEOF(src, req_access)
 	. += NAMEOF(src, id_tag)
+	. += NAMEOF(src, obj_flags)
 	return .
 
 /**
@@ -51,7 +69,10 @@
  * Returns: Assoicated list of variables with custom values to be serialized
  */
 /atom/proc/get_custom_save_vars()
-	return list()
+	. = list()
+	if(uses_integrity && (atom_integrity != max_integrity))
+		.[NAMEOF(src, atom_integrity)] = atom_integrity
+	return .
 
 /**
  * A procedure for saving non-standard properties of an object.
@@ -63,7 +84,50 @@
  * Returns: Null or array list of additional object data to be included on turf
  */
 /obj/proc/on_object_saved(map_string, turf/current_loc)
-	return null
+	// these always need to be reset
+	//save_container_parent_id = null
+	//save_container_child_id = null
+
+	var/parent_container_id_tag
+	if(length(contents))
+		parent_container_id_tag = assign_random_name()
+		//save_container_parent_id = parent_container_id_tag
+		GLOB.save_containers_parents[src] = parent_container_id_tag
+
+	for(var/obj/target_obj in contents)
+		//if(obj_blacklist[target_atom.type]) // this needs to be a GLOB
+		//	continue
+		if(!target_obj.is_saveable(current_loc))
+			continue
+
+		// links the stored child object to the id of the parent container
+		//target_obj.save_container_child_id = save_container_parent_id
+		GLOB.save_containers_children[target_obj] = parent_container_id_tag
+
+		target_obj.on_object_saved(map_string, current_loc)
+		var/metadata = generate_tgm_metadata(target_obj)
+		TGM_MAP_BLOCK(map_string, target_obj.type, metadata)
+
+// This is an alternate method to save containers/children but might cause hard deletes maybe
+/obj/get_custom_save_vars()
+	. = list()
+
+	// this might cause hard deletes tied to the object as references ? but these lists get deleted at the end of map saving
+	if(GLOB.save_containers_parents[src])
+		.[NAMEOF(src, save_container_parent_id)] = GLOB.save_containers_parents[src]
+	if(GLOB.save_containers_children[src])
+		.[NAMEOF(src, save_container_child_id)] = GLOB.save_containers_children[src]
+	return .
+
+/obj/PersistentInitialize()
+	if(save_container_parent_id)
+		GLOB.save_containers_parents[save_container_parent_id] = src
+
+	if(save_container_child_id)
+		GLOB.save_containers_children += src
+		//GLOB.save_containers_children[save_container_child_id] = src // += src
+		//src.forceMove(parent_obj)
+	. = ..()
 
 /**
  * Check if an atom is savable for serilization during map export.

@@ -1,6 +1,6 @@
 // Flags for the obj_flags var on /obj
 
-
+/// When an object is affected by a cryptographic sequencer (aka EMAG) disabling it or causing other malicious effects
 #define EMAGGED (1<<0)
 #define CAN_BE_HIT (1<<1) //can this be bludgeoned by items?
 #define DANGEROUS_POSSESSION (1<<2) //Admin possession yes/no
@@ -16,6 +16,8 @@
 #define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
 #define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
 #define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<14) //! Atoms don't spawn anything when deconstructed. They just vanish
+/// The object's internal contents has already been populated via PopulateContents()
+#define CONTENTS_INITIALIZED (1<<15)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

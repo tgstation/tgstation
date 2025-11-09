@@ -162,15 +162,17 @@
 						TGM_OBJ_INCREMENT
 */
 
+						//====SAVING SPECIAL DATA====
+						//This is what causes lockers and machines to save stuff inside of them
+						if(!substitute_type && (save_flag & SAVE_OBJECTS_PROPERTIES))
+							target_obj.on_object_saved(current_header, pull_from)
+
 						var/metadata
 						if(!substitute_type && (save_flag & SAVE_OBJECTS_VARIABLES))
 							metadata = generate_tgm_metadata(target_obj)
 						TGM_MAP_BLOCK(current_header, typepath, metadata)
 
-						//====SAVING SPECIAL DATA====
-						//This is what causes lockers and machines to save stuff inside of them
-						if(!substitute_type && (save_flag & SAVE_OBJECTS_PROPERTIES))
-							target_obj.on_object_saved(current_header, pull_from)
+
 
 					//====SAVING MOBS====
 					if((save_flag & SAVE_MOBS) && isliving(target_atom))
