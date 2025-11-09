@@ -371,7 +371,7 @@
 	// Blood Level
 	var/datum/blood_type/blood_type = target.get_bloodtype()
 	if(blood_type)
-		var/cached_blood_volume = target.get_modified_blood_volume()
+		var/cached_blood_volume = target.get_blood_volume(apply_modifiers = TRUE)
 		var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 		var/blood_type_format
 		var/level_format

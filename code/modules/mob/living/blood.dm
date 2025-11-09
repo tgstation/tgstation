@@ -7,32 +7,28 @@
 ****************************************************/
 
 /// Returns whether this mob can have blood.
-/// Use the CAN_HAVE_BLOOD(mob) macro instead.
-/// Unless you're the one updating blood status.
+/// Use the CAN_HAVE_BLOOD(mob) macro instead, this is used to update the cached value.
 /mob/living/proc/can_have_blood()
 	return default_blood_volume > 0
 
 /mob/living/carbon/can_have_blood()
 	return !HAS_TRAIT(src, TRAIT_NOBLOOD)
 
-/// Gets the base blood volume of the mob, before scalars like Saline-Glucose Solution are applied.
-/// For effects like oxyloss damage from blood volume, use [proc/get_modified_blood_volume] instead.
-/mob/living/proc/get_blood_volume()
-	return CAN_HAVE_BLOOD(src) ? blood_volume : 0
+/// Returns the blood volume of the mob.
+/// Apply modifiers when reading blood volume for oxyloss damage, HUDs and analyzers.
+/// Don't apply modifiers when using blood itself, like in spells and reagent transfers.
+/mob/living/proc/get_blood_volume(apply_modifiers = FALSE)
+	return CAN_HAVE_BLOOD(src) ? blood_volume : 0 // Overriding blood setting code can cause blood_volume to be non-zero even when a mob shouldn't have blood.
 
-/// Gets the blood volume of the mob, after scalars like Saline-Glucose Solution have been applied.
-/// For anything reliant on real blood, such as drawing blood, use [proc/get_blood_volume] instead.
-/mob/living/proc/get_modified_blood_volume()
+/mob/living/carbon/get_blood_volume(apply_modifiers = FALSE)
+	if (!CAN_HAVE_BLOOD(src))
+		return 0 // Overriding blood setting code can cause blood_volume to be non-zero even when a mob shouldn't have blood.
+	if (!apply_modifiers)
+		return blood_volume // Default behavior, returns the real blood volume.
 	if (HAS_TRAIT(src, TRAIT_GODMODE))
-		return default_blood_volume
+		return default_blood_volume // Makes TRAIT_GODMODE grant immunity to the effects of bleeding. (oxyloss, passing out, etc.)
 
-	return get_blood_volume()
-
-/mob/living/carbon/get_modified_blood_volume()
-	if (HAS_TRAIT(src, TRAIT_GODMODE))
-		return default_blood_volume
-
-	var/amount = get_blood_volume()
+	var/amount = blood_volume
 
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
 	if (saline && amount < saline.dilution_cap)
@@ -68,21 +64,27 @@
 		return 0
 
 	var/cached_blood_volume = get_blood_volume()
+	var/updated_blood_volume = cached_blood_volume + amount
 
 	if (amount < 0)
 		if (cached_blood_volume <= minimum)
+			// Already at or below the minimum, don't decrease further.
 			return 0
 		else
-			amount = max(amount, minimum - cached_blood_volume)
-	if (amount > 0)
+			// Not below the minimum yet, cap the decrease to the minimum.
+			updated_blood_volume = max(updated_blood_volume, minimum)
+	else
 		if (cached_blood_volume >= maximum)
+			// Already at or above the maximum, don't increase further.
 			return 0
 		else
-			amount = min(amount, maximum - cached_blood_volume)
+			// Not above the maximum yet, cap the increase to the maximum.
+			updated_blood_volume = min(updated_blood_volume, minimum)
 
-	// Do not set minimum and maximum here, those will not only cap the adjustment, but the pre-existing value as well.
-	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, cached_blood_volume = cached_blood_volume)
-
+	// Do not set minimum or maximum here. Doing so will cap the pre-existing value.
+	// If we were decreasing by 10, maximum was 200, and current was 250, passing the maximum would cap the final value to 200.
+	// That would result in a decrease of 50 rather than the expected decrease of 10.
+	updated_blood_volume = set_blood_volume(updated_blood_volume, cached_blood_volume = cached_blood_volume)
 	return updated_blood_volume - cached_blood_volume
 
 /// Updates effects that rely on blood volume, like blood HUDs.

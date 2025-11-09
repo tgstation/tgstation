@@ -295,7 +295,7 @@
 					heart_noises = FALSE
 				else if(having_heart_attack)
 					render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
-				else if(heart.damage > 10 || carbon_patient.get_modified_blood_volume() <= BLOOD_VOLUME_OKAY)
+				else if(heart.damage > 10 || carbon_patient.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
 				else
 					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
