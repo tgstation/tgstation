@@ -17412,7 +17412,6 @@
 /area/station/maintenance/starboard/lesser)
 "eUl" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -21047,7 +21046,6 @@
 "fUL" = (
 /obj/machinery/computer/rdservercontrol,
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/tlv_cold_room,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "fUM" = (
@@ -30771,6 +30769,7 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/checker,
 /area/station/ai/satellite/maintenance/storage)
 "iEp" = (
@@ -48465,6 +48464,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/detectives_office/private_investigators_office)
 "nxG" = (
@@ -78729,6 +78729,8 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners{
 	dir = 1
 	},
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/checker,
 /area/station/ai/satellite/maintenance/storage)
 "vXh" = (
