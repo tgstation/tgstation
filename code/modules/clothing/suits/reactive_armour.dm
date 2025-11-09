@@ -192,6 +192,7 @@
 	..()
 
 /obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
 	decoy.full_setup(
 		owner,
 		target_mob = owner,
