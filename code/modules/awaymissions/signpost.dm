@@ -16,19 +16,20 @@
 	. = ..()
 	if(.)
 		return
-	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
-		var/turf/T = zlevels ? find_safe_turf(zlevels=zlevels) : get_safe_random_station_turf_equal_weight()
+	if(tgui_alert(usr,question,name,list("Yes","No")) != "Yes" && !Adjacent(user))
+		return
 
-		if(T)
-			var/atom/movable/AM = user.pulling
-			if(AM)
-				AM.forceMove(T)
-			user.forceMove(T)
-			if(AM)
-				user.start_pulling(AM)
-			to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]."))
-		else
-			to_chat(user, "Nothing happens. You feel that this is a bad sign.")
+	var/turf/safe_dropoff = zlevels ? find_safe_turf(zlevels) : get_safe_random_station_turf_equal_weight()
+	if(!safe_dropoff)
+		to_chat(user, "Nothing happens. You feel that this is a bad sign.")
+		return
+
+	var/atom/movable/pulled = user.pulling
+	user.forceMove(safe_dropoff)
+	if(pulled)
+		pulled.forceMove(safe_dropoff)
+		user.start_pulling(pulled)
+	to_chat(user, span_notice("You blink and find yourself in [get_area_name(safe_dropoff)]."))
 
 /obj/structure/signpost/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return interact(user)
