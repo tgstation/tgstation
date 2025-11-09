@@ -193,7 +193,7 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
-	decoy.Copy_Parent(owner, 50)
+	decoy.mock_as(owner, 50)
 	decoy.GiveTarget(owner) //so it starts running right away
 	decoy.Goto(owner, decoy.move_to_delay, decoy.minimum_distance)
 	owner.alpha = 0

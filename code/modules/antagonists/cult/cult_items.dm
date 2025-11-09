@@ -1118,24 +1118,24 @@ Striking a noncultist, however, will tear their flesh."}
 				illusions--
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 				if(prob(60))
-					var/mob/living/basic/illusion/M = new(owner.loc)
-					M.faction = list(FACTION_CULT)
-					M.Copy_Parent(owner, 70, 10, 5)
-					M.move_to_delay = owner.cached_multiplicative_slowdown
+					var/mob/living/basic/illusion/apparation = new(owner.loc)
+					apparation.faction = list(FACTION_CULT)
+					apparation.mock_as(owner, 70, 10, 5)
+					apparation.move_to_delay = owner.cached_multiplicative_slowdown
 				else
-					var/mob/living/basic/illusion/escape/E = new(owner.loc)
-					E.Copy_Parent(owner, 70, 10)
-					E.GiveTarget(owner)
-					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
+					var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
+					decoy.mock_as(owner, 70, 10)
+					decoy.GiveTarget(owner)
+					decoy.Goto(owner, owner.cached_multiplicative_slowdown, decoy.minimum_distance)
 			return TRUE
 	else
 		if(prob(50))
-			var/mob/living/basic/illusion/H = new(owner.loc)
-			H.Copy_Parent(owner, 100, 20, 5)
-			H.faction = list(FACTION_CULT)
-			H.GiveTarget(owner)
-			H.move_to_delay = owner.cached_multiplicative_slowdown
-			to_chat(owner, span_danger("<b>[src] betrays you!</b>"))
+			var/mob/living/basic/illusion/bizarro = new(owner.loc)
+			bizarro.mock_as(owner, 100, 20, 5)
+			bizarro.faction = list(FACTION_CULT)
+			bizarro.GiveTarget(owner)
+			bizarro.move_to_delay = owner.cached_multiplicative_slowdown
+			to_chat(owner, span_bolddanger("[src] betrays you!"))
 		return FALSE
 
 /obj/item/shield/mirror/proc/readd()

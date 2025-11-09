@@ -40,19 +40,23 @@
 	if(disarm(attacked_target))
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-/mob/living/basic/illusion/proc/Copy_Parent(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0, attack_mode = ATTACK_MODE_ATTACK)
-	appearance = original.appearance
+/mob/living/basic/illusion/proc/mock_as(mob/living/original, life = 5 SECONDS, hp = 100, damage = 0, replicate = 0, attack_mode = ATTACK_MODE_ATTACK)
 	parent_mob_ref = WEAKREF(original)
+	appearance = original.appearance
 	setDir(original.dir)
+
 	maxHealth = hp
 	updatehealth() // re-cap health to new value
+
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
+
 	faction -= FACTION_NEUTRAL
 	transform = initial(transform)
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
+
 	src.attack_mode = attack_mode
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, death)), life)
 
@@ -73,32 +77,12 @@
 	if(isnull(parent_mob))
 		return
 	var/mob/living/basic/illusion/new_clone = new(loc)
-	new_clone.Copy_Parent(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
+	new_clone.mock_as(parent_mob, 8 SECONDS, health / 2, melee_damage_upper, multiply_chance / 2)
 	new_clone.faction = faction.Copy()
 	new_clone.GiveTarget(target)
 
 ///////Actual Types/////////
 
-/mob/living/basic/illusion/escape
-	retreat_distance = 10
-	minimum_distance = 10
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	speed = -1
-	obj_damage = 0
-	environment_smash = ENVIRONMENT_SMASH_NONE
-
-
-/mob/living/basic/illusion/escape/AttackingTarget()
-	return FALSE
-
-/mob/living/basic/illusion/mirage
-	AIStatus = AI_OFF
-	density = FALSE
-
-/mob/living/basic/illusion/mirage/death(gibbed)
-	do_sparks(rand(3, 6), FALSE, src)
-	return ..()
 
 #undef ATTACK_MODE_ATTACK
 #undef ATTACK_MODE_SHOVE
