@@ -80,7 +80,8 @@
 		else
 			amount = min(amount, maximum - cached_blood_volume)
 
-	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
+	// Do not set minimum and maximum here, those will not only cap the adjustment, but the pre-existing value as well.
+	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, cached_blood_volume = cached_blood_volume)
 
 	return updated_blood_volume - cached_blood_volume
 
