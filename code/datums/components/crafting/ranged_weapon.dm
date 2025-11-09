@@ -349,8 +349,6 @@
 	reqs = list(
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/spear = 1,
-		/obj/item/stock_parts/capacitor = 3,
-		/obj/item/stack/sheet/plasteel = 5,
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/rods = 10,
 	)

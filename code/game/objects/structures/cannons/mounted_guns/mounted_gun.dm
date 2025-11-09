@@ -28,10 +28,18 @@
 	var/shots_in_gun = 1
 	///shots added to gun, per piece of ammo loaded.
 	var/shots_per_load = 1
+	///Does it have an alternative ammo type it can uses
+	var/has_alt_ammo = FALSE
+	//Is it loaded with said alternative ammo?
+	var/use_alt_ammo = FALSE
 	///Accepted "ammo" type
 	var/obj/item/ammo_type = /obj/item/ammo_casing/strilka310
+	///Alternative ammo types, for extra effects!
+	var/obj/item/alt_ammo_type = /obj/item/ammo_casing/strilka310
 	///Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
 	var/obj/projectile/projectile_type = /obj/projectile/bullet/strilka310
+	///Projectile from said gun. Doesnt automatically inherit said ammo's projectile in case you wanted to make a gun that shoots floor tiles or something.
+	var/obj/projectile/alt_projectile_type = /obj/projectile/bullet/strilka310
 	///If the gun has anything in it.
 	var/loaded_gun = TRUE
 	///If the gun is currently loaded with its maximum capacity.
@@ -104,13 +112,21 @@
 				playsound(src, fire_sound, 50, FALSE, 5)
 			else
 				playsound(src, last_fire_sound, 50, TRUE, 5) //for the empty fire sound
-			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
-			fired_projectile.firer = src
-			fired_projectile.fired_from = src
-			fired_projectile.fire(dir2angle(dir))
+
+			if (use_alt_ammo)
+				var/obj/projectile/fired_projectile = new alt_projectile_type(get_turf(src))
+				fired_projectile.firer = src
+				fired_projectile.fired_from = src
+				fired_projectile.fire(dir2angle(dir))
+			else
+				var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
+				fired_projectile.firer = src
+				fired_projectile.fired_from = src
+				fired_projectile.fire(dir2angle(dir))
 		sleep(shot_delay)
 	if(uses_ammo == TRUE)
 		loaded_gun = FALSE
+		use_alt_ammo = FALSE
 		shots_in_gun = 0
 		fully_loaded_gun = FALSE
 		is_firing = FALSE
@@ -305,8 +321,11 @@
 	shots_in_gun = 1
 	fire_sound = 'sound/items/xbow_lock.ogg'
 	last_fire_sound = 'sound/items/xbow_lock.ogg'
+	has_alt_ammo = TRUE
 	ammo_type = /obj/item/spear
 	projectile_type = /obj/projectile/bullet/Large_Ballista_Spear
+	alt_ammo_type = /obj/item/spear/dragonator
+	alt_projectile_type = /obj/projectile/bullet/Large_Ballista_Spear_Dragonator
 	loaded_gun = FALSE
 	fully_loaded_gun = FALSE
 	fire_delay = 1
@@ -318,12 +337,14 @@
 		balloon_alert(user, "the gun is in the middle of firing!")
 		return
 
-	if(istype(used_item, ammo_type))
+	if(istype(used_item, ammo_type || alt_ammo_type))
 		if(fully_loaded_gun)
 			balloon_alert(user, "already fully loaded!")
 			return
 
 		else //Single shot weirdness.
+			if(istype(used_item, alt_ammo_type))
+				use_alt_ammo = TRUE
 
 			playsound(src, 'sound/items/weapons/draw_bow.ogg', 50, FALSE, 5)
 			do_after(user, load_delay, target = src)
