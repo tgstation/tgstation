@@ -390,12 +390,12 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 /datum/summon_things_controller/toggleGhosts/equip_all_affected()
 	for (var/mob/living/living_mob as anything in GLOB.mob_living_list)
-		living_mob.set_invis_see(SEE_INVISIBLE_GHOSTS)
 		INVOKE_ASYNC(src, PROC_REF(show_button), living_mob)
 
 /datum/summon_things_controller/toggleGhosts/equip_latejoiner(mob/living/new_mob)
 	show_button(new_mob)
 
 /datum/summon_things_controller/toggleGhosts/proc/show_button(mob/to_who)
+	to_who.set_invis_see(SEE_INVISIBLE_GHOSTS)
 	toggle_ghosts = new(to_who.mind || to_who)
 	toggle_ghosts.Grant(to_who)
