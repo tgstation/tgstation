@@ -330,7 +330,7 @@
 	crafting_flags = CRAFT_CHECK_DENSITY
 
 /datum/crafting_recipe/Ratvarian_Repeater
-	name = "Emplaced Ratvarian_Repeater"
+	name = "Emplaced Ratvarian Repeater"
 	tool_behaviors = list(TOOL_SCREWDRIVER,TOOL_WRENCH)
 	result = /obj/structure/mounted_gun/ratvarian_repeater
 	reqs = list(
@@ -345,8 +345,8 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
-/datum/crafting_recipe/Ratvarian_Repeater
-	name = "Detached Ratvarian_Repeater"
+/datum/crafting_recipe/Detached_Ratvarian_Repeater
+	name = "Detached Ratvarian Repeater"
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/gun/energy/laser/musket/repeater
 	reqs = list(
