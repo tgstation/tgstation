@@ -33578,10 +33578,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"jjs" = (
-/obj/structure/sign/poster/contraband/random/directional/north,
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "jjv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -35264,6 +35260,25 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
+"jEB" = (
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/structure/sign/directions/dorms{
+	dir = 1;
+	pixel_y = 4
+	},
+/obj/structure/sign/directions/medical{
+	dir = 1;
+	pixel_y = -2
+	},
+/obj/structure/sign/directions/evac{
+	dir = 1;
+	pixel_y = -8
+	},
+/turf/closed/wall,
+/area/station/science/lab)
 "jEL" = (
 /obj/effect/turf_decal/siding/green{
 	dir = 1
@@ -57307,10 +57322,6 @@
 /turf/open/floor/engine/hull/air,
 /area/station/security/courtroom)
 "pQc" = (
-/obj/structure/sign/directions/command{
-	dir = 1;
-	pixel_y = 10
-	},
 /obj/structure/sign/directions/medical{
 	dir = 1;
 	pixel_y = -2
@@ -57322,6 +57333,10 @@
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	pixel_y = -8
+	},
+/obj/structure/sign/directions/command{
+	dir = 1;
+	pixel_y = 10
 	},
 /turf/closed/wall,
 /area/station/hallway/secondary/entry)
@@ -64320,7 +64335,6 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/east,
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
@@ -75978,6 +75992,13 @@
 /obj/effect/spawner/random/medical/surgery_tool,
 /turf/open/floor/iron/smooth_large,
 /area/station/maintenance/department/medical)
+"uYf" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/wood/large,
+/area/station/hallway/primary/central)
 "uYs" = (
 /obj/machinery/light/floor,
 /obj/effect/turf_decal/trimline/dark_blue/filled/mid_joiner{
@@ -87140,7 +87161,8 @@
 "xZe" = (
 /obj/machinery/turretid{
 	control_area = "/area/station/ai/upload/chamber";
-	name = "AI Upload Turret Control"
+	name = "AI Upload Turret Control";
+	icon_state = "control_stun"
 	},
 /turf/closed/wall/r_wall,
 /area/station/ai/upload/foyer)
@@ -121004,7 +121026,7 @@ pHl
 pHl
 wgS
 uqo
-yjM
+pJS
 pJS
 pJS
 uqo
@@ -121260,8 +121282,8 @@ cPY
 tNP
 tNP
 fAl
-jkr
-pJS
+jEB
+yjM
 pJS
 pJS
 pQc
@@ -121518,7 +121540,7 @@ thf
 thf
 vXQ
 fAl
-jjs
+pJS
 pJS
 pJS
 eap
@@ -122505,7 +122527,7 @@ ovT
 cPf
 aWV
 mGR
-qaA
+uYf
 yhp
 aTo
 dqh
