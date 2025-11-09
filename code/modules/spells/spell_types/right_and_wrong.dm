@@ -7,7 +7,7 @@ GLOBAL_DATUM(summon_guns, /datum/summon_things_controller/item)
 GLOBAL_DATUM(summon_magic, /datum/summon_things_controller/item)
 /// A global singleton datum used to store a "summon things controller" for Mass Teaching, to grant a specific spellbook entry to stationgoers and latejoiners
 GLOBAL_DATUM(mass_teaching, /datum/summon_things_controller/spellbook_entry)
-/// A global singleton datum used to store a "summon things controller" for Toggle Ghosts, to grant a specific spellbook entry to stationgoers and latejoiners
+/// A global singleton datum used to store a "summon things controller" for Toggle Ghosts, to grant the spell toggle_ghosts to stationgoers and latejoiners
 GLOBAL_DATUM(summon_ghosts, /datum/summon_things_controller/toggleGhosts)
 
 // 1 in 50 chance of getting something really special.
