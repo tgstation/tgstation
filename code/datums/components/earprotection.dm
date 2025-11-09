@@ -9,8 +9,7 @@
 
 /datum/component/wearertargeting/earprotection/Initialize(protection_amount = EAR_PROTECTION_NORMAL)
 	. = ..()
-	if(protection_amount)
-		src.protection_amount = protection_amount
+	src.protection_amount = protection_amount
 
 /datum/component/wearertargeting/earprotection/proc/reducebang(datum/source, list/reflist)
 	SIGNAL_HANDLER
