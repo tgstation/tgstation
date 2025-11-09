@@ -349,8 +349,8 @@
 	name = "Detached Ratvarian Repeater"
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/gun/energy/laser/musket/repeater
-	reqs = list(
-		/obj/structure/mounted_gun/ratvarian_repeater
+	structures = list(
+		/obj/structure/mounted_gun/ratvarian_repeater = CRAFTING_STRUCTURE_CONSUME,
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
