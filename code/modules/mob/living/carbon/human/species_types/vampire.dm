@@ -255,8 +255,7 @@
 		return FALSE
 	if(!do_after(user, 3 SECONDS, target = victim, hidden = TRUE))
 		return FALSE
-	var/blood_volume_difference = BLOOD_VOLUME_MAXIMUM - user.get_blood_volume() //How much capacity we have left to absorb blood
-	var/drained_blood = min(victim.get_blood_volume(), VAMP_DRAIN_AMOUNT, blood_volume_difference)
+
 	victim.show_message(span_danger("[user] is draining your blood!"))
 	to_chat(user, span_notice("You drain some blood!"))
 	playsound(user, 'sound/items/drink.ogg', 30, TRUE, -2)
