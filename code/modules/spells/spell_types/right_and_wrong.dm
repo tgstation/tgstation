@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	if (!GLOB.summon_ghosts)
 		GLOB.summon_ghosts = new /datum/summon_things_controller/toggleGhosts()
-		GLOB.summon_ghosts.equip_all_affected()
+	GLOB.summon_ghosts.equip_all_affected()
 /**
  * Triggers Summon Magic from [user].
  * Can optionally be passed [survivor_probability], to set the chance of creating survivalists.
