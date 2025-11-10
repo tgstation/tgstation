@@ -7054,7 +7054,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 4
 	},
