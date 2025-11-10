@@ -1,5 +1,5 @@
 /datum/element/reagent_scoopable_atom
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
 	argument_hash_start_idx = 2
 	var/datum/reagent/reagent_to_extract
 
@@ -14,8 +14,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 
 /datum/element/reagent_scoopable_atom/Detach(datum/source, ...)
-	UnregisterSignal(source, COMSIG_ATOM_EXAMINE)
-	UnregisterSignal(source, COMSIG_ATOM_ITEM_INTERACTION)
+	UnregisterSignal(source, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ITEM_INTERACTION))
 	return ..()
 
 /datum/element/reagent_scoopable_atom/proc/on_examine(atom/source, mob/user, list/examine_list)
