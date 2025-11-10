@@ -82,7 +82,7 @@
 	if(!isnull(broken_flooring))
 		return
 	var/turf/T = get_turf(src)
-	if(T.tiled_dirt && is_tileable)
+	if(T.tiled_turf && is_tileable)
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = "dirt-0"
 		smoothing_flags = SMOOTH_BITMASK
@@ -383,3 +383,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	flick("rubble_bounce", src)
 	icon_state = "rubble"
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/effect/decal/cleanable/can_bits
+	name = "shredded can"
+	desc = "This story doesn't hold water anymore."

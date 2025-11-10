@@ -252,6 +252,7 @@
 
 	flick("poster_being_set", placed_poster)
 	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
+	placed_poster.find_and_hang_on_wall()
 	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.

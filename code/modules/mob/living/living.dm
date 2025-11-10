@@ -8,8 +8,8 @@
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_atom_to_hud(src)
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -1328,7 +1328,7 @@
 	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
-	if(!GLOB.cameranet.checkCameraVis(src))
+	if(!SScameras.is_visible_by_cameras(src))
 		return FALSE
 	return TRUE
 
@@ -1965,7 +1965,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	return ..()
 
 /mob/living/proc/mob_pickup(mob/living/user)
-	var/obj/item/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/obj/item/mob_holder/holder = new inhand_holder_type(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	SEND_SIGNAL(src, COMSIG_LIVING_SCOOPED_UP, user, holder)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
 

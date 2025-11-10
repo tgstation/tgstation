@@ -63,7 +63,8 @@
 
 /atom/movable/screen/alert/status_effect/embryonic
 	name = "Embryonic Stasis"
-	icon_state = "netpod_stasis"
+	use_user_hud_icon = TRUE
+	overlay_state = "netpod_stasis"
 	desc = "You feel like you're in a dream."
 
 #undef BASE_HEAL

@@ -12,7 +12,7 @@
 
 /datum/round_event/camera_failure/start()
 	var/iterations = 1
-	var/list/cameras = GLOB.cameranet.cameras.Copy()
+	var/list/cameras = SScameras.cameras.Copy()
 	while(prob(round(100/iterations)))
 		var/obj/machinery/camera/C = pick_n_take(cameras)
 		if (!C)

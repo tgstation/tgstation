@@ -1,0 +1,4 @@
+author: "MintMetal"
+delete-after: True
+changes:
+  - map: "No more regular pipes in atmos under layer adaptors on DeltaStation"
