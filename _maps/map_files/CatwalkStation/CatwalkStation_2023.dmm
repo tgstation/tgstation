@@ -44325,6 +44325,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mdp" = (
@@ -59520,6 +59523,9 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "qsm" = (
@@ -60563,13 +60569,6 @@
 /obj/structure/cable,
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
-"qII" = (
-/obj/structure/railing/corner{
-	dir = 4
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/openspace,
-/area/station/hallway/primary/central)
 "qJf" = (
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
@@ -66574,12 +66573,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"snR" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/central)
 "snU" = (
 /obj/machinery/door/airlock/highsecurity,
 /obj/effect/mapping_helpers/airlock/access/all/command/captain,
@@ -189098,7 +189091,7 @@ tNW
 tNW
 tNW
 tNW
-qII
+dUb
 dfn
 htH
 htH
@@ -189355,7 +189348,7 @@ dfn
 dfn
 dfn
 dUb
-ukT
+dUb
 dUb
 oKw
 dfn
@@ -189611,8 +189604,8 @@ cAM
 cAM
 cAM
 cAM
-cAM
-snR
+dUb
+dUb
 dUb
 dUb
 dfn
