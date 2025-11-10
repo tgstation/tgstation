@@ -24,7 +24,7 @@
 
 	if(QDELETED(entered))
 		return
-	if(HAS_TRAIT(entered, TRAIT_IMMERSED || HAS_TRAIT(entered, TRAIT_WALLMOUNTED)))
+	if(HAS_TRAIT(entered, TRAIT_IMMERSED) || HAS_TRAIT(entered, TRAIT_WALLMOUNTED))
 		return
 	RegisterSignal(entered, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
 	if(isliving(entered))
