@@ -30,7 +30,7 @@ ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music
 	var/list/files = flist(CONFIG_JUKEBOX_SOUNDS)
 	// Filter out things that are not sound files, like the exclude
 	for(var/thing in files)
-		if(!IS_SOUND_FILE_COMPLETE(thing))
+		if(!IS_SOUND_FILE(thing))
 			files -= thing
 	if(!files.len)
 		to_chat(user, span_warning("No uploaded tracks found."))
