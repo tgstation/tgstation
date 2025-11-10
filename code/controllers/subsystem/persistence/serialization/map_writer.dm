@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 							continue
 						TGM_MOB_INCREMENT
 */
-						TGM_MAP_BLOCK(current_header, typepath, generate_tgm_metadata(target_mob))
+						TGM_MAP_BLOCK(current_header, target_mob.type, generate_tgm_metadata(target_mob))
 
 				var/turf_metadata
 				//====SAVING ATMOS====
