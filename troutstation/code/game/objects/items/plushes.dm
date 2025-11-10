@@ -224,3 +224,12 @@
 		src.manual_emote("coughs!")
 		squashed += 1
 	return ..()
+
+
+/obj/item/toy/plush/lehto
+	icon = 'troutstation/icons/obj/toys/plushes.dmi'
+	name = "lehto plushie"
+	desc = "A stuffed toy resembling Lehto. He looks as if he were a deer in the headlights."
+	icon_state = "plushie_lehto"
+	inhand_icon_state = null
+	gender = MALE

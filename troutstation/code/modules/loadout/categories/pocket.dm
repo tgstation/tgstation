@@ -13,3 +13,7 @@
 /datum/loadout_item/pocket_items/plush/cyd
 	name = "Plush (Cydonia)"
 	item_path = /obj/item/toy/plush/cyd
+
+/datum/loadout_item/pocket_items/plush/lehto
+	name = "Plush (Lehto)"
+	item_path = /obj/item/toy/plush/lehto
