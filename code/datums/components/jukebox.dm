@@ -103,7 +103,7 @@
 			if(!length(track_data) || !IS_SOUND_FILE_SAFE(new_track.song_path))
 				continue
 			var/track_name = track_data[JUKEBOX_NAME]
-			track_name = strip_filepath_extension(track_name, SSsounds.valid_file_extensions)
+			track_name = strip_filepath_extension(track_name, SSsounds.safe_formats)
 			new_track.song_name = track_name
 			new_track.song_length = SSsounds.get_sound_length(new_track.song_path)
 			if(track_data.len >= 3) // Bandaid for legacy tracks to not use the length for the bpm rather then the actual beats.
