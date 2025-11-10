@@ -21212,10 +21212,6 @@
 	id = "hop";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "hop";
-	name = "Privacy Shutters"
-	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "fOe" = (
@@ -24029,6 +24025,14 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"gAj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/station/command/gateway)
 "gAl" = (
 /obj/item/restraints/legcuffs/beartrap/prearmed,
 /turf/open/floor/plating,
@@ -44453,6 +44457,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/gateway)
 "mfk" = (
@@ -55056,12 +55061,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "pdf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/gateway)
 "pdr" = (
@@ -118648,7 +118653,7 @@ nrw
 ooO
 hwR
 chQ
-hwR
+gAj
 eLU
 vAs
 dsB
