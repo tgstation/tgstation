@@ -74,7 +74,7 @@
 			// Already at or below the minimum, don't decrease further.
 			return 0
 		// Decreases shouldn't jump the pre-existing value to the maximum.
-		maximum = BLOOD_VOLUME_MAXIMUM
+		maximum = INFINITY
 	else
 		if (cached_blood_volume >= maximum)
 			// Already at or above the maximum, don't increase further.
