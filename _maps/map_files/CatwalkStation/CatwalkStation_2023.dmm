@@ -16234,6 +16234,14 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
+"ewn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/central)
 "ewz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31046,6 +31054,12 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/textured_large,
 /area/station/security/prison/rec)
+"iyi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "iym" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -35119,14 +35133,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/virology)
-"jCs" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
-/area/station/hallway/primary/central)
 "jCt" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -36045,6 +36051,19 @@
 /obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"jOU" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Courtroom"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/station/security/courtroom)
 "jPa" = (
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
@@ -55187,13 +55206,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"peF" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/security/courtroom)
 "peG" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood{
@@ -116616,7 +116628,7 @@ bJJ
 iyv
 iyv
 kpC
-iyv
+iyi
 iyv
 aYR
 fbC
@@ -116872,8 +116884,8 @@ fYS
 gjU
 lIM
 lIM
-peF
-lIM
+hWw
+jOU
 lIM
 hWw
 fbC
@@ -117129,8 +117141,8 @@ anL
 anL
 hMy
 hMy
-jCs
 hMy
+ewn
 hMy
 vBP
 qBR
