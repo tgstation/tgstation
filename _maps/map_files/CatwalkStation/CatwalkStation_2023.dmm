@@ -4514,10 +4514,6 @@
 /area/station/engineering/atmos/project)
 "bmw" = (
 /obj/structure/table/wood/poker,
-/obj/item/flashlight/lamp/green{
-	pixel_x = -8;
-	pixel_y = 14
-	},
 /obj/item/clothing/head/fedora/white,
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain/private)
@@ -51335,6 +51331,9 @@
 /area/station/command/heads_quarters/qm)
 "odK" = (
 /obj/structure/table/wood/poker,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 5
+	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/captain/private)
 "odM" = (
@@ -71626,6 +71625,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "tKI" = (
@@ -84277,6 +84277,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "xfX" = (
