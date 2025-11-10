@@ -1,5 +1,5 @@
 The enclosed /sounds folder holds the sound files used for player selectable songs for an ingame jukebox.
-OGG, WAV, and MP3 are supported. (I recommend verifying this is up to date with the list of `IS_SOUND_FILE`)
+OGG, WAV, and MP3 are supported. (I recommend verifying this is up to date with the list of `IS_SOUND_FILE_SAFE`)
 
 Using unnecessarily huge sounds can cause client side lag and should be avoided.
 
