@@ -30,9 +30,13 @@
 
 	var/amount = blood_volume
 
+	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
+	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
 	if (saline && amount < saline.dilution_cap)
-		amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
+		var/datum/blood_type/blood_type = get_bloodtype()
+		if (blood_type?.restoration_chem = saline.required_restoration_chem)
+			amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
 
 	return amount
 

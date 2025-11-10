@@ -303,17 +303,22 @@
 	/// Doesn't dilute blood beyond this point.
 	var/dilution_cap = BLOOD_VOLUME_NORMAL
 
+	/// Only supplements blood types that use this restoration chem.
+	var/required_restoration_chem = /datum/reagent/iron
+
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update = FALSE
+
 	if(SPT_PROB(18, seconds_per_tick))
 		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_biotype)
 		need_mob_update += affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_biotype)
+
+	// Regen is handled here, dilution is handled in [living/proc/get_blood_volume]
 	var/datum/blood_type/blood_type = affected_mob.get_bloodtype()
-	// Only suppliments base blood types
-	if(blood_type?.restoration_chem != /datum/reagent/iron)
-		return need_mob_update ? UPDATE_MOB_HEALTH : null
-	affected_mob.adjust_blood_volume(extra_regen * REM * seconds_per_tick)
+	if(blood_type?.restoration_chem == required_restoration_chem)
+		affected_mob.adjust_blood_volume(extra_regen * REM * seconds_per_tick)
+
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
