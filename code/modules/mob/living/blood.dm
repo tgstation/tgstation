@@ -80,7 +80,7 @@
 			// Already at or above the maximum, don't increase further.
 			return 0
 		// Increases shouldn't jump the pre-existing value to the minimum.
-		minimum = 0
+		minimum = -INFINITY
 
 	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
 	return updated_blood_volume - cached_blood_volume
