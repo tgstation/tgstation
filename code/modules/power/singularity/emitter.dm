@@ -63,8 +63,6 @@
 	var/last_projectile_params
 	//the disk in the gun
 	var/obj/item/emitter_disk/diskie
-	//color of beam fired by emitter
-	var/laser_color
 
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
@@ -75,8 +73,6 @@
 		if(!anchored)
 			set_anchored(TRUE)
 		connect_to_network()
-
-	RegisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_emitter_overlay))
 
 	sparks = new
 	sparks.attach(src)
@@ -142,9 +138,6 @@
 	return welded
 
 /obj/machinery/power/emitter/Destroy()
-	//no emitter means no signal
-	UnregisterSignal(src, COMSIG_ATOM_UPDATE_OVERLAYS)
-
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
 		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
@@ -153,24 +146,18 @@
 	QDEL_NULL(sparks)
 	return ..()
 
-/obj/machinery/power/emitter/proc/add_emitter_overlay(atom/source, list/overlays)
-	SIGNAL_HANDLER
+/obj/machinery/power/emitter/update_overlays()
+	. = ..()
 	if(!active)
 		return
-
+	var/laser_color = COLOR_VIBRANT_LIME
 	if (!powered)
 		laser_color = COLOR_ORANGE //stank low power orange
-
 	else if (diskie)
 		laser_color = diskie.laser_color
-
-	else
-		laser_color = COLOR_VIBRANT_LIME
-
-	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay", FLOAT_LAYER, src)
+	var/mutable_appearance/overlay = mutable_appearance(icon, "emitter_overlay")
 	overlay.color = laser_color
-	overlays |= overlay
-	return
+	. += overlay
 
 /obj/machinery/power/emitter/update_icon_state()
 	if(panel_open)
