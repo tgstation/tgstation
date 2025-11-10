@@ -33,7 +33,7 @@
 	if (!isturf(loc) || length(GLOB.raptor_population) >= MAX_RAPTOR_POP)
 		return
 
-	var/growth_value = rand(min_growth_rate, max_growth_rate) * seconds_per_tick * (1 + inherited_stats.growth_modifier)
+	var/growth_value = rand(min_growth_rate, max_growth_rate) * seconds_per_tick * (1 + inherited_stats?.growth_modifier)
 	// Slower growth off hot lavaland
 	if (!SSmapping.level_trait(z, ZTRAIT_ASHSTORM))
 		growth_value *= 0.75

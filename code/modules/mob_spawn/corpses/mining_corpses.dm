@@ -262,7 +262,7 @@
 		else
 			backpack_contents += backpack_loot
 	if(prob(30))
-		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(list( 1 = 3, 2 = 2, 3 = 1)))
+		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(alist( 1 = 3, 2 = 2, 3 = 1)))
 	if(prob(10))
 		l_pocket = pick_weight(list(
 			/obj/item/bikehorn/golden = 3,

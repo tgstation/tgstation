@@ -123,7 +123,7 @@
 		on_threshold_drop()
 
 	if(stacks_added > 0)
-		tick_interval += delay_before_decay // refreshes time until decay
+		time_until_next_tick += delay_before_decay // refreshes time until decay
 
 	if (status_overlay)
 		status_overlay.icon_state = "[overlay_state][stacks]"

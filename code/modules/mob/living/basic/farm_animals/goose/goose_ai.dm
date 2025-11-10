@@ -62,7 +62,7 @@
 
 	var/list/filtered = list()
 	for (var/obj/item/thing as anything in found)
-		if (IsEdible(thing) || thing.has_material_type(/datum/material/plastic))
+		if (IS_EDIBLE(thing) || thing.has_material_type(/datum/material/plastic))
 			filtered += thing
 
 	if(length(filtered))

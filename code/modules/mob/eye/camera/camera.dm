@@ -71,7 +71,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(use_visibility)
-		GLOB.cameranet.visibility(src)
+		SScameras.update_eye_chunk(src)
 
 /mob/eye/camera/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
 	. = ..()
