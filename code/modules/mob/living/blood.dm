@@ -268,7 +268,7 @@
  * * skip_cooldown - Skips caring about the bleed message cooldown.
  */
 /mob/living/carbon/proc/bleed_warn(bleed_rate = null, skip_cooldown = FALSE)
-	if(!get_blood_volume() || !client)
+	if(!CAN_HAVE_BLOOD(src) || !client)
 		return
 	if(!COOLDOWN_FINISHED(src, bleeding_message_cd) && !skip_cooldown)
 		return
