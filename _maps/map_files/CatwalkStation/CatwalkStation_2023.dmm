@@ -36129,13 +36129,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
-"jQw" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/hallway/primary/central)
 "jQA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -60561,9 +60554,6 @@
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/openspace,
 /area/station/hallway/primary/central)
 "qJf" = (
@@ -188313,7 +188303,7 @@ dxs
 xwx
 tYR
 pUs
-dfn
+dUb
 dfn
 dUb
 dUb
@@ -188570,7 +188560,7 @@ iNR
 xwx
 wGt
 pUs
-dfn
+dUb
 dfn
 dUb
 dfn
@@ -188827,7 +188817,7 @@ pUs
 qsi
 pUs
 pUs
-dfn
+dUb
 htH
 htH
 htH
@@ -189080,7 +189070,7 @@ tNW
 tNW
 tNW
 qII
-jQw
+dfn
 htH
 htH
 htH
@@ -189338,11 +189328,11 @@ dfn
 dUb
 ukT
 dUb
-dfn
-dfn
 oKw
 dfn
-dfn
+dUb
+dUb
+dUb
 dUb
 dUb
 jzM
