@@ -74,21 +74,16 @@
 		if (cached_blood_volume <= minimum)
 			// Already at or below the minimum, don't decrease further.
 			return 0
-		else
-			// Not below the minimum yet, cap the decrease to the minimum.
-			updated_blood_volume = max(updated_blood_volume, minimum)
+		// Decreases shouldn't jump the pre-existing value to the maximum.
+		maximum = BLOOD_VOLUME_MAXIMUM
 	else
 		if (cached_blood_volume >= maximum)
 			// Already at or above the maximum, don't increase further.
 			return 0
-		else
-			// Not above the maximum yet, cap the increase to the maximum.
-			updated_blood_volume = min(updated_blood_volume, minimum)
+		// Increases shouldn't jump the pre-existing value to the minimum.
+		minimum = BLOOD_VOLUME_MAXIMUM
 
-	// Do not set minimum or maximum here. Doing so will cap the pre-existing value.
-	// If we were decreasing by 10, maximum was 200, and current was 250, passing the maximum would cap the final value to 200.
-	// That would result in a decrease of 50 rather than the expected decrease of 10.
-	updated_blood_volume = set_blood_volume(updated_blood_volume, cached_blood_volume = cached_blood_volume)
+	updated_blood_volume = set_blood_volume(updated_blood_volume, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
 	return updated_blood_volume - cached_blood_volume
 
 /// Updates effects that rely on blood volume, like blood HUDs.

@@ -12,15 +12,13 @@
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), dummy.default_blood_volume, "Blood volume isn't initialized properly.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(apply_modifiers = TRUE), dummy.get_blood_volume(), "Blood volume is modified on initialization.")
 
-	var/set_amount = 100
+	var/set_amount = 400
 
 	// Test setting blood volume.
 	TEST_ASSERT_EQUAL(dummy.set_blood_volume(set_amount), set_amount, "Set proc return value is incorrect.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), set_amount, "Final blood volume is different from what was expected.")
 
-	// Reset it so adjustments work with a clean slate.
-	dummy.set_blood_volume(dummy.default_blood_volume)
-
+	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	var/adjustment_amount = 100
 	var/expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 
@@ -28,6 +26,7 @@
 	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount), adjustment_amount, "Adjustment proc return value is incorrect.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Final blood volume is different from what was expected.")
 
+	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = -100
 	expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 
@@ -35,6 +34,7 @@
 	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount), adjustment_amount, "Adjustment proc return value is incorrect.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Final blood volume is different from what was expected.")
 
+	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = 100
 	var/expected_adjustment = 50
 	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
@@ -43,6 +43,7 @@
 	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, maximum = expected_final_volume), expected_adjustment, "Clamped adjustment proc return value is incorrect.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Clamped final blood volume is different from what was expected.")
 
+	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = -100
 	expected_adjustment = -50
 	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
@@ -50,6 +51,24 @@
 	// Test decreasing blood volume, clamped to a minimum.
 	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, minimum = expected_final_volume), expected_adjustment, "Clamped adjustment proc return value is incorrect.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Clamped final blood volume is different from what was expected.")
+
+	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
+	adjustment_amount = -100
+	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
+	var/maximum = BLOOD_VOLUME_NORMAL - 200
+
+	// Test if decreasing an existing volume that is above the maximum causes it to jump to the maximum.
+	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, maximum = maximum), adjustment_amount, "When existing volume is above the maximum, the adjustment after trying to decrease it is unexpected. (likely jumped to maximum)")
+	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "When existing volume is above the maximum, the final volume after trying to decrease it is unexpected. (likely jumped to maximum)")
+
+	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
+	adjustment_amount = 100
+	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
+	var/minimum = BLOOD_VOLUME_NORMAL + 200
+
+	// Test if increasing an existing volume that is below the minimum causes it to jump to the minimum.
+	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, minimum = minimum), adjustment_amount, "When existing volume is below the minimum, the adjustment after trying to increase it is unexpected. (likely jumped to minimum)")
+	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "When existing volume is below the minimum, the final volume after trying to increase it is unexpected. (likely jumped to minimum)")
 
 	dummy.reagents.add_reagent(/datum/reagent/medicine/salglu_solution, 10)
 	var/datum/reagent/medicine/salglu_solution/saline = dummy.reagents.has_reagent(/datum/reagent/medicine/salglu_solution)
