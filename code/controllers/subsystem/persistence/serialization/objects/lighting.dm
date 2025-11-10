@@ -5,7 +5,7 @@
 	. -= NAMEOF(src, icon_state)
 	return .
 
-/obj/machinery/light/substitute_with_typepath()
+/obj/machinery/light/substitute_with_typepath(map_string)
 	if(type != /obj/machinery/light)
 		return FALSE
 
@@ -18,7 +18,7 @@
 			return /obj/machinery/light/burned
 	return FALSE
 
-/obj/machinery/light/empty/substitute_with_typepath()
+/obj/machinery/light/empty/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light
@@ -28,7 +28,7 @@
 			return /obj/machinery/light/burned
 	return FALSE
 
-/obj/machinery/light/broken/substitute_with_typepath()
+/obj/machinery/light/broken/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light
@@ -38,7 +38,7 @@
 			return /obj/machinery/light/burned
 	return FALSE
 
-/obj/machinery/light/burned/substitute_with_typepath()
+/obj/machinery/light/burned/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light
@@ -48,7 +48,7 @@
 			return /obj/machinery/light/burned
 	return FALSE
 
-/obj/machinery/light/small/substitute_with_typepath()
+/obj/machinery/light/small/substitute_with_typepath(map_string)
 	if(type != /obj/machinery/light/small)
 		return FALSE
 
@@ -61,7 +61,7 @@
 			return /obj/machinery/light/small/burned
 	return FALSE
 
-/obj/machinery/light/small/empty/substitute_with_typepath()
+/obj/machinery/light/small/empty/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light/small
@@ -71,7 +71,7 @@
 			return /obj/machinery/light/small/burned
 	return FALSE
 
-/obj/machinery/light/small/broken/substitute_with_typepath()
+/obj/machinery/light/small/broken/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light/small
@@ -81,7 +81,7 @@
 			return /obj/machinery/light/small/burned
 	return FALSE
 
-/obj/machinery/light/small/burned/substitute_with_typepath()
+/obj/machinery/light/small/burned/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light/small
@@ -92,7 +92,7 @@
 	return FALSE
 
 // Floor lights
-/obj/machinery/light/floor/substitute_with_typepath()
+/obj/machinery/light/floor/substitute_with_typepath(map_string)
 	if(type != /obj/machinery/light/floor)
 		return FALSE
 
@@ -107,7 +107,7 @@
 			return obj/machinery/light/floor/burned
 	return FALSE
 
-/obj/machinery/light/floor/broken/substitute_with_typepath()
+/obj/machinery/light/floor/broken/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light/floor
@@ -119,7 +119,7 @@
 			return obj/machinery/light/floor/burned
 	return FALSE
 
-/obj/machinery/light/floor/burned/substitute_with_typepath()
+/obj/machinery/light/floor/burned/substitute_with_typepath(map_string)
 	switch(status)
 		if(LIGHT_OK)
 			return /obj/machinery/light/floor

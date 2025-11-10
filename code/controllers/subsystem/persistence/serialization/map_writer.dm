@@ -169,6 +169,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 						TGM_OBJ_INCREMENT
 */
 
+						// if a typepath substitute was performed we don't need to save original object data
 						if(target_atom.substitute_with_typepath(current_header))
 							continue
 

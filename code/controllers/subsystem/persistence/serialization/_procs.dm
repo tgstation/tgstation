@@ -174,5 +174,5 @@ GLOBAL_LIST_EMPTY(save_containers_children)
  *
  * Returns: The typepath for the substitution if possible or FALSE
  */
-/atom/proc/substitute_with_typepath()
+/atom/proc/substitute_with_typepath(map_string)
 	return FALSE
