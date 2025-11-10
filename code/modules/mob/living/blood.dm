@@ -653,12 +653,6 @@
 	if(base_brute >= 300 || base_bleed_rate >= 7)
 		blood_to_add *= 2
 
-	// Ensures that the total splattered blood is the same as the blood removed.
-	blood_to_add = -adjust_blood_volume(-blood_to_add)
-
-	if(blood_to_add <= 0)
-		return
-
 	// Checks if we can add visual blood effects on turfs.
 	switch(can_bleed(BLOOD_COVER_TURFS))
 		if(BLEED_NONE)
