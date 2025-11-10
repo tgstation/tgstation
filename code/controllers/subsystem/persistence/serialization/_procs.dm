@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	. += NAMEOF(src, dir)
 	//. += NAMEOF(src, icon)
 	//. += NAMEOF(src, icon_state)
-	. += NAMEOF(src, name) // should probably disable this and use a whitelist of objs
+	//. += NAMEOF(src, name) // should probably disable this and use a whitelist of objs
 	. += NAMEOF(src, pixel_x)
 	. += NAMEOF(src, pixel_y)
 	. += NAMEOF(src, density)
