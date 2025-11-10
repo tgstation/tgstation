@@ -68,7 +68,6 @@
 		return 0
 
 	var/cached_blood_volume = get_blood_volume()
-	var/updated_blood_volume = cached_blood_volume + amount
 
 	if (amount < 0)
 		if (cached_blood_volume <= minimum)
@@ -81,9 +80,9 @@
 			// Already at or above the maximum, don't increase further.
 			return 0
 		// Increases shouldn't jump the pre-existing value to the minimum.
-		minimum = BLOOD_VOLUME_MAXIMUM
+		minimum = 0
 
-	updated_blood_volume = set_blood_volume(updated_blood_volume, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
+	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
 	return updated_blood_volume - cached_blood_volume
 
 /// Updates effects that rely on blood volume, like blood HUDs.
