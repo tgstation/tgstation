@@ -35,7 +35,7 @@
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
 	if (saline && amount < saline.dilution_cap)
 		var/datum/blood_type/blood_type = get_bloodtype()
-		if (blood_type?.restoration_chem = saline.required_restoration_chem)
+		if (blood_type?.restoration_chem == saline.required_restoration_chem)
 			amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
 
 	return amount
@@ -618,6 +618,9 @@
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
+// FIXME: This duplicates blood like crazy. The amount you bleed is way less than the splatter.
+// To summarize, you can literally dupe blood and bypass bloodloss with a syringe and a beaker.
+// I'm writing this here because it's out of scope for my PR, but was discovered because of it.
 /mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
 	if(!has_gravity() || !isturf(start) || !can_bleed())
 		return
@@ -638,13 +641,17 @@
 	if(cached_blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - max(bleeding_rate, brute_ratio)), 0))
 		return
 
-	// Every six steps you take is equivalent to one second of bleeding.
-	// This comes out to roughly doubling your bleed rate. Bandage or epi first, THEN move!
-	var/blood_to_add = base_bleed_rate / 6
+	var/blood_to_add = BLOOD_AMOUNT_PER_DECAL * 0.1
 
-	// Being dragged on the floor causes you to lose even more blood.
 	if(body_position == LYING_DOWN)
 		blood_to_add += bleed_drag_amount()
+		adjust_blood_volume(-blood_to_add)
+	else
+		blood_to_add += base_bleed_rate
+
+	// If we're very damaged or bleeding a lot, add even more blood to the trail
+	if(base_brute >= 300 || base_bleed_rate >= 7)
+		blood_to_add *= 2
 
 	// Ensures that the total splattered blood is the same as the blood removed.
 	blood_to_add = -adjust_blood_volume(-blood_to_add)

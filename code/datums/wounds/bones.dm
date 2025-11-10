@@ -560,6 +560,6 @@
 
 	if(limb.body_zone == BODY_ZONE_HEAD)
 		. += "Cranial Trauma Detected: Patient will suffer random bouts of [severity == WOUND_SEVERITY_SEVERE ? "mild" : "severe"] brain traumas until bone is repaired."
-	else if(limb.body_zone == BODY_ZONE_CHEST && victim.get_blood_volume())
+	else if(limb.body_zone == BODY_ZONE_CHEST && CAN_HAVE_BLOOD(victim))
 		. += "Ribcage Trauma Detected: Further trauma to chest is likely to worsen internal bleeding until bone is repaired."
 	. += "</div>"
