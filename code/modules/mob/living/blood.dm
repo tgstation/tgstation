@@ -619,19 +619,13 @@
 	our_splatter.fly_towards(targ, splatter_strength)
 
 /mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
-	if(!has_gravity() || !isturf(start))
+	if(!has_gravity() || !isturf(start) || !can_bleed())
 		return
 
 	var/cached_blood_volume = get_blood_volume()
 
 	if(!cached_blood_volume)
 		return
-
-	switch (can_bleed(BLOOD_COVER_TURFS))
-		if (BLEED_NONE)
-			return
-		if (BLEED_ADD_DNA)
-			return start.add_mob_blood(src)
 
 	var/base_bleed_rate = get_bleed_rate()
 	var/base_brute = getBruteLoss()
@@ -648,18 +642,22 @@
 	// This comes out to roughly doubling your bleed rate. Bandage or epi first, THEN move!
 	var/blood_to_add = base_bleed_rate / 6
 
+	// Being dragged on the floor causes you to lose even more blood.
 	if(body_position == LYING_DOWN)
 		blood_to_add += bleed_drag_amount()
-
-	// If we're very damaged or bleeding a lot, add even more blood to the trail
-	if(base_brute >= 300 || base_bleed_rate >= 7)
-		blood_to_add *= 2
 
 	// Ensures that the total splattered blood is the same as the blood removed.
 	blood_to_add = -adjust_blood_volume(-blood_to_add)
 
 	if(blood_to_add <= 0)
 		return
+
+	// Checks if we can add visual blood effects on turfs.
+	switch(can_bleed(BLOOD_COVER_TURFS))
+		if(BLEED_NONE)
+			return
+		if(BLEED_ADD_DNA)
+			return start.add_mob_blood(src)
 
 	var/trail_dir = REVERSE_DIR(movement_direction)
 	// The mob is performing a diagonal movement so we need to make a diagonal trail
@@ -690,7 +688,7 @@
 					trail_dir &= ~(was_facing & (EAST|WEST))
 				break
 
-	if (continuing_trail || (trail_dir in GLOB.diagonals))
+	if(continuing_trail || (trail_dir in GLOB.diagonals))
 		create_blood_trail_component(start, trail_dir, blood_to_add * 0.67, FALSE)
 		create_blood_trail_component(target_turf, get_dir(start, target_turf), blood_to_add * 0.33, TRUE)
 		return
