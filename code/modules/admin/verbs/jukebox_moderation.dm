@@ -50,6 +50,7 @@ ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music
 			var/msg = "[key_name_admin(user)] deleted [choice] from the jukebox!"
 			message_admins(msg)
 			log_admin(msg)
+			SSblackbox.record_feedback("associative", "jukebox_deletion", 1, list("deletor" = "[key_name_admin(user)]", "deleted" = "[choice]", "round_id" = "[GLOB.round_id]"))
 		if ("Download")
 			user << ftp(file(path))
 		else
