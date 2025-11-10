@@ -54,7 +54,7 @@
 
 	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = 100
-	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
+	expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 	var/minimum = BLOOD_VOLUME_NORMAL + 200
 
 	// Test if increasing an existing volume that is below the minimum causes it to jump to the minimum.
@@ -63,7 +63,7 @@
 
 	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = -100
-	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
+	expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 	var/maximum = BLOOD_VOLUME_NORMAL - 200
 
 	// Test if decreasing an existing volume that is above the maximum causes it to jump to the maximum.
@@ -72,14 +72,15 @@
 
 	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = BLOOD_VOLUME_MAXIMUM * 10
-	expected_final_volume = dummy.get_blood_volume() + expected_adjustment
+	expected_final_volume = dummy.get_blood_volume() + adjustment_amount
 
 	// Test increasing blood volume beyond BLOOD_VOLUME_MAXIMUM by setting the maximum to INFINITY. (ALLOWED)
-	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, maximum = INFINITY), expected_adjustment, "Setting adjustment proc maximum to INFINITY results in an unexpected adjustment proc return value.")
+	TEST_ASSERT_EQUAL(dummy.adjust_blood_volume(adjustment_amount, maximum = INFINITY), adjustment_amount, "Setting adjustment proc maximum to INFINITY results in an unexpected adjustment proc return value.")
 	TEST_ASSERT_EQUAL(dummy.get_blood_volume(), expected_final_volume, "Setting adjustment proc maximum to INFINITY results in an unexpected final volume.")
 
 	dummy.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	adjustment_amount = BLOOD_VOLUME_MAXIMUM * -10
+	expected_adjustment = -BLOOD_VOLUME_NORMAL
 	expected_final_volume = 0
 
 	// Test decreasing blood volume below 0 by setting the minimum to -INFINITY. (NOT ALLOWED)
