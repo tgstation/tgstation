@@ -158,9 +158,6 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 					if(!target_atom.is_saveable(pull_from, obj_blacklist))
 						continue
 
-					var/substitute_type = target_atom.get_save_substitute_type()
-					var/typepath = substitute_type || target_atom.type
-
 					//====SAVING OBJECTS====
 					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
 						var/obj/target_obj = target_atom
@@ -172,15 +169,19 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 						TGM_OBJ_INCREMENT
 */
 
+						if(target_atom.substitute_with_typepath(current_header))
+							continue
+
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
-						if(!substitute_type && (save_flag & SAVE_OBJECTS_PROPERTIES))
+						if((save_flag & SAVE_OBJECTS_PROPERTIES))
 							target_obj.on_object_saved(current_header, pull_from, obj_blacklist)
 
 						var/metadata
-						if(!substitute_type && (save_flag & SAVE_OBJECTS_VARIABLES))
+						if(save_flag & SAVE_OBJECTS_VARIABLES)
 							metadata = generate_tgm_metadata(target_obj)
-						TGM_MAP_BLOCK(current_header, typepath, metadata)
+
+						TGM_MAP_BLOCK(current_header, target_atom.type, metadata)
 
 
 

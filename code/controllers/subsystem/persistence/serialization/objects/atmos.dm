@@ -26,7 +26,7 @@
 	. -= NAMEOF(src, icon_state)
 	return .
 
-/obj/machinery/atmospherics/pipe/smart/get_save_substitute_type()
+/obj/machinery/atmospherics/pipe/smart/substitute_with_typepath()
 	var/base_type = /obj/machinery/atmospherics/pipe/smart/manifold4w
 
 	var/cache_key = "[base_type]-[pipe_color]-[hide]-[piping_layer]"
@@ -104,7 +104,7 @@
 // REMEMBER
 // lots of scrubbers/vents/pipe shit does not have layers 1 & 5 so plz test to make sure it works
 
-/obj/machinery/atmospherics/components/unary/get_save_substitute_type()
+/obj/machinery/atmospherics/components/unary/substitute_with_typepath()
 	var/base_type
 	if(istype(src, /obj/machinery/atmospherics/components/unary/vent_scrubber))
 		base_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
