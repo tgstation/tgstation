@@ -138,32 +138,36 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		. += SANITIZE_FILENAME(node)
 
 /**
- * Verifys wether a string or file ends with a given file type
+ * Verifys wether a string or file ends with a given file type.
+ *
+ * this does not at all check the actual type of the file, a user could just rename it
  *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
- * * file_types - A list of strings to check against [e.g. list(".ogg", ".wav")]
+ * * file_types - A list of strings to check against [e.g. list("ogg" = TRUE, "mp3" = TRUE)]
  */
 /proc/is_file_type_in_list(file, file_types = list())
 	var/extstart = findlasttext("[file]", ".")
 	if(!extstart)
 		return FALSE
-	var/ext = copytext("[file]", extstart)
-	if(ext in file_types)
+	var/ext = copytext("[file]", extstart + 1)
+	if(file_types[ext])
 		return TRUE
 
 /**
  * Verifys wether a string or file ends with a given file type
  *
+ * this does not at all check the actual type of the file, a user could just rename it
+ *
  * Arguments:
  * * file - A string or file. No checks for if this file ACCTALLY exists
- * * file_types - A list of strings to check against [e.g. ".ogg"]
+ * * file_type - A string to check against [e.g. "ogg"]
  */
 /proc/is_file_type(file, file_type)
 	var/extstart = findlasttext("[file]", ".")
 	if(!extstart)
 		return FALSE
-	var/ext = copytext("[file]", extstart)
+	var/ext = copytext("[file]", extstart + 1)
 	if(ext == file_type)
 		return TRUE
 

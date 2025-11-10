@@ -1,0 +1,5 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - bugfix: "stuff like carpet and wood tiles dont use the 2x2 tiled sprite"
+  - bugfix: "similarly, floors that dont use the tiled sprite now can have permafrost sprites (as they are not tiled)"

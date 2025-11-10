@@ -105,7 +105,7 @@ ADMIN_VERB(create_command_report, R_ADMIN, "Create Command Report", "Create a co
 					tgui_alert(ui_user, "The custom sound could not be loaded. The standard sound will be played.", "Loading error", list("Ok"))
 					return
 
-				if(!IS_SOUND_FILE_COMPLETE(sound_file))
+				if(!IS_SOUND_FILE(sound_file))
 					tgui_alert(ui_user, "Invalid file type. Please select a sound file.", "Loading error", list("Ok"))
 					return
 

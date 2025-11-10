@@ -100,7 +100,7 @@
 			var/datum/track/new_track = new()
 			new_track.song_path = file("[CONFIG_JUKEBOX_SOUNDS][track_file]")
 			var/list/track_data = splittext(track_file, "+")
-			if(!length(track_data) || !IS_SOUND_FILE(new_track.song_path))
+			if(!length(track_data) || !IS_SOUND_FILE_SAFE(new_track.song_path))
 				continue
 			var/track_name = track_data[JUKEBOX_NAME]
 			track_name = strip_filepath_extension(track_name, SSsounds.valid_file_extensions)

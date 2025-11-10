@@ -1,0 +1,7 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add constructable floor lights by using a small light fixture on the floor. They are constructed the same way as other lights."
+  - qol: "Add `/burned` subtype to `/obj/machinery/light` for mapping shenanigans"
+  - image: "Add floor light construction sprites"
+  - map: "Converted the `/built` subtype for `/obj/machinery/light` to be `/empty` and added an UpdatePaths script."
