@@ -548,7 +548,7 @@
 /proc/pick_n(list/list_to_pick, n)
 	var/list_to_pick_length
 	if(islist(list_to_pick))
-		list_to_pick_length = list_to_pick.len
+		list_to_pick_length = length(list_to_pick)
 
 	if(!list_to_pick_length || n <= 0)
 		return list()
