@@ -23318,8 +23318,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
 "gpU" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/public/glass{
+	name = "Crew Quarters Access"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
 /area/station/commons/dorms)
 "gqa" = (
 /obj/structure/mop_bucket/janitorialcart{
@@ -38377,6 +38380,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
+"kvd" = (
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "kvl" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -78952,8 +78959,11 @@
 /turf/open/floor/wood/large,
 /area/station/medical/break_room)
 "vKW" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/public/glass{
+	name = "Laundromat"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "vKX" = (
 /obj/effect/spawner/structure/window,
@@ -124286,7 +124296,7 @@ vfe
 vfe
 vfe
 vfe
-vfe
+kvd
 gpU
 rgG
 pFu
