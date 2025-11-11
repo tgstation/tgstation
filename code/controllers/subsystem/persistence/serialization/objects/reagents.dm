@@ -42,3 +42,8 @@
 	. -= NAMEOF(src, icon_state)
 	. -= NAMEOF(src, color)
 	return .
+
+/obj/item/lazarus_injector/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, loaded)
+	return .
