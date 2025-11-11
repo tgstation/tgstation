@@ -339,7 +339,6 @@
 		finish_manipulation(TRANSFER_TYPE_DROPOFF)
 		return TRUE
 
-	held_item.forceMove(src)
 	check_for_cycle_end_drop(destination_point, TRUE, TRUE)
 
 /// Checks what should we do with the `held_object` after `USE`-ing it.
