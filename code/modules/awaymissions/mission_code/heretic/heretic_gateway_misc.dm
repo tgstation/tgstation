@@ -96,7 +96,7 @@
 	desc = "A creature that has been tasked to watch over the stars, Now its tasked with watching its cell decay."
 	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	icon_living = "Star_gazer"
-	icon_state = "Star_gazer"
+	icon_state = "glow_Star_gazer_heretic"
 	construct_spells = list(
 		/datum/action/cooldown/spell/conjure/cosmic_expansion,
 		/datum/action/cooldown/spell/pointed/projectile/star_blast,
