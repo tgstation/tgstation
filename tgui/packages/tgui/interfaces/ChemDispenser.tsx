@@ -46,6 +46,8 @@ type Reaction = {
   bitflags: number;
   lower_temperature: number;
   upper_temperature: number;
+  lower_ph: number;
+  upper_ph: number;
   required_reagents: ReactionComponent[];
   required_catalysts: ReactionComponent[];
   description: string;
@@ -617,6 +619,15 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
                   reaction.reaction.upper_temperature,
                 )}
               </Stack.Item>
+              <Stack.Item>
+                <HorizontalBarWithText text="pH Range" />
+              </Stack.Item>
+              <Stack.Item fontSize="0.9em">
+                {getPHMessage(
+                  reaction.reaction.lower_ph,
+                  reaction.reaction.upper_ph,
+                )}
+              </Stack.Item>
             </Stack>
           </BlockQuote>
         </Collapsible>
@@ -633,11 +644,21 @@ function getTemperatureMessage(lower: number, upper: number): string {
   if (lower === upper) {
     return `Forms at ${lower}°K`;
   } else if (lower > 300 && upper > 300) {
-    return `Heat to between ${lower}°K and ${upper}°K`;
+    return `Heat between ${lower}°K-${upper}°K`;
   } else if (lower < 300 && upper < 300) {
-    return `Cool to between ${lower}°K and ${upper}°K`;
+    return `Cool between ${upper}°K-${lower}°K`;
   } else {
-    return `Keep between ${lower}°K and ${upper}°K`;
+    return `Keep between ${lower}°K-${upper}°K`;
+  }
+}
+
+// if lower and upper are the same, return "keep at pH X"
+// else return "keep between pH X and Y"
+function getPHMessage(lower: number, upper: number): string {
+  if (lower === upper) {
+    return `Optimally keep at pH ${lower}`;
+  } else {
+    return `Optimally keep between pH ${lower}-${upper}`;
   }
 }
 

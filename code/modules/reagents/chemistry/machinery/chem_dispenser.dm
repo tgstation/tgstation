@@ -561,6 +561,8 @@
 	info["id"] = reaction.type
 	info["lower_temperature"] = reaction.required_temp
 	info["upper_temperature"] = reaction.optimal_temp
+	info["lower_ph"] = reaction.optimal_ph_min
+	info["upper_ph"] = reaction.optimal_ph_max
 	info["bitflags"] = reaction.reaction_tags
 	info["required_reagents"] = reagent_list_to_info(reaction.required_reagents)
 	info["required_catalysts"] = reagent_list_to_info(reaction.required_catalysts)
