@@ -75,7 +75,7 @@
 
 /datum/award/score/progress/pda_themes
 	name = "Unlocked PDA Themes"
-	desc = "Track how many unlockable PDA themes, namely from maintenances disks, you've installed on your PDA (or another that you stole) so that you can use them on future rounds as well."
+	desc = "Any special PDA theme that you've installed on your PDA, which will then be added to your roundstart PDA on future rounds as well."
 	database_id = PDA_THEMES_SCORE
 	track_high_scores = FALSE //This is purely personal progress
 	var/list/cheevo_icons
