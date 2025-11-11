@@ -10,6 +10,7 @@ import {
   ProgressBar,
   Section,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { createSearch, toTitleCase } from 'tgui-core/string';
@@ -47,6 +48,8 @@ type Reaction = {
   upper_temperature: number;
   required_reagents: ReactionComponent[];
   required_catalysts: ReactionComponent[];
+  description: string;
+  color: string; // hex
 };
 
 type ReagentReaction = {
@@ -524,12 +527,34 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
             />
           </Stack.Item>
           <Stack.Item
+            grow
             style={{
-              textOverflow: 'ellipsis',
               overflow: 'hidden',
+              whiteSpace: 'nowrap',
             }}
           >
-            {reaction.name}
+            <Tooltip
+              content={
+                <Box fontSize="0.9rem">{reaction.reaction.description}</Box>
+              }
+              position="top"
+            >
+              <Stack fill>
+                <Stack.Item
+                  backgroundColor={reaction.reaction.color}
+                  p={1.25}
+                  style={{ borderRadius: '8px' }}
+                />
+                <Stack.Item
+                  style={{
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {reaction.name}
+                </Stack.Item>
+              </Stack>
+            </Tooltip>
           </Stack.Item>
         </Stack>
       </Stack.Item>

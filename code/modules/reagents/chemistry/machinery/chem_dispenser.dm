@@ -532,7 +532,7 @@
 
 	var/list/new_reaction_list = list()
 	for(var/result, reactions in GLOB.chemical_reactions_list_product_index - (dispensable_reagents + upgrade_reagents + emagged_reagents))
-		var/datum/reagent/result_typepath = result
+		var/datum/reagent/result_datum = GLOB.chemical_reagents_list[result]
 		for(var/datum/chemical_reaction/reaction as anything in reactions)
 			if(!(reaction.reaction_tags & shown_reaction_tags))
 				continue
@@ -540,17 +540,19 @@
 				continue
 			if(reaction.required_container)
 				continue
-			var/index = result_typepath::name
+			var/index = result_datum.name
 			if(!index)
 				stack_trace("[result_typepath] has no name but is set to show up in chem dispenser reaction list.")
 				continue
 
 			var/list/new_info = get_reaction_info(reaction)
+			new_info["description"] = result_datum.description
+			new_info["color"] = result_datum.color
 
 			var/num_alts = 0
 			while(new_reaction_list[index])
 				num_alts++
-				index = "[result_typepath::name] (Alt [num_alts])"
+				index = "[result_datum.name] (Alt[num_alts == 1 ? "" : " #[num_alts]"])"
 
 			new_reaction_list[index] = new_info
 
@@ -558,7 +560,6 @@
 	return reaction_list[type]
 
 /obj/machinery/chem_dispenser/proc/get_reaction_info(datum/chemical_reaction/reaction)
-	// collect basic info
 	var/list/info = list()
 	info["id"] = reaction.type
 	info["lower_temperature"] = reaction.required_temp
@@ -566,7 +567,6 @@
 	info["bitflags"] = reaction.reaction_tags
 	info["required_reagents"] = reagent_list_to_info(reaction.required_reagents)
 	info["required_catalysts"] = reagent_list_to_info(reaction.required_catalysts)
-
 	return info
 
 /obj/machinery/chem_dispenser/proc/reagent_list_to_info(list/reagent_list)
