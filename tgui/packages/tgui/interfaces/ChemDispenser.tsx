@@ -382,6 +382,13 @@ export const ChemDispenser = (props) => {
                           onClick={() => setSearchTerm('')}
                         />
                       </Stack.Item>
+                      <Stack.Item>
+                        <Button
+                          icon="thumbtack"
+                          disabled={pinnedReactions.length === 0}
+                          onClick={() => setPinnedReactions([])}
+                        />
+                      </Stack.Item>
                     </Stack>
                   </Stack.Item>
                   <Stack.Divider />
@@ -664,7 +671,7 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
     return (
       <ReagentDispenseButton
         chemical={baseReagent}
-        prefix={`${reagentComponent.amount}u `}
+        prefix={formatReagentName(reagentComponent.amount)}
       />
     );
   }
@@ -705,7 +712,7 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
           </Stack>
         }
       >
-        {`${reagentComponent.amount}u ${reagentComponent.name}`}
+        {formatReagentName(reagentComponent.amount, reagentComponent.name)}
       </Button>
     );
   }
@@ -713,10 +720,16 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
   // otherwise, just display the name
   return (
     <Button fluid ellipsis disabled icon="question">
-      {`${reagentComponent.amount}u ${reagentComponent.name}`}
+      {formatReagentName(reagentComponent.amount, reagentComponent.name)}
     </Button>
   );
 };
+
+function formatReagentName(amount: number, name?: string) {
+  if (!name) return `${amount} part `;
+
+  return `${amount} part${amount === 1 ? '' : 's'} ${name}`;
+}
 
 const HorizontalBarWithText = (props: { text: string }) => {
   const { text } = props;

@@ -26,7 +26,7 @@
 	rate_up_lim = 12.5
 	purity_min = 0.5 //100u will natrually just dip under this w/ no buffer
 	reaction_flags = REACTION_HEAT_ARBITARY //Heating up is arbitary because of submechanics of this reaction.
-	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DRUG | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DRUG | REACTION_TAG_DANGEROUS | REACTION_TAG_ORGAN
 
 //The less pure it is, the faster it heats up. tg please don't hate me for making your meth even more dangerous
 /datum/chemical_reaction/methamphetamine/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
