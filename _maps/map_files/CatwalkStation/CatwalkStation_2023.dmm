@@ -16708,11 +16708,14 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
+/obj/machinery/camera/autoname/directional/west,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/machinery/camera/autoname/directional/west,
+/obj/item/tank/jetpack{
+	pixel_y = 4
+	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
@@ -69505,9 +69508,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/tank/jetpack{
-	pixel_y = 4
-	},
+/obj/item/mod/module/thermal_regulator,
+/obj/item/mod/module/plasma_stabilizer,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "twz" = (
