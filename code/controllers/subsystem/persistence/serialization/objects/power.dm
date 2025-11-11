@@ -30,6 +30,7 @@
 /obj/machinery/power/apc/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, opened)
+	. += NAMEOF(src, locked)
 	. += NAMEOF(src, coverlocked)
 	. += NAMEOF(src, lighting)
 	. += NAMEOF(src, equipment)
