@@ -541,11 +541,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
             >
               <Stack fill>
                 <Stack.Item
-                  backgroundColor={reaction.reaction.color}
-                  p={1.25}
-                  style={{ borderRadius: '8px' }}
-                />
-                <Stack.Item
+                  grow
                   style={{
                     textOverflow: 'ellipsis',
                     overflow: 'hidden',
@@ -553,6 +549,11 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
                 >
                   {reaction.name}
                 </Stack.Item>
+                <Stack.Item
+                  backgroundColor={reaction.reaction.color}
+                  p={1.25}
+                  style={{ borderRadius: '8px' }}
+                />
               </Stack>
             </Tooltip>
           </Stack.Item>
