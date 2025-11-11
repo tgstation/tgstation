@@ -2,14 +2,19 @@
 
 ///  B A S I C   M O B S  ///
 
+/mob/living/is_saveable(turf/current_loc, list/obj_blacklist)
+	. = ..()
+	if(stat == DEAD) // what is dead may never die
+		return FALSE
+
+	return TRUE
+
 /mob/living/basic/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, stat)
 	. += NAMEOF(src, health)
 
 	. -= NAMEOF(src, density)
-	. -= NAMEOF(src, icon)
-	. -= NAMEOF(src, icon_state)
 	return .
 
 /mob/living/basic/PersistentInitialize()
