@@ -406,7 +406,7 @@
 		return
 
 	held_atom.forceMove(drop_turf)
-	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(held_atom), get_turf(src))), item_throw_range, 2)
+	held_atom.throw_at(get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_turf(held_atom))), item_throw_range, 2)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
 	finish_manipulation(TRANSFER_TYPE_DROPOFF)
