@@ -6,9 +6,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "m90"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/p90_mag
-	can_suppress = TRUE
-	mag_display = TRUE
-	mag_display_ammo = TRUE
+	can_suppress = FALSE
+	mag_display = FALSE
+	mag_display_ammo = FALSE
 	empty_indicator = TRUE
 	var/rof = 0.05 SECONDS
 
