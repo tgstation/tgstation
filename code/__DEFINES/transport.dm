@@ -19,6 +19,7 @@
 #define HILBERT_LINE_1 "hilb_1"
 #define BIRDSHOT_LINE_1 "bird_1"
 #define BIRDSHOT_LINE_2 "bird_2"
+#define HERETIC_LINE_1 "heretic_1"
 
 // Destinations/platforms
 #define TRAMSTATION_WEST 1
@@ -31,6 +32,10 @@
 
 #define BIRDSHOT_PRISON_WING 1
 #define BIRDSHOT_SECURITY_WING 2
+
+#define HERETIC_PORT 1
+#define HERETIC_CENTRAL 2
+#define HERETIC_STARBOARD 3
 
 #define BIRDSHOT_MAINTENANCE_LEFT 1
 #define BRIDSHOT_MAINTENANCE_RIGHT 2
