@@ -1,0 +1,5 @@
+author: "mikederkan"
+delete-after: True
+changes:
+  - rscadd: "Emitters now change their light color depending on the diode disk inserted."
+  - bugfix: "Emitters can light up with their panel open."
