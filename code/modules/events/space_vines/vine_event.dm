@@ -36,7 +36,7 @@
 	else
 		var/obj/structure/spacevine/vine = new()
 		var/list/floor_candidates = list()
-		for(var/area/station/hallway/area in shuffle(GLOB.areas.Copy()))
+		for(var/area/station/hallway/area in shuffle(GLOB.areas))
 			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
 				if(isopenspaceturf(floor))
 					continue
