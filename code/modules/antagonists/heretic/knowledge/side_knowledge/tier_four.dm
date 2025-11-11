@@ -17,7 +17,7 @@
 	name = "Unfathomable Curio"
 	desc = "Allows you to transmute 3 rods, lungs and any belt into an Unfathomable Curio, \
 			a belt that can hold blades and items for rituals. Whilst worn it will also \
-			veil you, allowing you to take 5 hits without suffering damage, this veil will recharge very slowly \
+			veil you, allowing you to take up to 5 damage without suffering damage. This veil will recharge very slowly \
 			outside of combat."
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 
