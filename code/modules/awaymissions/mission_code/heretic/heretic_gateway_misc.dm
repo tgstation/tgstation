@@ -90,19 +90,36 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/feeder
 	id = "MASSDRIVER_HERETIC"
 
-/mob/living/basic/construct/harvester/heretic/false_star_gazer
+/mob/living/basic/heretic/_heretic_summon/false_star_gazer
 	name = "The Fylakismenos"
 	real_name = "The Ittiménos"
 	desc = "A creature that has been tasked to watch over the stars, Now its tasked with watching its cell decay."
 	icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	icon_living = "Star_gazer"
-	icon_state = "glow_Star_gazer_heretic"
-	construct_spells = list(
-		/datum/action/cooldown/spell/conjure/cosmic_expansion,
-		/datum/action/cooldown/spell/pointed/projectile/star_blast,
-	)
-	playstyle_string = span_bold("You are a once mighty champion brought low, very low, now your put to a cruel fate of having to wait potential eons for the machinery around your cell to slowly ware down so that you may escape.")
+	icon_state = "Star_gazer"
 	maxHealth = 3000
 	health = 3000
 	melee_damage_lower = 40
 	melee_damage_upper = 50
+	sentience_type = SENTIENCE_BOSS
+	attack_verb_continuous = "ravages"
+	attack_verb_simple = "ravage"
+	attack_vis_effect = ATTACK_EFFECT_SLASH
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
+	melee_attack_cooldown = 0.6 SECONDS
+	speak_emote = list("growls")
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
+	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
+
+	slowed_by_drag = FALSE
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
+	can_buckle_to = FALSE
+	mob_size = MOB_SIZE_HUGE
+	layer = LARGE_MOB_LAYER
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	lighting_cutoff_red = 12
+	lighting_cutoff_green = 15
+	lighting_cutoff_blue = 34
+	sight = SEE_TURFS|SEE_MOBS|SEE_OBJS
