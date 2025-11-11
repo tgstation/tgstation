@@ -1,5 +1,9 @@
 // Don't forget to look into other atmos subtypes for variables to save and initialize
 // knock it out now before it gets forgotten in the future
+/obj/machinery/meter/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, target_layer)
+	return .
 
 /obj/machinery/atmospherics/get_save_vars()
 	. = ..()
@@ -261,13 +265,13 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/get_save_vars()
 	. = ..()
-	. -= NAMEOF(src, icon)
+	. += NAMEOF(src, target_temperature)
 	return .
 
-/obj/machinery/atmospherics/pipe/get_save_vars()
+/obj/machinery/atmospherics/components/trinary/filter/get_save_vars()
 	. = ..()
-	. -= NAMEOF(src, icon)
-	. -= NAMEOF(src, icon_state)
+	. += NAMEOF(src, transfer_rate)
+	. += NAMEOF(src, filter_type)
 	return .
 
 /obj/machinery/atmospherics/components/get_save_vars()
@@ -276,18 +280,12 @@
 
 	if(!override_naming)
 		. -= NAMEOF(src, name)
-	. -= NAMEOF(src, icon_state)
 	return .
 
 /obj/item/pipe/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, piping_layer)
 	. += NAMEOF(src, pipe_color)
-	return .
-
-/obj/machinery/portable_atmospherics/get_save_vars()
-	. = ..()
-	. -= NAMEOF(src, icon_state)
 	return .
 
 /obj/machinery/portable_atmospherics/canister/get_save_vars()
