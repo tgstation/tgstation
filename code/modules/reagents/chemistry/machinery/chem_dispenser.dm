@@ -540,11 +540,8 @@
 				continue
 			if(reaction.required_container)
 				continue
-			var/index = result_datum.name
-			if(!index)
-				stack_trace("[result_typepath] has no name but is set to show up in chem dispenser reaction list.")
-				continue
 
+			var/index = result_datum.name
 			var/list/new_info = get_reaction_info(reaction)
 			new_info["description"] = result_datum.description
 			new_info["color"] = result_datum.color
