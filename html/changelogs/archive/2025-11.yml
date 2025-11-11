@@ -282,3 +282,42 @@
   - bugfix: Grasp of Lock can no longer yank down your jumpsuit unless it is capable
       of being adjusted.
   - code_imp: Cleans up some leftover mentions of 'knock' in Lock code.
+2025-11-11:
+  Aliceee2ch:
+  - map: Removed two over-strong turrets on interdyne pirate ship.
+  - admin: EMP logs are improved, additionally chemical EMP reactions are now logged.
+  - bugfix: Medbay office in Catwalk now connected to powernet.
+  ArcaneMusic:
+  - rscadd: The House Edge sword has a new special attack, allowing you to charge
+      up the blade for either a light (after the first cooldown) or heavy (after both
+      cooldowns) explosive sword slash.
+  - balance: The House Edge can only gain charges when fighting live opponents.
+  FalloutFalcon:
+  - bugfix: stuff like carpet and wood tiles dont use the 2x2 tiled sprite
+  - bugfix: similarly, floors that dont use the tiled sprite now can have permafrost
+      sprites (as they are not tiled)
+  Melbert:
+  - rscdel: 'Caps "Automated Announcement System" messages to 168 characters (was:
+      1024 characters)'
+  - qol: Accounting console shows paycheck with a % rather than via a vague modifier
+  - bugfix: Accounting console can scroll again
+  MintMetal:
+  - map: No more regular pipes in atmos under layer adaptors on DeltaStation
+  Rhials:
+  - bugfix: Regal rats can now attack FAKEDEATH species mobs, like zombies and skeletons.
+  SyncIt21:
+  - bugfix: internals/externals in humans now protect against all inhalation effects
+      of reagents
+  necromanceranne:
+  - balance: The surplus energy sword and holy energy swords now require throw speed
+      boosters to embed into people.
+  - balance: The surplus energy sword now loses charge whenever it successfully blocks
+      an attack.
+  - qol: Operative lockers come with thermal regulator and plasma stabilizer modules.
+  timothymtorres:
+  - rscadd: Add constructable floor lights by using a small light fixture on the floor.
+      They are constructed the same way as other lights.
+  - qol: Add `/burned` subtype to `/obj/machinery/light` for mapping shenanigans
+  - image: Add floor light construction sprites
+  - map: Converted the `/built` subtype for `/obj/machinery/light` to be `/empty`
+      and added an UpdatePaths script.
