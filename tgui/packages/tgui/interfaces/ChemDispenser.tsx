@@ -363,7 +363,7 @@ export const ChemDispenser = (props) => {
           </Stack.Item>
           {showReactionList && (
             <Stack.Item width={reactionWidth}>
-              <Section title="Reactions" fill>
+              <Section title="Recipes" fill>
                 <Stack vertical fill>
                   <Stack.Item>
                     <Stack>
@@ -604,7 +604,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
               <Stack.Item>
                 <HorizontalBarWithText text="Temperature" />
               </Stack.Item>
-              <Stack.Item>
+              <Stack.Item fontSize="0.9em">
                 {getTemperatureMessage(
                   reaction.reaction.lower_temperature,
                   reaction.reaction.upper_temperature,
@@ -624,13 +624,13 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
 // if lower is <300 and upper is >300, return "keep between X and Y degrees"
 function getTemperatureMessage(lower: number, upper: number): string {
   if (lower === upper) {
-    return `Forms at ${lower} °K`;
+    return `Forms at ${lower}°K`;
   } else if (lower > 300 && upper > 300) {
-    return `Heat to between ${lower} °K and ${upper} °K`;
+    return `Heat to between ${lower}°K and ${upper}°K`;
   } else if (lower < 300 && upper < 300) {
-    return `Cool to between ${lower} °K and ${upper} °K`;
+    return `Cool to between ${lower}°K and ${upper}°K`;
   } else {
-    return `Keep between ${lower} °K and ${upper} °K`;
+    return `Keep between ${lower}°K and ${upper}°K`;
   }
 }
 
@@ -725,7 +725,7 @@ const HorizontalBarWithText = (props: { text: string }) => {
       <Stack.Item grow>
         <hr />
       </Stack.Item>
-      <Stack.Item>{text}</Stack.Item>
+      <Stack.Item fontSize="0.95em">{text}</Stack.Item>
       <Stack.Item grow>
         <hr />
       </Stack.Item>

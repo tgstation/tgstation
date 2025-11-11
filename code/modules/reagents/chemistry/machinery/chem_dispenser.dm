@@ -531,7 +531,7 @@
 	reaction_list[type] = list()
 
 	var/list/new_reaction_list = list()
-	for(var/result, reactions in GLOB.chemical_reactions_list_product_index - (dispensable_reagents + upgrade_reagents + emagged_reagents))
+	for(var/result, reactions in GLOB.chemical_reactions_list_product_index - dispensable_reagents)
 		var/datum/reagent/result_datum = GLOB.chemical_reagents_list[result]
 		for(var/datum/chemical_reaction/reaction as anything in reactions)
 			if(!(reaction.reaction_tags & shown_reaction_tags))
