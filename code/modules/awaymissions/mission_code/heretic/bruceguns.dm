@@ -1,17 +1,16 @@
-/obj/item/gun/ballistic/automatic/wt550/p90
+/obj/item/gun/ballistic/automatic/wt550/p90 //this is staying as an admin spawn, warning, shooting this thing will make the server shit bricks.
 	name = "\improper FN P90"
 	desc = "The FN P90 is a fast fire rate personal defense weapon, the bullets it shoots are small but what it lacks in damage it more than makes up for in penetration and fire rate."
 	icon = 'icons/obj/weapons/guns/p90.dmi'
-	icon_state = "p90"
+	icon_state = "m90"
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "m90"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/p90_mag
-	can_suppress = FALSE
-	mag_display = FALSE
-	mag_display_ammo = FALSE
+	can_suppress = TRUE
+	mag_display = TRUE
+	mag_display_ammo = TRUE
 	empty_indicator = TRUE
 	var/rof = 0.05 SECONDS
-
 
 /obj/item/gun/ballistic/automatic/wt550/p90/Initialize(mapload)
 	. = ..()
