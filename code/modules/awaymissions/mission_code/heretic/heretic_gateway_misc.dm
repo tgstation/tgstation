@@ -90,3 +90,19 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/feeder
 	id = "MASSDRIVER_HERETIC"
 
+/mob/living/basic/construct/harvester/heretic/false_star_gazer
+	name = "The Fylakismenos"
+	real_name = "The Ittiménos"
+	desc = "A creature that has been tasked to watch over the stars, Now its tasked with watching its cell decay."
+	icon = "'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'"
+	icon_living = "Star_gazer"
+	icon_state = "Star_gazer"
+	construct_spells = list(
+		/datum/action/cooldown/spell/conjure/cosmic_expansion,
+		/datum/action/cooldown/spell/pointed/projectile/star_blast,
+	)
+	playstyle_string = span_bold("You are a once mighty champion brought low, very low, now your put to a cruel fate of having to wait potential eons for the machinery around your cell to slowly ware down so that you may escape.")
+	maxHealth = 3000
+	health = 3000
+	melee_damage_lower = 40
+	melee_damage_upper = 50
