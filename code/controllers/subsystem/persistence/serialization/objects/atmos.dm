@@ -12,7 +12,6 @@
 	. += NAMEOF(src, on)
 	. += NAMEOF(src, vent_movement)
 
-	. -= NAMEOF(src, name)
 	. -= NAMEOF(src, id_tag)
 	return .
 
@@ -272,6 +271,13 @@
 	. = ..()
 	. += NAMEOF(src, transfer_rate)
 	. += NAMEOF(src, filter_type)
+	return .
+
+/obj/machinery/atmospherics/components/trinary/mixer/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, target_pressure)
+	. += NAMEOF(src, node1_concentration)
+	. += NAMEOF(src, node2_concentration)
 	return .
 
 /obj/machinery/atmospherics/components/get_save_vars()
