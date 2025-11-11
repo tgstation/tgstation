@@ -1529,7 +1529,7 @@
 	if (biological_state & BIO_FLESH)
 		return "shreds of ligaments"
 	if (biological_state & BIO_WOOD)
-		return "splinters of manufactured wood"
+		return "splinters of poorly manufactured wood"
 
 	return "error"
 
