@@ -11,6 +11,8 @@
 	sound_vary = TRUE
 	unique_reskin_changes_base_icon_state = TRUE
 
+	min_recoil = 0.1
+
 	///sound when inserting magazine
 	var/load_sound = 'sound/items/weapons/gun/general/magazine_insert_full.ogg'
 	///sound when inserting an empty magazine

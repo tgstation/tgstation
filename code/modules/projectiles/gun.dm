@@ -37,7 +37,7 @@
 	var/suppressed_volume = 60
 	/// Whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
 	var/can_unsuppress = TRUE
-	var/recoil = 0 //boom boom shake the room
+
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL //trigger guard on the weapon, hulks can't fire them with their big meaty fingers
@@ -75,6 +75,15 @@
 
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+
+	///Screen shake when the weapon is fired
+	var/recoil = 0
+	///a multiplier of the duration the recoil takes to go back to normal view, this is (recoil*recoil_backtime_multiplier)+1
+	var/recoil_backtime_multiplier = 2
+	///this is how much deviation the gun recoil can have, recoil pushes the screen towards the reverse angle you shot + some deviation which this is the max.
+	var/recoil_deviation = 22.5
+	///Used if the guns recoil is lower then the min, it clamps the highest recoil
+	var/min_recoil = 0
 
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -208,8 +217,9 @@
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
-	if(recoil && !tk_firing(user))
-		shake_camera(user, recoil + 1, recoil)
+	if(!tk_firing(user))
+		var/actual_angle = get_angle_with_scatter((user || get_turf(src)), pbtarget, rand(-recoil_deviation, recoil_deviation) + 180)
+		simulate_recoil(user, recoil, actual_angle)
 	fire_sounds()
 	if(suppressed || !message)
 		return FALSE
@@ -477,6 +487,19 @@
 	process_chamber()
 	update_appearance()
 	return TRUE
+
+/obj/item/gun/proc/calculate_recoil(mob/living/user, recoil_amount = 0)
+	return clamp(recoil_amount, min_recoil, INFINITY)
+
+/obj/item/gun/proc/simulate_recoil(mob/living/user, recoil_amount = 0, firing_angle)
+	var/total_recoil = calculate_recoil(user, recoil_amount)
+
+	var/actual_angle = firing_angle + rand(-recoil_deviation, recoil_deviation) + 180
+	if(actual_angle > 360)
+		actual_angle -= 360
+	if(total_recoil > 0)
+		recoil_camera(user, total_recoil + 1, (total_recoil * recoil_backtime_multiplier)+1, total_recoil, actual_angle)
+		return TRUE
 
 ///returns true if the gun successfully fires
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
