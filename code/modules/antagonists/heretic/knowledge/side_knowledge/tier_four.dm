@@ -15,9 +15,9 @@
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
-	desc = "Allows you to transmute 3 rods, lungs, and any belt into an Unfathomable Curio; \
+	desc = "Allows you to transmute 3 rods, lungs, and any belt into an Unfathomable Curio - \
 			a belt that can hold blades and items for rituals. Whilst worn it will veil you, \
-			blocking incoming damage, losing the veil. The veil will recharge itself out of combat."
+			blocking one blow of incoming damage, at the cost of the veil. The veil will recharge itself out of combat."
 	gain_text = "The mansus holds many a curio, some are not meant for the mortal eye."
 
 	required_atoms = list(
