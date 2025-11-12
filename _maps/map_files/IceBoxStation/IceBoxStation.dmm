@@ -20053,7 +20053,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "fDl" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "fDn" = (
@@ -38693,7 +38693,7 @@
 /area/station/cargo/storage)
 "kUJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/structure/mirror/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -45830,7 +45830,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
 "mZG" = (

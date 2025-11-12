@@ -212,7 +212,6 @@
 // luxury shuttle funnies
 /obj/item/firing_pin/paywall/luxury
 	multi_payment = TRUE
-	owned = TRUE
 	payment_amount = 20
 
 /obj/item/gun/energy/laser/luxurypaywall
