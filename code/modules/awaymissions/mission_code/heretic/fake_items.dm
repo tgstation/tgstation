@@ -32,17 +32,13 @@
 	desc = "If there is some deity out there, they've definitely skipped their psych appointment before creating this."
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "the_wabbajack"
-	inhand_icon_state = "the_wabbajack"
 	anchored = 1
 
 /obj/item/fake_items/abductor_win_stick
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	icon = 'icons/obj/antags/abductor.dmi'
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	icon_state = "wonderprodStun"
-	inhand_icon_state = "wonderprod"
 	anchored = 1
 
 /obj/item/fake_items/l6_saw
@@ -50,8 +46,6 @@
 	desc = "A heavily modified 7mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "l6"
-	inhand_icon_state = "l6closedmag"
-	base_icon_state = "l6"
 	anchored = 1
 
 /obj/item/fake_items/lahti_l39
@@ -60,6 +54,4 @@
 		this thing was made to go through a tank and come out the other end- imagine what it could do to an exosuit, there's also a completely useless sight which is totally obstructed by the magazine."
 	icon = 'icons/obj/weapons/guns/lahtil39.dmi'
 	icon_state = "lahtil"
-	inhand_icon_state = "sniper"
-	worn_icon_state = "sniper"
 	anchored = 1
