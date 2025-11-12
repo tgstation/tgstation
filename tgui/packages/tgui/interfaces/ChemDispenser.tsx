@@ -646,7 +646,7 @@ function getTemperatureMessage(lower: number, upper: number): string {
   } else if (lower > 300 && upper > 300) {
     return `Heat between ${lower}°K-${upper}°K`;
   } else if (lower < 300 && upper < 300) {
-    return `Cool between ${upper}°K-${lower}°K`;
+    return `Cool between ${Math.min(upper, lower)}°K-${Math.max(upper, lower)}°K`;
   } else {
     return `Keep between ${lower}°K-${upper}°K`;
   }

@@ -51,7 +51,7 @@
 	var/hidden_reaction_tags = REACTION_TAG_ACTIVE | REACTION_TAG_FOOD | REACTION_TAG_DRINK
 
 	/// The default list of dispensable_reagents
-	VAR_PRIVATE/static/list/default_dispensable_reagents = list(
+	var/static/list/default_dispensable_reagents = list(
 		/datum/reagent/aluminium,
 		/datum/reagent/bromine,
 		/datum/reagent/carbon,
@@ -79,7 +79,7 @@
 		/datum/reagent/fuel
 	)
 	/// The default list of reagents upgrade_reagents
-	VAR_PRIVATE/static/list/default_upgrade_reagents = list(
+	var/static/list/default_upgrade_reagents = list(
 		/datum/reagent/acetone,
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
@@ -88,7 +88,7 @@
 		/datum/reagent/saltpetre
 	)
 	/// The default list of reagents emagged_reagents
-	VAR_PRIVATE/static/list/default_emagged_reagents = list(
+	var/static/list/default_emagged_reagents = list(
 		/datum/reagent/toxin/carpotoxin,
 		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/medicine/morphine,
@@ -97,17 +97,17 @@
 	)
 
 /obj/machinery/chem_dispenser/Initialize(mapload)
-	if(!length(dispensable_reagents))
+	if(dispensable_reagents != null && !dispensable_reagents.len)
 		dispensable_reagents = default_dispensable_reagents
 	if(dispensable_reagents)
 		dispensable_reagents = sort_list(dispensable_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 
-	if(!length(upgrade_reagents))
+	if(upgrade_reagents != null && !upgrade_reagents.len)
 		upgrade_reagents = default_upgrade_reagents
 	if(upgrade_reagents)
 		upgrade_reagents = sort_list(upgrade_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 
-	if(!length(emagged_reagents))
+	if(emagged_reagents != null && !emagged_reagents.len)
 		emagged_reagents = default_emagged_reagents
 	if(emagged_reagents)
 		emagged_reagents = sort_list(emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
