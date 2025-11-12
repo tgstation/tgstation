@@ -776,7 +776,6 @@
 "fH" = (
 /obj/machinery/light/floor,
 /obj/structure/table,
-/obj/item/mod/module/springlock/bite_of_87,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "fI" = (
@@ -800,7 +799,6 @@
 /area/awaymission/beach/heretic)
 "fP" = (
 /obj/item/stack/sheet/mineral/uranium,
-/obj/item/nuke_core,
 /obj/item/coin/uranium,
 /obj/item/coin/uranium,
 /obj/item/coin/uranium,
@@ -810,6 +808,9 @@
 /obj/item/stack/ore/uranium,
 /obj/item/reagent_containers/cup/bottle/radium,
 /obj/structure/closet/crate/wooden,
+/obj/item/nuke_core{
+	anchored = 1
+	},
 /turf/open/floor/mineral/uranium,
 /area/awaymission/beach/heretic)
 "fX" = (
@@ -847,7 +848,6 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "gg" = (
-/obj/item/nuke_core,
 /obj/item/coin/uranium,
 /obj/item/coin/uranium,
 /obj/item/coin/uranium,
@@ -858,6 +858,9 @@
 /obj/item/stack/ore/uranium,
 /obj/item/reagent_containers/cup/bottle/radium,
 /obj/structure/closet/crate/wooden,
+/obj/item/nuke_core{
+	anchored = 1
+	},
 /turf/open/floor/mineral/uranium,
 /area/awaymission/beach/heretic)
 "gi" = (
@@ -998,13 +1001,10 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "gX" = (
-/obj/structure/table,
 /obj/effect/blessing,
-/obj/item/gun/ballistic/automatic/lahti{
-	pixel_x = 19
-	},
+/obj/machinery/vending/sustenance,
 /turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
+/area/awaymission/caves/heretic_laboratory)
 "gY" = (
 /obj/machinery/conveyor/auto{
 	dir = 9
@@ -1573,7 +1573,9 @@
 /area/awaymission/caves/heretic_laboratory)
 "ko" = (
 /obj/item/stack/sheet/mineral/uranium,
-/obj/item/nuke_core,
+/obj/item/nuke_core{
+	anchored = 1
+	},
 /obj/item/coin/uranium,
 /obj/item/coin/uranium,
 /obj/item/stack/sheet/mineral/uranium,
@@ -1659,13 +1661,6 @@
 /obj/structure/closet/crate/secure/weapon{
 	name = "p90 ammo crate"
 	},
-/obj/item/ammo_box/magazine/p90_mag,
-/obj/item/ammo_box/magazine/p90_mag,
-/obj/item/ammo_box/magazine/p90_mag,
-/obj/item/ammo_box/magazine/p90_mag,
-/obj/item/ammo_box/magazine/p90_mag,
-/obj/item/ammo_box/magazine/p90_mag,
-/obj/item/ammo_box/magazine/p90_mag,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "lh" = (
@@ -2531,6 +2526,7 @@
 "qC" = (
 /obj/item/clothing/head/utility/radiation/cbrnhood,
 /obj/item/clothing/suit/utility/radiation/cbrnsuit,
+/obj/structure/closet/cabinet,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "qE" = (
@@ -3556,16 +3552,10 @@
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/beach/heretic)
 "xj" = (
-/obj/structure/railing{
-	dir = 6
-	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes{
-	dir = 4
-	},
-/obj/machinery/deployable_turret/hmg,
-/turf/open/floor/iron/large,
-/area/awaymission/beach/heretic)
+/obj/structure/table/glass,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "xk" = (
 /obj/machinery/door/airlock/highsecurity{
 	max_integrity = 10000;
@@ -3784,12 +3774,14 @@
 /area/awaymission/caves/heretic_laboratory)
 "yz" = (
 /obj/item/stack/ore/uranium,
-/obj/item/nuke_core,
 /obj/item/coin/uranium,
 /obj/item/stack/sheet/mineral/uranium,
 /obj/item/stack/sheet/mineral/uranium,
 /obj/item/stack/sheet/mineral/uranium,
 /obj/structure/closet/crate/wooden,
+/obj/item/nuke_core{
+	anchored = 1
+	},
 /turf/open/floor/mineral/uranium,
 /area/awaymission/beach/heretic)
 "yA" = (
@@ -4636,13 +4628,10 @@
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Fn" = (
-/obj/structure/table,
-/obj/machinery/light/floor,
-/obj/item/melee/baton/abductor{
-	anchored = 1
-	},
+/obj/effect/blessing,
+/obj/item/kirbyplants/organic/plant10,
 /turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
+/area/awaymission/caves/heretic_laboratory)
 "Fr" = (
 /obj/structure/fluff/tram_rail/anchor,
 /obj/structure/transport/linear/tram,
@@ -5148,11 +5137,12 @@
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "II" = (
-/obj/structure/table,
-/obj/effect/blessing,
-/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
+/obj/structure/fluff/tram_rail,
+/obj/effect/oneway{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/awaymission/caves/heretic_laboratory)
 "IJ" = (
 /turf/open/misc/beach/coast{
 	dir = 9
@@ -5209,9 +5199,6 @@
 "Jf" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
-/obj/item/nuke_core/supermatter_sliver{
-	anchored = 1
-	},
 /obj/structure/holosign/barrier/atmos/sturdy,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory_clean)
@@ -5503,9 +5490,6 @@
 "Lb" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
-/obj/item/mod/module/timestopper{
-	anchored = 1
-	},
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Lc" = (
@@ -6794,13 +6778,14 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Um" = (
-/obj/structure/table,
-/obj/machinery/light/floor,
-/obj/item/gun/magic/staff/chaos/true_wabbajack{
-	anchored = 1
+/obj/structure/fluff/tram_rail{
+	dir = 1
 	},
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
+/obj/effect/oneway{
+	dir = 4
+	},
+/turf/open/misc/asteroid,
+/area/awaymission/caves/heretic_laboratory)
 "Un" = (
 /obj/effect/baseturf_helper/beach/sand,
 /turf/open/floor/plating,
@@ -7044,9 +7029,10 @@
 /turf/open/floor/stone,
 /area/awaymission/beach/heretic)
 "Wl" = (
-/obj/item/gun/ballistic/automatic/wt550/p90,
-/turf/open/floor/iron,
-/area/awaymission/caves/heretic_laboratory_clean)
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "Wn" = (
 /obj/structure/dresser,
 /obj/effect/blessing,
@@ -7324,16 +7310,10 @@
 /turf/open/floor/carpet,
 /area/awaymission/caves/heretic_laboratory_clean)
 "XQ" = (
-/obj/structure/railing{
-	dir = 10
-	},
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/stripes{
-	dir = 8
-	},
-/obj/machinery/deployable_turret/hmg,
-/turf/open/floor/iron/large,
-/area/awaymission/beach/heretic)
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "XS" = (
 /obj/structure/chair/plastic{
 	dir = 1
@@ -13777,8 +13757,8 @@ KB
 KB
 KB
 KB
-WV
-GW
+Um
+II
 KB
 KB
 yW
@@ -20449,11 +20429,11 @@ Sv
 Sv
 Sv
 xl
-Wl
+FY
 ld
 an
 ld
-Wl
+FY
 xl
 KB
 OG
@@ -27363,8 +27343,8 @@ xl
 xl
 Pc
 yd
-gX
-II
+Le
+Le
 eW
 Pc
 xl
@@ -29180,7 +29160,7 @@ KB
 uy
 KB
 hs
-Um
+Lb
 hs
 KB
 hs
@@ -29724,10 +29704,10 @@ dD
 XC
 xT
 dD
-dD
-dD
-dD
-ls
+Fn
+XQ
+xj
+Wl
 Zw
 MS
 db
@@ -30752,11 +30732,11 @@ dD
 aC
 xT
 dD
-dD
-dD
-dD
-dD
-dD
+Fn
+XQ
+xj
+Wl
+gX
 SG
 fq
 jO
@@ -31236,7 +31216,7 @@ Sv
 Sv
 KB
 hs
-Fn
+Lb
 hs
 KB
 hs
@@ -48111,7 +48091,7 @@ oo
 oo
 oo
 oo
-XQ
+kI
 nI
 nI
 nI
@@ -49653,7 +49633,7 @@ VQ
 VQ
 VQ
 VQ
-xj
+CC
 nI
 nI
 nI

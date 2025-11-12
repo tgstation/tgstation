@@ -90,7 +90,7 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/feeder
 	id = "MASSDRIVER_HERETIC"
 
-/mob/living/basic/heretic/_heretic_summon/false_star_gazer
+/mob/living/basic/heretic/heretic_summon/false_star_gazer
 	name = "The Fylakismenos"
 	real_name = "The Ittiménos"
 	desc = "A creature that has been tasked to watch over the stars, Now its tasked with watching its cell decay."
