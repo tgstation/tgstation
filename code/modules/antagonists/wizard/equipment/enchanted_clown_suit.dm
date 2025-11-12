@@ -62,7 +62,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/conjure_item/clown_pockets/post_created(atom/cast_on, atom/created)
-	cast_on.visible_message(span_notice("[cast_on] pulls out [created]!"))
+	cast_on.visible_message(span_notice("[cast_on] pulls out [created]!"), span_notice("You pull out [created]!"))
 
 /datum/action/cooldown/spell/conjure_item/clown_pockets/can_cast_spell(feedback = TRUE)
 	. = ..()
@@ -76,7 +76,8 @@
 /// Prints a funny message, exists so I can override it to print a different message
 /datum/action/cooldown/spell/conjure_item/clown_pockets/proc/cast_message(mob/cast_on)
 	cast_on.visible_message(span_notice("[cast_on] reaches far deeper into [cast_on.p_their()] pockets than you think \
-		should be possible and starts rummaging around for something."))
+		should be possible and starts rummaging around for something."), span_notice("You reach further down into your \
+		pockets than you ever have before and feel around for something."))
 
 /// Longer cooldown variant which is attached to the enchanted clown suit
 /datum/action/cooldown/spell/conjure_item/clown_pockets/enchantment
@@ -84,7 +85,8 @@
 	cooldown_time = 60 SECONDS
 
 /datum/action/cooldown/spell/conjure_item/clown_pockets/enchantment/cast_message(mob/cast_on)
-	cast_on.visible_message(span_notice("[cast_on] starts rummaging around in [cast_on.p_their()] comically large pants."))
+	cast_on.visible_message(span_notice("[cast_on] starts rummaging around in [cast_on.p_their()] comically large pants."), span_notice("You \
+		start rummaging around in your comically large pants."))
 
 /// Enchanted clown suit
 /obj/item/clothing/under/rank/civilian/clown/magic
