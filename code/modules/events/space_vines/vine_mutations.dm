@@ -316,7 +316,7 @@
 
 /datum/spacevine_mutation/proc/consume_gas(obj/structure/spacevine/holder, datum/gas/gas_type)
 	if(isnull(gas_type))
-		stack_trace("gas_type not set for gas_consuming mutation [type]")
+		stack_trace("gas_type argument is null for consume_gas proc called from [type]")
 		return
 
 	var/turf/open/floor/turf = holder.loc
