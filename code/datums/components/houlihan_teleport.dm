@@ -38,7 +38,7 @@
 	if(!said_yes || !source.Adjacent(user))
 		return
 
-	var/turf/destination_turf = zlevels ? find_safe_turf(zlevels=zlevels) : get_safe_random_station_turf_equal_weight()
+	var/turf/destination_turf = zlevels ? find_safe_turf(zlevels) : get_safe_random_station_turf_equal_weight()
 	if(!destination_turf)
 		source.balloon_alert(user, "uh oh...")
 		to_chat(user, span_warning("Nothing happens. You feel like this is a bad sign."))
