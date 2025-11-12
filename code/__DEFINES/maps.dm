@@ -45,7 +45,6 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 /// Distance from edge to move to another z-level
 #define TRANSITIONEDGE 8
-#define TRANSITIONEDGE 8
 
 // Maploader bounds indices
 /// The maploader index for the maps minimum x
