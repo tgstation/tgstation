@@ -45,6 +45,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 
 /// Distance from edge to move to another z-level
 #define TRANSITIONEDGE 8
+#define TRANSITIONEDGE 8
 
 // Maploader bounds indices
 /// The maploader index for the maps minimum x
@@ -135,6 +136,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+
 
 #define ZTRAITS_WILDS list(\
 	ZTRAIT_LINKAGE = GRIDLINKED, \

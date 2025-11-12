@@ -176,7 +176,7 @@
 
 	backpack_contents = list(
 		/obj/item/grenade/smokebomb = 2,
-		/obj/item/ammo_box/strilka310 = 2,
+		/obj/item/ammo_box/speedloader/strilka310 = 2,
 	)
 
 /datum/outfit/deathmatch_loadout/battler/druid
@@ -1041,8 +1041,7 @@
 	// I mean is it really that bad if they don't even know half this stuff is added to them.
 	// It's like, forbidden knowledge. It fits with the mansus theme - great excuse for poor design!
 	knowledge_to_grant = list(
-		/datum/heretic_knowledge/blade_grasp,
-		/datum/heretic_knowledge/blade_dance,
+		/datum/heretic_knowledge/limited_amount/starting/base_blade,
 		/datum/heretic_knowledge/blade_upgrade/blade,
 	)
 
@@ -1071,8 +1070,8 @@
 	belt = /obj/item/storage/belt/unfathomable_curio
 	gloves = null
 	shoes = /obj/item/clothing/shoes/winterboots/ice_boots
-	l_pocket = /obj/item/ammo_box/strilka310/lionhunter
-	r_pocket = /obj/item/ammo_box/strilka310/lionhunter
+	l_pocket = /obj/item/ammo_box/speedloader/strilka310/lionhunter
+	r_pocket = /obj/item/ammo_box/speedloader/strilka310/lionhunter
 
 	back = /obj/item/gun/ballistic/rifle/lionhunter // for his neutral b, he wields a gun
 
@@ -1084,7 +1083,7 @@
 	)
 
 	knowledge_to_grant = list(
-		/datum/heretic_knowledge/cosmic_grasp,
+		/datum/heretic_knowledge/limited_amount/starting/base_cosmic,
 	)
 
 	spells_to_add = list(

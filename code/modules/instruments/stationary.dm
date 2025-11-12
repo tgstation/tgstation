@@ -3,9 +3,12 @@
 	desc = "Something broke, contact coderbus."
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_DEXTERITY
 	integrity_failure = 0.25
+	/// IF FALSE music stops when the piano is unanchored.
 	var/can_play_unanchored = FALSE
+	/// Our allowed list of instrument ids. This is nulled on initialize.
 	var/list/allowed_instrument_ids = list("r3grand","r3harpsi","crharpsi","crgrand1","crbright1", "crichugan", "crihamgan","piano")
-	var/datum/song/song
+	/// Our song datum.
+	var/datum/song/stationary/song
 
 /obj/structure/musician/Initialize(mapload)
 	. = ..()
@@ -16,18 +19,22 @@
 	QDEL_NULL(song)
 	return ..()
 
-/obj/structure/musician/proc/should_stop_playing(atom/music_player)
-	if(!(anchored || can_play_unanchored) || !ismob(music_player))
-		return STOP_PLAYING
+/obj/structure/musician/proc/can_play(atom/music_player)
+	if(!anchored && !can_play_unanchored)
+		return FALSE
+	if(!ismob(music_player))
+		return FALSE
 	var/mob/user = music_player
-
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(src, span_warning("You don't have the dexterity to do this!"))
-		return STOP_PLAYING
+		return FALSE
+	if(user.incapacitated)
+		return FALSE
+	if(!Adjacent(user))
+		return FALSE
+	return TRUE
 
 /obj/structure/musician/ui_interact(mob/user)
-	. = ..()
-	song.ui_interact(user)
+	return song.ui_interact(user)
 
 /obj/structure/musician/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

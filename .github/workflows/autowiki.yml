@@ -20,7 +20,7 @@ jobs:
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install BYOND
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: ./.github/actions/restore_or_install_byond

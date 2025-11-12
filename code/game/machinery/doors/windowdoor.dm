@@ -256,7 +256,6 @@
 	var/open_delay = animation_segment_delay(DOOR_OPENING_FINISHED) - passable_delay
 	sleep(open_delay)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	if(operating == 1) //emag again
 		operating = FALSE
@@ -299,7 +298,6 @@
 	sleep(unpassable_delay)
 	set_density(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 	var/close_delay = animation_segment_delay(DOOR_CLOSING_FINISHED) - unpassable_delay
 	sleep(close_delay)
 
@@ -464,6 +462,13 @@
 	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
+	if(istype(I, /obj/item/crowbar/power))
+		var/obj/item/crowbar/power/power_tool = I
+		if(power_tool.limit_jaws_access && forced)
+			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
+			user.balloon_alert(user, "cannot pry open!")
+			return
+
 	if(!hasPower() || forced)
 		if(density)
 			open(BYPASS_DOOR_CHECKS)
@@ -542,8 +547,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	operating = TRUE
 
 	set_density(FALSE)
+	set_opacity(FALSE)
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 
 	operating = FALSE
 	update_appearance()
@@ -557,8 +562,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	operating = TRUE
 
 	set_density(TRUE)
+	set_opacity(TRUE)
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 
 	operating = FALSE
 	update_appearance()

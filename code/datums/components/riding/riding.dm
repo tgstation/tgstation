@@ -185,7 +185,8 @@
 	if(seat.buckle_lying && rider.body_position == LYING_DOWN)
 		y_offset += (-1 * PIXEL_Y_OFFSET_LYING)
 
-	rider.add_offsets(RIDING_SOURCE, x_add = x_offset, y_add = y_offset, animate = animate)
+	// Rider uses pixel_z offsets as they're above the turf, not up north on the turf
+	rider.add_offsets(RIDING_SOURCE, x_add = x_offset, z_add = y_offset, animate = animate)
 	rider.layer = layer
 
 #undef GET_X_OFFSET

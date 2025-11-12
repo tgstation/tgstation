@@ -217,7 +217,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/vehicle/ridden/lavaboat,
 /obj/item/oar,
 /turf/open/floor/plating/rainworld,

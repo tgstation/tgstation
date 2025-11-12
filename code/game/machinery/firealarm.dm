@@ -49,10 +49,10 @@
 	fire = 90
 	acid = 30
 
-/obj/machinery/firealarm/Initialize(mapload, dir, building)
+/obj/machinery/firealarm/Initialize(mapload)
 	. = ..()
 	id_tag = assign_random_name()
-	if(building)
+	if(!mapload)
 		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
@@ -78,9 +78,9 @@
 	)
 
 	register_context()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_wall()
 	update_appearance()
-
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
@@ -517,7 +517,7 @@
 // Taking melee damage always triggers the alarm if panel is open
 /obj/machinery/firealarm/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!. || !panel_open || buildstage != FIRE_ALARM_BUILD_SECURED)
+	if(. <= 0 || !panel_open || buildstage != FIRE_ALARM_BUILD_SECURED)
 		return
 	alarm()
 

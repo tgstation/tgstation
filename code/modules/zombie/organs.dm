@@ -6,11 +6,11 @@
 	icon_state = "blacktumor"
 	var/causes_damage = TRUE
 	var/datum/species/old_species = /datum/species/human
-	var/living_transformation_time = 30
+	var/living_transformation_time = 3 SECONDS
 	var/converts_living = FALSE
 
-	var/revive_time_min = 450
-	var/revive_time_max = 700
+	var/revive_time_min = 45 SECONDS
+	var/revive_time_max = 70 SECONDS
 	var/timer_id
 
 /obj/item/organ/zombie_infection/Initialize(mapload)

@@ -26,17 +26,18 @@
 
 	///Note that this spawn list is also in the lavaland generator
 	weighted_feature_spawn_list = list(
-		/obj/structure/geyser/hollowwater = 10,
-		/obj/structure/geyser/plasma_oxide = 10,
-		/obj/structure/geyser/protozine = 10,
+		/obj/structure/geyser/hollowwater = 8,
+		/obj/structure/geyser/plasma_oxide = 8,
+		/obj/structure/geyser/protozine = 8,
 		/obj/structure/geyser/random = 2,
-		/obj/structure/geyser/wittel = 10,
+		/obj/structure/geyser/wittel = 8,
+		/obj/structure/geyser/chiral_buffer = 8,
 		/obj/structure/ore_vent/boss/icebox = 1,
 	)
 
 /datum/map_generator/cave_generator/icemoon/surface
 	weighted_open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 1)
-	flora_spawn_chance = 4
+	flora_spawn_chance = 60
 	weighted_mob_spawn_list = null
 	initial_closed_chance = 0
 	birth_limit = 5
@@ -45,11 +46,18 @@
 
 	feature_spawn_chance = 0.15
 	weighted_feature_spawn_list = list(
-		/obj/structure/geyser/hollowwater = 10,
-		/obj/structure/geyser/plasma_oxide = 10,
-		/obj/structure/geyser/protozine = 10,
+		/obj/structure/geyser/hollowwater = 8,
+		/obj/structure/geyser/plasma_oxide = 8,
+		/obj/structure/geyser/protozine = 8,
 		/obj/structure/geyser/random = 2,
-		/obj/structure/geyser/wittel = 10,
+		/obj/structure/geyser/wittel = 8,
+		/obj/structure/geyser/chiral_buffer = 8,
+	)
+
+	weighted_flora_spawn_list = list(
+		/obj/structure/flora/ash/chilly = 2,
+		/obj/structure/flora/grass/both/style_random = 20,
+		/obj/structure/flora/tree/pine/style_random = 2,
 	)
 
 	weighted_flora_spawn_list = list(
@@ -76,6 +84,10 @@
 
 	mob_spawn_chance = 0.2
 	weighted_mob_spawn_list = list(/mob/living/basic/deer/ice = 99, /mob/living/basic/tree = 1, /obj/effect/spawner/random/lavaland_mob/raptor = 15)
+
+/datum/map_generator/cave_generator/icemoon/surface/rocky
+	initial_closed_chance = 53
+	mob_spawn_chance = 0.5
 
 /datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 

@@ -53,7 +53,7 @@
 
 /datum/status_effect/void_prison/on_remove()
 	if(!IS_HERETIC(owner))
-		owner.apply_status_effect(/datum/status_effect/void_chill, 3)
+		owner.apply_status_effect(/datum/status_effect/void_chill, 1)
 	if(stasis_overlay)
 		//Free our prisoner
 		owner.remove_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM, TRAIT_SOFTSPOKEN), TRAIT_STATUS_EFFECT(id))
@@ -97,5 +97,7 @@
 /atom/movable/screen/alert/status_effect/void_prison
 	name = "Void Prison"
 	desc = "A Yawning void encases your mortal coil." //Go straight to jail, do not pass GO, do not collect 200$
-	icon = 'icons/mob/actions/actions_ecult.dmi'
-	icon_state = "voidball_effect"
+	use_user_hud_icon = TRUE
+	icon_state = "heretic_template"
+	overlay_icon = 'icons/mob/actions/actions_ecult.dmi'
+	overlay_state = "voidball_effect"

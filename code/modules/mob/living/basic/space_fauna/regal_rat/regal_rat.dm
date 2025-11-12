@@ -197,7 +197,7 @@
 		return TRUE // it might be possible to attack this? we'll find out soon enough
 
 	var/mob/living/living_target = the_target
-	if (HAS_TRAIT(living_target, TRAIT_FAKEDEATH) || living_target.stat == DEAD)
+	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
 		balloon_alert(src, "already dead!")
 		return FALSE
 
@@ -216,7 +216,7 @@
  * * atom/lean_target - the target we try to add the spit to
  */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
-	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
+	if(isnull(target.reagents) || !target.is_injectable(src, /*allowmobs = */TRUE))
 		return FALSE
 
 	visible_message(

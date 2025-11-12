@@ -98,7 +98,7 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account && !pack.goody) //privately purchased and not a goody means 1.1x the cost
+	if(paying_account?.add_to_accounts && !pack.goody) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
 	return round(cost)
 
@@ -204,7 +204,7 @@
 	return
 
 /datum/supply_order/proc/append_order(list/new_contents, cost_increase)
-	for(var/i as anything in new_contents)
+	for(var/i in new_contents)
 		if(pack.contains[i])
 			pack.contains[i] += new_contents[i]
 		else

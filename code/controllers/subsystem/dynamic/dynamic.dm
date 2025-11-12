@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(dynamic)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
 		if(!ruleset.prepare_execution( num_real_players, antag_candidates ))
-			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed!")
+			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed! [ruleset.log_data]")
 			queued_rulesets -= ruleset
 			qdel(ruleset)
 			continue
@@ -368,7 +368,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates()))
-		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
+		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed! [picked_ruleset.log_data]")
 		QDEL_LIST(rulesets_weighted)
 		return FALSE
 	// Run the thing
@@ -430,8 +430,8 @@ SUBSYSTEM_DEF(dynamic)
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates()))
 		if(alert_admins_on_fail)
-			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
-		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
+			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
+		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
 		qdel(running)
 		return FALSE
 
@@ -493,7 +493,7 @@ SUBSYSTEM_DEF(dynamic)
 		return FALSE
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution(player_count, list(latejoiner)))
-		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased.")
+		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased. [picked_ruleset.log_data]")
 		QDEL_LIST(rulesets_weighted)
 		failed_latejoins++
 		return FALSE

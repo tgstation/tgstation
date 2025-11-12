@@ -126,6 +126,7 @@
 		part.set_armor(armor_type)
 		part.resistance_flags = resistance_flags
 		part.flags_1 |= atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
+		part.item_flags |= DO_NOT_WARDROBE
 		part.heat_protection = NONE
 		part.cold_protection = NONE
 		part.max_heat_protection_temperature = max_heat_protection_temperature
@@ -167,6 +168,7 @@
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 		part.icon_state = "[skin]-[part.base_icon_state][mod.get_part_datum(part).sealed ? "-sealed" : ""]"
 		mod.wearer?.update_clothing(part.slot_flags)
+	mod.wearer?.refresh_obscured()
 
 /datum/armor/mod_theme
 	melee = 10
@@ -640,6 +642,7 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/storage/bag/chemistry,
 		/obj/item/storage/bag/bio,
+		/obj/item/crowbar/power/paramedic,
 	)
 	variants = list(
 		"medical" = list(

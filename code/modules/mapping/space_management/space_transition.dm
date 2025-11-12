@@ -67,12 +67,11 @@
 
 		transition_levels.Add(level)
 
-		if(linkage)
-			if(level.linkage != linkage)
-				// Either you be gridlinked or crosslinked, both is uhhh... a headache
-				stack_trace("Mixed linkages detected in z-level neighbour transitions!")
-		else
-			linkage = level.linkage
+		if(!isnull(linkage) && level.linkage != linkage)
+			// Either you be gridlinked or crosslinked, both is uhhh... a headache
+			stack_trace("Mixed linkages detected in z-level neighbour transitions!")
+			continue
+		linkage = level.linkage
 
 	if(linkage == CROSSLINKED)
 		set_cross_linkages(transition_levels)
@@ -147,9 +146,8 @@
 				var/turf/place = locate(S.destination_x, S.destination_y, zdestination)
 				S.AddElement(/datum/element/mirage_border, place, mirage_dir, range_cached)
 
-/// Construct linkages randomly to get confusing space transitions
-/// We do this by constructing an absurdly large grid, and placing the levels randomly inside
-/// Please update this comment when you figure out why this is
+/// Construct linkages randomly to get maze-like space transitions
+/// We do this by constructing a very large grid, and placing the levels randomly inside, and then filling out the empty spaces
 /datum/controller/subsystem/mapping/proc/set_cross_linkages(list/transition_levels)
 	var/grid_diameter = (length(transition_levels) * 2) + 1
 	var/list/grid = new /list(grid_diameter ** 2)
@@ -157,13 +155,14 @@
 	var/datum/space_transition_point/point
 	for(var/x in 1 to grid_diameter)
 		for(var/y in 1 to grid_diameter)
-			point = new/datum/space_transition_point(x, y, grid)
+			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 	for(point as anything in grid)
 		point.set_neigbours(grid, grid_diameter)
 
 	var/center = round(grid_diameter / 2)
-	point = grid[CHORDS_TO_1D(grid_diameter, center, center)]
+	if(transition_levels.len)
+		point = grid[CHORDS_TO_1D(center, center, grid_diameter)]
 	grid.Cut()
 
 	var/list/transition_pick = transition_levels.Copy()
@@ -191,7 +190,7 @@
 	var/datum/space_transition_point/point
 	for(var/x in 1 to grid_diameter)
 		for(var/y in 1 to grid_diameter)
-			point = new/datum/space_transition_point(x, y, grid)
+			point = new /datum/space_transition_point(x, y, grid)
 			grid[CHORDS_TO_1D(x, y, grid_diameter)] = point
 
 	// Translate the grid we made to the z-levels

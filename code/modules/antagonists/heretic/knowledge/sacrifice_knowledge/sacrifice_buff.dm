@@ -4,7 +4,8 @@
 /atom/movable/screen/alert/status_effect/unholy_determination
 	name = "Unholy Determination"
 	desc = "You appear in a unfamiliar room. The darkness begins to close in. Panic begins to set in. There is no time. Fight on, or die!"
-	icon_state = "wounded"
+	icon_state = "heretic_template"
+	overlay_state = "wounded"
 
 /// The buff given to people within the shadow realm to assist them in surviving.
 /datum/status_effect/unholy_determination
@@ -22,6 +23,8 @@
 
 /datum/status_effect/unholy_determination/on_apply()
 	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
+	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
+		owner.blood_volume = BLOOD_VOLUME_OKAY
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()

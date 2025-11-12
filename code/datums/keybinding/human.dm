@@ -6,7 +6,7 @@
 	return ishuman(user.mob)
 
 /datum/keybinding/human/quick_equip
-	hotkey_keys = list("E")
+	hotkey_keys = list("R")
 	name = "quick_equip"
 	full_name = "Quick equip"
 	description = "Quickly puts an item in the best slot available"
@@ -21,7 +21,7 @@
 	return TRUE
 
 /datum/keybinding/human/quick_equip_belt
-	hotkey_keys = list("ShiftE")
+	hotkey_keys = list("ShiftR")
 	name = "quick_equip_belt"
 	full_name = "Quick equip belt"
 	description = "Put held thing in belt or take out most recent thing from belt"

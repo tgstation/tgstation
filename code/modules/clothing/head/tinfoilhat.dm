@@ -4,7 +4,7 @@
 	icon_state = "foilhat"
 	inhand_icon_state = null
 	armor_type = /datum/armor/costume_foilhat
-	equip_delay_other = 140
+	equip_delay_other = 14 SECONDS
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE

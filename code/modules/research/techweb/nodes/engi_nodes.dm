@@ -180,6 +180,7 @@
 		"welding_goggles",
 		"tray_goggles",
 		"geigercounter",
+		"diode_disk_stamina"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
@@ -218,7 +219,6 @@
 		"holobarrier_jani",
 		"holobarrier_med",
 		"holopad",
-		"vendatray",
 		"holodisk",
 		"modular_shield_gate",
 		"modular_shield_generator",
@@ -228,6 +228,7 @@
 		"modular_shield_charger",
 		"modular_shield_well",
 		"modular_shield_console",
+		"diode_disk_magnetic",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 

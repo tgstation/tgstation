@@ -145,6 +145,14 @@ SUBSYSTEM_DEF(mapping)
 		if(LAZYLEN(FailedZs))
 			CRASH("Ocean failed to load!")
 
+	if(current_map.wilderness_levels)
+		var/list/FailedZs = list()
+
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+
+		if(LAZYLEN(FailedZs))
+			CRASH("Ice wilds failed to load!")
+
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
@@ -286,7 +294,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
-		spawn_rivers(ice_z, 4, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
+		spawn_rivers(ice_z, 6, /turf/open/lava/plasma/ice_moon, /area/icemoon/surface/outdoors/unexplored/rivers)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	for (var/ice_z in ice_ruins_underground)

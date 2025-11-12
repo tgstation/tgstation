@@ -20,8 +20,8 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/chaplainsuit_armor_weaker
-	strip_delay = 80
-	equip_delay_other = 60
+	strip_delay = 8 SECONDS
+	equip_delay_other = 6 SECONDS
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood/divine_archer
 	hood_up_affix = ""
 
@@ -48,8 +48,8 @@
 	icon_state = "archerbracers"
 	inhand_icon_state = "archerbracers"
 	body_parts_covered = ARMS|HANDS
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
 	resistance_flags = NONE
 	armor_type = /datum/armor/chaplainsuit_armor_weaker
 
@@ -60,8 +60,8 @@
 	icon_state = "archerboots"
 	inhand_icon_state = "archerboots"
 	body_parts_covered = LEGS|FEET
-	strip_delay = 30
-	equip_delay_other = 50
+	strip_delay = 3 SECONDS
+	equip_delay_other = 5 SECONDS
 	resistance_flags = NONE
 	fastening_type = SHOES_SLIPON
 	armor_type = /datum/armor/shoes_divine_archer

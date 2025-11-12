@@ -65,13 +65,10 @@
 
 /datum/component/appearance_on_aggro/proc/on_icon_state_updated(mob/living/source)
 	SIGNAL_HANDLER
-	if (source.stat == DEAD)
-		return
-	source.icon_state = source.ai_controller?.blackboard_key_exists(target_key) ? aggro_state : initial(source.icon_state)
+	if (source.stat != DEAD)
+		source.icon_state = source.ai_controller?.blackboard_key_exists(target_key) ? aggro_state : initial(source.icon_state)
 
 /datum/component/appearance_on_aggro/proc/on_overlays_updated(mob/living/basic/source, list/overlays)
 	SIGNAL_HANDLER
-
-	if(!(source.ai_controller?.blackboard_key_exists(target_key)))
-		return
-	overlays += aggro_overlay
+	if(source.ai_controller?.blackboard_key_exists(target_key) && source.stat != DEAD)
+		overlays += aggro_overlay

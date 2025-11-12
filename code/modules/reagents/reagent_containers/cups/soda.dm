@@ -5,14 +5,16 @@
 #define SODA_FIZZINESS_THROWN 15
 /// How much fizziness is added to the can of soda by shaking it, in percentage points
 #define SODA_FIZZINESS_SHAKE 5
+/// At what atmospheric pressure do we burst a soda can? Empirical evidance (one googled experiment video) states that ~67.458 kPa is where a can bursts.
+#define SODA_EXPLOSION_PRESSURE 67.458
 
 /obj/item/reagent_containers/cup/soda_cans
 	name = "soda can"
 	icon = 'icons/obj/drinks/soda.dmi'
 	icon_state = "cola"
 	icon_state_preview = "cola"
-	reagent_flags = NONE
-	spillable = FALSE
+	abstract_type = /obj/item/reagent_containers/cup/soda_cans
+	initial_reagent_flags = NONE
 	custom_price = PAYCHECK_CREW * 0.9
 	obj_flags = CAN_BE_HIT
 	possible_transfer_amounts = list(5, 10, 15, 25, 30)
@@ -24,6 +26,7 @@
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
+	AddElement(/datum/element/atmos_sensitive, mapload) //Enables soda cans to explode in vaccuum.
 
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()
@@ -63,17 +66,24 @@
 	sleep(2 SECONDS) //dramatic pause
 	return TOXLOSS
 
-/obj/item/reagent_containers/cup/soda_cans/attack(mob/M, mob/living/user)
-	if(iscarbon(M) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
-		if(M == user)
-			user.visible_message(span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"), span_notice("You crush the can of [src] on your forehead."))
+/obj/item/reagent_containers/cup/soda_cans/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	if(iscarbon(target) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
+		if(target == user)
+			user.visible_message(
+				span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"),
+				span_notice("You crush the can of [src] on your forehead."),
+			)
 		else
-			user.visible_message(span_warning("[user] crushes the can of [src] on [M]'s forehead!"), span_notice("You crush the can of [src] on [M]'s forehead."))
-		playsound(M,'sound/items/weapons/pierce.ogg', rand(10,50), TRUE)
-		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(M.loc)
+			user.visible_message(
+				span_warning("[user] crushes the can of [src] on [target]'s forehead!"),
+				span_notice("You crush the can of [src] on [target]'s forehead."),
+			)
+		playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
 		crushed_can.icon_state = icon_state
 		qdel(src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
 
 /obj/item/reagent_containers/cup/soda_cans/bullet_act(obj/projectile/proj)
@@ -95,9 +105,8 @@
 		return
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
-	reagents.flags |= OPENCONTAINER
+	add_container_flags(OPENCONTAINER)
 	playsound(src, SFX_CAN_OPEN, 50, TRUE)
-	spillable = TRUE
 	throwforce = 0
 
 /**
@@ -121,15 +130,14 @@
 	playsound(src, 'sound/items/can/can_pop.ogg', 80, TRUE)
 	if(!hide_message)
 		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
-	spillable = TRUE
-	reagents.flags |= OPENCONTAINER
+	add_container_flags(OPENCONTAINER)
 	reagents.expose(target, TOUCH)
 	reagents.clear_reagents()
 	throwforce = 0
 
 /obj/item/reagent_containers/cup/soda_cans/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if(. || spillable || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
+	if(. || is_open_container() || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
 		return
 
 	fizziness += SODA_FIZZINESS_THROWN
@@ -165,8 +173,16 @@
 		. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 		. += "\t[span_warning("You get a menacing aura of fizziness from it...")]"
 
+/obj/item/reagent_containers/cup/soda_cans/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
+	return ((air.return_pressure() <= SODA_EXPLOSION_PRESSURE) && !(reagents.flags & OPENCONTAINER))
+
+/obj/item/reagent_containers/cup/soda_cans/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(reagents.total_volume && !(reagents.flags & OPENCONTAINER))
+		burst_soda(loc)
+
 #undef SODA_FIZZINESS_THROWN
 #undef SODA_FIZZINESS_SHAKE
+#undef SODA_EXPLOSION_PRESSURE
 
 /obj/item/reagent_containers/cup/soda_cans/cola
 	name = "Space Cola"

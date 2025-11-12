@@ -16,7 +16,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 13
+	speech_probability_rate = 6
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null

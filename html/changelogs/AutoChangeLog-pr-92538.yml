@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "product category vendors start out correctly filled & can be refilled with cargo ordered vending canisters again"

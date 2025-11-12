@@ -20,7 +20,7 @@
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 45,
 		/obj/item/pen = 25)
-	time = 64
+	time = 6.4 SECONDS
 
 /datum/surgery/ear_surgery/can_start(mob/user, mob/living/carbon/target)
 	return target.get_organ_slot(ORGAN_SLOT_EARS) && ..()
@@ -45,8 +45,10 @@
 		span_notice("[user] completes the surgery on [target]'s ears."),
 	)
 	display_pain(target, "Your head swims, but it seems like you can feel your hearing coming back!")
-	target_ears.deaf = (20) //deafness works off ticks, so this should work out to about 30-40s
 	target_ears.set_organ_damage(0)
+	///makes you temporarily deaf for a duration post-surgery
+	var/deaf_change = 40 SECONDS - target_ears.temporary_deafness
+	target_ears.adjust_temporary_deafness(deaf_change)
 	return ..()
 
 /datum/surgery_step/fix_ears/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

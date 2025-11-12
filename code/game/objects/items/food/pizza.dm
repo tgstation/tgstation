@@ -2,6 +2,7 @@
 /obj/item/food/pizza
 	name = "pizza"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizza
 	w_class = WEIGHT_CLASS_NORMAL
 	max_volume = 80
 	icon_state = "pizzamargherita"
@@ -72,7 +73,7 @@
 	. = ..()
 	if(!sliced)
 		return
-	user.visible_message(span_notice("You take a slice of [src]."), span_notice("[user] takes a slice of [src]."))
+	user.visible_message(span_notice("[user] takes a slice of [src]."), span_notice("You take a slice of [src]."))
 	produce_slice(user)
 
 /obj/item/food/pizza/proc/get_slices_filter() //to not repeat code
@@ -124,6 +125,7 @@
 /obj/item/food/pizzaslice
 	name = "pizza slice"
 	icon = 'icons/obj/food/pizza.dmi'
+	abstract_type = /obj/item/food/pizzaslice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	icon_state = "pizzamargheritaslice"
 	foodtypes = GRAIN
@@ -132,7 +134,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pizzaslice/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
 
 /obj/item/food/pizza/margherita
 	name = "pizza margherita"

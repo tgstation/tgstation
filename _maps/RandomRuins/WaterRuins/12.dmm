@@ -97,7 +97,6 @@
 /area/rainworld/surface/outdoors)
 "gn" = (
 /obj/machinery/turretid{
-	icon_state = "control_off";
 	pixel_y = -24;
 	req_access = null
 	},

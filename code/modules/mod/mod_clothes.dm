@@ -27,7 +27,7 @@
 	allowed = list(
 		/obj/item/tank/internals,
 		/obj/item/flashlight,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack/captain,
 	)
 	armor_type = /datum/armor/none
 	body_parts_covered = CHEST|GROIN

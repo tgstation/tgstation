@@ -12,7 +12,7 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       #Parse the Codeowner file on non draft PRs
       - name: CodeOwnersParser

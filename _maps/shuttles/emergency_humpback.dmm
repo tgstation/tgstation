@@ -126,7 +126,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "he" = (
-/obj/machinery/vending/wallmed/directional/east,
+/obj/machinery/wall_healer/free/directional/east,
 /turf/open/floor/wood/large,
 /area/shuttle/escape)
 "hk" = (
@@ -297,7 +297,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "rL" = (
@@ -513,8 +513,7 @@
 /area/shuttle/escape)
 "Dj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
-	dir = 1;
-	chamber_id = "evacair"
+	dir = 1
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/air,

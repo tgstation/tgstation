@@ -112,7 +112,7 @@
 		. += observer_desc
 		. += "It is activated by [activation_method]."
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
+/obj/machinery/anomalous_crystal/Hear(atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -373,7 +373,7 @@
 	if(isanimal_or_basicmob(loc))
 		holder_animal = loc
 		RegisterSignal(holder_animal, COMSIG_LIVING_DEATH, PROC_REF(on_holder_animal_death))
-	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

@@ -135,6 +135,7 @@
 /obj/item/bodypart/arm
 	name = "arm"
 	desc = "Hey buddy give me a HAND and report this to the github because you shouldn't be seeing this."
+	abstract_type = /obj/item/bodypart/arm
 	attack_verb_continuous = list("slaps", "punches")
 	attack_verb_simple = list("slap", "punch")
 	max_damage = LIMB_MAX_HP_DEFAULT
@@ -400,6 +401,7 @@
 /obj/item/bodypart/leg
 	name = "leg"
 	desc = "This item shouldn't exist. Talk about breaking a leg. Badum-Tss!"
+	abstract_type = /obj/item/bodypart/leg
 	attack_verb_continuous = list("kicks", "stomps")
 	attack_verb_simple = list("kick", "stomp")
 	max_damage = LIMB_MAX_HP_DEFAULT

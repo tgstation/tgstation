@@ -28,11 +28,14 @@
 	var/space_ruin_levels = DEFAULT_SPACE_RUIN_LEVELS
 	var/space_empty_levels = DEFAULT_SPACE_EMPTY_LEVELS
 
+
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
 	/// How many z's to generate around a planetary station
 	var/ocean_levels = 0
 	/// Directory to the wilderness 0rea we can spawn in
+	var/wilderness_levels = 0
+	/// Directory to the wilderness area we can spawn in
 	var/wilderness_directory
 	/// Index of map names (inside wilderness_directory) with the amount to spawn. ("ice_planes" = 1) for one ice spawn
 	var/list/maps_to_spawn = list()
@@ -201,6 +204,12 @@
 		ocean_levels = temp
 	else if (!isnull(temp))
 		log_world("map_config ocean_levels is not a number!")
+
+	temp = json["wilderness_levels"]
+	if (isnum(temp))
+		wilderness_levels = temp
+	else if (!isnull(temp))
+		log_world("map_config wilderness_levels is not a number!")
 		return
 
 	if ("minetype" in json)
@@ -249,6 +258,15 @@
 		for(var/i in 1 to ocean_levels)
 			maps_to_spawn += pick_weight_take(ocean_wilderness)
 			to_chat(world, "map_config maps_to_spawn: [maps_to_spawn]")
+	var/list/wilderness = json["wilderness"]
+	// If we got wilderness levels, fetch them from the config
+	if (islist(wilderness))
+		wilderness_directory = wilderness["directory"]
+		wilderness.Remove("directory")
+
+		// Just pick and take based on weight
+		for(var/i in 1 to wilderness_levels)
+			maps_to_spawn += pick_weight_take(wilderness)
 		shuffle(maps_to_spawn)
 
 #ifdef UNIT_TESTS

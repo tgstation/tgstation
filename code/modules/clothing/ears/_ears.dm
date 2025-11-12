@@ -4,6 +4,7 @@
 	name = "ears"
 	lefthand_file = 'icons/mob/inhands/clothing/ears_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/ears_righthand.dmi'
+	abstract_type = /obj/item/clothing/ears
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_EARS
@@ -16,8 +17,8 @@
 	icon_state = "earmuffs"
 	inhand_icon_state = "earmuffs"
 	clothing_traits = list(TRAIT_DEAF)
-	strip_delay = 15
-	equip_delay_other = 25
+	strip_delay = 1.5 SECONDS
+	equip_delay_other = 2.5 SECONDS
 	resistance_flags = FLAMMABLE
 	custom_price = PAYCHECK_COMMAND * 1.5
 	flags_cover = EARS_COVERED

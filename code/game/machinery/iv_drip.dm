@@ -428,7 +428,7 @@
 /datum/crafting_recipe/iv_drip
 	name = "IV drip"
 	result = /obj/machinery/iv_drip
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	reqs = list(
 		/obj/item/stack/rods = 2,
@@ -456,7 +456,8 @@
 /atom/movable/screen/alert/iv_connected
 	name = "IV Connected"
 	desc = "You have an IV connected to your arm. Remember to remove it or drag the IV stand with you before moving, or else it will rip out!"
-	icon_state = ALERT_IV_CONNECTED
+	use_user_hud_icon = TRUE
+	overlay_state = "iv_connected"
 
 #undef IV_TAKING
 #undef IV_INJECTING

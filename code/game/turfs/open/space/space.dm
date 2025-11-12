@@ -44,7 +44,7 @@ GLOBAL_LIST_EMPTY(starlight)
 
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	MAP_SWITCH(icon_state = "space", icon_state = "space_map")
+	icon_state = MAP_SWITCH("space", "space_map")
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	force_no_gravity = TRUE
 
 /turf/open/space/basic
-	MAP_SWITCH(icon_state = "space", icon_state = "space_basic_map")
+	icon_state = MAP_SWITCH("space", "space_basic_map")
 
 /turf/open/space/basic/New() //Do not convert to Initialize
 	SHOULD_CALL_PARENT(FALSE)
@@ -154,9 +154,6 @@ GLOBAL_LIST_EMPTY(starlight)
 
 
 /turf/open/space/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(!CanBuildHere())
-		return FALSE
-
 	if(the_rcd.mode == RCD_TURF)
 		if(the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
 			var/obj/structure/lattice/lattice = locate(/obj/structure/lattice, src)
@@ -194,6 +191,9 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/ChangeTurf(path, list/new_baseturfs, flags)
 	. = ..()
 	if (!. || isspaceturf(.))
+		return
+
+	if (flags & CHANGETURF_NO_AREA_CHANGE)
 		return
 
 	var/area/new_turf_area = get_area(.)

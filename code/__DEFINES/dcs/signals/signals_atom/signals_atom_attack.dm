@@ -51,6 +51,8 @@
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
+/// from base of atom/attack_ai(): (mob/user, params)
+#define COMSIG_ATOM_ATTACK_AI "atom_attack_ai"
 ///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
 ///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)
@@ -70,3 +72,10 @@
 
 /// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
 #define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"
+
+/// Called from [/mob/living/proc/send_item_attack_message()]: (obj/item/weapon, /mob/living/victim, mob/living/attacker)
+#define COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT "send_item_attack_message_object"
+/// Called from [/mob/living/proc/send_item_attack_message()]: (mob/living/victim, obj/item/weapon, mob/living/user)
+#define COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON "send_item_attack_message_carbon"
+	/// Return value if the hitby messages are changed.
+	#define SIGNAL_MESSAGE_MODIFIED (1<<0)

@@ -138,7 +138,7 @@
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	. = ..()
-	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
+	target.loc.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(target, 'sound/mobs/non-humanoids/brimdemon/brimdemon_crush.ogg', 100)
 
 // Bileworm
