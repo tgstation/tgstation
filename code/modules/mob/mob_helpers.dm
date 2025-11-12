@@ -174,10 +174,10 @@
 
 	if(C.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
 		var/type = /atom/movable/screen/fullscreen/flash/black
-		var/shake_dur = max(duration * 1.5 , 2 SECONDS)
+		var/shake_dur = max(duration, 2 SECONDS)
 
 		M.overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", shake_dur), shake_dur)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
 
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
@@ -223,9 +223,9 @@
 
 	if(my_client.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
 		var/type = /atom/movable/screen/fullscreen/flash/black
-		var/shake_dur = max(duration * 1.5 , 2 SECONDS)
+		var/shake_dur = max(duration, 2 SECONDS)
 		recoiled_mob.overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(recoiled_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", shake_dur), shake_dur)
+		addtimer(CALLBACK(recoiled_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
 
 
 	animate(client_to_shake, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
