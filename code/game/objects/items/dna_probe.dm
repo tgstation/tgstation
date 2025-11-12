@@ -58,14 +58,26 @@
 	var/human_dna_length = length(stored_dna_human)
 	var/animal_dna_length = length(stored_dna_animal)
 	if(plant_dna_length)
+		for(var/plant_type in stored_dna_plants)
+			if(target.plant_dna[plant_type])
+				stored_dna_plants -= plant_type
+				plant_dna_length--
 		uploaded += plant_dna_length
 		target.plant_dna += stored_dna_plants
 		stored_dna_plants.Cut()
 	if(human_dna_length)
+		for(var/human_type in stored_dna_human)
+			if(target.human_dna[human_type])
+				stored_dna_human -= human_type
+				human_dna_length--
 		uploaded += human_dna_length
 		target.human_dna += stored_dna_human
 		stored_dna_human.Cut()
 	if(animal_dna_length)
+		for(var/animal_type in stored_dna_animal)
+			if(target.animal_dna[animal_type])
+				stored_dna_animal -= animal_type
+				human_dna_length--
 		uploaded += animal_dna_length
 		target.animal_dna += stored_dna_animal
 		stored_dna_animal.Cut()
