@@ -33658,12 +33658,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/gravity_generator)
-"crH" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 4
-	},
-/turf/open/water/no_planet_atmos/deep/rainworld,
-/area/rainworld/surface/outdoors)
 "crJ" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -87707,7 +87701,7 @@ cpX
 cqz
 cqQ
 byD
-crH
+crZ
 crT
 crZ
 cFo
@@ -88221,7 +88215,7 @@ cpZ
 cig
 cqS
 ccw
-crH
+crZ
 crT
 crZ
 cFo
