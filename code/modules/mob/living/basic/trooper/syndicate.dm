@@ -219,7 +219,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	density = FALSE
-	pass_flags = PASSTABLE | PASSMOB | PASSMACHINE | PASSFLAP
+	pass_flags = PASSTABLE | PASSMOB | PASSMACHINE | PASSFLAPS
 	combat_mode = TRUE
 	mob_biotypes = MOB_ROBOTIC
 	basic_mob_flags = DEL_ON_DEATH
