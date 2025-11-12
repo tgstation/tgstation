@@ -125,7 +125,7 @@
 	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
-	if(explosion_severity >= 3)
+	if(explosion_severity >= EXPLODE_DEVASTATE)
 		QDEL_IN(holder, 0.5 SECONDS)
 		return TRUE
 
