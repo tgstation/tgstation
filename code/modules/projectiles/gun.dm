@@ -25,6 +25,7 @@
 	action_slots = ALL
 
 	var/gun_flags = NONE
+
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
@@ -52,7 +53,6 @@
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0
 	var/weapon_weight = WEAPON_LIGHT
-	var/dual_wield_spread = 24 //additional spread when dual wielding
 	///Can we hold up our target with this? Default to yes
 	var/can_hold_up = TRUE
 	/// If TRUE, and we aim at ourselves, it will initiate a do after to fire at ourselves.
@@ -75,6 +75,7 @@
 
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+	var/dual_wield_spread = 24 //additional spread when dual wielding
 
 	///Screen shake when the weapon is fired
 	var/recoil = 0
