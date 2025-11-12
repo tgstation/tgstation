@@ -85,7 +85,7 @@ export const bitflagInfo = [
     icon: 'gavel',
     tooltip: 'Produces a reagent that heals or deals brute damage.',
     category: 'Affects',
-    toggle: 'toggle_tag_brute', // todo : just make this use ui state
+    toggle: 'toggle_tag_brute', // future todo : just make this use ui state
   },
   {
     flag: 'BURN',
