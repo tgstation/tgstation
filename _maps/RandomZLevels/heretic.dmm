@@ -776,6 +776,7 @@
 "fH" = (
 /obj/machinery/light/floor,
 /obj/structure/table,
+/obj/item/fake_items/feddy_fazbear,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "fI" = (
@@ -1634,6 +1635,12 @@
 /obj/machinery/light/floor,
 /obj/item/slimepotion/genderchange,
 /obj/structure/closet/crate/freezer,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
+"kO" = (
+/obj/structure/table,
+/obj/effect/blessing,
+/obj/item/fake_items/l6_saw,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "kQ" = (
@@ -3103,6 +3110,12 @@
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"uE" = (
+/obj/structure/table,
+/obj/machinery/light/floor,
+/obj/item/fake_items/abductor_win_stick,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "uH" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
@@ -4641,6 +4654,12 @@
 "Fs" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/beach/heretic)
+"Fu" = (
+/obj/structure/table,
+/obj/machinery/light/floor,
+/obj/item/fake_items/wabbajack,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Fw" = (
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -5200,6 +5219,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/structure/holosign/barrier/atmos/sturdy,
+/obj/item/fake_items/sm_sliver,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Jg" = (
@@ -5490,6 +5510,7 @@
 "Lb" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
+/obj/item/fake_items/time_stopper,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Lc" = (
@@ -6973,6 +6994,14 @@
 /obj/structure/holosign/barrier/atmos/sturdy,
 /obj/machinery/conveyor/auto{
 	dir = 8
+	},
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
+"VG" = (
+/obj/structure/table,
+/obj/effect/blessing,
+/obj/item/fake_items/lahti_l39{
+	pixel_x = 16
 	},
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
@@ -27343,8 +27372,8 @@ xl
 xl
 Pc
 yd
-Le
-Le
+VG
+kO
 eW
 Pc
 xl
@@ -29160,7 +29189,7 @@ KB
 uy
 KB
 hs
-Lb
+Fu
 hs
 KB
 hs
@@ -31216,7 +31245,7 @@ Sv
 Sv
 KB
 hs
-Lb
+uE
 hs
 KB
 hs
