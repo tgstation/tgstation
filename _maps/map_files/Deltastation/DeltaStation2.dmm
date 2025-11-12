@@ -6950,7 +6950,6 @@
 /area/station/maintenance/solars/port/aft)
 "bIW" = (
 /obj/machinery/turretid{
-	icon_state = "control_stun";
 	name = "AI Chamber turret control";
 	pixel_x = 3;
 	pixel_y = -23
@@ -22113,7 +22112,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/virology)
 "fyt" = (
-/obj/machinery/light/built/directional/west,
+/obj/machinery/light/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "fyv" = (
@@ -43541,7 +43540,6 @@
 "kKz" = (
 /obj/machinery/turretid{
 	control_area = "/area/station/ai/upload/chamber";
-	icon_state = "control_stun";
 	name = "AI Upload Turret Control";
 	pixel_y = -32
 	},
@@ -57284,7 +57282,7 @@
 "okj" = (
 /obj/effect/spawner/random/structure/crate_loot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/plating,
 /area/station/medical/abandoned)
 "okk" = (
@@ -81196,7 +81194,7 @@
 	},
 /area/station/science/research)
 "uaY" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
 	dir = 4
@@ -81461,7 +81459,7 @@
 /area/station/medical/abandoned)
 "udG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
 	dir = 4
 	},
@@ -82247,7 +82245,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "unO" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
 	dir = 4
 	},

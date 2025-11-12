@@ -1148,7 +1148,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 
 	for(var/mob/living/target in range(src, 3))
 		target.Paralyze(30)
-	empulse(T, 0.42*(intensity), 1)
+	empulse(T, 0.42*(intensity), 1, emp_source = src)
 
 	var/list/images = list()
 	for(var/mob/living/M in GLOB.alive_mob_list)
