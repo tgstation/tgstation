@@ -28,7 +28,6 @@
 /obj/item/card/emag/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(isnull(user) || !istype(emag_card))
 		return FALSE
-	var/emag_count = 0
 	for(var/obj/item/card/emag/emag in get_all_contents() + emag_card.get_all_contents()) // This is including itself
 		emag_count++
 	if(emag_card.loc != loc) // Both have to be in your hand (or TK shenanigans)
