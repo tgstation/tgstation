@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - bugfix: "fixes pizza slices displaying the wrong message when taken"

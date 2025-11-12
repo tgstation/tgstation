@@ -321,3 +321,31 @@
   - image: Add floor light construction sprites
   - map: Converted the `/built` subtype for `/obj/machinery/light` to be `/empty`
       and added an UpdatePaths script.
+2025-11-12:
+  Aliceee2ch:
+  - map: Repowered mining lounge external airlock.
+  FalloutFalcon:
+  - bugfix: deer now eat* real grass
+  Krysonism:
+  - balance: fly swatter now has bonus damage against all basic bugs.
+  - balance: bug killer reagents now do slightly more damage.
+  - balance: spiders and flesh spiders have greatly increased tox vulnerability.
+  MatrixOne500:
+  - rscadd: Added a recolorable cape to the ClothesMate accessories section
+  Paxilmaniac:
+  - bugfix: fixes pizza slices displaying the wrong message when taken
+  SmArtKar:
+  - bugfix: Spawn Ruin verb no longer "sorts" its ruins alphabetically, instead sorting
+      them within their categories
+  SyncIt21:
+  - bugfix: crystal meth reaction yields correct methamphetamine amounts
+  Time-Green:
+  - qol: Readds nodeath and succumb-blocking for voidwalker victims
+  lelandkemble:
+  - bugfix: Several catwalk apcs are now powered roundstart
+  - qol: Added thermal and plasma stabilizer MODules to catwalk engineering
+  mikederkan:
+  - rscadd: Emitters now change their light color depending on the diode disk inserted.
+  - bugfix: Emitters can light up with their panel open.
+  trazodont:
+  - map: moved metastation security locker room apc
