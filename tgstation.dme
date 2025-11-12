@@ -3736,6 +3736,7 @@
 #include "code\modules\awaymissions\mission_code\undergroundoutpost45.dm"
 #include "code\modules\awaymissions\mission_code\heretic\bruceguns.dm"
 #include "code\modules\awaymissions\mission_code\heretic\cbrn.dm"
+#include "code\modules\awaymissions\mission_code\heretic\fake_items.dm"
 #include "code\modules\awaymissions\mission_code\heretic\heretic.dm"
 #include "code\modules\awaymissions\mission_code\heretic\heretic_gateway_misc.dm"
 #include "code\modules\awaymissions\mission_code\heretic\heretic_gateway_spawners.dm"
