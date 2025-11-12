@@ -18,6 +18,8 @@
 	throw_blocked_message = "bounces off the shell of"
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
+	move_resist = MOVE_FORCE_VERY_STRONG
+	pull_force = MOVE_FORCE_VERY_STRONG
 	ai_controller = /datum/ai_controller/basic_controller/basilisk
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
