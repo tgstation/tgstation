@@ -1657,6 +1657,9 @@
 /obj/structure/closet/crate/secure/weapon{
 	name = "p90 ammo crate"
 	},
+/obj/item/ammo_box/magazine/napad,
+/obj/item/ammo_box/magazine/napad,
+/obj/item/ammo_box/magazine/napad,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "lh" = (
@@ -5014,6 +5017,13 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
+"Ib" = (
+/obj/item/gun/ballistic/automatic/napad/no_mag{
+	pixel_x = -3
+	},
+/obj/structure/rack,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Id" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/light/directional/east,
@@ -20360,11 +20370,11 @@ Sv
 Sv
 Sv
 xl
-FY
+Ib
 ld
 an
 ld
-FY
+Ib
 xl
 KB
 OG
