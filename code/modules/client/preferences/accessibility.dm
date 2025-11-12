@@ -18,3 +18,13 @@
 	default_value = FALSE
 	savefile_key = "remove_double_click"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/numeric/min_recoil_multiplier
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	maximum = 200
+	minimum = 0
+	savefile_key = "min_recoil_multiplier"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/numeric/min_recoil_multiplier/create_default_value()
+	return 100
