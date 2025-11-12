@@ -12,12 +12,12 @@
 /obj/item/gun/ballistic/automatic/napad
 	name = "\improper 'Napad' Submachine Gun"
 	desc = "A bulky, 10mm submachine gun with sizeable magazines holding a close relation to the Zashchitnik pistol. Designated 'Napadayuschiy'."
-	icon = 'modular_nova/modules/modular_weapons/icons/obj/company_and_or_faction_based/szot_dynamica/guns_48.dmi'
+	icon = 'icons/obj/weapons/guns/ninemmsmg/napad_item.dmi'
 	icon_state = "napad"
-	worn_icon = 'modular_nova/modules/modular_weapons/icons/mob/company_and_or_faction_based/szot_dynamica/guns_worn.dmi'
+	worn_icon = 'icons/obj/weapons/guns/ninemmsmg/napad_worn.dmi'
 	worn_icon_state = "napad"
-	lefthand_file = 'modular_nova/modules/modular_weapons/icons/mob/company_and_or_faction_based/szot_dynamica/guns_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/modular_weapons/icons/mob/company_and_or_faction_based/szot_dynamica/guns_righthand.dmi'
+	lefthand_file = 'icons/obj/weapons/guns/ninemmsmg/napad_lefthand.dmi'
+	righthand_file = 'icons/obj/weapons/guns/ninemmsmg/napad_righthand.dmi'
 	inhand_icon_state = "napad"
 	special_mags = FALSE
 	bolt_type = BOLT_TYPE_LOCKING
@@ -25,7 +25,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/napad
-	fire_sound = 'modular_nova/modules/modular_weapons/sounds/smg_heavy.ogg'
+	fire_sound = 'sound/items/weapons/gun/rifle/smg_heavy.ogg'
 	fire_sound_volume = 80
 	can_suppress = FALSE
 	burst_size = 1
@@ -40,7 +40,7 @@
 /obj/item/ammo_box/magazine/napad
 	name = "\improper Napad submachinegun magazine"
 	desc = "A magazine for a submachine gun. Holds twenty five rounds of 9mm ammunition."
-	icon = 'modular_nova/modules/modular_weapons/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "napad_mag"
 	w_class = WEIGHT_CLASS_NORMAL
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
