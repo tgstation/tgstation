@@ -90,9 +90,8 @@
 		return
 
 	var/datum/spacevine_mutation/thorns/thorns = locate() in holder.mutations
-	var/crosser_pierce_immune = HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE)
 
-	if(thorns && !crosser_pierce_immune)
+	if(thorns)
 		to_chat(crosser, span_alert("You are pricked by thorns and feel a strange sensation."))
 		crosser.apply_damage(20, TOX)
 		return
@@ -106,11 +105,7 @@
 		if((body_parts_covered & required_coverage) == required_coverage)
 			return
 
-	if(thorns && crosser_pierce_immune)
-		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
-	else
-		to_chat(crosser, span_alert("You are pricked by thorns and feel a strange sensation."))
-
+	to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
 	crosser.apply_damage(20, TOX)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
