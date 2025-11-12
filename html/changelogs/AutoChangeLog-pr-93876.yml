@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Spawn Ruin verb no longer \"sorts\" its ruins alphabetically, instead sorting them within their categories"
