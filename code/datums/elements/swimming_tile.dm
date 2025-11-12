@@ -43,8 +43,8 @@
 		return
 	if(QDELETED(swimmer))
 		return
-	if(HAS_TRAIT(swimmer, TRAIT_IMMERSED))
-		return
+	// if(HAS_TRAIT(swimmer, TRAIT_IMMERSED))
+	// 	return
 	RegisterSignal(swimmer, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
 	if(HAS_TRAIT(swimmer, TRAIT_IMMERSED))
 		dip_in(swimmer)
