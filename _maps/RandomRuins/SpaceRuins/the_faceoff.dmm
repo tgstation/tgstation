@@ -37,7 +37,7 @@
 /area/ruin/space)
 "aC" = (
 /obj/effect/turf_decal/stripes/red/full,
-/obj/machinery/light/small/built,
+/obj/machinery/light/small/empty,
 /obj/item/light/bulb/broken,
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
