@@ -80,9 +80,9 @@
 	///Screen shake when the weapon is fired
 	var/recoil = 0
 	///a multiplier of the duration the recoil takes to go back to normal view, this is (recoil*recoil_backtime_multiplier)+1
-	var/recoil_backtime_multiplier = 2
+	var/recoil_backtime_multiplier = 1.5
 	///this is how much deviation the gun recoil can have, recoil pushes the screen towards the reverse angle you shot + some deviation which this is the max.
-	var/recoil_deviation = 22.5
+	var/recoil_deviation = 20
 	///Used if the guns recoil is lower then the min, it clamps the highest recoil
 	var/min_recoil = 0
 
@@ -219,7 +219,7 @@
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(!tk_firing(user))
-		var/actual_angle = get_angle_with_scatter((user || get_turf(src)), pbtarget, rand(-recoil_deviation, recoil_deviation) + 180)
+		var/actual_angle = get_angle((user || get_turf(src)), pbtarget)
 		simulate_recoil(user, recoil, actual_angle)
 	fire_sounds()
 	if(suppressed || !message)

@@ -28,29 +28,6 @@
 	else if(dx < 0)
 		. += 360
 
-////Tile coordinates (x, y) to absolute coordinates (in number of pixels). Center of a tile is generally assumed to be (16,16), but can be offset.
-#define ABS_COOR(c) (((c - 1) * ICON_SIZE_ALL) + ICON_SIZE_ALL/2)
-#define ABS_COOR_OFFSET(c, o) (((c - 1) * ICON_SIZE_ALL) + o)
-
-/proc/get_angle_with_scatter(atom/start, atom/end, scatter, x_offset = ICON_SIZE_ALL/2, y_offset = ICON_SIZE_ALL/2)
-	var/end_apx
-	var/end_apy
-	if(isliving(end)) //Center mass.
-		end_apx = ABS_COOR(end.x)
-		end_apy = ABS_COOR(end.y)
-	else //Exact pixel.
-		end_apx = ABS_COOR_OFFSET(end.x, x_offset)
-		end_apy = ABS_COOR_OFFSET(end.y, y_offset)
-	scatter = ((rand(0, min(scatter, 45))) * (prob(50) ? 1 : -1)) //Up to 45 degrees deviation to either side.
-	. = round((90 - ATAN2(end_apx - ABS_COOR(start.x), end_apy - ABS_COOR(start.y))), 1) + scatter
-	if(. < 0)
-		. += 360
-	else if(. >= 360)
-		. -= 360
-
-#undef ABS_COOR
-#undef ABS_COOR_OFFSET
-
 ///for getting the angle when animating something's pixel_x and pixel_y
 /proc/get_pixel_angle(y, x)
 	if(!y)
