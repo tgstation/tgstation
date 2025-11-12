@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - qol: "Added thermal and plasma stabilizer MODules to catwalk engineering"
