@@ -757,8 +757,10 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	if(!isliving(interacting_with))
+		return NONE
 	var/mob/living/dumb_mob = interacting_with
-	if(being_used || !istype(dumb_mob))
+	if(being_used)
 		return ITEM_INTERACT_BLOCKING
 	if(dumb_mob.ckey) //only works on animals that aren't player controlled
 		balloon_alert(user, "already sentient!")
@@ -832,8 +834,10 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	if(!isliving(interacting_with))
+		return NONE
 	var/mob/living/switchy_mob = interacting_with
-	if(prompted || !isliving(switchy_mob))
+	if(prompted)
 		return ITEM_INTERACT_BLOCKING
 	if(switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
 		balloon_alert(user, "already sentient!")
@@ -952,7 +956,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		return .
 	if(!isobj(interacting_with))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(HAS_TRAIT(interacting_with, TRAIT_SPEED_POTIONED))
 		to_chat(user, span_warning("[interacting_with] can't be made any faster!"))
@@ -998,7 +1002,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	var/obj/item/clothing/clothing = interacting_with
 	if(!istype(clothing))
 		to_chat(user, span_warning("The potion can only be used on clothing!"))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(clothing.max_heat_protection_temperature >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
 		to_chat(user, span_warning("The [clothing] is already fireproof!"))
 		return ITEM_INTERACT_BLOCKING
@@ -1023,8 +1027,10 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	if(!isliving(interacting_with))
+		return NONE
 	var/mob/living/living_mob = interacting_with
-	if(!istype(living_mob) || living_mob.stat == DEAD)
+	if(living_mob.stat == DEAD)
 		to_chat(user, span_warning("The potion can only be used on living things!"))
 		return ITEM_INTERACT_BLOCKING
 
@@ -1053,29 +1059,31 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
-	if(being_used || !ismob(interacting_with))
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/renaming_mob = interacting_with
+	if(being_used)
 		return ITEM_INTERACT_BLOCKING
-	var/mob/M = interacting_with
-	if(!M.ckey) //only works on animals that aren't player controlled
-		to_chat(user, span_warning("[M] is not self aware, and cannot pick its own name."))
+	if(!renaming_mob.ckey) //only works on animals that aren't player controlled
+		to_chat(user, span_warning("[renaming_mob] is not self aware, and cannot pick its own name."))
 		return ITEM_INTERACT_BLOCKING
 
 	being_used = TRUE
 
 	to_chat(user, span_notice("You offer [src] to [user]..."))
 
-	var/new_name = sanitize_name(tgui_input_text(M, "What would you like your name to be?", "Input a name", M.real_name, MAX_NAME_LEN))
+	var/new_name = sanitize_name(tgui_input_text(renaming_mob, "What would you like your name to be?", "Input a name", renaming_mob.real_name, MAX_NAME_LEN))
 
-	if(!new_name || QDELETED(src) || QDELETED(M) || new_name == M.real_name || !M.Adjacent(user))
+	if(!new_name || QDELETED(src) || QDELETED(renaming_mob) || new_name == renaming_mob.real_name || !renaming_mob.Adjacent(user))
 		being_used = FALSE
 		return ITEM_INTERACT_BLOCKING
 
-	M.visible_message(span_notice("[span_name("[M]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[M.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
-	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], letting them rename themselves into [new_name].")
-	user.log_message("used [src] on [key_name(M)], letting them rename themselves into [new_name].", LOG_GAME)
+	renaming_mob.visible_message(span_notice("[span_name("[renaming_mob]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[renaming_mob.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
+	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(renaming_mob)], letting them rename themselves into [new_name].")
+	user.log_message("used [src] on [key_name(renaming_mob)], letting them rename themselves into [new_name].", LOG_GAME)
 
 	// pass null as first arg to not update records or ID/PDA
-	M.fully_replace_character_name(null, new_name)
+	renaming_mob.fully_replace_character_name(null, new_name)
 
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

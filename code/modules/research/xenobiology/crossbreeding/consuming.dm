@@ -80,8 +80,8 @@ Consuming extracts:
 			living_mob.reagents.add_reagent(/datum/reagent/consumable/nutriment, nutrition)
 		do_effect(living_mob, user)
 		qdel(src)
-		return
-	..()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/slimecross/consuming/grey
 	colour = SLIME_TYPE_GREY
