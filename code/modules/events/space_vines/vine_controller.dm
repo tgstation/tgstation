@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 /proc/init_vine_mutation_list()
 	var/list/mutation_list = list()
 
-	for(var/datum/spacevine_mutation/subtype as anything in valid_subtypesof(/datum/spacevine_mutation/))
+	for(var/datum/spacevine_mutation/subtype as anything in valid_subtypesof(/datum/spacevine_mutation))
 		var/datum/spacevine_mutation/mutation = new subtype
 		mutation_list[mutation] = IDEAL_MAX_SEVERITY - mutation.severity // the ideal maximum potency is used for weighting
 

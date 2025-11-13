@@ -271,6 +271,7 @@
 
 /datum/spacevine_mutation/gas_eater
 	abstract_type = /datum/spacevine_mutation/gas_eater
+	/// Type of gas consumed by this mutation
 	var/datum/gas/gas_type = null
 
 /datum/spacevine_mutation/gas_eater/process_mutation(obj/structure/spacevine/holder)
