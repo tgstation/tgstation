@@ -74,7 +74,7 @@ Consuming extracts:
 			living_mob.visible_message(span_danger("[user] forces [living_mob] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
 	if(fed)
 		if(!HAS_TRAIT(living_mob, TRAIT_AGEUSIA))
-			to_chat(living_mob, span_notice("Tastes like [taste]."))
+			to_chat(living_mob, span_notice("You can taste [taste]."))
 		playsound(get_turf(living_mob), 'sound/items/eatfood.ogg', 20, TRUE)
 		if(nutrition)
 			living_mob.reagents.add_reagent(/datum/reagent/consumable/nutriment, nutrition)
