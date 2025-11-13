@@ -363,48 +363,47 @@
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
+/// Creates an MMI of the AI based on its configuration.
+/mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/mmi
+	RETURN_TYPE(/obj/item/mmi)
+	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
+	var/obj/item/mmi/copied_mmi
+	if(posibrain_inside)
+		copied_mmi = new /obj/item/mmi/posibrain(destination, FALSE)
+		copied_mmi.name = "[initial(copied_mmi.name)] ([real_name])"
+	else
+		copied_mmi = new /obj/item/mmi(destination)
+		copied_mmi.name = "[initial(copied_mmi.name)]: [real_name]"
+		copied_mmi.brain = new /obj/item/organ/brain(copied_mmi)
+		copied_mmi.brain.organ_flags |= ORGAN_FROZEN
+		copied_mmi.brain.name = "[real_name]'s brain"
+		copied_mmi.set_brainmob(new /mob/living/brain(copied_mmi))
+		copied_mmi.brainmob.container = copied_mmi
+
+	copied_mmi.brainmob.name = real_name
+	copied_mmi.brainmob.real_name = real_name
+	copied_mmi.brainmob.gender = gender
+
+	var/suicided = HAS_TRAIT(src, TRAIT_SUICIDED)
+	copied_mmi.brainmob.set_suicide(suicided)
+	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain... sigh
+
+	if(copied_mmi.brainmob.stat == DEAD && !suicided)
+		copied_mmi.brainmob.set_stat(CONSCIOUS)
+
+	copied_mmi.update_appearance()
+	return copied_mmi
+
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
 	var/obj/structure/ai_core/ai_core = new(get_turf(src), CORE_STATE_FINISHED, posibrain_inside)
-	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
-		qdel(src)
+	var/obj/item/mmi/transferred_mmi = make_mmi(ai_core)
+	qdel(ai_core.core_mmi)
+	ai_core.core_mmi = transferred_mmi
+	mind?.transfer_to(transferred_mmi.brainmob)
+	qdel(src)
 	return ai_core
-
-/mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
-	var/mmi_type
-	if(posibrain_inside)
-		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
-	else
-		mmi_type = new/obj/item/mmi(src)
-	if(hack_software)
-		new/obj/item/malf_upgrade(get_turf(src))
-	the_mmi = mmi_type
-	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
-	the_mmi.brain.organ_flags |= ORGAN_FROZEN
-	the_mmi.brain.name = "[real_name]'s brain"
-	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
-	the_mmi.set_brainmob(new /mob/living/brain(the_mmi))
-	the_mmi.brainmob.name = src.real_name
-	the_mmi.brainmob.real_name = src.real_name
-	the_mmi.brainmob.container = the_mmi
-	the_mmi.brainmob.gender = src.gender
-
-	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
-	the_mmi.brainmob.set_suicide(has_suicided_trait)
-	the_mmi.brain.suicided = has_suicided_trait
-	if(the_core)
-		var/obj/structure/ai_core/core = the_core
-		core.core_mmi = the_mmi
-		the_mmi.forceMove(the_core)
-	else
-		the_mmi.forceMove(get_turf(src))
-	if(the_mmi.brainmob.stat == DEAD && !has_suicided_trait)
-		the_mmi.brainmob.set_stat(CONSCIOUS)
-	if(mind)
-		mind.transfer_to(the_mmi.brainmob)
-	the_mmi.update_appearance()
-	return TRUE
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -1110,6 +1109,11 @@
 	if(linked_core) //uh oh
 		break_core_link(linked_core)
 	linked_core = core
+
+	//this block is kind of sketchy, but I don't think this should cause any problems
+	qdel(core.core_mmi)
+	core.core_mmi = make_mmi(core)
+
 	RegisterSignals(linked_core, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_core_destroyed))
 	RegisterSignals(linked_core, list(
 		COMSIG_ATOM_ITEM_INTERACTION,
@@ -1177,12 +1181,13 @@
 	SIGNAL_HANDLER
 
 	if(istype(gone, /obj/item/mmi))
+		var/obj/item/mmi/mmi_gone = gone
 		on_core_destroyed(source, NONE)
 		if(!IS_MALF_AI(src)) //don't pull back shunted malf AIs
 			death(gibbed = TRUE, drop_mmi = FALSE)
 			///the drop_mmi param determines whether the MMI is dropped at their current location
 			///which in this case would be somewhere else, so we drop their MMI at the core instead
-			make_mmi_drop_and_transfer(gone, source) //FIXME: This just re-inserts a new MMI into the core!
+			mind?.transfer_to(mmi_gone.brainmob)
 			qdel(src)
 
 #undef HOLOGRAM_CHOICE_CHARACTER
