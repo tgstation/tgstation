@@ -647,6 +647,9 @@
 	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
 		ADD_TRAIT(drinker, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 		if (HAS_TRAIT(drinker, TRAIT_IRRADIATED))
+			var/mob/living/carbon/human/human_drinker = drinker
+			human_drinker.radiation = max(human_drinker.radiation - 0.15 * REM * seconds_per_tick, 0)
+			human_drinker.radiation_damage = max(human_drinker.radiation - REM * seconds_per_tick, 0)
 			if(drinker.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 				return UPDATE_MOB_HEALTH
 

@@ -57,9 +57,6 @@ SUBSYSTEM_DEF(radiation)
 			SEND_SIGNAL(target, COMSIG_IN_RANGE_OF_IRRADIATION, pulse_information, current_insulation)
 
 			// Check a second time, because of TRAIT_BYPASS_EARLY_IRRADIATED_CHECK
-			if (HAS_TRAIT(target, TRAIT_IRRADIATED))
-				continue
-
 			if (current_insulation <= pulse_information.threshold)
 				continue
 
@@ -91,7 +88,7 @@ SUBSYSTEM_DEF(radiation)
 			if (!prob(perceived_chance))
 				continue
 
-			if (irradiate_after_basic_checks(target))
+			if (irradiate_after_basic_checks(target, pulse_information.power, pulse_information.max_power))
 				target.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
 
 		if(MC_TICK_CHECK)
@@ -100,29 +97,29 @@ SUBSYSTEM_DEF(radiation)
 	cached_turfs_to_process.Cut(1, turfs_iterated + 1)
 
 /// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
-/datum/controller/subsystem/radiation/proc/irradiate(atom/target)
+/datum/controller/subsystem/radiation/proc/irradiate(atom/target, power, max_power)
 	if (!can_irradiate_basic(target))
 		return FALSE
 
-	irradiate_after_basic_checks(target)
+	irradiate_after_basic_checks(target, power, max_power)
 	return TRUE
 
-/datum/controller/subsystem/radiation/proc/irradiate_after_basic_checks(atom/target)
+/datum/controller/subsystem/radiation/proc/irradiate_after_basic_checks(atom/target, power, max_power)
 	PRIVATE_PROC(TRUE)
 
-	if (ishuman(target) && wearing_rad_protected_clothing(target))
-		return FALSE
-
-	target.AddComponent(/datum/component/irradiated)
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(wearing_rad_protected_clothing(target))
+			return FALSE
+		human_target.takeRadiation(power, max_power)
+	else
+		target.AddComponent(/datum/component/irradiated)
 	return TRUE
 
 /// Returns whether or not the target can be irradiated by any means.
 /// Does not check for clothing.
 /datum/controller/subsystem/radiation/proc/can_irradiate_basic(atom/target)
 	if (!CAN_IRRADIATE(target))
-		return FALSE
-
-	if (HAS_TRAIT(target, TRAIT_IRRADIATED) && !HAS_TRAIT(target, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK))
 		return FALSE
 
 	if (HAS_TRAIT(target, TRAIT_RADIMMUNE))

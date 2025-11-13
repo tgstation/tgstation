@@ -22,12 +22,15 @@
 /// Assuming there is nothing in the way, the chance will determine what the chance is to get irradiated from half of max_range.
 /// Example: If chance is equal to 30%, and max_range is equal to 8,
 /// then the chance for a thing to get irradiated is 30% if they are 4 turfs away from the pulse source.
+/// Power refers to the amount of radiation inflicted on humans, max_power is how high their radiation can get from this pulse. Similar to how adjust_timed_status_effect works.
 /proc/radiation_pulse(
 	atom/source,
 	max_range,
 	threshold,
 	chance = DEFAULT_RADIATION_CHANCE,
 	minimum_exposure_time = 0,
+	power = 0,
+	max_power = 0,
 )
 	if(!SSradiation.can_fire)
 		return
@@ -39,6 +42,8 @@
 	pulse_information.chance = chance
 	pulse_information.minimum_exposure_time = minimum_exposure_time
 	pulse_information.turfs_to_process = RANGE_TURFS(max_range, source)
+	pulse_information.power = power
+	pulse_information.max_power = max_power
 
 	SSradiation.processing += pulse_information
 
@@ -51,6 +56,8 @@
 	var/chance
 	var/minimum_exposure_time
 	var/list/turfs_to_process
+	var/power
+	var/max_power
 
 #define MEDIUM_RADIATION_THRESHOLD_RANGE 0.5
 #define EXTREME_RADIATION_CHANCE 30

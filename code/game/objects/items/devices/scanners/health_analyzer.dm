@@ -346,6 +346,19 @@
 		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
 
+		// Radiation
+		if(humantarget.radiation > 0)
+			var/adjective = ""
+			if(humantarget.radiation >= 2.5)
+				adjective = "high levels of "
+			if(humantarget.radiation >= 4)
+				adjective = "extreme levels of "
+			render_list += "<span class='alert ml-1'>"
+			render_list += conditional_tooltip("Subject has been exposed to [adjective]radiation.", "Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", tochat)
+			render_list += "</span><br>"
+			if(advanced)
+				render_list += "<span class='alert ml-1'>Dose Equivalent: [round(humantarget.radiation/4, 0.01)]x the lethal dose.</span><br>"
+
 		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
 		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)

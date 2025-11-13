@@ -28,9 +28,11 @@
 	addtimer(CALLBACK(src, PROC_REF(remove_self)), TIME_UNTIL_DELETION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/component/radiation_countdown/proc/remove_self()
-	if (!HAS_TRAIT(parent, TRAIT_IRRADIATED))
-		to_chat(parent, span_notice("The air here feels safer."))
 
+	if(ishuman(parent))
+		var/mob/living/carbon/human/human_parent = parent
+		if (human_parent.radiation == 0)
+			to_chat(parent, span_notice("The air here feels safer."))
 	qdel(src)
 
 /datum/component/radiation_countdown/RegisterWithParent()

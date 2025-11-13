@@ -1194,6 +1194,15 @@
 
 	qdel(owner.GetComponent(/datum/component/object_possession))
 
+/atom/movable/screen/alert/irradiated
+	name = "Irradiated"
+	desc = "You've been irradiated! Take counteractive medicine to stop the effects from getting worse! Standing under a shower will slow the radiation."
+	use_user_hud_icon = TRUE
+	overlay_state = "irradiated"
+
+/atom/movable/screen/alert/irradiated/less
+	desc= "You aren't irradiated any longer, but your body is still experiencing the effects."
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 /// Gets the placement for the alert based on its index

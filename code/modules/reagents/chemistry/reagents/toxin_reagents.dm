@@ -627,10 +627,11 @@
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
+	if(SSradiation.can_irradiate_basic(affected_mob))
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
 		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
-			affected_mob.AddComponent(/datum/component/irradiated)
+			var/mob/living/carbon/human/human_mob = affected_mob
+			human_mob.takeRadiation(chance / 5, RAD_MOB_MICROWAVE - 1) // No, you can't heat yourself up by eating radioactive goop. That's stupid.
 	else
 		if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
@@ -665,6 +666,8 @@
 		max_range = 0,
 		threshold = RAD_VERY_LIGHT_INSULATION,
 		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
+		power = 1,
+		max_power = 5
 	)
 
 /datum/reagent/toxin/histamine

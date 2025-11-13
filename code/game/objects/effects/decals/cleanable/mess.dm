@@ -145,6 +145,8 @@
 		cooldown_time = 5 SECONDS, \
 		range = 4, \
 		threshold = RAD_MEDIUM_INSULATION, \
+		power = 0.5, \
+		max_power = 3.5, \
 	)
 
 /obj/effect/decal/cleanable/cobweb

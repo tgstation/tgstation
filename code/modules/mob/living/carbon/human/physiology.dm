@@ -43,5 +43,7 @@
 
 	var/hunger_mod = 1 //% of hunger rate taken per tick.
 
+	var/radiation_mod = 1 // resistance to radiation damage taken
+
 /datum/physiology/New()
 	armor = new

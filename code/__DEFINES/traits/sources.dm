@@ -37,6 +37,8 @@
 #define LICH_TRAIT "lich"
 ///Comes from a holy source.
 #define HOLY_TRAIT "holy"
+///Comes from being irradiated
+#define RADIATION_TRAIT "radiation"
 
 #define VENDING_MACHINE_TRAIT "vending_machine"
 
