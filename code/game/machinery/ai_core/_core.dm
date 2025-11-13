@@ -1,12 +1,12 @@
 #define AI_CORE_BRAIN(X) X.braintype == "Android" ? "brain" : "MMI"
 
 /obj/structure/ai_core
-	density = TRUE
-	anchored = FALSE
 	name = "\improper AI core"
+	desc = "The framework for an artificial intelligence core."
 	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "0"
-	desc = "The framework for an artificial intelligence core."
+	density = TRUE
+	anchored = FALSE
 	max_integrity = 500
 	var/state = CORE_STATE_EMPTY
 	var/datum/ai_laws/laws
