@@ -30,6 +30,10 @@
 
 	var/amount = blood_volume
 
+	// For simple multipliers, like a blood worm in a mob.
+	for (var/source as anything in blood_volume_modifiers)
+		amount *= blood_volume_modifiers[source]
+
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
 	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
@@ -48,15 +52,15 @@
 	if (!CAN_HAVE_BLOOD(src) && amount != 0)
 		return cached_blood_volume
 
-	if (amount == cached_blood_volume)
-		return cached_blood_volume
+	// Don't return early even if "amount == cached_blood_volume", because we don't know if minimum or maximum would change it anyway.
+	// Putting this here because I made that mistake and it led to a bug.
 
 	blood_volume = clamp(amount, minimum, maximum)
 
 	var/updated_blood_volume = get_blood_volume()
 
 	if (cached_blood_volume != updated_blood_volume)
-		living_flags |= QUEUE_BLOOD_UPDATE
+		QUEUE_BLOOD_UPDATE(src)
 
 	return updated_blood_volume
 
@@ -85,9 +89,10 @@
 	var/updated_blood_volume = set_blood_volume(cached_blood_volume + amount, minimum = minimum, maximum = maximum, cached_blood_volume = cached_blood_volume)
 	return updated_blood_volume - cached_blood_volume
 
-/// Updates effects that rely on blood volume, like blood HUDs.
+/// Updates effects that rely on blood volume or status, like blood HUDs.
 /mob/living/proc/update_blood_effects()
-	living_flags &= ~QUEUE_BLOOD_UPDATE
+	living_flags &= ~BLOOD_UPDATE_QUEUED
+	blood_hud_set_status()
 
 /// Updates effects that rely on whether the mob can have blood.
 /mob/living/proc/update_blood_status()
@@ -97,6 +102,7 @@
 
 	var/has_blood = CAN_HAVE_BLOOD(src)
 
+	// Must not return early on first init for mobs that can have blood. (otherwise they will miss being added to the blood hud)
 	if (had_blood == has_blood)
 		return
 
@@ -107,6 +113,25 @@
 	var/new_blood_volume = get_blood_volume()
 
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume, new_blood_volume)
+
+	var/datum/atom_hud/data/human/blood/blood_hud = GLOB.huds[DATA_HUD_BLOOD]
+
+	if (has_blood)
+		blood_hud.add_atom_to_hud(src)
+	else
+		blood_hud.remove_atom_from_hud(src)
+
+	update_blood_effects()
+
+/// Sets the blood volume multiplier for the given source to the given multiplier value.
+/mob/living/proc/set_blood_volume_modifier(source, multiplier)
+	LAZYSET(blood_volume_modifiers, source, multiplier)
+	QUEUE_BLOOD_UPDATE(src)
+
+/// Removes the blood volume multiplier for the given source.
+/mob/living/proc/remove_blood_volume_modifier(source)
+	LAZYREMOVE(blood_volume_modifiers, source)
+	QUEUE_BLOOD_UPDATE(src)
 
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick, times_fired)

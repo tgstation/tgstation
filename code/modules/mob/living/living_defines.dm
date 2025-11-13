@@ -171,6 +171,9 @@
 	var/blood_volume = 0
 	/// The default blood volume of the mob. Used primarily for healing bloodloss.
 	var/default_blood_volume = 0
+	/// Lazylist of blood volume modifiers. These multiply blood volume when get_blood_volume(apply_modifiers = TRUE) is used.
+	/// Use set_blood_volume_modifier(multiplier, source) and remove_blood_volume_modifier(source) to modify this.
+	var/list/blood_volume_modifiers = null
 
 	///a list of all status effects the mob has
 	var/list/status_effects

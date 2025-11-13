@@ -25,7 +25,6 @@
 /mob/living/proc/prepare_data_huds()
 	med_hud_set_health()
 	med_hud_set_status()
-	blood_hud_set_status()
 
 /mob/living/Destroy()
 	for(var/datum/status_effect/effect as anything in status_effects)

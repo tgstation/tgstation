@@ -155,7 +155,7 @@ Medical HUD! Basic mode needs suit sensors on.
 
 /// A helper for getting the appropriate icon state for the blood hud.
 /proc/round_blood_for_hud(mob/living/bloodbag)
-	var/blood_level = (bloodbag.blood_volume / BLOOD_VOLUME_NORMAL) * 100
+	var/blood_level = (bloodbag.get_blood_volume(apply_modifiers = TRUE) / BLOOD_VOLUME_NORMAL) * 100
 	switch(blood_level)
 		if(87.5 to INFINITY)
 			return "hudblood100"
@@ -518,19 +518,9 @@ Diagnostic HUDs!
 	BLOOD FOR THE BLOOD GOD!!!
 ~~~~~~~~~~~~~*/
 
-/mob/living/proc/blood_hud_set_status(icon_state_override = null)
-	if (initial(blood_volume))
-		set_hud_image_state(BLOOD_HUD, icon_state_override || round_blood_for_hud(src))
-		set_hud_image_active(BLOOD_HUD)
-	else
-		set_hud_image_inactive(BLOOD_HUD)
-
-/mob/living/carbon/blood_hud_set_status(icon_state_override = null)
-	if (!HAS_TRAIT(src, TRAIT_NOBLOOD))
-		set_hud_image_state(BLOOD_HUD, icon_state_override || round_blood_for_hud(src))
-		set_hud_image_active(BLOOD_HUD)
-	else
-		set_hud_image_inactive(BLOOD_HUD)
+/mob/living/proc/blood_hud_set_status()
+	if (CAN_HAVE_BLOOD(src))
+		set_hud_image_state(BLOOD_HUD, round_blood_for_hud(src))
 
 #define CACHED_WIDTH_INDEX "width"
 #define CACHED_HEIGHT_INDEX "height"

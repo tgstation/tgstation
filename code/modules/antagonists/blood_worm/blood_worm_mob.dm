@@ -157,7 +157,6 @@
 	if (!host)
 		return
 
-	update_dilution()
 	sync_health()
 
 /mob/living/basic/blood_worm/Life(seconds_per_tick, times_fired)
@@ -175,7 +174,7 @@
 		return ..()
 
 /mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
-	return host ? 0 : ..() // Prevents damage from adjustXLoss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust [var/host.blood_volume] instead.
+	return host ? 0 : ..() // Prevents damage from adjustXLoss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
@@ -195,7 +194,9 @@
 
 	var/mob/living/bloodbag = target
 
-	if (bloodbag.blood_volume <= 0)
+	var/cached_blood_volume = bloodbag.get_blood_volume()
+
+	if (cached_blood_volume <= 0)
 		return
 
 	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
@@ -205,10 +206,10 @@
 
 	var/unscaled_blood = consumed_blood[blood_type.id]
 	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
-	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + bloodbag.blood_volume)
+	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + cached_blood_volume)
 	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
 
-	var/rounded_volume = CEILING(bloodbag.blood_volume, 1)
+	var/rounded_volume = CEILING(cached_blood_volume, 1)
 	var/total_consumed_blood = get_scaled_total_consumed_blood()
 
 	var/growth_string = ""
@@ -232,7 +233,7 @@
 
 	consumed_blood[blood_type_id] += blood_amount
 
-	if (should_heal)
+	if (should_heal && !host)
 		adjustBruteLoss(-blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)
 
 	SEND_SIGNAL(src, COMSIG_BLOOD_WORM_INGEST_BLOOD, blood_amount, blood_type_id, should_heal)
@@ -278,9 +279,18 @@
 		// If the host is a changeling, then we forcibly move their client to the backseat so they can use Expel Worm if they wish to.
 		host.mind.transfer_to(backseat, force_key_move = host.mind.has_antag_datum(/datum/antagonist/changeling))
 
-	ingest_blood(host.blood_volume, host.get_bloodtype(), should_heal = FALSE)
+	var/cached_blood_volume = host.get_blood_volume()
 
-	start_dilution()
+	// Apply the host's blood volume to our growth.
+	ingest_blood(cached_blood_volume, host.get_bloodtype(), should_heal = FALSE)
+
+	// Combine our health with the blood of our host.
+	host.set_blood_volume(cached_blood_volume + health * BLOOD_WORM_HEALTH_TO_BLOOD)
+
+	// Modify host blood such that it's BLOOD_VOLUME_NORMAL when we're at max health.
+	host.set_blood_volume_modifier(REF(src), BLOOD_VOLUME_NORMAL / (maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD))
+
+	// Caps host blood volume to our custom maximum and syncs our bruteloss with host health.
 	sync_health()
 
 	if (host.hud_used)
@@ -331,13 +341,15 @@
 	remove_actions(src, host_actions)
 	grant_actions(src, innate_actions)
 
-	update_dilution()
-	sync_health()
+	host.remove_blood_volume_modifier(REF(src))
+	sync_health(already_ejecting = TRUE)
 
 	remove_host_hud()
 
-	host.blood_volume = 0
-	host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
+	host.set_blood_volume(0)
+
+	if (host.stat != DEAD)
+		host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
 
 	host = null
 
@@ -381,7 +393,7 @@
 	return HANDLE_BLOOD_NO_OXYLOSS | HANDLE_BLOOD_NO_NUTRITION_DRAIN
 
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
-	host.blood_volume += regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD // Regen beforehand, meaning we can still reach 0 exactly.
+	host.adjust_blood_volume(regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD)
 
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
 		handle_host_blood(seconds_per_tick, times_fired)
@@ -401,7 +413,7 @@
 		return
 
 	var/burn_coeff = damage_coeff[BURN]
-	host.blood_volume = max(0, host.blood_volume - unsuitable_heat_damage * BLOOD_WORM_HEALTH_TO_BLOOD * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
+	host.adjust_blood_volume(-unsuitable_heat_damage * BLOOD_WORM_HEALTH_TO_BLOOD * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
 
 	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
 		to_chat(is_possessing_host ? host : src, span_userdanger("Your blood is burning up!"))
@@ -437,33 +449,34 @@
 	for (var/datum/action/action as anything in actions)
 		action.Remove(target)
 
-/mob/living/basic/blood_worm/proc/start_dilution()
-	var/health_as_blood = health * BLOOD_WORM_HEALTH_TO_BLOOD
-	var/dilution_multiplier = get_dilution_multiplier()
-
-	var/base_blood_volume = clamp(host.blood_volume + health_as_blood, 0, BLOOD_VOLUME_NORMAL / dilution_multiplier)
-	var/diluted_blood_volume = base_blood_volume * dilution_multiplier
-
-	last_added_blood = diluted_blood_volume - base_blood_volume
-	host.blood_volume = diluted_blood_volume
-
-/mob/living/basic/blood_worm/proc/update_dilution()
-	var/dilution_multiplier = get_dilution_multiplier()
-
-	var/base_blood_volume = clamp(host.blood_volume - last_added_blood, 0, BLOOD_VOLUME_NORMAL / dilution_multiplier)
-	var/diluted_blood_volume = base_blood_volume * dilution_multiplier
-
-	last_added_blood = diluted_blood_volume - base_blood_volume
-	host.blood_volume = diluted_blood_volume
-
-/mob/living/basic/blood_worm/proc/sync_health()
+/mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)
 		return
 
-	setBruteLoss(maxHealth * (1 - host.blood_volume / BLOOD_VOLUME_NORMAL))
+	var/host_max_blood = maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD
 
-/mob/living/basic/blood_worm/proc/get_dilution_multiplier()
-	return BLOOD_VOLUME_NORMAL / (maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD)
+	// Cap host blood to maximum
+	if (host.get_blood_volume() > host_max_blood)
+		host.set_blood_volume(host_max_blood)
+
+	var/cached_blood_volume = host.get_blood_volume()
+
+	// Sync mob health to host blood
+	setBruteLoss(maxHealth * (1 - cached_blood_volume / host_max_blood))
+
+	// Checks if we still have a host since setBruteLoss() can kill us, causing us to leave our host.
+	if (!already_ejecting && cached_blood_volume <= get_eject_volume_threshold())
+		// Sent before leave_host() for the correct message order in chat
+		to_chat(src, span_userdanger("You run out of blood to control your host with!"))
+
+		leave_host()
+
+		// Has to be sent after the forceMove() in leave_host()
+		balloon_alert(src, "out of blood!")
+
+/// Gets BLOOD_WORM_EJECT_THRESHOLD as an actionable blood volume threshold.
+/mob/living/basic/blood_worm/proc/get_eject_volume_threshold()
+	return maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD * BLOOD_WORM_EJECT_THRESHOLD
 
 /mob/living/basic/blood_worm/get_status_tab_items()
 	. = ..()

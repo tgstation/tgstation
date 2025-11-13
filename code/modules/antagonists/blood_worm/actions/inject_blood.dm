@@ -52,7 +52,7 @@
 
 	to_chat(owner, span_notice("You inject blood into the damaged tissues of your host."))
 
-	host.blood_volume -= health_cost * BLOOD_WORM_HEALTH_TO_BLOOD
+	host.adjust_blood_volume(-health_cost * BLOOD_WORM_HEALTH_TO_BLOOD)
 
 	return ..()
 

@@ -31,7 +31,7 @@
 	unset_click_ability(worm, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
 
 	if (!invade_check(worm, victim, feedback = TRUE))
-		return FALSE
+		return TRUE // Don't bite the victim.
 
 	worm.visible_message(
 		message = span_danger("\The [worm] starts entering \the [victim]!"),
@@ -55,8 +55,12 @@
 		if (feedback)
 			victim.balloon_alert(worm, "still alive!")
 		return FALSE
-	if (HAS_TRAIT(victim, TRAIT_NOBLOOD))
+	if (!CAN_HAVE_BLOOD(victim))
 		if (feedback)
 			victim.balloon_alert(worm, "no blood!")
+		return FALSE
+	if (victim.get_blood_volume() + worm.health * BLOOD_WORM_HEALTH_TO_BLOOD <= worm.get_eject_volume_threshold())
+		if (feedback)
+			victim.balloon_alert(worm, "not enough blood for control!")
 		return FALSE
 	return TRUE

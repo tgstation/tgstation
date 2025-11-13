@@ -124,12 +124,9 @@
 	playsound(target, 'sound/effects/wounds/pierce3.ogg', vol = 100, vary = TRUE, ignore_walls = FALSE)
 
 	while (do_after(leech, 1 SECONDS, target, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(leech_living_active_check), leech, target)))
-		var/original_volume = target.blood_volume
-
 		var/datum/blood_type/blood_type = target.get_bloodtype()
 
-		target.blood_volume = max(0, target.blood_volume - leech_rate)
-		leech.ingest_blood(original_volume - target.blood_volume, blood_type.id)
+		leech.ingest_blood(-target.adjust_blood_volume(-leech_rate), blood_type.id)
 
 		if (target.stat != DEAD)
 			target.adjustOxyLoss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
@@ -143,7 +140,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
-	if (HAS_TRAIT(target, TRAIT_NOBLOOD) || target.blood_volume <= 0 || !target.get_bloodtype())
+	if (target.get_blood_volume() <= 0 || !target.get_bloodtype())
 		target.balloon_alert(leech, "no blood!")
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
@@ -152,7 +149,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target)
-	if (HAS_TRAIT(target, TRAIT_NOBLOOD) || target.blood_volume <= 0 || !target.get_bloodtype())
+	if (target.get_blood_volume() <= 0 || !target.get_bloodtype())
 		target.balloon_alert(leech, "no more blood!")
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))

@@ -138,7 +138,7 @@
 	var/mob/living/basic/blood_worm/worm = src.target
 
 	if (worm.host)
-		worm.host.blood_volume -= health_cost * BLOOD_WORM_HEALTH_TO_BLOOD * count
+		worm.host.adjust_blood_volume(-health_cost * BLOOD_WORM_HEALTH_TO_BLOOD * count)
 	else
 		worm.adjustBruteLoss(health_cost * count)
 
