@@ -1100,6 +1100,8 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	if(!isliving(interacting_with))
+		return NONE
 	if(!isanimal_or_basicmob(interacting_with))
 		to_chat(user, span_warning("[interacting_with] is too complex for the potion!"))
 		return ITEM_INTERACT_BLOCKING
