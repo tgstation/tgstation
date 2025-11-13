@@ -55,6 +55,7 @@
 			/obj/machinery/plumbing/filter = 5,
 			/obj/machinery/plumbing/splitter = 5,
 			/obj/machinery/plumbing/sender = 20,
+			/obj/machinery/plumbing/receiver = 20
 			/obj/machinery/plumbing/output = 5,
 		),
 
@@ -336,6 +337,7 @@
 			/obj/machinery/plumbing/splitter = 5,
 			/obj/machinery/plumbing/output/tap = 5,
 			/obj/machinery/plumbing/sender = 20,
+			/obj/machinery/plumbing/receiver = 20
 		),
 
 		//category 3 storage
