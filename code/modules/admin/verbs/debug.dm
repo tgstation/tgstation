@@ -615,7 +615,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", sort_list(names))
+	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", names)
 	var/data = names[ruinname]
 	if (!data)
 		return

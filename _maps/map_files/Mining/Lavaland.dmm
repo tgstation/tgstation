@@ -655,10 +655,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"eb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/lavaland/surface/outdoors)
 "ee" = (
 /obj/machinery/shower/directional/south,
 /obj/machinery/door/window/right/directional/south,
@@ -5129,7 +5125,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/lavaland/surface/outdoors)
+/area/mine/production)
 "Dd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -48044,10 +48040,10 @@ Ra
 oh
 pK
 NU
-eb
+Le
 Db
-eb
-FH
+Le
+NU
 BP
 BP
 BP
