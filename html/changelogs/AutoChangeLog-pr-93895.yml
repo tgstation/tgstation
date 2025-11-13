@@ -1,0 +1,4 @@
+author: "Soot-IX"
+delete-after: True
+changes:
+  - bugfix: "eMagging doors didn't display proper animation. Now doors more sparkly when Doorjacked."
