@@ -388,8 +388,8 @@
  *
  * Won't lower it if it's already above the maximum.
  */
-/mob/living/carbon/human/proc/takeRadiation(amount, maximum, forced = FALSE) ///
-	if(!forced && (HAS_TRAIT(src, TRAIT_RADDIMUNE) || HAS_TRAIT(src, TRAIT_GODMODE)))
+/mob/living/carbon/human/proc/takeRadiation(amount, maximum = INFINITY, forced = FALSE)
+	if(!forced && (HAS_TRAIT(src, TRAIT_RADIMMUNE) || HAS_TRAIT(src, TRAIT_GODMODE)))
 		return FALSE
 
 	amount *= physiology.radiation_mod

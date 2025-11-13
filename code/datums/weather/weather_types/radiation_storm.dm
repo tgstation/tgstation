@@ -71,7 +71,7 @@
 		human.random_mutate_unique_features()
 
 	if(!HAS_TRAIT(human, TRAIT_RADIMMUNE))
-		human.radiation += 1 // No maximum, radiation storms are evil and this is still far nicer than random mutations
+		human.takeRadiation(1, 20) // Very high maximum, radiation storms are evil and this is still far nicer than random mutations
 
 	return ..()
 

@@ -426,11 +426,11 @@
 	var/shower = has_status_effect(/datum/status_effect/washing_regen)
 
 	for(var/i in 1 to 4) // If our radiation is over a requirement, we get to increase our radiation damage beyond a stage threshold
-		if(effective_radiation >= RAD_STAGE_REQUIREMENTS[i])
+		if(radiation >= RAD_STAGE_REQUIREMENTS[i])
 			stage_cap = i+1
 
 	if(radiation_damage < RAD_STAGE_THRESHOLDS[stage_cap])
-		radiation_damage = min(radiation_damage + radiation * seconds_per_tick * radiation_mod * (shower ? 0.3 : 1), RAD_STAGE_THRESHOLDS[stage_cap])
+		radiation_damage = min(radiation_damage + radiation * seconds_per_tick * (shower ? 0.3 : 1), RAD_STAGE_THRESHOLDS[stage_cap])
 		if(radiation > 2)
 			return // We don't heal rads if we're still accumulating damage, unless our radiation level is really low.
 	radiation = max(radiation - RAD_MOB_DECAY_RATE * (shower ? 3 : 1), 0)

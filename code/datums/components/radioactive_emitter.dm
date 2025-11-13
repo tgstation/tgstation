@@ -75,6 +75,8 @@
 	src.cooldown_time = cooldown_time
 	src.range = range
 	src.threshold = threshold
+	src.power = power
+	src.max_power = max_power
 	// Don't touch examine text or whatever else.
 
 /datum/component/radioactive_emitter/process(seconds_per_tick)

@@ -39,7 +39,7 @@
 		cooldown_time = 5 SECONDS, \
 		range = (GET_MUTATION_POWER(src) * 2), \
 		threshold = RAD_MEDIUM_INSULATION, \
-		power = 0.5, \
+		power = 1, \
 		max_power = 5 \
 	)
 
