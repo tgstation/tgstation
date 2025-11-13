@@ -87,6 +87,7 @@
 #define EASY_ALLOCATE(arguments...) allocate(__IMPLIED_TYPE__, run_loc_floor_bottom_left, ##arguments)
 
 // BEGIN_INCLUDE
+#include "aas_configs.dm"
 #include "abductor_baton_spell.dm"
 #include "ablative_hud.dm"
 #include "achievements.dm"
@@ -108,6 +109,7 @@
 #include "binary_insert.dm"
 #include "bitrunning.dm"
 #include "blindness.dm"
+#include "blood_volume_procs.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
 #include "buckle.dm"
@@ -261,6 +263,7 @@
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "reagent_transfer.dm"
+#include "recycle_recycling.dm"
 #include "required_map_items.dm"
 #include "resist.dm"
 #include "reta_system.dm"

@@ -39,22 +39,22 @@
 /**
  * On gain of TRAIT_NOBLOOD
  *
- * This will update the blood HUD so that it no longer shows blood levels.
+ * This will make the mob update its blood state.
  */
 /mob/living/carbon/proc/on_noblood_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	blood_hud_set_status()
+	update_blood_status()
 
 /**
  * On removal of TRAIT_NOBLOOD
  *
- * This will update the blood HUD so that it shows blood levels again.
+ * This will make the mob update its blood state.
  */
 /mob/living/carbon/proc/on_noblood_trait_loss(datum/source)
 	SIGNAL_HANDLER
 
-	blood_hud_set_status()
+	update_blood_status()
 
 /**
  * On gain of TRAIT_NOBREATH
