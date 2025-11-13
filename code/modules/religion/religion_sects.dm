@@ -383,13 +383,13 @@
 		target.adjustOxyLoss(-suffocation_damage)
 		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
 
-	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
-		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && target.get_blood_compatibility(chaplain))
-				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		else if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+	var/cached_blood_volume = target.get_blood_volume()
+	if (cached_blood_volume < BLOOD_VOLUME_SAFE)
+		if (target.get_blood_compatibility(chaplain))
+			var/amount_to_transfer = BLOOD_VOLUME_SAFE - cached_blood_volume
+			transferred |= chaplain.transfer_blood_to(target, amount_to_transfer, ignore_low_blood = TRUE)
+	else if (cached_blood_volume > BLOOD_VOLUME_EXCESS)
+		transferred |= target.transfer_blood_to(chaplain, cached_blood_volume - BLOOD_VOLUME_EXCESS)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()

@@ -66,7 +66,7 @@
 			old_wound.clear_highest_scar()
 	else
 		set_blood_flow(initial_flow)
-		if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+		if(limb.can_bleed() && attack_direction && victim.get_blood_volume() > BLOOD_VOLUME_OKAY)
 			victim.spray_blood(attack_direction, severity)
 
 	if(!highest_scar)

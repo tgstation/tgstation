@@ -735,8 +735,7 @@
 
 /mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(dna && !HAS_TRAIT(src, TRAIT_NOBLOOD))
-			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+		adjust_blood_volume(excess_healing * 2)
 
 		for(var/obj/item/organ/target_organ as anything in organs)
 			if(!target_organ.damage)
@@ -1101,12 +1100,17 @@
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		if(part.cached_bleed_rate)
 			return TRUE
 
 /// get our total bleedrate
 /mob/living/carbon/proc/get_total_bleed_rate()
+	if(!CAN_HAVE_BLOOD(src))
+		return FALSE
+
 	var/total_bleed_rate = 0
 	for(var/obj/item/bodypart/part as anything in bodyparts)
 		total_bleed_rate += part.cached_bleed_rate
