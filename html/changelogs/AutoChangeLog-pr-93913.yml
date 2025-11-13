@@ -1,0 +1,4 @@
+author: "SapphicOverload"
+delete-after: True
+changes:
+  - rscadd: "Added powers to arithmetic circuit components."
