@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Non-blob-spawned blob minion mobs can no longer traverse blob tiles."

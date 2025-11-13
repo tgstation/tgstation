@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - code_imp: "Add correct code documentation for object flags"

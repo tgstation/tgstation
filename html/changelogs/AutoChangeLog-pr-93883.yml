@@ -1,4 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "High-priority status effects like stuns no longer process (and thus expire) twice as quickly as they should."

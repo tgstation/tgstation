@@ -349,3 +349,33 @@
   - bugfix: Emitters can light up with their panel open.
   trazodont:
   - map: moved metastation security locker room apc
+2025-11-13:
+  Ghommie:
+  - bugfix: bridge assistant and veteran advisor PDAs (inside backpack) are now imprinted
+      automatically
+  LT3:
+  - bugfix: Peg limbs are now internally classified as wooden
+  - bugfix: Shears now able to be stored in the surgery tray
+  Rhials:
+  - bugfix: Non-blob-spawned blob minion mobs can no longer traverse blob tiles.
+  RikuTheKiller:
+  - bugfix: High-priority status effects like stuns no longer process (and thus expire)
+      twice as quickly as they should.
+  SmArtKar:
+  - bugfix: Luxury paywall lasers no longer drop their pins when spawned
+  Soot-IX:
+  - bugfix: eMagging doors didn't display proper animation. Now doors more sparkly
+      when Doorjacked.
+  lelandkemble:
+  - spellcheck: Adds self-message to clown pockets spell
+  - spellcheck: Auxbase construction console says the name of the area rather than
+      the path in failure messages
+  necromanceranne:
+  - qol: You can now backflip.
+  paganiy:
+  - bugfix: Fixed recycler deconstruction.
+  - bugfix: Holograms now properly drop their contents when processed in recycler
+      instead of deleting them.
+  - code_imp: Cleaned up recycler code.
+  timothymtorres:
+  - code_imp: Add correct code documentation for object flags

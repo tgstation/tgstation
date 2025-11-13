@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Peg limbs are now internally classified as wooden"
