@@ -576,12 +576,10 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
           <BlockQuote>
             <Stack vertical>
               <Stack.Item>
-                <HorizontalBarWithText text="Reagents" />
+                <HorizontalBarWithText text="Formula" />
               </Stack.Item>
               {reaction.reaction.required_reagents.map((reagent) => (
-                <Stack.Item
-                  key={`${reaction.name}-${Object.keys(reagent)[0]}-req`}
-                >
+                <Stack.Item key={`${reaction.name}-${reagent.name}-req`}>
                   <ReactionComponentDisplay
                     reagentComponent={reagent}
                     setSearchTerm={props.setSearchTerm}
@@ -593,13 +591,12 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
               {reaction.reaction.required_catalysts.length > 0 && (
                 <>
                   <Stack.Item>
-                    {' '}
-                    <HorizontalBarWithText text="Catalysts" />
+                    <HorizontalBarWithText
+                      text={`Catalyst${reaction.reaction.required_reagents.length === 1 ? '' : 's'}`}
+                    />
                   </Stack.Item>
                   {reaction.reaction.required_catalysts.map((catalyst) => (
-                    <Stack.Item
-                      key={`${reaction.name}-${Object.keys(catalyst)[0]}-cat`}
-                    >
+                    <Stack.Item key={`${reaction.name}-${catalyst.name}-cat`}>
                       <ReactionComponentDisplay
                         reagentComponent={catalyst}
                         setSearchTerm={props.setSearchTerm}
@@ -611,7 +608,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
                 </>
               )}
               <Stack.Item>
-                <HorizontalBarWithText text="Temperature" />
+                <HorizontalBarWithText text="Optimal temperature" />
               </Stack.Item>
               <Stack.Item fontSize="0.9em">
                 {getTemperatureMessage(
@@ -620,7 +617,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
                 )}
               </Stack.Item>
               <Stack.Item>
-                <HorizontalBarWithText text="pH Range" />
+                <HorizontalBarWithText text="Optimal pH range" />
               </Stack.Item>
               <Stack.Item fontSize="0.9em">
                 {getPHMessage(
@@ -656,9 +653,9 @@ function getTemperatureMessage(lower: number, upper: number): string {
 // else return "keep between pH X and Y"
 function getPHMessage(lower: number, upper: number): string {
   if (lower === upper) {
-    return `Optimally keep at pH ${lower}`;
+    return `Keep at pH ${lower}`;
   } else {
-    return `Optimally keep between pH ${lower}-${upper}`;
+    return `Keep between pH ${lower}-${upper}`;
   }
 }
 
