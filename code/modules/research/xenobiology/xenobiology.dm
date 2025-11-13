@@ -683,7 +683,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slimepotion/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(is_reagent_container(interacting_with))
 		to_chat(user, span_warning("You cannot transfer [src] to [interacting_with]! \
-			It appears the potion must be given directly to a slime to absorb.") )
+			It appears the potion must be given directly to a slime or other object to absorb.") )
 		return ITEM_INTERACT_BLOCKING
 	return NONE
 
@@ -694,7 +694,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	if(isslime(interacting_with))
 		return interact_with_slime(interacting_with, user, modifiers)
 	else
-		to_chat(user, span_warning("[src] only works on slimes!"))
+		to_chat(user, span_warning("It appears [src] must be given directly to a slime to absorb."))
 		return NONE
 
 /obj/item/slimepotion/slime/proc/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
