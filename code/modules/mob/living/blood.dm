@@ -31,7 +31,7 @@
 	var/amount = blood_volume
 
 	// For simple multipliers, like a blood worm in a mob.
-	for (var/source as anything in blood_volume_modifiers)
+	for (var/source in blood_volume_modifiers)
 		amount *= blood_volume_modifiers[source]
 
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
