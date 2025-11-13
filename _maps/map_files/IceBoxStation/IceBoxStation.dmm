@@ -55603,7 +55603,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/flasher{
 	id = "visitorflash";
-	pixel_y = -26
+	pixel_y = -26;
+	pixel_x = -7
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = 7;
+	pixel_y = -26;
+	name = "Visitation Shutters Control";
+	id = "visitation";
+	req_access = list("brig")
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/visit)
