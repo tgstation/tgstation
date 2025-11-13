@@ -458,7 +458,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/obj/item/slimepotion/slime/sentience/O = new(null, 1)
+			var/obj/item/slimepotion/sentience/O = new(null, 1)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -727,7 +727,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/slimepotion/slime/sentience
+/obj/item/slimepotion/sentience
 	name = "intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -738,23 +738,23 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	/// Reason for offering potion. This will be displayed in the poll alert to ghosts.
 	var/potion_reason
 
-/obj/item/slimepotion/slime/sentience/examine(mob/user)
+/obj/item/slimepotion/sentience/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to set potion offer reason. [potion_reason ? "Current reason: [span_warning(potion_reason)]" : null]")
 
-/obj/item/slimepotion/slime/sentience/Initialize(mapload)
+/obj/item/slimepotion/sentience/Initialize(mapload)
 	register_context()
 	return ..()
 
-/obj/item/slimepotion/slime/sentience/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/item/slimepotion/sentience/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Set potion offer reason"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/slimepotion/slime/sentience/click_alt(mob/living/user)
+/obj/item/slimepotion/sentience/click_alt(mob/living/user)
 	potion_reason = tgui_input_text(user, "Enter reason for offering potion", "Intelligence Potion", potion_reason, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/slimepotion/slime/sentience/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/slimepotion/sentience/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
@@ -786,7 +786,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	return ITEM_INTERACT_SUCCESS
 
 /// Assign the chosen ghost to the mob
-/obj/item/slimepotion/slime/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)
+/obj/item/slimepotion/sentience/proc/on_poll_concluded(mob/user, mob/living/dumb_mob, mob/dead/observer/ghost)
 	if(isnull(ghost))
 		balloon_alert(user, "try again later!")
 		being_used = FALSE
@@ -805,19 +805,19 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	after_success(user, dumb_mob)
 	qdel(src)
 
-/obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/smart_mob)
+/obj/item/slimepotion/sentience/proc/after_success(mob/living/user, mob/living/smart_mob)
 	return
 
-/obj/item/slimepotion/slime/sentience/nuclear
+/obj/item/slimepotion/sentience/nuclear
 	name = "syndicate intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
-/obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/smart_mob)
+/obj/item/slimepotion/sentience/nuclear/after_success(mob/living/user, mob/living/smart_mob)
 	var/obj/item/implant/radio/syndicate/imp = new(src)
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
-/obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse
+/obj/item/slimepotion/sentience/nuclear/dangerous_horse
 	name = "dangerous pony potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to pony beings. It has been modified with Syndicate technology to also grant an internal radio implant to the pony and authenticate with identification systems"
 	sentience_type = SENTIENCE_PONY
