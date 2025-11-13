@@ -462,8 +462,8 @@
 	name = "Blood Worm"
 	config_tag = "Blood Worm"
 	preview_antag_datum = /datum/antagonist/blood_worm
-	// Please set this to HEAVY_MIDROUND once dynamic has fine-grained handling for spawn times and doesn't restrict all heavy midrounds to spawning after 60 minutes.
-	// Blood worms are intended to spawn around 20 minutes into a round. Spawning 30 minutes in isn't intentional, it's a byproduct of dynamic. This is a band-aid fix.
+	// Please set this to HEAVY_MIDROUND once dynamic has fine-grained handling for spawn times and doesn't restrict all heavy midrounds to spawning after 40 minutes.
+	// Blood worms are intended to spawn 10-30 minutes into a round. This is a band-aid fix, and the better of two evils. (wrong threat tier vs wrong round timing)
 	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOOD_WORM
