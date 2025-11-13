@@ -269,49 +269,13 @@
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
-/datum/spacevine_mutation/oxy_eater
-	name = "Oxygen consuming"
-	description = "Consumes Oxygen from the surrounding area."
-	hue = "#28B5B5"
-	severity = SEVERITY_AVERAGE
-	quality = NEGATIVE
+/datum/spacevine_mutation/gas_eater
+	abstract_type = /datum/spacevine_mutation/gas_eater
+	var/datum/gas/gas_type = null
 
-/datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
-	consume_gas(holder, /datum/gas/oxygen)
-
-/datum/spacevine_mutation/nitro_eater
-	name = "Nitrogen consuming"
-	description = "Consumes Nitrogen from the surrounding area."
-	hue = "#FF7B54"
-	severity = SEVERITY_AVERAGE
-	quality = NEGATIVE
-
-/datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
-	consume_gas(holder, /datum/gas/nitrogen)
-
-/datum/spacevine_mutation/carbondioxide_eater
-	name = "CO2 consuming"
-	description = "Consumes Carbon Dioxide from the surrounding area."
-	hue = "#798777"
-	severity = SEVERITY_MINOR
-	quality = POSITIVE
-
-/datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
-	consume_gas(holder, /datum/gas/carbon_dioxide)
-
-/datum/spacevine_mutation/plasma_eater
-	name = "Plasma consuming"
-	description = "Consumes Plasma from the surrounding area."
-	hue = "#9074b6"
-	severity = SEVERITY_AVERAGE
-	quality = POSITIVE
-
-/datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
-	consume_gas(holder, /datum/gas/plasma)
-
-/datum/spacevine_mutation/proc/consume_gas(obj/structure/spacevine/holder, datum/gas/gas_type)
+/datum/spacevine_mutation/gas_eater/process_mutation(obj/structure/spacevine/holder)
 	if(isnull(gas_type))
-		stack_trace("gas_type argument is null for consume_gas proc called from [type]")
+		stack_trace("gas_type not set for gas_eater mutation [type]")
 		return
 
 	var/turf/open/floor/turf = holder.loc
@@ -324,6 +288,38 @@
 
 	gas_mix.gases[gas_type][MOLES] = max(gas_mix.gases[gas_type][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
 	gas_mix.garbage_collect()
+
+/datum/spacevine_mutation/gas_eater/oxy_eater
+	name = "Oxygen consuming"
+	description = "Consumes Oxygen from the surrounding area."
+	hue = "#28B5B5"
+	severity = SEVERITY_AVERAGE
+	quality = NEGATIVE
+	gas_type = /datum/gas/oxygen
+
+/datum/spacevine_mutation/gas_eater/nitro_eater
+	name = "Nitrogen consuming"
+	description = "Consumes Nitrogen from the surrounding area."
+	hue = "#FF7B54"
+	severity = SEVERITY_AVERAGE
+	quality = NEGATIVE
+	gas_type = /datum/gas/nitrogen
+
+/datum/spacevine_mutation/gas_eater/carbondioxide_eater
+	name = "CO2 consuming"
+	description = "Consumes Carbon Dioxide from the surrounding area."
+	hue = "#798777"
+	severity = SEVERITY_MINOR
+	quality = POSITIVE
+	gas_type = /datum/gas/carbon_dioxide
+
+/datum/spacevine_mutation/gas_eater/plasma_eater
+	name = "Plasma consuming"
+	description = "Consumes Plasma from the surrounding area."
+	hue = "#9074b6"
+	severity = SEVERITY_AVERAGE
+	quality = POSITIVE
+	gas_type = /datum/gas/plasma
 
 /datum/spacevine_mutation/thorns
 	name = "Thorny"
@@ -400,7 +396,7 @@
 	if(locate(/obj/structure/alien/resin/flower_bud) in range(5, holder))
 		return
 	if(holder.growth_stage == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB))
-		var/obj/structure/alien/resin/flower_bud/spawned_flower_bud = new /obj/structure/alien/resin/flower_bud(holder.loc)
+		var/obj/structure/alien/resin/flower_bud/spawned_flower_bud = new(holder.loc)
 		spawned_flower_bud.trait_flags = holder.trait_flags
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
