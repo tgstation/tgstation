@@ -886,13 +886,13 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slimepotion/slime/steroid/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
 	if(interacting_slime.life_stage == SLIME_LIFE_STAGE_ADULT) //Can't steroidify adults
 		to_chat(user, span_warning("Only baby slimes can use the steroid!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.stat)
 		to_chat(user, span_warning("The slime is dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.cores >= 5)
 		to_chat(user, span_warning("The slime already has the maximum amount of extract!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You feed the slime the steroid. It will now produce one more extract."))
 	interacting_slime.cores++
@@ -914,10 +914,10 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slimepotion/slime/stabilizer/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
 	if(interacting_slime.stat)
 		to_chat(user, span_warning("The slime is dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutation_chance == 0)
 		to_chat(user, span_warning("The slime already has no chance of mutating!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You feed the slime the stabilizer. It is now less likely to mutate."))
 	interacting_slime.mutation_chance = clamp(interacting_slime.mutation_chance-15,0,100)
@@ -933,13 +933,13 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 /obj/item/slimepotion/slime/mutator/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
 	if(interacting_slime.stat)
 		to_chat(user, span_warning("The slime is dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutator_used)
 		to_chat(user, span_warning("This slime has already consumed a mutator, any more would be far too unstable!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutation_chance == 100)
 		to_chat(user, span_warning("The slime is already guaranteed to mutate!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You feed the slime the mutator. It is now more likely to mutate."))
 	interacting_slime.mutation_chance = clamp(interacting_slime.mutation_chance+12,0,100)
@@ -1035,11 +1035,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	var/mob/living/living_mob = interacting_with
 	if(!istype(living_mob) || living_mob.stat == DEAD)
 		to_chat(user, span_warning("The potion can only be used on living things!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(living_mob.gender != MALE && living_mob.gender != FEMALE)
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(living_mob.gender == MALE)
 		living_mob.gender = FEMALE
@@ -1064,11 +1064,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
 	if(being_used || !ismob(interacting_with))
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/mob/M = interacting_with
 	if(!M.ckey) //only works on animals that aren't player controlled
 		to_chat(user, span_warning("[M] is not self aware, and cannot pick its own name."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	being_used = TRUE
 
@@ -1078,7 +1078,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	if(!new_name || QDELETED(src) || QDELETED(M) || new_name == M.real_name || !M.Adjacent(user))
 		being_used = FALSE
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	M.visible_message(span_notice("[span_name("[M]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[M.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], letting them rename themselves into [new_name].")
@@ -1102,11 +1102,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		return .
 	if(!isanimal_or_basicmob(interacting_with))
 		to_chat(user, span_warning("[interacting_with] is too complex for the potion!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/mob/living/radio_head = interacting_with
 	if(radio_head.stat)
 		to_chat(user, span_warning("[radio_head] is dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You feed the potion to [radio_head]."))
 	to_chat(radio_head, span_notice("Your mind tingles as you are fed the potion. You can hear radio waves now!"))

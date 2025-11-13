@@ -45,10 +45,10 @@ Slimecrossing Potions
 	var/mob/living/peace_target = interacting_with
 	if(!isliving(peace_target) || peace_target.stat == DEAD)
 		to_chat(user, span_warning("[src] only works on the living."))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(ismegafauna(peace_target))
 		to_chat(user, span_warning("[src] does not work on beings of pure evil!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(peace_target != user)
 		peace_target.visible_message(span_danger("[user] starts to feed [peace_target] [src]!"),
 			span_userdanger("[user] starts to feed you [src]!"))
@@ -57,7 +57,7 @@ Slimecrossing Potions
 			span_danger("You start to drink [src]!"))
 
 	if(!do_after(user, 10 SECONDS, target = peace_target))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(peace_target != user)
 		to_chat(user, span_notice("You feed [peace_target] [src]!"))
 	else
@@ -68,6 +68,7 @@ Slimecrossing Potions
 		var/mob/living/carbon/peaceful_carbon = peace_target
 		peaceful_carbon.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //Love potion - Charged Pink
 /obj/item/slimepotion/lovepotion
@@ -83,27 +84,28 @@ Slimecrossing Potions
 	var/mob/living/love_target = interacting_with
 	if(!isliving(love_target) || love_target.stat == DEAD)
 		to_chat(user, span_warning("The love potion only works on living things, sicko!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(ismegafauna(love_target))
 		to_chat(user, span_warning("The love potion does not work on beings of pure evil!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(user == love_target)
 		to_chat(user, span_warning("You can't drink the love potion. What are you, a narcissist?"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(love_target.has_status_effect(/datum/status_effect/in_love))
 		to_chat(user, span_warning("[love_target] is already lovestruck!"))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	love_target.visible_message(span_danger("[user] starts to feed [love_target] a love potion!"),
 		span_userdanger("[user] starts to feed you a love potion!"))
 
 	if(!do_after(user, 5 SECONDS, target = love_target))
-		return
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
 	love_target.faction |= "[REF(user)]"
 	love_target.apply_status_effect(/datum/status_effect/in_love, user)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //Pressure potion - Charged Dark Blue
 /obj/item/slimepotion/spaceproof
@@ -225,11 +227,12 @@ Slimecrossing Potions
 /obj/item/slimepotion/slime/chargedstabilizer/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
 	if(interacting_slime.stat)
 		to_chat(user, span_warning("The slime is dead!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutation_chance == 0)
 		to_chat(user, span_warning("The slime already has no chance of mutating!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You feed the slime the omnistabilizer. It will not mutate this cycle!"))
 	interacting_slime.mutation_chance = 0
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
