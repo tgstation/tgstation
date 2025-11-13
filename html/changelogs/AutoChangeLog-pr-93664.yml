@@ -1,6 +1,0 @@
-author: "arbuzik456"
-delete-after: True
-changes:
-  - rscadd: "Added UI buttons for mech cargo module, left click to dispose first item in the list and right click to select an item to drop."
-  - rscadd: "Added UI button for mech fire extinguisher, left click to splash and right click to refill."
-  - balance: "Mech fire extinguisher module now goes on any mech, combat slips with a press of a button!"

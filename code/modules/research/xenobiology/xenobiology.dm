@@ -325,7 +325,8 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin starts flashing intermittently..."), span_warning("Your skin starts flashing intermittently..."))
 			if(do_after(user, 2.5 SECONDS, target = user))
-				empulse(user, 1, 2)
+				empulse(user, 1, 2, emp_source = src)
+				user.log_message("triggered EMP using [src] in [AREACOORD(src)]", LOG_GAME)
 				user.visible_message(span_warning("[user]'s skin flashes!"), span_warning("Your skin flashes as you emit an electromagnetic pulse!"))
 				return 600
 

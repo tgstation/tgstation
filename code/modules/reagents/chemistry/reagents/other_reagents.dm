@@ -288,8 +288,8 @@
 /datum/wound/burn/flesh/on_saltwater(reac_volume)
 	// Similar but better stats from normal salt.
 	sanitization += VALUE_PER(0.6, 30) * reac_volume
-	infestation -= max(VALUE_PER(0.5, 30) * reac_volume, 0)
-	infestation_rate += VALUE_PER(0.07, 30) * reac_volume
+	infection -= max(VALUE_PER(0.5, 30) * reac_volume, 0)
+	infection_rate += VALUE_PER(0.07, 30) * reac_volume
 	to_chat(victim, span_notice("The salt water splashes over [LOWER_TEXT(src)], soaking up the... miscellaneous fluids. It feels somewhat better afterwards."))
 	return
 
@@ -560,7 +560,7 @@
 /datum/reagent/spraytan/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if(ishuman(exposed_mob))
-		if(methods & (PATCH|VAPOR) && touch_protection >= 1)
+		if(methods & (PATCH|VAPOR) && touch_protection < 1)
 			var/mob/living/carbon/human/exposed_human = exposed_mob
 			if(HAS_TRAIT(exposed_human, TRAIT_USES_SKINTONES))
 				switch(exposed_human.skin_tone)

@@ -640,6 +640,15 @@
 	worn_icon_state = "grass_sheath"
 	storage_type = /datum/storage/green_sabre_belt
 
+/obj/item/storage/belt/sheath/gladius
+	name = "gladius scabbard"
+	desc = "A fun-sized sheath for a fun-sized sword."
+	icon_state = "gladius_sheath"
+	inhand_icon_state = "gladius_sheath"
+	worn_icon_state = "gladius_sheath"
+	storage_type = /datum/storage/gladius_belt
+	stored_blade = /obj/item/claymore/gladius
+
 /obj/item/storage/belt/plant
 	name = "botanical belt"
 	desc = "A sturdy leather belt used to hold most hydroponics supplies."

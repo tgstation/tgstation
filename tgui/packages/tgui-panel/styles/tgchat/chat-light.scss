@@ -929,7 +929,9 @@ h2.alert {
 }
 
 .drone {
-  color: hsl(60, 0.8%, 51.4%);
+  color: hsl(60 100% 50%);
+  background-color: hsl(287 62% 36%);
+  font-style: italic;
 }
 
 .monkey {

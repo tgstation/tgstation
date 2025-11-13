@@ -1,5 +1,3 @@
-/obj/item/tank/jetpack : @DELETE
-
 /obj/item/tank/jetpack/oxygen : /obj/item/tank/jetpack{@OLD}
 
 /obj/item/tank/jetpack/oxygen/harness : /obj/item/tank/jetpack/harness{@OLD}
