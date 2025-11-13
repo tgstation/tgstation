@@ -941,6 +941,9 @@
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/door/airlock/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return screwdriver_act(user, tool)
+
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
 		. = ITEM_INTERACT_SUCCESS  // everything after this shouldn't result in attackby
