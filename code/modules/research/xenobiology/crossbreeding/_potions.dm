@@ -38,7 +38,11 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
 
-/obj/item/slimepotion/peacepotion/attack(mob/living/peace_target, mob/user)
+/obj/item/slimepotion/peacepotion/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	var/mob/living/peace_target = interacting_with
 	if(!isliving(peace_target) || peace_target.stat == DEAD)
 		to_chat(user, span_warning("[src] only works on the living."))
 		return ..()
@@ -72,7 +76,11 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
 
-/obj/item/slimepotion/lovepotion/attack(mob/living/love_target, mob/user)
+/obj/item/slimepotion/lovepotion/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	var/mob/living/love_target = interacting_with
 	if(!isliving(love_target) || love_target.stat == DEAD)
 		to_chat(user, span_warning("The love potion only works on living things, sicko!"))
 		return ..()
@@ -214,17 +222,14 @@ Slimecrossing Potions
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
-/obj/item/slimepotion/slime/chargedstabilizer/attack(mob/living/basic/slime/stabilize_target, mob/user)
-	if(!isslime(stabilize_target))
-		to_chat(user, span_warning("The stabilizer only works on slimes!"))
-		return ..()
-	if(stabilize_target.stat)
+/obj/item/slimepotion/slime/chargedstabilizer/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
+	if(interacting_slime.stat)
 		to_chat(user, span_warning("The slime is dead!"))
 		return
-	if(stabilize_target.mutation_chance == 0)
+	if(interacting_slime.mutation_chance == 0)
 		to_chat(user, span_warning("The slime already has no chance of mutating!"))
 		return
 
 	to_chat(user, span_notice("You feed the slime the omnistabilizer. It will not mutate this cycle!"))
-	stabilize_target.mutation_chance = 0
+	interacting_slime.mutation_chance = 0
 	qdel(src)
