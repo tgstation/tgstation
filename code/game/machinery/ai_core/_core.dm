@@ -4,7 +4,8 @@
 	name = "\improper AI core"
 	desc = "The framework for an artificial intelligence core."
 	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "0"
+	icon_state = "build_0"
+	base_icon_state = "build_"
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 500
@@ -31,22 +32,11 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/ai_core/update_icon_state()
-	switch(state)
-		if(CORE_STATE_EMPTY)
-			icon_state = "0"
-		if(CORE_STATE_CIRCUIT)
-			icon_state = "1"
-		if(CORE_STATE_SCREWED)
-			icon_state = "2"
-		if(CORE_STATE_CABLED)
-			if(core_mmi)
-				icon_state = "3b"
-			else
-				icon_state = "3"
-		if(CORE_STATE_GLASSED)
-			icon_state = "4"
-		if(CORE_STATE_FINISHED)
-			icon_state = "ai-empty"
+	if(state != CORE_STATE_FINISHED)
+		icon_state = "[base_icon_state][state]"
+		if(state == CORE_STATE_CABLED && core_mmi)
+			icon_state += "b"
+	icon_state = "ai-empty"
 	return ..()
 
 /obj/structure/ai_core/Exited(atom/movable/gone, direction)
