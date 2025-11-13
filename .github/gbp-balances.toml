@@ -1136,7 +1136,7 @@
 
 93310496 = 3 # delingar
 93492992 = 10 # Pink-MB
-93578146 = 13 # SapphicOverload
+93578146 = 7 # SapphicOverload
 93882977 = 31 # Helg2
 94013721 = 6 # maxspells
 94123167 = 3 # Kepteyn
@@ -1334,4 +1334,4 @@
 213118679 = 6 # Steve-Cambridge
 220969319 = 6 # DresserOnFire
 226049938 = 9 # Needicla
-230859540 = 0 # glue0000
+230859540 = 1 # glue0000
