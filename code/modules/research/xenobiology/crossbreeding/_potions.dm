@@ -8,7 +8,6 @@ Slimecrossing Potions
 /obj/item/slimepotion/extract_cloner
 	name = "extract cloning potion"
 	desc = "A more powerful version of the extract enhancer potion, capable of cloning regular slime extracts."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgold"
 
 /obj/item/slimepotion/extract_cloner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -35,7 +34,6 @@ Slimecrossing Potions
 /obj/item/slimepotion/peacepotion
 	name = "pacification potion"
 	desc = "A light pink solution of chemicals, smelling like liquid peace. And mercury salts."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
 
 /obj/item/slimepotion/peacepotion/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -74,7 +72,6 @@ Slimecrossing Potions
 /obj/item/slimepotion/lovepotion
 	name = "love potion"
 	desc = "A pink chemical mix thought to inspire feelings of love."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
 
 /obj/item/slimepotion/lovepotion/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -111,7 +108,6 @@ Slimecrossing Potions
 /obj/item/slimepotion/spaceproof
 	name = "slime pressurization potion"
 	desc = "A potent chemical sealant that will render any article of clothing airtight. Has two uses."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potblack"
 	var/uses = 2
 
@@ -148,14 +144,12 @@ Slimecrossing Potions
 /obj/item/slimepotion/enhancer/max
 	name = "extract maximizer"
 	desc = "An extremely potent chemical mix that will maximize a slime extract's uses."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcerulean"
 
 //Lavaproofing potion - Charged Red
 /obj/item/slimepotion/lavaproof
 	name = "slime lavaproofing potion"
 	desc = "A strange, reddish goo said to repel lava as if it were water, without reducing flammability. Has two uses."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potyellow"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	var/uses = 2
@@ -190,7 +184,6 @@ Slimecrossing Potions
 /obj/item/slimepotion/slime_reviver
 	name = "slime revival potion"
 	desc = "Infused with plasma and compressed gel, this brings dead slimes back to life."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgrey"
 
 /obj/item/slimepotion/slime_reviver/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -221,7 +214,6 @@ Slimecrossing Potions
 /obj/item/slimepotion/slime/chargedstabilizer
 	name = "slime omnistabilizer"
 	desc = "An extremely potent chemical mix that will stop a slime from mutating completely."
-	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
 /obj/item/slimepotion/slime/chargedstabilizer/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
