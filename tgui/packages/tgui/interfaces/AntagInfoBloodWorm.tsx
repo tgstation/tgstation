@@ -96,6 +96,10 @@ export const AntagInfoBloodWorm = (props) => {
                   Hosts are practically meatshields for you, just keep track of any fires, bleeding wounds, cremators or gibbing mechanisms.
                   Remember to also heal your host periodically using Inject Blood whenever they get too low.
                   </LabeledList.Item>
+                  <LabeledList.Item label="Life Insurance">
+                  Because you can't control corpses while you have less than a tenth of your health in blood volume, you will be ejected from your host when you get really low.
+                  You can use this as insurance to get a last ditch escape attempt.
+                  </LabeledList.Item>
                   <LabeledList.Item label="Medbay Buffet">
                   Medbay's blood freezers are all-you-can-eat buffets for you! Multiple blood types and high volumes grant you a lot of growth.
                   Be careful of nearby crew, as breaking freezers can alert them through walls.
