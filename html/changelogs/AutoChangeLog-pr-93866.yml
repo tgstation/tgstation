@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixes ear protection equipment doing nothing."
+  - balance: "Detonating a flashbang in space or any environment with little to no air no longer stuns anyone NOT on the same tile as the flashbang with loud bangs. Flashing still works as intended though."
