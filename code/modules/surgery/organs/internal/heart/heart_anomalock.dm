@@ -98,8 +98,7 @@
 	if(!core)
 		return
 
-	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += 5 * seconds_per_tick
+	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
@@ -108,7 +107,7 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_cells())
+	for(var/obj/item/stock_parts/power_store/cell in assoc_to_values(owner.get_all_cells()))
 		if(cell.used_charge())
 			batteries += cell
 
@@ -210,7 +209,8 @@
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"
-	icon_state = "anomalock_heart"
+	use_user_hud_icon = TRUE
+	overlay_state = "anomalock_heart"
 	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
 
 /obj/item/organ/heart/cybernetic/anomalock/hear_beat_noise(mob/living/hearer)

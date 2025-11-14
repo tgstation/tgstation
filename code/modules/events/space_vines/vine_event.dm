@@ -29,23 +29,31 @@
 	var/production
 
 /datum/round_event/spacevine/start()
-	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
-
+	var/list/final_turf_candidates = list() // final list of eligible empty floor turfs in the hallway areas that can be chosen
 
 	if(override_turf)
-		turfs += override_turf
+		final_turf_candidates += override_turf
 	else
 		var/obj/structure/spacevine/vine = new()
-
-		for(var/area/station/hallway/area in GLOB.areas)
+		var/list/floor_candidates = list()
+		for(var/area/station/hallway/area in shuffle(GLOB.areas))
 			for(var/turf/open/floor in area.get_turfs_from_all_zlevels())
-				if(!isopenspaceturf(floor) && floor.Enter(vine))
-					turfs += floor
+				if(isopenspaceturf(floor))
+					continue
+				floor_candidates += floor
 
+		// Enter() is expensive to call on potentially hundreds to thousands of turfs at once and can even lead to server crashes.
+		// We can pick() a subset instead and get close enough results at a fraction of the cost.
+		var/turfs_to_test = 100
+		var/list/sampled_floor_candidates = pick_n(floor_candidates, min(turfs_to_test, length(floor_candidates))) // results in at most 100 calls of Enter(), a reasonable amount while still feeling random.
+
+		for(var/turf/open/floor as anything in sampled_floor_candidates)
+			if(floor.Enter(vine))
+				final_turf_candidates += floor
 		qdel(vine)
 
-	if(length(turfs)) //Pick a turf to spawn at if we can
-		var/turf/floor = pick(turfs)
+	if(length(final_turf_candidates)) //Pick a turf to spawn at if we can
+		var/turf/floor = pick(final_turf_candidates)
 		var/list/selected_mutations = list()
 
 		if(mutations_overridden == FALSE)

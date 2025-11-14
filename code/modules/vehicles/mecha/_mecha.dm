@@ -249,8 +249,8 @@
 	log_message("[src.name] created.", LOG_MECHA)
 	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_atom_to_hud(src)
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_atom_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
@@ -305,8 +305,8 @@
 	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list
-	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.remove_atom_from_hud(src) //YEET
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_atom_from_hud(src) //YEET
 	return ..()
 
 ///Add parts on mech spawning. Skipped in manual construction.
@@ -451,9 +451,9 @@
  * Creates a new action, sets up the chassis and equipment references, and grants it to the mob.
  */
 /obj/vehicle/sealed/mecha/proc/grant_equipment_action(mob/occupant, obj/item/mecha_parts/mecha_equipment/equipment)
-	var/datum/action/vehicle/sealed/mecha/equipment/action = new  // We cannot use grant_action_type_to_mob() because:
-	action.set_chassis(src) 									  // 1. grant_action_type_to_mob() works with a single predefined action type
-	action.set_equipment(equipment) 							 // 2. We create unique action instances for each equipment with specific equipment references
+	var/datum/action/vehicle/sealed/mecha/equipment/action = new equipment.action_type // We cannot use grant_action_type_to_mob() because:
+	action.set_chassis(src) 									  					  // 1. grant_action_type_to_mob() works with a single predefined action type
+	action.set_equipment(equipment) 							 					 // 2. We create unique action instances for each equipment with specific equipment references
 
 	action.Grant(occupant)
 	LAZYINITLIST(occupant_actions[occupant])

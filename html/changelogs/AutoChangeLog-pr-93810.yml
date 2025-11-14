@@ -1,0 +1,4 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - refactor: "Signposts have had their code improved internally. Please make an issue if a signpost that should teleport you no longer can."

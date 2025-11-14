@@ -93,6 +93,8 @@
 	desc = "You %STACKS% explosive dust, kinetic impacts will cause it to detonate! \
 		The explosion will not harm you as long as you're not under atmospheric pressure. \
 		Click this alert to shake off the dust."
+	use_user_hud_icon = TRUE
+	overlay_state = "brimdemon_1"
 
 /atom/movable/screen/alert/status_effect/brimdust_coating/MouseEntered(location,control,params)
 	desc = initial(desc)
@@ -132,7 +134,8 @@
 	. = ..()
 	if (stacks == 0)
 		return
-	linked_alert.icon_state = "brimdemon_[stacks]"
+	linked_alert.overlay_state = "brimdemon_[stacks]"
+	linked_alert.update_appearance(UPDATE_OVERLAYS)
 	if (dust_overlay)
 		owner.cut_overlay(dust_overlay)
 		dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK

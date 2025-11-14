@@ -354,8 +354,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Normalizes blood in a human if it is excessive. If it is above BLOOD_VOLUME_NORMAL, this will clamp it to that value. It will not give the human more blodo than they have less than this value.
  */
 /datum/species/proc/normalize_blood(mob/living/carbon/human/blood_possessing_human)
-	var/normalized_blood_values = max(blood_possessing_human.blood_volume, 0, BLOOD_VOLUME_NORMAL)
-	blood_possessing_human.blood_volume = normalized_blood_values
+	blood_possessing_human.set_blood_volume(min(blood_possessing_human.get_blood_volume(), BLOOD_VOLUME_NORMAL))
 
 /**
  * Proc called when a carbon becomes this species.
@@ -1348,7 +1347,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *	Handles exposure to the skin of various gases.
  */
 /datum/species/proc/handle_gas_interaction(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick, times_fired)
-	if((human?.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE) && (human?.head?.clothing_flags & STOPSPRESSUREDAMAGE))
+	/// Some non-clothing items may end up in these slots, e.g. flowers worn on the head, so we should consider clothing_flags as potentially nonexistant as a var.
+	/// Otherwise we will get a very spammy runtime.
+	var/suit_flags = istype(human?.wear_suit, /obj/item/clothing) ? human.wear_suit.clothing_flags : NONE
+	var/head_flags = istype(human?.head, /obj/item/clothing) ? human.head.clothing_flags : NONE
+
+	if((suit_flags & STOPSPRESSUREDAMAGE) && (head_flags & STOPSPRESSUREDAMAGE))
 		return
 
 	for(var/gas_id in environment.gases)

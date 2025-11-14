@@ -162,8 +162,13 @@
 	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 	var/butcher_difficulty = 0
 
-	///how much blood the mob has
+	/// How much blood the mob currently has.
+	/// Don't read directly, use get_blood_volume() and get_blood_volume(apply_modifiers = TRUE).
+	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
+	/// Also don't initialize this. Initialize default_blood_volume instead.
 	var/blood_volume = 0
+	/// The default blood volume of the mob. Used primarily for healing bloodloss.
+	var/default_blood_volume = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects
@@ -202,6 +207,8 @@
 	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
+	/// Typepath of the holder created when we're picked up
+	var/inhand_holder_type = /obj/item/mob_holder
 
 	///If combat mode is on or not
 	var/combat_mode = FALSE

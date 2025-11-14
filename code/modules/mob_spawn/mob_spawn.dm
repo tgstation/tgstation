@@ -331,6 +331,7 @@
 		spawned_human.Drain()
 	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
 		spawned_human.cure_husk()
+	spawned_human.job = name
 
 /obj/effect/mob_spawn/corpse/human/equip(mob/living/carbon/human/spawned_human)
 	. = ..()

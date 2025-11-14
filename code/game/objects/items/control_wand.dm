@@ -30,10 +30,9 @@
 	var/static/list/area/restricted_areas = list(
 		/area/station/command/bridge, 									/*so Captain's remote isn't totally useless*/
 		/area/station/security, 										/*so antag RD/HoP/QM/CMO can't easily screw up the brig doors*/
-		/area/station/ai_monitored/command/nuke_storage, 				/*aka Vault since it's QM's special thing*/
-		/area/station/ai_monitored/turret_protected/ai,					// these are areas exclusive to RD
-		/area/station/ai_monitored/turret_protected/ai_upload_foyer,	// but sometimes mappers might misconfig
-		/area/station/ai_monitored/turret_protected/ai_upload,			// their doors with our several dozen access helpers
+		/area/station/command/vault, 									/*aka Vault since it's QM's special thing*/
+		/area/station/ai/satellite/chamber,	// these are areas exclusive to RD
+		/area/station/ai/upload,			// but sometimes mappers might misconfig their doors with our several dozen access helpers
 	)
 	COOLDOWN_DECLARE(shock_cooldown)
 	/// sound played when mode is switched
@@ -127,9 +126,8 @@
 	region_access = REGION_RESEARCH
 	owner_trim = /datum/id_trim/job/research_director
 	our_domain = list(
-		/area/station/ai_monitored/turret_protected/ai,
-		/area/station/ai_monitored/turret_protected/ai_upload_foyer,
-		/area/station/ai_monitored/turret_protected/ai_upload,
+		/area/station/ai/satellite/chamber,
+		/area/station/ai/upload,
 	)
 
 /obj/item/door_remote/head_of_security
@@ -147,7 +145,7 @@
 	department = "cargo"
 	region_access = REGION_SUPPLY
 	owner_trim = /datum/id_trim/job/quartermaster
-	our_domain = list( /area/station/ai_monitored/command/nuke_storage )
+	our_domain = list( /area/station/command/vault )
 
 /obj/item/door_remote/chief_medical_officer
 	name = "medical door remote"

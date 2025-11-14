@@ -212,12 +212,19 @@
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	//pretending this reaction took two ingredients and not three for its effects
+	var/turf/turf = get_turf(holder.my_atom)
 	var/two_thirds = created_volume / 1.5
 	var/location = get_turf(holder.my_atom)
+	var/lastkey = holder.my_atom.fingerprintslast
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1)
+	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1, emp_source = src)
 	holder.clear_reagents()
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		toucher.log_message("triggered EMP reaction at [AREACOORD(turf)].", LOG_GAME, log_globally = FALSE)
+	..()
+
 
 /datum/chemical_reaction/beesplosion
 	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/uranium/radium = 1)
@@ -414,8 +421,8 @@
 	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/3, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	required_reagents = list(/datum/reagent/sonic_powder = 1)
@@ -425,8 +432,8 @@
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/10, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	results = list(/datum/reagent/phlogiston = 3)

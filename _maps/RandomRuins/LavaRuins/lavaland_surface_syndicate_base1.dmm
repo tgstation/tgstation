@@ -2401,7 +2401,6 @@
 	ailock = 1;
 	control_area = "/area/ruin/syndicate_lava_base/main";
 	dir = 1;
-	icon_state = "control_kill";
 	lethal = 1;
 	name = "Base turret controls";
 	pixel_y = 30;
