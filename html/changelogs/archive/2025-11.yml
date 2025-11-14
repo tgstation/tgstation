@@ -379,3 +379,49 @@
   - code_imp: Cleaned up recycler code.
   timothymtorres:
   - code_imp: Add correct code documentation for object flags
+2025-11-14:
+  Aliceee2ch:
+  - spellcheck: Flash message now starts with a capital letter.
+  ArchBTW:
+  - spellcheck: unfathomable curio "take 5 hits" && grammar
+  - balance: viscerators get PASSMACHINE && PASSFLAP
+  - bugfix: viscerators respect the PASSMOB flag
+  Ghommie:
+  - bugfix: Fixes ear protection equipment doing nothing.
+  - balance: Detonating a flashbang in space or any environment with little to no
+      air no longer stuns anyone NOT on the same tile as the flashbang with loud bangs.
+      Flashing still works as intended though.
+  Melbert:
+  - refactor: Refactored wound treatment (using a laser gun to cauterize a cut, for
+      example). Report anything that doesn't work
+  Neocloudy:
+  - code_imp: '`sound_to_playing_players` now has an argument for taking a volume
+      preference, and it''s applied to security level looping sounds in case any are
+      added.'
+  RikuTheKiller:
+  - refactor: Refactored the entire blood system. Shit is extremely likely to break,
+      so report any issues.
+  - bugfix: Some previously broken blood effects have had fixes. Way too many to jot
+      them all down.
+  - bugfix: Blood trails can no longer be used to duplicate blood.
+  - balance: Blood trails scale directly on your bleeding rate now, alongside the
+      old brute damage scaling.
+  - balance: While you can technically still die from too much blood, reaching that
+      state is now impossible.
+  - balance: The autopsy scanner can now read blood information from husks, similarly
+      to normal health analyzers.
+  SapphicOverload:
+  - rscadd: Added powers to arithmetic circuit components.
+  SmArtKar:
+  - admin: Implemented color matrix and transform modification support for Filterrific
+  necromanceranne:
+  - bugfix: Ashen bows look like they are actually made from bone.
+  paganiy:
+  - balance: Thorns kudzu vines respects armor.
+  - balance: You can protect yourself from toxic kudzu vines by fully covering your
+      body with thick clothing. However, this won't help against toxic thorns.
+  tontyGH:
+  - refactor: Signposts have had their code improved internally. Please make an issue
+      if a signpost that should teleport you no longer can.
+  trazodont:
+  - map: adds visitation shutter control button to icebox perma
