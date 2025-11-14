@@ -3912,6 +3912,10 @@
 /obj/structure/flora/rock,
 /turf/open/floor/asphalt,
 /area/awaymission/beach/heretic)
+"zO" = (
+/mob/living/basic/rabbit,
+/turf/open/floor/wood,
+/area/awaymission/caves/heretic_laboratory_clean)
 "zQ" = (
 /turf/closed/indestructible/reinforced,
 /area/awaymission/beach/heretic)
@@ -16741,7 +16745,7 @@ Ry
 fl
 hK
 KT
-KT
+zO
 KT
 KT
 im
