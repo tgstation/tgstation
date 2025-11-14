@@ -41,8 +41,9 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 				// Start auto-refresh timer during save
 				if(refresh_timer)
 					deltimer(refresh_timer)
-				refresh_timer = addtimer(CALLBACK(src, PROC_REF(auto_refresh)), 1 SECONDS, TIMER_LOOP)
+					refresh_timer = null
 
+				refresh_timer = addtimer(CALLBACK(src, PROC_REF(auto_refresh)), 1 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_LOOP)
 				// Start the save operation asynchronously
 				INVOKE_ASYNC(SSpersistence, TYPE_PROC_REF(/datum/controller/subsystem/persistence, save_persistent_maps))
 
