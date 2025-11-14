@@ -36,12 +36,13 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/datum/wound/possible_bleeding_wound as anything in affected_mob.all_wounds)
+	var/mob/living/carbon/carbon_host = A.affected_mob
+	for(var/datum/wound/possible_bleeding_wound as anything in carbon_host.all_wounds)
 		if(possible_bleeding_wound.blood_flow && !hidden)
 			if(4 > A.stage >= 2)
-				to_chat(affected_mob, span_warning("Your bleeding wounds start to itch."))
+				to_chat(carbon_host, span_warning("Your bleeding wounds start to itch."))
 			if(A.stage >= 4)
-				to_chat(affected_mob, span_warning("Your bleeding wounds itch like crazy as more blood leaves your body."))
+				to_chat(carbon_host, span_warning("Your bleeding wounds itch like crazy as more blood leaves your body."))
 			return
 
 /datum/symptom/bleeding/on_stage_change(datum/disease/advance/A)
@@ -49,14 +50,16 @@
 	if(!.)
 		return
 	if(A.stage >= 4)
-		ADD_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
+		var/mob/living/carbon/carbon_host = A.affected_mob
+		ADD_TRAIT(carbon_host, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
 		if(easybleed)
-			ADD_TRAIT(affected_mob, TRAIT_EASYBLEED, DISEASE_TRAIT)
+			ADD_TRAIT(carbon_host, TRAIT_EASYBLEED, DISEASE_TRAIT)
 
 
 /datum/symptom/bleeding/End(datum/disease/advance/A)
 	. = ..()
 	if(!.)
 		return
-	REMOVE_TRAIT(affected_mob, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
-	REMOVE_TRAIT(affected_mob, TRAIT_EASYBLEED, DISEASE_TRAIT)
+	var/mob/living/carbon/carbon_host = A.affected_mob
+	REMOVE_TRAIT(carbon_host, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
+	REMOVE_TRAIT(carbon_host, TRAIT_EASYBLEED, DISEASE_TRAIT)

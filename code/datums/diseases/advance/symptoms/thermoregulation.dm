@@ -30,10 +30,10 @@
 	. = ..()
 	if(!.)
 		return
-	if(A.stage < 3)
-		return
-	if(!(affected_mob.dna.species.bodytemp_cold_damage_limit < affected_mob.bodytemperature < affected_mob.dna.species.bodytemp_heat_damage_limit))
-		to_chat(affected_mob, span_notice("You feel a [difference >= 0 ? "warmth" : "chill"] spread through your body."))
-	var/difference = affected_mob.bodytemperature - affected_mob.bodytemp_normal
-	var/stage_power = (A.stage == 3) ? power/2 : power // Half as strong at stage 3
-	affected_mob.adjust_bodytemperature(clamp(difference, -stage_power * 10, stage_power * 10))
+	if(A.stage >= 3)
+		var/mob/living/carbon/carbon_host = A.affected_mob
+		var/difference = carbon_host.bodytemperature - carbon_host.dna.species.bodytemp_normal
+		if(!(carbon_host.dna.species.bodytemp_cold_damage_limit < carbon_host.bodytemperature < carbon_host.dna.species.bodytemp_heat_damage_limit)) // No need to spam chat
+			to_chat(carbon_host, span_notice("You feel a [difference >= 0 ? "warmth" : "chill"] spread through your body."))
+		var/stage_power = (A.stage == 3) ? power/2 : power // Half as strong at stage 3
+		carbon_host.adjust_bodytemperature(clamp(difference, -stage_power * 10, stage_power * 10))
