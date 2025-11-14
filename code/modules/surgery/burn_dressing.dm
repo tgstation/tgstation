@@ -27,7 +27,7 @@
 	var/datum/wound/burn/flesh/burn_wound = target.get_bodypart(user.zone_selected).get_wound_type(targetable_wound)
 	// Should be guaranteed to have the wound by this point
 	ASSERT(burn_wound, "[type] on [target] has no burn wound when it should have been guaranteed to have one by can_start")
-	return burn_wound.infestation > 0
+	return burn_wound.infection > 0
 
 //SURGERY STEPS
 
@@ -52,9 +52,9 @@
 
 /// To give the surgeon a heads up how much work they have ahead of them
 /datum/surgery_step/debride/proc/get_progress(mob/user, mob/living/carbon/target, datum/wound/burn/flesh/burn_wound)
-	if(!burn_wound?.infestation || !infestation_removed)
+	if(!burn_wound?.infection || !infestation_removed)
 		return
-	var/estimated_remaining_steps = burn_wound.infestation / infestation_removed
+	var/estimated_remaining_steps = burn_wound.infection / infestation_removed
 	var/progress_text
 
 	switch(estimated_remaining_steps)
@@ -72,7 +72,7 @@
 /datum/surgery_step/debride/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)
 		var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
-		if(burn_wound.infestation <= 0)
+		if(burn_wound.infection <= 0)
 			to_chat(user, span_notice("[target]'s [target.parse_zone_with_bodypart(user.zone_selected)] has no infected flesh to remove!"))
 			surgery.status++
 			repeatable = FALSE
@@ -101,9 +101,9 @@
 		)
 		log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		target.apply_damage(3, BRUTE, surgery.operated_bodypart, wound_bonus = CANT_WOUND, sharpness = SHARP_EDGED, attacking_item = tool)
-		burn_wound.infestation -= infestation_removed
+		burn_wound.infection -= infestation_removed
 		burn_wound.sanitization += sanitization_added
-		if(burn_wound.infestation <= 0)
+		if(burn_wound.infection <= 0)
 			repeatable = FALSE
 	else
 		to_chat(user, span_warning("[target] has no infected flesh there!"))
@@ -124,7 +124,7 @@
 	if(!..())
 		return
 	var/datum/wound/burn/flesh/burn_wound = surgery.operated_wound
-	while(burn_wound && burn_wound.infestation > 0.25)
+	while(burn_wound && burn_wound.infection > 0.25)
 		if(!..())
 			break
 

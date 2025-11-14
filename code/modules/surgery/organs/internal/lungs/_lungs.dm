@@ -911,7 +911,7 @@
 	. = ..()
 	if (breath?.gases[/datum/gas/plasma])
 		var/plasma_pp = breath.get_breath_partial_pressure(breath.gases[/datum/gas/plasma][MOLES])
-		breather_slime.blood_volume += (0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
+		breather_slime.adjust_blood_volume(0.2 * plasma_pp) // 10/s when breathing literally nothing but plasma, which will suffocate you.
 
 /obj/item/organ/lungs/smoker_lungs
 	name = "smoker lungs"

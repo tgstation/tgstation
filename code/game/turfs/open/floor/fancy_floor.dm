@@ -16,7 +16,7 @@
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/wood/broken_states()
@@ -148,7 +148,7 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/grass/broken_states()
@@ -202,7 +202,7 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/fake_snow
@@ -216,7 +216,7 @@
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_ORGANIC
 	slowdown = 1.5
 	bullet_sizzle = TRUE
@@ -251,7 +251,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/fakebasalt/Initialize(mapload)
 	. = ..()
@@ -280,7 +280,7 @@
 	barefootstep = FOOTSTEP_CARPET_BAREFOOT
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/carpet/examine(mob/user)
@@ -867,7 +867,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_TURF_CHASM
 	canSmoothWith = SMOOTH_GROUP_TURF_CHASM
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -893,7 +893,7 @@
 	floor_tile = /obj/item/stack/tile/fakespace
 	layer = SPACE_LAYER
 	plane = PLANE_SPACE
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	damaged_dmi = 'icons/turf/space.dmi'
 
 /turf/open/floor/fakespace/broken_states()

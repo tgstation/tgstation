@@ -49,7 +49,7 @@
 	set_limb(dismembered_part)
 	second_wind()
 	log_wound(victim, src)
-	if(dismembered_part.can_bleed() && wounding_type != WOUND_BURN && victim.blood_volume)
+	if(dismembered_part.can_bleed() && wounding_type != WOUND_BURN && victim.get_blood_volume())
 		victim.spray_blood(attack_direction, severity)
 	dismembered_part.dismember(wounding_type == WOUND_BURN ? BURN : BRUTE, wounding_type = wounding_type)
 	qdel(src)

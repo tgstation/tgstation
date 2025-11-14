@@ -41,7 +41,7 @@ Difficulty: Medium
 	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
 	achievement_type = /datum/award/achievement/boss/blood_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher

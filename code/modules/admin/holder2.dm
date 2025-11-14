@@ -32,7 +32,7 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
-	var/datum/filter_editor/filteriffic
+	var/datum/filter_editor/filterrific
 	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test
 	var/datum/plane_master_debug/plane_debug

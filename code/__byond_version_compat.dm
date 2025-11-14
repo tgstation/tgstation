@@ -13,9 +13,6 @@
 #if (DM_VERSION == 516 && DM_BUILD == 1660)
 #error This version of BYOND (516.1660) has a bug which prevents this codebase from loading properly. If possible, update your BYOND version. Otherwise, visit www.byond.com/download/build to download an older release.
 #endif
-#if (DM_VERSION == 516 && (DM_BUILD == 1670 || DM_BUILD == 1671))
-#error This version of BYOND (516.1671) has a bug which prevents this codebase from compiling. If possible, update your BYOND version. Otherwise, visit www.byond.com/download/build to download an older release.
-#endif
 
 // Keep savefile compatibilty at minimum supported level
 /savefile/byond_version = MIN_COMPILER_VERSION

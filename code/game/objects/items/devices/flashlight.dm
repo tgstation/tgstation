@@ -250,9 +250,11 @@
 	else
 		. += span_info_ml("You press a finger to [patient.p_their()] gums:\n")
 
-	if(patient.blood_volume <= BLOOD_VOLUME_SAFE && patient.blood_volume > BLOOD_VOLUME_OKAY)
+	var/cached_blood_volume = patient.get_blood_volume(apply_modifiers = TRUE)
+
+	if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
 		. += span_danger_ml("Color returns slowly!\n")//low blood
-	else if(patient.blood_volume <= BLOOD_VOLUME_OKAY)
+	else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
 		. += span_danger_ml("Color does not return!\n")//critical blood
 	else
 		. += span_notice_ml("Color returns quickly.\n")//they're okay :D

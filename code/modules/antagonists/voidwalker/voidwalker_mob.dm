@@ -146,6 +146,9 @@
 
 		var/should_attack = try_kidnap(hewmon)
 
+		// Marks the victim with nodeath
+		hewmon.apply_status_effect(/datum/status_effect/void_chomped)
+
 		if(!should_attack)
 			return FALSE
 

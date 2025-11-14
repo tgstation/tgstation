@@ -738,7 +738,7 @@
 	var/mob/user = ui.user
 	add_fingerprint(user)
 	update_last_used(user)
-	if(isAI(user) && !GLOB.cameranet.checkTurfVis(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
+	if(isAI(user) && !SScameras.is_visible_by_cameras(get_turf(src))) //We check if they're an AI specifically here, so borgs/adminghosts/human wand can still access off-camera stuff.
 		to_chat(user, span_warning("You can no longer connect to this device!"))
 		return FALSE
 	return ..()

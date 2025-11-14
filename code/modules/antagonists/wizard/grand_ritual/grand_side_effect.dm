@@ -123,7 +123,7 @@
 /datum/grand_side_effect/emp/trigger(potency, turf/ritual_location, mob/invoker)
 	var/heavy = LERP(0, 3, potency/GRAND_RITUAL_FINALE_COUNT)
 	var/light = LERP(3, 6, potency/GRAND_RITUAL_FINALE_COUNT)
-	empulse(ritual_location, heavy, light)
+	empulse(ritual_location, heavy, light, emp_source = src)
 
 /// Swap locations of nearby mobs arbitrarily and confuse them
 /datum/grand_side_effect/translocate

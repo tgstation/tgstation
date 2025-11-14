@@ -546,3 +546,4 @@
 	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
 		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace. Or a road roller, if one happened to hit you.
 	return ..()
+

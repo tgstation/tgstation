@@ -1,4 +1,0 @@
-author: "mcbalaam"
-delete-after: True
-changes:
-  - bugfix: "Turret controls are visible again"

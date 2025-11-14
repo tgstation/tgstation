@@ -357,8 +357,7 @@
 /obj/item/organ/liver/bloody/on_life(seconds_per_tick, times_fired)
 	. = ..()
 
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += 4 * seconds_per_tick
+	owner.adjust_blood_volume(4 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 /// Convert all non-alcoholic drinks into alcohol
 /obj/item/organ/liver/distillery

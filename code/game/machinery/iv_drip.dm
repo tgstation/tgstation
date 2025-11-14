@@ -264,7 +264,7 @@
 			return
 
 		// If the human is losing too much blood, beep.
-		if(attached_mob.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+		if(attached_mob.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_SAFE && prob(5))
 			audible_message(span_hear("[src] beeps loudly."))
 			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 		var/atom/movable/target = use_internal_storage ? src : reagent_container

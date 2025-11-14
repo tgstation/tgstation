@@ -185,6 +185,7 @@
 
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_XRAY
 	update_appearance()
+	SScameras.update_visibility(src)
 
 /obj/machinery/camera/proc/removeXRay(ignore_malf_upgrades)
 	if(!ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.

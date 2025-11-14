@@ -41,8 +41,8 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		CRASH("cause_hallucination called with no arguments.")
 
 	var/datum/hallucination/hallucination_type = raw_args[HALLUCINATION_ARG_TYPE] // first arg is the type always
-	if(!ispath(hallucination_type))
-		CRASH("cause_hallucination was given a non-hallucination type.")
+	if(!ispath(hallucination_type, /datum/hallucination))
+		CRASH("cause_hallucination was given a non-hallucination type. (Got: [hallucination_type || "null"])")
 
 	var/hallucination_source = raw_args[HALLUCINATION_ARG_SOURCE] // and second arg, the source
 	var/datum/hallucination/new_hallucination

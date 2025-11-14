@@ -119,7 +119,7 @@
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "bg" = (
-/obj/structure/no_effect_signpost{
+/obj/structure/signpost{
 	name = "if youre reading this you stink and also made by jimmyl"
 	},
 /turf/open/floor/bluespace,

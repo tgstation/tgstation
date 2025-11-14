@@ -38,12 +38,13 @@ type Data = {
   recordingRecipe: string[];
   recipeReagents: string[];
   beaker: TransferableBeaker;
+  hasBeakerInHand: BooleanLike;
 };
 
 export const ChemDispenser = (props) => {
   const { act, data } = useBackend<Data>();
   const recording = !!data.recordingRecipe;
-  const { recipeReagents = [], recipes = [], beaker } = data;
+  const { recipeReagents = [], recipes = [], beaker, hasBeakerInHand } = data;
   const [showPhCol, setShowPhCol] = useState(false);
 
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
@@ -228,12 +229,38 @@ export const ChemDispenser = (props) => {
             </Button>
           ))}
         >
-          <BeakerDisplay
-            beaker={beaker}
-            title_label={recording && 'Virtual beaker'}
-            replace_contents={recordedContents}
-            showpH={data.showpH}
-          />
+          {beaker || recording ? (
+            <BeakerDisplay
+              beaker={beaker}
+              title_label={recording && 'Virtual beaker'}
+              replace_contents={recordedContents}
+              showpH={data.showpH}
+            />
+          ) : (
+            <Box
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Box color="label">No beaker loaded.</Box>
+              <Button
+                icon="eject"
+                onClick={() => act('insert')}
+                style={{
+                  opacity: data.hasBeakerInHand ? 1 : 0.5,
+                }}
+                tooltip={
+                  !data.hasBeakerInHand &&
+                  'You need to hold a container in your hand'
+                }
+                tooltipPosition="left-start"
+              >
+                Insert
+              </Button>
+            </Box>
+          )}
         </Section>
       </Window.Content>
     </Window>

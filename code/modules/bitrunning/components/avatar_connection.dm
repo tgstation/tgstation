@@ -69,6 +69,7 @@
 		avatar.fully_replace_character_name(newname = alias)
 
 	update_avatar_id()
+	avatar.mind.set_assigned_role(SSjob.get_job_type(/datum/job/bit_avatar))
 
 	for(var/skill_type in old_mind.known_skills)
 		avatar.mind.set_experience(skill_type, old_mind.get_skill_exp(skill_type), silent = TRUE)

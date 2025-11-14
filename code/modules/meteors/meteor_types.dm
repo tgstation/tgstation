@@ -376,7 +376,7 @@
 /obj/effect/meteor/emp/meteor_effect()
 	..()
 	playsound(src, 'sound/items/weapons/zapbang.ogg', 100, TRUE, -1)
-	empulse(src, 3, 8)
+	empulse(src, 3, 8, emp_source = src)
 
 //Meaty Ore
 /obj/effect/meteor/meaty

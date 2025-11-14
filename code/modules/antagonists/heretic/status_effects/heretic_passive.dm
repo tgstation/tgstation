@@ -303,8 +303,7 @@
 	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)
 	healed_amount += owner.adjustOxyLoss(-2, FALSE)
 	healed_amount += owner.adjustToxLoss(-2, FALSE, TRUE)
-	if(!HAS_TRAIT(owner, TRAIT_NOBLOOD))
-		owner.blood_volume += 2.5
+	owner.adjust_blood_volume(2.5)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_eater = owner
@@ -536,8 +535,7 @@
 	var/stun_reduction = 0.5 * passive_level * delta_time
 	source.AdjustAllImmobility(-stun_reduction)
 	// Heals blood loss
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * delta_time
+	source.adjust_blood_volume(2.5 * delta_time, maximum = BLOOD_VOLUME_NORMAL)
 	for(var/datum/reagent/reagent as anything in source.reagents.reagent_list)
 		source.reagents.remove_reagent(reagent.type, 2 * reagent.purge_multiplier * REM * seconds_per_tick)
 

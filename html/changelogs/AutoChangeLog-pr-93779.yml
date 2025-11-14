@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an oversight where the wardrobe system tries to delete modsuit parts when stashing the modsuit"

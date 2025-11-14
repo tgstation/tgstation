@@ -205,6 +205,6 @@
 */
 /obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
 	if(oldLoc != get_turf(src))
-		GLOB.cameranet.updatePortableCamera(chassis_camera, MECH_CAMERA_BUFFER)
+		SScameras.update_portable_camera(chassis_camera, MECH_CAMERA_BUFFER)
 	updating = FALSE
 #undef MECH_CAMERA_BUFFER

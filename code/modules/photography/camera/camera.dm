@@ -191,17 +191,11 @@
 
 /// Check whether an AI could take a picture of the target turf.
 /obj/item/camera/proc/can_ai_target(turf/target_turf)
-	if(!GLOB.cameranet.checkTurfVis(target_turf))
-		return FALSE
-	return TRUE
+	return SScameras.is_visible_by_cameras(target_turf)
 
 /// Check whether a mob could take a picture of the target turf.
 /obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
-	var/user_view = user.client ? user.client.view : WIDESCREEN_VIEWPORT_SIZE
-	var/user_eye = user.client ? user.client.eye : user
-	if(!(target_turf in get_hear(user_view, user_eye)))
-		return FALSE
-	return TRUE
+	return (target_turf in get_hear_turfs(user.client?.view || world.view, user.client?.eye || user))
 
 /obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// Always skip on storage and tables
@@ -260,18 +254,17 @@
 	var/list/desc = list("This is a photo of an area of [size_x+1] meters by [size_y+1] meters.")
 	var/list/mobs_spotted = list()
 	var/list/dead_spotted = list()
-	var/list/seen
-	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
-	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user?.client ? user.client.eye : target
-	seen = get_hear(viewr, viewc)
+	var/list/viewlist = getviewsize(user?.client?.view || world.view)
+	var/view_range = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
+	var/viewer = user?.client?.eye || user || target // not sure why target is a fallback
+	var/list/seen = get_hear_turfs(view_range, viewer)
 	var/list/turfs = list()
 	var/list/mobs = list()
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
 	///list of human names taken on picture
 	var/list/names = list()
-	var/cameranet_user = isAI(user) || istype(viewc, /mob/eye/camera)
+	var/cameranet_user = isAI(user) || istype(viewer, /mob/eye/camera)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
@@ -279,7 +272,7 @@
 		if(isnull(seen_placeholder))
 			continue
 
-		if(cameranet_user && !GLOB.cameranet.checkTurfVis(seen_placeholder))
+		if(cameranet_user && !SScameras.is_visible_by_cameras(seen_placeholder))
 			continue
 		if(!cameranet_user && !(seen_placeholder in seen))
 			continue

@@ -63,8 +63,6 @@
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
 	var/list/treatable_by
-	/// Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher
-	var/list/treatable_by_grabbed
 	/// Any tools with any of the flags in this list will be usable to try directly treating this wound
 	var/list/treatable_tools
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
@@ -269,6 +267,7 @@
 		UnregisterSignal(victim, COMSIG_QDELETING)
 		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
 		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
+		UnregisterSignal(victim, COMSIG_ATOM_ITEM_INTERACTION)
 		if (actionspeed_mod)
 			victim.remove_actionspeed_modifier(actionspeed_mod) // no need to qdelete it, just remove it from our victim
 
@@ -277,7 +276,7 @@
 	if(victim)
 		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
 		RegisterSignals(victim, list(COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
-
+		RegisterSignal(victim, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(interact_try_treating))
 		if (limb)
 			start_limping_if_we_should() // the status effect already handles removing itself
 			add_or_remove_actionspeed_mod()
@@ -459,69 +458,90 @@
 		if(WOUND_SEVERITY_LOSS)
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_LOSS)
 
+/datum/wound/proc/interact_try_treating(datum/source, mob/living/user, obj/item/tool, ...)
+	SIGNAL_HANDLER
+
+	return try_treating(tool, user)
+
 /**
- * try_treating() is an intercept run from [/mob/living/carbon/proc/attackby] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
+ * Attempt to treat the wound with the given item/tool by the given user
+ * This proc leads into [/datum/wound/proc/treat]
  *
- * This proc leads into [/datum/wound/proc/treat] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
- * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
+ * You can specify what items or tools you want to be intercepted
+ * with var/list/treatable_by and var/treatable_tool,
+ * then if an item fulfills one of those requirements and our wound claims it first,
+ * it goes over to treat() and treat_self().
  *
  * Arguments:
  * * I: The item we're trying to use
  * * user: The mob trying to use it on us
  */
-/datum/wound/proc/try_treating(obj/item/I, mob/user)
-	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
-	if(!I || limb.body_zone != user.zone_selected)
-		return FALSE
+/datum/wound/proc/try_treating(obj/item/tool, mob/living/user)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(isliving(user))
-		var/mob/living/tendee = user
-		if(I.force && tendee.combat_mode)
-			return FALSE
+	if(limb.body_zone != user.zone_selected)
+		return NONE
 
-	if(!item_can_treat(I, user))
-		return FALSE
+	if(user.combat_mode && tool.force)
+		return NONE
 
-	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
+	if(!item_can_treat(tool, user))
+		return NONE
+
+	// now that we've determined we have a valid attempt at treating,
+	// we can stomp on their dreams if we're already interacting with the patient or if their part is obscured
 	if(DOING_INTERACTION_WITH_TARGET(user, victim))
 		to_chat(user, span_warning("You're already interacting with [victim]!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	// next we check if the bodypart in actually accessible (not under thick clothing). We skip the species trait check since skellies
 	// & such may need to use bone gel but may be wearing a space suit for..... whatever reason a skeleton would wear a space suit for
 	if(ishuman(victim))
 		var/mob/living/carbon/human/victim_human = victim
 		if(!victim_human.try_inject(user, injection_flags = INJECT_CHECK_IGNORE_SPECIES | INJECT_TRY_SHOW_ERROR_MESSAGE))
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
-	// lastly, treat them
-	return treat(I, user) // we allow treat to return a value so it can control if the item does its normal interaction or not
+	INVOKE_ASYNC(src, PROC_REF(treat), tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
+	// surgeries take priority
+	for(var/datum/surgery/operation as anything in victim.surgeries)
+		if(isnull(operation.operated_bodypart) || operation.operated_bodypart != limb)
+			continue
+		var/datum/surgery_step/next_step = operation.get_surgery_next_step()
+		if(isnull(next_step))
+			continue
+		if(potential_treater.tool_behaviour in next_step.implements)
+			return FALSE
+		if(is_type_in_list(potential_treater, next_step.implements))
+			return FALSE
+
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE
-	if((TOOL_CAUTERY in treatable_tools) && potential_treater.get_temperature() && (user == victim)) // allow improvised cauterization on yourself without an aggro grab
-		return TRUE
 	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
-	if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(potential_treater, user))
+	if((user == victim || (user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)) && check_grab_treatments(potential_treater, user))
 		return TRUE
 	// failing THAT, we check if we have a generally allowed item
-	for(var/allowed_type in treatable_by)
-		if(istype(potential_treater, allowed_type))
-			return TRUE
-
-/// Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]). Treatment is still is handled in [/datum/wound/proc/treat]
-/datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
+	if(is_type_in_list(potential_treater, treatable_by))
+		return TRUE
 	return FALSE
 
-/// Like try_treating() but for unhanded interactions, used by joint dislocations for manual bodypart chiropractice for example. Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
+/// Return TRUE if we have an item that can only be used while aggro grabbed
+/// (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling]).
+/// Treatment is still is handled in [/datum/wound/proc/treat]
+/datum/wound/proc/check_grab_treatments(obj/item/tool, mob/user)
+	return FALSE
+
+/// Like try_treating() but for unhanded interactions, used by joint dislocations for manual bodypart chiropractice for example.
+/// Ignores thick material checks since you can pop an arm into place through a thick suit unlike using sutures
 /datum/wound/proc/try_handling(mob/living/user)
 	return FALSE
 
 /// Someone is using something that might be used for treating the wound on this limb
-/datum/wound/proc/treat(obj/item/I, mob/user)
+/datum/wound/proc/treat(obj/item/tool, mob/user)
 	return
 
 /// If var/processing is TRUE, this is run on each life tick

@@ -22,6 +22,10 @@
 /datum/element/watery_tile/proc/enter_water(atom/source, atom/movable/entered)
 	SIGNAL_HANDLER
 
+	if(QDELETED(entered))
+		return
+	if(HAS_TRAIT(entered, TRAIT_IMMERSED) || HAS_TRAIT(entered, TRAIT_WALLMOUNTED))
+		return
 	RegisterSignal(entered, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
 	if(isliving(entered))
 		RegisterSignal(entered, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(dip_out))

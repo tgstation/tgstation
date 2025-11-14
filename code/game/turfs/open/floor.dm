@@ -16,7 +16,7 @@
 
 	thermal_conductivity = 0.02
 	heat_capacity = 20000
-	tiled_dirt = TRUE
+	tiled_turf = TRUE
 
 
 	overfloor_placed = TRUE

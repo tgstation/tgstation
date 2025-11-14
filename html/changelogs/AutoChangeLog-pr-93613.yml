@@ -1,4 +1,0 @@
-author: "L0pz"
-delete-after: True
-changes:
-  - qol: "Messages in drone comms appear with their own color in chat"

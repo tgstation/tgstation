@@ -38,7 +38,7 @@ Difficulty: Hard
 	crusher_loot = /obj/item/crusher_trophy/wendigo_horn
 	wander = FALSE
 	del_on_death = FALSE
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	achievement_type = /datum/award/achievement/boss/wendigo_kill
 	crusher_achievement_type = /datum/award/achievement/boss/wendigo_crusher
 	score_achievement_type = /datum/award/score/wendigo_score

@@ -23,6 +23,8 @@
 	var/active_force = 30
 	/// Throwforce while active.
 	var/active_throwforce = 20
+	/// The throw speed of the weapon when on
+	var/active_throw_speed = 4
 	/// Sharpness while active.
 	var/active_sharpness = SHARP_EDGED
 	/// Hitsound played attacking while active.
@@ -61,7 +63,7 @@
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		throw_speed_on = 4, \
+		throw_speed_on = active_throw_speed, \
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
@@ -156,6 +158,7 @@
 
 	active_force = 150
 	active_throwforce = 30
+	active_throw_speed = 3
 	active_w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/melee/energy/axe/make_transformable()
@@ -163,7 +166,7 @@
 		/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
-		throw_speed_on = throw_speed, \
+		throw_speed_on = active_throw_speed, \
 		sharpness_on = sharpness, \
 		w_class_on = active_w_class, \
 	)
@@ -384,7 +387,7 @@
 	icon_angle = 0
 
 /obj/item/melee/energy/sword/surplus
-	name = "\improper Type I 'Iaito' energy sword"
+	name = "\improper Pattern I 'Iaito' energy sword"
 	desc = "Oversized, overengineered, and somehow still mass-produced. The twin energy blades, theoretically, help make up for the poor cutting plane the emitter generates. \
 		When there are no more heroes in a desperate struggle, it's kill or be killed."
 	icon_state = "surplus_e_sword"
@@ -396,6 +399,7 @@
 	inhand_y_dimension = 64
 	active_force = 15 // This force is augmented by the state of our target.
 	active_throwforce = 15
+	active_throw_speed = 3
 	alt_continuous = list("whacks", "smacks", "bashes")
 	alt_simple = list("whack", "smack", "bash")
 	alt_sharpness = NONE
@@ -499,6 +503,20 @@
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) || charge <= 0)
 		return
 
+	expend_charge(user)
+
+/obj/item/melee/energy/sword/surplus/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(prob(final_block_chance) && charge)
+		expend_charge(owner)
+		return TRUE
+
+/obj/item/melee/energy/sword/surplus/proc/expend_charge(mob/user)
+	if(!charge) // not that this will ever get here without charge, but...
+		return
+
 	charge--
 	if(charge <= 0)
 		user.balloon_alert(user, "out of charge!")
@@ -531,19 +549,16 @@
 	armour_penetration = 0
 	wound_bonus = -10
 	demolition_mod = 1
-	embed_type = /datum/embedding/holy_esword
 	sword_color_icon = "blue"
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 	active_force = 18
 	active_throwforce = 10
+	active_throw_speed = 3
 	alt_force_mod = -3
 
 /obj/item/melee/energy/sword/nullrod/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/nullrod_core)
-
-/datum/embedding/holy_esword
-	embed_chance = 0
 
 /obj/item/melee/energy/sword/nullrod/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))

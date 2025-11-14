@@ -289,7 +289,7 @@
 
 /obj/item/mod/module/emp_shield/pulse/on_use(mob/activator)
 	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE)
-	empulse(src, heavy_range = 4, light_range = 6)
+	empulse(src, heavy_range = 4, light_range = 6, emp_source = src)
 	drain_power(use_energy_cost)
 
 /// Ninja Status Readout - Like the normal status display (see the base type), but with a clock.

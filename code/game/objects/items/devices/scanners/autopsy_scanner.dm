@@ -187,31 +187,32 @@
 
 	// Blood Info
 	if(HAS_TRAIT(scanned, TRAIT_HUSK))
-		autopsy_information += "Blood can't be found, subject is husked by: "
+		autopsy_information += "Subject is husked by: "
 		if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN))
 			autopsy_information += "Severe burns.</br>"
 		else if (HAS_TRAIT_FROM(scanned, TRAIT_HUSK, CHANGELING_DRAIN))
 			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
 		else
 			autopsy_information += "Unknown causes.</br>"
-	else
-		var/datum/blood_type/blood_type = scanned.get_bloodtype()
-		if(blood_type)
-			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type_format
-			var/level_format
-			if(scanned.blood_volume <= BLOOD_VOLUME_SAFE && scanned.blood_volume > BLOOD_VOLUME_OKAY)
-				level_format = "LOW [blood_percent]%, [scanned.blood_volume] cl"
-			else if(scanned.blood_volume <= BLOOD_VOLUME_OKAY)
-				level_format = "<u>CRITICAL [blood_percent]%</u>, [scanned.blood_volume] cl"
-			else
-				level_format = "[blood_percent]%, [scanned.blood_volume] cl"
-			if(blood_type.get_type())
-				blood_type_format = "type: [blood_type.get_type()]"
-			autopsy_information += "<b>[blood_type.get_blood_name()] level:</b> [level_format], [blood_type_format]</br>"
-		var/blood_alcohol_content = scanned.get_blood_alcohol_content()
-		if(blood_alcohol_content > 0)
-			autopsy_information += "&rdsh; [blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</br>"
+
+	var/datum/blood_type/blood_type = scanned.get_bloodtype()
+	if(blood_type)
+		var/cached_blood_volume = scanned.get_blood_volume(apply_modifiers = TRUE)
+		var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/blood_type_format
+		var/level_format
+		if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
+			level_format = "LOW [blood_percent]%, [cached_blood_volume] cl"
+		else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
+			level_format = "<u>CRITICAL [blood_percent]%</u>, [cached_blood_volume] cl"
+		else
+			level_format = "[blood_percent]%, [cached_blood_volume] cl"
+		if(blood_type.get_type())
+			blood_type_format = "type: [blood_type.get_type()]"
+		autopsy_information += "<b>[blood_type.get_blood_name()] level:</b> [level_format], [blood_type_format]</br>"
+	var/blood_alcohol_content = scanned.get_blood_alcohol_content()
+	if(blood_alcohol_content > 0)
+		autopsy_information += "&rdsh; [blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</br>"
 	autopsy_information += "<hr>"
 
 	autopsy_information += "<u>Chemical Data:</u></br>"

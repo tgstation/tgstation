@@ -199,7 +199,7 @@
 
 /// Validates whether the target turf can be interacted with.
 /obj/machinery/computer/camera_advanced/xenobio/proc/validate_turf(mob/living/user, turf/open/target_turf)
-	if(!GLOB.cameranet.checkTurfVis(target_turf))
+	if(!SScameras.is_visible_by_cameras(target_turf))
 		target_turf.balloon_alert(user, "outside of view!")
 		return FALSE
 

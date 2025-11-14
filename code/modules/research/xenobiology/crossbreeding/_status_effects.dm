@@ -715,12 +715,12 @@
 	if(healthcheck && (healthcheck - owner.health) > 5)
 		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevel = owner.z, extended_safety_checks = TRUE)
+		var/turf/emergency_turf = find_safe_turf(owner.z, extended_safety_checks = TRUE)
 		var/range = 0
-		if(!F)
-			F = get_turf(owner)
+		if(!emergency_turf)
+			emergency_turf = get_turf(owner)
 			range = 50
-		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
+		if(do_teleport(owner, emergency_turf, range, channel = TELEPORT_CHANNEL_BLUESPACE))
 			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)

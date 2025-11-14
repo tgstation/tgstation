@@ -5,6 +5,8 @@
 	//Traits that register add and remove
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AGENDER), PROC_REF(on_agender_trait_loss))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBLOOD), PROC_REF(on_noblood_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_NOBLOOD), PROC_REF(on_noblood_trait_loss))
 
 	//Traits that register add only
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
@@ -33,6 +35,26 @@
 
 	var/datum/dna_block/identity/gender/to_update = GLOB.dna_identity_blocks[/datum/dna_block/identity/gender]
 	to_update.apply_to_mob(src, src.dna.unique_identity)
+
+/**
+ * On gain of TRAIT_NOBLOOD
+ *
+ * This will make the mob update its blood state.
+ */
+/mob/living/carbon/proc/on_noblood_trait_gain(datum/source)
+	SIGNAL_HANDLER
+
+	update_blood_status()
+
+/**
+ * On removal of TRAIT_NOBLOOD
+ *
+ * This will make the mob update its blood state.
+ */
+/mob/living/carbon/proc/on_noblood_trait_loss(datum/source)
+	SIGNAL_HANDLER
+
+	update_blood_status()
 
 /**
  * On gain of TRAIT_NOBREATH

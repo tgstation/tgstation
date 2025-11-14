@@ -413,18 +413,25 @@
 
 		equipped.update_ID_card()
 
+	if(!pda_slot) //This job outfit doesn't have a PDA.
+		return
+
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
+	if(pda && !istype(pda)) //we found something but it isn't a PDA, check if it's inside it instead.
+		pda = locate() in pda
 
-	if(istype(pda))
-		pda.imprint_id(equipped.real_name, equipped_job.title)
-		pda.update_ringtone(equipped_job.job_tone)
-		pda.UpdateDisplay()
+	if(!istype(pda)) //We couldn't find a PDA at all.
+		stack_trace("pda_slot was set but we couldn't find a PDA!")
+		return
 
-		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
+	pda.imprint_id(equipped.real_name, equipped_job.title)
+	pda.update_ringtone(equipped_job.job_tone)
+	pda.UpdateDisplay()
 
-		if(equipped_client)
-			pda.update_pda_prefs(equipped_client)
+	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
 
+	if(equipped_client)
+		pda.update_pda_prefs(equipped_client)
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

@@ -294,6 +294,16 @@
 	. = ..()
 	set_holdable(/obj/item/melee/parsnip_sabre)
 
+/datum/storage/gladius_belt
+	max_slots = 1
+	do_rustle = FALSE
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	click_alt_open = FALSE
+
+/datum/storage/gladius_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(/obj/item/claymore/gladius)
+
 ///Plant belt
 /datum/storage/plant_belt
 	max_slots = 6

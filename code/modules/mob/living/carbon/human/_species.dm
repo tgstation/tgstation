@@ -354,8 +354,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Normalizes blood in a human if it is excessive. If it is above BLOOD_VOLUME_NORMAL, this will clamp it to that value. It will not give the human more blodo than they have less than this value.
  */
 /datum/species/proc/normalize_blood(mob/living/carbon/human/blood_possessing_human)
-	var/normalized_blood_values = max(blood_possessing_human.blood_volume, 0, BLOOD_VOLUME_NORMAL)
-	blood_possessing_human.blood_volume = normalized_blood_values
+	blood_possessing_human.set_blood_volume(min(blood_possessing_human.get_blood_volume(), BLOOD_VOLUME_NORMAL))
 
 /**
  * Proc called when a carbon becomes this species.

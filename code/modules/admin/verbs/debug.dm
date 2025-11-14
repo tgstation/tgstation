@@ -320,7 +320,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for vario
 			areas_with_intercom.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 		var/area/A = get_area(C)
 		if(!A)
 			dat += "Skipped over [C] in invalid location, [C.loc].<br>"
@@ -615,7 +615,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", sort_list(names))
+	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", names)
 	var/data = names[ruinname]
 	if (!data)
 		return

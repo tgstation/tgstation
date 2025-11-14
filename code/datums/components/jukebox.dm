@@ -100,7 +100,7 @@
 			var/datum/track/new_track = new()
 			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
 			var/list/track_data = splittext(track_file, "+")
-			if(length(track_data) < 3)
+			if(length(track_data) < 3 || !IS_SOUND_FILE(new_track.song_path))
 				continue
 			new_track.song_name = track_data[1]
 			new_track.song_length = text2num(track_data[2])

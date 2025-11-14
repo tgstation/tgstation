@@ -247,9 +247,12 @@
 	if(stabilization_available && owner.health <= owner.crit_threshold)
 		stabilize_heart()
 
-	if(bleed_prevention && ishuman(owner) && owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Wound healing is intentionally tied to blood volume.
+	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
-		wounded_owner.blood_volume += 2 * seconds_per_tick
+
+		wounded_owner.adjust_blood_volume(2 * seconds_per_tick)
+
 		if(toxification_probability && prob(toxification_probability))
 			wounded_owner.adjustToxLoss(1 * seconds_per_tick, updating_health = FALSE)
 

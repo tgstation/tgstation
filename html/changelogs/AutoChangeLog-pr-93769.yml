@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix locked secure safes not showing correct UI"

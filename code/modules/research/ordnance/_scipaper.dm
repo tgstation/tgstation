@@ -102,12 +102,12 @@
 	if(!tier || !experiment_path || !tracked_variable)
 		return FALSE
 	var/gain = calculate_gains(tier)
-	for (var/gain_type in 1 to gains.len)
-		gains[gain_type] = gain
+	for (var/gain_index in gains)
+		gains[gain_index] = gain
 		if(!partner_path)
 			continue
 		var/datum/scientific_partner/partner = locate(partner_path) in SSresearch.scientific_partners
-		gains[gain_type] *= partner.multipliers[gain_type]
+		gains[gain_index] *= partner.multipliers[gain_index]
 
 /** Fully check if our paper have all the required variables, and prevent duplicate papers being published in the same tier.
  * Things to check: tier, gain, and partner here. ex_path and record datums in subtypes.
@@ -151,23 +151,23 @@
 /datum/scientific_paper/proc/return_gist()
 	var/list/gist = list()
 	var/list/transcripted_gains = list(SCIPAPER_COOPERATION_INDEX, SCIPAPER_FUNDING_INDEX)
-	for (var/index in 1 to transcripted_gains.len)
+	for (var/gain_index in transcripted_gains)
 		if (!gains)
-			transcripted_gains[index] = "None"
+			transcripted_gains[gain_index] = "None"
 			continue
-		switch (round(gains[index]))
+		switch (round(gains[gain_index]))
 			if(-INFINITY to 0)
-				transcripted_gains[index] = "None"
+				transcripted_gains[gain_index] = "None"
 			if(1 to 24)
-				transcripted_gains[index] = "Little"
+				transcripted_gains[gain_index] = "Little"
 			if(25 to 49)
-				transcripted_gains[index] = "Moderate"
+				transcripted_gains[gain_index] = "Moderate"
 			if(50 to 99)
-				transcripted_gains[index] = "Significant"
+				transcripted_gains[gain_index] = "Significant"
 			if(100 to INFINITY)
-				transcripted_gains[index] = "Huge"
+				transcripted_gains[gain_index] = "Huge"
 			else
-				transcripted_gains[index] = "Undefined"
+				transcripted_gains[gain_index] = "Undefined"
 	gist["gains"] = transcripted_gains
 	gist["title"] = title
 	gist["author"] = author

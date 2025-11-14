@@ -82,7 +82,7 @@
 	if(!isnull(broken_flooring))
 		return
 	var/turf/T = get_turf(src)
-	if(T.tiled_dirt && is_tileable)
+	if(T.tiled_turf && is_tileable)
 		icon = 'icons/effects/dirt.dmi'
 		icon_state = "dirt-0"
 		smoothing_flags = SMOOTH_BITMASK

@@ -202,6 +202,24 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+/obj/item/clothing/neck/robe_cape
+	name = "robe cape"
+	desc = "A comfortable cape, draped down your back and held around your neck with a brooch."
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "/obj/item/clothing/neck/robe_cape"
+	post_init_icon_state = "robe_cape"
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	worn_icon_state = "robe_cape"
+	abstract_type = /obj/item/clothing/neck
+	greyscale_config = /datum/greyscale_config/robe_cape
+	greyscale_config_worn = /datum/greyscale_config/robe_cape/worn
+	greyscale_colors = "#2a2844"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/neck/robe_cape/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
+
 /obj/item/clothing/neck/tie/disco
 	name = "horrific necktie"
 	icon = 'icons/obj/clothing/neck.dmi'
@@ -295,7 +313,7 @@
 					heart_noises = FALSE
 				else if(having_heart_attack)
 					render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
-				else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
+				else if(heart.damage > 10 || carbon_patient.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
 				else
 					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
@@ -343,8 +361,10 @@
 				render_list += span_info("You carefully press your fingers to [carbon_patient]'s [body_part]:\n")
 				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
 
+			var/cached_blood_volume = carbon_patient.get_blood_volume(apply_modifiers = TRUE)
+
 			//assess pulse (heart & blood level)
-			if(isnull(heart) || !heart.is_beating() || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
+			if(isnull(heart) || !heart.is_beating() || cached_blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
 				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
 			else
 				if(having_heart_attack)
@@ -354,7 +374,7 @@
 				else
 					heart_strength = span_notice("regular")//they're okay :D
 
-				if((carbon_patient.blood_volume <= BLOOD_VOLUME_SAFE && carbon_patient.blood_volume > BLOOD_VOLUME_OKAY) || having_heart_attack)
+				if((cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY) || having_heart_attack)
 					pulse_pressure = span_danger("thready")//low blood
 				else
 					pulse_pressure = span_notice("strong")//they're okay :D

@@ -61,7 +61,7 @@ Difficulty: Hard
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	crusher_loot = /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	replace_crusher_drop = TRUE
-	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
+	default_blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	gps_name = "Bloody Signal"
 	achievement_type = /datum/award/achievement/boss/bubblegum_kill
 	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher

@@ -24,7 +24,6 @@
 	name = "Piercing Wound"
 	sound_effect = 'sound/items/weapons/slice.ogg'
 	processes = TRUE
-	treatable_by = list(/obj/item/stack/medical/suture)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE | CAN_BE_GRASPED)
@@ -45,13 +44,13 @@
 
 /datum/wound/pierce/bleed/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
-	if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+	if(limb.can_bleed() && attack_direction && victim.get_blood_volume() > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
 
 	return ..()
 
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.blood_volume || !prob(internal_bleeding_chance + wounding_dmg))
+	if(victim.stat == DEAD || (wounding_dmg < 5) || !limb.can_bleed() || !victim.get_blood_volume() || !prob(internal_bleeding_chance + wounding_dmg))
 		return
 	if(limb.current_gauze?.splint_factor)
 		wounding_dmg *= (1 - limb.current_gauze.splint_factor)
@@ -131,13 +130,14 @@
 		to_chat(victim, span_green("The holes on your [limb.plaintext_zone] have [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
 		qdel(src)
 
-/datum/wound/pierce/bleed/check_grab_treatments(obj/item/I, mob/user)
-	if(I.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
-		return TRUE
+/datum/wound/pierce/bleed/check_grab_treatments(obj/item/tool, mob/user)
+	// if we're using something hot but not a cautery, we need to be aggro grabbing them first,
+	// so we don't try treating someone we're eswording
+	return tool.get_temperature()
 
-/datum/wound/pierce/bleed/treat(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		return tool_cauterize(I, user)
+/datum/wound/pierce/bleed/treat(obj/item/tool, mob/user)
+	if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature())
+		tool_cauterize(tool, user)
 
 /datum/wound/pierce/bleed/on_xadone(power)
 	. = ..()
@@ -179,8 +179,7 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > 0)
-		return try_treating(I, user)
-	return TRUE
+		try_treating(I, user)
 
 /datum/wound_pregen_data/flesh_pierce
 	abstract = TRUE

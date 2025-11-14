@@ -151,8 +151,7 @@
 			var/mob/living/basic/basic_candidate = candidate
 			basic_candidate.adjust_health(-simple_heal * seconds_per_tick, updating_health = FALSE)
 
-		if (candidate.blood_volume < BLOOD_VOLUME_NORMAL)
-			candidate.blood_volume += blood_heal * seconds_per_tick
+		candidate.adjust_blood_volume(blood_heal * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 		candidate.updatehealth()
 
