@@ -7,7 +7,7 @@
 	if(stat == DEAD) // what is dead may never die
 		return FALSE
 
-	return TRUE
+	return .
 
 /mob/living/basic/get_save_vars()
 	. = ..()
