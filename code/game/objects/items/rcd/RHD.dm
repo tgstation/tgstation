@@ -179,7 +179,7 @@
 			. += "[icon_state]_charge[ratio]"
 
 /**
- * Uses resource to do some action
+ * Uses resource to do some action. Returns amount of resource used or TRUE/FALSE if only an dry run is required
  *
  * Arguments
  * * amount - the amount of resource to use
@@ -198,7 +198,6 @@
 			matter -= amount
 			update_appearance()
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		return TRUE
 	else
 		if(!silo_mats.can_use_resource(user_data = ID_DATA(user)))
 			if(user)
@@ -209,9 +208,9 @@
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
 		if(!dry_run)
-			silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
+			amount = silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-		return TRUE
+	return dry_run ? TRUE : amount
 
 /obj/item/construction/ui_static_data(mob/user)
 	. = list()

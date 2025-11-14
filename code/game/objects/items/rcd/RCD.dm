@@ -497,10 +497,10 @@
 	if(!borgy.cell)
 		balloon_alert(user, "no cell found!")
 		return FALSE
-	if(!dry_run && !borgy.cell.use(amount * energyfactor))
+	if(borgy.cell.charge >= (amount * energyfactor))
 		balloon_alert(user, "insufficient charge!")
 		return FALSE
-	return TRUE
+	return dry_run ? TRUE : borgy.cell.use(amount * energyfactor)
 
 /obj/item/construction/rcd/borg/syndicate
 	name = "syndicate RCD"
