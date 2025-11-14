@@ -158,7 +158,8 @@
 
 	var/conversion_buffer = amount * 10 //Converts up to 10 units of reagent per 1 unit of inversing buffer.
 	var/converted = 0
-	for(var/datum/reagent/reagent as anything in target.reagent_list)
+	var/list/cached_reagents = target.reagent_list.Copy()
+	for(var/datum/reagent/reagent as anything in cached_reagents)
 		if(!conversion_buffer)
 			return
 		if(reagent.purity <= reagent.inverse_chem_val)
@@ -171,18 +172,19 @@
 			target.add_reagent(reagent.inverse_chem, converted, FALSE, added_purity = reagent.get_inverse_purity(reagent.purity))
 			//remove from buffer remaining
 			conversion_buffer -= converted
-	converted = conversion_buffer < amount * 10
 
 	//audible feedback
-	if(converted)
+	if(conversion_buffer < amount * 10)
 		target.my_atom.audible_message(span_warning("The beaker goes into a rolling boil as the contents begin inversing!"))
 		playsound(target.my_atom, 'sound/effects/chemistry/catalyst.ogg', 50, TRUE)
 	else
 		target.my_atom.audible_message(span_warning("The buffer fizzles with no effect."))
 
 	//remove inversening reagent based on total buffer removed
-	volume -= amount * (1 - (conversion_buffer / (amount * 10)))
-	holder.update_total()
-
-	return converted
+	var/volume_to_transfer = amount - (amount * (1 - (conversion_buffer / (amount * 10))))
+	if(volume_to_transfer)
+		target.add_reagent(type, volume_to_transfer, reagtemp = holder.chem_temp, added_purity = purity, added_ph = ph)
+	if(!copy_only)
+		volume -= amount
+		holder.update_total()
 
