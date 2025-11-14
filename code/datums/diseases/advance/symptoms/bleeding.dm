@@ -49,8 +49,8 @@
 	. = ..()
 	if(!.)
 		return
+	var/mob/living/carbon/carbon_host = A.affected_mob
 	if(A.stage >= 4)
-		var/mob/living/carbon/carbon_host = A.affected_mob
 		ADD_TRAIT(carbon_host, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
 		if(easybleed)
 			ADD_TRAIT(carbon_host, TRAIT_EASYBLEED, DISEASE_TRAIT)
