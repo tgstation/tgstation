@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 		GLOB.save_object_blacklist += typecacheof(list(
 			/obj/effect,
 			/obj/projectile,
-			/atom/movable/mirage_holder,
+			//atom/movable/mirage_holder,
 			/obj/machinery/gravity_generator/part,
 			/obj/structure/fluff/airlock_filler,
 			/mob/living/carbon,
