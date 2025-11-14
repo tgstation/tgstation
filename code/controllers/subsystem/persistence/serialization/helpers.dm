@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 // If SAVE_OBJECTS_VARIABLES flag is omitted, these are the default variables that should save regardless
 GLOBAL_LIST_INIT(default_save_vars, list("dir", "pixel_x", "pixel_y"))
 
-/proc/generate_tgm_metadata(atom/object, save_flags)
+/proc/generate_tgm_metadata(atom/object, save_flags=ALL)
 	var/list/data_to_add
 
 	var/list/vars_to_save
