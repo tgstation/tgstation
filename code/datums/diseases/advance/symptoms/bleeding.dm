@@ -28,7 +28,7 @@
 	if(!.)
 		return
 	if(A.totalStageSpeed() >= 9)
-	easybleed = TRUE
+		easybleed = TRUE
 	if(A.totalStealth() >= 3)
 		hidden = TRUE
 
