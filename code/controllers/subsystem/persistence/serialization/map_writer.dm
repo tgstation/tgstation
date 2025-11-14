@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 	maxx,
 	maxy,
 	maxz,
-	save_flag = ALL,
+	save_flags = ALL,
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
 	list/obj_blacklist,
 )
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 					saved_turf = /turf/template_noop
 					saved_area = /area/template_noop
 				//Ignore things in space, must be a space turf
-				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_TURFS_SPACE))
+				else if(istype(pull_from, /turf/open/space) && !(save_flags & SAVE_TURFS_SPACE))
 					saved_turf = /turf/template_noop
 					saved_area = /area/template_noop
 					pull_from = null
@@ -94,9 +94,9 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 				if(ispath(saved_area, /area/station/holodeck) && istype(saved_turf, /turf/open/floor/holofloor))
 					saved_turf = /turf/open/floor/holofloor/plating
 				//====For toggling not saving areas and turfs====
-				if(!(save_flag & SAVE_AREAS))
+				if(!(save_flags & SAVE_AREAS))
 					saved_area = /area/template_noop
-				if(!(save_flag & SAVE_TURFS))
+				if(!(save_flags & SAVE_TURFS))
 					saved_turf = /turf/template_noop
 				//====Generate Header Character====
 				// Info that describes this turf and all its contents
@@ -114,9 +114,9 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 				var/skip_shuttle_area
 				if(is_custom_shuttle_area)
-					skip_shuttle_area = !(save_flag & SAVE_AREAS_CUSTOM_SHUTTLES)
+					skip_shuttle_area = !(save_flags & SAVE_AREAS_CUSTOM_SHUTTLES)
 				else if(is_shuttle_area)
-					skip_shuttle_area = !(save_flag & SAVE_AREAS_DEFAULT_SHUTTLES)
+					skip_shuttle_area = !(save_flags & SAVE_AREAS_DEFAULT_SHUTTLES)
 
 				if(skip_shuttle_area)
 					var/shuttle_depth = pull_from.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
@@ -159,7 +159,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 						continue
 
 					//====SAVING OBJECTS====
-					if((save_flag & SAVE_OBJECTS) && isobj(target_atom))
+					if((save_flags & SAVE_OBJECTS) && isobj(target_atom))
 						var/obj/target_obj = target_atom
 						CHECK_TICK
 
@@ -175,19 +175,17 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 						//====SAVING SPECIAL DATA====
 						//This is what causes lockers and machines to save stuff inside of them
-						if((save_flag & SAVE_OBJECTS_PROPERTIES))
+						if((save_flags & SAVE_OBJECTS_PROPERTIES))
 							target_obj.on_object_saved(current_header, pull_from, obj_blacklist)
 
-						var/metadata
-						if(save_flag & SAVE_OBJECTS_VARIABLES)
-							metadata = generate_tgm_metadata(target_obj)
+						var/metadata = generate_tgm_metadata(target_obj, save_flags)
 
 						TGM_MAP_BLOCK(current_header, target_atom.type, metadata)
 
 
 
 					//====SAVING MOBS====
-					if((save_flag & SAVE_MOBS) && isliving(target_atom))
+					if((save_flags & SAVE_MOBS) && isliving(target_atom))
 						var/mob/living/target_mob = target_atom
 						CHECK_TICK
 /*
@@ -199,7 +197,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 				var/turf_metadata
 				//====SAVING ATMOS====
-				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_TURFS_ATMOS))
+				if((save_flags & SAVE_TURFS) && (save_flags & SAVE_TURFS_ATMOS))
 					var/turf/open/atmos_turf = pull_from
 					// Optimiziations that skip saving atmospheric data for turfs that don't need it
 					// - Walls: Atmos values should not realistically change
