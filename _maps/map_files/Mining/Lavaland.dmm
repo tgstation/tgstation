@@ -685,6 +685,12 @@
 	dir = 8
 	},
 /area/mine/laborcamp/production)
+"ep" = (
+/obj/structure/sign/directions/evac/directional/south{
+	pixel_y = 0
+	},
+/turf/closed/wall,
+/area/mine/production)
 "et" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
@@ -3968,10 +3974,6 @@
 /turf/open/floor/plating,
 /area/mine/hydroponics)
 "vr" = (
-/obj/structure/sign/directions/evac/directional/south{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/arrow_ccw{
 	dir = 8
 	},
@@ -47266,7 +47268,7 @@ jw
 fA
 NU
 Le
-NU
+ep
 Le
 NU
 BP
