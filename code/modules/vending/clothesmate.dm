@@ -52,6 +52,7 @@
 				/obj/item/clothing/accessory/waistcoat = 4,
 				/obj/item/clothing/suit/toggle/suspenders = 4,
 				/obj/item/clothing/neck/tie/horrible = 3,
+				/obj/item/clothing/neck/robe_cape = 3,
 				/obj/item/clothing/glasses/regular = 3,
 				/obj/item/clothing/glasses/regular/jamjar = 3,
 				/obj/item/clothing/glasses/orange = 3,

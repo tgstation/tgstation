@@ -1839,7 +1839,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/light/tube/broken,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/waystation/cargooffice)
 "HH" = (

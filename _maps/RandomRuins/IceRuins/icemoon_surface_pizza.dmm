@@ -810,7 +810,7 @@
 /area/ruin/pizzeria/kitchen)
 "IW" = (
 /obj/effect/spawner/random/entertainment/cigarette,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "IY" = (

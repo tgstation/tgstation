@@ -23,7 +23,7 @@ export const AccountingConsole = () => {
     : `Ian.${pic_file_format}`;
 
   return (
-    <Window width={600} height={440} theme="ntOS95">
+    <Window width={680} height={440} theme="ntOS95">
       <Window.Content fontFamily="Tahoma">
         <Stack vertical fill>
           <Stack.Item>
