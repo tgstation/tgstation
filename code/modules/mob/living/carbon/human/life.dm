@@ -351,8 +351,10 @@
 			adjustStaminaLoss(min(20+effective_rad_damage/10, 60))
 	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[3]) // Stage 3: Glow that lasts until we are no longer irradiated + headaches and immunodeficiency
 		ADD_TRAIT(src, TRAIT_IMMUNODEFICIENCY, RADIATION_TRAIT)
-		add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
-		addtimer(CALLBACK(src, PROC_REF(start_glow_loop), src), rand(0.1 SECONDS, 1.9 SECONDS)) // Things should look uneven
+		var/filter = get_filter("rad_glow")
+		if (!filter)
+			add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
+			addtimer(CALLBACK(src, PROC_REF(start_glow_loop), src), rand(0.1 SECONDS, 1.9 SECONDS)) // Things should look uneven
 		if(SPT_PROB(1.5, seconds_per_tick))
 			to_chat(src, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 			adjust_dizzy_up_to(15 SECONDS, 30 SECONDS)
@@ -406,8 +408,8 @@
 		if(!has_status_effect(/datum/status_effect/washing_regen))
 			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(src, span_danger("Your body feels unnaturally hot."))
-			adjust_coretemperature(min(radiation*2-2, 30), seconds_per_tick, max_temp = radiation * 100)
-			adjust_bodytemperature(min(radiation*2-2, 30), seconds_per_tick, max_temp = radiation * 100)
+			adjust_coretemperature(min(effective_radiation*2-2, 30), seconds_per_tick, max_temp = effective_radiation * 100)
+			adjust_bodytemperature(min(effective_radiation*2-2, 30), seconds_per_tick, max_temp = effective_radiation * 100)
 
 /mob/living/carbon/human/proc/go_bald()
 	set_facial_hairstyle("Shaved", update = FALSE)

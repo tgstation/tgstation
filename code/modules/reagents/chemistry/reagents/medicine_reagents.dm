@@ -160,6 +160,10 @@
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(power * REM * seconds_per_tick)
 	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
+	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		var/mob/living/carbon/human/human_mob = affected_mob
+		affected_mob.radiation = max(affected_mob.radiation - power * 0.05 * REM * seconds_per_tick, 0)
+		affected_mob.radiation = max(affected_mob.radiation - power * 0.25 * REM * seconds_per_tick, 0)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -201,6 +205,10 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(power * REM * seconds_per_tick)
 		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+			var/mob/living/carbon/human/human_mob = affected_mob
+			affected_mob.radiation = max(affected_mob.radiation - power * 0.05 * REM * seconds_per_tick, 0)
+			affected_mob.radiation = max(affected_mob.radiation - power * 0.25 * REM * seconds_per_tick, 0)
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
