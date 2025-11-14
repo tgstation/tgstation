@@ -163,7 +163,7 @@
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		var/mob/living/carbon/human/human_mob = affected_mob
 		human_mob.radiation = max(human_mob.radiation - power * 0.05 * REM * seconds_per_tick, 0)
-		human_mob.radiation = max(human_mob.radiation - power * 0.25 * REM * seconds_per_tick, 0)
+		human_mob.radiation = max(human_mob.radiation - power * 0.5 * REM * seconds_per_tick, 0)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -208,7 +208,7 @@
 		if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 			var/mob/living/carbon/human/human_mob = affected_mob
 			human_mob.radiation = max(human_mob.radiation - power * 0.05 * REM * seconds_per_tick, 0)
-			human_mob.radiation = max(human_mob.radiation - power * 0.25 * REM * seconds_per_tick, 0)
+			human_mob.radiation = max(human_mob.radiation - power * 0.5 * REM * seconds_per_tick, 0)
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
