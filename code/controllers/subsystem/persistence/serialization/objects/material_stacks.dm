@@ -7,6 +7,9 @@
 	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
 	for(var/each in material_holder.materials)
 		var/amount_in_stack = material_holder.materials[each] / 100
+		if(amount_in_stack <= 0)
+			continue
+
 		var/datum/material/material_datum = each
 /*
 			if(TGM_MAX_OBJ_CHECK)
