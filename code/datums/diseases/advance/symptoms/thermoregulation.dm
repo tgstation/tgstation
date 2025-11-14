@@ -36,4 +36,4 @@
 		if(!(carbon_host.dna.species.bodytemp_cold_damage_limit < carbon_host.bodytemperature < carbon_host.dna.species.bodytemp_heat_damage_limit)) // No need to spam chat
 			to_chat(carbon_host, span_notice("You feel a [difference >= 0 ? "warmth" : "chill"] spread through your body."))
 		var/stage_power = (A.stage == 3) ? power/2 : power // Half as strong at stage 3
-		carbon_host.adjust_bodytemperature(clamp(difference, -stage_power * 10, stage_power * 10))
+		carbon_host.adjust_bodytemperature(clamp(-difference, -stage_power * 10, stage_power * 10))
