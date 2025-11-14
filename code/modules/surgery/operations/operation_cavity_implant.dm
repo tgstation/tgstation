@@ -25,7 +25,7 @@
 		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
 		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
 	)
-	display_pain(operating_on.owner, "You can feel pressure as your [operating_on.plaintext_zone] is being widened!", TRUE)
+	display_pain(operating_on.owner, "You can feel pressure as your [operating_on.plaintext_zone] is being opened wide!")
 
 /datum/surgery_operation/limb/prepare_cavity/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
