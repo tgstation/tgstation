@@ -503,18 +503,6 @@
 
 /// Returns TRUE if the item can be used to treat our wounds. Hooks into treat() - only things that return TRUE here may be used there.
 /datum/wound/proc/item_can_treat(obj/item/potential_treater, mob/user)
-	// surgeries take priority
-	for(var/datum/surgery/operation as anything in victim.surgeries)
-		if(isnull(operation.operated_bodypart) || operation.operated_bodypart != limb)
-			continue
-		var/datum/surgery_step/next_step = operation.get_surgery_next_step()
-		if(isnull(next_step))
-			continue
-		if(potential_treater.tool_behaviour in next_step.implements)
-			return FALSE
-		if(is_type_in_list(potential_treater, next_step.implements))
-			return FALSE
-
 	// check if we have a valid treatable tool
 	if(potential_treater.tool_behaviour in treatable_tools)
 		return TRUE

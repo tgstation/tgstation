@@ -27,10 +27,10 @@
 
 /// To give the surgeon a heads up how much work they have ahead of them
 /datum/surgery_operation/limb/debride/proc/get_progress(datum/wound/burn/flesh/wound)
-	if(wound?.infestation <= 0)
+	if(wound?.infection <= 0)
 		return null
 
-	var/estimated_remaining_steps = wound.infestation / infestation_removed
+	var/estimated_remaining_steps = wound.infection / infestation_removed
 	var/progress_text
 
 	switch(estimated_remaining_steps)
@@ -57,12 +57,12 @@
 
 /datum/surgery_operation/limb/debride/can_loop(mob/living/patient, obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
 	var/datum/wound/burn/flesh/wound = locate() in limb.wounds
-	return ..() && wound?.infestation > 0
+	return ..() && wound?.infection > 0
 
 /datum/surgery_operation/limb/debride/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, default_display_results = FALSE)
 	limb.receive_damage(3, wound_bonus = CANT_WOUND, sharpness = tool.get_sharpness(), damage_source = tool)
 	var/datum/wound/burn/flesh/wound = locate() in limb.wounds
-	wound?.infestation -= infestation_removed
+	wound?.infection -= infestation_removed
 	wound?.sanitization += sanitization_added
 	display_results(
 		surgeon,

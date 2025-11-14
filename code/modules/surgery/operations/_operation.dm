@@ -46,12 +46,8 @@
 			var/obj/item/realtool = potential_tool
 			// for surgical tools specifically, we have some special handling
 			if(realtool.item_flags & SURGICAL_TOOL)
-				// first try to treat wounds - this allows people to, say, cauterize wounds mid surgery
+				// if the targeted limb isn't prepped for surgery, i suppose we can allow an attack
 				var/obj/item/bodypart/operating = patient.get_bodypart(operating_zone)
-				for(var/datum/wound/wound as anything in shuffle(operating?.wounds))
-					if(wound.try_treating(realtool, src))
-						return ITEM_INTERACT_SUCCESS
-				// now if the targeted limb isn't prepped for surgery, i suppose we can allow an attack
 				if(operating && !HAS_TRAIT(operating, TRAIT_READY_TO_OPERATE))
 					return NONE
 				// at this point we can be relatively sure they messed up so let's give a feedback message...

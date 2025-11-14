@@ -495,8 +495,8 @@
 	// Dressing burns provides a "one-time" bonus to sanitization and healing
 	// However, any notable infection will reduce the effectiveness of this bonus
 	for(var/datum/wound/burn/flesh/wound in limb.wounds)
-		wound.sanitization += sanitization * (wound.infestation > 0.1 ? 0.2 : 1)
-		wound.flesh_healing += flesh_regeneration * (wound.infestation > 0.1 ? 0 : 1)
+		wound.sanitization += sanitization * (wound.infection > 0.1 ? 0.2 : 1)
+		wound.flesh_healing += flesh_regeneration * (wound.infection > 0.1 ? 0 : 1)
 
 	limb.apply_gauze(src)
 
