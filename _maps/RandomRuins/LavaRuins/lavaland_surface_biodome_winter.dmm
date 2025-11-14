@@ -266,7 +266,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/snow_biodome)
 "hA" = (
-/obj/machinery/light/built/directional/north,
+/obj/machinery/light/empty/directional/north,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/pod/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"

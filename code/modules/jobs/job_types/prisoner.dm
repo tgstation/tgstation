@@ -60,6 +60,7 @@
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	box = /obj/item/storage/box/survival/prisoner
+	pda_slot = null
 
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
 	..()

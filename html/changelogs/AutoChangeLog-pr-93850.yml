@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "bridge assistant and veteran advisor PDAs (inside backpack) are now imprinted automatically"

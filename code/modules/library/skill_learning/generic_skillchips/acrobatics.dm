@@ -11,7 +11,7 @@
 	/// set integrity to 1 when mapping for !!FUN!!
 	max_integrity = 100
 	/// list of emotes whose cd is overridden by this skillchip. can be edited in mapping or ingame
-	var/list/affected_emotes = list("spin", "flip")
+	var/list/affected_emotes = list("spin", "flip", "backflip")
 	var/datum/effect_system/spark_spread/sparks
 	/// you can use this without lowering integrity! let's be honest. nobody's doing that
 	var/allowed_usage = 5

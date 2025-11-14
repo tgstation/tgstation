@@ -41,6 +41,7 @@ type Data = {
   acidicBufferVol: number;
   basicBufferVol: number;
   dispenseVolume: number;
+  hasBeakerInHand: BooleanLike;
 };
 
 type ReactionDisplayProps = {
@@ -192,6 +193,7 @@ export const ChemHeater = (props) => {
     dispenseVolume,
     upgradeLevel,
     activeReactions = [],
+    hasBeakerInHand,
   } = data;
   const isBeakerLoaded = beaker !== null;
 
@@ -355,7 +357,12 @@ export const ChemHeater = (props) => {
             highDangerDisplay={upgradeLevel >= 2}
           />
         )}
-        <BeakerSectionDisplay beaker={beaker} showpH={false} />
+        <BeakerSectionDisplay
+          beaker={beaker}
+          showpH={false}
+          showInsertButton={true}
+          hasBeakerInHand={hasBeakerInHand}
+        />
       </Window.Content>
     </Window>
   );
