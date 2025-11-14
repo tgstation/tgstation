@@ -156,19 +156,33 @@
 	if(!.)
 		return
 
-	for(var/_reagent in target.reagent_list)
-		var/datum/reagent/reaction_agent/reagent = _reagent
+	var/conversion_buffer = amount * 10 //Converts up to 10 units of reagent per 1 unit of inversing buffer.
+	var/converted = 0
+	for(var/datum/reagent/reagent as anything in target.reagent_list)
+		if(!conversion_buffer)
+			return
 		if(reagent.purity <= reagent.inverse_chem_val)
-			target.my_atom.audible_message(span_warning("The beaker goes into a rolling boil as the contents begin inversing!"))
-			playsound(target.my_atom, 'sound/effects/chemistry/catalyst.ogg', 50, TRUE)
-			var/converted = min(reagent.volume, amount * 10)//Converts up to 10 units of reagent per 1 unit of inversing buffer.
-			if(converted > 0)
-				target.remove_reagent(reagent.type, converted, safety = FALSE)
-				target.add_reagent(reagent.inverse_chem, converted, FALSE, added_purity = reagent.get_inverse_purity(reagent.purity))
-				volume -= amount
-				holder.update_total()
-				break
-		else
-			target.my_atom.audible_message(span_warning("The buffer quietly fizzles away with no effect."))
-			volume -= amount
-			holder.update_total()
+			//compute volume of reagent to be converted
+			converted = min(reagent.volume, conversion_buffer)
+			//remove original reagent from target
+			reagent.volume -= converted
+			target.update_total()
+			//add new inverse reagent to target
+			target.add_reagent(reagent.inverse_chem, converted, FALSE, added_purity = reagent.get_inverse_purity(reagent.purity))
+			//remove from buffer remaining
+			conversion_buffer -= converted
+	converted = conversion_buffer < amount * 10
+
+	//audible feedback
+	if(converted)
+		target.my_atom.audible_message(span_warning("The beaker goes into a rolling boil as the contents begin inversing!"))
+		playsound(target.my_atom, 'sound/effects/chemistry/catalyst.ogg', 50, TRUE)
+	else
+		target.my_atom.audible_message(span_warning("The buffer quietly fizzles away with no effect."))
+
+	//remove inversening reagent based on total buffer removed
+	volume -= amount * (1 - (conversion_buffer / (amount * 10)))
+	holder.update_total()
+
+	return converted
+
