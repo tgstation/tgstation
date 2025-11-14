@@ -4571,9 +4571,6 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
-"ze" = (
-/turf/closed/mineral/random/high_chance,
-/area/lavaland/surface/outdoors)
 "zf" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -44720,8 +44717,8 @@ aj
 aj
 aj
 aj
-ze
-ze
+ad
+ad
 pU
 aj
 aj
@@ -44978,7 +44975,7 @@ aj
 aj
 pU
 pU
-ze
+ad
 pU
 aj
 aj
@@ -47292,7 +47289,7 @@ pU
 pU
 ai
 BP
-ze
+ad
 pU
 pU
 aj
@@ -47547,8 +47544,8 @@ aj
 aj
 pU
 ai
-ze
-ze
+ad
+ad
 ai
 aj
 aj
@@ -47804,8 +47801,8 @@ aj
 aj
 pU
 BP
-ze
-ze
+ad
+ad
 pU
 aj
 aj
@@ -50115,8 +50112,8 @@ pU
 pU
 pU
 ai
-ze
-ze
+ad
+ad
 pU
 pU
 pU
@@ -50371,8 +50368,8 @@ pU
 pU
 pU
 ai
-ze
-ze
+ad
+ad
 BP
 pU
 pU
@@ -50883,7 +50880,7 @@ pU
 pU
 pU
 ai
-ze
+ad
 ai
 ai
 lP
