@@ -1,7 +1,7 @@
 /*Anticoagulant
  * Increases stealth
- * Tremendous increase to resistance
- * Tremendous increase to stage speed
+ * No change to resistance
+ * Reduces to stage speed
  * Reduces transmissibility
  * Fatal Level
  * Bonus: Worsens blood loss
