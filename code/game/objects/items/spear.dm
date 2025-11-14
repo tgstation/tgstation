@@ -157,7 +157,7 @@
 /obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(improvised_construction)
 		return
-	take_damage(force, sound_effect = FALSE)
+	take_damage(force/2, sound_effect = FALSE)
 
 /obj/item/spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -165,7 +165,7 @@
 		return
 	if(!improvised_construction)
 		return
-	take_damage(throwforce, sound_effect = FALSE)
+	take_damage(throwforce/2, sound_effect = FALSE)
 
 /obj/item/spear/atom_destruction(damage_flag)
 	playsound(src, 'sound/effects/grillehit.ogg', 50)
