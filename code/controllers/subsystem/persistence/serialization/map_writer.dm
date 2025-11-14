@@ -28,9 +28,6 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 	var/height = maxy - miny
 	var/depth = maxz - minz
 
-	var/max_object_limit = CONFIG_GET(number/persistent_max_object_limit_per_turf)
-	var/max_mob_limit = CONFIG_GET(number/persistent_max_mob_limit_per_turf)
-
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
 
