@@ -1,6 +1,0 @@
-author: "paganiy"
-delete-after: True
-changes:
-  - bugfix: "Fixed recycler deconstruction."
-  - bugfix: "Holograms now properly drop their contents when processed in recycler instead of deleting them."
-  - code_imp: "Cleaned up recycler code."

@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - spellcheck: "Auxbase construction console says the name of the area rather than the path in failure messages"

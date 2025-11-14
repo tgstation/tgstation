@@ -150,3 +150,6 @@
 	var/obj/item/organ/ears/ears = victim.get_organ_slot(ORGAN_SLOT_EARS)
 	ears.adjust_temporary_deafness(-20 SECONDS)
 	TEST_ASSERT(!HAS_TRAIT_FROM(victim, TRAIT_DEAF, EAR_DAMAGE), "victim hasn't recovered from temprorary deafness")
+	victim.equip_to_slot_if_possible(new /obj/item/clothing/ears/earmuffs, ITEM_SLOT_EARS)
+	victim.soundbang_act(intensity = SOUNDBANG_NORMAL, deafen_pwr = 20 SECONDS)
+	TEST_ASSERT(!HAS_TRAIT_FROM(victim, TRAIT_DEAF, EAR_DAMAGE), "victim has been deafened despite wearing earmuffs")
