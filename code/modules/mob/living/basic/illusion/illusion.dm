@@ -1,3 +1,5 @@
+/// Pretty genericky mob that just manifests itself as any sort of input living mob, used in several ways
+/// Has a basic AI that helps it attack targets that are assigned to it, but there's more flavor in the subtypes.
 /mob/living/basic/illusion
 	name = "illusion"
 	desc = "It's a fake!"
