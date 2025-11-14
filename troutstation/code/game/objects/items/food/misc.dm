@@ -18,3 +18,37 @@
 	venue_value = FOOD_PRICE_EXOTIC
 	trash_type = /obj/item/reagent_containers/cup/glass/drinkingglass
 	food_flags = FOOD_TINY_SNOUT_EDIBLE
+
+/obj/item/food/gaywatermelonslice
+	name = "gaywatermelon slice"
+	desc = "A slice of gaywatery goodness."
+	icon = 'troutstation/icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "gaywatermelonslice"
+	food_reagents = list(
+		/datum/reagent/medicine/gaywater = 1,
+		/datum/reagent/consumable/nutriment/vitamin = 0.2,
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	tastes = list("gay" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE
+	juice_typepath = /datum/reagent/medicine/gaywater
+	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH
+
+/obj/item/food/gaywatermelonmush
+	name = "gaywatermelon mush"
+	desc = "A plop of gaywatery goodness."
+	icon = 'troutstation/icons/obj/service/hydroponics/harvest.dmi'
+	icon_state = "gaywatermelonpulp"
+	food_reagents = list(
+		/datum/reagent/medicine/gaywater = 2,
+		/datum/reagent/consumable/nutriment/vitamin = 0.1,
+		/datum/reagent/consumable/nutriment = 0.5,
+	)
+	tastes = list("gay" = 1)
+	foodtypes = FRUIT
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE
+	juice_typepath = /datum/reagent/medicine/gaywater
+	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH
