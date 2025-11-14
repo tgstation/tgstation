@@ -30,10 +30,6 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 	var/max_object_limit = CONFIG_GET(number/persistent_max_object_limit_per_turf)
 	var/max_mob_limit = CONFIG_GET(number/persistent_max_mob_limit_per_turf)
-	var/total_mobs_saved = 0
-	var/total_objs_saved = 0
-	var/total_turfs_saved = 0
-	var/total_areas_saved = 0
 
 	if(obj_blacklist && !islist(obj_blacklist))
 		CRASH("Non-list being used as object blacklist for map writing")
@@ -65,11 +61,20 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 	var/list/header = list() //The actual header in text
 	var/list/contents = list() //The contents in text (bit at the end)
 	var/key_index = 1 // How many keys we've generated so far
+
 	for(var/z in 0 to depth)
 		for(var/x in 0 to width)
+			SSpersistence.current_save_x = x
 			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
+
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
+
+				SSpersistence.current_save_y = y
+				// Reset the per turf obj/mob limits
+				GLOB.TGM_objs = 0
+				GLOB.TGM_mobs = 0
+
 				//====Get turfs Data====
 				var/turf/saved_turf
 				var/area/saved_area
@@ -148,11 +153,12 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 					saved_turf = /turf/open/space/basic
 				else if(!istype(saved_turf, /turf/template_noop))
 					// exclude all space and template_noop from our count
-					total_turfs_saved++
+					INCREMENT_TURF_COUNT
 
-				// always reset these to 0 as we iterate to a new turf
-				GLOB.TGM_objs = 0
-				GLOB.TGM_mobs = 0
+				// Count unique areas
+				if(saved_area != /area/template_noop && !(SSpersistence.counted_areas[saved_area]))
+					SSpersistence.counted_areas[saved_area] = TRUE
+					INCREMENT_AREA_COUNT
 
 				for(var/atom/movable/target_atom as anything in pull_from)
 					if(!target_atom.is_saveable(pull_from, obj_blacklist))
@@ -160,40 +166,31 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 					//====SAVING OBJECTS====
 					if((save_flags & SAVE_OBJECTS) && isobj(target_atom))
-						var/obj/target_obj = target_atom
 						CHECK_TICK
 
-/*
-						if(TGM_MAX_OBJ_CHECK)
+						if(OBJECT_LIMIT_EXCEEDED)
 							continue
-						TGM_OBJ_INCREMENT
-*/
-
-						// if a typepath substitute was performed we don't need to save original object data
-						if(target_atom.substitute_with_typepath(current_header))
-							continue
-
-						//====SAVING SPECIAL DATA====
-						//This is what causes lockers and machines to save stuff inside of them
-						if((save_flags & SAVE_OBJECTS_PROPERTIES))
-							target_obj.on_object_saved(current_header, pull_from, obj_blacklist)
-
-						var/metadata = generate_tgm_metadata(target_obj, save_flags)
-
-						TGM_MAP_BLOCK(current_header, target_atom.type, metadata)
-
-
+						INCREMENT_OBJ_COUNT()
 
 					//====SAVING MOBS====
-					if((save_flags & SAVE_MOBS) && isliving(target_atom))
-						var/mob/living/target_mob = target_atom
+					else if((save_flags & SAVE_MOBS) && isliving(target_atom))
 						CHECK_TICK
-/*
-						if(TGM_MAX_MOB_CHECK)
+
+						if(MOB_LIMIT_EXCEEDED)
 							continue
-						TGM_MOB_INCREMENT
-*/
-						TGM_MAP_BLOCK(current_header, target_mob.type, generate_tgm_metadata(target_mob))
+						INCREMENT_MOB_COUNT()
+
+					// if a typepath substitute was performed we don't need to save original object data
+					if(target_atom.substitute_with_typepath(current_header))
+						continue
+
+					//====SAVING SPECIAL DATA====
+					//This is what causes lockers and machines to save stuff inside of them
+					if((save_flags & SAVE_OBJECTS_PROPERTIES))
+						target_atom.on_object_saved(current_header, pull_from, obj_blacklist)
+
+					var/metadata = generate_tgm_metadata(target_atom, save_flags)
+					TGM_MAP_BLOCK(current_header, target_atom.type, metadata)
 
 				var/turf_metadata
 				//====SAVING ATMOS====
@@ -208,8 +205,6 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 				TGM_MAP_BLOCK(current_header, saved_turf.type, turf_metadata)
 
-				total_mobs_saved += GLOB.TGM_objs
-				total_objs_saved += GLOB.TGM_mobs
 				TGM_MAP_BLOCK(current_header, saved_area.type, null) // no metadata for now
 
 				//====Fill the contents file====

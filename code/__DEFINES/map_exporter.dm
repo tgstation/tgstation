@@ -102,7 +102,33 @@
 /// Checks if a given value matches the compile-time default value of a typepath variable
 #define IS_TYPEPATH_DEFAULT_VAR(datum, variable, new_var) (##datum::variable == new_var)
 
-#define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
-#define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
-#define TGM_MAX_OBJ_CHECK (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
-#define TGM_MAX_MOB_CHECK (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))
+//#define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
+//#define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
+
+// Metrics tracking macros for map serialization
+
+/// Increment object counter (per turf)
+#define INCREMENT_OBJ_COUNT(...) \
+	do { \
+		GLOB.TGM_objs++; \
+		GLOB.TGM_total_objs++; \
+	} while (FALSE); \
+
+/// Increment mob counter (per turf)
+#define INCREMENT_MOB_COUNT(...) \
+	do { \
+		GLOB.TGM_mobs++; \
+		GLOB.TGM_total_mobs++; \
+	} while (FALSE); \
+
+/// Increment turf counter
+#define INCREMENT_TURF_COUNT (GLOB.TGM_total_turfs++)
+
+/// Increment area counter (should only be called once per unique area)
+#define INCREMENT_AREA_COUNT (GLOB.TGM_total_areas++)
+
+/// Check if object limit is exceeded
+#define OBJECT_LIMIT_EXCEEDED (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
+
+/// Check if mob limit is exceeded
+#define MOB_LIMIT_EXCEEDED (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))
