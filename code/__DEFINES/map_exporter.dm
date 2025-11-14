@@ -128,7 +128,7 @@
 #define INCREMENT_AREA_COUNT (GLOB.TGM_total_areas++)
 
 /// Check if object limit is exceeded
-#define OBJECT_LIMIT_EXCEEDED (GLOB.TGM_objs > CONFIG_GET(number/persistent_max_object_limit_per_turf))
+#define OBJECT_LIMIT_EXCEEDED (GLOB.TGM_objs >= CONFIG_GET(number/persistent_max_object_limit_per_turf))
 
 /// Check if mob limit is exceeded
-#define MOB_LIMIT_EXCEEDED (GLOB.TGM_mobs > CONFIG_GET(number/persistent_max_mob_limit_per_turf))
+#define MOB_LIMIT_EXCEEDED (GLOB.TGM_mobs >= CONFIG_GET(number/persistent_max_mob_limit_per_turf))
