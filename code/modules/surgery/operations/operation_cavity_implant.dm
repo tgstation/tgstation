@@ -20,16 +20,16 @@
 /datum/surgery_operation/limb/prepare_cavity/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
 	display_results(
 		surgeon,
-		operating_on.owner,
+		limb.owner,
 		span_notice("You begin to open [limb.owner]'s [limb.plaintext_zone] cavity wide..."),
 		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
 		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
 	)
-	display_pain(operating_on.owner, "You can feel pressure as your [operating_on.plaintext_zone] is being opened wide!")
+	display_pain(limb.owner, "You can feel pressure as your [limb.plaintext_zone] is being opened wide!")
 
 /datum/surgery_operation/limb/prepare_cavity/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
 	. = ..()
-	operating_on.add_surgical_state(SURGERY_CAVITY_WIDENED)
+	limb.add_surgical_state(SURGERY_CAVITY_WIDENED)
 
 /datum/surgery_operation/limb/cavity_implant
 	name = "cavity implant"
