@@ -8280,7 +8280,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/lavaland/surface/outdoors)
+/area/mine/production)
 "VJ" = (
 /obj/structure/closet/crate,
 /obj/item/food/mint,

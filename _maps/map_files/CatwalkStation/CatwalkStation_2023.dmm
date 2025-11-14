@@ -16637,11 +16637,14 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
+/obj/machinery/camera/autoname/directional/west,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/machinery/camera/autoname/directional/west,
+/obj/item/tank/jetpack{
+	pixel_y = 4
+	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
@@ -20873,7 +20876,6 @@
 "fUL" = (
 /obj/machinery/computer/rdservercontrol,
 /obj/machinery/airalarm/directional/east,
-/obj/effect/mapping_helpers/airalarm/tlv_cold_room,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "fUM" = (
@@ -25062,9 +25064,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/tank/jetpack{
-	pixel_y = 4
-	},
+/obj/item/mod/module/thermal_regulator,
+/obj/item/mod/module/plasma_stabilizer,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "hbS" = (
@@ -62873,6 +62874,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "rFm" = (
