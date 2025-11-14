@@ -54,6 +54,9 @@
 		ADD_TRAIT(carbon_host, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
 		if(easybleed)
 			ADD_TRAIT(carbon_host, TRAIT_EASYBLEED, DISEASE_TRAIT)
+	else
+		REMOVE_TRAIT(carbon_host, TRAIT_BLOOD_FOUNTAIN, DISEASE_TRAIT)
+		REMOVE_TRAIT(carbon_host, TRAIT_EASYBLEED, DISEASE_TRAIT)
 
 
 /datum/symptom/bleeding/End(datum/disease/advance/A)
