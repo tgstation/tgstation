@@ -14,6 +14,9 @@
 /datum/surgery_operation/limb/prepare_cavity/get_default_radial_image()
 	return image(/obj/item/retractor)
 
+/datum/surgery_operation/limb/prepare_cavity/all_required_strings()
+	return list("operate on chest") + ..()
+
 /datum/surgery_operation/limb/prepare_cavity/state_check(obj/item/bodypart/chest/limb)
 	return limb.body_zone == BODY_ZONE_CHEST
 
