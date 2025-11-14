@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
  *
  * Returns: Null or array list of additional object data to be included on turf
  */
-/obj/proc/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+/atom/proc/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	return
 
 /// Helper proc to save children objects that are stored inside the contents of the source object
