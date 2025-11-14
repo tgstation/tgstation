@@ -41,7 +41,7 @@
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_CAVITY_WIDENED
 	/// Items that bypass normal size restrictions for cavity implantation
 	var/list/heavy_cavity_implants
 
