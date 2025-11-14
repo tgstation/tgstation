@@ -234,8 +234,8 @@
 	name = "prosthetic organ manipulation"
 	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
-		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
+		TOOL_HEMOSTAT = 1,
 		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE | OPERATION_MECHANIC
@@ -268,8 +268,8 @@
 	name = "prosthetic feature manipulation"
 	required_bodytype = BODYTYPE_ROBOTIC
 	remove_implements = list(
-		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1,
+		TOOL_HEMOSTAT = 1,
 		/obj/item/kitchen/fork = 2.85,
 	)
 	operation_flags = parent_type::operation_flags | OPERATION_SELF_OPERABLE

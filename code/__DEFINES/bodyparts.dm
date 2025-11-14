@@ -86,6 +86,8 @@
 #define SURGERY_PLASTIC_APPLIED (1<<7)
 /// Used in prosthetic surgery: Is the prosthetic unsecured
 #define SURGERY_PROSTHETIC_UNSECURED (1<<8)
+/// Used for cavity implants
+#define SURGERY_CAVITY_WIDENED (1<<9)
 
 DEFINE_BITFIELD(surgery_state, list(
 	"SKIN CUT" = SURGERY_SKIN_CUT,
@@ -97,6 +99,7 @@ DEFINE_BITFIELD(surgery_state, list(
 	"BONE SAWED" = SURGERY_BONE_SAWED,
 	"PLASTIC APPLIED" = SURGERY_PLASTIC_APPLIED,
 	"PROSTHETIC UNSECURED" = SURGERY_PROSTHETIC_UNSECURED,
+	"CAVITY OPENED" = SURGERY_CAVITY_WIDENED,
 ))
 
 /// For use in translating bitfield to human readable strings. Keep in the correct order!
@@ -109,7 +112,8 @@ DEFINE_BITFIELD(surgery_state, list(
 	"Bone is drilled" = SURGERY_BONE_DRILLED, \
 	"Bone is sawed" = SURGERY_BONE_SAWED, \
 	"Plastic is applied" = SURGERY_PLASTIC_APPLIED, \
-	"Prosthetic is unsecured" = SURGERY_PROSTHETIC_UNSECURED \
+	"Prosthetic is unsecured" = SURGERY_PROSTHETIC_UNSECURED, \
+	"Cavity is opened wide" = SURGERY_CAVITY_WIDENED, \
 )
 
 /// For use in translating bitfield to steps required for surgery. Keep in the correct order!
@@ -123,6 +127,7 @@ DEFINE_BITFIELD(surgery_state, list(
 	"the bone [must_must_not] be sawed" = SURGERY_BONE_SAWED, \
 	"plastic [must_must_not] be applied" = SURGERY_PLASTIC_APPLIED, \
 	"the prosthetic [must_must_not] be unsecured" = SURGERY_PROSTHETIC_UNSECURED, \
+	"the chest cavity [must_must_not] be opened wide" = SURGERY_CAVITY_WIDENED, \
 )
 
 // Yes these are glorified bitflag manipulation macros, they're meant to make reading surgical operations a bit easier
@@ -145,7 +150,7 @@ DEFINE_BITFIELD(surgery_state, list(
 #define ALL_SURGERY_ORGAN_STATES (SURGERY_ORGANS_CUT)
 
 /// These states are automatically cleared when the surgery is closed for ease of use
-#define ALL_SURGERY_STATES_UNSET_ON_CLOSE (ALL_SURGERY_SKIN_STATES|ALL_SURGERY_VESSEL_STATES|ALL_SURGERY_BONE_STATES|ALL_SURGERY_ORGAN_STATES)
+#define ALL_SURGERY_STATES_UNSET_ON_CLOSE (ALL_SURGERY_SKIN_STATES|ALL_SURGERY_VESSEL_STATES|ALL_SURGERY_BONE_STATES|ALL_SURGERY_ORGAN_STATES|SURGERY_CAVITY_WIDENED)
 /// Surgery state required for a limb with a certain zone to... be... fished... in...
 #define ALL_SURGERY_FISH_STATES(for_zone) (SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|(for_zone == BODY_ZONE_CHEST ? SURGERY_BONE_SAWED : NONE))
 

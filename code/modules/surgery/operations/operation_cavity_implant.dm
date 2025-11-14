@@ -1,3 +1,36 @@
+/datum/surgery_operation/limb/prepare_cavity
+	name = "widen chest cavity"
+	desc = "Widen a patient's chest cavity to allow for implanting of larger items."
+	implements = list(
+		TOOL_RETRACTOR = 1,
+		TOOL_CROWBAR = 1.5,
+	)
+	time = 4.8 SECONDS
+	preop_sound = 'sound/items/handling/surgery/retractor1.ogg'
+	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+	any_surgery_states_blocked = SURGERY_CAVITY_WIDENED
+
+/datum/surgery_operation/limb/prepare_cavity/get_default_radial_image()
+	return image(/obj/item/retractor)
+
+/datum/surgery_operation/limb/prepare_cavity/state_check(obj/item/bodypart/chest/limb)
+	return limb.body_zone == BODY_ZONE_CHEST
+
+/datum/surgery_operation/limb/prepare_cavity/on_preop(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
+	display_results(
+		surgeon,
+		operating_on.owner,
+		span_notice("You begin to open [limb.owner]'s [limb.plaintext_zone] cavity wide..."),
+		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
+		span_notice("[surgeon] begins to open [limb.owner]'s [limb.plaintext_zone] cavity wide."),
+	)
+	display_pain(operating_on.owner, "You can feel pressure as your [operating_on.plaintext_zone] is being widened!", TRUE)
+
+/datum/surgery_operation/limb/prepare_cavity/on_success(obj/item/bodypart/chest/limb, mob/living/surgeon, tool, list/operation_args)
+	. = ..()
+	operating_on.add_surgical_state(SURGERY_CAVITY_WIDENED)
+
 /datum/surgery_operation/limb/cavity_implant
 	name = "cavity implant"
 	desc = "Implant an item into a patient's body cavity."
@@ -30,16 +63,28 @@
 	return base
 
 /datum/surgery_operation/limb/cavity_implant/state_check(obj/item/bodypart/chest/limb)
-	return limb.body_zone == BODY_ZONE_CHEST
+	if(limb.body_zone != BODY_ZONE_CHEST)
+		return FALSE
+	if(!isnull(limb.cavity_item))
+		return FALSE
+	return TRUE
 
-/datum/surgery_operation/limb/cavity_implant/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, obj/item/tool, operated_zone)
-	return surgeon.canUnEquip(tool)
+/datum/surgery_operation/limb/cavity_implant/snowflake_check_availability(obj/item/bodypart/chest/limb, mob/living/surgeon, obj/item/tool, operated_zone)
+	if(!surgeon.canUnEquip(tool))
+		return FALSE
+	// Stops accidentally putting a tool you meant to operate with
+	// Besides who really wants to put a scalpel or a wrench inside someone that's lame
+	if(IS_ROBOTIC_LIMB(limb) && (tool.tool_behaviour in GLOB.all_mechanical_tools))
+		return FALSE
+	if(IS_ORGANIC_LIMB(limb) && (tool.tool_behaviour in GLOB.all_surgical_tools))
+		return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/cavity_implant/tool_check(obj/item/tool)
 	if(tool.w_class > WEIGHT_CLASS_NORMAL && !is_type_in_typecache(tool, heavy_cavity_implants))
 		return FALSE
-	if(tool.item_flags & (SURGICAL_TOOL|ABSTRACT|DROPDEL|HAND_ITEM))
-		return FALSE // besides the obvious, you never want to leave your scalpel into the patient
+	if(tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM))
+		return FALSE
 	if(isorgan(tool))
 		return FALSE // use organ manipulation
 	return TRUE
@@ -66,6 +111,7 @@
 		return
 
 	limb.cavity_item = tool
+	limb.remove_surgical_state(SURGERY_CAVITY_WIDENED)
 	display_results(
 		surgeon,
 		limb.owner,
@@ -73,6 +119,7 @@
 		span_notice("[surgeon] stuffs [tool] into [limb.owner]'s [limb.plaintext_zone]!"),
 		span_notice("[surgeon] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [limb.owner]'s [limb.plaintext_zone]."),
 	)
+
 
 /datum/surgery_operation/limb/undo_cavity_implant
 	name = "remove cavity implant"
@@ -87,7 +134,7 @@
 	time = 3.2 SECONDS
 	preop_sound = 'sound/items/handling/surgery/organ1.ogg'
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT|SURGERY_CAVITY_WIDENED
 
 /datum/surgery_operation/limb/undo_cavity_implant/all_required_strings()
 	return list("operate on chest") + ..()
@@ -134,6 +181,7 @@
 
 	var/obj/item/implant = limb.cavity_item
 	limb.cavity_item = null
+	limb.remove_surgical_state(SURGERY_CAVITY_WIDENED)
 	display_results(
 		surgeon,
 		limb.owner,

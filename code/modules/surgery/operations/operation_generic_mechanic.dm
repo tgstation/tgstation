@@ -126,7 +126,7 @@
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/taperecorder/tape_flip.ogg'
 	success_sound = 'sound/items/taperecorder/taperecorder_close.ogg'
-	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/limb/prepare_electronics/get_default_radial_image()
@@ -190,7 +190,7 @@
 	operation_flags = OPERATION_SELF_OPERABLE | OPERATION_MECHANIC
 	time = 2.4 SECONDS
 	preop_sound = 'sound/items/tools/ratchet.ogg'
-	any_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
+	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
 
 /datum/surgery_operation/limb/mechanic_wrench/state_check(obj/item/bodypart/limb)
 	return LIMB_HAS_BONES(limb)

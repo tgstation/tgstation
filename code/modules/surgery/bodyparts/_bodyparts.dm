@@ -459,6 +459,8 @@
 		surgery_message += "prosthetic item is unsecured"
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
 		surgery_message += "got a layer of plastic applied to it"
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_CAVITY_WIDENED))
+		surgery_message += "chest cavity is wide open"
 
 	if(length(surgery_message))
 		return span_warning("Its [english_list(surgery_message)]!")
@@ -510,6 +512,9 @@
 	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
 		sub_messages += "got a layer of plastic applied to it"
 		single_message = "A layer of plastic has been applied to [t_his] [plaintext_zone]."
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_CAVITY_WIDENED))
+		sub_messages += "the chest cavity is wide open"
+		single_message = "[t_His] chest cavity is wide open!"
 
 	if(length(sub_messages) >= 2)
 		return span_danger("[t_His] [plaintext_zone]'s [english_list(sub_messages)].")

@@ -90,7 +90,7 @@
 	var/obj/item/holding = get_active_held_item()
 
 	if(tool == IMPLEMENT_HAND)
-		return isnull(holding) // still holding nothing
+		return isnull(holding) || istype(holding, /obj/item/borg/cyborghug) // still holding nothing (or "hands")
 	if(QDELETED(holding))
 		return FALSE // i dunno, a stack item? not our problem
 
