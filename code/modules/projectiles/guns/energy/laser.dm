@@ -94,6 +94,7 @@
 	icon_state = "laser_carbine"
 	burst_size = 2
 	fire_delay = 2
+	projectile_damage_multiplier = 0.75
 	projectile_speed_multiplier = 1.5
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/carbine)
 	weapon_weight = WEAPON_MEDIUM

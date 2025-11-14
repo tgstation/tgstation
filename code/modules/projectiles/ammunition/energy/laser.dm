@@ -27,7 +27,7 @@
 
 /obj/item/ammo_casing/energy/lasergun/carbine
 	projectile_type = /obj/projectile/beam/laser/rapid
-	e_cost = LASER_SHOTS(25, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(26, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 
