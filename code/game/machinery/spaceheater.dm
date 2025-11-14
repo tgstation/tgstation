@@ -122,7 +122,7 @@
 		. += "[base_icon_state]-open"
 
 	if(on)
-		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + set_mode]-emissive", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + mode]-emissive", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/on_set_panel_open()
 	update_appearance()
