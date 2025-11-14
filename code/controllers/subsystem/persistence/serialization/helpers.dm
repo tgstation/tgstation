@@ -12,10 +12,20 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"Y","Z",
 ))
 
-/proc/generate_tgm_metadata(atom/object)
+// If SAVE_OBJECTS_VARIABLES flag is omitted, these are the default variables that should save regardless
+GLOBAL_LIST_INIT(default_save_vars, list("dir", "pixel_x", "pixel_y"))
+
+/proc/generate_tgm_metadata(atom/object, save_flags)
 	var/list/data_to_add
-	var/list/vars_to_save = GLOB.map_export_save_vars_cache[object.type] || object.get_save_vars()
-	var/alist/custom_vars = object.get_custom_save_vars()
+
+	var/list/vars_to_save
+	var/alist/custom_vars
+	if(save_flags & SAVE_OBJECTS_VARIABLES)
+		vars_to_save = GLOB.map_export_save_vars_cache[object.type] || object.get_save_vars()
+		custom_vars = object.get_custom_save_vars()
+	else
+		vars_to_save = GLOB.default_save_vars
+
 	// Tracks variables handled by get_custom_save_vars() This ensures the default variable saving loop
 	// correctly skips these names. A separate list is necessary because custom_vars can contain null or FALSE values.
 	var/list/custom_var_names
