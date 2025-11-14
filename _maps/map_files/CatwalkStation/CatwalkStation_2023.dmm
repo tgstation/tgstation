@@ -21970,7 +21970,7 @@
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/obj/structure/fireaxecabinet/jawsofrecovery/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "gfs" = (
@@ -26202,6 +26202,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/paramedic,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "hrD" = (
@@ -51686,6 +51687,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/south,
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "osn" = (
