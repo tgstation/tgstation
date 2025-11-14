@@ -214,24 +214,20 @@
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_ORGANS_CUT
 
 /datum/surgery_operation/limb/organ_manipulation/internal/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
-	return !(organ.organ_flags & ORGAN_EXTERNAL)
-
-/datum/surgery_operation/limb/organ_manipulation/internal/state_check(obj/item/bodypart/limb)
-	return bone_check(limb)
-
-/datum/surgery_operation/limb/organ_manipulation/internal/proc/bone_check(obj/item/bodypart/limb)
+	if(organ.organ_flags & ORGAN_EXTERNAL)
+		return FALSE
 	if(!LIMB_HAS_BONES(limb))
 		return TRUE
-	// chest -> bone must be sawed
-	if(limb.body_zone == BODY_ZONE_CHEST)
+	// chest organs and the brain require bone sawed
+	if(organ.zone == BODY_ZONE_CHEST || organ.slot == ORGAN_SLOT_BRAIN)
 		return LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED)
-	// limbs -> bones must be intact
+	// all other organs require bone intact
 	return !LIMB_HAS_ANY_SURGERY_STATE(limb, SURGERY_BONE_SAWED|SURGERY_BONE_DRILLED)
 
 /datum/surgery_operation/limb/organ_manipulation/internal/all_required_strings()
 	return ..() + list(
-		"if operating on the chest, the bone must be sawed (or absent)",
-		"if operating on a limb, the bone must be intact (or absent)",
+		"if operating on the chest or brain, the bone must be sawed",
+		"otherwise, if the limb has bones, they must be intact",
 	)
 
 /datum/surgery_operation/limb/organ_manipulation/internal/mechanic
@@ -250,11 +246,8 @@
 	operation_flags = parent_type::operation_flags | OPERATION_IGNORE_CLOTHES | OPERATION_LOCKED
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED
 
-/datum/surgery_operation/limb/organ_manipulation/internal/abductor/state_check(obj/item/bodypart/limb)
-	return TRUE // Skip bone checks, we do it in organ_check
-
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
-	return ..() && (organ.slot == ORGAN_SLOT_HEART || bone_check(limb)) // Operating on the heart skips all bone checks
+	return (organ.slot == ORGAN_SLOT_HEART) || ..() // Hearts can always be removed, it doesn't check for bone state
 
 /datum/surgery_operation/limb/organ_manipulation/internal/abductor/any_optional_strings()
 	return ..() + list(
