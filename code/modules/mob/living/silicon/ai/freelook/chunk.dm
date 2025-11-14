@@ -65,7 +65,7 @@
 	// Camera updates will never be second guessed.
 	// Track the number of times the camera has queued an update instead of opacity (just for fun)
 	if(istype(update_source, /obj/machinery/camera))
-		update_sources[update_source] += 1
+		update_sources[update_key] += 1
 
 	// Otherwise track this atom's opacity at time of queue
 	else if(isnull(update_sources[update_key]))
