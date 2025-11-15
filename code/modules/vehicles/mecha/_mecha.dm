@@ -365,7 +365,6 @@
 
 /obj/vehicle/sealed/mecha/update_icon_state()
 	icon_state = get_mecha_occupancy_state()
-	diag_hud_set_mechcell() //when charged by inducer
 	return ..()
 
 /**
@@ -510,6 +509,7 @@
 	return TRUE
 
 /obj/vehicle/sealed/mecha/get_cell()
+	RegisterSignal(cell, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(diag_hud_set_mechcell), TRUE)
 	return cell
 
 /obj/vehicle/sealed/mecha/rust_heretic_act()
