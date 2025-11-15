@@ -181,7 +181,7 @@
 		I.do_pickup_animation(src)
 	if(get_item_for_held_index(hand_index))
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
-	I.forceMove(src)
+	I.forceMove(src) //this has to come before has_equipped() is called
 	held_items[hand_index] = I
 	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	if(I.pulledby)
@@ -440,6 +440,7 @@
 	item_dropping.layer = initial(item_dropping.layer)
 	SET_PLANE_EXPLICIT(item_dropping, initial(item_dropping.plane), newloc)
 	item_dropping.appearance_flags &= ~NO_CLIENT_COLOR
+	item_dropping.item_flags &= ~IN_INVENTORY //This has to come before MoveToNullspace/forceMove is called
 	if(!no_move && !(item_dropping.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 		if (isnull(newloc))
 			item_dropping.moveToNullspace()
@@ -531,6 +532,7 @@
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	item.item_flags |= IN_INVENTORY
 	. = item.on_equipped(src, slot, initial)
 	if(.)
 		update_equipment_speed_mods()

@@ -118,7 +118,7 @@
 	for(var/mob/dead/observe as anything in observers)
 		observe.client?.screen -= equipping
 
-	equipping.forceMove(src)
+	equipping.forceMove(src) //This has to come before has_equipped is called.
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 	equipping.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE
