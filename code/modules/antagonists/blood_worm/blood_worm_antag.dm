@@ -5,6 +5,7 @@
 	pref_flag = ROLE_BLOOD_WORM
 	antag_hud_name = "blood_worm"
 	antag_moodlet = /datum/mood_event/blood_worm
+	hijack_speed = 0.5
 	show_to_ghosts = TRUE
 	stinger_sound = 'sound/effects/magic/exit_blood.ogg'
 	ui_name = "AntagInfoBloodWorm"
@@ -56,11 +57,15 @@
 	if (!istype(target, /mob/living/basic/blood_worm))
 		target.faction |= FACTION_BLOOD_WORM
 
+	target.add_traits(list(TRAIT_APATHETIC, TRAIT_DESENSITIZED, TRAIT_FEARLESS), REF(src))
+
 /datum/antagonist/blood_worm/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
 
 	if (!istype(target, /mob/living/basic/blood_worm))
 		target.faction -= FACTION_BLOOD_WORM
+
+	REMOVE_TRAITS_IN(target, REF(src))
 
 /datum/antagonist/blood_worm/admin_add(datum/mind/new_owner, mob/admin)
 	if (!new_owner.current)

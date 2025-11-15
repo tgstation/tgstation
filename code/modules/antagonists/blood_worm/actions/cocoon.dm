@@ -84,8 +84,10 @@
 	transfer(owner, new_worm)
 
 	for (var/mob/living/unfortunate_observer in view(3, cocoon))
-		if (istype(unfortunate_observer, /mob/living/basic/blood_worm))
+		if (new_worm.faction_check_atom(unfortunate_observer))
 			continue // Don't harm our siblings.
+		if (unfortunate_observer.stat == DEAD)
+			continue // Harms potential hosts.
 
 		unfortunate_observer.visible_message(
 			message = span_danger("\The [unfortunate_observer] is splashed with a wave of corrosive blood!"),
@@ -190,6 +192,8 @@
 
 /obj/structure/blood_worm_cocoon
 	icon = 'icons/mob/nonhuman-player/blood_worm_32x32.dmi'
+
+	faction = list(FACTION_BLOOD_WORM)
 
 	density = TRUE
 	anchored = TRUE

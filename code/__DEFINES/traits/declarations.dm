@@ -1608,4 +1608,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob is the host of a living blood worm.
 #define TRAIT_BLOOD_WORM_HOST "blood_worm_host"
 
+/// Mob just doesn't fucking care. No mood and no sanity.
+#define TRAIT_APATHETIC "apathetic"
+
 // END TRAIT DEFINES

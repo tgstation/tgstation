@@ -73,6 +73,8 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_BASIC_HEALTH_HUD_VISIBLE), PROC_REF(add_to_basic_health_hud))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_BASIC_HEALTH_HUD_VISIBLE), PROC_REF(remove_from_basic_health_hud))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_APATHETIC), PROC_REF(on_apathetic_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_APATHETIC), PROC_REF(on_apathetic_trait_loss))
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
@@ -313,3 +315,13 @@
 	SIGNAL_HANDLER
 	var/datum/atom_hud/data/human/medical/basic/hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
 	hud.remove_atom_from_hud(src)
+
+/// Called when [TRAIT_APATHETIC] is added to the mob.
+/mob/living/proc/on_apathetic_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	mob_mood?.update_mood()
+
+/// Called when [TRAIT_APATHETIC] is removed from the mob.
+/mob/living/proc/on_apathetic_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	mob_mood?.update_mood()

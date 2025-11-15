@@ -17,13 +17,13 @@
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
-	RegisterSignal(host, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))
+	RegisterSignals(host, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_HEALTH_UPDATE), PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/revive/Remove(mob/removed_from)
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
-	UnregisterSignal(host, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(host, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_HEALTH_UPDATE))
 
 	return ..()
 

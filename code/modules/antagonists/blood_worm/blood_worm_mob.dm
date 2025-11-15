@@ -259,6 +259,7 @@
 	RegisterSignal(host, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(on_host_handle_blood))
 	RegisterSignal(host, COMSIG_LIVING_LIFE, PROC_REF(on_host_life))
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
+	RegisterSignal(host, COMSIG_LIVING_UPDATE_BLOOD_STATUS, PROC_REF(on_host_update_blood_status))
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -266,7 +267,9 @@
 
 	// The worm handles basic blood oxygenation, circulation and filtration.
 	// The controlled host still requires a liver to process chemicals and lungs to speak.
-	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_UNCONVERTABLE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
+	// Apathy is cause it's a fuckin' worm that just wants to "KILL, CONSUME, MULTIPLY, CONQUER."
+	// Lack of hunger is a QoL thing for long-dead hosts. Apathy makes hunger meaningless anyway.
+	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_NOHUNGER, TRAIT_APATHETIC, TRAIT_FEARLESS, TRAIT_UNCONVERTABLE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
@@ -384,12 +387,14 @@
 	qdel(src)
 
 /mob/living/basic/blood_worm/proc/on_host_stat_changed(datum/source, new_stat, old_stat)
+	SIGNAL_HANDLER
 	if (old_stat == DEAD && new_stat != DEAD)
 		possess_host()
 	else if (old_stat != DEAD && new_stat == DEAD)
 		possess_worm()
 
 /mob/living/basic/blood_worm/proc/on_host_handle_blood(datum/source, seconds_per_tick, times_fired)
+	SIGNAL_HANDLER
 	return HANDLE_BLOOD_NO_OXYLOSS | HANDLE_BLOOD_NO_NUTRITION_DRAIN
 
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
@@ -420,7 +425,13 @@
 		COOLDOWN_START(src, host_heat_alert_cooldown, 15 SECONDS)
 
 /mob/living/basic/blood_worm/proc/on_host_adjust_oxy_damage(datum/source, type, amount, forced)
+	SIGNAL_HANDLER
 	return COMPONENT_IGNORE_CHANGE // Functionally, this unimplements oxy damage from hosts altogether. Which is exactly what we want.
+
+/mob/living/basic/blood_worm/proc/on_host_update_blood_status(datum/source, had_blood, has_blood, old_blood_volume, new_blood_volume)
+	SIGNAL_HANDLER
+	if (!has_blood)
+		leave_host()
 
 /mob/living/basic/blood_worm/proc/create_host_hud(datum/source)
 	SIGNAL_HANDLER
