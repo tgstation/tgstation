@@ -8,7 +8,7 @@
 	/// How should this point be interacted with?
 	var/interaction_mode = INTERACT_DROP
 	/// How should the monkey worker (if there is one) interact with the target point?
-	var/worker_interaction
+	var/worker_interaction = WORKER_NORMAL_USE
 	/// How far should the manipulator throw the object?
 	var/throw_range = 1
 	/// Which items are supposed to be picked up from `interaction_turf` if this is a pickup point

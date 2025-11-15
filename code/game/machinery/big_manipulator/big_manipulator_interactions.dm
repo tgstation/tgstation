@@ -136,9 +136,10 @@
 	if(selected.anchored || HAS_TRAIT(selected, TRAIT_NODROP))
 		return handle_no_work_available()
 
-	var/obj/item/selected_item = selected
-	if(selected_item.item_flags & (ABSTRACT|DROPDEL))
-		return handle_no_work_available()
+	if(isitem(selected))
+		var/obj/item/selected_item = selected
+		if(selected_item.item_flags & (ABSTRACT|DROPDEL))
+			return handle_no_work_available()
 
 	start_task(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
 	interact_with_origin_point(selected, hand_is_empty)

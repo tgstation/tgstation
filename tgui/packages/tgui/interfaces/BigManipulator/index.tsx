@@ -435,30 +435,23 @@ const PointSection = (props: {
               </Stack.Item>
               <Stack.Item grow>
                 <Table>
+                  <ConfigRow
+                    label="Object Type"
+                    content={getFilteringModeText(editingPoint.filtering_mode)}
+                    onClick={() =>
+                      adjustPoint(editingPoint.id, 'cycle_pickup_point_type')
+                    }
+                    tooltip="Cycle the pickup type"
+                  />
                   {title === 'Pickup Points' ? (
-                    <>
-                      <ConfigRow
-                        label="Object Type"
-                        content={getFilteringModeText(
-                          editingPoint.filtering_mode,
-                        )}
-                        onClick={() =>
-                          adjustPoint(
-                            editingPoint.id,
-                            'cycle_pickup_point_type',
-                          )
-                        }
-                        tooltip="Cycle the pickup type"
-                      />
-                      <ConfigRow
-                        label="Use Item Filters"
-                        content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
-                        onClick={() =>
-                          adjustPoint(editingPoint.id, 'toggle_filter_skip')
-                        }
-                        tooltip="Toggle filter usage"
-                      />
-                    </>
+                    <ConfigRow
+                      label="Use Item Filters"
+                      content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
+                      onClick={() =>
+                        adjustPoint(editingPoint.id, 'toggle_filter_skip')
+                      }
+                      tooltip="Toggle filter usage"
+                    />
                   ) : (
                     <>
                       <ConfigRow
@@ -522,6 +515,17 @@ const PointSection = (props: {
                               )
                             }
                             tooltip="Toggle using Combat Mode for interactions"
+                          />
+                          <ConfigRow
+                            label="Alt Worker Action"
+                            content={editingPoint.worker_interaction}
+                            onClick={() =>
+                              adjustPoint(
+                                editingPoint.id,
+                                'cycle_worker_interaction',
+                              )
+                            }
+                            tooltip="Cycle interaction type"
                           />
                           <ConfigRow
                             label="No Uses Left"
