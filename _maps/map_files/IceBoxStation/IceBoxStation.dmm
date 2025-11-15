@@ -16602,7 +16602,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "eCR" = (
-/obj/structure/no_effect_signpost{
+/obj/structure/signpost{
 	desc = "Now, where to go from here? That's a timeless question."
 	},
 /turf/open/misc/asteroid/snow/icemoon,
@@ -18524,7 +18524,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "fep" = (
-/obj/structure/no_effect_signpost,
+/obj/structure/signpost,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fez" = (
@@ -20053,7 +20053,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "fDl" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "fDn" = (
@@ -38693,7 +38693,7 @@
 /area/station/cargo/storage)
 "kUJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /obj/structure/mirror/directional/west,
 /obj/structure/sign/poster/contraband/random/directional/south,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -45830,7 +45830,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
-/obj/machinery/light/built/directional/east,
+/obj/machinery/light/empty/directional/east,
 /turf/open/floor/iron/white,
 /area/station/maintenance/port/fore)
 "mZG" = (
@@ -55603,7 +55603,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/button/flasher{
 	id = "visitorflash";
-	pixel_y = -26
+	pixel_y = -26;
+	pixel_x = -7
+	},
+/obj/machinery/button/door/directional/south{
+	pixel_x = 7;
+	pixel_y = -26;
+	name = "Visitation Shutters Control";
+	id = "visitation";
+	req_access = list("brig")
 	},
 /turf/open/floor/iron,
 /area/station/security/prison/visit)

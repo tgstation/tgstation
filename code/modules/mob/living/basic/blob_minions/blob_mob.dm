@@ -7,7 +7,6 @@
 	base_icon_state = "blob_head"
 	unique_name = TRUE
 	status_flags = CANPUSH
-	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	combat_mode = TRUE
 	bubble_icon = "blob"
@@ -24,6 +23,11 @@
 	/// Size of cloud produced from a dying spore
 	var/death_cloud_size = BLOBMOB_CLOUD_NONE
 	var/loot = /obj/item/food/spore_sack
+
+/mob/living/basic/blob_minion/New(loc, blob_borne)
+	. = ..()
+	if(blob_borne)
+		pass_flags = PASSBLOB
 
 /mob/living/basic/blob_minion/Initialize(mapload)
 	. = ..()
