@@ -20,7 +20,7 @@
 	var/list/radial_operations = list()
 	var/operating_zone = zone_selected
 	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
-		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && patient.body_position != LYING_DOWN)
+		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && !IS_LYING_OR_CANNOT_LIE(patient))
 			continue
 		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
 			continue
@@ -53,7 +53,7 @@
 				// at this point we can be relatively sure they messed up so let's give a feedback message...
 				if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
 					patient.balloon_alert(src, "operation site is obstructed!")
-				else if(patient.body_position != LYING_DOWN)
+				else if(!IS_LYING_OR_CANNOT_LIE(patient))
 					patient.balloon_alert(src, "not lying down!")
 				else
 					patient.balloon_alert(src, "nothing to do with [realtool.name]!")

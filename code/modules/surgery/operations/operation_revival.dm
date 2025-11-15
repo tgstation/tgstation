@@ -27,13 +27,16 @@
 		return FALSE
 	if(HAS_TRAIT(patient, TRAIT_SUICIDED) || HAS_TRAIT(patient, TRAIT_HUSK) || HAS_TRAIT(patient, TRAIT_DEFIB_BLACKLISTED))
 		return FALSE
-	var/obj/item/organ/brain/brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(patient.has_limbs && (isnull(brain) || !brain_check(brain)))
-		return FALSE
-	return TRUE
+	if(patient.has_limbs)
+		var/obj/item/organ/brain/brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
+		return !isnull(brain) && brain_check(brain)
+	return mob_check(patient)
 
 /datum/surgery_operation/basic/revival/proc/brain_check(obj/item/organ/brain/brain)
 	return IS_ORGANIC_ORGAN(brain)
+
+/datum/surgery_operation/basic/revival/proc/mob_check(mob/living/patient)
+	return patient.mob_biotypes & MOB_ORGANIC
 
 /datum/surgery_operation/basic/revival/tool_check(obj/item/tool)
 	if(istype(tool, /obj/item/shockpaddles))
@@ -104,6 +107,10 @@
 
 /datum/surgery_operation/basic/revival/mechanic
 	name = "full system reboot"
+	required_biotype = MOB_ROBOTIC
 
 /datum/surgery_operation/basic/revival/mechanic/brain_check(obj/item/organ/brain/brain)
 	return IS_ROBOTIC_ORGAN(brain)
+
+/datum/surgery_operation/basic/revival/mechanic/mob_check(mob/living/patient)
+	return patient.mob_biotypes & MOB_ROBOTIC

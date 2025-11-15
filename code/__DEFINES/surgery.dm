@@ -90,6 +90,9 @@
 /// Default for most heads
 #define HEAD_DEFAULT_FEATURES (HEAD_HAIR|HEAD_FACIAL_HAIR|HEAD_LIPS|HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES|HEAD_DEBRAIN)
 
+/// Checks if the mob is lying down if they can lie down, otherwise always passes
+#define IS_LYING_OR_CANNOT_LIE(mob) ((mob.mobility_flags & MOBILITY_LIEDOWN) ? (mob.body_position == LYING_DOWN) : TRUE)
+
 /// Applies moodlets after the surgical operation is complete
 #define OPERATION_AFFECTS_MOOD (1<<0)
 /// Notable operations are specially logged and also leave memories
@@ -102,7 +105,7 @@
 #define OPERATION_LOCKED (1<<4)
 /// A surgeon can perform this operation on themselves
 #define OPERATION_SELF_OPERABLE (1<<5)
-/// Operation can be performed on standing patients
+/// Operation can be performed on standing patients - note: mobs that cannot lie down are *always* considered lying down for surgery
 #define OPERATION_STANDING_ALLOWED (1<<6)
 /// Some traits may cause operations to be infalliable - this flag disables that behavior, always allowing it to be failed
 #define OPERATION_ALWAYS_FAILABLE (1<<7)

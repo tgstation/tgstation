@@ -1067,17 +1067,22 @@
 	if(patient && patient != potential_patient)
 		return
 
-	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
+	if(IS_LYING_OR_CANNOT_LIE(potential_patient) && potential_patient.loc == loc)
 		set_patient(potential_patient)
 		return
 
 	// Find another lying mob as a replacement.
-	for (var/mob/living/carbon/replacement_patient in loc.contents)
-		if(replacement_patient.body_position == LYING_DOWN)
-			set_patient(replacement_patient)
-			return
+	var/found_replacement
+	for (var/mob/living/replacement_patient in loc)
+		if(!IS_LYING_OR_CANNOT_LIE(replacement_patient))
+			continue
+		if(iscarbon(found_replacement))
+			break
+		else if(isliving(found_replacement) && !iscarbon(replacement_patient))
+			continue // Prefer carbons over non-carbons.
+		found_replacement = replacement_patient
 
-	set_patient(null)
+	set_patient(found_replacement)
 
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)

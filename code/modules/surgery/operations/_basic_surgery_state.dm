@@ -17,6 +17,13 @@
 	if(owner.has_limbs)
 		stack_trace("Applied a basic surgery state to [owner], which has limbs. This status effect is intended for limbless mobs.")
 
+/datum/status_effect/basic_surgery_state/get_examine_text()
+	if(HAS_SURGERY_STATE(surgery_state, SURGERY_SKIN_OPEN))
+		return "[owner.p_Their()] skin is open."
+	// other states are not yet supported
+	stack_trace("Surgery state holder had unsupported state(s): [jointext(bitfield_to_list(surgery_state, SURGERY_STATE_READABLE), ", ")]")
+	return null
+
 /datum/status_effect/basic_surgery_state/refresh(mob/living/old_owner, added_state = NONE, removed_state = NONE)
 	surgery_state |= added_state
 	surgery_state &= ~removed_state
