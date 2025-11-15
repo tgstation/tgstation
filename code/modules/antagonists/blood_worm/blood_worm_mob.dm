@@ -136,6 +136,8 @@
 	// For reference, a cyborg has a move speed delay of 1.5 deciseconds
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 0.5)
 
+	name = generate_random_mob_name()
+
 /mob/living/basic/blood_worm/Destroy()
 	unregister_host()
 
@@ -226,6 +228,9 @@
 			growth_string = ". You are already fully grown"
 
 	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
+
+/mob/living/basic/blood_worm/generate_random_mob_name(unique)
+	return "[initial(name)] ([rand(1, 999)])"
 
 /mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, blood_type_id, should_heal = TRUE)
 	if (!blood_type_id || !blood_amount)
