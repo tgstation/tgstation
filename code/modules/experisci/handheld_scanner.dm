@@ -26,6 +26,7 @@
 		COMSIG_ITEM_AFTERATTACK = TYPE_PROC_REF(/datum/component/experiment_handler, ignored_handheld_experiment_attempt),
 	)
 	AddComponent(/datum/component/experiment_handler, \
+		config_mode = EXPERIMENT_CONFIG_ATTACKSELF|EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical), \
 		disallowed_traits = EXPERIMENT_TRAIT_DESTRUCTIVE, \
 		experiment_signals = handheld_signals, \
