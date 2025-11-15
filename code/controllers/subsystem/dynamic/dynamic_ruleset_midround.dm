@@ -470,9 +470,9 @@
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 1,
-		DYNAMIC_TIER_MEDIUMHIGH = 2,
-		DYNAMIC_TIER_HIGH = 3,
+		DYNAMIC_TIER_LOWMEDIUM = 2,
+		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 4,
 	)
 	min_pop = 20 // Blood worms are limited by resources, so low pop means they have a harder time getting their tail in the door.
 	min_antag_cap = 1
