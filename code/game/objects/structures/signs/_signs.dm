@@ -175,23 +175,23 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/sign/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(is_editable && IS_WRITING_UTENSIL(I))
-		if(!length(GLOB.editable_sign_types))
-			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
-		if(isnull(choice))
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
-			return
-		user.visible_message(span_notice("You begin changing [src]."))
-		if(!do_after(user, 4 SECONDS, target = src))
-			return
-		set_sign_type(GLOB.editable_sign_types[choice])
-		user.visible_message(span_notice("You finish changing the sign."))
-		return
-	return ..()
+/obj/item/sign/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_editable || !IS_WRITING_UTENSIL(tool))
+		return ..()
+	if(!length(GLOB.editable_sign_types))
+		CRASH("GLOB.editable_sign_types failed to populate")
+	var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	if(!Adjacent(user)) //Make sure user is adjacent still.
+		to_chat(user, span_warning("You need to stand next to the sign to change it!"))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("You begin changing [src]."))
+	if(!do_after(user, 4 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	set_sign_type(GLOB.editable_sign_types[choice])
+	user.visible_message(span_notice("You finish changing the sign."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iswallturf(interacting_with) && !istype(interacting_with, /obj/structure/tram))
