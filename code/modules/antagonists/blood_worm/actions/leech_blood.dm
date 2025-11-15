@@ -82,9 +82,10 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living(mob/living/basic/blood_worm/leech, mob/living/target)
 	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
+	. = TRUE // Don't bite invalid victims when trying to leech from them.
 
 	if (!leech_living_start_check(leech, target))
-		return FALSE
+		return
 
 	leech.visible_message(
 		message = span_danger("\The [leech] start[leech.p_s()] trying to bite into \the [target]!"),
@@ -98,13 +99,21 @@
 	)
 
 	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_living_start_check), leech, target)))
-		return FALSE
+		return
 
 	if (leech.pulling != target && !leech.grab(target))
 		target.balloon_alert(leech, "unable to grab!")
-		return FALSE
+		return
 	if (leech.grab_state < GRAB_AGGRESSIVE)
 		leech.setGrabState(GRAB_AGGRESSIVE)
+
+	// Flooring the target makes them treat our grab state as one higher, halving their escape chance.
+	// Using a neck grab would reduce their escape chance to a third, which is too low.
+	ADD_TRAIT(target, TRAIT_FLOORED, REF(src))
+
+	// Prevents NPC monkeys from resisting out of this.
+	if (ismonkey(target) && !target.client)
+		ADD_TRAIT(target, TRAIT_INCAPACITATED, REF(src))
 
 	leech.visible_message(
 		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
@@ -136,8 +145,10 @@
 	if (leech.pulling == target && leech.grab_state >= GRAB_AGGRESSIVE)
 		leech.setGrabState(GRAB_PASSIVE)
 
+	REMOVE_TRAITS_IN(target, REF(src))
+
 	StartCooldown()
-	return TRUE
+	return
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (target.get_blood_volume() <= 0 || !target.get_bloodtype())
@@ -162,9 +173,10 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
 	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the target is invalid.
+	. = TRUE // Don't bite invalid targets when trying to leech from them.
 
 	if (!leech_container_start_check(leech, target, feedback = TRUE))
-		return FALSE
+		return
 
 	leech.visible_message(
 		message = span_danger("\The [leech] start[leech.p_s()] trying to bite into \the [target]!"),
@@ -172,7 +184,7 @@
 	)
 
 	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_start_check), leech, target)))
-		return FALSE
+		return
 
 	leech.visible_message(
 		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
@@ -207,7 +219,6 @@
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
 	StartCooldown()
-	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
 	if (!length(get_blood_in_container(target)))
