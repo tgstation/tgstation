@@ -320,6 +320,7 @@
 /mob/living/proc/on_apathetic_trait_gain(datum/source)
 	SIGNAL_HANDLER
 	mob_mood?.update_mood()
+	mob_mood?.set_sanity(SANITY_NEUTRAL)
 
 /// Called when [TRAIT_APATHETIC] is removed from the mob.
 /mob/living/proc/on_apathetic_trait_loss(datum/source)
