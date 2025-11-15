@@ -153,7 +153,7 @@
 	block += span_info("You think you can cast it up to [get_cast_range()] tiles away.")
 	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod")
 	block += get_stat_info(get_percent, experience_multiplier - 1, "You will gain experience", "faster", "slower")
-	block += get_stat_info(get_percent, completion_speed_mult - 1, "The minigame completion is", "faster", "slower")
+	block += get_stat_info(get_percent, completion_speed_mult - 1, "The minigame completion speed is", "faster", "slower")
 	block += get_stat_info(get_percent, bait_speed_mult - 1, "Reeling is", "faster", "slower")
 	block += get_stat_info(get_percent, deceleration_mult - 1, "Deceleration is", "faster", "slower")
 	block += get_stat_info(get_percent, bounciness_mult - 1, "This fishing rod is ", "bouncier", "less bouncy", "than a normal one", less_is_better = TRUE)
