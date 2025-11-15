@@ -163,7 +163,7 @@
 		/datum/component/aquarium,\
 		min_px = 6,\
 		max_px = 26,\
-		min_py = 6,\
+		min_py = 7,\
 		max_py = 24,\
 		default_beauty = 100,\
 		reagents_size = src.reagent_size,\
