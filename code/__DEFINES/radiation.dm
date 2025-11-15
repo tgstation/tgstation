@@ -35,7 +35,7 @@ Ask Mothblocks if they're around
 /// The amount of radiation humans absorb from a uranium object each pulse
 #define URANIUM_RADIATION_POWER 0.75
 /// The most amount of radiation a human can absorb from a uranium object
-#define URANIUM_RADIATION_MAX_POWER 2
+#define URANIUM_RADIATION_MAX_POWER 2.5
 
 /// The minimum exposure time before uranium structures can irradiate
 #define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)

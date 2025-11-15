@@ -329,7 +329,7 @@
 	else if(effective_rad_damage > 0)
 		radiation_damage = max(radiation_damage - seconds_per_tick * 0.5, 0)
 
-	if(RAD_STAGE_THRESHOLDS[2] > effective_rad_damage >= RAD_STAGE_THRESHOLDS[1]) // Stage 1: Mild dizziness, tox damage, and fatigue
+	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[1] && effective_rad_damage < RAD_STAGE_THRESHOLDS[2]) // Stage 1: Mild dizziness, tox damage, and fatigue
 		adjustToxLoss(0.1)
 		if(SPT_PROB(3, seconds_per_tick))
 			if(prob(30)) // To avoid chat spam since there are going to be a lot of symptoms at high stages

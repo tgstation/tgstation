@@ -627,11 +627,9 @@
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(SSradiation.can_irradiate_basic(affected_mob))
-		var/chance = min(volume / (20 - rad_power * 5), rad_power)
-		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
-			var/mob/living/carbon/human/human_mob = affected_mob
-			human_mob.takeRadiation(chance / 5, RAD_MOB_MICROWAVE - 1) // No, you can't heat yourself up by eating radioactive goop. That's stupid.
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/human_mob = affected_mob
+		human_mob.takeRadiation(rad_power / 5, RAD_MOB_MUTATE + 1) // Of course polonium can scramble your DNA. It's syndicate magic.
 	else
 		if(affected_mob.adjustToxLoss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
@@ -642,11 +640,16 @@
 	if(!SSradiation.can_irradiate_basic(exposed_obj))
 		return
 
+	var/chance = min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))
+	var/chance_percentage = chance / CALCULATE_RAD_MAX_CHANCE(rad_power)
+
 	radiation_pulse(
 		source = exposed_obj,
 		max_range = 0,
 		threshold = RAD_VERY_LIGHT_INSULATION,
-		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
+		chance = chance,
+		power = (chance_percentage * rad_power / 5),
+		max_power = RAD_MOB_MUTATE,
 	)
 
 /datum/reagent/toxin/polonium/expose_mob(mob/living/exposed_mob, methods, reac_volume)
