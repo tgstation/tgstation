@@ -265,6 +265,7 @@
 	RegisterSignal(host, COMSIG_LIVING_LIFE, PROC_REF(on_host_life))
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 	RegisterSignal(host, COMSIG_LIVING_UPDATE_BLOOD_STATUS, PROC_REF(on_host_update_blood_status))
+	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -346,7 +347,16 @@
 		backseat.mind?.transfer_to(host)
 		QDEL_NULL(backseat)
 
-	UnregisterSignal(host, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE, COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_LIFE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_MOB_HUD_CREATED))
+	UnregisterSignal(host, list(
+		COMSIG_QDELETING,
+		COMSIG_MOB_STATCHANGE,
+		COMSIG_HUMAN_ON_HANDLE_BLOOD,
+		COMSIG_LIVING_LIFE,
+		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
+		COMSIG_LIVING_UPDATE_BLOOD_STATUS,
+		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
+		COMSIG_MOB_HUD_CREATED,
+	))
 
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -507,7 +517,14 @@
 	return maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD * BLOOD_WORM_EJECT_THRESHOLD
 
 /mob/living/basic/blood_worm/get_status_tab_items()
-	. = ..()
+	return ..() + "" + get_special_status_tab_items()
+
+/mob/living/basic/blood_worm/proc/on_host_get_status_tab_items(datum/source, list/items)
+	SIGNAL_HANDLER
+	items += get_special_status_tab_items()
+
+/mob/living/basic/blood_worm/proc/get_special_status_tab_items()
+	. = list()
 
 	var/unscaled = get_unscaled_total_consumed_blood()
 	var/scaled = get_scaled_total_consumed_blood()
@@ -515,7 +532,6 @@
 	var/unscaled_rounded = CEILING(unscaled, 1)
 	var/scaled_rounded = CEILING(scaled, 1)
 
-	. += ""
 	. += "Blood Consumed: [unscaled_rounded]u[scaled_rounded == unscaled_rounded ? "" : " ([scaled_rounded]u)"]"
 
 	if (cocoon_action?.total_blood_required > 0)
