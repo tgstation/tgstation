@@ -95,7 +95,7 @@
 /**
  * Called when you complete an experiment, makes sure the techwebs knows the experiment was finished, and tells everyone it happend, yay!
  */
-/datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler, linked_web_override)
+/datum/experiment/proc/finish_experiment(datum/component/experiment_handler/experiment_handler, datum/techweb/linked_web_override)
 	completed = TRUE
 	if(!experiment_handler && !linked_web_override)
 		CRASH("finish_experiment() called without either experiment_handler or linked_web_override being set")
@@ -115,7 +115,7 @@
 	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
 		if(experi_handler.linked_web != linked_web)
 			continue
-		if((!experi_handler.config_flags & EXPERIMENT_CONFIG_ATTACKSELF) && !experi_handler.is_compatible_experiment(src))
+		if((experi_handler.config_flags & EXPERIMENT_CONFIG_ATTACKSELF) && !experi_handler.is_compatible_experiment(src))
 			continue
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
