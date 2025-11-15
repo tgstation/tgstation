@@ -57,7 +57,7 @@
 	if (!istype(target, /mob/living/basic/blood_worm))
 		target.faction |= FACTION_BLOOD_WORM
 
-	target.add_traits(list(TRAIT_APATHETIC, TRAIT_DESENSITIZED, TRAIT_FEARLESS), REF(src))
+	target.add_traits(list(TRAIT_APATHETIC, TRAIT_FEARLESS), REF(src))
 
 /datum/antagonist/blood_worm/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
