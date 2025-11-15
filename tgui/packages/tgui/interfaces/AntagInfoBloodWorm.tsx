@@ -60,6 +60,9 @@ export const AntagInfoBloodWorm = (props) => {
                   While inside of a host, your host doesn't need vital organs to survive, except for a brain. Lungs let you speak, and a liver lets you process chems.
                   You can insert organs into your host by picking them up and right-clicking on your host with them. This works for cybernetics too.
                   </LabeledList.Item>
+                  <LabeledList.Item label="Alien Mind">
+                  Your mind is not that of a human. You don't experience cravings, fear, sadness or joy from normal sources, even while in a host.
+                  </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Stack.Item>
