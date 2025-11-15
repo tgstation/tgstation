@@ -459,7 +459,7 @@
  * * Optional - include_flags, (see obj.flags.dm) describes which optional things to include or not (pockets, accessories, held items)
  */
 
-/mob/living/proc/get_equipped_items(include_flags = NONE)
+/mob/proc/get_equipped_items(include_flags = NONE)
 	var/list/items = list()
 	for(var/obj/item/item_contents in contents)
 		if(item_contents.item_flags & IN_INVENTORY)
