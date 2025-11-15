@@ -171,7 +171,6 @@
 	if(!.)
 		return
 
-	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
 		return
@@ -184,7 +183,6 @@
 	if(!.)
 		return
 
-	update_equipment_speed_mods()
 	hud_used?.update_locked_slots()
 	if(item.hair_mask)
 		update_body()

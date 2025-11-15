@@ -531,12 +531,15 @@
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	return item.on_equipped(src, slot, initial)
+	. = item.on_equipped(src, slot, initial)
+	if(.)
+		update_equipment_speed_mods()
 
 /// This proc is called after an item has been removed from a mob but before it has been officially deslotted.
 /mob/proc/has_unequipped(obj/item/item, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	item.dropped(src, silent)
+	update_equipment_speed_mods()
 	return TRUE
 
 /**
