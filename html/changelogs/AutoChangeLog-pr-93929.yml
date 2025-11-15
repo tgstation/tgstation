@@ -1,0 +1,5 @@
+author: "SapphicOverload"
+delete-after: True
+changes:
+  - bugfix: "Integrated circuits can now correctly be inserted into circuit-compatible airlocks."
+  - qol: "Airlock maintenance panels can now be opened/closed with right click as well, to avoid removing an integrated circuit instead."

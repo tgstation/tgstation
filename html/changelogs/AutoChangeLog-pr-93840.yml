@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored wound treatment (using a laser gun to cauterize a cut, for example). Report anything that doesn't work"

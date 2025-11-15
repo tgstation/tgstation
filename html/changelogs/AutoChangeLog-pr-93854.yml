@@ -1,9 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - refactor: "Refactored the entire blood system. Shit is extremely likely to break, so report any issues."
-  - bugfix: "Some previously broken blood effects have had fixes. Way too many to jot them all down."
-  - bugfix: "Blood trails can no longer be used to duplicate blood."
-  - balance: "Blood trails scale directly on your bleeding rate now, alongside the old brute damage scaling."
-  - balance: "While you can technically still die from too much blood, reaching that state is now impossible."
-  - balance: "The autopsy scanner can now read blood information from husks, similarly to normal health analyzers."
