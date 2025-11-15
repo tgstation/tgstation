@@ -126,6 +126,8 @@
 			if(!do_after(user, REMOVE_DELAY, target = interacting_with))
 				qdel(beam)
 				return ITEM_INTERACT_BLOCKING
+			if(!useResource(DECONSTRUCT_COST, user, TRUE))
+				return ITEM_INTERACT_BLOCKING
 			qdel(interacting_with)
 			useResource(DECONSTRUCT_COST, user)
 			return ITEM_INTERACT_SUCCESS
