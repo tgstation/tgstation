@@ -67345,7 +67345,7 @@
 /area/station/cargo/storage)
 "sQc" = (
 /obj/structure/table,
-/obj/item/food/sandwich/cheese/grilled{
+/obj/item/food/sandwich/grilled_cheese{
 	name = "idiot sandwich";
 	pixel_y = 8
 	},
