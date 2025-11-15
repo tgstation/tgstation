@@ -3,6 +3,14 @@
 #define LEFT_LEFT_COMBO "HH"
 #define RIGHT_RIGHT_COMBO "DD"
 
+#define STRAIGHT_PUNCH "straight_punch"
+#define RIGHT_HOOK "right_hook"
+#define LEFT_HOOK "left_hook"
+#define LIGHT_JAB "light_jab"
+#define DISCOMBOBULATE "discombobulate"
+#define BLIND_JAB "blind_jab"
+#define CRAVEN_BLOW "craven_blow"
+
 /datum/martial_art/boxing
 	name = "Boxing"
 	id = MARTIALART_BOXING
@@ -31,23 +39,34 @@
 
 ///Unlike most instances of this proc, this is actually called in _proc/tussle()
 ///Returns a multiplier on our skill damage bonus.
-/datum/martial_art/boxing/proc/check_streak(mob/living/attacker, mob/living/defender)
-	var/combo_multiplier = 1
-
-	if(findtext(streak, LEFT_LEFT_COMBO) || findtext(streak, RIGHT_RIGHT_COMBO))
+/datum/martial_art/boxing/proc/check_streak(mob/living/attacker, mob/living/defender, obj/item/bodypart/arm/active_arm)
+	if(check_behind(attacker, defender) && !honorable_boxer)
 		reset_streak()
-		if(COOLDOWN_FINISHED(src, warning_cooldown))
-			COOLDOWN_START(src, warning_cooldown, 2 SECONDS)
-			attacker.balloon_alert(attacker, "weak combo, alternate your hits!")
-		return combo_multiplier * 0.5
+		return CRAVEN_BLOW
+
+	if(is_detective_job(attacker.mind?.assigned_role)  && defender.is_blind()) //In short: discombobulate
+		reset_streak()
+		return DISCOMBOBULATE
+
+	if(findtext(streak, LEFT_LEFT_COMBO) && active_arm.body_zone == BODY_ZONE_R_ARM || findtext(streak, RIGHT_RIGHT_COMBO) && active_arm.body_zone == BODY_ZONE_L_ARM)
+		reset_streak()
+		if(attacker.is_blind())
+			return BLIND_JAB
+		else
+			return LIGHT_JAB
+
+	else if(findtext(streak, LEFT_LEFT_COMBO) && active_arm.body_zone == BODY_ZONE_L_ARM || findtext(streak, RIGHT_RIGHT_COMBO) && active_arm.body_zone == BODY_ZONE_R_ARM)
+		reset_streak()
+		return STRAIGHT_PUNCH
 
 	if(findtext(streak, LEFT_RIGHT_COMBO) || findtext(streak, RIGHT_LEFT_COMBO))
 		reset_streak()
-		// If we have an extra effect from the combo, perform it here. By default, we have no extra effect.
-		perform_extra_effect(attacker, defender)
-		return combo_multiplier * 1.5
-
-	return combo_multiplier
+		if(active_arm.body_zone == BODY_ZONE_L_ARM)
+			return LEFT_HOOK
+		else if(active_arm.body_zone == BODY_ZONE_R_ARM)
+			return RIGHT_HOOK
+	perform_extra_effect(attacker, defender)
+	return NONE
 
 /// An extra effect on some moves and attacks.
 /datum/martial_art/boxing/proc/perform_extra_effect(mob/living/attacker, mob/living/defender)
@@ -56,7 +75,7 @@
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("D", defender)
-	tussle(attacker, defender, "right hook", "right hooked")
+	tussle(attacker, defender)
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)
@@ -68,11 +87,11 @@
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("H", defender)
-	tussle(attacker, defender, "left hook", "left hooked")
+	tussle(attacker, defender)
 	return MARTIAL_ATTACK_SUCCESS
 
 // Our only boxing move, which occurs on literally all attacks; the tussle. However, quite a lot morphs the results of this proc. Combos, unlike most martial arts attacks, are checked in this proc rather than our standard unarmed procs
-/datum/martial_art/boxing/proc/tussle(mob/living/attacker, mob/living/defender, atk_verb = "blind jab", atk_verbed = "blind jabbed")
+/datum/martial_art/boxing/proc/tussle(mob/living/attacker, mob/living/defender)
 
 	if(honorable_boxer) //Being a good sport, you never hit someone on the ground or already knocked down. It shows you're the better person.
 		if(defender.body_position == LYING_DOWN && defender.getStaminaLoss() >= 100 || defender.IsUnconscious()) //If they're in stamcrit or unconscious, don't bloody punch them
@@ -102,8 +121,29 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 
+	// Our potential wound bonus on a punch. Only applies if we're dishonorable. Otherwise, we can't wound.
+	var/possible_wound_bonus = honorable_boxer ? 0 : CANT_WOUND
+
 	// Determines damage dealt on a punch. Against a boxing defender, we apply our skill bonus.
 	var/damage = rand(lower_force, upper_force)
+
+	// Attack verbs for our visible chat messages.
+	var/current_atk_verb = "normal punches"
+	var/current_atk_verbed = "normal punched"
+
+	if(defender.check_block(attacker, damage, "[attacker]'s punch", UNARMED_ATTACK))
+		return FALSE
+
+	// Similar to a normal punch, should we have a value of 0 for our lower force, we simply miss outright.
+	if(!lower_force)
+		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
+		defender.visible_message(span_warning("[attacker]'s punch misses [defender]!"), \
+			span_danger("You avoid [attacker]'s punch!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
+		to_chat(attacker, span_warning("Your punch misses [defender]!"))
+		log_combat(attacker, defender, "attempted to hit", "punch (boxing) ")
+		return FALSE
+
+	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 
 	if(honor_check(defender))
 		var/strength_bonus = HAS_TRAIT(attacker, TRAIT_STRENGTH) ? 2 : 0 //Investing into genetic strength improvements makes you a better boxer
@@ -112,36 +152,66 @@
 		if(istype(potential_spine))
 			strength_bonus *= potential_spine.strength_bonus
 
-		damage += round(athletics_skill * check_streak(attacker, defender) + strength_bonus, 1)
+		var/streak_augmentation = check_streak(attacker, defender, active_arm)
+
+		var/combo_multiplier = 1
+
+		switch(streak_augmentation)
+			if(STRAIGHT_PUNCH)
+				current_atk_verb = "consecutively normal punches"
+				current_atk_verbed = "cnsecutively normal punched"
+
+			if(LIGHT_JAB)
+				current_atk_verb = "light jabs"
+				current_atk_verbed = "light jabbed"
+
+			if(LEFT_HOOK)
+				current_atk_verb = "left hooks"
+				current_atk_verbed = "left hooked"
+				combo_multiplier = 1.5
+				base_unarmed_effectiveness *= 1.2
+				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
+
+			if(LEFT_HOOK)
+				current_atk_verb = "right hooks"
+				current_atk_verbed = "right hooked"
+				combo_multiplier = 1.5
+				base_unarmed_effectiveness *= 1.2
+				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
+
+			if(DISCOMBOBULATE)
+				current_atk_verb = "discombobulates"
+				current_atk_verbed = "discombobulated"
+				affecting = defender.get_bodypart(defender.get_random_valid_zone(BODY_ZONE_HEAD))
+				defender.adjust_confusion_up_to(20 SECONDS, 50 SECONDS)
+				defender.adjust_dizzy_up_to(20 SECONDS, 50 SECONDS)
+
+			if(BLIND_JAB)
+				current_atk_verb = "blind jabs"
+				current_atk_verbed = "blind jabbed"
+				combo_multiplier = 0.5
+				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
+
+			if(CRAVEN_BLOW)
+				current_atk_verb = "sucker punches"
+				current_atk_verbed = "sucker punch"
+				possible_wound_bonus = damage
+				combo_multiplier = 2
+				possible_wound_bonus *= 1.5
+				affecting = defender.get_bodypart(defender.get_random_valid_zone(BODY_ZONE_HEAD))
+				defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS) //why yes, this could result in them being knocked out in one.
+
+		damage += round((athletics_skill + strength_bonus) * combo_multiplier, 1)
+
 		if(defender.stat <= HARD_CRIT) // Do not grant experience against dead targets
 			grant_experience = TRUE
 
-	var/current_atk_verb = atk_verb
-	var/current_atk_verbed = atk_verbed
-
-	if(is_detective_job(attacker.mind?.assigned_role)) //In short: discombobulate
-		current_atk_verb = "discombobulate"
-		current_atk_verbed = "discombulated"
-
-	// Similar to a normal punch, should we have a value of 0 for our lower force, we simply miss outright.
-	if(!lower_force)
-		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
-		defender.visible_message(span_warning("[attacker]'s [current_atk_verb] misses [defender]!"), \
-			span_danger("You avoid [attacker]'s [current_atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_warning("Your [current_atk_verb] misses [defender]!"))
-		log_combat(attacker, defender, "attempted to hit", current_atk_verb)
-		return FALSE
-
-	if(defender.check_block(attacker, damage, "[attacker]'s [current_atk_verb]", UNARMED_ATTACK))
-		return FALSE
-
-	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/armor_block = defender.run_armor_check(affecting, MELEE, armour_penetration = base_unarmed_effectiveness)
 
 	playsound(defender, attack_sound, 25, TRUE, -1)
 
 	defender.visible_message(
-		span_danger("[attacker] [current_atk_verbed] [defender]!"),
+		span_danger("[attacker] [current_atk_verb] [defender]!"),
 		span_userdanger("You're [current_atk_verbed] by [attacker]!"),
 		span_hear("You hear a sickening sound of flesh hitting flesh!"),
 		COMBAT_MESSAGE_RANGE,
@@ -153,7 +223,7 @@
 	// Determines the total amount of experience earned per punch
 	var/experience_earned = round(damage/4, 1)
 
-	defender.apply_damage(damage, damage_type, affecting, armor_block)
+	defender.apply_damage(damage, damage_type, affecting, armor_block, wound_bonus = possible_wound_bonus)
 
 	log_combat(attacker, defender, "punched (boxing) ")
 
@@ -210,6 +280,10 @@
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
+
+	if(defender.pulledby && defender.pulledby.grab_state >= GRAB_AGGRESSIVE) // dubious a normal boxer will be in a state where this happens, buuuut.
+		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
+		defender.throw_at(throw_target, 2, 2, attacker)
 
 /// Returns whether whoever is checked by this proc is complying with the rules of boxing. The boxer cannot block non-boxers, and cannot apply their scariest moves against non-boxers.
 /datum/martial_art/boxing/proc/honor_check(mob/living/possible_boxer)
