@@ -415,7 +415,7 @@
 
 	// Ignored while possessing a host, as [carbon/proc/bleed_warn] handles it instead.
 	if (!is_possessing_host && COOLDOWN_FINISHED(src, host_bleed_alert_cooldown) && host.get_bleed_rate() > 0)
-		to_chat(src, span_userdanger("Your blood is leaking out!"))
+		to_chat(src, span_userdanger("Your host is bleeding!"))
 		COOLDOWN_START(src, host_bleed_alert_cooldown, 15 SECONDS)
 
 /mob/living/basic/blood_worm/proc/handle_host_temperature(seconds_per_tick, times_fired)
