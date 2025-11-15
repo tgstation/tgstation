@@ -57,6 +57,8 @@
 	if (!istype(target, /mob/living/basic/blood_worm))
 		target.faction |= FACTION_BLOOD_WORM
 
+	// Apathy and fearlessness are traits inherent to the very mind of a blood worm.
+	// Being immune to hunger, withdrawals, etc. are physical traits of blood worm hosts.
 	target.add_traits(list(TRAIT_APATHETIC, TRAIT_FEARLESS), REF(src))
 
 /datum/antagonist/blood_worm/remove_innate_effects(mob/living/mob_override)

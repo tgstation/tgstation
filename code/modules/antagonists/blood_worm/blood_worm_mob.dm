@@ -270,11 +270,20 @@
 
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), BLOOD_WORM_HOST_TRAIT)
 
-	// The worm handles basic blood oxygenation, circulation and filtration.
-	// The controlled host still requires a liver to process chemicals and lungs to speak.
-	// Apathy is cause it's a fuckin' worm that just wants to "KILL, CONSUME, MULTIPLY, CONQUER."
-	// Lack of hunger is a QoL thing for long-dead hosts. Apathy makes hunger meaningless anyway.
-	host.add_traits(list(TRAIT_NOBREATH, TRAIT_STABLEHEART, TRAIT_STABLELIVER, TRAIT_NOCRITDAMAGE, TRAIT_NOHUNGER, TRAIT_APATHETIC, TRAIT_FEARLESS, TRAIT_UNCONVERTABLE, TRAIT_BLOOD_HUD, TRAIT_BLOOD_WORM_HOST), BLOOD_WORM_HOST_TRAIT)
+	host.add_traits(list(
+	TRAIT_NOBREATH, // Makes blood worms carry at least one of their atmos immunities to a host. Also allows them to take off masks to be able to spit, without risking suffocation.
+	TRAIT_STABLEHEART, // Allows blood worms to take fucked up hosts. Especially useful if you accidentally gut your future host yourself. (very possible as an adult)
+	TRAIT_STABLELIVER, // Ditto.
+	TRAIT_NOCRITDAMAGE, // Prevents blood worms from noob trapping themselves by reviving a host "too early", since that shouldn't be a thing.
+	TRAIT_NOHUNGER, // Every single long-deceased corpse is starved. Many people also just ignore hunger the whole shift. Starving with every new host gets old fast.
+	TRAIT_APATHETIC, // Prevents OOC quirk choices, seeing death, etc. causing as many issues for blood worms. They don't give a shit about your heirloom. Also thematically accurate.
+	TRAIT_NO_WITHDRAWALS, // Ditto. Stops withdrawals instead of addictions, because people can metagame you being a blood worm if they spot an addiction quirk without an active addiction.
+	TRAIT_FEARLESS, // Ditto.
+	TRAIT_UNCONVERTABLE, // Blood worms are not allowed to get abilities from other antags, like blood cultist abilities. That would be utterly broken.
+	TRAIT_BLOOD_HUD, // Self-explanatory, allows blood worms to seek prey even while in a host.
+	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
+	BLOOD_WORM_HOST_TRAIT)
+
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
@@ -404,6 +413,10 @@
 
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
 	host.adjust_blood_volume(regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD)
+
+	// Required for now, because TRAIT_NOBREATH does not actually prevent oxygen damage.
+	// This is really weird because it also sets oxygen damage to 0 when added to a mob.
+	host.setOxyLoss(0, forced = TRUE)
 
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
 		handle_host_blood(seconds_per_tick, times_fired)
