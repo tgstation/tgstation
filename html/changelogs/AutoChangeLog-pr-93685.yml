@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Spear materials are somewhat more consistent as you use better materials. More statistics improve with material used."
-  - balance: "Spears, when not wielded, have 2 tiles of reach. When wielded, they also gain twice as much AP than their material type allows."
-  - balance: "Spears start to break as they're used until they fall apart. Some types of spears are not affected."

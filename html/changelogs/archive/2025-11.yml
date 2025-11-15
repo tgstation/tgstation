@@ -425,3 +425,15 @@
       if a signpost that should teleport you no longer can.
   trazodont:
   - map: adds visitation shutter control button to icebox perma
+2025-11-15:
+  Fghj240:
+  - rscadd: You may now spawn in as your static when picking a ghost role
+  lessthnthree:
+  - spellcheck: Fixed some RETA examine text
+  necromanceranne:
+  - balance: Spear materials are somewhat more consistent as you use better materials.
+      More statistics improve with material used.
+  - balance: Spears, when not wielded, have 2 tiles of reach. When wielded, they also
+      gain twice as much AP than their material type allows.
+  - balance: Spears start to break as they're used until they fall apart. Some types
+      of spears are not affected.
