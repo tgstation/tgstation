@@ -452,3 +452,8 @@
 		else
 			source.next_click = world.time + CLICK_CD_ACTIVATE_ABILITY
 	INVOKE_ASYNC(src, PROC_REF(Trigger))
+
+/// Used for setting the keybind via external sources.
+/datum/action/proc/set_key(new_full_key)
+	full_key = new_full_key
+	build_all_button_icons(UPDATE_BUTTON_STATUS)

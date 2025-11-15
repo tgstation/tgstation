@@ -117,14 +117,14 @@
 
 	new_worm.consumed_blood = old_worm.consumed_blood
 
-	new_worm.spit_action?.full_key = old_worm.spit_action?.full_key
-	new_worm.leech_action?.full_key = old_worm.leech_action?.full_key
-	new_worm.invade_action?.full_key = old_worm.invade_action?.full_key
-	new_worm.cocoon_action?.full_key = old_worm.cocoon_action?.full_key
+	new_worm.spit_action?.set_key(old_worm.spit_action?.full_key)
+	new_worm.leech_action?.set_key(old_worm.leech_action?.full_key)
+	new_worm.invade_action?.set_key(old_worm.invade_action?.full_key)
+	new_worm.cocoon_action?.set_key(old_worm.cocoon_action?.full_key)
 
-	new_worm.transfuse_action?.full_key = old_worm.transfuse_action?.full_key
-	new_worm.eject_action?.full_key = old_worm.eject_action?.full_key
-	new_worm.revive_action?.full_key = old_worm.revive_action?.full_key
+	new_worm.transfuse_action?.set_key(old_worm.transfuse_action?.full_key)
+	new_worm.eject_action?.set_key(old_worm.eject_action?.full_key)
+	new_worm.revive_action?.set_key(old_worm.revive_action?.full_key)
 
 	new_worm.cocoon_action?.StartCooldown()
 
