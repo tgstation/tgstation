@@ -6,6 +6,7 @@
 #define STRAIGHT_PUNCH "straight_punch"
 #define RIGHT_HOOK "right_hook"
 #define LEFT_HOOK "left_hook"
+#define UPPERCUT "uppercut"
 #define LIGHT_JAB "light_jab"
 #define DISCOMBOBULATE "discombobulate"
 #define BLIND_JAB "blind_jab"
@@ -62,9 +63,15 @@
 	if(findtext(streak, LEFT_RIGHT_COMBO) || findtext(streak, RIGHT_LEFT_COMBO))
 		reset_streak()
 		if(active_arm.body_zone == BODY_ZONE_L_ARM)
-			return LEFT_HOOK
+			if(findtext(streak, RIGHT_LEFT_COMBO))
+				return LEFT_HOOK
+
 		else if(active_arm.body_zone == BODY_ZONE_R_ARM)
-			return RIGHT_HOOK
+			if(findtext(streak, LEFT_RIGHT_COMBO))
+				return RIGHT_HOOK
+		else
+			return UPPERCUT
+
 	perform_extra_effect(attacker, defender)
 	return NONE
 
@@ -169,14 +176,18 @@
 				current_atk_verb = "left hooks"
 				current_atk_verbed = "left hooked"
 				combo_multiplier = 1.5
-				base_unarmed_effectiveness *= 1.2
 				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
 
-			if(LEFT_HOOK)
+			if(RIGHT_HOOK)
 				current_atk_verb = "right hooks"
 				current_atk_verbed = "right hooked"
 				combo_multiplier = 1.5
-				base_unarmed_effectiveness *= 1.2
+				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
+
+			if(UPPERCUT)
+				current_atk_verb = "uppercuts"
+				current_atk_verbed = "uppercutted"
+				base_unarmed_effectiveness *= 1.5
 				attacker.changeNext_move(CLICK_CD_MELEE * 1.5)
 
 			if(DISCOMBOBULATE)
