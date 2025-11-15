@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Chem and drink dispensers have a new recipe browser embedded into their ui. The old one still exists for people who really, really need all the information available possible."
+  - spellcheck: "A few chems have had their descriptions updated."
