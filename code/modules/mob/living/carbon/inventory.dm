@@ -163,9 +163,6 @@
 
 	return not_handled
 
-/mob/living/carbon/get_equipped_speed_mod_items()
-	return ..() + get_equipped_items(INCLUDE_ABSTRACT)
-
 /mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
 	if(!.)

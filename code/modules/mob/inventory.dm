@@ -473,6 +473,10 @@
 
 	return items
 
+///Get all items in our possession that should affect our movespeed
+/mob/proc/get_equipped_speed_mod_items()
+	return get_equipped_items(INCLUDE_HELD|INCLUDE_ABSTRACT|INCLUDE_PROSTHETICS)
+
 /**
  * Returns the items that were successfully unequipped.
  */
