@@ -13,8 +13,7 @@
 	var/minimum_health = 10
 
 	var/projectile_type = null
-
-	var/can_burst = FALSE
+	var/burst_projectile_type = null
 	var/burst_count = 5
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/New(Target, original)
@@ -27,7 +26,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/set_click_ability(mob/on_who)
 	. = ..()
-	var/right_click_message = ishuman(owner) ? ", right-click to melt restraints" : (can_burst ? ", right-click for a burst" : "")
+	var/right_click_message = ishuman(owner) ? ", right-click to melt restraints" : (burst_projectile_type ? ", right-click for a burst" : "")
 	to_chat(owner, span_notice("You fill your [ishuman(owner) ? "mouth" : "maw"] with blood. <b>Left-click to spit corrosive blood[right_click_message]!</b>"))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/unset_click_ability(mob/on_who, refund_cooldown)
@@ -70,7 +69,7 @@
 
 	if (modifiers[RIGHT_CLICK] && worm.host)
 		melt_restraints()
-	else if (modifiers[RIGHT_CLICK] && can_burst)
+	else if (modifiers[RIGHT_CLICK] && burst_projectile_type)
 		fire_burst(clicker, modifiers, target)
 	else
 		fire_normal(clicker, modifiers, target)
@@ -93,22 +92,17 @@
 		blind_message = span_hear("You hear spitting.")
 	)
 
-	spit(target, modifiers)
+	spit(target, modifiers, projectile_type)
 
 	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 25, vary = TRUE)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_burst(mob/living/clicker, modifiers, atom/target)
 	if (target == owner)
 		return
-	if (!fire_burst_checks(feedback = TRUE))
-		return
 
-	owner.visible_message(
-		message = span_danger("\The [owner] pull[owner.p_s()] back [owner.p_their()] head in preparation for something!"),
-		self_message = span_danger("You pull back your head in preparation to spit a burst of corrosive blood!")
-	)
-
-	if (!do_after(owner, 1 SECONDS, owner, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fire_burst_checks))))
+	var/mob/living/basic/blood_worm/worm = src.target
+	if (worm.health - health_cost * burst_count < minimum_health)
+		owner.balloon_alert(owner, "out of blood!")
 		return
 
 	owner.visible_message(
@@ -117,14 +111,14 @@
 		blind_message = span_hear("You hear spitting.")
 	)
 
-	spit(target, modifiers, count = burst_count, spread = 10)
+	spit(target, modifiers, burst_projectile_type, count = burst_count, spread = 10)
 
 	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 40, vary = TRUE)
 	playsound(owner, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', vol = 40, vary = TRUE)
 
 	StartCooldown(10 SECONDS)
 
-/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/spit(target, modifiers, count = 1, spread = 0)
+/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/spit(target, modifiers, projectile_type, count = 1, spread = 0)
 	for (var/i in 1 to count)
 		var/obj/projectile/blood_worm_spit/spit = new projectile_type(owner.loc)
 
@@ -141,18 +135,6 @@
 		worm.host.adjust_blood_volume(-health_cost * BLOOD_WORM_HEALTH_TO_BLOOD * count)
 	else
 		worm.adjustBruteLoss(health_cost * count)
-
-/datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_burst_checks(feedback = FALSE)
-	if (!IsAvailable(feedback))
-		return FALSE
-
-	var/mob/living/basic/blood_worm/worm = target
-	if (worm.health - health_cost * burst_count < minimum_health)
-		if (feedback)
-			owner.balloon_alert(owner, "out of blood!")
-		return FALSE
-
-	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_restraints()
 	var/mob/living/carbon/human/host = owner
@@ -288,9 +270,14 @@
 	desc = "Spit corrosive blood at your target in exchange for your own health. Right-click to melt restraints while in a host, or fire a burst while out of a host."
 	health_cost = 6.5 // This is enough for 26 shots in a row at full health. (keep in mind that health is VERY important)
 	projectile_type = /obj/projectile/blood_worm_spit/adult
-	can_burst = TRUE
+	burst_projectile_type = /obj/projectile/blood_worm_spit/adult_burst
 
 /obj/projectile/blood_worm_spit/adult
 	damage = 25 // 500 damage total, assuming no armor.
 	armour_penetration = 50 // Yeah no your armor isn't saving you from this.
 	wound_bonus = 5 // Okay, now we're talking.
+
+/obj/projectile/blood_worm_spit/adult_burst
+	damage = 15 // 75 damage per burst if all hit.
+	armour_penetration = 50 // Same armor penetration.
+	wound_bonus = 2 // Slightly less wound power than normal.
