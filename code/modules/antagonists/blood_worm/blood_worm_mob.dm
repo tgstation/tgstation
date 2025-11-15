@@ -190,45 +190,6 @@
 	if (host && loc != host)
 		unregister_host()
 
-/mob/living/basic/blood_worm/examining(atom/target, list/result)
-	if (!isliving(target))
-		return
-
-	var/mob/living/bloodbag = target
-
-	var/cached_blood_volume = bloodbag.get_blood_volume()
-
-	if (cached_blood_volume <= 0)
-		return
-
-	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
-
-	if (!blood_type)
-		return
-
-	var/unscaled_blood = consumed_blood[blood_type.id]
-	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
-	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + cached_blood_volume)
-	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
-
-	var/rounded_volume = CEILING(cached_blood_volume, 1)
-	var/total_consumed_blood = get_scaled_total_consumed_blood()
-
-	var/growth_string = ""
-	if (total_consumed_blood < cocoon_action?.total_blood_required)
-		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
-		if (rounded_growth > 0)
-			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
-		else
-			growth_string = ", but consuming it wouldn't contribute to your growth"
-	else
-		if (!istype(src, /mob/living/basic/blood_worm/adult))
-			growth_string = ". You are already ready to mature"
-		else
-			growth_string = ". You are already fully grown"
-
-	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
-
 /mob/living/basic/blood_worm/generate_random_mob_name(unique)
 	return "[initial(name)] ([rand(1, 999)])"
 
@@ -266,6 +227,7 @@
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 	RegisterSignal(host, COMSIG_LIVING_UPDATE_BLOOD_STATUS, PROC_REF(on_host_update_blood_status))
 	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
+	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -323,9 +285,11 @@
 
 	visible_message(
 		message = span_bolddanger("\The [src] emerge[p_s()] from \the [host]!"),
-		self_message = span_notice("You emerge from \the [host]."),
-		blind_message = span_hear("You hear a squelch.")
+		blind_message = span_hear("You hear a squelch."),
+		ignored_mobs = list(host, src)
 	)
+
+	to_chat(is_possessing_host ? host : src, span_notice("You emerge from \the [host]."))
 
 	forceMove(host.drop_location()) // This will call unregister_host() via Moved()
 
@@ -355,6 +319,7 @@
 		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
 		COMSIG_LIVING_UPDATE_BLOOD_STATUS,
 		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
+		COMSIG_MOB_EXAMINING,
 		COMSIG_MOB_HUD_CREATED,
 	))
 
@@ -505,22 +470,67 @@
 	// Checks if we still have a host since setBruteLoss() can kill us, causing us to leave our host.
 	if (!already_ejecting && cached_blood_volume <= get_eject_volume_threshold())
 		// Sent before leave_host() for the correct message order in chat
-		to_chat(src, span_userdanger("You run out of blood to control your host with!"))
+		to_chat(is_possessing_host ? host : src, span_userdanger("You run out of blood to control your host with!"))
 
 		leave_host()
 
 		// Has to be sent after the forceMove() in leave_host()
 		balloon_alert(src, "out of blood!")
 
-/// Gets BLOOD_WORM_EJECT_THRESHOLD as an actionable blood volume threshold.
-/mob/living/basic/blood_worm/proc/get_eject_volume_threshold()
-	return maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD * BLOOD_WORM_EJECT_THRESHOLD
+/mob/living/basic/blood_worm/examining(atom/target, list/result)
+	add_special_examining_messages(target, result)
+
+/mob/living/basic/blood_worm/proc/on_host_examining(datum/source, atom/target, list/examine_strings)
+	SIGNAL_HANDLER
+	add_special_examining_messages(target, examine_strings)
+
+/mob/living/basic/blood_worm/proc/add_special_examining_messages(atom/target, list/result)
+	if (!isliving(target) || target == host)
+		return
+
+	var/mob/living/bloodbag = target
+
+	var/cached_blood_volume = bloodbag.get_blood_volume()
+
+	if (cached_blood_volume <= 0)
+		return
+
+	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
+
+	if (!blood_type)
+		return
+
+	var/unscaled_blood = consumed_blood[blood_type.id]
+	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
+	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + cached_blood_volume)
+	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
+
+	var/rounded_volume = CEILING(cached_blood_volume, 1)
+	var/total_consumed_blood = get_scaled_total_consumed_blood()
+
+	var/growth_string = ""
+	if (HAS_TRAIT(bloodbag, TRAIT_BLOOD_WORM_HOST))
+		growth_string = ", but consuming it is impossible, as they are a host"
+	else if (total_consumed_blood < cocoon_action?.total_blood_required)
+		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
+		if (rounded_growth > 0)
+			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+		else
+			growth_string = ", but consuming it wouldn't contribute to your growth"
+	else
+		if (!istype(src, /mob/living/basic/blood_worm/adult))
+			growth_string = ". You are already ready to mature"
+		else
+			growth_string = ". You are already fully grown"
+
+	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
 
 /mob/living/basic/blood_worm/get_status_tab_items()
-	return ..() + "" + get_special_status_tab_items()
+	return ..() + get_special_status_tab_items()
 
 /mob/living/basic/blood_worm/proc/on_host_get_status_tab_items(datum/source, list/items)
 	SIGNAL_HANDLER
+	items += "Worm Health: [round((health / maxHealth) * 100)]%"
 	items += get_special_status_tab_items()
 
 /mob/living/basic/blood_worm/proc/get_special_status_tab_items()
@@ -533,7 +543,6 @@
 	var/scaled_rounded = CEILING(scaled, 1)
 
 	. += "Blood Consumed: [unscaled_rounded]u[scaled_rounded == unscaled_rounded ? "" : " ([scaled_rounded]u)"]"
-
 	if (cocoon_action?.total_blood_required > 0)
 		. += "Growth: [FLOOR(scaled / cocoon_action.total_blood_required * 100, 1)]%"
 
@@ -547,12 +556,11 @@
 		var/efficiency = CEILING(get_blood_volume_after_curve(base_amount) / base_amount * 100, 1)
 
 		if (efficiency < 100)
-			efficiency_strings += "[blood_type_id]: [efficiency]%"
+			efficiency_strings += "- [blood_type_id]: [efficiency]%"
 
 	if (!length(efficiency_strings))
 		return
 
-	. += ""
 	. += "Blood Efficiency"
 	for (var/efficiency_string in efficiency_strings)
 		. += efficiency_string
@@ -577,6 +585,10 @@
 	// To put this in laymans terms, after you reach BLOOD_VOLUME_NORMAL, any further blood of the same type has a lower and lower effect.
 	// This ends after you've consumed BLOOD_VOLUME_NORMAL * 2 of any blood type, after which consuming any more of that type is useless.
 	return max(0, clamped_volume - (volume_past_starting_point * volume_past_starting_point) / maximum_point)
+
+/// Gets BLOOD_WORM_EJECT_THRESHOLD as an actionable blood volume threshold.
+/mob/living/basic/blood_worm/proc/get_eject_volume_threshold()
+	return maxHealth * BLOOD_WORM_HEALTH_TO_BLOOD * BLOOD_WORM_EJECT_THRESHOLD
 
 /obj/effect/temp_visual/blood_worm_invade_host
 	icon = 'icons/mob/nonhuman-player/blood_worm_32x32.dmi'
