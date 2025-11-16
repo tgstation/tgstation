@@ -67,7 +67,7 @@
 
 /datum/component/trapdoor/PostTransfer(datum/new_parent)
 	if(!isopenturf(new_parent))
-		return COMPONENT_INCOMPATIBLE
+		return COMPONENT_NOTRANSFER
 	if(SSshuttle.get_containing_shuttle(new_parent))
 		on_shuttle = TRUE
 	else
@@ -231,11 +231,11 @@
 		try_closing()
 
 ///signal called by turf changing
-/datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+/datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, list/new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
 	if((flags & CHANGETURF_TRAPDOOR_INDUCED) == 0) //not a process of the trapdoor
-		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace) && !ispath(path, /turf/open/space/openspace)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
+		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && islist(new_baseturfs) && new_baseturfs.Find(/turf/baseturf_skipover/trapdoor)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
 			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), path, null, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
@@ -320,8 +320,7 @@
 
 /datum/component/trapdoor/proc/on_move_special(datum/source, turf/new_turf)
 	SIGNAL_HANDLER
-	carry_over_trapdoor(trapdoor_turf_path, trapdoor_baseturfs, conspicuous, assembly, new_turf)
-	qdel(src)
+	new_turf.TakeComponent(src)
 
 #undef IS_OPEN
 
