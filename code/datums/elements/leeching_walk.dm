@@ -55,8 +55,7 @@
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility((-0.5 SECONDS) * delta_time)
 	// Heals blood loss
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += 2.5 * delta_time
+	source.adjust_blood_volume(2.5 * delta_time, maximum = BLOOD_VOLUME_NORMAL)
 	// Slowly regulates your body temp
 	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature) / 5)
 

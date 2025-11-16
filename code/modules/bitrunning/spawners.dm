@@ -34,12 +34,14 @@
 	outfit = /datum/outfit/beachbum
 	spawner_job_path = /datum/job/beach_bum
 	antag = FALSE
+	allow_custom_character = GHOSTROLE_ALLOW_OTHER
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard
 	name = "virtual lifeguard sleeper"
 	you_are_text = "You are a spunky virtual lifeguard!"
 	flavour_text = "It's up to you to make sure nobody lags or gets eaten by malware and stuff."
 	outfit = /datum/outfit/beachbum/lifeguard
+	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/beach/lifeguard/special(mob/living/carbon/human/lifeguard, mob/mob_possessor)
 	. = ..()
@@ -51,6 +53,7 @@
 	you_are_text = "You are a virtual beach bartender!"
 	flavour_text = "Your job is to keep the virtually rendered drinks coming, and help the dudebros engage drunkness simulations."
 	outfit = /datum/outfit/spacebartender
+	allow_custom_character = ALL
 
 //Skeleton Pirates
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate

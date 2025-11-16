@@ -930,7 +930,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	color = "#FC9B54"
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && CAN_HAVE_BLOOD(target))
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			to_chat(target, span_cult_large("Your blood boils in your veins!"))
@@ -955,7 +955,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/blood_boil/proc/do_area_burn(turf/T, multiplier)
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
-		if(!IS_CULTIST(target) && target.blood_volume)
+		if(!IS_CULTIST(target) && target.get_blood_volume())
 			if(target.can_block_magic(charge_cost = 0))
 				continue
 			target.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)

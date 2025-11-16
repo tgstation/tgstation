@@ -349,3 +349,114 @@
   - bugfix: Emitters can light up with their panel open.
   trazodont:
   - map: moved metastation security locker room apc
+2025-11-13:
+  Ghommie:
+  - bugfix: bridge assistant and veteran advisor PDAs (inside backpack) are now imprinted
+      automatically
+  LT3:
+  - bugfix: Peg limbs are now internally classified as wooden
+  - bugfix: Shears now able to be stored in the surgery tray
+  Rhials:
+  - bugfix: Non-blob-spawned blob minion mobs can no longer traverse blob tiles.
+  RikuTheKiller:
+  - bugfix: High-priority status effects like stuns no longer process (and thus expire)
+      twice as quickly as they should.
+  SmArtKar:
+  - bugfix: Luxury paywall lasers no longer drop their pins when spawned
+  Soot-IX:
+  - bugfix: eMagging doors didn't display proper animation. Now doors more sparkly
+      when Doorjacked.
+  lelandkemble:
+  - spellcheck: Adds self-message to clown pockets spell
+  - spellcheck: Auxbase construction console says the name of the area rather than
+      the path in failure messages
+  necromanceranne:
+  - qol: You can now backflip.
+  paganiy:
+  - bugfix: Fixed recycler deconstruction.
+  - bugfix: Holograms now properly drop their contents when processed in recycler
+      instead of deleting them.
+  - code_imp: Cleaned up recycler code.
+  timothymtorres:
+  - code_imp: Add correct code documentation for object flags
+2025-11-14:
+  Aliceee2ch:
+  - spellcheck: Flash message now starts with a capital letter.
+  ArchBTW:
+  - spellcheck: unfathomable curio "take 5 hits" && grammar
+  - balance: viscerators get PASSMACHINE && PASSFLAP
+  - bugfix: viscerators respect the PASSMOB flag
+  Ghommie:
+  - bugfix: Fixes ear protection equipment doing nothing.
+  - balance: Detonating a flashbang in space or any environment with little to no
+      air no longer stuns anyone NOT on the same tile as the flashbang with loud bangs.
+      Flashing still works as intended though.
+  Melbert:
+  - refactor: Refactored wound treatment (using a laser gun to cauterize a cut, for
+      example). Report anything that doesn't work
+  Neocloudy:
+  - code_imp: '`sound_to_playing_players` now has an argument for taking a volume
+      preference, and it''s applied to security level looping sounds in case any are
+      added.'
+  RikuTheKiller:
+  - refactor: Refactored the entire blood system. Shit is extremely likely to break,
+      so report any issues.
+  - bugfix: Some previously broken blood effects have had fixes. Way too many to jot
+      them all down.
+  - bugfix: Blood trails can no longer be used to duplicate blood.
+  - balance: Blood trails scale directly on your bleeding rate now, alongside the
+      old brute damage scaling.
+  - balance: While you can technically still die from too much blood, reaching that
+      state is now impossible.
+  - balance: The autopsy scanner can now read blood information from husks, similarly
+      to normal health analyzers.
+  SapphicOverload:
+  - rscadd: Added powers to arithmetic circuit components.
+  SmArtKar:
+  - admin: Implemented color matrix and transform modification support for Filterrific
+  necromanceranne:
+  - bugfix: Ashen bows look like they are actually made from bone.
+  paganiy:
+  - balance: Thorns kudzu vines respects armor.
+  - balance: You can protect yourself from toxic kudzu vines by fully covering your
+      body with thick clothing. However, this won't help against toxic thorns.
+  tontyGH:
+  - refactor: Signposts have had their code improved internally. Please make an issue
+      if a signpost that should teleport you no longer can.
+  trazodont:
+  - map: adds visitation shutter control button to icebox perma
+2025-11-15:
+  Fghj240:
+  - rscadd: You may now spawn in as your static when picking a ghost role
+  lessthnthree:
+  - spellcheck: Fixed some RETA examine text
+  necromanceranne:
+  - balance: Spear materials are somewhat more consistent as you use better materials.
+      More statistics improve with material used.
+  - balance: Spears, when not wielded, have 2 tiles of reach. When wielded, they also
+      gain twice as much AP than their material type allows.
+  - balance: Spears start to break as they're used until they fall apart. Some types
+      of spears are not affected.
+2025-11-16:
+  LT3:
+  - bugfix: Station trait buttons display correctly on non-widescreen clients
+  Melbert:
+  - bugfix: Things disappear instantly when going into bodybags
+  - bugfix: Holodeck ready buttons no longer vanish
+  - rscadd: Chem and drink dispensers have a new recipe browser embedded into their
+      ui. The old one still exists for people who really, really need all the information
+      available possible.
+  - spellcheck: A few chems have had their descriptions updated.
+  SapphicOverload:
+  - bugfix: Integrated circuits can now correctly be inserted into circuit-compatible
+      airlocks.
+  - qol: Airlock maintenance panels can now be opened/closed with right click as well,
+      to avoid removing an integrated circuit instead.
+  SmArtKar:
+  - bugfix: Fixed admin-spawned vines not having selected mutations
+  - bugfix: Fixed jagged bonesaw's attack animation being flipped
+  - bugfix: Fixed raptors spawning regular eggs instead of raptor ones
+  SyncIt21:
+  - bugfix: flatpacker can interact with borg omnitools again
+  muchatras:
+  - bugfix: fixed the spraycan left-click
