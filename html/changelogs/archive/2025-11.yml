@@ -437,3 +437,26 @@
       gain twice as much AP than their material type allows.
   - balance: Spears start to break as they're used until they fall apart. Some types
       of spears are not affected.
+2025-11-16:
+  LT3:
+  - bugfix: Station trait buttons display correctly on non-widescreen clients
+  Melbert:
+  - bugfix: Things disappear instantly when going into bodybags
+  - bugfix: Holodeck ready buttons no longer vanish
+  - rscadd: Chem and drink dispensers have a new recipe browser embedded into their
+      ui. The old one still exists for people who really, really need all the information
+      available possible.
+  - spellcheck: A few chems have had their descriptions updated.
+  SapphicOverload:
+  - bugfix: Integrated circuits can now correctly be inserted into circuit-compatible
+      airlocks.
+  - qol: Airlock maintenance panels can now be opened/closed with right click as well,
+      to avoid removing an integrated circuit instead.
+  SmArtKar:
+  - bugfix: Fixed admin-spawned vines not having selected mutations
+  - bugfix: Fixed jagged bonesaw's attack animation being flipped
+  - bugfix: Fixed raptors spawning regular eggs instead of raptor ones
+  SyncIt21:
+  - bugfix: flatpacker can interact with borg omnitools again
+  muchatras:
+  - bugfix: fixed the spraycan left-click

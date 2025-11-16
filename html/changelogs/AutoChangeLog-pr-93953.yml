@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Station trait buttons display correctly on non-widescreen clients"
