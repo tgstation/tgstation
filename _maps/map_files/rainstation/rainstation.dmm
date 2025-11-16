@@ -46750,6 +46750,7 @@
 	},
 /obj/item/clothing/gloves/latex/nitrile,
 /obj/item/clothing/gloves/latex/nitrile,
+/obj/structure/fireaxecabinet/jawsofrecovery/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/medical/storage)
 "lAB" = (
