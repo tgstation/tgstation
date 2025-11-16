@@ -74,10 +74,28 @@
 	item_flags = IGNORE_DIGITIGRADE
 	fastening_type = SHOES_SLIPON
 	equip_sound = null
+	/// Reference to the component that manages the footstep sounds
+	VAR_PRIVATE/datum/component/shoe_footstep/footstep_component
 
 /obj/item/clothing/shoes/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+
+/obj/item/clothing/shoes/mod/Destroy()
+	footstep_component = null
+	return ..()
+
+/obj/item/clothing/shoes/mod/proc/update_footstep_sounds()
+	QDEL_NULL(footstep_component)
+	switch(slowdown)
+		if(0.3 to INFINITY)
+			footstep_component = AddComponent(/datum/component/shoe_footstep, list('maplestation_modules/sound/items/rigstep_chonk.ogg'), volume = 50)
+		if(0.2 to 0.3)
+			footstep_component = AddComponent(/datum/component/shoe_footstep, list('maplestation_modules/sound/items/rigstep_heavy.ogg'), volume = 50)
+		if(0.1 to 0.2)
+			footstep_component = AddComponent(/datum/component/shoe_footstep, list('maplestation_modules/sound/items/rigstep_medium.ogg'), volume = 50)
+		if(-INFINITY to 0.1)
+			footstep_component = AddComponent(/datum/component/shoe_footstep, list('maplestation_modules/sound/items/rigstep.ogg'), volume = 50)
 
 /obj/item/clothing/glasses/mod
 	name = "\improper MOD glasses"
