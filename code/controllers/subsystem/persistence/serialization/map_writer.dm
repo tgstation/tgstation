@@ -147,9 +147,8 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 				// always replace [/turf/open/space] with [/turf/open/space/basic] since it speeds up the maploader
 				// [/turf/open/space] is created naturally when shuttles are moving or turf gets destroyed leading to space
 				if(ispath(saved_turf, /turf/open/space))
-					// figure out why arrivals shuttle is bypassing this lol
 					saved_turf = /turf/open/space/basic
-					// space turfs with no catwalks/lattice present should always be saved as [/area/space]
+					// space turfs without catwalks/lattice should always be saved as [/area/space]
 					if((saved_area.type != /area/space) && !(locate(/obj/structure/lattice, pull_from)))
 						saved_area = /area/space
 
