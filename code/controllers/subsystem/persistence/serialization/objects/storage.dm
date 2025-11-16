@@ -6,6 +6,7 @@
 /obj/structure/closet/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, name)
+	// we need these to keep track of paint jobs via airlock painters
 	. += NAMEOF(src, icon_state)
 	. += NAMEOF(src, base_icon_state)
 	. += NAMEOF(src, icon_door)
