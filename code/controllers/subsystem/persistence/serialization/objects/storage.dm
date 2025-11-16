@@ -1,7 +1,14 @@
-/* This is really good for debugging what's inside objects
+/* This is really good for debugging what's inside every object
 /obj/proc/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
 */
+
+/obj/structure/closet/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, name)
+	. += NAMEOF(src, icon_state)
+	. += NAMEOF(src, base_icon_state)
+	. += NAMEOF(src, icon_door)
 
 /obj/structure/closet/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist, include_ids=FALSE)
