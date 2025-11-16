@@ -117,7 +117,10 @@
 
 	new_worm.id_number = old_worm.id_number
 	new_worm.update_name()
-	new_worm.mind.name = new_worm.real_name
+
+	// Safety check: If someone gets turned into a blood worm, they need to keep their old mind name.
+	if (new_worm.mind.name == old_worm.real_name)
+		new_worm.mind.name = new_worm.real_name
 
 	new_worm.consumed_blood = old_worm.consumed_blood
 
