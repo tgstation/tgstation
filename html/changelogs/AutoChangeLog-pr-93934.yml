@@ -1,0 +1,4 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - map: "Replaces rocks on the public mining path on Lavaland with correct subtype."
