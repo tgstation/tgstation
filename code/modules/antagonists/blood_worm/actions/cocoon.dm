@@ -64,7 +64,7 @@
 
 	owner.forceMove(cocoon)
 
-	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
+	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_worm_moved))
 	RegisterSignal(cocoon, COMSIG_QDELETING, PROC_REF(on_cocoon_qdel))
@@ -151,7 +151,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(cocoon, COMSIG_QDELETING)
 
-	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), REF(src))
+	owner.remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), REF(src))
 
 	if (!QDELETED(owner))
 		owner.forceMove(cocoon.drop_location())

@@ -231,7 +231,7 @@
 
 	START_PROCESSING(SSfastprocess, src)
 
-	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE), BLOOD_WORM_HOST_TRAIT)
+	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_MUTE, TRAIT_EMOTEMUTE), BLOOD_WORM_HOST_TRAIT)
 
 	host.add_traits(list(
 	TRAIT_NOBREATH, // Makes blood worms carry at least one of their atmos immunities to a host. Also allows them to take off masks to be able to spit, without risking suffocation.
