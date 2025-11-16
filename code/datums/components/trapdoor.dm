@@ -67,6 +67,9 @@
 
 /datum/component/trapdoor/PostTransfer(datum/new_parent)
 	if(!isopenturf(new_parent))
+		if(isatom(new_parent))
+			var/atom/new_parent_atom = new_parent
+			new_parent_atom.visible_message(span_warning("The trapdoor mechanism under [new_parent_atom] is broken!"))
 		return COMPONENT_NOTRANSFER
 	if(SSshuttle.get_containing_shuttle(new_parent))
 		on_shuttle = TRUE
