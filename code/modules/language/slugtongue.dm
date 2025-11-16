@@ -12,5 +12,6 @@
 	syllables = list(
 		"wa" = 15, "wawa" = 1, "waw" = 1, "aw" = 1
 	)
-	icon_state = "scug"
+	icon = 'icons/ui/chat/emoji.dmi'
+	icon_state = "u"
 	default_priority = 90
