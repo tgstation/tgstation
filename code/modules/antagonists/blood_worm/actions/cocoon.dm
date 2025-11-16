@@ -36,6 +36,14 @@
 		return FALSE
 	if (!ispath(new_worm_type, /mob/living/basic/blood_worm))
 		return FALSE
+	if (HAS_TRAIT(owner, TRAIT_SHAPESHIFTED))
+		if (feedback)
+			owner.balloon_alert(owner, "not while shapeshifted!")
+		return FALSE
+	if (!isturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "get on the ground!")
+		return FALSE
 	if (!check_consumed_blood(feedback))
 		return FALSE
 	if (!QDELETED(cocoon))
