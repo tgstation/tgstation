@@ -86,13 +86,17 @@
 		if (feedback)
 			host.balloon_alert(owner, "husked!")
 		return FALSE
-	if (!host.get_organ_by_type(/obj/item/organ/brain))
+	if (!host.get_organ_slot(ORGAN_SLOT_BRAIN))
 		if (feedback)
 			host.balloon_alert(owner, "no brain!")
 		return FALSE
+	if (host.get_organ_loss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_DEATH && !HAS_TRAIT(host, TRAIT_BRAIN_DAMAGE_NODEATH))
+		if (feedback)
+			host.balloon_alert(owner, "brain too damaged!")
+		return FALSE
 	if (host.health <= HEALTH_THRESHOLD_DEAD)
 		if (feedback)
-			host.balloon_alert(owner, "too damaged!")
+			host.balloon_alert(owner, "body too damaged!")
 		return FALSE
 	if (!host.can_be_revived()) // Fallback, ideally caught by earlier, more descriptive checks.
 		if (feedback)

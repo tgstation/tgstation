@@ -594,6 +594,7 @@
 
 /// Handles adding examine messages for the target that are specific to this mob, e.g. a blood worm examining how much blood a living target has.
 /mob/proc/examining(atom/target, list/result)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /mob/Topic(href, list/href_list)

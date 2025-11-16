@@ -76,6 +76,9 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_APATHETIC), PROC_REF(on_apathetic_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_APATHETIC), PROC_REF(on_apathetic_trait_loss))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_MIND_TEMPORARILY_GONE), PROC_REF(on_mind_temporarily_gone_trait_loss))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -326,3 +329,13 @@
 /mob/living/proc/on_apathetic_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	mob_mood?.update_mood()
+
+/// Called when [TRAIT_MIND_TEMPORARILY_GONE] is added to the mob.
+/mob/living/proc/on_mind_temporarily_gone_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	med_hud_set_status()
+
+/// Called when [TRAIT_MIND_TEMPORARILY_GONE] is removed from the mob.
+/mob/living/proc/on_mind_temporarily_gone_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	med_hud_set_status()

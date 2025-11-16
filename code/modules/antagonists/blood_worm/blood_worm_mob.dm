@@ -160,6 +160,18 @@
 
 	return ..()
 
+/mob/living/basic/blood_worm/Login()
+	. = ..()
+	if (!. || !client)
+		return FALSE
+	if (host)
+		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+
+/mob/living/basic/blood_worm/Logout()
+	. = ..()
+	if (host)
+		REMOVE_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+
 /mob/living/basic/blood_worm/process(seconds_per_tick, times_fired)
 	if (!host)
 		return
@@ -264,6 +276,10 @@
 
 		// If the host is a changeling, then we forcibly move their client to the backseat so they can use Expel Worm if they wish to.
 		host.mind.transfer_to(backseat, force_key_move = host.mind.has_antag_datum(/datum/antagonist/changeling))
+
+	// Separated out here after host mind transfer for code clarity. This is handled via login/logout code later.
+	if (client)
+		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
 	var/cached_blood_volume = host.get_blood_volume()
 
