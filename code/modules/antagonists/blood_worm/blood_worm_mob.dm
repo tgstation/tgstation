@@ -33,6 +33,10 @@
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 20
 
+	/// Identification number, i.e. "hatchling blood worm (id)"
+	/// Used for carrying the same number through growth stages.
+	var/id_number = null
+
 	/// Effect name for stuff like "invade-[effect_name]".
 	/// Should correspond to the growth stage, like "adult".
 	var/effect_name = ""
@@ -136,7 +140,8 @@
 	// For reference, a cyborg has a move speed delay of 1.5 deciseconds
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 0.5)
 
-	name = generate_random_mob_name()
+	id_number = rand(1, 999)
+	update_name()
 
 /mob/living/basic/blood_worm/Destroy()
 	unregister_host()
@@ -175,6 +180,11 @@
 	else
 		return ..()
 
+/mob/living/basic/blood_worm/update_name(updates)
+	. = ..()
+	name = "[initial(name)] ([id_number])"
+	real_name = name
+
 /mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
 	return host ? 0 : ..() // Prevents damage from adjustXLoss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
 
@@ -189,9 +199,6 @@
 
 	if (host && loc != host)
 		unregister_host()
-
-/mob/living/basic/blood_worm/generate_random_mob_name(unique)
-	return "[initial(name)] ([rand(1, 999)])"
 
 /mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, blood_type_id, should_heal = TRUE)
 	if (!blood_type_id || !blood_amount)

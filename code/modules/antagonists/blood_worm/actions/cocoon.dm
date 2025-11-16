@@ -115,6 +115,10 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
 	old_worm.mind?.transfer_to(new_worm)
 
+	new_worm.id_number = old_worm.id_number
+	new_worm.update_name()
+	new_worm.mind.name = new_worm.real_name
+
 	new_worm.consumed_blood = old_worm.consumed_blood
 
 	new_worm.spit_action?.set_key(old_worm.spit_action?.full_key)
