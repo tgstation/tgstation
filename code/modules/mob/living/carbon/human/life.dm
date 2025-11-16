@@ -323,6 +323,9 @@
 	if(HAS_TRAIT(src, TRAIT_HALT_RADIATION_EFFECTS))
 		effective_rad_damage = 0
 		effective_radiation = 0
+	else if (has_reagent(/datum/reagent/inverse/pen_acid, needs_metabolizing = TRUE))
+		effective_radiation *= 1.5
+		effective_rad_damage *= 1.5
 
 	if(effective_radiation > 0) // Effective rads of 0 pauses rad decay. It's called HALT_RADIATION_EFFECTS, not HALT_RADIATION_SYMPTOMS_BUT_LET_THE_EFFECTS_WEAR_OFF
 		radiation_stage(seconds_per_tick) // Note: This function is unaffected by effective rads
