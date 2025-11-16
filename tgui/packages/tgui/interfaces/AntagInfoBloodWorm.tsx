@@ -46,7 +46,7 @@ export const AntagInfoBloodWorm = (props) => {
                   Secure a good spot or a host before maturing.
                   </LabeledList.Item>
                   <LabeledList.Item label="Reproduction">
-                  Once you enter your final stage of growth as an adult, you can reproduce to create 4 new hatchlings, in exchange for reverting into one yourself.
+                  Once you enter your final stage of growth as an adult, you can reproduce to create 3 new hatchlings, in exchange for reverting into one yourself.
                   </LabeledList.Item>
                   <LabeledList.Item label="Parasitism">
                   You have the supernatural ability to turn into blood upon command.

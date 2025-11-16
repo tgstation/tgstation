@@ -262,7 +262,7 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult
 	name = "Reproduce"
-	desc = "Enter incubation in a cocoon, creating 5 new hatchlings including yourself."
+	desc = "Enter incubation in a cocoon, creating 4 new hatchlings including yourself."
 
 	button_icon_state = "reproduce"
 
@@ -271,7 +271,7 @@
 
 	total_blood_required = 0
 
-	var/num_hatchlings = 4 // in addition to the original
+	var/num_hatchlings = 3 // in addition to the original
 
 	var/list/candidates = null
 
@@ -341,7 +341,7 @@
 		if (isnull(candidate) || isnull(candidate.key) || isnull(candidate.client))
 			continue
 
-		// The crew now has 4 new problems to deal with.
+		// The crew now has 3 new problems to deal with.
 		var/mob/living/basic/blood_worm/hatchling/new_hatchling = new(cocoon.drop_location())
 		var/datum/mind/fresh_mind = new(candidate.key)
 
