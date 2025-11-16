@@ -206,7 +206,7 @@
 		zone_name = parse_zone(def_zone)
 
 	zones_disabled++
-	if(!istype(src,/obj/item/clothing/under/plasmaman))
+	if(clothing_flags & NO_ZONE_DISABLING)
 		body_parts_covered &= ~body_zone2cover_flags(def_zone)
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
