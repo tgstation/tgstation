@@ -1,5 +1,0 @@
-author: "ArchBTW"
-delete-after: True
-changes:
-  - balance: "viscerators get PASSMACHINE && PASSFLAP"
-  - bugfix: "viscerators respect the PASSMOB flag"

@@ -1,4 +1,0 @@
-author: "Neocloudy"
-delete-after: True
-changes:
-  - code_imp: "`sound_to_playing_players` now has an argument for taking a volume preference, and it's applied to security level looping sounds in case any are added."

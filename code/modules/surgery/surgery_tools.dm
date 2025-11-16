@@ -744,6 +744,7 @@
 	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
 	icon_state = "cruelsaw"
 	inhand_icon_state = "cruelsaw"
+	icon_angle = 0
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	surgical_tray_overlay = "saw_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
