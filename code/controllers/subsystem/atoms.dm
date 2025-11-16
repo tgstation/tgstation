@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(atoms)
 		for(var/parent_id as anything in GLOB.save_containers_parents)
 			var/obj/parent = GLOB.save_containers_parents[parent_id]
 			parent.update_appearance()
-			parent.parent_container_id_tag = null
+			parent.save_container_parent_id = null
 
 		GLOB.save_containers_parents.Cut()
 		GLOB.save_containers_children.Cut()
