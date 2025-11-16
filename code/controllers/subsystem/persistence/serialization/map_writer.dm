@@ -149,6 +149,10 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 				if(ispath(saved_turf, /turf/open/space))
 					// figure out why arrivals shuttle is bypassing this lol
 					saved_turf = /turf/open/space/basic
+					// space turfs with no catwalks/lattice present should always be saved as [/area/space]
+					if((saved_area.type != /area/space) && !(locate(/obj/structure/lattice, pull_from)))
+						saved_area = /area/space
+
 				else if(!istype(saved_turf, /turf/template_noop))
 					// exclude all space and template_noop from our count
 					INCREMENT_TURF_COUNT
