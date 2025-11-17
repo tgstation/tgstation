@@ -37186,7 +37186,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/ai_upload";
+	control_area = "/area/station/ai/upload/chamber";
 	name = "AI Upload turret control";
 	pixel_y = -25
 	},
@@ -51762,7 +51762,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable/layer3,
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat/hallway";
+	control_area = "/area/station/ai/satellite/hallway";
 	name = "Chamber Hallway Turret Control";
 	pixel_x = 32;
 	pixel_y = -24;
@@ -54715,7 +54715,7 @@
 	start_active = 1
 	},
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat/atmos";
+	control_area = "/area/station/ai/satellite/atmos";
 	name = "Atmospherics Turret Control";
 	pixel_x = -27;
 	req_access = list("minisat")
@@ -55582,7 +55582,7 @@
 /area/station/science/breakroom)
 "sSy" = (
 /obj/machinery/turretid{
-	control_area = "/area/station/ai_monitored/turret_protected/aisat/service";
+	control_area = "/area/station/ai/satellite/service";
 	name = "Service Bay Turret Control";
 	pixel_x = 27;
 	req_access = list("minisat")
