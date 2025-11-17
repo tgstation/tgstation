@@ -6924,9 +6924,6 @@
 /obj/machinery/computer/order_console/mining,
 /turf/open/floor/iron/dark,
 /area/mine/production)
-"NK" = (
-/turf/closed/mineral/random/high_chance,
-/area/lavaland/surface/outdoors)
 "NL" = (
 /obj/structure/railing,
 /obj/structure/lattice/catwalk/mining,
@@ -44718,8 +44715,8 @@ aj
 aj
 aj
 aj
-NK
-NK
+ad
+ad
 pU
 aj
 aj
@@ -44976,7 +44973,7 @@ aj
 aj
 pU
 pU
-NK
+ad
 pU
 aj
 aj
@@ -47290,7 +47287,7 @@ pU
 pU
 ai
 BP
-NK
+ad
 pU
 pU
 aj
@@ -47545,8 +47542,8 @@ aj
 aj
 pU
 ai
-NK
-NK
+ad
+ad
 ai
 aj
 aj
@@ -47802,8 +47799,8 @@ aj
 aj
 pU
 BP
-NK
-NK
+ad
+ad
 pU
 aj
 aj
@@ -50113,8 +50110,8 @@ pU
 pU
 pU
 ai
-NK
-NK
+ad
+ad
 pU
 pU
 pU
@@ -50369,8 +50366,8 @@ pU
 pU
 pU
 ai
-NK
-NK
+ad
+ad
 BP
 pU
 pU
@@ -50881,7 +50878,7 @@ pU
 pU
 pU
 ai
-NK
+ad
 ai
 ai
 lP
