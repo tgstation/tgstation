@@ -5,7 +5,9 @@
 
 	initial_language_holder = /datum/language_holder/blood_worm
 
-	mob_biotypes = MOB_ORGANIC | MOB_BUG
+	// FIXME: This should use MOB_BUG, but it makes hunter boxing instakill juveniles.
+	// I.e. blood worms should be susceptible to pest killer, but not hunter boxing.
+	mob_biotypes = MOB_ORGANIC
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = CANPUSH // No CANSTUN, blood worms are immune to stuns by design.
 
@@ -707,7 +709,8 @@
 	icon_dead = "adult-dead"
 	health_doll_icon = "adult_blood_worm"
 
-	mob_size = MOB_SIZE_HUGE
+	// We undershoot a tiny bit so that Proto-Kinetic Crushers don't work on adult blood worms.
+	mob_size = MOB_SIZE_HUMAN
 
 	maxHealth = 180 // Used to be 150, turns out their lack of armor and weakness to burn made them too squishy. People kited them using lasguns, leaving them with no way to fight back at all.
 	health = 180
