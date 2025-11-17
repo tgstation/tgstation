@@ -460,3 +460,20 @@
   - bugfix: flatpacker can interact with borg omnitools again
   muchatras:
   - bugfix: fixed the spraycan left-click
+2025-11-17:
+  Aliceee2ch:
+  - balance: Adv. parts and adv. surgery experiments are now discounts, instead of
+      requirements.
+  - spellcheck: Items that block contents/wires from EMPs now showed up as only "partially
+      EMP blocking" objects in examine menu.
+  Dmeto:
+  - map: Replaces rocks on the public mining path on Lavaland with correct subtype.
+  Melbert:
+  - rscadd: Adds emagged apc hallucination
+  - spellcheck: Some Coveralls
+  - rscdel: 'Catwalk med: Removed 1 of 2 first aid stations'
+  - qol: 'Catwalk med: Adds some newscasters'
+  SpaceSmithers:
+  - map: Added a virtual gymnasium to the holodeck.
+  TealSeer:
+  - bugfix: fixed placing wall signs at diagonals allowing you to duplicate them
