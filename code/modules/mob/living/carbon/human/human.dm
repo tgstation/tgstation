@@ -707,7 +707,7 @@
 	return ..()
 
 /mob/living/carbon/human/vomit(vomit_flags = VOMIT_CATEGORY_DEFAULT, vomit_type = /obj/effect/decal/cleanable/vomit/toxic, lost_nutrition = 10, distance = 1, purge_ratio = 0.1)
-	if(!((vomit_flags & MOB_VOMIT_BLOOD) && HAS_TRAIT(src, TRAIT_NOBLOOD) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
+	if(!((vomit_flags & MOB_VOMIT_BLOOD) && !CAN_HAVE_BLOOD(src) && !HAS_TRAIT(src, TRAIT_TOXINLOVER)))
 		return ..()
 
 	if(vomit_flags & MOB_VOMIT_MESSAGE)
@@ -969,16 +969,6 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown, TRUE, multiplicative_slowdown = health_deficiency / 75)
 	else
 		remove_movespeed_modifier(/datum/movespeed_modifier/damage_slowdown)
-
-/mob/living/carbon/human/is_bleeding()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
-	return ..()
-
-/mob/living/carbon/human/get_total_bleed_rate()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
-	return ..()
 
 /mob/living/carbon/human/get_exp_list(minutes)
 	. = ..()

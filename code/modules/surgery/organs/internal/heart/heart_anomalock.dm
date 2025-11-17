@@ -98,8 +98,7 @@
 	if(!core)
 		return
 
-	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += 5 * seconds_per_tick
+	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)

@@ -32,24 +32,30 @@
 		return
 
 	update_mob()
-	var/flashbang_turf = get_turf(src)
+	var/turf/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
+
+	//Check that there's enough pressure on the detonation turf for the 'bang' part of the flashbang to work.
+	var/datum/gas_mixture/environment = flashbang_turf.return_air()
+	var/pressure = environment?.return_pressure()
+	var/soundbang = pressure >= SOUND_MINIMUM_PRESSURE
+
 	do_sparks(rand(5, 9), FALSE, src)
 	playsound(flashbang_turf, 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, flashbang_range + 2, 4, COLOR_WHITE, 2)
 	for(var/mob/living/living_mob in get_hearers_in_view(flashbang_range, flashbang_turf))
-		bang(get_turf(living_mob), living_mob)
+		bang(get_turf(living_mob), living_mob, soundbang)
 	qdel(src)
 
-/obj/item/grenade/flashbang/proc/bang(turf/turf, mob/living/living_mob)
+/obj/item/grenade/flashbang/proc/bang(turf/turf, mob/living/living_mob, soundbang = TRUE)
 	if(living_mob.stat == DEAD) //They're dead!
 		return
 	living_mob.show_message(span_warning("BANG"), MSG_AUDIBLE)
 	var/distance = get_dist(get_turf(src), turf)
 	var/sweetspot_range = clamp(CEILING(flashbang_range/sweetspot_divider, 1), 0, flashbang_range)
 
-//Flash
+	//Flash
 	var/attempt_flash = living_mob.flash_act(affect_silicon = 1)
 	if(attempt_flash == FLASH_COMPLETED)
 		if(distance <= sweetspot_range || issilicon(living_mob))
@@ -60,7 +66,10 @@
 		living_mob.dropItemToGround(living_mob.get_active_held_item())
 		living_mob.dropItemToGround(living_mob.get_inactive_held_item())
 
-//Bang
+	//Bang
+	if(!soundbang && distance)
+		return
+
 	if(!distance)
 		living_mob.soundbang_act(SOUNDBANG_OVERWHELMING, 20 SECONDS, 10, 15)
 		return
