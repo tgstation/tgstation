@@ -195,14 +195,14 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 				var/turf_metadata
 				//====SAVING ATMOS====
-				if((save_flags & SAVE_TURFS) && (save_flags & SAVE_TURFS_ATMOS))
+				if((save_flags & SAVE_TURFS))
 					var/turf/open/atmos_turf = pull_from
 					// Optimiziations that skip saving atmospheric data for turfs that don't need it
 					// - Walls: Atmos values should not realistically change
 					// - Space: Gas is constantly purged and temperature is immutable
 					// - Planetary: Atmos slowly reverts to its default gas mix
 					if(isopenturf(atmos_turf) && !isspaceturf(atmos_turf) && !atmos_turf.planetary_atmos)
-						turf_metadata = generate_tgm_metadata(atmos_turf)
+						turf_metadata = generate_tgm_metadata(atmos_turf, save_flags)
 
 				TGM_MAP_BLOCK(current_header, saved_turf.type, turf_metadata)
 
