@@ -261,7 +261,6 @@
 	TRAIT_NOCRITDAMAGE, // Prevents blood worms from noob trapping themselves by reviving a host "too early", since that shouldn't be a thing.
 	TRAIT_NOHUNGER, // Every single long-deceased corpse is starved. Many people also just ignore hunger the whole shift. Starving with every new host gets old fast.
 	TRAIT_NO_WITHDRAWALS, // Prevents OOC quirk choices from impacting blood worms as much. Stops withdrawals instead of addictions since the latter can be metagamed.
-	TRAIT_UNCONVERTABLE, // Blood worms are not allowed to get abilities from other antags, like blood cultist abilities. That would be utterly broken.
 	TRAIT_NO_SPLIT_PERSONALITY, // How about no?
 	TRAIT_BLOOD_HUD, // Self-explanatory, allows blood worms to seek prey even while in a host.
 	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.

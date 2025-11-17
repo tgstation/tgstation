@@ -48,6 +48,11 @@
 /datum/antagonist/blood_worm/on_gain()
 	forge_objectives()
 	owner.set_assigned_role(SSjob.get_job_type(/datum/job/blood_worm))
+	ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src)) // No blood cultist worms or whatever the fuck
+	return ..()
+
+/datum/antagonist/blood_worm/on_removal()
+	REMOVE_TRAITS_IN(owner, REF(src))
 	return ..()
 
 /datum/antagonist/blood_worm/apply_innate_effects(mob/living/mob_override)
