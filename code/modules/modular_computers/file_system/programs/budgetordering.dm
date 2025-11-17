@@ -145,7 +145,7 @@
 			"id" = order.id,
 			"amount" = 1,
 			"orderer" = order.orderer,
-			"paid" = !!order.paying_account?.add_to_accounts, //number of orders purchased privatly
+			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
 			"dep_order" = !!order.department_destination, //number of orders purchased by a department
 			"can_be_cancelled" = order.can_be_cancelled,
 		))
@@ -230,8 +230,8 @@
 				name = user.real_name
 				rank = "Silicon"
 
-			// Our account that we want to end up paying with. Defaults to the cargo budget!
-			var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			// Our account that we want to end up paying with.
+			var/datum/bank_account/account
 			// Our ID card that we want to pull from for identification. Modifies either name, account, or neither depending on function.
 			var/obj/item/card/id/id_card_customer = computer.stored_id?.GetID()
 			if(!id_card_customer)
@@ -265,7 +265,7 @@
 					if(!dept_choice)
 						return
 					if(dept_choice == "Cargo Budget")
-						personal_department = SSeconomy.get_dep_account(cargo_account)
+						personal_department = null
 
 			if(pack.goody && !self_paid)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -279,10 +279,6 @@
 
 			if(!self_paid)
 				account = personal_department
-
-			if(!requestonly && !self_paid && ishuman(user) && !account)
-				var/obj/item/card/id/id_card = computer.stored_id?.GetID()
-				account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
