@@ -1,22 +1,5 @@
 // Flags for the obj_flags var on /obj
 
-/// When an object is affected by a cryptographic sequencer (aka EMAG) disabling it or causing other malicious effects
-#define EMAGGED (1<<0)
-#define CAN_BE_HIT (1<<1) //can this be bludgeoned by items?
-#define DANGEROUS_POSSESSION (1<<2) //Admin possession yes/no
-#define UNIQUE_RENAME (1<<3) // can you customize the description/name of the thing?
-#define RENAME_NO_DESC (1<<4) // if it can be renamed, is its description excluded?
-#define BLOCK_Z_OUT_DOWN (1<<5)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<6) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<7) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<8) // Should this object block z uprise from below?
-#define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
-#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
-#define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
-#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<14) //! Atoms don't spawn anything when deconstructed. They just vanish
-
 /// Object has been affected by a cryptographic sequencer (EMAG) disabling it or causing other malicious effects
 #define EMAGGED (1<<0)
 /// The object's internal contents has already been populated via PopulateContents()
