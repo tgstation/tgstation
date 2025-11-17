@@ -45,8 +45,8 @@
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
 		if(!mind.has_ever_been_ai)
 			mind.has_ever_been_ai = TRUE
-	else if(target_ai.key)
-		key = target_ai.key
+	else if(target_ai.ckey)
+		PossessByPlayer(target_ai.ckey)
 
 	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
 	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))

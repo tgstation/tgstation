@@ -263,18 +263,23 @@
 
 	mind.active = FALSE //we wish to transfer the key manually
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
-	if(QDELETED(src) || !HAS_CONNECTED_PLAYER(src))
-		return // Disconnected while checking for the appearance ban.
+	if(QDELETED(src))
+		return
+
+	// Annoyingly the AI mob yoinks our client on init so we have to check for it here
+	var/client/player_client = src.client || spawning_mob.client
+	if(isnull(player_client))
+		return
 
 	if(!isAI(spawning_mob)) // Unfortunately there's still snowflake AI code out there.
 		// transfer_to sets mind to null
 		var/datum/mind/preserved_mind = mind
-		preserved_mind.original_character_slot_index = client.prefs.default_slot
+		preserved_mind.original_character_slot_index = player_client.prefs.default_slot
 		preserved_mind.transfer_to(spawning_mob) //won't transfer key since the mind is not active
 		preserved_mind.set_original_character(spawning_mob)
 
-	LAZYADD(persistent_client.joined_as_slots, "[client.prefs.default_slot]")
-	client.init_verbs()
+	LAZYADD(player_client.persistent_client.joined_as_slots, "[player_client.prefs.default_slot]")
+	player_client.init_verbs()
 	. = spawning_mob
 	new_character = .
 
