@@ -27,7 +27,7 @@
 			"Linkage": "Grid",
 			"Gravity": true,
 			"Weather_Rainstorm": true,
-			"Baseturf": "/turf/open/water/no_planet_atmos/deep/rainworld",
+			"Baseturf": "/turf/open/water/no_planet_atmos/deep/rainworld/station",
 			"No Parallax": true
 		}
 	],

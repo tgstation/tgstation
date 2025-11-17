@@ -148,6 +148,10 @@
 	ticking_oxy_damage = 4
 	exhaust_swimmer_prob = 50
 
+/turf/open/water/no_planet_atmos/deep/rainworld/station
+	planetary_atmos = FALSE
+	stamina_entry_cost = 5
+
 /turf/open/water/beach
 	planetary_atmos = FALSE
 	gender = PLURAL
