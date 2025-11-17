@@ -1422,7 +1422,7 @@
 
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "A strong neurotoxin that puts the patient into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
 	boozepwr = 50
 	quality = DRINK_VERYGOOD
