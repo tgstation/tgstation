@@ -78,12 +78,12 @@ SUBSYSTEM_DEF(atoms)
 			testing("Persistent initialized [persistent_loaders.len] atoms")
 		persistent_loaders.Cut()
 
-		for(var/obj/child as anything in GLOB.save_containers_children)
+		for(var/obj/child in GLOB.save_containers_children)
 			var/parent_id = child.save_container_child_id
 			child.forceMove(GLOB.save_containers_parents[parent_id])
 			child.save_container_child_id = null
 
-		for(var/parent_id as anything in GLOB.save_containers_parents)
+		for(var/parent_id in GLOB.save_containers_parents)
 			var/obj/parent = GLOB.save_containers_parents[parent_id]
 			parent.update_appearance()
 			parent.save_container_parent_id = null
