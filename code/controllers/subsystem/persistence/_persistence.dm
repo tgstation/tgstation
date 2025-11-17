@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/save_world(list/z_levels, silent=FALSE)
 	log_world("World map save initiated at [time_stamp()]")
 	if(!silent)
-	to_chat(world, span_boldannounce("World map save initiated at [time_stamp()]"))
+		to_chat(world, span_boldannounce("World map save initiated at [time_stamp()]"))
 
 	save_persistent_maps(z_levels, silent)
 	prune_old_autosaves()
@@ -203,23 +203,6 @@ SUBSYSTEM_DEF(persistence)
 		return FALSE
 
 	return TRUE
-
-/*
-/datum/controller/subsystem/persistence/proc/cleanup_corrupted_saves()
-	var/list/all_saves = get_all_saves(GLOBAL_PROC_REF(cmp_text_dsc))
-	var/corrupted_count = 0
-
-	for(var/save_directory in all_saves)
-		if(!is_save_valid(save_directory))
-			var/full_path = MAP_PERSISTENT_DIRECTORY + save_directory
-			log_admin("Deleting corrupted save: [full_path]")
-			fdel(full_path)
-			corrupted_count++
-
-	if(corrupted_count)
-		log_admin("Cleaned up [corrupted_count] corrupted save(s)")
-	return corrupted_count
-*/
 
 ///Deletes empty save directories and removes the oldest saves if the total count exceeds the max autosaves allowed in config
 /datum/controller/subsystem/persistence/proc/prune_old_autosaves()
@@ -364,15 +347,6 @@ SUBSYSTEM_DEF(persistence)
 
 	// Prune any empty save directories
 	for(var/path in all_saves)
-		var/full_path = MAP_PERSISTENT_DIRECTORY + path
-
-/*
-		if(!flist(full_path).len) // empty save directory
-			log_mapping("Deleted empty autosave: [full_path]")
-			log_admin("Deleted empty autosave: [full_path]")
-			all_saves -= full_path
-			fdel(full_path)
-*/
 		if(is_save_valid(path))
 			valid_saves += path
 
@@ -424,8 +398,8 @@ SUBSYSTEM_DEF(persistence)
 
 	var/map_save_directory = get_current_persistence_map_directory()
 	var/save_flags = get_save_flags()
-	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 	var/overall_save_start = REALTIMEOFDAY
+	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 
 	for(var/z in 1 to world.maxz)
 		var/list/level_traits = list()
@@ -440,22 +414,22 @@ SUBSYSTEM_DEF(persistence)
 			if(!z_levels[num2text(z)])
 				continue
 		else // Skip saving certain z-levels based on config settings
-		if(!persistent_save_z_levels[ZTRAIT_CENTCOM] && is_centcom_level(z))
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_STATION] && is_station_level(z))
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && is_space_empty_level(z))
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && is_space_ruins_level(z))
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_ICE_RUINS] && is_ice_ruins_level(z))
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_MINING] && is_mining_level(z))
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_RESERVED] && is_reserved_level(z)) // for shuttles in transit (hyperspace)
-			continue
-		else if(!persistent_save_z_levels[ZTRAIT_AWAY] && is_away_level(z)) // gateway away missions
-			continue
+			if(!persistent_save_z_levels[ZTRAIT_CENTCOM] && is_centcom_level(z))
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_STATION] && is_station_level(z))
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_SPACE_EMPTY] && is_space_empty_level(z))
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_SPACE_RUINS] && is_space_ruins_level(z))
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_ICE_RUINS] && is_ice_ruins_level(z))
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_MINING] && is_mining_level(z))
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_RESERVED] && is_reserved_level(z)) // for shuttles in transit (hyperspace)
+				continue
+			else if(!persistent_save_z_levels[ZTRAIT_AWAY] && is_away_level(z)) // gateway away missions
+				continue
 
 		var/bottom_z = z
 		var/top_z = z
@@ -550,15 +524,6 @@ SUBSYSTEM_DEF(persistence)
 	var/completed_tiles = (current_save_x * world.maxy) + current_save_y
 
 	return (completed_tiles / total_tiles) * 100
-
-/*
-ADMIN_VERB(cleanup_corrupted_saves, R_DEBUG, "Cleanup Corrupted Saves", "Delete all corrupted/incomplete persistence saves.", ADMIN_CATEGORY_DEBUG)
-	var/corrupted = SSpersistence.cleanup_corrupted_saves()
-	to_chat(user, "Cleaned up [corrupted] corrupted save(s)")
-*/
-
-ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Saves all z-levels that are have their persistent save config enabled.", ADMIN_CATEGORY_DEBUG)
-	SSpersistence.save_persistent_maps()
 
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
