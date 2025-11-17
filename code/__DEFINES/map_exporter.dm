@@ -1,6 +1,6 @@
 /// Save objects types
 #define SAVE_OBJECTS (1 << 1)
-/// Save objects variables from obj.get_save_vars() and obj.get_custom_save_vars()
+/// Save objects variables from obj.get_save_vars() and obj.get_custom_save_vars() if disabled, saves dir, pixel_x, pixel_y as default
 #define SAVE_OBJECTS_VARIABLES (1 << 2)
 /// Save objects custom properties from obj.on_object_saved()
 #define SAVE_OBJECTS_PROPERTIES (1 << 3)
@@ -101,9 +101,6 @@
 
 /// Checks if a given value matches the compile-time default value of a typepath variable
 #define IS_TYPEPATH_DEFAULT_VAR(datum, variable, new_var) (##datum::variable == new_var)
-
-//#define TGM_OBJ_INCREMENT (GLOB.TGM_objs += 1)
-//#define TGM_MOB_INCREMENT (GLOB.TGM_mobs += 1)
 
 // Metrics tracking macros for map serialization
 
