@@ -32,14 +32,14 @@ const sortByJob = (a: CrewSensor, b: CrewSensor) => {
 }
 
 const sortByVitals = (a: CrewSensor, b: CrewSensor) => {
-  if (a.life_status > b.life_status) return 1;
-  if (a.life_status < b.life_status) return -1;
+  if (a.life_status > b.life_status) return -1;
+  if (a.life_status < b.life_status) return 1;
 
-  if (b.oxydam === undefined) return 1;
-  if (a.oxydam === undefined) return -1;
+  if (b.oxydam === undefined) return -1;
+  if (a.oxydam === undefined) return 1;
 
-  if (a.health < b.health) return 1;
-  if (a.health > b.health) return -1;
+  if (a.health < b.health) return -1;
+  if (a.health > b.health) return 1;
 
   return 0;
 };
