@@ -641,13 +641,14 @@
 		return
 	RegisterSignal(user, COMSIG_ATOM_ATTACKBY, PROC_REF(counter_attack))
 	user.Immobilize(0.5 SECONDS)
+	eyed_fool = over
 	user.visible_message(span_danger("[user] widens [p_their(user)] stance, [p_their(user)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [over]!"))
 	addtimer(CALLBACK(src, PROC_REF(relax), user), 0.5 SECONDS)
 
 /obj/item/storage/belt/sheath/proc/counter_attack(mob/living/forward_thinker, atom/movable/weapon, mob/living/fool)
 	SIGNAL_HANDLER
 	var/obj/item/justicetool = contents[1]
-	if(loc != forward_thinker || !length(contents) || !forward_thinker.put_in_active_hand(justicetool))
+	if(loc != forward_thinker || !length(contents) || fool != eyed_fool || !forward_thinker.put_in_active_hand(justicetool))
 		return
 	fool.apply_damage(
 		damage = justicetool.force * 3,
