@@ -284,8 +284,8 @@
 	. = ..()
 	. += NAMEOF(src, welded)
 
-	if(!override_naming)
-		. -= NAMEOF(src, name)
+	if(override_naming)
+		. += NAMEOF(src, name)
 	return .
 
 /obj/item/pipe/get_save_vars(save_flags=ALL)
