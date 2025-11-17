@@ -76,40 +76,38 @@
 	if(charging)
 		charging.forceMove(drop_location())
 
+/obj/machinery/cell_charger/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == charging)
+		charging = null
+
 /obj/machinery/cell_charger/Destroy()
 	QDEL_NULL(charging)
 	return ..()
 
-/obj/machinery/cell_charger/proc/removecell()
+/obj/machinery/cell_charger/proc/removecell(new_loc)
+	. = charging
 	charging.update_appearance()
+	charging.forceMove(new_loc)
 	charging = null
 	update_appearance()
 
 /obj/machinery/cell_charger/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(.)
-		return
-	if(!charging)
+	if(. || !charging)
 		return
 
-	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
-
 	user.visible_message(span_notice("[user] removes [charging] from [src]."), span_notice("You remove [charging] from [src]."))
-
-	removecell()
-
+	user.put_in_hands(removecell(drop_location()))
 
 /obj/machinery/cell_charger/attack_tk(mob/user)
 	if(!charging)
 		return
 
-	charging.forceMove(loc)
 	to_chat(user, span_notice("You telekinetically remove [charging] from [src]."))
-
-	removecell()
+	removecell(drop_location())
 	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	return

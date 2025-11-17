@@ -93,7 +93,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bg" = (
-/obj/structure/no_effect_signpost{
+/obj/structure/signpost{
 	pixel_y = 6;
 	desc = "Northwest: Hotel. South: Seaside Bar. East: Dressing Rooms."
 	},

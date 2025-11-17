@@ -43,12 +43,11 @@
 // Clicking on the jar with an organ lets you put the organ inside, if there isn't one already
 // Otherwise it should act like a normal bottle
 /obj/item/reagent_containers/cup/beaker/organ_jar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(!istype(tool, /obj/item/organ))
-		return
+		return ..()
 	if(held_organ)
 		balloon_alert(user, "the jar already contains [held_organ]")
-		return  ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	if(!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING

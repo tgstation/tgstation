@@ -1,4 +1,0 @@
-author: "SSensum13"
-delete-after: True
-changes:
-  - bugfix: "fixed incorrect use of bit flags in some components."

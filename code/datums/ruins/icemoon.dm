@@ -79,6 +79,12 @@
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
 
+/datum/map_template/ruin/icemoon/roro
+	name = "Ice-Ruin RoroCo Factory"
+	id = "gloves"
+	description = "A manufacturing and packaging facility producing insulated gloves."
+	suffix = "icemoon_surface_gloves.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site

@@ -177,7 +177,6 @@
 #define SPECIES_HUMAN "human"
 #define SPECIES_JELLYPERSON "jelly"
 #define SPECIES_SLIMEPERSON "slime"
-#define SPECIES_SPIRIT "spirit"
 #define SPECIES_LUMINESCENT "luminescent"
 #define SPECIES_STARGAZER "stargazer"
 #define SPECIES_LIZARD "lizard"
@@ -480,7 +479,7 @@
 #define REM REAGENTS_EFFECT_MULTIPLIER //! Shorthand for the above define for ease of use in equations and the like
 
 // Eye protection
-// THese values are additive to determine your overall flash protection.
+// These values are additive to determine your overall flash protection.
 #define FLASH_PROTECTION_HYPER_SENSITIVE -2
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
@@ -488,6 +487,29 @@
 #define FLASH_PROTECTION_WELDER 2
 #define FLASH_PROTECTION_WELDER_SENSITIVE 3
 #define FLASH_PROTECTION_WELDER_HYPER_SENSITIVE 4
+
+/**
+ * Ear protection
+ * These values are additive to determine your overall ear/soundbang protection
+ */
+#define EAR_PROTECTION_NONE 0
+#define EAR_PROTECTION_NORMAL 1
+#define EAR_PROTECTION_HEAVY 2
+#define EAR_PROTECTION_VACUUM 3
+#define EAR_PROTECTION_FULL INFINITY
+
+/**
+ * Soundbang defines
+ * These values are used as argument to determine the strength of the soundbang_act call
+ */
+///Soundbang strength for most things like flashbangs, honkblasts and harm control modules
+#define SOUNDBANG_NORMAL 1
+///Soundbang strength for things like flashbangs in proximity and emagged harm alarm megaphones, cannot be countered by standard ear protection equipment
+#define SOUNDBANG_STRONG 2
+///Soundbang strength for things like changeling shrieks, which can affect robots and aliens as well.
+#define SOUNDBANG_MASSIVE 3
+///Soundbang strength for anything that cannot be stopped unless you're stacked on multiple effects and equipment to counter it (or are simply deaf)
+#define SOUNDBANG_OVERWHELMING 4
 
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY 5
@@ -710,55 +732,57 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 38
+#define TOTAL_LAYERS 39
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 37
+#define MUTATIONS_LAYER 38
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 36
+#define BODY_BEHIND_LAYER 37
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 35
+#define BODYPARTS_LOW_LAYER 36
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 34
+#define BODYPARTS_LAYER 35
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 33
+#define BODY_ADJ_LAYER 34
 /// Underwear, undershirts, socks
-#define BODY_LAYER 32
+#define BODY_LAYER 33
 /// Eyes and eyelids
-#define EYES_LAYER 31
+#define EYES_LAYER 32
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 30
+#define FRONT_MUTATIONS_LAYER 31
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 29
+#define DAMAGE_LAYER 30
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 28
+#define UNIFORM_LAYER 29
 /// ID card layer
-#define ID_LAYER 27
+#define ID_LAYER 28
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 26
+#define ID_CARD_LAYER 27
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 25
+#define BODYPARTS_HIGH_LAYER 26
 /// Gloves layer
-#define GLOVES_LAYER 24
+#define GLOVES_LAYER 25
 /// Shoes layer
-#define SHOES_LAYER 23
+#define SHOES_LAYER 24
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 22
+#define LOW_FACEMASK_LAYER 23
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 21
+#define EARS_LAYER 22
 /// Layer for neck apperal that should appear below the suit slot (like neckties)
-#define LOW_NECK_LAYER 20
+#define LOW_NECK_LAYER 21
 /// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 19
+#define SUIT_LAYER 20
 /// Glasses layer
-#define GLASSES_LAYER 18
+#define GLASSES_LAYER 19
 /// Belt layer
-#define BELT_LAYER 17 //Possible make this an overlay of something required to wear a belt?
+#define BELT_LAYER 18 //Possible make this an overlay of something required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 16
+#define SUIT_STORE_LAYER 17
 /// Neck layer (for wearing capes and bedsheets)
-#define NECK_LAYER 15
+#define NECK_LAYER 16
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 14
+#define BACK_LAYER 15
+/// Special layer for rendering beneath hair, for special facemasks
+#define BENEATH_HAIR_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
 #define HAIR_LAYER 13 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
@@ -800,6 +824,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 	"[HEAD_LAYER]" = UPPER_BODY,
 	// Hair will get cut off by filter
 	"[HAIR_LAYER]" = UPPER_BODY,
+	"[BENEATH_HAIR_LAYER]" = UPPER_BODY,
 	// Long belts (sabre sheathe) will get cut off by filter
 	"[BELT_LAYER]" = LOWER_BODY,
 	// Everything below looks fine with or without a filter, so we can skip it and just offset

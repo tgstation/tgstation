@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /turf/proc/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	if(copy_to_turf.type != type)
-		copy_to_turf.ChangeTurf(type, flags)
+		copy_to_turf.ChangeTurf(type, null, flags)
 	if(copy_to_turf.icon_state != icon_state)
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			space_tile.enable_starlight()
 
 	if(old_opacity != opacity && SSticker)
-		GLOB.cameranet.bareMajorChunkChange(src)
+		SScameras.bare_major_chunk_change(src)
 
 	// We will only run this logic if the tile is not on the prime z layer, since we use area overlays to cover that
 	if(SSmapping.z_level_to_plane_offset[z])

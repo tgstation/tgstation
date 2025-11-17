@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Shuttle catastrophe should no longer cause random unintended crashlandings"

@@ -72,7 +72,7 @@
 
 /datum/crafting_recipe/food/beans
 	name = "Beans"
-	time = 40
+	time = 4 SECONDS
 	reqs = list(/datum/reagent/consumable/ketchup = 5,
 		/obj/item/food/grown/soybeans = 2
 	)
@@ -111,7 +111,7 @@
 
 /datum/crafting_recipe/food/powercrepe
 	name = "Powercrepe"
-	time = 40
+	time = 4 SECONDS
 	reqs = list(
 		/obj/item/food/flatdough = 1,
 		/datum/reagent/consumable/milk = 1,
@@ -169,6 +169,10 @@
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
+	)
+	parts = list(
+		/obj/item/organ/brain,
+		/obj/item/organ/heart
 	)
 	result = /mob/living/basic/bear/butter
 	category = CAT_MISCFOOD

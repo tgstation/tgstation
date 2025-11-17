@@ -40,3 +40,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/mirage_holder)
 /atom/movable/mirage_holder
 	name = "Mirage holder"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/// If we, hypothetically, spawned on a turf that calls init (so non-space tiles), we would be transported to the other Z, which would be very bad
+/atom/movable/mirage_holder/forceMove(atom/destination)
+	return FALSE

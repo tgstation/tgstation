@@ -18,7 +18,7 @@
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 45,
 		/obj/item/pen = 25)
-	time = 64
+	time = 6.4 SECONDS
 
 /datum/surgery_step/fix_eyes/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

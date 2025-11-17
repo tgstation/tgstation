@@ -203,7 +203,7 @@
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping, client/player_client)
 	if(equipping.paycheck_department)
 		var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
-		bank_account.payday(STARTING_PAYCHECKS, TRUE)
+		bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
 		account_id = bank_account.account_id
 		bank_account.replaceable = FALSE
 		add_mob_memory(/datum/memory/key/account, remembered_id = account_id)
@@ -413,18 +413,25 @@
 
 		equipped.update_ID_card()
 
+	if(!pda_slot) //This job outfit doesn't have a PDA.
+		return
+
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
+	if(pda && !istype(pda)) //we found something but it isn't a PDA, check if it's inside it instead.
+		pda = locate() in pda
 
-	if(istype(pda))
-		pda.imprint_id(equipped.real_name, equipped_job.title)
-		pda.update_ringtone(equipped_job.job_tone)
-		pda.UpdateDisplay()
+	if(!istype(pda)) //We couldn't find a PDA at all.
+		stack_trace("pda_slot was set but we couldn't find a PDA!")
+		return
 
-		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
+	pda.imprint_id(equipped.real_name, equipped_job.title)
+	pda.update_ringtone(equipped_job.job_tone)
+	pda.UpdateDisplay()
 
-		if(equipped_client)
-			pda.update_pda_prefs(equipped_client)
+	var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
 
+	if(equipped_client)
+		pda.update_pda_prefs(equipped_client)
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
@@ -510,8 +517,7 @@
 		// This is unfortunately necessary because of snowflake AI init code. To be refactored.
 		spawn_instance = new spawn_type(get_turf(spawn_point), null, player_client.mob)
 	else
-		spawn_instance = new spawn_type(player_client.mob.loc)
-		spawn_point.JoinPlayerHere(spawn_instance, TRUE)
+		spawn_instance = spawn_point.JoinPlayerHere(spawn_type, TRUE)
 	spawn_instance.apply_prefs_job(player_client, src)
 	if(!player_client)
 		qdel(spawn_instance)
@@ -648,3 +654,15 @@
 /// This proc may be called when someone of this job is made into a traitor to create custom objectives related to the job.
 /datum/job/proc/generate_traitor_objective()
 	return null
+
+/// Returns a large (due to cropping) icon of this job's sechud icon state.
+/datum/job/proc/get_lobby_icon() as /icon
+	var/datum/outfit/job_outfit = outfit
+	if(!job_outfit || !job_outfit::id_trim)
+		CRASH("[src.type] has no job outfit but isn't overwriting get_lobby_icon().")
+	var/datum/id_trim/job_trim = job_outfit::id_trim
+	var/icon_state = job_trim::sechud_icon_state
+	if(!icon_state || icon_state == SECHUD_UNKNOWN)
+		CRASH("[src.type] has no job icon state.")
+
+	return icon('icons/mob/huds/hud.dmi', icon_state)

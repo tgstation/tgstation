@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "The access changing software (the HoP console) now has ID two slots again (one for the HoP's id and one for the ID being changed). You can insert IDs in the secondary slot via the UI or right click, and remove them via the UI or alt-right click."
-  - qol: "If your PDA is destroyed via acid or bombs, your ID (and similar contents such as disks) are spit out instead of being deleted"
-  - rscdel: "Deletes the \"New IDs and you\" memo in the HoP's office. They haven't been new for 4 years."
-  - bugfix: "Engineering sub-tab in the access changing software no longer looks messed up"
-  - bugfix: "Fix reversed alt-click logic for mod pcs"

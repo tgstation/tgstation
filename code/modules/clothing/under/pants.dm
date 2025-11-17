@@ -6,6 +6,7 @@
 	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/clothing/under/shorts_pants_shirts.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
+	abstract_type = /obj/item/clothing/under/pants
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/under/pants/slacks
@@ -18,6 +19,7 @@
 	greyscale_config_worn = /datum/greyscale_config/slacks/worn
 	greyscale_colors = "#575757#3E3E3E#75634F"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/pants/jeans
 	name = "jeans"

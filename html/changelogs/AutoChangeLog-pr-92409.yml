@@ -1,6 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - code_imp: "Ammo boxes' multiload variable is now a bitflag that determines if a magazine can be multiloaded into or out of. Ammo boxes can multiload in or out, while magazines can only multiload in."
-  - image: ".223 ammo now has a distinct casing icon."
-  - bugfix: "Foam force magazines now have a proper description."

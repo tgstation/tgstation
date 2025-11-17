@@ -2,7 +2,7 @@
 
 /// Status effect that gives the target miscellanous debuffs while throwing a status alert and causing them to smoke from the damage they're incurring.
 /// Purposebuilt for cursed slot machines.
-/datum/status_effect/grouped/cursed
+/datum/status_effect/slot_machine_curse
 	id = "cursed"
 	alert_type = /atom/movable/screen/alert/status_effect/cursed
 	remove_on_fullheal = TRUE
@@ -20,7 +20,7 @@
 	/// The cached path of the particles we're using to smoke
 	var/smoke_path = null
 
-/datum/status_effect/grouped/cursed/on_apply()
+/datum/status_effect/slot_machine_curse/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(owner, COMSIG_CURSED_SLOT_MACHINE_USE, PROC_REF(check_curses))
@@ -28,7 +28,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON, PROC_REF(clear_curses))
 	return ..()
 
-/datum/status_effect/grouped/cursed/Destroy()
+/datum/status_effect/slot_machine_curse/Destroy()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CURSED_SLOT_MACHINE_WON)
 	branded_hand = null
 	if (smoke_path)
@@ -36,7 +36,7 @@
 	return ..()
 
 /// Checks the number of curses we have and returns information back to the slot machine. `max_curse_amount` is set by the slot machine itself.
-/datum/status_effect/grouped/cursed/proc/check_curses(mob/user, max_curse_amount)
+/datum/status_effect/slot_machine_curse/proc/check_curses(mob/user, max_curse_amount)
 	SIGNAL_HANDLER
 	if(curse_count >= max_curse_amount)
 		return SLOT_MACHINE_USE_CANCEL
@@ -46,7 +46,7 @@
 		return SLOT_MACHINE_USE_POSTPONE
 
 /// Handles the debuffs of this status effect and incrementing the number of curses we have.
-/datum/status_effect/grouped/cursed/proc/update_curse_count()
+/datum/status_effect/slot_machine_curse/proc/update_curse_count()
 	SIGNAL_HANDLER
 	curse_count++
 
@@ -55,7 +55,7 @@
 	addtimer(CALLBACK(src, PROC_REF(handle_after_effects), 1 SECONDS)) // give it a second to let the failure sink in before we exact our toll
 
 /// Makes a nice lorey message about the curse level we're at. I think it's nice
-/datum/status_effect/grouped/cursed/proc/handle_after_effects()
+/datum/status_effect/slot_machine_curse/proc/handle_after_effects()
 	if(QDELETED(src))
 		return
 
@@ -114,7 +114,7 @@
 	monologuing = FALSE
 
 /// Cleans ourselves up and removes our curses. Meant to be done in a "positive" way, when the curse is broken. Directly use qdel otherwise.
-/datum/status_effect/grouped/cursed/proc/clear_curses()
+/datum/status_effect/slot_machine_curse/proc/clear_curses()
 	SIGNAL_HANDLER
 
 	if(!isnull(branded_hand))
@@ -128,7 +128,7 @@
 	qdel(src)
 
 /// If our owner's stat changes, rapidly surge the damage chance.
-/datum/status_effect/grouped/cursed/proc/on_stat_changed()
+/datum/status_effect/slot_machine_curse/proc/on_stat_changed()
 	SIGNAL_HANDLER
 	if(owner.stat == CONSCIOUS || owner.stat == DEAD) // reset on these two states
 		damage_chance = initial(damage_chance)
@@ -138,13 +138,13 @@
 	damage_chance += 75 //ruh roh raggy
 
 /// If our owner dies without getting gibbed (as in of other causes), stop smoking because we've "expended all the life energy".
-/datum/status_effect/grouped/cursed/proc/on_death(mob/living/source, gibbed)
+/datum/status_effect/slot_machine_curse/proc/on_death(mob/living/source, gibbed)
 	SIGNAL_HANDLER
 
 	if(!gibbed && smoke_path)
 		owner.remove_shared_particles(smoke_path)
 
-/datum/status_effect/grouped/cursed/update_particles()
+/datum/status_effect/slot_machine_curse/update_particles()
 	var/particle_path = /particles/smoke/steam/mild
 	switch(curse_count)
 		if(2 to 3)
@@ -160,7 +160,7 @@
 	owner.add_shared_particles(particle_path)
 	smoke_path = particle_path
 
-/datum/status_effect/grouped/cursed/tick(seconds_between_ticks)
+/datum/status_effect/slot_machine_curse/tick(seconds_between_ticks)
 	if(curse_count <= 1)
 		return // you get one "freebie" (single damage) to nudge you into thinking this is a bad idea before the house begins to win.
 
@@ -178,11 +178,12 @@
 /atom/movable/screen/alert/status_effect/cursed
 	name = "Cursed!"
 	desc = "The brand on your hand reminds you of your greed, yet you seem to be okay otherwise."
-	icon_state = "cursed_by_slots"
+	use_user_hud_icon = TRUE
+	overlay_state = "cursed_by_slots"
 
 /atom/movable/screen/alert/status_effect/cursed/update_desc()
 	. = ..()
-	var/datum/status_effect/grouped/cursed/linked_effect = attached_effect
+	var/datum/status_effect/slot_machine_curse/linked_effect = attached_effect
 	var/curses = linked_effect.curse_count
 	switch(curses)
 		if(2)

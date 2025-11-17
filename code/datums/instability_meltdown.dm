@@ -1,11 +1,11 @@
 /// A possible genetic meltdown that occurs when someone exceeds 100 genetic instability
 /datum/instability_meltdown
+	/// Used to ensure that abstract subtypes do not get picked
+	abstract_type = /datum/instability_meltdown
 	/// How likely a meltdown is to be picked
 	var/meltdown_weight = 1
 	/// If this meltdown is considered "fatal" or not
 	var/fatal = FALSE
-	/// Used to ensure that abstract subtypes do not get picked
-	var/abstract_type = /datum/instability_meltdown
 
 /// Code that runs when this meltdown is picked
 /datum/instability_meltdown/proc/meltdown(mob/living/carbon/human/victim)

@@ -101,3 +101,36 @@ SUBSYSTEM_DEF(achievements)
 
 	if(to_update.len)
 		SSdbcore.MassInsert(format_table_name("achievement_metadata"),to_update,duplicate_key = TRUE)
+
+	var/list/orphaned_keys = get_orphaned_keys(FALSE)
+	if(orphaned_keys.len)
+		message_admins("Achievement metadata found without matching achievement, use Achievements-Admin-Panel verb to cleanup if necessary")
+
+/// returns list of metadata keys and versions in db with no matching achievement datum, either deleted achievements, or from server with code ahead of us.
+/datum/controller/subsystem/achievements/proc/get_orphaned_keys(include_archived = TRUE)
+	. = list()
+	var/list/current_metadata = list()
+	// Fetch all keys from the db
+	var/datum/db_query/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version FROM [format_table_name("achievement_metadata")]")
+	if(!Q.Execute(async = TRUE))
+		qdel(Q)
+		return
+	else
+		while(Q.NextRow())
+			current_metadata[Q.item[1]] = Q.item[2]
+		qdel(Q)
+
+	var/list/achievements_by_db_id = list()
+	for(var/datum/award/award as anything in subtypesof(/datum/award))
+		if(!initial(award.database_id)) // abstract type
+			continue
+		achievements_by_db_id[award.database_id] = TRUE
+
+	for(var/key in current_metadata)
+		if(achievements_by_db_id[key])
+			continue
+		if(!include_archived && current_metadata[key] == ACHIEVEMENT_ARCHIVED_VERSION)
+			continue
+		.[key] = current_metadata[key]
+
+

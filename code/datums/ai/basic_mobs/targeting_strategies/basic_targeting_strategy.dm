@@ -97,7 +97,7 @@
 	if (!length(required_traits))
 		return TRUE
 
-	for (var/trait as anything in required_traits)
+	for (var/trait in required_traits)
 		if (HAS_TRAIT(the_target, trait))
 			return TRUE
 	return FALSE
@@ -154,3 +154,6 @@
 	if(!istype(target) || target.has_status_effect(/datum/status_effect/gutted))
 		return FALSE
 	return ..()
+
+/datum/targeting_strategy/basic/exact_match
+	check_factions_exactly = TRUE

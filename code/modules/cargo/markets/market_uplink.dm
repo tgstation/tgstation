@@ -165,7 +165,7 @@
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"
 	result = /obj/item/market_uplink/blackmarket
-	time = 30
+	time = 3 SECONDS
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	reqs = list(
 		/obj/item/stock_parts/micro_laser = 1,

@@ -11,6 +11,9 @@
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
@@ -381,7 +384,7 @@
 	signal.levels = SSmapping.get_connected_levels(T)
 	signal.broadcast()
 
-/obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
+/obj/item/radio/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range || message_mods[MODE_RELAY])
 		return

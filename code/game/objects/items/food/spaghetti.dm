@@ -1,6 +1,7 @@
 ///spaghetti prototype used by all subtypes
 /obj/item/food/spaghetti
 	icon = 'icons/obj/food/spaghetti.dmi'
+	abstract_type = /obj/item/food/spaghetti
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 1,
 		/datum/reagent/consumable/nutriment/vitamin = 1,

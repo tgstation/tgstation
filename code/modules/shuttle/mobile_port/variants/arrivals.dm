@@ -6,7 +6,7 @@
 	port_direction = SOUTH
 
 	callTime = INFINITY
-	ignitionTime = 50
+	ignitionTime = 5 SECONDS
 
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 

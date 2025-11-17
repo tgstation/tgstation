@@ -66,8 +66,7 @@
 	neutral_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_grey")
 	combat_overlay = mutable_appearance(icon = 'icons/mob/silicon/aibots.dmi', icon_state = "mining_drone_offense_grey")
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	var/static/list/death_drops = list(/obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
-	AddElement(/datum/element/death_drops, death_drops)
+	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/blood/gibs/robot_debris/old)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 
@@ -166,7 +165,7 @@
 
 /mob/living/basic/mining_drone/ui_static_data(mob/user)
 	var/list/data = list()
-	data["bot_icon"] = icon2base64(getFlatIcon(src))
+	data["bot_icon"] = icon2base64(getFlatIcon(src, no_anim = TRUE))
 	data["possible_colors"] = list()
 	for(var/color in possible_colors)
 		data["possible_colors"] += list(list(

@@ -69,7 +69,6 @@
 	extra_price = PAYCHECK_CREW * 2.4
 	payment_department = ACCOUNT_SRV
 	light_mask = "dinnerware-light-mask"
-	allow_custom = TRUE
 
 /obj/item/vending_refill/dinnerware
 	machine_name = "Plasteel Chef's Dinnerware Vendor"

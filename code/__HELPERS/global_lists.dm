@@ -159,7 +159,7 @@
 /proc/init_subtypes_w_path_keys(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/path as anything in subtypesof(prototype))
+	for(var/path in subtypesof(prototype))
 		L[path] = new path()
 	return L
 
@@ -171,7 +171,6 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
 	/obj/structure/secure_safe,
 	/obj/machinery/airalarm,
-	/obj/machinery/bluespace_vendor,
 	/obj/machinery/button,
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,

@@ -2,8 +2,8 @@
 /mob/living/silicon/grippedby(mob/living/carbon/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
-/mob/living/silicon/get_ear_protection()//no ears
-	return 2
+/mob/living/silicon/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY //no ears
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	. = ..()
@@ -159,3 +159,6 @@
 	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
 
 #undef CYBORG_SLOWDOWN_THRESHOLD
+
+/mob/living/silicon/hypnosis_vulnerable()
+	return FALSE //It obeys its laws

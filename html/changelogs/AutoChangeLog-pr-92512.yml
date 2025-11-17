@@ -1,4 +1,0 @@
-author: "trazodont"
-delete-after: True
-changes:
-  - bugfix: "added the CRAFT_CLEARS_REAGENTS flag to the rootdough recipes, bananas + water will no longer doom lizard food ever again"

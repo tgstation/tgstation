@@ -28,6 +28,8 @@
 	var/list/datum/weakref/spawned_threat_refs = list()
 	/// Scales loot with extra players
 	var/multiplayer_bonus = 1.1
+	/// Extra bonus for every player that nohits the run
+	var/nohit_bonus = 0.8
 	/// The amount of points in the system, used to purchase maps
 	var/points = 0
 	/// Keeps track of the number of times someone has built a hololadder
@@ -143,17 +145,16 @@
 	return ..()
 
 
-/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/machinery/quantum_server/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bitrunning_debug))
+		return NONE
 
-	if(!istype(weapon, /obj/item/bitrunning_debug))
-		return
-
+	balloon_alert(user, "*hacker voice* i'm in")
 	obj_flags |= EMAGGED
 	glitch_chance = 0.5
 	capacitor_coefficient = 0.1
 	points = 100
-
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/quantum_server/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = NONE

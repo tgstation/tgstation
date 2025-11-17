@@ -1,4 +1,0 @@
-author: "tonyhawq"
-delete-after: True
-changes:
-  - bugfix: "fixes circuit gun not recharging it's internal cell when an integrated circuit is inserted"

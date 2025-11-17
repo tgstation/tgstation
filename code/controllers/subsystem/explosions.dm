@@ -463,8 +463,9 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 				throwingturf[1] = max_range - dist
 				throwingturf[2] = epicenter
 				throwingturf[3] = max_range
+				throwingturf[4] = severity
 		else
-			explode.explosion_throw_details = list(max_range - dist, epicenter, max_range)
+			explode.explosion_throw_details = list(max_range - dist, epicenter, max_range, severity)
 			held_throwturf += explode
 
 
@@ -756,19 +757,28 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 			var/turf/explode = thing
 			var/list/details = explode.explosion_throw_details
 			explode.explosion_throw_details = null
-			if (length(details) != 3)
+			if (length(details) != 4)
 				continue
 			var/throw_range = details[1]
 			var/turf/center = details[2]
 			var/max_range = details[3]
-			for(var/atom/movable/A in explode)
-				if(QDELETED(A))
+			var/severity = details[4]
+			var/required_resist = 0
+			switch(severity)
+				if(EXPLODE_DEVASTATE) // The jump from "very strong" to "overpowering" is intentional, more stuff should be thrown by point-blank explosions
+					required_resist = MOVE_FORCE_OVERPOWERING
+				if(EXPLODE_HEAVY)
+					required_resist = MOVE_FORCE_VERY_STRONG
+				if(EXPLODE_LIGHT)
+					required_resist = MOVE_FORCE_STRONG
+			for(var/atom/movable/movable as anything in explode)
+				if(QDELETED(movable))
 					continue
-				if(!A.anchored && A.move_resist != INFINITY)
+				if(!movable.anchored && movable.move_resist < required_resist)
 					// We want to have our distance matter, but we do want to bias to a lot of throw, for the vibe
 					var/atom_throw_range = rand(throw_range, max_range) + max_range * 0.3
-					var/turf/throw_at = get_ranged_target_turf_direct(A, center, atom_throw_range, 180) // Throw 180 degrees away from the explosion source
-					A.throw_at(throw_at, atom_throw_range, EXPLOSION_THROW_SPEED, quickstart = FALSE)
+					var/turf/throw_at = get_ranged_target_turf_direct(movable, center, atom_throw_range, 180) // Throw 180 degrees away from the explosion source
+					movable.throw_at(throw_at, atom_throw_range, EXPLOSION_THROW_SPEED, quickstart = FALSE)
 		cost_throwturf = MC_AVERAGE(cost_throwturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
 	currentpart = SSEXPLOSIONS_TURFS

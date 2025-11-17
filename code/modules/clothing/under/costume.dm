@@ -8,7 +8,7 @@
 	icon_state = "roman"
 	inhand_icon_state = "armor"
 	can_adjust = FALSE
-	strip_delay = 100
+	strip_delay = 10 SECONDS
 	resistance_flags = NONE
 
 /obj/item/clothing/under/costume/jabroni
@@ -130,6 +130,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR //weebs are gonna love this
 
 /obj/item/clothing/under/costume/geisha
 	name = "geisha suit"
@@ -137,6 +138,7 @@
 	icon_state = "geisha"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/yukata
 	name = "black yukata"
@@ -145,6 +147,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/yukata/green
 	name = "green yukata"
@@ -164,6 +168,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/kimono/red
 	name = "red kimono"
@@ -297,7 +303,7 @@
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
 	armor_type = /datum/armor/clothing_under/costume_russian_officer
-	strip_delay = 50
+	strip_delay = 5 SECONDS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 	can_adjust = FALSE
@@ -316,6 +322,7 @@
 	species_exception = list(/datum/species/golem)
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/buttondown/slacks
 	name = "button-down shirt with slacks"
@@ -391,6 +398,7 @@
 	icon_state = "SwagOutfit"
 	inhand_icon_state = null
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/referee
 	name = "referee uniform"
@@ -448,6 +456,7 @@
 	inhand_icon_state = null
 	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/under/costume/gi/Initialize(mapload)
 	. = ..()

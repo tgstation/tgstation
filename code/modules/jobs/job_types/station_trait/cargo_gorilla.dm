@@ -34,7 +34,7 @@
 	. = ..()
 	// Gorilla with a wage, what's he buyin?
 	var/datum/bank_account/bank_account = new(spawned.real_name, src)
-	bank_account.payday(STARTING_PAYCHECKS, TRUE)
+	bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
 	bank_account.replaceable = FALSE
 	spawned.add_mob_memory(/datum/memory/key/account, remembered_id = bank_account.account_id)
 

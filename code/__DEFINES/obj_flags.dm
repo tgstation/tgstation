@@ -1,20 +1,35 @@
 // Flags for the obj_flags var on /obj
 
-
+/// Object has been affected by a cryptographic sequencer (EMAG) disabling it or causing other malicious effects
 #define EMAGGED (1<<0)
-#define CAN_BE_HIT (1<<1) //can this be bludgeoned by items?
-#define DANGEROUS_POSSESSION (1<<2) //Admin possession yes/no
-#define UNIQUE_RENAME (1<<3) // can you customize the description/name of the thing?
-#define BLOCK_Z_OUT_DOWN (1<<4)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<5) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<6) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<7) // Should this object block z uprise from below?
-#define BLOCKS_CONSTRUCTION (1<<8) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<9) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<10) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
-#define INFINITE_RESKIN (1<<11) // We can reskin this item infinitely
-#define CONDUCTS_ELECTRICITY (1<<12) //! Can this object conduct electricity?
-#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<13) //! Atoms don't spawn anything when deconstructed. They just vanish
+/// Can this be bludgeoned by items
+#define CAN_BE_HIT (1<<1)
+/// Admin possession yes/no
+#define DANGEROUS_POSSESSION (1<<2)
+/// Can you customize the description/name of the thing
+#define UNIQUE_RENAME (1<<3)
+/// If it can be renamed, is its description excluded
+#define RENAME_NO_DESC (1<<4)
+/// Should this object block z falling from loc
+#define BLOCK_Z_OUT_DOWN (1<<5)
+/// Should this object block z uprise from loc
+#define BLOCK_Z_OUT_UP (1<<6)
+/// Should this object block z falling from above
+#define BLOCK_Z_IN_DOWN (1<<7)
+/// Should this object block z uprise from below
+#define BLOCK_Z_IN_UP (1<<8)
+/// Does this object prevent things from being built on it
+#define BLOCKS_CONSTRUCTION (1<<9)
+/// Does this object prevent same-direction things from being built on it
+#define BLOCKS_CONSTRUCTION_DIR (1<<10)
+/// Can we ignore density when building on this object (for example, directional windows and grilles)
+#define IGNORE_DENSITY (1<<11)
+/// We can reskin this item infinitely
+#define INFINITE_RESKIN (1<<12)
+/// Can this object conduct electricity
+#define CONDUCTS_ELECTRICITY (1<<13)
+/// Atoms don't spawn anything when deconstructed (they just vanish)
+#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<14)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -29,6 +44,7 @@
 #define NO_MAT_REDEMPTION (1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define DROPDEL (1<<6) // When dropped, it calls qdel on itself
 #define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
+#define DO_NOT_WARDROBE (1<<8) // Used to denote anything that should not be stashed by SSwardrobe
 /**
  * for all things that are technically items but don't want to be treated as such, given on a case-by-case basis
  * examples of use are hand items, omni-toolsets, non-limb limbs (hand eater, mounted chainsaw, many null rods), borg modules, bodyparts, organs, etc.
@@ -94,6 +110,8 @@
 #define HEADINTERNALS (1<<16)
 /// Prevents masks from getting adjusted from enabling internals
 #define INTERNALS_ADJUST_EXEMPT (1<<17)
+/// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
+#define CARP_STYLE_FACTOR (1<<18)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
@@ -118,3 +136,7 @@
 #define INCLUDE_POCKETS (1<<0)
 #define INCLUDE_ACCESSORIES (1<<1)
 #define INCLUDE_HELD (1<<2)
+/// Include prosthetic item limbs (which are not flavoured as being equipped items)
+#define INCLUDE_PROSTHETICS (1<<3)
+/// Include items that are not "real" items, such as hand items
+#define INCLUDE_ABSTRACT (1<<4)

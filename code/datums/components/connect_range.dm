@@ -26,8 +26,8 @@
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
 	src.range = range
-	set_tracked(tracked)
 	src.works_in_containers = works_in_containers
+	set_tracked(tracked)
 
 /datum/component/connect_range/Destroy()
 	set_tracked(null)
