@@ -26,6 +26,17 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/brain_surgery/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/fix_brain/mechanic,
+		/datum/surgery_step/close,
+	)
+
 /datum/surgery_step/fix_brain
 	name = "fix brain (hemostat)"
 	implements = list(

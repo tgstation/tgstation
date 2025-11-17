@@ -29,6 +29,19 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/gastrectomy/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/gastrectomy/mechanic,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/close,
+	)
+
 ////Gastrectomy, because we truly needed a way to repair stomachs.
 //95% chance of success to be consistent with most organ-repairing surgeries.
 /datum/surgery_step/gastrectomy

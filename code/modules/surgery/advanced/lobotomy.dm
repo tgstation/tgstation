@@ -2,6 +2,7 @@
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	surgery_flags = SURGERY_MORBID_CURIOSITY
+	organ_to_manipulate = ORGAN_SLOT_BRAIN
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -25,14 +26,16 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-/datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
-	. = ..()
-	if(!.)
-		return FALSE
-	var/obj/item/organ/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(!target_brain)
-		return FALSE
-	return TRUE
+/datum/surgery/advanced/lobotomy/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/lobotomize/mechanic,
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery_step/lobotomize
 	name = "perform lobotomy (scalpel)"

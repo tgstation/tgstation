@@ -26,6 +26,17 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/lobectomy/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/lobectomy/mechanic,
+		/datum/surgery_step/close,
+	)
+
 //lobectomy, removes the most damaged lung lobe with a 95% base success chance
 /datum/surgery_step/lobectomy
 	name = "excise damaged lung node (scalpel)"

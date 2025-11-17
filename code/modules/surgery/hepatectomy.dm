@@ -28,6 +28,18 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/hepatectomy/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/hepatectomy/mechanic,
+		/datum/surgery_step/close,
+	)
+
 ////hepatectomy, removes damaged parts of the liver so that the liver may regenerate properly
 //95% chance of success, not 100 because organs are delicate
 /datum/surgery_step/hepatectomy

@@ -28,6 +28,18 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/coronary_bypass/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise_heart,
+		/datum/surgery_step/coronary_bypass/mechanic,
+		/datum/surgery_step/close,
+	)
+
 //an incision but with greater bleed, and a 90% base success chance
 /datum/surgery_step/incise_heart
 	name = "incise heart (scalpel)"
