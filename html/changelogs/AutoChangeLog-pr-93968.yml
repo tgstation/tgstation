@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed placing wall signs at diagonals allowing you to duplicate them"
