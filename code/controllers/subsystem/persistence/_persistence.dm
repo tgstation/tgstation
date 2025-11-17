@@ -112,12 +112,12 @@ SUBSYSTEM_DEF(persistence)
 	save_world()
 
 /// Saves map z-levels in the world based on PERSISTENT_SAVE_ENABLED config options in config/persistence.txt
-/datum/controller/subsystem/persistence/proc/save_world()
+/datum/controller/subsystem/persistence/proc/save_world(list/z_levels, silent=FALSE)
 	log_world("World map save initiated at [time_stamp()]")
+	if(!silent)
 	to_chat(world, span_boldannounce("World map save initiated at [time_stamp()]"))
-	save_persistent_maps()
-	to_chat(world, span_boldannounce("World map save finished at [time_stamp()]"))
-	log_world("World map save finished at [time_stamp()]")
+
+	save_persistent_maps(z_levels, silent)
 	prune_old_autosaves()
 
 ///Collects all data to persist.
@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(persistence)
 
 	return flags
 
-/datum/controller/subsystem/persistence/proc/save_persistent_maps()
+/datum/controller/subsystem/persistence/proc/save_persistent_maps(list/z_levels, silent=FALSE)
 	save_in_progress = TRUE
 	current_save_metrics = list()
 	counted_areas = list()
@@ -436,7 +436,10 @@ SUBSYSTEM_DEF(persistence)
 			z_traits["yi"] = level_to_check.yi
 		level_traits += list(z_traits)
 
-		// Skip saving certain z-levels depending on config settings
+		if(z_levels) // Skip saving z-levels based on num
+			if(!z_levels[num2text(z)])
+				continue
+		else // Skip saving certain z-levels based on config settings
 		if(!persistent_save_z_levels[ZTRAIT_CENTCOM] && is_centcom_level(z))
 			continue
 		else if(!persistent_save_z_levels[ZTRAIT_STATION] && is_station_level(z))
@@ -534,6 +537,9 @@ SUBSYSTEM_DEF(persistence)
 	current_save_x = 0
 	current_save_y = 0
 	counted_areas = list()
+	if(!silent)
+		to_chat(world, span_boldannounce("World map save finished at [time_stamp()]"))
+	log_world("World map save finished at [time_stamp()]")
 
 /// Gets the current progress percentage for the active z-level
 /datum/controller/subsystem/persistence/proc/get_current_progress_percent()
