@@ -40,9 +40,9 @@
 	var/replaced_by
 	/// Organ being directly manipulated, used for checking if the organ is in the body prior to surgery and after surgery has begun.
 	var/organ_to_manipulate
-	///What organ type is required. Used with organ_to_manipulate.
+	///What organ type is required to start the surgery. Used with organ_to_manipulate.
 	var/requires_organ_type
-	///What organ flags are required. Used with organ_to_manipulate.
+	///What organ flags are required to start the surgery. Used with organ_to_manipulate.
 	var/requires_organ_flags
 	///What amount of damage is required on the organ before the surgery can start. Used with organ_to_manipulate.
 	var/requires_organ_damage
