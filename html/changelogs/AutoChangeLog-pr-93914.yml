@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - spellcheck: "Items that block contents/wires from EMPs now showed up as only \"partially EMP blocking\" objects in examine menu."
