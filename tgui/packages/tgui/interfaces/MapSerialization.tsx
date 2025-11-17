@@ -18,6 +18,7 @@ type ZLevel = {
   name: string;
   traits: string[];
   enabled: BooleanLike;
+  disabled: BooleanLike;
   in_progress: BooleanLike;
   progress_percent: number;
   save_time_seconds: number;
@@ -138,56 +139,59 @@ function ZLevelsSection() {
           <Table.Cell>Areas</Table.Cell>
           <Table.Cell>Traits</Table.Cell>
         </Table.Row>
-        {z_levels &&
-          z_levels.map((z_level) => (
-            <Table.Row key={z_level.z}>
-              <Table.Cell>{z_level.z}</Table.Cell>
-              <Table.Cell>{z_level.name}</Table.Cell>
-              <Table.Cell>
-                <Button.Checkbox
-                  checked={z_level.enabled}
-                  disabled={is_saving}
-                  onClick={() => act('toggle_z_level', { z_level: z_level.z })}
-                />
-              </Table.Cell>
-              <Table.Cell width="150px">
-                {z_level.in_progress ? (
-                  <ProgressBar
-                    value={z_level.progress_percent}
-                    minValue={0}
-                    maxValue={100}
-                    color="blue"
-                  >
-                    {z_level.progress_percent.toFixed(1)}%
-                  </ProgressBar>
-                ) : z_level.enabled ? (
-                  <ProgressBar
-                    value={z_level.save_time_seconds > 0 ? 100 : 0}
-                    minValue={0}
-                    maxValue={100}
-                    color={z_level.save_time_seconds > 0 ? 'green' : 'grey'}
-                  >
-                    {z_level.save_time_seconds > 0 ? 'Complete' : 'Pending'}
-                  </ProgressBar>
-                ) : (
-                  <ProgressBar
-                    value={0}
-                    minValue={0}
-                    maxValue={100}
-                    color="red"
-                  >
-                    Disabled
-                  </ProgressBar>
-                )}
-              </Table.Cell>
-              <Table.Cell>{z_level.save_time_seconds.toFixed(2)}</Table.Cell>
-              <Table.Cell>{z_level.objs_saved.toLocaleString()}</Table.Cell>
-              <Table.Cell>{z_level.mobs_saved.toLocaleString()}</Table.Cell>
-              <Table.Cell>{z_level.turfs_saved.toLocaleString()}</Table.Cell>
-              <Table.Cell>{z_level.areas_saved.toLocaleString()}</Table.Cell>
-              <Table.Cell>{z_level.traits.join(', ')}</Table.Cell>
-            </Table.Row>
-          ))}
+        {z_levels?.map((z_level) => (
+          <Table.Row key={z_level.z}>
+            <Table.Cell>{z_level.z}</Table.Cell>
+            <Table.Cell>{z_level.name}</Table.Cell>
+            <Table.Cell>
+              <Button.Checkbox
+                checked={z_level.enabled}
+                disabled={z_level.disabled || is_saving}
+                onClick={() => act('toggle_z_level', { z_level: z_level.z })}
+              />
+            </Table.Cell>
+            <Table.Cell width="150px">
+              {z_level.in_progress ? (
+                <ProgressBar
+                  value={z_level.progress_percent}
+                  minValue={0}
+                  maxValue={100}
+                  color="blue"
+                >
+                  {z_level.progress_percent.toFixed(1)}%
+                </ProgressBar>
+              ) : z_level.enabled ? (
+                <ProgressBar
+                  value={z_level.save_time_seconds > 0 ? 100 : 0}
+                  minValue={0}
+                  maxValue={100}
+                  color={z_level.save_time_seconds > 0 ? 'green' : 'grey'}
+                >
+                  {z_level.save_time_seconds > 0 ? 'Complete' : 'Pending'}
+                </ProgressBar>
+              ) : z_level.disabled ? (
+                <ProgressBar
+                  value={100}
+                  minValue={0}
+                  maxValue={100}
+                  color="grey"
+                >
+                  Multi-Z
+                </ProgressBar>
+              ) : (
+                <ProgressBar value={0} minValue={0} maxValue={100} color="red">
+                  Disabled
+                </ProgressBar>
+              )}
+            </Table.Cell>
+            <Table.Cell>{z_level.save_time_seconds.toFixed(2)}</Table.Cell>
+            <Table.Cell>{z_level.objs_saved.toLocaleString()}</Table.Cell>
+            <Table.Cell>{z_level.mobs_saved.toLocaleString()}</Table.Cell>
+            <Table.Cell>{z_level.turfs_saved.toLocaleString()}</Table.Cell>
+            <Table.Cell>{z_level.areas_saved.toLocaleString()}</Table.Cell>
+            <Table.Cell>{z_level.traits.join(', ')}</Table.Cell>
+          </Table.Row>
+        ))}
       </Table>
     </Section>
   );
