@@ -21,53 +21,45 @@ const STAT_DEAD = 4;
 
 const jobIsHead = (jobId: number) => jobId % 10 === 0;
 
-const sortByName = (a: CrewSensor, b: CrewSensor) => {
-  if (a.name > b.name) return 1;
-  if (a.name < b.name) return -1;
-  return 0;
-}
-
-const sortByJob = (a: CrewSensor, b: CrewSensor) => {
-  return a.ijob - b.ijob;
-}
-
-const sortByVitals = (a: CrewSensor, b: CrewSensor) => {
-  if (a.life_status > b.life_status) return -1;
-  if (a.life_status < b.life_status) return 1;
-
-  if (b.oxydam === undefined) return -1;
-  if (a.oxydam === undefined) return 1;
-
-  if (a.health < b.health) return -1;
-  if (a.health > b.health) return 1;
-
-  return 0;
-};
-
-const sortByArea = (a: CrewSensor, b: CrewSensor) => {
-  if (a.area === undefined) return 1;
-  if (b.area === undefined) return -1;
-  if (a.area > b.area) return 1;
-  if (a.area < b.area) return -1;
-  return 0;
-};
-
 const SORT_OPTIONS = [
   {
     name: 'Job',
-    sortingFunction: sortByJob
+    sort: (a: CrewSensor, b: CrewSensor) => {
+      return a.ijob - b.ijob;
+    }
   },
   {
     name: 'Name',
-    sortingFunction: sortByName,
+    sort: (a: CrewSensor, b: CrewSensor) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    }
   },
   {
     name: 'Area',
-    sortingFunction: sortByArea,
+    sort: (a: CrewSensor, b: CrewSensor) => {
+      if (a.area === undefined) return 1;
+      if (b.area === undefined) return -1;
+      if (a.area > b.area) return 1;
+      if (a.area < b.area) return -1;
+      return 0;
+    }
   },
   {
     name: 'Vitals',
-    sortingFunction: sortByVitals,
+    sort: (a: CrewSensor, b: CrewSensor) => {
+      if (a.life_status > b.life_status) return -1;
+      if (a.life_status < b.life_status) return 1;
+
+      if (b.oxydam === undefined) return -1;
+      if (a.oxydam === undefined) return 1;
+
+      if (a.health < b.health) return -1;
+      if (a.health > b.health) return 1;
+
+      return 0;
+    }
   }
 ];
 
@@ -182,8 +174,8 @@ const CrewTable = () => {
 
   const sorted = sensors.filter(nameSearch).sort((a, b) =>
     sortAsc
-      ? SORT_OPTIONS[indexOfSortingOption].sortingFunction(a, b)
-      : SORT_OPTIONS[indexOfSortingOption].sortingFunction(b, a)
+      ? SORT_OPTIONS[indexOfSortingOption].sort(a, b)
+      : SORT_OPTIONS[indexOfSortingOption].sort(b, a)
   );
 
   return (
