@@ -588,6 +588,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
+	var/mob/living/eyed_fool
+	COOLDOWN_DECLARE(counter_attempt_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
 	. = ..()
@@ -622,6 +624,46 @@
 	if(stored_blade)
 		new stored_blade(src)
 		update_appearance()
+
+/obj/item/storage/belt/sheath/mouse_drop_dragged(mob/living/over, mob/living/user, src_location, over_location, params)
+	if(!over)
+		return
+	if(!length(contents))
+		return
+	if(!user.combat_mode)
+		return
+	if(src.loc != user)
+		return
+	if(user.get_item_for_held_index(user.active_hand_index))
+		return
+	if(!COOLDOWN_FINISHED(src, counter_attempt_cooldown))
+		balloon_alert(user, "just tried that!")
+		return
+	RegisterSignal(user, COMSIG_ATOM_ATTACKBY, PROC_REF(counter_attack))
+	user.Immobilize(0.5 SECONDS)
+	user.visible_message(span_danger("[user] widens [p_their(user)] stance, [p_their(user)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [over]!"))
+	addtimer(CALLBACK(src, PROC_REF(relax), user), 0.5 SECONDS)
+
+/obj/item/storage/belt/sheath/proc/counter_attack(mob/living/forward_thinker, atom/movable/weapon, mob/living/fool)
+	SIGNAL_HANDLER
+	var/obj/item/justicetool = contents[1]
+	if(loc != forward_thinker || !length(contents) || !forward_thinker.put_in_active_hand(justicetool))
+		return
+	fool.apply_damage(
+		damage = justicetool.force * 3,
+		damagetype = justicetool.damtype,
+		def_zone = fool.get_active_hand(),
+		wound_bonus = justicetool.wound_bonus * 3,
+		exposed_wound_bonus = justicetool.exposed_wound_bonus * 3,
+		attacking_item = justicetool,
+	)
+	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/item/storage/belt/sheath/proc/relax(mob/living/holder)
+	UnregisterSignal(holder, COMSIG_ATOM_ATTACKBY)
+	COOLDOWN_START(src, counter_attempt_cooldown, 5 SECONDS)
+
 
 /obj/item/storage/belt/sheath/sabre
 	name = "sabre sheath"
