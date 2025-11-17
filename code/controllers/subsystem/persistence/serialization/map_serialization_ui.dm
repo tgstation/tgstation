@@ -1,12 +1,21 @@
 // Map Serialization Admin UI
-ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map serialization admin interface.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB_VISIBILITY(map_serialization_ui, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
+ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Save", "Opens the map serialization admin interface.", ADMIN_CATEGORY_MAPPING)
 	var/datum/map_serialization_ui/ui = new(usr)
 	ui.ui_interact(usr)
 
-/// Map Serialization UI datum
 /datum/map_serialization_ui
 	/// Timer for auto-refreshing the UI during saves
 	var/refresh_timer
+	var/list/z_levels_to_save = list()
+
+/datum/map_serialization_ui/New()
+	for(var/z in 1 to world.maxz)
+		var/datum/space_level/level = SSmapping.z_list[z]
+		if(!level)
+			continue
+
+		z_levels_to_save[num2text(z)] = FALSE
 
 /datum/map_serialization_ui/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -38,14 +47,13 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 				message_admins("[key_name_admin(usr)] started a map serialization save operation.")
 				log_admin("[key_name(usr)] started a map serialization save operation.")
 
-				// Start auto-refresh timer during save
 				if(refresh_timer)
 					deltimer(refresh_timer)
 					refresh_timer = null
 
 				refresh_timer = addtimer(CALLBACK(src, PROC_REF(auto_refresh)), 1 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_LOOP)
 				// Start the save operation asynchronously
-				INVOKE_ASYNC(SSpersistence, TYPE_PROC_REF(/datum/controller/subsystem/persistence, save_persistent_maps))
+				INVOKE_ASYNC(SSpersistence, TYPE_PROC_REF(/datum/controller/subsystem/persistence, save_world), z_levels_to_save, silent=TRUE)
 
 		if("stop_save")
 			if(SSpersistence.save_in_progress)
@@ -81,7 +89,6 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 /// Gets z-level data including real-time progress for display
 /datum/map_serialization_ui/proc/get_z_level_data()
 	var/list/z_level_list = list()
-	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
 
 	for(var/z in 1 to world.maxz)
 		var/datum/space_level/level = SSmapping.z_list[z]
@@ -89,40 +96,32 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 			continue
 
 		var/list/z_traits = list()
-		var/enabled = FALSE
 
 		// Determine traits and enabled status for this z-level
 		if(is_station_level(z))
 			z_traits += "Station"
-			enabled = !!persistent_save_z_levels[ZTRAIT_STATION]
 		if(is_centcom_level(z))
 			z_traits += "CentCom"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_CENTCOM]
 		if(is_mining_level(z))
 			z_traits += "Mining"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_MINING]
 		if(is_space_empty_level(z))
 			z_traits += "Space Empty"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_SPACE_EMPTY]
 		if(is_space_ruins_level(z))
 			z_traits += "Space Ruins"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_SPACE_RUINS]
 		if(is_ice_ruins_level(z))
 			z_traits += "Ice Ruins"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_ICE_RUINS]
 		if(is_reserved_level(z))
 			z_traits += "Transit/Reserved"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_RESERVED]
 		if(is_away_level(z))
 			z_traits += "Away Mission"
-			if(!enabled)
-				enabled = !!persistent_save_z_levels[ZTRAIT_AWAY]
+
+		var/enabled = z_levels_to_save[num2text(z)]
+
+		var/disabled = FALSE
+
+		if(is_multi_z_level(z))
+			if(!SSmapping.level_trait(z, ZTRAIT_UP) || SSmapping.level_trait(z, ZTRAIT_DOWN))
+				disabled = TRUE // due to the way the map save works, we cannot split z-levels so the bottom z-level determines if all the multi-z's get saved
 
 		// Check if this z-level is currently being processed
 		var/in_progress = (SSpersistence.save_in_progress && SSpersistence.current_save_z_level == z)
@@ -153,6 +152,7 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 			"name" = level.name || "Level [z]",
 			"traits" = z_traits,
 			"enabled" = enabled,
+			"disabled" = disabled,
 			"in_progress" = in_progress,
 			"progress_percent" = progress_percent,
 			"save_time_seconds" = save_time,
@@ -172,10 +172,13 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 	flags_data["objects"] = !!(save_flags & SAVE_OBJECTS)
 	flags_data["objects_variables"] = !!(save_flags & SAVE_OBJECTS_VARIABLES)
 	flags_data["objects_properties"] = !!(save_flags & SAVE_OBJECTS_PROPERTIES)
+
 	flags_data["mobs"] = !!(save_flags & SAVE_MOBS)
+
 	flags_data["turfs"] = !!(save_flags & SAVE_TURFS)
 	flags_data["turfs_atmos"] = !!(save_flags & SAVE_TURFS_ATMOS)
 	flags_data["turfs_space"] = !!(save_flags & SAVE_TURFS_SPACE)
+
 	flags_data["areas"] = !!(save_flags & SAVE_AREAS)
 	flags_data["areas_default_shuttles"] = !!(save_flags & SAVE_AREAS_DEFAULT_SHUTTLES)
 	flags_data["areas_custom_shuttles"] = !!(save_flags & SAVE_AREAS_CUSTOM_SHUTTLES)
@@ -195,31 +198,30 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 
 /// Toggles the enabled state of a z-level
 /datum/map_serialization_ui/proc/toggle_z_level_enabled(z_level)
-	var/trait_key = get_z_level_trait_key(z_level)
-	if(!trait_key)
-		return FALSE
-
-	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
-	persistent_save_z_levels[trait_key] = !persistent_save_z_levels[trait_key]
-	CONFIG_SET(keyed_list/persistent_save_z_levels, persistent_save_z_levels)
-
-	return TRUE
+	z_levels_to_save[num2text(z_level)] = !z_levels_to_save[num2text(z_level)]
 
 /// Toggles all z-levels on or off
 /datum/map_serialization_ui/proc/toggle_all_z_levels()
-	var/list/persistent_save_z_levels = CONFIG_GET(keyed_list/persistent_save_z_levels)
-
 	// Check if any are disabled, if so enable all, otherwise disable all
 	var/enable_all = FALSE
-	for(var/key in persistent_save_z_levels)
-		if(!persistent_save_z_levels[key])
+	for(var/z_string in z_levels_to_save)
+		var/z_num = text2num(z_string)
+		if(is_multi_z_level(z_num))
+			if(!SSmapping.level_trait(z_num, ZTRAIT_UP) || SSmapping.level_trait(z_num, ZTRAIT_DOWN))
+				continue
+
+		if(!z_levels_to_save[z_string])
 			enable_all = TRUE
 			break
 
-	for(var/key in persistent_save_z_levels)
-		persistent_save_z_levels[key] = enable_all
+	for(var/z_string in z_levels_to_save)
+		var/z_num = text2num(z_string)
+		if(is_multi_z_level(z_num))
+			if(!SSmapping.level_trait(z_num, ZTRAIT_UP) || SSmapping.level_trait(z_num, ZTRAIT_DOWN))
+				continue
 
-	CONFIG_SET(keyed_list/persistent_save_z_levels, persistent_save_z_levels)
+		z_levels_to_save[z_string] = enable_all
+
 	return TRUE
 
 /// Toggles a specific save flag
@@ -250,23 +252,3 @@ ADMIN_VERB(map_serialization_ui, R_DEBUG, "Map Serialization", "Opens the map se
 
 	CONFIG_SET(keyed_list/persistent_save_flags, persistent_save_flags)
 	return TRUE
-
-/// Gets the appropriate trait key for a z-level
-/datum/map_serialization_ui/proc/get_z_level_trait_key(z)
-	if(is_station_level(z))
-		return ZTRAIT_STATION
-	if(is_centcom_level(z))
-		return ZTRAIT_CENTCOM
-	if(is_mining_level(z))
-		return ZTRAIT_MINING
-	if(is_space_empty_level(z))
-		return ZTRAIT_SPACE_EMPTY
-	if(is_space_ruins_level(z))
-		return ZTRAIT_SPACE_RUINS
-	if(is_ice_ruins_level(z))
-		return ZTRAIT_ICE_RUINS
-	if(is_reserved_level(z))
-		return ZTRAIT_RESERVED
-	if(is_away_level(z))
-		return ZTRAIT_AWAY
-	return null
