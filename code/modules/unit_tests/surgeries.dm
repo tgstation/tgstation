@@ -140,18 +140,21 @@
 	var/datum/surgery_step/manipulate_organs/manipulate_organs = new
 
 	// Extract the stomach organ
-	surgery.current_type = "extract"
-	surgery.target_organ = patient.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/target_stomach = patient.get_organ_slot(ORGAN_SLOT_STOMACH)
+	surgery.target_organ = target_stomach
 	manipulate_organs.implement_type = TOOL_HEMOSTAT
 	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
+	user.put_in_active_hand(hemostat)
 	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, hemostat, surgery)
 
 	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), null, "Organ manipulation failed to extract stomach organ from patient")
+	TEST_ASSERT_EQUAL(target_stomach.loc, run_loc_floor_bottom_left, "Organ manipulation failed to move stomach organ to turf after extracting from patient")
 
 	// Insert a new stomach organ
 	var/obj/item/organ/stomach/stomach = allocate(/obj/item/organ/stomach)
-	surgery.current_type = "insert"
+	user.put_in_active_hand(stomach, forced = TRUE)
 	surgery.target_organ = stomach
 	manipulate_organs.success(user, patient, BODY_ZONE_CHEST, stomach, surgery)
 
 	TEST_ASSERT_EQUAL(patient.get_organ_slot(ORGAN_SLOT_STOMACH), stomach, "Organ manipulation failed to insert stomach organ into patient")
+	TEST_ASSERT(!user.is_holding(stomach), "Organ manipulation failed to remove stomach organ from user's hands after inserting into patient")
