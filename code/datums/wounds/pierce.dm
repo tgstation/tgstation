@@ -203,8 +203,8 @@
 	occur_text = "spurts out a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
-	initial_flow = 1.5
-	gauzed_clot_rate = 0.8
+	initial_flow = 1.25
+	gauzed_clot_rate = 0.75
 	clot_rate = 0.03
 	internal_bleeding_chance = 30
 	internal_bleeding_coefficient = 1.25
@@ -282,8 +282,8 @@
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 2.25
-	gauzed_clot_rate = 0.6
+	initial_flow = 2
+	gauzed_clot_rate = 0.5
 	clot_rate = 0.02
 	internal_bleeding_chance = 60
 	internal_bleeding_coefficient = 1.5
@@ -395,8 +395,8 @@
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 3
-	gauzed_clot_rate = 0.4
+	initial_flow = 2.5
+	gauzed_clot_rate = 0.3
 	internal_bleeding_chance = 80
 	internal_bleeding_coefficient = 1.75
 	threshold_penalty = 15

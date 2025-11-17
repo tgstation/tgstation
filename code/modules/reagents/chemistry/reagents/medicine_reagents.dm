@@ -1837,22 +1837,11 @@
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!CAN_HAVE_BLOOD(affected_mob) || !affected_mob.all_wounds)
-		return
-
-	var/datum/wound/bloodiest_wound
-
-	for(var/i in affected_mob.all_wounds)
-		var/datum/wound/iter_wound = i
-		if(iter_wound.blood_flow)
-			if(iter_wound.blood_flow > bloodiest_wound?.blood_flow)
-				bloodiest_wound = iter_wound
-
-	if(bloodiest_wound)
+	if(affected_mob.coagulant_effect(clot_rate * REM * seconds_per_tick))
 		if(!was_working)
 			to_chat(affected_mob, span_green("You can feel your flowing blood start thickening!"))
 			was_working = TRUE
-		bloodiest_wound.adjust_blood_flow(-clot_rate * REM * seconds_per_tick)
+
 	else if(was_working)
 		was_working = FALSE
 
