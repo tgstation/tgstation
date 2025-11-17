@@ -35,11 +35,11 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(human_holder.stat == DEAD || human_holder.blood_volume <= min_blood)
+
+	if(human_holder.stat == DEAD)
 		return
 
-	if(!HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD))
-		human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
+	human_holder.adjust_blood_volume(-human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick, minimum = min_blood)
 
 /// Try to update the mail goodies to match the quirk holder's blood type. If we fail for whatever reason then it will just default to the initial O- blood pack that we start with.
 /datum/quirk/blooddeficiency/proc/update_mail(mob/living/carbon/human/human_quirk_holder, datum/blood_type/new_blood_type, update_cached_blood_dna_info)
