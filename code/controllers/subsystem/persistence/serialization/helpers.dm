@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(default_save_vars, list("dir", "pixel_x", "pixel_y"))
 	if(!length(data_to_add))
 		return
 
-	return TGM_VARS_BLOCK(data_to_add.Join(";\n\t")) //"{\n\t[data_to_add.Join(";\n\t")]\n\t}"
+	return TGM_VARS_BLOCK(data_to_add.Join(";\n\t"))
 
 /proc/generate_tgm_typepath_metadata(list/data_to_seralize)
 	var/list/data_to_add = list()

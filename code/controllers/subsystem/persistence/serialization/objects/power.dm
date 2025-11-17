@@ -3,7 +3,6 @@
 	. += NAMEOF(src, cable_color)
 	. += NAMEOF(src, cable_layer)
 
-	. -= NAMEOF(src, icon_state)
 	. -= NAMEOF(src, color)
 	return .
 
@@ -13,8 +12,6 @@
 
 	// wires modify several vars immediately after init which results
 	// in excessive save data that should be omitted
-	. -= NAMEOF(src, name)
-	. -= NAMEOF(src, icon_state)
 	. -= NAMEOF(src, pixel_x)
 	. -= NAMEOF(src, pixel_y)
 	. -= NAMEOF(src, color)
@@ -36,9 +33,8 @@
 	. += NAMEOF(src, equipment)
 	. += NAMEOF(src, environ)
 	. += NAMEOF(src, cell_type)
-
-	if(auto_name)
-		. -= NAMEOF(src, name)
+	if(!auto_name)
+		. += NAMEOF(src, name)
 
 	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
 	//. += NAMEOF(src, shorted)

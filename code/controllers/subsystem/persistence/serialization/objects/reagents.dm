@@ -39,7 +39,6 @@
 	. += NAMEOF(src, ignore_colors)
 	. += NAMEOF(src, duct_color)
 
-	. -= NAMEOF(src, icon_state)
 	. -= NAMEOF(src, color)
 	return .
 

@@ -2,7 +2,6 @@
 	. = ..()
 	. -= NAMEOF(src, density)
 	. -= NAMEOF(src, opacity)
-	. -= NAMEOF(src, icon_state)
 	return .
 
 /obj/machinery/door/airlock/get_save_vars(save_flags=ALL)
@@ -10,12 +9,11 @@
 	. += NAMEOF(src, autoname)
 	. += NAMEOF(src, emergency)
 
-	if(autoname)
-		. -= NAMEOF(src, name)
+	if(!autoname)
+		. += NAMEOF(src, name)
 
 	. -= NAMEOF(src, density)
 	. -= NAMEOF(src, opacity)
-	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
 	return .
 
 /obj/machinery/door/airlock/on_object_saved(map_string, turf/current_loc)

@@ -1,8 +1,6 @@
 /obj/machinery/light/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, status)
-
-	. -= NAMEOF(src, icon_state)
 	return .
 
 /* This feels like a mistake in hindsight
@@ -171,6 +169,4 @@
 	. = ..()
 	. += NAMEOF(src, stage)
 	. += NAMEOF(src, fixture_type)
-
-	. -= NAMEOF(src, icon_state)
 	return .

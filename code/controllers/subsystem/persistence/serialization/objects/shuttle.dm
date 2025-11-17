@@ -21,16 +21,6 @@
 /obj/structure/transport/linear/tram/is_saveable(turf/current_loc, list/obj_blacklist)
 	return TRUE // skip multi-tile object checks
 
-/obj/structure/transport/linear/tram/get_save_vars(save_flags=ALL)
-	. = ..()
-	. -= NAMEOF(src, icon_state)
-	return .
-
-/obj/structure/tram/spoiler/get_save_vars(save_flags=ALL)
-	. = ..()
-	. -= NAMEOF(src, icon_state)
-	return .
-
 // these are for public elevators
 /obj/structure/transport/linear/public/on_object_saved(map_string, turf/current_loc)
 	var/datum/transport_controller/linear/transport = transport_controller_datum
@@ -75,8 +65,6 @@
 
 /obj/machinery/lift_indicator/get_save_vars(save_flags=ALL)
 	. = ..()
-	. -= NAMEOF(src, icon_state)
-
 	. += NAMEOF(src, linked_elevator_id)
 	. += NAMEOF(src, current_lift_floor)
 	return .

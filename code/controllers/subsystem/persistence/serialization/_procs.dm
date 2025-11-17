@@ -30,9 +30,6 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	. = list()
 	. += NAMEOF(src, color)
 	. += NAMEOF(src, dir)
-	//. += NAMEOF(src, icon)
-	//. += NAMEOF(src, icon_state)
-	//. += NAMEOF(src, name) // should probably disable this and use a whitelist of objs
 	. += NAMEOF(src, pixel_x)
 	. += NAMEOF(src, pixel_y)
 	. += NAMEOF(src, density)
@@ -106,7 +103,6 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 		var/metadata = generate_tgm_metadata(target_obj)
 		TGM_MAP_BLOCK(map_string, target_obj.type, metadata)
 
-// This is an alternate method to save containers/children but might cause hard deletes maybe
 /obj/get_custom_save_vars(save_flags=ALL)
 	. = list()
 
@@ -123,8 +119,6 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 
 	if(save_container_child_id)
 		GLOB.save_containers_children += src
-		//GLOB.save_containers_children[save_container_child_id] = src // += src
-		//src.forceMove(parent_obj)
 	. = ..()
 
 /**
