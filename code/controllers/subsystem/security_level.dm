@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(security_level)
 	if(!current_security_level.looping_sound) // No sound? No play.
 		can_fire = FALSE
 		return
-	sound_to_playing_players(current_security_level.looping_sound)
+	sound_to_playing_players(current_security_level.looping_sound, volume_preference = /datum/preference/numeric/volume/sound_ambience_volume)
 
 
 /**

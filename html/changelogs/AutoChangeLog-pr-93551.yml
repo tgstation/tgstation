@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "The House Edge sword has a new special attack, allowing you to charge up the blade for either a light (after the first cooldown) or heavy (after both cooldowns) explosive sword slash."
-  - balance: "The House Edge can only gain charges when fighting live opponents."

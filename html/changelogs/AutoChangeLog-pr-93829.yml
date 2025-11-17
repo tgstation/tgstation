@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Caps \"Automated Announcement System\" messages to 168 characters (was: 1024 characters)"

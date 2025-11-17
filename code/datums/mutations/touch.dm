@@ -306,49 +306,43 @@
 			iter_wound.remove_wound()
 			iter_wound.apply_wound(mendicant_transfer_limb)
 
-	if(HAS_TRAIT(mendicant, TRAIT_NOBLOOD))
+	if(!CAN_HAVE_BLOOD(mendicant) || !CAN_HAVE_BLOOD(hurtguy))
 		return .
 
 	// 10% base
 	var/max_blood_transfer = (BLOOD_VOLUME_NORMAL * 0.10) * heal_multiplier
 	// Too little blood
-	if(hurtguy.blood_volume < BLOOD_VOLUME_NORMAL)
-		var/max_blood_to_hurtguy = min(mendicant.blood_volume, BLOOD_VOLUME_NORMAL - hurtguy.blood_volume)
-		var/blood_to_hurtguy = min(max_blood_transfer, max_blood_to_hurtguy)
-		if(!blood_to_hurtguy)
-			return .
-
+	if(hurtguy.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		// We ignore incompatibility here.
-		if(!mendicant.transfer_blood_to(hurtguy, blood_to_hurtguy, forced = TRUE, ignore_incompatibility = TRUE))
+		var/blood_transferred = mendicant.transfer_blood_to(hurtguy, max_blood_transfer, ignore_low_blood = TRUE, ignore_incompatibility = TRUE)
+
+		if(!blood_transferred)
 			return
 
 		to_chat(mendicant, span_notice("Your veins (and brain) feel a bit lighter."))
 		. = TRUE
 		// Because we do our own spin on it!
 		if(hurtguy.get_blood_compatibility(mendicant) == FALSE)
-			hurtguy.adjustToxLoss((blood_to_hurtguy * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+			hurtguy.adjustToxLoss((blood_transferred * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 			to_chat(hurtguy, span_notice("Your veins feel thicker, but they itch a bit."))
 		else
 			to_chat(hurtguy, span_notice("Your veins feel thicker!"))
 		return
 
-	if(hurtguy.blood_volume < BLOOD_VOLUME_MAXIMUM)
+	if(hurtguy.get_blood_volume() < BLOOD_VOLUME_EXCESS)
 		return
 
-	// Too MUCH blood
-	var/max_blood_to_mendicant = BLOOD_VOLUME_EXCESS - hurtguy.blood_volume
-	var/blood_to_mendicant = min(max_blood_transfer, max_blood_to_mendicant)
-	// mender always gonna have blood
-
 	// We ignore incompatibility here.
-	if(!hurtguy.transfer_blood_to(mendicant, hurtguy.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE, ignore_incompatibility = TRUE))
+	var/blood_received = hurtguy.transfer_blood_to(mendicant, hurtguy.get_blood_volume() - BLOOD_VOLUME_EXCESS, ignore_incompatibility = TRUE)
+
+	if(!blood_received)
 		return
 
 	to_chat(hurtguy, span_notice("Your veins don't feel quite so swollen anymore."))
 	. = TRUE
 	// Because we do our own spin on it!
 	if(mendicant.get_blood_compatibility(hurtguy) == FALSE)
-		mendicant.adjustToxLoss((blood_to_mendicant * 0.1) * pain_multiplier) // 1 dmg per 10 blood
+		mendicant.adjustToxLoss((blood_received * 0.1) * pain_multiplier) // 1 dmg per 10 blood
 		to_chat(mendicant, span_notice("Your veins swell and itch!"))
 	else
 		to_chat(mendicant, span_notice("Your veins swell!"))
