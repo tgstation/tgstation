@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
  *
  * Returns: Array list of variable names to be serialized
  */
-/atom/proc/get_save_vars()
+/atom/proc/get_save_vars(save_flags=ALL)
 	. = list()
 	. += NAMEOF(src, color)
 	. += NAMEOF(src, dir)
@@ -46,12 +46,12 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	GLOB.map_export_save_vars_cache[type] = .
 	return .
 
-/atom/movable/get_save_vars()
+/atom/movable/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, anchored)
 	return .
 
-/obj/get_save_vars()
+/obj/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, req_access)
 	. += NAMEOF(src, id_tag)
@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
  *
  * Returns: Assoicated list of variables with custom values to be serialized
  */
-/atom/proc/get_custom_save_vars()
+/atom/proc/get_custom_save_vars(save_flags=ALL)
 	. = list()
 	if(uses_integrity && (atom_integrity != max_integrity))
 		.[NAMEOF(src, atom_integrity)] = atom_integrity
@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 		TGM_MAP_BLOCK(map_string, target_obj.type, metadata)
 
 // This is an alternate method to save containers/children but might cause hard deletes maybe
-/obj/get_custom_save_vars()
+/obj/get_custom_save_vars(save_flags=ALL)
 	. = list()
 
 	// this might cause hard deletes tied to the object as references ? but these lists get deleted at the end of map saving

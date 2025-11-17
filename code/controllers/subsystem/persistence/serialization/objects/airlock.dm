@@ -1,11 +1,11 @@
-/obj/machinery/door/get_save_vars()
+/obj/machinery/door/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, density)
 	. -= NAMEOF(src, opacity)
 	. -= NAMEOF(src, icon_state)
 	return .
 
-/obj/machinery/door/airlock/get_save_vars()
+/obj/machinery/door/airlock/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, autoname)
 	. += NAMEOF(src, emergency)
@@ -46,7 +46,7 @@
 				TGM_ADD_TYPEPATH_VAR(variables, typepath, dir, heading)
 				TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
 
-/obj/machinery/door/poddoor/get_save_vars()
+/obj/machinery/door/poddoor/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, id)
 	return .

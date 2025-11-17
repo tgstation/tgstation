@@ -9,7 +9,7 @@
 
 	return .
 
-/mob/living/basic/get_save_vars()
+/mob/living/basic/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stat)
 	. += NAMEOF(src, health)
@@ -23,7 +23,7 @@
 
 ///  S I M P L E   A N I M A L S  ///
 
-/mob/living/simple_animal/get_save_vars()
+/mob/living/simple_animal/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stat)
 	. += NAMEOF(src, health)

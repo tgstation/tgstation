@@ -1,4 +1,4 @@
-/obj/docking_port/get_save_vars()
+/obj/docking_port/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, dheight)
 	. += NAMEOF(src, dwidth)
@@ -7,7 +7,7 @@
 	. += NAMEOF(src, width)
 	return .
 
-/obj/docking_port/stationary/get_save_vars()
+/obj/docking_port/stationary/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, roundstart_template)
 	return .
@@ -21,12 +21,12 @@
 /obj/structure/transport/linear/tram/is_saveable(turf/current_loc, list/obj_blacklist)
 	return TRUE // skip multi-tile object checks
 
-/obj/structure/transport/linear/tram/get_save_vars()
+/obj/structure/transport/linear/tram/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, icon_state)
 	return .
 
-/obj/structure/tram/spoiler/get_save_vars()
+/obj/structure/tram/spoiler/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, icon_state)
 	return .
@@ -67,13 +67,13 @@
 		TGM_ADD_TYPEPATH_VAR(landmark_variables, landmark_typepath, specific_transport_id, transport.specific_transport_id)
 		TGM_MAP_BLOCK(map_string, landmark_typepath, generate_tgm_typepath_metadata(landmark_variables))
 
-/obj/machinery/elevator_control_panel/get_save_vars()
+/obj/machinery/elevator_control_panel/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, linked_elevator_id)
 	. += NAMEOF(src, preset_destination_names)
 	return .
 
-/obj/machinery/lift_indicator/get_save_vars()
+/obj/machinery/lift_indicator/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, icon_state)
 

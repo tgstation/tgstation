@@ -3,10 +3,10 @@
 // both seeds and grown fruit are easily spammable with different variables
 // also look into returning FALSE instead of empty list might be faster for all
 // objects
-/obj/item/seeds/get_save_vars()
+/obj/item/seeds/get_save_vars(save_flags=ALL)
 	return list()
 
-/obj/item/food/grown/get_save_vars()
+/obj/item/food/grown/get_save_vars(save_flags=ALL)
 	return list()
 
 
@@ -35,7 +35,7 @@
 		qdel(money)
 
 
-/obj/machinery/light/get_save_vars()
+/obj/machinery/light/get_save_vars(save_flags=ALL)
 	. = ..()
 	. -= NAMEOF(src, icon_state) // the tube changes color depending on low power, which we don't want to track
 
@@ -43,21 +43,21 @@
 	. += NAMEOF(src, status)
 	return .
 
-/obj/structure/light_construct/get_save_vars()
+/obj/structure/light_construct/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stage)
 	. += NAMEOF(src, fixture_type)
 	return .
 
 
-/obj/item/paper/get_save_vars()
+/obj/item/paper/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, show_written_words)
 	. += NAMEOF(src, input_field_count)
 	. += NAMEOF(src, default_raw_text)
 	return .
 
-/obj/item/paper/get_custom_save_vars()
+/obj/item/paper/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 
 	// Don't save anything if the paper is empty

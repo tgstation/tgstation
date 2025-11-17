@@ -1,4 +1,4 @@
-/obj/machinery/light/get_save_vars()
+/obj/machinery/light/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, status)
 
@@ -167,7 +167,7 @@
 	return typepath
 */
 
-/obj/structure/light_construct/get_save_vars()
+/obj/structure/light_construct/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, stage)
 	. += NAMEOF(src, fixture_type)

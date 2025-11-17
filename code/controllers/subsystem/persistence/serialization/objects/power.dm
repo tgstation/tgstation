@@ -1,4 +1,4 @@
-/obj/structure/cable/get_save_vars()
+/obj/structure/cable/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, cable_color)
 	. += NAMEOF(src, cable_layer)
@@ -7,7 +7,7 @@
 	. -= NAMEOF(src, color)
 	return .
 
-/obj/item/stack/cable_coil/get_save_vars()
+/obj/item/stack/cable_coil/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, cable_color)
 
@@ -27,7 +27,7 @@
 
 	return ..()
 
-/obj/machinery/power/apc/get_save_vars()
+/obj/machinery/power/apc/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, opened)
 	. += NAMEOF(src, locked)
@@ -45,24 +45,24 @@
 	//. += NAMEOF(src, locked)
 	return .
 
-/obj/machinery/power/apc/get_custom_save_vars()
+/obj/machinery/power/apc/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	if(cell_type)
 		.[NAMEOF(src, start_charge)] = round((cell.charge / cell.maxcharge * 100))
 	return .
 
-/obj/machinery/power/smes/get_save_vars()
+/obj/machinery/power/smes/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, input_level)
 	. += NAMEOF(src, output_level)
 	return .
 
-/obj/machinery/power/smes/get_custom_save_vars()
+/obj/machinery/power/smes/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	.[NAMEOF(src, charge)] = total_charge()
 	return .
 
-/obj/item/stock_parts/power_store/get_save_vars()
+/obj/item/stock_parts/power_store/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, charge)
 	. += NAMEOF(src, rigged)

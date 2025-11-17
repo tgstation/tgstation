@@ -1,9 +1,9 @@
-/obj/item/reagent_containers/get_save_vars()
+/obj/item/reagent_containers/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, amount_per_transfer_from_this)
 	return .
 
-/obj/item/reagent_containers/get_custom_save_vars()
+/obj/item/reagent_containers/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	var/has_identical_reagents = TRUE
 	var/list/cached_reagents = reagents.reagent_list
@@ -31,7 +31,7 @@
 
 	return .
 
-/obj/machinery/duct/get_save_vars()
+/obj/machinery/duct/get_save_vars(save_flags=ALL)
 	. = ..()
 	// idk shit about plumbing but i think these are correct?
 	. += NAMEOF(src, lock_layers)
@@ -43,7 +43,7 @@
 	. -= NAMEOF(src, color)
 	return .
 
-/obj/item/lazarus_injector/get_save_vars()
+/obj/item/lazarus_injector/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, loaded)
 	return .

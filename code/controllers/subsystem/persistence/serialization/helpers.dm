@@ -21,8 +21,8 @@ GLOBAL_LIST_INIT(default_save_vars, list("dir", "pixel_x", "pixel_y"))
 	var/list/vars_to_save
 	var/alist/custom_vars
 	if(save_flags & SAVE_OBJECTS_VARIABLES)
-		vars_to_save = GLOB.map_export_save_vars_cache[object.type] || object.get_save_vars()
-		custom_vars = object.get_custom_save_vars()
+		vars_to_save = GLOB.map_export_save_vars_cache[object.type] || object.get_save_vars(save_flags)
+		custom_vars = object.get_custom_save_vars(save_flags)
 	else
 		vars_to_save = GLOB.default_save_vars
 
