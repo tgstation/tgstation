@@ -11,12 +11,6 @@
 			continue
 
 		var/datum/material/material_datum = each
-/*
-			if(TGM_MAX_OBJ_CHECK)
-				continue
-			TGM_OBJ_INCREMENT
-*/
-
 		var/obj/item/stack/typepath = material_datum.sheet_type
 		var/list/variables = list()
 		TGM_ADD_TYPEPATH_VAR(variables, typepath, amount, amount_in_stack)
