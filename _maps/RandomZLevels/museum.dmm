@@ -1760,7 +1760,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/food/sandwich/cheese/grilled,
+/obj/item/food/sandwich/grilled_cheese,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "of" = (
