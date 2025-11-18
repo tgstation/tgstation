@@ -264,21 +264,13 @@
 	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
 	BLOOD_WORM_HOST_TRAIT)
 
+	if (client)
+		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions)
-
-	if (host.mind)
-		backseat = new(host)
-		backseat.death(gibbed = TRUE) // Same thing that the corpse mob spawners do to stop deathgasps and such.
-
-		// If the host is a changeling, then we forcibly move their client to the backseat so they can use Expel Worm if they wish to.
-		host.mind.transfer_to(backseat, force_key_move = host.mind.has_antag_datum(/datum/antagonist/changeling))
-
-	// Separated out here after host mind transfer for code clarity. This is handled via login/logout code later.
-	if (client)
-		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
 	var/cached_blood_volume = host.get_blood_volume()
 
@@ -333,10 +325,6 @@
 
 	possess_worm()
 
-	if (backseat)
-		backseat.mind?.transfer_to(host)
-		QDEL_NULL(backseat)
-
 	UnregisterSignal(host, list(
 		COMSIG_QDELETING,
 		COMSIG_MOB_STATCHANGE,
@@ -376,6 +364,13 @@
 
 	is_possessing_host = TRUE
 
+	if (host.mind)
+		backseat = new(host)
+		backseat.death(gibbed = TRUE) // Same thing that the corpse mob spawners do to stop deathgasps and such.
+
+		// If the host is a changeling, then we forcibly move their client to the backseat so they can use Expel Worm if they wish to.
+		host.mind.transfer_to(backseat, force_key_move = host.mind.has_antag_datum(/datum/antagonist/changeling))
+
 	mind?.transfer_to(host)
 
 	remove_actions(src, host_actions)
@@ -390,6 +385,10 @@
 	is_possessing_host = FALSE
 
 	host.mind?.transfer_to(src)
+
+	if (backseat)
+		backseat.mind?.transfer_to(host)
+		QDEL_NULL(backseat)
 
 	remove_actions(host, host_actions)
 	grant_actions(src, host_actions)

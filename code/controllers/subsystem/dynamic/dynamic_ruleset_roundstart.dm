@@ -121,8 +121,8 @@
 	if (!CAN_HAVE_BLOOD(candidate.current))
 		CRASH("A roundstart blood worm tried to spawn into a candidate mob with no blood. This shouldn't happen, because we already checked for TRAIT_NOBLOOD in species traits.")
 
-	var/mob/living/basic/blood_worm/hatchling/worm = new
 	var/mob/living/carbon/human/host = candidate.current
+	var/mob/living/basic/blood_worm/hatchling/worm = new(get_turf(host))
 
 	candidate.transfer_to(worm)
 	candidate.add_antag_datum(/datum/antagonist/blood_worm/infestation)

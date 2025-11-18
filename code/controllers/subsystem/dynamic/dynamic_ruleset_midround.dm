@@ -467,6 +467,7 @@
 	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
+	candidate_role = "Blood Worm"
 	ruleset_flags = RULESET_INVADER
 	weight = 2 // For reference, Nightmare has a weight of 5.
 	min_pop = 20 // Blood worms are limited by resources, so low pop means they have a harder time getting their tail in the door.
