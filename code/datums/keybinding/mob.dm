@@ -84,7 +84,7 @@
 	hotkey_keys = list("X")
 	name = "drop_item"
 	full_name = "Drop Item"
-	description = ""
+	description = "Drops the item in your active hand to the ground."
 	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
 
 /datum/keybinding/mob/drop_item/down(client/user, turf/target, mousepos_x, mousepos_y)
@@ -98,8 +98,26 @@
 	if(!item_dropped)
 		to_chat(user, span_warning("You have nothing to drop in your hand!"))
 		return TRUE
-	if(!user.prefs.read_preference(/datum/preference/toggle/specific_dropping))
-		user.mob.dropItemToGround(item_dropped)
+	user.mob.dropItemToGround(item_dropped)
+	return TRUE
+
+/datum/keybinding/mob/drop_item_specific
+	hotkey_keys = list("CtrlX")
+	name = "drop_item_specific"
+	full_name = "Drop Item (Specific)"
+	description = "Drops the item in your active where your mouse cursor is, if in range."
+	keybind_signal = COMSIG_KB_MOB_DROPITEM_DOWN
+
+/datum/keybinding/mob/drop_item_specific/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	if(iscyborg(user.mob)) //cyborgs can't drop items
+		return FALSE
+	var/mob/user_mob = user.mob
+	var/obj/item/item_dropped = user_mob.get_active_held_item()
+	if(!item_dropped)
+		to_chat(user, span_warning("You have nothing to drop in your hand!"))
 		return TRUE
 	if(!user_mob.Adjacent(target) || target.is_blocked_turf(source_atom = item_dropped))
 		return TRUE
