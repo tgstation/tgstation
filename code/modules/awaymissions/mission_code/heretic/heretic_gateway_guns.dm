@@ -11,7 +11,7 @@
 
 /obj/item/gun/ballistic/automatic/napad
 	name = "\improper 'Napad' Submachine Gun"
-	desc = "A bulky, 10mm submachine gun with sizeable magazines holding a close relation to the Zashchitnik pistol. Designated 'Napadayuschiy'."
+	desc = "A 9mm submachine gun with a sizeable magazine, there are no other markings on it, why is it so big?"
 	icon = 'icons/obj/weapons/guns/ninemmsmg/napad_item.dmi'
 	icon_state = "napad"
 	worn_icon = 'icons/obj/weapons/guns/ninemmsmg/napad_worn.dmi'
