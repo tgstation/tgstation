@@ -341,7 +341,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /datum/scan_condition/nebula
 	name = "Nebula"
-	description = "Site is within an unusually dense nebula. To reduce scanner noise, position dishes at least 15 tiles apart."
+	description = "Site is within an unusually dense nebula. To reduce scanner noise, position dishes at least 15 meters apart."
 	var/distance = 15
 
 /datum/scan_condition/nebula/check_dish(obj/machinery/exoscanner/dish)

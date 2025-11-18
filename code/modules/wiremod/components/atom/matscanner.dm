@@ -21,7 +21,7 @@
 
 /obj/item/circuit_component/matscanner/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+	. += create_ui_notice("Maximum Range: [max_range] meters", "orange", "info")
 
 /obj/item/circuit_component/matscanner/populate_ports()
 	input_port = add_input_port("Entity", PORT_TYPE_ATOM)

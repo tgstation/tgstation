@@ -81,7 +81,7 @@
 
 	if(isnull(server_ref?.resolve()))
 		. += span_infoplain("It's not connected to anything.")
-		. += span_infoplain("Netpods must be built within 4 tiles of a server.")
+		. += span_infoplain("Netpods must be built within 4 meters of a server.")
 		return
 
 	if(!isobserver(user))

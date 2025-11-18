@@ -19,7 +19,7 @@
 
 /obj/item/circuit_component/compare/health_state/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+	. += create_ui_notice("Maximum Range: [max_range] meters", "orange", "info")
 
 /obj/item/circuit_component/compare/health_state/populate_options()
 	input_port = add_input_port("Organism", PORT_TYPE_ATOM)

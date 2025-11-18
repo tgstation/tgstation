@@ -447,7 +447,7 @@
 
 /obj/item/circuit_component/mod_program/radar/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Max range for unsupported entities: [MAX_RADAR_CIRCUIT_DISTANCE] tiles", "orange", FA_ICON_BULLSEYE)
+	. += create_ui_notice("Max range for unsupported entities: [MAX_RADAR_CIRCUIT_DISTANCE] meters", "orange", FA_ICON_BULLSEYE)
 
 ///Set the selected ref of the program to the target (if it exists) and update the x/y pos ports (if trackable) when triggered.
 /obj/item/circuit_component/mod_program/radar/input_received(datum/port/port)

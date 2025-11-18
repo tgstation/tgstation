@@ -32,7 +32,7 @@
 	. = ..()
 	// Not necessary to show the same path cooldown, since it doesn't change much for the player
 	. += create_ui_notice("Pathfinding Cooldown: [DisplayTimeText(different_path_cooldown)]", "orange", "stopwatch")
-	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+	. += create_ui_notice("Maximum Range: [max_range] meters", "orange", "info")
 
 /obj/item/circuit_component/pathfind/populate_ports()
 	input_X = add_input_port("Target X", PORT_TYPE_NUMBER, trigger = null)
