@@ -99,7 +99,7 @@ const CoreCompressorContent = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label={'Required Radius'}>
               {requiredRadius
-                ? `${requiredRadius} tiles`
+                ? `${requiredRadius} meters`
                 : 'Implosion not possible.'}
             </LabeledList.Item>
           </LabeledList>
