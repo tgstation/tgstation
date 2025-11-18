@@ -88,7 +88,6 @@
 	AddTrait(src, TRAIT_NOKNOCKDOWN, "voidwalker")
 
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
 
 	AddComponent(/datum/component/regenerator, brute_per_second = 2, burn_per_second = 2, outline_colour = regenerate_colour, regen_check = CALLBACK(src, PROC_REF(can_regen)))
