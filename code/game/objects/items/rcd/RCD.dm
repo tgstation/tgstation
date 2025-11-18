@@ -593,17 +593,6 @@
 	var/obj/vehicle/sealed/mecha/gundam = owner
 	return round(gundam.get_charge() / MASS_TO_ENERGY)
 
-/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
-	if(silo_link)
-		return ..()
-	if(!ismecha(owner))
-		return 0
-	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
-		gundam.balloon_alert(user, "insufficient charge!")
-		return FALSE
-	return TRUE
-
 /obj/item/construction/rcd/exosuit/useResource(amount, mob/user, dry_run)
 	if(silo_link)
 		return ..()
@@ -613,7 +602,7 @@
 	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
 		gundam.balloon_alert(user, "insufficient charge!")
 		return FALSE
-	return ..()
+	return dry_run ? TRUE : gundam.use_energy(amount * MASS_TO_ENERGY)
 
 #undef MASS_TO_ENERGY
 
