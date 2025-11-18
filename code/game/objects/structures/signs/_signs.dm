@@ -51,17 +51,17 @@
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
 	if(!buildable_sign)
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	user.visible_message(span_notice("[user] starts removing [src]..."), \
 		span_notice("You start unfastening [src]."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
 	deconstruct(TRUE)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()

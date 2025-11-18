@@ -1,6 +1,5 @@
 // This element should be applied to wall-mounted machines/structures, so that if the support structure it's "hanging" from is broken or deconstructed, the wall-hung structure will deconstruct.
 /datum/component/atom_mounted
-	dupe_mode = COMPONENT_DUPE_ALLOWED
 	/// The closed turf our object is currently linked to.
 	var/atom/hanging_support_atom
 

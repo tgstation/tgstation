@@ -32,7 +32,8 @@
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 	if(new_poster_structure && (new_poster_structure.loc != src))
-		new_poster_structure.forceMove(src) //The poster structure *must* be in the item's contents for the exited() proc to properly clean up when placing the poster
+		qdel(new_poster_structure.GetComponent(/datum/component/atom_mounted))
+		new_poster_structure.forceMove(src)
 	poster_structure = new_poster_structure
 	if(poster_type)
 		name = "[poster_type::poster_item_name] - [poster_type::original_name]"
@@ -85,7 +86,9 @@
 
 	balloon_alert(user, "hanging poster...")
 	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
+	placed_poster.poster_item_type = type
 	placed_poster.forceMove(wall_structure)
+	poster_structure = null
 	flick("poster_being_set", placed_poster)
 	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 	qdel(src)
@@ -191,15 +194,15 @@
 	desc = holi_data.poster_desc
 	icon_state = holi_data.poster_icon
 
-/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(tool.tool_behaviour == TOOL_WIRECUTTER)
-		tool.play_tool_sound(src, 100)
-		if(ruined)
-			to_chat(user, span_notice("You remove the remnants of the poster."))
-			qdel(src)
-		else
-			to_chat(user, span_notice("You carefully remove the poster from the wall."))
-			roll_and_drop(Adjacent(user) ? get_turf(user) : loc, user)
+/obj/structure/sign/poster/wirecutter_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 100)
+	if(ruined)
+		to_chat(user, span_notice("You remove the remnants of the poster."))
+		qdel(src)
+	else
+		to_chat(user, span_notice("You carefully remove the poster from the wall."))
+		roll_and_drop(Adjacent(user) ? get_turf(user) : loc, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/poster/attack_hand(mob/user, list/modifiers)
 	. = ..()
