@@ -85,7 +85,6 @@
 
 	// stun + knockdown immunity
 	AddTrait(src, TRAIT_STUNIMMUNE, "voidwalker")
-	AddTrait(src, TRAIT_NOKNOCKDOWN, "voidwalker")
 
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
