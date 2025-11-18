@@ -24236,7 +24236,7 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
-/turf/open/space/basic,
+/turf/open/space/openspace,
 /area/space/nearstation)
 "gCs" = (
 /obj/effect/turf_decal/trimline/yellow/corner,
@@ -171751,8 +171751,8 @@ nlm
 nlm
 osV
 nlm
-dcE
-dcE
+nlm
+nlm
 mae
 mae
 jfB
