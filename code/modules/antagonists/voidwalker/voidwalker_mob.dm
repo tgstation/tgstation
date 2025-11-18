@@ -80,11 +80,8 @@
 	var/can_do_abductions = TRUE
 
 /mob/living/basic/voidwalker/Initialize(mapload, mob/tamer)
-	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT,TRAIT_STUNIMMUNE) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
-
-	// stun + knockdown immunity
-	AddTrait(src, TRAIT_STUNIMMUNE, "voidwalker")
 
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
