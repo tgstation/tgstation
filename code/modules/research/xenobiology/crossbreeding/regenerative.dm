@@ -87,9 +87,9 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/C in target.get_all_cells())
-		if(C.charge < C.maxcharge)
-			batteries += C
+	for(var/obj/item/stock_parts/power_store/cell in assoc_to_values(target.get_all_cells()))
+		if(cell.charge < cell.maxcharge)
+			batteries += cell
 	if(batteries.len)
 		var/obj/item/stock_parts/power_store/ToCharge = pick(batteries)
 		ToCharge.charge = ToCharge.maxcharge

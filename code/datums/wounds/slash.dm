@@ -34,8 +34,6 @@
 	name = "Slashing (Cut) Flesh Wound"
 	threshold_penalty = 5
 	processes = TRUE
-	treatable_by = list(/obj/item/stack/medical/suture)
-	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tools = list(TOOL_CAUTERY)
 	base_treat_time = 3 SECONDS
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
@@ -68,7 +66,7 @@
 			old_wound.clear_highest_scar()
 	else
 		set_blood_flow(initial_flow)
-		if(limb.can_bleed() && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+		if(limb.can_bleed() && attack_direction && victim.get_blood_volume() > BLOOD_VOLUME_OKAY)
 			victim.spray_blood(attack_direction, severity)
 
 	if(!highest_scar)
@@ -166,17 +164,18 @@
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
-/datum/wound/slash/flesh/check_grab_treatments(obj/item/I, mob/user)
-	if(istype(I, /obj/item/gun/energy/laser))
+/datum/wound/slash/flesh/check_grab_treatments(obj/item/tool, mob/user)
+	if(istype(tool, /obj/item/gun/energy/laser))
 		return TRUE
-	if(I.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
+	if(tool.get_temperature()) // if we're using something hot but not a cautery, we need to be aggro grabbing them first, so we don't try treating someone we're eswording
 		return TRUE
+	return FALSE
 
-/datum/wound/slash/flesh/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/gun/energy/laser))
-		return las_cauterize(I, user)
-	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature())
-		return tool_cauterize(I, user)
+/datum/wound/slash/flesh/treat(obj/item/tool, mob/user)
+	if(istype(tool, /obj/item/gun/energy/laser))
+		las_cauterize(tool, user)
+	else if(tool.tool_behaviour == TOOL_CAUTERY || tool.get_temperature())
+		tool_cauterize(tool, user)
 
 /datum/wound/slash/flesh/try_handling(mob/living/user)
 	if(user.pulling != victim || !HAS_TRAIT(user, TRAIT_WOUND_LICKER) || !victim.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
@@ -253,9 +252,8 @@
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")
-	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
 	victim.visible_message(span_warning("The cuts on [victim]'s [limb.plaintext_zone] scar over!"))
-	return TRUE
+	adjust_blood_flow(-1 * (damage / (5 * self_penalty_mult))) // 20 / 5 = 4 bloodflow removed, p good
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
 /datum/wound/slash/flesh/proc/tool_cauterize(obj/item/I, mob/user)
@@ -287,11 +285,10 @@
 	adjust_blood_flow(-blood_cauterized)
 
 	if(blood_flow > minimum_flow)
-		return try_treating(I, user)
+		try_treating(I, user)
+
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim_stored ? "your" : "[victim_stored]'s"] cuts."))
-		return TRUE
-	return FALSE
 
 /datum/wound/slash/get_limb_examine_description()
 	return span_warning("The flesh on this limb appears badly lacerated.")

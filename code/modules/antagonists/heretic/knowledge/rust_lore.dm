@@ -111,13 +111,6 @@
 	cost = 2
 	is_final_knowledge = TRUE
 
-/datum/heretic_knowledge/mark/rust_mark
-	name = "Mark of Rust"
-	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
-		When triggered, your victim will suffer heavy disgust and confusion. \
-		Allows you to rust reinforced walls and floors as well as plasteel."
-	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-
 /datum/heretic_knowledge/spell/rust_construction
 	name = "Rust Construction"
 	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
@@ -314,7 +307,8 @@
 	need_mob_update += source.adjustToxLoss(-base_heal_amt, updating_health = FALSE, forced = TRUE)
 	need_mob_update += source.adjustOxyLoss(-base_heal_amt, updating_health = FALSE)
 	need_mob_update += source.adjustStaminaLoss(-base_heal_amt * 4, updating_stamina = FALSE)
-	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
-		source.blood_volume += base_heal_amt
+
+	source.adjust_blood_volume(base_heal_amt, maximum = BLOOD_VOLUME_NORMAL)
+
 	if(need_mob_update)
 		source.updatehealth()

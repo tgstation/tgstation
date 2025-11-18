@@ -98,8 +98,7 @@
 	if(!core)
 		return
 
-	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
-		owner.blood_volume += 5 * seconds_per_tick
+	owner.adjust_blood_volume(5 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
@@ -108,7 +107,7 @@
 		return
 
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_cells())
+	for(var/obj/item/stock_parts/power_store/cell in assoc_to_values(owner.get_all_cells()))
 		if(cell.used_charge())
 			batteries += cell
 

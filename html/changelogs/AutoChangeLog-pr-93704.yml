@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - refactor: "AI-monitored areas (armory, EVA, AI upload/satellite/chamber) have been refactored internally. Please make an issue report if things relating to them start behaving strangely."

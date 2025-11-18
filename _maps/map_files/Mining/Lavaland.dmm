@@ -655,10 +655,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"eb" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/lavaland/surface/outdoors)
 "ee" = (
 /obj/machinery/shower/directional/south,
 /obj/machinery/door/window/right/directional/south,
@@ -4575,9 +4571,6 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
-"ze" = (
-/turf/closed/mineral/random/high_chance,
-/area/lavaland/surface/outdoors)
 "zf" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -5129,7 +5122,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/lavaland/surface/outdoors)
+/area/mine/production)
 "Dd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44724,8 +44717,8 @@ aj
 aj
 aj
 aj
-ze
-ze
+ad
+ad
 pU
 aj
 aj
@@ -44982,7 +44975,7 @@ aj
 aj
 pU
 pU
-ze
+ad
 pU
 aj
 aj
@@ -47296,7 +47289,7 @@ pU
 pU
 ai
 BP
-ze
+ad
 pU
 pU
 aj
@@ -47551,8 +47544,8 @@ aj
 aj
 pU
 ai
-ze
-ze
+ad
+ad
 ai
 aj
 aj
@@ -47808,8 +47801,8 @@ aj
 aj
 pU
 BP
-ze
-ze
+ad
+ad
 pU
 aj
 aj
@@ -48044,10 +48037,10 @@ Ra
 oh
 pK
 NU
-eb
+Le
 Db
-eb
-FH
+Le
+NU
 BP
 BP
 BP
@@ -50119,8 +50112,8 @@ pU
 pU
 pU
 ai
-ze
-ze
+ad
+ad
 pU
 pU
 pU
@@ -50375,8 +50368,8 @@ pU
 pU
 pU
 ai
-ze
-ze
+ad
+ad
 BP
 pU
 pU
@@ -50887,7 +50880,7 @@ pU
 pU
 pU
 ai
-ze
+ad
 ai
 ai
 lP
