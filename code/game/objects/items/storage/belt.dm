@@ -588,7 +588,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
-	var/mob/living/eyed_fool
+	var/datum/weakref/eyed_fool
 	COOLDOWN_DECLARE(counter_attempt_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
@@ -598,7 +598,8 @@
 /obj/item/storage/belt/sheath/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
+		. += span_notice("Alt-click it to quickly draw the blade.\
+		You can also attempt to countterattack with the blade by dragging it onto an attacker in combat mode.")
 
 /obj/item/storage/belt/sheath/click_alt(mob/user)
 	if(!length(contents))
@@ -626,44 +627,49 @@
 		update_appearance()
 
 /obj/item/storage/belt/sheath/mouse_drop_dragged(mob/living/over, mob/living/user, src_location, over_location, params)
-	if(!over)
+	if(!isliving(over))
 		return
 	if(!length(contents))
 		return
 	if(!user.combat_mode)
 		return
-	if(src.loc != user)
+	if(loc != user)
 		return
 	if(user.get_item_for_held_index(user.active_hand_index))
 		return
 	if(!COOLDOWN_FINISHED(src, counter_attempt_cooldown))
 		balloon_alert(user, "just tried that!")
 		return
-	RegisterSignal(user, COMSIG_ATOM_ATTACKBY, PROC_REF(counter_attack))
+	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	user.Immobilize(0.5 SECONDS)
-	eyed_fool = over
+	eyed_fool = WEAKREF(over)
 	user.visible_message(span_danger("[user] widens [p_their(user)] stance, [p_their(user)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [over]!"))
 	addtimer(CALLBACK(src, PROC_REF(relax), user), 0.5 SECONDS)
 
-/obj/item/storage/belt/sheath/proc/counter_attack(mob/living/forward_thinker, atom/movable/weapon, mob/living/fool)
+/obj/item/storage/belt/sheath/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing)
 	SIGNAL_HANDLER
 	var/obj/item/justicetool = contents[1]
-	if(loc != forward_thinker || !length(contents) || fool != eyed_fool || !forward_thinker.put_in_active_hand(justicetool))
-		return
+	var/mob/living/fool = isliving(attackingthing) ? attackingthing : attackingthing.loc
+	if(loc != forward_thinker || !length(contents) || fool != eyed_fool.resolve() || !forward_thinker.put_in_active_hand(justicetool))
+		return FAILED_BLOCK
+	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	fool.apply_damage(
-		damage = justicetool.force * 3,
+		damage = justicetool.force * 4,
 		damagetype = justicetool.damtype,
-		def_zone = fool.get_active_hand(),
-		wound_bonus = justicetool.wound_bonus * 3,
-		exposed_wound_bonus = justicetool.exposed_wound_bonus * 3,
+		def_zone = offending_hand,
+		blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
+		wound_bonus = justicetool.wound_bonus * 4,
+		exposed_wound_bonus = justicetool.exposed_wound_bonus * 4,
+		sharpness = justicetool.sharpness,
+		attack_direction = get_dir(forward_thinker, fool),
 		attacking_item = justicetool,
 	)
 	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
 	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return SUCCESSFUL_BLOCK
 
 /obj/item/storage/belt/sheath/proc/relax(mob/living/holder)
-	UnregisterSignal(holder, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
 	COOLDOWN_START(src, counter_attempt_cooldown, 5 SECONDS)
 
 
