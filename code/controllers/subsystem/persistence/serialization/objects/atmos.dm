@@ -92,64 +92,6 @@
 	. += NAMEOF(src, welded)
 	return .
 
-// REMEMBER
-// lots of scrubbers/vents/pipe shit does not have layers 1 & 5 so plz test to make sure it works
-/*
-/obj/machinery/atmospherics/components/unary/substitute_with_typepath(map_string)
-	var/base_type
-	if(istype(src, /obj/machinery/atmospherics/components/unary/vent_scrubber))
-		base_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
-	else if(istype(src, /obj/machinery/atmospherics/components/unary/vent_pump/high_volume))
-		base_type = /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
-	else if(istype(src, /obj/machinery/atmospherics/components/unary/vent_pump))
-		base_type = /obj/machinery/atmospherics/components/unary/vent_pump
-	else
-		return FALSE
-
-	var/cache_key = "[base_type]-[on]-[piping_layer]"
-	var/cached_typepath = GLOB.map_export_typepath_cache[cache_key]
-	if(!isnull(cached_typepath))
-		var/obj/machinery/atmospherics/components/unary/typepath = cached_typepath
-		var/list/variables = list()
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, dir, dir)
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, welded, welded)
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, pump_direction, pump_direction)
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, pressure_checks, pressure_checks)
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, internal_pressure_bound, internal_pressure_bound)
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, external_pressure_bound, external_pressure_bound)
-		TGM_ADD_TYPEPATH_VAR(variables, typepath, fan_overclocked, fan_overclocked)
-
-
-		TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
-		return TRUE //cached_typepath
-
-	var/on_path = on ? "/on" : ""
-
-	var/layer_path = ""
-	switch(piping_layer)
-		if(1)
-			layer_path = "/layer1"
-		if(2)
-			layer_path = "/layer2"
-		if(3)
-			layer_path = ""
-		if(4)
-			layer_path = "/layer4"
-		if(5)
-			layer_path = "/layer5"
-
-	var/full_path = "[base_type][on_path][layer_path]"
-	var/typepath = text2path(full_path)
-
-	if(ispath(typepath))
-		GLOB.map_export_typepath_cache[cache_key] = typepath
-		return typepath
-
-	GLOB.map_export_typepath_cache[cache_key] = FALSE
-	stack_trace("Failed to convert vent scrubber to typepath: [full_path]")
-	return FALSE
-*/
-
 /obj/machinery/atmospherics/components/unary/vent_pump/substitute_with_typepath(map_string)
 	var/base_type
 	if(istype(src, /obj/machinery/atmospherics/components/unary/vent_pump/high_volume))
