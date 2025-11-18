@@ -641,10 +641,12 @@
 		balloon_alert(user, "just tried that!")
 		return
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
-	user.Immobilize(0.5 SECONDS)
+	user.Immobilize(1 SECONDS)
 	eyed_fool = WEAKREF(over)
 	user.visible_message(span_danger("[user] widens [p_their(user)] stance, [p_their(user)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [over]!"))
-	addtimer(CALLBACK(src, PROC_REF(relax), user), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(relax), user), 1 SECONDS)
+
+#define COUNTERMULTIPLIER 3
 
 /obj/item/storage/belt/sheath/proc/counter_attack(mob/living/forward_thinker, atom/attackingthing)
 	SIGNAL_HANDLER
@@ -654,12 +656,12 @@
 		return FAILED_BLOCK
 	var/obj/item/bodypart/offending_hand = fool.get_active_hand()
 	fool.apply_damage(
-		damage = justicetool.force * 4,
+		damage = justicetool.force * COUNTERMULTIPLIER,
 		damagetype = justicetool.damtype,
 		def_zone = offending_hand,
 		blocked = fool.run_armor_check(offending_hand, MELEE, armour_penetration = justicetool.armour_penetration, silent = TRUE),
-		wound_bonus = justicetool.wound_bonus * 4,
-		exposed_wound_bonus = justicetool.exposed_wound_bonus * 4,
+		wound_bonus = justicetool.wound_bonus * COUNTERMULTIPLIER,
+		exposed_wound_bonus = justicetool.exposed_wound_bonus * COUNTERMULTIPLIER,
 		sharpness = justicetool.sharpness,
 		attack_direction = get_dir(forward_thinker, fool),
 		attacking_item = justicetool,
@@ -667,6 +669,8 @@
 	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
 	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
 	return SUCCESSFUL_BLOCK
+
+#undef COUNTERMULTIPLIER
 
 /obj/item/storage/belt/sheath/proc/relax(mob/living/holder)
 	UnregisterSignal(holder, COMSIG_LIVING_CHECK_BLOCK)
