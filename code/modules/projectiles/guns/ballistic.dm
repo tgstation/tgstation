@@ -286,7 +286,7 @@
 	burst_fire_selection = !burst_fire_selection
 	if(!burst_fire_selection)
 		burst_size = 1
-		fire_delay = 0
+		fire_delay = 0 SECONDS
 		balloon_alert(user, "switched to semi-automatic")
 	else
 		burst_size = initial(burst_size)
