@@ -84,7 +84,7 @@
 	. = ..()
 
 	// Space-only stun immunity toggle
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_space_stun_immunity))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/check_space_stun_immunity)
 	check_space_stun_immunity() // initial check in case it spawns in space
 
 	AddElement(/datum/element/simple_flying)
