@@ -83,6 +83,10 @@
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
 
+	// Space-only stun immunity toggle
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_space_stun_immunity))
+	check_space_stun_immunity() // initial check in case it spawns in space
+
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
 
@@ -346,5 +350,18 @@
 			balloon_alert(src, "too strong!")
 		return FALSE
 	return TRUE
+
+/// Space-only stun + knockdown immunity
+/mob/living/basic/voidwalker/proc/check_space_stun_immunity()
+	SIGNAL_HANDLER
+
+	if(istype(get_turf(src), home_turf))
+		if(!HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+			AddTrait(TRAIT_STUNIMMUNE, TRAIT_VOIDWALKER_SPACE)
+			AddTrait(TRAIT_NOKNOCKDOWN, TRAIT_VOIDWALKER_SPACE)
+	else
+		if(HAS_TRAIT(src, TRAIT_STUNIMMUNE))
+			RemoveTrait(TRAIT_STUNIMMUNE, TRAIT_VOIDWALKER_SPACE)
+			RemoveTrait(TRAIT_NOKNOCKDOWN, TRAIT_VOIDWALKER_SPACE)
 
 #undef WALL_CONVERT_STRENGTH
