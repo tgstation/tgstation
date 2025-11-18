@@ -12425,6 +12425,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/navigate_destination/incinerator,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/upper)
 "drk" = (
@@ -20446,7 +20447,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/effect/landmark/navigate_destination/atmos,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/main)
 "fBB" = (
@@ -22674,7 +22674,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/navigate_destination/tools,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
@@ -29757,6 +29756,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "hYa" = (
@@ -30221,13 +30221,13 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/effect/landmark/navigate_destination/minisat_access_ai,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "transitlockdown"
 	},
+/obj/effect/landmark/navigate_destination/minisat_access_tcomms_ai,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "ift" = (
@@ -45678,6 +45678,21 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/station/maintenance/starboard/upper)
+"mnC" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Holodeck Door"
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "holodeck"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/commons/fitness/recreation)
 "mnE" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -55382,6 +55397,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "atmosengimainttriangle"
 	},
+/obj/effect/landmark/navigate_destination/atmos,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/engineering/atmos)
 "oVz" = (
@@ -71756,7 +71772,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/effect/landmark/navigate_destination/minisat_access_tcomms,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
@@ -125446,7 +125461,7 @@ ixf
 oOz
 ixf
 ixf
-dtu
+mnC
 ixf
 ixf
 ixf
