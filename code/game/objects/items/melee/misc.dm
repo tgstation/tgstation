@@ -43,7 +43,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
-	force = 25
+	force = 24
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
