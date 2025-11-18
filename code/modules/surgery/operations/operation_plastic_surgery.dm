@@ -7,6 +7,7 @@
 		TOOL_SCALPEL = 1,
 		/obj/item/knife = 2,
 		TOOL_WIRECUTTER = 2.85,
+		/obj/item/pen = 5,
 	)
 	time = 6.4 SECONDS
 	operation_flags = OPERATION_MORBID | OPERATION_AFFECTS_MOOD | OPERATION_NOTABLE

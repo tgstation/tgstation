@@ -9,6 +9,7 @@
 		/obj/item/melee/energy/sword = 1.33,
 		/obj/item/knife = 1.5,
 		/obj/item/shard = 2.25,
+		/obj/item/pen = 5,
 		/obj/item = 3.33,
 	)
 	time = 1.6 SECONDS

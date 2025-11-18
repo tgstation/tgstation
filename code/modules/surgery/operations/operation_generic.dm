@@ -11,6 +11,7 @@
 		/obj/item/melee/energy/sword = 1.33,
 		/obj/item/knife = 1.5,
 		/obj/item/shard = 2.25,
+		/obj/item/pen = 5,
 		/obj/item = 3.33,
 	)
 	time = 1.6 SECONDS
@@ -417,6 +418,7 @@
 		/obj/item/melee/energy/sword = 1.33,
 		/obj/item/knife = 1.5,
 		/obj/item/shard = 2.25,
+		/obj/item/pen = 5,
 		/obj/item = 3.33,
 	)
 	time = 2.4 SECONDS
@@ -424,18 +426,6 @@
 	success_sound = 'sound/items/handling/surgery/organ1.ogg'
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_ORGANS_CUT
-
-/datum/surgery_operation/limb/incise_organs/state_check(obj/item/bodypart/limb)
-	if(limb.body_zone != BODY_ZONE_CHEST)
-		return TRUE
-	if(!LIMB_HAS_BONES(limb))
-		return TRUE
-	if(LIMB_HAS_SURGERY_STATE(limb, SURGERY_BONE_SAWED))
-		return TRUE
-	return FALSE
-
-/datum/surgery_operation/limb/incise_organs/all_required_strings()
-	return ..() + list("if operating on the chest, the bone must be sawed")
 
 /datum/surgery_operation/limb/incise_organs/get_default_radial_image()
 	return image(/obj/item/scalpel)
