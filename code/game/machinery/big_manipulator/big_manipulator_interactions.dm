@@ -254,14 +254,6 @@
 	elapsed_time += BASE_INTERACTION_TIME / speed_multiplier
 	addtimer(CALLBACK(src, PROC_REF(do_step_rotation), target_point, callback, next_angle, target_angle, rotation_step, elapsed_time, total_time), BASE_INTERACTION_TIME / speed_multiplier)
 
-/*
-  ___         _   _           _   _            ___     _     _
- |   \ ___ __| |_(_)_ _  __ _| |_(_)___ _ _   | _ \___(_)_ _| |_ ___
- | |) / -_|_-<  _| | ' \/ _` |  _| / _ \ ' \  |  _/ _ \ | ' \  _(_-<
- |___/\___/__/\__|_|_||_\__,_|\__|_\___/_||_| |_| \___/_|_||_\__/__/
-
-*/
-
 /// Moves the item onto the turf.
 ///
 /// If the turf has an atom with fitting `atom_storage` that corresponds to the
