@@ -41,6 +41,10 @@ SUBSYSTEM_DEF(wardrobe)
 	var/stock_hit = 0
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
+	/// Item types that should not ever be restocked, only generated (like modsuits)
+	var/static/list/restock_blacklist = typecacheof(list(
+		/obj/item/mod/control/pre_equipped,
+	))
 
 /datum/controller/subsystem/wardrobe/Initialize()
 	setup_callbacks()

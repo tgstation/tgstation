@@ -47,10 +47,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/delete_equipment()
 	var/list/items_to_check = get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT)
 	var/list/to_nuke = list() //List of items queued for deletion, can't qdel them before iterating their contents in case they hold something
+	var/list/restock_blacklist = SSwardrobe.restock_blacklist
 	///Travel to the bottom of the contents chain, expanding it out
 	for(var/i = 1; i <= length(items_to_check); i++) //Needs to be a c style loop since it can expand
 		var/obj/item/checking = items_to_check[i]
 		if(QDELETED(checking)) //Nulls in the list, depressing
+			continue
+		if(is_type_in_typecache(checking, restock_blacklist))
+			to_nuke += checking
 			continue
 		if(!isitem(checking)) //What the fuck are you on
 			to_nuke += checking
