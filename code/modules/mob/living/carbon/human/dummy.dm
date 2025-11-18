@@ -33,28 +33,24 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/organ/current_organ = get_organ_slot(slot) //Time to cache it lads
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
-			SSwardrobe.stash_object(current_organ)
+			SSwardrobe.stash_object(current_organ, restocking = TRUE)
 
 	var/datum/species/current_species = dna.species
 	for(var/organ_path in current_species.mutant_organs)
 		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
-			SSwardrobe.stash_object(current_organ)
+			SSwardrobe.stash_object(current_organ, restocking = TRUE)
 
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
 /mob/living/carbon/human/dummy/delete_equipment()
 	var/list/items_to_check = get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT)
 	var/list/to_nuke = list() //List of items queued for deletion, can't qdel them before iterating their contents in case they hold something
-	var/list/restock_blacklist = SSwardrobe.restock_blacklist
 	///Travel to the bottom of the contents chain, expanding it out
 	for(var/i = 1; i <= length(items_to_check); i++) //Needs to be a c style loop since it can expand
 		var/obj/item/checking = items_to_check[i]
 		if(QDELETED(checking)) //Nulls in the list, depressing
-			continue
-		if(is_type_in_typecache(checking, restock_blacklist))
-			to_nuke += checking
 			continue
 		if(!isitem(checking)) //What the fuck are you on
 			to_nuke += checking
@@ -70,7 +66,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(ismob(checking.loc))
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
-		SSwardrobe.stash_object(checking)
+		SSwardrobe.stash_object(checking, restocking = TRUE)
 
 	for(var/obj/item/delete as anything in to_nuke)
 		qdel(delete)
