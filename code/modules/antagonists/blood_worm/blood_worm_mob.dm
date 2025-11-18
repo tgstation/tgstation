@@ -302,6 +302,9 @@
 
 	forceMove(host)
 
+	if (host.stat != DEAD)
+		possess_host()
+
 /mob/living/basic/blood_worm/proc/leave_host()
 	if (!host)
 		return

@@ -108,13 +108,26 @@
 	max_antag_cap = list("denominator" = 39) // +1 blood worm per 40 pop.
 	repeatable = FALSE // Yeah no.
 
-/datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
-	var/mob/living/basic/blood_worm/hatchling/worm = new
+/datum/dynamic_ruleset/roundstart/blood_worm/is_valid_candidate(mob/living/candidate, client/candidate_client)
+	if (!..())
+		return FALSE
 
-	worm.enter_host(candidate.current, silent = TRUE, gain_progress = FALSE)
+	var/species_type = candidate_client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+
+	return !(TRAIT_NOBLOOD in species.inherent_traits)
+
+/datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
+	if (!CAN_HAVE_BLOOD(candidate.current))
+		CRASH("A roundstart blood worm tried to spawn into a candidate mob with no blood. This shouldn't happen, because we already checked for TRAIT_NOBLOOD in species traits.")
+
+	var/mob/living/basic/blood_worm/hatchling/worm = new
+	var/mob/living/carbon/human/host = candidate.current
 
 	candidate.transfer_to(worm)
 	candidate.add_antag_datum(/datum/antagonist/blood_worm/infestation)
+
+	worm.enter_host(host, silent = TRUE, gain_progress = FALSE)
 
 /datum/dynamic_ruleset/roundstart/heretic
 	name = "Heretics"
