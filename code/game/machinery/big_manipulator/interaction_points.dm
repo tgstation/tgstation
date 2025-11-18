@@ -33,7 +33,7 @@
 	/// What should the manipulator do when there's nothing to "USE" the held item on anymore?
 	var/use_post_interaction = POST_INTERACTION_DROP_AT_POINT
 
-/datum/interaction_point/New(turf/new_turf, list/new_filters, new_should_use_filters, new_interaction_mode, new_allowed_types, new_overflow_status)
+/datum/interaction_point/New(turf/new_turf, list/new_filters, new_should_use_filters, new_interaction_mode, new_allowed_types, new_overflow_status, manipulator_tier)
 	if(!new_turf)
 		stack_trace("New manipulator interaction point created with no valid turf references passed.")
 		qdel(src)
@@ -60,7 +60,7 @@
 	if(new_overflow_status)
 		overflow_status = new_overflow_status
 
-	interaction_priorities = fill_priority_list()
+	interaction_priorities = fill_priority_list(manipulator_tier)
 
 /// Finds the type priority of the interaction point.
 /datum/interaction_point/proc/find_type_priority()
@@ -186,8 +186,8 @@
 	return FALSE
 
 /// Fills the interaction endpoint priority list for the current interaction mode.
-/datum/interaction_point/proc/fill_priority_list()
-	var/list/priorities_to_set = new /list(4)
+/datum/interaction_point/proc/fill_priority_list(manipulator_tier)
+	var/list/priorities_to_set = new /list(5)
 
 	switch(interaction_mode)
 		if(INTERACT_DROP)
@@ -199,6 +199,9 @@
 			priorities_to_set[2] = new /datum/manipulator_priority/interact/with_structure
 			priorities_to_set[3] = new /datum/manipulator_priority/interact/with_machinery
 			priorities_to_set[4] = new /datum/manipulator_priority/interact/with_items
+
+			if(manipulator_tier == 4)
+				priorities_to_set[5] = new /datum/manipulator_priority/interact/with_vehicles
 
 	return priorities_to_set
 

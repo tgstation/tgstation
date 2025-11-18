@@ -31,3 +31,7 @@
 /datum/manipulator_priority/interact/with_items
 	name = "USE ON ITEM"
 	atom_typepath = /obj/item
+
+/datum/manipulator_priority/interact/with_vehicles
+	name = "USE ON VEHICLES"
+	atom_typepath = /obj/vehicle

@@ -120,7 +120,10 @@
 		balloon_alert(user, "[point_type] point limit reached!")
 		return FALSE
 
-	var/datum/interaction_point/new_interaction_point = new(new_turf, new_filters, new_filters_status, new_interaction_mode)
+	var/datum/stock_part/servo/locate_servo = locate() in component_parts
+	var/manipulator_tier = locate_servo ? locate_servo.tier : 1
+
+	var/datum/interaction_point/new_interaction_point = new(new_turf, new_filters, new_filters_status, new_interaction_mode, manipulator_tier)
 
 	if(QDELETED(new_interaction_point)) // if something STILL somehow went wrong
 		return FALSE
@@ -184,6 +187,12 @@
 			manipulator_arm?.set_greyscale(COLOR_PURPLE)
 
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * BASE_POWER_USAGE * manipulator_tier
+
+	for(var/datum/interaction_point/each_point in pickup_points)
+		each_point.interaction_priorities = each_point.fill_priority_list(manipulator_tier)
+
+	for(var/datum/interaction_point/each_point in dropoff_points)
+		each_point.interaction_priorities = each_point.fill_priority_list(manipulator_tier)
 
 /obj/machinery/big_manipulator/examine(mob/user)
 	. = ..()
@@ -709,7 +718,9 @@
 
 		if("cycle_dropoff_point_interaction")
 			target_point.interaction_mode = cycle_value(target_point.interaction_mode, monkey_worker ? list(INTERACT_DROP, INTERACT_THROW, INTERACT_USE) : list(INTERACT_DROP, INTERACT_THROW))
-			target_point.interaction_priorities = target_point.fill_priority_list()
+			var/datum/stock_part/servo/locate_servo = locate() in component_parts
+			var/manipulator_tier = locate_servo ? locate_servo.tier : 1
+			target_point.interaction_priorities = target_point.fill_priority_list(manipulator_tier)
 			return TRUE
 
 		if("toggle_filter_skip")

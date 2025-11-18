@@ -1,7 +1,7 @@
 // How should the manipulator interact with the point
-#define INTERACT_DROP "Drop"
-#define INTERACT_USE "Use"
-#define INTERACT_THROW "Throw"
+#define INTERACT_DROP "DROP"
+#define INTERACT_USE "USE"
+#define INTERACT_THROW "THROW"
 
 // What should be picked up from the point
 #define TAKE_ITEMS 1
@@ -31,9 +31,9 @@
 #define CURRENT_TASK_STOPPING "STOPPING"
 
 // How should the worker interact with the point
-#define WORKER_SINGLE_USE "Single Time Use"
-#define WORKER_EMPTY_USE "Empty Hand Use"
-#define WORKER_NORMAL_USE "Normal Use"
+#define WORKER_SINGLE_USE "SINGLE TIME"
+#define WORKER_EMPTY_USE "EMPTY HAND"
+#define WORKER_NORMAL_USE "NORMAL"
 
 // The tasking schedules the manipulator uses to iterate through points
 #define TASKING_ROUND_ROBIN "Round Robin" // 1 - 2 - 3 - 2 - 3
@@ -41,8 +41,8 @@
 #define TASKING_PREFER_FIRST "Prefer First" // 1 - 2 - 1 - 2 - 3 - 2 - 1 - 3 (first availiable)
 
 // Defines if this point is a pickup or a dropoff point
-#define TRANSFER_TYPE_PICKUP "Pick Up"
-#define TRANSFER_TYPE_DROPOFF "Drop Off"
+#define TRANSFER_TYPE_PICKUP "PICK UP"
+#define TRANSFER_TYPE_DROPOFF "DROP OFF"
 
 #define BASE_POWER_USAGE 0.2
 #define BASE_INTERACTION_TIME 0.3 SECONDS

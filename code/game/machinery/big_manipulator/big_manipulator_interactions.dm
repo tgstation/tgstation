@@ -173,13 +173,18 @@
 	// If we're stopping, just finish the task and shut down
 	if(IS_STOPPING)
 		complete_stopping_task()
-		return
+		return FALSE
 
 	start_task(CURRENT_TASK_INTERACTING, 0.2 SECONDS)
 
 	if(hand_is_empty)
 		use_thing_with_empty_hand(destination_point)
 		return TRUE
+
+	var/obj/actual_held_object = held_object?.resolve()
+	if(actual_held_object.loc != src)
+		handle_no_work_available()
+		return FALSE
 
 	switch(destination_point.interaction_mode)
 		if(INTERACT_DROP)
