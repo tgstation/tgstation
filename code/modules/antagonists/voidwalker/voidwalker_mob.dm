@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_SPECIAL
 	maxHealth = 150
 	health = 150
-	damage_coeff = list(BRUTE = 1, BURN = 0.66, TOX = 1, STAMINA = 1, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.66, TOX = 1, STAMINA = 0, OXY = 0)
 
 	pressure_resistance = 200
 	combat_mode = TRUE
@@ -82,8 +82,7 @@
 /mob/living/basic/voidwalker/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
 	. = ..()
-	/// Stun Immunity
-	ADD_TRAIT(src, TRAIT_STUNIMMUNE, "voidwalker")
+	status_flags &= ~CANSTUN
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
 
