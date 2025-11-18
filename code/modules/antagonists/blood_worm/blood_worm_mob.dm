@@ -225,19 +225,17 @@
 
 	SEND_SIGNAL(src, COMSIG_BLOOD_WORM_INGEST_BLOOD, blood_amount, blood_type_id, should_heal)
 
-/mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host)
-	if (!mind || !key)
-		return
+/mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host, silent = FALSE, gain_progress = TRUE)
+	if (!silent)
+		playsound(src, 'sound/effects/magic/enter_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
 
-	playsound(src, 'sound/effects/magic/enter_blood.ogg', vol = 60, vary = TRUE, ignore_walls = FALSE)
+		visible_message(
+			message = span_bolddanger("\The [src] enter[p_s()] \the [new_host]!"),
+			self_message = span_notice("You enter \the [new_host]."),
+			blind_message = span_hear("You hear a squelch.")
+		)
 
-	visible_message(
-		message = span_bolddanger("\The [src] enter[p_s()] \the [new_host]!"),
-		self_message = span_notice("You enter \the [new_host]."),
-		blind_message = span_hear("You hear a squelch.")
-	)
-
-	new /obj/effect/temp_visual/blood_worm_invade_host(get_turf(new_host), effect_name)
+		new /obj/effect/temp_visual/blood_worm_invade_host(get_turf(new_host), effect_name)
 
 	host = new_host
 
@@ -246,7 +244,7 @@
 	RegisterSignal(host, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(on_host_handle_blood))
 	RegisterSignal(host, COMSIG_LIVING_LIFE, PROC_REF(on_host_life))
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
-	RegisterSignal(host, COMSIG_LIVING_UPDATE_BLOOD_STATUS, PROC_REF(on_host_update_blood_status))
+	RegisterSignal(host, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, PROC_REF(on_host_pre_update_blood_status))
 	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
 	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
 
@@ -284,8 +282,9 @@
 
 	var/cached_blood_volume = host.get_blood_volume()
 
-	// Apply the host's blood volume to our growth.
-	ingest_blood(cached_blood_volume, host.get_bloodtype(), should_heal = FALSE)
+	if (gain_progress)
+		// Apply the host's blood volume to our growth.
+		ingest_blood(cached_blood_volume, host.get_bloodtype(), should_heal = FALSE)
 
 	// Combine our health with the blood of our host.
 	host.set_blood_volume(cached_blood_volume + health * BLOOD_WORM_HEALTH_TO_BLOOD)
@@ -341,7 +340,7 @@
 		COMSIG_HUMAN_ON_HANDLE_BLOOD,
 		COMSIG_LIVING_LIFE,
 		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
-		COMSIG_LIVING_UPDATE_BLOOD_STATUS,
+		COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS,
 		COMSIG_MOB_GET_STATUS_TAB_ITEMS,
 		COMSIG_MOB_EXAMINING,
 		COMSIG_MOB_HUD_CREATED,
@@ -444,7 +443,7 @@
 	SIGNAL_HANDLER
 	return COMPONENT_IGNORE_CHANGE // Functionally, this unimplements oxy damage from hosts altogether. Which is exactly what we want.
 
-/mob/living/basic/blood_worm/proc/on_host_update_blood_status(datum/source, had_blood, has_blood, old_blood_volume, new_blood_volume)
+/mob/living/basic/blood_worm/proc/on_host_pre_update_blood_status(datum/source, had_blood, has_blood, old_blood_volume)
 	SIGNAL_HANDLER
 	if (!has_blood)
 		leave_host()

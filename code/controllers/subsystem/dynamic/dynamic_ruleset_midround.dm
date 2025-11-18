@@ -459,21 +459,16 @@
 	candidate.current.move_into_vent(vent)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms
-	name = "Blood Worm"
-	config_tag = "Blood Worm"
-	preview_antag_datum = /datum/antagonist/blood_worm
+	name = "Blood Worm Infestation"
+	config_tag = "Midround Blood Worm"
+	preview_antag_datum = /datum/antagonist/blood_worm/infestation
 	// Please set this to HEAVY_MIDROUND once dynamic has fine-grained handling for spawn times and doesn't restrict all heavy midrounds to spawning after 40 minutes.
 	// Blood worms are intended to spawn 10-30 minutes into a round. This is a band-aid fix, and the better of two evils. (wrong threat tier vs wrong round timing)
 	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
-	pref_flag = ROLE_BLOOD_WORM
+	pref_flag = ROLE_BLOOD_WORM_INFESTATION
 	ruleset_flags = RULESET_INVADER
-	weight = list(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 2,
-		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 4,
-	)
+	weight = 2 // For reference, Nightmare has a weight of 5.
 	min_pop = 20 // Blood worms are limited by resources, so low pop means they have a harder time getting their tail in the door.
 	min_antag_cap = 1
 	max_antag_cap = 2

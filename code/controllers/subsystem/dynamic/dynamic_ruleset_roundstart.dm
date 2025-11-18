@@ -98,6 +98,24 @@
 /datum/dynamic_ruleset/roundstart/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
 
+/datum/dynamic_ruleset/roundstart/blood_worm
+	name = "Blood Worms"
+	config_tag = "Roundstart Blood Worm"
+	preview_antag_datum = /datum/antagonist/blood_worm
+	pref_flag = ROLE_BLOOD_WORM
+	weight = 1
+	min_pop = 20 // Resource limited, spawning on lowpop is fine.
+	max_antag_cap = list("denominator" = 39) // +1 blood worm per 40 pop.
+	repeatable = FALSE // Yeah no.
+
+/datum/dynamic_ruleset/roundstart/blood_worm/assign_role(datum/mind/candidate)
+	var/mob/living/basic/blood_worm/hatchling/worm = new
+
+	worm.enter_host(candidate.current, silent = TRUE, gain_progress = FALSE)
+
+	candidate.transfer_to(worm)
+	candidate.add_antag_datum(/datum/antagonist/blood_worm/infestation)
+
 /datum/dynamic_ruleset/roundstart/heretic
 	name = "Heretics"
 	config_tag = "Roundstart Heretics"

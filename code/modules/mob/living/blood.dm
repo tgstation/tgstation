@@ -97,10 +97,7 @@
 /// Updates effects that rely on whether the mob can have blood.
 /mob/living/proc/update_blood_status()
 	var/had_blood = CAN_HAVE_BLOOD(src)
-
-	living_flags = can_have_blood() ? (living_flags | LIVING_CAN_HAVE_BLOOD) : (living_flags & ~LIVING_CAN_HAVE_BLOOD)
-
-	var/has_blood = CAN_HAVE_BLOOD(src)
+	var/has_blood = can_have_blood()
 
 	// Must not return early on first init for mobs that can have blood. (otherwise they will miss being added to the blood hud)
 	if (had_blood == has_blood)
@@ -108,10 +105,16 @@
 
 	var/old_blood_volume = get_blood_volume()
 
+	// Must be sent before living flags are updated.
+	SEND_SIGNAL(src, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume)
+
+	living_flags = has_blood ? (living_flags | LIVING_CAN_HAVE_BLOOD) : (living_flags & ~LIVING_CAN_HAVE_BLOOD)
+
 	set_blood_volume(has_blood ? default_blood_volume : 0)
 
 	var/new_blood_volume = get_blood_volume()
 
+	// Must be sent after living flags are updated.
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_BLOOD_STATUS, had_blood, has_blood, old_blood_volume, new_blood_volume)
 
 	var/datum/atom_hud/data/human/blood/blood_hud = GLOB.huds[DATA_HUD_BLOOD]

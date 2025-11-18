@@ -6,7 +6,7 @@
 	antag_hud_name = "blood_worm"
 	antag_moodlet = /datum/mood_event/blood_worm
 	hijack_speed = 0.5
-	show_to_ghosts = TRUE
+	show_to_ghosts = TRUE // I mean let's be honest, even the roundstart versions will become painfully apparent soon enough.
 	stinger_sound = 'sound/effects/magic/exit_blood.ogg'
 	ui_name = "AntagInfoBloodWorm"
 
@@ -47,7 +47,6 @@
 
 /datum/antagonist/blood_worm/on_gain()
 	forge_objectives()
-	owner.set_assigned_role(SSjob.get_job_type(/datum/job/blood_worm))
 	ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src)) // No blood cultist worms or whatever the fuck
 	return ..()
 
@@ -96,3 +95,6 @@
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
+
+/datum/antagonist/blood_worm/infestation
+	pref_flag = ROLE_BLOOD_WORM_INFESTATION

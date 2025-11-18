@@ -1,8 +1,8 @@
 import { type Antagonist, Category } from '../base';
 
-const BloodWorm: Antagonist = {
-  key: 'bloodworm',
-  name: 'Blood Worm',
+const BloodWormInfestation: Antagonist = {
+  key: 'bloodworminfestation',
+  name: 'Blood Worm Infestation',
   description: [
     `
       Become a giant, parasitic blood worm. Start as a hatchling, take hosts,
@@ -12,4 +12,4 @@ const BloodWorm: Antagonist = {
   category: Category.Midround,
 };
 
-export default BloodWorm;
+export default BloodWormInfestation;
