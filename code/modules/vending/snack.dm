@@ -31,7 +31,7 @@
 		/obj/item/food/shok_roks/random = 3,
 	)
 	contraband = list(
-		/obj/item/food/syndicake = 6,
+		/obj/item/storage/fancy/syndi_cakes_box = 3,
 		/obj/item/food/peanuts/ban_appeal = 3,
 		/obj/item/food/candy/bronx = 1,
 	)

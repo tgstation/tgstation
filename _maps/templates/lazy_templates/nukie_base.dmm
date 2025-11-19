@@ -403,7 +403,7 @@
 /area/centcom/syndicate_mothership/control)
 "er" = (
 /obj/structure/table/wood,
-/obj/item/food/syndicake{
+/obj/item/storage/fancy/syndi_cakes_box{
 	pixel_y = 3
 	},
 /turf/open/floor/wood/tile,
@@ -763,11 +763,11 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/item/storage/fancy/donut_box,
 /obj/structure/rack,
-/obj/item/food/syndicake{
+/obj/item/storage/fancy/syndi_cakes_box{
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/item/food/syndicake{
+/obj/item/storage/fancy/syndi_cakes_box{
 	pixel_x = 1;
 	pixel_y = 1
 	},

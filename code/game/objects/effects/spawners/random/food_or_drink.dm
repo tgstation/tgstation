@@ -265,7 +265,7 @@
 		/obj/item/food/peanuts/random = 3,
 		/obj/item/food/cnds/random = 3,
 		/obj/item/storage/box/gum = 3,
-		/obj/item/food/syndicake = 1,
+		/obj/item/storage/fancy/syndi_cakes_box = 1,
 		/obj/item/food/peanuts/ban_appeal = 1,
 		/obj/item/food/pistachios = 1,
 		/obj/item/food/candy/bronx = 1

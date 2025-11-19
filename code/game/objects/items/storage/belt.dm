@@ -381,7 +381,7 @@
 			/obj/item/food/sosjerky,
 			/obj/item/food/spacetwinkie,
 			/obj/item/food/spaghetti/pastatomato,
-			/obj/item/food/syndicake,
+			/obj/item/storage/fancy/syndi_cakes_box,
 			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola,
 			/obj/item/reagent_containers/cup/glass/dry_ramen,
 			/obj/item/reagent_containers/cup/soda_cans/cola,

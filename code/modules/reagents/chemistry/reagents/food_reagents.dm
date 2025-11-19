@@ -1277,3 +1277,28 @@
 	color = "#efeff0"
 	taste_description = "metallic salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/syndie_syrup
+	name = "Syndie Syrup"
+	description = "The deliciously subversive syrup found in all Lil Syndie's Snack Cakes. The recipe is a famously well kept secret."
+	color = "#8b0000"
+	taste_description = "raspberry syrup" //the recipe is very obvious and VERY delicious
+
+/datum/reagent/consumable/syndie_syrup/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if ((affected_mob?.mind?.has_antag_datum(/datum/antagonist/traitor)) || (affected_mob?.mind?.has_antag_datum(/datum/antagonist/nukeop)))
+		var/need_mob_update ///yum popaganda
+		need_mob_update = affected_mob.adjustBruteLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustToxLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustOxyLoss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		if(need_mob_update)
+			return UPDATE_MOB_HEALTH
+	else
+		var/need_mob_update //ideally so people dont use this to antag check
+		need_mob_update = affected_mob.adjustBruteLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustFireLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjustToxLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjustOxyLoss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		if(need_mob_update)
+			return UPDATE_MOB_HEALTH

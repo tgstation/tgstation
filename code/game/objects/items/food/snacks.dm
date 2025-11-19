@@ -192,18 +192,49 @@
 	foodtypes = JUNKFOOD | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/syndicake
-	name = "\improper Syndi-Cakes"
-	icon_state = "syndi_cakes"
+/obj/item/food/syndi_cake
+	name = "\improper Syndi-Cake"
+	icon_state = "syndi_cake_wrapped"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
-	trash_type = /obj/item/trash/syndi_cakes
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
-		/datum/reagent/consumable/doctor_delight = 5,
+		/datum/reagent/consumable/syndie_syrup = 5, //this reagent taste will be "strong", so the below tastes are rarer.
 	)
-	tastes = list("sweetness" = 3, "cake" = 1)
-	foodtypes = GRAIN | FRUIT | VEGETABLES
+	tastes = list("sweet cake" = 5, "subversion" = 1)
+	foodtypes = GRAIN | SUGAR | JUNKFOOD
 	w_class = WEIGHT_CLASS_SMALL
+	var/wrapped = TRUE ///Does the cake have its wrapper on
+
+/obj/item/food/syndi_cake/Initialize(mapload)
+	. = ..()
+
+/obj/item/food/syndi_cake/update_icon_state()
+	if(!wrapped)
+		icon_state = "syndi_cake"
+	return ..()
+
+
+/obj/item/food/syndi_cake/attack_self(mob/user)
+	if(wrapped)
+		balloon_alert(user, "unwrapping...")
+		if(!do_after(user, 2 SECONDS, target = src))
+			balloon_alert(user, "interrupted!")
+			return
+		if(prob(20))
+			balloon_alert(user, "your hand slips!")
+			return
+
+		wrapped = FALSE
+		update_appearance()
+		playsound(src, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
+		new /obj/item/trash/candy(get_turf(src))
+		return
+	return ..()
+
+/obj/item/food/syndi_cake/proc/on_consume(mob/living/eater)
+	if(wrapped)
+		balloon_alert(eater, "open it first!")
+	return FALSE
 
 /obj/item/food/energybar
 	name = "\improper High-power energy bars"
