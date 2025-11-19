@@ -7610,7 +7610,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
+/obj/effect/mapping_helpers/airlock/access/all/admin/officer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Kg" = (
