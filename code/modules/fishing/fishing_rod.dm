@@ -150,7 +150,7 @@
 
 	var/list/block = list()
 	var/get_percent = HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH)
-	block += span_info("You think you can cast it up to [get_cast_range()] meters away.")
+	block += span_info("You think you can cast it up to [get_cast_range()] [METERS_TOOLTIP] away.")
 	block += get_stat_info(get_percent, difficulty_modifier * 0.01, "Fishing will be", "easier", "harder", "with this fishing rod", offset = 0)
 	block += get_stat_info(get_percent, experience_multiplier, "You will gain experience", "faster", "slower")
 	block += get_stat_info(get_percent, completion_speed_mult, "You should complete the minigame", "faster", "slower")
