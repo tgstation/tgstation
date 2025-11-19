@@ -46,3 +46,16 @@
 	. = ..()
 	. += NAMEOF(src, loaded)
 	return .
+
+/obj/item/lazarus_injector/PersistentInitialize()
+	. = ..()
+	update_appearance()
+
+/obj/item/reagent_containers/hypospray/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, used_up)
+	return .
+
+/obj/item/reagent_containers/hypospray/PersistentInitialize(save_flags=ALL)
+	. = ..()
+	update_appearance()
