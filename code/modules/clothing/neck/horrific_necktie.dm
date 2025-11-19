@@ -94,6 +94,7 @@
 /obj/item/clothing/neck/tie/disco/proc/on_deleting(datum/source, force)
 	SIGNAL_HANDLER
 	possessed_souls -= source
+	to_chat(hears_us.current, span_notice("You feel like a voice just exited your mind."))
 
 ///Creates the ghost itself and adds them to the list of possessed souls in the tie.
 /obj/item/clothing/neck/tie/disco/proc/create_ghost(mob/new_ghost)
@@ -102,6 +103,7 @@
 	RegisterSignal(new_soul, COMSIG_LIVING_SEND_SPEECH, PROC_REF(on_speech_sent))
 	RegisterSignal(new_soul, COMSIG_QDELETING, PROC_REF(on_deleting))
 	possessed_souls += new_soul
+	to_chat(hears_us.current, span_notice("You look down at [src] and feel like there's another thought process entering your mind."))
 
 ///Called when a voice in the tie speaks, we use this to remove all listeners except the voices and creator.
 /obj/item/clothing/neck/tie/disco/proc/on_speech_sent(atom/source, list/listeners)
