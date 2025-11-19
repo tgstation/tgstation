@@ -387,6 +387,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
 			listening.Remove(listening_movable)
 
+	SEND_SIGNAL(src, COMSIG_LIVING_SEND_SPEECH, listening)
+
 	if(imaginary_group)
 		listening |= imaginary_group
 
@@ -403,9 +405,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				else if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= player_mob
-
-	// this signal ignores whispers or language translations (only used by beetlejuice component)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message_raw)
 
 	var/list/listened = list()
 	for(var/atom/movable/listening_movable as anything in listening)
