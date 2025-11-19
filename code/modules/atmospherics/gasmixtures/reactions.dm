@@ -1264,16 +1264,11 @@
 	// Rusts its surroundings.
 	if(SPT_PROB(1, antinoblium_moles / 100) && isturf(holder)) // 1% chance per tick at 100 moles.
 		var/turf/location = holder
-		var/list/turfs = list(location)
+		if(!HAS_TRAIT(location, TRAIT_RUSTY))
+			location.rust_turf()
 		for(var/direction in GLOB.cardinals)
 			var/turf/turf = get_step(location, direction)
-			if(isclosedturf(turf))
-				turfs += turf
-		for(var/turf/turf in turfs)
-			if(!HAS_TRAIT(turf, TRAIT_RUSTY)) // prevents destroying walls
+			if(isclosedturf(turf) && !HAS_TRAIT(turf, TRAIT_RUSTY))
 				turf.rust_turf()
-			for(var/obj/obj in turf)
-				obj.rust_heretic_act()
-
 
 #undef SET_REACTION_RESULTS
