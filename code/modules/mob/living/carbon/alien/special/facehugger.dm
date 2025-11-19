@@ -188,7 +188,9 @@
 	if(!sterile)
 		victim.take_bodypart_damage(strength,0) //done here so that humans in helmets take damage
 	if(real && !sterile)
-		victim.Knockdown(5 SECONDS)
+		victim.Paralyze(1 SECONDS)
+		victim.adjust_confusion(20 SECONDS)
+		victim.Knockdown(10 SECONDS)
 	GoIdle() //so it doesn't jump the people that tear it off
 
 	addtimer(CALLBACK(src, PROC_REF(Impregnate), victim), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
