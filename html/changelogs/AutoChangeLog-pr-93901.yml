@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an where modsuits would accumulate in nullspace over the course of a round"
