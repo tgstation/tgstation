@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "clicking on a turf containing a grill with a rcd in window mode will complete the grill"
-  - bugfix: "clicking on a turf containing a girder with a rcd in turf/wall mode will complete the girder"
-  - bugfix: "RCD, RLD, RTD & RPLD now uses material only after action is successful"

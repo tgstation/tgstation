@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Partial language understanding now correctly has a higher chance of translating more common words."
-  - qol: "Aphasia got slightly more words to work with"

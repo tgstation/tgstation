@@ -1,5 +1,0 @@
-author: "SyncIt21, JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "budget ordering console correctly differentiates between private & department orders."
-  - bugfix: "budget ordering console checkout cart displays correct Private/Department order text amounts."
