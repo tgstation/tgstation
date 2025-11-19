@@ -62,15 +62,15 @@
 	var/animal_dna_length = length(stored_dna_animal)
 	if(plant_dna_length)
 		uploaded += plant_dna_length
-		target.plant_dna |= stored_dna_plants
+		target.plant_dna += stored_dna_plants
 		stored_dna_plants.Cut()
 	if(human_dna_length)
 		uploaded += human_dna_length
-		target.human_dna |= stored_dna_human
+		target.human_dna += stored_dna_human
 		stored_dna_human.Cut()
 	if(animal_dna_length)
 		uploaded += animal_dna_length
-		target.animal_dna |= stored_dna_animal
+		target.animal_dna += stored_dna_animal
 		stored_dna_animal.Cut()
 	target.check_goal()
 	playsound(target, 'sound/machines/compiler/compiler-stage1.ogg', 50)
