@@ -33,12 +33,15 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 	if(!length(GLOB.save_object_blacklist))
 		GLOB.save_object_blacklist += typecacheof(list(
-			/obj/effect,
-			/obj/projectile,
-			/atom/movable/mirage_holder,
-			/obj/machinery/gravity_generator/part,
-			/obj/structure/fluff/airlock_filler,
-			/mob/living/carbon,
+			/obj/effect, // most effects can be ignored
+			/obj/projectile, // bullets shouldn't be stuck in mid-air
+			/atom/movable/mirage_holder, // z-level boundaries
+			/obj/machinery/gravity_generator/part, // grav gen only needs main part and these duplicate
+			/obj/structure/fluff/airlock_filler, // multi-tile airlocks
+			/obj/structure/closet/supplypod, // very spammy and runtimes during initialize
+			/obj/item/relic/lavaland, // lots of relic spam
+			/mob/living/carbon, // carbon mobs are very complex to save so skip
+			/mob/dead, // no dead ghosts
 		))
 
 		GLOB.save_object_blacklist -= typecacheof(list(
