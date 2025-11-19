@@ -437,3 +437,107 @@
       gain twice as much AP than their material type allows.
   - balance: Spears start to break as they're used until they fall apart. Some types
       of spears are not affected.
+2025-11-16:
+  LT3:
+  - bugfix: Station trait buttons display correctly on non-widescreen clients
+  Melbert:
+  - bugfix: Things disappear instantly when going into bodybags
+  - bugfix: Holodeck ready buttons no longer vanish
+  - rscadd: Chem and drink dispensers have a new recipe browser embedded into their
+      ui. The old one still exists for people who really, really need all the information
+      available possible.
+  - spellcheck: A few chems have had their descriptions updated.
+  SapphicOverload:
+  - bugfix: Integrated circuits can now correctly be inserted into circuit-compatible
+      airlocks.
+  - qol: Airlock maintenance panels can now be opened/closed with right click as well,
+      to avoid removing an integrated circuit instead.
+  SmArtKar:
+  - bugfix: Fixed admin-spawned vines not having selected mutations
+  - bugfix: Fixed jagged bonesaw's attack animation being flipped
+  - bugfix: Fixed raptors spawning regular eggs instead of raptor ones
+  SyncIt21:
+  - bugfix: flatpacker can interact with borg omnitools again
+  muchatras:
+  - bugfix: fixed the spraycan left-click
+2025-11-17:
+  Aliceee2ch:
+  - balance: Adv. parts and adv. surgery experiments are now discounts, instead of
+      requirements.
+  - spellcheck: Items that block contents/wires from EMPs now showed up as only "partially
+      EMP blocking" objects in examine menu.
+  Dmeto:
+  - map: Replaces rocks on the public mining path on Lavaland with correct subtype.
+  Melbert:
+  - rscadd: Adds emagged apc hallucination
+  - spellcheck: Some Coveralls
+  - rscdel: 'Catwalk med: Removed 1 of 2 first aid stations'
+  - qol: 'Catwalk med: Adds some newscasters'
+  SpaceSmithers:
+  - map: Added a virtual gymnasium to the holodeck.
+  TealSeer:
+  - bugfix: fixed placing wall signs at diagonals allowing you to duplicate them
+2025-11-18:
+  loganuk:
+  - map: CATWALK - Bridge - New location and new layout, now feels impressive and
+      should be better for those scenes that take places there, bit more gravitas,
+      it also contains an escape route behind 2x high security doors, or could it
+      be an attack route in?
+  - map: CATWALK - Command Meeting Area - Now is a more central location, no point
+      having meetings on the bridge itself, have them in the meeting room with some
+      style
+  - map: CATWALK - HOP Office - Made larger and a few things re-arranged to work and
+      make sense, extra security features and re-decoration
+  - map: CATWALK - Command Area - Extra anti tider measures, fixing of access and
+      wiring/air - Some of the screens/wall mounts have been moved and fixed - Avoiding
+      duplicate wallmounts
+  - map: CATWALK - Captain Office - Re-arranged and a few broken things fixed, the
+      door to the public hallway has been removed, Security shutters have been added
+      for extra protection
+  - map: CATWALK - Gateway - Re-decorated and tweaked a little
+  - map: CATWALK - Public Area - New chill out area to replace the weird judge/holding
+      cell, generic for now but also a space for players to take apart easily and
+      build new things, NT even threw in a water cooler
+  - map: CATWALK - Hallways - New floor tiles featuring the dreaded catwalks, A more
+      central landmark to identify when in the central area, may be divisive opinion
+      wise. A few layout changes and tweaks
+  - map: CATWALK - EVA - Security doors on jetpacks/magboots now working, one was
+      free access the other was missing + room re-decorated + shutters tweaked
+  - map: CATWALK - Arrivals - Extra lights and a bit of extra signage to indicate
+      direction for new arrivals unfamiliar with the station
+  mikederkan:
+  - qol: Welding protection now prevents Maintenance Adapted eyes from burning in
+      the light.
+2025-11-19:
+  Hatterhat:
+  - bugfix: Alien welders, as befitting their nature of being Wacky Advanced Tools,
+      no longer sear your eyeballs if you don't have eye protection.
+  Melbert:
+  - qol: Monkeys will avoid stepping over glass tables
+  - bugfix: Partial language understanding now correctly has a higher chance of translating
+      more common words.
+  - qol: Aphasia got slightly more words to work with
+  SmArtKar:
+  - bugfix: Fixed mobs not actually befriending their lazarus reviver, and losing
+      all previous friends upon revival
+  - bugfix: Fixed purple raptors being unusable by winged species
+  SyncIt21:
+  - bugfix: clicking on a turf containing a grill with a rcd in window mode will complete
+      the grill
+  - bugfix: clicking on a turf containing a girder with a rcd in turf/wall mode will
+      complete the girder
+  - bugfix: RCD, RLD, RTD & RPLD now uses material only after action is successful
+  SyncIt21, JohnFulpWillard:
+  - bugfix: budget ordering console correctly differentiates between private & department
+      orders.
+  - bugfix: budget ordering console checkout cart displays correct Private/Department
+      order text amounts.
+  TealSeer:
+  - bugfix: fixed grilled cheese sandwich grilling into grilled cheese sandwich
+  Thunder12345:
+  - code_imp: Converted some gun related variables to use time defines, make an issue
+      report if anything shoots abnormally fast/slow.
+  mcbalaam:
+  - bugfix: Turret controls should have a carcass again
+  timothymtorres:
+  - bugfix: Fix lattice deconstruction to update space areas
