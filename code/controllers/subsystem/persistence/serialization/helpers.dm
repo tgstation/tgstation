@@ -31,6 +31,9 @@ GLOBAL_LIST_INIT(default_save_vars, list("dir", "pixel_x", "pixel_y"))
 	var/list/custom_var_names
 
 	for(var/custom_variable, custom_value in custom_vars)
+		if(custom_value == initial(object.vars[custom_variable]) || !issaved(object.vars[custom_variable]))
+			continue
+
 		TGM_ENCODE(custom_value)
 		if(!custom_value)
 			continue
