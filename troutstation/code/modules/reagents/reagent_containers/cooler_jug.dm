@@ -2,7 +2,7 @@
 	name = "gay water jug"
 	desc = "A queer-looking water cooler jug. There's a water cooler out there desperate to have its voice heard. If you listen, you can hear faint noises coming from the jug's mouth."
 	throw_drop_sound = 'troutstation/sound/misc/gay.ogg'
-	mob_throw_hit_sound = 'troutstation/sound/misc/gay.ogg'
-	hitsound = 'troutstation/sound/misc/gay.ogg'
+	mob_throw_hit_sound = 'troutstation/sound/misc/gay2.ogg'
+	hitsound = 'troutstation/sound/misc/gay3.ogg'
 	list_reagents = list(/datum/reagent/medicine/gaywater = 200)
 	do_burbling = TRUE

@@ -20,8 +20,8 @@
 	desc = "It's full of gaywatery goodness."
 	icon = 'troutstation/icons/obj/service/hydroponics/harvest.dmi'
 	throw_drop_sound = 'troutstation/sound/misc/gay.ogg'
-	mob_throw_hit_sound = 'troutstation/sound/misc/gay.ogg'
-	hitsound = 'troutstation/sound/misc/gay.ogg'
+	mob_throw_hit_sound = 'troutstation/sound/misc/gay2.ogg'
+	hitsound = 'troutstation/sound/misc/gay3.ogg'
 	icon = 'troutstation/icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "gaywatermelon"
 	juice_typepath = /datum/reagent/medicine/gaywater

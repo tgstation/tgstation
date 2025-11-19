@@ -11,7 +11,7 @@
 		T.add_atom_colour("#ff99fc",WASHABLE_COLOUR_PRIORITY)
 
 		for (var/mob/living/M in T)
-			playsound(M, 'troutstation/sound/misc/gay.ogg', 100, FALSE)
+			playsound(M, pick('troutstation/sound/misc/gay.ogg','troutstation/sound/misc/gay2.ogg','troutstation/sound/misc/gay3.ogg','troutstation/sound/misc/gay4.ogg','troutstation/sound/misc/gay5.ogg'), 100, FALSE)
 			M.reagents.add_reagent(/datum/reagent/medicine/gaywater, 25)
 
 			for (var/obj/item/gayitem in M.get_equipped_items(include_flags))
