@@ -223,7 +223,7 @@
 	var/production_amount
 	switch(power_level)
 		if(3,4)
-			production_amount = clamp(heat_output * 1e-3, 0, fuel_consumption_rate) * seconds_per_tick
+			production_amount = clamp(heat_output / 1000, 0, fuel_consumption_rate) * seconds_per_tick
 		else
 			production_amount = clamp(heat_output * 2 / 10 ** (power_level+1), 0, fuel_consumption_rate) * seconds_per_tick
 
