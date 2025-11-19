@@ -112,6 +112,8 @@
 #define INTERNALS_ADJUST_EXEMPT (1<<17)
 /// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
 #define CARP_STYLE_FACTOR (1<<18)
+/// Prevents clothing from losing bodyparts coverage when shredded
+#define NO_ZONE_DISABLING (1<<19)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
