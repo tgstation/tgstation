@@ -78,7 +78,7 @@
 	if(overclocked)
 		var/turf/turf = loc
 		if(isclosedturf(turf))
-			balloon_alert_to_viewers("jammed! turning on safeties.")
+			balloon_alert_to_viewers("jammed!")
 			overclocked = FALSE
 			update_appearance(UPDATE_ICON)
 
