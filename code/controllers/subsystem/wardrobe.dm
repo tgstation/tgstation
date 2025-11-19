@@ -223,7 +223,6 @@ SUBSYSTEM_DEF(wardrobe)
 /// If we can't or won't take it, it's deleted. You do not own this object after passing it in
 /datum/controller/subsystem/wardrobe/proc/stash_object(obj/item/object)
 	var/object_type = object.type
-
 	var/list/master_info = canon_minimum[object_type]
 	// I will not permit objects you didn't reserve ahead of time
 	if(!master_info)
