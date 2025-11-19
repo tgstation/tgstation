@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_GOLEM = "Golems",
 	POLL_IGNORE_HERETIC_MONSTER = "Heretic Monster",
 	POLL_IGNORE_HOLOPARASITE = "Holoparasite",
+	POLL_IGNORE_HORRIFIC_NECKTIE = "Horrific Necktie",
 	POLL_IGNORE_IMAGINARYFRIEND = "Imaginary Friend",
 	POLL_IGNORE_LAVALAND_ELITE = "Lavaland elite",
 	POLL_IGNORE_MAID_IN_MIRROR = "Maid in the Mirror",

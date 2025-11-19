@@ -406,6 +406,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 					continue
 			listening |= player_mob
 
+	// this signal ignores whispers or language translations (only used by beetlejuice component)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message_raw)
+
 	var/list/listened = list()
 	for(var/atom/movable/listening_movable as anything in listening)
 		if(!listening_movable)

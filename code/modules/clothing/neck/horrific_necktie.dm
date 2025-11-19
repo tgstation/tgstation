@@ -9,47 +9,63 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+	///The only person who can hear us is the one who activated us. Once activated a voice, only they can activate more.
+	var/mob/living/hears_us
 	/// Are we grabbing a spirit?
 	var/using = FALSE
 	///The mob that inhabits us, once posessed.
-	var/mob/living/basic/tie/possessed
+	var/list/mob/living/basic/tie/possessed_souls = list()
 
 /obj/item/clothing/neck/tie/disco/Destroy()
-	QDEL_NULL(possessed)
+	QDEL_LIST(possessed_souls)
 	return ..()
 
 /obj/item/clothing/neck/tie/disco/examine(mob/user)
 	. = ..()
-	if(isnull(possessed))
+	if(!length(possessed_souls))
 		. += span_notice("It may be given sentience by [EXAMINE_HINT("using it in hand")].")
 
 /obj/item/clothing/neck/tie/disco/attack_self(mob/living/user, modifiers)
-	if(using || !isnull(possessed))
-		return ..()
-	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		user.balloon_alert(user, "spirits are unwilling!")
+	if(using || (hears_us && (user != hears_us)))
 		return ..()
 
 	using = TRUE
 	to_chat(user, span_notice("You plumb the depths of your Inland Empire. Whispers seem to emaninate from [src], as though it had somehow come to life; could it be?"))
 
-	var/mob/speaking_tie = SSpolling.poll_ghosts_for_target(
+	var/list/candidates = SSpolling.poll_ghost_candidates(
 		question = "Do you want to play as the spirit of [span_danger("[user.real_name]'s")] [span_notice("horrific necktie")]?",
 		check_jobban = ROLE_PAI,
 		poll_time = 20 SECONDS,
-		checked_target = user,
-		ignore_category = POLL_IGNORE_HORRIFIC_NECKTIE,
 		alert_pic = user,
-		role_name_text = "horrific necktie",
+		jump_target = user,
+		ignore_category = POLL_IGNORE_HORRIFIC_NECKTIE,
 	)
-	if(QDELETED(src))
-		return
-	if(speaking_tie)
-		possessed = new(src, user)
-		possessed.PossessByPlayer(speaking_tie.ckey)
-	else
+	if(!length(candidates))
 		to_chat(user, span_warning("The whispers coming from [src] fade and are silent again... Was it all your imagination? Maybe you can try again later."))
+		using = FALSE
+		return
+	hears_us = user
+	while(!QDELETED(src) && length(candidates))
+		var/mob/speaking_tie = candidates[1]
+		var/mob/living/basic/tie/new_soul = new(src)
+		new_soul.PossessByPlayer(speaking_tie.ckey)
+		RegisterSignal(new_soul, COMSIG_LIVING_SEND_SPEECH, PROC_REF(on_speech_sent))
+		RegisterSignal(new_soul, COMSIG_QDELETING, PROC_REF(on_deleting))
+		possessed_souls += new_soul
+		speaking_tie -= candidates[1]
 	using = FALSE
+
+///Called when a voice in the tie speaks, we use this to remove all listeners except the voices and creator.
+/obj/item/clothing/neck/tie/disco/proc/on_speech_sent(atom/source, list/listeners)
+	SIGNAL_HANDLER
+	listeners.Cut()
+	listeners += possessed_souls
+	listeners += hears_us
+
+///Called when one of our ghosts die (like from logging out/ghosting).
+/obj/item/clothing/neck/tie/disco/proc/on_deleting(datum/source, force)
+	SIGNAL_HANDLER
+	possessed_souls -= source
 
 ///The mob that inhabits the tie when posessed.
 /mob/living/basic/tie
@@ -61,45 +77,16 @@
 	unsuitable_heat_damage = 0
 	unsuitable_atmos_damage = 0
 
-	///The only person who can hear us is the one who activated us, set by the tie item.
-	var/mob/living/hears_us
-	///Innate ability for the tie to change its name constantly, in case they want to play several voices at once.
-	var/datum/action/innate/change_name/name_change
-
-/mob/living/basic/tie/Initialize(mapload, mob/living/hears_us)
+/mob/living/basic/tie/Initialize(mapload)
 	. = ..()
-	src.hears_us = hears_us
-	name_change = new(src)
-	name_change.Grant(src)
-	RegisterSignal(src, COMSIG_LIVING_SEND_SPEECH, PROC_REF(on_speech_sent))
-
-/mob/living/basic/tie/Destroy(force)
-	hears_us = null
-	QDEL_NULL(name_change)
-	return ..()
+	GRANT_ACTION(/datum/action/innate/change_name)
 
 /mob/living/basic/tie/Login()
 	. = ..()
-	to_chat(src, span_notice("You are the horrific necktie of [hears_us.real_name], \
+	to_chat(src, span_notice("You are the horrific necktie of the person who summoned you, \
 		the only person who is able to hear you. Like a voice in their head, you are their reasoning, \
-		their second-in-command. Take good care of [hears_us.real_name]."))
+		their second-in-command. Take good care of them."))
 
-///Called when we speak, we use this to remove all listeners except ourselves and our creator.
-/mob/living/basic/tie/proc/on_speech_sent(atom/source, list/listeners)
-	SIGNAL_HANDLER
-
-	listeners.Cut()
-	listeners += src
-	listeners += hears_us
-
-/datum/action/innate/change_name
-	name = "Change Name"
-	button_icon_state = "ghost"
-
-/datum/action/innate/change_name/Activate()
-	var/new_name = tgui_input_text(usr, "Enter a new name.", "Renaming", initial(owner.name))
-	if(!new_name)
-		return FALSE
-
-	owner.fully_replace_character_name(owner.name, new_name)
-	return TRUE
+/mob/living/basic/tie/Logout()
+	. = ..()
+	qdel(src)
