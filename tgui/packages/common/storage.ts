@@ -6,12 +6,10 @@
  * @license MIT
  */
 
-export const IMPL_MEMORY = 0;
 export const IMPL_HUB_STORAGE = 1;
 export const IMPL_IFRAME_INDEXED_DB = 2;
 
 type StorageImplementation =
-  | typeof IMPL_MEMORY
   | typeof IMPL_HUB_STORAGE
   | typeof IMPL_IFRAME_INDEXED_DB;
 
@@ -34,32 +32,6 @@ const testGeneric = (testFn: () => boolean) => (): boolean => {
 const testHubStorage = testGeneric(
   () => window.hubStorage && !!window.hubStorage.getItem,
 );
-
-class MemoryBackend implements StorageBackend {
-  private store: Record<string, any>;
-  public impl: StorageImplementation;
-
-  constructor() {
-    this.impl = IMPL_MEMORY;
-    this.store = {};
-  }
-
-  async get(key: string): Promise<any> {
-    return this.store[key];
-  }
-
-  async set(key: string, value: any): Promise<void> {
-    this.store[key] = value;
-  }
-
-  async remove(key: string): Promise<void> {
-    this.store[key] = undefined;
-  }
-
-  async clear(): Promise<void> {
-    this.store = {};
-  }
-}
 
 class HubStorageBackend implements StorageBackend {
   public impl: StorageImplementation;
@@ -105,7 +77,11 @@ class IFrameIndexedDbBackend implements StorageBackend {
     iframe.src = Byond.storageCdn;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
-      iframe.onload = () => resolve(true);
+      window.addEventListener('message', (message) => {
+        if (message.data === "ready") {
+          resolve(true);
+        }
+      })
     });
 
     this.documentElement = document.body.appendChild(iframe);
@@ -143,21 +119,6 @@ class IFrameIndexedDbBackend implements StorageBackend {
     this.iframeWindow.postMessage({ type: 'clear' }, '*');
   }
 
-  async ping(): Promise<boolean> {
-    const promise: Promise<boolean> = new Promise((resolve) => {
-      window.addEventListener('message', (message) => {
-        if (message.data === true) {
-          resolve(true);
-        }
-      });
-
-      setTimeout(() => resolve(false), 100);
-    });
-
-    this.iframeWindow.postMessage({ type: 'ping' }, '*');
-    return promise;
-  }
-
   async destroy(): Promise<void> {
     document.body.removeChild(this.documentElement);
   }
@@ -169,15 +130,14 @@ class IFrameIndexedDbBackend implements StorageBackend {
  */
 class StorageProxy implements StorageBackend {
   private backendPromise: Promise<StorageBackend>;
-  public impl: StorageImplementation = IMPL_MEMORY;
+  public impl: StorageImplementation = IMPL_IFRAME_INDEXED_DB;
 
   constructor() {
     this.backendPromise = (async () => {
       if (Byond.storageCdn && !window.hubStorage) {
         const iframe = new IFrameIndexedDbBackend();
-        await iframe.ready();
 
-        if ((await iframe.ping()) === true) {
+        if ((await iframe.ready()) === true) {
           if (await iframe.get('byondstorage-migrated')) return iframe;
 
           Byond.winset(null, 'browser-options', '+byondstorage');
@@ -205,26 +165,22 @@ class StorageProxy implements StorageBackend {
         }
 
         iframe.destroy();
+      };
 
-        if (!testHubStorage()) {
-          Byond.winset(null, 'browser-options', '+byondstorage');
+      if (!testHubStorage()) {
+        Byond.winset(null, 'browser-options', '+byondstorage');
 
-          return new Promise((resolve) => {
-            const listener = () => {
-              document.removeEventListener('byondstorageupdated', listener);
-              resolve(new HubStorageBackend());
-            };
+        return new Promise((resolve) => {
+          const listener = () => {
+            document.removeEventListener('byondstorageupdated', listener);
+            resolve(new HubStorageBackend());
+          };
 
-            document.addEventListener('byondstorageupdated', listener);
-          });
-        }
-        return new HubStorageBackend();
+          document.addEventListener('byondstorageupdated', listener);
+        });
       }
-      console.warn(
-        'No supported storage backend found. Using in-memory storage.',
-      );
 
-      return new MemoryBackend();
+      return new HubStorageBackend();
     })();
   }
 
