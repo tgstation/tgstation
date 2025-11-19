@@ -78,7 +78,7 @@
 
 /obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/hit_proj)
 	. = ..()
-	if(hit_proj.damage)
+	if(hit_proj.damage > 0)
 		ignite()
 		log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
