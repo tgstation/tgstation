@@ -57,6 +57,9 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
+	unsuitable_cold_damage = 0
+	unsuitable_heat_damage = 0
+	unsuitable_atmos_damage = 0
 
 	///The only person who can hear us is the one who activated us, set by the tie item.
 	var/mob/living/hears_us
