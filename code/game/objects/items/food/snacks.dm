@@ -227,7 +227,7 @@
 		wrapped = FALSE
 		update_appearance()
 		playsound(src, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
-		new /obj/item/trash/candy(get_turf(src))
+		new /obj/item/trash/syndi_cakes_wrapper(get_turf(src))
 		return
 	return ..()
 

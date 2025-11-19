@@ -82,7 +82,7 @@
 	icon_state = "syndi_cakes"
 	custom_materials = list(/datum/material/cardboard=SMALL_MATERIAL_AMOUNT*2) //we dont care about the environment
 
-/obj/item/trash/syndi_cakes
+/obj/item/trash/syndi_cakes_wrapper
 	name = "syndi-cake wrapper"
 	icon_state = "syndi_cakes_wrapper"
 

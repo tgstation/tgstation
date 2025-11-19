@@ -684,7 +684,7 @@
 	icon = 'icons/obj/food/containers.dmi'
 	inhand_icon_state = null
 	icon_state = "syndi_cakes_box"
-	base_icon_state = "syndi_cakes_box_open"
+	base_icon_state = "syndi_cakes_box"
 	name = "lil syndie's snack cakes box"
 	desc = "A single serving of Lil Syndie's Snack Cakes, produced by Waffle Co."
 	spawn_type = /obj/item/food/syndi_cake
