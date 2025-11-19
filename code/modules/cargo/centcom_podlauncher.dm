@@ -777,7 +777,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
 	for (var/obj/object in bay.get_all_contents())
-		if (istype(object.type, /obj/effect/light_emitter/podbay))
+		if (istype(object, /obj/effect/light_emitter/podbay))
 			continue
 		qdel(object)
 	for (var/mob/living/mob in bay.get_all_contents())
