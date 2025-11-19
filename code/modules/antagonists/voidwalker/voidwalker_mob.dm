@@ -348,5 +348,4 @@
 		return FALSE
 	return TRUE
 
-
 #undef WALL_CONVERT_STRENGTH
