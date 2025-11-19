@@ -1,0 +1,5 @@
+author: "SapphicOverload"
+delete-after: True
+changes:
+  - bugfix: "Fixed cracked HFR parts not being able to leak moderator gases."
+  - code_imp: "The HFR now processes at the same rate as other atmos machinery."
