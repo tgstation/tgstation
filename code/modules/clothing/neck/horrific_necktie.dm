@@ -9,6 +9,8 @@
 	greyscale_config_worn = null
 	greyscale_colors = null
 
+	/// Are we grabbing a spirit?
+	var/using = FALSE
 	///The mob that inhabits us, once posessed.
 	var/mob/living/basic/tie/possessed
 
@@ -22,9 +24,13 @@
 		. += span_notice("It may be given sentience by [EXAMINE_HINT("using it in hand")].")
 
 /obj/item/clothing/neck/tie/disco/attack_self(mob/living/user, modifiers)
-	if(!isnull(possessed))
+	if(using || !isnull(possessed))
+		return ..()
+	if(!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
+		user.balloon_alert(user, "spirits are unwilling!")
 		return ..()
 
+	using = TRUE
 	to_chat(user, span_notice("You plumb the depths of your Inland Empire. Whispers seem to emaninate from [src], as though it had somehow come to life; could it be?"))
 
 	var/mob/speaking_tie = SSpolling.poll_ghosts_for_target(
@@ -36,11 +42,14 @@
 		alert_pic = user,
 		role_name_text = "horrific necktie",
 	)
-	if(!QDELETED(src) && speaking_tie)
+	if(QDELETED(src))
+		return
+	if(speaking_tie)
 		possessed = new(src, user)
 		possessed.PossessByPlayer(speaking_tie.ckey)
-		return
-	to_chat(user, span_warning("The whispers coming from [src] fade and are silent again... Was it all your imagination? Maybe you can try again later."))
+	else
+		to_chat(user, span_warning("The whispers coming from [src] fade and are silent again... Was it all your imagination? Maybe you can try again later."))
+	using = FALSE
 
 ///The mob that inhabits the tie when posessed.
 /mob/living/basic/tie
