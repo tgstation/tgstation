@@ -31,7 +31,7 @@ export const AntagInfoBloodWorm = (props) => {
                   </LabeledList.Item>
                   <LabeledList.Item label="Blood Consumption">
                   You can grow by using Leech Blood or Invade Corpse to consume blood,
-                  but overfeeding on one blood type yields diminishing returns.
+                  but synthetic blood, such as from monkeys, has a limit.
                   You can see blood levels at a glance using your HUD,
                   and examining targets yields advanced information on their blood.
                   </LabeledList.Item>
@@ -104,12 +104,12 @@ export const AntagInfoBloodWorm = (props) => {
                   You can use this as insurance to get a last ditch escape attempt.
                   </LabeledList.Item>
                   <LabeledList.Item label="Medbay Buffet">
-                  Medbay's blood freezers are all-you-can-eat buffets for you! Multiple blood types and high volumes grant you a lot of growth.
-                  Be careful of nearby crew, as breaking freezers can alert them through walls.
+                  Medbay's blood freezers are all-you-can-eat buffets for you! They are only half synthetic and their high volumes grant you a lot of growth.
+                  Be careful of nearby crew, as the sounds of breaking freezers can travel through walls.
                   </LabeledList.Item>
                   <LabeledList.Item label="Fast Food">
                   You can enter corpses to consume all of their blood extremely quickly. Blood gained while already in a host doesn't affect your growth.
-                  Duplicated blood does, but you'll need multiple blood types for your growth.
+                  Duplicated blood does, but it's synthetic, limiting its effectiveness.
                   </LabeledList.Item>
                   <LabeledList.Item label="Nomadic">
                   You have night vision and no territory, meaning you can thrive anywhere. Hatchlings can ventcrawl, while

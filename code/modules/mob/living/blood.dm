@@ -396,8 +396,20 @@
 		adjust_blood_volume(-amount)
 		return amount
 
+	var/cached_target_blood_volume = target.get_blood_volume()
+
 	// And, obviously, cap it to how much blood the target can take if they're living.
 	amount = target.adjust_blood_volume(amount, maximum = BLOOD_VOLUME_MAX_LETHAL)
+
+	// Synthetic blood handling, used for capping blood worm growth from monkeys, blood bags and basic mobs. This forces blood worms to kill people to reach adulthood.
+	if (!IS_BLOOD_ALWAYS_SYNTHETIC(target))
+		var/added_synth_volume = amount * get_blood_synth_content()
+		var/existing_synth_volume = cached_target_blood_volume * target.get_blood_synth_content()
+
+		if (added_synth_volume != 0 || existing_synth_volume != 0)
+			// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of their blood is synthetic"
+			target.AddComponent(/datum/component/synth_blood, (added_synth_volume + existing_synth_volume) / (amount + cached_target_blood_volume))
+
 	adjust_blood_volume(-amount)
 	return amount
 
@@ -793,14 +805,14 @@
 
 	return blood_alcohol_content
 
-/// Returns on a 0-1 scale how synthetic this mobs blood is. Used for blood worms to cap growth from easily accessible sources.
+/// Returns on a 0-1 scale how synthetic this mobs blood is. Used for blood worms to cap growth from easily accessible sources of blood.
 /mob/living/proc/get_blood_synth_content()
-	if (!ishuman(src) || HAS_TRAIT(src, TRAIT_BORN_MONKEY) || HAS_TRAIT(src, TRAIT_SPAWNED_MOB))
+	if (IS_BLOOD_ALWAYS_SYNTHETIC(src))
 		return 1 // Basic mobs, simple mobs, born monkeys and spawned mobs have fully synthetic blood.
 
 	// Handles accounting for synthetic blood injected into mobs that don't normally have it.
 	var/datum/component/synth_blood/synth_comp = GetComponent(/datum/component/synth_blood)
-	return synth_comp?.current_synth_content
+	return synth_comp?.synth_content
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

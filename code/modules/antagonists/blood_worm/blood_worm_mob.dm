@@ -548,6 +548,9 @@
 	var/list/blood_data = bloodbag.get_blood_data()
 
 	var/synth_content = blood_data?[BLOOD_DATA_SYNTH_CONTENT]
+	if (!isnum(synth_content))
+		synth_content = 0 // Otherwise the switch statement breaks.
+
 	var/normal_content = 1 - synth_content
 
 	var/normal_blood_after = consumed_normal_blood + cached_blood_volume * normal_content
@@ -575,13 +578,13 @@
 		else
 			growth_string = ". You are already fully grown"
 
-	var/synth_string = ""
+	var/synth_string = "[CEILING(synth_content * 100, 1)]%"
 	switch(synth_content)
 		if (-INFINITY to 0)
 			synth_string = "not"
 		if (1 to INFINITY)
 			synth_string = "fully"
-		else
+		if (0 to 1)
 			synth_string = "[CEILING(synth_content * 100, 1)]%"
 
 	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of blood[growth_string]. [target.p_Their()] blood is <b>[synth_string]</b> synthetic.")
