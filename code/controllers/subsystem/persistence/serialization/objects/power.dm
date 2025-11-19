@@ -17,6 +17,16 @@
 	. -= NAMEOF(src, color)
 	return .
 
+/obj/item/rwd/get_save_vars(save_flags)
+	. = ..()
+	. += NAMEOF(src, current_amount)
+	. += NAMEOF(src, cable_layer)
+	return .
+
+/obj/item/rwd/PersistentInitialize()
+	. = ..()
+	update_appearance()
+
 // these spawn underneath apc's but are created by them in initialization
 /obj/machinery/power/terminal/is_saveable(turf/current_loc, list/obj_blacklist)
 	if(locate(/obj/machinery/power/apc) in loc)
@@ -63,3 +73,36 @@
 	. += NAMEOF(src, charge)
 	. += NAMEOF(src, rigged)
 	return .
+
+/obj/machinery/power/port_gen/pacman/get_save_vars(save_flags)
+	. = ..()
+	. += NAMEOF(src, active)
+	. += NAMEOF(src, sheets)
+	. += NAMEOF(src, sheet_left)
+	return .
+
+/obj/machinery/power/port_gen/pacman/PersistentInitialize()
+	. = ..()
+	if(active)
+		active = FALSE // gets reset to TRUE after TogglePower()
+		TogglePower()
+	return .
+
+/obj/machinery/power/solar_control/get_save_vars(save_flags)
+	. = ..()
+	. += NAMEOF(src, azimuth_rate)
+	. += NAMEOF(src, azimuth_target)
+	. += NAMEOF(src, track)
+	return .
+
+/obj/machinery/power/solar_control/PersistentInitialize()
+	. = ..()
+	search_for_connected()
+	switch(track)
+		if(SOLAR_TRACK_AUTO)
+			if(connected_tracker)
+				connected_tracker.sun_update(SSsun, SSsun.azimuth)
+			else
+				track = SOLAR_TRACK_OFF
+		if(SOLAR_TRACK_TIMED)
+			set_panels(azimuth_target)
