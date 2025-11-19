@@ -129,7 +129,7 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/drop_loot(drop_loc)
 	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
 	if(newloc && newloc.z == z && ischasm(newloc)) //we're not stupid!
