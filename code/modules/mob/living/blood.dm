@@ -432,6 +432,10 @@
 		if(LAZYLEN(disease_resistances))
 			blood_data["resistances"] = disease_resistances.Copy()
 
+	var/synth_content = get_blood_synth_content()
+	if (synth_content > 0)
+		blood_data[BLOOD_DATA_SYNTH_CONTENT] = synth_content
+
 	// DNA, mind, facitons, etc don't get stored in stuff like oil
 	if (!(blood_type.blood_flags & BLOOD_ADD_DNA))
 		return blood_data
@@ -788,6 +792,15 @@
 		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
 
 	return blood_alcohol_content
+
+/// Returns on a 0-1 scale how synthetic this mobs blood is. Used for blood worms to cap growth from easily accessible sources.
+/mob/living/proc/get_blood_synth_content()
+	if (!ishuman(src) || HAS_TRAIT(src, TRAIT_BORN_MONKEY) || HAS_TRAIT(src, TRAIT_SPAWNED_MOB))
+		return 1 // Basic mobs, simple mobs, born monkeys and spawned mobs have fully synthetic blood.
+
+	// Handles accounting for synthetic blood injected into mobs that don't normally have it.
+	var/datum/component/synth_blood/synth_comp = GetComponent(/datum/component/synth_blood)
+	return synth_comp?.current_synth_content
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

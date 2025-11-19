@@ -43,8 +43,7 @@
 		if (feedback)
 			owner.balloon_alert(owner, "mouth is covered!")
 		return FALSE
-
-	if (worm.health - health_cost < minimum_health)
+	if (worm.get_worm_health() - health_cost < minimum_health)
 		if (feedback)
 			owner.balloon_alert(owner, "out of blood!")
 		return FALSE
@@ -101,7 +100,7 @@
 		return
 
 	var/mob/living/basic/blood_worm/worm = src.target
-	if (worm.health - health_cost * burst_count < minimum_health)
+	if (worm.get_worm_health() - health_cost * burst_count < minimum_health)
 		owner.balloon_alert(owner, "out of blood!")
 		return
 
@@ -131,10 +130,7 @@
 
 	var/mob/living/basic/blood_worm/worm = src.target
 
-	if (worm.host)
-		worm.host.adjust_blood_volume(-health_cost * BLOOD_WORM_HEALTH_TO_BLOOD * count)
-	else
-		worm.adjustBruteLoss(health_cost * count)
+	worm.adjust_worm_health(-health_cost * count)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/melt_restraints()
 	var/mob/living/carbon/human/host = owner

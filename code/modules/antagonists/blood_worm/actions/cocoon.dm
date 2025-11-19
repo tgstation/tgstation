@@ -21,12 +21,12 @@
 		return
 
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_worm_stat_changed), override = TRUE)
-	RegisterSignal(owner, COMSIG_BLOOD_WORM_INGEST_BLOOD, PROC_REF(update_status_on_signal))
+	RegisterSignal(owner, COMSIG_BLOOD_WORM_CONSUME_BLOOD, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Remove(mob/removed_from)
 	if (!QDELETED(cocoon))
 		cancel()
-	UnregisterSignal(owner, COMSIG_BLOOD_WORM_INGEST_BLOOD)
+	UnregisterSignal(owner, COMSIG_BLOOD_WORM_CONSUME_BLOOD)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/IsAvailable(feedback)
@@ -130,7 +130,8 @@
 	if (new_worm.mind.name == old_worm.real_name)
 		new_worm.mind.name = new_worm.real_name
 
-	new_worm.consumed_blood = old_worm.consumed_blood
+	new_worm.consumed_normal_blood = old_worm.consumed_normal_blood
+	new_worm.consumed_synth_blood = old_worm.consumed_synth_blood
 
 	new_worm.spit_action?.set_key(old_worm.spit_action?.full_key)
 	new_worm.leech_action?.set_key(old_worm.leech_action?.full_key)
@@ -197,7 +198,7 @@
 /// Checks if the blood worm has consumed enough blood to use this action.
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/check_consumed_blood(feedback = FALSE)
 	var/mob/living/basic/blood_worm/worm = owner
-	var/total_consumed_blood = worm.get_scaled_total_consumed_blood()
+	var/total_consumed_blood = worm.get_consumed_blood()
 
 	if (total_consumed_blood < total_blood_required)
 		if (feedback)
@@ -222,7 +223,7 @@
 	cocoon_type = /obj/structure/blood_worm_cocoon/hatchling
 	new_worm_type = /mob/living/basic/blood_worm/juvenile
 
-	total_blood_required = 1000
+	total_blood_required = 500
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become a juvenile, gaining stat increases and the ability to spit corrosive blood, but losing the ability to ventcrawl.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
@@ -253,7 +254,7 @@
 	cocoon_type = /obj/structure/blood_worm_cocoon/juvenile
 	new_worm_type = /mob/living/basic/blood_worm/adult
 
-	total_blood_required = 2500
+	total_blood_required = 1500
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will become an adult, gaining stat increases and the ability to spit bursts of corrosive blood by right-clicking with Spit Blood while outside of a host.", "Mature", list("Yes", "No"), 30 SECONDS) != "Yes")
@@ -368,7 +369,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
 	. = ..()
 
-	new_worm.consumed_blood = list()
+	new_worm.reset_consumed_blood()
 
 	var/datum/antagonist/blood_worm/antag_datum = new_worm.mind?.has_antag_datum(/datum/antagonist/blood_worm)
 

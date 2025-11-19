@@ -32,7 +32,7 @@
 
 	var/mob/living/basic/blood_worm/worm = target
 
-	if (worm.health - health_cost < minimum_health)
+	if (worm.get_worm_health() - health_cost < minimum_health)
 		if (feedback)
 			owner.balloon_alert(owner, "out of blood!")
 		return FALSE
@@ -52,7 +52,7 @@
 
 	to_chat(owner, span_notice("You inject blood into the damaged tissues of your host."))
 
-	host.adjust_blood_volume(-health_cost * BLOOD_WORM_HEALTH_TO_BLOOD)
+	worm.adjust_worm_health(-health_cost)
 
 	return ..()
 

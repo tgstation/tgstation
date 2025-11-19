@@ -24,3 +24,7 @@
 
 /// Mobs will drop everything
 #define DROP_ALL_REMAINS (DROP_BRAIN | DROP_ORGANS | DROP_BODYPARTS | DROP_ITEMS)
+
+// Keys for indexing blood data lists. HIGHLY INCOMPLETE.
+/// Indexing a blood reagent data list with this returns how synthetic the blood is, used for blood worms to nerf common blood sources like monkeys.
+#define BLOOD_DATA_SYNTH_CONTENT "synth_content"

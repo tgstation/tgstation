@@ -14,31 +14,11 @@
 
 	var/is_actively_leeching = FALSE
 
-	/// Associative list of all blood type ids that are compatible for leeching from reagent containers. Format is "list[blood_type_id] = TRUE"
-	var/static/list/compatible_container_blood_types = list(
-		BLOOD_TYPE_A_MINUS = TRUE,
-		BLOOD_TYPE_A_PLUS = TRUE,
-		BLOOD_TYPE_B_MINUS = TRUE,
-		BLOOD_TYPE_B_PLUS = TRUE,
-		BLOOD_TYPE_AB_MINUS = TRUE,
-		BLOOD_TYPE_AB_PLUS = TRUE,
-		BLOOD_TYPE_O_MINUS = TRUE,
-		BLOOD_TYPE_O_PLUS = TRUE,
-		BLOOD_TYPE_UNIVERSAL = TRUE,
-		BLOOD_TYPE_LIZARD = TRUE,
-		BLOOD_TYPE_VAMPIRE = TRUE,
-		BLOOD_TYPE_ANIMAL = TRUE,
-		BLOOD_TYPE_ETHEREAL = TRUE
+	/// Associative list of all reagent types that are compatible for leeching from reagent containers. Format is "list[reagent_type] = TRUE"
+	var/static/list/compatible_container_reagent_types = list(
+		/datum/reagent/blood = TRUE, // If it's blood, then it works :D
+		/datum/reagent/consumable/liquidelectricity = TRUE, // Rare enough to allow.
 	)
-
-	/// Associative list of all reagent types that are compatible for leeching from reagent containers. Format is "list[reagent_type] = blood_type_id"
-	var/list/compatible_container_reagent_types = list()
-
-/datum/action/cooldown/mob_cooldown/blood_worm/leech/New(Target, original)
-	. = ..()
-	for (var/blood_type_id in compatible_container_blood_types)
-		var/datum/blood_type/blood_type = get_blood_type(blood_type_id)
-		compatible_container_reagent_types[blood_type.reagent_type] = blood_type_id
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/IsAvailable(feedback)
 	if (!istype(owner, /mob/living/basic/blood_worm))
@@ -133,9 +113,7 @@
 	playsound(target, 'sound/effects/wounds/pierce3.ogg', vol = 100, vary = TRUE, ignore_walls = FALSE)
 
 	while (do_after(leech, 1 SECONDS, target, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(leech_living_active_check), leech, target)))
-		var/datum/blood_type/blood_type = target.get_bloodtype()
-
-		leech.ingest_blood(-target.adjust_blood_volume(-leech_rate), blood_type.id)
+		leech.consume_blood(-target.adjust_blood_volume(-leech_rate), target.get_blood_synth_content())
 
 		if (target.stat != DEAD)
 			target.adjustOxyLoss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
@@ -151,7 +129,7 @@
 	return
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
-	if (target.get_blood_volume() <= 0 || !target.get_bloodtype())
+	if (target.get_blood_volume() <= 0)
 		target.balloon_alert(leech, "no blood!")
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
@@ -160,7 +138,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_active_check(mob/living/basic/blood_worm/leech, mob/living/target)
-	if (target.get_blood_volume() <= 0 || !target.get_bloodtype())
+	if (target.get_blood_volume() <= 0)
 		target.balloon_alert(leech, "no more blood!")
 		return FALSE
 	if (HAS_TRAIT(target, TRAIT_BLOOD_WORM_HOST))
@@ -206,15 +184,10 @@
 			var/volume = blood[reagent_type]
 			var/datum/reagent/reagent = target.reagents.has_reagent(reagent_type)
 
-			var/blood_type_id
-			if (istype(reagent, /datum/reagent/blood))
-				var/datum/blood_type/blood_type = reagent.data["blood_type"]
-				blood_type_id = blood_type.id
-			else
-				blood_type_id = compatible_container_reagent_types[reagent_type]
-
+			var/synth_content = reagent.data[BLOOD_DATA_SYNTH_CONTENT]
 			var/amount_consumed = target.reagents.remove_reagent(reagent_type, leech_rate * (volume / total_volume))
-			leech.ingest_blood(amount_consumed, blood_type_id)
+
+			leech.consume_blood(amount_consumed, synth_content)
 
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
@@ -245,10 +218,6 @@
 			continue
 		if (!compatible_container_reagent_types[reagent.type])
 			continue
-		if (istype(reagent, /datum/reagent/blood))
-			var/datum/blood_type/blood_type = reagent.data["blood_type"]
-			if (!blood_type || !compatible_container_blood_types[blood_type.id])
-				continue
 
 		.[reagent.type] = reagent.volume
 

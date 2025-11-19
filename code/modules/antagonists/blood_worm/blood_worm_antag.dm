@@ -98,3 +98,4 @@
 
 /datum/antagonist/blood_worm/infestation
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
+	show_in_antagpanel = FALSE

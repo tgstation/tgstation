@@ -46,10 +46,14 @@
 	/// How long the leave host animation lasts for this type, in deciseconds.
 	var/leave_host_duration = 0
 
-	/// Associative list of how much of each blood type the blood worm has consumed.
-	/// The format of this list is "list[blood_type.id] = amount_consumed"
-	/// This carries across growth stages.
-	var/list/consumed_blood = list()
+	/// How much regular (human, blood pack, etc.) blood the worm has consumed.
+	var/consumed_normal_blood = 0
+	/// How much synthetic (monkey, duplicated, etc.) blood the worm has consumed.
+	var/consumed_synth_blood = 0
+	/// The maximum amount of synthetic blood counted for growth.
+	var/maximum_synth_blood = 1000
+	/// How efficient ingesting synthetic blood is compared to normal blood. (ingested amount is multiplied by this)
+	var/synth_blood_efficiency = 0.7
 
 	/// The current host of the blood worm, if any.
 	/// You can use this to check if the blood worm has a host.
@@ -184,7 +188,8 @@
 	. = ..()
 
 	if (!host)
-		adjustBruteLoss(-regen_rate * seconds_per_tick)
+		// Moved to host life while in a host.
+		adjust_worm_health(regen_rate * seconds_per_tick)
 	else
 		bodytemperature = T20C
 
@@ -214,16 +219,35 @@
 	if (host && loc != host)
 		unregister_host()
 
-/mob/living/basic/blood_worm/proc/ingest_blood(blood_amount, blood_type_id, should_heal = TRUE)
-	if (!blood_type_id || !blood_amount)
+/mob/living/basic/blood_worm/proc/consume_blood(blood_amount, synth_content = 0, should_heal = TRUE)
+	if (blood_amount <= 0)
 		return
 
-	consumed_blood[blood_type_id] += blood_amount
+	synth_content = clamp(synth_content, 0, 1)
 
-	if (should_heal && !host)
-		adjustBruteLoss(-blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)
+	consumed_synth_blood = min(consumed_synth_blood + blood_amount * synth_content * synth_blood_efficiency, maximum_synth_blood)
+	consumed_normal_blood += blood_amount * (1 - synth_content)
 
-	SEND_SIGNAL(src, COMSIG_BLOOD_WORM_INGEST_BLOOD, blood_amount, blood_type_id, should_heal)
+	if (should_heal)
+		// Synthetic blood works just fine for healing.
+		adjust_worm_health(blood_amount * BLOOD_WORM_BLOOD_TO_HEALTH)
+
+	SEND_SIGNAL(src, COMSIG_BLOOD_WORM_CONSUME_BLOOD, blood_amount, synth_content, should_heal)
+
+/mob/living/basic/blood_worm/proc/reset_consumed_blood()
+	consumed_normal_blood = 0
+	consumed_synth_blood = 0
+
+/mob/living/basic/blood_worm/proc/get_consumed_blood()
+	return consumed_normal_blood + consumed_synth_blood
+
+/// Gets the current health of the worm, regardless of if its in a host or not.
+/mob/living/basic/blood_worm/proc/get_worm_health()
+	return host ? min(host.get_blood_volume() * BLOOD_WORM_BLOOD_TO_HEALTH, maxHealth) : health
+
+/// Adjusts the current health of the worm, regardless of if its in a host or not.
+/mob/living/basic/blood_worm/proc/adjust_worm_health(amount)
+	return host ? host.adjust_blood_volume(amount * BLOOD_WORM_HEALTH_TO_BLOOD) * BLOOD_WORM_BLOOD_TO_HEALTH : adjustBruteLoss(-amount)
 
 /mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host, silent = FALSE, gain_progress = TRUE)
 	if (!silent)
@@ -276,7 +300,7 @@
 
 	if (gain_progress)
 		// Apply the host's blood volume to our growth.
-		ingest_blood(cached_blood_volume, host.get_bloodtype(), should_heal = FALSE)
+		consume_blood(cached_blood_volume, host.get_blood_synth_content(), should_heal = FALSE)
 
 	// Combine our health with the blood of our host.
 	host.set_blood_volume(cached_blood_volume + health * BLOOD_WORM_HEALTH_TO_BLOOD)
@@ -411,7 +435,8 @@
 	return HANDLE_BLOOD_NO_OXYLOSS | HANDLE_BLOOD_NO_NUTRITION_DRAIN
 
 /mob/living/basic/blood_worm/proc/on_host_life(datum/source, seconds_per_tick, times_fired)
-	host.adjust_blood_volume(regen_rate * seconds_per_tick * BLOOD_WORM_HEALTH_TO_BLOOD)
+	// Moved to worm life when not in a host.
+	adjust_worm_health(regen_rate * seconds_per_tick)
 
 	// Required for now, because TRAIT_NOBREATH does not actually prevent oxygen damage.
 	// This is really weird because it also sets oxygen damage to 0 when added to a mob.
@@ -435,7 +460,7 @@
 		return
 
 	var/burn_coeff = damage_coeff[BURN]
-	host.adjust_blood_volume(-unsuitable_heat_damage * BLOOD_WORM_HEALTH_TO_BLOOD * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
+	adjust_worm_health(-unsuitable_heat_damage * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
 
 	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
 		to_chat(is_possessing_host ? host : src, span_userdanger("Your blood is burning up!"))
@@ -520,23 +545,25 @@
 	if (cached_blood_volume <= 0)
 		return
 
-	var/datum/blood_type/blood_type = bloodbag.get_bloodtype()
+	var/list/blood_data = bloodbag.get_blood_data()
 
-	if (!blood_type)
-		return
+	var/synth_content = blood_data?[BLOOD_DATA_SYNTH_CONTENT]
+	var/normal_content = 1 - synth_content
 
-	var/unscaled_blood = consumed_blood[blood_type.id]
-	var/scaled_blood_right_now = get_blood_volume_after_curve(unscaled_blood)
-	var/scaled_blood_after_consumption = get_blood_volume_after_curve(unscaled_blood + cached_blood_volume)
-	var/potential_gain = scaled_blood_after_consumption - scaled_blood_right_now
+	var/normal_blood_after = consumed_normal_blood + cached_blood_volume * normal_content
+	var/synth_blood_after = min(consumed_synth_blood + cached_blood_volume * synth_content, maximum_synth_blood)
+
+	var/total_blood_now = get_consumed_blood()
+	var/total_blood_after = normal_blood_after + synth_blood_after
+
+	var/potential_gain = total_blood_after - total_blood_now
 
 	var/rounded_volume = CEILING(cached_blood_volume, 1)
-	var/total_consumed_blood = get_scaled_total_consumed_blood()
 
 	var/growth_string = ""
 	if (HAS_TRAIT(bloodbag, TRAIT_BLOOD_WORM_HOST))
 		growth_string = ", but consuming it is impossible, as they are a host"
-	else if (total_consumed_blood < cocoon_action?.total_blood_required)
+	else if (total_blood_now < cocoon_action?.total_blood_required)
 		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
 		if (rounded_growth > 0)
 			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
@@ -548,7 +575,16 @@
 		else
 			growth_string = ". You are already fully grown"
 
-	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of [blood_type.id] blood[growth_string].")
+	var/synth_string = ""
+	switch(synth_content)
+		if (-INFINITY to 0)
+			synth_string = "not"
+		if (1 to INFINITY)
+			synth_string = "fully"
+		else
+			synth_string = "[CEILING(synth_content * 100, 1)]%"
+
+	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of blood[growth_string]. [target.p_Their()] blood is <b>[synth_string]</b> synthetic.")
 
 /mob/living/basic/blood_worm/get_status_tab_items()
 	return ..() + get_special_status_tab_items()
@@ -561,55 +597,18 @@
 /mob/living/basic/blood_worm/proc/get_special_status_tab_items()
 	. = list()
 
-	var/unscaled = get_unscaled_total_consumed_blood()
-	var/scaled = get_scaled_total_consumed_blood()
+	var/normal = consumed_normal_blood
+	var/synth = consumed_synth_blood
+	var/total = normal + synth
 
-	var/unscaled_rounded = CEILING(unscaled, 1)
-	var/scaled_rounded = CEILING(scaled, 1)
+	var/total_required = cocoon_action?.total_blood_required
 
-	. += "Blood Consumed: [unscaled_rounded]u[scaled_rounded == unscaled_rounded ? "" : " ([scaled_rounded]u)"]"
-	if (cocoon_action?.total_blood_required > 0)
-		. += "Growth: [FLOOR(scaled / cocoon_action.total_blood_required * 100, 1)]%"
-
-	if (!length(consumed_blood))
-		return
-
-	var/list/efficiency_strings = list()
-
-	for (var/blood_type_id in consumed_blood)
-		var/base_amount = consumed_blood[blood_type_id]
-		var/efficiency = CEILING(get_blood_volume_after_curve(base_amount) / base_amount * 100, 1)
-
-		if (efficiency < 100)
-			efficiency_strings += "- [blood_type_id]: [efficiency]%"
-
-	if (!length(efficiency_strings))
-		return
-
-	. += "Blood Efficiency"
-	for (var/efficiency_string in efficiency_strings)
-		. += efficiency_string
-
-/mob/living/basic/blood_worm/proc/get_scaled_total_consumed_blood()
-	. = 0
-	for (var/blood_type_id in consumed_blood)
-		. += get_blood_volume_after_curve(consumed_blood[blood_type_id])
-
-/mob/living/basic/blood_worm/proc/get_unscaled_total_consumed_blood()
-	. = 0
-	for (var/blood_type_id in consumed_blood)
-		. += consumed_blood[blood_type_id]
-
-/// This is why you can't just drain the same dude to reach adulthood in 10 seconds flat.
-/mob/living/basic/blood_worm/proc/get_blood_volume_after_curve(initial_volume)
-	var/starting_point = BLOOD_VOLUME_NORMAL
-	var/maximum_point = starting_point * 2
-	var/clamped_volume = clamp(initial_volume, 0, maximum_point)
-	var/volume_past_starting_point = max(0, clamped_volume - starting_point)
-
-	// To put this in laymans terms, after you reach BLOOD_VOLUME_NORMAL, any further blood of the same type has a lower and lower effect.
-	// This ends after you've consumed BLOOD_VOLUME_NORMAL * 2 of any blood type, after which consuming any more of that type is useless.
-	return max(0, clamped_volume - (volume_past_starting_point * volume_past_starting_point) / maximum_point)
+	if (total_required > 0)
+		. += "Growth: [FLOOR(total / total_required * 100, 1)]%"
+	. += "Blood Consumed"
+	. += "- Normal: [CEILING(normal, 1)]u"
+	. += "- Synthetic: [CEILING(synth, 1)]u (MAX: [maximum_synth_blood]u)"
+	. += "- Total: [CEILING(total, 1)]u (REQ: [total_required]u)"
 
 /// Gets BLOOD_WORM_EJECT_THRESHOLD as an actionable blood volume threshold.
 /mob/living/basic/blood_worm/proc/get_eject_volume_threshold()
