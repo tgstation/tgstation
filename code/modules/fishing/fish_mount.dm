@@ -39,7 +39,7 @@
 	//Mounted fish shouldn't flop. It should also show size and weight to everyone.
 	add_traits(list(TRAIT_STOP_FISH_FLOPPING, TRAIT_EXAMINE_FISH), INNATE_TRAIT)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	if(!persistence_id)
 		return
 	if(SSfishing.initialized)
