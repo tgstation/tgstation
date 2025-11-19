@@ -15,7 +15,7 @@
 			achievements += score_achievement_type
 		RemoveElement(/datum/element/kill_achievement, string_list(achievements), crusher_achievement_type, /datum/memory/megafauna_slayer)
 
-	// remove the crusher loot elemet's arguments also to remove it appropriately
+	// remove the crusher loot element's arguments also to remove it appropriately
 	RemoveElement(\
 		/datum/element/crusher_loot,\
 		trophy_type = crusher_loot,\
