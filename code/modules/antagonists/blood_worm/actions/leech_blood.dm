@@ -112,6 +112,12 @@
 	playsound(target, 'sound/items/weapons/bite.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 	playsound(target, 'sound/effects/wounds/pierce3.ogg', vol = 100, vary = TRUE, ignore_walls = FALSE)
 
+	var/synth_content = target.get_blood_synth_content()
+	if (synth_content >= 1)
+		target.balloon_alert(leech, "fully synthetic")
+	else if (synth_content > 0)
+		target.balloon_alert(leech, "[CEILING(synth_content * 100, 1)]% synthetic")
+
 	while (do_after(leech, 1 SECONDS, target, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(leech_living_active_check), leech, target)))
 		leech.consume_blood(-target.adjust_blood_volume(-leech_rate), target.get_blood_synth_content())
 
@@ -173,25 +179,41 @@
 
 	playsound(target, 'sound/items/weapons/bite.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
+	leech_container_alert_synth_info(leech, target)
+
 	while (do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_active_check), leech, target)))
 		var/list/blood = get_blood_in_container(target)
 
 		var/total_volume = 0
-		for (var/reagent_type in blood)
-			total_volume += blood[reagent_type]
+		for (var/datum/reagent/reagent as anything in blood)
+			total_volume += reagent.volume
 
-		for (var/reagent_type in blood)
-			var/volume = blood[reagent_type]
-			var/datum/reagent/reagent = target.reagents.has_reagent(reagent_type)
-
-			var/synth_content = reagent.data[BLOOD_DATA_SYNTH_CONTENT]
-			var/amount_consumed = target.reagents.remove_reagent(reagent_type, leech_rate * (volume / total_volume))
+		for (var/datum/reagent/reagent as anything in blood)
+			var/synth_content = reagent.data?[BLOOD_DATA_SYNTH_CONTENT]
+			var/amount_consumed = target.reagents.remove_reagent(reagent.type, leech_rate * (reagent.volume / total_volume))
 
 			leech.consume_blood(amount_consumed, synth_content)
 
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 
 	StartCooldown()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_alert_synth_info(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
+	var/list/blood = get_blood_in_container(target)
+
+	var/total_volume = 0
+	var/synth_content = 0
+
+	for (var/datum/reagent/reagent as anything in blood)
+		total_volume += reagent.volume
+		synth_content += reagent.data?[BLOOD_DATA_SYNTH_CONTENT] * reagent.volume
+
+	synth_content /= total_volume
+
+	if (synth_content >= 1)
+		target.balloon_alert(leech, "fully synthetic")
+	else if (synth_content > 0)
+		target.balloon_alert(leech, "[CEILING(synth_content * 100, 1)]% synthetic")
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container_start_check(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target, feedback = FALSE)
 	if (!length(get_blood_in_container(target)))
@@ -219,7 +241,7 @@
 		if (!compatible_container_reagent_types[reagent.type])
 			continue
 
-		.[reagent.type] = reagent.volume
+		. += reagent
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/hatchling
 	leech_rate = BLOOD_VOLUME_NORMAL * 0.05 // 28 units of blood, 5 points of health, or 6.25% of a hatchling blood worm's health
