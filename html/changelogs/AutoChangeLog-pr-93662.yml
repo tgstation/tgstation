@@ -1,0 +1,9 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "fixes all incorrectly maploded wall mounts that aren't actually hanging on any support structure"
+  - bugfix: "objects mounted on tables, windows & fences also fall off now when destoryed"
+  - qol: "lights can be mounted on windows"
+  - qol: "cameras can be mounted on windows"
+  - qol: "buttons can be mounted on tables"
+  - refactor: "improved how wall mounts interact with objects as a whole report bugs on github"
