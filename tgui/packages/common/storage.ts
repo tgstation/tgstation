@@ -77,7 +77,14 @@ class IFrameIndexedDbBackend implements StorageBackend {
     iframe.src = Byond.storageCdn;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
-      setTimeout(() => resolve(false), 1000);
+      fetch(Byond.storageCdn, { method: "HEAD" }).then((response) => {
+        if (response.status !== 200) {
+          resolve(false);
+        }
+
+      }).catch(() => {
+        resolve(false);
+      })
 
       window.addEventListener('message', (message) => {
         if (message.data === "ready") {
