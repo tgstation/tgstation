@@ -81,7 +81,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "ch" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/cerulean,
@@ -242,10 +243,12 @@
 /area/ruin/space/has_grav/listeningstation)
 "lO" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
@@ -351,7 +354,8 @@
 "vt" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
@@ -613,7 +617,8 @@
 	pixel_y = -32
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,

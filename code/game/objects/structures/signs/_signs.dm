@@ -23,8 +23,11 @@
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
-	if(mapload)
-		find_and_hang_on_wall()
+	if(mapload && !find_and_hang_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/sign/LateInitialize()
+	find_and_hang_on_atom(late_init = TRUE)
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -48,17 +51,17 @@
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
 	if(!buildable_sign)
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	user.visible_message(span_notice("[user] starts removing [src]..."), \
 		span_notice("You start unfastening [src]."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
 	deconstruct(TRUE)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -217,7 +220,7 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_hang_on_wall()
+	placed_sign.find_and_hang_on_atom()
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
