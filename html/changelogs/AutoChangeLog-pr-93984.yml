@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed mobs not actually befriending their lazarus reviver, and losing all previous friends upon revival"
