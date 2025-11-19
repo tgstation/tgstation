@@ -214,7 +214,7 @@ SUBSYSTEM_DEF(wardrobe)
 /// Take an existing object, and recycle it if we are allowed to by stashing it back into our storage
 /datum/controller/subsystem/wardrobe/proc/recycle_object(obj/item/object)
 	// Don't restock blacklisted items, instead just delete them
-	if(recycling && is_type_in_typecache(object_type, recycle_blacklist))
+	if(is_type_in_typecache(object_type, recycle_blacklist))
 		qdel(object)
 		return
 	stash_object(object)
