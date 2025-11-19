@@ -8,3 +8,13 @@
 	. += NAMEOF(src, opened)
 	. += NAMEOF(src, locked)
 	return .
+
+/obj/structure/extinguisher_cabinet/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, opened)
+	return .
+
+/obj/structure/extinguisher_cabinet/PersistentInitialize()
+	. = ..()
+	if(opened)
+		update_appearance()
