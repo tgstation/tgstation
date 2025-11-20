@@ -258,7 +258,7 @@
 				play_sound = TRUE
 
 	if(play_sound && !no_sound)
-		replacer.play_rped_sound()
+		replacer.play_rped_effect()
 
 	return TRUE
 

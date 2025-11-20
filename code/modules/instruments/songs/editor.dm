@@ -9,6 +9,7 @@
 
 /datum/song/ui_data(mob/user)
 	var/list/data = ..()
+	data["id"] = id
 	data["using_instrument"] = using_instrument?.name || "No instrument loaded!"
 	data["note_shift"] = note_shift
 	data["octaves"] = round(note_shift / 12, 0.01)
@@ -70,6 +71,11 @@
 				INVOKE_ASYNC(src, PROC_REF(start_playing), user)
 			else
 				stop_playing()
+			return TRUE
+		if("set_instrument_id")
+			var/new_id = reject_bad_name(LOWER_TEXT(params["id"]), max_length = 20, allow_numbers = TRUE, cap_after_symbols = FALSE)
+			if(new_id)
+				id = new_id
 			return TRUE
 		if("change_instrument")
 			var/new_instrument = params["new_instrument"]

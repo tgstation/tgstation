@@ -1,6 +1,7 @@
 /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = CLEANABLE_FLOOR_OBJECT_LAYER
+	abstract_type = /obj/effect/decal/cleanable
 	flags_1 = UNPAINTABLE_1
 	var/list/random_icon_states = null
 	/// When two of these are on a same tile or do we need to merge them into just one?
@@ -134,3 +135,7 @@
 	if (existing)
 		return existing
 	return new cleanable_type(checkturf)
+
+/turf/proc/spawn_glitter(glitter_colors)
+	var/obj/effect/decal/cleanable/glitter/new_glitter = spawn_unique_cleanable(/obj/effect/decal/cleanable/glitter)
+	new_glitter.color = pick_weight(glitter_colors)

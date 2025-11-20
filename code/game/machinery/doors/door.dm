@@ -98,7 +98,6 @@
 		set_bounds()
 		set_filler()
 		update_overlays()
-	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
 	if(elevator_mode)
@@ -163,7 +162,6 @@
 		layer = initial(layer)
 
 /obj/machinery/door/Destroy()
-	update_freelook_sight()
 	if(elevator_mode)
 		GLOB.elevator_doors -= src
 	if(spark_system)
@@ -508,7 +506,7 @@
 	operating = TRUE
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
-	set_opacity(0)
+	set_opacity(FALSE)
 	var/passable_delay = animation_segment_delay(DOOR_OPENING_PASSABLE)
 	SLEEP_NOT_DEL(passable_delay)
 	set_density(FALSE)
@@ -517,10 +515,9 @@
 	SLEEP_NOT_DEL(open_delay)
 	layer = initial(layer)
 	update_appearance()
-	set_opacity(0)
+	set_opacity(FALSE)
 	operating = FALSE
 	air_update_turf(TRUE, FALSE)
-	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
 	return TRUE
@@ -556,10 +553,9 @@
 	SLEEP_NOT_DEL(close_delay)
 	update_appearance()
 	if(visible && !glass)
-		set_opacity(1)
+		set_opacity(TRUE)
 	operating = FALSE
 	air_update_turf(TRUE, TRUE)
-	update_freelook_sight()
 
 	if(!can_crush)
 		return TRUE
@@ -584,24 +580,23 @@
 	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
 			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
-			SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			var/sig_return = SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
+			future_pancake.add_splatter_floor(loc)
+			log_combat(src, future_pancake, "crushed")
+			var/door_wounding = (sig_return & DOORCRUSH_NO_WOUND) ? CANT_WOUND : 10
 			if(isalien(future_pancake))  //For xenos
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE * 1.5, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src) //Xenos go into crit after aproximately the same amount of crushes as humans.
 				future_pancake.emote("roar")
 			else if(ismonkey(future_pancake)) //For monkeys
 				future_pancake.emote("screech")
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				future_pancake.Paralyze(100)
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+				future_pancake.Paralyze(10 SECONDS)
 			else if(ishuman(future_pancake)) //For humans
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 				future_pancake.emote("scream")
-				future_pancake.Paralyze(100)
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
+				future_pancake.Paralyze(10 SECONDS)
 			else //for simple_animals & borgs
-				future_pancake.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				var/turf/location = get_turf(src)
-				//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-				future_pancake.add_splatter_floor(location)
-				log_combat(src, future_pancake, "crushed")
+				future_pancake.apply_damage(DOOR_CRUSH_DAMAGE, BRUTE, BODY_ZONE_CHEST, wound_bonus = door_wounding, attacking_item = src)
 		for(var/obj/vehicle/sealed/mecha/mech in get_turf(src)) // Your fancy metal won't save you here!
 			mech.take_damage(DOOR_CRUSH_DAMAGE)
 			log_combat(src, mech, "crushed")
@@ -619,10 +614,6 @@
 /obj/machinery/door/proc/hasPower()
 	return !(machine_stat & NOPOWER)
 
-/obj/machinery/door/proc/update_freelook_sight()
-	if(!glass && GLOB.cameranet)
-		GLOB.cameranet.updateVisibility(src, 0)
-
 /obj/machinery/door/block_superconductivity() // All non-glass airlocks block heat, this is intended.
 	if(opacity || heat_proof)
 		return 1
@@ -633,7 +624,13 @@
 
 /obj/machinery/door/morgue/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/redirect_attack_hand_from_turf)
+	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(drag_check)))
+
+// if dragging, block redirect_Attack_hand_from_turf
+/obj/machinery/door/morgue/proc/drag_check(mob/user)
+	if (user.pulling)
+		return FALSE
+	return TRUE
 
 /obj/machinery/door/get_dumping_location()
 	return null

@@ -224,7 +224,7 @@
 		stack_trace("[type] created on invalid target [Target || "null"]")
 		qdel(src)
 
-/datum/action/backup_uplink/Trigger(trigger_flags)
+/datum/action/backup_uplink/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

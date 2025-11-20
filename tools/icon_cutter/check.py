@@ -93,11 +93,16 @@ for cutter_template in files:
 
     output_hash[output_name] = get_file_hash(output_name)
 
+# Sanity check
+if len(output_hash) == 0:
+    print(f"::error output_hash dict was empty. Something has gone wrong")
+    sys.exit(1)
+
 # Execute cutter
 if platform.system() == "Windows":
     subprocess.run(f"{path_to_us}\..\\build\\build.bat --force-recut --ci icon-cutter")
 else:
-    subprocess.run(f"{path_to_us}/../build/build --force-recut --ci icon-cutter", shell = True)
+    subprocess.run(f"{path_to_us}/../build/build.sh --force-recut --ci icon-cutter", shell = True)
 
 for output_name in output_hash:
     old_hash, old_metadata, old_icon_hash = output_hash[output_name]

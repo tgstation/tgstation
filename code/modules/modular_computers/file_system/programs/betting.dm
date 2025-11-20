@@ -40,17 +40,17 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 			"description" = bets.description,
 			"owner" = bets == created_bet,
 			"creator" = bets.bet_owner,
-			"current_bets" = bets.get_bets(computer.computer_id_slot?.registered_account),
+			"current_bets" = bets.get_bets(computer.stored_id?.registered_account),
 			"locked" = bets.locked,
 		))
 
 	data["can_create_bet"] = !!isnull(created_bet)
-	if(isnull(computer.computer_id_slot))
+	if(isnull(computer.stored_id))
 		data["bank_name"] = null
 		data["bank_money"] = null
 	else
-		data["bank_name"] = computer.computer_id_slot.registered_account.account_holder
-		data["bank_money"] = computer.computer_id_slot.registered_account.account_balance
+		data["bank_name"] = computer.stored_id.registered_account.account_holder
+		data["bank_money"] = computer.stored_id.registered_account.account_balance
 
 	return data
 
@@ -63,7 +63,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 /datum/computer_file/program/betting/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user = ui.user
-	if(isnull(computer.computer_id_slot))
+	if(isnull(computer.stored_id))
 		to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
 		return
 	switch(action)
@@ -102,14 +102,14 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 			var/option = params["option_selected"]
 			if(isnull(bet_placed_on))
 				return
-			bet_placed_on.bet_money(computer.computer_id_slot.registered_account, money_betting, option)
+			bet_placed_on.bet_money(computer.stored_id.registered_account, money_betting, option)
 			return TRUE
 		if("cancel_bet")
 			var/datum/active_bet/bet_cancelling
 			for(var/datum/active_bet/bets as anything in GLOB.active_bets)
 				if(bets.name == params["bet_selected"])
 					bet_cancelling = bets
-			bet_cancelling.cancel_bet(computer.computer_id_slot.registered_account)
+			bet_cancelling.cancel_bet(computer.stored_id.registered_account)
 			return TRUE
 		if("select_winner")
 			var/datum/active_bet/bets_ending
@@ -170,18 +170,31 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	for(var/option in options)
 		if(!length(options[option]))
 			options[option] = list()
-	//we'll only advertise it on the first bet of the round, as to not make this overly annoying.
-	var/should_alert = FALSE
-	for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
-		if(FC.channel_name == NEWSCASTER_SPACE_BETTING)
-			if(!length(FC.messages))
-				should_alert = TRUE
-	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Space Betting App", NEWSCASTER_SPACE_BETTING, null, update_alert = should_alert)
+	advertise_bet()
 
 /datum/active_bet/Destroy(force)
 	GLOB.active_bets -= src
 	newscaster_message = null
 	return ..()
+
+/// Place a feed article advertising our bet.
+/datum/active_bet/proc/advertise_bet()
+	var/datum/feed_channel/betting_channel = GLOB.news_network.network_channels_by_name[NEWSCASTER_SPACE_BETTING]
+	if(isnull(betting_channel))
+		return
+	// We'll only advertise it on the first bet of the round, as to not make this overly annoying.
+	var/should_alert = !length(betting_channel.messages)
+	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Space Betting App", NEWSCASTER_SPACE_BETTING, null, update_alert = should_alert)
+
+/// Reply to our previously placed advertisement feed article.
+/datum/active_bet/proc/reply_to_feed(winning_option)
+	if(isnull(newscaster_message))
+		return
+	GLOB.news_network.submit_comment(
+		comment_text = "The bet [name] has ended, the winner was [winning_option]!",
+		newscaster_username = "NtOS Betting Results",
+		current_message = newscaster_message,
+	)
 
 ///Returns how many bets there is per option
 /datum/active_bet/proc/get_bets(datum/bank_account/user_account)
@@ -206,11 +219,8 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 				var/datum/bank_account/refunded_account = existing_bets[1]
 				refunded_account.adjust_money(text2num(existing_bets[2]), "Refund: [name] gamble cancelled.")
 		return
-	GLOB.news_network.submit_comment(
-		comment_text = "The bet [name] has ended, the winner was [winning_option]!",
-		newscaster_username = "NtOS Betting Results",
-		current_message = newscaster_message,
-	)
+
+	reply_to_feed(winning_option)
 	var/list/winners = options[winning_option]
 	if(!length(winners))
 		return

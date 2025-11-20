@@ -90,7 +90,7 @@
 	var/direct_target
 	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
 		direct_target = target
-	loaded_projectile.aim_projectile(target, fired_from, params2list(params), spread)
+	loaded_projectile.aim_projectile(target, tk_firing(user, fired_from) ? fired_from : user, params2list(params), spread)
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
 	loaded_projectile_cache.fire(null, direct_target)

@@ -37,7 +37,7 @@ function GhostFormInput(
 
   const serverData = props.serverData;
   if (!serverData) {
-    return <> </>;
+    return;
   }
 
   const displayNames = serverData.display_names;

@@ -267,14 +267,14 @@
 	var/holder_item = FALSE
 
 	if(!isidcard(card_to_insert))
-		card_to_insert = inserting_item.RemoveID()
+		card_to_insert = inserting_item.remove_id()
 		holder_item = TRUE
 
 	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
 		return FALSE
 
 	if(target)
-		if(holder_item && inserting_item.InsertID(target))
+		if(holder_item && inserting_item.insert_id(target))
 			playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		else
 			id_eject(user, target)
@@ -347,7 +347,7 @@
 		var/nag_message = "[src] is unsent in [get_area(src)]."
 
 		//nag on Supply channel and reduce the speed bonus multiplier to nothing
-		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src)
+		var/obj/machinery/announcement_system/aas = get_announcement_system(/datum/aas_config_entry/bounty_cube_unsent, src, list(RADIO_CHANNEL_SUPPLY))
 		if (aas)
 			nag_message = aas.compile_config_message(/datum/aas_config_entry/bounty_cube_unsent, list("LOCATION" = get_area_name(src), "COST" = bounty_value), "Regular Message")
 			if (speed_bonus)

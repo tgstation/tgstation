@@ -31,7 +31,7 @@
 	///A wearkef to the throwdatum we're currently dealing with, if we need it
 	var/datum/weakref/tackle_ref
 
-/datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance)
+/datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, silent_gain = FALSE)
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -42,8 +42,9 @@
 	src.skill_mod = skill_mod
 	src.min_distance = min_distance
 
-	var/mob/P = parent
-	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
+	if(!silent_gain)
+		var/mob/P = parent
+		to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw mode, and ") + span_boldnotice("RIGHT-CLICKING on your target with an empty hand."))
 
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
@@ -409,6 +410,13 @@
 		var/obj/item/organ/cyberimp/chest/spine/potential_spine = tackle_target.get_organ_slot(ORGAN_SLOT_SPINE)
 		if(istype(potential_spine))
 			defense_mod += potential_spine.strength_bonus
+
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade))
+			defense_mod += 8
+		if(istype(tackle_target.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust))
+			var/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/rust_robes = tackle_target.wear_suit
+			if(rust_robes.rusted)
+				defense_mod += 10
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent

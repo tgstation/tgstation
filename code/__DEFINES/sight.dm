@@ -25,6 +25,7 @@
 #define BORGTHERM (1<<1)
 #define BORGXRAY (1<<2)
 #define BORGMATERIAL (1<<3)
+#define BORGDEFAULT 0
 
 //for clothing visor toggles, these determine which vars to toggle
 #define VISOR_FLASHPROTECT (1<<0)

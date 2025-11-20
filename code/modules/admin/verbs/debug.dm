@@ -1,6 +1,6 @@
 ADMIN_VERB(toggle_game_debug, R_DEBUG, "Debug-Game", "Toggles game debugging.", ADMIN_CATEGORY_DEBUG)
-	GLOB.Debug2 = !GLOB.Debug2
-	var/message = "toggled debugging [(GLOB.Debug2 ? "ON" : "OFF")]"
+	GLOB.debugging_enabled = !GLOB.debugging_enabled
+	var/message = "toggled debugging [(GLOB.debugging_enabled ? "ON" : "OFF")]"
 	message_admins("[key_name_admin(user)] [message].")
 	log_admin("[key_name(user)] [message].")
 	BLACKBOX_LOG_ADMIN_VERB("Toggle Debug Two")
@@ -139,7 +139,7 @@ ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "Grant Full Access", "Grant full 
 		if(worn)
 			if(istype(worn, /obj/item/modular_computer))
 				var/obj/item/modular_computer/worn_computer = worn
-				worn_computer.InsertID(id, H)
+				worn_computer.insert_id(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
@@ -320,7 +320,7 @@ ADMIN_VERB(cmd_admin_areatest, R_DEBUG, "Test Areas", "Tests the areas for vario
 			areas_with_intercom.Add(A.type)
 		CHECK_TICK
 
-	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in SScameras.cameras)
 		var/area/A = get_area(C)
 		if(!A)
 			dat += "Skipped over [C] in invalid location, [C.loc].<br>"
@@ -615,7 +615,7 @@ ADMIN_VERB(place_ruin, R_DEBUG, "Spawn Ruin", "Attempt to randomly place a speci
 			themed_names[name] = list(ruin, theme, list(ruin.default_area))
 		names += sort_list(themed_names)
 
-	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", sort_list(names))
+	var/ruinname = tgui_input_list(user, "Select ruin", "Spawn Ruin", names)
 	var/data = names[ruinname]
 	if (!data)
 		return
@@ -1031,3 +1031,21 @@ ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom 
 	. = list()
 	CRASH("count_datums not supported on OpenDream")
 #endif
+
+ADMIN_VERB_VISIBILITY(export_save_to_dev_preference, ADMIN_VERB_VISIBLITY_FLAG_LOCALHOST)
+ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferences", "Exports your savefile to be used by any guests that connect to your localost.", ADMIN_CATEGORY_SERVER)
+	if(!user.is_localhost())
+		tgui_alert(user, "You shouldn't be using this right now!", "Export Failed", list("OK"))
+		log_admin("[key_name(user)] attempted to export preferences to [DEV_PREFS_PATH] - this is normally locked to localhost only!")
+		stack_trace("Export Save as Dev Preferences was called by a non-localhost user!")
+		return
+	if(is_guest_key(user.key))
+		tgui_alert(user, "Guests don't have preferences to export.", "Export Failed", list("OK"))
+		return
+	var/datum/preferences/user_prefs = user.prefs
+	var/datum/json_savefile/dev_save = new(DEV_PREFS_PATH)
+	user_prefs.save_preferences()
+	user_prefs.savefile.copy_to_savefile(dev_save)
+	dev_save.save()
+	tgui_alert(user, "Exported preferences to [DEV_PREFS_PATH]. \
+		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))

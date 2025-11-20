@@ -124,23 +124,22 @@ export const chatMiddleware = (store: Store) => {
       }
 
       const sequence_count = sequences.length;
-      seq_check: if (sequence_count > 0) {
+      if (sequence_count > 0) {
         if (sequences_requested.includes(sequence)) {
           sequences_requested.splice(sequences_requested.indexOf(sequence), 1);
           // if we are receiving a message we requested, we can stop reliability checks
-          break seq_check;
-        }
-
-        // cannot do reliability if we don't have any messages
-        const expected_sequence = sequences[sequence_count - 1] + 1;
-        if (sequence !== expected_sequence) {
-          for (
-            let requesting = expected_sequence;
-            requesting < sequence;
-            requesting++
-          ) {
-            sequences_requested.push(requesting);
-            Byond.sendMessage('chat/resend', requesting);
+        } else {
+          // cannot do reliability if we don't have any messages
+          const expected_sequence = sequences[sequence_count - 1] + 1;
+          if (sequence !== expected_sequence) {
+            for (
+              let requesting = expected_sequence;
+              requesting < sequence;
+              requesting++
+            ) {
+              sequences_requested.push(requesting);
+              Byond.sendMessage('chat/resend', requesting);
+            }
           }
         }
       }

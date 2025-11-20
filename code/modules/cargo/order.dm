@@ -98,7 +98,7 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account && !pack.goody) //privately purchased and not a goody means 1.1x the cost
+	if(paying_account?.add_to_accounts && !pack.goody) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
 	return round(cost)
 
@@ -157,7 +157,6 @@
 				if(!container_contents[missing_item]) // To avoid 0s and negative values on the manifest
 					container_contents -= missing_item
 
-
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
 	manifest_text += "</ul>"
@@ -173,16 +172,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-
 	manifest_paper.update_appearance()
 	manifest_paper.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = container
-		C.manifest = manifest_paper
-		C.update_appearance()
-	else
-		container.contents += manifest_paper
+		var/obj/structure/closet/crate/crate = container
+		crate.manifest = WEAKREF(manifest_paper)
+		crate.update_appearance()
 
 	return manifest_paper
 
@@ -208,7 +204,7 @@
 	return
 
 /datum/supply_order/proc/append_order(list/new_contents, cost_increase)
-	for(var/i as anything in new_contents)
+	for(var/i in new_contents)
 		if(pack.contains[i])
 			pack.contains[i] += new_contents[i]
 		else

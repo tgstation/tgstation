@@ -112,7 +112,7 @@
 /datum/ai_behavior/goliath_dig/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	var/turf/target_turf = controller.blackboard[target_key]
 	var/mob/living/basic/basic_mob = controller.pawn
-	if(!basic_mob.CanReach(target_turf))
+	if(!target_turf.IsReachableBy(basic_mob))
 		return AI_BEHAVIOR_DELAY
 	basic_mob.melee_attack(target_turf)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

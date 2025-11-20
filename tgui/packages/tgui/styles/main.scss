@@ -16,6 +16,7 @@
 @include meta.load-css('~tgui-core/styles/all-themes.scss');
 
 // Interfaces
+@include meta.load-css('./interfaces/Accounting.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');

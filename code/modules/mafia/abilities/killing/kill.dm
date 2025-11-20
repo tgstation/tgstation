@@ -21,7 +21,7 @@
 		host_role.send_message_to_player(span_danger("Your attempt at killing [target_role.body.real_name] was prevented!"))
 	else
 		target_role.send_message_to_player(span_userdanger("You have been [attack_action] \a [host_role.name]!"))
-		if(honorable && (target_role.team != MAFIA_TEAM_TOWN))
+		if(honorable && (target_role.team & MAFIA_TEAM_TOWN))
 			host_role.send_message_to_player(span_userdanger("You have killed an innocent crewmember. You will die tomorrow night."))
 			RegisterSignal(game, COMSIG_MAFIA_SUNDOWN, PROC_REF(internal_affairs))
 	return TRUE

@@ -36,7 +36,7 @@
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/laser/hos
-	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE * 1.2)
+	e_cost = LASER_SHOTS(12, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/laser/musket
 	projectile_type = /obj/projectile/beam/laser/musket

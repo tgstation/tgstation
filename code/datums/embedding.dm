@@ -308,12 +308,12 @@
 /// Move self to owner's turf when our limb gets removed
 /datum/embedding/proc/on_removed(datum/source, mob/living/carbon/old_owner)
 	SIGNAL_HANDLER
-	stop_embedding()
-	parent.forceMove(old_owner.drop_location())
+	if (!stop_embedding()) // Dropdel?
+		parent.forceMove(old_owner.drop_location())
 
 /// Someone attempted to pull us out! Either the owner by inspecting themselves, or someone else by examining the owner and clicking the link.
 /datum/embedding/proc/rip_out(mob/living/jack_the_ripper)
-	if (!jack_the_ripper.CanReach(owner))
+	if (!owner.IsReachableBy(jack_the_ripper))
 		return
 
 	if (!jack_the_ripper.can_perform_action(owner, FORBID_TELEKINESIS_REACH | NEED_HANDS | ALLOW_RESTING))

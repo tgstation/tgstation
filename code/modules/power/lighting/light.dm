@@ -118,8 +118,12 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
+	if(mapload)
+		find_and_hang_on_atom(mark_for_late_init = TRUE)
+
+/obj/machinery/light/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
 	if(break_if_moved)
-		find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
+		return ..()
 
 /obj/machinery/light/post_machine_initialize()
 	. = ..()
@@ -140,6 +144,11 @@
 		on = FALSE
 	QDEL_NULL(cell)
 	return ..()
+
+/obj/machinery/light/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
+		cell = null
 
 /obj/machinery/light/setDir(newdir)
 	. = ..()
@@ -180,6 +189,9 @@
 
 	var/area/local_area = get_room_area()
 
+	if(flickering)
+		. += mutable_appearance(overlay_icon, "[base_state]_flickering")
+		return
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
@@ -225,7 +237,11 @@
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
 		var/area/local_area = get_room_area()
-		if (local_area?.fire)
+		if (flickering)
+			brightness_set = brightness * bulb_low_power_brightness_mul
+			power_set = bulb_low_power_pow_mul
+			color_set = nightshift_light_color
+		else if (local_area?.fire)
 			color_set = fire_colour
 			power_set = fire_power
 			brightness_set = fire_brightness
@@ -381,7 +397,7 @@
 		return
 
 	// attempt to stick weapon into light socket
-	if(status != LIGHT_EMPTY)
+	if(status != LIGHT_EMPTY || user.combat_mode)
 		return ..()
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER) //If it's a screwdriver open it.
 		tool.play_tool_sound(src, 75)
@@ -400,38 +416,32 @@
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 
 /obj/machinery/light/on_deconstruction(disassembled)
-	var/obj/structure/light_construct/new_light = null
-	var/current_stage = 2
-	if(!disassembled)
-		current_stage = 1
+	var/atom/drop_point = drop_location()
+
+	var/obj/item/wallframe/light_fixture/frame = null
 	switch(fitting)
 		if("tube")
-			new_light = new /obj/structure/light_construct(loc)
-			new_light.icon_state = "tube-construct-stage[current_stage]"
-
+			frame = new /obj/item/wallframe/light_fixture(drop_point)
 		if("bulb")
-			new_light = new /obj/structure/light_construct/small(loc)
-			new_light.icon_state = "bulb-construct-stage[current_stage]"
-	new_light.setDir(dir)
-	new_light.stage = current_stage
+			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
+		if("floor bulb")
+			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
 	if(!disassembled)
-		new_light.take_damage(new_light.max_integrity * 0.5, sound_effect=FALSE)
+		frame.take_damage(frame.max_integrity * 0.5, sound_effect = FALSE)
 		if(status != LIGHT_BROKEN)
 			break_light_tube()
 		if(status != LIGHT_EMPTY)
 			drop_light_tube()
 		new /obj/item/stack/cable_coil(loc, 1, "red")
-	transfer_fingerprints_to(new_light)
+	transfer_fingerprints_to(frame)
 
 	var/obj/item/stock_parts/power_store/real_cell = get_cell()
 	if(!QDELETED(real_cell))
-		new_light.cell = real_cell
-		real_cell.forceMove(new_light)
-		cell = null
+		real_cell.forceMove(drop_point)
 
 /obj/machinery/light/attacked_by(obj/item/attacking_object, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!.)
+	if(. <= 0)
 		return
 	if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 		return
@@ -500,25 +510,36 @@
 		)
 	return TRUE
 
-/obj/machinery/light/proc/flicker(amount = rand(10, 20))
+/obj/machinery/light/proc/flicker(amount = 1)
 	set waitfor = FALSE
-	if(flickering)
+	if(flickering || !on || status != LIGHT_OK)
 		return
-	flickering = TRUE
-	if(on && status == LIGHT_OK)
-		. = TRUE //did we actually flicker? Send this now because we expect immediate response, before sleeping.
-		for(var/i in 1 to amount)
-			if(status != LIGHT_OK || !has_power())
-				break
-			on = !on
-			update(FALSE)
-			sleep(rand(5, 15))
-		if(has_power())
-			on = (status == LIGHT_OK)
-		else
-			on = FALSE
+
+	. = TRUE // did we actually flicker? Send this now because we expect immediate response, before sleeping.
+	set_light(
+		l_range = brightness * bulb_low_power_brightness_mul,
+		l_power = bulb_low_power_pow_mul,
+		l_color = nightshift_light_color,
+	)
+	cut_overlays(src)
+	stoplag(0.7 SECONDS)
+	if(prob(30))
+		do_sparks(number = 2, cardinal_only = TRUE, source = src)
+
+	for(var/i in 1 to amount)
+		if(status != LIGHT_OK || !has_power())
+			break
+		flickering = !flickering
 		update(FALSE)
+		stoplag(pick(list(2 SECONDS, 4 SECONDS, 6 SECONDS)))
+
+	if(has_power())
+		on = (status == LIGHT_OK)
+	else
+		on = FALSE
+
 	flickering = FALSE
+	update(FALSE)
 
 // ai attack - make lights flicker, because why not
 
@@ -698,23 +719,6 @@
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
 
-/**
- * All the effects that occur when a light falls off a wall that it was hung onto.
- */
-/obj/machinery/light/proc/knock_down()
-	if (fitting == "bulb")
-		new /obj/item/wallframe/light_fixture/small(drop_location())
-	else
-		new /obj/item/wallframe/light_fixture(drop_location())
-	new /obj/item/stack/cable_coil(drop_location(), 1, "red")
-	if(status != LIGHT_BROKEN)
-		break_light_tube(FALSE)
-	if(status != LIGHT_EMPTY)
-		drop_light_tube()
-	if(cell)
-		cell.forceMove(drop_location())
-	qdel(src)
-
 /obj/machinery/light/floor
 	name = "floor light"
 	desc = "A lightbulb you can walk on without breaking it, amazing."
@@ -726,9 +730,12 @@
 	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
-	fitting = "bulb"
+	fitting = "floor bulb"
 	nightshift_brightness = 4
 	fire_brightness = 4.5
+
+/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+	return //its a floor light not a wall light
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
@@ -736,6 +743,15 @@
 /obj/machinery/light/floor/broken
 	status = LIGHT_BROKEN
 	icon_state = "floor-broken"
+
+/obj/machinery/light/floor/burned
+	status = LIGHT_BURNED
+	icon_state = "floor-burned"
+
+/obj/machinery/light/floor/empty
+	icon_state = "floor-empty"
+	start_with_cell = FALSE
+	status = LIGHT_EMPTY
 
 /obj/machinery/light/floor/transport
 	name = "transport light"

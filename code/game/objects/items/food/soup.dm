@@ -1,6 +1,7 @@
 /obj/item/food/bowled
 	w_class = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/food/soupsalad.dmi'
+	abstract_type = /obj/item/food/bowled
 	bite_consumption = 5
 	max_volume = 80
 	foodtypes = NONE
@@ -16,6 +17,7 @@
 	icon_state = "wishsoup"
 	food_reagents = list(/datum/reagent/water = 10)
 	tastes = list("wishes" = 1)
+	trash_type = /obj/item/reagent_containers/cup/bowl
 
 /obj/item/food/bowled/wish/Initialize(mapload)
 	. = ..()
@@ -45,6 +47,8 @@
 		/datum/reagent/drug/mushroomhallucinogen = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
+	trash_type = /obj/item/reagent_containers/cup/bowl
+
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -60,6 +64,9 @@
 		/datum/reagent/toxin/amatoxin = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
+	trash_type = /obj/item/reagent_containers/cup/bowl
+
+
 	tastes = list("jelly" = 1, "mushroom" = 1)
 	foodtypes = VEGETABLES | TOXIC
 	crafting_complexity = FOOD_COMPLEXITY_2

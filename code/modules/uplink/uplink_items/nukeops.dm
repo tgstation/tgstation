@@ -218,7 +218,7 @@
 	name = ".357 Speed Loader (Revolver)"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 		For when you really need a lot of things dead. Unlike field agents, operatives get a premium price for their speedloaders!"
-	item = /obj/item/ammo_box/a357
+	item = /obj/item/ammo_box/speedloader/c357
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/revolver/phasic
@@ -226,7 +226,7 @@
 	desc = "A speed loader that contains seven additional .357 Magnum phasic rounds; usable with the Syndicate revolver. \
 		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
 		The name is a misnomer. It doesn't contain any lead whatsoever!"
-	item = /obj/item/ammo_box/a357/phasic
+	item = /obj/item/ammo_box/speedloader/c357/phasic
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/special/revolver/heartseeker
@@ -234,7 +234,7 @@
 	desc = "A speed loader that contains seven additional .357 Magnum heartseeker rounds; usable with the Syndicate revolver. \
 		Able to veer straight into targets! Don't miss a shot with heartseeker! As seen in the hit NTFlik horror-space western film, Forget-Me-Not!	\
 		Brought to you by Roseus Galactic!"
-	item = /obj/item/ammo_box/a357/heartseeker
+	item = /obj/item/ammo_box/speedloader/c357/heartseeker
 	cost = 3
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
@@ -498,18 +498,7 @@
 	item = /obj/item/storage/backpack/duffelbag/syndie/x4
 	cost = 10 // 50% discount!
 
-/datum/uplink_item/explosives/military_grade/emp
-	name = "Syndicate EMP Bomb"
-	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
-	item = /obj/item/sbeacondrop/emp
-	cost = 6
-
-/datum/uplink_item/explosives/syndicate_bomb/emp/New()
-	..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		cost *= 2
-
-/datum/uplink_item/explosives/syndicate_bomb
+/datum/uplink_item/explosives/military_grade/syndicate_bomb
 	name = "Syndicate Bomb"
 	desc = "The Syndicate bomb is a fearsome device capable of massive destruction. It has an adjustable timer, \
 		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
@@ -520,9 +509,20 @@
 	item = /obj/item/sbeacondrop/bomb
 	cost = 8
 
-/datum/uplink_item/explosives/syndicate_bomb/New()
+/datum/uplink_item/explosives/military_grade/syndicate_bomb/New()
 	. = ..()
 	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
+
+/datum/uplink_item/explosives/military_grade/syndicate_bomb/emp
+	name = "Syndicate EMP Bomb"
+	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
+	item = /obj/item/sbeacondrop/emp
+	cost = 6
+
+/datum/uplink_item/explosives/military_grade/syndicate_bomb/emp/New()
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
 
 // Support (Borgs and Reinforcements)
 
@@ -723,6 +723,7 @@
 	item = /obj/item/mod/module/injector
 	cost = 2
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	uplink_item_flags = NONE
 
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
@@ -730,6 +731,7 @@
 	item = /obj/item/mod/module/holster
 	cost = 2
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	uplink_item_flags = NONE
 
 /datum/uplink_item/device_tools/medgun_mod
 	name = "Medbeam Gun Module"

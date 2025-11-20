@@ -270,3 +270,4 @@
 	if(iscyborg(user) && iscyborg(interacting_with))
 		balloon_alert(user, "can't charge this!")
 		return ITEM_INTERACT_FAILURE
+	return ..()

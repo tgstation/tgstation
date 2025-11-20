@@ -95,6 +95,7 @@
 			/datum/reagent/consumable/ethanol/beer = 25,
 			/datum/reagent/consumable/ethanol/b52 = 6,
 			/datum/reagent/consumable/ethanol/manhattan = 3,
+			/datum/reagent/consumable/ethanol/old_fashioned = 3,
 			/datum/reagent/consumable/ethanol/atomicbomb = 1,
 		),
 	)
@@ -141,6 +142,7 @@
 			/datum/reagent/consumable/ethanol/wine = 3,
 			/datum/reagent/consumable/ethanol/grappa = 3,
 			/datum/reagent/consumable/ethanol/amaretto = 5,
+			/datum/reagent/consumable/ethanol/amaretto_sour = 3,
 			/datum/reagent/consumable/cucumberlemonade = 2,
 		),
 	)
@@ -178,6 +180,7 @@
 			/datum/reagent/consumable/ethanol/beer = 5,
 			/datum/reagent/consumable/ethanol/wine = 5,
 			/datum/reagent/consumable/ethanol/gin_garden = 2,
+			/datum/reagent/consumable/ethanol/french_75 = 5,
 		),
 	)
 
@@ -306,7 +309,8 @@
 /datum/customer_data/moth/proc/get_wings(mob/living/basic/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
 	if (!LAZYACCESS(wings_chosen, customer_ref))
-		LAZYSET(wings_chosen, customer_ref, SSaccessories.moth_wings_list[pick(SSaccessories.moth_wings_list)])
+		var/picked_wings = pick(SSaccessories.feature_list[FEATURE_MOTH_WINGS])
+		LAZYSET(wings_chosen, customer_ref, SSaccessories.feature_list[FEATURE_MOTH_WINGS][picked_wings])
 	return wings_chosen[customer_ref]
 
 /datum/customer_data/moth/get_underlays(mob/living/basic/robot_customer/customer)
@@ -383,7 +387,7 @@
 			/obj/item/food/benedict = 5,
 			/obj/item/food/fishandchips = 10,
 			/obj/item/food/full_english = 2,
-			/obj/item/food/sandwich/cheese/grilled = 5,
+			/obj/item/food/sandwich/grilled_cheese = 5,
 			/obj/item/food/pie/meatpie = 5,
 			/obj/item/food/salad/ricepudding = 5,
 		),
@@ -396,6 +400,7 @@
 			/datum/reagent/consumable/ethanol/martini = 5,
 			/datum/reagent/consumable/ethanol/gintonic = 5,
 			/datum/reagent/consumable/tea = 10,
+			/datum/reagent/consumable/ethanol/hot_toddy = 5,
 		),
 	)
 

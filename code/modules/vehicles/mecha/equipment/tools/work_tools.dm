@@ -160,7 +160,9 @@
 	energy_drain = 0
 	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED
-	mech_flags = EXOSUIT_MODULE_WORKING
+	mech_flags = ALL
+	can_be_triggered = TRUE
+	action_type = /datum/action/vehicle/sealed/mecha/equipment/extinguisher_action
 	///Minimum amount of reagent needed to activate.
 	var/required_amount = 80
 
@@ -391,7 +393,7 @@
 		newmech.name = markone.name
 	markone.wreckage = FALSE
 	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
-		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
+		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, REF(newmech))
 	qdel(markone)
 	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
 

@@ -94,6 +94,37 @@
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
+
+/**
+ * Returns the amount of bruteloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the bruteloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/getBruteLossForType(required_bodytype = ALL)
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
+		amount += bodypart.brute_dam
+	return round(amount, DAMAGE_PRECISION)
+
+/**
+ * Returns the amount of fireloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the fireloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/getFireLossForType(required_bodytype = ALL)
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
+		amount += bodypart.burn_dam
+	return round(amount, DAMAGE_PRECISION)
+
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
@@ -194,10 +225,13 @@
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+ * * required_organ_flag - if you only want to check the damage of organs with the specified organ_flag(s) then you can use this.
  */
-/mob/living/carbon/get_organ_loss(slot)
+/mob/living/carbon/get_organ_loss(slot, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(affected_organ)
+		if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
+			return
 		return affected_organ.damage
 
 ////////////////////////////////////////////

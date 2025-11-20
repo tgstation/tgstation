@@ -32,11 +32,11 @@ Difficulty: Extremely Hard
 	move_to_delay = 20
 	gps_name = "Bloodchilling Signal"
 	ranged = TRUE
-	crusher_loot = list(/obj/effect/decal/remains/plasma, /obj/item/crusher_trophy/ice_block_talisman, /obj/item/ice_energy_crystal)
+	crusher_loot = /obj/item/crusher_trophy/ice_block_talisman
 	loot = list(/obj/effect/decal/remains/plasma, /obj/item/ice_energy_crystal)
 	wander = FALSE
 	del_on_death = TRUE
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
@@ -177,7 +177,7 @@ Difficulty: Extremely Hard
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/death(gibbed, list/force_grant)
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/death(gibbed)
 	if(health > 0)
 		return
 	var/turf/T = get_turf(src)

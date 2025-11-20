@@ -64,7 +64,7 @@
 				return //User sat on the selection window and things changed.
 
 			AI.ai_restore_power()//So the AI initially has power.
-			AI.control_disabled = TRUE
+			AI.set_control_disabled(TRUE)
 			AI.radio_enabled = FALSE
 			AI.disconnect_shell()
 			remove_occupant(AI)
@@ -104,7 +104,7 @@
 			if((LAZYLEN(occupants) >= max_occupants) || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, span_warning("Access denied. [name] is [LAZYLEN(occupants) >= max_occupants ? "currently fully occupied" : "secured with a DNA lock"]."))
 				return
-			AI.control_disabled = FALSE
+			AI.set_control_disabled(FALSE)
 			AI.radio_enabled = TRUE
 			to_chat(user, "[span_boldnotice("Transfer successful")]: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null

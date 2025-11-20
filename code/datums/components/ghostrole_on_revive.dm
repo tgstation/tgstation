@@ -4,6 +4,8 @@
 	var/refuse_revival_if_failed
 	/// Callback for when the mob is revived and has their body occupied by a ghost
 	var/datum/callback/on_successful_revive
+	/// The chance to twitch when orbiting the spawn
+	var/twitch_chance = 30
 
 /datum/component/ghostrole_on_revive/Initialize(refuse_revival_if_failed, on_successful_revive)
 	. = ..()
@@ -30,6 +32,9 @@
 /datum/component/ghostrole_on_revive/proc/prepare_mob(mob/living/liver)
 	RegisterSignal(liver, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
 	ADD_TRAIT(liver, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+
+	add_orbit_twitching(liver)
+
 	liver.med_hud_set_status()
 
 	if(iscarbon(liver))
@@ -42,6 +47,8 @@
 	SIGNAL_HANDLER
 
 	REMOVE_TRAIT(old_owner, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
+	remove_orbit_twitching(old_owner)
+
 	// we might have some lingering blinking eyes
 	var/obj/item/bodypart/head/head = old_owner?.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
@@ -110,6 +117,32 @@
 		on_successful_revive?.Invoke(aliver)
 		qdel(src)
 
+/datum/component/ghostrole_on_revive/proc/add_orbit_twitching(mob/living/liver)
+	liver.AddElement(/datum/element/orbit_twitcher, twitch_chance)
+
+	// Add it to the ghostrole spawner menu. Note that we can't directly spawn from it, but we can make it twitch to alert bystanders to defib it
+	LAZYADD(GLOB.joinable_mobs[format_text("Recovered Crew")], liver)
+	RegisterSignal(liver, COMSIG_LIVING_GHOSTROLE_INFO, PROC_REF(set_spawner_info))
+
+/datum/component/ghostrole_on_revive/proc/set_spawner_info(datum/spawners_menu/menu, string_info)
+	SIGNAL_HANDLER
+
+	string_info["you_are_text"] = "You are a long dead crewmember, but are soon to be revived to rejoin the crew!"
+	string_info["flavor_text"] = "Get a job and get back to work!"
+	string_info["important_text"] = "Do your best to help the station. You still roll for midround antagonists."
+
+/datum/component/ghostrole_on_revive/proc/remove_orbit_twitching(mob/living/living)
+	living.RemoveElement(/datum/element/orbit_twitcher, twitch_chance)
+
+	// Remove from the ghostrole spawning menu
+	var/list/spawners = GLOB.joinable_mobs[format_text("Recovered Crew")]
+	LAZYREMOVE(spawners, living)
+
+	if(!LAZYLEN(spawners))
+		GLOB.joinable_mobs -= format_text("Recovered Crew")
+
+	UnregisterSignal(living, COMSIG_LIVING_GHOSTROLE_INFO)
+
 /datum/component/ghostrole_on_revive/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_GHOSTROLE_ON_REVIVE, REF(src))
 
@@ -120,5 +153,7 @@
 		var/obj/item/organ/brain/brain = parent
 		living = brain.owner
 	living?.med_hud_set_status()
+	if(living)
+		remove_orbit_twitching(living)
 
-	. = ..()
+	return ..()

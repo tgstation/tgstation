@@ -34,7 +34,7 @@
 	src.shop_sound = sell_sound
 	src.opening_lines = opening_lines
 
-/datum/action/setup_shop/Trigger(trigger_flags)
+/datum/action/setup_shop/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

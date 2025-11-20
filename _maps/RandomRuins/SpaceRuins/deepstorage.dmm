@@ -1048,7 +1048,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "deepo2";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -1196,13 +1195,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
-"gv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "deepn2";
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
 "gw" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -1286,7 +1278,6 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gP" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "deepn2";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -1581,13 +1572,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
-"qm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "deepo2";
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
 "qq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 1
@@ -4507,9 +4491,9 @@ fb
 fp
 fC
 fL
-qm
+gP
 fp
-gv
+fC
 gD
 gP
 fp

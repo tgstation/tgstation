@@ -221,7 +221,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(stop_consuming))
 
 ///Try to consume the pulled mob
-/datum/action/consume/Trigger(trigger_flags)
+/datum/action/consume/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

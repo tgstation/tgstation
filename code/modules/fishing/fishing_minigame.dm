@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	float.update_appearance(UPDATE_OVERLAYS)
 	if(special_effects & FISHING_MINIGAME_AUTOREEL)
 		addtimer(CALLBACK(src, PROC_REF(auto_spin)), 0.2 SECONDS)
-	playsound(float, 'sound/machines/ping.ogg', 10, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(float, 'sound/machines/ping.ogg', 20, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
 /datum/fishing_challenge/proc/auto_spin()
 	if(phase != WAIT_PHASE || !float.spin_ready)
@@ -284,7 +284,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 /datum/fishing_challenge/proc/on_float_or_user_move(datum/source)
 	SIGNAL_HANDLER
 
-	if(!user.CanReach(location))
+	if(!location.IsReachableBy(user))
 		user.balloon_alert(user, "too far!")
 		interrupt()
 
@@ -512,7 +512,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	SIGNAL_HANDLER
 	if(istype(reward))
 		var/damage = CEILING((world.time - start_time)/10 * FISH_DAMAGE_PER_SECOND, 1)
-		reward.adjust_health(reward.health - damage)
+		reward.damage_fish(damage)
 
 /datum/fishing_challenge/proc/get_difficulty()
 	var/list/difficulty_holder = list(0)
@@ -599,7 +599,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	deltimer(next_phase_timer)
 	if((FISHING_MINIGAME_RULE_KILL in special_effects) && ispath(reward_path,/obj/item/fish))
 		var/obj/item/fish/fish = reward_path
-		var/wait_time = (initial(fish.health) / FISH_DAMAGE_PER_SECOND) SECONDS
+		var/wait_time = ((initial(fish.max_integrity) * (1 - initial(fish.integrity_failure))) / FISH_DAMAGE_PER_SECOND) SECONDS
 		addtimer(CALLBACK(src, PROC_REF(win_anyway)), wait_time, TIMER_DELETE_ME)
 	else if(ismovable(reward_path))
 		var/atom/movable/reward = reward_path
@@ -926,7 +926,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	var/mutable_appearance/overlay = mutable_appearance(icon, "lure_light")
 	overlay.color = spin_ready ? COLOR_GREEN : COLOR_RED
 	. += overlay
-	. += emissive_appearance(icon, "lure_light_emissive", src, alpha = src.alpha)
+	. += emissive_appearance(icon, "lure_light_emissive", src, alpha = src.alpha, effect_type = EMISSIVE_NO_BLOOM)
 
 #undef WAIT_PHASE
 #undef BITING_PHASE

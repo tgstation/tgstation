@@ -1,7 +1,7 @@
 /// Some defines for items the cult archives can create.
 #define CULT_BLINDFOLD "Zealot's Blindfold"
 #define CURSE_ORB "Shuttle Curse"
-#define VEIL_WALKER "Veil Walker Set"
+#define VEIL_WALKER "Veil Walker"
 #define CRIMSON_MEDALLION "Crimson Medallion"
 
 // Cult archives. Gives out utility items.
@@ -31,7 +31,7 @@
 			),
 		VEIL_WALKER = list(
 			PREVIEW_IMAGE = image(icon = 'icons/obj/antags/cult/items.dmi', icon_state = "shifter"),
-			OUTPUT_ITEMS = list(/obj/item/cult_shift, /obj/item/flashlight/flare/culttorch),
+			OUTPUT_ITEMS = list(/obj/item/cult_shift),
 			RADIAL_DESC = "Creates \a [/obj/item/cult_shift::name], a small wand that teleports the user \
 				- and anyone the user is dragging - forward some distance.  Has [/obj/item/cult_shift::uses] uses.",
 			),

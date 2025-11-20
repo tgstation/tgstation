@@ -24,7 +24,7 @@
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
-	if(!user.CanReach(src))
+	if(!IsReachableBy(user))
 		return WIRE_INTERACTION_FAIL
 	INVOKE_ASYNC(wires, TYPE_PROC_REF(/datum/wires, interact), user)
 	return WIRE_INTERACTION_BLOCK
@@ -257,12 +257,13 @@
 
 /datum/wires/proc/interact(mob/user)
 	if(!interactable(user))
-		return
+		return FALSE
 	ui_interact(user)
 	for(var/A in assemblies)
 		var/obj/item/I = assemblies[A]
 		if(istype(I) && I.on_found(user))
-			return
+			break
+	return TRUE
 
 /**
  * Checks whether wire assignments should be revealed.

@@ -1,4 +1,4 @@
-import { Gradient } from './data';
+import type { Gradient } from './data';
 
 /** Edits the key of a object. Does NOT change that keys assigned value and index */
 export const editKeyOf = (

@@ -79,8 +79,8 @@
 /obj/item/proc/GetID()
 	return null
 
-/obj/item/proc/RemoveID()
+/obj/item/proc/remove_id()
 	return null
 
-/obj/item/proc/InsertID()
+/obj/item/proc/insert_id()
 	return FALSE

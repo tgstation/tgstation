@@ -57,9 +57,9 @@
 #define FEATURE_MUTANT_COLOR "mcolor"
 #define FEATURE_ETHEREAL_COLOR "ethcolor"
 #define FEATURE_EARS "ears"
-#define FEATURE_TAIL "tail_cat"
+#define FEATURE_TAIL_CAT "tail_cat"
 #define FEATURE_TAIL_LIZARD "tail_lizard"
-#define FEATURE_TAIL_FISH "tail_fish"
+#define FEATURE_TAIL_FISH "fish_tail"
 #define FEATURE_SNOUT "snout"
 #define FEATURE_LIZARD_MARKINGS "marking_lizard"
 #define FEATURE_HORNS "horns"
@@ -73,6 +73,7 @@
 
 // Other
 #define FEATURE_WINGS "wings"
+#define FEATURE_WINGS_OPEN "wingsopen"
 #define FEATURE_TAIL_MONKEY "tail_monkey"
 #define FEATURE_TAIL_XENO "tail_xeno"
 #define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails

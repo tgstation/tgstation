@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(dbcore)
 			log_config("ERROR: POOLING_MAX_SQL_CONNECTIONS ([max_sql_connections]) is set lower than POOLING_MIN_SQL_CONNECTIONS ([min_sql_connections]). Please check your config or the code defaults for sanity")
 
 /datum/controller/subsystem/dbcore/stat_entry(msg)
-	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
+	msg = "\n  P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
 	return ..()
 
 /// Resets the tracking numbers on the subsystem. Used by SStime_track.

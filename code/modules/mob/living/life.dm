@@ -42,19 +42,18 @@
 		return
 
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
-
 		if(stat != DEAD)
 			//Mutations and radiation
 			handle_mutations(seconds_per_tick, times_fired)
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick, times_fired)
 
-		handle_diseases(seconds_per_tick, times_fired)// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		handle_diseases(seconds_per_tick, times_fired) // DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
-		if (QDELETED(src)) // diseases can qdel the mob via transformations
+		if (QDELETED(src)) // Diseases can qdel the mob via transformations
 			return
 
-		//Handle temperature/pressure differences between body and environment
+		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment)
 			handle_environment(environment, seconds_per_tick, times_fired)
@@ -67,7 +66,7 @@
 		living_flags &= ~QUEUE_NUTRITION_UPDATE
 
 	if(stat != DEAD)
-		return 1
+		return TRUE
 
 /mob/living/proc/handle_breathing(seconds_per_tick, times_fired)
 	SEND_SIGNAL(src, COMSIG_LIVING_HANDLE_BREATHING, seconds_per_tick, times_fired)

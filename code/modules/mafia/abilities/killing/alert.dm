@@ -8,7 +8,7 @@
 	ability_action = "send any visitors home with buckshot tonight"
 	use_flags = CAN_USE_ON_SELF
 
-/datum/mafia_ability/attack_visitors/set_target(datum/mafia_controller/game, datum/mafia_role/new_target)
+/datum/mafia_ability/attack_visitors/set_target(datum/mafia_role/new_target)
 	. = ..()
 	if(!.)
 		return FALSE

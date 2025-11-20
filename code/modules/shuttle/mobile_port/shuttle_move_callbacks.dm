@@ -238,11 +238,11 @@ All ShuttleMove procs go here
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
-		GLOB.cameranet.removeCamera(src)
+		SScameras.remove_camera_from_chunk(src)
 
 /obj/machinery/camera/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	GLOB.cameranet.addCamera(src)
+	SScameras.add_camera_to_chunk(src)
 
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -326,8 +326,6 @@ All ShuttleMove procs go here
 		return
 	if(knockdown > 0)
 		if(buckled)
-			// If we're buckled, no stun but we'll still be floored and frozen
-			Knockdown(knockdown)
 			Immobilize(knockdown * 0.5)
 			return
 		Paralyze(knockdown)

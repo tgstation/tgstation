@@ -48,7 +48,7 @@
 		TOOL_WIRECUTTER = 50,
 		/obj/item/stack/package_wrap = 35,
 		/obj/item/stack/cable_coil = 15)
-	time = 200
+	time = 20 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'

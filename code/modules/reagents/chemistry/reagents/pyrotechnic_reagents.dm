@@ -42,7 +42,7 @@
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
-	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
+	description = "A very flammable liquid capable of burning even through the hull of the station. Bursts into a fireball upon creation."
 	color = "#FFC8C8"
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	taste_description = "burning"
@@ -313,17 +313,19 @@
 	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_ELECTROGENESIS, type), fish.feeding_frequency * 0.75, TIMER_UNIQUE|TIMER_OVERRIDE)
 	return TRUE
 
-/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/affected_mob)
+/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	affected_mob.physiology.siemens_coeff *= 2
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.physiology.siemens_coeff *= 2
 
-/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/human/affected_mob)
+/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	affected_mob.physiology.siemens_coeff *= 0.5
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.physiology.siemens_coeff *= 0.5
 
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"

@@ -82,7 +82,7 @@
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/turf_at_coords = Safe_COORD_Location()
-	return turf_at_coords ? "[area_name ? "[get_area_name(turf_at_coords, TRUE)] " : " "]([turf_at_coords.x],[turf_at_coords.y],[turf_at_coords.z])[admin_jump_ref ? " [ADMIN_JMP(turf_at_coords)]" : ""]" : "nonexistent location"
+	return turf_at_coords ? "[area_name ? "[get_area_name(turf_at_coords, TRUE)] " : ""]([turf_at_coords.x],[turf_at_coords.y],[turf_at_coords.z])[admin_jump_ref ? " [ADMIN_JMP(turf_at_coords)]" : ""]" : "nonexistent location"
 
 /atom/proc/Safe_COORD_Location()
 	var/atom/drop_atom = drop_location()
@@ -123,12 +123,6 @@
 #define RANK_SOURCE_DB "rank_db"
 #define RANK_SOURCE_BACKUP "rank_backup"
 #define RANK_SOURCE_TEMPORARY "rank_temp"
-
-/// Amount of time after the round starts that the player disconnect report is issued.
-#define ROUNDSTART_LOGOUT_REPORT_TIME (10 MINUTES)
-
-/// Threshold in minutes for counting a player as AFK on the roundstart report.
-#define ROUNDSTART_LOGOUT_AFK_THRESHOLD (ROUNDSTART_LOGOUT_REPORT_TIME * 0.7)
 
 /// Number of identical messages required before the spam-prevention will warn you to stfu
 #define SPAM_TRIGGER_WARNING 5

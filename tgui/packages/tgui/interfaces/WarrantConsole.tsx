@@ -116,7 +116,7 @@ const RecordList = (props) => {
 /** Views info on the current selection. */
 const ViewRecord = (props) => {
   const foundRecord = getCurrentRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { citations = [], crew_name } = foundRecord;
 
@@ -136,7 +136,7 @@ const ViewRecord = (props) => {
 /** Handles paying fines */
 const CitationManager = (props) => {
   const foundRecord = getCurrentRecord();
-  if (!foundRecord) return <> </>;
+  if (!foundRecord) return;
 
   const { act } = useBackend<Data>();
   const {

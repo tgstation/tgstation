@@ -199,7 +199,7 @@
 
 /// Validates whether the target turf can be interacted with.
 /obj/machinery/computer/camera_advanced/xenobio/proc/validate_turf(mob/living/user, turf/open/target_turf)
-	if(!GLOB.cameranet.checkTurfVis(target_turf))
+	if(!SScameras.is_visible_by_cameras(target_turf))
 		target_turf.balloon_alert(user, "outside of view!")
 		return FALSE
 
@@ -223,12 +223,16 @@
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
 		stored_slime.forceMove(target_turf)
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
-		stored_slime.handle_slime_stasis(0)
+		stored_slime.handle_slime_stasis()
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits
 ///Returns TRUE to signal it hitting the limit, in case its being called from a loop and we want it to stop
 /obj/machinery/computer/camera_advanced/xenobio/proc/slime_pickup(mob/living/user, mob/living/basic/slime/target_slime)
+	if(target_slime in stored_slimes)
+		// It's possible for this proc to be called on a slime that's already being picked up,
+		// so we need to check whether we already have to avoid duplicate entries.
+		return FALSE
 	if(stored_slimes.len >= max_slimes)
 		to_chat(user, span_warning("Slime storage is full."))
 		target_slime.balloon_alert(user, "storage full")
@@ -258,6 +262,7 @@
 	if (QDELETED(food))
 		return
 	food.apply_status_effect(/datum/status_effect/slime_food, user)
+	ADD_TRAIT(food, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
 
 	stored_monkeys--
 	stored_monkeys = round(stored_monkeys, 0.1) //Prevents rounding errors

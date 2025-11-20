@@ -44,7 +44,7 @@ type FishData = {
   fish_happiness: number;
   fish_icon: string;
   fish_icon_state: string;
-  fish_health: number;
+  fish_alive: BooleanLike;
 };
 
 type PropData = {
@@ -129,8 +129,8 @@ const FishInfo = (props: FishInfoProps) => {
               >
                 {fish.fish_name}
               </Stack.Item>
-              <Stack.Item mt={fish.fish_health > 0 ? -4 : 1}>
-                {fish.fish_health > 0 ? (
+              <Stack.Item mt={fish.fish_alive ? -4 : 1}>
+                {fish.fish_alive ? (
                   <CalculateHappiness happiness={fish.fish_happiness} />
                 ) : (
                   <Icon ml={2} name="skull-crossbones" textColor="white" />

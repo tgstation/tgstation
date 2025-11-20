@@ -2100,7 +2100,6 @@
 /area/centcom/syndicate_mothership)
 "wY" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "nukiebase";
 	desc = "Has a valve and pump attached to it. Slightly more menacing than Nanotrasen's standard.";
 	dir = 1;
 	name = "syndicate air injector"
@@ -3220,10 +3219,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/centcom/syndicate_mothership/control)
-"IZ" = (
-/obj/machinery/processor/slime/fullupgrade,
-/turf/closed/indestructible/opsglass,
 /area/centcom/syndicate_mothership/control)
 "Jc" = (
 /obj/structure/table/wood,
@@ -7932,7 +7927,7 @@ uT
 VK
 VK
 DZ
-IZ
+VK
 VK
 VK
 VK
