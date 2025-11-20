@@ -120,6 +120,7 @@
 	. = ..()
 	if(panel_open)
 		. += "[base_icon_state]-open"
+		. += emissive_blocker(icon, "[base_icon_state]-open", src, alpha = src.alpha)
 
 	if(on)
 		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + mode]-emissive", src, alpha = src.alpha)
