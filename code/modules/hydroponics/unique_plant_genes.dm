@@ -756,7 +756,7 @@
 /// Spaceman's Trumpet fragile Polypyrylium Oligomers
 /datum/plant_gene/reagent/preset/polypyr
 	reagent_id = /datum/reagent/medicine/polypyr
-	rate = 0.15
+	rate = 0.08
 
 /// Jupitercup's fragile Liquid Electricity
 /datum/plant_gene/reagent/preset/liquidelectricity
