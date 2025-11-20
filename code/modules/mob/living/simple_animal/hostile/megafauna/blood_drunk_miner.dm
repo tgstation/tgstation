@@ -78,7 +78,7 @@ Difficulty: Medium
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 
 /// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)
