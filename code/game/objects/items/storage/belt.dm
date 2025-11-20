@@ -589,10 +589,16 @@
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
 	actions_types = list(/datum/action/cooldown/spell/pointed/blade_counter)
+	COOLDOWN_DECLARE(resheath_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_ATOM_STORED_ITEM, PROC_REF(post_resheath))
+
+/obj/item/storage/belt/sheath/Destroy(force)
+	. = ..()
+	UnregisterSignal(src, COMSIG_ATOM_STORED_ITEM)
 
 /obj/item/storage/belt/sheath/examine(mob/user)
 	. = ..()
@@ -624,25 +630,9 @@
 		new stored_blade(src)
 		update_appearance()
 
-/*/obj/item/storage/belt/sheath/mouse_drop_dragged(mob/living/over, mob/living/user, src_location, over_location, params)
-	if(!isliving(over))
-		return
-	if(!length(contents))
-		return
-	if(!user.combat_mode)
-		return
-	if(loc != user)
-		return
-	if(user.get_item_for_held_index(user.active_hand_index))
-		return
-	if(!COOLDOWN_FINISHED(src, counter_attempt_cooldown))
-		balloon_alert(user, "just tried that!")
-		return
-	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
-	user.Immobilize(1 SECONDS)
-	eyed_fool = WEAKREF(over)
-	user.visible_message(span_danger("[user] widens [p_their(user)] stance, [p_their(user)] hand hovering over \the [src]!"), span_notice("You prepare to counterattack [over]!"))
-	addtimer(CALLBACK(src, PROC_REF(relax), user), 1 SECONDS)*/
+/obj/item/storage/belt/sheath/proc/post_resheath()
+	SIGNAL_HANDLER
+	COOLDOWN_START(src, resheath_cooldown, 10 SECONDS)
 
 /datum/action/cooldown/spell/pointed/blade_counter
 	name = "Counterattack"
@@ -673,6 +663,10 @@
 	if(!length(owners_sheath.contents))
 		if(feedback)
 			to_chat(owner, span_warning("Your sheath is empty!"))
+		return FALSE
+	if(!COOLDOWN_FINISHED(owners_sheath, resheath_cooldown))
+		if(feedback)
+			to_chat(owner, span_warning("You only just resheathed your blade!"))
 		return FALSE
 	blade_sheath_ref = WEAKREF(owners_sheath)
 	return TRUE
