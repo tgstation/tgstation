@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes:
-  - code_imp: "Converted some gun related variables to use time defines, make an issue report if anything shoots abnormally fast/slow."

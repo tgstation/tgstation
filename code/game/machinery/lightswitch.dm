@@ -35,7 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	if(autoname)
 		name = "light switch ([area.name])"
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	register_context()
 	update_appearance()
 

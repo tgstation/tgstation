@@ -11,7 +11,7 @@
 	name = initial(faketype.key)
 	full_name = capitalize(initial(faketype.key))
 
-/datum/keybinding/emote/down(client/user, turf/target)
+/datum/keybinding/emote/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
