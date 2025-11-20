@@ -32,7 +32,7 @@
 	. = ..()
 	if(!(slot & slot_flags))
 		return
-	if(isnull(hears_us) || user == hears_us)
+	if(user.client && (isnull(hears_us) || user == hears_us))
 		SSpoints_of_interest.make_point_of_interest(src)
 		LAZYADD(GLOB.joinable_mobs[format_text("[initial(name)]")], src)
 
