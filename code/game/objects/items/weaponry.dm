@@ -363,6 +363,25 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/robot/process()
 	loc.layer = ABOVE_ALL_MOB_LAYER
 
+/obj/item/claymore/gladius
+	name = "gladius"
+	desc = "A short but formidable sword, favored by recently-reanimated ancient warriors."
+	icon = 'icons/obj/weapons/sword.dmi'
+	icon_state = "gladius"
+	inhand_icon_state = "gladius"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	sharpness = SHARP_POINTY
+	attack_verb_continuous = list("stabs", "cuts")
+	attack_verb_simple = list("stab", "cut")
+	slot_flags = null
+	sound_vary = TRUE
+	block_sound = 'sound/items/weapons/parry.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	pickup_sound = SFX_KNIFE_PICKUP
+	drop_sound = SFX_KNIFE_DROP
+
+
 /obj/item/katana
 	name = "katana"
 	desc = "Woefully underpowered in D20."
@@ -1023,10 +1042,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	w_class = WEIGHT_CLASS_SMALL
 	/// Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/static/list/splattable
-	/// Things in this list which take a lot more damage from the fly swatter, but not be necessarily killed by it.
-	var/static/list/strong_against
-	/// How much extra damage the fly swatter does against mobs it is strong against
-	var/extra_strength_damage = 24
 
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
@@ -1041,11 +1056,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			/obj/effect/decal/cleanable/ants,
 			/obj/item/queen_bee,
 		))
-	if (isnull(strong_against))
-		strong_against = typecacheof(list(
-			/mob/living/basic/spider,
-		))
-
+	AddElement(/datum/element/bane, mob_biotypes = MOB_BUG,  target_type = /mob/living/basic, damage_multiplier = 0, added_damage = 24, requires_combat_mode = FALSE)
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
@@ -1057,10 +1068,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			bug.gib(DROP_ALL_REMAINS)
 		else
 			qdel(target)
-		return
-	if(is_type_in_typecache(target, strong_against) && isliving(target))
-		var/mob/living/living_target = target
-		living_target.adjustBruteLoss(extra_strength_damage)
 
 /obj/item/proc/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(!user.can_use_guns(src))

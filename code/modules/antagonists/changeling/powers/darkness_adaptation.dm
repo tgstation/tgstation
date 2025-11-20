@@ -51,7 +51,7 @@
 /// Makes the user harder to see in the dark (and makes the user see in the dark easier)
 /datum/status_effect/darkness_adapted
 	id = "darkness_adapted"
-	tick_interval = 0.5 SECONDS
+	tick_interval = 0.6 SECONDS
 	alert_type = null
 	/// Threshold before the dark color is applied
 	var/dark_color_threshold = 70

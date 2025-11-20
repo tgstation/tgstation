@@ -5,7 +5,7 @@
 	program_open_overlay = "bountyboard"
 	extended_desc = "Scan and analyze raptor genes."
 	size = 2
-	tgui_id = "RaptorDex"
+	tgui_id = "NtosRaptorDex"
 	program_icon = "crow"
 	can_run_on_flags = PROGRAM_PDA
 	/// Raptor scan data we have stored
