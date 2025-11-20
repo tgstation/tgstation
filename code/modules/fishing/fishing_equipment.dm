@@ -540,7 +540,7 @@
 		balloon_alert(user, "gene-gun is empty!")
 		return
 	var/obj/item/loaded = loaded_injector
-	forceMove(loaded, drop_location()) //this will unset the loaded_injector variable
+	loaded.forceMove(drop_location()) //this will unset the loaded_injector variable
 	if(IsReachableBy(user)) //check that the user can actually reach the loaded injector (telekinesis yadda yadda)
 		user.put_in_hands(loaded)
 	balloon_alert(user, "gene-gun unloaded")
