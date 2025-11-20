@@ -5428,7 +5428,8 @@
 /area/awaymission/snowdin/post/cavern1)
 "un" = (
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/machinery/light/small/broken/directional/east,
 /turf/open/floor/plating/snowed/cavern,
@@ -5769,6 +5770,10 @@
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/broken_shuttle)
+"vO" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/wall,
+/area/awaymission/snowdin/outside)
 "vP" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -7894,6 +7899,13 @@
 /obj/item/stack/ore/iron,
 /turf/closed/mineral/iron/ice,
 /area/awaymission/snowdin/cave/cavern)
+"EW" = (
+/obj/structure/sign/nanotrasen,
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow,
+/area/awaymission/snowdin/outside)
 "EX" = (
 /obj/item/pickaxe/drill{
 	pixel_x = 3;
@@ -10887,7 +10899,8 @@
 "Vz" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/cavern2)
@@ -11311,6 +11324,14 @@
 	},
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
+"Yg" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32;
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/cavern,
+/area/awaymission/snowdin/cave/cavern)
 "Yh" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -20249,7 +20270,7 @@ eo
 Zy
 Zy
 YE
-Va
+vO
 TI
 Zy
 Zy
@@ -21791,7 +21812,7 @@ Qj
 Zy
 YE
 Zy
-Va
+vO
 Qj
 Zy
 Zy
@@ -21938,7 +21959,7 @@ dX
 dX
 Zy
 Zy
-Va
+EW
 Zy
 Zy
 Zy
@@ -23480,7 +23501,7 @@ Cu
 Zy
 Zy
 dX
-Va
+EW
 Zy
 Zy
 Zy
@@ -35536,7 +35557,7 @@ ai
 ai
 ai
 Zy
-Va
+EW
 Zy
 Zy
 Zy
@@ -35807,7 +35828,7 @@ Zy
 dX
 dX
 Zy
-Va
+EW
 Zy
 Zy
 Zy
@@ -37335,7 +37356,7 @@ ai
 ai
 ai
 Zy
-Va
+EW
 Zy
 Zy
 Zy
@@ -37349,7 +37370,7 @@ Zy
 ZK
 Zy
 Zy
-Va
+EW
 Zy
 Zy
 Zy
@@ -62892,7 +62913,7 @@ wD
 wE
 wD
 xW
-VO
+Yg
 qi
 qi
 At
