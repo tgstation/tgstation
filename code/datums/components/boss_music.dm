@@ -4,6 +4,8 @@
 /datum/component/boss_music
 	///The music track we will play to players.
 	var/boss_track
+	///How long the track is, used to clear players out when the music is supposed to end.
+	var/track_duration
 
 	///List of all mobs listening to the boss music currently. Cleared on Destroy or after `track_duration`.
 	var/list/datum/weakref/players_listening_refs = list()
@@ -17,7 +19,7 @@
 	if(!ishostile(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.boss_track = boss_track
-	track_duration = SSsound.get_sound_length(boss_track)
+	track_duration = SSsounds.get_sound_length(boss_track)
 
 /datum/component/boss_music/Destroy(force)
 	. = ..()
