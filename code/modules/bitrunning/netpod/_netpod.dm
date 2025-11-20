@@ -93,7 +93,7 @@
 		. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
 		. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
 		if(copy_body)
-			. += span_infoplain("Occupant scanning is currently enabled, which will cause bit avatars to look like the occupant player when first created.")
+			. += span_infoplain("Occupant scanning is currently enabled, which will cause bit avatars to look like the occupant when first created.")
 		. += span_infoplain("Alt-click to [copy_body ? "disable" : "enable"] occupant scanning.")
 
 	if(isnull(occupant))
