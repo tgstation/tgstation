@@ -50,18 +50,9 @@
 
 		var/visible_path = hide ? "/hidden" : "/visible"
 
-		var/layer_path = ""
-		switch(piping_layer)
-			if(1)
-				layer_path = "/layer1"
-			if(2)
-				layer_path = "/layer2"
-			if(3)
-				layer_path = ""
-			if(4)
-				layer_path = "/layer4"
-			if(5)
-				layer_path = "/layer5"
+		var/layer_path = "" 
+		if(piping_layer != 3)
+			layer_path = "/layer[piping_layer]"
 
 		var/full_path = "[base_type][color_path][visible_path][layer_path]"
 		var/typepath = text2path(full_path)
@@ -104,17 +95,8 @@
 		var/on_path = on ? "/on" : ""
 
 		var/layer_path = ""
-		switch(piping_layer)
-			if(1)
-				layer_path = "/layer1"
-			if(2)
-				layer_path = "/layer2"
-			if(3)
-				layer_path = ""
-			if(4)
-				layer_path = "/layer4"
-			if(5)
-				layer_path = "/layer5"
+		if(piping_layer != 3)
+			layer_path = "/layer[piping_layer]"
 
 		var/full_path = "[base_type][on_path][layer_path]"
 		var/typepath = text2path(full_path)
@@ -157,17 +139,8 @@
 		var/on_path = on ? "/on" : ""
 
 		var/layer_path = ""
-		switch(piping_layer)
-			if(1)
-				layer_path = "/layer1"
-			if(2)
-				layer_path = "/layer2"
-			if(3)
-				layer_path = ""
-			if(4)
-				layer_path = "/layer4"
-			if(5)
-				layer_path = "/layer5"
+		if(piping_layer != 3)
+			layer_path = "/layer[piping_layer]"
 
 		var/full_path = "[base_type][on_path][layer_path]"
 		var/typepath = text2path(full_path)

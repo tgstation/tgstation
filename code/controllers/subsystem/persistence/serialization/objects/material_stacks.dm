@@ -6,7 +6,7 @@
 /obj/machinery/ore_silo/on_object_saved(map_string, turf/current_loc)
 	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
 	for(var/each in material_holder.materials)
-		var/amount_in_stack = material_holder.materials[each] / 100
+		var/amount_in_stack = material_holder.materials[each] / SHEET_MATERIAL_AMOUNT
 		if(amount_in_stack <= 0)
 			continue
 
