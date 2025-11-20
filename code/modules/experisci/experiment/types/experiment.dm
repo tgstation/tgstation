@@ -109,13 +109,13 @@
  *
  * Arguments:
  * * message - The message to announce
- * * linked_web: the linked techweb we want to target. Prevent experiment handlers not linked to said techweb from receiving the message
+ * * linked_web - the linked techweb we want to target. Prevent experiment handlers not linked to said techweb from receiving the message
  */
 /datum/experiment/proc/announce_message_to_all(message, datum/techweb/linked_web)
 	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
 		if(experi_handler.linked_web != linked_web)
 			continue
-		if((experi_handler.config_flags & EXPERIMENT_CONFIG_ATTACKSELF) && !experi_handler.is_compatible_experiment(src))
+		if((experi_handler.config_flags & EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE) && !experi_handler.is_compatible_experiment(src))
 			continue
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
