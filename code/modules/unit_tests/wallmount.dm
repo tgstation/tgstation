@@ -4,6 +4,7 @@
 /datum/unit_test/wallmount/Run()
 	var/obj/structure/table/test_table = EASY_ALLOCATE()
 	var/obj/machinery/light/directional/south/test_light = EASY_ALLOCATE()
+	test_light.find_and_hang_on_atom()
 
 	var/datum/component/atom_mounted/wallmount_component = test_light.GetComponent(/datum/component/atom_mounted)
 	TEST_ASSERT_NOTNULL(wallmount_component, "Wall mount component was not added to the light!")
