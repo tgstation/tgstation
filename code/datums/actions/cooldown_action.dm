@@ -120,7 +120,7 @@
 	build_all_button_icons()
 	if(next_use_time > world.time)
 		START_PROCESSING(SSfastprocess, src)
-	RegisterSignal(granted_to, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(handle_melee_attack))
+	RegisterSignal(granted_to, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(handle_melee_attack), override = TRUE)
 	for(var/datum/action/cooldown/ability as anything in initialized_actions)
 		ability.Grant(granted_to)
 
