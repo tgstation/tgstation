@@ -149,7 +149,7 @@ class StorageProxy implements StorageBackend {
       if (!testHubStorage()) {
 
         // If we have an IFrame URL we can use, and we haven't already enabled
-        // hubstorage, we should use the IFrame backend
+        // byondstorage, we should use the IFrame backend
         if (Byond.storageCdn) {
           const iframe = new IFrameIndexedDbBackend();
 
