@@ -220,7 +220,7 @@
 		if(!do_after(user, 2 SECONDS, target = src))
 			balloon_alert(user, "interrupted!")
 			return
-		if(prob(20))
+		if(prob(40))
 			balloon_alert(user, "your hand slips!")
 			return
 
@@ -231,10 +231,11 @@
 		return
 	return ..()
 
-/obj/item/food/syndi_cake/proc/on_consume(mob/living/eater)
+/obj/item/food/syndi_cake/attack(mob/living/target, mob/user, def_zone)
 	if(wrapped)
-		balloon_alert(eater, "open it first!")
-	return FALSE
+		balloon_alert(user, "open it first!")
+		return FALSE
+	return ..()
 
 /obj/item/food/energybar
 	name = "\improper High-power energy bars"

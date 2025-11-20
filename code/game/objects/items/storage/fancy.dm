@@ -11,7 +11,6 @@
  * Cigar Case
  * Heart Shaped Box w/ Chocolates
  * Coffee condiments display
- * Syndi-Cakes / Lil Syndie's Snack Cakes
  */
 
 /obj/item/storage/fancy
@@ -679,18 +678,3 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/condiment/chocolate(src)
 	update_appearance()
-
-/obj/item/storage/fancy/syndi_cakes_box
-	icon = 'icons/obj/food/containers.dmi'
-	inhand_icon_state = null
-	icon_state = "syndi_cakes_box0"
-	base_icon_state = "syndi_cakes_box"
-	name = "lil syndie's snack cakes box"
-	desc = "A single serving of Lil Syndie's Snack Cakes, produced by Waffle Co."
-	spawn_type = /obj/item/food/syndi_cake
-	spawn_count = 1
-	custom_price = PAYCHECK_CREW * 2 //overpriced snack cakes
-	contents_tag = "snack cake"
-	foldable_result = /obj/item/trash/syndi_cakes //scrunch it up
-	resistance_flags = FLAMMABLE
-	storage_type = /datum/storage/box/syndicakes

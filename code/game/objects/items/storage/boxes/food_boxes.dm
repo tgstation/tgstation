@@ -589,3 +589,19 @@
 	name = "robusta beans"
 	desc = "A bag containing fresh, dry coffee robusta beans. Ethically sourced and packaged by Waffle Corp."
 	beantype = /obj/item/food/grown/coffee/robusta
+
+/obj/item/storage/box/syndi_cakes
+	icon = 'icons/obj/food/containers.dmi'
+	inhand_icon_state = null
+	icon_state = "syndi_cakes_box"
+	name = "lil syndie's snack cakes box"
+	desc = "A single serving of Lil Syndie's Snack Cakes, produced by Waffle Co."
+	inhand_icon_state = null
+	illustration = null
+	custom_price = PAYCHECK_CREW * 2 //overpriced snack cakes
+	foldable_result = /obj/item/trash/syndi_cakes //scrunch it up
+	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/box/syndicakes
+
+/obj/item/storage/box/syndi_cakes/PopulateContents()
+    new /obj/item/food/syndi_cake(src)

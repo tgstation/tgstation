@@ -149,6 +149,6 @@
 			new /obj/item/food/breadslice/moldy/bacteria(src)
 	else if(prob(40))
 		if(prob(50))
-			new /obj/item/storage/fancy/syndi_cakes_box(src)
+			new /obj/item/storage/box/syndi_cakes(src)
 		else
 			new /mob/living/basic/cockroach(src)
