@@ -724,6 +724,7 @@
 	)
 	playsound(forward_thinker, 'sound/items/unsheath.ogg', 50, TRUE)
 	forward_thinker.visible_message(span_danger("[forward_thinker] swiftly draws \the [justicetool] and strikes [fool] during [p_their(fool)] attack!"), span_notice("You swiftly draw \the [justicetool] and counter-attack [fool]!"))
+	ResetCooldown()
 	return SUCCESSFUL_BLOCK
 
 #undef COUNTERMULTIPLIER
