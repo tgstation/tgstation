@@ -240,6 +240,12 @@
 	. = ..()
 	. += NAMEOF(src, valve_open)
 	. += NAMEOF(src, release_pressure)
+	. += NAMEOF(src, name)
+	. += NAMEOF(src, desc)
+	. += NAMEOF(src, icon_state)
+	. += NAMEOF(src, base_icon_state)
+	. += NAMEOF(src, greyscale_colors)
+	. += NAMEOF(src, greyscale_config)
 	return .
 
 /obj/machinery/portable_atmospherics/get_custom_save_vars(save_flags=ALL)
@@ -247,3 +253,8 @@
 	var/datum/gas_mixture/gasmix = air_contents
 	.[NAMEOF(src, initial_gas_mix)] = gasmix.to_string()
 	return .
+
+/obj/machinery/portable_atmospherics/PersistentInitialize()
+	. = ..()
+	if((greyscale_colors != initial(greyscale_colors)) || (greyscale_config != initial(greyscale_config)))
+		set_greyscale(greyscale_colors, greyscale_config)
