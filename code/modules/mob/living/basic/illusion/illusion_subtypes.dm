@@ -25,8 +25,9 @@
 	if(attacked_target == parent_mob) // we don't want to get our wires crossed and attack our owner ever.
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-/// a mirage with a little more flair
+/// a mirage with a little more flair. not meant to move just to look cool
 /mob/living/basic/illusion/mirage
+	ai_controller = null
 	density = FALSE
 
 /mob/living/basic/illusion/mirage/death(gibbed)
