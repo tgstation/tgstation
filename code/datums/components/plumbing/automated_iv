@@ -1,0 +1,25 @@
+/datum/component/plumbing/automated_iv
+	demand_connects = WEST
+	supply_connects = EAST
+	var/obj/machinery/iv_drip/plumbing/myivdrip
+
+/datum/component/plumbing/automated_iv/Initialize(start=TRUE, _ducting_layer, _turn_connects=TRUE, datum/reagents/custom_receiver)
+	. = ..()
+	if(!istype(parent, /obj/machinery/iv_drip/plumbing))
+		return COMPONENT_INCOMPATIBLE
+	myacclimator = parent
+
+/datum/component/plumbing/automated_iv/Destroy(force)
+	myivdrip = null
+	return ..()
+
+/datum/component/plumbing/automated_iv/can_give(amount, reagent)
+	. = ..()
+	if(. && myivdrip.mode == 0)
+		return TRUE
+	return FALSE
+///We're overriding process and not send_request, because all process does is do the requests, so we might aswell cut out the middle man and save some code from running
+/datum/component/plumbing/acclimator/process()
+	if(myacclimator.emptying)
+		return
+	return ..()

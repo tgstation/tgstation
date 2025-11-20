@@ -10,9 +10,7 @@
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/automated_iv, bolt, layer)
 
 /obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
