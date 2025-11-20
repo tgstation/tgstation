@@ -10,6 +10,13 @@
 	result_path = /obj/machinery/firealarm
 	pixel_shift = 26
 
+/obj/item/wallframe/firealarm/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()
+
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
@@ -79,7 +86,7 @@
 
 	register_context()
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	update_appearance()
 
 /obj/machinery/firealarm/Destroy()

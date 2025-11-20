@@ -195,6 +195,14 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/machinery/button/door/directional/north{
+	id = "ice_comms_car";
+	name = "Garage Door Button";
+	pixel_x = -23;
+	pixel_y = 0;
+	req_access = list("research");
+	dir = 8
+	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "zz" = (
@@ -239,13 +247,6 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/south,
-/obj/machinery/button/door/directional/north{
-	id = "ice_comms_car";
-	name = "Garage Door Button";
-	pixel_x = -23;
-	pixel_y = 22;
-	req_access = list("research")
-	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "FK" = (
