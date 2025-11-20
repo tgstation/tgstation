@@ -709,6 +709,12 @@
 	},
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
+"on" = (
+/obj/structure/sign/directions/security/directional/south{
+	pixel_y = 0
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
 "op" = (
 /turf/closed/mineral/random/stationside/asteroid{
 	baseturfs = /turf/open/indestructible/white
@@ -1524,6 +1530,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
+"Da" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/ai_module/law/core/full/ten_commandments,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/powered/biooutpost)
 "Df" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/siding/purple{
@@ -2206,6 +2220,12 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
+"QY" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
 "Ra" = (
 /obj/effect/spawner/structure/window/hollow/end,
 /turf/open/indestructible/plating,
@@ -2492,14 +2512,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
-"Xm" = (
-/obj/structure/table/wood/fancy/orange,
-/obj/item/ai_module/law/core/full/ten_commandments,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/powered/biooutpost)
 "Xo" = (
 /obj/structure/showcase/horrific_experiment,
 /turf/open/indestructible/plating,
@@ -2526,15 +2538,6 @@
 /obj/structure/broken_flooring/pile/always_floorplane,
 /obj/structure/cable,
 /turf/open/indestructible/plating,
-/area/ruin/space/has_grav/powered/biooutpost)
-"XO" = (
-/obj/structure/sign/directions/security/directional/south{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/tile/purple/opposingcorners,
-/obj/structure/sign/poster/official/random/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
 "XP" = (
 /turf/closed/mineral/bananium,
@@ -3171,7 +3174,7 @@ Jh
 Jh
 Jh
 eT
-Xm
+Da
 Tw
 tg
 Jh
@@ -3263,7 +3266,7 @@ wX
 wM
 DJ
 cp
-XO
+QY
 Ju
 op
 op
@@ -3306,7 +3309,7 @@ EC
 xr
 hR
 UX
-UX
+on
 UX
 op
 Gd

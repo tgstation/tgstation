@@ -582,10 +582,6 @@
 "fU" = (
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
-"fZ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
-/turf/open/floor/engine/airless,
-/area/ruin/space/ks13/engineering/atmos)
 "gd" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/airless,
@@ -843,11 +839,28 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
+"kp" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/core/full/drone,
+/obj/item/circuitboard/machine/ai_law_rack/core{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "kt" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance_hall)
+"kv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/aft)
 "kw" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -982,19 +995,6 @@
 /obj/machinery/gravity_generator/main,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
-"lG" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter/offstation{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/ai_module/law/core/full/drone,
-/obj/item/circuitboard/machine/ai_law_rack/core{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "lM" = (
 /obj/machinery/door/window/right/directional/east{
 	name = "Med-Dorms Access"
@@ -1822,6 +1822,12 @@
 "rM" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance_hall)
+"rN" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
+/area/ruin/space/ks13/engineering/atmos)
 "rO" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "derelict11"
@@ -2423,10 +2429,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/hallway/starboard_bow)
-"uZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
-/turf/open/floor/engine/airless,
-/area/ruin/space/ks13/engineering/atmos)
 "va" = (
 /obj/structure/frame/machine{
 	anchored = 1
@@ -4206,12 +4208,6 @@
 /obj/structure/chair,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/hallway/starboard_bow)
-"Es" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
-/area/ruin/space/ks13/engineering/atmos)
 "Eu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4923,6 +4919,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
+"HU" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
+/turf/open/floor/engine/airless,
+/area/ruin/space/ks13/engineering/atmos)
 "HV" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
@@ -5863,6 +5863,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"Nf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
+/area/ruin/space/ks13/engineering/atmos)
 "Nh" = (
 /obj/structure/table,
 /obj/item/stock_parts/servo{
@@ -6500,6 +6506,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/cafe)
+"Qq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
+/turf/open/floor/engine/airless,
+/area/ruin/space/ks13/engineering/atmos)
 "Qr" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
@@ -8418,12 +8428,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/sec)
-"ZQ" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
-/area/ruin/space/ks13/engineering/atmos)
 "ZR" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/iron/dark,
@@ -10677,7 +10681,7 @@ vb
 Jr
 Ut
 Ww
-MW
+Jr
 Wt
 Sp
 pK
@@ -10783,7 +10787,7 @@ qO
 wC
 WE
 OR
-MW
+Jr
 JJ
 Hi
 vb
@@ -11822,7 +11826,7 @@ Fa
 iT
 TW
 BM
-jV
+kv
 Uo
 gG
 jV
@@ -12259,7 +12263,7 @@ yl
 pT
 tY
 mb
-uZ
+Qq
 hQ
 CI
 JE
@@ -12372,7 +12376,7 @@ yR
 pT
 tY
 Eo
-fZ
+HU
 zO
 RO
 Dl
@@ -12598,7 +12602,7 @@ yl
 Uw
 tY
 EP
-Es
+Nf
 hQ
 Az
 CI
@@ -12711,7 +12715,7 @@ yl
 Uw
 tY
 Sy
-ZQ
+rN
 ve
 WI
 yA
@@ -13566,7 +13570,7 @@ Jy
 lq
 YC
 Yc
-lG
+kp
 Yc
 aa
 aa
