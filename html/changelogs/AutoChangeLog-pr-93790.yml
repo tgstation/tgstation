@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "There's a keybind (default is Ctrl+X, rebindable) for the drop hotkey to drop where your mouse is (similar to SS14)."
