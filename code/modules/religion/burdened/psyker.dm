@@ -98,7 +98,7 @@
 		return FALSE
 	var/mob/living/carbon/human/human_user = user
 	var/datum/brain_trauma/special/burdened/burden = human_user.has_trauma_type(/datum/brain_trauma/special/burdened)
-	if(!burden || burden.burden_level < 9)
+	if(!burden || burden.burden_level < 4)
 		to_chat(human_user, span_warning("You aren't burdened enough."))
 		return FALSE
 	for(var/obj/item/possible_rod in get_turf(religious_tool))
@@ -214,7 +214,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, src) || !istype(user))
 		return
 	var/datum/brain_trauma/special/burdened/burden = user.has_trauma_type(/datum/brain_trauma/special/burdened)
-	if(needs_burden && (!burden || burden.burden_level < 9))
+	if(needs_burden && (!burden || burden.burden_level < 4))
 		to_chat(user, span_warning("You aren't burdened enough."))
 		return
 	user.manual_emote("presses [user.p_their()] palms together...")

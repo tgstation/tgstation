@@ -331,7 +331,7 @@
 	if(ishuman(burdened))
 		var/datum/brain_trauma/special/burdened/burden = burdened.has_trauma_type(/datum/brain_trauma/special/burdened)
 		if(burden)
-			return "You are at burden level [burden.burden_level]/9."
+			return "You are at burden level [burden.burden_level]/4."
 	return "You are not burdened."
 
 /datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
