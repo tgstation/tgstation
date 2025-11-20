@@ -143,52 +143,64 @@ class StorageProxy implements StorageBackend {
 
   constructor() {
     this.backendPromise = (async () => {
-      if (Byond.storageCdn && !window.hubStorage) {
-        const iframe = new IFrameIndexedDbBackend();
 
-        if ((await iframe.ready()) === true) {
-          if (await iframe.get('byondstorage-migrated')) return iframe;
-
-          Byond.winset(null, 'browser-options', '+byondstorage');
-
-          await new Promise<void>((resolve) => {
-            document.addEventListener('byondstorageupdated', async () => {
-              setTimeout(() => {
-                const hub = new HubStorageBackend();
-
-                for (const setting of ['panel-settings', 'chat-state', 'chat-messages']) {
-                  hub
-                    .get(setting)
-                    .then((settings) => iframe.set(setting, settings));
-                }
-
-                iframe.set('byondstorage-migrated', true);
-                Byond.winset(null, 'browser-options', '-byondstorage');
-
-                resolve();
-              }, 1);
-            });
-          });
-
-          return iframe;
-        }
-
-        iframe.destroy();
-      };
-
+      // If we have not enabled byondstorage yet, we need to check
+      // if we can use the IFrame, or if we need to enable byondstorage
       if (!testHubStorage()) {
+
+        // If we have an IFrame URL we can use, and we haven't already enabled
+        // hubstorage, we should use the IFrame backend
+        if (Byond.storageCdn) {
+          const iframe = new IFrameIndexedDbBackend();
+
+          if ((await iframe.ready()) === true) {
+            if (await iframe.get('byondstorage-migrated')) return iframe;
+
+            Byond.winset(null, 'browser-options', '+byondstorage');
+
+            await new Promise<void>((resolve) => {
+              document.addEventListener('byondstorageupdated', async () => {
+                setTimeout(() => {
+                  const hub = new HubStorageBackend();
+
+                  // Migrate these existing settings from byondstorage to the IFrame
+                  for (const setting of ['panel-settings', 'chat-state', 'chat-messages']) {
+                    hub
+                      .get(setting)
+                      .then((settings) => iframe.set(setting, settings));
+                  }
+
+                  iframe.set('byondstorage-migrated', true);
+                  Byond.winset(null, 'browser-options', '-byondstorage');
+
+                  resolve();
+                }, 1);
+              });
+            });
+
+            return iframe;
+          }
+
+          iframe.destroy();
+        };
+
+        // IFrame hasn't worked out for us, we'll need to enable byondstorage
         Byond.winset(null, 'browser-options', '+byondstorage');
 
         return new Promise((resolve) => {
           const listener = () => {
             document.removeEventListener('byondstorageupdated', listener);
-            resolve(new HubStorageBackend());
+
+            // This event is emitted *before* byondstorage is actually created
+            // so we have to wait a little bit before we can use it
+            setTimeout(() => resolve(new HubStorageBackend()), 1);
           };
 
           document.addEventListener('byondstorageupdated', listener);
         });
       }
 
+      // byondstorage is already enabled, we can use it straight away
       return new HubStorageBackend();
     })();
   }
