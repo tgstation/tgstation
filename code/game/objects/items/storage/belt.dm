@@ -589,6 +589,7 @@
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
 	var/stored_blade
 	actions_types = list(/datum/action/cooldown/spell/pointed/blade_counter)
+	action_slots = ITEM_SLOT_BELT
 	COOLDOWN_DECLARE(resheath_cooldown)
 
 /obj/item/storage/belt/sheath/Initialize(mapload)
