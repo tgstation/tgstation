@@ -225,16 +225,23 @@
 
 	synth_content = clamp(synth_content, 0, 1)
 
-	var/was_capped = consumed_synth_blood >= maximum_synth_blood
+	var/was_synth_capped = consumed_synth_blood >= maximum_synth_blood
+	var/was_ready_to_mature = get_consumed_blood() >= cocoon_action?.total_blood_required
 
 	consumed_synth_blood = min(consumed_synth_blood + blood_amount * synth_content * synth_blood_efficiency, maximum_synth_blood)
 	consumed_normal_blood += blood_amount * (1 - synth_content)
 
-	if (!was_capped && consumed_synth_blood >= maximum_synth_blood)
+	if (!was_synth_capped && consumed_synth_blood >= maximum_synth_blood)
 		if (host)
 			host.balloon_alert(is_possessing_host ? host : src, "synthetic cap reached!")
 		else
 			balloon_alert(src, "synthetic cap reached!")
+
+	if (!was_ready_to_mature && get_consumed_blood() >= cocoon_action?.total_blood_required)
+		if (host)
+			host.balloon_alert(is_possessing_host ? host : src, "ready to mature!")
+		else
+			balloon_alert(src, "ready to mature!")
 
 	if (should_heal)
 		// Synthetic blood works just fine for healing.
