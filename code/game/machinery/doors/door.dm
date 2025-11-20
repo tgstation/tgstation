@@ -70,8 +70,8 @@
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
 
-	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
-	var/unres_sensor = FALSE
+	/// Checks to see if this airlock has an unrestricted "latch" within (will set to TRUE if present).
+	var/unres_latch = FALSE
 	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/unres_sides = NONE
 	/// Delayed open for unrestricted users. If there is an unrestricted side, we want to know if the door opening should be delayed for a bit to add tension and what-not
@@ -363,7 +363,7 @@
 
 
 
-/// Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+/// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
 /obj/machinery/door/proc/unrestricted_side(mob/opener)
 	return get_dir(src, opener) & unres_sides
 
