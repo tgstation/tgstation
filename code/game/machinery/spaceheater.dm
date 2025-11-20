@@ -118,12 +118,12 @@
 
 /obj/machinery/space_heater/update_overlays()
 	. = ..()
-	if(panel_open)
-		. += "[base_icon_state]-open"
-		. += emissive_blocker(icon, "[base_icon_state]-open", src, alpha = src.alpha)
 
 	if(on)
 		. += emissive_appearance(icon, "[emissive_state ? emissive_state : base_icon_state + "-" + mode]-emissive", src, alpha = src.alpha)
+	if(panel_open)
+		. += "[base_icon_state]-open"
+		. += emissive_blocker(icon, "[base_icon_state]-open", src, alpha = src.alpha)
 
 /obj/machinery/space_heater/on_set_panel_open()
 	update_appearance()
@@ -494,10 +494,10 @@
 	emissive_state = null
 
 /obj/machinery/space_heater/improvised_chem_heater/update_overlays()
-	. = ..()
 	. += "[icon_state]-beaker"
 	. += "[base_icon_state]-rigged"
 	. += emissive_blocker(icon, "[base_icon_state]-rigged", src, alpha = src.alpha)
+	. += ..()
 
 /obj/machinery/space_heater/improvised_chem_heater/RefreshParts()
 	. = ..()
