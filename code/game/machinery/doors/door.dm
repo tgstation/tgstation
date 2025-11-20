@@ -80,8 +80,6 @@
 	var/delayed_unres_time_lower = 2 SECONDS
 	/// Upper range for random time to open for unrestricted users
 	var/delayed_unres_time_upper = 3 SECONDS
-	/// How much longer it takes for incapacitated mobs to open unrestricted doors
-	var/incapacitated_multiplier = 2.5
 
 /datum/armor/machinery_door
 	melee = 30
@@ -375,13 +373,10 @@
 
 	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
 
-	if(HAS_TRAIT(opener, TRAIT_INCAPACITATED))
-		do_after_time *= incapacitated_multiplier
-
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt") // statcollecting on how often people try to use this.
 	balloon_alert(opener, "activating unrestricted latch...")
 	playsound(opener.loc, 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE)
-	if(do_after(opener, do_after_time, target = src, timed_action_flags = IGNORE_INCAPACITATED))
+	if(do_after(opener, do_after_time, target = src))
 		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success") // no need to tally failures as we can assume it as long as we have this + the total
 		return TRUE
 	return FALSE
