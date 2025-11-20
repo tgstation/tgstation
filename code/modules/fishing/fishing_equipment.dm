@@ -530,6 +530,7 @@
 	. += info
 
 /obj/item/fish_genegun/update_icon_state()
+	. = ..()
 	icon_state = base_icon_state
 	if(!loaded_injector)
 		return
