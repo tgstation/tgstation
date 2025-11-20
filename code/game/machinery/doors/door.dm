@@ -342,7 +342,7 @@
 	if(density)
 		run_animation(DOOR_DENY_ANIMATION)
 
-/obj/machinery/door/allowed(mob/M)
+/obj/machinery/door/allowed(mob/accessor)
 	if(emergency)
 		return TRUE
 
@@ -351,11 +351,11 @@
 	if(. == TRUE)
 		return TRUE
 
-	if(unrestricted_side(M))
+	if(unrestricted_side(accessor))
 		if(!delayed_unres_open)
 			return TRUE
 
-		return attempt_delayed_unres_open(M)
+		return attempt_delayed_unres_open(accessor)
 
 	return FALSE
 
