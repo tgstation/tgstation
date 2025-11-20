@@ -375,7 +375,7 @@
 
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt") // statcollecting on how often people try to use this.
 	balloon_alert(opener, "activating unrestricted latch...")
-	playsound(opener.loc, 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE)
+	playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE)
 	if(do_after(opener, do_after_time, target = src))
 		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success") // no need to tally failures as we can assume it as long as we have this + the total
 		return TRUE
