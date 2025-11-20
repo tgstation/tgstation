@@ -27,8 +27,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "g" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "h" = (
 /obj/machinery/power/shuttle_engine/propulsion/left{
@@ -78,6 +82,7 @@
 "n" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "o" = (
@@ -227,8 +232,8 @@ e
 d
 o
 r
-w
 g
+d
 "}
 (7,1,1) = {"
 f
@@ -238,7 +243,7 @@ m
 f
 "}
 (8,1,1) = {"
-g
+d
 n
 r
 H

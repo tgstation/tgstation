@@ -7,10 +7,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"ac" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "ae" = (
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red,
@@ -20,6 +16,7 @@
 	dir = 8
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "al" = (
@@ -587,6 +584,7 @@
 /area/shuttle/escape)
 "Am" = (
 /obj/machinery/light/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Dh" = (
@@ -608,6 +606,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/directional/south,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ge" = (
@@ -682,7 +681,7 @@ aa
 aa
 aa
 qX
-ac
+aa
 ay
 aa
 sY
@@ -690,7 +689,7 @@ sY
 sY
 aa
 aP
-ac
+aa
 aP
 aa
 aa
@@ -783,7 +782,7 @@ bt
 bv
 "}
 (6,1,1) = {"
-ac
+aa
 ab
 IX
 sY
@@ -892,7 +891,7 @@ aa
 sY
 sY
 aa
-ac
+aa
 aa
 sY
 sY
@@ -900,7 +899,7 @@ sY
 sY
 sY
 aa
-ac
+aa
 aa
 aa
 aa

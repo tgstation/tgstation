@@ -877,6 +877,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"dI" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/courtroom)
 "dJ" = (
 /obj/machinery/button/door/indestructible{
 	id = "thunderdomehea";
@@ -1019,6 +1025,7 @@
 "eB" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "eD" = (
@@ -1673,6 +1680,7 @@
 "hP" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "hT" = (
@@ -1737,8 +1745,11 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "in" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "io" = (
 /turf/closed/indestructible/riveted,
@@ -1767,6 +1778,7 @@
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/clothing/mask/gas,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iu" = (
@@ -1816,6 +1828,7 @@
 /obj/item/restraints/handcuffs/cable/zipties,
 /obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "iz" = (
@@ -1874,9 +1887,10 @@
 	},
 /area/centcom/central_command_areas/supply)
 "iH" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/prison)
+/obj/effect/turf_decal/tile/green,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "iK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -3354,8 +3368,9 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "pc" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "pd" = (
 /obj/item/clipboard{
@@ -3541,6 +3556,7 @@
 /obj/item/taperecorder,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "qd" = (
@@ -3739,9 +3755,10 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
 "qR" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/ferry)
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "qS" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -4584,6 +4601,11 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"uB" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "uE" = (
 /obj/effect/light_emitter/thunderdome,
 /turf/closed/indestructible/fakeglass,
@@ -4981,6 +5003,14 @@
 /obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/tdome/administration)
+"wk" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "wl" = (
 /obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
@@ -5683,9 +5713,11 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "zw" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/tdome/observation)
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/nanotrasen/directional/east,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "zx" = (
 /obj/machinery/defibrillator_mount/loaded{
 	pixel_y = null
@@ -5882,11 +5914,13 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "Ao" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "Aq" = (
@@ -6302,6 +6336,7 @@
 /obj/item/stamp,
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "BW" = (
@@ -6441,6 +6476,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "CJ" = (
@@ -6466,6 +6502,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "CO" = (
@@ -6547,8 +6584,10 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/ai_multicam_room)
 "Dj" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
+/obj/effect/landmark/prisonwarp,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/indestructible/dark,
 /area/centcom/central_command_areas/prison/cells)
 "Dk" = (
 /obj/structure/cable,
@@ -7064,6 +7103,12 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/closed/indestructible/fakeglass,
 /area/centcom/tdome/observation)
+"Ge" = (
+/obj/structure/bookcase/random,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/briefing)
 "Gf" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -7231,6 +7276,12 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/central_command_areas/evacuation/ship)
+"He" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/floor,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/indestructible/dark,
+/area/centcom/central_command_areas/prison/cells)
 "Hi" = (
 /obj/effect/turf_decal/tile/green,
 /obj/machinery/light/directional/south,
@@ -7241,6 +7292,7 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "Hl" = (
@@ -7363,6 +7415,14 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
+"HW" = (
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/courtroom)
 "HY" = (
 /obj/machinery/button/door/indestructible{
 	id = "CCsec3";
@@ -8110,6 +8170,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/black,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "Mp" = (
@@ -8222,6 +8283,7 @@
 "ML" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "MM" = (
@@ -8261,9 +8323,12 @@
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/central_command_areas/evacuation/ship)
 "MY" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/briefing)
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/control)
 "Ne" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup,
@@ -8874,9 +8939,11 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/ferry)
 "PF" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin)
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "PG" = (
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
@@ -9200,6 +9267,7 @@
 "Rd" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "Rf" = (
@@ -9503,9 +9571,13 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod)
 "Sx" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin/storage)
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/fore)
 "Sy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -9529,6 +9601,13 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
 /turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
+"SD" = (
+/obj/item/kirbyplants/organic/plant21,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/courtroom)
 "SE" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/light_emitter/podbay,
@@ -9641,6 +9720,7 @@
 "Th" = (
 /obj/structure/filingcabinet/white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
 "Tj" = (
@@ -10353,6 +10433,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "WM" = (
@@ -10443,6 +10524,7 @@
 "Xc" = (
 /obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "Xd" = (
@@ -10570,6 +10652,11 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
+"XG" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "XJ" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -10790,9 +10877,10 @@
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/control)
 "Za" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/fore)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/south,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "Ze" = (
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
@@ -47933,20 +48021,20 @@ On
 On
 On
 On
-PF
+On
 PE
 ww
 Fh
 wz
-qR
+mD
 Rd
 eF
 hx
 TE
 az
 eF
-Rd
-MY
+Ge
+gO
 aa
 aa
 aa
@@ -49993,8 +50081,8 @@ On
 mD
 su
 fw
-ts
-qR
+iH
+mD
 Mp
 Pd
 RH
@@ -50498,7 +50586,7 @@ EJ
 QV
 QV
 Mo
-Sx
+YU
 Gs
 Ow
 aD
@@ -51526,7 +51614,7 @@ mi
 pj
 nm
 Th
-Sx
+YU
 Nn
 yi
 cL
@@ -51535,8 +51623,8 @@ vb
 oe
 su
 xk
-ts
-qR
+iH
+mD
 Vg
 bH
 bH
@@ -52328,8 +52416,8 @@ bz
 QC
 Zj
 bi
-eI
-zw
+qR
+QC
 Id
 Bs
 vW
@@ -53336,8 +53424,8 @@ wC
 iu
 iu
 iu
-in
-tL
+io
+wk
 tL
 io
 iu
@@ -53604,7 +53692,7 @@ iu
 Dt
 DH
 iu
-in
+io
 Sl
 RW
 Sl
@@ -53838,11 +53926,11 @@ Ox
 Ox
 Ox
 Ox
-qs
-Za
+Sx
 Vx
-Za
-tK
+Vx
+Vx
+in
 gL
 io
 HY
@@ -53853,9 +53941,9 @@ hc
 iu
 Ab
 An
-in
 io
-in
+io
+io
 CI
 CY
 wH
@@ -54127,8 +54215,8 @@ aB
 DF
 BW
 BW
-BW
-zw
+Za
+QC
 yY
 Kd
 yY
@@ -54638,8 +54726,8 @@ Mu
 Mu
 Mu
 aB
-zw
-BW
+QC
+XG
 BW
 BW
 QC
@@ -54866,11 +54954,11 @@ Ox
 Ox
 Ox
 Ox
-qs
-Za
+Sx
 Vx
-Za
-tN
+Vx
+Vx
+MY
 gL
 io
 SQ
@@ -54881,9 +54969,9 @@ Oh
 iu
 Ab
 Ao
-in
 io
-in
+io
+io
 CL
 CZ
 wH
@@ -55146,7 +55234,7 @@ iu
 Xa
 DI
 iu
-in
+io
 Sl
 RW
 Sl
@@ -55392,8 +55480,8 @@ wC
 iu
 iu
 iu
-in
-tL
+io
+wk
 tL
 io
 iu
@@ -55613,19 +55701,19 @@ aa
 Jb
 rs
 am
+Jb
 Dj
-rs
 am
+Jb
 Dj
-rs
 am
+Jb
 Dj
-rs
 am
+Jb
 Dj
-rs
-am
-Dj
+He
+Jb
 rs
 am
 Jb
@@ -55886,7 +55974,7 @@ YX
 ir
 IF
 Jb
-iH
+il
 il
 Mz
 GC
@@ -56143,7 +56231,7 @@ iT
 ls
 lL
 Ra
-kB
+PF
 nD
 iL
 iT
@@ -56381,7 +56469,7 @@ aa
 aa
 aa
 aa
-iH
+il
 it
 lL
 im
@@ -56440,8 +56528,8 @@ bz
 QC
 dV
 cS
-cS
-zw
+uB
+QC
 Ot
 Ot
 di
@@ -57923,7 +58011,7 @@ aa
 aa
 aa
 aa
-iH
+il
 iy
 lL
 ip
@@ -58199,7 +58287,7 @@ iU
 lt
 lL
 Ra
-kB
+zw
 rg
 iK
 iU
@@ -58456,7 +58544,7 @@ YX
 ir
 IF
 Jb
-pc
+Hv
 Hv
 RI
 ja
@@ -58697,19 +58785,19 @@ aa
 Jb
 rs
 am
+Jb
 Dj
-rs
 am
+Jb
 Dj
-rs
 am
+Jb
 Dj
-rs
 am
+Jb
 Dj
-rs
-am
-Dj
+He
+Jb
 rs
 am
 Jb
@@ -58976,8 +59064,8 @@ rM
 rM
 rM
 rM
-zc
-pc
+HW
+Hv
 cg
 PL
 fm
@@ -60001,10 +60089,10 @@ Hv
 Hv
 Hv
 Hv
-pc
+Hv
 ja
 ja
-pc
+Hv
 Hv
 qA
 qy
@@ -60251,17 +60339,17 @@ Hv
 bB
 ps
 tQ
-pc
+Hv
 hP
 lR
 ml
 mW
 rN
 bP
+pc
 ps
 ps
-ps
-aU
+SD
 Hv
 qy
 qz
@@ -61275,7 +61363,7 @@ aa
 aa
 aa
 aa
-pc
+Hv
 qc
 rk
 kE
@@ -61789,8 +61877,8 @@ aa
 aa
 aa
 aa
-pc
-bC
+Hv
+dI
 rk
 kG
 ld
@@ -62061,7 +62149,7 @@ MV
 mY
 rM
 ML
-pc
+Hv
 qz
 qy
 cg
@@ -62303,7 +62391,7 @@ aa
 aa
 aa
 aa
-pc
+Hv
 BU
 rk
 kE
@@ -63335,7 +63423,7 @@ Hv
 Wp
 xX
 QX
-pc
+Hv
 Xc
 KD
 rc
