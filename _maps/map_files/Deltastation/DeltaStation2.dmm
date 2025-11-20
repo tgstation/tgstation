@@ -38087,6 +38087,7 @@
 	name = "Head of Security's Fax Machine"
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "jsL" = (
@@ -88099,10 +88100,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"vOe" = (
-/obj/structure/sign/nanotrasen/directional/west,
-/turf/open/space/basic,
-/area/space)
 "vOh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -154281,7 +154278,7 @@ jgc
 hDc
 arz
 vVc
-vOe
+aaa
 kOA
 cPR
 mgv
