@@ -44,7 +44,7 @@
 /obj/machinery/power/apc/get_custom_save_vars(save_flags=ALL)
 	. = ..()
 	if(cell_type)
-		.[NAMEOF(src, start_charge)] = round((cell.charge / cell.maxcharge * 100))
+		.[NAMEOF(src, start_charge)] = round((cell.charge / cell.maxcharge) * 100)
 	return .
 
 /obj/machinery/power/smes/get_save_vars(save_flags=ALL)
