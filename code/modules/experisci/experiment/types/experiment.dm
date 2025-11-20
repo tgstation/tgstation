@@ -115,7 +115,7 @@
 	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
 		if(experi_handler.linked_web != linked_web)
 			continue
-		if((experi_handler.config_flags & EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE) && !experi_handler.is_compatible_experiment(src))
+		if(!(experi_handler.config_flags & EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE) && !experi_handler.is_compatible_experiment(src))
 			continue
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
