@@ -648,7 +648,7 @@
 
 	active_msg = "You prepare to counterattack a target..."
 	deactive_msg = "You relax your stance."
-	cast_range = 1
+	cast_range = 2
 
 	var/datum/weakref/blade_sheath_ref
 	var/datum/weakref/eyed_fool
