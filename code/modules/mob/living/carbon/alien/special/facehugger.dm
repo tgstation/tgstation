@@ -24,6 +24,7 @@
 	layer = MOB_LAYER
 	max_integrity = 100
 	slowdown = 2
+	clothing_traits = list(TRAIT_SOFTSPOKEN)
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
