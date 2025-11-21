@@ -76,6 +76,7 @@ export const AntagInfoBloodWorm = (props) => {
                   <LabeledList.Item label="Bleeding">
                   While in a host, you are transformed entirely into blood. This renders you extremely vulnerable to bleeding wounds.
                   When your host bleeds, it directly damages you, and your hosts continue bleeding even while dead.
+                  Your hosts also bleed 50% faster than normal people.
                   </LabeledList.Item>
                   <LabeledList.Item label="Inferior Biology">
                   Your hosts lack your advanced senses, leaving them vulnerable to ordinary impediments like darkness and flashbangs.
