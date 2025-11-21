@@ -734,7 +734,7 @@
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
-/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE, mount_dir = NONE)
+/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir)
 	return //its a floor light not a wall light
 
 /obj/machinery/light/floor/get_light_offset()
