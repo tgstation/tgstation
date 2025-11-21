@@ -172,7 +172,7 @@
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
 			if (!M.use(1))
 				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
-			return
+				return
 			var/obj/item/bot_assembly/ed209/B = new(drop_location())
 			to_chat(user, span_notice("You arm the robot frame."))
 			var/holding_this = user.get_inactive_held_item() == src
