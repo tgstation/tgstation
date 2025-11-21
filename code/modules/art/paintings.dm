@@ -973,6 +973,11 @@
 		if(EAST)
 			bound_height = 64
 
+/obj/structure/sign/painting/large/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir)
+	if(!pixel_x && !pixel_y)
+		mount_dir = dir
+	return ..()
+
 /obj/structure/sign/painting/large/frame_canvas(mob/living/user, obj/item/canvas/new_canvas)
 	. = ..()
 	if(.)
