@@ -121,20 +121,16 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EVENT_PROTECTED (1<<9)
 /// This Area Doesn't have Flood or Bomb Admin Messages, but will still log
 #define QUIET_LOGS (1<<10)
-/// This is a virtual/bitrunning area
-#define VIRTUAL_AREA (1<<11)
-/// This area does not allow virtual entities to enter.
-#define VIRTUAL_SAFE_AREA (1<<12)
 /// This area does not allow the Binary channel
-#define BINARY_JAMMING (1<<13)
+#define BINARY_JAMMING (1<<11)
 /// This area prevents Bag of Holding rifts from being opened.
-#define NO_BOH (1<<14)
+#define NO_BOH (1<<12)
 /// This area prevents fishing from removing unique/limited loot from sources that're also used outside of it.
-#define UNLIMITED_FISHING (1<<15)
+#define UNLIMITED_FISHING (1<<13)
 /// This area is prevented from having gravity (ie. space, nearstation, or outside solars)
-#define NO_GRAVITY (1<<16)
+#define NO_GRAVITY (1<<14)
 /// This area can be teleported in, but -only- to locations within that same area.
-#define LOCAL_TELEPORT (1<<17)
+#define LOCAL_TELEPORT (1<<15)
 
 ////////////////Area Mapping Flags\\\\\\\\\\\\\\
 /// If false, loading multiple maps with this area type will create multiple instances.
@@ -149,6 +145,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MEGAFAUNA_SPAWN_ALLOWED (1<<4)
 /// If engravings are persistent in this area
 #define PERSISTENT_ENGRAVINGS (1<<5)
+/// This is a virtual/bitrunning area
+#define VIRTUAL_AREA (1<<6)
+/// This area does not allow virtual entities to enter.
+#define VIRTUAL_SAFE_AREA (1<<7)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
