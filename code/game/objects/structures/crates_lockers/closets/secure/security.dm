@@ -307,7 +307,7 @@
 	new /obj/item/storage/box/firingpins(src)
 	new /obj/item/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser/thermal(src)
+		new /obj/item/gun/energy/laser/pistol(src)
 
 /obj/structure/closet/secure_closet/armory3/populate_contents_immediate()
 	for(var/i in 1 to 3)
