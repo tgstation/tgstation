@@ -86,8 +86,7 @@
 /obj/item/toy/plush/rufran/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/dnainjector))
 		var/obj/item/dnainjector/serum = item
-		embiggen(serum)
-		return
+		embiggen(serum, user)
 	return ..()
 
 /obj/item/toy/plush/rufran/proc/embiggen(obj/item/dnainjector/serum, mob/user)
