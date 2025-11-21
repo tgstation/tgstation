@@ -153,9 +153,9 @@
 	repair.toolbox = type
 	var/new_color = toolbox_colors[type] || "#445eb3"
 	repair.set_color(new_color)
-	user.put_in_hands(repair)
 	repair.update_appearance()
 	repair.balloon_alert(user, "sensor added!")
 	qdel(tool)
 	qdel(src)
+	user.put_in_hands(repair)
 	return ITEM_INTERACT_SUCCESS
