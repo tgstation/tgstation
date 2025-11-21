@@ -403,9 +403,9 @@
 
 /datum/supply_pack/security/blood_worm_testers
 	name = "Blood Worm Testing Crate"
-	desc = "Contains three single-use blood worm testing tools. \
+	desc = "Contains four single-use blood worm testing tools. \
 		They are accurate, but the testing process is painful and cumbersome."
 	cost = CARGO_CRATE_VALUE * 50 // These aren't meant to be bought en-masse.
 	access_view = ACCESS_SECURITY
-	contains = list(/obj/item/blood_worm_tester = 3)
+	contains = list(/obj/item/blood_worm_tester = 4)
 	crate_name = "blood worm testing crate"
