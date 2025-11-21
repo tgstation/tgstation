@@ -296,7 +296,7 @@
 	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
 	purchasing_techweb.scientific_cooperation[type] -= boostable_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
 	if(possible_boost == SCIPAPER_ALREADY_BOUGHT) /// Refund the original price
-		purchasing_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = node.research_costs[TECHWEB_POINT_TYPE_GENERIC]))
+		purchasing_techweb.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
 		return SCIPAPER_ALREADY_BOUGHT
 	return TRUE
 

@@ -221,7 +221,7 @@
 			if(partner && node)
 				var/possible_boost = partner.purchase_boost(linked_techweb, node)
 				if(possible_boost)
-					computer.say("Purchase successful[possible_boost == SCIPAPER_ALREADY_BOUGHT ? ", refunding [node.research_costs[TECHWEB_POINT_TYPE_GENERIC]] points" : ""].")
+					computer.say("Purchase successful[possible_boost == SCIPAPER_ALREADY_BOUGHT ? ", refunding [partner.boostable_nodes[params["purchased_boost"]]] points" : ""].")
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
 			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25)
