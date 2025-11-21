@@ -30,11 +30,11 @@
 
 /obj/structure/light_construct/Initialize(mapload)
 	. = ..()
-	if(mapload && !find_and_hang_on_atom(mark_for_late_init = TRUE, mount_dir = dir))
+	if(mapload && !find_and_mount_on_atom(mark_for_late_init = TRUE, mount_dir = dir))
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/light_construct/LateInitialize()
-	find_and_hang_on_atom(late_init = TRUE, mount_dir = dir)
+	find_and_mount_on_atom(late_init = TRUE, mount_dir = dir)
 
 /obj/structure/light_construct/Destroy()
 	QDEL_NULL(cell)
@@ -150,7 +150,7 @@
 					if("floor")
 						new_light = new /obj/machinery/light/floor/empty(loc)
 				new_light.setDir(dir)
-				new_light.find_and_hang_on_atom()
+				new_light.find_and_mount_on_atom()
 				transfer_fingerprints_to(new_light)
 				if(!QDELETED(cell))
 					new_light.cell = cell

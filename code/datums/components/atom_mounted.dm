@@ -80,7 +80,7 @@
  * * mount_dir - the direction to check for an mount before defaulting to pixel offsets or the loc turf.
  * Useful only for manual mounting or if your object has directional icon states AND don't use offsets,
 */
-/obj/proc/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE, mount_dir = NONE)
+/obj/proc/find_and_mount_on_atom(mark_for_late_init = FALSE, late_init = FALSE, mount_dir = NONE)
 	if(obj_flags & MOUNT_ON_LATE_INITIALIZE)
 		obj_flags &= ~MOUNT_ON_LATE_INITIALIZE
 	else if(late_init)

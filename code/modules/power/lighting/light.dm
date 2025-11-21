@@ -119,9 +119,9 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(mapload)
-		find_and_hang_on_atom(mark_for_late_init = TRUE)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
-/obj/machinery/light/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir = dir)
+/obj/machinery/light/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir = dir)
 	if(break_if_moved)
 		return ..()
 
@@ -734,8 +734,24 @@
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
-/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir)
-	return //its a floor light not a wall light
+/obj/machinery/light/floor/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir)
+	var/area/location = get_area(src)
+	if(!isarea(location))
+		return FALSE
+
+	var/msg
+	if(PERFORM_ALL_TESTS(focus_only/atom_mounted))
+		msg = "[type] Could not find floor turf at [location.type] "
+
+	var/turf/local_turf = get_turf(src)
+	if(!isfloorturf(local_turf))
+		if(msg)
+			msg += "[local_turf.x],[local_turf.y],[local_turf.z]"
+			stack_trace(msg)
+		return FALSE
+
+	AddComponent(/datum/component/atom_mounted, local_turf)
+	return TRUE
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
