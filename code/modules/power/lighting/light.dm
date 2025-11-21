@@ -745,7 +745,7 @@
 
 	var/atom/attachable_atom
 	var/turf/local_turf = get_turf(src)
-	if(isfloorturf(local_turf) || isindestructiblefloor(local_turf))
+	if(!isgroundlessturf(local_turf))
 		attachable_atom = local_turf
 	else
 		var/static/list/attachables = list(
