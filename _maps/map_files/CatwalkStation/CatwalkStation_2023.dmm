@@ -32951,8 +32951,10 @@
 /turf/open/openspace,
 /area/station/construction/storage_wing)
 "jbh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor/broken,
-/turf/open/openspace,
+/turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "jbn" = (
 /obj/structure/stairs/west,
@@ -112458,7 +112460,7 @@ oLN
 vwl
 ilE
 chu
-wNu
+jbh
 sQY
 aHS
 pMT
@@ -177994,7 +177996,7 @@ adC
 adC
 adC
 adC
-jbh
+adC
 fgT
 hdN
 cVm
