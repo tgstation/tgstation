@@ -741,17 +741,29 @@
 
 	var/msg
 	if(PERFORM_ALL_TESTS(focus_only/atom_mounted))
-		msg = "[type] Could not find floor turf at [location.type] "
+		msg = "[type] Could not find attachable atom at [location.type] "
 
+	var/atom/attachable_atom
 	var/turf/local_turf = get_turf(src)
-	if(!isfloorturf(local_turf))
-		if(msg)
-			msg += "[local_turf.x],[local_turf.y],[local_turf.z]"
-			stack_trace(msg)
-		return FALSE
+	if(isfloorturf(local_turf))
+		attachable_atom = local_turf
+	else
+		var/static/list/attachables = list(
+			/obj/structure/thermoplastic,
+			/obj/structure/lattice/catwalk,
+		) //list of structures to mount on
+		for(var/obj/attachable in local_turf)
+			if(is_type_in_list(attachable, attachables))
+				attachable_atom = attachable
+				break
+	if(attachable_atom)
+		AddComponent(/datum/component/atom_mounted, attachable_atom)
+		return TRUE
 
-	AddComponent(/datum/component/atom_mounted, local_turf)
-	return TRUE
+	if(msg)
+		msg += "([local_turf.x],[local_turf.y],[local_turf.z])"
+		stack_trace(msg)
+	return FALSE
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
