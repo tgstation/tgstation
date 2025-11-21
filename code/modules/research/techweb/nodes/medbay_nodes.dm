@@ -80,7 +80,6 @@
 		"healthanalyzer_advanced",
 		"mod_health_analyzer",
 		"crewpinpointer",
-		"defibrillator_compact",
 		"defibmount",
 		"medicalbed_emergency",
 		"piercesyringe",

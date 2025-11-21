@@ -98,9 +98,7 @@
 	prereq_ids = list(TECHWEB_NODE_FUSION)
 	design_ids = list(
 		"flatpacker",
-		"handdrill",
 		"exwelder",
-		"jawsoflife",
 		"rangedanalyzer",
 		"rtd_loaded",
 		"mech_rcd",
