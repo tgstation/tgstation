@@ -306,6 +306,8 @@
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
+	host.physiology.bleed_mod *= BLOOD_WORM_BLEED_MOD
+
 	host.AddElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, innate_actions)
@@ -380,6 +382,7 @@
 
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
+	host.physiology.bleed_mod /= BLOOD_WORM_BLEED_MOD
 	host.RemoveElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, host_actions)

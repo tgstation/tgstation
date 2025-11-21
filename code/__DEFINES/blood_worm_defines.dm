@@ -3,3 +3,7 @@
 
 /// The health percentage at which blood worms are forcibly kicked out from their hosts.
 #define BLOOD_WORM_EJECT_THRESHOLD 0.1
+
+/// How much faster blood worm hosts bleed. Required because blood worms, unlike people, don't die at ~60% blood, instead they leave hosts at 10% blood, and adults have a ton of blood.
+/// This means blood worms are ridiculously strong against one of their own weaknesses without this. Don't make this too high, because blood worms use blood to heal, attack and survive.
+#define BLOOD_WORM_BLEED_MOD 1.5
