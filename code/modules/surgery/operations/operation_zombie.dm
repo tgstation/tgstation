@@ -36,7 +36,7 @@
 		return FALSE
 	if(!(locate(/obj/item/organ/brain) in limb))
 		return FALSE
-	return FALSE
+	return TRUE
 
 /datum/surgery_operation/limb/bionecrosis/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, operated_zone)
 	for(var/chem in zombie_chems)
