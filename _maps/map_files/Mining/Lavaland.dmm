@@ -8606,19 +8606,6 @@
 /obj/item/seeds/apple,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
-"XM" = (
-/obj/machinery/door/airlock/external/glass{
-	name = "Mining External Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "lavaland_living_west"
-	},
-/obj/structure/sign/directions/security/directional/west{
-	pixel_y = -7;
-	pixel_x = 0
-	},
-/turf/open/floor/iron/textured_large,
-/area/mine/cafeteria)
 "XP" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/block{
@@ -37499,7 +37486,7 @@ te
 dz
 px
 DI
-XM
+oS
 BP
 ol
 aj

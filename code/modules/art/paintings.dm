@@ -946,11 +946,11 @@
 	wallframe_type = /obj/item/wallframe/painting/large
 
 /obj/structure/sign/painting/large/Initialize(mapload)
-	. = ..()
 	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
 	if(mapload)
 		finalize_size()
+	return ..()
 
 /**
  * This frame is visually put between two wall turfs and it has an icon that's bigger than 32px, and because

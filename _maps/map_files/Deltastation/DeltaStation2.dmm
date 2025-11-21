@@ -4310,12 +4310,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/science/research)
-"bbP" = (
-/obj/structure/plaque/static_plaque/golden/commission/delta,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/entry)
 "bbQ" = (
 /obj/machinery/vending/wardrobe/hydro_wardrobe,
 /obj/effect/turf_decal/bot,
@@ -67921,6 +67915,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/plaque/static_plaque/golden/commission/delta{
+	pixel_x = -32;
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "qNb" = (
@@ -132353,7 +132351,7 @@ aaa
 aaa
 qld
 lYd
-bbP
+sde
 kJd
 xcm
 lSh

@@ -31911,10 +31911,11 @@
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "kXV" = (
-/obj/structure/cable,
-/obj/structure/plaque/static_plaque/golden/commission/wawa,
-/obj/structure/disposalpipe/segment{
-	dir = 8
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/plaque/static_plaque/golden/commission/wawa{
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
@@ -92358,8 +92359,8 @@ sGk
 crr
 lsC
 prW
+tOm
 kXV
-tCE
 rnk
 ykc
 pEZ

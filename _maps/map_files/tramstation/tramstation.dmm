@@ -17129,6 +17129,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/structure/plaque/static_plaque/golden/commission/tram{
+	pixel_x = -32;
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
 "eSI" = (
@@ -48429,7 +48433,6 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "pWN" = (
-/obj/structure/plaque/static_plaque/golden/commission/tram,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
