@@ -587,3 +587,28 @@
   vinylspiders:
   - bugfix: fixes an where modsuits would accumulate in nullspace over the course
       of a round
+2025-11-21:
+  ArchBTW:
+  - balance: Increase Captain's Sabre damage [15->20]
+  Ezel:
+  - balance: Cmo no longer starts with a advanced health analyzer
+  Fghj240:
+  - rscadd: Added 2 new virus symptoms
+  Ghommie:
+  - bugfix: Fixed some fishes trying to eat other (bigger) fish while not hungry.
+      Also a nit with purple sludgefish being a bit too rare.
+  - bugfix: Fixes fish analyzers not working with held or equipped fish or aquariums
+      (not in your backpack).
+  - balance: Fish analyzers and operating computers no longer announce completed experiments
+      that they aren't compatible with.
+  - balance: the ping sound from using fishing lures should be a smidge louder and
+      can be heard from more than 1 tile away.
+  - qol: Examining fish tanks (the item) when they're almost full will warn you about
+      it.
+  SmArtKar:
+  - bugfix: Echolocation no longer displays pipes and other invisible objects
+  - bugfix: Clearing centcom podbays no longer deletes ghosts and runtimes upon doing
+      so
+  UwUMacaroniTime:
+  - balance: Nerfed cyborg hypospray across the board, notably refilling chems 20%
+      slower.
