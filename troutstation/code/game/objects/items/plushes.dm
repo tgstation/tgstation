@@ -87,6 +87,7 @@
 	if(istype(item, /obj/item/dnainjector))
 		var/obj/item/dnainjector/serum = item
 		embiggen(serum)
+		return
 	return ..()
 
 /obj/item/toy/plush/rufran/proc/embiggen(obj/item/dnainjector/serum, mob/user)
