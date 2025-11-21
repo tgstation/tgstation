@@ -604,4 +604,4 @@
 	storage_type = /datum/storage/box/syndicakes
 
 /obj/item/storage/box/syndi_cakes/PopulateContents()
-    new /obj/item/food/syndi_cake(src)
+	new /obj/item/food/syndi_cake(src)
