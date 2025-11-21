@@ -497,7 +497,7 @@
 	if(!borgy.cell)
 		balloon_alert(user, "no cell found!")
 		return FALSE
-	if(borgy.cell.charge >= (amount * energyfactor))
+	if(borgy.cell.charge < (amount * energyfactor))
 		balloon_alert(user, "insufficient charge!")
 		return FALSE
 	return dry_run ? TRUE : borgy.cell.use(amount * energyfactor)
