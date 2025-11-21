@@ -14,6 +14,9 @@
 	result_path = /obj/machinery/camera/autoname/deconstructed
 	wall_external = TRUE
 
+/obj/item/wallframe/camera/find_support_structure(atom/structure)
+	return istype(structure, /obj/structure/window) ? structure : ..()
+
 /obj/machinery/camera
 	name = "security camera"
 	desc = "It's used to monitor rooms."
@@ -128,7 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	alarm_manager = new(src)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom(mark_for_late_init = TRUE)
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
