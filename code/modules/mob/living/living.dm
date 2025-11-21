@@ -1630,7 +1630,6 @@
 				/mob/living/basic/pet/dog/pug,
 				/mob/living/basic/pet/gondola,
 				/mob/living/basic/pet/fox,
-				/mob/living/basic/pet/penguin,
 				/mob/living/basic/pet/penguin/baby,
 				/mob/living/basic/pet/penguin/baby/permanent,
 				/mob/living/basic/pet/penguin/emperor,
@@ -2761,8 +2760,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /// Proc called when TARGETED by a lazarus injector
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
-	befriend(reviver)
-	faction = (malfunctioning) ? list("[REF(reviver)]") : list(FACTION_NEUTRAL)
+	faction |= FACTION_NEUTRAL
+	if (!malfunctioning)
+		befriend(reviver)
 	var/lazarus_policy = get_policy(ROLE_LAZARUS_GOOD) || "The lazarus injector has brought you back to life! You are now friendly to everyone."
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)

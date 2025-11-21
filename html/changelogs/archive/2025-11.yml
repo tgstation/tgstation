@@ -460,3 +460,155 @@
   - bugfix: flatpacker can interact with borg omnitools again
   muchatras:
   - bugfix: fixed the spraycan left-click
+2025-11-17:
+  Aliceee2ch:
+  - balance: Adv. parts and adv. surgery experiments are now discounts, instead of
+      requirements.
+  - spellcheck: Items that block contents/wires from EMPs now showed up as only "partially
+      EMP blocking" objects in examine menu.
+  Dmeto:
+  - map: Replaces rocks on the public mining path on Lavaland with correct subtype.
+  Melbert:
+  - rscadd: Adds emagged apc hallucination
+  - spellcheck: Some Coveralls
+  - rscdel: 'Catwalk med: Removed 1 of 2 first aid stations'
+  - qol: 'Catwalk med: Adds some newscasters'
+  SpaceSmithers:
+  - map: Added a virtual gymnasium to the holodeck.
+  TealSeer:
+  - bugfix: fixed placing wall signs at diagonals allowing you to duplicate them
+2025-11-18:
+  loganuk:
+  - map: CATWALK - Bridge - New location and new layout, now feels impressive and
+      should be better for those scenes that take places there, bit more gravitas,
+      it also contains an escape route behind 2x high security doors, or could it
+      be an attack route in?
+  - map: CATWALK - Command Meeting Area - Now is a more central location, no point
+      having meetings on the bridge itself, have them in the meeting room with some
+      style
+  - map: CATWALK - HOP Office - Made larger and a few things re-arranged to work and
+      make sense, extra security features and re-decoration
+  - map: CATWALK - Command Area - Extra anti tider measures, fixing of access and
+      wiring/air - Some of the screens/wall mounts have been moved and fixed - Avoiding
+      duplicate wallmounts
+  - map: CATWALK - Captain Office - Re-arranged and a few broken things fixed, the
+      door to the public hallway has been removed, Security shutters have been added
+      for extra protection
+  - map: CATWALK - Gateway - Re-decorated and tweaked a little
+  - map: CATWALK - Public Area - New chill out area to replace the weird judge/holding
+      cell, generic for now but also a space for players to take apart easily and
+      build new things, NT even threw in a water cooler
+  - map: CATWALK - Hallways - New floor tiles featuring the dreaded catwalks, A more
+      central landmark to identify when in the central area, may be divisive opinion
+      wise. A few layout changes and tweaks
+  - map: CATWALK - EVA - Security doors on jetpacks/magboots now working, one was
+      free access the other was missing + room re-decorated + shutters tweaked
+  - map: CATWALK - Arrivals - Extra lights and a bit of extra signage to indicate
+      direction for new arrivals unfamiliar with the station
+  mikederkan:
+  - qol: Welding protection now prevents Maintenance Adapted eyes from burning in
+      the light.
+2025-11-19:
+  Hatterhat:
+  - bugfix: Alien welders, as befitting their nature of being Wacky Advanced Tools,
+      no longer sear your eyeballs if you don't have eye protection.
+  Melbert:
+  - qol: Monkeys will avoid stepping over glass tables
+  - bugfix: Partial language understanding now correctly has a higher chance of translating
+      more common words.
+  - qol: Aphasia got slightly more words to work with
+  SmArtKar:
+  - bugfix: Fixed mobs not actually befriending their lazarus reviver, and losing
+      all previous friends upon revival
+  - bugfix: Fixed purple raptors being unusable by winged species
+  SyncIt21:
+  - bugfix: clicking on a turf containing a grill with a rcd in window mode will complete
+      the grill
+  - bugfix: clicking on a turf containing a girder with a rcd in turf/wall mode will
+      complete the girder
+  - bugfix: RCD, RLD, RTD & RPLD now uses material only after action is successful
+  SyncIt21, JohnFulpWillard:
+  - bugfix: budget ordering console correctly differentiates between private & department
+      orders.
+  - bugfix: budget ordering console checkout cart displays correct Private/Department
+      order text amounts.
+  TealSeer:
+  - bugfix: fixed grilled cheese sandwich grilling into grilled cheese sandwich
+  Thunder12345:
+  - code_imp: Converted some gun related variables to use time defines, make an issue
+      report if anything shoots abnormally fast/slow.
+  mcbalaam:
+  - bugfix: Turret controls should have a carcass again
+  timothymtorres:
+  - bugfix: Fix lattice deconstruction to update space areas
+2025-11-20:
+  Aliceee2ch:
+  - balance: Plasmamen not catching in fire anymore from the slightest wind blow on
+      their envirosuits.
+  Hatterhat:
+  - bugfix: Makarov gun/ammo cases (the ones with the evil red S and the evidence
+      disposal bomb) no longer require you to be stunned to arm the evidence disposal
+      bomb.
+  JohnFulpWillard:
+  - qol: There's a keybind (default is Ctrl+X, rebindable) for the drop hotkey to
+      drop where your mouse is (similar to SS14).
+  - bugfix: Medbeams are no longer considered guns (for beepsky and honorbound Chaplains).
+  Melbert:
+  - bugfix: Glowing bloody footprints looks less weird
+  - qol: Other forms of being husked are now reported before burns
+  - bugfix: Confusion does things again
+  Pickle-Coding:
+  - bugfix: Fixes welding fuel being ignited by kisses.
+  SapphicOverload:
+  - bugfix: Fixed cracked HFR parts not being able to leak moderator gases.
+  - code_imp: The HFR now processes at the same rate as other atmos machinery.
+  SmArtKar:
+  - bugfix: Fixed swimming not draining stamina or wetting/extinguishing players
+  SyncIt21:
+  - bugfix: fixes all incorrectly maploded wall mounts that aren't actually hanging
+      on any support structure
+  - bugfix: objects mounted on tables, windows & fences also fall off now when destoryed
+  - qol: lights can be mounted on windows
+  - qol: cameras can be mounted on windows
+  - qol: buttons can be mounted on tables
+  - refactor: improved how wall mounts interact with objects as a whole report bugs
+      on github
+  - bugfix: mech HUD always updates like when charged via inducer
+  afonamo:
+  - bugfix: binary sensors no longer report exact consciousness status to crew monitor.
+  - bugfix: crew monitor sort by name now respects ascending vs. descending sorting.
+  - qol: crew monitor sort by vitals now properly treats those with binary sensors
+      as either fully healthy or dead.
+  jokypoky:
+  - balance: Voidwalkers are immune to hardstuns again.
+  lelandkemble:
+  - bugfix: You can no longer duplicate DNA for the DNA vault objective by scanning
+      yourself on several probes at once.
+  vinylspiders:
+  - bugfix: fixes an where modsuits would accumulate in nullspace over the course
+      of a round
+2025-11-21:
+  ArchBTW:
+  - balance: Increase Captain's Sabre damage [15->20]
+  Ezel:
+  - balance: Cmo no longer starts with a advanced health analyzer
+  Fghj240:
+  - rscadd: Added 2 new virus symptoms
+  Ghommie:
+  - bugfix: Fixed some fishes trying to eat other (bigger) fish while not hungry.
+      Also a nit with purple sludgefish being a bit too rare.
+  - bugfix: Fixes fish analyzers not working with held or equipped fish or aquariums
+      (not in your backpack).
+  - balance: Fish analyzers and operating computers no longer announce completed experiments
+      that they aren't compatible with.
+  - balance: the ping sound from using fishing lures should be a smidge louder and
+      can be heard from more than 1 tile away.
+  - qol: Examining fish tanks (the item) when they're almost full will warn you about
+      it.
+  SmArtKar:
+  - bugfix: Echolocation no longer displays pipes and other invisible objects
+  - bugfix: Clearing centcom podbays no longer deletes ghosts and runtimes upon doing
+      so
+  UwUMacaroniTime:
+  - balance: Nerfed cyborg hypospray across the board, notably refilling chems 20%
+      slower.

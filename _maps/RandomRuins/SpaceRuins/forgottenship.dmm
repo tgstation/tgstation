@@ -1053,7 +1053,8 @@
 	lethal = 1;
 	name = "Ship turret control panel";
 	pixel_y = 32;
-	req_access = list("syndicate")
+	req_access = list("syndicate");
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)

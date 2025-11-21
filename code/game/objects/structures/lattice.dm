@@ -48,6 +48,10 @@
 		for(var/thing_that_falls in turfloc)
 			turfloc.zFall(thing_that_falls)
 
+	var/area/turf_area = get_area(turfloc)
+	if(isspaceturf(turfloc) && istype(turf_area, /area/space/nearstation))
+		set_turf_to_area(turfloc, GLOB.areas_by_type[/area/space])
+
 /obj/structure/lattice/proc/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>. There's space for more <i>rods</i> or a <i>tile</i>.")
 
