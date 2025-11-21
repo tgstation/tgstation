@@ -134,7 +134,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
 /obj/machinery/camera/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir = dir)
-	return ..()
+	return ..() //remember mountdir = dir is VERY IMPORTANT as cameras have directional sprits. Do not remove
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
