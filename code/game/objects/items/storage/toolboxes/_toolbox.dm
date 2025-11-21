@@ -149,13 +149,16 @@
 		/obj/item/storage/toolbox/crafter = "#9D3282",
 		/obj/item/storage/toolbox/syndicate = "#3d3d3d",
 	)
-	var/obj/item/bot_assembly/repairbot/repair = new
+	var/obj/item/bot_assembly/repairbot/repair = new(drop_location())
 	repair.toolbox = type
 	var/new_color = toolbox_colors[type] || "#445eb3"
 	repair.set_color(new_color)
 	repair.update_appearance()
 	repair.balloon_alert(user, "sensor added!")
 	qdel(tool)
-	qdel(src)
-	user.put_in_hands(repair)
+	if (user.is_holding(src))
+		qdel(src)
+		user.put_in_hands(repair)
+	else
+		qdel(src)
 	return ITEM_INTERACT_SUCCESS

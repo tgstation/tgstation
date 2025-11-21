@@ -369,15 +369,19 @@
 		reagents.clear_reagents()
 		user.visible_message(span_notice("[user] empties out [src] onto the floor using the release valve."), span_info("You quietly empty out [src] using its release valve."))
 
-//firebot assembly
-/obj/item/extinguisher/attackby(obj/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/bodypart/arm/left/robot) || istype(O, /obj/item/bodypart/arm/right/robot))
-		to_chat(user, span_notice("You add [O] to [src]."))
-		qdel(O)
+// Firebot assembly
+/obj/item/extinguisher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/bodypart/arm/left/robot) && !istype(tool, /obj/item/bodypart/arm/right/robot))
+		return NONE
+
+	to_chat(user, span_notice("You add [tool] to [src]."))
+	qdel(tool)
+	if (user.is_holding(src))
 		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/firebot)
+		user.put_in_hands(new /obj/item/bot_assembly/firebot(drop_location()))
 	else
-		..()
+		qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extinguisher/anti
 	name = "fire extender"

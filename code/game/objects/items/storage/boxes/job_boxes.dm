@@ -190,9 +190,12 @@
 		return ITEM_INTERACT_BLOCKING
 	qdel(tool)
 	loc.balloon_alert(user, "wheels added, honk!")
-	var/obj/item/bot_assembly/honkbot/A = new
-	qdel(src)
-	user.put_in_hands(A)
+	var/obj/item/bot_assembly/honkbot/assembly = new(drop_location())
+	if (user.is_holding(src))
+		qdel(src)
+		user.put_in_hands(assembly)
+	else
+		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/storage/box/clown/suicide_act(mob/living/user)

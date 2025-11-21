@@ -374,14 +374,17 @@
 		balloon_alert(user, "items inside!")
 		return ITEM_INTERACT_BLOCKING
 
-	var/obj/item/bot_assembly/medbot/medbot_assembly = new()
+	var/obj/item/bot_assembly/medbot/medbot_assembly = new(drop_location())
 	medbot_assembly.set_skin(get_medbot_skin())
 	medbot_assembly.balloon_alert(user, "arm added")
 	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
 	qdel(tool)
-	qdel(src)
-	user.put_in_hands(medbot_assembly)
+	if(user.is_holding(src))
+		qdel(src)
+		user.put_in_hands(medbot_assembly)
+	else
+		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
 /// Gets what skin (icon_state) this medkit uses for a medbot
