@@ -20,7 +20,7 @@
 	return FALSE
 
 /datum/component/plumbing/automated_iv/send_request(dir)
-		if(myivdrip.mode == 1)
+	if(myivdrip.mode == 1)
 		process_request(dir = dir)
 		return TRUE
 	return FALSE
