@@ -460,7 +460,7 @@
 /datum/relic_node/teleport/reaction_power(mob/user)
 	for(var/mob/living/m in view(3, parent_relic))
 		to_chat(m, span_notice("[parent_relic] vanishes into thin air!"))
-	var/turf/t = find_safe_turf(zlevel = parent_relic.z)
+	var/turf/t = find_safe_turf(parent_relic.z)
 	for (var/mob/living/m in range(0, parent_relic))
 		do_teleport(teleatom = m, destination = t)
 	if (parent_relic.embedded_mob == null)
