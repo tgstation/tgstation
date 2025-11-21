@@ -387,7 +387,7 @@
 			/obj/item/food/benedict = 5,
 			/obj/item/food/fishandchips = 10,
 			/obj/item/food/full_english = 2,
-			/obj/item/food/sandwich/cheese/grilled = 5,
+			/obj/item/food/sandwich/grilled_cheese = 5,
 			/obj/item/food/pie/meatpie = 5,
 			/obj/item/food/salad/ricepudding = 5,
 		),

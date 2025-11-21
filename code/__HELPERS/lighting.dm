@@ -1,5 +1,3 @@
-#define TOPDOWN_TO_EMISSIVE_LAYER(layer) LERP(FLOOR_EMISSIVE_START_LAYER, FLOOR_EMISSIVE_END_LAYER, (layer - (TOPDOWN_LAYER + 1)) / TOPDOWN_LAYER_COUNT)
-
 /// Produces a mutable appearance glued to the [EMISSIVE_PLANE] dyed to be the [EMISSIVE_COLOR].
 /proc/emissive_appearance(icon, icon_state = "", atom/offset_spokesman, layer, alpha = 255, appearance_flags = NONE, offset_const, effect_type = EMISSIVE_BLOOM)
 	if((isnull(layer) || layer == FLOAT_LAYER) && IS_TOPDOWN_PLANE(offset_spokesman.plane))
@@ -99,5 +97,3 @@
 	var/atom/movable/vis_cast = make_blocker
 	vis_cast.vis_contents += hand_back
 	return hand_back
-
-#undef TOPDOWN_TO_EMISSIVE_LAYER

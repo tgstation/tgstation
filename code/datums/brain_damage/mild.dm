@@ -217,7 +217,7 @@
 				word = copytext(word, 1, suffix_foundon)
 			word = html_decode(word)
 
-			if(GLOB.most_common_words[LOWER_TEXT(word)])
+			if(GLOB.most_common_words_alphabetical[LOWER_TEXT(word)])
 				new_message += word + suffix
 			else
 				if(prob(30) && message_split.len > 2)

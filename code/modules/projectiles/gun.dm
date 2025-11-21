@@ -47,7 +47,7 @@
 	/// Delay between shots in a burst.
 	var/burst_delay = 2
 	/// Delay between bursts (if burst-firing) or individual shots (if weapon is single-fire).
-	var/fire_delay = 0
+	var/fire_delay = 0 SECONDS
 	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0

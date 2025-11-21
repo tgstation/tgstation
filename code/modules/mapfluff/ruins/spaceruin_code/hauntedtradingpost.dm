@@ -325,7 +325,7 @@
 	desc = "A ballistic machine gun auto-turret with Donk Co. branding. It uses 9mm rounds."
 	armor_type = /datum/armor/donk_turret
 	scan_range = 6
-	shot_delay = 10
+	shot_delay = 1 SECONDS
 
 /datum/armor/donk_turret
 	melee = 20
@@ -352,7 +352,7 @@
 	desc = "An energy gun auto-turret with Cybersun branding. It fires high-energy plasma beams that do a lot of damage, but it can be fairly slow."
 	armor_type = /datum/armor/syndicate_shuttle
 	scan_range = 6
-	shot_delay = 50
+	shot_delay = 5 SECONDS
 	always_up = FALSE
 	has_cover = TRUE
 

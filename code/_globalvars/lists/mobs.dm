@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
 	/mob/living/basic/mining,
 	/mob/living/basic/pet,
+	/mob/living/basic/pet/penguin,
 	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
 	/mob/living/basic/spider,
 	/mob/living/carbon,

@@ -15,7 +15,7 @@
 	var/anchorable_cannon = TRUE
 	var/obj/item/stack/cannonball/loaded_cannonball = null
 	var/charge_ignited = FALSE
-	var/fire_delay = 15
+	var/fire_delay = 1.5 SECONDS
 	var/charge_size = 15
 	var/fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 

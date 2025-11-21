@@ -1,0 +1,4 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "Several things that turn you into a random animal will no longer turn you into a spriteless penguin."

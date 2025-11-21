@@ -16,7 +16,7 @@
 	if(LAZYLEN(hotkey_keys) && !LAZYLEN(classic_keys))
 		classic_keys = hotkey_keys.Copy()
 
-/datum/keybinding/proc/down(client/user, turf/target)
+/datum/keybinding/proc/down(client/user, turf/target, mousepos_x, mousepos_y)
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(user.mob, keybind_signal, target) & COMSIG_KB_ACTIVATED
 

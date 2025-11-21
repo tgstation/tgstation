@@ -530,11 +530,11 @@
 
 			for(var/required_access in req_access)
 				if(required_access in origin_dept_access)
-					return target_dept
+					return LOWER_TEXT(target_dept)
 
 			for(var/required_access in req_one_access)
 				if(required_access in origin_dept_access)
-					return target_dept
+					return LOWER_TEXT(target_dept)
 
 	return FALSE
 
@@ -747,7 +747,7 @@
 
 	var/active_reta = has_active_reta_access()
 	if(active_reta)
-		. += span_nicegreen("Emergency Temporary Access is enabled for [EXAMINE_HINT(active_reta)].")
+		. += span_nicegreen("Emergency Temporary Access is enabled for [EXAMINE_HINT(active_reta)] ID cards.")
 
 	if(issilicon(user) && !(machine_stat & BROKEN))
 		. += span_notice("Shift-click [src] to [ density ? "open" : "close"] it.")
@@ -940,6 +940,9 @@
 	tool.play_tool_sound(src)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/door/airlock/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return screwdriver_act(user, tool)
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)

@@ -186,3 +186,10 @@
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
 	pixel_shift = 27
+
+/obj/item/wallframe/airalarm/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()

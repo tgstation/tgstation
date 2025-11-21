@@ -89,11 +89,11 @@
 	SIGNAL_HANDLER
 	unregister_scanned()
 
-/obj/item/fish_analyzer/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/fish_analyzer/ui_interact(mob/living/user, datum/tgui/ui)
 	if(isnull(scanned_object))
 		balloon_alert(user, "no specimen data!")
 		return TRUE
-	if(!(scanned_object in view(7, get_turf(src))))
+	if(istype(user) && !(scanned_object in (view(7, get_turf(src)) | user.get_equipped_items(INCLUDE_HELD))))
 		balloon_alert(user, "specimen data lost!")
 		unregister_scanned()
 		return TRUE
@@ -103,8 +103,10 @@
 		ui = new(user, src, "FishAnalyzer")
 		ui.open()
 
-/obj/item/fish_analyzer/ui_status(mob/user, datum/ui_state/state)
-	if(!scanned_object || !(scanned_object in view(7, get_turf(src))))
+/obj/item/fish_analyzer/ui_status(mob/living/user, datum/ui_state/state)
+	if(!istype(user)) //observers shouldn't disrupt things.
+		return ..()
+	if(!scanned_object || !(scanned_object in (view(7, get_turf(src)) | user.get_equipped_items(INCLUDE_HELD))))
 		balloon_alert(user, "specimen data lost!")
 		unregister_scanned()
 		return UI_CLOSE

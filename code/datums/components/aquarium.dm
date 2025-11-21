@@ -395,8 +395,8 @@
 ///Check if an offspring of two fish (or one if self-reproducing) can evolve.
 /datum/component/aquarium/proc/check_evolution(atom/movable/source, obj/item/fish/fish, obj/item/fish/mate, datum/fish_evolution/evolution)
 	SIGNAL_HANDLER
-	//chances are halved if only one parent has this evolution.
-	var/real_probability = (mate && (evolution.type in mate.evolution_types)) ? evolution.probability : evolution.probability * 0.5
+	//chances are halved if it isn't asexual reproduction and one parent doesn't have the evolution.
+	var/real_probability = (isnull(mate) || (evolution.type in mate.evolution_types)) ? evolution.probability : evolution.probability * 0.5
 	if(HAS_TRAIT(fish, TRAIT_FISH_MUTAGENIC) || (mate && HAS_TRAIT(mate, TRAIT_FISH_MUTAGENIC)))
 		real_probability *= 3
 	if(!prob(real_probability))

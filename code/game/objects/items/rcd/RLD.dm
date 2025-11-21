@@ -1,11 +1,11 @@
 // RAPID LIGHTING DEVICE
 
-// modes of operation
+//modes of operation
 #define GLOW_MODE 1
 #define LIGHT_MODE 2
 #define REMOVE_MODE 3
 
-// operation costs
+//operation costs
 #define LIGHT_TUBE_COST 10
 #define FLOOR_LIGHT_COST 15
 #define GLOW_STICK_COST 5
@@ -32,7 +32,6 @@
 
 	/// mode of operation see above defines
 	var/mode = LIGHT_MODE
-
 	///reference to thr original icons
 	var/static/list/original_options = list(
 		"Color Pick" = icon(icon = 'icons/hud/radial.dmi', icon_state = "omni"),
@@ -42,6 +41,7 @@
 	)
 	///will contain the original icons modified with the color choice
 	var/list/display_options = list()
+	///Current color choice
 	var/color_choice = "#ffffff"
 
 /obj/item/construction/rld/Initialize(mapload)
@@ -78,7 +78,7 @@
 				if(option == "Color Pick" || option == "Deconstruct" || option == "Silo Link")
 					continue
 				var/icon/icon = icon(original_options[option])
-				icon.SetIntensity(new_rgb[1]/255, new_rgb[2]/255, new_rgb[3]/255) //apply new scale
+				icon.SetIntensity(new_rgb[1] / 255, new_rgb[2] / 255, new_rgb[3] / 255) //apply new scale
 				display_options[option] = icon
 
 			color_choice = new_choice
@@ -101,8 +101,8 @@
 
 /**
  * Try to place/remove a light or throw a glowstick
- * Arguments
  *
+ * Arguments
  * * atom/interacting_with - the target atom to light or throw glowsticks at
  * * mob/user - the player doing this action
  */
@@ -119,26 +119,24 @@
 				return NONE
 
 			//resource sanity checks before & after delay
-			if(!checkResource(DECONSTRUCT_COST, user))
+			if(!useResource(DECONSTRUCT_COST, user, TRUE))
 				return ITEM_INTERACT_BLOCKING
 			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = 15)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(!do_after(user, REMOVE_DELAY, target = interacting_with))
 				qdel(beam)
 				return ITEM_INTERACT_BLOCKING
-			if(!checkResource(DECONSTRUCT_COST, user))
+			if(!useResource(DECONSTRUCT_COST, user, TRUE))
 				return ITEM_INTERACT_BLOCKING
-			if(!useResource(DECONSTRUCT_COST, user))
-				return ITEM_INTERACT_BLOCKING
-			activate()
 			qdel(interacting_with)
+			useResource(DECONSTRUCT_COST, user)
 			return ITEM_INTERACT_SUCCESS
 
 		if(LIGHT_MODE)
 			//resource sanity checks before & after delay
 			var/cost = iswallturf(interacting_with) ? LIGHT_TUBE_COST : FLOOR_LIGHT_COST
 
-			if(!checkResource(cost, user))
+			if(!useResource(cost, user, TRUE))
 				return ITEM_INTERACT_BLOCKING
 			var/beam = user.Beam(interacting_with, icon_state="light_beam", time = BUILD_DELAY)
 			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -146,7 +144,7 @@
 			if(!do_after(user, BUILD_DELAY, target = interacting_with))
 				qdel(beam)
 				return ITEM_INTERACT_BLOCKING
-			if(!checkResource(cost, user))
+			if(!useResource(cost, user, TRUE))
 				return ITEM_INTERACT_BLOCKING
 
 			if(iswallturf(interacting_with))
@@ -173,31 +171,26 @@
 				if(!winner)
 					balloon_alert(user, "no valid target!")
 					return ITEM_INTERACT_BLOCKING
-				if(!useResource(cost, user))
-					return ITEM_INTERACT_BLOCKING
-				activate()
 				var/obj/machinery/light/L = new /obj/machinery/light(get_turf(winner))
 				L.setDir(get_dir(winner, interacting_with))
 				L.color = color_choice
 				L.set_light_color(color_choice)
+				useResource(cost, user)
 				return ITEM_INTERACT_SUCCESS
 
 			if(isfloorturf(interacting_with))
 				var/turf/target = get_turf(interacting_with)
 				if(locate(/obj/machinery/light/floor) in target)
 					return ITEM_INTERACT_BLOCKING
-				if(!useResource(cost, user))
-					return ITEM_INTERACT_BLOCKING
-				activate()
 				var/obj/machinery/light/floor/FL = new /obj/machinery/light/floor(target)
 				FL.color = color_choice
 				FL.set_light_color(color_choice)
+				useResource(cost, user)
 				return ITEM_INTERACT_SUCCESS
 
 		if(GLOW_MODE)
 			if(!useResource(GLOW_STICK_COST, user))
 				return ITEM_INTERACT_BLOCKING
-			activate()
 			// Picks the closest fitting color for the fluid by hue
 			var/closest_diff = null
 			var/closest_fluid = null

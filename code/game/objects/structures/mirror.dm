@@ -55,7 +55,7 @@
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom()
 	update_choices()
 	register_context()
 

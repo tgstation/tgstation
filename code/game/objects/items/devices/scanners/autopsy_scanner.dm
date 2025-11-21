@@ -188,12 +188,12 @@
 	// Blood Info
 	if(HAS_TRAIT(scanned, TRAIT_HUSK))
 		autopsy_information += "Subject is husked by: "
-		if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN))
-			autopsy_information += "Severe burns.</br>"
-		else if (HAS_TRAIT_FROM(scanned, TRAIT_HUSK, CHANGELING_DRAIN))
+		if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, CHANGELING_DRAIN))
 			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
-		else
+		else if(!HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 			autopsy_information += "Unknown causes.</br>"
+		else
+			autopsy_information += "Severe burns.</br>"
 
 	var/datum/blood_type/blood_type = scanned.get_bloodtype()
 	if(blood_type)

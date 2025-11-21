@@ -214,9 +214,9 @@
 /**
  * Infrequently plays accent sounds, and adjusts main loop parameters
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience(seconds_per_tick)
 	// We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
-	if(last_accent_sound < world.time && prob(20))
+	if(last_accent_sound < world.time && SPT_PROB(10, seconds_per_tick))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
 		if(critical_threshold_proximity >= 300)
 			playsound(src, SFX_HYPERTORUS_MELTING, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)

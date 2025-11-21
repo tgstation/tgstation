@@ -598,6 +598,10 @@
 	if(length(occupants))
 		process_occupants(seconds_per_tick)
 	process_constant_power_usage(seconds_per_tick)
+	//Diagnostic HUD updates
+	diag_hud_set_mechhealth()
+	diag_hud_set_mechcell()
+	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_overclock_effects(seconds_per_tick)
 	if(!overclock_mode && overclock_temp > 0)
@@ -697,10 +701,6 @@
 			else if (checking == src)
 				break  // all good
 			checking = checking.loc
-	//Diagnostic HUD updates
-	diag_hud_set_mechhealth()
-	diag_hud_set_mechcell()
-	diag_hud_set_mechstat()
 
 /obj/vehicle/sealed/mecha/proc/process_constant_power_usage(seconds_per_tick)
 	if(mecha_flags & LIGHTS_ON && !use_energy(light_power_drain * seconds_per_tick))

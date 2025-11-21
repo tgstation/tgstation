@@ -75,3 +75,6 @@
 
 ///Checks that items have roughly the same materials whenever spawned via processing/microwaving/baking etc. or any other mean.
 /datum/unit_test/focus_only/check_materials_when_processed
+
+///Checks if an map loaded object found an valid support atom to hang on
+/datum/unit_test/focus_only/atom_mounted

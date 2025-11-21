@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "Chiral inversion buffer now converts multiple reagents"
+  - bugfix: "Chiral inversion buffer can now be transferred into another reagent holder if no conversion took place instead of just evaporating"
+  - bugfix: "dropper, bottles & syringes now won't display messages like 0u of reagent transferred"

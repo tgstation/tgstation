@@ -1,0 +1,4 @@
+author: "ArchBTW"
+delete-after: True
+changes:
+  - rscdel: "Removes the limit for how many times you can emag an emag (6->127 max)"

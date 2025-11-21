@@ -169,7 +169,7 @@
 	results = list(/datum/reagent/medicine/albuterol = 4, /datum/reagent/medicine/sal_acid = 0.5, /datum/reagent/ammonia = 0.5)
 	required_catalysts = list(/datum/reagent/toxin/acid = 1)
 	required_reagents = list(/datum/reagent/medicine/salbutamol = 5, /datum/reagent/medicine/c2/convermol = 1)
-	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
 	required_temp = 500
 	optimal_temp = 610
 	overheat_temp = 980
@@ -181,7 +181,7 @@
 	results = list(/datum/reagent/medicine/salbutamol = 2, /datum/reagent/ammonia = 1)
 	required_catalysts = list(/datum/reagent/toxin/acid = 1)
 	required_reagents = list(/datum/reagent/medicine/albuterol = 3, /datum/reagent/oxygen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_ORGAN | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
 	required_temp = 300
 	optimal_temp = 500
 	overheat_temp = 800
@@ -191,7 +191,7 @@
 	results = list(/datum/reagent/inverse/healing/convermol = 1, /datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3)
 	required_catalysts = list(/datum/reagent/toxin/acid/fluacid = 1)
 	required_reagents = list(/datum/reagent/medicine/albuterol = 5)
-	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
 	required_temp = 900
 	optimal_temp = 920
 	overheat_temp = 990
@@ -401,7 +401,7 @@
 /datum/chemical_reaction/medicine/medsuture
 	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/toxin/formaldehyde = 4, /datum/reagent/medicine/polypyr = 3) //This might be a bit much, reagent cost should be reviewed after implementation.
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/medicine/medsuture/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	new /obj/item/stack/medical/suture/medicated(get_turf(holder.my_atom), round(created_volume * 4))
@@ -409,7 +409,7 @@
 /datum/chemical_reaction/medicine/medmesh
 	required_reagents = list(/datum/reagent/cellulose = 2, /datum/reagent/consumable/aloejuice = 4, /datum/reagent/space_cleaner/sterilizine = 2)
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/medicine/medmesh/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	new /obj/item/stack/medical/mesh/advanced(get_turf(holder.my_atom), round(created_volume * 3))
@@ -417,7 +417,7 @@
 /datum/chemical_reaction/medicine/poultice
 	required_reagents = list(/datum/reagent/toxin/bungotoxin = 4, /datum/reagent/cellulose = 4, /datum/reagent/consumable/aloejuice = 4	)
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/medicine/poultice/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	new /obj/item/stack/medical/poultice(get_turf(holder.my_atom), round(created_volume * 3))

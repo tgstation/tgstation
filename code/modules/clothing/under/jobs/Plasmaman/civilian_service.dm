@@ -6,11 +6,12 @@
 	inhand_icon_state = "plasmaman"
 	icon = 'icons/obj/clothing/under/plasmaman.dmi'
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
-	clothing_flags = PLASMAMAN_PREVENT_IGNITION
+	clothing_flags = PLASMAMAN_PREVENT_IGNITION | NO_ZONE_DISABLING
 	armor_type = /datum/armor/clothing_under/plasmaman
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	can_adjust = FALSE
 	strip_delay = 8 SECONDS
+	resistance_flags = FIRE_PROOF
 	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5

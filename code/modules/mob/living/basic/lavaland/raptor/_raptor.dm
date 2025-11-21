@@ -209,7 +209,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/proc/add_breeding_component()
 	var/static/list/partner_types = typecacheof(list(/mob/living/basic/raptor))
-	var/static/list/baby_types = list(/obj/item/food/egg = 1) ///raptor_egg = 1)
+	var/static/list/baby_types = list(/obj/item/food/egg/raptor_egg = 1)
 	AddComponent(\
 		/datum/component/breed, \
 		can_breed_with = partner_types, \

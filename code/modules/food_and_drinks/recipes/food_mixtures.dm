@@ -314,7 +314,7 @@
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
 	mix_sound = 'sound/items/weapons/taser.ogg'
-	reaction_flags = REACTION_INSTANT
+	reaction_flags = REACTION_INSTANT | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/food/martian_batter
 	results = list(/datum/reagent/consumable/martian_batter = 10)

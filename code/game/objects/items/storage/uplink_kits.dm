@@ -889,7 +889,7 @@
 
 /obj/item/storage/box/syndicate/horse_box/PopulateContents()
 	new /obj/item/food/monkeycube/dangerous_horse(src)
-	new /obj/item/slimepotion/slime/sentience/nuclear/dangerous_horse(src)
+	new /obj/item/slimepotion/sentience/nuclear/dangerous_horse(src)
 	new /obj/item/food/grown/apple(src)
 
 /obj/item/storage/box/syndicate/sleeping_carp/PopulateContents()

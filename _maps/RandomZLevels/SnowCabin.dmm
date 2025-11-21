@@ -1659,7 +1659,8 @@
 /area/awaymission/cabin/caves)
 "iP" = (
 /obj/structure/sign/picture_frame{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
@@ -5525,16 +5526,13 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "Zb" = (
-/obj/structure/fence{
-	dir = 4
-	},
 /obj/structure/sign/nanotrasen,
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
-/turf/open/misc/asteroid/snow/snow_cabin,
+/turf/closed/wall,
 /area/awaymission/cabin/caves)
 "Zf" = (
 /obj/structure/fence{

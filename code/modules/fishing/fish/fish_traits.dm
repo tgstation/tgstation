@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
+	if(source.get_hunger() < 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -434,12 +434,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
+	if(source.get_hunger() < 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
-		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
+		if(victim.size >= source.size * 0.7) // It's a big fish eat small fish world
 			continue
-		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
+		if(victim.status != FISH_ALIVE || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
 			continue
 		eat_fish(source, victim)
 		return

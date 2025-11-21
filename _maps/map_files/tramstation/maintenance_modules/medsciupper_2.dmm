@@ -292,6 +292,9 @@
 "II" = (
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
+"IV" = (
+/turf/closed/wall,
+/area/station/asteroid)
 "Kw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -1300,7 +1303,7 @@ nm
 cn
 vr
 Vh
-tD
+IV
 tD
 tD
 Mf

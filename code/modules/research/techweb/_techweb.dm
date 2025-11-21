@@ -558,10 +558,6 @@
 		if(experiment.type != paper_to_add.experiment_path)
 			continue
 
-		experiment.completed = TRUE
-		var/announcetext = complete_experiment(experiment)
-		if(length(GLOB.experiment_handlers))
-			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
-			handler.announce_message_to_all(announcetext)
+		experiment.finish_experiment(linked_web_override = src)
 
 	return TRUE

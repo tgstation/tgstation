@@ -515,7 +515,17 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/admin/bar/get_access()
 	var/list/access_list = ..()
-	access_list += list(ACCESS_CENT_CAPTAIN)
+	access_list += list(ACCESS_CENT_BAR)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/officer/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_OFFICER)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_SPECOPS)
 	return access_list
 
 // -------------------- Req All (Requires ALL of the given accesses to open)
@@ -981,4 +991,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/bar/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_CENT_BAR
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/officer/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_OFFICER
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_SPECOPS
 	return access_list

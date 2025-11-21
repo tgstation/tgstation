@@ -248,7 +248,7 @@
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "A strong neurotoxin that puts the patient into a death-like state."
 	silent_toxin = TRUE
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -705,7 +705,8 @@
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
-	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine. When used in a dead body, will prevent organ decay."
+	description = "A fairly weak toxin that helps prevent organ decay in dead bodies. \
+		It will slowly decay into Histamine over time."
 	silent_toxin = TRUE
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -766,7 +767,7 @@
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"
-	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
+	description = "Inhibits brain function and causes toxin damage before eventually knocking out the patient."
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1046,7 +1047,8 @@
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
-	description = "A powerful anticoagulant. All open cut wounds on the victim will open up and bleed much faster. It directly purges sanguirite, a coagulant."
+	description = "A powerful anticoagulant. All open cut wounds on the patient will open up and bleed much faster. \
+		Counters coagulants like Sanguirite, purging them."
 	silent_toxin = TRUE
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1064,7 +1066,7 @@
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
-	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	description = "A constantly swirling, oddly colourful fluid. Causes the patient's sense of direction and hand-eye coordination to become wild."
 	silent_toxin = TRUE
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1164,7 +1166,7 @@
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric Acid"
-	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
+	description = "An extremely corrosive chemical substance."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1186,7 +1188,7 @@
 
 /datum/reagent/toxin/acid/nitracid
 	name = "Nitric Acid"
-	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
+	description = "An extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
