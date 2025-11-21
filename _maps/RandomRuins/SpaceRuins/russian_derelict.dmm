@@ -8139,10 +8139,9 @@
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "YE" = (
-/obj/structure/plaque/static_plaque/golden/commission/ks13{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/plaque/static_plaque/golden/commission/ks13,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "YF" = (
@@ -12480,8 +12479,8 @@ RD
 Fw
 LA
 Xr
+DM
 YE
-yR
 yR
 Qz
 tY

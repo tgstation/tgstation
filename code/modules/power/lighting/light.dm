@@ -734,36 +734,19 @@
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
-/obj/machinery/light/floor/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir)
-	var/area/location = get_area(src)
-	if(!isarea(location))
-		return FALSE
+/obj/machinery/light/floor/get_turfs_to_mount_on(mount_dir)
+	return list(get_turf(src))
 
-	var/msg
-	if(PERFORM_ALL_TESTS(focus_only/atom_mounted))
-		msg = "[type] Could not find attachable atom at [location.type] "
+/obj/machinery/light/floor/is_mountable_turf(turf/target)
+	return !isgroundlessturf(target)
 
-	var/atom/attachable_atom
-	var/turf/local_turf = get_turf(src)
-	if(!isgroundlessturf(local_turf))
-		attachable_atom = local_turf
-	else
-		var/static/list/attachables = list(
-			/obj/structure/thermoplastic,
-			/obj/structure/lattice/catwalk,
-		) //list of structures to mount on
-		for(var/obj/attachable in local_turf)
-			if(is_type_in_list(attachable, attachables))
-				attachable_atom = attachable
-				break
-	if(attachable_atom)
-		AddComponent(/datum/component/atom_mounted, attachable_atom)
-		return TRUE
+/obj/machinery/light/floor/get_moutable_objects()
+	var/static/list/attachables = list(
+		/obj/structure/thermoplastic,
+		/obj/structure/lattice/catwalk,
+	)
 
-	if(msg)
-		msg += "([local_turf.x],[local_turf.y],[local_turf.z])"
-		stack_trace(msg)
-	return FALSE
+	return attachables
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)

@@ -2380,6 +2380,7 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "tk" = (
+/obj/structure/plaque/static_plaque/golden/commission/northstar,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "tl" = (
@@ -4023,13 +4024,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/awaymission/museum)
-"GA" = (
-/obj/structure/plaque/static_plaque/golden/commission/northstar{
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/silver,
-/area/awaymission/museum)
 "GB" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/soda_cans/thirteenloko{
@@ -4038,11 +4032,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/museum/cafeteria)
 "GE" = (
-/obj/structure/plaque/static_plaque/golden/commission/meta{
-	pixel_x = 32;
-	pixel_y = -32
-	},
-/turf/open/floor/mineral/silver,
+/obj/structure/plaque/static_plaque/golden/commission/meta,
+/turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "GG" = (
 /mob/living/basic/statue/mannequin{
@@ -5380,6 +5371,7 @@
 /area/awaymission/museum)
 "Tr" = (
 /obj/machinery/light/floor,
+/obj/structure/plaque/static_plaque/golden/commission/kilo,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
 "Tt" = (
@@ -6130,13 +6122,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/museum/cafeteria)
-"Zd" = (
-/obj/structure/plaque/static_plaque/golden/commission/kilo{
-	pixel_x = 32;
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/silver,
-/area/awaymission/museum)
 "Zf" = (
 /obj/structure/plaque/static_plaque/golden/commission/donut,
 /turf/closed/indestructible/reinforced,
@@ -39307,7 +39292,7 @@ lb
 uY
 tD
 Zf
-Zd
+Lw
 Lw
 Lw
 Mg
@@ -39315,9 +39300,9 @@ lb
 uY
 tD
 eR
-GA
-tk
+Lw
 GE
+Lw
 Nm
 lb
 uY
