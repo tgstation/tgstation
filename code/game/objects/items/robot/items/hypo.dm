@@ -188,8 +188,12 @@
 		balloon_alert(user, "not enough [selected_reagent.name]!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)) || !injectee.reagents)
+	if(!injectee.try_inject(user, user.zone_selected, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE | (bypass_protection ? INJECT_CHECK_PENETRATE_THICK : 0)))
 		balloon_alert(user, "[injectee.parse_zone_with_bodypart(user.zone_selected)] is blocked!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (!injectee.reagents)
+		balloon_alert(user, "unable to inject!")
 		return ITEM_INTERACT_BLOCKING
 
 	to_chat(injectee, span_warning("You feel a tiny prick!"))
