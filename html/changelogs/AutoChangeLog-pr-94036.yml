@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Facehuggers now apply a 1 second stun when initially applied"
+  - balance: "Facehuggers now apply a 20 second confusion effect"
+  - balance: "Facehugger knockdown duration has been doubled (to 10 seconds)"
+  - balance: "While your face is covered by a facehugger, you are forced to whisper"
