@@ -77,8 +77,10 @@
  * Arguments
  * * mark_for_late_init - if TRUE will apply the MOUNT_ON_LATE_INITIALIZE which gets cleared on every call
  * * late_init - should only be passed as TRUE from inside LateInitialize()
+ * * mount_dir - the direction to check for an mount before defaulting to pixel offsets or the loc turf.
+ * Usefull only for manual mounting or if your object has directional icon states AND don't use offsets,
 */
-/obj/proc/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/proc/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE, mount_dir = NONE)
 	if(obj_flags & MOUNT_ON_LATE_INITIALIZE)
 		obj_flags &= ~MOUNT_ON_LATE_INITIALIZE
 	else if(late_init)
@@ -92,9 +94,21 @@
 	if(PERFORM_ALL_TESTS(focus_only/atom_mounted) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
+	var/pixel_direction = mount_dir
+	if(pixel_direction == NONE) //Infer using icon offsets. Can support diagonal mounting
+		if(pixel_x > (ICON_SIZE_X / 2))
+			pixel_direction |= EAST
+		else if(pixel_x < -(ICON_SIZE_X / 2))
+			pixel_direction |= WEST
+		if(pixel_y > (ICON_SIZE_Y / 2))
+			pixel_direction |= NORTH
+		else if(pixel_y < -(ICON_SIZE_Y / 2))
+			pixel_direction |= SOUTH
+
 	var/list/turf/attachable_turfs = list()
+	if(pixel_direction != NONE)
+		attachable_turfs += get_step(src, pixel_direction)
 	attachable_turfs += get_turf(src)
-	attachable_turfs += get_step(attachable_turfs[1], dir)
 	for(var/turf/target as anything in attachable_turfs)
 		var/atom/attachable_atom
 		if(isclosedturf(target))

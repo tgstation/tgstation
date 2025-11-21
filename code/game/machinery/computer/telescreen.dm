@@ -14,6 +14,11 @@
 	var/frame_type = /obj/item/wallframe/telescreen
 	projectiles_pass_chance = 100
 
+/obj/machinery/computer/security/telescreen/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		find_and_hang_on_atom()
+
 /obj/item/wallframe/telescreen
 	name = "telescreen frame"
 	desc = "A wall-mountable telescreen frame. Apply to wall to use."

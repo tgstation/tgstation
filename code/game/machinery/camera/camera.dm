@@ -133,6 +133,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(mapload)
 		find_and_hang_on_atom(mark_for_late_init = TRUE)
 
+/obj/machinery/camera/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir = dir)
+	return ..()
+
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
 		toggle_cam(null, 0) //kick anyone viewing out and remove from the camera chunks

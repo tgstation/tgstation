@@ -121,7 +121,7 @@
 	if(mapload)
 		find_and_hang_on_atom(mark_for_late_init = TRUE)
 
-/obj/machinery/light/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/machinery/light/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir = dir)
 	if(break_if_moved)
 		return ..()
 
@@ -734,7 +734,7 @@
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
-/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE, mount_dir = NONE)
 	return //its a floor light not a wall light
 
 /obj/machinery/light/floor/get_light_offset()
