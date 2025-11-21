@@ -170,9 +170,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	// rather than waiting for atoms to initialize.
 	if (area_flags_mapping & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
-	if (area_flags & VIRTUAL_AREA)
-		if(isnull(GLOB.virtual_areas[type]))
-			GLOB.virtual_areas[type] = TRUE
 	GLOB.areas += src
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case

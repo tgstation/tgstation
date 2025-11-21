@@ -68,3 +68,15 @@
 /area/virtual_domain/protected_space/fullbright
 	static_lighting = FALSE
 	base_lighting_alpha = 255
+
+/// A hash lookup list of all the virtual area types
+GLOBAL_LIST_INIT_TYPED(virtual_areas, /area, populate_virtual_areas())
+
+/// Constructs the list of virtual areas
+/proc/populate_virtual_areas()
+	RETURN_TYPE(/list/area)
+	var/list/area/virtual_areas = list()
+	for(var/area/area_type as anything in subtypesof(/area))
+		if (area_type::area_flags & VIRTUAL_AREA)
+			virtual_areas[area_type] = TRUE
+	return virtual_areas

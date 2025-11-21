@@ -150,8 +150,6 @@ GLOBAL_LIST_EMPTY(sortedAreas)
 GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
 /// A list of player-created areas.
 GLOBAL_LIST_EMPTY_TYPED(custom_areas, /area)
-/// A list of virtual/bitrunning areas
-GLOBAL_LIST_EMPTY_TYPED(virtual_areas, /area)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
 
