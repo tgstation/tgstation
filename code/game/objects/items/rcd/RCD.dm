@@ -500,7 +500,10 @@
 	if(borgy.cell.charge < (amount * energyfactor))
 		balloon_alert(user, "insufficient charge!")
 		return FALSE
-	return dry_run ? TRUE : borgy.cell.use(amount * energyfactor)
+	if(!dry_run)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return borgy.cell.use(amount * energyfactor)
+	return TRUE
 
 /obj/item/construction/rcd/borg/syndicate
 	name = "syndicate RCD"
@@ -593,17 +596,6 @@
 	var/obj/vehicle/sealed/mecha/gundam = owner
 	return round(gundam.get_charge() / MASS_TO_ENERGY)
 
-/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
-	if(silo_link)
-		return ..()
-	if(!ismecha(owner))
-		return 0
-	var/obj/vehicle/sealed/mecha/gundam = owner
-	if(!gundam.use_energy(amount * MASS_TO_ENERGY))
-		gundam.balloon_alert(user, "insufficient charge!")
-		return FALSE
-	return TRUE
-
 /obj/item/construction/rcd/exosuit/useResource(amount, mob/user, dry_run)
 	if(silo_link)
 		return ..()
@@ -613,7 +605,10 @@
 	if(!gundam.has_charge(amount * MASS_TO_ENERGY))
 		gundam.balloon_alert(user, "insufficient charge!")
 		return FALSE
-	return ..()
+	if(!dry_run)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return gundam.use_energy(amount * MASS_TO_ENERGY)
+	return TRUE
 
 #undef MASS_TO_ENERGY
 
