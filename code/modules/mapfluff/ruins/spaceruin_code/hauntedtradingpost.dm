@@ -170,6 +170,9 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/machinery/button/door/invisible_tripwire/find_and_hang_on_atom(mark_for_late_init, late_init, mount_dir)
+	return //these exist independently on an turf
+
 /obj/machinery/button/door/invisible_tripwire/post_machine_initialize()
 	. = ..()
 	if(!suicide_pact || isnull(SSqueuelinks.queues[suicide_pact_id]))
