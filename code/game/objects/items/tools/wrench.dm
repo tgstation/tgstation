@@ -136,5 +136,6 @@
 	desc = "A wrench designed to grab into airlock's bolting system and raise it regardless of the airlock's power status."
 	icon_state = "bolter_wrench"
 	inhand_icon_state = "bolter_wrench"
+	toolspeed = 0.7
 	icon_angle = -90
 	w_class = WEIGHT_CLASS_NORMAL
