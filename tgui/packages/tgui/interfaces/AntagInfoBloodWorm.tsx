@@ -82,6 +82,10 @@ export const AntagInfoBloodWorm = (props) => {
                   Your hosts lack your advanced senses, leaving them vulnerable to ordinary impediments like darkness and flashbangs.
                   You can use human tools like night-vision goggles, eye protection and ear protection to circumvent this.
                   </LabeledList.Item>
+                  <LabeledList.Item label="Testing">
+                  The DeForest corporation has engineered single-use devices for detecting blood worms. They can be ordered by security
+                  and take no time to use, but using them is painful for the target and they're really expensive.
+                  </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Stack.Item>
