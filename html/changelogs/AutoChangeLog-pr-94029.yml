@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Clearing centcom podbays no longer deletes ghosts and runtimes upon doing so"

@@ -1,8 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed some fishes trying to eat other (bigger) fish while not hungry. Also a nit with purple sludgefish being a bit too rare."
-  - bugfix: "Fixes fish analyzers not working with held or equipped fish or aquariums (not in your backpack)."
-  - balance: "Fish analyzers and operating computers no longer announce completed experiments that they aren't compatible with."
-  - balance: "the ping sound from using fishing lures should be a smidge louder and can be heard from more than 1 tile away."
-  - qol: "Examining fish tanks (the item) when they're almost full will warn you about it."

@@ -419,7 +419,10 @@
 	if(borgy.cell.charge >= (amount * RTD_BORG_ENERGY_FACTOR))
 		balloon_alert(user, "insufficient charge!")
 		return FALSE
-	return dry_run ? TRUE: borgy.cell.use(amount * RTD_BORG_ENERGY_FACTOR)
+	if(!dry_run)
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		return borgy.cell.use(amount * RTD_BORG_ENERGY_FACTOR)
+	return TRUE
 
 #undef RTD_BORG_ENERGY_FACTOR
 
