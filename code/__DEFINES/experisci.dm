@@ -39,3 +39,5 @@
 #define EXPERIMENT_CONFIG_SILENT_FAIL (1 << 2)
 /// Experiment handlers with this flag will bypass any delay when trying to scan something
 #define EXPERIMENT_CONFIG_IMMEDIATE_ACTION (1 << 3)
+/// Experiment handlers with this flag will announce when an experiment is completed even if it isn't compatible with them.
+#define EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE (1 << 4)

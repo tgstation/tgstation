@@ -1,0 +1,4 @@
+author: "combustor"
+delete-after: True
+changes:
+  - bugfix: "Fixes the AI sat's teleporter on catwalk"
