@@ -268,7 +268,6 @@
 "sL" = (
 /obj/structure/table,
 /obj/effect/spawner/random/engineering/tool,
-/obj/machinery/light/directional/north,
 /obj/item/stack/cable_coil,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
@@ -439,6 +438,7 @@
 	pixel_x = 8
 	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)
 "Da" = (
