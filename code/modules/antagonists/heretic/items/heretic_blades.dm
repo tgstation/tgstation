@@ -314,3 +314,8 @@
 
 /obj/item/melee/sickly_blade/training/check_usability(mob/living/user)
 	return TRUE // If you can hold this, you can use it
+
+/obj/item/melee/sickly_blade/cursed/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()

@@ -415,6 +415,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -15)
 
+/obj/item/katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0 //Not a high freuqnecy blade, sorry pal
+	return ..()
+
 /datum/armor/item_katana
 	fire = 100
 	acid = 50
@@ -635,6 +640,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/bambostaff/update_icon_state()
 	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
+	return ..()
+
+/obj/item/bambostaffhit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
+		final_block_chance = 0 //Don't bring a staff to a gunfight, and also you aren't going to really block someone full body tackling you with a staff. Or a road roller, if one happened to hit you.
 	return ..()
 
 /obj/item/cane
