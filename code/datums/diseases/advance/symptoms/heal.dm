@@ -598,9 +598,11 @@
 
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
-
-	carbon_host.adjustToxLoss(-2 * heal_amt)
-	if(carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes) && prob(4))
+	var/needs_update = FALSE
+	needs_update += carbon_host.adjustToxLoss(-2 * heal_amt, updating_health = FALSE)
+	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
+	needs_update += brute_burn_heal
+	if(brute_burn_heal && prob(4))
 		to_chat(carbon_host, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 	return TRUE
 
