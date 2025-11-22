@@ -93,6 +93,10 @@
         const store = await getStore(READ_WRITE);
         store.clear();
       };
+
+      window.onload = () => {
+        window.parent.postMessage("ready", "*");
+      }
     </script>
   </head>
 </html>
