@@ -1275,7 +1275,6 @@
 "ars" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /obj/machinery/camera/autoname/directional/east,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
@@ -20312,6 +20311,7 @@
 "fGD" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
 "fGL" = (
@@ -30442,6 +30442,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/ce)
 "isv" = (
@@ -31057,9 +31060,6 @@
 "iAW" = (
 /obj/machinery/computer/apc_control{
 	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/ce)
@@ -35249,9 +35249,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
@@ -58707,11 +58704,13 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
 "qic" = (
-/obj/structure/disposalpipe/segment,
 /obj/structure/chair/office{
 	dir = 1
 	},
 /obj/effect/landmark/start/chief_engineer,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/ce)
 "qid" = (
@@ -59078,10 +59077,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/mail_sorting/engineering/ce_office,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1
-	},
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/command/heads_quarters/ce)
 "qnt" = (
@@ -69791,11 +69790,8 @@
 "tnM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "tnS" = (
@@ -74542,9 +74538,6 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/railing/corner/end/flip,
@@ -80505,6 +80498,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/atmospherics,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "wfF" = (
@@ -85512,9 +85506,6 @@
 /area/space/nearstation)
 "xBa" = (
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -86025,9 +86016,6 @@
 "xHU" = (
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
 	},
 /turf/open/floor/engine,
 /area/station/command/heads_quarters/ce)
