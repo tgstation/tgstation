@@ -746,7 +746,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Rounds all temperature and gases to 0.1 and skips any gases less than that amount
 /datum/gas_mixture/proc/to_string()
 	var/list/cached_gases = gases
-	var/rounded_temp = round(temperature, 0.01)
+	var/rounded_temp = round(temperature, 0.1)
 
 	var/list/atmos_contents = list()
 	var/temperature_str = "TEMP=[num2text(rounded_temp)]"
