@@ -197,26 +197,24 @@
 
 	//resource & placement sanity check before & after delay
 	var/is_allowed = TRUE
-	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
+	if(!useResource(cost, user, TRUE) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
 			balloon_alert(user, "tile is blocked!")
 		return FALSE
 	if(!build_delay(user, cost, target = destination))
 		return FALSE
-	if(!checkResource(cost, user) || !(is_allowed = canPlace(destination)))
+	if(!useResource(cost, user, TRUE) || !(is_allowed = canPlace(destination)))
 		if(!is_allowed)
 			balloon_alert(user, "tile is blocked!")
 		return FALSE
 
-	if(!useResource(cost, user))
-		return FALSE
-	activate()
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	if(ispath(blueprint, /obj/machinery/duct))
 		var/is_omni = current_color == DUCT_COLOR_OMNI
 		new blueprint(destination, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
 	else
 		new blueprint(destination, FALSE, GLOB.plumbing_layers[current_layer])
+	useResource(cost, user)
 	return TRUE
 
 /obj/item/construction/plumbing/proc/canPlace(turf/destination)

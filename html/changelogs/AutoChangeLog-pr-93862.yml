@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - qol: "Readds nodeath and succumb-blocking for voidwalker victims"

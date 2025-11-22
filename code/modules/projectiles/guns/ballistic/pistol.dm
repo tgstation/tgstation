@@ -6,7 +6,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm
 	can_suppress = TRUE
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
 	fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'

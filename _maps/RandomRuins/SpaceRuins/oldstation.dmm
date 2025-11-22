@@ -710,7 +710,7 @@
 "dq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank/high{
-	desc = "A highly-pressurized water tank, this one seems almost empty..";
+	desc = "A highly-pressurized water tank. This one seems almost empty..";
 	tank_volume = 1000
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2600,13 +2600,6 @@
 /area/ruin/space/ancientstation/charlie/hydro)
 "lI" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/door/directional/west{
-	id = "Beta Secure Storage";
-	name = "Engineering Secure Storage";
-	req_access = list("engine_equip");
-	pixel_x = 25;
-	pixel_y = 23
-	},
 /obj/item/shard/plasma,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
@@ -7821,6 +7814,9 @@
 /obj/item/geiger_counter,
 /obj/item/geiger_counter,
 /obj/machinery/light/small/broken/directional/north,
+/obj/machinery/button/door/directional/north{
+	id = "Beta Secure Storage"
+	},
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
 "TA" = (

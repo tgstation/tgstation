@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "you can no longer send money from virtualspace to a real account"
+  - code_imp: "adds a flag for virtual areas so they can easily be checked, as well as an easy helper proc, 'is_area_virtual(your_area)'"

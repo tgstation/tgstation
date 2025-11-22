@@ -12,7 +12,7 @@
 	description = "Reconnects you to your most recently used AI shell"
 	keybind_signal = COMSIG_KB_SILICON_RECONNECT_DOWN
 
-/datum/keybinding/artificial_intelligence/reconnect/down(client/user, turf/target)
+/datum/keybinding/artificial_intelligence/reconnect/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return

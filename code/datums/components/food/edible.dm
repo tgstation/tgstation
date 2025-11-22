@@ -287,7 +287,7 @@ Behavior that's still missing from this component that original food items had t
 			else
 				examine_list += span_notice("[owner] was bitten multiple times!")
 
-	if(GLOB.Debug2)
+	if(GLOB.debugging_enabled)
 		examine_list += span_notice("Reagent purities:")
 		for(var/datum/reagent/reagent as anything in owner.reagents.reagent_list)
 			examine_list += span_notice("- [reagent.name] [reagent.volume]u: [round(reagent.purity * 100)]% pure")
@@ -739,6 +739,8 @@ Behavior that's still missing from this component that original food items had t
 ///Ability to feed food to puppers
 /datum/component/edible/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
+	if(QDELETED(parent))
+		return
 	SEND_SIGNAL(parent, COMSIG_FOOD_CROSSED, arrived, bitecount)
 
 ///Response to being used to customize something

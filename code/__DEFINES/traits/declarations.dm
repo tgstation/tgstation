@@ -222,7 +222,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_AUGMENTS "no_augments"
 /// This carbon doesn't get hungry
 #define TRAIT_NOHUNGER "no_hunger"
-/// This carbon doesn't bleed
+/// This carbon doesn't have blood
 #define TRAIT_NOBLOOD "noblood"
 /// This just means that the carbon will always have functional liverless metabolism
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
@@ -1603,5 +1603,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Mob is artificially spawned rather than being created through more natural means - applied to monkey cubes and such
 #define TRAIT_SPAWNED_MOB "spawned_mob"
+
+/// Turf is one that ai mobs will generally avoid pathing through
+/// Doesn't need to be applied to any turfs that override can_cross_safely
+#define TRAIT_AI_AVOID_TURF "warning_turf"
 
 // END TRAIT DEFINES
