@@ -204,9 +204,9 @@
 
 /datum/symptom/heal/chem/Heal(mob/living/living_host, datum/disease/advance/our_disease, actual_power)
 	for(var/datum/reagent/each_reagent in living_host.reagents.reagent_list) //Not just toxins!
-		living_host.reagents.remove_reagent(each_reagent.type, actual_power)
+		var/food = living_host.reagents.remove_reagent(each_reagent.type, actual_power)
 		if(food_conversion)
-			living_host.adjust_nutrition(0.3 * actual_power)
+			living_host.adjust_nutrition(0.3 * food)
 		if(prob(2))
 			to_chat(living_host, span_notice("You feel a mild warmth as your blood purifies itself."))
 	return TRUE
