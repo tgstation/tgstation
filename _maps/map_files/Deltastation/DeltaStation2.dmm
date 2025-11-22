@@ -64891,12 +64891,9 @@
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/camera/directional/south{
 	c_tag = "Service - Bar Aft";
-	dir = 5;
 	name = "service camera"
 	},
-/obj/effect/turf_decal/tile/red/opposingcorners{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
