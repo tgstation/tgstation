@@ -13,13 +13,10 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/basic/heretic_summon,
 	/mob/living/basic/mimic/copy, // Cannot exist if spawned without being passed an item reference
 	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
-	/mob/living/carbon/alien,
-	/mob/living/carbon/alien/adult,
 	/mob/living/carbon/human/consistent,
 	/mob/living/carbon/human/dummy,
 	/mob/living/carbon/human/dummy/consistent,
-	/mob/living/carbon/human/species,
-	) + valid_subtypesof(/mob/living))
+	))
 
 
 //Since it didn't really belong in any other category, I'm putting this here
