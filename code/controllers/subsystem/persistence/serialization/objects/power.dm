@@ -90,9 +90,14 @@
 
 /obj/machinery/power/solar_control/get_save_vars(save_flags)
 	. = ..()
-	. += NAMEOF(src, azimuth_rate)
-	. += NAMEOF(src, azimuth_target)
 	. += NAMEOF(src, track)
+	return .
+
+/obj/machinery/power/solar_control/get_custom_save_vars(save_flags)
+	. = ..()
+	if(track == SOLAR_TRACK_TIMED)
+		.[NAMEOF(src, azimuth_rate)] = azimuth_rate
+		.[NAMEOF(src, azimuth_target)] = azimuth_target
 	return .
 
 /obj/machinery/power/solar_control/PersistentInitialize()
