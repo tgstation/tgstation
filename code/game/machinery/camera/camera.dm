@@ -134,7 +134,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
 /obj/machinery/camera/get_turfs_to_mount_on()
-	return list(get_turf(src, dir))
+	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
