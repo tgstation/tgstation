@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
 	/// Does the menu default to a regex prefix?
 	var/regex_search = FALSE
 	/// Does the search include atom names?
-	var/name_search = FALSE
+	var/name_search = TRUE
 	/// Should we display full typepaths or the condensed versions?
 	var/fancy_types = TRUE
 	/// Initial search value from the latest command
