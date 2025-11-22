@@ -50,15 +50,18 @@
 		return NONE
 	if(attack_type == PROJECTILE_ATTACK)
 		return NONE
-	if(!prob(block_chance))
-		return NONE
 
 	var/blocking_text = "block"
 	var/blocking_text_s = "blocks"
+	var/potential_block_chance = block_chance
 
 	if(attack_type == OVERWHELMING_ATTACK)
 		blocking_text = "dodge"
 		blocking_text_s = "dodges"
+		potential_block_chance = clamp(round(potential_block_chance / (attack_type == OVERWHELMING_ATTACK ? 2 : 1), 1), 0, 100)
+
+	if(!prob(potential_block_chance))
+		return NONE
 
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
