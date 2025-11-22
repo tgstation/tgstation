@@ -1,0 +1,4 @@
+author: "EEASAS"
+delete-after: True
+changes:
+  - bugfix: "Fixes a few disposal pipes on CatwalkStation. Read the PR!"
