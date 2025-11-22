@@ -74,7 +74,7 @@
 		require_near = TRUE,
 		autopick_single_option = TRUE,
 		radius = 56,
-		custom_check = CALLBACK(src, PROC_REF(surgery_check), potential_tool, patient, src),
+		custom_check = CALLBACK(src, PROC_REF(surgery_check), potential_tool, patient),
 	)
 	if(isnull(picked))
 		return ITEM_INTERACT_BLOCKING
@@ -88,7 +88,7 @@
 	return picked_op.try_perform(operating_on, src, potential_tool, op_info)
 
 /// Callback for checking if the surgery radial can be kept open
-/mob/living/proc/surgery_check(obj/item/tool, mob/living/patient, mob/living/surgeon)
+/mob/living/proc/surgery_check(obj/item/tool, mob/living/patient)
 	var/obj/item/holding = get_active_held_item()
 
 	if(tool == IMPLEMENT_HAND)
@@ -765,7 +765,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		if(tool_stack.amount <= 0)
 			return FALSE
 
-	if(!surgeon.surgery_check(tool, patient, surgeon))
+	if(!surgeon.surgery_check(tool, patient))
 		return FALSE
 
 	if(!check_availability(patient, operating_on, surgeon, tool, operation_args[OPERATION_TARGET_ZONE]))
