@@ -70,26 +70,21 @@
 	hanging_parent.deconstruct(FALSE)
 
 
-/**
- * Checks if our object can mount on this turf
- *
- * Arguments
- * * mount_dir - objects dir which may be used in locating turf. Can be NONE if the object does not wish to use it
-*/
-/obj/proc/get_turfs_to_mount_on(mount_dir)
+/// Returns a list of potential turfs to mount on. This should not check if those turfs are valid but only locate them
+/obj/proc/get_turfs_to_mount_on()
 	PROTECTED_PROC(TRUE)
 	RETURN_TYPE(/list/turf)
 
-	var/pixel_direction = mount_dir
-	if(pixel_direction == NONE) //Infer using icon offsets. Can support diagonal mounting
-		if(pixel_x > (ICON_SIZE_X / 2))
-			pixel_direction |= EAST
-		else if(pixel_x < -(ICON_SIZE_X / 2))
-			pixel_direction |= WEST
-		if(pixel_y > (ICON_SIZE_Y / 2))
-			pixel_direction |= NORTH
-		else if(pixel_y < -(ICON_SIZE_Y / 2))
-			pixel_direction |= SOUTH
+	//Infer using icon offsets. Can support diagonal mounting
+	var/pixel_direction = NONE
+	if(pixel_x > (ICON_SIZE_X / 2))
+		pixel_direction |= EAST
+	else if(pixel_x < -(ICON_SIZE_X / 2))
+		pixel_direction |= WEST
+	if(pixel_y > (ICON_SIZE_Y / 2))
+		pixel_direction |= NORTH
+	else if(pixel_y < -(ICON_SIZE_Y / 2))
+		pixel_direction |= SOUTH
 
 	. = list()
 	if(pixel_direction != NONE)
@@ -131,10 +126,8 @@
  * Arguments
  * * mark_for_late_init - if TRUE will apply the MOUNT_ON_LATE_INITIALIZE which gets cleared on every call
  * * late_init - should only be passed as TRUE from inside LateInitialize()
- * * mount_dir - the direction to check for an mount before defaulting to pixel offsets or the loc turf.
- * Useful only for manual mounting or if your object has directional icon states AND don't use offsets,
 */
-/obj/proc/find_and_mount_on_atom(mark_for_late_init = FALSE, late_init = FALSE, mount_dir = NONE)
+/obj/proc/find_and_mount_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
 	if(obj_flags & MOUNT_ON_LATE_INITIALIZE)
 		obj_flags &= ~MOUNT_ON_LATE_INITIALIZE
 	else if(late_init)
@@ -148,7 +141,7 @@
 	if(PERFORM_ALL_TESTS(focus_only/atom_mounted) && !mark_for_late_init)
 		msg = "[type] Could not find attachable object at [location.type] "
 
-	var/list/turf/attachable_turfs = get_turfs_to_mount_on(mount_dir)
+	var/list/turf/attachable_turfs = get_turfs_to_mount_on()
 	for(var/turf/target as anything in attachable_turfs)
 		var/atom/attachable_atom
 		if(is_mountable_turf(target))

@@ -110,7 +110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 		find_and_mount_on_atom()
 	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
 
-/obj/structure/secure_safe/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir)
+/obj/structure/secure_safe/find_and_mount_on_atom(mark_for_late_init, late_init)
 	if(!density)
 		return ..()
 

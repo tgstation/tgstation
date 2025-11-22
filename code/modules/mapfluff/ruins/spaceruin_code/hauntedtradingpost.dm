@@ -170,7 +170,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/button/door/invisible_tripwire/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir)
+/obj/machinery/button/door/invisible_tripwire/find_and_mount_on_atom(mark_for_late_init, late_init)
 	return //these exist independently on an turf
 
 /obj/machinery/button/door/invisible_tripwire/post_machine_initialize()

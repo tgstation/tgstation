@@ -236,7 +236,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
 
-/obj/machinery/defibrillator_mount/mobile/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir)
+/obj/machinery/defibrillator_mount/mobile/find_and_mount_on_atom(mark_for_late_init, late_init)
 	return //its mobile
 
 /obj/machinery/defibrillator_mount/mobile/wrench_act_secondary(mob/living/user, obj/item/tool)

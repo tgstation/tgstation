@@ -121,7 +121,10 @@
 	if(mapload)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
 
-/obj/machinery/light/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir = dir)
+/obj/machinery/light/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
+
+/obj/machinery/light/find_and_mount_on_atom(mark_for_late_init, late_init)
 	if(break_if_moved)
 		return ..()
 
@@ -734,7 +737,7 @@
 	nightshift_brightness = 4
 	fire_brightness = 4.5
 
-/obj/machinery/light/floor/get_turfs_to_mount_on(mount_dir)
+/obj/machinery/light/floor/get_turfs_to_mount_on()
 	return list(get_turf(src))
 
 /obj/machinery/light/floor/is_mountable_turf(turf/target)

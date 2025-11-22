@@ -9,7 +9,10 @@
 		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		layer = HIGH_TURF_LAYER
 
-/obj/structure/plaque/static_plaque/find_and_mount_on_atom(mark_for_late_init, late_init, mount_dir)
+/obj/machinery/camera/get_moutable_objects()
+	return list()
+
+/obj/structure/plaque/static_plaque/find_and_mount_on_atom(mark_for_late_init, late_init)
 	if(isProbablyWallMounted(src))
 		return ..()
 
