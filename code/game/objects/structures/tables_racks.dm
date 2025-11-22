@@ -1042,7 +1042,7 @@
 	buckled.remove_offsets(type)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
-/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
@@ -1050,7 +1050,7 @@
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.
-/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/carbon/potential_patient)
+/obj/structure/table/optable/proc/unmark_patient(datum/source, mob/living/potential_patient)
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return

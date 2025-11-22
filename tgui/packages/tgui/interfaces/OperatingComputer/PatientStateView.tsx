@@ -11,7 +11,7 @@ import {
 } from 'tgui-core/components';
 import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../../backend';
-import { BodyZone, BodyZoneSelector } from '../common/BodyZoneSelector';
+import { type BodyZone, BodyZoneSelector } from '../common/BodyZoneSelector';
 import { extractSurgeryName } from './helpers';
 import {
   ComputerTabs,
@@ -152,17 +152,10 @@ const PatientStateSurgeryStateView = (
       <Stack.Item>
         <BodyZoneSelector
           theme="slimecore"
-          onClick={
-            // no limbs = don't allow changing zones
-            patient.has_limbs
-              ? (zone) =>
-                  zone !== target_zone && act('change_zone', { new_zone: zone })
-              : undefined
+          onClick={(zone) =>
+            zone !== target_zone && act('change_zone', { new_zone: zone })
           }
-          selectedZone={
-            // no limbs = default to chest
-            patient.has_limbs ? target_zone : BodyZone.Chest
-          }
+          selectedZone={target_zone}
         />
       </Stack.Item>
       <Stack.Item>

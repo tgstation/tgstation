@@ -17,6 +17,7 @@
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	operation_flags = OPERATION_AFFECTS_MOOD
 	any_surgery_states_blocked = ALL_SURGERY_SKIN_STATES
+	target_zone = null
 
 /datum/surgery_operation/basic/incise_skin/all_blocked_strings()
 	return ..() + list("The patient must not have complex anatomy")
@@ -61,6 +62,7 @@
 	preop_sound = 'sound/items/handling/surgery/cautery1.ogg'
 	success_sound = 'sound/items/handling/surgery/cautery2.ogg'
 	any_surgery_states_required = ALL_SURGERY_STATES_UNSET_ON_CLOSE // we're not picky
+	target_zone = null
 
 /datum/surgery_operation/basic/close_skin/all_blocked_strings()
 	return ..() + list("The patient must not have complex anatomy")

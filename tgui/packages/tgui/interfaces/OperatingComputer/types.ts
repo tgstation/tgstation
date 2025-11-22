@@ -26,7 +26,6 @@ export type PatientData = {
   blood_level: number;
   standard_blood_level: number;
   target_zone: BodyZone;
-  has_limbs: BooleanLike;
   surgery_state: string[];
 };
 

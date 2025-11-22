@@ -996,13 +996,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/basic/is_available(mob/living/patient, operated_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(target_zone != operated_zone)
+	if(target_zone && target_zone != operated_zone)
 		return FALSE
 	if(!HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
 		return FALSE
 	if(required_biotype && !(patient.mob_biotypes & required_biotype))
 		return FALSE
-	if(!patient.has_limbs)
+	if(!patient.has_limbs || !target_zone)
 		return ..()
 
 	var/obj/item/bodypart/carbon_part = patient.get_bodypart(target_zone)

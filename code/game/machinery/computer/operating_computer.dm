@@ -179,7 +179,6 @@
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
 	data["patient"]["blood_level"] = patient.blood_volume
 	data["patient"]["standard_blood_level"] = BLOOD_VOLUME_NORMAL
-	data["patient"]["has_limbs"] = patient.has_limbs // used for allowing zone selection
 	data["patient"]["surgery_state"] = patient.get_surgery_state_as_list(deprecise_zone(target_zone))
 	return data
 
