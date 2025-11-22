@@ -108,7 +108,7 @@
 	pref_flag = ROLE_BLOOD_WORM
 	weight = 1
 	min_pop = 10 // Resource limited, spawning on lowpop is fine.
-	max_antag_cap = list("denominator" = 19) // +1 blood worm per 20 pop.
+	max_antag_cap = list("denominator" = 29) // +1 blood worm per 30 pop.
 	repeatable = FALSE // Yeah no.
 
 /datum/dynamic_ruleset/roundstart/blood_worm/is_valid_candidate(mob/living/candidate, client/candidate_client)
