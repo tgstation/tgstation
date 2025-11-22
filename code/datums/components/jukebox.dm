@@ -107,7 +107,11 @@
 			new_track.song_name = track_name
 			new_track.song_length = SSsounds.get_sound_length(new_track.song_path)
 			if(track_data.len >= 3) // Bandaid for legacy tracks to not use the length for the bpm rather then the actual beats.
+				var/static/logged_to_admins = FALSE
 				log_game("[new_track.song_path] track data seems to be using the legacy format, we will attempt to make it work")
+				if(!logged_to_admins)
+					message_admins("The jukebox has tracks uploaded in a legacy format. Length is now fetched programticly, title and beats are the only required fields.")
+					logged_to_admins = TRUE
 				new_track.song_beat_deciseconds = text2num(track_data[3])
 			else if(track_data.len >= 2)
 				new_track.song_beat_deciseconds = text2num(track_data[JUKEBOX_BEATS])
