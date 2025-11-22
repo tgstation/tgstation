@@ -136,7 +136,6 @@
 	if(!(flora_allowed && length(flora_types)) && !(features_allowed && length(feature_types)) && !(fauna_allowed && length(fauna_types)))
 		return
 
-
 	for(var/turf/target_turf as anything in target_turfs)
 		// We do the CHECK_TICK here because there's a bunch of continue calls
 		// in this.
