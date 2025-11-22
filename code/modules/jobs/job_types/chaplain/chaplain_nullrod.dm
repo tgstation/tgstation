@@ -287,9 +287,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		force_unwielded = 10, \
 		force_wielded = 18, \
 	)
-
-/obj/item/nullrod/vibro/Initialize(mapload)
-	. = ..()
 	AddComponent(
 		/datum/component/butchering, \
 		speed = 7 SECONDS, \
