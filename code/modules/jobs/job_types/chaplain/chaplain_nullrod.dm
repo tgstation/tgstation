@@ -19,7 +19,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		Harms you if you dismiss the scythe without first causing harm to a creature. \
 		The shard also causes you to become Morbid, shifting your interests towards the macabre."
 	rods[/obj/item/melee/skateboard/holyboard] = "A skateboard that grants you flight and anti-magic abilities while ridden. Fits in your bag."
-	rods[/obj/item/spear/unholy_pitchfork] = "A sharp pitchfork, functionally identical to a spear. Can be two-handed. Has an extended reach when not wielded. Can be worn on the back."
 
 	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
 		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
@@ -616,7 +615,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, it is now used to harass the clown."
 	force = 10
-	block_chance = 25
+	block_chance = 40
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
@@ -636,8 +635,8 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 /obj/item/nullrod/bostaff/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
-		force_unwielded = 10, \
-		force_wielded = 15, \
+		force_unwielded = 14, \
+		force_wielded = 18, \
 	)
 
 /obj/item/nullrod/bostaff/update_icon_state()
@@ -647,9 +646,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == (PROJECTILE_ATTACK || LEAP_ATTACK || OVERWHELMING_ATTACK))
 		return FALSE //Don't bring a stick to a gunfight, and also you aren't going to really block someone full body tackling you with a stick. Or a road roller, if one happened to hit you.
-	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
-		return TRUE
-	return FALSE
+	return ..()
 
 // Arrhythmic Knife - Lets your walk without rhythm by varying your walk speed. Can't be put away.
 
@@ -694,6 +691,26 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		var/mob/living/carbon/wielder = loc
 		if(wielder.is_holding(src))
 			wielder.update_equipment_speed_mods()
+
+// Unholy Pitchfork - Does absolutely nothing special, it is just bigger.
+
+/obj/item/nullrod/pitchfork
+	name = "unholy pitchfork"
+	desc = "Holding this makes you look absolutely devilish."
+	icon = 'icons/obj/weapons/spear.dmi'
+	icon_state = "pitchfork0"
+	inhand_icon_state = "pitchfork0"
+	icon_angle = -45
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	worn_icon_state = "pitchfork0"
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
+	attack_verb_simple = list("poke", "impale", "pierce", "jab")
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	sharpness = SHARP_EDGED
+	menu_description = "A sharp pitchfork. Can be worn on the back."
 
 // Egyptian Staff - Used as a tool for making mummy wraps.
 
