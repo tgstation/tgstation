@@ -612,3 +612,47 @@
   UwUMacaroniTime:
   - balance: Nerfed cyborg hypospray across the board, notably refilling chems 20%
       slower.
+2025-11-22:
+  ArchBTW:
+  - rscdel: Removes the limit for how many times you can emag an emag (6->127 max)
+  FalloutFalcon:
+  - refactor: refactors some attack-chain code relating to xenobio potions and items
+  Melbert:
+  - balance: Facehuggers now apply a 1 second stun when initially applied
+  - balance: Facehuggers now apply a 20 second confusion effect
+  - balance: Facehugger knockdown duration has been doubled (to 10 seconds)
+  - balance: While your face is covered by a facehugger, you are forced to whisper
+  - bugfix: Fixes borg RCD
+  SmArtKar:
+  - bugfix: Fixed blood emissives rendering below disposals pipes and other floor
+      objects
+  SyncIt21:
+  - bugfix: exosuit RCD uses charge without silo link
+  - bugfix: deconstruct sound fx plays for borg rcd & rtd
+  - bugfix: Chiral inversion buffer now converts multiple reagents
+  - bugfix: Chiral inversion buffer can now be transferred into another reagent holder
+      if no conversion took place instead of just evaporating
+  - bugfix: dropper, bottles & syringes now won't display messages like 0u of reagent
+      transferred
+  Time-Green:
+  - bugfix: Blobs can spawn blobbernauts again
+  dwinters99:
+  - code_imp: Puce
+  lelandkemble:
+  - bugfix: Several things that turn you into a random animal will no longer turn
+      you into a spriteless penguin.
+  necromanceranne:
+  - rscadd: Three variants of the laser gun; Carbine (replacing the existing one),
+      Pistol and Rifle! Find it (possibly) in your armory today!
+  - balance: The armory laser guns might be different variants of the laser gun, rather
+      than always being the standard. The standard is the same as ever, even if it
+      looks different.
+  - rscadd: If you care, the sovl version is available as a goodie. And in the hands
+      of pirates...
+  - spellcheck: Lore! LORE FOR LASER GUNS! LOOOORE! Examine laser guns closely and
+      you might learn more about them.
+  - balance: The new set of laser guns come with brand new sprites.
+  trickyfox-inc:
+  - rscadd: Added centcom officer's access (cent_officer)
+  - rscadd: Added mapping helpers for cent_officer and cent_specops access
+  - map: Changed access on the administrative office doors (cent_officer)
