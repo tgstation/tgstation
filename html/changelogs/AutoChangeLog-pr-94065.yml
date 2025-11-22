@@ -1,0 +1,4 @@
+author: "EEASAS"
+delete-after: True
+changes:
+  - bugfix: "Fixes Icebox's comms agent ruin having generic documents, not the secret ones"
