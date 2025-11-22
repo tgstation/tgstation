@@ -108,8 +108,6 @@
 		return ..()
 
 	if(victim.check_block(chassis, clamp_damage, name, attack_type = OVERWHELMING_ATTACK))
-		source.visible_message(span_danger("[chassis] attempts to squeeze [victim] with [src], but the [name] is blocked!"), span_userdanger("You attempt to squeeze [victim] with [src], but [victim.p_They()] managed to block the attempt!"), ignored_mobs = victim)
-		to_chat(victim, span_userdanger("You block [chassis]'s attempt to squeeze you with [src]!"))
 		return ..()
 
 	if(iscarbon(victim) && killer_clamp)//meme clamp here
