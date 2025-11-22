@@ -7841,7 +7841,7 @@
 	cycle_id = "lavaland_living_west"
 	},
 /obj/structure/sign/directions/security/directional/west{
-	pixel_y = 10
+	pixel_y = -8
 	},
 /turf/open/floor/iron/textured_large,
 /area/mine/cafeteria)
