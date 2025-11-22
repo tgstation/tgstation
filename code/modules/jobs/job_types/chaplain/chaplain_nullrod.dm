@@ -637,7 +637,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
-		force_wielded = 14, \
+		force_wielded = 15, \
 	)
 
 /obj/item/nullrod/bostaff/update_icon_state()
