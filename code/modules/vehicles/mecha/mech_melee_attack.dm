@@ -106,9 +106,9 @@
 		step_away(src, mecha_attacker, 15)
 
 	if(check_block(mecha_attacker, mecha_attacker.force * 3, "the [mecha_attacker.attack_verbs[1]]", attack_type = OVERWHELMING_ATTACK))
-		visible_message(span_warning("[mecha_attacker] attempts to [mecha_attacker.attack_verbs[1]] [src], but is blocked."), \
-						span_warning("[mecha_attacker] attempts to [mecha_attacker.attack_verbs[1]] you, but you manage to block the attack."), span_hear("You hear loud smashing!"), 5, list(mecha_attacker))
-		to_chat(mecha_attacker, span_danger("You attempt to [mecha_attacker.attack_verbs[1]] [src], but the attack was blocked!"))
+		visible_message(span_warning("[mecha_attacker] attempts to [mecha_attacker.attack_verbs[1]] [src], but is stopped."), \
+						span_warning("[mecha_attacker] attempts to [mecha_attacker.attack_verbs[1]] you, but you manage to stop the attack."), span_hear("You hear loud smashing!"), 5, list(mecha_attacker))
+		to_chat(mecha_attacker, span_danger("You attempt to [mecha_attacker.attack_verbs[1]] [src], but the attack was stopped!"))
 		return
 
 	switch(mecha_attacker.damtype)
