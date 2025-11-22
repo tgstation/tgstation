@@ -1,7 +1,5 @@
 /// Attempts to perform a surgery with whatever tool is passed
 /mob/living/proc/perform_surgery(mob/living/patient, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE)
-	if(combat_mode || !HAS_TRAIT(patient, TRAIT_READY_TO_OPERATE))
-		return NONE
 	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? patient : DOAFTER_SOURCE_SURGERY)))
 		patient.balloon_alert(src, "already performing surgery!")
 		return ITEM_INTERACT_BLOCKING
@@ -40,28 +38,32 @@
 			operations[radial_slice] = list(operation, operate_on, option_specific_info)
 			radial_operations[radial_slice] = radial_slice
 
+	// we failed to undertake any operations?
 	if(!length(operations))
-		// we failed to undertake any operations
-		if(isitem(potential_tool))
-			var/obj/item/realtool = potential_tool
-			// for surgical tools specifically, we have some special handling
-			if(realtool.item_flags & SURGICAL_TOOL)
-				// if the targeted limb isn't prepped for surgery, i suppose we can allow an attack
-				var/obj/item/bodypart/operating = patient.get_bodypart(operating_zone)
-				if(operating && !HAS_TRAIT(operating, TRAIT_READY_TO_OPERATE))
-					return NONE
-				// at this point we can be relatively sure they messed up so let's give a feedback message...
-				if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
-					patient.balloon_alert(src, "operation site is obstructed!")
-				else if(!IS_LYING_OR_CANNOT_LIE(patient))
-					patient.balloon_alert(src, "not lying down!")
-				else
-					patient.balloon_alert(src, "nothing to do with [realtool.name]!")
-				//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
-				return ITEM_INTERACT_BLOCKING
-
-		// but for every other item, we continue to strike the mob
-		return NONE
+		if(!isitem(potential_tool))
+			return NONE
+		var/obj/item/realtool = potential_tool
+		// try self-cauterization if applicable
+		if(src == patient)
+			var/manual_cauterization = try_manual_cauterize(realtool)
+			if(manual_cauterization & ITEM_INTERACT_ANY_BLOCKER)
+				return manual_cauterization
+		// for surgical tools specifically, we have some special handling
+		if(!(realtool.item_flags & SURGICAL_TOOL))
+			return NONE
+		// if the targeted limb isn't prepped for surgery, i suppose we can allow an attack
+		var/obj/item/bodypart/operating = patient.get_bodypart(operating_zone)
+		if(operating && !HAS_TRAIT(operating, TRAIT_READY_TO_OPERATE))
+			return NONE
+		// at this point we can be relatively sure they messed up so let's give a feedback message...
+		if(!patient.is_location_accessible(operating_zone, IGNORED_OPERATION_CLOTHING_SLOTS))
+			patient.balloon_alert(src, "operation site is obstructed!")
+		else if(!IS_LYING_OR_CANNOT_LIE(patient))
+			patient.balloon_alert(src, "not lying down!")
+		else
+			patient.balloon_alert(src, "nothing to do with [realtool.name]!")
+		//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
+		return ITEM_INTERACT_BLOCKING
 
 	sortTim(radial_operations, GLOBAL_PROC_REF(cmp_name_asc))
 
@@ -72,7 +74,7 @@
 		require_near = TRUE,
 		autopick_single_option = TRUE,
 		radius = 56,
-		custom_check = CALLBACK(src, PROC_REF(surgery_check), potential_tool),
+		custom_check = CALLBACK(src, PROC_REF(surgery_check), potential_tool, patient, src),
 	)
 	if(isnull(picked))
 		return ITEM_INTERACT_BLOCKING
@@ -95,6 +97,51 @@
 		return FALSE // i dunno, a stack item? not our problem
 
 	return tool == holding.get_proxy_attacker_for(patient, surgeon) // tool (or its proxy) is still being held
+
+/// src attempts to cauterize themselves to reset their surgery state
+/mob/living/proc/try_manual_cauterize(obj/item/tool)
+	if(tool.get_temperature() < 0 && tool.tool_behaviour != TOOL_CAUTERY)
+		return NONE
+
+	var/cauterize_zone = deprecise_zone(zone_selected)
+	var/obj/item/bodypart/limb = get_bodypart(cauterize_zone)
+	if(!manual_cauterize_check(limb))
+		return NONE
+	if(DOING_INTERACTION_WITH_TARGET(src, src))
+		return ITEM_INTERACT_BLOCKING
+
+	visible_message(
+		span_notice("[src] attempts to close [p_their()] own [limb.plaintext_zone] with [tool]..."),
+		span_notice("You attempt to close your own [limb.plaintext_zone] with [tool]..."),
+		span_hear("You hear singing."),
+		vision_distance = 5,
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	playsound(src, 'sound/items/handling/surgery/cautery1.ogg', 50, TRUE)
+	if(!do_after(
+		user = src,
+		delay = /datum/surgery_operation/limb/close_skin::time * 2 * tool.toolspeed,
+		target = src,
+		extra_checks = CALLBACK(src, PROC_REF(manual_cauterize_check), limb),
+	))
+		return ITEM_INTERACT_BLOCKING
+
+	visible_message(
+		span_notice("[src] closes [p_their()] own [limb.plaintext_zone] with [tool]."),
+		span_notice("You close your own [limb.plaintext_zone] with [tool]."),
+		span_hear("You hear singing."),
+		vision_distance = 5,
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	playsound(src, 'sound/items/handling/surgery/cautery2.ogg', 50, TRUE)
+	limb.remove_surgical_state(ALL_SURGERY_STATES_UNSET_ON_CLOSE)
+	limb.receive_damage(burn = 5, wound_bonus = CANT_WOUND, damage_source = tool)
+	return ITEM_INTERACT_SUCCESS
+
+/// Callback for checking if the cauterization do-after can continue
+/mob/living/proc/manual_cauterize_check(obj/item/bodypart/limb)
+	PRIVATE_PROC(TRUE)
+	return !QDELETED(limb) && limb.owner == src && LIMB_HAS_ANY_SURGERY_STATE(limb, ALL_SURGERY_STATES_UNSET_ON_CLOSE)
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")

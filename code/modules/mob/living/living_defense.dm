@@ -473,7 +473,7 @@
 	if(.)
 		return TRUE
 
-	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
 		return TRUE
 
 	return FALSE

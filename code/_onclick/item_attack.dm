@@ -181,10 +181,18 @@
 	return attacking_item.attack_atom(src, user, modifiers, attack_modifiers)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(combat_mode)
+		return NONE
+
 	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
 		var/surgery_ret = user.perform_surgery(src, tool, LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(surgery_ret)
 			return surgery_ret
+
+	if(src == user)
+		var/manual_cauterization = try_manual_cauterize(tool)
+		if(manual_cauterization & ITEM_INTERACT_ANY_BLOCKER)
+			return manual_cauterization
 
 	return NONE
 
