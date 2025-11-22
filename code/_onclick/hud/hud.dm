@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Midnight-Knox" = 'icons/hud/screen_midnightknox.dmi',
 	"Plasma-Knox" = 'icons/hud/screen_plasmaknox.dmi',
 	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi',
+	"Nyan-knox" = 'icons/hud/screen_nyanknox.dmi',
 	"Detective" = 'icons/hud/screen_detective.dmi',
 ))
 
