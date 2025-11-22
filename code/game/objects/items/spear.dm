@@ -325,7 +325,7 @@
 /*
  * Bamboo Spear
  */
-/obj/item/spear/bamboospear //Blatant imitation of spear, but all natural. Also not valid for explosive modification.
+/obj/item/spear/bamboospear //Blatant imitation of spear, but all natural.
 	icon_state = "bamboo_spear0"
 	base_icon_state = "bamboo_spear0"
 	icon_prefix = "bamboo_spear"
@@ -343,6 +343,24 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/*
+ * Unholy pitchfork
+ * Benefits from antimagic.
+ */
+/obj/item/spear/unholy_pitchfork
+	name = "unholy pitchfork"
+	desc = "Holding this makes you look absolutely devilish."
+	icon_state = "pitchfork0"
+	inhand_icon_state = "pitchfork0"
+	base_icon_state = "pitchfork"
+	improvised_construction = FALSE
+	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
+	attack_verb_simple = list("poke", "impale", "pierce", "jab")
+
+/obj/item/spear/unholy_pitchfork/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/nullrod_core)
 
 /**
  * Skybulge

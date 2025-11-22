@@ -29,6 +29,8 @@
 	var/shield_icon = "shield-red"
 	/// Charges the shield should start with.
 	var/charges
+	/// Whether or not we allow this shield to block overwhelming attacks, such as from mechs.
+	var/block_overwhelming_attacks = FALSE
 
 /obj/item/mod/module/energy_shield/Initialize(mapload)
 	. = ..()
@@ -43,6 +45,7 @@
 		charge_recovery = charge_recovery, \
 		lose_multiple_charges = lose_multiple_charges, \
 		starting_charges = charges, \
+		can_block_overwhelming = block_overwhelming_attacks, \
 		shield_icon_file = shield_icon_file, \
 		shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(shield_reaction))
@@ -64,7 +67,7 @@
 	SIGNAL_HANDLER
 
 	if(mod.hit_reaction(owner, hitby, attack_text, 0, damage, attack_type))
-		drain_power(use_energy_cost)
+		drain_power(use_energy_cost + use_energy_cost * (attack_type == OVERWHELMING_ATTACK ? (damage/100) : 0))
 		return SUCCESSFUL_BLOCK
 	return NONE
 
@@ -80,6 +83,7 @@
 	max_charges = 5
 	recharge_start_delay = 20 SECONDS
 	charge_increment_delay = 3 SECONDS
+	block_overwhelming_attacks = TRUE // It's magic, bitch
 	shield_icon_file = 'icons/effects/magic.dmi'
 	shield_icon = "mageshield"
 	required_slots = list()

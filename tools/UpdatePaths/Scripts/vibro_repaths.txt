@@ -1,0 +1,7 @@
+/obj/item/nullrod/claymore/spellblade : /obj/item/nullrod/vibro/spellblade{@OLD}
+
+/obj/item/nullrod/claymore/talking : /obj/item/nullrod/vibro/talking{@OLD}
+
+/obj/item/nullrod/claymore/talking/chainsword : /obj/item/nullrod/vibro/talking/chainsword{@OLD}
+
+/obj/item/spear/unholy_pitchfork : /obj/item/nullrod/pitchfork{@OLD}

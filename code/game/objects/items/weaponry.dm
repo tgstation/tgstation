@@ -1198,7 +1198,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			playsound(src, SFX_BULLET_MISS, 75, TRUE)
 			return TRUE
 		return FALSE
-	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)))
+	var/stop_that_blade = (final_block_chance + (attack_type == OVERWHELMING_ATTACK ? 25 : 0)) * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)
+	if(prob(stop_that_blade))
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 	return FALSE

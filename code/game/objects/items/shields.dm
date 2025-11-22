@@ -54,7 +54,7 @@
 	if(attack_type == LEAP_ATTACK)
 		effective_block_chance = 100
 	if(attack_type == OVERWHELMING_ATTACK)
-		effective_block_chance -= 25
+		effective_block_chance = 0
 	final_block_chance = clamp(effective_block_chance, 0, 100)
 	. = ..()
 	if(.)
@@ -345,7 +345,7 @@
 
 	var/effective_block_chance = final_block_chance
 	if(attack_type == OVERWHELMING_ATTACK)
-		effective_block_chance -= 25
+		effective_block_chance = 0
 
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/our_projectile = hitby
