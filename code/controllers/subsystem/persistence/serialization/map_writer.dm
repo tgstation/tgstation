@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 			/atom/movable/mirage_holder, // z-level boundaries
 			/obj/machinery/gravity_generator/part, // grav gen only needs main part and these duplicate
 			/obj/structure/fluff/airlock_filler, // multi-tile airlocks
+			/obj/golfcart_rear, // multi-tile golfcards
 			/obj/structure/closet/supplypod, // very spammy and runtimes during initialize
 			/obj/item/paper/requisition, // spammed by cargo orders
 			/obj/item/paper/fluff/jobs/cargo/manifest, // spammed by cargo orders
