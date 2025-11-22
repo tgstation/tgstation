@@ -572,7 +572,7 @@
 	var/normal_content = 1 - synth_content
 
 	var/normal_blood_after = consumed_normal_blood + cached_blood_volume * normal_content
-	var/synth_blood_after = min(consumed_synth_blood + cached_blood_volume * synth_content, maximum_synth_blood)
+	var/synth_blood_after = min(consumed_synth_blood + cached_blood_volume * synth_content * synth_blood_efficiency, maximum_synth_blood)
 
 	var/total_blood_now = get_consumed_blood()
 	var/total_blood_after = normal_blood_after + synth_blood_after
