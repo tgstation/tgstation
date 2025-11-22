@@ -205,6 +205,48 @@
 #define REACTION_TAG_PLANT (1<<19)
 /// This reaction is produces a product that affects plants
 #define REACTION_TAG_COMPETITIVE (1<<20)
+/// Reaction produces a reagent that is a common component for other reactions
+#define REACTION_TAG_COMPONENT (1<<21)
+/// Denotes reactions that will immediately do something on reaction, like an explosion, smoke, etc.
+#define REACTION_TAG_ACTIVE (1<<22)
+
+/// Readable list of reagent reaction tags (in the same order as they are defined!)
+#define REACTION_TAG_READABLE list(\
+	"BRUTE" = REACTION_TAG_BRUTE,\
+	"BURN" = REACTION_TAG_BURN,\
+	"TOXIN" = REACTION_TAG_TOXIN,\
+	"OXY" = REACTION_TAG_OXY,\
+	"HEALING" = REACTION_TAG_HEALING,\
+	"DAMAGING" = REACTION_TAG_DAMAGING,\
+	"EXPLOSIVE" = REACTION_TAG_EXPLOSIVE,\
+	"OTHER" = REACTION_TAG_OTHER,\
+	"DANGEROUS" = REACTION_TAG_DANGEROUS,\
+	"EASY" = REACTION_TAG_EASY,\
+	"MODERATE" = REACTION_TAG_MODERATE,\
+	"HARD" = REACTION_TAG_HARD,\
+	"ORGAN" = REACTION_TAG_ORGAN,\
+	"DRINK" = REACTION_TAG_DRINK,\
+	"FOOD" = REACTION_TAG_FOOD,\
+	"SLIME" = REACTION_TAG_SLIME,\
+	"DRUG" = REACTION_TAG_DRUG,\
+	"UNIQUE" = REACTION_TAG_UNIQUE,\
+	"CHEMICAL" = REACTION_TAG_CHEMICAL,\
+	"PLANT" = REACTION_TAG_PLANT,\
+	"COMPETITIVE" = REACTION_TAG_COMPETITIVE,\
+	"COMPONENT" = REACTION_TAG_COMPONENT,\
+	"ACTIVE" = REACTION_TAG_ACTIVE,\
+)
+
+/// Reaction tags for basic damgae types
+#define DAMAGE_HEALING_REACTION_TAGS (REACTION_TAG_BRUTE | REACTION_TAG_BURN | REACTION_TAG_TOXIN | REACTION_TAG_OXY)
+/// Reaction tags for medication
+#define MEDICATION_REACTION_TAGS (REACTION_TAG_HEALING | REACTION_TAG_DAMAGING | REACTION_TAG_ORGAN | REACTION_TAG_DRUG)
+/// Reaction tags for things the chemist would make
+#define CHEMIST_REACTION_TAGS (REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE | REACTION_TAG_EXPLOSIVE | REACTION_TAG_COMPONENT)
+/// Reaction tags for botanist stuff
+#define BOTANIST_REACTION_TAGS (REACTION_TAG_PLANT | REACTION_TAG_COMPONENT)
+/// Reaction tags for food and drink mainly
+#define KITCHEN_REACTION_TAGS (REACTION_TAG_FOOD | REACTION_TAG_DRINK | REACTION_TAG_COMPONENT)
 
 //flags used by holder.dm to locate an reagent
 ///Direct type

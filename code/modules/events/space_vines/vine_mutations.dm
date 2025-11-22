@@ -81,17 +81,36 @@
 	hue = "#9B3675"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	var/required_coverage = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(issilicon(crosser))
+	if(isvineimmune(crosser) || issilicon(crosser))
 		return
-	if(prob(TOXICITY_MUTATION_PROB) && istype(crosser) && !isvineimmune(crosser))
-		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
-		crosser.adjustToxLoss(20)
+	if(!prob(TOXICITY_MUTATION_PROB))
+		return
+
+	var/datum/spacevine_mutation/thorns/thorns = locate() in holder.mutations
+
+	if(thorns)
+		to_chat(crosser, span_alert("You are pricked by thorns and feel a strange sensation."))
+		crosser.apply_damage(20, TOX)
+		return
+
+	var/body_parts_covered = 0
+	for(var/obj/item/clothing/worn_item in crosser.get_equipped_items())
+		if(!(worn_item.clothing_flags & THICKMATERIAL))
+			continue
+		body_parts_covered |= worn_item.body_parts_covered
+
+		if((body_parts_covered & required_coverage) == required_coverage)
+			return
+
+	to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
+	crosser.apply_damage(20, TOX)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
 	if(!isvineimmune(eater))
-		eater.adjustToxLoss(20)
+		eater.apply_damage(20, TOX)
 
 /datum/spacevine_mutation/explosive  // JC IT'S A BOMB
 	name = "Explosive"
@@ -101,11 +120,11 @@
 	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
-	if(explosion_severity < 3)
-		qdel(holder)
-	else
+	if(explosion_severity >= EXPLODE_DEVASTATE)
 		QDEL_IN(holder, 0.5 SECONDS)
 		return TRUE
+
+	qdel(holder)
 	return FALSE
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/item)
@@ -184,8 +203,7 @@
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/turf, mob/living)
 	for(var/mob/living/victim in turf)
-		if(!isvineimmune(victim) && victim.stat != DEAD) // Don't kill immune creatures. Dead check to prevent log spam when a corpse is trapped between vine eaters.
-			aggrospread_act(holder, victim)
+		aggrospread_act(holder, victim)
 
 /// What happens if an aggr spreading vine buckles a mob.
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
@@ -194,41 +212,51 @@
 
 /// Hurts mobs. To be used when a vine with aggressive spread mutation spreads into the mob's tile or buckles them.
 /datum/spacevine_mutation/aggressive_spread/aggrospread_act(obj/structure/spacevine/vine, mob/living/living_mob)
-	var/mob/living/carbon/victim = living_mob //If the mob is carbon then it now also exists as a victim, and not just an living mob.
-	if(istype(victim)) //If the mob (M) is a carbon subtype (C) we move on to pick a more complex damage proc, with damage zones, wounds and armor mitigation.
-		var/obj/item/bodypart/limb = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE)) //Picks a random bodypart.
-		var/armor = victim.run_armor_check(limb, MELEE, null, null) //armor = the armor value of that randomly chosen bodypart. Nulls to not print a message, because it would still print on pierce.
-		var/datum/spacevine_mutation/thorns/thorn = locate() in vine.mutations //Searches for the thorns mutation in the "mutations"-list inside obj/structure/spacevine, and defines T if it finds it.
-		if(thorn && prob(40) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE)) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
+	if(isvineimmune(living_mob) || living_mob.stat == DEAD)
+		return
+
+	if(!iscarbon(living_mob))
+		living_mob.apply_damage(75, BRUTE, blocked = living_mob.run_armor_check(attack_flag = MELEE, silent = TRUE))
+		playsound(living_mob, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
+		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
+		span_userdanger("You are brutally threshed by [vine]!"))
+		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
+		return
+
+	var/mob/living/carbon/victim = living_mob
+	var/obj/item/bodypart/limb = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE))
+	var/armor = victim.run_armor_check(def_zone = limb, attack_flag = MELEE)
+
+
+	if(!HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+		var/datum/spacevine_mutation/thorns/thorn = locate() in vine.mutations
+
+		if(thorn && prob(40)) //If we found the thorns mutation there is now a chance to get stung instead of lashed or smashed.
 			victim.apply_damage(50, BRUTE, def_zone = limb, wound_bonus = rand(-20,10), sharpness = SHARP_POINTY) //This one gets a bit lower damage because it ignores armor.
 			victim.Stun(1 SECONDS) //Stopped in place for a moment.
 			playsound(living_mob, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 			living_mob.visible_message(span_danger("[living_mob] is nailed by a sharp thorn!"), \
 			span_userdanger("You are nailed by a sharp thorn!"))
 			log_combat(vine, living_mob, "aggressively pierced") //"Aggressively" for easy ctrl+F'ing in the attack logs.
-		else
-			if(prob(80) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
-				victim.Knockdown(2 SECONDS)
-				playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
-				living_mob.visible_message(span_danger("[living_mob] is lacerated by an outburst of vines!"), \
-				span_userdanger("You are lacerated by an outburst of vines!"))
-				log_combat(vine, living_mob, "aggressively lacerated")
-			else
-				victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = NONE)
-				victim.Knockdown(3 SECONDS)
-				var/atom/throw_target = get_edge_target_turf(living_mob, get_dir(vine, get_step_away(living_mob, vine)))
-				victim.throw_at(throw_target, 3, 6)
-				playsound(victim, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-				living_mob.visible_message(span_danger("[living_mob] is smashed by a large vine!"), \
-				span_userdanger("You are smashed by a large vine!"))
-				log_combat(vine, living_mob, "aggressively smashed")
-	else //Living but not a carbon? Maybe a silicon? Can't be wounded so have a big chunk of simple bruteloss with no special effects. They can be entangled.
-		living_mob.adjustBruteLoss(75)
-		playsound(living_mob, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
-		living_mob.visible_message(span_danger("[living_mob] is brutally threshed by [vine]!"), \
-		span_userdanger("You are brutally threshed by [vine]!"))
-		log_combat(vine, living_mob, "aggressively spread into") //You aren't being attacked by the vines. You just happen to stand in their way.
+			return
+
+		if(prob(80))
+			victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = SHARP_EDGED)
+			victim.Knockdown(2 SECONDS)
+			playsound(victim, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
+			living_mob.visible_message(span_danger("[living_mob] is lacerated by an outburst of vines!"), \
+			span_userdanger("You are lacerated by an outburst of vines!"))
+			log_combat(vine, living_mob, "aggressively lacerated")
+			return
+
+	victim.apply_damage(60, BRUTE, def_zone = limb, blocked = armor, wound_bonus = rand(-20,10), sharpness = NONE)
+	victim.Knockdown(3 SECONDS)
+	var/atom/throw_target = get_edge_target_turf(living_mob, get_dir(vine, get_step_away(living_mob, vine)))
+	victim.throw_at(throw_target, 3, 6)
+	playsound(victim, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+	living_mob.visible_message(span_danger("[living_mob] is smashed by a large vine!"), \
+	span_userdanger("You are smashed by a large vine!"))
+	log_combat(vine, living_mob, "aggressively smashed")
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"
@@ -241,69 +269,58 @@
 	holder.light_state = PASS_LIGHT
 	holder.alpha = 125
 
-/datum/spacevine_mutation/oxy_eater
+/datum/spacevine_mutation/gas_eater
+	abstract_type = /datum/spacevine_mutation/gas_eater
+	/// Type of gas consumed by this mutation
+	var/datum/gas/gas_type = null
+
+/datum/spacevine_mutation/gas_eater/process_mutation(obj/structure/spacevine/holder)
+	if(isnull(gas_type))
+		stack_trace("gas_type not set for gas_eater mutation [type]")
+		return
+
+	var/turf/open/floor/turf = holder.loc
+	if(!istype(turf))
+		return
+
+	var/datum/gas_mixture/gas_mix = turf.air
+	if(!gas_mix.gases[gas_type])
+		return
+
+	gas_mix.gases[gas_type][MOLES] = max(gas_mix.gases[gas_type][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
+	gas_mix.garbage_collect()
+
+/datum/spacevine_mutation/gas_eater/oxy_eater
 	name = "Oxygen consuming"
 	description = "Consumes Oxygen from the surrounding area."
 	hue = "#28B5B5"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	gas_type = /datum/gas/oxygen
 
-/datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/oxygen])
-			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/nitro_eater
+/datum/spacevine_mutation/gas_eater/nitro_eater
 	name = "Nitrogen consuming"
 	description = "Consumes Nitrogen from the surrounding area."
 	hue = "#FF7B54"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	gas_type = /datum/gas/nitrogen
 
-/datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/nitrogen])
-			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/carbondioxide_eater
+/datum/spacevine_mutation/gas_eater/carbondioxide_eater
 	name = "CO2 consuming"
 	description = "Consumes Carbon Dioxide from the surrounding area."
 	hue = "#798777"
 	severity = SEVERITY_MINOR
 	quality = POSITIVE
+	gas_type = /datum/gas/carbon_dioxide
 
-/datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
-			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
-
-/datum/spacevine_mutation/plasma_eater
+/datum/spacevine_mutation/gas_eater/plasma_eater
 	name = "Plasma consuming"
 	description = "Consumes Plasma from the surrounding area."
 	hue = "#9074b6"
 	severity = SEVERITY_AVERAGE
 	quality = POSITIVE
-
-/datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
-	var/turf/open/floor/turf = holder.loc
-	if(istype(turf))
-		var/datum/gas_mixture/gas_mix = turf.air
-		if(!gas_mix.gases[/datum/gas/plasma])
-			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.growth_stage, 0)
-		gas_mix.garbage_collect()
+	gas_type = /datum/gas/plasma
 
 /datum/spacevine_mutation/thorns
 	name = "Thorny"
@@ -313,28 +330,27 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(istype(crosser) && HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
+	if(isvineimmune(crosser) || HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
 		return
-
-	if(prob(THORN_MUTATION_CUT_PROB) && istype(crosser) && !isvineimmune(crosser))
+	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = crosser
-		victim.adjustBruteLoss(15)
-		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
+		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
+			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
+	if(isvineimmune(hitter) || HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
+		return expected_damage
+
 	if(iscarbon(hitter))
 		var/mob/living/carbon/carbon_victim = hitter
 		for(var/obj/item/clothing/worn_item in carbon_victim.get_equipped_items())
 			if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
 				return expected_damage
 
-	if(HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
-		return expected_damage
-
-	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
+	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = hitter
-		victim.adjustBruteLoss(15)
-		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
+		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
+			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 	return expected_damage
 
@@ -378,8 +394,10 @@
 	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
-	if(holder.growth_stage == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
-		var/obj/structure/alien/resin/flower_bud/spawned_flower_bud = new/obj/structure/alien/resin/flower_bud(get_turf(holder))
+	if(locate(/obj/structure/alien/resin/flower_bud) in range(5, holder))
+		return
+	if(holder.growth_stage == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB))
+		var/obj/structure/alien/resin/flower_bud/spawned_flower_bud = new(holder.loc)
 		spawned_flower_bud.trait_flags = holder.trait_flags
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
