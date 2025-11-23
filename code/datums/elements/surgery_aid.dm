@@ -126,7 +126,7 @@
 /datum/status_effect/surgery_prepped/proc/on_attach_limb(datum/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 
-	if(LAZYACCESS(zones, limb.body_zone))
+	if(limb.body_zone in zones)
 		ADD_TRAIT(limb, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/surgery_prepped/proc/on_detach_limb(datum/source, obj/item/bodypart/limb)

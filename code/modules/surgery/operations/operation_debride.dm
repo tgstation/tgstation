@@ -10,7 +10,10 @@
 	)
 	time = 3 SECONDS
 	operation_flags = OPERATION_AFFECTS_MOOD | OPERATION_LOOPING | OPERATION_PRIORITY_NEXT_STEP
-	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
+	preop_sound = list(
+		TOOL_SCALPEL = 'sound/items/handling/surgery/scalpel1.ogg',
+		TOOL_HEMOSTAT = 'sound/items/handling/surgery/hemostat1.ogg',
+	)
 	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ1.ogg'
 
@@ -19,11 +22,15 @@
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5 // just enough to stop infestation from worsening
 
+/datum/surgery_operation/limb/debride/get_default_radial_image()
+	return image(/obj/item/reagent_containers/applicator/patch/aiuri)
+
 /datum/surgery_operation/limb/debride/all_required_strings()
 	return list("the limb must have a second degree or worse burn") + ..()
 
 /datum/surgery_operation/limb/debride/state_check(obj/item/bodypart/limb)
-	return !!(locate(/datum/wound/burn/flesh) in limb.wounds)
+	var/datum/wound/burn/flesh/wound = locate() in limb.wounds
+	return wound?.infection > 0
 
 /// To give the surgeon a heads up how much work they have ahead of them
 /datum/surgery_operation/limb/debride/proc/get_progress(datum/wound/burn/flesh/wound)
@@ -54,10 +61,6 @@
 		span_notice("[surgeon] begins to excise infected flesh from [limb.owner]'s [limb.plaintext_zone]."),
 	)
 	display_pain(limb.owner, "The infection in your [limb.plaintext_zone] stings like hell! It feels like you're being stabbed!")
-
-/datum/surgery_operation/limb/debride/can_loop(mob/living/patient, obj/item/bodypart/limb, mob/living/surgeon, tool, list/operation_args)
-	var/datum/wound/burn/flesh/wound = locate() in limb.wounds
-	return ..() && wound?.infection > 0
 
 /datum/surgery_operation/limb/debride/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args, default_display_results = FALSE)
 	limb.receive_damage(3, wound_bonus = CANT_WOUND, sharpness = tool.get_sharpness(), damage_source = tool)

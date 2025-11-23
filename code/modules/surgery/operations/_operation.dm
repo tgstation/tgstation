@@ -1,4 +1,13 @@
-/// Attempts to perform a surgery with whatever tool is passed
+/**
+ * Attempts to perform a surgery with whatever tool is passed
+ *
+ * * src - the surgeon
+ * * patient - the mob being operated on
+ * * potential_tool - the tool being used for the operation (can be null / IMPLEMENT_HAND)
+ * * intentionally_fail - if TRUE, forces the operation to fail (for testing purposes)
+ *
+ * Returns an ITEM_INTERACT_* flag
+ */
 /mob/living/proc/perform_surgery(mob/living/patient, potential_tool = IMPLEMENT_HAND, intentionally_fail = FALSE)
 	if(DOING_INTERACTION(src, (HAS_TRAIT(src, TRAIT_HIPPOCRATIC_OATH) ? patient : DOAFTER_SOURCE_SURGERY)))
 		patient.balloon_alert(src, "already performing surgery!")
@@ -8,35 +17,8 @@
 	if(istype(potential_tool, /obj/item/borg/cyborghug))
 		potential_tool = IMPLEMENT_HAND
 
-	// List of typepaths of operations we *can* do
-	var/list/possible_operations = GLOB.operations.unlocked.Copy()
-	// Signals can add operation types to the list to unlock special ones
-	SEND_SIGNAL(src, COMSIG_LIVING_OPERATING_ON, patient, possible_operations)
-	SEND_SIGNAL(patient, COMSIG_LIVING_BEING_OPERATED_ON, patient, possible_operations)
-
-	var/list/operations = list()
-	var/list/radial_operations = list()
 	var/operating_zone = zone_selected
-	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
-		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && !IS_LYING_OR_CANNOT_LIE(patient))
-			continue
-		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
-			continue
-		var/atom/movable/operate_on = operation.get_operation_target(patient, operating_zone)
-		if(isnull(operate_on))
-			continue
-		if(!operation.check_availability(patient, operate_on, src, potential_tool, operating_zone))
-			continue
-		var/potential_options = operation.get_radial_options(operate_on, potential_tool, operating_zone)
-		if(!islist(potential_options))
-			potential_options = list(potential_options)
-		for(var/datum/radial_menu_choice/radial_slice as anything in potential_options)
-			if(radial_operations[radial_slice])
-				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation.type]'.")
-				continue
-			var/option_specific_info = potential_options[radial_slice] || list("[OPERATION_ACTION]" = "default")
-			operations[radial_slice] = list(operation, operate_on, option_specific_info)
-			radial_operations[radial_slice] = radial_slice
+	var/list/operations = get_available_operations(patient, potential_tool, operating_zone)
 
 	// we failed to undertake any operations?
 	if(!length(operations))
@@ -65,6 +47,10 @@
 		//  ...then, block attacking. prevents the surgeon from viciously stabbing the patient on a mistake
 		return ITEM_INTERACT_BLOCKING
 
+	var/list/radial_operations = list()
+	for(var/radial_slice in operations)
+		radial_operations[radial_slice] = radial_slice // weird but makes it easier to index later
+
 	sortTim(radial_operations, GLOBAL_PROC_REF(cmp_name_asc))
 
 	var/picked = show_radial_menu(
@@ -86,6 +72,49 @@
 	op_info[OPERATION_FORCE_FAIL] = intentionally_fail
 
 	return picked_op.try_perform(operating_on, src, potential_tool, op_info)
+
+/**
+ * Returns a list of all surgery operations the mob can currently perform on the patient with the potential tool
+ *
+ * * src - the surgeon
+ * * patient - the mob being operated on
+ * * potential_tool - the tool being used for the operation (can be null / IMPLEMENT_HAND)
+ * * operating_zone - the body zone being operated on
+ *
+ * Returns a list where the keys are radial menu slices and the values are lists of:
+ * * [0] - the operation datum
+ * * [1] - the atom being operated on
+ * * [2] - a list of option-specific info
+ */
+/mob/living/proc/get_available_operations(mob/living/patient, potential_tool = IMPLEMENT_HAND, operating_zone = zone_selected)
+	// List of typepaths of operations we *can* do
+	var/list/possible_operations = GLOB.operations.unlocked.Copy()
+	// Signals can add operation types to the list to unlock special ones
+	SEND_SIGNAL(src, COMSIG_LIVING_OPERATING_ON, patient, possible_operations)
+	SEND_SIGNAL(patient, COMSIG_LIVING_BEING_OPERATED_ON, patient, possible_operations)
+
+	var/list/operations = list()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
+		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && !IS_LYING_OR_CANNOT_LIE(patient))
+			continue
+		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
+			continue
+		var/atom/movable/operate_on = operation.get_operation_target(patient, operating_zone)
+		if(isnull(operate_on))
+			continue
+		if(!operation.check_availability(patient, operate_on, src, potential_tool, operating_zone))
+			continue
+		var/potential_options = operation.get_radial_options(operate_on, potential_tool, operating_zone)
+		if(!islist(potential_options))
+			potential_options = list(potential_options)
+		for(var/datum/radial_menu_choice/radial_slice as anything in potential_options)
+			if(operations[radial_slice])
+				stack_trace("Duplicate radial surgery option '[radial_slice.name]' detected for operation '[operation.type]'.")
+				continue
+			var/option_specific_info = potential_options[radial_slice] || list("[OPERATION_ACTION]" = "default")
+			operations[radial_slice] = list(operation, operate_on, option_specific_info)
+
+	return operations
 
 /// Callback for checking if the surgery radial can be kept open
 /mob/living/proc/surgery_check(obj/item/tool, mob/living/patient)
@@ -152,6 +181,25 @@
 	if(!states_to_check || !LIMB_HAS_ANY_SURGERY_STATE(limb, states_to_check))
 		return FALSE
 	return TRUE
+
+/// Debug proc to print all surgeries available to whoever called the proc
+/mob/living/proc/debug_get_all_available_surgeries()
+	var/mob/living/surgeon = usr
+	if(!isliving(surgeon))
+		return
+
+	var/list/operations = surgeon.get_available_operations(src, surgeon.get_active_held_item())
+	if(!length(operations))
+		to_chat(surgeon, boxed_message(span_info("No available surgeries.")))
+		return
+
+	var/list/operations_info = list()
+	for(var/radial_slice in operations)
+		var/datum/surgery_operation/operation = operations[radial_slice][1]
+		var/atom/movable/operating_on = operations[radial_slice][2]
+		operations_info += "[radial_slice]: [operation.name] on [operating_on]"
+
+	to_chat(surgeon, boxed_message(span_info("Available surgeries:<br><hr>[jointext(operations_info, "<br>")]")))
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
@@ -245,12 +293,27 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/operation_holder/proc/get_instances(list/typepaths, filter_replaced = TRUE)
 	var/list/result = list()
 	for(var/datum/surgery_operation/operation_type as anything in typepaths)
-		if(!operations_by_typepath[operation_type])
+		var/datum/surgery_operation/operation = operations_by_typepath[operation_type]
+		if(isnull(operation))
 			continue
-		if(filter_replaced && operation_type::replaced_by && operation_type::replaced_by != operation_type && (operation_type::replaced_by in typepaths))
+		if(filter_replaced && is_replaced(operation, typepaths))
 			continue
-		result += operations_by_typepath[operation_type]
+		result += operation
 	return result
+
+/// Check if the passed operation has been replaced by a typepath in the provided operation pool
+/datum/operation_holder/proc/is_replaced(datum/surgery_operation/operation, list/operation_pool)
+	if(isnull(operation.replaced_by) || !length(operation_pool))
+		return FALSE
+	if(operation.replaced_by == operation.type)
+		return FALSE
+	if(operation.replaced_by in operation_pool)
+		return TRUE
+	// recursively check if the operation that replaces us is itself replaced
+	var/datum/surgery_operation/next_highest_operation = operations_by_typepath[operation.replaced_by]
+	if(isnull(next_highest_operation))
+		return FALSE
+	return is_replaced(next_highest_operation, operation_pool)
 
 /**
  * ## Surgery operation datum

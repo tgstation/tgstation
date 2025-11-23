@@ -179,6 +179,39 @@
 		if (isnull(operation.desc))
 			TEST_FAIL("Surgery operation [operation.type] has no description set")
 
+/// Checks replaced surgeries are filtered out correctly
+/datum/unit_test/verify_surgery_replacements
+
+/datum/unit_test/verify_surgery_replacements/Run()
+	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(subtypesof(/datum/surgery_operation), filter_replaced = TRUE))
+		if(!operation.replaced_by || operation.replaced_by.type == operation.type)
+			continue
+		TEST_FAIL("Surgery operation [operation.type] is marked as replaced by [operation.replaced_by.type], \
+			but the operation was not correctly filtered by get_instances.")
+
+/// Tests that make incision shows up when expected
+/datum/unit_test/incision_check
+
+/datum/unit_test/incision_check/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/surgeon = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/scalpel/scalpel = allocate(/obj/item/scalpel)
+	var/list/operations
+
+	surgeon.put_in_active_hand(scalpel)
+	operations = surgeon.get_available_operations(patient, scalpel, BODY_ZONE_CHEST)
+	TEST_ASSERT_EQUAL(length(operations), 0, "Surgery operations were available on a standing patient")
+
+	patient.set_body_position(LYING_DOWN)
+	operations = surgeon.get_available_operations(patient, scalpel, BODY_ZONE_CHEST)
+	TEST_ASSERT_EQUAL(length(operations), 1, "\"make incision\", was not available on a lying patient")
+
+	var/list/found_operation_data = operations[operations[1]]
+	var/datum/surgery_operation/operation = found_operation_data[1]
+	var/atom/movable/operating_on = found_operation_data[2]
+	TEST_ASSERT_EQUAL(operation.type, /datum/surgery_operation/limb/incise_skin, "The available surgery operation was not \"make incision\"")
+	TEST_ASSERT_EQUAL(operating_on, patient.get_bodypart(BODY_ZONE_CHEST), "The available surgery operation was not on the chest bodypart")
+
 /datum/unit_test/location_accessibility
 
 /datum/unit_test/location_accessibility/Run()
