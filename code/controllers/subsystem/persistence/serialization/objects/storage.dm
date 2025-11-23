@@ -65,3 +65,38 @@
 // technically you could do this with all the regular pipes but it might clog
 /obj/machinery/disposal/bin/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	save_stored_contents(map_string, current_loc, obj_blacklist)
+
+/obj/structure/mop_bucket/janitorialcart/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
+	var/list/janicart_contents = list()
+	janicart_contents += mybag
+	janicart_contents += mymop
+	janicart_contents += mybroom
+	janicart_contents += myspray
+	janicart_contents += myreplacer
+	for(var/obj/item/clothing/suit/caution/sign as anything in held_signs)
+		janicart_contents += sign
+
+	if(janicart_contents.len)
+		save_stored_contents(map_string, current_loc, obj_blacklist, janicart_contents)
+
+/obj/structure/mop_bucket/janitorialcart/PersistentInitialize()
+	. = ..()
+
+	for(var/jani_obj in contents)
+		if(istype(jani_obj, /obj/item/storage/bag/trash))
+			mybag = jani_obj
+		else if(istype(jani_obj, /obj/item/mop))
+			mymop = jani_obj
+		else if(istype(jani_obj, /obj/item/pushbroom))
+			mybroom = jani_obj
+		else if(istype(jani_obj, /obj/item/reagent_containers/spray/cleaner))
+			myspray = jani_obj
+		else if(istype(jani_obj, /obj/item/lightreplacer))
+			myreplacer = jani_obj
+		else if(istype(jani_obj, /obj/item/clothing/suit/caution))
+			// held_signs is a list so slightly different
+			held_signs += jani_obj
+
+		contents -= jani_obj
+
+	update_appearance()
