@@ -196,7 +196,11 @@
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/surgeon = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/scalpel/scalpel = allocate(/obj/item/scalpel)
+	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
 	var/list/operations
+
+	ADD_TRAIT(patient, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
+	ADD_TRAIT(chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 
 	surgeon.put_in_active_hand(scalpel)
 	operations = surgeon.get_available_operations(patient, scalpel, BODY_ZONE_CHEST)
@@ -204,13 +208,28 @@
 
 	patient.set_body_position(LYING_DOWN)
 	operations = surgeon.get_available_operations(patient, scalpel, BODY_ZONE_CHEST)
-	TEST_ASSERT_EQUAL(length(operations), 1, "No operations were available on a lying patient")
+	if(length(operations) > 1)
+		TEST_FAIL("More operations than expected were available on the patient")
+		return
 
-	var/list/found_operation_data = operations[operations[1]]
-	var/datum/surgery_operation/operation = found_operation_data[1]
-	var/atom/movable/operating_on = found_operation_data[2]
-	TEST_ASSERT_EQUAL(operation.type, /datum/surgery_operation/limb/incise_skin, "The available surgery operation was not \"make incision\"")
-	TEST_ASSERT_EQUAL(operating_on, patient.get_bodypart(BODY_ZONE_CHEST), "The available surgery operation was not on the chest bodypart")
+	if(length(operations) == 1)
+		var/list/found_operation_data = operations[operations[1]]
+		var/datum/surgery_operation/operation = found_operation_data[1]
+		var/atom/movable/operating_on = found_operation_data[2]
+		TEST_ASSERT_EQUAL(operation.type, /datum/surgery_operation/limb/incise_skin, "The available surgery operation was not \"make incision\"")
+		TEST_ASSERT_EQUAL(operating_on, patient.get_bodypart(BODY_ZONE_CHEST), "The available surgery operation was not on the chest bodypart")
+		return
+
+	TEST_ASSERT_EQUAL(patient.body_position, LYING_DOWN, "Patient is not lying down as expected")
+
+	var/datum/surgery_operation/incise_operation = GLOB.operations.operations_by_typepath[/datum/surgery_operation/limb/incise_skin]
+	var/atom/movable/operate_on = incise_operation.get_operation_target(patient, BODY_ZONE_CHEST)
+	TEST_ASSERT_EQUAL(operate_on, patient.get_bodypart(BODY_ZONE_CHEST), "Incise skin operation did not return the chest bodypart as a valid operation target")
+
+	if(incise_operation.check_availability(patient, operate_on, surgeon, scalpel, BODY_ZONE_CHEST))
+		TEST_FAIL("Make incision operation was not found among available operations despite being available")
+	else
+		TEST_FAIL("Make incision operation was not available when it should have been")
 
 /datum/unit_test/location_accessibility
 
