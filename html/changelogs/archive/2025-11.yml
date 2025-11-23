@@ -656,3 +656,29 @@
   - rscadd: Added centcom officer's access (cent_officer)
   - rscadd: Added mapping helpers for cent_officer and cent_specops access
   - map: Changed access on the administrative office doors (cent_officer)
+2025-11-23:
+  EEASAS:
+  - bugfix: Fixes a few disposal pipes on CatwalkStation. Read the PR!
+  - bugfix: Fixes Icebox's comms agent ruin having generic documents, not the secret
+      ones
+  Fghj240:
+  - balance: NT Frontier can purchase and refund researched techweb nodes.
+  Melbert:
+  - bugfix: Wall mounts no longer stick to tables instead of the wall behind it
+  SmArtKar:
+  - code_imp: Improved borg hypo reagent handling
+  - bugfix: Fixed a duplicate signal registration in station trait lobby button code
+  alien3301:
+  - qol: Captain's fountain pen writes in black
+  combustor:
+  - bugfix: Fixes the AI sat's teleporter on catwalk
+  hry-gh:
+  - bugfix: chat storage should load more reliably
+  - server: server operators can now properly disable the iframe chat storage solution
+      by unsetting the STORAGE_CDN_IFRAME config
+  timothymtorres:
+  - qol: Add direction helpers for burned subtypes of lights
+  vinylspiders:
+  - bugfix: you can no longer send money from virtualspace to a real account
+  - code_imp: adds a flag for virtual areas so they can easily be checked, as well
+      as an easy helper proc, 'is_area_virtual(your_area)'

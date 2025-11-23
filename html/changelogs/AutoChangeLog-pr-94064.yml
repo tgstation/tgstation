@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Wall mounts no longer stick to tables instead of the wall behind it"
