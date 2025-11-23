@@ -409,7 +409,7 @@
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
 
 /datum/chemical_reaction/slime/slimepotion2/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/slimepotion/slime/sentience(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/sentience(get_turf(holder.my_atom))
 	..()
 
 /datum/chemical_reaction/slime/renaming
@@ -417,7 +417,7 @@
 	required_reagents = list(/datum/reagent/water = 1)
 
 /datum/chemical_reaction/slime/renaming/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/slimepotion/slime/renaming(holder.my_atom.drop_location())
+	new /obj/item/slimepotion/renaming(holder.my_atom.drop_location())
 	..()
 
 
@@ -454,7 +454,7 @@
 	required_container = /obj/item/slime_extract/bluespace
 
 /datum/chemical_reaction/slime/slimeradio/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	new /obj/item/slimepotion/slime/slimeradio(get_turf(holder.my_atom))
+	new /obj/item/slimepotion/slimeradio(get_turf(holder.my_atom))
 	..()
 
 //Cerulean
