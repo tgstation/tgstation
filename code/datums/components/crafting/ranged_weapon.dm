@@ -362,11 +362,10 @@
 	result = /obj/structure/mounted_gun/large_ballista
 	reqs = list(
 		/obj/item/stack/cable_coil = 15,
-		/obj/item/spear = 1,
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/rods = 10,
 	)
-	time = 15 SECONDS
+	time = 8 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
