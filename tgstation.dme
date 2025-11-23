@@ -792,6 +792,7 @@
 #include "code\controllers\subsystem\persistence\trophies.dm"
 #include "code\controllers\subsystem\persistence\trophy_fishes.dm"
 #include "code\controllers\subsystem\persistence\serialization\_procs.dm"
+#include "code\controllers\subsystem\persistence\serialization\areas.dm"
 #include "code\controllers\subsystem\persistence\serialization\helpers.dm"
 #include "code\controllers\subsystem\persistence\serialization\map_serialization_ui.dm"
 #include "code\controllers\subsystem\persistence\serialization\map_writer.dm"
