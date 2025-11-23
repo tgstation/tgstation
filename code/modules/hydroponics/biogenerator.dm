@@ -440,14 +440,12 @@
 	if(!can_interact(user))
 		return
 
-	if(user.put_in_hands(beaker))
-		if(!silent)
-			to_chat(user, span_notice("You eject [beaker] from [src]."))
+	if(!silent)
+		to_chat(user, span_notice("You eject [beaker] from [src]."))
 
-	else
+	if(!user.put_in_active_hand(beaker))
 		if(!silent)
 			to_chat(user, span_notice("You eject [beaker] from [src] onto the ground."))
-
 		beaker.forceMove(drop_location())
 
 	beaker = null
