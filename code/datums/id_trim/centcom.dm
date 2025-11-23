@@ -110,7 +110,7 @@
 
 	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
 
-/// Trim for Deathsquad officers. All Centcom and Station Access.
+/// Trim for Deathsquad officers. All Centcom and Station Access. No centcom officer's access
 /datum/id_trim/centcom/deathsquad
 	assignment = JOB_ERT_DEATHSQUAD
 	trim_state = "trim_deathcommando"
@@ -122,7 +122,7 @@
 /datum/id_trim/centcom/deathsquad/New()
 	. = ..()
 
-	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
+	access = (SSid_access.get_region_access_list(list(REGION_CENTCOM)) - ACCESS_CENT_OFFICER) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
 /// Trim for generic ERT interns. No universal ID card changing access.
 /datum/id_trim/centcom/ert
@@ -135,7 +135,7 @@
 
 	access = list(ACCESS_CENT_GENERAL) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)) - ACCESS_CHANGE_IDS)
 
-/// Trim for ERT Commanders. All station and centcom access.
+/// Trim for ERT Commanders. All station and centcom access. No centcom officer's access
 /datum/id_trim/centcom/ert/commander
 	assignment = JOB_ERT_COMMANDER
 	trim_state = "trim_ert_commander"
@@ -144,7 +144,7 @@
 /datum/id_trim/centcom/ert/commander/New()
 	. = ..()
 
-	access = SSid_access.get_region_access_list(list(REGION_CENTCOM, REGION_ALL_STATION))
+	access = (SSid_access.get_region_access_list(list(REGION_CENTCOM)) - ACCESS_CENT_OFFICER) | (SSid_access.get_region_access_list(list(REGION_ALL_STATION)))
 
 /// Trim for generic ERT seccies. No universal ID card changing access.
 /datum/id_trim/centcom/ert/security

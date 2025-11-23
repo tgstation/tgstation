@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
-	var/tiled_dirt = FALSE // use smooth tiled dirt decal
+	var/tiled_turf = FALSE // use tiled water and dirt decals
 
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
@@ -804,7 +804,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Returns whether it is safe for an atom to move across this turf
 /turf/proc/can_cross_safely(atom/movable/crossing)
-	return TRUE
+	return !HAS_TRAIT(src, TRAIT_AI_AVOID_TURF)
 
 /**
  * the following are some fishing-related optimizations to shave off as much

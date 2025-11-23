@@ -8,25 +8,37 @@
 	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
+/obj/item/ammo_casing/energy/laser/accelerator
+	projectile_type = /obj/projectile/beam/laser/accelerator
+	select_name = "accelerator"
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = LASER_SHOTS(16, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 
-/obj/item/ammo_casing/energy/lasergun/carbine
-	projectile_type = /obj/projectile/beam/laser/carbine
+/obj/item/ammo_casing/energy/lasergun/pistol
+	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE)
+
+/obj/item/ammo_casing/energy/lasergun/assault
+	projectile_type = /obj/projectile/beam/laser/rapid
 	e_cost = LASER_SHOTS(40, STANDARD_CELL_CHARGE)
+
+/obj/item/ammo_casing/energy/lasergun/carbine
+	projectile_type = /obj/projectile/beam/laser/rapid
+	e_cost = LASER_SHOTS(26, STANDARD_CELL_CHARGE)
 	select_name = "kill"
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 
-/obj/item/ammo_casing/energy/lasergun/carbine/cybersun
-	projectile_type = /obj/projectile/beam/laser/carbine/cybersun
+/obj/item/ammo_casing/energy/lasergun/cybersun
+	projectile_type = /obj/projectile/beam/laser/cybersun
 	e_cost = LASER_SHOTS(54, STANDARD_CELL_CHARGE)
 	select_name = "rapid fire"
 	fire_sound = 'sound/items/weapons/laser2.ogg'
 
 /obj/item/ammo_casing/energy/lasergun/carbine/practice
-	projectile_type = /obj/projectile/beam/laser/carbine/practice
+	projectile_type = /obj/projectile/beam/laser/rapid/practice
 	select_name = "practice"
 	harmful = FALSE
 

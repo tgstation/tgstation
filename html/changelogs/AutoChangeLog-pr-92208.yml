@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored the way camera updates are handled to hopefully reduce some lag. Report any oddities"

@@ -119,9 +119,9 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(mapload)
-		find_and_hang_on_wall()
+		find_and_hang_on_atom(mark_for_late_init = TRUE)
 
-/obj/machinery/light/find_and_hang_on_wall()
+/obj/machinery/light/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
 	if(break_if_moved)
 		return ..()
 
@@ -423,6 +423,8 @@
 		if("tube")
 			frame = new /obj/item/wallframe/light_fixture(drop_point)
 		if("bulb")
+			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
+		if("floor bulb")
 			frame = new /obj/item/wallframe/light_fixture/small(drop_point)
 	if(!disassembled)
 		frame.take_damage(frame.max_integrity * 0.5, sound_effect = FALSE)
@@ -728,9 +730,12 @@
 	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
-	fitting = "bulb"
+	fitting = "floor bulb"
 	nightshift_brightness = 4
 	fire_brightness = 4.5
+
+/obj/machinery/light/floor/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
+	return //its a floor light not a wall light
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)
@@ -738,6 +743,15 @@
 /obj/machinery/light/floor/broken
 	status = LIGHT_BROKEN
 	icon_state = "floor-broken"
+
+/obj/machinery/light/floor/burned
+	status = LIGHT_BURNED
+	icon_state = "floor-burned"
+
+/obj/machinery/light/floor/empty
+	icon_state = "floor-empty"
+	start_with_cell = FALSE
+	status = LIGHT_EMPTY
 
 /obj/machinery/light/floor/transport
 	name = "transport light"
