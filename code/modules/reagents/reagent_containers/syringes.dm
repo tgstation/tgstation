@@ -137,8 +137,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user) // transfer from, transfer to - who cares?
-
-	to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
 	target.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

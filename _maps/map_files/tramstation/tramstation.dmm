@@ -29533,7 +29533,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/cable,
-/obj/effect/spawner/random/armory/laser_gun,
+/obj/effect/spawner/random/armory/pick_laser_loadout,
 /turf/open/floor/iron,
 /area/station/security/armory)
 "juV" = (
