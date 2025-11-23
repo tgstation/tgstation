@@ -1,0 +1,21 @@
+/obj/effect/decal/cleanable/is_saveable(turf/current_loc, list/obj_blacklist)
+	. = ..()
+	// this shouldn't be possible but just in case
+	return !isgroundlessturf(current_loc)
+
+/obj/effect/decal/cleanable/crayon/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, name)
+	. += NAMEOF(src, icon_state)
+	. += NAMEOF(src, do_icon_rotate)
+	. += NAMEOF(src, rotation)
+	. += NAMEOF(src, paint_colour)
+	. += NAMEOF(src, color_strength)
+	return .
+
+/obj/effect/decal/cleanable/blood/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, icon_state)
+	. += NAMEOF(src, bloodiness)
+	. += NAMEOF(src, dried)
+	return .
