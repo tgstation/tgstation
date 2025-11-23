@@ -223,7 +223,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/escape)
 "hu" = (
-/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/wall_healer/free/directional/north,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 8
 	},
@@ -935,7 +935,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/shuttle/escape";
 	desc = "Used to control the Lance's automated defenses.";
-	icon_state = "control_kill";
 	lethal = 1;
 	pixel_y = -26;
 	req_access = list("command")
@@ -1076,7 +1075,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "In" = (
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/wall_healer/free/directional/south,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -1240,7 +1239,7 @@
 	},
 /area/shuttle/escape)
 "MA" = (
-/obj/machinery/vending/wallmed/directional/west,
+/obj/machinery/wall_healer/free/directional/west,
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
 	},
@@ -1539,7 +1538,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "WO" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},

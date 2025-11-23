@@ -43,7 +43,7 @@
 		spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 		if(check_holidays(APRIL_FOOLS)) // Clown blood is real
 			var/mob/living/carbon/human/human_clown = spawned
-			human_clown.set_blood_type(get_blood_type(BLOOD_TYPE_CLOWN))
+			human_clown.set_blood_type(BLOOD_TYPE_CLOWN)
 
 	return ..()
 
@@ -100,9 +100,6 @@
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
-	H.dna.add_mutation(/datum/mutation/human/clumsy)
-	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
-		M.mutadone_proof = TRUE
-	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.show_to(H)
+	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
+	ADD_TRAIT(H, TRAIT_CLOWN_ENJOYER, INNATE_TRAIT)
 	H.faction |= FACTION_CLOWN

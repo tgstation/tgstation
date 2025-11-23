@@ -55,7 +55,7 @@
 		if(!limb)
 			replace_limb(zone)
 			return
-		if((limb.get_damage() >= (limb.max_damage / 2)) || (!IS_ORGANIC_LIMB(limb)))
+		if((limb.get_damage() >= (limb.max_damage / 2)) || (!IS_ORGANIC_LIMB(limb)) && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 			replace_limb(zone, limb)
 			return
 
@@ -68,8 +68,8 @@
 	if(tox_amount > 10)
 		replace_blood()
 		return
-	if(owner.blood_volume < BLOOD_VOLUME_OKAY)
-		owner.blood_volume = BLOOD_VOLUME_NORMAL
+	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
+		owner.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		to_chat(owner, span_warning("You feel your blood pulsing within you."))
 		return
 
@@ -196,8 +196,8 @@
 	owner.Stun(15)
 	owner.adjustToxLoss(-15, forced = TRUE)
 
-	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	owner.adjust_blood_volume(20, maximum = BLOOD_VOLUME_NORMAL)
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		keep_going = TRUE
 
 	if(owner.getToxLoss())
@@ -215,15 +215,14 @@
 		playsound(owner, 'sound/effects/magic/clockwork/anima_fragment_attack.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
-			var/obj/effect/decal/cleanable/robot_debris/debris = new(get_turf(owner))
+			var/obj/effect/decal/cleanable/blood/gibs/robot_debris/debris = new(get_turf(owner))
 			debris.streak(dirs)
 	else
 		owner.visible_message(span_warning("[owner]'s [chest.name] sheds off its damaged flesh, rapidly replacing it!"), span_warning("Your [chest.name] sheds off its damaged flesh, rapidly replacing it!"))
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
-			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner))
-			gibs.add_blood_DNA(blood_dna_info)
+			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner), owner.get_static_viruses(), blood_dna_info)
 			gibs.streak(dirs)
 
 	var/obj/item/bodypart/chest/new_chest = new(null)

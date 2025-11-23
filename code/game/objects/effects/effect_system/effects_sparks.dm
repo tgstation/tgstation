@@ -75,9 +75,9 @@
 
 	SEND_SIGNAL(singed, COMSIG_ATOM_TOUCHED_SPARKS, src)
 	if(isobj(singed))
-		if(singed.reagents)
-			var/datum/reagents/reagents = singed.reagents // heat up things that contain reagents before we check to see if they burn
-			reagents?.expose_temperature(1000) // we set this at 1000 because that's the max reagent temp for a chem heater, higher temps require more than sparks
+		var/datum/reagents/reagents = singed.reagents // heat up things that contain reagents before we check to see if they burn
+		if(reagents && !(reagents.flags & SEALED_CONTAINER))
+			reagents.expose_temperature(1000) // we set this at 1000 because that's the max reagent temp for a chem heater, higher temps require more than sparks
 		return
 	if(ishuman(singed))
 		var/mob/living/carbon/human/singed_human = singed
@@ -86,8 +86,6 @@
 
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
-
-
 
 /datum/effect_system/spark_spread/quantum
 	effect_type = /obj/effect/particle_effect/sparks/quantum

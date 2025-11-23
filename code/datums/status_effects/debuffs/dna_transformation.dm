@@ -33,7 +33,7 @@
 	// Save the old DNA
 	transforming.dna.copy_dna(old_dna)
 	// Makes them into the new DNA
-	new_dna.transfer_identity(transforming)
+	new_dna.copy_dna(transforming.dna, COPY_DNA_SPECIES)
 	transforming.real_name = new_dna.real_name
 	transforming.name = transforming.get_visible_name()
 	transforming.updateappearance(mutcolor_update = TRUE)
@@ -44,7 +44,7 @@
 	var/mob/living/carbon/transforming = owner
 
 	if(!QDELING(owner)) // Don't really need to do appearance stuff if we're being deleted
-		old_dna.transfer_identity(transforming)
+		old_dna.copy_dna(transforming.dna, COPY_DNA_SPECIES)
 		transforming.updateappearance(mutcolor_update = TRUE)
 		transforming.domutcheck()
 
@@ -82,10 +82,10 @@
 		if(duration == STATUS_EFFECT_PERMANENT)
 			return // Already paused
 
-		time_before_pause = duration - world.time
+		time_before_pause = duration
 		duration = STATUS_EFFECT_PERMANENT
 
 	// Resume if we're none of the above and also were paused
 	else if(time_before_pause != -1)
-		duration = time_before_pause + world.time
+		duration = time_before_pause
 		time_before_pause = -1

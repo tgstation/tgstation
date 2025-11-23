@@ -3,7 +3,7 @@
 do { \
 	var/datum/action/item_action/chameleon/change/_action = locate() in item.actions; \
 	_action?.emp_randomise(INFINITY); \
-	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF); \
+	item.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE); \
 } while(FALSE)
 
 // Cham jumpsuit
@@ -152,7 +152,6 @@ do { \
 
 /obj/item/clothing/head/chameleon/drone
 	actions_types = list(/datum/action/item_action/chameleon/change/hat, /datum/action/item_action/chameleon/drone/togglehatmask, /datum/action/item_action/chameleon/drone/randomise)
-	action_slots = ALL
 	item_flags = DROPDEL
 	// The camohat, I mean, holographic hat projection, is part of the drone itself.
 	armor_type = /datum/armor/none
@@ -186,12 +185,15 @@ do { \
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/chameleon/change/mask)
 	action_slots = ALL
-	/// Is our voice changer enabled or disabled?
-	var/voice_change = TRUE
+	clothing_traits = list(TRAIT_VOICE_MATCHES_ID)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	voice_change = !voice_change
-	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
+	var/was_on = (TRAIT_VOICE_MATCHES_ID in clothing_traits)
+	if(was_on)
+		attach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	else
+		detach_clothing_traits(TRAIT_VOICE_MATCHES_ID)
+	to_chat(user, span_notice("The voice changer is now [was_on ? "off" : "on"]!"))
 
 /obj/item/clothing/mask/chameleon/broken
 
@@ -201,11 +203,10 @@ do { \
 
 /obj/item/clothing/mask/chameleon/drone
 	actions_types = list(/datum/action/item_action/chameleon/change/mask, /datum/action/item_action/chameleon/drone/togglehatmask, /datum/action/item_action/chameleon/drone/randomise)
-	action_slots = ALL
 	item_flags = DROPDEL
 	//Same as the drone chameleon hat, undroppable and no protection
 	armor_type = /datum/armor/none
-	voice_change = FALSE
+	clothing_traits = null
 
 /obj/item/clothing/mask/chameleon/drone/Initialize(mapload)
 	. = ..()
@@ -269,7 +270,6 @@ do { \
 /obj/item/storage/backpack/chameleon
 	name = "backpack"
 	actions_types = list(/datum/action/item_action/chameleon/change/backpack)
-	action_slots = ALL
 
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
@@ -287,7 +287,6 @@ do { \
 	name = "toolbelt"
 	desc = "Holds tools."
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
-	action_slots = ALL
 
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
@@ -315,7 +314,6 @@ do { \
 /obj/item/modular_computer/pda/chameleon
 	name = "tablet"
 	actions_types = list(/datum/action/item_action/chameleon/change/tablet)
-	action_slots = ALL
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/modular_computer/pda/chameleon/broken

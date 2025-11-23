@@ -74,7 +74,7 @@
 	mytray.mutation_roll(user)
 	mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
-/datum/reagent/mutagen/used_on_fish(obj/item/fish/fish)
+/datum/reagent/toxin/mutagen/used_on_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_MUTAGENIC, type)
 	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_MUTAGENIC, type), fish.feeding_frequency * 0.8, TIMER_UNIQUE|TIMER_OVERRIDE)
 	return TRUE
@@ -214,7 +214,7 @@
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
-	color = "#801E28" // rgb: 128, 30, 40
+	color = "#a6959d"
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3
@@ -241,9 +241,14 @@
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/toxin/carpotoxin/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	if (HAS_TRAIT(affected_mob, TRAIT_CARPOTOXIN_IMMUNE))
+		toxpwr = 0
+
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "A strong neurotoxin that puts the patient into a death-like state."
 	silent_toxin = TRUE
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -254,23 +259,38 @@
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
+/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
 	. = ..()
+	if(!isliving(exposed_mob) || !(methods & (INGEST|INHALE)))
+		return
+
+	LAZYINITLIST(data)
+	data["method"] |= methods
+
+	//the stomach handles INGEST via on_mob_metabolize() we only deal with INHALE
+	//also means vapour works much faster which is realistic
+	if(methods & INHALE)
+		zombify(exposed_mob)
+/**
+ * Does the fake death & oxy loss on the mob
+ *
+ * Arguments
+ * * mob/living/holder_mob - the mob we are zombifying
+*/
+/datum/reagent/toxin/zombiepowder/proc/zombify(mob/living/holder_mob)
+	PRIVATE_PROC(TRUE)
+
 	holder_mob.adjustOxyLoss(0.5*REM, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if((data?["method"] & (INGEST|INHALE)) && holder_mob.stat != DEAD)
 		holder_mob.fakedeath(type)
 
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
+	. = ..()
+	zombify(holder_mob)
+
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.cure_fakedeath(type)
-
-/datum/reagent/toxin/zombiepowder/on_transfer(atom/target_atom, methods, trans_volume)
-	. = ..()
-	var/datum/reagent/zombiepowder = target_atom.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-	if(!zombiepowder || !(methods & (INGEST|INHALE)))
-		return
-	LAZYINITLIST(zombiepowder.data)
-	zombiepowder.data["method"] |= (INGEST|INHALE)
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -441,7 +461,22 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	ph = 11
+	liver_damage_multiplier = 0.7
+	taste_description = "spores"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/toxin/spore/expose_mob(mob/living/spore_lung_victim, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+
+	if(!(methods & INHALE))
+		return
+	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
+		return
+
+	if(prob(min(reac_volume * 10, 80)))
+		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
+		spore_lung_victim.Stun(1 SECONDS)
+		spore_lung_victim.emote("cough")
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -670,7 +705,8 @@
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
-	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine. When used in a dead body, will prevent organ decay."
+	description = "A fairly weak toxin that helps prevent organ decay in dead bodies. \
+		It will slowly decay into Histamine over time."
 	silent_toxin = TRUE
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -687,9 +723,15 @@
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)) //it counteracts its own toxin damage.
 			return UPDATE_MOB_HEALTH
 		return
-	else if(SPT_PROB(2.5, seconds_per_tick))
+	else if(SPT_PROB(2.5, seconds_per_tick) && !HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
+	return ..()
+
+/datum/reagent/toxin/formaldehyde/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(HAS_TRAIT(affected_mob, TRAIT_BLOCK_FORMALDEHYDE_METABOLISM))
+		return
+
 	return ..()
 
 /datum/reagent/toxin/venom
@@ -725,7 +767,7 @@
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"
-	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
+	description = "Inhibits brain function and causes toxin damage before eventually knocking out the patient."
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1005,7 +1047,8 @@
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
-	description = "A powerful anticoagulant. All open cut wounds on the victim will open up and bleed much faster. It directly purges sanguirite, a coagulant."
+	description = "A powerful anticoagulant. All open cut wounds on the patient will open up and bleed much faster. \
+		Counters coagulants like Sanguirite, purging them."
 	silent_toxin = TRUE
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1014,7 +1057,7 @@
 	toxpwr = 0
 	ph = 11.6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	metabolized_traits = list(TRAIT_BLOODY_MESS)
+	metabolized_traits = list(TRAIT_BLOOD_FOUNTAIN)
 
 /datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(holder.has_reagent(/datum/reagent/medicine/coagulant)) //Directly purges coagulants from the system. Get rid of the heparin BEFORE attempting to use coagulants.
@@ -1023,7 +1066,7 @@
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
-	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	description = "A constantly swirling, oddly colourful fluid. Causes the patient's sense of direction and hand-eye coordination to become wild."
 	silent_toxin = TRUE
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1123,7 +1166,7 @@
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric Acid"
-	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
+	description = "An extremely corrosive chemical substance."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1145,7 +1188,7 @@
 
 /datum/reagent/toxin/acid/nitracid
 	name = "Nitric Acid"
-	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
+	description = "An extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
@@ -1241,7 +1284,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT(fish, TRAIT_FISH_MADE_OF_BONE))
-		fish.adjust_health(fish.health - 30)
+		fish.damage_fish(30)
 		return TRUE
 
 /datum/reagent/toxin/bungotoxin

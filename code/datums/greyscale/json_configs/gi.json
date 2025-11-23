@@ -1,36 +1,36 @@
 {
-    "martial_arts_gi": [
-        {
-            "type": "icon_state",
-            "icon_state": "gi_base",
-            "blend_mode": "overlay",
-            "color_ids": [1]
-        },
+	"martial_arts_gi": [
 		{
-            "type": "icon_state",
-            "icon_state": "gi_belt",
-            "blend_mode": "overlay",
+			"type": "icon_state",
+			"icon_state": "gi_base",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gi_belt",
+			"blend_mode": "overlay",
 			"color_ids": [2]
-        }
-    ],
+		}
+	],
 
-    "martial_arts_gi_goku": [
-        {
-            "type": "icon_state",
-            "icon_state": "gi_base",
-            "blend_mode": "overlay",
-            "color_ids": [1]
-        },
+	"martial_arts_gi_goku": [
 		{
-            "type": "icon_state",
-            "icon_state": "gi_belt",
-            "blend_mode": "overlay",
+			"type": "icon_state",
+			"icon_state": "gi_base",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gi_belt",
+			"blend_mode": "overlay",
 			"color_ids": [2]
-        },
+		},
 		{
-            "type": "icon_state",
-            "icon_state": "gi_goku",
-            "blend_mode": "overlay"
-        }
-    ]
+			"type": "icon_state",
+			"icon_state": "gi_goku",
+			"blend_mode": "overlay"
+		}
+	]
 }

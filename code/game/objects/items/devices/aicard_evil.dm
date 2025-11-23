@@ -57,7 +57,7 @@
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
 	new_ai.mind.add_antag_datum(nuke_datum, op_datum.nuke_team)
-	new_ai.mind.special_role = "Syndicate AI"
+	LAZYADD(new_ai.mind.special_roles, "Syndicate AI")
 	new_ai.faction |= ROLE_SYNDICATE
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
@@ -71,7 +71,7 @@
 	capture_ai(new_ai, user)
 	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)
 	qdel(detritus)
-	AI.control_disabled = FALSE
+	AI.set_control_disabled(FALSE)
 	AI.radio_enabled = TRUE
 	do_sparks(4, TRUE, src)
 	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)

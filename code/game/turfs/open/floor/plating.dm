@@ -102,7 +102,28 @@
 				balloon_alert(user, "too damaged, use a welding tool!")
 			else
 				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
-
+	else if(istype(C, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
+		if(broken || burnt)
+			if(!iscyborg(user))
+				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+			else
+				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage."))
+			return
+		var/obj/item/stack/sheet/mineral/plastitanium/sheet = C
+		if (sheet.get_amount() < 1)
+			to_chat(user, span_warning("You are literally holding nothing."))
+			return
+		else
+			balloon_alert(user, "insulating flooring...")
+			if(!do_after(user, 1.5 SECONDS, target = src))
+				return
+			if(sheet.get_amount() < 1 || istype(src, /turf/open/floor/engine/insulation))
+				return
+			place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			sheet.use(1)
+			to_chat(user, span_notice("You insulate the floor."))
+			balloon_alert(user, "insulated!")
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()
@@ -135,19 +156,22 @@
 /turf/open/floor/plating/foam/break_tile()
 	return //jetfuel can't break steel foam...
 
-/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers)
-	if(ismetaltile(attacking_item))
-		var/obj/item/stack/tile/tiles = attacking_item
-		if(!tiles.use(1))
-			return
-		var/obj/lattice = locate(/obj/structure/lattice) in src
-		if(lattice)
-			qdel(lattice)
-		to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
-		playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
-		ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-		return
+/turf/open/floor/plating/foam/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!ismetaltile(tool))
+		return NONE
 
+	var/obj/item/stack/tile/tiles = tool
+	if(!tiles.use(1))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/lattice = locate(/obj/structure/lattice) in src
+	if(lattice)
+		qdel(lattice)
+	to_chat(user, span_notice("You reinforce the foamed plating with tiling."))
+	playsound(src, 'sound/items/weapons/Genhit.ogg', 50, TRUE)
+	ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	return ITEM_INTERACT_SUCCESS
+
+/turf/open/floor/plating/foam/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	playsound(src, 'sound/items/weapons/tap.ogg', 100, TRUE) //The attack sound is muffled by the foam itself
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)

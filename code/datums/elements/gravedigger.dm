@@ -44,5 +44,5 @@
 	return ITEM_INTERACT_BLOCKING
 
 /datum/element/gravedigger/proc/perform_digging(mob/user, atom/dig_area, obj/item/our_tool)
-	if(our_tool.use_tool(dig_area, user, 10 SECONDS))
+	if(our_tool.use_tool(dig_area, user, 10 SECONDS * (HAS_MIND_TRAIT(user, TRAIT_MORBID) ? 0.7 : 1) * our_tool.toolspeed))
 		new /obj/structure/closet/crate/grave/fresh(dig_area) //We don't get_turf for the location since this is guaranteed to be a turf at this point.

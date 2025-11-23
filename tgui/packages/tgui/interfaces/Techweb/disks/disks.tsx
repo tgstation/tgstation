@@ -2,7 +2,7 @@ import { Section, VirtualList } from 'tgui-core/components';
 
 import { useRemappedBackend } from '../helpers';
 import { TechNode } from '../nodes/TechNode';
-import { TechwebNode } from '../types';
+import type { TechwebNode } from '../types';
 
 export function TechwebDesignDisk(props) {
   const { data } = useRemappedBackend();

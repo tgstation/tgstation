@@ -92,14 +92,7 @@
 	desc = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
 
 	telegraph_message = span_danger("A magical rain cloud appears above. You hear droplets falling down.")
-	protected_areas = list(
-		/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload,
-		/area/station/ai_monitored/turret_protected/ai_upload_foyer, /area/station/ai_monitored/turret_protected/aisat/maint,
-		/area/station/ai_monitored/command/storage/satellite, /area/station/ai_monitored/turret_protected/ai,
-		/area/station/commons/storage/emergency/starboard, /area/station/commons/storage/emergency/port,
-		/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance,
-		/area/icemoon/underground, /area/ruin/comms_agent/maint
-	)
+	protected_areas = /datum/weather/rad_storm::protected_areas
 
 	// same time durations as floor_is_lava event
 	telegraph_duration = 15 SECONDS
@@ -129,11 +122,11 @@
 	GLOB.wizard_rain_reagents |= allowed_medicine
 
 	// One randomized type is allowed so the whitelist isn't spammed with subtypes
-	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/glitter))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/glitter/random))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/uranium))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/luminescent_fluid))
 	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/carpet))

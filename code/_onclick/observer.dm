@@ -51,7 +51,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(user.client)
-		if(user.gas_scan && atmos_scan(user=user, target=src, silent=TRUE))
+		if((user.ghost_hud_flags & GHOST_GAS) && atmos_scan(user=user, target=src, silent=TRUE))
 			return TRUE
 		else if(isAdminGhostAI(user))
 			attack_ai(user)
@@ -60,9 +60,9 @@
 	return FALSE
 
 /mob/living/attack_ghost(mob/dead/observer/user)
-	if(user.client && user.health_scan)
+	if(user.client && (user.ghost_hud_flags & GHOST_HEALTH))
 		healthscan(user, src, 1, TRUE)
-	if(user.client && user.chem_scan)
+	if(user.client && (user.ghost_hud_flags & GHOST_CHEM))
 		chemscan(user, src)
 	return ..()
 

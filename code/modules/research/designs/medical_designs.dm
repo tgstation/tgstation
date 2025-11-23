@@ -59,6 +59,17 @@
 	build_path = /obj/item/reagent_containers/cup/beaker/plastic
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/organ_jar
+	name = "Organ Jar"
+	id = "organ_jar"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT*2.5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT * 1.5)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
+	)
+	build_path = /obj/item/reagent_containers/cup/beaker/organ_jar
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/meta_beaker
 	name = "Metamaterial Beaker"
 	id = "meta_beaker"
@@ -116,6 +127,30 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_CHEMISTRY
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/inhaler
+	name = "Inhaler"
+	desc = "A small device capable of administering short bursts of aerosolized chemicals. Requires a canister to function."
+	id = "inhaler"
+	build_path = /obj/item/inhaler/medical
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.1)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/inhaler_canister
+	name = "Inhaler Canister"
+	desc = "A small canister filled with aerosolized reagents for use in a inhaler."
+	id = "inhaler_canister"
+	build_path = /obj/item/reagent_containers/inhaler_canister
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.2)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/bluespacebodybag
 	name = "Bluespace Body Bag"
@@ -427,7 +462,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/cyberimp/arm/surgery
+	build_path = /obj/item/organ/cyberimp/arm/toolkit/surgery
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
@@ -444,7 +479,7 @@
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT * 1.5,
 	)
 	construction_time = 2 SECONDS
-	build_path = /obj/item/organ/cyberimp/arm/toolset
+	build_path = /obj/item/organ/cyberimp/arm/toolkit/toolset
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_UTILITY
 	)
@@ -1008,6 +1043,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cybernetic_ears_volume
+	name = "Volume-adjusting Cybernetic Ears"
+	desc = "A pair of volume-adjusting cybernetic ears"
+	id = "cybernetic_ears_volume"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 4 SECONDS
+	materials = list(
+			/datum/material/iron = SMALL_MATERIAL_AMOUNT*5,
+			/datum/material/glass = SMALL_MATERIAL_AMOUNT*5,
+			/datum/material/silver = SMALL_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/organ/ears/cybernetic/volume
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cybernetic_ears_xray
 	name = "Wall-penetrating Cybernetic Ears"
 	desc = "A pair of wall-penetrating cybernetic ears."
@@ -1024,6 +1076,36 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_3
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_ears/cat
+	name = "Basic Cybernetic Cat Ears"
+	desc = "A basic pair of cybernetic cat ears"
+	id = "cybernetic_ears_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic
+
+/datum/design/cybernetic_ears_u/cat
+	name = "Cybernetic Cat Ears"
+	desc = "A pair of cybernetic cat ears"
+	id = "cybernetic_ears_u_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/upgraded
+
+/datum/design/cybernetic_ears_whisper/cat
+	name = "Whisper-sensitive Cybernetic Cat Ears"
+	desc = "A pair of whisper-sensitive cybernetic cat ears"
+	id = "cybernetic_ears_whisper_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/whisper
+
+/datum/design/cybernetic_ears_volume/cat
+	name = "Volume-adjusting Cybernetic Cat Ears"
+	desc = "A pair of volume-adjusting cybernetic cat ears"
+	id = "cybernetic_ears_volume_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/volume
+
+/datum/design/cybernetic_ears_xray/cat
+	name = "Wall-penetrating Cybernetic Cat Ears"
+	desc = "A pair of wall-penetrating cybernetic cat ears"
+	id = "cybernetic_ears_xray_cat"
+	build_path = /obj/item/organ/ears/cat/cybernetic/xray
 
 /datum/design/cybernetic_eyes
 	name = "Basic Cybernetic Eyes"

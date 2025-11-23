@@ -199,7 +199,7 @@
 	name = "Paperwork Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to effectivize crewmembers at paperwork. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/organ/cyberimp/arm/paperwork = 2)
+	contains = list(/obj/item/organ/cyberimp/arm/toolkit/paperwork = 2)
 	crate_name = "Paperwork implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
@@ -212,3 +212,25 @@
 	crate_name = "body freezer"
 	crate_type = /obj/structure/closet/crate/secure/freezer
 
+/datum/supply_pack/medical/organ_growing
+	name = "Organ Growing Kit"
+	desc = "All the tools you need to grow organs at home! Besides letting you grow standard organs from tissue samples, \
+	you might find mutant cells which can be further proliferated to grow strange properties."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(
+		/obj/machinery/vatgrower/small/unanchored,
+		/obj/item/biopsy_tool/organ,
+		/obj/item/storage/box/petridish,
+		/obj/structure/microscope/unanchored,
+		/obj/item/reagent_containers/cup/mortar,
+		/obj/item/pestle,
+	)
+	crate_name = "organ growing kit"
+
+/datum/supply_pack/medical/chiral_inversing_buffer
+	name = "Chiral Inversing Buffer Crate"
+	desc = "A crate containing a rare sample of an inversing buffer. \
+		It can transform impure reagents into their inverse counterparts when the right conditions are met."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/reagent_containers/cup/bottle/inversing_buffer)
+	crate_name = "chiral inversing buffer crate"

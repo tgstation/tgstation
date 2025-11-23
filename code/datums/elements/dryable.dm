@@ -14,6 +14,17 @@
 	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(finish_drying))
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
+	var/atom/atom_target = target
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !atom_target.custom_materials || !dry_result || isstack(atom_target))
+		return
+
+	var/atom/result = new dry_result
+	if(!atom_target.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when dried compared to just spawned don't match"
+		var/what_it_should_be = atom_target.get_materials_english_list()
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 
 /datum/element/dryable/Detach(datum/target)
 	. = ..()
@@ -38,18 +49,15 @@
 			apply_dried_status(resulting_atom, drying_user)
 		qdel(source)
 		return
-	else if(istype(source, /obj/item/food) && ispath(dry_result, /obj/item/food))
+
+	var/obj/item/food/resulting_atom = new dry_result(source.loc)
+	if(istype(source, /obj/item/food) && ispath(dry_result, /obj/item/food))
 		var/obj/item/food/source_food = source
-		var/obj/item/food/resulting_food = new dry_result(source.loc)
-		resulting_food.reagents.clear_reagents()
-		source_food.reagents.trans_to(resulting_food, source_food.reagents.total_volume)
-		apply_dried_status(resulting_food, drying_user)
-		qdel(source)
-		return
-	else
-		var/atom/movable/resulting_atom = new dry_result(source.loc)
-		apply_dried_status(resulting_atom, drying_user)
-		qdel(source)
+		resulting_atom.reagents.clear_reagents()
+		source_food.reagents.trans_to(resulting_atom, source_food.reagents.total_volume)
+	resulting_atom.set_custom_materials(source.custom_materials)
+	apply_dried_status(resulting_atom, drying_user)
+	qdel(source)
 
 /datum/element/dryable/proc/apply_dried_status(atom/target, datum/weakref/drying_user)
 	ADD_TRAIT(target, TRAIT_DRIED, ELEMENT_TRAIT(type))

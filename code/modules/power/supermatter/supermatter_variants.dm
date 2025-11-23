@@ -53,14 +53,6 @@
 	anchored = TRUE
 	moveable = FALSE
 
-/atom/movable/supermatter_warp_effect
-	plane = GRAVITY_PULSE_PLANE
-	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
-	icon = 'icons/effects/light_overlays/light_352.dmi'
-	icon_state = "light"
-	pixel_x = -176
-	pixel_y = -176
-
 /// Normal sm but small (sm sword recipe element) (wiz only) and adamantine pedestal for it
 /obj/machinery/power/supermatter_crystal/small
 	name = "strangely small supermatter crystal"

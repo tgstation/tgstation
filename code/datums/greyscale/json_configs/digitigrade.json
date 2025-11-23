@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "jumpsuit",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"oversuit_worn": [
@@ -12,7 +12,7 @@
 			"type": "icon_state",
 			"icon_state": "oversuit",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"sneakers_worn": [
@@ -20,7 +20,7 @@
 			"type": "icon_state",
 			"icon_state": "shoes_colored",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -33,7 +33,7 @@
 			"type": "icon_state",
 			"icon_state": "boots",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

@@ -1,4 +1,5 @@
-import { binaryInsertWith, sortBy } from 'common/collections';
+import { binaryInsertWith } from 'common/collections';
+import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import {
   Box,
@@ -13,7 +14,7 @@ import {
   TrackOutsideClicks,
 } from 'tgui-core/components';
 
-import { Name } from '../types';
+import type { Name } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 
 type NameWithKey = {
@@ -29,7 +30,7 @@ function binaryInsertName(
 }
 
 function sortNameWithKeyEntries(array: [string, NameWithKey[]][]) {
-  return sortBy(array, ([key]) => key);
+  return sortBy(array, [([key]) => key]);
 }
 
 type MultiNameProps = {

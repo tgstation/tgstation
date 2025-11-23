@@ -6,8 +6,8 @@
 	icon_state = "wizard"
 	inhand_icon_state = "wizhat"
 	armor_type = /datum/armor/head_wizard
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	clothing_flags = SNUG_FIT | CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
@@ -119,8 +119,8 @@
 	armor_type = /datum/armor/suit_wizrobe
 	allowed = list(/obj/item/teleportation_scroll, /obj/item/highfrequencyblade/wizard)
 	flags_inv = HIDEJUMPSUIT
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	clothing_flags = CASTING_CLOTHES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	///How much this robe affects fishing difficulty
@@ -299,11 +299,3 @@
 	stickman.faction |= summoner.faction - FACTION_NEUTRAL //These bad boys shouldn't inherit the neutral faction from the crew
 
 	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)
-
-
-// The actual code for this is handled in the shielded component, see [/datum/component/shielded/proc/check_recharge_rune]
-/obj/item/wizard_armour_charge
-	name = "battlemage shield charges"
-	desc = "A powerful rune that will increase the number of hits a suit of battlemage armour can take before failing.."
-	icon = 'icons/effects/anomalies.dmi'
-	icon_state = "flux"

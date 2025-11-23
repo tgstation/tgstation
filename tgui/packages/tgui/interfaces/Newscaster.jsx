@@ -91,101 +91,99 @@ const NewscasterChannelCreation = (props) => {
   return (
     <Modal textAlign="center" mr={1.5}>
       <Stack vertical>
-        <>
-          <Stack.Item>
-            <Box pb={1}>
-              Enter channel name here:
+        <Stack.Item>
+          <Box pb={1}>
+            Enter channel name here:
+            <Button
+              color="red"
+              icon="times"
+              position="relative"
+              top="20%"
+              left="15%"
+              onClick={() => act('cancelCreation')}
+            />
+          </Box>
+          <TextArea
+            height="40px"
+            width="240px"
+            backgroundColor="black"
+            textColor="white"
+            maxLength={42}
+            onBlur={(value) =>
+              act('setChannelName', {
+                channeltext: value,
+              })
+            }
+          >
+            Channel Name
+          </TextArea>
+        </Stack.Item>
+        <Stack.Item>
+          <Box pb={1}>Enter channel description here:</Box>
+          <TextArea
+            height="150px"
+            width="240px"
+            backgroundColor="black"
+            textColor="white"
+            maxLength={512}
+            onBlur={(value) =>
+              act('setChannelDesc', {
+                channeldesc: value,
+              })
+            }
+          >
+            Channel Description
+          </TextArea>
+        </Stack.Item>
+        <Stack.Item>
+          <Section>
+            Set Channel as Public or Private
+            <Box pt={1}>
               <Button
-                color="red"
-                icon="times"
-                position="relative"
-                top="20%"
-                left="15%"
-                onClick={() => act('cancelCreation')}
-              />
-            </Box>
-            <TextArea
-              height="40px"
-              width="240px"
-              backgroundColor="black"
-              textColor="white"
-              maxLength={42}
-              onBlur={(value) =>
-                act('setChannelName', {
-                  channeltext: value,
-                })
-              }
-            >
-              Channel Name
-            </TextArea>
-          </Stack.Item>
-          <Stack.Item>
-            <Box pb={1}>Enter channel description here:</Box>
-            <TextArea
-              height="150px"
-              width="240px"
-              backgroundColor="black"
-              textColor="white"
-              maxLength={512}
-              onBlur={(value) =>
-                act('setChannelDesc', {
-                  channeldesc: value,
-                })
-              }
-            >
-              Channel Description
-            </TextArea>
-          </Stack.Item>
-          <Stack.Item>
-            <Section>
-              Set Channel as Public or Private
-              <Box pt={1}>
-                <Button
-                  selected={!lockedmode}
-                  disabled={cross_sector}
-                  onClick={() => setLockedmode(false)}
-                >
-                  Public
-                </Button>
-                <Button
-                  selected={!!lockedmode}
-                  disabled={cross_sector}
-                  onClick={() => setLockedmode(true)}
-                >
-                  Private
-                </Button>
-              </Box>
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Button.Checkbox
-              fluid
-              checked={cross_sector}
-              onClick={() => {
-                setcross_sector(!cross_sector);
-                setLockedmode(true);
-              }}
-              tooltip="Cross-sector newscaster messaging will require Central Command approval for each article. Cross-sector channels are automatically locked."
-              tooltipPosition="bottom-start"
-            >
-              Make cross-sector?
-            </Button.Checkbox>
-          </Stack.Item>
-          <Stack.Item>
-            <Box>
-              <Button
-                onClick={() =>
-                  act('createChannel', {
-                    cross_sector: cross_sector,
-                    lockedmode: lockedmode,
-                  })
-                }
+                selected={!lockedmode}
+                disabled={cross_sector}
+                onClick={() => setLockedmode(false)}
               >
-                Submit Channel
+                Public
+              </Button>
+              <Button
+                selected={!!lockedmode}
+                disabled={cross_sector}
+                onClick={() => setLockedmode(true)}
+              >
+                Private
               </Button>
             </Box>
-          </Stack.Item>
-        </>
+          </Section>
+        </Stack.Item>
+        <Stack.Item>
+          <Button.Checkbox
+            fluid
+            checked={cross_sector}
+            onClick={() => {
+              setcross_sector(!cross_sector);
+              setLockedmode(true);
+            }}
+            tooltip="Cross-sector newscaster messaging will require Central Command approval for each article. Cross-sector channels are automatically locked."
+            tooltipPosition="bottom-start"
+          >
+            Make cross-sector?
+          </Button.Checkbox>
+        </Stack.Item>
+        <Stack.Item>
+          <Box>
+            <Button
+              onClick={() =>
+                act('createChannel', {
+                  cross_sector: cross_sector,
+                  lockedmode: lockedmode,
+                })
+              }
+            >
+              Submit Channel
+            </Button>
+          </Box>
+        </Stack.Item>
       </Stack>
     </Modal>
   );
@@ -489,7 +487,7 @@ const NewscasterChannelSelector = (props) => {
   const { act, data } = useBackend();
   const { channels = [], viewing_channel, wanted = [] } = data;
   return (
-    <Section minHeight="100%" width={window.innerWidth - 410 + 'px'}>
+    <Section minHeight="100%" width={`${window.innerWidth - 410}px`}>
       <Tabs vertical>
         {wanted.map((activeWanted) => (
           <Tabs.Tab

@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "window-fg",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"window-bg": [
@@ -12,7 +12,7 @@
 			"type": "icon_state",
 			"icon_state": "window-bg",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

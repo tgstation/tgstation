@@ -1,4 +1,4 @@
-import { Antagonist, Category } from '../base';
+import { type Antagonist, Category } from '../base';
 
 export const TRAITOR_MECHANICAL_DESCRIPTION = `
       Start with an uplink to purchase your gear and take on your sinister

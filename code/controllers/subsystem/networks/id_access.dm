@@ -290,6 +290,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_VIROLOGY]"] = "Virology"
 	desc_by_access["[ACCESS_PSYCHOLOGY]"] = "Psychology"
 	desc_by_access["[ACCESS_CMO]"] = "CMO Office"
+	desc_by_access["[ACCESS_PARAMEDIC]"] = "Paramedic Office"
 	desc_by_access["[ACCESS_QM]"] = "QM Office"
 	desc_by_access["[ACCESS_SURGERY]"] = "Surgery"
 	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
@@ -319,15 +320,16 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
 	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
 	desc_by_access["[ACCESS_SERVICE]"] = "Service Hallway"
-	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
-	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
-	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"
-	desc_by_access["[ACCESS_CENT_LIVING]"] = "Code Green"
-	desc_by_access["[ACCESS_CENT_MEDICAL]"] = "Code White"
-	desc_by_access["[ACCESS_CENT_TELEPORTER]"] = "Code Blue"
-	desc_by_access["[ACCESS_CENT_SPECOPS]"] = "Code Black"
-	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "Code Gold"
-	desc_by_access["[ACCESS_CENT_BAR]"] = "Code Scotch"
+	desc_by_access["[ACCESS_CENT_GENERAL]"] = "CentCom General Access"
+	desc_by_access["[ACCESS_CENT_THUNDER]"] = "CentCom Thunderdome"
+	desc_by_access["[ACCESS_CENT_STORAGE]"] = "CentCom Storage"
+	desc_by_access["[ACCESS_CENT_LIVING]"] = "CentCom Living Quarters"
+	desc_by_access["[ACCESS_CENT_MEDICAL]"] = "CentCom Medical"
+	desc_by_access["[ACCESS_CENT_TELEPORTER]"] = "CentCom Teleporter"
+	desc_by_access["[ACCESS_CENT_SPECOPS]"] = "CentCom SpecOps"
+	desc_by_access["[ACCESS_CENT_CAPTAIN]"] = "CentCom Captain"
+	desc_by_access["[ACCESS_CENT_BAR]"] = "CentCom Bar"
+	desc_by_access["[ACCESS_CENT_OFFICER]"] = "CentCom Officer"
 	desc_by_access["[ACCESS_BIT_DEN]"] = "Bitrunner Den"
 
 /**
@@ -417,6 +419,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.update_label()
 	id_card.update_icon()
 
+	// Apply any currently active RETA grants to this newly trimmed card
+	apply_active_reta_grants_to_card(id_card)
+
 	return TRUE
 
 /**
@@ -457,7 +462,10 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
+
+	// Apply any currently active RETA grants to this card with updated trim override
+	apply_active_reta_grants_to_card(id_card)
 
 /**
  * Removes a trim from a ID card.
@@ -478,7 +486,7 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 /**
  * Adds the accesses associated with a trim to an ID card.
@@ -501,6 +509,9 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
 		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
 
+	// Apply any currently active RETA grants to this card with updated trim access
+	apply_active_reta_grants_to_card(id_card)
+
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.
  *
@@ -518,3 +529,78 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+
+/**
+ * Helper proc for creating a copy of the in-character information you could render from scanning for an ID card.
+ * Accounts for chameleon cards, silicons, and ID read failures.
+ * Pertinently, it also returns relevant information for their bank account (if they have one).
+ * To return bank account info for a chameleon card, bypass_chameleon must be set to TRUE. Otherwise it returns
+ * a bogey record.
+ * datum/source -
+ */
+/datum/controller/subsystem/id_access/proc/__in_character_record_id_information(
+	atom/movable/target_of_record,
+	bypass_chameleon = FALSE
+	) as /alist
+
+	var/alist/returned_record = alist(
+		"name" = null,
+		"age" = null,
+		"assignment" = null,
+		"account_id" = null,
+		"account_holder" = null,
+		"account_assignment" = null,
+		"accesses" = null,
+	)
+	. = returned_record
+	if(isnull(target_of_record))
+		.["name"] = ID_READ_FAILURE
+		.["age"] = ID_READ_FAILURE
+		.["assignment"] = ID_READ_FAILURE
+		.["account_id"] = ID_READ_FAILURE
+		.["account_holder"] = ID_READ_FAILURE
+		.["account_assignment"] = ID_READ_FAILURE
+		.["accesses"] = ID_READ_FAILURE
+		.[ID_READ_FAILURE] = ID_READ_FAILURE
+		return .
+	var/mob/living/target = astype(target_of_record, /mob/living)
+	if(target)
+		if(!issilicon(target) && !isdrone(target))
+			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
+			return .
+		.["name"] = target.name
+		.["age"] = 0
+		.["assignment"] = "Silicon"
+		.["account_id"] = null
+		.["account_holder"] = null
+		.["account_assignment"] = null
+		.["accesses"] = null
+		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
+		return .
+	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
+	if(id_card)
+		.["name"] = id_card.registered_name || "Unknown"
+		.["age"] = id_card.registered_age || "Unknown"
+		.["assignment"] = id_card.assignment || "Unassigned"
+		.["accesses"] = id_card.access
+		var/datum/bank_account/id_account = id_card.registered_account
+		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
+			// Generate a bogey record based only on the ID card
+			// Generates a random bank account number every time as a 'spot the thread' for anyone who
+			// went through records for this entry for whatever reason.
+			.["account_id"] = rand(111111, 999999)
+			.["account_holder"] = .["name"]
+			.["account_assignment"] = .["assignment"]
+			.[CHAMELEON_OVERRIDE] = CHAMELEON_OVERRIDE
+			return .
+		if(!id_account)
+			.["account_id"] = 0
+			.["account_holder"] = "NO ACCOUNT."
+			.["account_assignment"] = "NO ACCOUNT."
+			return .
+		.["account_id"] = id_account.account_id
+		.["account_holder"] = id_account.account_holder
+		.["account_assignment"] = id_account.account_job?.title || "Unassigned"
+		return .
+	else
+		. = ID_DATA(null)

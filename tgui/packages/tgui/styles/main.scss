@@ -11,17 +11,12 @@
 @include meta.load-css('./reset.scss');
 @include meta.load-css('./css-variables.scss');
 
-// Atomic classes
-@include meta.load-css('./atomic/candystripe.scss');
-@include meta.load-css('./atomic/centered-image.scss');
-@include meta.load-css('./atomic/color.scss');
-@include meta.load-css('./atomic/debug-layout.scss');
-@include meta.load-css('./atomic/fit-text.scss');
-@include meta.load-css('./atomic/links.scss');
-@include meta.load-css('./atomic/outline.scss');
-@include meta.load-css('./atomic/text.scss');
+// Tgui core bulk imports
+@include meta.load-css('~tgui-core/styles/all-atomic.scss');
+@include meta.load-css('~tgui-core/styles/all-themes.scss');
 
 // Interfaces
+@include meta.load-css('./interfaces/Accounting.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');
@@ -61,7 +56,7 @@
 
 // NT Theme
 .Layout__content {
-  background-image: url('../assets/bg-nanotrasen.svg');
+  background-image: url('tgui-core/assets/bg-nanotrasen.svg');
   background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;

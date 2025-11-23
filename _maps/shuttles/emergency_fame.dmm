@@ -879,7 +879,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "Or" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/fakebasalt,
 /area/shuttle/escape/brig)
 "Ow" = (

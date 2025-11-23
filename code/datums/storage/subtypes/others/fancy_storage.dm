@@ -6,7 +6,7 @@
 /datum/storage/donut_box
 	max_slots = 6
 
-/datum/storage/donut_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/donut_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/food/donut)
 
@@ -16,7 +16,7 @@
 	// So we have two rows of 6, like the box visually has
 	screen_max_columns = 6
 
-/datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/food/egg,
@@ -31,7 +31,7 @@
 /datum/storage/candle_box
 	max_slots = 5
 
-/datum/storage/candle_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/candle_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/flashlight/flare/candle)
 
@@ -39,8 +39,10 @@
 /datum/storage/cigarette_box
 	max_slots = 6
 	display_contents = FALSE
+	rustle_sound = SFX_CIG_PACK_INSERT
+	remove_rustle_sound = SFX_CIG_PACK_RUSTLE
 
-/datum/storage/cigarette_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/cigarette_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/cigarette,
@@ -52,7 +54,7 @@
 	max_slots = 10
 	screen_max_columns = 5
 
-/datum/storage/rolling_paper_pack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/rolling_paper_pack/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/rollingpaper)
 
@@ -61,7 +63,7 @@
 	max_slots = 5
 	display_contents = FALSE
 
-/datum/storage/cigar_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/cigar_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/cigarette/cigar,
@@ -72,7 +74,7 @@
 	max_slots = 8
 	screen_max_columns = 4
 
-/datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/food/bonbon)
 
@@ -80,7 +82,7 @@
 /datum/storage/nugget_box
 	max_slots = 6
 
-/datum/storage/nugget_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/nugget_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/food/nugget,
@@ -93,7 +95,7 @@
 	max_total_storage = WEIGHT_CLASS_SMALL * 10
 	screen_max_columns = 5
 
-/datum/storage/pickles_jar/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/pickles_jar/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/food/pickle)
 
@@ -101,7 +103,7 @@
 /datum/storage/coffee_condi_display
 	max_slots = 14
 
-/datum/storage/coffee_condi_display/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/coffee_condi_display/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/reagent_containers/condiment/pack/sugar,
@@ -114,6 +116,6 @@
 /datum/storage/coffee_cart_rack
 	max_slots = 4
 
-/datum/storage/coffee_cart_rack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/coffee_cart_rack/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/coffee_cartridge)

@@ -1,46 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, Button, Flex, Stack } from 'tgui-core/components';
 
-import { DataEvidence } from './DataTypes';
+import { useBackend } from '../../backend';
+import type { Coordinates } from '../common/Connections';
 import { Pin } from './Pin';
+import type { DataEvidence, EvidenceFn } from './types';
 
-type EvidenceProps = {
+type Props = {
   case_ref: string;
   evidence: DataEvidence;
-  act: Function;
-  onPinStartConnecting: Function;
-  onPinConnected: Function;
-  onPinMouseUp: Function;
-  onEvidenceRemoved: Function;
-  onStartMoving: Function;
-  onStopMoving: Function;
-  onMoving: Function;
+  onEvidenceRemoved: EvidenceFn;
+  onMoving: (evidence: DataEvidence, position: Coordinates) => void;
+  onPinConnected: EvidenceFn;
+  onPinMouseUp: (evidence: DataEvidence, event: any) => void;
+  onPinStartConnecting: (evidence: DataEvidence, mousePos: Coordinates) => void;
+  onStartMoving: EvidenceFn;
+  onStopMoving: EvidenceFn;
 };
 
-type Position = {
-  x: number;
-  y: number;
-};
-
-export function Evidence(props: EvidenceProps) {
-  const { evidence, case_ref, act } = props;
+export function Evidence(props: Props) {
+  const { act } = useBackend();
+  const { evidence, case_ref } = props;
 
   const [dragging, setDragging] = useState(false);
 
   const [canDrag, setCanDrag] = useState(true);
 
-  const [dragPosition, setDragPosition] = useState<Position>({
+  const [dragPosition, setDragPosition] = useState<Coordinates>({
     x: evidence.x,
     y: evidence.y,
   });
 
-  const [lastMousePosition, setLastMousePosition] = useState<Position | null>(
-    null,
-  );
+  const [lastMousePosition, setLastMousePosition] =
+    useState<Coordinates | null>(null);
 
-  const randomRotation = Math.random() * 2 - 1;
+  const randomRotation = useMemo(() => Math.random() * 2 - 1, []);
 
-  function handleMouseDown(args) {
+  function handleMouseDown(args: React.MouseEvent<HTMLDivElement>) {
     if (canDrag) {
       setDragging(true);
       props.onStartMoving(evidence);
@@ -128,7 +124,7 @@ export function Evidence(props: EvidenceProps) {
                   evidence={evidence}
                   onStartConnecting={(
                     evidence: DataEvidence,
-                    mousePos: Position,
+                    mousePos: Coordinates,
                   ) => {
                     setCanDrag(false);
                     props.onPinStartConnecting(evidence, mousePos);
@@ -137,7 +133,7 @@ export function Evidence(props: EvidenceProps) {
                     setCanDrag(true);
                     props.onPinConnected(evidence);
                   }}
-                  onMouseUp={(evidence: DataEvidence, args) => {
+                  onPinMouseUp={(evidence: DataEvidence, args) => {
                     setCanDrag(true);
                     props.onPinMouseUp(evidence, args);
                   }}
@@ -174,7 +170,7 @@ export function Evidence(props: EvidenceProps) {
               {evidence.type === 'photo' ? (
                 <img className="Evidence__Icon" src={evidence.photo_url} />
               ) : (
-                // eslint-disable-next-line react/no-danger
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
                 <div dangerouslySetInnerHTML={{ __html: evidence.text }} />
               )}
             </Box>

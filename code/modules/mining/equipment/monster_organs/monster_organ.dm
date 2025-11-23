@@ -61,6 +61,7 @@
 /obj/item/organ/monster_core/Initialize(mapload)
 	. = ..()
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
+	AddElement(/datum/element/above_mob_drop)
 
 /obj/item/organ/monster_core/examine(mob/user)
 	. = ..()

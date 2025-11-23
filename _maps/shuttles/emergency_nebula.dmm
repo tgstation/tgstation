@@ -807,7 +807,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	use_power = 0
 	},
 /obj/machinery/light/directional/east,

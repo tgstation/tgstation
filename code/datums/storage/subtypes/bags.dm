@@ -11,7 +11,7 @@
 	max_slots = 30
 	supports_smart_equip = FALSE
 
-/datum/storage/bag/trash/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/trash/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(cant_hold_list = /obj/item/disk/nuclear)
 
@@ -36,7 +36,7 @@
 	max_total_storage = 50
 	silent_for_user = TRUE
 
-/datum/storage/bag/ore/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/ore/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/stack/ore)
 
@@ -51,7 +51,7 @@
 	max_total_storage = 100
 	max_slots = 100
 
-/datum/storage/bag/plants/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/plants/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/food/grown,
@@ -65,7 +65,7 @@
 /datum/storage/bag/sheet_snatcher
 	max_total_storage = 150
 
-/datum/storage/bag/sheet_snatcher/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/sheet_snatcher/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(
 		can_hold_list = /obj/item/stack/sheet,
@@ -86,7 +86,7 @@
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 	max_total_storage = 5000
 
-/datum/storage/bag/sheet_snatcher_debug/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/sheet_snatcher_debug/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/stack/sheet,
@@ -99,7 +99,7 @@
 	max_total_storage = 21
 	max_slots = 7
 
-/datum/storage/bag/books/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/books/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/book,
@@ -114,7 +114,7 @@
 	max_slots = 8
 	max_total_storage = 16
 
-/datum/storage/bag/tray/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/tray/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(
 		can_hold_list = list(
@@ -143,7 +143,7 @@
 	max_total_storage = 200
 	max_slots = 50
 
-/datum/storage/bag/chemistry/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/chemistry/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/reagent_containers/chem_pack,
@@ -162,7 +162,7 @@
 	max_total_storage = 200
 	max_slots = 25
 
-/datum/storage/bag/bio/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/bio/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/bodypart,
@@ -183,7 +183,7 @@
 	max_total_storage = 200
 	max_slots = 25
 
-/datum/storage/bag/xeno/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/xeno/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/bodypart,
@@ -206,7 +206,7 @@
 	max_slots = 50
 	max_specific_storage = WEIGHT_CLASS_SMALL
 
-/datum/storage/bag/construction/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/construction/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/assembly,
@@ -228,17 +228,17 @@
 	max_slots = 40
 	max_total_storage = 100
 
-/datum/storage/bag/harpoon_quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/harpoon_quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/ammo_casing/harpoon)
 
-///Rebar quiber bag
+///Rebar quiver bag
 /datum/storage/bag/rebar_quiver
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 10
 	max_total_storage = 15
 
-/datum/storage/bag/rebar_quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/rebar_quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/ammo_casing/rebar,
@@ -255,24 +255,64 @@
 	max_slots = 21
 	numerical_stacking = FALSE
 
-/datum/storage/bag/mail/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/mail/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
-		/obj/item/paper
+		/obj/item/paper,
+		/obj/item/bounty_cube,
 	))
 
 ///Garment bag
 /datum/storage/bag/garment
 	numerical_stacking = FALSE
 	max_total_storage = 200
-	max_slots = 15
+	max_slots = 20
 	insert_preposition = "in"
+	allow_big_nesting = TRUE
 
-/datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
-	set_holdable(/obj/item/clothing)
+	set_holdable(
+		can_hold_list = list(/obj/item/clothing, /obj/item/storage/backpack),
+		exception_hold_list = list(/obj/item/storage/backpack),
+	)
+
+/datum/storage/bag/garment/can_insert(obj/item/to_insert, mob/user, messages, force)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(istype(to_insert, /obj/item/storage/backpack) && length(to_insert.contents))
+		if(messages && user)
+			parent.balloon_alert(user, "can't store filled backpacks!")
+		return FALSE
+
+	return TRUE
+
+/datum/storage/bag/garment/item_init(datum/source, obj/item/inited)
+	. = ..()
+	if(!istype(inited, /obj/item/storage/backpack))
+		return
+	RegisterSignal(inited, COMSIG_ATOM_PRE_STORED_ITEM, PROC_REF(block_inner_storage))
+
+/datum/storage/bag/garment/handle_enter(datum/source, obj/item/arrived)
+	. = ..()
+	if(!istype(arrived, /obj/item/storage/backpack))
+		return
+	RegisterSignal(arrived, COMSIG_ATOM_PRE_STORED_ITEM, PROC_REF(block_inner_storage))
+
+/datum/storage/bag/garment/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+	UnregisterSignal(gone, COMSIG_ATOM_PRE_STORED_ITEM)
+
+/datum/storage/bag/garment/proc/block_inner_storage(obj/item/backpack, to_insert, user, force, messages)
+	SIGNAL_HANDLER
+
+	if(user && messages)
+		parent.balloon_alert(user, "garment bag is in the way!")
+	return BLOCK_STORAGE_INSERT
 
 ///Quiver bag
 /datum/storage/bag/quiver
@@ -280,7 +320,7 @@
 	max_slots = 40
 	max_total_storage = 100
 
-/datum/storage/bag/quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/ammo_casing/arrow)
 
@@ -299,22 +339,30 @@
 
 ///Money bag
 /datum/storage/bag/money
-	max_slots = 40
-	max_specific_storage = 40
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	max_total_storage = 1000
+	max_slots = 1000
 
-/datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/coin,
 		/obj/item/stack/spacecash,
-		/obj/item/holochip
+		/obj/item/holochip,
+		/obj/item/poker_chip,
+		/obj/item/stack/sheet/mineral/diamond, // Precious gems and stones are something a sophisticated french thief might put in his thief bag.
+		/obj/item/stack/sheet/mineral/gold, // This is money, the only real money actually, if you ask a Ron Paul-style guy.
+		/obj/item/stack/sheet/mineral/silver,
+		/obj/item/stack/sheet/mineral/mythril,
+		/obj/item/stack/telecrystal,
 	))
+
 
 ///Fishing bag
 /datum/storage/bag/fishing
 	max_total_storage = 24 // Up to 8 normal fish
 	max_slots = 21
 
-/datum/storage/bag/fishing/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/bag/fishing/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(/obj/item/fish)

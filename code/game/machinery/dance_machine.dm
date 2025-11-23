@@ -20,6 +20,15 @@
 /obj/machinery/jukebox/Initialize(mapload)
 	. = ..()
 	music_player = new(src)
+	register_context()
+
+/obj/machinery/jukebox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return CONTEXTUAL_SCREENTIP_SET
+	context[SCREENTIP_CONTEXT_RMB] = "Toggle Playing"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/jukebox/Destroy()
 	stop_music()
@@ -30,9 +39,6 @@
 	. = ..()
 	if(music_player.active_song_sound)
 		. += "Now playing: [music_player.selection.song_name]"
-
-/obj/machinery/jukebox/no_access
-	req_access = null
 
 /obj/machinery/jukebox/wrench_act(mob/living/user, obj/item/tool)
 	if(!isnull(music_player.active_song_sound))
@@ -47,15 +53,22 @@
 	icon_state = "[base_icon_state][music_player.active_song_sound ? "-active" : null]"
 	return ..()
 
+/obj/machinery/jukebox/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !allowed(user))
+		return .
+	toggle_playing(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/jukebox/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user))
 		return ..()
 	if(!anchored)
-		to_chat(user,span_warning("This device must be anchored by a wrench!"))
+		balloon_alert(user, "must be anchored!")
 		return UI_CLOSE
 	if(!allowed(user))
-		to_chat(user,span_warning("Error: Access Denied."))
-		user.playsound_local(src, 'sound/machines/compiler/compiler-failure.ogg', 25, TRUE)
+		balloon_alert(user, "access denied!")
+		user.playsound_local(src, 'sound/machines/compiler/compiler-failure.ogg', 20, TRUE)
 		return UI_CLOSE
 	if(!length(music_player.songs))
 		to_chat(user,span_warning("Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue."))
@@ -77,26 +90,15 @@
 	if(.)
 		return
 
+	var/mob/user = ui.user
 	switch(action)
 		if("toggle")
-			if(isnull(music_player.active_song_sound))
-				if(!COOLDOWN_FINISHED(src, jukebox_song_cd))
-					to_chat(usr, span_warning("Error: The device is still resetting from the last activation, \
-						it will be ready again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, jukebox_song_cd))]."))
-					if(COOLDOWN_FINISHED(src, jukebox_error_cd))
-						playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 33, TRUE)
-						COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
-					return TRUE
-
-				activate_music()
-			else
-				stop_music()
-
+			toggle_playing(user)
 			return TRUE
 
 		if("select_track")
 			if(!isnull(music_player.active_song_sound))
-				to_chat(usr, span_warning("Error: You cannot change the song until the current one is over."))
+				to_chat(user, span_warning("Error: You cannot change the song until the current one is over."))
 				return TRUE
 
 			var/datum/track/new_song = music_player.songs[params["track"]]
@@ -120,6 +122,19 @@
 			music_player.sound_loops = !!params["looping"]
 			return TRUE
 
+///If a song is playing, cut it. If none is playing, and the cooldown is up, start the queued track.
+/obj/machinery/jukebox/proc/toggle_playing(mob/user)
+	if(!isnull(music_player.active_song_sound))
+		stop_music()
+		return
+	if(COOLDOWN_FINISHED(src, jukebox_song_cd))
+		activate_music()
+		return
+	balloon_alert(user, "on cooldown for [DisplayTimeText(COOLDOWN_TIMELEFT(src, jukebox_song_cd))]!")
+	if(COOLDOWN_FINISHED(src, jukebox_error_cd))
+		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 25, TRUE)
+		COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
+
 /obj/machinery/jukebox/proc/activate_music()
 	if(!isnull(music_player.active_song_sound))
 		return FALSE
@@ -139,7 +154,7 @@
 
 	if(!QDELING(src))
 		COOLDOWN_START(src, jukebox_song_cd, 10 SECONDS)
-		playsound(src,'sound/machines/terminal/terminal_off.ogg',50,TRUE)
+		playsound(src,'sound/machines/terminal/terminal_off.ogg', 50, TRUE)
 		update_use_power(IDLE_POWER_USE)
 		update_appearance(UPDATE_ICON_STATE)
 	return TRUE
@@ -147,6 +162,9 @@
 /obj/machinery/jukebox/on_set_is_operational(old_value)
 	if(!is_operational)
 		stop_music()
+
+/obj/machinery/jukebox/no_access
+	req_access = null
 
 /obj/machinery/jukebox/disco
 	name = "radiant dance machine mark IV"

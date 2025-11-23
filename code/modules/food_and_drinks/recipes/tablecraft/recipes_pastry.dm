@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////DONUTS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut
-	time = 15
+	time = 1.5 SECONDS
 	name = "Donut"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 1,
@@ -14,15 +14,6 @@
 	added_foodtypes = JUNKFOOD|SUGAR|BREAKFAST|FRIED
 	removed_foodtypes = RAW
 	category = CAT_PASTRY
-
-// It is so stupid that we have to do this but because food crafting clears all reagents that got added during init,
-// here we are adding it again (but only for crafting, maploaded and spawned donuts work fine).
-// Until the issues with crafted items' reagents are resolved this will have to do
-/datum/crafting_recipe/food/donut/on_craft_completion(mob/user, atom/result)
-	. = ..()
-	var/obj/item/food/donut/donut_result = result
-	if(donut_result.is_decorated)
-		donut_result.reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
 
 /datum/crafting_recipe/food/donut/chaos
 	name = "Chaos donut"
@@ -35,7 +26,7 @@
 	result = /obj/item/food/donut/chaos
 
 /datum/crafting_recipe/food/donut/meat
-	time = 15
+	time = 1.5 SECONDS
 	name = "Meat donut"
 	reqs = list(
 		/obj/item/food/meat/rawcutlet = 1,
@@ -296,7 +287,7 @@
 ////////////////////////////////////////////////WAFFLES////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/waffles
-	time = 15
+	time = 1.5 SECONDS
 	name = "Waffles"
 	reqs = list(
 		/obj/item/food/pastrybase = 2
@@ -339,7 +330,7 @@
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donkpocket
-	time = 15
+	time = 1.5 SECONDS
 	name = "Donk-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -349,7 +340,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/dankpocket
-	time = 15
+	time = 1.5 SECONDS
 	name = "Dank-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -359,7 +350,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/spicy
-	time = 15
+	time = 1.5 SECONDS
 	name = "Spicy-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -370,7 +361,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/teriyaki
-	time = 15
+	time = 1.5 SECONDS
 	name = "Teriyaki-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -381,7 +372,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/pizza
-	time = 15
+	time = 1.5 SECONDS
 	name = "Pizza-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -392,7 +383,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/honk
-	time = 15
+	time = 1.5 SECONDS
 	name = "Honk-Pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -404,7 +395,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/berry
-	time = 15
+	time = 1.5 SECONDS
 	name = "Berry-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -415,7 +406,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/gondola
-	time = 15
+	time = 1.5 SECONDS
 	name = "Gondola-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -426,7 +417,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/deluxe
-	time = 15
+	time = 1.5 SECONDS
 	name = "Deluxe Donk-pocket"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -440,7 +431,7 @@
 	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/food/donkpocket/deluxe/nocarb
-	time = 15
+	time = 1.5 SECONDS
 	name = "Deluxe Meat-pocket"
 	reqs = list(
 		/obj/item/organ/heart = 1,
@@ -453,7 +444,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/deluxe/vegan
-	time = 15
+	time = 1.5 SECONDS
 	name = "Deluxe Donk-roll"
 	reqs = list(
 		/obj/item/food/doughslice = 1,
@@ -468,7 +459,7 @@
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/muffin
-	time = 15
+	time = 1.5 SECONDS
 	name = "Muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
@@ -517,7 +508,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/sugarcookie
-	time = 15
+	time = 1.5 SECONDS
 	name = "Sugar cookie"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
@@ -528,7 +519,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/spookyskull
-	time = 15
+	time = 1.5 SECONDS
 	name = "Skull cookie"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -540,7 +531,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/spookycoffin
-	time = 15
+	time = 1.5 SECONDS
 	name = "Coffin cookie"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -552,7 +543,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/fortunecookie
-	time = 15
+	time = 1.5 SECONDS
 	name = "Fortune cookie"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -566,7 +557,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/poppypretzel
-	time = 15
+	time = 1.5 SECONDS
 	name = "Poppy pretzel"
 	reqs = list(
 		/obj/item/seeds/poppy = 1,
@@ -577,7 +568,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/plumphelmetbiscuit
-	time = 15
+	time = 1.5 SECONDS
 	name = "Plumphelmet biscuit"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -587,7 +578,7 @@
 	category = CAT_PASTRY
 
 /datum/crafting_recipe/food/cracker
-	time = 15
+	time = 1.5 SECONDS
 	name = "Cracker"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,

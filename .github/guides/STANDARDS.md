@@ -17,41 +17,45 @@ As with the style guide, you are expected to follow these specifications in orde
 As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
 
 ### Avoid hacky code
-Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
+
+Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is **_no_** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
 
 ### Develop Secure Code
 
-* Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind.
-	* This extends to much further than just numbers or strings. You should always sanity check that an input is valid, especially when it comes to datums or references!
-	* Input stalling is a very common exploit / bug that involves opening an input window when in a valid state, and triggering the input after exiting the valid state. These can be very serious, and allow players to teleport across the map or remove someone's brain at any given moment. If you check the player must be in a specific context before an input, you should generally check that they are still in the context AFTER the input resolves.
-		* For example, if you have an item which can be used (in hand) by a player to make it explode, but you want them to confirm (via prompt) that they want it to explode, you should check that the item is still in the player's hands after confirming. Otherwise, they could drop it and explode it at any moment they want.
-	* Another less common exploit involves allowing a player to open multiple of an input at once. This may allow the player to stack effects, such as triggering 10 explosions when only 1 should be allowed. While a lot of code is generally built in a way making this infeasible (usually due to runtime errors), it is noteworthy regardless.
-		* You should also consider if it would make sense to apply a timeout to your input, to prevent players from opening it and keeping it on their screen until convenient.
+- Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind.
 
-* SQL queries **must** use parameters for any sort of input data, and `format_table_name` for table names. Directly substituting input into SQL queries is how SQL injections happen, which parameterized queries prevent.
-	* Good: `SSdbcore.NewQuery({"UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))`
-	* Bad: `SSdbcore.NewQuery({"UPDATE round SET map_name = '[current_map.map_name]' WHERE id = [GLOB.round_id]"}`
+  - This extends to much further than just numbers or strings. You should always sanity check that an input is valid, especially when it comes to datums or references!
+  - Input stalling is a very common exploit / bug that involves opening an input window when in a valid state, and triggering the input after exiting the valid state. These can be very serious, and allow players to teleport across the map or remove someone's brain at any given moment. If you check the player must be in a specific context before an input, you should generally check that they are still in the context AFTER the input resolves.
+    - For example, if you have an item which can be used (in hand) by a player to make it explode, but you want them to confirm (via prompt) that they want it to explode, you should check that the item is still in the player's hands after confirming. Otherwise, they could drop it and explode it at any moment they want.
+  - Another less common exploit involves allowing a player to open multiple of an input at once. This may allow the player to stack effects, such as triggering 10 explosions when only 1 should be allowed. While a lot of code is generally built in a way making this infeasible (usually due to runtime errors), it is noteworthy regardless.
+    - You should also consider if it would make sense to apply a timeout to your input, to prevent players from opening it and keeping it on their screen until convenient.
 
-* All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
-	* Don't expose a topic call to more than what you need it to. If you are only looking for an item inside an atom, don't look for every item in the world - just look in the atom's contents.
-		* You rarely should call `locate(ref)` without specifying a list! This is a serious exploit vector which can be used to spawn Nar'sie or delete players across the map. Try narrowing it down via a list - such as `locate(ref) in contents`, to find an item in an atom's contents.
+- SQL queries **must** use parameters for any sort of input data, and `format_table_name` for table names. Directly substituting input into SQL queries is how SQL injections happen, which parameterized queries prevent.
 
-* Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
+  - Good: `SSdbcore.NewQuery({"UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))`
+  - Bad: `SSdbcore.NewQuery({"UPDATE round SET map_name = '[current_map.map_name]' WHERE id = [GLOB.round_id]"}`
 
-* It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type.
+- All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
 
-* Where you have code that can cause large-scale modification and *FUN*, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
+  - Don't expose a topic call to more than what you need it to. If you are only looking for an item inside an atom, don't look for every item in the world - just look in the atom's contents.
+    - You rarely should call `locate(ref)` without specifying a list! This is a serious exploit vector which can be used to spawn Nar'sie or delete players across the map. Try narrowing it down via a list - such as `locate(ref) in contents`, to find an item in an atom's contents.
+
+- Information that players could use to metagame (that is, to identify round information and/or antagonist type via information that would not be available to them in character) should be kept as administrator only.
+
+- It is recommended as well you do not expose information about the players - even something as simple as the number of people who have readied up at the start of the round can and has been used to try to identify the round type.
+
+- Where you have code that can cause large-scale modification and _FUN_, make sure you start it out locked behind one of the default admin roles - use common sense to determine which role fits the level of damage a function could do.
 
 ### User Interfaces
 
-* All new player-facing user interfaces must use TGUI, unless they are critical user interfaces.
-* All critical user interfaces must be usable with HTML or the interface.dmf, with tgui being *optional* for this UI.
-	* Examples of critical user interfaces are the chat box, the observe button, the stat panel, and the chat input.
-* Documentation for TGUI can be found at:
-	* [tgui/README.md](../tgui/README.md)
-	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
+- All new player-facing user interfaces must use TGUI, unless they are critical user interfaces.
+- All critical user interfaces must be usable with HTML or the interface.dmf, with tgui being _optional_ for this UI.
+  - Examples of critical user interfaces are the chat box, the observe button, the stat panel, and the chat input.
+- Documentation for TGUI can be found at:
+  - [tgui/README.md](../tgui/README.md)
+  - [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)
 
 ### Dont override type safety checks
 
@@ -71,20 +75,22 @@ var/path_type = "/obj/item/baseball_bat"
 
 ### Other Notes
 
-* Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
+- Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
 
-* Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
+- Bloated code may be necessary to add a certain feature, which means there has to be a judgement over whether the feature is worth having or not. You can help make this decision easier by making sure your code is modular.
 
-* You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
+- You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
-* Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
+- Separating single lines into more readable blocks is not banned, however you should use it only where it makes new information more accessible, or aids maintainability. We do not have a column limit, and mass conversions will not be received well.
 
-* If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
+- If you used regex to replace code during development of your code, post the regex in your PR for the benefit of future developers and downstream users.
 
-* Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
+- Changes to the `/config` tree must be made in a way that allows for updating server deployments while preserving previous behaviour. This is due to the fact that the config tree is to be considered owned by the user and not necessarily updated alongside the remainder of the code. The code to preserve previous behaviour may be removed at some point in the future given the OK by maintainers.
 
 ## Structural
+
 ### No duplicated code (Don't repeat yourself)
+
 Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
@@ -96,21 +102,23 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 ### Files
 
-* Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
+- Because runtime errors do not give the full path, try to avoid having files with the same name across folders.
 
-* File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
+- File names should not be mixed case, or contain spaces or any character that would require escaping in a uri.
 
-* Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
+- Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
 ### RegisterSignal()
 
 #### PROC_REF Macros
+
 When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF, TYPE_PROC_REF and GLOBAL_PROC_REF macros.
 They ensure compilation fails if the reffered to procs change names or get removed.
 The macro to be used depends on how the proc you're in relates to the proc you want to use:
 
 PROC_REF if the proc you want to use is defined on the current proc type or any of its ancestor types.
 Example:
+
 ```
 /mob/proc/funny()
 	to_chat(world,"knock knock")
@@ -127,6 +135,7 @@ Example:
 
 TYPE_PROC_REF if the proc you want to use is defined on a different unrelated type
 Example:
+
 ```
 /obj/thing/proc/funny()
 	to_chat(world,"knock knock")
@@ -139,6 +148,7 @@ Example:
 
 GLOBAL_PROC_REF if the proc you want to use is a global proc.
 Example:
+
 ```
 /proc/funny()
 	to_chat(world,"knock knock")
@@ -152,11 +162,13 @@ Note that the same rules go for verbs too! We have VERB_REF() and TYPE_VERB_REF(
 #### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
+
 ```
 /type/path/proc/signal_callback()
 	SIGNAL_HANDLER
 	// rest of the code
 ```
+
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously.
@@ -174,12 +186,14 @@ If you decide to do this, you should make it clear with a comment explaining why
 ### Enforcing parent calling
 
 When adding new signals to root level procs, eg;
+
 ```
 /atom/proc/setDir(newdir)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 ```
+
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
 ### Avoid unnecessary type checks and obscuring nulls in lists
@@ -191,6 +205,7 @@ If we know the list is supposed to only contain the desired type then we want to
 Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
 
 This is bad:
+
 ```DM
 var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
 var/highest_alpha = 0
@@ -201,6 +216,7 @@ for(var/atom/thing in bag_of_atoms)
 ```
 
 This is good:
+
 ```DM
 var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
 var/highest_alpha = 0
@@ -238,20 +254,21 @@ How do we solve this? By using delta-time. Delta-time is the amount of seconds y
 	health -= health_loss * seconds_per_tick
 ```
 
-In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * seconds_per_tick, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
+In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every 2 seconds. Delta_time would have a value of 2. This means that by doing health_loss \* seconds_per_tick, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
 ## Optimization
+
 ### Startup/Runtime tradeoffs with lists and the "hidden" init proc
 
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
 
 There are two key points here:
 
-1) Defining a list in the variable's definition calls a hidden proc - init. If you have to define a list at startup, do so in New() (or preferably Initialize()) and avoid the overhead of a second call (Init() and then New())
+1. Defining a list in the variable's definition calls a hidden proc - init. If you have to define a list at startup, do so in New() (or preferably Initialize()) and avoid the overhead of a second call (Init() and then New())
 
-2) It also consumes more memory to the point where the list is actually required, even if the object in question may never use it!
+2. It also consumes more memory to the point where the list is actually required, even if the object in question may never use it!
 
 Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
@@ -261,8 +278,8 @@ BYOND will allow you to use a raw icon file or even an icon datum for underlays,
 
 Converting them yourself to appearances and storing this converted value will ensure this process only has to happen once for the lifetime of the round. Helper functions exist to do most of the work for you.
 
-
 Bad:
+
 ```dm
 /obj/machine/update_overlays(blah)
 	if (stat & broken)
@@ -275,6 +292,7 @@ Bad:
 ```
 
 Good:
+
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/on_overlay
@@ -296,13 +314,12 @@ Good:
 
 Note: images are appearances with extra steps, and don't incur the overhead in conversion.
 
-
 ### Do not abuse associated lists.
 
 Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
 
-
 Bad:
+
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/our_overlays
@@ -315,6 +332,7 @@ Bad:
 ```
 
 Good:
+
 ```dm
 #define OUR_ON_OVERLAY 1
 #define OUR_OFF_OVERLAY 2
@@ -333,9 +351,11 @@ Good:
 #undef OUR_OFF_OVERLAY
 #undef OUR_BROKEN_OVERLAY
 ```
+
 Storing these in a flat (non-associated) list saves on memory, and using defines to reference locations in the list saves CPU time searching the list.
 
 Also good:
+
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/on_overlay
@@ -350,6 +370,7 @@ Also good:
 		return
 	...
 ```
+
 Proc variables, static variables, and global variables are resolved at compile time, so the above is equivalent to the second example, but is easier to read, and avoids the need to store a list.
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
@@ -359,6 +380,7 @@ Note: While there has historically been a strong impulse to use associated lists
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, some are harmful.
 
 ### Loops
+
 #### In-To for-loops
 
 `for(var/i = 1, i <= some_value, i++)` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's `for(var/i in 1 to some_value)` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the `to` keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
@@ -427,7 +449,7 @@ Because of these problems, it is encouraged to prefer standard, explicit return 
 
 #### Exception: `. = ..()`
 
-As hinted at before, `. = ..()` is *extremely* common. This will call the parent function, and preserve its return type. Code like this:
+As hinted at before, `. = ..()` is _extremely_ common. This will call the parent function, and preserve its return type. Code like this:
 
 ```dm
 /obj/item/spoon/attack()
@@ -435,7 +457,7 @@ As hinted at before, `. = ..()` is *extremely* common. This will call the parent
 	visible_message("Whack!")
 ```
 
-...is completely accepted, and in fact, usually *prefered* over:
+...is completely accepted, and in fact, usually _prefered_ over:
 
 ```dm
 /obj/item/spoon/attack()
@@ -458,7 +480,7 @@ One unique property of DM is the ability for procs to error, but for code to con
 	to_chat(world, "2")
 ```
 
-...would print both 1 *and* 2, which may be unexpected if you come from other languages.
+...would print both 1 _and_ 2, which may be unexpected if you come from other languages.
 
 This is where `.` provides a new useful behavior--**a proc that runtimes will return `.`**.
 
@@ -511,12 +533,12 @@ The way they pull this off, while fine for the language itself, makes a mess of 
 
 The following is a list of procs, and their safe replacements.
 
-* Removing something from the loop `walk(0)` -> `SSmove_manager.stop_looping()`
-* Move in a direction `walk()` -> `SSmove_manager.move()`
-* Move towards a thing, taking turf density into account`walk_to()` -> `SSmove_manager.move_to()`
-* Move in a thing's direction, ignoring turf density `walk_towards()` -> `SSmove_manager.home_onto()` and `SSmove_manager.move_towards_legacy()`, check the documentation to see which you like better
-* Move away from something, taking turf density into account `walk_away()` -> `SSmove_manager.move_away()`
-* Move to a random place nearby. NOT random walk `walk_rand()` -> `SSmove_manager.move_rand()` is random walk, `SSmove_manager.move_to_rand()` is walk to a random place
+- Removing something from the loop `walk(0)` -> `SSmove_manager.stop_looping()`
+- Move in a direction `walk()` -> `SSmove_manager.move()`
+- Move towards a thing, taking turf density into account`walk_to()` -> `SSmove_manager.move_to()`
+- Move in a thing's direction, ignoring turf density `walk_towards()` -> `SSmove_manager.home_onto()` and `SSmove_manager.move_towards_legacy()`, check the documentation to see which you like better
+- Move away from something, taking turf density into account `walk_away()` -> `SSmove_manager.move_away()`
+- Move to a random place nearby. NOT random walk `walk_rand()` -> `SSmove_manager.move_rand()` is random walk, `SSmove_manager.move_to_rand()` is walk to a random place
 
 ### Avoid pointer use
 
@@ -537,6 +559,7 @@ world << pointed_at // outputs "text a THIRD TIME"
 ```
 
 The problem with this is twofold.
+
 - First: if you use a pointer to reference a var on a datum, it is essentially as if you held an invisible reference to that datum. This risks hard deletes in very unclear ways that cannot be tested for.
 - Second: People don't like, understand how pointers work? They mix them up with classical C pointers, when they're more like `std::shared_ptr`. This leads to code that just doesn't work properly, or is hard to follow without first getting your mind around it. It also risks hiding what code does in dumb ways because pointers don't have unique types.
 
@@ -553,18 +576,18 @@ Due to how they are internally represented as part of appearance, overlays and u
 
 ## SQL
 
-* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
+- Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
-* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
+- All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
 
-* Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
+- Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
 
-* Queries must never specify the database, be it in code, or in text files in the repo.
+- Queries must never specify the database, be it in code, or in text files in the repo.
 
-* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+- Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
 
-* The ttl for data from the database is 10 seconds. You must have a compelling reason to store and reuse data for longer then this.
+- The ttl for data from the database is 10 seconds. You must have a compelling reason to store and reuse data for longer then this.
 
-* Do not write stored and transformed data to the database, instead, apply the transformation to the data in the database directly.
-	* ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
-	* if the transformation is user provided (such as allowing a user to edit a string), you should confirm the value being updated did not change in the database in the intervening time before writing the new user provided data by checking the old value with the current value in the database, and if it has changed, allow the user to decide what to do next.
+- Do not write stored and transformed data to the database, instead, apply the transformation to the data in the database directly.
+  - ie: SELECTing a number from the database, doubling it, then updating the database with the doubled number. If the data in the database changed between step 1 and 3, you'll get an incorrect result. Instead, directly double it in the update query. `UPDATE table SET num = num*2` instead of `UPDATE table SET num = [num]`.
+  - if the transformation is user provided (such as allowing a user to edit a string), you should confirm the value being updated did not change in the database in the intervening time before writing the new user provided data by checking the old value with the current value in the database, and if it has changed, allow the user to decide what to do next.

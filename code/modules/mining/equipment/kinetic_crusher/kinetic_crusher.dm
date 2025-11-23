@@ -188,15 +188,15 @@
 	// Detonation effect
 	var/datum/status_effect/crusher_damage/crusher_damage_effect = target.has_status_effect(/datum/status_effect/crusher_damage) || target.apply_status_effect(/datum/status_effect/crusher_damage)
 	var/target_health = target.health
+	var/combined_damage = detonation_damage
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
-		crusher_trophy.on_mark_detonation(target, user)
+		combined_damage += crusher_trophy.on_mark_detonation(target, user)
 	if(QDELETED(target))
 		return
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 	new /obj/effect/temp_visual/kinetic_blast(get_turf(target))
 	var/backstabbed = FALSE
-	var/combined_damage = detonation_damage
 	var/def_check = target.getarmor(type = BOMB)
 	// Backstab bonus
 	if(check_behind(user, target) || boosted_mark)
@@ -207,6 +207,14 @@
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
 	target.apply_damage(combined_damage, BRUTE, blocked = def_check)
+
+/obj/item/kinetic_crusher/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/item/crusher_trophy))
+		return NONE
+	var/obj/item/crusher_trophy/new_trophy = interacting_with
+	if(new_trophy.add_to(src, user))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/kinetic_crusher/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
@@ -297,6 +305,8 @@
 	log_override = TRUE
 	/// Has this projectile been boosted
 	var/boosted = FALSE
+	/// Should this projectile go through allied mobs?
+	var/ignore_allies = FALSE
 
 /obj/projectile/destabilizer/Initialize(mapload)
 	. = ..()
@@ -312,6 +322,14 @@
 	// Get a bit of a damage/range boost after being parried
 	damage = 10
 	range = 9
+
+/obj/projectile/destabilizer/prehit_pierce(atom/target)
+	if(!isliving(target) || !firer || !ignore_allies)
+		return ..()
+	var/mob/living/victim = target
+	if(firer.faction_check_atom(victim))
+		return PROJECTILE_PIERCE_PHASE
+	return ..()
 
 /obj/projectile/destabilizer/on_hit(atom/target, blocked = 0, pierce_hit)
 	var/obj/item/kinetic_crusher/used_crusher

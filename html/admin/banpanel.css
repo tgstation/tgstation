@@ -1,78 +1,78 @@
 .middle {
-    width: 80px;
+  width: 80px;
 }
 
 .right {
-    width: 150px;
+  width: 150px;
 }
 
 .reason {
-    resize: none;
-    min-height: 40px;
-    width: 340px;
+  resize: none;
+  min-height: 40px;
+  width: 340px;
 }
 
 .rolegroup {
-    padding: 3px;
-    width: 430px;
-    border: none;
-    text-align: center;
-    outline: none;
-    display: inline-block;
+  padding: 3px;
+  width: 430px;
+  border: none;
+  text-align: center;
+  outline: none;
+  display: inline-block;
 }
 
 .long {
-    width: 860px;
+  width: 860px;
 }
 
 .content {
-    text-align: center;
+  text-align: center;
 }
 
 .command {
-    background-color: #948f02;
+  background-color: #948f02;
 }
 
 .security {
-    background-color: #a30000;
+  background-color: #a30000;
 }
 
 .engineering {
-    background-color: #fb5613;
+  background-color: #fb5613;
 }
 
 .medical {
-    background-color: #337296;
+  background-color: #337296;
 }
 
 .science {
-    background-color: #993399;
+  background-color: #993399;
 }
 
 .supply {
-    background-color: #a8732b;
+  background-color: #a8732b;
 }
 
 .silicon {
-    background-color: #ff00ff;
+  background-color: #ff00ff;
 }
 
 .abstract {
-    background-color: #708090;
+  background-color: #708090;
 }
 
 .service {
-    background-color: #6eaa2c;
+  background-color: #6eaa2c;
 }
 
 .ghostandotherroles {
-    background-color: #5c00e6;
+  background-color: #5c00e6;
 }
 
 .antagonistpositions {
-    background-color: #6d3f40;
+  background-color: #6d3f40;
 }
 
 .undefineddepartment {
-    background-color: #111cf7;
+  background-color: #111cf7;
 }

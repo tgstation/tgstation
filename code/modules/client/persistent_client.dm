@@ -11,9 +11,9 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	/// The mob this persistent client is currently bound to.
 	var/mob/mob
 
-	/// Major version of BYOND this client is using.
+	/// Major version of BYOND this client was last using.
 	var/byond_version
-	/// Build number of BYOND this client is using.
+	/// Build number of BYOND this client was last using.
 	var/byond_build
 
 	/// Action datums assigned to this player
@@ -39,8 +39,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	/// World.time this player last died
 	var/time_of_death = 0
 
-/datum/persistent_client/New(ckey, client)
-	src.client = client
+/datum/persistent_client/New(ckey)
 	achievements = new(ckey)
 	GLOB.persistent_clients_by_ckey[ckey] = src
 	GLOB.persistent_clients += src
@@ -49,6 +48,19 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 	SHOULD_CALL_PARENT(FALSE)
 	. = QDEL_HINT_LETMELIVE
 	CRASH("Who the FUCK tried to delete a persistent client? Get your head checked you leadskull.")
+
+/// Setter for the client var, updates any vars we have that might be dependent on client state
+/datum/persistent_client/proc/set_client(client/new_client)
+	if(client == new_client)
+		return
+	
+	if(client)
+		client.persistent_client = null
+	client = new_client
+	if(client)
+		client.persistent_client = src
+		byond_build = client.byond_build
+		byond_version = client.byond_version
 
 /// Setter for the mob var, handles both references.
 /datum/persistent_client/proc/set_mob(mob/new_mob)

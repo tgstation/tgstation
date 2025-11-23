@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, NoticeBox, Section, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { RequestsData } from './types';
+import type { RequestsData } from './types';
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();

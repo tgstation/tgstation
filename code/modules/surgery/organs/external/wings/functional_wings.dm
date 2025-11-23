@@ -1,5 +1,5 @@
 #define FUNCTIONAL_WING_FORCE 2.25 NEWTONS
-#define FUNCTIONAL_WING_STABILIZATION 1.2 NEWTONS
+#define FUNCTIONAL_WING_STABILIZATION 4.5 NEWTONS
 
 ///hud action for starting and stopping flight
 /datum/action/innate/flight
@@ -82,8 +82,8 @@
 	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-	if(!cant_hide && human.wear_suit && ((human.wear_suit.flags_inv & HIDEJUMPSUIT) && (!human.wear_suit.species_exception || !is_type_in_list(src, human.wear_suit.species_exception))))
-		to_chat(human, span_warning("Your suit blocks your wings from extending!"))
+	if(!cant_hide && (human.obscured_slots & HIDEJUMPSUIT))
+		to_chat(human, span_warning("Your clothing blocks your wings from extending!"))
 		return FALSE
 	var/turf/location = get_turf(human)
 	if(!location)
@@ -166,19 +166,16 @@
 /datum/bodypart_overlay/mutant/wings/functional
 	///Are our wings currently open? Change through open_wings or close_wings()
 	VAR_PRIVATE/wings_open = FALSE
-	///Feature render key for opened wings
-	var/open_feature_key = "wingsopen"
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
-		return SSaccessories.wings_open_list
-	else
-		return SSaccessories.wings_list
+		return SSaccessories.feature_list[FEATURE_WINGS_OPEN]
+	return ..()
 
 ///Update our wingsprite to the open wings variant
 /datum/bodypart_overlay/mutant/wings/functional/proc/open_wings()
 	wings_open = TRUE
-	feature_key = open_feature_key
+	feature_key = FEATURE_WINGS_OPEN
 	set_appearance_from_name(sprite_datum.name) //It'll look for the same name again, but this time from the open wings list
 
 ///Update our wingsprite to the closed wings variant

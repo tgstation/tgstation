@@ -1,16 +1,16 @@
 {
-    "tape_piece_spikes": [
-        {
-            "type": "icon_state",
-            "icon_state": "tape_piece",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        },
-        {
-            "type": "icon_state",
-            "icon_state": "tape_piece_spikes",
-            "blend_mode": "overlay",
-            "color_ids": [ 2 ]
-        }
-    ]
+	"tape_piece_spikes": [
+		{
+			"type": "icon_state",
+			"icon_state": "tape_piece",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "tape_piece_spikes",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	]
 }

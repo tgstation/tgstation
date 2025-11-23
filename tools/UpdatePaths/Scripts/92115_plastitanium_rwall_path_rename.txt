@@ -1,0 +1,5 @@
+#comment This repaths syndicate reinforced walls, as they have been made a subtype of a constructible plastitanium reinforced wall
+
+/turf/closed/wall/r_wall/syndicate : /turf/closed/wall/r_wall/plastitanium/syndicate{@OLD}
+/turf/closed/wall/r_wall/syndicate/nodiagonal : /turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal{@OLD}
+/turf/closed/wall/r_wall/syndicate/overspace : /turf/closed/wall/r_wall/plastitanium/syndicate/overspace{@OLD}

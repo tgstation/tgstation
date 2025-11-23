@@ -1,4 +1,6 @@
 /* This file contains standalone items for debug purposes. */
+/obj/item/debug
+	abstract_type = /obj/item/debug
 
 /obj/item/debug/human_spawner
 	name = "human spawner"
@@ -60,7 +62,7 @@
 	var/list/tool_list = list(
 		"Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
 		"Multitool" = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "multitool"),
-		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
+		"Screwdriver" = image(icon = 'icons/map_icons/items/_item.dmi', icon_state = "/obj/item/screwdriver"),
 		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),

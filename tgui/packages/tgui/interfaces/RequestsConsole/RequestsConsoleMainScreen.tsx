@@ -4,7 +4,7 @@ import { useBackend, useSharedState } from '../../backend';
 import { AnnouncementTab } from './AnnouncementTab';
 import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
-import { RequestsData, RequestTabs } from './types';
+import { type RequestsData, RequestTabs } from './types';
 
 export const RequestMainScreen = (props) => {
   const { act, data } = useBackend<RequestsData>();

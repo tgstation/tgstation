@@ -73,7 +73,7 @@
 	show_in_antagpanel = FALSE
 	antagpanel_category = ANTAG_GROUP_CREW
 	show_name_in_check_antagonists = TRUE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	silent = TRUE
 
 /// Give everyone magic items, its so simple it feels pointless to give it its own file

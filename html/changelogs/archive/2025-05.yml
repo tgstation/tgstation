@@ -769,3 +769,62 @@
       activate, rather than intensity for some reason.
   timothymtorres:
   - code_imp: Properly document circuitboard vars
+2025-05-29:
+  Goat:
+  - bugfix: Strongarm implant no longer gives the text about being broken when you
+      use your empty hand.
+  - code_imp: Toolset arms are now a subtype of arm implants instead of all arm implants
+      being treated like toolset arms.
+  SmArtKar:
+  - rscadd: Colorblind people can no longer see wire colors
+  - bugfix: Fixed eyecharts not considering people with monochromacy colorblind
+  Y0SH1M4S73R:
+  - spellcheck: Stations in the Spinward Sector have reported malfunctioning AIs swearing
+      fealty to the dead god Ratvar.
+2025-05-30:
+  00-Steven:
+  - refactor: Refactored the folder/biscuit interaction chain. Please report any issues.
+  - bugfix: Picking up paper into a folder/biscuit by clicking on the paper with it
+      is now less prone to inventory jank.
+  - qol: Picking up paper into a folder/biscuit now plays the pickup animation, consistent
+      with inserting it otherwise.
+  - qol: Folders and biscuit cards now have screentips.
+  - sound: Inserting paper into a folder now plays the pickup/drop sounds, consistent
+      with taking it out.
+  - balance: You can now examine things through advanced camera consoles.
+  - balance: You can now examine things while in a holopad call.
+  - balance: You can now examine things while looking up or down.
+  JohnFulpWillard:
+  - rscadd: Added a 'Ghost settings' button, taking the spot of the pAI candidate
+      button and replacing the "Ghost" tab of the Stat panel. This button contains
+      buttons pertinent to your time as an Observer.
+  - rscadd: Added a new sleep HUD element when you're resting.
+  - rscadd: Xenos' HUD looks a little closer to human ones, with the rest button on
+      the right side.
+  - qol: Added a new accessibility setting for users who get inconsistent double clicks.
+  - spellcheck: The header for RD consoles now says what type of points it's counting.
+  necromanceranne:
+  - balance: Projectiles that have armour penetration, or can pass straight through
+      structures, can potentially hit a pilot inside of a mech.
+  - rscadd: Felinids, when sufficiently manic and starving, will sometimes take a
+      chunk out of their fellow spessman. With their teeth.
+  - balance: Carp-infused mutants have pointy teeth.
+  - balance: Melee weapons with sufficient armour penetration can potentially overpenetrate
+      and hit the pilot if you attack it while in combat mode.
+  ocan4214:
+  - bugfix: fixed Civilian Bounty Terminal not filling rest of the window when opened
+      first time.
+  throwawayuseless:
+  - bugfix: Binders and The Book Of Babel now fit on bookshelves.
+  timothymtorres:
+  - qol: Replace hardcoded atmos values for virtual domain turfs
+  - bugfix: Fix `map_export` admin verb not blacklisting `obj/effects`
+  - bugfix: Fix map linter conditional rule crashing
+2025-05-31:
+  Ezel/Improvedname, Toriate, JohnFulpWillard:
+  - rscadd: Re-added the Dragoon Tomb lair, now has a Skybulge spear and Drachen armor.
+  - balance: Ice whelps now spit out cold fire.
+  JohnFulpWillard:
+  - qol: Info buttons previously at the top right of your screen (Changelog, wiki,
+      forums) is now in the Escape menu.
+  - qol: Fullscreen is now a preferences and will follow you through rounds.

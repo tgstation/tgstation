@@ -1,8 +1,13 @@
+#define MAINT_LOOT "maintenance_loot"
+#define DUMPSTER_LOOT "dumpster_loot"
+
 /obj/effect/spawner/random/maintenance
 	name = "maintenance loot spawner"
 	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
 	icon_state = "loot"
 	remove_if_cant_spawn = FALSE //don't remove stuff from the global maint list, which other can use.
+	/// The global loot list we are going to use to spawn loot from
+	var/loot_table = MAINT_LOOT
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
 /// A subtype of maintenance loot spawner that does not spawn any decals, for when you want to place them on chasm turfs and such
@@ -19,14 +24,25 @@
 	. += span_info("This spawner has an effective loot count of [get_effective_lootcount()].")
 
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
-	loot = GLOB.maintenance_loot
+	switch(loot_table)
+		if(MAINT_LOOT)
+			loot = GLOB.maintenance_loot
+		if(DUMPSTER_LOOT)
+			loot = GLOB.dumpster_loot
 	return ..()
 
 /obj/effect/spawner/random/maintenance/skew_loot_weights(list/loot_list, exponent)
 	///We only need to skew the weights once, since it's a global list used by all maint spawners.
 	var/static/already_done = FALSE
-	if(loot_list == GLOB.maintenance_loot && already_done)
-		return
+	if(already_done)
+		switch(loot_table)
+			if(MAINT_LOOT)
+				if(loot_list == GLOB.maintenance_loot)
+					return
+			if(DUMPSTER_LOOT)
+				if(loot_list == GLOB.dumpster_loot)
+					return
+
 	already_done = TRUE
 	return ..()
 
@@ -110,3 +126,11 @@
 /obj/effect/spawner/random/maintenance/no_decals/eight
 	name = "8 x maintenance loot spawner"
 	spawn_loot_count = 8
+
+/obj/effect/spawner/random/maintenance/dumpster
+	name = "dumpster loot spawner"
+	spawn_loot_count = 3
+	loot_table = DUMPSTER_LOOT
+
+#undef MAINT_LOOT
+#undef DUMPSTER_LOOT

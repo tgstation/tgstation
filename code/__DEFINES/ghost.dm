@@ -21,7 +21,7 @@
 /// The default ghost display selection for the main player
 #define GHOST_ACCS_DEFAULT_OPTION GHOST_ACCS_FULL
 
-/// The other players ghosts will display as a simple white ghost 
+/// The other players ghosts will display as a simple white ghost
 #define GHOST_OTHERS_SIMPLE "White ghosts"
 /// The other players ghosts will display as transparent mobs
 #define GHOST_OTHERS_DEFAULT_SPRITE "Default sprites"
@@ -31,6 +31,8 @@
 /// The default ghost display selection when viewing other players
 #define GHOST_OTHERS_DEFAULT_OPTION GHOST_OTHERS_THEIR_SETTING
 
+/// A ghosts min view range that we won't allow them to go under by.
+#define GHOST_MIN_VIEW_RANGE 7
 /// A ghosts max view range if they are a BYOND guest or regular account
 #define GHOST_MAX_VIEW_RANGE_DEFAULT 10
 /// A ghosts max view range if they are a BYOND paid member account (P2W feature)
@@ -56,3 +58,18 @@
 #define CAMERA_SEE_GHOSTS_BASIC 1
 /// Pictures taken by a camera will display ghosts and their orbits
 #define CAMERA_SEE_GHOSTS_ORBIT 2 // this doesn't do anything right now as of Jan 2022
+
+
+#define GHOST_DATA_HUDS (1<<0)
+#define GHOST_VISION (1<<1)
+#define GHOST_HEALTH (1<<2)
+#define GHOST_CHEM (1<<3)
+#define GHOST_GAS (1<<4)
+
+#define ALL_GHOST_FLAGS list( \
+	GHOST_DATA_HUDS, \
+	GHOST_VISION, \
+	GHOST_HEALTH, \
+	GHOST_CHEM, \
+	GHOST_GAS, \
+)

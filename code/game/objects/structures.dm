@@ -1,6 +1,7 @@
 /// Inert structures, such as girders, machine frames, and crates/lockers.
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
+	abstract_type = /obj/structure
 	pressure_resistance = 8
 	max_integrity = 300
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -22,10 +23,8 @@
 	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
-	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy(force)
-	GLOB.cameranet.updateVisibility(src)
 	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH_NEIGHBORS(src)
 	return ..()
@@ -74,6 +73,12 @@
 /// For when a mob comes flying through the window, smash it and damage the mob
 /obj/structure/proc/smash_and_injure(mob/living/flying_mob, atom/oldloc, direction)
 	flying_mob.balloon_alert_to_viewers("smashed through!")
-	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
+	flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, exposed_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(src, oldloc))
 	new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
 	deconstruct(disassembled = FALSE)
+
+/obj/structure/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	. = ..()
+	// If we consumed in crafting, we should dump contents out before qdeling them.
+	if(!is_type_in_list(src, current_recipe.parts))
+		dump_contents()

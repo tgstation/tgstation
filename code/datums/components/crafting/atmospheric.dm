@@ -1,14 +1,3 @@
-/datum/crafting_recipe/bluespace_vendor_mount
-	name = "Bluespace Vendor Wall Mount"
-	result = /obj/item/wallframe/bluespace_vendor_mount
-	time = 6 SECONDS
-	reqs = list(
-		/obj/item/stack/sheet/iron = 15,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/cable_coil = 10,
-	)
-	category = CAT_ATMOSPHERIC
-
 /datum/crafting_recipe/pipe
 	name = "Smart pipe fitting"
 	tool_behaviors = list(TOOL_WRENCH)
@@ -39,6 +28,19 @@
 	blacklist = list(/obj/item/analyzer/ranged)
 	category = CAT_ATMOSPHERIC
 
+/datum/crafting_recipe/portable_wind_turbine
+	name = "Portable Wind Turbine"
+	result = /obj/item/portable_wind_turbine
+	tool_behaviors = list(TOOL_WELDER)
+	reqs = list(
+		/obj/item/knife/kitchen = 3,
+		/obj/item/stack/sheet/plastic = 5,
+		/obj/item/stack/rods = 8,
+		/obj/item/stock_parts/servo = 2,
+		/obj/item/stack/cable_coil = 5,
+		)
+	category = CAT_ATMOSPHERIC
+
 ///abstract path for pipe crafting recipes that set the pipe_type of their results and have other checks as well
 /datum/crafting_recipe/spec_pipe
 	var/pipe_type
@@ -48,13 +50,6 @@
 	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
 		return TRUE
 	return FALSE
-
-/datum/crafting_recipe/spec_pipe/on_craft_completion(mob/user, atom/result)
-	var/obj/item/pipe/crafted_pipe = result
-	crafted_pipe.pipe_type = pipe_type
-	crafted_pipe.pipe_color = ATMOS_COLOR_OMNI
-	crafted_pipe.setDir(user.dir)
-	crafted_pipe.update()
 
 /datum/crafting_recipe/spec_pipe/layer_adapter
 	name = "Layer manifold fitting"

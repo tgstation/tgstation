@@ -30,14 +30,6 @@ Then the player gets the profit from selling his own wasted time.
 	///set to false if any objects in a dry run were unscannable
 	var/all_contents_scannable = TRUE
 
-/// Makes sure the exports list is populated and that the report isn't null.
-/proc/init_export(datum/export_report/external_report)
-	if(!length(GLOB.exports_list))
-		setupExports()
-	if(isnull(external_report))
-		external_report = new
-	return external_report
-
 /*
 	* Handles exporting a movable atom and its contents
 	* Arguments:
@@ -46,17 +38,21 @@ Then the player gets the profit from selling his own wasted time.
 	** dry_run: if the item should be actually sold, or if it's just a pirce test
 	** external_report: works as "transaction" object, pass same one in if you're doing more than one export in single go
 	** ignore_typecache: typecache containing types that should be completely ignored
-	** export_market: Defines the market that the items are being sold to.
+	** export_markets: Defines the market that the items are being sold to.
 */
-/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache, export_market = EXPORT_MARKET_STATION)
-	external_report = init_export(external_report)
+/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache, export_markets = list(EXPORT_MARKET_STATION))
+	if(!islist(export_markets))
+		export_markets = list(export_markets)
+
+	if(!external_report)
+		external_report = new
 
 	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
 
 	// We go backwards, so it'll be innermost objects sold first. We also make sure nothing is accidentally delete before everything is sold.
 	var/list/to_delete = list()
 	for(var/atom/movable/thing as anything in reverse_range(contents))
-		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report, export_market)
+		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report, export_markets)
 		if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
@@ -69,10 +65,11 @@ Then the player gets the profit from selling his own wasted time.
 	return external_report
 
 /// It works like export_item_and_contents(), however it ignores the contents. Meaning only `exported_atom` will be valued.
-/proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_market = EXPORT_MARKET_STATION)
-	external_report = init_export(external_report)
+/proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets = list(EXPORT_MARKET_STATION))
+	if(!external_report)
+		external_report = new
 
-	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report, export_market)
+	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report, export_markets)
 	if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
 		if(ismob(exported_atom))
 			exported_atom.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
@@ -81,10 +78,10 @@ Then the player gets the profit from selling his own wasted time.
 	return external_report
 
 /// The main bit responsible for selling the item. Shared by export_single_item() and export_item_and_contents()
-/proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report, export_market)
+/proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets)
 	var/sold = EXPORT_NOT_SOLD
 	for(var/datum/export/export as anything in GLOB.exports_list)
-		if(export.applies_to(exported_atom, apply_elastic, export_market))
+		if(export.applies_to(exported_atom, apply_elastic, export_markets))
 			if(!dry_run && (SEND_SIGNAL(exported_atom, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
 				break
 			//Don't add value of unscannable items for a dry run report
@@ -92,23 +89,28 @@ Then the player gets the profit from selling his own wasted time.
 				external_report.all_contents_scannable = FALSE
 				break
 			sold = export.sell_object(exported_atom, external_report, dry_run, apply_elastic)
-			external_report.exported_atoms += " [exported_atom.name]"
 			break
 	return sold
 
 /datum/export
+	abstract_type = /datum/export
+
 	/// Unit name. Only used in "Received [total_amount] [name]s [message]."
 	var/unit_name = ""
 	/// Message appended to the sale report
 	var/message = ""
-	/// Cost of item, in cargo credits. Must not allow for infinite price dupes, see above.
+
+	///Price per unit of an exported item
 	var/cost = 1
 	/// whether this export can have a negative impact on the cargo budget or not
 	var/allow_negative_cost = FALSE
-	/// coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
-	var/k_elasticity = 1/30
-	/// Coefficient used in the recovery of elastic price calculation. See Process, this value and k_elasticity are multiplied together to form the exponent that returns the price to normal.
-	var/k_recovery_elasticity = 1/30
+	///The percentage of an items real price that is earned when selling that item on cargo
+	var/k_elasticity = 1
+	///The percentage decrease on this exports elasticity per unit of item sold
+	var/k_hit_percentile = 0.05
+	///Time taken for this exports elasticity to reach back to 100%
+	var/k_recovery_time = 10 MINUTES
+
 	/// The multiplier of the amount sold shown on the report. Useful for exports, such as material, which costs are not strictly per single units sold.
 	var/amount_report_multiplier = 1
 	/// Type of the exported object. If none, the export datum is considered base type.
@@ -122,59 +124,69 @@ Then the player gets the profit from selling his own wasted time.
 	/// Export market that this export applies to. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, etc.
 	var/sales_market = EXPORT_MARKET_STATION
 
-	/// cost includes elasticity, this does not.
-	var/init_cost
-
-
-
 /datum/export/New()
 	..()
-	SSprocessing.processing += src
-	init_cost = cost
-	export_types = typecacheof(export_types, only_root_path = !include_subtypes, ignore_root_path = FALSE)
+	export_types = typecacheof(export_types, only_root_path = !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()
-	SSprocessing.processing -= src
 	return ..()
 
-/datum/export/process()
-	cost *= NUM_E**(k_elasticity * k_recovery_elasticity)
-	// A little note here based on the standard values for k_recovery_elasticity: 1/30 will result in a price that started at 20% to go back to 100% in around 20 minutes, ramping up over time.
-	if(cost > init_cost)
-		cost = init_cost
+/datum/export/process(seconds_per_tick)
+	k_elasticity += seconds_per_tick / k_recovery_time
+	if(k_elasticity >= 1)
+		k_elasticity = 1
+		return PROCESS_KILL
 
-/// Checks the cost. 0 cost items are skipped in export.
-/datum/export/proc/get_cost(obj/exported_item, apply_elastic = TRUE)
-	var/amount = get_amount(exported_item)
-	if(apply_elastic)
-		if(k_elasticity != 0)
-			return round((cost/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * amount))) //anti-derivative of the marginal cost function
-		else
-			return round(cost * amount) //alternative form derived from L'Hopital to avoid division by 0
-	else
-		return round(init_cost * amount)
+/**
+ * Returns the cost of 1 unit of the exported item
+ *
+ * Arguments
+ * * obj/exported_item - the item we whos base cost we are trying to compute
+*/
+/datum/export/proc/get_base_cost(obj/exported_item)
+	return cost
 
 /*
-* Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
-* Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
+ * Returns the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
+ * Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
+ *
+ * Arguments
+ * * obj/exported_item - the amount of units in this exported item
 */
 /datum/export/proc/get_amount(obj/exported_item)
 	return 1
 
+
+/**
+ * Returns the cost of the xported item i.e. amount * base cost * elasticity if TRUE
+ *
+ * Arguments
+ * * obj/exported_item - the item we are trying to export
+ * * apply_elastic - should we use elasticity
+*/
+/datum/export/proc/get_cost(obj/exported_item, apply_elastic = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/total = get_base_cost(exported_item) * get_amount(exported_item)
+	if(apply_elastic && initial(k_elasticity) > 0)
+		total *= k_elasticity
+	return ROUND_UP(total)
+
 /// Checks if the item is fit for export datum.
-/datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE, export_market)
-	if(!is_type_in_typecache(exported_item, export_types))
-		return FALSE
-	if(include_subtypes && is_type_in_typecache(exported_item, exclude_types))
-		return FALSE
-	if(!get_cost(exported_item, apply_elastic))
-		return FALSE
-	if(export_market != sales_market)
-		return FALSE
-	if(exported_item.flags_1 & HOLOGRAM_1)
-		return FALSE
-	return TRUE
+/datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE, export_markets)
+	for(var/found_market in export_markets)
+		if(!is_type_in_typecache(exported_item, export_types))
+			continue
+		if(include_subtypes && is_type_in_typecache(exported_item, exclude_types))
+			continue
+		if(!get_cost(exported_item, apply_elastic))
+			continue
+		if(found_market != sales_market)
+			continue
+		if(exported_item.flags_1 & HOLOGRAM_1)
+			continue
+		return TRUE
 
 /**
  * Calculates the exact export value of the object, while factoring in all the relivant variables.
@@ -202,10 +214,14 @@ Then the player gets the profit from selling his own wasted time.
 	if(!(export_result & COMPONENT_STOP_EXPORT_REPORT))
 		report.total_value[src] += export_value
 		report.total_amount[src] += export_amount * amount_report_multiplier
+		report.exported_atoms += "[sold_item.name]"
 
 	if(!dry_run)
-		if(apply_elastic)
-			cost *= NUM_E**(-1 * k_elasticity * export_amount) //marginal cost modifier
+		if(apply_elastic && k_elasticity > 0)
+			k_elasticity -= export_amount * k_hit_percentile
+			if(k_elasticity < 0)
+				k_elasticity = 0
+			SSprocessing.processing |= src
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[sold_item.type]", "[export_value]"))
 	return EXPORT_SOLD
 
@@ -238,11 +254,3 @@ Then the player gets the profit from selling his own wasted time.
 	msg += "."
 	return msg
 
-GLOBAL_LIST_EMPTY(exports_list)
-
-/// Called when the global exports_list is empty, and sets it up.
-/proc/setupExports()
-	for(var/subtype in subtypesof(/datum/export))
-		var/datum/export/export_datum = new subtype
-		if(export_datum.export_types && export_datum.export_types.len) // Exports without a type are invalid/base types
-			GLOB.exports_list += export_datum

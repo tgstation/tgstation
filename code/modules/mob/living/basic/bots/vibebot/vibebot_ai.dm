@@ -6,6 +6,7 @@
 		BB_VIBEBOT_BIRTHDAY_SONG = VIBEBOT_HAPPY_BIRTHDAY,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/find_party_friends,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -16,7 +17,6 @@
 		BB_VIBEBOT_PARTY_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_controller/basic_controller/bot/vibebot/TryPossessPawn(atom/new_pawn)
 	. = ..()

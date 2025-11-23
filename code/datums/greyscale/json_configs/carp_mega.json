@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "megacarp_greyscale",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -17,7 +17,7 @@
 			"type": "icon_state",
 			"icon_state": "megacarp_dead_greyscale",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",

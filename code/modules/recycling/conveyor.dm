@@ -117,12 +117,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
 	last_command = CONVEYOR_FORWARD
 	. = ..()
-	set_operating(TRUE)
+	set_operating(last_command)
 
 /obj/machinery/conveyor/auto/update()
 	. = ..()
 	if(.)
-		set_operating(TRUE)
+		set_operating(last_command)
 
 /obj/machinery/conveyor/auto/inverted
 	icon_state = "conveyor_map_inverted"
@@ -133,6 +133,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	build_neighbors()
 
 /obj/machinery/conveyor/Destroy()
+	last_command = CONVEYOR_OFF
 	set_operating(FALSE)
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
 	attached_wire_ref = null
@@ -340,7 +341,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		new /obj/machinery/conveyor(target_turf, forwards, id)
 
 	else if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
-		user.transferItemToLoc(attacking_item, drop_location())
+		user.transfer_item_to_turf(attacking_item, drop_location())
 	else
 		return ..()
 

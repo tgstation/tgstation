@@ -1,9 +1,18 @@
-import { ComponentProps, ReactNode, useEffect, useState } from 'react';
+import {
+  type ComponentProps,
+  type ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 
-import { Feature, FeatureChoicedServerData, FeatureValueProps } from './base';
+import type {
+  Feature,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+} from './base';
 
 type DropdownInputProps = FeatureValueProps<
   string,
@@ -35,10 +44,10 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
 
     const { choices = [] } = serverData;
 
-    let newOptions: DropdownOptions = [];
+    const newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
-      let displayText: ReactNode = serverData.display_names
+      const displayText: ReactNode = serverData.display_names
         ? serverData.display_names[choice]
         : capitalizeFirst(choice);
 
@@ -81,7 +90,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     if (!serverData) return;
     const { icons = {}, choices = [] } = serverData;
 
-    let newOptions: DropdownOptions = [];
+    const newOptions: DropdownOptions = [];
 
     for (const choice of choices) {
       let displayText: ReactNode = serverData.display_names?.[choice]

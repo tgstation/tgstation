@@ -107,7 +107,7 @@
 
 /datum/crafting_recipe/food/stuffedlegion
 	name = "Stuffed legion"
-	time = 40
+	time = 4 SECONDS
 	reqs = list(
 		/obj/item/food/meat/steak/goliath = 1,
 		/obj/item/organ/monster_core/regenerative_core/legion = 1,

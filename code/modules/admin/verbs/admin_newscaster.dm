@@ -86,15 +86,15 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 			"author" = channel.author,
 			"censored" = channel.censored,
 			"locked" = channel.locked,
-			"ID" = channel.channel_ID,
+			"ID" = channel.channel_id,
 		))
 	if(current_channel)
 		for(var/datum/feed_message/feed_message as anything in current_channel.messages)
-			var/photo_ID = null
+			var/photo_id = null
 			var/list/comment_list
 			if(feed_message.img)
-				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_ID].png")
-				photo_ID = "tmp_photo[feed_message.message_ID].png"
+				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_id].png")
+				photo_id = "tmp_photo[feed_message.message_id].png"
 			for(var/datum/feed_comment/comment_message as anything in feed_message.comments)
 				comment_list += list(list(
 					"auth" = comment_message.author,
@@ -105,16 +105,16 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 				"auth" = feed_message.author,
 				"body" = feed_message.body,
 				"time" = feed_message.time_stamp,
-				"channel_num" = feed_message.parent_ID,
+				"channel_num" = feed_message.parent_id,
 				"censored_message" = feed_message.body_censor,
 				"censored_author" = feed_message.author_censor,
-				"ID" = feed_message.message_ID,
-				"photo" = photo_ID,
+				"ID" = feed_message.message_id,
+				"photo" = photo_id,
 				"comments" = comment_list
 			))
 
 
-	data["viewing_channel"] = current_channel?.channel_ID
+	data["viewing_channel"] = current_channel?.channel_id
 	//Here we display all the information about the current channel.
 	data["channelName"] = current_channel?.channel_name
 	data["channelAuthor"] = current_channel?.author
@@ -141,19 +141,20 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 
 	switch(action)
 		if("setChannel")
-			var/prototype_channel = params["channel"]
-			if(isnull(prototype_channel))
+			var/selected_channel_id = params["channel"]
+			if(isnull(selected_channel_id))
 				return TRUE
-			for(var/datum/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
-				if(prototype_channel == potential_channel.channel_ID)
-					current_channel = potential_channel
+			var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_id["[selected_channel_id]"]
+			if(isnull(potential_channel))
+				return TRUE
+			current_channel = potential_channel
 
 		if("createStory")
 			if(!current_channel)
 				to_chat(usr, "select a channel first!")
 				return TRUE
-			var/prototype_channel = params["current"]
-			create_story(channel_name = prototype_channel)
+			var/current_channel_id = params["current"]
+			create_story(channel_id = current_channel_id)
 
 		if("togglePhoto")
 			toggle_photo()
@@ -189,23 +190,25 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 		if("storyCensor")
 			var/questionable_message = params["messageID"]
 			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
-				if(iterated_feed_message.message_ID == questionable_message)
+				if(iterated_feed_message.message_id == questionable_message)
 					iterated_feed_message.toggle_censor_body()
 					break
 
 		if("author_censor")
 			var/questionable_message = params["messageID"]
 			for(var/datum/feed_message/iterated_feed_message in current_channel.messages)
-				if(iterated_feed_message.message_ID == questionable_message)
+				if(iterated_feed_message.message_id == questionable_message)
 					iterated_feed_message.toggle_censor_author()
 					break
 
 		if("channelDNotice")
-			var/prototype_channel = (params["channel"])
-			for(var/datum/feed_channel/potential_channel in GLOB.news_network.network_channels)
-				if(prototype_channel == potential_channel.channel_ID)
-					current_channel = potential_channel
-					break
+			var/selected_channel_id = (params["channel"])
+			if(isnull(selected_channel_id))
+				return TRUE
+			var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_id["[selected_channel_id]"]
+			if(isnull(potential_channel))
+				return TRUE
+			current_channel = potential_channel
 			current_channel.toggle_censor_D_class()
 
 		if("startComment")
@@ -214,7 +217,7 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 			if(!commentable_message)
 				return TRUE
 			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
-				if(iterated_feed_message.message_ID == commentable_message)
+				if(iterated_feed_message.message_id == commentable_message)
 					current_message = iterated_feed_message
 			return TRUE
 
@@ -284,10 +287,10 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
 /datum/newspanel/proc/create_channel(channel_locked)
 	if(!channel_name)
 		return
-	for(var/datum/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
-		if(iterated_feed_channel.channel_name == channel_name)
-			tgui_alert(usr, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
-			return TRUE
+	var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_name[channel_name]
+	if(potential_channel)
+		tgui_alert(usr, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
+		return TRUE
 	if(!channel_desc)
 		return TRUE
 	if(isnull(channel_locked))
@@ -334,11 +337,12 @@ ADMIN_VERB(access_news_network, R_ADMIN, "Access Newscaster Network", "Allows yo
  * Verifies that the message is being written to a real feed_channel, then provides a text input for the feed story to be written into.
  * Finally, it submits the message to the network, is logged globally, and clears all message-specific variables from the machine.
  */
-/datum/newspanel/proc/create_story(channel_name)
-	for(var/datum/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
-		if(channel_name == potential_channel.channel_ID)
-			current_channel = potential_channel
-			break
+/datum/newspanel/proc/create_story(channel_id)
+	var/datum/feed_channel/potential_channel = GLOB.news_network.network_channels_by_id["[channel_id]"]
+	if(isnull(potential_channel))
+		return
+	current_channel = potential_channel
+
 	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, max_length = MAX_BROADCAST_LEN, multiline = TRUE)
 	if(length(temp_message) <= 1)
 		return TRUE

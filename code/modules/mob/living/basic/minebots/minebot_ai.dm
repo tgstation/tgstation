@@ -32,7 +32,6 @@
 		/datum/ai_planning_subtree/minebot_mining,
 		/datum/ai_planning_subtree/locate_dead_humans,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_planning_subtree/launch_missiles
 

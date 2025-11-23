@@ -1,7 +1,8 @@
 /obj/item/food/meat
-	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/meat.dmi'
+	abstract_type = /obj/item/food/meat
 	var/subjectname = ""
 	var/subjectjob = null
 	var/blood_decal_type = /obj/effect/decal/cleanable/blood
@@ -9,7 +10,7 @@
 /obj/item/food/meat/Initialize(mapload, blood_dna_list = list("meaty DNA" = get_blood_type(BLOOD_TYPE_MEAT)))
 	. = ..()
 
-	if(!blood_decal_type)
+	if(!blood_decal_type || !length(custom_materials))
 		return
 
 	AddComponent(
@@ -18,13 +19,13 @@
 		blood_spawn_chance = 45,\
 		transfer_blood_dna = TRUE,\
 		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
+		blood_dna_info = blood_dna_list,\
 	)
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 		blood_dna = blood_dna_list,\
-		diseases = null,\
 	)
 
 /obj/item/food/meat/slab
@@ -51,7 +52,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, MEATSLAB_PROCESSED_AMOUNT, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 ///////////////////////////////////// HUMAN MEATS //////////////////////////////////////////////////////
 
@@ -65,7 +66,10 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/human/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
+
+/obj/item/food/meat/slab/human/mutant
+	abstract_type = /obj/item/food/meat/slab/human/mutant
 
 /obj/item/food/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
@@ -153,6 +157,9 @@
 /obj/item/food/meat/slab/human/mutant/skeleton/make_processable()
 	return //skeletons don't have cutlets
 
+/obj/item/food/meat/slab/human/mutant/skeleton/make_grillable()
+	return
+
 /obj/item/food/meat/slab/human/mutant/zombie
 	name = "meat (rotten)"
 	icon_state = "rottenmeat"
@@ -204,6 +211,10 @@
 	foodtypes = RAW | MEAT | BUGS
 	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
+/obj/item/food/meat/slab/bugmeat/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, health_modifier = 2, color_chances = string_list(list(/datum/raptor_color/green = 2)))
+
 /obj/item/food/meat/slab/mouse
 	name = "mouse meat"
 	desc = "A slab of mouse meat. Best not eat it raw."
@@ -246,6 +257,7 @@
 	desc = "A slice from a huge tomato."
 	icon_state = "tomatomeat"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	custom_materials = null
 	tastes = list("tomato" = 1)
 	foodtypes = FRUIT
 	blood_decal_type = /obj/effect/decal/cleanable/food/tomato_smudge
@@ -254,7 +266,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/killertomato, rand(70 SECONDS, 85 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/killertomato/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/bear
 	name = "bear meat"
@@ -270,7 +282,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/bear/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/bear/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/bear, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -290,10 +302,10 @@
 	bite_consumption = 4
 	tastes = list("meat" = 1, "acid" = 1)
 	foodtypes = RAW | MEAT
-	blood_decal_type = /obj/effect/decal/cleanable/xenoblood
+	blood_decal_type = /obj/effect/decal/cleanable/blood/xeno
 
 /obj/item/food/meat/slab/xeno/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/xeno/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/xeno, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -312,7 +324,7 @@
 	blood_decal_type = /obj/effect/decal/cleanable/insectguts
 
 /obj/item/food/meat/slab/spider/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/spider/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/spider, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -328,6 +340,10 @@
 	icon_state = "goliathmeat"
 	tastes = list("meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
+
+/obj/item/food/meat/slab/goliath/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, attack_modifier = 0.5, speed_modifier = -0.05, color_chances = string_list(list(/datum/raptor_color/red = 5)))
 
 /obj/item/food/meat/slab/goliath/burn()
 	visible_message(span_notice("[src] finishes cooking!"))
@@ -356,6 +372,7 @@
 	desc = "A raw piece of bacon."
 	icon_state = "bacon"
 	bite_consumption = 2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/fat = 3,
@@ -371,6 +388,7 @@
 	name = "piece of bacon"
 	desc = "A delicious piece of bacon."
 	icon_state = "baconcooked"
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 2,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
@@ -393,7 +411,7 @@
 	foodtypes = RAW | MEAT | GORE
 
 /obj/item/food/meat/slab/gondola/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/gondola/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
@@ -410,7 +428,7 @@
 
 /obj/item/food/meat/slab/penguin/make_processable()
 	. = ..()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/penguin/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/penguin, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
@@ -453,7 +471,7 @@
 	starting_reagent_purity = 1
 
 /obj/item/food/meat/slab/chicken/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/meat/slab/chicken/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/chicken, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe? (no this is chicken)
@@ -559,6 +577,10 @@
 	trash_type = null
 	tastes = list("meat" = 1, "rock" = 1)
 
+/obj/item/food/meat/steak/goliath/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, attack_modifier = 1, speed_modifier = -0.075, color_chances = string_list(list(/datum/raptor_color/red = 7)))
+
 /obj/item/food/meat/steak/gondola
 	name = "gondola steak"
 	tastes = list("meat" = 1, "tranquility" = 1)
@@ -606,10 +628,15 @@
 	desc = "A raw meat cutlet."
 	icon_state = "rawcutlet"
 	bite_consumption = 2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	var/meat_type = "meat"
+
+/obj/item/food/meat/rawcutlet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/meat/rawcutlet/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -670,7 +697,7 @@
 /obj/item/food/meat/rawcutlet/xeno
 	name = "raw xeno cutlet"
 	tastes = list("meat" = 1, "acid" = 1)
-	blood_decal_type = /obj/effect/decal/cleanable/xenoblood
+	blood_decal_type = /obj/effect/decal/cleanable/blood/xeno
 
 /obj/item/food/meat/rawcutlet/xeno/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/xeno, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
@@ -716,6 +743,7 @@
 	desc = "A cooked meat cutlet."
 	icon_state = "cutlet"
 	bite_consumption = 2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
@@ -725,6 +753,10 @@
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(on_microwave_cooked))
+
+/obj/item/food/meat/cutlet/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/food_storage)
 
 ///This proc handles setting up the correct meat name for the cutlet, this should definitely be changed with the food rework.
 /obj/item/food/meat/cutlet/proc/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency)

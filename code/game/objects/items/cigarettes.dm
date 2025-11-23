@@ -199,6 +199,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = ITEM_SLOT_MASK
 	grind_results = list()
 	heat = 1000
+	light_range = 1
+	light_color = LIGHT_COLOR_FIRE
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
 	throw_verb = "flick"
 	/// Whether this cigarette has been lit.
 	VAR_FINAL/lit = FALSE
@@ -407,6 +411,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lit = TRUE
 	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
+	set_light_on(TRUE)
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
 		return
@@ -416,21 +421,36 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/tools/welder.ogg'
 	damtype = BURN
 	force = 4
-	if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
+
+	if(reagents?.has_reagent(/datum/reagent/flash_powder))
+		if(!isliving(loc))
+			loc.visible_message(span_hear("\The [src] burns up!"))
+			qdel(src)
+			return
+		var/mob/living/user = loc
+		loc.visible_message(span_hear("[user]'s [name] burns up as [p_they(user)] fall to the ground!"), span_danger("The solution violently explodes!"))
+		user.flash_act(INFINITY, visual = TRUE, length = 5 SECONDS)
+		user.playsound_local(get_turf(user), SFX_EXPLOSION, 50, TRUE)
+		user.cause_hallucination(/datum/hallucination/death, "trick trick [name]")
+		qdel(src)
+		return
+
+	if(reagents?.has_reagent(/datum/reagent/drug/methamphetamine))
+		reagents.flags |= NO_REACT
+
+	if(reagents?.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/toxin/plasma) / 2.5, 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
-	if(reagents.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
+	if(reagents?.get_reagent_amount(/datum/reagent/fuel)) // the fuel explodes, too, but much less violently
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount(/datum/reagent/fuel) / 5, 1), get_turf(src), 0, 0)
 		e.start(src)
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	reagents.flags &= ~(NO_REACT)
-	reagents.handle_reactions()
 	update_appearance(UPDATE_ICON)
 	if(flavor_text)
 		var/turf/T = get_turf(src)
@@ -456,6 +476,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lit = FALSE
 	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
+	set_light_on(FALSE)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
 	QDEL_NULL(cig_smoke)
@@ -637,6 +658,35 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigarette/robust
 	desc = "A Robust brand cigarette."
 
+/obj/item/cigarette/greytide
+	name = "grey mainthol"
+	desc = "Made by hand, has a funky smell."
+	chem_volume = 60
+	lung_harm = 2.5
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/consumable/menthol = 6, /datum/reagent/medicine/oculine = 1)
+	/// Weighted list of random reagents to add
+	var/static/list/possible_reagents = list(
+		/datum/reagent/toxin/fentanyl = 2,
+		/datum/reagent/glitter/random = 2,
+		/datum/reagent/drug/aranesp = 2,
+		/datum/reagent/consumable/laughter = 2,
+		/datum/reagent/medicine/insulin = 2,
+		/datum/reagent/drug/maint/powder = 2,
+		/datum/reagent/drug/maint/sludge = 2,
+		/datum/reagent/toxin/staminatoxin = 2,
+		/datum/reagent/toxin/leadacetate = 2,
+		/datum/reagent/drug/space_drugs = 2,
+		/datum/reagent/drug/pumpup = 2,
+		/datum/reagent/drug/kronkaine = 2,
+		/datum/reagent/consumable/mintextract = 2,
+		/datum/reagent/pax = 1,
+	)
+
+/obj/item/cigarette/greytide/Initialize(mapload)
+	. = ..()
+	if(prob(40))
+		reagents.add_reagent(pick_weight(possible_reagents), rand(10, 15))
+
 /obj/item/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/gold = 3) // Just enough to taste a hint of expensive metal.
@@ -672,6 +722,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Xeno Filtered brand cigarette."
 	lung_harm = 2
 	list_reagents = list (/datum/reagent/drug/nicotine = 20, /datum/reagent/medicine/regen_jelly = 15, /datum/reagent/drug/krokodil = 4)
+
+/obj/item/cigarette/flash_powder
+	desc = /obj/item/cigarette/space_cigarette::desc
+	list_reagents = list (/datum/reagent/drug/nicotine = 9, /datum/reagent/flash_powder = 5)
 
 // Rollies.
 
@@ -771,6 +825,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "roach"
 	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
+
+/obj/item/cigbutt/greycigbutt
+	name = "butt"
+	desc = "It's low tide, now."
+	icon_state = "cigbutt"
 
 /obj/item/cigbutt/roach/Initialize(mapload)
 	. = ..()
@@ -894,18 +953,20 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, span_notice("Your [name] goes out."))
 		packeditem = null
 	update_appearance(UPDATE_ICON)
+	set_light_on(FALSE)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
 /obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(thing, /obj/item/food/grown))
+	if(!(istype(thing, /obj/item/food/grown) || istype(thing, /obj/item/food/drug)))
 		return ..()
 
-	var/obj/item/food/grown/to_smoke = thing
 	if(packeditem)
 		to_chat(user, span_warning("It is already packed!"))
 		return
-	if(!HAS_TRAIT(to_smoke, TRAIT_DRIED))
+
+	var/obj/item/to_smoke = thing
+	if(istype(to_smoke, /obj/item/food/grown) && !HAS_TRAIT(to_smoke, TRAIT_DRIED))
 		to_chat(user, span_warning("It has to be dried first!"))
 		return
 
@@ -939,6 +1000,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	inhand_icon_on = null
 	inhand_icon_off = null
 
+/obj/item/cigarette/pipe/crackpipe
+	name = "glass pipe"
+	desc = "An ergonomic, low-key delivery method for the combusted. This apparatus taught the ancients much wisdom."
+	icon_state = "crackpipe"
+	icon_on = "crackpipeon"
+	icon_off = "crackpipe"
+	inhand_icon_on = null
+	inhand_icon_off = null
+	lung_harm = 2
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+
 ///////////
 //ROLLING//
 ///////////
@@ -951,7 +1023,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/rollingpaper/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/cigarette/rollie, CUSTOM_INGREDIENT_ICON_NOCHANGE, ingredient_type=CUSTOM_INGREDIENT_TYPE_DRYABLE, max_ingredients=2)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/cigarette/rollie, CUSTOM_INGREDIENT_ICON_NOCHANGE, ingredient_type=CUSTOM_INGREDIENT_TYPE_DRYABLE, max_ingredients=2)
 
 
 ///////////////
@@ -971,6 +1043,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
+	light_range = 1
+	light_color = LIGHT_COLOR_HALOGEN
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
 
 	/// The capacity of the vape.
 	var/chem_volume = 100
@@ -1070,12 +1146,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	to_chat(user, span_notice("You start puffing on the vape."))
 	reagents.flags &= ~(NO_REACT)
 	START_PROCESSING(SSobj, src)
+	set_light_on(TRUE)
 
 /obj/item/vape/dropped(mob/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
 		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
+		set_light_on(FALSE)
 
 /obj/item/vape/proc/handle_reagents()
 	if(!reagents.total_volume)
@@ -1170,9 +1248,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags_1 = NONE
 
 /obj/item/vape/black
-	icon_state = "/obj/item/vape/black"
 	greyscale_colors = "#2e2e2e"
-	flags_1 = NONE
+	flags_1 = NO_NEW_GAGS_PREVIEW_1 // same color as basetype
 
 /obj/item/vape/white
 	icon_state = "/obj/item/vape/white"

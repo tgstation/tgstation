@@ -1,5 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
+	abstract_type = /obj/item/mecha_parts/mecha_equipment/weapon
 	range = MECHA_RANGED
 	equipment_slot = MECHA_WEAPON
 	destroy_sound = 'sound/vehicles/mecha/weapdestr.ogg'
@@ -194,7 +195,7 @@
 	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
 		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
 			to_chat(user, span_warning("[themech] already has [thegun] installed!"))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
 			has_molten = TRUE
 	if (has_molten)
@@ -209,7 +210,7 @@
 	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
 		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
 			to_chat(user, span_warning("[themech] already has [thegun] installed!"))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
 			has_cryo = TRUE
 	if (has_cryo)
@@ -272,9 +273,7 @@
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.adjust_stutter(40 SECONDS)
-		var/obj/item/organ/ears/ears = M.get_organ_slot(ORGAN_SLOT_EARS)
-		if(ears)
-			ears.adjustEarDamage(0, 30)
+		M.sound_damage(deafen = 30 SECONDS)
 		M.Paralyze(60)
 		if(prob(30))
 			M.Stun(200)
@@ -659,7 +658,7 @@
 
 		playsound(chassis, clampsound, 50, FALSE, -6)
 		mobtarget.visible_message(span_notice("[chassis] lifts [mobtarget] into its internal holding cell."),span_userdanger("[chassis] grips you with [src] and prepares to load you into [secmech.cargo_hold]!"))
-		if(!do_after_cooldown(mobtarget, source))
+		if(!do_after_cooldown(mobtarget, source, flags = MECH_DO_AFTER_DIR_CHANGE_FLAG|MECH_DO_AFTER_ADJACENCY_FLAG))
 			return
 		mobtarget.forceMove(secmech.cargo_hold)
 		log_message("Loaded [mobtarget]. Cargo compartment capacity: [secmech.cargo_hold.cargo_capacity - secmech.cargo_hold.contents.len]", LOG_MECHA)
@@ -668,7 +667,6 @@
 		if(autocuff && iscarbon(target))
 			var/mob/living/carbon/carbontarget = target
 			carbontarget.set_handcuffed(new cuff_type(carbontarget))
-			carbontarget.update_handcuffed()
 		return
 
 	if(istype(target, /obj/machinery/door))

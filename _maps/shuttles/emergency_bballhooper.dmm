@@ -503,7 +503,7 @@
 	name = "TIMEOUT BOX"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Cf" = (
@@ -972,7 +972,7 @@
 /obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
-/obj/machinery/vending/wallmed/directional/east{
+/obj/machinery/wall_healer/free/directional/east{
 	name = "Hooper's First Medical Kit"
 	},
 /obj/machinery/light/small/directional/east,

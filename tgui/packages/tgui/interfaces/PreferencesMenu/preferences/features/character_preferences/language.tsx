@@ -1,4 +1,8 @@
-import { CheckboxInput, FeatureChoiced, FeatureToggle } from '../base';
+import {
+  CheckboxInput,
+  type FeatureChoiced,
+  type FeatureToggle,
+} from '../base';
 import {
   FeatureDropdownInput,
   FeatureIconnedDropdownInput,

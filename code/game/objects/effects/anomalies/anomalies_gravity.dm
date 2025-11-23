@@ -1,12 +1,4 @@
 
-/atom/movable/warp_effect
-	plane = GRAVITY_PULSE_PLANE
-	appearance_flags = PIXEL_SCALE|LONG_GLIDE // no tile bound so you can see it around corners and so
-	icon = 'icons/effects/light_overlays/light_352.dmi'
-	icon_state = "light"
-	pixel_x = -176
-	pixel_y = -176
-
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon = 'icons/effects/effects.dmi'
@@ -14,8 +6,7 @@
 	density = FALSE
 	anomaly_core = /obj/item/assembly/signaler/anomaly/grav
 	var/boing = 0
-	///Warp effect holder for displacement filter to "pulse" the anomaly
-	var/atom/movable/warp_effect/warp
+	var/object_launch_prob = 20
 
 /obj/effect/anomaly/grav/Initialize(mapload, new_lifespan)
 	. = ..()
@@ -25,21 +16,6 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	apply_wibbly_filters(src)
 
-	warp = new(src)
-	vis_contents += warp
-
-/obj/effect/anomaly/grav/Destroy()
-	vis_contents -= warp
-	warp = null
-	return ..()
-
-/obj/effect/anomaly/grav/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	. = ..()
-	if(same_z_layer)
-		return
-	if(warp)
-		SET_PLANE(warp, PLANE_TO_TRUE(warp.plane), new_turf)
-
 /obj/effect/anomaly/grav/anomalyEffect(seconds_per_tick)
 	..()
 	boing = 1
@@ -47,23 +23,17 @@
 		if(!O.anchored)
 			step_towards(O,src)
 	for(var/mob/living/M in range(0, src))
-		gravShock(M)
+		if(!M.mob_negates_gravity())
+			gravShock(M)
 	for(var/mob/living/M in orange(4, src))
 		if(!M.mob_negates_gravity())
 			step_towards(M,src)
 	for(var/obj/O in range(0,src))
-		if(!O.anchored)
-			if(isturf(O.loc))
-				var/turf/T = O.loc
-				if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-					continue
-			var/mob/living/target = locate() in view(4,src)
-			if(target && !target.stat)
-				O.throw_at(target, 5, 10)
-
-	//anomaly quickly contracts then slowly expands its ring
-	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
-	animate(time = seconds_per_tick*7, transform = matrix())
+		if(O.anchored || HAS_TRAIT(O, TRAIT_UNDERFLOOR))
+			continue
+		var/mob/living/target = locate() in view(4,src)
+		if(target && !target.stat && prob(object_launch_prob))
+			O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -75,11 +45,11 @@
 /obj/effect/anomaly/grav/Bumped(atom/movable/AM)
 	gravShock(AM)
 
-/obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
-	if(boing && isliving(A) && !A.stat)
-		A.Paralyze(40)
-		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
-		A.throw_at(target, 5, 1)
+/obj/effect/anomaly/grav/proc/gravShock(mob/living/living_debris)
+	if(boing && isliving(living_debris) && !living_debris.stat && !living_debris.mob_negates_gravity())
+		living_debris.Knockdown(4 SECONDS)
+		var/atom/target = get_edge_target_turf(living_debris, get_dir(src, get_step_away(living_debris, src)))
+		living_debris.throw_at(target, 5, 1)
 		boing = 0
 
 /obj/effect/anomaly/grav/detonate()

@@ -9,7 +9,7 @@
 			per_category[possible_sale.category] = list()
 		per_category[possible_sale.category] += possible_sale
 
-	for (var/i in 1 to num)
+	for (var/i in 1 to min(length(per_category), num))
 		var/datum/uplink_category/item_category = pick(per_category)
 		var/datum/uplink_item/taken_item = pick(per_category[item_category])
 		per_category -= item_category
@@ -29,7 +29,17 @@
 			"Use only as directed.",
 			"16% sales tax will be charged for orders originating within Space Nebraska.",
 		)
-		uplink_item.limited_stock = limited_stock
+
+		//We want to limit the purchase amount of some items without adjusting the pricing.
+		if (uplink_item.limited_discount_stock > 0) {
+			uplink_item.limited_stock = uplink_item.limited_discount_stock
+		}
+
+		//if stock limited is passed into the function, we'll override everything
+		if (limited_stock > 0) {
+			uplink_item.limited_stock = limited_stock
+		}
+
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
 		uplink_item.stock_key = WEAKREF(uplink_item)
@@ -73,6 +83,8 @@
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
+	/// How many items of this stock can be purchased from the discount tab.
+	var/limited_discount_stock = -1
 	/// A bitfield to represent what uplinks can purchase this item.
 	/// See [`code/__DEFINES/uplink.dm`].
 	var/purchasable_from = ALL
@@ -197,7 +209,7 @@
 
 	QDEL_NULL(gun_reward.pin)
 	var/obj/item/firing_pin/pin = new
-	pin.gun_insert(new_gun = gun_reward)
+	pin.gun_insert(new_gun = gun_reward, starting = TRUE)
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)

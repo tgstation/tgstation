@@ -422,7 +422,8 @@
 			return
 
 	var/obj/item/food/pizza/favourite_pizza_type = pizza_preferences[nommer.ckey]
-	pizza = new favourite_pizza_type
+	pizza = new favourite_pizza_type(src)
+	pizza.slice()
 	boxtag_set = FALSE
 	update_appearance() //update our boxtag to match our new pizza
 	pizza.foodtypes = nommer.get_liked_foodtypes() //it's our favorite!

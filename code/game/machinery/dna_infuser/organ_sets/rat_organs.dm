@@ -61,6 +61,7 @@
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
+	beat_noise = "a fast-paced high-pitched pit-pat"
 
 /obj/item/organ/heart/rat/Initialize(mapload)
 	. = ..()
@@ -74,7 +75,7 @@
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
 	if(human_receiver.can_mutate())
-		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
+		human_receiver.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
 	//but 1.5 damage
 	human_receiver.physiology?.damage_resistance -= 50
 
@@ -83,8 +84,7 @@
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	if(human_heartless.can_mutate())
-		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+	human_heartless.dna.remove_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
 	human_heartless.physiology?.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
@@ -107,8 +107,19 @@
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
+/obj/item/organ/tongue/rat/proc/whimsy_check(mob/living/checking)
+	if(check_holidays(APRIL_FOOLS))
+		return TRUE
+	if(HAS_PERSONALITY(checking, /datum/personality/whimsical))
+		return TRUE
+	if(prob(1))
+		return TRUE
+	return FALSE
+
 /obj/item/organ/tongue/rat/modify_speech(datum/source, list/speech_args)
 	. = ..()
+	if(!whimsy_check(source))
+		return
 	var/message = LOWER_TEXT(speech_args[SPEECH_MESSAGE])
 	if(message == "hi" || message == "hi.")
 		speech_args[SPEECH_MESSAGE] = "Cheesed to meet you!"
@@ -125,6 +136,8 @@
 
 /obj/item/organ/tongue/rat/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
 	SIGNAL_HANDLER
+	if(!whimsy_check(offerer))
+		return
 	INVOKE_ASYNC(src, PROC_REF(its_on_the_mouse), offerer, taker)
 
 /obj/item/organ/tongue/rat/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker)

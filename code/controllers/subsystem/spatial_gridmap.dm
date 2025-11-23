@@ -104,6 +104,9 @@ SUBSYSTEM_DEF(spatial_grid)
 	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
 
+	///for debugging, stores a list of grids with colors to paint atoms with
+	var/list/cells_with_color
+
 /datum/controller/subsystem/spatial_grid/Initialize()
 	cells_on_x_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxx)
 	cells_on_y_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxy)
@@ -842,6 +845,31 @@ SUBSYSTEM_DEF(spatial_grid)
 	[cells_with_clients] cells have clients, [cells_with_hearables] have hearables, and [cells_with_atmos] have atmos machines \
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
+
+//A debugging proc that colors objects based on what grid they belong to
+/datum/controller/subsystem/spatial_grid/proc/paint_grids()
+	cells_with_color = list()
+	for(var/list/z_level_grid as anything in grids_by_z_level)
+		for(var/list/cell_row as anything in z_level_grid)
+			for(var/datum/spatial_grid_cell/cell as anything in cell_row)
+				cells_with_color[cell] = RANDOM_COLOUR
+	for(var/atom/thing in world.contents)
+		var/datum/spatial_grid_cell/things_cell = get_cell_of(thing)
+		if(!things_cell)
+			continue
+		thing.add_atom_colour(cells_with_color[things_cell], ADMIN_COLOUR_PRIORITY)
+		if(ismovable(thing))
+			RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(update_color))
+		CHECK_TICK
+
+//A debugging proc that colors objects based on what grid they belong to
+/datum/controller/subsystem/spatial_grid/proc/update_color(atom/movable/thing)
+	SIGNAL_HANDLER
+
+	var/datum/spatial_grid_cell/things_cell = get_cell_of(thing)
+	if(!isdatum(things_cell))
+		return
+	thing.add_atom_colour(cells_with_color[things_cell], ADMIN_COLOUR_PRIORITY)
 
 #undef BOUNDING_BOX_MAX
 #undef BOUNDING_BOX_MIN

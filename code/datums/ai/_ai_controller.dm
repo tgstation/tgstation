@@ -18,7 +18,7 @@ multiple modular subtrees with behaviors
 	var/list/blackboard = list()
 
 	///Bitfield of traits for this AI to handle extra behavior
-	var/ai_traits = NONE
+	var/ai_traits = DEFAULT_AI_FLAGS
 	///Current actions planned to be performed by the AI in the upcoming plan
 	var/list/planned_behaviors = list()
 	///Current actions being performed by the AI.
@@ -387,7 +387,7 @@ multiple modular subtrees with behaviors
 
 		///Stops pawns from performing such actions that should require the target to be adjacent.
 		var/atom/movable/moving_pawn = pawn
-		var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || moving_pawn.CanReach(current_movement_target)
+		var/can_reach = !(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_REACH) || current_movement_target.IsReachableBy(moving_pawn)
 		if(can_reach && current_behavior.required_distance >= get_dist(moving_pawn, current_movement_target)) ///Are we close enough to engage?
 			if(ai_movement.moving_controllers[src] == current_movement_target) //We are close enough, if we're moving stop.
 				ai_movement.stop_moving_towards(src)

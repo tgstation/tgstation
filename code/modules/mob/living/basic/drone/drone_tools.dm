@@ -42,10 +42,12 @@
 	desc = "A screwdriver built into your chassis."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_screwdriver"
+	post_init_icon_state = null
 	inhand_icon_state = "screwdriver"
 	item_flags = NO_MAT_REDEMPTION
 	random_color = FALSE
-
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/item/screwdriver/drone/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
 	. = ..()

@@ -1,6 +1,6 @@
 ///Lavaproof, fireproof, fast mech with low armor and higher energy consumption and has an internal ore box.
 /obj/vehicle/sealed/mecha/clarke
-	desc = "Combining man and machine for a better, stronger miner, Cannot strafe Can even resist lava!"
+	desc = "Combining man and machine for a better, stronger miner. Can even resist lava! Due to its tracks it cannot strafe."
 	name = "\improper Clarke"
 	icon_state = "clarke"
 	base_icon_state = "clarke"
@@ -29,7 +29,7 @@
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	mech_type = EXOSUIT_MODULE_CLARKE
 	enter_delay = 40
-	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
+	mecha_flags = IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 	accesses = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 	allow_diagonal_movement = FALSE
 	pivot_step = TRUE
@@ -120,7 +120,7 @@
 	button_icon = 'icons/obj/devices/mecha_equipment.dmi'
 	button_icon_state = "mecha_sleeper_miner"
 
-/datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/clarke_scoop_body/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	var/obj/item/mecha_parts/mecha_equipment/sleeper/clarke/sleeper = locate() in chassis
@@ -139,7 +139,7 @@
 	button_icon_state = "mech_search_ruins"
 	COOLDOWN_DECLARE(search_cooldown)
 
-/datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(trigger_flags)
+/datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(mob/clicker, trigger_flags)
 	if(!..())
 		return
 	if(!chassis || !(owner in chassis.occupants))

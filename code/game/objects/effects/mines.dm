@@ -65,6 +65,9 @@
 	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
 		return FALSE
 
+	if(on_who.anchored || HAS_TRAIT(on_who, TRAIT_WALLMOUNTED))
+		return FALSE
+
 	var/mob/living/living_mob
 	if(ismob(on_who))
 		if(!isliving(on_who)) //no ghosties.

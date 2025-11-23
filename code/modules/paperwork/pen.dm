@@ -93,7 +93,7 @@
 		"embedding" = get_embed().create_copy(),
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
-		"bare_wound_bonus" = bare_wound_bonus,
+		"exposed_wound_bonus" = exposed_wound_bonus,
 		"demolition_mod" = demolition_mod,
 	)
 
@@ -184,7 +184,6 @@
 	force = 5
 	throwforce = 5
 	throw_speed = 4
-	colour = "#DC143C"
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT*7.5)
 	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
@@ -309,7 +308,7 @@
 	attack_verb_simple = list("slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_POINTY
 	armour_penetration = 20
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	item_flags = NO_BLOOD_ON_ITEM
 	light_system = OVERLAY_LIGHT
 	light_range = 1.5
@@ -445,9 +444,10 @@
 /datum/embedding/edagger_active
 	embed_chance = 100
 
-/obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
+/obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, datum/detective_scanner_log/entry)
 	SIGNAL_HANDLER
-	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
+
+	entry.add_data_entry(DETSCAN_CATEGORY_ILLEGAL, "Hard-light generator detected.")
 
 /obj/item/pen/survival
 	name = "survival pen"

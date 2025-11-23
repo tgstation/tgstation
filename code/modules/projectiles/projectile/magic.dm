@@ -367,16 +367,12 @@
 
 /obj/projectile/magic/wipe/proc/possession_test(mob/living/carbon/target)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = target.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
-	var/poll_message = "Do you want to play as [span_danger(target.real_name)]?"
-	if(target.mind)
-		poll_message = "[poll_message] Job:[span_notice(target.mind.assigned_role.title)]."
-	if(target.mind && target.mind.special_role)
-		poll_message = "[poll_message] Status:[span_boldnotice(target.mind.special_role)]."
-	else if(target.mind)
-		var/datum/antagonist/A = target.mind.has_antag_datum(/datum/antagonist/)
-		if(A)
-			poll_message = "[poll_message] Status:[span_boldnotice(A.name)]."
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = target, alert_pic = target, role_name_text = "bolt of possession")
+	var/whomst = span_danger(target.real_name)
+	if(!is_unassigned_job(target.mind?.assigned_role))
+		whomst += "Job: [span_notice(target.mind.assigned_role.title)]."
+	if(length(target.mind?.get_special_roles()))
+		whomst += "Status: [span_boldnotice(english_list(target.mind.get_special_roles()))]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = target, alert_pic = target, role_name_text = "bolt of possession")
 	if(target.stat == DEAD)//boo.
 		return
 	if(chosen_one)

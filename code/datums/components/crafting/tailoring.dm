@@ -119,7 +119,7 @@
 
 /datum/crafting_recipe/grass_sheath
 	name = "Grass Sabre Sheath"
-	result = /obj/item/storage/belt/grass_sabre
+	result = /obj/item/storage/belt/sheath/grass_sabre
 	reqs = list(/obj/item/food/grown/grass = 4,
 				/obj/item/food/grown/grass/fairy = 2)
 	time = 4 SECONDS

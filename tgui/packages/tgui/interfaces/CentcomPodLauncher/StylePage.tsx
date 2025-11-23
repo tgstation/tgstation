@@ -2,7 +2,7 @@ import { Box, Button, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function StylePage(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -52,7 +52,7 @@ export function StylePage(props) {
           width="45px"
         >
           <Box
-            className={classes(['supplypods64x64', 'pod_asset' + page.id])}
+            className={classes(['supplypods64x64', `pod_asset${page.id}`])}
             style={{
               pointerEvents: 'none',
               transform: 'rotate(45deg) translate(-25%,-10%)',

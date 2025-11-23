@@ -9,19 +9,18 @@
 
 /obj/effect/blessing/Initialize(mapload)
 	. = ..()
-	for(var/obj/effect/blessing/B in loc)
-		if(B != src)
-			return INITIALIZE_HINT_QDEL
-		var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = ABOVE_NORMAL_TURF_LAYER, loc = src)
-		I.alpha = 64
-		I.appearance_flags = RESET_ALPHA
-		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/blessed_aware, "blessing", I)
+	var/image/blessing_icon = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = ABOVE_NORMAL_TURF_LAYER, loc = src)
+	blessing_icon.alpha = 64
+	blessing_icon.appearance_flags = RESET_ALPHA
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/blessed_aware, "blessing", blessing_icon)
+
 	RegisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_cult_teleport))
 
 /obj/effect/blessing/Destroy()
 	UnregisterSignal(loc, COMSIG_ATOM_INTERCEPT_TELEPORTING)
 	return ..()
 
+///Called from intercept teleport signal, blocks cult teleporting from being able to teleport on us.
 /obj/effect/blessing/proc/block_cult_teleport(datum/source, channel, turf/origin)
 	SIGNAL_HANDLER
 

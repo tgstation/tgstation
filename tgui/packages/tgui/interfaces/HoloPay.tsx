@@ -134,7 +134,7 @@ const TerminalDisplay = (props) => {
               content={
                 <>
                   <Icon name="coins" />
-                  Pay {force_fee + ' cr'}
+                  Pay {`${force_fee} cr`}
                 </>
               }
               disabled={cannot_pay}

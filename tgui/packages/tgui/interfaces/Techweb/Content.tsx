@@ -10,6 +10,7 @@ export function TechwebContent(props) {
     d_disk,
     node_cache,
     points_last_tick,
+    point_types_abbreviations = [],
     points,
     queue_nodes = [],
     sec_protocols,
@@ -33,7 +34,7 @@ export function TechwebContent(props) {
                 </span>
               </LabeledList.Item>
               {Object.keys(points).map((k) => (
-                <LabeledList.Item key={k} label="Points">
+                <LabeledList.Item key={k} label={point_types_abbreviations[k]}>
                   <b>{points[k]}</b>
                   {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
                 </LabeledList.Item>

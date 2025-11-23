@@ -1,6 +1,7 @@
 /datum/surgery/advanced/bioware/muscled_veins
 	name = "Vein Muscle Membrane"
 	desc = "A surgical procedure which adds a muscled membrane to blood vessels, allowing them to pump blood without a heart."
+	surgery_flags = SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,

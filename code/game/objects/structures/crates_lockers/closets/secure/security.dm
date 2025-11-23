@@ -5,11 +5,6 @@
 
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
-
-	new /obj/item/storage/backpack/captain(src)
-	new /obj/item/storage/backpack/satchel/cap(src)
-	new /obj/item/storage/backpack/duffelbag/captain(src)
-	new /obj/item/storage/backpack/messenger/cap(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/bag/garment/captain(src)
@@ -21,7 +16,7 @@
 
 /obj/structure/closet/secure_closet/captains/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
-	new /obj/item/storage/belt/sabre(src)
+	new /obj/item/storage/belt/sheath/sabre(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
@@ -312,7 +307,7 @@
 	new /obj/item/storage/box/firingpins(src)
 	new /obj/item/gun/energy/ionrifle(src)
 	for(var/i in 1 to 3)
-		new /obj/item/gun/energy/laser/thermal(src)
+		new /obj/item/gun/energy/laser/pistol(src)
 
 /obj/structure/closet/secure_closet/armory3/populate_contents_immediate()
 	for(var/i in 1 to 3)

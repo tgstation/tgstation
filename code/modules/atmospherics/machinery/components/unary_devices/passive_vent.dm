@@ -17,7 +17,7 @@
 
 /obj/machinery/atmospherics/components/unary/passive_vent/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions, pipe_color)
 		cap.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(cap)

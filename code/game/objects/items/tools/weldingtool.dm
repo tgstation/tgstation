@@ -29,7 +29,7 @@
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 1
 	wound_bonus = 10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.3)
 	/// Whether the welding tool is on or off.
 	var/welding = FALSE
@@ -123,6 +123,11 @@
 	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
+
+/obj/item/weldingtool/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
 
 /obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
 	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
@@ -343,12 +348,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
-
-/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
-	if(!isOn())
-		return
-	switched_on(user)
-
 
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"

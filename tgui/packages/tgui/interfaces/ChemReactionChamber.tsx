@@ -13,7 +13,7 @@ import { round, toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { MixingData, Reagent } from './ChemMixingChamber';
+import type { MixingData, Reagent } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {
   ph: number;
@@ -39,7 +39,7 @@ export const ChemReactionChamber = (props) => {
   const reagents = data.reagents || [];
   const catalysts = data.catalysts || [];
   return (
-    <Window width={290} height={520}>
+    <Window width={290} height={570}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -50,6 +50,7 @@ export const ChemReactionChamber = (props) => {
                   <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
+                      tickWhileDragging
                       width="65px"
                       unit="K"
                       step={10}
@@ -57,7 +58,7 @@ export const ChemReactionChamber = (props) => {
                       value={round(targetTemp, 0.1)}
                       minValue={0}
                       maxValue={1000}
-                      onDrag={(value) =>
+                      onChange={(value) =>
                         act('temperature', {
                           target: value,
                         })
@@ -76,7 +77,7 @@ export const ChemReactionChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + ' K'}
+                        format={(value) => `${toFixed(value)} K`}
                       />
                     </Stack.Item>
                     <Stack.Item grow>
@@ -132,9 +133,8 @@ export const ChemReactionChamber = (props) => {
           <Stack.Item grow>
             <Section
               title="Settings"
-              height="220px"
-              maxHeight="220px"
-              overflow="hidden"
+              fill
+              scrollable
               buttons={
                 (isReacting && (
                   <Box inline bold color={'purple'}>
@@ -157,13 +157,14 @@ export const ChemReactionChamber = (props) => {
                   <LabeledList>
                     <LabeledList.Item label="Acidic pH limit">
                       <NumberInput
+                        tickWhileDragging
                         value={reagentAcidic}
                         minValue={0}
                         maxValue={14}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) =>
+                        onChange={(value) =>
                           act('acidic', {
                             target: value,
                           })
@@ -172,13 +173,14 @@ export const ChemReactionChamber = (props) => {
                     </LabeledList.Item>
                     <LabeledList.Item label="Alkaline pH limit">
                       <NumberInput
+                        tickWhileDragging
                         value={reagentAlkaline}
                         minValue={0}
                         maxValue={14}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) =>
+                        onChange={(value) =>
                           act('alkaline', {
                             target: value,
                           })
@@ -205,13 +207,14 @@ export const ChemReactionChamber = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <NumberInput
+                        tickWhileDragging
                         value={reagentQuantity}
                         minValue={1}
                         maxValue={100}
                         step={1}
                         stepPixelSize={3}
                         width="39px"
-                        onDrag={(value) => setReagentQuantity(value)}
+                        onChange={(value) => setReagentQuantity(value)}
                       />
                       <Box inline mr={1} />
                     </Stack.Item>
@@ -223,7 +226,7 @@ export const ChemReactionChamber = (props) => {
                       <Stack.Item key={reagent.name}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ':'}
+                            {`${reagent.name}:`}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}
@@ -265,20 +268,15 @@ export const ChemReactionChamber = (props) => {
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item>
-            <Section
-              title="Catalysts"
-              height="150px"
-              maxHeight="150px"
-              overflow="hidden"
-            >
+          <Stack.Item grow={0.7}>
+            <Section title="Catalysts" fill scrollable>
               <Stack.Item>
                 <Stack vertical fill>
                   {catalysts.map((reagent) => (
                     <Stack.Item key={reagent.name}>
                       <Stack fill>
                         <Stack.Item mt={0.25} textColor="label">
-                          {reagent.name + ':'}
+                          {`${reagent.name}:`}
                         </Stack.Item>
                         <Stack.Item mt={0.25} grow>
                           {reagent.volume}

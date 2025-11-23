@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /proc/populate_spontaneous_fish_traits()
 	var/list/list = list()
-	for(var/trait_path as anything in GLOB.fish_traits)
+	for(var/trait_path in GLOB.fish_traits)
 		var/datum/fish_trait/trait = GLOB.fish_traits[trait_path]
 		if(isnull(trait.spontaneous_manifest_types))
 			continue
@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/turf/turf = get_turf(source)
 	var/light_amount = turf.get_lumcount()
 	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
-		source.adjust_health(source.health - 0.5 * seconds_per_tick)
+		source.damage_fish(0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
 	. = ..()
@@ -301,10 +301,10 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		for(var/trait in resistance_traits)
 			if(HAS_TRAIT(victim, trait))
 				continue
-		victim.adjust_health(victim.health - 3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
+		victim.damage_fish(3 * seconds_per_tick) //the victim may heal a bit but this will quickly kill
 		emulsified = TRUE
 	if(emulsified)
-		source.adjust_health(source.health + 3 * seconds_per_tick)
+		source.repair_damage(3 * seconds_per_tick)
 		source.sate_hunger()
 
 /datum/fish_trait/emulsijack/apply_to_mob(mob/living/basic/mob)
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/necrophage/proc/eat_dead_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
+	if(source.get_hunger() < 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	for(var/obj/item/fish/victim in source.loc)
 		if(victim.status != FISH_DEAD || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH))
@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "If crossbred, offsprings will always be of the mate species, unless it also possess the trait."
 	inheritability = 0
 
-/datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
+/datum/fish_trait/recessive/apply_to_fish(obj/item/fish/fish)
 	. = ..()
 	ADD_TRAIT(fish, TRAIT_FISH_RECESSIVE, FISH_TRAIT_DATUM)
 
@@ -434,12 +434,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/predator/proc/eat_fishes(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(source.get_hunger() > 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
+	if(source.get_hunger() < 0.75 || !source.loc || !HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM))
 		return
 	for(var/obj/item/fish/victim as anything in source.get_aquarium_fishes(TRUE, source))
-		if(victim.size < source.size * 0.7) // It's a big fish eat small fish world
+		if(victim.size >= source.size * 0.7) // It's a big fish eat small fish world
 			continue
-		if(victim.status != FISH_ALIVE || victim == source || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
+		if(victim.status != FISH_ALIVE || HAS_TRAIT(victim, TRAIT_YUCKY_FISH) || SPT_PROB(80, seconds_per_tick))
 			continue
 		eat_fish(source, victim)
 		return
@@ -487,7 +487,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 
 /datum/fish_trait/toxic/proc/damage_predator(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	source.adjust_health(source.health - 3 * seconds_per_tick)
+	source.damage_fish(3 * seconds_per_tick)
 
 /datum/fish_trait/toxic/proc/stop_damaging(obj/item/fish/source)
 	SIGNAL_HANDLER
@@ -543,7 +543,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 			continue
 		source.loc.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
 		var/damage = round(rand(4, 20) * (source.size / victim.size)) //smaller fishes take extra damage.
-		victim.adjust_health(victim.health - damage)
+		victim.damage_fish(damage)
 		return
 
 /datum/fish_trait/lubed

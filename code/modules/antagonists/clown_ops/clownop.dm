@@ -4,6 +4,7 @@
 	roundend_category = "clown operatives"
 	antagpanel_category = ANTAG_GROUP_CLOWNOPS
 	nukeop_outfit = /datum/outfit/syndicate/clownop
+	job_type = /datum/job/nuclear_operative/clown_operative
 	suicide_cry = "HAPPY BIRTHDAY!!"
 
 	preview_outfit = /datum/outfit/clown_operative_elite
@@ -11,7 +12,6 @@
 	nuke_icon_state = "bananiumbomb_base"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/clown_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has clown op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has clown op'ed [key_name(new_owner)].")
@@ -24,7 +24,6 @@
 /datum/antagonist/nukeop/clownop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L.mind, TRAIT_NAIVE, CLOWNOP_TRAIT)
-	return ..()
 
 /datum/antagonist/nukeop/clownop/equip_op()
 	. = ..()
@@ -34,11 +33,12 @@
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, CLOWNOP_TRAIT)
 
 /datum/antagonist/nukeop/leader/clownop/give_alias()
-	title = pick("Head Honker", "Slipmaster", "Clown King", "Honkbearer")
-	if(nuke_team?.syndicate_name)
-		owner.current.real_name = "[nuke_team.syndicate_name] [title]"
+	title ||= pick("Head Honker", "Slipmaster", "Clown King", "Honkbearer")
+	. = ..()
+	if(ishuman(owner.current))
+		owner.current.fully_replace_character_name(owner.current.real_name, "[title] [owner.current.real_name]")
 	else
-		owner.current.real_name = "Syndicate [title]"
+		owner.current.fully_replace_character_name(owner.current.real_name, "[nuke_team.syndicate_name] [title]")
 
 /datum/antagonist/nukeop/leader/clownop
 	name = "Clown Operative Leader"
@@ -56,7 +56,6 @@
 /datum/antagonist/nukeop/leader/clownop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
 	REMOVE_TRAIT(L.mind, TRAIT_NAIVE, CLOWNOP_TRAIT)
-	return ..()
 
 /datum/antagonist/nukeop/leader/clownop/equip_op()
 	. = ..()
@@ -76,16 +75,8 @@
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	uniform = /obj/item/clothing/under/syndicate
 
-/datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visuals_only)
-	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.activate()
-
 /datum/outfit/clown_operative_elite
 	name = "Clown Operative (Elite, Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/empty/syndicate/honkerative
 	uniform = /obj/item/clothing/under/syndicate
-
-/datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visuals_only)
-	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
-	booster.activate()

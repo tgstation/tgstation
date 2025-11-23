@@ -89,6 +89,8 @@
 #define ACCESS_PSYCHOLOGY "psychology"
 /// Access for the Chief Medical Officer's personal quarters in mapping, as well as some other CMO-related things.
 #define ACCESS_CMO "cmo"
+/// Access to the Paramedic dispatch.
+#define ACCESS_PARAMEDIC "paramedic"
 
 /// General access for Cargo, allows for entry to Cargo Bay and Cargo's Office.
 #define ACCESS_CARGO "cargo"
@@ -160,6 +162,8 @@
 #define ACCESS_AWAY_GENERIC2 "away_generic2"
 #define ACCESS_AWAY_GENERIC3 "away_generic3"
 #define ACCESS_AWAY_GENERIC4 "away_generic4"
+#define ACCESS_ROROCO "roroco"
+#define ACCESS_ROROCO_SECURE "roroco_secure"
 
 /// - - - MECH - - -
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
@@ -180,8 +184,9 @@
 #define ACCESS_CENT_TELEPORTER "cent_teleporter"
 #define ACCESS_CENT_CAPTAIN "cent_captain"
 #define ACCESS_CENT_BAR "cent_bar"
+#define ACCESS_CENT_OFFICER "cent_officer"
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
-#define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
+#define ACCESS_CENT_SPECOPS "cent_specops"
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
@@ -323,6 +328,7 @@
 	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
 	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_PARAMEDIC, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
@@ -381,6 +387,7 @@
 	ACCESS_CENT_STORAGE, \
 	ACCESS_CENT_TELEPORTER, \
 	ACCESS_CENT_THUNDER, \
+	ACCESS_CENT_OFFICER, \
 )
 
 /// Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)
@@ -456,6 +463,7 @@
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
 	ACCESS_MORGUE_SECURE, \
+	ACCESS_PARAMEDIC, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
@@ -591,3 +599,8 @@
 #define FORCE_ADD_ALL 2
 /// Used in ID card access adding procs. Will stack trace on fail.
 #define ERROR_ON_FAIL 3
+
+#define ID_DATA(T) SSid_access.__in_character_record_id_information(T)
+#define SILICON_OVERRIDE "silicon_override"
+#define CHAMELEON_OVERRIDE "chameleon_override"
+#define ID_READ_FAILURE "id_read_failure"

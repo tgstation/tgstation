@@ -5,6 +5,7 @@
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw"
+	base_icon_state = "chainsaw"
 	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
@@ -32,7 +33,6 @@
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()
 	chainsaw_loop = new(src)
-	apply_components()
 	AddComponent( \
 		/datum/component/transforming, \
 		force_on = force_on, \
@@ -42,10 +42,6 @@
 		hitsound_on = 'sound/items/weapons/chainsawhit.ogg', \
 		w_class_on = w_class, \
 	)
-
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-
-/obj/item/chainsaw/proc/apply_components()
 	AddComponent(/datum/component/butchering, \
 		speed = 3 SECONDS, \
 		effectiveness = 100, \
@@ -53,7 +49,11 @@
 		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
+	AddElement(/datum/element/prosthetic_icon, "mounted", 180, TRUE)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_ITEM_PRE_USED_AS_PROSTHETIC, PROC_REF(disable_twohanded_comp))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED_FROM_PROSTHETIC, PROC_REF(enable_twohanded_comp))
 
 /obj/item/chainsaw/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
@@ -70,6 +70,16 @@
 	update_item_action_buttons()
 
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/chainsaw/proc/disable_twohanded_comp()
+	SIGNAL_HANDLER
+
+	qdel(GetComponent(/datum/component/two_handed))
+
+/obj/item/chainsaw/proc/enable_twohanded_comp()
+	SIGNAL_HANDLER
+
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 
 /obj/item/chainsaw/get_demolition_modifier(obj/target)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? demolition_mod : 0.8
@@ -132,41 +142,6 @@
 		playsound(src, SFX_BULLET_MISS, 75, TRUE)
 		return TRUE
 	return FALSE
-
-/obj/item/chainsaw/mounted_chainsaw
-	name = "mounted chainsaw"
-	desc = "A chainsaw that has replaced your arm."
-	inhand_icon_state = "mounted_chainsaw"
-	item_flags = ABSTRACT | DROPDEL
-	throwforce = 0
-	throw_range = 0
-	throw_speed = 0
-	toolspeed = 1
-
-/obj/item/chainsaw/mounted_chainsaw/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-
-/obj/item/chainsaw/mounted_chainsaw/Destroy()
-	var/obj/item/bodypart/part
-	new /obj/item/chainsaw(get_turf(src))
-	if(iscarbon(loc))
-		var/mob/living/carbon/holder = loc
-		var/index = holder.get_held_index_of_item(src)
-		if(index)
-			part = holder.hand_bodyparts[index]
-	. = ..()
-	if(part)
-		part.drop_limb()
-
-/obj/item/chainsaw/mounted_chainsaw/apply_components()
-	AddComponent(/datum/component/butchering, \
-		speed = 3 SECONDS, \
-		effectiveness = 100, \
-		bonus_modifier = 0, \
-		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
-		disabled = TRUE, \
-	)
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"

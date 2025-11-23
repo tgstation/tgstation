@@ -3,6 +3,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
+	abstract_type = /obj/item/trash
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE

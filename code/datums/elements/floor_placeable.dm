@@ -30,12 +30,15 @@
 		return NONE
 	if(source.item_flags & ABSTRACT)
 		return NONE
-	if(!user.dropItemToGround(to_drop = source, silent = FALSE, newloc = interacting_with))
-		return ITEM_INTERACT_BLOCKING
 
+	var/x_offset = 0
+	var/y_offset = 0
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
 		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the turf)
-		source.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
-		source.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
+		x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
+		y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
+
+	if(!user.transfer_item_to_turf(source, interacting_with, x_offset, y_offset, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS

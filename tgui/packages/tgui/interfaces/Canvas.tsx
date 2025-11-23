@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject, useState } from 'react';
+import { Component, createRef, type RefObject, useState } from 'react';
 import { Color } from 'tgui-core/color';
 import {
   Box,
@@ -89,9 +89,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     if (this.zoom !== this.props.zoom) {
       this.prepareCanvas();
       this.syncCanvas();
-    }
-    // eslint-disable-next-line max-len
-    else if (
+    } else if (
       (this.props.value !== undefined &&
         JSON.stringify(this.baseImageData) !==
           JSON.stringify(fromDM(this.props.value))) ||
@@ -180,7 +178,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     if (this.modifiedElements.some(checkPointCoords.bind(null, x, y))) {
       return;
     }
-    let p: PointData = { x, y };
+    const p: PointData = { x, y };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
     const ctx = canvas.getContext('2d')!;

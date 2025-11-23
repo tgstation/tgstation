@@ -1,5 +1,5 @@
 {
-	"generic_beginnings":[
+	"generic_beginnings": [
 		"Comet",
 		"Ion",
 		"Laser",
@@ -11,7 +11,7 @@
 		"Star",
 		"Void"
 	],
-	"generic_endings":[
+	"generic_endings": [
 		"beard",
 		"bilge",
 		"deck",
@@ -24,7 +24,7 @@
 		"knot",
 		"salt"
 	],
-	"psyker_beginnings":[
+	"psyker_beginnings": [
 		"Arch",
 		"Brain",
 		"Cheeze",
@@ -46,7 +46,7 @@
 		"Super",
 		"Wise"
 	],
-	"psyker_endings":[
+	"psyker_endings": [
 		"bound",
 		"brain",
 		"brammage",
@@ -64,7 +64,7 @@
 		"teller",
 		"whiz"
 	],
-	"rogue_names":[
+	"rogue_names": [
 		"Abyssal Titan",
 		"Ashes to Ashes",
 		"Asteroid Blaster",
@@ -109,7 +109,7 @@
 		"War as a Business",
 		"Xenophobia"
 	],
-	"silverscale_names":[
+	"silverscale_names": [
 		"Antelope's Run",
 		"Archduke's Silver Ring",
 		"Aristocrat's Principle",
@@ -141,10 +141,8 @@
 		"Swords and Sandals",
 		"Thesaurus Terror"
 	],
-	"skeleton_names":[
-		"Flying Dutchman"
-	],
-	"interdyne_names":[
+	"skeleton_names": ["Flying Dutchman"],
+	"interdyne_names": [
 		"Pharmaceutics Biocraft",
 		"Angel Dust",
 		"Black Acid",
@@ -158,7 +156,7 @@
 		"Diabetes Rusher",
 		"Schistosome Vector"
 	],
-	"grey_names":[
+	"grey_names": [
 		"The Space Toolbox",
 		"ISV Maintenance",
 		"S.S. Istant",
@@ -173,7 +171,7 @@
 		"The monochrome crash",
 		"Maintrastosphere Omega"
 	],
-	"irs_names":[
+	"irs_names": [
 		"Iron Shell Agency",
 		"Auroran Federal Tax Bureau",
 		"TerraGov Internal Revenue Service",
@@ -185,7 +183,7 @@
 		"Sindrian Revenue Authority",
 		"Space IRS"
 	],
-	"psyker_names":[
+	"psyker_names": [
 		"Big Gulchergut for Gore",
 		"Blowkaine",
 		"Brainframe",
@@ -219,7 +217,7 @@
 		"Ultra Violence",
 		"Where We're Going"
 	],
-	"geode_names":[
+	"geode_names": [
 		"Gamma Knife",
 		"Planet B",
 		"Crumbling Castle",
@@ -238,7 +236,7 @@
 		"Bloody Valentine",
 		"Wild Nothing"
 	],
-	"medieval_names":[
+	"medieval_names": [
 		"Head Reaper",
 		"The Lords Judgement",
 		"The Judgement",

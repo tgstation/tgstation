@@ -6,8 +6,9 @@
 	flavour_text = "Write me some god damn flavor text!" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
 	show_flavor = FALSE
 	var/back_story = "error"
+	allow_custom_character = GHOSTROLE_ALLOW_OTHER
 
-/obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	var/datum/antagonist/fugitive_hunter/fughunter = new
 	fughunter.backstory = back_story

@@ -1,9 +1,9 @@
-import { Component, RefObject } from 'react';
+import { Component, type RefObject } from 'react';
 import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../backend';
 import { Stamp } from './Stamp';
-import { PaperContext } from './types';
+import type { PaperContext } from './types';
 
 type PaperSheetStamperState = {
   x: number;
@@ -77,7 +77,7 @@ export class PaperSheetStamper extends Component<PaperSheetStamperProps> {
     });
   };
 
-  findStampPosition(e: MouseEvent): StampPosition | void {
+  findStampPosition(e: MouseEvent): StampPosition | undefined {
     let rotating;
     const scrollable = this.scrollableRef.current;
 

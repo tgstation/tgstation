@@ -1,5 +1,6 @@
 /obj/item/food/cake
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cake
 	bite_consumption = 3
 	max_volume = 80
 	food_reagents = list(
@@ -20,10 +21,11 @@
 
 /obj/item/food/cake/make_processable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cakeslice
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,
@@ -47,7 +49,7 @@
 
 /obj/item/food/cake/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/cake/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
 
 /obj/item/food/cakeslice/plain
 	name = "plain cake slice"
@@ -71,7 +73,7 @@
 
 /obj/item/food/cakeslice/empty/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 16)
 
 /obj/item/food/cake/carrot
 	name = "carrot cake"
@@ -485,6 +487,7 @@
 	foodtypes = GRAIN|DAIRY|SUGAR|GROSS
 	slice_type = /obj/item/food/cakeslice/hardware_cake_slice
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/food/cakeslice/hardware_cake_slice
 	name = "hardware cake slice"
@@ -499,6 +502,7 @@
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtypes = GRAIN|DAIRY|SUGAR|GROSS
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT / 5)
 
 /obj/item/food/cake/vanilla_cake
 	name = "vanilla cake"

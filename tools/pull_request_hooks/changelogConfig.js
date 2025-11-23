@@ -8,106 +8,106 @@
  * doesn't exist.
  */
 export const CHANGELOG_ENTRIES = [
-	[
-		["rscadd", "add", "adds"],
-		{
-			placeholders: [
-				"Added new mechanics or gameplay changes",
-				"Added more things",
-			],
-		},
-	],
+  [
+    ["rscadd", "add", "adds"],
+    {
+      placeholders: [
+        "Added new mechanics or gameplay changes",
+        "Added more things",
+      ],
+    },
+  ],
 
-	[
-		["bugfix", "fix", "fixes"],
-		{
-			placeholders: ["fixed a few things"],
-		},
-	],
+  [
+    ["bugfix", "fix", "fixes"],
+    {
+      placeholders: ["fixed a few things"],
+    },
+  ],
 
-	[
-		["rscdel", "del", "dels"],
-		{
-			placeholders: ["Removed old things"],
-		},
-	],
+  [
+    ["rscdel", "del", "dels"],
+    {
+      placeholders: ["Removed old things"],
+    },
+  ],
 
-	[
-		["qol"],
-		{
-			placeholders: ["made something easier to use"],
-		},
-	],
+  [
+    ["qol"],
+    {
+      placeholders: ["made something easier to use"],
+    },
+  ],
 
-	[
-		["sound"],
-		{
-			placeholders: ["added/modified/removed audio or sound effects"],
-		},
-	],
+  [
+    ["sound"],
+    {
+      placeholders: ["added/modified/removed audio or sound effects"],
+    },
+  ],
 
-	[
-		["image"],
-		{
-			placeholders: ["added/modified/removed some icons or images"],
-		},
-	],
+  [
+    ["image"],
+    {
+      placeholders: ["added/modified/removed some icons or images"],
+    },
+  ],
 
-	[
-		["map"],
-		{
-			placeholders: ["added/modified/removed map content"],
-		},
-	],
+  [
+    ["map"],
+    {
+      placeholders: ["added/modified/removed map content"],
+    },
+  ],
 
-	[
-		["spellcheck", "typo"],
-		{
-			placeholders: ["fixed a few typos"],
-		},
-	],
+  [
+    ["spellcheck", "typo"],
+    {
+      placeholders: ["fixed a few typos"],
+    },
+  ],
 
-	[
-		["balance"],
-		{
-			placeholders: ["rebalanced something"],
-		},
-	],
+  [
+    ["balance"],
+    {
+      placeholders: ["rebalanced something"],
+    },
+  ],
 
-	[
-		["code_imp", "code"],
-		{
-			placeholders: ["changed some code"],
-		},
-	],
+  [
+    ["code_imp", "code"],
+    {
+      placeholders: ["changed some code"],
+    },
+  ],
 
-	[
-		["refactor"],
-		{
-			placeholders: ["refactored some code"],
-		},
-	],
+  [
+    ["refactor"],
+    {
+      placeholders: ["refactored some code"],
+    },
+  ],
 
-	[
-		["config"],
-		{
-			placeholders: ["changed some config setting"],
-		},
-	],
+  [
+    ["config"],
+    {
+      placeholders: ["changed some config setting"],
+    },
+  ],
 
-	[
-		["admin"],
-		{
-			placeholders: ["messed with admin stuff"],
-		},
-	],
+  [
+    ["admin"],
+    {
+      placeholders: ["messed with admin stuff"],
+    },
+  ],
 
-	[
-		["server"],
-		{
-			placeholders: ["something server ops should know"],
-		},
-	],
+  [
+    ["server"],
+    {
+      placeholders: ["something server ops should know"],
+    },
+  ],
 ];
 
 // Valid changelog openers

@@ -4,7 +4,7 @@
 	roundend_category = "Heretics"
 	antagpanel_category = ANTAG_GROUP_HORRORS
 	antag_moodlet = /datum/mood_event/heretics
-	job_rank = ROLE_HERETIC
+	pref_flag = ROLE_HERETIC
 	antag_hud_name = "heretic_beast"
 	suicide_cry = "MY MASTER SMILES UPON ME!!"
 	show_in_antagpanel = FALSE
@@ -21,6 +21,16 @@
 			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] been freed from the chains of the Mansus!"), ignored_mobs = owner.current)
 
 	master = null
+	return ..()
+
+/datum/antagonist/heretic_monster/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	ADD_TRAIT(target, TRAIT_HERETIC_SUMMON, REF(src))
+
+/datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	REMOVE_TRAIT(target, TRAIT_HERETIC_SUMMON, REF(src))
 	return ..()
 
 /*

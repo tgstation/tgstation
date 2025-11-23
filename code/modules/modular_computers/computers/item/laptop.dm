@@ -24,6 +24,13 @@
 	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = 1
 
+/obj/item/modular_computer/laptop/Initialize(mapload)
+	. = ..()
+	if(start_open && !screen_on)
+		toggle_open()
+	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
+	AddElement(/datum/element/drag_pickup)
+
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
 	if(screen_on)
@@ -39,11 +46,11 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/modular_computer/laptop/Initialize(mapload)
-	. = ..()
-
-	if(start_open && !screen_on)
-		toggle_open()
+/// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the open slowdown
+/obj/item/modular_computer/laptop/proc/on_speed_potioned(datum/source)
+	SIGNAL_HANDLER
+	// Don't need to touch the actual slowdown here, since the speed potion does it for us
+	slowdown_open = 0
 
 /obj/item/modular_computer/laptop/update_icon_state()
 	if(!screen_on)
@@ -69,16 +76,6 @@
 	set src in view(1)
 
 	try_toggle_open(usr)
-
-/obj/item/modular_computer/laptop/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
-	if(over_object == user || over_object == src)
-		try_toggle_open(user)
-		return
-	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		if(!isturf(loc))
-			return
-		user.put_in_hand(src, H.held_index)
 
 /obj/item/modular_computer/laptop/proc/try_toggle_open(mob/living/user)
 	if(issilicon(user))
@@ -108,14 +105,15 @@
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
 		to_chat(user, span_notice("You close \the [src]."))
-		slowdown = initial(slowdown)
+		slowdown -= slowdown_open
 		update_weight_class(initial(w_class))
 		drag_slowdown = initial(drag_slowdown)
 	else
 		to_chat(user, span_notice("You open \the [src]."))
-		slowdown = slowdown_open
+		slowdown += slowdown_open
 		update_weight_class(w_class_open)
 		drag_slowdown = slowdown_open
+
 	if(isliving(loc))
 		var/mob/living/localmob = loc
 		localmob.update_equipment_speed_mods()

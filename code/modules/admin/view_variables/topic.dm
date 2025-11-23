@@ -117,7 +117,7 @@
 			if("wound")
 				existing_val = editing.wound_bonus
 			if("bare wound")
-				existing_val = editing.bare_wound_bonus
+				existing_val = editing.exposed_wound_bonus
 			else
 				CRASH("Invalid var_tweak passed to item vv set var: [href_list["var_tweak"]]")
 
@@ -137,7 +137,7 @@
 			if("wound")
 				editing.wound_bonus = new_val
 			if("bare wound")
-				editing.bare_wound_bonus = new_val
+				editing.exposed_wound_bonus = new_val
 
 		message_admins("[key_name(usr)] set [editing]'s [href_list["var_tweak"]] to [new_val] (was [existing_val])")
 		log_admin("[key_name(usr)] set [editing]'s [href_list["var_tweak"]] to [new_val] (was [existing_val])")

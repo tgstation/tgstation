@@ -48,6 +48,18 @@
 		/obj/item/seeds/cucumber,
 	)
 
+/obj/effect/spawner/random/food_or_drink/seed_flowers
+	name = "flower seed spawner"
+	icon_state = "seed"
+	spawn_all_loot = TRUE
+	loot = list( // Just some random flowers you can usually find and doesn't take away from mutated plants uniqueness
+		/obj/item/seeds/poppy,
+		/obj/item/seeds/poppy/lily,
+		/obj/item/seeds/harebell,
+		/obj/item/seeds/sunflower,
+		/obj/item/seeds/rose,
+	)
+
 /obj/effect/spawner/random/food_or_drink/seed_rare
 	spawn_loot_count = 5
 	icon_state = "seed"
@@ -59,14 +71,55 @@
 		/obj/item/seeds/seedling = 5,
 		/obj/item/seeds/nettle/death = 1,
 		/obj/item/seeds/plump/walkingmushroom = 1,
-		/obj/item/seeds/cannabis/rainbow = 1,
+		/obj/item/seeds/cannabis/anti = 1,
 		/obj/item/seeds/cannabis/death = 1,
-		/obj/item/seeds/cannabis/white = 1,
+		/obj/item/seeds/cannabis/rainbow = 1,
 		/obj/item/seeds/cannabis/ultimate = 1,
+		/obj/item/seeds/cannabis/white = 1,
 		/obj/item/seeds/kudzu = 1,
 		/obj/item/seeds/angel = 1,
 		/obj/item/seeds/glowshroom/glowcap = 1,
 		/obj/item/seeds/glowshroom/shadowshroom = 1,
+	)
+
+/obj/effect/spawner/random/food_or_drink/plant_produce
+	name = "plant produce spawner"
+	icon_state = "seed"
+	spawn_loot_count = 8 // will select 8 random produce
+	loot = list( // Just some random grown basic plants
+		/obj/item/food/grown/banana,
+		/obj/item/food/grown/soybeans,
+		/obj/item/food/grown/berries,
+		/obj/item/food/grown/wheat,
+		/obj/item/food/grown/rice,
+		/obj/item/food/grown/oat,
+		/obj/item/food/grown/apple,
+		/obj/item/food/grown/cherries,
+		/obj/item/food/grown/chili,
+		/obj/item/food/grown/citrus/orange,
+		/obj/item/food/grown/citrus/lime,
+		/obj/item/food/grown/citrus/lemon,
+		/obj/item/food/grown/cocoapod,
+		/obj/item/food/grown/corn,
+		/obj/item/food/grown/cucumber,
+		/obj/item/food/grown/eggplant,
+		/obj/item/food/grown/garlic,
+		/obj/item/food/grown/korta_nut,
+		/obj/item/food/grown/watermelon,
+		/obj/item/food/grown/olive,
+		/obj/item/food/grown/onion,
+		/obj/item/food/grown/peanut,
+		/obj/item/food/grown/pineapple,
+		/obj/item/seeds/plum,
+		/obj/item/food/grown/potato,
+		/obj/item/food/grown/pumpkin,
+		/obj/item/food/grown/carrot,
+		/obj/item/food/grown/parsnip,
+		/obj/item/food/grown/whitebeet,
+		/obj/item/food/grown/peas,
+		/obj/item/grown/cotton,
+		/obj/item/food/grown/herbs,
+		/obj/item/grown/log,
 	)
 
 /obj/effect/spawner/random/food_or_drink/soup

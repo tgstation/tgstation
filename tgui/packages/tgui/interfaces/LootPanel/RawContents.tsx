@@ -2,7 +2,7 @@ import { Box } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
 import { LootBox } from './LootBox';
-import { SearchItem } from './types';
+import type { SearchItem } from './types';
 
 type Props = {
   contents: SearchItem[];

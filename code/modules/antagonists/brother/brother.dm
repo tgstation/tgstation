@@ -1,7 +1,7 @@
 /datum/antagonist/brother
 	name = "\improper Brother"
 	antagpanel_category = "Brother"
-	job_rank = ROLE_BROTHER
+	pref_flag = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
@@ -15,6 +15,7 @@
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
+		team = new()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
@@ -25,7 +26,6 @@
 
 /datum/antagonist/brother/on_gain()
 	objectives += team.objectives
-	owner.special_role = special_role
 	finalize_brother()
 
 	if (team.brothers_left <= 0)
@@ -45,7 +45,6 @@
 	return ..()
 
 /datum/antagonist/brother/on_removal()
-	owner.special_role = null
 	remove_conversion_skills()
 	return ..()
 
@@ -55,7 +54,7 @@
 	if (!istype(carbon_owner))
 		return
 	carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
+	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_mob_successful_flashed_mob))
 
 /// Take away the ability to add more brothers
 /datum/antagonist/brother/proc/remove_conversion_skills()
@@ -63,12 +62,12 @@
 		return
 	var/mob/living/carbon/carbon_owner = owner.current
 	carbon_owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
+	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
 
-/datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
+/datum/antagonist/brother/proc/on_mob_successful_flashed_mob(mob/living/source, mob/living/flashed, obj/item/assembly/flash/flash)
 	SIGNAL_HANDLER
 
-	if (flashed.stat == DEAD)
+	if (flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 
 	if (flashed.stat != CONSCIOUS)
@@ -134,12 +133,12 @@
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
-	brother1.dna.features["ethcolor"] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.dna.features[FEATURE_ETHEREAL_COLOR] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
-	brother2.dna.features["moth_antennae"] = "Plain"
-	brother2.dna.features["moth_markings"] = "None"
-	brother2.dna.features["moth_wings"] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_ANTENNAE] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_MARKINGS] = "None"
+	brother2.dna.features[FEATURE_MOTH_WINGS] = "Plain"
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
@@ -178,7 +177,7 @@
 	return brother_text
 
 /datum/antagonist/brother/greet()
-	to_chat(owner.current, span_alertsyndie("You are the [owner.special_role]."))
+	to_chat(owner.current, span_alertsyndie("You are a Blood Brother."))
 	owner.announce_objectives()
 
 /datum/antagonist/brother/proc/finalize_brother()
@@ -188,7 +187,6 @@
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	var/datum/team/brother_team/team = new
 	team.add_member(new_owner)
-	new_owner.add_antag_datum(/datum/antagonist/brother, team)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into a blood brother.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into a blood brother.")
 
@@ -219,6 +217,8 @@
 		forge_brother_objectives()
 	if (!new_member.has_antag_datum(/datum/antagonist/brother))
 		add_brother(new_member.current)
+	else
+		set_brothers_left(brothers_left - 1)
 
 /datum/team/brother_team/remove_member(datum/mind/member)
 	if (!(member in members))

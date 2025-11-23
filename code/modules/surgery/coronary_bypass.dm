@@ -40,7 +40,7 @@
 		/obj/item/melee/energy/sword = 45,
 		/obj/item/knife = 45,
 		/obj/item/shard = 25)
-	time = 16
+	time = 1.6 SECONDS
 	preop_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	success_sound = 'sound/items/handling/surgery/scalpel2.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
@@ -70,13 +70,14 @@
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		if (!HAS_TRAIT(target_human, TRAIT_NOBLOOD))
+		if (target_human.can_bleed())
+			var/blood_name = target_human.get_bloodtype()?.get_blood_name() || "Blood"
 			display_results(
 				user,
 				target,
-				span_notice("Blood pools around the incision in [target_human]'s heart."),
-				span_notice("Blood pools around the incision in [target_human]'s heart."),
-				span_notice("Blood pools around the incision in [target_human]'s heart."),
+				span_notice("[blood_name] pools around the incision in [target_human]'s heart."),
+				span_notice("[blood_name] pools around the incision in [target_human]'s heart."),
+				span_notice("[blood_name] pools around the incision in [target_human]'s heart."),
 			)
 			var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 			target_bodypart.adjustBleedStacks(10)
@@ -86,12 +87,13 @@
 /datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
+		var/blood_name = LOWER_TEXT(target_human.get_bloodtype()?.get_blood_name()) || "blood"
 		display_results(
 			user,
 			target,
 			span_warning("You screw up, cutting too deeply into the heart!"),
-			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
-			span_warning("[user] screws up, causing blood to spurt out of [target_human]'s chest!"),
+			span_warning("[user] screws up, causing [blood_name] to spurt out of [target_human]'s chest!"),
+			span_warning("[user] screws up, causing [blood_name] to spurt out of [target_human]'s chest!"),
 		)
 		var/obj/item/bodypart/target_bodypart = target_human.get_bodypart(target_zone)
 		target_bodypart.adjustBleedStacks(10)
@@ -106,7 +108,7 @@
 		TOOL_WIRECUTTER = 35,
 		/obj/item/stack/package_wrap = 15,
 		/obj/item/stack/cable_coil = 5)
-	time = 90
+	time = 9 SECONDS
 	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	success_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 	failure_sound = 'sound/items/handling/surgery/organ2.ogg'

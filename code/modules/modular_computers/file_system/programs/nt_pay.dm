@@ -42,7 +42,7 @@
 /datum/computer_file/program/nt_pay/ui_data(mob/user)
 	var/list/data = list()
 
-	current_user = computer.computer_id_slot?.registered_account || null
+	current_user = computer.stored_id?.registered_account || null
 	if(!current_user)
 		data["name"] = null
 	else
@@ -60,6 +60,11 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, payment_result)
 
 /datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
+	var/area/user_area = get_area(user)
+	if(user_area && is_area_virtual(user_area))
+		to_chat(user, span_notice("You cannot send virtual money to real accounts."))
+		return NT_PAY_STATUS_NO_ACCOUNT
+
 	money_to_send = round(money_to_send)
 
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))
@@ -81,7 +86,7 @@
 			to_chat(user, span_notice("You can't send credits to yourself."))
 		return NT_PAY_SATUS_SENDER_IS_RECEIVER
 
-	for(var/account as anything in SSeconomy.bank_accounts_by_id)
+	for(var/account in SSeconomy.bank_accounts_by_id)
 		var/datum/bank_account/acc = SSeconomy.bank_accounts_by_id[account]
 		if(acc.pay_token == token)
 			recipient = acc
@@ -127,14 +132,14 @@
 	var/obj/item/modular_computer/modpc = associated_program.computer
 	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, PROC_REF(on_payment_done))
 	RegisterSignal(modpc, COMSIG_MODULAR_COMPUTER_INSERTED_ID, PROC_REF(register_id))
-	if(modpc.computer_id_slot)
-		register_id(inserted_id = modpc.computer_id_slot)
+	if(modpc.stored_id)
+		register_id(inserted_id = modpc.stored_id)
 
 /obj/item/circuit_component/mod_program/nt_pay/unregister_shell()
 	var/obj/item/modular_computer/modpc = associated_program.computer
 	UnregisterSignal(modpc, list(COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, COMSIG_MODULAR_COMPUTER_INSERTED_ID))
-	if(modpc.computer_id_slot)
-		UnregisterSignal(modpc.computer_id_slot, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
+	if(modpc.stored_id)
+		UnregisterSignal(modpc.stored_id, list(COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED, COMSIG_MOVABLE_MOVED))
 	return ..()
 
 /obj/item/circuit_component/mod_program/nt_pay/proc/register_id(datum/source, obj/item/card/inserted_id, mob/user)

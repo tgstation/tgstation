@@ -2,13 +2,16 @@
 /datum/component/vision_hurting
 	var/damage_per_second
 	var/message
+	/// Do people looking at us make a fuss?
+	var/silent
 
-/datum/component/vision_hurting/Initialize(damage_per_second=1, message="Your eyes burn as you look at")
+/datum/component/vision_hurting/Initialize(damage_per_second=1, message="Your eyes burn as you look at", silent = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.damage_per_second = damage_per_second
 	src.message = message
+	src.silent = silent
 
 	START_PROCESSING(SSdcs, src)
 
@@ -20,6 +23,8 @@
 		if(!burning_orbs)
 			continue
 		burning_orbs.apply_organ_damage(damage_per_second * seconds_per_tick)
+		if(silent)
+			return
 		if(SPT_PROB(50, seconds_per_tick))
 			to_chat(viewer, span_userdanger("[message] [parent]!"))
 		if(SPT_PROB(20, seconds_per_tick))

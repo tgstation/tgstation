@@ -4,25 +4,25 @@
 			"type": "icon_state",
 			"icon_state": "buttondown",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "buttondown_obj_buckle",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "buttondown_obj_belt",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "buttondown_obj_shorts",
 			"blend_mode": "overlay",
-			"color_ids": [ 4 ]
+			"color_ids": [4]
 		}
 	]
 }

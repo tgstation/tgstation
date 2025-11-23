@@ -1,4 +1,4 @@
-import { InteractionType, WritingImplement } from './types';
+import { InteractionType, type WritingImplement } from './types';
 
 export function canEdit(heldItemDetails?: WritingImplement): boolean {
   if (!heldItemDetails) {

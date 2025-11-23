@@ -5,13 +5,20 @@ GLOBAL_LIST_EMPTY(protected_ranks) //admin ranks loaded from txt
 GLOBAL_PROTECT(protected_ranks)
 
 /datum/admin_rank
+	/// Rank name, key'd to the db
 	var/name = "NoRank"
+	/// Rank source, see RANK_SOURCE_TXT and friends
+	var/source = null
+	/// Our functional rights, these are what we actually use in game
 	var/rights = R_DEFAULT
-	var/exclude_rights = NONE
+	/// Rights we're allowed to use, pre filtering
 	var/include_rights = NONE
+	/// These are the rights of include_rights we aren't allowed to use. Frankly I have no idea why this exists
+	var/exclude_rights = NONE
+	/// Rights we're allowed to edit on other folks, impact of this is dependent on R_PERMISSIONS and R_DBRANKS
 	var/can_edit_rights = NONE
 
-/datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
+/datum/admin_rank/New(init_name, init_source, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
 		alert_to_permissions_elevation_attempt(usr)
 		if (name == "NoRank") //only del if this is a true creation (and not just a New() proc call), other wise trialmins/coders could abuse this to deadmin other admins
@@ -19,6 +26,10 @@ GLOBAL_PROTECT(protected_ranks)
 			CRASH("Admin proc call creation of admin datum")
 		return
 	name = init_name
+	source = init_source
+	if(!source)
+		qdel(src)
+		CRASH("Admin rank created without a source.")
 	if(!name)
 		qdel(src)
 		CRASH("Admin rank created without name.")
@@ -102,11 +113,24 @@ GLOBAL_PROTECT(protected_ranks)
 			if(3)
 				can_edit_rights |= flag
 
+/datum/admin_rank/proc/pretty_print_source()
+	switch(source)
+		if(RANK_SOURCE_LOCAL)
+			return "Localhost"
+		if(RANK_SOURCE_TXT)
+			return "admin_ranks.txt"
+		if(RANK_SOURCE_DB)
+			return "Database"
+		if(RANK_SOURCE_BACKUP)
+			return "Backup JSON"
+		if(RANK_SOURCE_TEMPORARY)
+			return "Temporary"
+
 /// Loads admin ranks.
 ///	Return a list containing the backup data if they were loaded from the database backup json
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin Reload blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 	GLOB.admin_ranks.Cut()
 	GLOB.protected_ranks.Cut()
@@ -115,17 +139,17 @@ GLOBAL_PROTECT(protected_ranks)
 	var/datum/admin_rank/previous_rank
 	var/regex/admin_ranks_regex = new(@"^Name\s*=\s*(.+?)\s*\n+Include\s*=\s*([\l @]*?)\s*\n+Exclude\s*=\s*([\l @]*?)\s*\n+Edit\s*=\s*([\l @]*?)\s*\n*$", "gm")
 	while(admin_ranks_regex.Find(ranks_text))
-		var/datum/admin_rank/R = new(admin_ranks_regex.group[1])
-		if(!R)
+		var/datum/admin_rank/txt_rank = new(admin_ranks_regex.group[1], RANK_SOURCE_TXT)
+		if(QDELETED(txt_rank))
 			continue
 		var/count = 1
 		for(var/i in admin_ranks_regex.group - admin_ranks_regex.group[1])
 			if(i)
-				R.process_keyword(i, count, previous_rank)
+				txt_rank.process_keyword(i, count, previous_rank)
 			count++
-		GLOB.admin_ranks += R
-		GLOB.protected_ranks += R
-		previous_rank = R
+		GLOB.admin_ranks += txt_rank
+		GLOB.protected_ranks += txt_rank
+		previous_rank = txt_rank
 	if(!CONFIG_GET(flag/admin_legacy_system) && !dbfail)
 		if(CONFIG_GET(flag/load_legacy_ranks_only))
 			if(!no_update)
@@ -144,14 +168,15 @@ GLOBAL_PROTECT(protected_ranks)
 						if(R.name == rank_name) //this rank was already loaded from txt override
 							skip = 1
 							break
-					if(!skip)
-						var/rank_flags = text2num(query_load_admin_ranks.item[2])
-						var/rank_exclude_flags = text2num(query_load_admin_ranks.item[3])
-						var/rank_can_edit_flags = text2num(query_load_admin_ranks.item[4])
-						var/datum/admin_rank/R = new(rank_name, rank_flags, rank_exclude_flags, rank_can_edit_flags)
-						if(!R)
-							continue
-						GLOB.admin_ranks += R
+					if(skip)
+						continue
+					var/rank_flags = text2num(query_load_admin_ranks.item[2])
+					var/rank_exclude_flags = text2num(query_load_admin_ranks.item[3])
+					var/rank_can_edit_flags = text2num(query_load_admin_ranks.item[4])
+					var/datum/admin_rank/db_rank = new(rank_name, RANK_SOURCE_DB, rank_flags, rank_exclude_flags, rank_can_edit_flags)
+					if(QDELETED(db_rank))
+						continue
+					GLOB.admin_ranks += db_rank
 			qdel(query_load_admin_ranks)
 	//load ranks from backup file
 	if(dbfail)
@@ -167,10 +192,10 @@ GLOBAL_PROTECT(protected_ranks)
 					skip = TRUE
 			if(skip)
 				continue
-			var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
-			if(!R)
+			var/datum/admin_rank/json_rank = new("[J]", RANK_SOURCE_BACKUP, json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
+			if(QDELETED(json_rank))
 				continue
-			GLOB.admin_ranks += R
+			GLOB.admin_ranks += json_rank
 		return json
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
@@ -307,7 +332,7 @@ GLOBAL_PROTECT(protected_ranks)
 	set waitfor = FALSE
 
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
+		to_chat(usr, span_adminprefix("Admin rank DB Sync blocked: Advanced ProcCall detected."), confidential = TRUE)
 		return
 
 	var/list/sql_ranks = list()
@@ -351,7 +376,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /proc/sync_admins_with_db()
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		to_chat(usr, span_adminprefix("Admin rank DB Sync blocked: Advanced ProcCall detected."))
 		return
 
 	if(CONFIG_GET(flag/admin_legacy_system) || !SSdbcore.IsConnected()) //we're already using legacy system so there's nothing to save
@@ -369,7 +394,7 @@ GLOBAL_PROTECT(protected_ranks)
 
 /proc/save_admin_backup()
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		to_chat(usr, span_adminprefix("Admin rank DB Sync blocked: Advanced ProcCall detected."))
 		return
 
 	if(CONFIG_GET(flag/admin_legacy_system)) //we're already using legacy system so there's nothing to save

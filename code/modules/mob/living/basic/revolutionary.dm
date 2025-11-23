@@ -86,8 +86,7 @@
 	attack_verb_simple = possible_weapons[weapon_of_choice]
 	attack_verb_continuous = "[attack_verb_simple]s"
 
-	var/static/list/death_loot = list(/obj/effect/mob_spawn/corpse/human/revolutionary)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/mob_spawn/corpse/human/revolutionary)
 	apply_dynamic_human_appearance(src, mob_spawn_path = /obj/effect/mob_spawn/corpse/human/revolutionary, l_hand = weapon_of_choice)
 
 	gender = pick(MALE, FEMALE, PLURAL)
@@ -130,6 +129,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/blackboard/revolutionary,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

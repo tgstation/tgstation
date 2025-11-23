@@ -70,7 +70,7 @@
 	///what the instrument will glow when playing
 	var/glow_color = COLOR_BLACK
 
-/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
+/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar/of_gods/altar)
 	. = ..()
 	to_chat(user, span_notice(song_invocation_message))
 	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)

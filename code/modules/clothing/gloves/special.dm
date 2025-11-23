@@ -91,7 +91,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	armor_type = /datum/armor/captain_gloves
 	resistance_flags = NONE
 	clothing_traits = list(TRAIT_FAST_CUFFING)
@@ -140,7 +140,7 @@
 	greyscale_colors = "#15191a"
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
 
-/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add)
+/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	return FALSE
 
 /obj/item/clothing/gloves/tinkerer

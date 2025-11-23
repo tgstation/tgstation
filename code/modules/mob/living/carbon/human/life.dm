@@ -23,40 +23,38 @@
 		return
 
 	. = ..()
+
 	if(QDELETED(src))
 		return FALSE
 
-	//Body temperature stability and damage
+	// Body temperature stability and damage
 	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
-	if(!HAS_TRAIT(src, TRAIT_STASIS))
-		if(stat != DEAD)
-			//handle active mutations
-			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
-				human_mutation.on_life(seconds_per_tick, times_fired)
-			//heart attack stuff
-			handle_heart(seconds_per_tick, times_fired)
-			//handles liver failure effects, if we lack a liver
-			handle_liver(seconds_per_tick, times_fired)
-
-		// for special species interactions
-		dna.species.spec_life(src, seconds_per_tick, times_fired)
-	else
+	if(HAS_TRAIT(src, TRAIT_STASIS))
 		for(var/datum/wound/iter_wound as anything in all_wounds)
 			iter_wound.on_stasis(seconds_per_tick, times_fired)
+		return stat != DEAD
 
-	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()
+	if(stat == DEAD)
+		return FALSE
 
-	if(stat != DEAD)
-		return TRUE
+	// Handle active mutations
+	for(var/datum/mutation/mutation as anything in dna.mutations)
+		mutation.on_life(seconds_per_tick, times_fired)
 
+	// Heart attack stuff
+	handle_heart(seconds_per_tick, times_fired)
+	// Handles liver failure effects, if we lack a liver
+	handle_liver(seconds_per_tick, times_fired)
+	// For special species interactions
+	dna.species.spec_life(src, seconds_per_tick, times_fired)
+	return stat != DEAD
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	var/chest_covered = !get_bodypart(BODY_ZONE_CHEST)
 	var/head_covered = !get_bodypart(BODY_ZONE_HEAD)
 	var/hands_covered = !get_bodypart(BODY_ZONE_L_ARM) && !get_bodypart(BODY_ZONE_R_ARM)
 	var/feet_covered = !get_bodypart(BODY_ZONE_L_LEG) && !get_bodypart(BODY_ZONE_R_LEG)
-	for(var/obj/item/clothing/equipped in get_equipped_items())
+	for(var/obj/item/clothing/equipped in get_equipped_items(INCLUDE_ABSTRACT))
 		if(!chest_covered && (equipped.body_parts_covered & CHEST) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))
 			chest_covered = TRUE
 		if(!head_covered && (equipped.body_parts_covered & HEAD) && (equipped.clothing_flags & STOPSPRESSUREDAMAGE))

@@ -1,6 +1,7 @@
 /datum/surgery/advanced/bioware/cortex_folding
 	name = "Cortex Folding"
 	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
+	surgery_flags = SURGERY_MORBID_CURIOSITY
 	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,

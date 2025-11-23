@@ -113,6 +113,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/central)
+"aQ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/aft)
 "aU" = (
 /obj/item/shard,
 /obj/structure/lattice,
@@ -1806,9 +1810,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance_hall)
 "rN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "ks13"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
@@ -4914,9 +4916,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/genetics)
 "HU" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "ks13-2"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "HV" = (
@@ -5860,9 +5860,7 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "Nf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "ks13"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
@@ -6505,9 +6503,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/cafe)
 "Qq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "ks13-2"
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "Qr" = (
@@ -10681,7 +10677,7 @@ vb
 Jr
 Ut
 Ww
-MW
+Jr
 Wt
 Sp
 pK
@@ -10787,7 +10783,7 @@ qO
 wC
 WE
 OR
-MW
+Jr
 JJ
 Hi
 vb
@@ -11826,7 +11822,7 @@ Fa
 iT
 TW
 BM
-jV
+aQ
 Uo
 gG
 jV
