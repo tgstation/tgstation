@@ -341,3 +341,7 @@
 /obj/item/delivery/small/floppy/Initialize(mapload)
 	. = ..()
 	new /obj/item/disk/data(src)
+
+#undef MAX_DISK_STACK_SIZE
+#undef STACK_PIXEL_STEP
+#undef MAX_TEXT_LENGTH
