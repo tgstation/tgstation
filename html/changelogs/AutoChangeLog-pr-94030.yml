@@ -1,5 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - bugfix: "chat storage should load more reliably"
-  - server: "server operators can now properly disable the iframe chat storage solution by unsetting the STORAGE_CDN_IFRAME config"
