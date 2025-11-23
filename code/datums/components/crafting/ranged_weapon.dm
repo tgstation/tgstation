@@ -346,7 +346,7 @@
 	crafting_flags = CRAFT_CHECK_DENSITY
 
 /datum/crafting_recipe/Detached_Ratvarian_Repeater
-	name = "Detached Ratvarian Repeater"
+	name = "Iconoclast's Repeater"
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/gun/energy/laser/musket/repeater
 	structures = list(

@@ -129,7 +129,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)
 
 /obj/item/gun/energy/laser/musket/repeater
-	name = "Detached Ratvarian Repeater"
+	name = "Iconoclast's Repeater"
 	desc = "A weapon of incredible bulk, this ratvarian repeater has been permanently severed from its stand to be carried by hand. Cumbersome, Yes - but powerful."
 	icon_state = "repeater"
 	inhand_icon_state = "repeater"

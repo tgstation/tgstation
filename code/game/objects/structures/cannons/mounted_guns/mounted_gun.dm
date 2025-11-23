@@ -240,10 +240,10 @@
 	anchorable_gun = TRUE
 	uses_ammo = FALSE
 	has_loading_delay = TRUE
-	load_delay = 20
+	load_delay = 30
 	max_shots_per_fire = 12
-	shots_per_load = 10
-	shots_in_gun = 10
+	shots_per_load = 12
+	shots_in_gun = 12
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	last_fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	projectile_type = /obj/projectile/beam/laser/musket/repeater
