@@ -232,9 +232,9 @@
 //Big Ballista Mounted gun Spear
 /obj/projectile/bullet/Large_Ballista_Spear
 	name = "Spear"
-	icon_state = "Ballista_Spear"
+	icon_state = "ballista_spear"
 	//range = 20
-	damage = 80 //YOU ARE LAUNCHING A GIANT SPEAR AT SOMEONE THIS IS GOING TO HURT A LOT.
+	damage = 80
 	speed = 3
 	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
 	projectile_piercing = PASSMOB
@@ -255,11 +255,11 @@
 
 /obj/projectile/bullet/Large_Ballista_Spear_Dragonator
 	name = "Dragon-Slaying Spear"
-	icon_state = "Ballista_Spear_Dragon"
+	icon_state = "ballista_spear_dragon"
 	//range = 20
 	damage = 120 //If you get hit by this thing you deserve it.
 	speed = 4
-	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
+	catastropic_dismemberment = TRUE
 	projectile_piercing = PASSMOB
 	dismemberment = 3
 	embed_type = null
