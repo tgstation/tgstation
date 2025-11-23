@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 
 /// Helper proc to save children objects that are stored inside the contents of the source object
 /// ignore ids is for objects that automatically handle inserting objects inside the parent like closets, lockers, notice boards, etc.
-/obj/proc/save_stored_contents(map_string, turf/current_loc, list/obj_blacklist, include_ids=TRUE)
+/obj/proc/save_stored_contents(map_string, turf/current_loc, list/obj_blacklist, list/extra_contents=null, include_ids=TRUE)
 	var/parent_container_id_tag
 	for(var/obj/target_obj in contents)
 		if(!target_obj.is_saveable(current_loc, obj_blacklist))
@@ -98,6 +98,21 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 
 			// link the stored child object to the id of the parent container
 			GLOB.save_containers_children[target_obj] = parent_container_id_tag
+
+		target_obj.on_object_saved(map_string, current_loc, obj_blacklist)
+		var/metadata = generate_tgm_metadata(target_obj)
+		TGM_MAP_BLOCK(map_string, target_obj.type, metadata)
+
+	for(var/obj/target_obj in extra_contents)
+		if(!target_obj.is_saveable(current_loc, obj_blacklist))
+			continue
+
+		if(!parent_container_id_tag)
+			parent_container_id_tag = assign_random_name()
+			GLOB.save_containers_parents[src] = parent_container_id_tag
+
+		// link the stored child object to the id of the parent container
+		GLOB.save_containers_children[target_obj] = parent_container_id_tag
 
 		target_obj.on_object_saved(map_string, current_loc, obj_blacklist)
 		var/metadata = generate_tgm_metadata(target_obj)
