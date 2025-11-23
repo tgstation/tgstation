@@ -354,7 +354,7 @@
 			if(humantarget.radiation >= 4)
 				adjective = "extreme levels of "
 			render_list += "<span class='alert ml-1'>"
-			render_list += conditional_tooltip("Subject has been exposed to [adjective]radiation.", "Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", tochat)
+			render_list += conditional_tooltip("Subject has been exposed to [adjective]radiation.", "Supply antiradiation medicine such as [/datum/reagent/medicine/potass_iodide::name] or place the patient into cryogenics.", tochat)
 			render_list += "</span><br>"
 			if(advanced)
 				render_list += "<span class='alert ml-1'>Dose Equivalent: [round(humantarget.radiation/4, 0.01)]x the lethal dose.</span><br>"
