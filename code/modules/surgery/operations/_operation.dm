@@ -96,16 +96,13 @@
 	if(QDELETED(holding))
 		return FALSE // i dunno, a stack item? not our problem
 
-	return tool == holding.get_proxy_attacker_for(patient, surgeon) // tool (or its proxy) is still being held
+	return tool == holding.get_proxy_attacker_for(patient, src) // tool (or its proxy) is still being held
 
 /// src attempts to cauterize themselves to reset their surgery state
 /mob/living/proc/try_manual_cauterize(obj/item/tool)
-	if(tool.get_temperature() < 0 && tool.tool_behaviour != TOOL_CAUTERY)
-		return NONE
-
 	var/cauterize_zone = deprecise_zone(zone_selected)
 	var/obj/item/bodypart/limb = get_bodypart(cauterize_zone)
-	if(!manual_cauterize_check(limb))
+	if(!manual_cauterize_check(tool, limb))
 		return NONE
 	if(DOING_INTERACTION_WITH_TARGET(src, src))
 		return ITEM_INTERACT_BLOCKING
@@ -122,7 +119,7 @@
 		user = src,
 		delay = /datum/surgery_operation/limb/close_skin::time * 2 * tool.toolspeed,
 		target = src,
-		extra_checks = CALLBACK(src, PROC_REF(manual_cauterize_check), limb),
+		extra_checks = CALLBACK(src, PROC_REF(manual_cauterize_check), tool, limb),
 	))
 		return ITEM_INTERACT_BLOCKING
 
@@ -139,9 +136,22 @@
 	return ITEM_INTERACT_SUCCESS
 
 /// Callback for checking if the cauterization do-after can continue
-/mob/living/proc/manual_cauterize_check(obj/item/bodypart/limb)
+/mob/living/proc/manual_cauterize_check(obj/item/tool, obj/item/bodypart/limb)
 	PRIVATE_PROC(TRUE)
-	return !QDELETED(limb) && limb.owner == src && LIMB_HAS_ANY_SURGERY_STATE(limb, ALL_SURGERY_STATES_UNSET_ON_CLOSE)
+	if(QDELETED(limb) || limb.owner != src)
+		return FALSE
+	if(QDELETED(tool) || (tool.get_temperature() <= 0 && tool.tool_behaviour != TOOL_CAUTERY))
+		return FALSE
+	var/states_to_check = ALL_SURGERY_STATES_UNSET_ON_CLOSE
+	if(!LIMB_HAS_BONES(limb))
+		states_to_check &= ~BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(limb))
+		states_to_check &= ~VESSELLESS_SURGERY_STATES
+	if(!LIMB_HAS_SKIN(limb))
+		states_to_check &= ~SKINLESS_SURGERY_STATES
+	if(!states_to_check || !LIMB_HAS_ANY_SURGERY_STATE(limb, states_to_check))
+		return FALSE
+	return TRUE
 
 /// Takes a target zone and returns a list of readable surgery states for that zone.
 /// Example output may be list("Skin is cut", "Blood vessels are unclamped", "Bone is sawed")
