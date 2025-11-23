@@ -1704,6 +1704,12 @@
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
+"Gq" = (
+/obj/structure/sign/directions/security/directional/south{
+	pixel_y = 0
+	},
+/turf/closed/indestructible/riveted/plastinum/nodiagonal,
+/area/ruin/space/has_grav/powered/biooutpost/vault)
 "GA" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
@@ -2528,9 +2534,6 @@
 /turf/open/indestructible/plating,
 /area/ruin/space/has_grav/powered/biooutpost)
 "XO" = (
-/obj/structure/sign/directions/security/directional/south{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/structure/sign/poster/official/random/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -3306,7 +3309,7 @@ EC
 xr
 hR
 UX
-UX
+Gq
 UX
 op
 Gd

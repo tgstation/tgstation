@@ -16,7 +16,7 @@
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
-	biological_state = (BIO_JOINTED)
+	biological_state = (BIO_WOOD|BIO_JOINTED)
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/bodypart/arm/left/ghetto/Initialize(mapload, ...)
@@ -41,7 +41,7 @@
 	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
-	biological_state = (BIO_JOINTED)
+	biological_state = (BIO_WOOD|BIO_JOINTED)
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/bodypart/arm/right/ghetto/Initialize(mapload, ...)
@@ -64,7 +64,7 @@
 	burn_modifier = 1.5
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
-	biological_state = (BIO_JOINTED)
+	biological_state = (BIO_WOOD|BIO_JOINTED)
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/bodypart/leg/left/ghetto/Initialize(mapload, ...)
@@ -87,7 +87,7 @@
 	burn_modifier = 1.5
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
-	biological_state = (BIO_JOINTED)
+	biological_state = (BIO_WOOD|BIO_JOINTED)
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/bodypart/leg/right/ghetto/Initialize(mapload, ...)

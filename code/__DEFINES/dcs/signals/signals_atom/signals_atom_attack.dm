@@ -14,7 +14,7 @@
 	#define COMPONENT_NO_AFTERATTACK (1<<0)
 ///from base of atom/attack_hulk(): (/mob/living/carbon/human)
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"
-///from base of atom/animal_attack(): (/mob/user)
+///from base of atom/animal_attack(): (/mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_ANIMAL "attack_animal"
 //from base of atom/attack_basic_mob(): (/mob/user)
 #define COMSIG_ATOM_ATTACK_BASIC_MOB "attack_basic_mob"
@@ -43,16 +43,18 @@
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"
 ///from base of atom/attack_hand(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"
-///from base of atom/attack_paw(): (mob/user)
+///from base of atom/attack_paw(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_PAW "atom_attack_paw"
 ///from base of atom/mech_melee_attack(): (obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
 #define COMSIG_ATOM_ATTACK_MECH "atom_attack_mech"
-/// from base of atom/attack_robot(): (mob/user)
+/// from base of atom/attack_robot(): (mob/user, list/modifiers)
 #define COMSIG_ATOM_ATTACK_ROBOT "atom_attack_robot"
 /// from base of atom/attack_robot_secondary(): (mob/user)
 #define COMSIG_ATOM_ATTACK_ROBOT_SECONDARY "atom_attack_robot_secondary"
 /// from base of atom/attack_ai(): (mob/user, params)
 #define COMSIG_ATOM_ATTACK_AI "atom_attack_ai"
+/// from base of atom/attack_larva(): (mob/user, list/modifiers)
+#define COMSIG_ATOM_ATTACK_LARVA "atom_attack_larva"
 ///from relay_attackers element: (atom/attacker, attack_flags)
 #define COMSIG_ATOM_WAS_ATTACKED "atom_was_attacked"
 ///Called before a atom gets something tilted on them. If [COMPONENT_IMMUNE_TO_TILT_AND_CRUSH] is returned in a signal, the atom will be unaffected: (atom/target, atom/source)

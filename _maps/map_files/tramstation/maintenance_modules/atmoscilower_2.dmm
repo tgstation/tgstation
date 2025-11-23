@@ -204,7 +204,7 @@
 	pixel_x = -7;
 	pixel_y = -10
 	},
-/obj/item/food/sandwich/cheese/grilled{
+/obj/item/food/sandwich/grilled_cheese{
 	pixel_x = -5;
 	pixel_y = -9
 	},

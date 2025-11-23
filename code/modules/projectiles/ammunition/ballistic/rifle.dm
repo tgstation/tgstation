@@ -156,7 +156,7 @@
 	if (can_sleep && (owner.mob_biotypes & MOB_ORGANIC))
 		owner.adjust_drowsiness(drowsy_per_second * seconds_per_tick)
 		var/datum/status_effect/drowsiness/drowsiness = owner.has_status_effect(/datum/status_effect/drowsiness)
-		if (drowsiness?.duration - world.time >= drowsy_knockout)
+		if (drowsiness?.duration >= drowsy_knockout)
 			owner.Sleeping(3 SECONDS)
 	if (casing.heals_left <= 0)
 		fall_out()

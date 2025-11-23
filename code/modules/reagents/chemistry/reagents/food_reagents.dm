@@ -512,8 +512,8 @@
 /datum/wound/burn/flesh/on_salt(reac_volume)
 	// Slightly sanitizes and disinfects, but also increases infestation rate (some bacteria are aided by salt), and decreases flesh healing (can damage the skin from moisture absorption)
 	sanitization += VALUE_PER(0.4, 30) * reac_volume
-	infestation -= max(VALUE_PER(0.3, 30) * reac_volume, 0)
-	infestation_rate += VALUE_PER(0.12, 30) * reac_volume
+	infection -= max(VALUE_PER(0.3, 30) * reac_volume, 0)
+	infection_rate += VALUE_PER(0.12, 30) * reac_volume
 	flesh_healing -= max(VALUE_PER(5, 30) * reac_volume, 0)
 	to_chat(victim, span_notice("The salt bits seep in and stick to [LOWER_TEXT(src)], painfully irritating the skin! After a few moments, it feels marginally better."))
 
@@ -678,7 +678,7 @@
 /datum/wound/burn/flesh/on_flour(reac_volume)
 	to_chat(victim, span_notice("The flour seeps into [LOWER_TEXT(src)], spiking you with intense pain! That probably wasn't a good idea..."))
 	sanitization -= min(0, 1)
-	infestation += 0.2
+	infection += 0.2
 	return
 
 /datum/reagent/consumable/flour/expose_turf(turf/exposed_turf, reac_volume)
@@ -782,7 +782,7 @@
 /datum/wound/burn/flesh/on_starch(reac_volume, mob/living/carbon/carbies)
 	to_chat(carbies, span_notice("The slimey starch seeps into [LOWER_TEXT(src)], spiking you with intense pain! That probably wasn't a good idea..."))
 	sanitization -= min(0, 0.5)
-	infestation += 0.1
+	infection += 0.1
 	return
 
 /datum/reagent/consumable/corn_syrup
@@ -985,7 +985,7 @@
 /datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(isethereal(affected_mob))
-		affected_mob.blood_volume += 1 * seconds_per_tick
+		affected_mob.adjust_blood_volume(1 * seconds_per_tick)
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		affected_mob.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
