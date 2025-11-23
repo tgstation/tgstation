@@ -108,6 +108,8 @@
 	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/hemostat/hemostat = allocate(/obj/item/hemostat)
 
+	patient.set_body_position(LYING_DOWN)
+
 	ADD_TRAIT(patient, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
 	var/obj/item/bodypart/chest/patient_chest = patient.get_bodypart(BODY_ZONE_CHEST)
 	ADD_TRAIT(patient_chest, TRAIT_READY_TO_OPERATE, TRAIT_SOURCE_UNIT_TESTS)
@@ -118,8 +120,7 @@
 	patient.take_overall_damage(10, 10)
 	TEST_ASSERT(!surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was available on a damaged but unoperated patient")
 
-	var/obj/item/bodypart/chest/chest = patient.get_bodypart(BODY_ZONE_CHEST)
-	chest.add_surgical_state(SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
+	patient_chest.add_surgical_state(SURGERY_SKIN_OPEN|SURGERY_VESSELS_CLAMPED)
 	TEST_ASSERT(surgery.check_availability(patient, patient, user, hemostat, BODY_ZONE_CHEST), "Tend wounds surgery was not available on a damaged, operated patient")
 
 /datum/unit_test/tend_wounds/Run()
