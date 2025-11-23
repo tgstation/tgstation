@@ -88,9 +88,6 @@
 		if(!newdescription)
 			return ITEM_INTERACT_FAILURE
 
-		if(!user.CanReach(src))
-			return ITEM_INTERACT_FAILURE
-
 		playsound(src, SFX_WRITING_PEN, 30)
 		to_chat(user, span_notice("You sign the [src]."))
 
