@@ -40,9 +40,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 	if(mapload)
 		for(var/obj/item/item in loc)
-			if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
-				item.forceMove(src)
-				cases[current_case].notices++
+			if(!(istype(item, /obj/item/paper) || istype(item, /obj/item/photo)))
+				continue
+			if(!cases[current_case])
+				var/datum/case/case = new("Cold Cases", pick(case_colors))
+				cases += case
+				current_case = clamp(cases.len, 1, MAX_CASES)
+			item.forceMove(src)
+			cases[current_case].notices++
+			var/datum/evidence/evidence = new(null, null, item)
+			cases[current_case].evidences += evidence
+			update_appearance(UPDATE_ICON)
 		find_and_hang_on_atom()
 
 	register_context()
@@ -60,17 +68,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			return
 		attaching_evidence = TRUE
 		var/name = tgui_input_text(user, "Please enter the evidence name", "Detective's Board", max_length = MAX_NAME_LEN)
-		if(!name)
-			name = item.name
 		var/desc = tgui_input_text(user, "Please enter the evidence description", "Detective's Board", max_length = MAX_DESC_LEN)
-		if(!desc)
-			desc = item.desc
 
 		if(!user.transferItemToLoc(item, src))
 			attaching_evidence = FALSE
 			return
 		cases[current_case].notices++
-		var/datum/evidence/evidence = new (name, desc, item)
+		var/datum/evidence/evidence = new(name, desc, item)
 		cases[current_case].evidences += evidence
 		to_chat(user, span_notice("You pin the [item] to the detective board."))
 		attaching_evidence = FALSE
@@ -290,6 +294,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	name = param_name
 	description = param_desc
 	item = param_item
+	if(!name)
+		name = param_item.name
+	if(!desc)
+		desc = param_item.desc
 	if(istype(param_item, /obj/item/photo))
 		evidence_type = EVIDENCE_TYPE_PHOTO
 	else
