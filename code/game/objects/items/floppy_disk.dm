@@ -64,6 +64,7 @@
 	. = ..()
 	if(initial_sticker_icon_state)
 		add_overlay(initial_sticker_icon_state)
+		sticker_changed = TRUE
 	else
 		add_overlay("o_empty")
 
@@ -73,7 +74,7 @@
 
 	if(custom_description)
 		. += span_notice("There's something scribbled on the sticker:")
-		. += span_notice(span_italics("\"[custom_description]"\""))
+		. += span_notice(span_italics("\"[custom_description]\""))
 
 /obj/item/disk/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/pen))
