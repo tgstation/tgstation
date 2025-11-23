@@ -97,7 +97,7 @@
 /obj/item/organ/heart/proc/is_beating()
 	return beating
 
-/obj/item/organ/heart/get_status_text(advanced, add_tooltips)
+/obj/item/organ/heart/get_status_text(advanced, add_tooltips, colored)
 	if(owner.has_status_effect(/datum/status_effect/heart_attack))
 		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
 	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
@@ -247,9 +247,12 @@
 	if(stabilization_available && owner.health <= owner.crit_threshold)
 		stabilize_heart()
 
-	if(bleed_prevention && ishuman(owner) && owner.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Wound healing is intentionally tied to blood volume.
+	if(bleed_prevention && ishuman(owner) && owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		var/mob/living/carbon/human/wounded_owner = owner
-		wounded_owner.blood_volume += 2 * seconds_per_tick
+
+		wounded_owner.adjust_blood_volume(2 * seconds_per_tick)
+
 		if(toxification_probability && prob(toxification_probability))
 			wounded_owner.adjustToxLoss(1 * seconds_per_tick, updating_health = FALSE)
 

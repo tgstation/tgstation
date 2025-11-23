@@ -661,16 +661,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		)
 
 		traumalist -= abstracttraumas
-		for (var/type as anything in forbiddentraumas)
+		for (var/type in forbiddentraumas)
 			traumalist -= typesof(type)
-		for (var/type as anything in forbiddensubtypes)
+		for (var/type in forbiddensubtypes)
 			traumalist -= subtypesof(type)
 
 	traumalist = shuffle(traumalist)
 	var/obj/item/organ/brain/brain = affected_mob.get_organ_slot(ORGAN_SLOT_BRAIN)
 	for(var/trauma in traumalist)
-		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
-			temp_trauma = trauma
+		temp_trauma = brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC)
+		if(temp_trauma)
 			return
 
 /datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/affected_mob)
@@ -679,7 +679,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	if(istype(temp_trauma, /datum/brain_trauma/special/imaginary_friend))//Good friends stay by you, no matter what
 		return
-	affected_mob.cure_trauma_type(temp_trauma, resilience = TRAUMA_RESILIENCE_MAGIC)
+	qdel(temp_trauma)
+	temp_trauma = null
 
 /datum/reagent/inverse/corazargh
 	name = "Corazargh" //It's what you yell! Though, if you've a better name feel free. Also an homage to an older chem
@@ -1041,8 +1042,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 			else
 				holder.add_reagent(/datum/reagent/medicine/coagulant, 0.2 * REM * seconds_per_tick)
 
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		need_mob_update += affected_mob.blood_volume += min(3 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+	affected_mob.adjust_blood_volume(3 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 	switch(current_cycle)
 		if(10)
@@ -1254,7 +1254,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/picked_color = pick(random_color_list)
 	var/color_filter = color_transition_filter(picked_color, SATURATION_OVERRIDE)
 	if (can_color_clothing && (methods & (TOUCH|VAPOR|INHALE)))
-		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES
+		var/include_flags = INCLUDE_HELD|INCLUDE_ACCESSORIES|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT
 		if (methods & (VAPOR|INHALE) || touch_protection >= 1)
 			include_flags |= INCLUDE_POCKETS
 		for (var/obj/item/to_color in exposed_mob.get_equipped_items(include_flags))

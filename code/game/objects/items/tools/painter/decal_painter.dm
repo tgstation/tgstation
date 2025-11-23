@@ -141,3 +141,21 @@
 	name = "extreme decal painter"
 	icon_state = "decal_sprayer_ex"
 	initial_ink_type = /obj/item/toner/extreme
+
+/obj/item/airlock_painter/decal/cyborg
+	icon_state = "decal_sprayer_borg"
+	initial_ink_type = /obj/item/toner/infinite
+
+/obj/item/airlock_painter/decal/cyborg/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	var/mob/living/silicon/robot/cyborg = user
+	if(!iscyborg(user) || !cyborg.cell)
+		return
+	if(cyborg.cell && cyborg.cell.charge > 0)
+		cyborg.cell.use(0.025 * STANDARD_CELL_CHARGE)
+	else if(cyborg.cell.charge <= 0)
+		balloon_alert(user, "not enough energy!")
+		return
+
+/obj/item/airlock_painter/decal/cyborg/click_alt(mob/user)
+	return CLICK_ACTION_BLOCKING

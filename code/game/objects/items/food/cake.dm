@@ -1,5 +1,6 @@
 /obj/item/food/cake
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cake
 	bite_consumption = 3
 	max_volume = 80
 	food_reagents = list(
@@ -20,10 +21,11 @@
 
 /obj/item/food/cake/make_processable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
+	abstract_type = /obj/item/food/cakeslice
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/vitamin = 1,

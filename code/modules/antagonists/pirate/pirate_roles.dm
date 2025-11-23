@@ -14,6 +14,7 @@
 	you_are_text = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection. Protect the ship, siphon the credits from the station, and raid it for even more loot."
 	spawner_job_path = /datum/job/space_pirate
+	allow_custom_character = GHOSTROLE_ALLOW_OTHER
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
 	///Path of the structure we spawn after creating a pirate.
@@ -58,6 +59,7 @@
 	outfit = /datum/outfit/pirate
 	rank = "Mate"
 	fluff_spawn = null
+	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
 	rank = "Captain"
@@ -75,6 +77,7 @@
 	mob_species = /datum/species/lizard/silverscale
 	outfit = /datum/outfit/pirate/silverscale
 	rank = "High-born"
+	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/generate_pirate_name(spawn_gender)
 	var/first_name
@@ -184,6 +187,7 @@
 	mob_species = /datum/species/ethereal/lustrous
 	outfit = /datum/outfit/pirate/lustrous
 	rank = "Scintillant"
+	allow_custom_character = NONE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain
 	rank = "Radiant"
@@ -205,7 +209,7 @@
 	outfit = /datum/outfit/pirate/medieval
 	rank = "Footsoldier"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/special(mob/living/carbon/spawned_mob, mob/mob_possessor)
 	. = ..()
 	if(rank == "Footsoldier")
 		spawned_mob.add_traits(list(TRAIT_NOGUNS, TRAIT_TOSS_GUN_HARD), INNATE_TRAIT)
@@ -217,7 +221,7 @@
 	rank = "Warlord"
 	outfit = /datum/outfit/pirate/medieval/warlord
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob)
+/obj/effect/mob_spawn/ghost_role/human/pirate/medieval/warlord/special(mob/living/carbon/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.dna.add_mutation(/datum/mutation/hulk/superhuman, MUTATION_SOURCE_GHOST_ROLE)
 	spawned_mob.dna.add_mutation(/datum/mutation/gigantism, MUTATION_SOURCE_GHOST_ROLE)

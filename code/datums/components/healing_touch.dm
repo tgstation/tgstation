@@ -45,6 +45,8 @@
 	var/required_modifier
 	/// Callback to run after healing a mob
 	var/datum/callback/after_healed
+	/// Callback to run to get a multiplier for our healing value
+	var/datum/callback/healing_multiplier
 
 /datum/component/healing_touch/Initialize(
 	heal_brute = 20,
@@ -65,6 +67,7 @@
 	heal_color = COLOR_HEALING_CYAN,
 	required_modifier = null,
 	datum/callback/after_healed = null,
+	datum/callback/healing_multiplier = null,
 )
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -87,6 +90,7 @@
 	src.heal_color = heal_color
 	src.required_modifier = required_modifier
 	src.after_healed = after_healed
+	src.healing_multiplier = healing_multiplier
 
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_healing)) // Players
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(try_healing)) // NPCs
@@ -190,15 +194,21 @@
 	if (complete_text)
 		healer.visible_message(span_notice("[format_string(complete_text, healer, target)]"))
 
+	var/mult = 1
+	if (healing_multiplier)
+		mult = healing_multiplier.Invoke(healer, target)
+		if (mult == 0)
+			return
+
 	var/healed = target.heal_overall_damage(
-		brute = heal_brute,
-		burn = heal_burn,
-		stamina = heal_stamina,
+		brute = heal_brute * mult,
+		burn = heal_burn * mult,
+		stamina = heal_stamina * mult,
 		required_bodytype = required_bodytype,
 		updating_health = FALSE,
 	)
-	healed += target.adjustOxyLoss(-heal_oxy, updating_health = FALSE, required_biotype = valid_biotypes)
-	healed += target.adjustToxLoss(-heal_tox, updating_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjustOxyLoss(-heal_oxy * mult, updating_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjustToxLoss(-heal_tox * mult, updating_health = FALSE, required_biotype = valid_biotypes)
 	if (healed <= 0)
 		return
 

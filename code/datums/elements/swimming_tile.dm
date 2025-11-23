@@ -11,6 +11,12 @@
 	var/ticking_oxy_damage
 	/// Probability to exhaust our swimmer
 	var/exhaust_swimmer_prob
+	/// Tracked list of all mobs that are present in our turfs
+	var/list/mob/swimmers = list()
+
+/datum/element/swimming_tile/Destroy(force)
+	swimmers = null
+	return ..()
 
 /datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 7, ticking_stamina_cost = 5, ticking_oxy_damage = 2, exhaust_swimmer_prob = 30)
 	. = ..()
@@ -39,41 +45,59 @@
 /// When something enters the water set up to start drowning it
 /datum/element/swimming_tile/proc/enter_water(atom/source, mob/living/swimmer)
 	SIGNAL_HANDLER
-	if (!istype(swimmer))
+
+	if(!istype(swimmer))
 		return
-	RegisterSignal(swimmer, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
+
+	if(QDELETED(swimmer))
+		return
+
 	if(HAS_TRAIT(swimmer, TRAIT_IMMERSED))
 		dip_in(swimmer)
+
+	if(swimmer in swimmers)
+		return
+
+	RegisterSignal(swimmer, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
+	RegisterSignal(swimmer, COMSIG_QDELETING, PROC_REF(on_swimmer_del))
+	swimmers |= swimmer
 
 /// When something exits the water it probably shouldn't drowning
 /datum/element/swimming_tile/proc/out_of_water(atom/source, mob/living/landlubber)
 	SIGNAL_HANDLER
-	UnregisterSignal(landlubber, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED)))
+	UnregisterSignal(landlubber, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED), COMSIG_QDELETING))
+	swimmers -= landlubber
+
+/datum/element/swimming_tile/proc/on_swimmer_del(atom/source)
+	SIGNAL_HANDLER
+	out_of_water(null, source)
 
 /// When we've validated that someone is actually in the water start drowning the-I mean, start swimming!
 /datum/element/swimming_tile/proc/dip_in(mob/living/floater)
 	SIGNAL_HANDLER
 
-	if ((!HAS_TRAIT(floater, TRAIT_SWIMMER) && (isnull(floater.buckled) || (!isvehicle(floater.buckled) && !ismob(floater.buckled))) && prob(exhaust_swimmer_prob)))
+	if(HAS_TRAIT(floater, TRAIT_SWIMMER) || (isvehicle(floater.buckled) || ismob(floater.buckled)) || !prob(exhaust_swimmer_prob))
+		// Apply the status anyway for when they stop riding
+		floater.apply_status_effect(/datum/status_effect/swimming, ticking_stamina_cost, ticking_oxy_damage)
+		return
 
-		//First, we determine our effective stamina entry cost baseline. This includes the value from the water, as well as any heavy clothing being worn. The strength trait halves this value.
-		var/effective_stamina_entry_cost = HAS_TRAIT(floater, TRAIT_STRENGTH) ? (stamina_entry_cost + clothing_weight(floater)) : ((stamina_entry_cost + clothing_weight(floater)) / 2)
+	//First, we determine our effective stamina entry cost baseline. This includes the value from the water, as well as any heavy clothing being worn. The strength trait halves this value.
+	var/effective_stamina_entry_cost = HAS_TRAIT(floater, TRAIT_STRENGTH) ? (stamina_entry_cost + clothing_weight(floater)) : ((stamina_entry_cost + clothing_weight(floater)) / 2)
 
-		//Being in high gravity doubles our effective stamina cost
-		var/gravity_modifier = floater.has_gravity() > STANDARD_GRAVITY ? 2 : 1
+	//Being in high gravity doubles our effective stamina cost
+	var/gravity_modifier = floater.has_gravity() > STANDARD_GRAVITY ? 2 : 1
 
-		//If our floater has a specialized spine, include that as a factor.
-		var/obj/item/organ/cyberimp/chest/spine/potential_spine = floater.get_organ_slot(ORGAN_SLOT_SPINE)
-		if(istype(potential_spine))
-			effective_stamina_entry_cost *= potential_spine.athletics_boost_multiplier
+	//If our floater has a specialized spine, include that as a factor.
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = floater.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		effective_stamina_entry_cost *= potential_spine.athletics_boost_multiplier
 
-		//Finally, we get our athletics skill as a reduction to the stamina cost. This is a direct reduction.
-		var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
+	//Finally, we get our athletics skill as a reduction to the stamina cost. This is a direct reduction.
+	var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
 
-		floater.apply_damage(clamp((effective_stamina_entry_cost - athletics_skill) * gravity_modifier, 1, 100), STAMINA)
-		floater.mind?.adjust_experience(/datum/skill/athletics, (stamina_entry_cost * gravity_modifier) * 0.1)
-		floater.apply_status_effect(/datum/status_effect/exercised, 15 SECONDS)
-
+	floater.apply_damage(clamp((effective_stamina_entry_cost - athletics_skill) * gravity_modifier, 1, 100), STAMINA)
+	floater.mind?.adjust_experience(/datum/skill/athletics, (stamina_entry_cost * gravity_modifier) * 0.1)
+	floater.apply_status_effect(/datum/status_effect/exercised, 15 SECONDS)
 	floater.apply_status_effect(/datum/status_effect/swimming, ticking_stamina_cost, ticking_oxy_damage) // Apply the status anyway for when they stop riding
 
 /// The weight of our swimmers clothing, including slowdown, impacts the amount of stamina damage dealt on dipping in.

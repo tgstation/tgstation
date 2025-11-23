@@ -159,6 +159,9 @@
 // NOTICE: we break from the pattern of increasing in steps of like 0.01 here
 // Because TOPDOWN_LAYER is 10000 and that's enough to floating point our modifications away
 
+/// Used to shift all topdown layer emissives to a the game plane equivalent layers, as otherwise they render above everything else due to being KEEP_APART
+#define TOPDOWN_TO_EMISSIVE_LAYER(layer) LERP(FLOOR_EMISSIVE_START_LAYER, FLOOR_EMISSIVE_END_LAYER, (layer - (TOPDOWN_LAYER + 1)) / TOPDOWN_LAYER_COUNT)
+
 // Must be equal to the offset of the highest topdown layer
 #define TOPDOWN_LAYER_COUNT 18
 
@@ -267,13 +270,6 @@
 #define ABOVE_TREE_LAYER 5.01
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
-
-/**
- * The layer of the visual overlay used in the submerge element.
- * The vis overlay inherits the planes of the movables it's attached to (that also have KEEP_TOGETHER added)
- * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
- */
-#define WATER_VISUAL_OVERLAY_LAYER 1000
 
 // SEETHROUGH_PLANE layers here, tho it has no layer values
 

@@ -1,0 +1,30 @@
+{
+	"ushanka_gagup": [
+		{
+			"type": "icon_state",
+			"icon_state": "ushanka_fur",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ushanka_base_up",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	],
+	"ushanka_gagdown": [
+		{
+			"type": "icon_state",
+			"icon_state": "ushanka_fur",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "ushanka_base",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	]
+}

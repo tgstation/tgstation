@@ -23,6 +23,9 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/nuclear,
 	/obj/item/gun/energy/laser,
+	/obj/item/gun/energy/laser/soul,
+	/obj/item/gun/energy/laser/pistol,
+	/obj/item/gun/energy/laser/assault,
 	/obj/item/gun/energy/laser/hellgun,
 	/obj/item/gun/energy/laser/captain,
 	/obj/item/gun/energy/laser/scatter,
@@ -88,7 +91,6 @@ GLOBAL_LIST_INIT(mystery_magic, list(
 GLOBAL_LIST_INIT(mystery_fishing, list(
 	/obj/item/storage/toolbox/fishing/master,
 	/obj/item/storage/box/fish_revival_kit,
-	/obj/item/circuitboard/machine/fishing_portal_generator/emagged,
 	/obj/item/fishing_rod/telescopic/master,
 	/obj/item/bait_can/super_baits,
 	/obj/item/storage/fish_case/tiziran,
@@ -173,15 +175,10 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /// This proc is used to define what item types valid_types is filled with
 /obj/structure/mystery_box/proc/generate_valid_types()
-	valid_types = list()
+	valid_types = get_sane_item_types(selectable_base_type)
 
-	for(var/iter_path in typesof(selectable_base_type))
-		if(!ispath(iter_path, /obj/item))
-			continue
-		var/obj/item/iter_item = iter_path
-		if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state) || !initial(iter_item.inhand_icon_state))
-			continue
-		valid_types += iter_path
+/obj/structure/mystery_box/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE
 
 /// The box has been activated, play the sound and spawn the prop item
 /obj/structure/mystery_box/proc/activate(mob/living/user)
@@ -189,7 +186,6 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	update_icon_state()
 	presented_item = new(src)
 	presented_item.vis_flags = VIS_INHERIT_PLANE
-	presented_item.flags_1 |= IS_ONTOP_1
 	vis_contents += presented_item
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)
@@ -274,6 +270,12 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 
 /obj/structure/mystery_box/wands/generate_valid_types()
 	valid_types = GLOB.mystery_magic
+
+/obj/structure/mystery_box/wildcard
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one has an EXTREAMLY extended array of weaponry."
+
+/obj/structure/mystery_box/wildcard/generate_valid_types()
+	valid_types = GLOB.summoned_all_guns
 
 ///A fishing and pirate-themed mystery box, rarely found by fishing in the ocean, then another cannot be caught for the next 30 minutes.
 /obj/structure/mystery_box/fishing

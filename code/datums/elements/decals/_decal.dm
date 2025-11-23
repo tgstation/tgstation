@@ -45,6 +45,11 @@
 	if(directional) //Even when the dirs are the same rotation is coming out as not 0 for some reason
 		rotation = SIMPLIFY_DEGREES(dir2angle(new_dir)-dir2angle(old_dir))
 		new_dir = turn(pic.dir,-rotation)
+
+	var/pic_color = pic.color
+	if(islist(pic_color))
+		pic_color = string_list(pic_color)
+
 	return list(
 		"icon" = pic.icon,
 		"icon_state" = base_icon_state,
@@ -52,7 +57,7 @@
 		"plane" = pic.plane,
 		"layer" = pic.layer,
 		"alpha" = pic.alpha,
-		"color" = pic.color,
+		"color" = pic_color,
 		"smoothing" = smoothing,
 		"cleanable" = cleanable,
 		"desc" = description
@@ -64,6 +69,9 @@
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
+	// Color matrixes should be stringlisted as to avoid dupes
+	if (islist(_color))
+		_color = string_list(_color)
 	if(_pic)
 		pic = _pic
 	else if(!generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, target))
@@ -104,6 +112,11 @@
 /datum/element/decal/proc/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
 	if(!_icon || !_icon_state)
 		return FALSE
+
+	if(_plane == EMISSIVE_PLANE)
+		pic = emissive_appearance(_icon, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", source, _layer, _alpha)
+		return TRUE
+
 	var/temp_image = image(_icon, null, isnull(_smoothing) ? _icon_state : "[_icon_state]-[_smoothing]", _layer, _dir)
 	pic = new(temp_image)
 	var/atom/atom_source = source
@@ -153,7 +166,10 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description)
+	var/pic_color = pic.color
+	if(islist(pic_color))
+		pic_color = string_list(pic_color)
+	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic_color, smoothing, cleanable, description)
 
 /datum/element/decal/proc/shuttle_rotate(datum/source, list/datum/element/decal/rotating)
 	SIGNAL_HANDLER
@@ -172,5 +188,8 @@
 		return NONE
 
 	Detach(source)
-	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
+	var/pic_color = pic.color
+	if(islist(pic_color))
+		pic_color = string_list(pic_color)
+	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic_color, smoothing_junction, cleanable, description)
 	return NONE

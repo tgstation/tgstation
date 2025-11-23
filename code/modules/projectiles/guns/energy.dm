@@ -47,6 +47,13 @@
 	var/charge_delay = 8
 	/// The amount restored by the gun to the cell per self charge tick
 	var/self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE
+	/// sound played when fire mode select is done
+	var/fire_mode_switch_sound = SFX_FIRE_MODE_SWITCH
+
+	// EMP related vars
+
+	/// A divide to the amount of charge lost when the weapon is EMP'd. Higher means more resistant.
+	var/emp_resistance = 1
 
 /obj/item/gun/energy/fire_sounds()
 	// What frequency the energy gun's sound will make
@@ -74,7 +81,7 @@
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
-		cell.use(round(cell.charge / severity))
+		cell.use(round(cell.charge / emp_resistance / severity))
 		chambered = null //we empty the chamber
 		recharge_newshot() //and try to charge a new shot
 		update_appearance()
@@ -236,6 +243,8 @@
 	chambered = null
 	recharge_newshot(TRUE)
 	update_appearance()
+	if(fire_mode_switch_sound)
+		playsound(src, fire_mode_switch_sound, 50, TRUE)
 
 /obj/item/gun/energy/update_icon_state()
 	var/skip_inhand = initial(inhand_icon_state) //only build if we aren't using a preset inhand icon

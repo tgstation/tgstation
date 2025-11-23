@@ -8,7 +8,7 @@
 	burn_damage = 1000
 	mob_species = /datum/species/skeleton
 
-/obj/effect/mob_spawn/corpse/human/charredskeleton/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/charredskeleton/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	spawned_human.color = "#454545"
 	spawned_human.gender = NEUTER
@@ -34,7 +34,7 @@
 	outfit = select_outfit()
 	return ..()
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	var/obj/item/organ/legion_tumour/cancer = new()
 	cancer.Insert(spawned_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
@@ -75,7 +75,7 @@
 /// Corpse spawner used by dwarf legions to make small corpses
 /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	spawned_human.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_MUTATOR)
 
@@ -123,7 +123,7 @@
 /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/select_outfit()
 	return null
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	spawned_human.gender = NEUTER
 
@@ -134,9 +134,10 @@
 	brute_damage = 0
 	burn_damage = 1000
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human, mob/mob_possessor)
 	. = ..()
 	spawned_human.color = "#454545"
+	spawned_human.AddComponent(/datum/component/storm_hating)
 
 
 /datum/outfit/consumed_miner
@@ -261,7 +262,7 @@
 		else
 			backpack_contents += backpack_loot
 	if(prob(30))
-		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(list( 1 = 3, 2 = 2, 3 = 1)))
+		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(alist( 1 = 3, 2 = 2, 3 = 1)))
 	if(prob(10))
 		l_pocket = pick_weight(list(
 			/obj/item/bikehorn/golden = 3,

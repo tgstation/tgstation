@@ -102,8 +102,9 @@
 	need_mob_update += owner_mob.adjustFireLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	need_mob_update += owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 	need_mob_update += owner_mob.adjustOxyLoss(-1 * seconds_per_tick, updating_health = FALSE)
-	if (owner_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner_mob.blood_volume += 2 * seconds_per_tick
+
+	owner_mob.adjust_blood_volume(2 * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
+
 	if(need_mob_update)
 		owner_mob.updatehealth()
 
@@ -151,8 +152,7 @@
 			var/mob/living/basic/basic_candidate = candidate
 			basic_candidate.adjust_health(simple_damage * seconds_per_tick, updating_health = FALSE)
 
-		if (candidate.blood_volume > BLOOD_VOLUME_SURVIVE)
-			candidate.blood_volume -= blood_damage * seconds_per_tick
+		candidate.adjust_blood_volume(blood_damage * seconds_per_tick, minimum = BLOOD_VOLUME_SURVIVE)
 
 		candidate.updatehealth()
 

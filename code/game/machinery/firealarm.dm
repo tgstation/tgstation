@@ -10,6 +10,13 @@
 	result_path = /obj/machinery/firealarm
 	pixel_shift = 26
 
+/obj/item/wallframe/firealarm/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()
+
 /obj/machinery/firealarm
 	name = "fire alarm"
 	desc = "Pull this in case of emergency. Thus, keep pulling it forever."
@@ -49,10 +56,10 @@
 	fire = 90
 	acid = 30
 
-/obj/machinery/firealarm/Initialize(mapload, dir, building)
+/obj/machinery/firealarm/Initialize(mapload)
 	. = ..()
 	id_tag = assign_random_name()
-	if(building)
+	if(!mapload)
 		buildstage = FIRE_ALARM_BUILD_NO_CIRCUIT
 		set_panel_open(TRUE)
 	if(name == initial(name))
@@ -78,9 +85,9 @@
 	)
 
 	register_context()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_hang_on_atom()
 	update_appearance()
-
 
 /obj/machinery/firealarm/Destroy()
 	if(my_area)

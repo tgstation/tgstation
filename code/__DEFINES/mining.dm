@@ -67,6 +67,14 @@
 /// The amount of ore that is mined from a wall that is VENT_PROX_FAR tiles to a vent.
 #define ORE_WALL_FAR 1
 
+/// Lifetime of a boulder platform in seconds when spawned in lava/plasma.
+#define PLATFORM_LIFE_DEFAULT 10 SECONDS
+
+#define PLATFORM_LIFE_GULAG 1 SECONDS
+#define PLATFORM_LIFE_SMALL 20 SECONDS
+#define PLATFORM_LIFE_MEDIUM 45 SECONDS
+#define PLATFORM_LIFE_LARGE 90 SECONDS
+
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100
 /// The multiplier that gets applied for automatically generated mining points.

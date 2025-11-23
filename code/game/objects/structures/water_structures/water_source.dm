@@ -94,12 +94,6 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/ore/glass))
-		new /obj/item/stack/sheet/sandblock(loc)
-		to_chat(user, span_notice("You wet the sand and form it into a block."))
-		attacking_item.use(1)
-		return
-
 	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
 		to_chat(user, span_notice("You start washing [attacking_item]..."))
 		busy = TRUE

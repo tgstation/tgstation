@@ -34,6 +34,8 @@
 	var/connector_type = "standard"
 	///Does the cell start without any charge?
 	var/empty = FALSE
+	// Damage multiplier the cells take from emps to prevent stuff like bluespace cells taking 40 shots to drain.
+	var/emp_damage_modifier = 1
 
 /obj/item/stock_parts/power_store/get_cell()
 	return src
@@ -50,10 +52,8 @@
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	rating = max(round(maxcharge / (rating_base * 10), 1), 1)
-	if(!charge)
+	if(!empty && !charge)
 		charge = maxcharge
-	if(empty)
-		charge = 0
 	if(ratingdesc)
 		desc += " This one has a rating of [display_energy(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
 	update_appearance()
@@ -239,7 +239,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	use(STANDARD_CELL_CHARGE / severity, force = TRUE)
+	use((STANDARD_CELL_CHARGE /severity) * emp_damage_modifier , force = TRUE)
 
 /obj/item/stock_parts/power_store/ex_act(severity, target)
 	. = ..()

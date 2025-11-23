@@ -31,10 +31,10 @@
 	item = /obj/item/clothing/gloves/combat
 	cost = 1
 
-/datum/uplink_item/spy_unique/krav_maga
+/datum/uplink_item/spy_unique/kaza_ruk
 	name = "Combat Gloves Plus"
 	desc = "A pair of combat gloves plus. They're insulated AND you can do martial arts with it!"
-	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	item = /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
 
 /datum/uplink_item/spy_unique/tackle_gloves
 	name = "Guerrilla Gloves"

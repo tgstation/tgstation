@@ -96,7 +96,7 @@
 	if(prob(33))
 		cone_type = /obj/item/food/icecream/chocolate
 	var/static/list/possible_flavors = list()
-	for(var/flavour as anything in GLOB.ice_cream_flavours)
+	for(var/flavour in GLOB.ice_cream_flavours)
 		//only request standard flavors that are available from the ice cream vat
 		if(!GLOB.ice_cream_flavours[flavour].hidden && flavour != ICE_CREAM_CUSTOM)
 			possible_flavors += flavour

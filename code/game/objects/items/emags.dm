@@ -17,6 +17,9 @@
 	var/prox_check = TRUE //If the emag requires you to be in range
 	var/type_blacklist //List of types that require a specialized emag
 
+/obj/item/card/emag/get_displayed_name(honorifics = FALSE)
+	return name // That's Grey Tider (as "cryptographic sequencer")
+
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
@@ -28,8 +31,7 @@
 	var/emag_count = 0
 	for(var/obj/item/card/emag/emag in get_all_contents() + emag_card.get_all_contents()) // This is including itself
 		emag_count++
-	if(emag_count > 6) // 1 uplink's worth is the limit
-		to_chat(user, span_warning("Nope, lesson learned. No more."))
+	if(emag_count >= 128) // prevent overlay sprite overload allowed on a single item, incase someone manages to (somehow) emag an emag 128 times
 		return FALSE
 	if(emag_card.loc != loc) // Both have to be in your hand (or TK shenanigans)
 		return FALSE
@@ -98,6 +100,9 @@
 	slot_flags = ITEM_SLOT_ID
 	/// Whether we are exploding
 	var/exploding = FALSE
+
+/obj/item/card/emagfake/get_displayed_name(honorifics = FALSE)
+	return name // That's Grey Tider (as "cryptographic sequencer")
 
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))

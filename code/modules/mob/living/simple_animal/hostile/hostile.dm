@@ -1,4 +1,5 @@
 /mob/living/simple_animal/hostile
+	abstract_type = /mob/living/simple_animal/hostile
 	faction = list(FACTION_HOSTILE)
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
@@ -10,7 +11,7 @@
 	///How many shots per volley.
 	var/rapid = 0
 	///Time between rapid fire shots
-	var/rapid_fire_delay = 2
+	var/rapid_fire_delay = 2 DECISECONDS
 
 	///Are we dodging?
 	var/dodging = FALSE

@@ -219,7 +219,7 @@
 	return costs
 
 /obj/machinery/flatpacker/base_item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
-	if(attacking_item.flags_1 & HOLOGRAM_1 || attacking_item.item_flags & ABSTRACT)
+	if(attacking_item.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
 	if(istype(attacking_item, /obj/item/circuitboard/machine))
@@ -235,7 +235,7 @@
 		inserted_board = attacking_item
 
 		//compute the needed mats from its stock parts
-		for(var/type as anything in inserted_board.req_components)
+		for(var/type in inserted_board.req_components)
 			//these don't count to the final cost as they have to inserted manually
 			if(type in inserted_board.flatpack_components)
 				continue
@@ -373,7 +373,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.retrieve_sheets(amount, material)
+			materials.retrieve_stack(amount, material)
 			return TRUE
 
 /**

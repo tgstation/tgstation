@@ -19,8 +19,6 @@
 	///How much sitting on this chair influences fishing difficulty
 	var/fishing_modifier = -5
 	var/has_armrest = FALSE
-	// The mutable appearance used for the overlay over buckled mobs.
-	var/mutable_appearance/armrest
 
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
@@ -28,8 +26,6 @@
 		name = "tactical [name]"
 		fishing_modifier -= 8
 	MakeRotate()
-	if (has_armrest)
-		gen_armrest()
 	if(can_buckle && fishing_modifier)
 		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
 
@@ -67,14 +63,6 @@
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
-/obj/structure/chair/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer || !has_armrest)
-		return ..()
-	cut_overlay(armrest)
-	QDEL_NULL(armrest)
-	gen_armrest()
-	return ..()
-
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += span_notice("It's held together by a couple of <b>bolts</b>.")
@@ -87,7 +75,6 @@
 
 /obj/structure/chair/Destroy()
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
-	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/atom_deconstruct(disassembled)
@@ -111,29 +98,16 @@
 		return
 	. = ..()
 
-/obj/structure/chair/update_atom_colour()
-	. = ..()
-	if (armrest)
-		color_atom_overlay(armrest)
-
-/obj/structure/chair/proc/gen_armrest()
-	armrest = GetArmrest()
-	armrest.layer = ABOVE_MOB_LAYER
-	armrest.appearance_flags |= KEEP_APART
-	update_armrest()
-
-/obj/structure/chair/proc/GetArmrest()
-	return mutable_appearance(icon, "[icon_state]_armrest")
-
-/obj/structure/chair/proc/update_armrest()
-	if (cached_color_filter)
-		armrest = filter_appearance_recursive(armrest, cached_color_filter)
-	update_appearance()
-
 /obj/structure/chair/update_overlays()
 	. = ..()
-	if(has_buckled_mobs())
-		. += armrest
+	if (!has_buckled_mobs())
+		return
+	var/mutable_appearance/armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
+	var/mutable_appearance/armrest_blocker = emissive_blocker(icon, "[icon_state]_armrest", src, ABOVE_MOB_LAYER)
+	if (cached_color_filter)
+		armrest = filter_appearance_recursive(armrest, cached_color_filter)
+	. += armrest
+	. += armrest_blocker
 
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
@@ -183,13 +157,13 @@
 	. = ..()
 	handle_layer()
 	if (has_armrest)
-		update_armrest()
+		update_appearance()
 
 /obj/structure/chair/post_unbuckle_mob()
 	. = ..()
 	handle_layer()
 	if (has_armrest)
-		update_armrest()
+		update_appearance()
 
 /obj/structure/chair/setDir(newdir)
 	..()
@@ -428,6 +402,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	// What structure type does this chair become when placed?
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
+/obj/item/chair/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src,hitsound,50,TRUE)
@@ -442,25 +420,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
-	var/turf/T = get_turf(loc)
-	if(isgroundlessturf(T))
+	var/turf/turf = user.loc
+	if(!istype(turf) || isgroundlessturf(turf))
 		to_chat(user, span_warning("You need ground to plant this on!"))
+		return
+	if(!user.dropItemToGround(src))
+		to_chat(user, span_warning("[src] is stuck to your hand!"))
 		return
 	if(flags_1 & HOLOGRAM_1)
 		to_chat(user, span_notice("You try to place down \the [src], but it fades away!"))
 		qdel(src)
 		return
 
-	for(var/obj/A in T)
-		if(istype(A, /obj/structure/chair))
+	for(var/obj/object in turf)
+		if(istype(object, /obj/structure/chair))
 			to_chat(user, span_warning("There is already a chair here!"))
 			return
-		if(A.density && !(A.flags_1 & ON_BORDER_1))
+		if(object.density && !(object.flags_1 & ON_BORDER_1))
 			to_chat(user, span_warning("There is already something here!"))
 			return
 
 	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
-	var/obj/structure/chair/chair = new origin_type(get_turf(loc))
+	var/obj/structure/chair/chair = new origin_type(turf)
 	chair.set_custom_materials(custom_materials)
 	TransferComponents(chair)
 	chair.setDir(user.dir)

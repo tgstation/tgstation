@@ -53,7 +53,7 @@
 	spawned_mob_ref = WEAKREF(spawned_mob)
 	return spawned_mob
 
-/obj/effect/mob_spawn/proc/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/proc/special(mob/living/spawned_mob, mob/mob_possessor)
 	SHOULD_CALL_PARENT(TRUE)
 	if(faction)
 		spawned_mob.faction = faction
@@ -114,6 +114,8 @@
 	/// A list of the ckeys that currently are trying to access this spawner, so that they can't try to spawn more than once (in case there's sleeps).
 	/// Static because you only really want to be able to spawn in one spawner at a time, obviously.
 	var/static/list/ckeys_trying_to_spawn
+	///bitflag that determines if players can spawn in as their statics
+	var/allow_custom_character = NONE
 
 	////descriptions
 
@@ -206,7 +208,7 @@
  * If you are manually forcing a player into this mob spawn,
  * you should be using this and not directly calling [proc/create].
  */
-/obj/effect/mob_spawn/ghost_role/proc/create_from_ghost(mob/dead/user)
+/obj/effect/mob_spawn/ghost_role/proc/create_from_ghost(mob/dead/observer/user)
 	ASSERT(istype(user))
 	var/user_ckey = user.ckey // We need to do it before everything else, because after the create() the ckey will already have been transferred.
 
@@ -214,6 +216,15 @@
 	uses -= 1 // Remove a use before trying to spawn to prevent strangeness like the spawner trying to spawn more mobs than it should be able to
 	if(!temp_body)
 		user.mind = null // dissassociate mind, don't let it follow us to the next life
+	var/species_pref = user.client.prefs.read_preference(/datum/preference/choiced/species)
+	var/datum/species/user_species = GLOB.species_prototypes[species_pref]
+	if(user_species.inherent_respiration_type == RESPIRATION_PLASMA) // Stupid flammable skeletons...
+		user.started_as_observer = null
+	else if(user.started_as_observer && allow_custom_character)
+		var/static_prompt = "Because you haven't taken a role so far, you may spawn in as [(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || user_species == /datum/species/human) ? "" : "a human version of"] your customized character with a random name. Would you like to?"
+		var/static_prompt_result = tgui_alert(user, static_prompt, "Custom Character", list("Yes", "No"), 10 SECONDS)
+		if(static_prompt_result != "Yes")
+			user.started_as_observer = null
 
 	var/created = create(user)
 	LAZYREMOVE(ckeys_trying_to_spawn, user_ckey) // We do this AFTER the create() so that we're basically sure that the user won't be in their ghost body anymore, so they can't click on the spawner again.
@@ -239,6 +250,14 @@
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	if(mob_possessor)
+		var/mob/dead/observer/observer_possessor = mob_possessor
+		if(observer_possessor.started_as_observer)
+			var/old_name = spawned_mob.real_name
+			if(allow_custom_character & GHOSTROLE_ALLOW_OTHER)
+				mob_possessor.client.prefs.safe_transfer_prefs_to(spawned_mob)
+				spawned_mob.fully_replace_character_name(newname = old_name)
+			if(!(allow_custom_character & GHOSTROLE_ALLOW_SPECIES || ishumanbasic(spawned_mob)))
+				spawned_mob.set_species(/datum/species/human)
 		if(mob_possessor.mind)
 			mob_possessor.mind.transfer_to(spawned_mob, force_key_move = TRUE)
 		else
@@ -247,7 +266,6 @@
 	if(spawned_mind)
 		spawned_mob.mind.set_assigned_role_with_greeting(SSjob.get_job_type(spawner_job_path))
 		spawned_mind.name = spawned_mob.real_name
-
 	if(show_flavor)
 		var/output_message = span_infoplain("<span class='big bold'>[you_are_text]</span>")
 		if(flavour_text != "")
@@ -296,7 +314,7 @@
 			if(mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))
 				INVOKE_ASYNC(src, PROC_REF(create))
 
-/obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob)
+/obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
 	spawned_mob.death(TRUE)
 	spawned_mob.adjustOxyLoss(oxy_damage)
@@ -331,6 +349,7 @@
 		spawned_human.Drain()
 	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
 		spawned_human.cure_husk()
+	spawned_human.job = name
 
 /obj/effect/mob_spawn/corpse/human/equip(mob/living/carbon/human/spawned_human)
 	. = ..()
@@ -344,8 +363,7 @@
 		// Or on crew monitors
 		var/obj/item/clothing/under/sensor_clothes = spawned_human.w_uniform
 		if(istype(sensor_clothes))
-			sensor_clothes.sensor_mode = SENSOR_OFF
-			spawned_human.update_suit_sensors()
+			sensor_clothes.set_sensor_mode(SENSOR_OFF)
 
 //don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist
 /obj/effect/mob_spawn/corpse/human/damaged

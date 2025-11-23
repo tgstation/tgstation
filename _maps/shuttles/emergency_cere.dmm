@@ -511,7 +511,7 @@
 "cu" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/stasis,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{

@@ -11,9 +11,9 @@
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/beanbag = 3,
 					/obj/item/storage/box/rubbershot = 3,
-					/obj/item/ammo_box/c38/trac,
-					/obj/item/ammo_box/c38/hotshot,
-					/obj/item/ammo_box/c38/iceblox,
+					/obj/item/ammo_box/speedloader/c38/trac,
+					/obj/item/ammo_box/speedloader/c38/hotshot,
+					/obj/item/ammo_box/speedloader/c38/iceblox,
 				)
 	crate_name = "ammo crate"
 
@@ -241,19 +241,20 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laser
-	name = "Lasers Crate"
-	desc = "Contains three lethal, high-energy laser guns."
+	name = "Type 5 Laser Gun Crate"
+	desc = "Contains three Type 5 laser guns, developed by Nanotrasen. For when the going gets tough, you get going with the \
+		Type 5 Heat Delivery System. As developed by Nanotrasen."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/gun/energy/laser = 3)
-	crate_name = "laser crate"
+	crate_name = "\improper Type 5 laser crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/laser_carbine
-	name = "Laser Carbine Crate"
-	desc = "Contains three laser carbines, capable of rapidly firing weak lasers."
+	name = "Type 5R Laser Carbine Crate"
+	desc = "Contains three Type 5R laser carbines, developed by Nanotrasen. Fires a rapid burst of slightly weaker laser projectiles."
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/laser/carbine = 3)
-	crate_name = "laser carbine crate"
+	crate_name = "\improper Type 5R laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/disabler_smg
@@ -266,9 +267,9 @@
 
 /datum/supply_pack/security/armory/battle_rifle
 	name = "NT BR-38 Crate"
-	desc = "An experimental energy-based ballistic battle rifle. Only available to \
-		Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE COMPANIES. \
-		Contains three NT BR-38 rifles and 6 magazines containing .38 Standard."
+	desc = "An experimental energy-based ballistic battle rifle, as developed by Nanotrasen. \
+		Only available to Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE \
+		COMPANIES. Contains three NT BR-38 rifles and 6 magazines containing .38 Standard."
 	cost = CARGO_CRATE_VALUE * 100
 	contains = list(
 		/obj/item/gun/ballistic/automatic/battle_rifle = 3,
@@ -321,7 +322,7 @@
 	desc = "Contains four tracking implants and three tracking speedloaders of tracing .38 ammo."
 	cost = CARGO_CRATE_VALUE * 4.5
 	contains = list(/obj/item/storage/box/trackimp,
-					/obj/item/ammo_box/c38/trac = 3,
+					/obj/item/ammo_box/speedloader/c38/trac = 3,
 				)
 	crate_name = "tracking implant crate"
 

@@ -44,3 +44,12 @@ EXTERNAL_RSC_URLS http://tgstation13.download/byond/tgstationv2.zip
 # <add name="Vary" value="Origin" />
 # <add name="Access-Control-Allow-Methods" value="GET, POST, OPTIONS" />
 # <add name="Access-Control-Max-Age" value="0" />
+
+# If configured, this allows server operators to define the persistent origin used for clientside
+# storage. This must host the same file as available in tgui/public/iframe.html. This is also hosted
+# on the GitHub Pages site for the /tg/station repository, so does not need to be configured.
+# If multiple servers use the same domain name, clientside features such as message saving
+# and chat tabs will be persistent across both.
+# If this setting is not configured, but the webroot CDN is, that will be used instead of GitHub Pages.
+# If this setting is mpty, and the webroot CDN is disabled, byondstorage will be used.
+# STORAGE_CDN_IFRAME https://tgstation.github.io/byond-client-storage/iframe.html
