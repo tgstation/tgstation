@@ -39,6 +39,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	. = ..()
 
 	if(mapload)
+		var/sprite_dirtied = FALSE
 		for(var/obj/item/item in loc)
 			if(!(istype(item, /obj/item/paper) || istype(item, /obj/item/photo)))
 				continue
@@ -50,6 +51,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			cases[current_case].notices++
 			var/datum/evidence/evidence = new(null, null, item)
 			cases[current_case].evidences += evidence
+			sprite_dirtied = TRUE
+		if(sprite_dirtied)
 			update_appearance(UPDATE_ICON)
 		find_and_hang_on_atom()
 
