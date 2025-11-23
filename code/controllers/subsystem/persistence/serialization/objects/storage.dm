@@ -68,13 +68,19 @@
 
 /obj/structure/mop_bucket/janitorialcart/on_object_saved(map_string, turf/current_loc, list/obj_blacklist)
 	var/list/janicart_contents = list()
-	janicart_contents += mybag
-	janicart_contents += mymop
-	janicart_contents += mybroom
-	janicart_contents += myspray
-	janicart_contents += myreplacer
-	for(var/obj/item/clothing/suit/caution/sign as anything in held_signs)
-		janicart_contents += sign
+	if(mybag)
+		janicart_contents += mybag
+	if(mymop)
+		janicart_contents += mymop
+	if(mybroom)
+		janicart_contents += mybroom
+	if(myspray)
+		janicart_contents += myspray
+	if(myreplacer)
+		janicart_contents += myreplacer
+	if(held_signs.len)
+		for(var/obj/item/clothing/suit/caution/sign as anything in held_signs)
+			janicart_contents += sign
 
 	if(janicart_contents.len)
 		save_stored_contents(map_string, current_loc, obj_blacklist, janicart_contents)
@@ -100,3 +106,4 @@
 		contents -= jani_obj
 
 	update_appearance()
+
