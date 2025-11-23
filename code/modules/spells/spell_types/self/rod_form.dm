@@ -104,7 +104,7 @@
 		span_userdanger("The [src] penetrates you!"),
 		span_danger("You hear a CLANG!"),
 		)
-	penetrated.adjustBruteLoss(70 + damage_bonus)
+	penetrated.adjust_brute_loss(70 + damage_bonus)
 
 /obj/effect/immovablerod/wizard/suplex_rod(mob/living/strongman)
 	var/mob/living/wizard = our_wizard?.resolve()

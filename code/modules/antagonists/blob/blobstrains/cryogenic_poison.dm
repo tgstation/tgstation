@@ -28,8 +28,8 @@
 /datum/reagent/blob/cryogenic_poison/on_mob_life(mob/living/carbon/exposed_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = exposed_mob.adjustBruteLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += exposed_mob.adjustFireLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += exposed_mob.adjustToxLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
+	need_mob_update = exposed_mob.adjust_brute_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += exposed_mob.adjust_fire_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += exposed_mob.adjust_tox_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
