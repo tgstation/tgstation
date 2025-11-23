@@ -73,8 +73,7 @@
 
 	if(custom_description)
 		. += span_notice("There's something scribbled on the sticker:")
-		. += "<br>"
-		. += span_notice(span_italics("[custom_description]"))
+		. += span_notice(span_italics("\"[custom_description]"\""))
 
 /obj/item/disk/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/pen))
@@ -107,6 +106,46 @@
 	read_only = !read_only
 	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
+/obj/item/disk/click_alt(mob/user)
+	if(sticker_changed)
+		return CLICK_ACTION_BLOCKING
+
+	if(!LAZYLEN(icon_variants))
+		return CLICK_ACTION_BLOCKING
+
+	var/list/items = list()
+	for(var/variant_name in icon_variants)
+		var/icon_state_name = icon_variants[variant_name]
+		var/image/item_image = image(icon = icon, icon_state = icon_state)
+
+		var/image/overlay_preview = image(icon = icon, icon_state = icon_state_name)
+		item_image.overlays += overlay_preview
+		items += list("[variant_name]" = item_image)
+
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_sticker_menu), user), radius = 38, require_near = TRUE)
+	if(!pick)
+		return CLICK_ACTION_BLOCKING
+	if(!icon_variants[pick])
+		return CLICK_ACTION_BLOCKING
+
+	cut_overlays()
+	add_overlay(icon_variants[pick])
+	initial_sticker_icon_state = icon_variants[pick]
+	sticker_changed = TRUE
+	to_chat(user, span_notice("You change the sticker on [src] to '[pick]'."))
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/disk/proc/check_sticker_menu(mob/user)
+	if(QDELETED(src))
+		return FALSE
+	if(sticker_changed)
+		return FALSE
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated)
+		return FALSE
+	return TRUE
+
 /obj/item/disk_stack
 	name = "stack of floppy disks"
 	desc = "A stack of floppy disks. You wonder what happens if you pull out the bottom one..."
@@ -129,30 +168,40 @@
 	. += span_notice("There are [span_bold("[length(stacked_disks)]")] disks in the stack.")
 
 /obj/item/disk/proc/handle_interaction(mob/living/user, obj/item/other)
-  if(istype(other, /obj/item/disk_stack))
-    var/obj/item/disk_stack/held_stack = other
-    var/obj/item/disk_stack/new_stack = new(get_turf(src))
-    new_stack.add_to_stack(user, src)
+	if(istype(other, /obj/item/disk_stack))
+		var/obj/item/disk_stack/held_stack = other
+		var/obj/item/disk_stack/new_stack = new(get_turf(src))
+		var/was_in_hand = user.is_holding(src) || user.is_holding(held_stack)
+		new_stack.add_to_stack(user, src)
 
-    for(var/obj/item/disk/disk_from_hand in held_stack.stacked_disks)
-      if(length(new_stack.stacked_disks) >= MAX_DISK_STACK_SIZE)
-        break
-      disk_from_hand.forceMove(new_stack)
-      new_stack.stacked_disks += disk_from_hand
+		for(var/obj/item/disk/disk_from_hand in held_stack.stacked_disks)
+			if(length(new_stack.stacked_disks) >= MAX_DISK_STACK_SIZE)
+				break
 
-    held_stack.stacked_disks.Cut()
-    new_stack.update_overlays()
-    qdel(held_stack)
+			disk_from_hand.forceMove(new_stack)
+			new_stack.stacked_disks += disk_from_hand
 
-    balloon_alert(user, "merged stacks")
-    return ITEM_INTERACT_SUCCESS
+		held_stack.stacked_disks.Cut()
+		new_stack.update_overlays()
+		if(was_in_hand)
+			user.put_in_hands(new_stack)
+		QDEL_IN(held_stack, 0)
 
-  if(istype(other, /obj/item/disk))
-    var/obj/item/disk_stack/new_stack = new(get_turf(src))
-    new_stack.add_to_stack(user, src)
-    new_stack.add_to_stack(user, other)
-    balloon_alert(user, "created stack")
-    return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "merged stacks")
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(other, /obj/item/disk))
+		var/obj/item/disk_stack/new_stack = new(get_turf(src))
+		new_stack.pixel_x = pixel_x
+		new_stack.pixel_y = pixel_y
+
+		var/was_in_hand = user.is_holding(src)
+		new_stack.add_to_stack(user, src)
+		new_stack.add_to_stack(user, other)
+		new_stack.update_overlays()
+		if(was_in_hand || user.is_holding(other))
+			user.put_in_hands(new_stack)
+		return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/disk_stack/proc/handle_interaction(mob/living/user, obj/item/other)
@@ -186,6 +235,9 @@
 	for(var/obj/item/disk/D in stacked_disks)
 		var/mutable_appearance/ma = mutable_appearance(D.icon, D.icon_state, D.layer + (0.1 * i))
 		ma.pixel_y += i * STACK_PIXEL_STEP
+		// Copy overlays (stickers) from the disk
+		if(LAZYLEN(D.overlays))
+			ma.overlays = D.overlays.Copy()
 		overlays += ma
 		i++
 
@@ -195,8 +247,26 @@
 
 	var/obj/item/disk/top = stacked_disks[length(stacked_disks)]
 	stacked_disks.Cut(length(stacked_disks))
+
 	balloon_alert(user, "removed top disk")
 	user.put_in_hands(top)
+
+	if(length(stacked_disks) == 1)
+		var/obj/item/disk/last_disk = stacked_disks[1]
+		var/was_in_hand = user.is_holding(src)
+		stacked_disks.Cut()
+		if(was_in_hand)
+			last_disk.forceMove(user)
+			user.put_in_hands(last_disk)
+		else
+			var/turf/T = get_turf(src)
+			last_disk.forceMove(T)
+			last_disk.pixel_x = pixel_x
+			last_disk.pixel_y = pixel_y
+
+		QDEL_IN(src, 0)
+		return TRUE
+
 	update_overlays()
 	return TRUE
 
@@ -220,8 +290,17 @@
 
 	update_overlays()
 	to_chat(user, span_notice("You merge two stacks of disks together."))
-	qdel(diskstack)
-	balloon_alert(user, "[amount_counter] merged")
+
+	if(!length(diskstack.stacked_disks))
+		QDEL_IN(diskstack, 0)
+
+	else if(length(diskstack.stacked_disks) == 1)
+		var/obj/item/disk/last_disk = diskstack.stacked_disks[1]
+		var/turf/T = get_turf(diskstack)
+		last_disk.forceMove(T)
+		diskstack.stacked_disks.Cut()
+		QDEL_IN(diskstack, 0)
+
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk_stack/proc/spread()
@@ -246,3 +325,18 @@
 
 	. = ..()
 
+/obj/item/disk/can_be_package_wrapped()
+	return TRUE
+
+/obj/item/disk_stack/can_be_package_wrapped()
+	return FALSE
+
+/obj/item/delivery/small/floppy
+	name = "flat parcel"
+	desc = "A flat paper parcel."
+	icon_state = "deliveryfloppy"
+	base_icon_state = "deliveryfloppy"
+
+/obj/item/delivery/small/floppy/Initialize(mapload)
+	. = ..()
+	new /obj/item/disk/data(src)

@@ -616,7 +616,7 @@
 /obj/item/emitter_disk
 	name = "\improper Diode Disk: Debugger"
 	desc = "This disk can be used on an emitter with an open panel to reset its projectile. Unless this was handed to you by an admin, you should report this on github."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk6"
 	var/stored_proj = /obj/projectile/beam/emitter/hitscan
 	var/stored_sound = 'sound/items/weapons/emitter.ogg'

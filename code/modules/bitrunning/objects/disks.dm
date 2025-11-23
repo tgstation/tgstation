@@ -7,7 +7,7 @@
 /obj/item/bitrunning_disk
 	name = "generic bitrunning program"
 	desc = "A disk containing source code."
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/floppy_disks.dmi'
 	base_icon_state = "datadisk"
 	icon_state = "datadisk0"
 	/// Name of the choice made
