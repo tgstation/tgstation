@@ -102,7 +102,7 @@
 
 /obj/item/disk/attack_self(mob/user)
 	if(read_only_locked)
-		to_chat(user, span_warning("The write-portect tab seems to be stuck in place!"))
+		to_chat(user, span_warning("The write-protect tab seems to be stuck in place!"))
 	read_only = !read_only
 	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
