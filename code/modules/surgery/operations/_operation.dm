@@ -178,8 +178,6 @@
 
 /// Debug proc to print all surgeries available to whoever called the proc
 /mob/living/proc/debug_get_all_available_surgeries()
-	#warn Remove me before merging
-
 	var/mob/living/surgeon = usr
 	if(!isliving(surgeon))
 		return

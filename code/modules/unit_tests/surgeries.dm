@@ -131,7 +131,7 @@
 
 	// Test that tending wounds actually lowers damage
 	var/datum/surgery_operation/basic/tend_wounds/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
-	UNLINT(surgery.success(patient, user, hemostat, list("brute_heal" = 10, "brute_multiplier" = 0.1)))
+	UNLINT(surgery.success(patient, user, hemostat, list("[OPERATION_BRUTE_HEAL]" = 10, "[OPERATION_BRUTE_MULTIPLIER]" = 0.1)))
 	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
 
 	// Test that wearing clothing lowers heal amount
@@ -142,8 +142,8 @@
 	clothed_patient.equipOutfit(/datum/outfit/job/doctor, TRUE)
 	clothed_patient.take_overall_damage(100)
 
-	UNLINT(surgery.success(naked_patient, user, hemostat, list("brute_heal" = 10, "brute_multiplier" = 0.1)))
-	UNLINT(surgery.success(clothed_patient, user, hemostat, list("brute_heal" = 10, "brute_multiplier" = 0.1)))
+	UNLINT(surgery.success(naked_patient, user, hemostat, list("[OPERATION_BRUTE_HEAL]" = 10, "[OPERATION_BRUTE_MULTIPLIER]" = 0.1)))
+	UNLINT(surgery.success(clothed_patient, user, hemostat, list("[OPERATION_BRUTE_HEAL]" = 10, "[OPERATION_BRUTE_MULTIPLIER]" = 0.1)))
 
 	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
 
@@ -231,6 +231,7 @@
 	else
 		TEST_FAIL("Make incision operation was not available when it should have been")
 
+/// Checks is_location_accessible works as intended
 /datum/unit_test/location_accessibility
 
 /datum/unit_test/location_accessibility/Run()

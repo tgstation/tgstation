@@ -5,11 +5,6 @@
 /// Allow combo healing operation
 #define COMBO_SURGERY (1<<2)
 
-#define OPERATION_BRUTE_HEAL "brute_heal"
-#define OPERATION_BURN_HEAL "burn_heal"
-#define OPERATION_BRUTE_MULTIPLIER "brute_multiplier"
-#define OPERATION_BURN_MULTIPLIER "burn_multiplier"
-
 /datum/surgery_operation/basic/tend_wounds
 	name = "tend wounds"
 	desc = "Perform superficial wound care on a patient's bruises and burns."
@@ -248,8 +243,3 @@
 #undef BRUTE_SURGERY
 #undef BURN_SURGERY
 #undef COMBO_SURGERY
-
-#undef OPERATION_BRUTE_HEAL
-#undef OPERATION_BURN_HEAL
-#undef OPERATION_BRUTE_MULTIPLIER
-#undef OPERATION_BURN_MULTIPLIER

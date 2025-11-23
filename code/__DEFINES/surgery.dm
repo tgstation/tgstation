@@ -163,3 +163,8 @@ DEFINE_BITFIELD(operation_flags, list(
 #define OPERATION_TARGET_ZONE "target_zone"
 /// The specific target of the operation, usually a bodypart or organ, generally redundant
 #define OPERATION_TARGET "target"
+// For tend wounds - only reason these aren't local is we use them in unit testing
+#define OPERATION_BRUTE_HEAL "brute_heal"
+#define OPERATION_BURN_HEAL "burn_heal"
+#define OPERATION_BRUTE_MULTIPLIER "brute_multiplier"
+#define OPERATION_BURN_MULTIPLIER "burn_multiplier"
