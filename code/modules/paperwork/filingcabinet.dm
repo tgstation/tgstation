@@ -17,6 +17,9 @@
 	icon_state = "filingcabinet"
 	density = TRUE
 	anchored = TRUE
+	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
+	var/virgin = TRUE
+
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -29,6 +32,20 @@
 
 /obj/structure/filingcabinet/white
 	icon_state = "tallcabinet"
+
+/obj/structure/filingcabinet/on_object_saved()
+	var/data
+
+	for(var/obj/item/stored_item in contents)
+		var/metadata = generate_tgm_metadata(stored_item)
+		data += "[data ? ",\n" : ""][stored_item.type][metadata]"
+
+	return data
+
+/obj/structure/filingcabinet/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, virgin)
+	return .
 
 /obj/structure/filingcabinet/Initialize(mapload)
 	. = ..()
@@ -60,7 +77,13 @@
 	else
 		return ..()
 
+// Old med/sec used attack_hand while employment used interact... Both to be safe..?
+/obj/structure/filingcabinet/interact(mob/user)
+	populate_contents()
+	. = ..()
+
 /obj/structure/filingcabinet/attack_hand(mob/living/carbon/user, list/modifiers)
+	populate_contents()
 	. = ..()
 	ui_interact(user)
 
@@ -98,6 +121,7 @@
 				return TRUE
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
+	populate_contents()
 	if(anchored)
 		return attack_self_tk(user)
 	return ..()
@@ -114,13 +138,15 @@
 			return
 	to_chat(user, span_notice("You find nothing in [src]."))
 
+/obj/structure/filingcabinet/proc/populate_contents()
+	return
+
 /*
  * Security Record Cabinets
  */
 /obj/structure/filingcabinet/security
-	var/virgin = TRUE
 
-/obj/structure/filingcabinet/security/proc/populate()
+/obj/structure/filingcabinet/security/populate_contents()
 	if(!virgin)
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
@@ -130,21 +156,19 @@
 					//before the records have been generated, so we do this inside the loop.
 
 /obj/structure/filingcabinet/security/attack_hand(mob/user, list/modifiers)
-	populate()
+	populate_contents()
 	return ..()
 
 /obj/structure/filingcabinet/security/attack_tk()
-	populate()
+	populate_contents()
 	return ..()
 
 /*
  * Medical Record Cabinets
  */
 /obj/structure/filingcabinet/medical
-	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
-	var/virgin = TRUE
 
-/obj/structure/filingcabinet/medical/proc/populate()
+/obj/structure/filingcabinet/medical/populate_contents()
 	if(!virgin)
 		return
 	for(var/datum/record/crew/record in GLOB.manifest.general)
@@ -159,15 +183,6 @@
 		virgin = FALSE //tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/structure/filingcabinet/medical/attack_hand(mob/user, list/modifiers)
-	populate()
-	return ..()
-
-/obj/structure/filingcabinet/medical/attack_tk()
-	populate()
-	return ..()
-
 /*
  * Employment contract Cabinets
  */
@@ -176,8 +191,6 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
 	icon_state = "employmentcabinet"
-	///This var is so that its filled on crew interaction to be as accurate (including latejoins) as possible, true until first interact
-	var/virgin = TRUE
 
 /obj/structure/filingcabinet/employment/Initialize(mapload)
 	. = ..()
@@ -187,18 +200,15 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	GLOB.employmentCabinets -= src
 	return ..()
 
-/obj/structure/filingcabinet/employment/proc/fillCurrent()
+/obj/structure/filingcabinet/employment/populate_contents()
+	if(!virgin)
+		return
 	//This proc fills the cabinet with the current crew.
 	for(var/datum/record/locked/target in GLOB.manifest.locked)
 		var/datum/mind/filed_mind = target.mind_ref.resolve()
 		if(filed_mind && ishuman(filed_mind.current))
-			addFile(filed_mind.current)
-
-/obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
-	new /obj/item/paper/employment_contract(src, employee.mind.name)
-
-/obj/structure/filingcabinet/employment/interact(mob/user)
-	if(virgin)
-		fillCurrent()
+			add_file(filed_mind.current)
 		virgin = FALSE
-	return ..()
+
+/obj/structure/filingcabinet/employment/proc/add_file(mob/living/carbon/human/employee)
+	new /obj/item/paper/employment_contract(src, employee.mind.name)

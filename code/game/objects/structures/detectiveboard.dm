@@ -26,6 +26,15 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
+/obj/structure/detectiveboard/on_object_saved()
+	var/data
+
+	for(var/obj/item/case_notes in contents)
+		var/metadata = generate_tgm_metadata(case_notes)
+		data += "[data ? ",\n" : ""][case_notes.type][metadata]"
+
+	return data
+
 /obj/structure/detectiveboard/Initialize(mapload)
 	. = ..()
 
