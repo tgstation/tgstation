@@ -213,8 +213,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 
 				TGM_MAP_BLOCK(current_header, saved_turf.type, turf_metadata)
 
-				var/area_metadata = generate_tgm_metadata(saved_area)
-				TGM_MAP_BLOCK(current_header, saved_area.type, area_metadata)
+				TGM_MAP_BLOCK(current_header, saved_area.type, null) // no metadata for areas
 
 				//====Fill the contents file====
 				var/textiftied_header = "(\n[current_header.Join()])\n"
