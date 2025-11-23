@@ -263,7 +263,7 @@
 		if(!do_after(user, load_delay, target = src))
 			return
 		shots_in_gun = shots_per_load //Add one to the shots in the gun
-		balloon_alert(user, "Clockwork Mechanism Wound.")
+		balloon_alert(user, "clockwork mechanism wound.")
 		playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, FALSE, 5)
 		loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
 		if(shots_in_gun >= max_shots_per_fire)
@@ -279,7 +279,7 @@
 
 /obj/structure/mounted_gun/ratvarian_repeater/fire()
 	if (!loaded_gun)
-		balloon_alert_to_viewers("Clockwork Mechanism not wound!","",2)
+		balloon_alert_to_viewers("clockwork mechanism not wound!","",2)
 		return
 	is_firing = TRUE
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
