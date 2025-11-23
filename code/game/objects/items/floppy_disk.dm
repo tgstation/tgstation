@@ -65,6 +65,8 @@
 	if(initial_sticker_icon_state)
 		add_overlay(initial_sticker_icon_state)
 		sticker_changed = TRUE
+	else if(initial_sticker_icon_state == NONE)
+		return
 	else
 		add_overlay("o_empty")
 
