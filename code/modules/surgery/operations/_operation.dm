@@ -95,13 +95,7 @@
 
 	var/list/operations = list()
 	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances(possible_operations))
-		if(!(operation.operation_flags & OPERATION_STANDING_ALLOWED) && !IS_LYING_OR_CANNOT_LIE(patient))
-			continue
-		if(!(operation.operation_flags & OPERATION_SELF_OPERABLE) && patient == src && !HAS_TRAIT(src, TRAIT_SELF_SURGERY))
-			continue
 		var/atom/movable/operate_on = operation.get_operation_target(patient, operating_zone)
-		if(isnull(operate_on))
-			continue
 		if(!operation.check_availability(patient, operate_on, src, potential_tool, operating_zone))
 			continue
 		var/potential_options = operation.get_radial_options(operate_on, potential_tool, operating_zone)
@@ -184,6 +178,8 @@
 
 /// Debug proc to print all surgeries available to whoever called the proc
 /mob/living/proc/debug_get_all_available_surgeries()
+	#warn Remove me before merging
+
 	var/mob/living/surgeon = usr
 	if(!isliving(surgeon))
 		return
@@ -430,6 +426,12 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	SHOULD_BE_PURE(TRUE)
 
 	if(isnull(patient) || isnull(operating_on))
+		return FALSE
+
+	if(!(operation_flags & OPERATION_STANDING_ALLOWED) && !IS_LYING_OR_CANNOT_LIE(patient))
+		return FALSE
+
+	if(!(operation_flags & OPERATION_SELF_OPERABLE) && patient == surgeon && !HAS_TRAIT(surgeon, TRAIT_SELF_SURGERY))
 		return FALSE
 
 	if(get_tool_quality(tool) <= 0)

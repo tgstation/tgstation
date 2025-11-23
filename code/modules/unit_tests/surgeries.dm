@@ -204,7 +204,7 @@
 
 	patient.set_body_position(LYING_DOWN)
 	operations = surgeon.get_available_operations(patient, scalpel, BODY_ZONE_CHEST)
-	TEST_ASSERT_EQUAL(length(operations), 1, "\"make incision\", was not available on a lying patient")
+	TEST_ASSERT_EQUAL(length(operations), 1, "No operations were available on a lying patient")
 
 	var/list/found_operation_data = operations[operations[1]]
 	var/datum/surgery_operation/operation = found_operation_data[1]
