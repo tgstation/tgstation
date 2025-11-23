@@ -356,6 +356,7 @@
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY
 
+
 /datum/crafting_recipe/large_ballista
 	name = "Improvised Ballista"
 	tool_behaviors = list(TOOL_WELDER,TOOL_SCREWDRIVER,TOOL_WRENCH,TOOL_WIRECUTTER)
