@@ -296,8 +296,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 	item = param_item
 	if(!name)
 		name = param_item.name
-	if(!desc)
-		desc = param_item.desc
+	if(!description)
+		description = param_item.desc
 	if(istype(param_item, /obj/item/photo))
 		evidence_type = EVIDENCE_TYPE_PHOTO
 	else
