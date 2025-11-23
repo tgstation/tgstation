@@ -42,7 +42,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 		for(var/obj/item/item in loc)
 			if(!(istype(item, /obj/item/paper) || istype(item, /obj/item/photo)))
 				continue
-			if(!cases[current_case])
+			if(!cases.len)
 				var/datum/case/case = new("Cold Cases", pick(case_colors))
 				cases += case
 				current_case = clamp(cases.len, 1, MAX_CASES)
