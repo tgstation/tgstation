@@ -1,0 +1,8 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - code_imp: "generic helpers and defines for validating file extenstion"
+  - refactor: "the jukebox has had some improvements in how it validates the sound file. hopefully none of your funny songs disappear."
+  - admin: "command_report_menu will let you set ANY sound file type for the sound it plays."
+  - admin: "Admins can now manage jukebox songs in game"
+  - server: "Jukebox songs length are now set automatically, update your jukebox configs!"
