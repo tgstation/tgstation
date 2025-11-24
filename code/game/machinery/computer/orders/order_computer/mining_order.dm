@@ -15,7 +15,7 @@
 	and hopefully get delivered by them.
 	35% cheaper than express delivery."}
 	express_tooltip = @{"Sends your purchases instantly."}
-	credit_type = CREDIT_TYPE_MINING
+	credit_type = MONEY_MINING_SYMBOL
 
 	order_categories = list(
 		CATEGORY_MINING,

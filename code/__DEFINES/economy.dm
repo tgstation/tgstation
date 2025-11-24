@@ -88,7 +88,5 @@
 #define MONEY_NAME "credits"
 #define MONEY_NAME_SINGULAR "credit"
 
-// Used to be "credit" but other parts of the code used "cr" as well so i strongly suspect that was a bug/oversight
-#define CREDIT_TYPE_CREDIT MONEY_SYMBOL
-#define CREDIT_TYPE_MINING "mp"
-#define CREDIT_TYPE_BITRUNNING "np"
+#define MONEY_MINING_SYMBOL "mp"
+#define MONEY_BITRUNNING_SYMBOL "np"

@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/announcement_line
 
 	///The kind of cash does the console use.
-	var/credit_type = CREDIT_TYPE_CREDIT
+	var/credit_type = MONEY_SYMBOL
 	///Whether the console can only use express mode ONLY
 	var/forced_express = FALSE
 	///Multiplied cost to use for cargo mode
