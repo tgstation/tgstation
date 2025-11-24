@@ -440,13 +440,17 @@
 	if(!can_interact(user))
 		return
 
-	if(!silent)
-		to_chat(user, span_notice("You eject [beaker] from [src]."))
+	var/obj/item/ejected_beaker = beaker
 
-	if(!user.put_in_active_hand(beaker))
+	if(user.put_in_hands(beaker))
 		if(!silent)
-			to_chat(user, span_notice("You eject [beaker] from [src] onto the ground."))
-		beaker.forceMove(drop_location())
+			to_chat(user, span_notice("You eject [ejected_beaker] from [src]."))
+
+	else
+		if(!silent)
+			to_chat(user, span_notice("You eject [ejected_beaker] from [src] onto the ground."))
+
+		ejected_beaker.forceMove(drop_location())
 
 	beaker = null
 	update_appearance(UPDATE_ICON)
