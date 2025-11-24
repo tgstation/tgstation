@@ -6392,9 +6392,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
-"PG" = (
-/turf/closed/wall/r_wall,
-/area/template_noop)
 "PH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -13236,7 +13233,7 @@ aa
 aa
 aa
 aa
-PG
+Kb
 IF
 Kb
 Wk
