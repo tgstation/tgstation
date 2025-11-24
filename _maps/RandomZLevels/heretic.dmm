@@ -1029,10 +1029,6 @@
 /obj/structure/fluff/bus/passable/seat{
 	pixel_y = 15
 	},
-/obj/item/toy/plush/lizard_plushie/green{
-	pixel_z = 17;
-	anchored = 1
-	},
 /turf/open/floor/iron/dark,
 /area/awaymission/beach/heretic)
 "hg" = (
@@ -5574,14 +5570,6 @@
 /obj/effect/spawner/random/bedsheet/double,
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory)
-"LM" = (
-/obj/structure/fluff/bus/passable/seat,
-/obj/item/toy/plush/pkplush{
-	pixel_z = 17;
-	anchored = 1
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/beach/heretic)
 "LN" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible,
 /obj/machinery/door/airlock/highsecurity{
@@ -6137,22 +6125,6 @@
 /obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
-"PS" = (
-/obj/structure/fluff/bus/passable/seat,
-/obj/item/food/grown/tomato{
-	offset_at_init = 0;
-	pixel_z = 23;
-	pixel_y = 2;
-	anchored = 1
-	},
-/obj/item/food/donut/plain{
-	pixel_z = 15;
-	pixel_y = 1;
-	pixel_x = 1;
-	anchored = 1
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/beach/heretic)
 "PT" = (
 /obj/machinery/light/floor,
 /obj/structure/closet/crate/freezer,
@@ -6519,21 +6491,6 @@
 	},
 /obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/plating,
-/area/awaymission/beach/heretic)
-"So" = (
-/obj/structure/fluff/bus/passable/seat,
-/obj/item/grown/novaflower{
-	offset_at_init = 0;
-	pixel_z = 24;
-	pixel_y = 1;
-	anchored = 1
-	},
-/obj/item/food/grown/watermelon{
-	offset_at_init = 0;
-	pixel_z = 17;
-	anchored = 1
-	},
-/turf/open/floor/iron/dark,
 /area/awaymission/beach/heretic)
 "Sq" = (
 /obj/item/keycard/heretic_entrance,
@@ -7288,21 +7245,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "XV" = (
 /obj/structure/fluff/bus/passable/seat/driver,
-/obj/item/toy/plush/moth{
-	pixel_z = 26;
-	pixel_y = 2;
-	anchored = 1
-	},
-/obj/item/food/grown/citrus/orange{
-	offset_at_init = 0;
-	pixel_z = 18;
-	pixel_y = 1;
-	anchored = 1
-	},
-/obj/item/toy/talking/ai{
-	pixel_z = 16;
-	anchored = 1
-	},
 /turf/open/floor/iron/dark,
 /area/awaymission/beach/heretic)
 "XY" = (
@@ -37938,13 +37880,13 @@ Sv
 bB
 CS
 aM
-LM
+po
 Lv
 Fx
 CS
 CS
 aM
-LM
+po
 Lv
 Fx
 CS
@@ -38452,13 +38394,13 @@ HM
 bB
 CS
 aM
-PS
+po
 Lv
 Fx
 CS
 CS
 aM
-PS
+po
 Lv
 Fx
 CS
@@ -39223,13 +39165,13 @@ nT
 Ql
 CS
 aM
-So
+po
 Lv
 Fx
 CS
 CS
 aM
-So
+po
 Lv
 Fx
 CS
@@ -40765,13 +40707,13 @@ LE
 Ql
 CS
 aM
-LM
+po
 Lv
 Fx
 CS
 CS
 aM
-LM
+po
 Lv
 Fx
 CS
@@ -41279,13 +41221,13 @@ HM
 bB
 CS
 aM
-PS
+po
 Lv
 Fx
 CS
 CS
 aM
-PS
+po
 Lv
 Fx
 CS
@@ -42050,13 +41992,13 @@ bB
 bB
 CS
 aM
-So
+po
 Lv
 Fx
 CS
 CS
 aM
-So
+po
 Lv
 Fx
 CS
