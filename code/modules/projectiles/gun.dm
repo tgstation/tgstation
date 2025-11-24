@@ -306,11 +306,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	if(chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
-		return ITEM_INTERACT_BLOCKING // block melee (etc), usually if waiting on fire delay
-	return NONE
+	return try_fire_gun(interacting_with, user, list2params(modifiers))
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode && isliving(interacting_with))
@@ -332,9 +328,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
-		return ITEM_INTERACT_SUCCESS
-	return ITEM_INTERACT_BLOCKING
+	return try_fire_gun(interacting_with, user, list2params(modifiers))
 
 /obj/item/gun/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(IN_GIVEN_RANGE(user, interacting_with, GUNPOINT_SHOOTER_STRAY_RANGE))
@@ -369,8 +363,7 @@
 			return
 
 	if(flag && doafter_self_shoot && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		handle_suicide(user, target, params)
-		return
+		return handle_suicide(user, target, params)
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
@@ -618,7 +611,7 @@
 			else if(target?.Adjacent(user))
 				target.visible_message(span_notice("[user] has decided to spare [target]"), span_notice("[user] has decided to spare your life!"))
 		fire_cd = FALSE
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	fire_cd = FALSE
 
@@ -634,6 +627,7 @@
 		chambered.loaded_projectile.damage /= 5
 		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
 			chambered.loaded_projectile.wound_bonus -= 5
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
