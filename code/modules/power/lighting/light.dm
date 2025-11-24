@@ -82,11 +82,6 @@
 	///break if moved, if false also makes it ignore if the wall its on breaks
 	var/break_if_moved = TRUE
 
-/obj/machinery/light/Move()
-	if(status != LIGHT_BROKEN && break_if_moved)
-		break_light_tube(TRUE)
-	return ..()
-
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
@@ -146,6 +141,11 @@
 	if(local_area)
 		on = FALSE
 	QDEL_NULL(cell)
+	return ..()
+
+/obj/machinery/light/Move()
+	if(status != LIGHT_BROKEN && break_if_moved)
+		break_light_tube(TRUE)
 	return ..()
 
 /obj/machinery/light/Exited(atom/movable/gone, direction)
