@@ -269,8 +269,10 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "bZ" = (
-/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/blessing,
+/obj/machinery/door/airlock/multi_tile{
+	dir = 4
+	},
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
 "cb" = (
@@ -1597,9 +1599,6 @@
 /obj/structure/sink{
 	pixel_y = 15
 	},
-/obj/structure/mirror{
-	pixel_y = 28
-	},
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach/heretic)
 "kH" = (
@@ -1777,10 +1776,6 @@
 	dir = 8;
 	pixel_y = 1;
 	pixel_x = 13
-	},
-/obj/structure/mirror{
-	pixel_x = 29;
-	pixel_y = -3
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/beach/heretic)
@@ -18015,7 +18010,7 @@ KB
 Gi
 iP
 KB
-bq
+mI
 bq
 Af
 yO
@@ -18272,7 +18267,7 @@ KB
 qp
 Xu
 qv
-mI
+bq
 bq
 gv
 Gv
