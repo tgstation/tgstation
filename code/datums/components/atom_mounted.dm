@@ -134,7 +134,7 @@
 		return TRUE
 
 	var/area/location = get_area(src)
-	if(!isarea(location))
+	if(!isarea(location) || istype(location, /area/shuttle))
 		return FALSE
 
 	var/msg
