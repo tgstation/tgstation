@@ -682,3 +682,10 @@
   - bugfix: you can no longer send money from virtualspace to a real account
   - code_imp: adds a flag for virtual areas so they can easily be checked, as well
       as an easy helper proc, 'is_area_virtual(your_area)'
+2025-11-24:
+  JohnFulpWillard:
+  - rscadd: The horrific necktie can now become sentient.
+  SmArtKar:
+  - image: Cybernetic cat ears now have unique sprites and emissives
+  ibexgoetia:
+  - image: Resprited the Plague Doctor's costume.
