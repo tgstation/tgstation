@@ -1,6 +1,5 @@
 ///List of all items that can be found in the different types of order consoles, to purchase.
 GLOBAL_LIST_EMPTY(order_console_products)
-#define CREDIT_TYPE_CREDIT "credit"
 
 /obj/machinery/computer/order_console
 	name = "Orders Console"
@@ -250,5 +249,3 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		announcement_lines_map["Error"] = "Unknown Error happened, while we tried to procceed an order, please report this to Nanotrasen."
 	. = ..()
 
-
-#undef CREDIT_TYPE_CREDIT

@@ -1,4 +1,4 @@
-#define CREDIT_TYPE_MINING "mp"
+
 
 /obj/machinery/computer/order_console/mining
 	name = "mining equipment order console"
@@ -127,6 +127,5 @@
 			points += amount
 			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
 
-#undef CREDIT_TYPE_MINING
 #undef TO_POINT_CARD
 #undef TO_USER_ID

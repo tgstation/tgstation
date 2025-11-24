@@ -1,5 +1,3 @@
-#define CREDIT_TYPE_BITRUNNING "np"
-
 /obj/machinery/computer/order_console/bitrunning
 	name = "bitrunning supplies order console"
 	desc = "NexaCache(tm)! Dubiously authentic gear for the digital daredevil."
@@ -84,5 +82,3 @@
 	name = "[purchaser]'s Bitrunning Order"
 	src.cost = cost
 	src.contains = contains
-
-#undef CREDIT_TYPE_BITRUNNING
