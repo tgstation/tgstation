@@ -3048,7 +3048,6 @@
 /area/awaymission/beach/heretic)
 "ut" = (
 /obj/structure/sink/directional/west,
-/obj/structure/mirror/directional/east,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/heretic_laboratory)
@@ -4734,7 +4733,6 @@
 /turf/closed/wall/mineral/iron,
 /area/awaymission/beach/heretic)
 "Gi" = (
-/obj/structure/mirror/directional/west,
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
@@ -5854,7 +5852,6 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "NQ" = (
-/obj/structure/mirror/directional/west,
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory_clean)
