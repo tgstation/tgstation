@@ -102,7 +102,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', 145 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg')
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	QDEL_NULL(spawned_beacon_ref)
