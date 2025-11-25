@@ -36,7 +36,8 @@
 		icon_state = "[base_icon_state][state]"
 		if(state == CORE_STATE_CABLED && core_mmi)
 			icon_state += "b"
-	icon_state = "ai-empty"
+	else
+		icon_state = "ai-empty"
 	return ..()
 
 /obj/structure/ai_core/Exited(atom/movable/gone, direction)
