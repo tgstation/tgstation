@@ -1101,6 +1101,10 @@
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
 	src.control_disabled = control_disabled
 
+
+/// Establishes a "core link" with a supplied core structure.
+/// This will register multiple signals and give the AI a strong reference to it.
+/// See [proc/resolve_core_link] or [proc/break_core_link] for ways to end the connection.
 /mob/living/silicon/ai/proc/create_core_link(obj/structure/ai_core/core)
 	if(linked_core) //uh oh
 		break_core_link(linked_core)
@@ -1122,7 +1126,9 @@
 	RegisterSignal(linked_core, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_core_take_damage))
 	RegisterSignal(linked_core, COMSIG_ATOM_EXITED, PROC_REF(on_core_exited))
 
-/// Returns the AI back to their core and severs the core link.
+/// Elegantly closes the AI's link to a core structure,
+/// moving them to its location and cleaning it up. This is generally what you want to call.
+/// Prefer calling [proc/break_core_link] directly if the connection is meant to be suddenly severed.
 /mob/living/silicon/ai/proc/resolve_core_link()
 	if(!linked_core) //oh no bro
 		CRASH("tried to resolve a core link with no core!!!!")
@@ -1133,6 +1139,8 @@
 	qdel(unlinked_core)
 	cancel_camera()
 
+/// Handles unregistering the AI from its core. The core itself will not be cleaned up.
+/// Prefer calling [proc/resolve_core_link] if the connection is being closed elegantly.
 /mob/living/silicon/ai/proc/break_core_link()
 	if(!linked_core)
 		return
