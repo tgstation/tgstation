@@ -344,9 +344,8 @@
 			style_factor_malus += human_carp_user.run_armor_check(potential_chest, MELEE)
 
 	// We also consider whether our footwear is appropriate
-	if(is_it_the_shoes)
-		if(is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
-			style_factor_points += 20
+	if(istype(is_it_the_shoes) && is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
+		style_factor_points += 20
 
 	// Achieved a carp state of mind.
 	if(human_carp_user.has_status_effect(/datum/status_effect/organ_set_bonus/carp))
