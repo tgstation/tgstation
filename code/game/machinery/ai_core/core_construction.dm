@@ -4,11 +4,10 @@
 
 /obj/structure/ai_core/welder_act(mob/living/user, obj/item/tool)
 	if(state != CORE_STATE_EMPTY)
-		balloon_alert(user, "too much stuff!")
+		balloon_alert(user, "frame has to be empty!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, 1))
-		balloon_alert(user, "[tool] won't work!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.use_tool(src, user, 2 SECONDS, 1, 50, CHECK_STATE_CALLBACK(CORE_STATE_EMPTY)))
@@ -20,7 +19,7 @@
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
 	if(state >= CORE_STATE_FINISHED)
 		set_anchored(TRUE) //teehee
-		balloon_alert(user, "can't!")
+		balloon_alert(user, "can't unanchor!")
 		return ITEM_INTERACT_BLOCKING
 
 	default_unfasten_wrench(user, tool)
@@ -29,6 +28,7 @@
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	switch(state)
 		if(CORE_STATE_EMPTY)
+			balloon_alert(user, "nothing to screw in there!")
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CIRCUIT)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
@@ -43,6 +43,7 @@
 			UPDATE_STATE(CORE_STATE_CIRCUIT)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_CABLED)
+			balloon_alert(user, "can't reach the board!")
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_GLASSED)
 			if(!anchored)
@@ -75,13 +76,9 @@
 			if(!tool.use_tool(src, user, 10 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_FINISHED)))
 				return ITEM_INTERACT_BLOCKING
 
-			if(!core_mmi?.brainmob?.mind || suicide_check())
-				balloon_alert(user, "nothing happened?")
-				return ITEM_INTERACT_BLOCKING
-
 			var/atom/movable/alert_source = ai_structure_to_mob()
 			if(!alert_source)
-				balloon_alert(user, "nothing happened")
+				balloon_alert(user, "nothing happened?")
 				return ITEM_INTERACT_BLOCKING
 
 			alert_source.balloon_alert(user, "connected neural network")
@@ -90,6 +87,7 @@
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
 	switch(state)
 		if(CORE_STATE_EMPTY)
+			balloon_alert(user, "nothing to pry out!")
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CIRCUIT)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CIRCUIT)))
@@ -103,6 +101,7 @@
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CABLED)
 			if(!core_mmi)
+				balloon_alert(user, "nothing to pry out!")
 				return ITEM_INTERACT_BLOCKING
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
 				return ITEM_INTERACT_BLOCKING
@@ -117,10 +116,14 @@
 			new /obj/item/stack/sheet/rglass(drop_location(), 2)
 			UPDATE_STATE(CORE_STATE_CABLED)
 			return ITEM_INTERACT_SUCCESS
+		if(CORE_STATE_FINISHED)
+			balloon_alert(user, "display is on!")
+			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wirecutter_act(mob/living/user, obj/item/tool)
 	switch(state)
 		if(CORE_STATE_EMPTY to CORE_STATE_CIRCUIT)
+			balloon_alert(user, "nothing to cut!")
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_CABLED)
 			if(core_mmi)
@@ -134,6 +137,7 @@
 			UPDATE_STATE(CORE_STATE_SCREWED)
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_GLASSED)
+			balloon_alert(user, "nothing left to cut!")
 			return ITEM_INTERACT_BLOCKING
 		if(CORE_STATE_FINISHED)
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_FINISHED)))
@@ -242,6 +246,7 @@
 	UPDATE_STATE(CORE_STATE_GLASSED)
 	return TRUE
 
+#undef EXPRESS_CONFUSION
 #undef CHECK_STATE_CALLBACK
 #undef UPDATE_STATE
 #undef AI_CORE_BRAIN
