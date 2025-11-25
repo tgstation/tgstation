@@ -149,11 +149,11 @@
 	AddElement(/datum/element/beauty, 300)
 
 /obj/structure/sign/poster/Destroy(force)
-	var/obj/item/poster/stored_inside = rolled_poster?.resolve()
-	if(!QDELETED(stored_inside))
-		stored_inside = null
+	var/obj/item/poster/rolled_poster = stored_inside?.resolve()
+	if(!QDELETED(rolled_poster))
+		rolled_poster = null
 	else
-		qdel(stored_inside)
+		qdel(rolled_poster)
 	return ..()
 
 /// Adds contextual screentips
