@@ -108,6 +108,7 @@ export function GamePreferencesPage(props) {
         .filter((entry) => {
           return (
             !searchText ||
+            searchText.length < 2 ||
             entry.name.toLowerCase().includes(searchText.toLowerCase())
           );
         })

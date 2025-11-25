@@ -217,6 +217,7 @@ function getKeybindingNodes(
     .map(([keybindingId, keybinding]) => {
       if (
         searchText &&
+        searchText.length >= 2 &&
         !keybinding.name.toLowerCase().includes(searchText.toLowerCase())
       ) {
         return null;

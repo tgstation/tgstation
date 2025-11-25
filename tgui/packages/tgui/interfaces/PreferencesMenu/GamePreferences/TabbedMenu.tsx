@@ -44,9 +44,11 @@ export function TabbedMenu(props: TabbedMenuProps) {
         </Stack>
       </Stack.Item>
       {!!props.setSearchText && (
-        <Stack.Item px={2} pt={1}>
+        <Stack.Item px={2} pl={5} pr={5}>
           <Input
             fluid
+            height="2em"
+            fontSize="1.2em"
             placeholder="Search..."
             value={props.searchText}
             onChange={props.setSearchText}
