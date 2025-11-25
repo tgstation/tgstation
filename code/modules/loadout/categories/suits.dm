@@ -30,7 +30,7 @@
 /datum/loadout_item/suit/overall
 	name = "Overall"
 	item_path = /obj/item/clothing/suit/apron/overalls
-	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING
+	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING | LOADOUT_FLAG_ALLOW_NAMING
 	job_greyscale_palettes = list(
 		/datum/job/assistant = COLOR_JOB_DEFAULT,
 		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,

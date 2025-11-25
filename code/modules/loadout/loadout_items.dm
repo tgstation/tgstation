@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Jobs are prioritized over departments.
 	/// Note: You don't need to set a color for every job or department!
 	var/list/job_greyscale_palettes
+	loadout_flags = LOADOUT_FLAG_ALLOW_NAMING
 
 /datum/loadout_item/New(category)
 	src.category = category
