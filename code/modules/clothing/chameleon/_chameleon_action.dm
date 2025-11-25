@@ -93,7 +93,7 @@
 
 	chameleon_typecache |= typecacheof(type_to_add)
 	for(var/obj/item/item_type as anything in chameleon_typecache)
-		if(chameleon_blacklist[item_type] || (item_type::item_flags & ABSTRACT) || !item_type::icon_state)
+		if(chameleon_blacklist[item_type] || (item_type::item_flags & ABSTRACT) || item_type == item_type::abstract_type || !item_type::icon_state)
 			continue
 		var/chameleon_item_name = "[item_type::name] ([item_type::post_init_icon_state || item_type::icon_state])"
 		chameleon_list[chameleon_item_name] = item_type
