@@ -397,11 +397,8 @@
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/ai_core = new(get_turf(src), CORE_STATE_FINISHED, posibrain_inside)
-	var/obj/item/mmi/transferred_mmi = make_mmi(ai_core)
-	qdel(ai_core.core_mmi)
-	ai_core.core_mmi = transferred_mmi
-	mind?.transfer_to(transferred_mmi.brainmob)
+	var/obj/structure/ai_core/ai_core = new(get_turf(src), CORE_STATE_FINISHED, make_mmi())
+	mind?.transfer_to(ai_core.core_mmi.brainmob)
 	qdel(src)
 	return ai_core
 
@@ -782,7 +779,7 @@
 		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, posibrain_inside)
+	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, make_mmi())
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
 	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!

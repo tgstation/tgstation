@@ -14,19 +14,27 @@
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
 
-/obj/structure/ai_core/Initialize(mapload, state = src.state, posibrain = FALSE)
+/obj/structure/ai_core/Initialize(mapload, state = src.state, obj/item/mmi/core_mmi = null)
 	. = ..()
 	laws = new
 	laws.set_laws_config()
 
+	if(core_mmi && state < CORE_STATE_CABLED)
+		stack_trace("supplied a core_mmi as constructor argument, but core state wouldn't have accepted it!")
+		state = CORE_STATE_FINISHED // just in case...
 	src.state = state
 	if(state >= CORE_STATE_CIRCUIT)
 		circuit = new(src)
 	if(state >= CORE_STATE_CABLED)
-		var/mmi_type = posibrain ? /obj/item/mmi : /obj/item/mmi/posibrain
-		core_mmi = new mmi_type(src)
-		core_mmi.brain = new(core_mmi)
-		core_mmi.update_appearance()
+		if(!core_mmi)
+			core_mmi = new /obj/item/mmi(src)
+			core_mmi.brain = new(core_mmi)
+			core_mmi.brain.organ_flags |= ORGAN_FROZEN
+			core_mmi.set_brainmob(new /mob/living/brain())
+			core_mmi.brainmob.container = core_mmi
+			core_mmi.update_appearance()
+		core_mmi.forceMove(src)
+		src.core_mmi = core_mmi
 		set_anchored(TRUE)
 
 	update_appearance(UPDATE_ICON_STATE)
