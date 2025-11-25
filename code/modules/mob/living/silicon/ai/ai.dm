@@ -694,8 +694,7 @@
 	if(!istype(apc))
 		to_chat(owner, span_notice("You are already in your Main Core."))
 		return
-	var/mob/living/silicon/ai/ai_owner = astype(owner, /mob/living/silicon/ai)
-	if(ai_owner?.linked_core)
+	if(astype(owner, /mob/living/silicon/ai)?.linked_core)
 		apc.malfvacate()
 	else
 		to_chat(owner, span_danger("Linked core not detected!"))
@@ -1160,7 +1159,7 @@
 	to_chat(src, span_danger("CORE TAMPERING DETECTED!"))
 	return NONE
 
-/mob/living/silicon/ai/proc/on_core_take_damage(datum/source, damage_taken, ...) // not writing allat
+/mob/living/silicon/ai/proc/on_core_take_damage(datum/source, damage_taken, ...)
 	SIGNAL_HANDLER
 
 	if(damage_taken > 0)
