@@ -18,7 +18,9 @@
 	force = 0
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
+	/// The sign typepath
 	var/obj/structure/sign/poster/poster_type
+	/// The owned sign object
 	var/obj/structure/sign/poster/poster_structure
 
 /obj/item/poster/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
@@ -31,9 +33,10 @@
 	)
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
-	if(new_poster_structure && (new_poster_structure.loc != src))
-		qdel(new_poster_structure.GetComponent(/datum/component/atom_mounted))
-		new_poster_structure.forceMove(src)
+	if(new_poster_structure)
+		if(new_poster_structure.loc != src)
+			qdel(new_poster_structure.GetComponent(/datum/component/atom_mounted))
+			new_poster_structure.store_sign_in_item(src)
 	poster_structure = new_poster_structure
 	if(poster_type)
 		name = "[poster_type::poster_item_name] - [poster_type::original_name]"
@@ -41,7 +44,8 @@
 		icon_state = poster_type::poster_item_icon_state
 
 /obj/item/poster/Destroy(force)
-	QDEL_NULL(poster_structure)
+	if(poster_structure)
+		QDEL_NULL(poster_structure)
 	return ..()
 
 /obj/item/poster/examine(mob/user)
@@ -87,7 +91,8 @@
 	balloon_alert(user, "hanging poster...")
 	var/obj/structure/sign/poster/placed_poster = poster_structure || new poster_type(src)
 	placed_poster.poster_item_type = type
-	placed_poster.forceMove(wall_structure)
+	placed_poster.store_sign_in_item(wall_structure)
+	transfer_fingerprints_to(placed_poster)
 	poster_structure = null
 	flick("poster_being_set", placed_poster)
 	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
@@ -129,6 +134,8 @@
 	var/poster_item_type = /obj/item/poster
 	///A sharp shard of material can be hidden inside of a poster, attempts to embed when it is torn down.
 	var/datum/weakref/trap
+	/// Weakref to the poster this sign is stored in
+	var/datum/weakref/stored_inside
 
 /obj/structure/sign/poster/Initialize(mapload)
 	. = ..()
@@ -140,6 +147,14 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 	AddElement(/datum/element/beauty, 300)
+
+/obj/structure/sign/poster/Destroy(force)
+	var/obj/item/poster/stored_inside = rolled_poster?.resolve()
+	if(!QDELETED(stored_inside))
+		rolled_poster = null
+	else
+		qdel(stored_inside)
+	return ..()
 
 /// Adds contextual screentips
 /obj/structure/sign/poster/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -238,13 +253,20 @@
 	pixel_y = 0
 	var/obj/item/poster/rolled_poster = return_to_poster_item(location, src)
 	if(!user?.put_in_hands(rolled_poster))
-		forceMove(rolled_poster)
+		rolled_poster.forceMove(drop_location())
+	store_sign_in_item(rolled_poster)
 	return rolled_poster
 
+/// Stores a sign obj in a rolled poster's contents, to later be deployed
+/obj/structure/sign/poster/proc/store_sign_in_item(/obj/item/poster/rolled_poster)
+	forceMove(rolled_poster)
+	stored_inside = WEAKREF(rolled_poster)
 
 /// Re-creates the poster item from the poster structure
 /obj/structure/sign/poster/proc/return_to_poster_item(atom/location)
-	return new poster_item_type(location, src)
+	var/obj/item/poster/rolled_poster = new poster_item_type(location, src)
+	transfer_fingerprints_to(rolled_poster)
+	return rolled_poster
 
 /obj/structure/sign/poster/proc/snowflake_closed_turf_check(atom/hopefully_still_a_closed_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
 	return isclosedturf(hopefully_still_a_closed_turf)
