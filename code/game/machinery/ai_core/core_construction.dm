@@ -3,9 +3,6 @@
 #define CHECK_STATE_CALLBACK(maintained_state) CALLBACK(src, PROC_REF(check_state), maintained_state)
 
 /obj/structure/ai_core/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	if(state != CORE_STATE_EMPTY)
 		balloon_alert(user, "too much stuff!")
 		return ITEM_INTERACT_BLOCKING
@@ -21,9 +18,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	if(state >= CORE_STATE_FINISHED)
 		set_anchored(TRUE) //teehee
 		balloon_alert(user, "can't!")
@@ -33,9 +27,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	switch(state)
 		if(CORE_STATE_EMPTY)
 			return ITEM_INTERACT_BLOCKING
@@ -97,9 +88,6 @@
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/crowbar_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	switch(state)
 		if(CORE_STATE_EMPTY)
 			return ITEM_INTERACT_BLOCKING
@@ -131,9 +119,6 @@
 			return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wirecutter_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return NONE
-
 	switch(state)
 		if(CORE_STATE_EMPTY to CORE_STATE_CIRCUIT)
 			return ITEM_INTERACT_BLOCKING
