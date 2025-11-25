@@ -28,3 +28,13 @@ export const remove_double_click: FeatureToggle = {
     `,
   component: CheckboxInput,
 };
+
+export const stair_indicator: FeatureToggle = {
+  name: 'Enable stair indicator',
+  category: 'ACCESSIBILITY',
+  description: `
+      When toggled, staircases will have a visual indicator showing which
+      direction to walk to transition floors.
+    `,
+  component: CheckboxInput,
+};

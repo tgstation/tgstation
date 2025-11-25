@@ -81,10 +81,8 @@
 	if(directly_above)
 		UnregisterSignal(directly_above, COMSIG_TURF_MULTIZ_NEW)
 		directly_above = null
-	for(var/datum/weakref/climber_ref as anything in mob_to_image)
-		var/mob/living/climber = climber_ref.resolve()
-		climber?.client?.images -= mob_to_image[climber_ref]
-	LAZYNULL(mob_to_image)
+	for(var/climber_ref in mob_to_image)
+		clear_climber_image(climber_ref, instant = TRUE)
 	GLOB.stairs -= src
 	return ..()
 
@@ -123,9 +121,9 @@
 	if(has_left_stairs && has_right_stairs)
 		icon_state = "[base_icon_state]-m"
 	else if(has_left_stairs)
-		icon_state = "[base_icon_state]-l"
-	else if(has_right_stairs)
 		icon_state = "[base_icon_state]-r"
+	else if(has_right_stairs)
+		icon_state = "[base_icon_state]-l"
 	else
 		icon_state = base_icon_state
 
@@ -152,8 +150,10 @@
 
 	var/mob/living/climber = entered
 	var/datum/weakref/climber_ref = WEAKREF(climber)
-	if(!climber.client)
+	if(!climber.client || !climber.client.prefs.read_preference(/datum/preference/toggle/stair_indicator))
 		return
+	if(climber.dir == REVERSE_DIR(dir))
+		return // walking away
 	if(LAZYACCESS(mob_to_image, climber_ref))
 		return // already see it
 	if(!(climber in viewers(STAIR_INDICATOR_RANGE + 1, src)))
@@ -172,17 +172,31 @@
 /obj/structure/stairs/proc/on_exit_range(datum/source, atom/movable/exited)
 	SIGNAL_HANDLER
 
+	if(!isliving(exited))
+		return
+
 	var/datum/weakref/climber_ref = WEAKREF(exited)
 	if(!LAZYACCESS(mob_to_image, climber_ref))
 		return // not seeing anything
 	if(exited in viewers(STAIR_INDICATOR_RANGE, src))
 		return // still in range and can see the staircase
 
-	var/image/pointing_image = mob_to_image[climber_ref]
-	animate(pointing_image, alpha = 0, time = 0.75 SECONDS, tag = "point_fadeout")
-	addtimer(CALLBACK(src, PROC_REF(clear_climber_image), climber_ref, pointing_image), 2 SECONDS, TIMER_UNIQUE)
+	clear_climber_image(climber_ref)
 
-/obj/structure/stairs/proc/clear_climber_image(datum/weakref/climber_ref, image/pointing_image)
+/obj/structure/stairs/proc/clear_climber_image(datum/weakref/climber_ref, instant = FALSE)
+	var/image/pointing_image = LAZYACCESS(mob_to_image, climber_ref)
+	if(!pointing_image)
+		LAZYREMOVE(mob_to_image, climber_ref) // just in case
+		return
+	if(instant)
+		clear_climber_image_callback(climber_ref, pointing_image)
+		return
+
+	animate(pointing_image, alpha = 0, time = 0.75 SECONDS, tag = "point_fadeout")
+	// note: the player won't see a new indicator until the image is fully a removed, so this timer also serves as a cooldown
+	addtimer(CALLBACK(src, PROC_REF(clear_climber_image_callback), climber_ref, pointing_image), 1.5 SECONDS, TIMER_UNIQUE)
+
+/obj/structure/stairs/proc/clear_climber_image_callback(datum/weakref/climber_ref, image/pointing_image)
 	PRIVATE_PROC(TRUE)
 	var/mob/living/climber = climber_ref?.resolve()
 	climber?.client?.images -= pointing_image
