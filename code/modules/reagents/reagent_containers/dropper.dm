@@ -60,7 +60,8 @@
 			log_combat(user, M, "squirted", reagents.get_reagent_log_string())
 
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		if(trans)
+			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -74,8 +75,8 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-
-	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the solution."))
 
 	update_appearance()
 	target.update_appearance()

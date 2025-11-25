@@ -983,7 +983,8 @@
 
 /datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
-	description = "Very minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
+	description = "Stabilizes and slowly heals patients in critical condition, and slows suffocation. \
+		Also provides a very minor boost to stun resistance. Overdose causes weakness and toxin damage."
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30

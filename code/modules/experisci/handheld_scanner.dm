@@ -28,6 +28,7 @@
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical), \
 		disallowed_traits = EXPERIMENT_TRAIT_DESTRUCTIVE, \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ANNOUNCE, \
 		experiment_signals = handheld_signals, \
 	)
 
