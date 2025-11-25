@@ -92,6 +92,7 @@
 		build_signal_listener()
 	update_surrounding()
 
+/// Updates the sprite and the sprites of neighboring stairs to reflect merged sprites
 /obj/structure/stairs/proc/update_surrounding()
 	if(!has_merged_sprites)
 		return
@@ -106,6 +107,9 @@
 
 /obj/structure/stairs/update_icon_state()
 	. = ..()
+	if(!has_merged_sprites)
+		return
+
 	var/has_left_stairs = FALSE
 	var/has_right_stairs = FALSE
 	for(var/obj/structure/stairs/stair in get_step(src, turn(dir, 90)))
