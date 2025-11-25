@@ -8,11 +8,12 @@
 	shared_cooldown = NONE
 
 	unset_after_click = FALSE // Unsetting is handled explicitly.
+	click_cd_override = 0 // Click cooldown is also handled explicitly.
 
 	var/leech_rate = 0
 	var/oxyloss_rate = 0
 
-	var/is_actively_leeching = FALSE
+	var/leech_grab_delay = 1 SECONDS
 
 	/// Associative list of all reagent types that are compatible for leeching from reagent containers. Format is "list[reagent_type] = TRUE"
 	var/static/list/compatible_container_reagent_types = list(
@@ -45,25 +46,20 @@
 	if (!target.IsReachableBy(owner))
 		target.balloon_alert(owner, "can't reach!")
 		return FALSE
-	if (is_actively_leeching)
-		target.balloon_alert(owner, "busy leeching!")
-		return FALSE
 
-	is_actively_leeching = TRUE
+	// If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
+	unset_click_ability(owner, refund_cooldown = FALSE)
 
 	if (isliving(target))
-		. = leech_living(owner, target)
+		leech_living(owner, target)
 	else if (is_reagent_container(target))
-		. = leech_container(owner, target)
+		leech_container(owner, target)
 	else
 		target.balloon_alert(owner, "can't leech from this!")
 
-	is_actively_leeching = FALSE
+	return TRUE // Prevents biting.
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living(mob/living/basic/blood_worm/leech, mob/living/target)
-	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the victim is invalid.
-	. = TRUE // Don't bite invalid victims when trying to leech from them.
-
 	if (!leech_living_start_check(leech, target))
 		return
 
@@ -78,7 +74,9 @@
 		type = MSG_VISUAL
 	)
 
-	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_living_start_check), leech, target)))
+	leech.changeNext_move(CLICK_CD_CLICK_ABILITY)
+
+	if (!do_after(leech, leech_grab_delay, target, extra_checks = CALLBACK(src, PROC_REF(leech_living_start_check), leech, target)))
 		return
 
 	if (leech.pulling != target && !leech.grab(target))
@@ -118,7 +116,10 @@
 	else if (synth_content > 0)
 		target.balloon_alert(leech, "[CEILING(synth_content * 100, 1)]% synthetic")
 
-	while (do_after(leech, 1 SECONDS, target, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(leech_living_active_check), leech, target)))
+	// Because of DO_AFTER_CHECK_NEXT_MOVE
+	leech.next_move = 0
+
+	while (do_after(leech, 1 SECONDS, target, timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_TARGET_LOC_CHANGE | DO_AFTER_CHECK_NEXT_MOVE, extra_checks = CALLBACK(src, PROC_REF(leech_living_active_check), leech, target)))
 		leech.consume_blood(-target.adjust_blood_volume(-leech_rate), target.get_blood_synth_content())
 
 		if (target.stat != DEAD)
@@ -132,7 +133,6 @@
 	REMOVE_TRAITS_IN(target, REF(src))
 
 	StartCooldown()
-	return
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_living_start_check(mob/living/basic/blood_worm/leech, mob/living/target)
 	if (target.get_blood_volume() <= 0)
@@ -156,9 +156,6 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
-	unset_click_ability(leech, refund_cooldown = FALSE) // If you fail after this point, it's because your attempt got interrupted or because the target is invalid.
-	. = TRUE // Don't bite invalid targets when trying to leech from them.
-
 	if (!leech_container_start_check(leech, target, feedback = TRUE))
 		return
 
@@ -167,7 +164,9 @@
 		self_message = span_danger("You start trying to bite into \the [target]!")
 	)
 
-	if (!do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_start_check), leech, target)))
+	leech.changeNext_move(CLICK_CD_CLICK_ABILITY)
+
+	if (!do_after(leech, leech_grab_delay, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_start_check), leech, target)))
 		return
 
 	leech.visible_message(
@@ -181,7 +180,10 @@
 
 	leech_container_alert_synth_info(leech, target)
 
-	while (do_after(leech, 1 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(leech_container_active_check), leech, target)))
+	// Because of DO_AFTER_CHECK_NEXT_MOVE
+	leech.next_move = 0
+
+	while (do_after(leech, 1 SECONDS, target, timed_action_flags = DO_AFTER_CHECK_NEXT_MOVE, extra_checks = CALLBACK(src, PROC_REF(leech_container_active_check), leech, target)))
 		var/list/blood = get_blood_in_container(target)
 
 		var/total_volume = 0

@@ -95,6 +95,8 @@
 
 	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 25, vary = TRUE)
 
+	owner.changeNext_move(CLICK_CD_RANGE)
+
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/fire_burst(mob/living/clicker, modifiers, atom/target)
 	if (target == owner)
 		return
@@ -115,6 +117,7 @@
 	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 40, vary = TRUE)
 	playsound(owner, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', vol = 40, vary = TRUE)
 
+	owner.changeNext_move(CLICK_CD_RANGE)
 	StartCooldown(10 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/spit/proc/spit(target, modifiers, projectile_type, count = 1, spread = 0)
