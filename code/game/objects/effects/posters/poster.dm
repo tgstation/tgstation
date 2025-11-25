@@ -151,7 +151,7 @@
 /obj/structure/sign/poster/Destroy(force)
 	var/obj/item/poster/stored_inside = rolled_poster?.resolve()
 	if(!QDELETED(stored_inside))
-		rolled_poster = null
+		stored_inside = null
 	else
 		qdel(stored_inside)
 	return ..()
@@ -258,7 +258,7 @@
 	return rolled_poster
 
 /// Stores a sign obj in a rolled poster's contents, to later be deployed
-/obj/structure/sign/poster/proc/store_sign_in_item(/obj/item/poster/rolled_poster)
+/obj/structure/sign/poster/proc/store_sign_in_item(obj/item/poster/rolled_poster)
 	forceMove(rolled_poster)
 	stored_inside = WEAKREF(rolled_poster)
 
