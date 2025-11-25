@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/leech
 	name = "Leech Blood"
-	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on reagent containers like blood packs."
+	desc = "Aggressively grab a target with your teeth and leech off of their blood. Also works on reagent containers like blood packs. Leeching will be canceled if you do any other actions."
 
 	button_icon_state = "leech_blood"
 
