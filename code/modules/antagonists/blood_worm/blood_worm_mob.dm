@@ -655,6 +655,8 @@
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSMOB // The benefits of being a tiny little bastard.
 
+	guaranteed_butcher_results = list(/obj/item/food/meat/slab/blood_worm = 1)
+
 	maxHealth = 80 // In practice, escaping into a vent from someone who could 3 hit you with a basic bitch welder was really hard. This used to be 50, and was buffed to 80, but speed was slowed a bit.
 	health = 80
 
@@ -691,6 +693,8 @@
 	icon_dead = "juvenile-dead"
 
 	mob_size = MOB_SIZE_SMALL
+
+	guaranteed_butcher_results = list(/obj/item/food/meat/slab/blood_worm = 2)
 
 	maxHealth = 120 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
 	health = 120
@@ -731,6 +735,8 @@
 
 	// We undershoot a tiny bit so that Proto-Kinetic Crushers don't work on adult blood worms.
 	mob_size = MOB_SIZE_HUMAN
+
+	guaranteed_butcher_results = list(/obj/item/food/meat/slab/blood_worm = 3)
 
 	maxHealth = 180 // Used to be 150, turns out their lack of armor and weakness to burn made them too squishy. People kited them using lasguns, leaving them with no way to fight back at all.
 	health = 180

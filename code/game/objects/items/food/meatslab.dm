@@ -506,6 +506,22 @@
 	) // Marble
 	starting_reagent_purity = 1
 
+/obj/item/food/meat/slab/blood_worm
+	name = "blood worm meat"
+	desc = "Who thought eating this would be a good idea? At least it's juicy..."
+	foodtypes = RAW | MEAT | BUGS | GORE
+	food_reagents = list(
+		/datum/reagent/blood = 30, // What did you expect?
+		/datum/reagent/consumable/nutriment/protein = 5, // Rich in protein.
+		/datum/reagent/consumable/nutriment/vitamin = 3, // Rich in vitamins.
+		/datum/reagent/consumable/nutriment/fat = 2, // Rather lean.
+	)
+	bite_consumption = 10
+	starting_reagent_purity = 1
+
+/obj/item/food/meat/slab/blood_worm/make_grillable()
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/blood_worm, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 /obj/item/food/meat/steak
 	name = "steak"
@@ -618,6 +634,12 @@
 	icon_state = "pigsteak"
 	tastes = list("pig" = 1)
 	foodtypes = MEAT
+
+/obj/item/food/meat/steak/blood_worm
+	name = "blood worm steak"
+	desc = "Now that's a bloody good steak!"
+	tastes = list("meat" = 1)
+	foodtypes = MEAT | BUGS
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
