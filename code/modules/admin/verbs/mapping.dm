@@ -198,7 +198,7 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 	var/icon/final = icon()
 	var/mob/living/carbon/human/dummy/consistent/mannequin = new(get_turf(usr))
 	mannequin.setDir(SOUTH)
-	for(var/job_type as anything in valid_subtypesof(/datum/job))
+	for(var/job_type in valid_subtypesof(/datum/job))
 		var/datum/job/job_datum = SSjob.get_job_type(job_type)
 		switch(job_datum.title)
 			if(JOB_AI)
