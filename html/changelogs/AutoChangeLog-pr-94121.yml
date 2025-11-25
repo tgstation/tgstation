@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "xenobio console potions work again"
