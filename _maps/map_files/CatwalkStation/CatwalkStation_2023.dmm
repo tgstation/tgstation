@@ -48562,9 +48562,6 @@
 /obj/effect/decal/cleanable/confetti,
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
-"ngH" = (
-/turf/closed/wall/r_wall,
-/area/station/engineering/break_room)
 "ngZ" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/table,
@@ -51492,7 +51489,7 @@
 	cycle_id = "atmosuppersm"
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/break_room)
+/area/station/engineering/supermatter/room/upper)
 "nSS" = (
 /obj/item/radio/intercom/directional/south,
 /obj/structure/closet/secure_closet/miner,
@@ -88782,10 +88779,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/education)
-"yaT" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating,
-/area/station/engineering/break_room)
 "yba" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
@@ -200250,7 +200243,7 @@ unl
 unl
 unl
 unl
-ngH
+tbt
 tbt
 eTs
 phH
@@ -200507,7 +200500,7 @@ unl
 lyz
 cIL
 gbg
-ngH
+tbt
 gCq
 phH
 phH
@@ -201021,7 +201014,7 @@ bqg
 iqG
 mAI
 kJg
-ngH
+tbt
 kAE
 phH
 phH
@@ -201278,7 +201271,7 @@ kbu
 uiW
 cFl
 imi
-yaT
+uPU
 rFz
 phH
 phH
@@ -201535,7 +201528,7 @@ unl
 tlw
 aYQ
 mNB
-ngH
+tbt
 eNe
 phH
 phH
@@ -201792,7 +201785,7 @@ unl
 unl
 kbu
 unl
-ngH
+tbt
 tbt
 cgN
 gaK
