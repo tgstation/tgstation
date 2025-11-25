@@ -106,8 +106,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage, stored_lock_code)
 	if(mapload)
-		PopulateContents()
+		if(!(obj_flags & CONTENTS_INITIALIZED))
+			PopulateContents()
+
 		find_and_hang_on_atom()
+	obj_flags |= CONTENTS_INITIALIZED
 	RegisterSignal(src, COMSIG_LOCKABLE_STORAGE_SET_CODE, PROC_REF(update_lock_code))
 
 /obj/structure/secure_safe/find_and_hang_on_atom(mark_for_late_init = FALSE, late_init = FALSE)
@@ -132,9 +135,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 			item.forceMove(new_safe)
 
 /obj/structure/secure_safe/proc/PopulateContents()
-	if(!(obj_flags & CONTENTS_INITIALIZED))
-		new /obj/item/paper(src)
-		new /obj/item/pen(src)
+	new /obj/item/paper(src)
+	new /obj/item/pen(src)
 
 /obj/structure/secure_safe/proc/update_lock_code(obj/structure/secure_safe/safe, new_code)
 	SIGNAL_HANDLER
