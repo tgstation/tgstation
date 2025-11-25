@@ -162,7 +162,7 @@
 
 /datum/emote/living/carbon/human/crazy
     key = "crazy"
-    message = "spins a finger next to their head."
+    message = "twirls a finger next to their head."
     hands_use_check = TRUE
 
 /datum/emote/living/carbon/human/shrug
