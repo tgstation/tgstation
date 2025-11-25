@@ -197,25 +197,17 @@ ADMIN_VERB_VISIBILITY(create_mapping_job_icons, ADMIN_VERB_VISIBLITY_FLAG_MAPPIN
 ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "Generates job starting location landmarks.", ADMIN_CATEGORY_MAPPING)
 	var/icon/final = icon()
 	for(var/job_type as anything in valid_subtypesof(/datum/job))
-		var/mob/living/carbon/human/dummy/consistent/mannequin = new(get_turf(usr))
-		mannequin.setDir(SOUTH)
 		var/datum/job/job_datum = SSjob.get_job_type(job_type)
 		switch(job_datum.title)
 			if(JOB_AI)
-				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
+				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), JOB_AI)
 			if(JOB_CYBORG)
-				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), JOB_CYBORG)
 			else
-				mannequin.wipe_state()
-				mannequin.job = job_datum.title
-				mannequin.dress_up_as_job(
-					equipping = job_datum,
-					visual_only = TRUE,
-					consistent = TRUE,
-				)
-				var/icon/I = icon(getFlatIcon(mannequin), frame = 1)
-				final.Insert(I, job_datum.title)
-		qdel(mannequin)
+				if(!job_datum.outfit)
+					continue
+				var/icon/job_icon = get_flat_human_icon(null, job_datum, dummy_key = "LANDMARK_ICONS", showDirs = list(SOUTH), no_anim = TRUE)
+				final.Insert(job_icon, job_datum.title, frame = 1)
 	//Also add the x
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
