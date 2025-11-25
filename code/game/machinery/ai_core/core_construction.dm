@@ -51,21 +51,20 @@
 				return ITEM_INTERACT_BLOCKING
 			if(!tool.use_tool(src, user, 0 SECONDS, 0, 50, CHECK_STATE_CALLBACK(CORE_STATE_GLASSED)))
 				return ITEM_INTERACT_BLOCKING
-			if(suicide_check())
-				balloon_alert(user, "nothing happened?")
-				return ITEM_INTERACT_BLOCKING
 
 			var/atom/movable/alert_source = src
 			if(core_mmi.brainmob?.mind)
 				alert_source = ai_structure_to_mob() || alert_source
 			else
+				playsound(src, SFX_SPARKS, 20)
 				UPDATE_STATE(CORE_STATE_FINISHED)
-			alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
+			alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ", something inside sparked"]")
 			return ITEM_INTERACT_SUCCESS
 		if(CORE_STATE_FINISHED)
 			if(!core_mmi?.brainmob?.mind || suicide_check())
 				tool.play_tool_sound(src, 50)
-				balloon_alert(user, "nothing happened?")
+				playsound(src, SFX_SPARKS, 20)
+				balloon_alert(user, "something inside is sparking")
 				return ITEM_INTERACT_BLOCKING
 
 			if(!anchored)
@@ -78,7 +77,8 @@
 
 			var/atom/movable/alert_source = ai_structure_to_mob()
 			if(!alert_source)
-				balloon_alert(user, "nothing happened?")
+				playsound(src, SFX_SPARKS, 20)
+				balloon_alert(user, "something inside is sparking")
 				return ITEM_INTERACT_BLOCKING
 
 			alert_source.balloon_alert(user, "connected neural network")
@@ -246,7 +246,6 @@
 	UPDATE_STATE(CORE_STATE_GLASSED)
 	return TRUE
 
-#undef EXPRESS_CONFUSION
 #undef CHECK_STATE_CALLBACK
 #undef UPDATE_STATE
 #undef AI_CORE_BRAIN
