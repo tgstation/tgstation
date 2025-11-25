@@ -361,5 +361,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMPATH_SEE_EVIL (1<<8)
 
 // Flags for using your static for a ghost role
-#define GHOSTROLE_ALLOW_SPECIES (1<<0)
-#define GHOSTROLE_ALLOW_OTHER (1<<1)
+/// Ghost role will take on the player's species
+#define GHOSTROLE_TAKE_PREFS_SPECIES (1<<0)
+/// Ghost role will take on the player's apperance (though exlcuding name)
+#define GHOSTROLE_TAKE_PREFS_APPEARANCE (1<<1)
