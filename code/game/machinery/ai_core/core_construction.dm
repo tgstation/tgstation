@@ -197,13 +197,16 @@
 		var/wants_install = (tgui_alert(user, "This [AI_CORE_BRAIN(mmi)] is inactive, would you like to make an inactive AI?", "Installing AI [AI_CORE_BRAIN(mmi)]", list("Yes", "No")) == "Yes")
 		if(!wants_install)
 			return FALSE
+		if(QDELETED(src) || QDELETED(user) || QDELETED(mmi) || !user.is_holding(mmi) || !Adjacent(user))
+			return FALSE
 		if(mmi.brainmob && HAS_TRAIT(mmi.brainmob, TRAIT_SUICIDED))
-			balloon_alert(user, "[mmi] is useless!")
+			balloon_alert(user, "[AI_CORE_BRAIN(mmi)] is useless!")
 			return FALSE
 	else
 		var/mob/living/brain/mmi_brainmob = mmi.brainmob
-		if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(mmi_brainmob.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(mmi) && !QDELETED(user) && Adjacent(user)))
-			balloon_alert(user, "[mmi] won't fit!")
+		if(!CONFIG_GET(flag/allow_ai) || (mmi_brainmob && is_banned_from(mmi_brainmob.ckey, JOB_AI)))
+			if(!QDELETED(src) && !QDELETED(user) && !QDELETED(mmi) && user.is_holding(mmi) && Adjacent(user))
+				balloon_alert(user, "[mmi] won't fit!")
 			return FALSE
 
 	if(state != CORE_STATE_CABLED)
