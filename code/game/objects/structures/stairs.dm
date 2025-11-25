@@ -158,7 +158,7 @@
 		return // already see it
 	if(!(climber in viewers(STAIR_INDICATOR_RANGE + 1, src)))
 		return // can't see the staircase (+1 tile for some leeway)
-	if(!isopenturf(get_step_multiz(src, dir|UP)))
+	if(!isopenturf(get_step_multiz(src, UP)))
 		return // no place to go up to
 
 	var/image/pointing_image = get_pointing_image()
