@@ -710,7 +710,7 @@
 "dq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank/high{
-	desc = "A highly-pressurized water tank, this one seems almost empty..";
+	desc = "A highly-pressurized water tank. This one seems almost empty..";
 	tank_volume = 1000
 	},
 /obj/effect/decal/cleanable/dirt,

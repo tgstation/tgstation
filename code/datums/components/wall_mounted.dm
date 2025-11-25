@@ -93,8 +93,8 @@
 		msg = "[type] Could not find attachable object at [location.type] "
 
 	var/list/turf/attachable_turfs = list()
+	attachable_turfs += get_step(src, dir)
 	attachable_turfs += get_turf(src)
-	attachable_turfs += get_step(attachable_turfs[1], dir)
 	for(var/turf/target as anything in attachable_turfs)
 		var/atom/attachable_atom
 		if(isclosedturf(target))
