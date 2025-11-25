@@ -87,6 +87,84 @@
 	hands_use_check = TRUE
 	sound = 'sound/mobs/humanoids/human/salute/salute.ogg'
 
+/datum/emote/living/carbon/human/slit
+	key = "slit"
+	key_third_person = "slits"
+	message = "drags a finger across their neck."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/scratch_h
+	key = "scratch_h"
+	message = "scratches their head."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/facepalm
+	key = "facepalm"
+	key_third_person = "facepalms"
+	message = "facepalms!"
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/thumb_up
+	key = "thumb_u"
+	message = "gives a thumbs up."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/thumb_down
+	key = "thumb_d"
+	message = "gives a thumbs down."
+	hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/time
+    key = "time"
+    message = "checks the time."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/tap
+    key = "tap"
+	key_third_person = "taps"
+    message = "taps their foot impatiently."
+
+/datum/emote/living/carbon/human/halt
+    key = "halt"
+	key_third_person = "halts"
+    message = "holds up their palm, signaling to stop."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/shush
+    key = "shush"
+    key_third_person = "shushes"
+    message = "holds a finger to their lips."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/listen
+    key = "listen"
+    key_third_person = "listens"
+    message = "cups a hand to their ear."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/think
+    key = "think"
+    key_third_person = "thinks"
+    message = "taps their head, thinking."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/beckon
+    key = "beckon"
+    key_third_person = "beckons"
+    message = "waves a hand for someone to come closer."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/airquote
+    key = "airquote"
+    key_third_person = "airquotes"
+    message = "makes air quotes."
+    hands_use_check = TRUE
+
+/datum/emote/living/carbon/human/crazy
+    key = "crazy"
+    message = "spins a finger next to their head."
+    hands_use_check = TRUE
+
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
 	key_third_person = "shrugs"
