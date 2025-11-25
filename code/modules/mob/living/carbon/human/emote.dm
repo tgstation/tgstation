@@ -98,12 +98,6 @@
 	message = "scratches their head."
 	hands_use_check = TRUE
 
-/datum/emote/living/carbon/human/facepalm
-	key = "facepalm"
-	key_third_person = "facepalms"
-	message = "facepalms!"
-	hands_use_check = TRUE
-
 /datum/emote/living/carbon/human/thumb_up
 	key = "thumb_u"
 	message = "gives a thumbs up."
