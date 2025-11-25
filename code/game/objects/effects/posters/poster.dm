@@ -151,7 +151,7 @@
 /obj/structure/sign/poster/Destroy(force)
 	var/obj/item/poster/rolled_poster = stored_inside?.resolve()
 	if(!QDELETED(rolled_poster))
-		rolled_poster = null
+		stored_inside = null
 	else
 		qdel(rolled_poster)
 	return ..()
