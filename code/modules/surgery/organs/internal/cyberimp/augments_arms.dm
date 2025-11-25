@@ -287,7 +287,7 @@
 		/obj/item/taperecorder,
 		/obj/item/lighter,
 		/obj/item/laser_pointer,
-		/obj/item/stamp,
+		/obj/item/stamp/granted,
 		/obj/item/stamp/denied,
 	)
 
