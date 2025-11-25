@@ -485,6 +485,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "hangover_spawn"
 
 	/// A list of everything this hangover spawn created as part of the hangover station trait
