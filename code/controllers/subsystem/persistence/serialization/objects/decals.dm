@@ -15,7 +15,10 @@
 
 /obj/effect/decal/cleanable/blood/get_save_vars(save_flags=ALL)
 	. = ..()
+	// check to see if these work otherwise omit it
 	. += NAMEOF(src, icon_state)
+	. += NAMEOF(src, base_icon_state)
+
 	. += NAMEOF(src, bloodiness)
 	. += NAMEOF(src, dried)
 	return .
