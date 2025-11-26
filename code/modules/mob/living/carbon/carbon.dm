@@ -1344,4 +1344,7 @@
 
 /mob/living/carbon/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
-	return dna?.blood_type
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+		return
+	var/datum/dna/dna = has_dna()
+	return dna.blood_type
