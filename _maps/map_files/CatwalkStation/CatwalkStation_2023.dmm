@@ -1582,10 +1582,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/science/research)
-"awh" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "awt" = (
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/item/kirbyplants/random,
@@ -39210,10 +39206,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
-"kzr" = (
-/obj/structure/sign/warning/directional/south,
-/turf/open/space/openspace,
-/area/space)
 "kzC" = (
 /obj/structure/chair{
 	dir = 4;
@@ -132106,7 +132098,7 @@ dcE
 dcE
 dcE
 dcE
-heR
+oGD
 iWu
 mXN
 mXN
@@ -139302,7 +139294,7 @@ dcE
 dcE
 dcE
 dcE
-heR
+oGD
 iWu
 mXN
 mXN
@@ -139313,13 +139305,13 @@ kOx
 mXN
 heR
 rQB
-awh
+heR
 dcE
 dcE
 heR
 dcE
 dcE
-awh
+heR
 rQB
 heR
 heR
@@ -197385,7 +197377,7 @@ nlm
 nlm
 nlm
 nlm
-dDL
+lcK
 iWu
 dDL
 dDL
@@ -198919,7 +198911,7 @@ nlm
 nlm
 nlm
 nlm
-dDL
+lcK
 iWu
 slL
 slL
@@ -199690,10 +199682,10 @@ nlm
 nlm
 nlm
 nlm
-nlm
-slL
-nlm
-kzr
+dDL
+iWu
+dDL
+lcK
 bxd
 bxd
 ydS
@@ -199947,10 +199939,10 @@ nlm
 nlm
 nlm
 nlm
-dDL
-iWu
-dDL
-dDL
+nlm
+slL
+nlm
+nlm
 bxd
 lti
 bNX
@@ -203031,7 +203023,7 @@ nlm
 nlm
 nlm
 nlm
-dDL
+lcK
 iWu
 slL
 slL
@@ -204838,7 +204830,7 @@ nlm
 nlm
 nlm
 nlm
-dDL
+lcK
 iWu
 xIe
 xIe
