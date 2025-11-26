@@ -682,3 +682,37 @@
   - bugfix: you can no longer send money from virtualspace to a real account
   - code_imp: adds a flag for virtual areas so they can easily be checked, as well
       as an easy helper proc, 'is_area_virtual(your_area)'
+2025-11-24:
+  JohnFulpWillard:
+  - rscadd: The horrific necktie can now become sentient.
+  SmArtKar:
+  - image: Cybernetic cat ears now have unique sprites and emissives
+  ibexgoetia:
+  - image: Resprited the Plague Doctor's costume.
+2025-11-25:
+  Cat:
+  - balance: Bartender's wardrobe vendor starts with a service plumbing constructor
+  FalloutFalcon:
+  - code_imp: generic helpers and defines for validating file extenstion
+  - refactor: the jukebox has had some improvements in how it validates the sound
+      file. hopefully none of your funny songs disappear.
+  - admin: command_report_menu will let you set ANY sound file type for the sound
+      it plays.
+  - admin: Admins can now manage jukebox songs in game
+  - server: Jukebox songs length are now set automatically, update your jukebox configs!
+  alien3301:
+  - qol: Kaza Ruk has balloon alerts when switching attacks
+  lelandkemble:
+  - bugfix: xenobio console potions work again
+  vinylspiders, Wallemations:
+  - image: space heaters got a model replacement, from stick heaters to box heaters
+2025-11-26:
+  Aliceee2ch:
+  - image: Various beakers now have own inhands sprites.
+  JohnFulpWillard:
+  - bugfix: Headslugs are now small.
+  Y0SH1M4S73R:
+  - sound: Squid tongues have a distinctive effect on your text-to-speech voice.
+  lelandkemble:
+  - bugfix: Ghosts can no longer try and fail to admire aquariums.
+  - bugfix: cyborg RTD works again
