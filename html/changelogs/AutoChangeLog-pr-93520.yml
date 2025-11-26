@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Three variants of the laser gun; Carbine (replacing the existing one), Pistol and Rifle! Find it (possibly) in your armory today!"
-  - balance: "The armory laser guns might be different variants of the laser gun, rather than always being the standard. The standard is the same as ever, even if it looks different."
-  - rscadd: "If you care, the sovl version is available as a goodie. And in the hands of pirates..."
-  - spellcheck: "Lore! LORE FOR LASER GUNS! LOOOORE! Examine laser guns closely and you might learn more about them."
-  - balance: "The new set of laser guns come with brand new sprites."

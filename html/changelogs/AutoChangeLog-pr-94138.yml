@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Pirates will no longer randomly spawn as human"
+  - bugfix: "Servant Golems have numbered names again"
+  - refactor: "Refactored ghost spawns (like spider eggs or pirate spawners), report any oddities"

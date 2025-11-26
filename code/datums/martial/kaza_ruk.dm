@@ -41,9 +41,11 @@
 	var/datum/martial_art/source = target
 	if (source.streak == "neck_chop")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
+		owner.balloon_alert(owner, "cleared")
 		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Neck Chop stance!"), "<b><i>Your next attack will be a Neck Chop.</i></b>")
+		owner.balloon_alert(owner, "neck chop")
 		source.streak = "neck_chop"
 
 /datum/action/low_sweep
@@ -60,9 +62,11 @@
 	var/datum/martial_art/source = target
 	if (source.streak == "low_sweep")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
+		owner.balloon_alert(owner, "cleared")
 		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Low Sweep stance!"), "<b><i>Your next attack will be a Low Sweep.</i></b>")
+		owner.balloon_alert(owner, "low sweep")
 		source.streak = "low_sweep"
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
@@ -79,9 +83,11 @@
 	var/datum/martial_art/source = target
 	if (source.streak == "quick_choke")
 		owner.visible_message(span_danger("[owner] assumes a neutral stance."), "<b><i>Your next attack is cleared.</i></b>")
+		owner.balloon_alert(owner, "cleared")
 		source.streak = ""
 	else
 		owner.visible_message(span_danger("[owner] assumes the Lung Punch stance!"), "<b><i>Your next attack will be a Lung Punch.</i></b>")
+		owner.balloon_alert(owner, "lung punch")
 		source.streak = "quick_choke"//internal name for lung punch
 
 /datum/martial_art/kaza_ruk/activate_style(mob/living/new_holder)

@@ -175,7 +175,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 	var/extstart = findlasttext("[file]", ".")
 	if(!extstart)
 		return "[file]"
-	var/ext = copytext("[file]", extstart)
+	var/ext = copytext("[file]", extstart + 1)
 	if(ext in file_types)
 		return copytext("[file]", 1, extstart)
 	return "[file]"

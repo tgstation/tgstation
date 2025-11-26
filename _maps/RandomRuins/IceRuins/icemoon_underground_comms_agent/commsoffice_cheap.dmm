@@ -8,11 +8,11 @@
 	pixel_x = -2
 	},
 /obj/item/paper/monitorkey,
-/obj/item/paperwork,
 /obj/item/radio/intercom/syndicate/freerange{
 	dir = 1;
 	pixel_y = 32
 	},
+/obj/item/folder/syndicate/mining,
 /turf/open/floor/plating,
 /area/ruin/comms_agent)
 "b" = (

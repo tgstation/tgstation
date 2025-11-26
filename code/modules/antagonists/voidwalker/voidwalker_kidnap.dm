@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
 
 /// Mini car where people drive around in in their mangled corpse to heal a bit before they get dumped back on station
 /obj/effect/wisp_mobile

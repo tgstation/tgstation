@@ -109,6 +109,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light, 0)
 // ---- Broken tube
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/broken, 0)
 
+// ---- Burned tube
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/burned, 0)
+
 // ---- Tube construct
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/light_construct, 0)
 
@@ -160,6 +163,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/empty, 0)
 
 // ---- Broken bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/broken, 0)
+
+// ---- Burned bulb
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/burned, 0)
 
 // ---- Red bulbs
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light/small/dim, 0)

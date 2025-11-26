@@ -467,6 +467,37 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "inky_tongue"
 	actions_types = list(/datum/action/cooldown/ink_spit)
+	/**
+	 * This is probably the most complex tts filter that won't require external files to be added to the tts image.
+	 * It works as follows:
+	 * 1. Increase the pitch of the input audio. Pitch increase is lower for higher speaker pitch and vice-versa.
+	 * 2. Apply a mid-heavy EQ curve.
+	 * 3. Using an oscillating target frequency:
+	 *   - Apply a low pass filter with its cutoff at the target frequency
+	 *   - Boost frequencies very close to the target frequency
+	 */
+	voice_filter = "\
+	rubberband=pitch='\
+		ifnot(%BLIPS%,\
+			2-(%PITCH%+if(%FEMALE%,4))/16\
+			,1)'\
+	:formant=preserved,\
+	highpass=f=1000:t=s:w=24,\
+	equalizer=f=1200:g=15,\
+	equalizer=f=4350:g=-15,\
+	highshelf=f=870:g=1,\
+	afftfilt=\
+		real='\
+			st(0,(b+0.5)/nb*sr);\
+			st(1,3000+1500*sin(9.3*2*PI*pts));\
+			st(2,ld(0)/ld(1));\
+			re*(1-ld(2)^2+2*gauss(log(ld(2)+1)))'\
+		:imag='\
+			st(0,(b+0.5)/nb*sr);\
+			st(1,3000+1500*sin(9.3*2*PI*pts));\
+			st(2,ld(0)/ld(1));\
+			im*(1-ld(2)^2+2*gauss(log(ld(2)+1)))'\
+		:win_size=1024"
 
 	// Seafood instead of meat, because it's a fish organ
 	foodtype_flags = RAW | SEAFOOD | GORE

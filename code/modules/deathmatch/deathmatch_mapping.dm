@@ -2,7 +2,7 @@
 	name = "Deathmatch Arena"
 	requires_power = FALSE
 	default_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | LOCAL_TELEPORT | EVENT_PROTECTED | QUIET_LOGS | NO_DEATH_MESSAGE | BINARY_JAMMING
+	area_flags = LOCAL_TELEPORT | EVENT_PROTECTED | QUIET_LOGS | NO_DEATH_MESSAGE | BINARY_JAMMING
 
 /area/deathmatch/fullbright
 	static_lighting = FALSE

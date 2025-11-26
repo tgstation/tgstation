@@ -310,6 +310,8 @@
 	name = "service plumbing constructor"
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
 	icon_state = "plumberer_service"
+	///Extra price because it appears in bartender's vendor
+	custom_premium_price = PAYCHECK_CREW * 6
 	///Design types for plumbing service constructor
 	var/static/list/service_design_types = list(
 		//Category 1 synthesizers

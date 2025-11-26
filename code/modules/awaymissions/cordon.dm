@@ -58,7 +58,7 @@
 	icon_state = "cordon"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA
+	area_flags = NOTELEPORT|HIDDEN_AREA
 	requires_power = FALSE
 
 /area/misc/cordon/Entered(atom/movable/arrived, area/old_area)
