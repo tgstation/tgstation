@@ -20,7 +20,7 @@
 /// Getter for a mob/living's lying angle, otherwise protected
 #define GET_LYING_ANGLE(mob) (UNLINT(mob.lying_angle))
 /// Checks if the mob can have blood
-#define CAN_HAVE_BLOOD(mob) ((mob.living_flags & LIVING_CAN_HAVE_BLOOD) && (!(HAS_TRAIT(mob, TRAIT_NOBLOOD))))
+#define CAN_HAVE_BLOOD(mob) (mob.living_flags & LIVING_CAN_HAVE_BLOOD)
 
 // Used in living mob offset list for determining pixel offsets
 #define PIXEL_W_OFFSET "w"
