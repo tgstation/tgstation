@@ -610,6 +610,23 @@
 		return gundam.use_energy(amount * MASS_TO_ENERGY)
 	return TRUE
 
+/obj/item/construction/rcd/exosuit/detonate_pulse()
+	var/obj/item/mecha_parts/mecha_equipment/rcd/ourshell = loc
+	if(!istype(ourshell))
+		return
+	ourshell.audible_message(span_danger("<b>[ourshell] begins to vibrate and buzz loudly!</b>"), \
+	span_danger("<b>[ourshell] begins vibrating violently!</b>"))
+	// 5 seconds to get rid of it
+	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 5 SECONDS)
+
+/obj/item/construction/rcd/exosuit/detonate_pulse_explode()
+	var/obj/item/mecha_parts/mecha_equipment/rcd/ourshell = loc
+	explosion(ourshell, light_impact_range = 3, flame_range = 1, flash_range = 1)
+	if(owner)
+		ourshell.detach()
+	qdel(ourshell)
+
+
 #undef MASS_TO_ENERGY
 
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
