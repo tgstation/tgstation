@@ -50,7 +50,7 @@
 
 		var/visible_path = hide ? "/hidden" : "/visible"
 
-		var/layer_path = "" 
+		var/layer_path = ""
 		if(piping_layer != 3)
 			layer_path = "/layer[piping_layer]"
 
@@ -180,6 +180,11 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, target_temperature)
+	return .
+
+/obj/machinery/atmospherics/components/trinary/get_save_vars(save_flags=ALL)
+	. = ..()
+	. += NAMEOF(src, flipped)
 	return .
 
 /obj/machinery/atmospherics/components/trinary/filter/get_save_vars(save_flags=ALL)
