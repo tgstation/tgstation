@@ -1,5 +1,5 @@
 #define BASE_DISCONNECT_DAMAGE 40
-
+#define SCANNING_TOGGLE_COOLDOWN 5
 
 /obj/machinery/netpod
 	name = "netpod"
@@ -26,6 +26,10 @@
 	var/disconnect_damage
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
+	/// Whether bit avatars become visually similar to their bitrunner on first creation
+	var/copy_body = FALSE
+	/// The next time copy_body can be toggled
+	var/scanning_can_toggle = 0
 
 
 /obj/machinery/netpod/post_machine_initialize()
@@ -53,21 +57,21 @@
 
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Select Outfit"
-		return CONTEXTUAL_SCREENTIP_SET
+	else
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER && !occupant && !state_open)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
 
-	if(held_item.tool_behaviour == TOOL_SCREWDRIVER && !occupant && !state_open)
-		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] Panel"
-		return CONTEXTUAL_SCREENTIP_SET
-
-	if(held_item.tool_behaviour == TOOL_CROWBAR)
-		if(isnull(occupant))
-			if(panel_open)
-				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		if(held_item.tool_behaviour == TOOL_CROWBAR)
+			if(isnull(occupant))
+				if(panel_open)
+					context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+				else
+					context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Close" : "Open"] Cover"
 			else
-				context[SCREENTIP_CONTEXT_LMB] = "[state_open ? "Close" : "Open"] Cover"
-		else
-			context[SCREENTIP_CONTEXT_LMB] = "Break out"
-		return CONTEXTUAL_SCREENTIP_SET
+				context[SCREENTIP_CONTEXT_LMB] = "Break out"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[copy_body ? "Disable" : "Enable"] Scan"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/netpod/examine(mob/user)
 	. = ..()
@@ -88,6 +92,9 @@
 		. += span_infoplain("Drag yourself into the pod to engage the link.")
 		. += span_infoplain("It has limited resuscitation capabilities. Remaining in the pod can heal some injuries.")
 		. += span_infoplain("It has a security system that will alert the occupant if it is tampered with.")
+		if(copy_body)
+			. += span_infoplain("Occupant scanning is currently enabled, which will cause bit avatars to look like the occupant when first created.")
+		. += span_infoplain("Alt-click to [copy_body ? "disable" : "enable"] occupant scanning.")
 
 	if(isnull(occupant))
 		. += span_infoplain("It's currently unoccupied.")
@@ -149,5 +156,14 @@
 
 	disconnect_damage = BASE_DISCONNECT_DAMAGE * (1 - source.servo_bonus)
 
+/obj/machinery/netpod/click_alt(mob/user)
+	if(world.time < scanning_can_toggle)
+		return CLICK_ACTION_BLOCKING
+	copy_body = !copy_body
+	scanning_can_toggle = world.time + SCANNING_TOGGLE_COOLDOWN
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	user.balloon_alert_to_viewers(user, "scanning [copy_body ? "enabled" : "disabled"]")
+	return CLICK_ACTION_SUCCESS
 
 #undef BASE_DISCONNECT_DAMAGE
+#undef SCANNING_TOGGLE_COOLDOWN
