@@ -111,6 +111,7 @@
 		server = server, \
 		pod = src, \
 		help_text = generated_domain.help_text, \
+		copy_body = copy_body, \
 	)
 
 	connected = TRUE
