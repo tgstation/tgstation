@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - qol: "Replaces abandoned crate multitool interaction with a TGUI window that shows ALL your previous attempts"
