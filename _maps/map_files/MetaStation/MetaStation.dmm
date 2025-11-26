@@ -45714,6 +45714,7 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 4
 	},
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "pMH" = (
@@ -98906,7 +98907,7 @@ jpj
 ewj
 ycM
 mMM
-bkl
+ycM
 ycM
 bkl
 bkl
