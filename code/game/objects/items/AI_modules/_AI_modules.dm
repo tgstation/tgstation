@@ -140,6 +140,7 @@
 	rack.update_lawset()
 
 /obj/item/ai_module/law/proc/multitool_cb(atom/start_loc, mob/living/user, obj/item/tool)
+	PRIVATE_PROC(TRUE)
 	if(!ioned)
 		return FALSE
 	if(loc != start_loc)
