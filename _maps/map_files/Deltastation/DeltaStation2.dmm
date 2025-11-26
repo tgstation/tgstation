@@ -93193,7 +93193,6 @@
 /obj/effect/turf_decal/trimline/blue/end{
 	dir = 4
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "xbG" = (
