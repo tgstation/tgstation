@@ -45,6 +45,12 @@
 
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
+#ifdef TESTING
+	var/obj/machinery/duct/duct_on_loc = locate() in parent_movable.loc
+	if(duct_on_loc)
+		log_mapping("[duct_on_loc.name] was found at [AREACOORDS(parent_movable)] spawning on top of [parent_movable.name], which should not occur as it takes ducts itself!")
+#endif
+
 	if(start)
 		enable()
 
