@@ -328,10 +328,10 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/glasses/regular/jamjar = 1,
 		/obj/item/clothing/under/rank/civilian/curator = 1,
 		/obj/item/clothing/under/rank/civilian/curator/skirt = 1,
-		/obj/item/clothing/under/rank/captain/suit = 1,
-		/obj/item/clothing/under/rank/captain/suit/skirt = 1,
-		/obj/item/clothing/under/rank/civilian/head_of_personnel/suit = 1,
-		/obj/item/clothing/under/rank/civilian/head_of_personnel/suit/skirt = 1,
+		/obj/item/clothing/under/costume/captain = 1,
+		/obj/item/clothing/under/costume/captain/skirt = 1,
+		/obj/item/clothing/under/costume/head_of_personnel = 1,
+		/obj/item/clothing/under/costume/head_of_personnel/skirt = 1,
 		/obj/item/clothing/suit/toggle/lawyer/greyscale = 1,
 		/obj/item/storage/backpack/satchel/explorer = 1,
 		/obj/item/storage/backpack/messenger/explorer = 1,
@@ -422,6 +422,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	premium = list(
 		/obj/item/storage/box/dishdrive = 1,
+		/obj/item/construction/plumbing/service = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_MED

@@ -8,7 +8,7 @@
 	///the color of the slime you're spawning.
 	var/slime_species = /datum/slime_type/grey
 
-/obj/effect/mob_spawn/corpse/slime/special(mob/living/basic/slime/spawned_slime, mob/mob_possessor)
+/obj/effect/mob_spawn/corpse/slime/special(mob/living/basic/slime/spawned_slime, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_slime.set_slime_type(slime_species)
 
@@ -17,7 +17,7 @@
 	//mostly for unit tests to not get alarmed (which by all means it should because this is a mess)
 	mob_type = /obj/item/clothing/mask/facehugger
 
-/obj/effect/mob_spawn/corpse/facehugger/create(mob/user)
+/obj/effect/mob_spawn/corpse/facehugger/create(mob/user, newname, apply_prefs)
 	var/obj/item/clothing/mask/facehugger/spawned_facehugger = new mob_type(loc)
 	spawned_facehugger.Die()
 	qdel(src)
