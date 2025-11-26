@@ -172,6 +172,7 @@
 	projectile_type = /obj/projectile/beam/instakill
 	e_cost = 0 // Not possible to use the macro
 	select_name = "DESTROY"
+	muzzle_flash_color = LIGHT_COLOR_BLUE
 
 /obj/projectile/beam/instakill
 	name = "instagib laser"
@@ -300,7 +301,6 @@
 /obj/projectile/beam/instakill/red
 	icon_state = "red_laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
-	light_color = COLOR_SOFT_RED
 
 // BLUE TEAM GUNS
 
