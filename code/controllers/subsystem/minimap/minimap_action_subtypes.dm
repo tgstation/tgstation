@@ -53,3 +53,7 @@
 	owner.update_parallax_contents()
 	// Close minimap
 	toggle_minimap(FALSE)
+
+/datum/action/minimap/nuclear
+	minimap_flags = MINIMAP_FLAG_NUCLEAR
+	marker_flags = MINIMAP_FLAG_NUCLEAR

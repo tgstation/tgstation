@@ -2740,6 +2740,7 @@
 #include "code\game\objects\items\implants\implant_spell.dm"
 #include "code\game\objects\items\implants\implant_stealth.dm"
 #include "code\game\objects\items\implants\implant_storage.dm"
+#include "code\game\objects\items\implants\implant_tacmap.dm"
 #include "code\game\objects\items\implants\implantcase.dm"
 #include "code\game\objects\items\implants\implantchair.dm"
 #include "code\game\objects\items\implants\implanter.dm"

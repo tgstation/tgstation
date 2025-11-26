@@ -13,6 +13,11 @@
 
 	skillchips = list(/obj/item/skillchip/disk_verifier)
 	box = /obj/item/storage/box/survival/syndie
+	implants = list(
+		/obj/item/implant/weapons_auth,
+		/obj/item/implant/explosive,
+		/obj/item/implant/tacmap/nuclear,
+	)
 	/// Amount of TC to automatically store in this outfit's uplink.
 	var/tc = 25
 	/// Enables big voice on this outfit's headset, used for nukie leaders.
@@ -56,10 +61,6 @@
 		var/obj/item/uplink = new uplink_type(nukie, nukie.key, tc)
 		nukie.equip_to_storage(uplink, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 
-	var/obj/item/implant/weapons_auth/weapons_implant = new/obj/item/implant/weapons_auth(nukie)
-	weapons_implant.implant(nukie)
-	var/obj/item/implant/explosive/explosive_implant = new/obj/item/implant/explosive(nukie)
-	explosive_implant.implant(nukie)
 	nukie.faction |= ROLE_SYNDICATE
 	nukie.update_icons()
 
