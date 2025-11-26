@@ -645,7 +645,7 @@
 #define AI_EMOTION_UNSURE "Unsure"
 #define AI_EMOTION_CONFUSED "Confused"
 #define AI_EMOTION_SAD "Sad"
-#define AI_EMOTION_BSOD "BSOD"
+#define AI_EMOTION_BSOD "BSOD" #It is used only on EMP pulse displays.
 #define AI_EMOTION_BLANK "Blank"
 #define AI_EMOTION_PROBLEMS "Problems?"
 #define AI_EMOTION_AWESOME "Awesome"
@@ -655,7 +655,7 @@
 #define AI_EMOTION_DORFY "Dorfy"
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
-#define AI_EMOTION_DEAD "Dead"
+#define AI_EMOTION_DEAD "Dead" #This one is used when deactivating the AI
 #define AI_EMOTION_DOWNLOAD "Download"
 
 // Defines for AI holograms
