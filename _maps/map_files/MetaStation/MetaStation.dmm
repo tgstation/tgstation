@@ -4359,7 +4359,6 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
 "bzV" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
 	name = "Brig"
@@ -37124,6 +37123,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "mMX" = (
@@ -58238,7 +58238,6 @@
 /obj/structure/cable,
 /obj/structure/bed/dogbed/mcgriff,
 /obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 9
 	},
@@ -64392,7 +64391,6 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "vYF" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
 	name = "Brig"
@@ -65120,6 +65118,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/effect/landmark/firealarm_sanity,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "wki" = (
