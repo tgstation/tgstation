@@ -334,14 +334,14 @@
 		for(var/obj/item/clothing/possible_headbands in human_carp_user.get_clothing_on_part(potential_head))
 			if(possible_headbands.clothing_flags & CARP_STYLE_FACTOR)
 				style_factor_points += 20 // Basically, you only need one chest level item to contribute
-			style_factor_malus += human_carp_user.run_armor_check(potential_head, MELEE)
+		style_factor_malus += human_carp_user.run_armor_check(potential_head, MELEE)
 
 	// Then let's look for any chest clothing that is either armored or on theme
 	if(potential_chest)
 		for(var/obj/item/clothing/possible_gi in human_carp_user.get_clothing_on_part(potential_chest))
 			if(possible_gi.clothing_flags & CARP_STYLE_FACTOR)
 				style_factor_points += 20 // Only need one head level item to contribute
-			style_factor_malus += human_carp_user.run_armor_check(potential_chest, MELEE)
+		style_factor_malus += human_carp_user.run_armor_check(potential_chest, MELEE)
 
 	// We also consider whether our footwear is appropriate
 	if(istype(is_it_the_shoes) && is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
