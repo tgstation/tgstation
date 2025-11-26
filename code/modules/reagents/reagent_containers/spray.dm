@@ -446,6 +446,10 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
 
+/obj/item/reagent_containers/spray/medical/Initialize(mapload, vol)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/med_spray)
+
 /obj/item/reagent_containers/spray/hercuri
 	name = "medical spray (hercuri)"
 	desc = "A medical spray bottle. This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"

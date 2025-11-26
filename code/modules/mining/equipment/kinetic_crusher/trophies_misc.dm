@@ -78,8 +78,6 @@
 	preview_name = "Dagger and Blaster"
 	new_icon_state = "crusher_dagger"
 	new_inhand_icon = "crusher_dagger"
-	/// Are we doing a blaster animation right now?
-	var/blaster_strike = FALSE
 
 /datum/atom_skin/crusher_skin/dagger/apply(atom/apply_to)
 	. = ..()
