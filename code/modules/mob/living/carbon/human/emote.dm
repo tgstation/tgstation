@@ -159,6 +159,17 @@
 	message = "twirls a finger next to their head."
 	hands_use_check = TRUE
 
+/datum/emote/living/carbon/human/squint
+	key = "squint"
+	key_third_person = "squints"
+	message = "squints."
+
+/datum/emote/living/carbon/human/rub
+	key = "rub"
+	key_third_person = "rubs"
+	message = "rubs their chin."
+	hands_use_check = TRUE
+
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
 	key_third_person = "shrugs"
