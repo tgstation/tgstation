@@ -101,6 +101,7 @@
 /obj/machinery/ai_law_rack/on_set_is_operational(old_value)
 	update_lawset()
 
+/// Refreshes the combined lawset with all the modules currently installed and syncs it to all linked silicons
 /obj/machinery/ai_law_rack/proc/update_lawset()
 	if(!is_operational) // updates won't happen while depowered or broken
 		return

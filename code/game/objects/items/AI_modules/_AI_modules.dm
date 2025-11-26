@@ -101,16 +101,50 @@
 	if(!ioned)
 		return NONE
 	balloon_alert(user, "repairing ion damage...")
-	if(!tool.use_tool(src, user, 4 SECONDS, volume = 25))
+	if(!tool.use_tool(ismachinery(loc) ? loc : src, user, 4 SECONDS, volume = 25, extra_checks = CALLBACK(src, PROC_REF(multitool_cb), loc, user, tool)))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "module repaired")
 	set_ioned(FALSE)
-	laws = saved_laws
+	set_laws(saved_laws)
 	saved_laws = null
-	if(istype(loc, /obj/machinery/ai_law_rack))
-		var/obj/machinery/ai_law_rack/rack = loc
-		rack.update_lawset()
 	return ITEM_INTERACT_SUCCESS
+
+/// Helper to set the laws list and automatically update any racks we're installed in.
+/obj/item/ai_module/law/proc/set_laws(list/new_laws)
+	laws = new_laws
+	update_rack_laws()
+
+/// Removes a law by text from the module and updates any racks we're installed in.
+/obj/item/ai_module/law/proc/remove_law(law_text)
+	laws -= law_text
+	update_rack_laws()
+
+/// Adds a law to the module and updates any racks we're installed in.
+/obj/item/ai_module/law/proc/add_law(law_text)
+	laws += law_text
+	update_rack_laws()
+
+/// Adds a law to the module at a specific index and updates any racks we're installed in.
+/obj/item/ai_module/law/proc/add_law_to_index(law_text, index)
+	if(length(laws) <= index)
+		laws += law_text
+	else
+		laws.Insert(index, law_text)
+	update_rack_laws()
+
+/// Update any racks we're installed in
+/obj/item/ai_module/law/proc/update_rack_laws()
+	if(!istype(loc, /obj/machinery/ai_law_rack))
+		return
+	var/obj/machinery/ai_law_rack/rack = loc
+	rack.update_lawset()
+
+/obj/item/ai_module/law/proc/multitool_cb(atom/start_loc, mob/living/user, obj/item/tool)
+	if(!ioned)
+		return FALSE
+	if(loc != start_loc)
+		return FALSE
+	return TRUE
 
 /// Updates the "ioned" stat of the module
 /obj/item/ai_module/law/proc/set_ioned(new_ioned)

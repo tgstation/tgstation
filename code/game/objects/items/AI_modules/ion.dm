@@ -23,13 +23,12 @@ CONTAINS:
 
 /obj/item/ai_module/law/core/full/damaged/multitool_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "repairing ion damage..?")
-	if(!tool.use_tool(src, user, 4 SECONDS, volume = 25))
+	if(!tool.use_tool(ismachinery(loc) ? loc : src, user, 4 SECONDS, volume = 25, extra_checks = CALLBACK(src, PROC_REF(multitool_cb), loc, user, tool)))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "module repaired..?")
-	gen_laws()
-	if(istype(loc, /obj/machinery/ai_law_rack))
-		var/obj/machinery/ai_law_rack/rack = loc
-		rack.update_lawset()
+	if(ismachinery(loc))
+		gen_laws()
+		update_rack_laws()
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ai_module/law/toy_ai // -- Incoming //No actual reason to inherit from ion boards here, either. *sigh* ~Miauw
