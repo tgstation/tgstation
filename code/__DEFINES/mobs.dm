@@ -658,7 +658,6 @@
 #define AI_EMOTION_DEAD "Dead"
 #define AI_EMOTION_DOWNLOAD "Download"
 
-
 // Defines for AI holograms
 #define AI_HOLOGRAM_CATEGORY_ANIMAL "Animal"
 	#define AI_HOLOGRAM_BEAR "Bear"
