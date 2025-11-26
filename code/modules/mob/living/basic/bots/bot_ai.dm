@@ -251,7 +251,7 @@
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	action_cooldown = BOT_COMMISSIONED_SALUTE_DELAY
 
-/datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/nearby_mob in oview(search_range, controller.pawn))
 		if(!HAS_TRAIT(nearby_mob, TRAIT_COMMISSIONED))
 			continue
