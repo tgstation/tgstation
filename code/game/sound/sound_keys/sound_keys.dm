@@ -1136,3 +1136,14 @@
 		'sound/items/hard_hat/hard_hat_equip2.ogg',
 		'sound/items/hard_hat/hard_hat_equip3.ogg',
 	)
+
+/// troutstation list
+/datum/sound_effect/gay
+	key = SFX_GAY
+	file_paths = list(
+		'troutstation/sound/misc/gay.ogg',
+		'troutstation/sound/misc/gay2.ogg',
+		'troutstation/sound/misc/gay3.ogg',
+		'troutstation/sound/misc/gay4.ogg',
+		'troutstation/sound/misc/gay5.ogg',
+	)

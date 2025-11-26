@@ -326,3 +326,6 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define MAX_EMOTE_PITCH 48000
 // ~0.6 - 1.4 at 0.12
 #define EMOTE_TTS_PITCH_MULTIPLIER 0.12
+
+/// troutstation edit
+#define SFX_GAY "gay_sounds"

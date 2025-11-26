@@ -25,7 +25,7 @@
 /datum/reagent/medicine/gaywater/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
-		playsound(get_turf(drinker), pick('troutstation/sound/misc/gay.ogg','troutstation/sound/misc/gay2.ogg','troutstation/sound/misc/gay3.ogg','troutstation/sound/misc/gay4.ogg','troutstation/sound/misc/gay5.ogg'), 100, TRUE) // plays ytpmv elf Gay sound
+		playsound(get_turf(drinker), SFX_GAY, 100, TRUE) // plays ytpmv elf Gay sound
 		to_chat(drinker, span_notice("You're gay."))
 
 /datum/glass_style/drinking_glass/gaywater
@@ -36,7 +36,7 @@
 /datum/reagent/medicine/gaywater/overdose_start(mob/living/carbon/affected_mob)
 	var/mob/living/carbon/human/affected_human = affected_mob
 	to_chat(affected_human, span_userdanger("You feel incredibly gay... gay people..."))
-	playsound(get_turf(affected_human), pick('troutstation/sound/misc/gay.ogg','troutstation/sound/misc/gay2.ogg','troutstation/sound/misc/gay3.ogg','troutstation/sound/misc/gay4.ogg','troutstation/sound/misc/gay5.ogg'), 100, TRUE)
+	playsound(get_turf(affected_human), SFX_GAY, 100, TRUE)
 
 	if(HAS_TRAIT(affected_human, TRAIT_USES_SKINTONES))
 		affected_human.skin_tone = "pink" // pink skin for humans
@@ -47,7 +47,7 @@
 /datum/reagent/medicine/gaywater/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(20, seconds_per_tick))
-		playsound(affected_mob, pick('troutstation/sound/misc/gay.ogg','troutstation/sound/misc/gay2.ogg','troutstation/sound/misc/gay3.ogg','troutstation/sound/misc/gay4.ogg','troutstation/sound/misc/gay5.ogg'), 100, FALSE) // Only audible to the mob
+		playsound(affected_mob, SFX_GAY, 100, FALSE) // Only audible to the mob
 	if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.say(pick("bable", "beble", "bible", "boble", "booble", "babie", "bebie", "bibie", "bobie", "bubie", "boobie"))
 
