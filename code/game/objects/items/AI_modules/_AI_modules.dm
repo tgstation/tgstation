@@ -76,9 +76,6 @@
 		if(delete_module)
 			return INITIALIZE_HINT_QDEL
 
-	if(ioned)
-		update_appearance()
-
 /// Logs the installation of this module to the law change log and silicon log.
 /obj/item/ai_module/law/log_install(mob/living/user, obj/machinery/ai_law_rack/rack)
 	. = ..()
@@ -93,7 +90,7 @@
 
 /obj/item/ai_module/law/examine(mob/user)
 	. = ..()
-	if(ioned && !ion_storm_immune)
+	if(ioned)
 		. += "This module has been damaged and should be repaired with a [EXAMINE_HINT("multitool")]."
 
 	var/examine_laws = display_laws()
@@ -101,7 +98,7 @@
 		. += "<br>[examine_laws]"
 
 /obj/item/ai_module/law/multitool_act(mob/living/user, obj/item/tool)
-	if(!ioned || ion_storm_immune)
+	if(!ioned)
 		return NONE
 	balloon_alert(user, "repairing ion damage...")
 	if(!tool.use_tool(src, user, 4 SECONDS, volume = 25))
@@ -117,6 +114,8 @@
 
 /// Updates the "ioned" stat of the module
 /obj/item/ai_module/law/proc/set_ioned(new_ioned)
+	if(!ioned)
+		save_laws()
 	var/old_ioned = ioned
 	ioned = new_ioned
 	if(old_ioned != ioned)

@@ -710,14 +710,13 @@
 	var/obj/item/ai_module/law/core/core = get_core_module()
 	var/core_sub_ion = prob(sub_ion_prob)
 	var/ions_added = 0
-	if(istype(core) && !core.ioned && !core.ion_storm_immune)
-		core.save_laws()
+	if(istype(core) && !core.ion_storm_immune)
 		// Chance the core lawset's laws are overwritten with a new lawset
 		if(prob(new_lawset_prob))
 			var/ion_lawset_type = pick_weighted_lawset()
 			var/datum/ai_laws/ion_lawset = new ion_lawset_type()
-			core.laws = ion_lawset.inherent.Copy()
 			core.set_ioned(TRUE)
+			core.laws = ion_lawset.inherent.Copy()
 			log_law_change(null, "ion replaced core lawset entirely in [src] ([log_status()]) with [ion_lawset] ([ion_lawset.id])")
 			qdel(ion_lawset)
 			. = TRUE
@@ -725,21 +724,21 @@
 		if(prob(remove_law_prob))
 			var/removed_index = rand(1, length(core.laws))
 			var/removed_law = core.laws[removed_index]
-			core.laws.Cut(removed_index, removed_index + 1)
 			core.set_ioned(TRUE)
+			core.laws.Cut(removed_index, removed_index + 1)
 			log_law_change(null, "ion removed law from [src] ([log_status()], text: \"[removed_law]\")")
 			. = TRUE
 		// Chance the core lawset is shuffled entirely
 		if(prob(shuffle_prob))
-			core.laws = shuffle(core.laws)
 			core.set_ioned(TRUE)
+			core.laws = shuffle(core.laws)
 			log_law_change(null, "ion shuffled laws in [src] ([log_status()])")
 			. = TRUE
 		// Chance the first law in the core lawset is replaced with an ion law
 		// Don't add this one if we're replacing a random law later
 		if(!core_sub_ion && prob(base_ion_prob))
-			core.laws.Insert(1, ion_message || generate_ion_law())
 			core.set_ioned(TRUE)
+			core.laws.Insert(1, ion_message || generate_ion_law())
 			ion_message = null
 			log_law_change(null, "ion added law to [src] ([log_status()], text: \"[core.laws[1]]\")")
 			ions_added++
@@ -747,18 +746,16 @@
 
 	// This can double dip and affect the core lawset again - that's fine
 	for(var/obj/item/ai_module/law/law in ai_modules)
-		if(law.ioned || law.ion_storm_immune)
+		if(law.ion_storm_immune)
 			continue
-		if(law != core)
-			law.save_laws()
 		// For core lawsets: Chance that a random law (EXCEPT the newly added ion law) is replaced with another ion law.
 		// For supplied laws: Chance the entire supplied law is replaced with a new ion law.
 		// If we had no core law and thus added no ion law, this is guaranteed to replace the first supplied law
 		if(ions_added < ion_limit && (ion_message || (law == core && core_sub_ion) || prob(sub_ion_prob)))
 			var/picked_law = length(law.laws) <= 1 ? 1 : rand(2, length(law.laws))
 			var/replaced_law = law.laws[picked_law]
-			law.laws[picked_law] = ion_message || generate_ion_law()
 			law.set_ioned(TRUE)
+			law.laws[picked_law] = ion_message || generate_ion_law()
 			ion_message = null
 			log_law_change(null, "ion replaced law in [src] ([log_status()], text: \"[replaced_law]\" -> \"[law.laws[picked_law]]\")")
 			ions_added++
@@ -767,8 +764,8 @@
 		/// Chance for any supplied law to be lost entirely
 		else if(law != core && prob(remove_law_prob))
 			var/wiped = law.laws[1]
-			law.laws.Cut()
 			law.set_ioned(TRUE)
+			law.laws.Cut(1, 2)
 			log_law_change(null, "ion wiped law from [src] ([log_status()], text: \"[wiped]\")")
 			. = TRUE
 
