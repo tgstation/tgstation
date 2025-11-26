@@ -43,6 +43,7 @@ GLOBAL_LIST_EMPTY(save_object_blacklist)
 			/obj/item/paper/requisition, // spammed by cargo orders
 			/obj/item/paper/fluff/jobs/cargo/manifest, // spammed by cargo orders
 			/obj/item/paper/fluff, // spammed by cargo mail
+			/obj/item/mail, // spammed by cargo mail
 			/obj/item/relic/lavaland, // lots of relic spam
 			/mob/living/carbon, // carbon mobs are very complex to save so skip
 			/mob/dead, // no dead ghosts
