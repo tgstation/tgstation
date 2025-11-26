@@ -655,6 +655,9 @@
 #define AI_EMOTION_DORFY "Dorfy"
 #define AI_EMOTION_BLUE_GLOW "Blue Glow"
 #define AI_EMOTION_RED_GLOW "Red Glow"
+#define AI_EMOTION_DEAD "Dead"
+#define AI_EMOTION_DOWNLOAD "Download"
+
 
 // Defines for AI holograms
 #define AI_HOLOGRAM_CATEGORY_ANIMAL "Animal"
