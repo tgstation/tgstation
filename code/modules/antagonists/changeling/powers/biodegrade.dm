@@ -18,15 +18,18 @@
 	var/obj/legcuffs = user.get_item_by_slot(ITEM_SLOT_LEGCUFFED)
 	var/obj/item/clothing/suit/straitjacket = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 	var/obj/item/clothing/shoes/sneakers/orange/prisoner_shoes = user.get_item_by_slot(ITEM_SLOT_FEET)
+	var/obj/item/clothing/shoes/knotted_shoes = user.get_item_by_slot(ITEM_SLOT_FEET)
 	var/obj/some_manner_of_cage = astype(user.loc, /obj)
 	var/mob/living/space_invader = user.pulledby
 
 	if(!istype(prisoner_shoes, /obj/item/clothing/shoes/sneakers/orange) || !prisoner_shoes?.attached_cuffs)
 		prisoner_shoes = null
+	if(!istype(knotted_shoes) || istype(knotted_shoes) && !knotted_shoes.tied == SHOES_KNOTTED)
+		knotted_shoes = null
 	if(!straitjacket?.breakouttime)
 		straitjacket = null
 
-	if(!handcuffs && !legcuffs && !straitjacket && !prisoner_shoes && !some_manner_of_cage && !space_invader)
+	if(!handcuffs && !legcuffs && !straitjacket && !prisoner_shoes && !knotted_shoes && !some_manner_of_cage && !space_invader)
 		user.balloon_alert(user, "already free!")
 		return .
 	..()
@@ -39,6 +42,8 @@
 		restraints.Add(straitjacket)
 	if(prisoner_shoes)
 		restraints.Add(prisoner_shoes)
+	if(knotted_shoes)
+		restraints.Add(knotted_shoes)
 	if(some_manner_of_cage)
 		restraints.Add(some_manner_of_cage)
 
