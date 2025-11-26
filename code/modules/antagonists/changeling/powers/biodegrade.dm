@@ -3,8 +3,8 @@
 	desc = "Dissolves restraints or other objects preventing free movement. Costs 30 chemicals."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
 	button_icon_state = "biodegrade"
-	chemical_cost = 30
-	dna_cost = 2
+	chemical_cost = 1
+	dna_cost = CHANGELING_POWER_INNATE
 	req_human = TRUE
 	disabled_by_fire = FALSE
 	var/static/bio_acid_path = /datum/reagent/toxin/acid/bio_acid
@@ -46,32 +46,33 @@
 		if(restraint.obj_flags & (INDESTRUCTIBLE | ACID_PROOF | UNACIDABLE))
 			to_chat(user, span_changeling("We cannot use bio-acid to destroy [restraint]!"))
 			continue
-		spew_acid(user, restraint)
+
+		if(restraint == user.loc)
+			restraint.visible_message(span_warning("Bubbling acid start spewing out of [restraint]..."))
+			addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 4 SECONDS)
+			for(var/beat in 1 to 3)
+				addtimer(CALLBACK(src, PROC_REF(make_puddle), restraint), beat SECONDS)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), restraint, 'sound/items/tools/welder.ogg', 50, TRUE), beat SECONDS)
+			log_combat(user = user, target = restraint, what_done = "melted restraining container", addition = "(biodegrade)")
+			return
+		addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 1.5 SECONDS)
+		log_combat(user = user, target = restraint, what_done = "melted restraining item", addition = "(biodegrade)")
+		user.visible_message(
+			span_warning("[user] spews torrents of acid onto [restraint], melting them with horrifying ease."),
+			user.balloon_alert(user, "melting restraints..."),
+			span_danger("You hear retching, then the sizzling of powerful acid, closer to the sound of hissing steam."))
+		playsound(user, 'sound/items/tools/welder.ogg', 50, TRUE)
 		. = TRUE
+
 	if(space_invader)
 		punish_with_acid(user, space_invader)
 		. = TRUE
 	return .
 
-/datum/action/changeling/biodegrade/proc/spew_acid(mob/living/carbon/human/user, obj/restraint)
-	if(restraint == user.loc)
-		restraint.visible_message(span_warning("Bubbling acid start spewing out of [restraint]..."))
-		addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 4 SECONDS)
-		for(var/beat in 1 to 3)
-			addtimer(CALLBACK(src, PROC_REF(make_puddle), restraint), beat SECONDS)
-			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), restraint, 'sound/items/tools/welder.ogg', 50, TRUE), beat SECONDS)
-		log_combat(user = user, target = restraint, what_done = "melted restraining container", addition = "(biodegrade)")
-		return
-	addtimer(CALLBACK(restraint, TYPE_PROC_REF(/atom, atom_destruction), ACID), 1.5 SECONDS)
-	log_combat(user = user, target = restraint, what_done = "melted restraining item", addition = "(biodegrade)")
-	user.visible_message(
-		span_warning("[user] spews torrents of acid onto [restraint], melting them with horrifying ease."),
-		user.balloon_alert(user, "melting restraints..."),
-		span_danger("You hear retching, then the sizzling of powerful acid, closer to the sound of hissing steam."))
-	playsound(user, 'sound/items/tools/welder.ogg', 50, TRUE)
-
+/// Spawn green acid puddle underneath obj
 /datum/action/changeling/biodegrade/proc/make_puddle(obj/melted_restraint)
-	return new /obj/effect/decal/cleanable/greenglow(get_turf(melted_restraint))
+	if (melted_restraint) // just incase obj gets qdel'd
+		return new /obj/effect/decal/cleanable/greenglow(get_turf(melted_restraint))
 
 /datum/action/changeling/biodegrade/proc/acid_blast(atom/movable/user, atom/movable/target)
 	var/datum/reagents/ephemeral_acid = new

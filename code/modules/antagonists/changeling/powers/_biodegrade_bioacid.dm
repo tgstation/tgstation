@@ -10,13 +10,12 @@
 	penetrates_skin = TOUCH
 
 /datum/reagent/toxin/acid/bio_acid/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection)
-	. = ..()
 	if(IS_CHANGELING(exposed_mob))
 		to_chat(exposed_mob, span_changeling("We excrete a bio-agent to neutralize the bio-acid. It is routine and reflexive to do so."))
 		volume = min(0.1, volume)
 		holder.update_total()
 		return
-
+	. = ..()
 	exposed_mob.adjustFireLoss(round(reac_volume * min(1 - touch_protection), 0.1) * 3, required_bodytype = BODYTYPE_ORGANIC) // full bio protection = 100% damage reduction
 	exposed_mob.acid_act(10, 50)
 
