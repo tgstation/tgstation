@@ -706,3 +706,13 @@
   - bugfix: xenobio console potions work again
   vinylspiders, Wallemations:
   - image: space heaters got a model replacement, from stick heaters to box heaters
+2025-11-26:
+  Aliceee2ch:
+  - image: Various beakers now have own inhands sprites.
+  JohnFulpWillard:
+  - bugfix: Headslugs are now small.
+  Y0SH1M4S73R:
+  - sound: Squid tongues have a distinctive effect on your text-to-speech voice.
+  lelandkemble:
+  - bugfix: Ghosts can no longer try and fail to admire aquariums.
+  - bugfix: cyborg RTD works again
