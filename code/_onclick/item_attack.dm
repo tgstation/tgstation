@@ -181,7 +181,7 @@
 	return attacking_item.attack_atom(src, user, modifiers, attack_modifiers)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(combat_mode)
+	if(user.combat_mode)
 		return NONE
 
 	if(HAS_TRAIT(src, TRAIT_READY_TO_OPERATE))
