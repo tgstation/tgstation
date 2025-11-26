@@ -118,17 +118,18 @@
 		save_laws()
 	var/old_ioned = ioned
 	ioned = new_ioned
-	if(old_ioned != ioned)
-		update_appearance()
+	if(old_ioned == ioned)
+		return
+	update_appearance()
+
+	if(ioned)
+		add_atom_colour(COLOR_RED_GRAY, TEMPORARY_COLOUR_PRIORITY)
+	else
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_RED_GRAY)
 
 /// Saves whatever laws are currently programmed into the module, so they can be restored later.
 /obj/item/ai_module/law/proc/save_laws()
 	saved_laws = laws.Copy()
-
-/obj/item/ai_module/law/update_overlays()
-	. = ..()
-	if(ioned)
-		. += "[base_icon_state]_damaged"
 
 /obj/item/ai_module/law/attack_self(mob/user)
 	. = ..()
