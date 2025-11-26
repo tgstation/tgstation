@@ -4413,7 +4413,7 @@
 /area/station/medical/virology)
 "bmc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
@@ -6988,7 +6988,6 @@
 /area/station/medical/cryo)
 "bWQ" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "bWY" = (
@@ -195786,7 +195785,7 @@ gvK
 ijs
 rhD
 dwq
-nBX
+svt
 bmc
 xqb
 ijs
