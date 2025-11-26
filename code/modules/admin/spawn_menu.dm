@@ -9,6 +9,8 @@ GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
 	var/name_search = TRUE
 	/// Should we display full typepaths or the condensed versions?
 	var/fancy_types = TRUE
+	/// Should abstract types be included in the search?
+	var/include_abstracts = FALSE
 	/// Initial search value from the latest command
 	var/init_value = null
 
@@ -66,6 +68,11 @@ GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
 			SStgui.update_uis(src)
 			return TRUE
 
+		if ("setIncludeAbstracts")
+			include_abstracts = text2num(params["includeAbstracts"])
+			SStgui.update_uis(src)
+			return TRUE
+
 		if ("spawn")
 			var/path = text2path(params["type"])
 			if (!path)
@@ -93,6 +100,7 @@ GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
 	data["searchNames"] = name_search
 	data["regexSearch"] = regex_search
 	data["fancyTypes"] = fancy_types
+	data["includeAbstracts"] = include_abstracts
 	return data
 
 /datum/spawn_menu/ui_assets(mob/user)

@@ -29,6 +29,7 @@ type SpawnSearchData = {
   searchNames: boolean;
   regexSearch: boolean;
   fancyTypes: boolean;
+  includeAbstracts: boolean;
 };
 
 type SpawnAtomData = {
@@ -51,7 +52,8 @@ type AtomTypeData = {
 
 export const SpawnSearch = () => {
   const { act, data } = useBackend<SpawnSearchData>();
-  const { initValue, searchNames, regexSearch, fancyTypes } = data;
+  const { initValue, searchNames, regexSearch, fancyTypes, includeAbstracts } =
+    data;
   const [atomData, setAtomData] = useState<AtomPathData>({
     types: [],
     abstractTypes: [],
@@ -125,7 +127,9 @@ export const SpawnSearch = () => {
         !x.slice(x.toLowerCase().lastIndexOf(filterQuery)).includes('/');
     return atomData.types.filter(
       (type: AtomTypeData) =>
-        searchLambda(type.typepath) || (searchNames && searchLambda(type.name)),
+        (searchLambda(type.typepath) ||
+          (searchNames && searchLambda(type.name))) &&
+        (includeAbstracts || !atomData.abstractTypes.includes(type.typepath)),
     );
   };
 
@@ -152,7 +156,10 @@ export const SpawnSearch = () => {
       });
   }, []);
 
-  useEffect(() => setFilteredItems(filterItems()), [query, atomData]);
+  useEffect(
+    () => setFilteredItems(filterItems()),
+    [query, atomData, includeAbstracts],
+  );
 
   // User presses up or down on keyboard
   // Simulates clicking an item
@@ -215,6 +222,16 @@ export const SpawnSearch = () => {
           />
           <Button
             icon="font"
+            selected={includeAbstracts}
+            tooltip="Include Abstract Types"
+            onClick={() =>
+              act('setIncludeAbstracts', {
+                includeAbstracts: !includeAbstracts,
+              })
+            }
+          />
+          <Button
+            icon="file-signature"
             selected={searchNames}
             tooltip="Name Search"
             onClick={() => act('setNameSearch', { searchNames: !searchNames })}
@@ -297,7 +314,7 @@ export const SpawnSearch = () => {
                       <span
                         style={
                           atomData.abstractTypes.includes(item.typepath)
-                            ? { opacity: 0.75 }
+                            ? { opacity: 0.75, color: '#FFA246' }
                             : {}
                         }
                       >
@@ -332,7 +349,7 @@ export const SpawnSearch = () => {
                           style={{
                             float: 'right',
                             marginRight: '0.5em',
-                            color: 'rgba(200, 200, 200, 0.5)',
+                            color: 'rgba(255, 162, 70, 0.5)',
                           }}
                         >
                           Abstract
