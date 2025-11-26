@@ -1605,7 +1605,6 @@
 /turf/open/floor/iron,
 /area/station/science/research)
 "awv" = (
-/obj/structure/cable,
 /obj/item/assembly/mousetrap/armed,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -5597,7 +5596,6 @@
 /turf/closed/wall,
 /area/station/science/lab)
 "bDm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/welded,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -5908,11 +5906,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/storage_shared)
-"bHM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "bHN" = (
 /obj/structure/railing{
 	dir = 4
@@ -9963,7 +9956,6 @@
 /area/station/maintenance/starboard/lesser)
 "cJb" = (
 /obj/item/trash/can,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "cJk" = (
@@ -17941,11 +17933,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"eYH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space/nearstation)
 "eYP" = (
 /obj/structure/showcase/machinery/tv/broken,
 /turf/open/floor/plating,
@@ -35540,13 +35527,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
-"jJm" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 4
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "jJC" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -38505,12 +38485,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"kzG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/lattice/catwalk,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "kzL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -46608,11 +46582,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-"mRf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space/nearstation)
 "mRg" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/firealarm_sanity,
@@ -48859,11 +48828,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "nxv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/clothing/head/wig/random,
 /obj/item/bodypart/head/lizard,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nxG" = (
@@ -50729,10 +50700,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai/satellite/interior)
-"nXp" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "nXr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -55702,7 +55669,6 @@
 /area/station/service/chapel/office)
 "pqQ" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "prn" = (
@@ -57555,7 +57521,6 @@
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "pQG" = (
-/obj/structure/cable,
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -57710,6 +57675,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "pSI" = (
@@ -58466,6 +58432,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "qgI" = (
@@ -59009,12 +58976,6 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
-"qnS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "qnW" = (
 /obj/effect/turf_decal/tile/dark_blue/anticorner{
 	dir = 8
@@ -60065,7 +60026,6 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -62148,7 +62108,6 @@
 /area/station/maintenance/central)
 "riv" = (
 /obj/item/trash/shok_roks/berry,
-/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -62371,7 +62330,6 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
 "rkU" = (
-/obj/structure/cable,
 /obj/item/banner/command/mundane,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -64547,7 +64505,6 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "rPU" = (
 /obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
@@ -69543,11 +69500,6 @@
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"tlQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/port)
 "tma" = (
 /obj/structure/flora/bush/fullgrass/style_random,
 /obj/structure/flora/bush/ferny/style_random,
@@ -70688,8 +70640,8 @@
 /turf/closed/wall,
 /area/station/science/lobby)
 "tEc" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
 "tEl" = (
@@ -84594,7 +84546,6 @@
 /turf/open/openspace,
 /area/station/hallway/secondary/exit/departure_lounge)
 "xqi" = (
-/obj/structure/cable,
 /obj/item/airlock_painter/decal,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -107444,7 +107395,7 @@ bWY
 dcE
 dcE
 dcE
-jJm
+bWY
 dcE
 dcE
 dcE
@@ -107701,7 +107652,7 @@ iWu
 iWu
 fWI
 iWu
-kzG
+bYT
 fWI
 iWu
 heR
@@ -107958,7 +107909,7 @@ dLq
 dLq
 jPs
 heR
-eYH
+bWY
 dcE
 heR
 bYT
@@ -108215,7 +108166,7 @@ dLq
 heR
 dcE
 dcE
-eYH
+bWY
 dcE
 dcE
 heR
@@ -108472,7 +108423,7 @@ dcE
 dcE
 dcE
 dcE
-eYH
+bWY
 dcE
 dcE
 heR
@@ -108729,7 +108680,7 @@ dLq
 heR
 dcE
 dcE
-eYH
+bWY
 dcE
 dcE
 iWu
@@ -108986,7 +108937,7 @@ riD
 riD
 riD
 heR
-eYH
+bWY
 dcE
 dcE
 iWu
@@ -109243,7 +109194,7 @@ jgR
 aEO
 riD
 riD
-nXp
+dLq
 dcE
 dcE
 gmt
@@ -109500,7 +109451,7 @@ gjW
 wTk
 eoI
 riD
-bHM
+kxE
 dLq
 dcE
 dcE
@@ -110009,13 +109960,13 @@ ydo
 xJo
 riD
 cJb
-unK
+tEv
 awv
 rPU
-uJi
-uJi
-qnS
-tlQ
+wTk
+wTk
+tEv
+wTk
 oaa
 oaa
 dcE
@@ -110265,14 +110216,14 @@ mqt
 fyx
 riD
 riD
-uJi
+wTk
 wTk
 riD
 riD
 tEv
 twD
 wTk
-tlQ
+wTk
 tEv
 oaa
 heR
@@ -110521,15 +110472,15 @@ oCE
 xJo
 riD
 riD
-uJi
-unK
+wTk
+tEv
 sPT
 riD
 wRj
 wTk
 wTk
 tEv
-tlQ
+wTk
 wTk
 oaa
 heR
@@ -110786,7 +110737,7 @@ riD
 nCM
 fES
 juE
-tlQ
+wTk
 oaa
 oaa
 heR
@@ -111035,7 +110986,7 @@ kUq
 aJV
 riD
 tOW
-uJi
+wTk
 wTk
 wTk
 qTy
@@ -111292,7 +111243,7 @@ eYP
 bsy
 riD
 mXW
-uJi
+wTk
 ifC
 tEv
 tEv
@@ -111300,7 +111251,7 @@ pmI
 wbK
 riD
 kxE
-nXp
+dLq
 heR
 dcE
 dcE
@@ -111549,7 +111500,7 @@ gAl
 uIG
 riD
 riv
-uJi
+wTk
 wTk
 wTk
 wTk
@@ -111557,7 +111508,7 @@ riD
 riD
 riD
 dLq
-mRf
+heR
 dcE
 dcE
 dcE
@@ -111805,7 +111756,7 @@ kTw
 wNv
 riD
 riD
-dEu
+mXW
 wTk
 tEv
 okf
@@ -112061,8 +112012,8 @@ iTI
 kTw
 wNv
 wPl
-mpT
-dEu
+wNv
+mXW
 tzi
 flg
 riD
@@ -112319,7 +112270,7 @@ kTw
 riD
 riD
 flg
-dEu
+mXW
 uCG
 riD
 riD
@@ -113862,10 +113813,10 @@ uga
 riD
 gZY
 dEu
-uJi
-uJi
-uJi
-uJi
+wTk
+wTk
+wTk
+wTk
 ayF
 kUq
 iKx
@@ -114122,7 +114073,7 @@ qgD
 riD
 osU
 flg
-uJi
+wTk
 nBu
 kUq
 fJx
@@ -114379,7 +114330,7 @@ pSF
 tVl
 srD
 flg
-uJi
+wTk
 xKB
 kUq
 gga
@@ -114892,7 +114843,7 @@ rPE
 bFe
 pqQ
 qDn
-uJi
+wTk
 rkU
 riD
 cTJ
