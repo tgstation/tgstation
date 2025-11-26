@@ -1346,5 +1346,4 @@
 	RETURN_TYPE(/datum/blood_type)
 	if(!CAN_HAVE_BLOOD(src))
 		return
-	var/datum/dna/dna = has_dna()
 	return dna?.blood_type
