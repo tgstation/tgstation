@@ -41,7 +41,7 @@ Difficulty: Medium
 	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
 	achievement_type = /datum/award/achievement/boss/blood_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
@@ -78,7 +78,7 @@ Difficulty: Medium
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg')
 
 /// Block deletion of their saw under normal circumstances. It is fused to their hands as far as we're concerned.
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/on_saw_deleted(datum/source, force)

@@ -47,7 +47,7 @@
 	/// Delay between shots in a burst.
 	var/burst_delay = 2
 	/// Delay between bursts (if burst-firing) or individual shots (if weapon is single-fire).
-	var/fire_delay = 0
+	var/fire_delay = 0 SECONDS
 	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0
@@ -362,12 +362,6 @@
 			return
 		if(target == user && (user.zone_selected != BODY_ZONE_PRECISE_MOUTH && doafter_self_shoot)) //so we can't shoot ourselves (unless mouth selected)
 			return
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			for(var/i in C.all_wounds)
-				var/datum/wound/W = i
-				if(W.try_treating(src, user))
-					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
