@@ -26700,15 +26700,14 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central/upper)
 "hmR" = (
-/obj/machinery/button/door/directional/west{
+/obj/structure/closet/crate/bin,
+/obj/structure/sign/poster/official/random/directional/south,
+/obj/machinery/button/door/directional/east{
 	id = "Cabin5";
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
-/obj/structure/closet/crate/bin,
-/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/commons/dorms)
 "hmV" = (
@@ -28463,11 +28462,10 @@
 /area/station/maintenance/starboard/central)
 "hKu" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/button/door/directional/west{
+/obj/machinery/button/door/directional/east{
 	id = "Cabin4";
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -43125,16 +43123,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "lEl" = (
-/obj/machinery/button/door/directional/west{
+/obj/structure/closet/crate/bin,
+/obj/machinery/button/door/directional/east{
 	id = "Cabin6";
 	name = "Cabin Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 24;
 	specialfunctions = 4
-	},
-/obj/structure/closet/crate/bin,
-/obj/machinery/button/door/directional/east{
-	id = "Cabin5"
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/commons/dorms)
@@ -77742,7 +77736,8 @@
 /obj/structure/cable,
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 4
@@ -86414,7 +86409,8 @@
 "xlz" = (
 /obj/structure/cable,
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
