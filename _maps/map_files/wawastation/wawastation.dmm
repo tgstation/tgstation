@@ -29618,7 +29618,7 @@
 "kkC" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/rack,
-/obj/effect/spawner/random/armory/laser_gun,
+/obj/effect/spawner/random/armory/pick_laser_loadout,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
