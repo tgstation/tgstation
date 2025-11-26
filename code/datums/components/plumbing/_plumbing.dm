@@ -45,12 +45,6 @@
 
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
-#ifdef TESTING
-	var/obj/machinery/duct/duct_on_loc = locate() in parent_movable.loc
-	if(duct_on_loc)
-		log_mapping("[duct_on_loc.name] was found at [AREACOORD(parent_movable)] spawning on top of [parent_movable.name], which should not occur as it takes ducts itself!")
-#endif
-
 	if(start)
 		enable()
 
@@ -250,6 +244,8 @@
 	// Machines disable when they get moved
 	for(var/obj/machinery/duct/duct in parent_movable.loc)
 		if(duct.anchored && (duct.duct_layer & ducting_layer))
+			log_mapping("[duct.name] was found at [AREACOORD(parent_movable)] spawning on top of [parent_movable.name], \
+				which should not occur as it takes ducts itself!")
 			duct.disconnect_duct()
 
 	if(demand_connects)
