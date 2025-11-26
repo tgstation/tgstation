@@ -1,0 +1,8 @@
+/area/template_noop:
+  banned_neighbors:
+    - /turf/baseturf_bottom
+    - /turf/baseturf_skipover
+    - /turf/closed
+    - /turf/cordon
+    - /turf/open
+    - /obj
