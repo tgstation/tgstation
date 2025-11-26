@@ -33,10 +33,6 @@
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
-/obj/structure/falsewall/PersistentInitialize()
-	. = ..()
-	update_appearance()
-
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
 	if(opening)
 		return
