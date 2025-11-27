@@ -281,6 +281,8 @@
 	update_power()
 
 /obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
+	name = "chief medical officer's compact defibrillator"
+	icon_state = "defibcmo"
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
