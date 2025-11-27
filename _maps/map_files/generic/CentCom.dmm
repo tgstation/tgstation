@@ -866,6 +866,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "dG" = (
@@ -993,6 +994,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
 "ev" = (
@@ -1490,9 +1492,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "gS" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/ferry)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/armory)
 "gU" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 8
@@ -2418,9 +2421,12 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
 "kR" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/admin/storage)
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "kS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3261,6 +3267,7 @@
 "oL" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/armory)
 "oM" = (
@@ -3991,9 +3998,12 @@
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/evacuation)
 "rY" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/armory)
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "rZ" = (
 /obj/machinery/shower/directional/west,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -4970,6 +4980,7 @@
 "wh" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
+/obj/structure/sign/warning/secure_area/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "wj" = (
@@ -6368,6 +6379,13 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/four)
+"Cp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "Cq" = (
 /obj/structure/chair{
 	dir = 8
@@ -6953,9 +6971,12 @@
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/prison)
 "Fq" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/control)
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "Fs" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "CCsec1";
@@ -7358,6 +7379,13 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation/ship)
+"HS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/prison)
 "HV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/closet/secure_closet/quartermaster,
@@ -8625,6 +8653,11 @@
 /obj/item/kirbyplants/organic/plant21,
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
+"OK" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sign/warning/secure_area/directional/west,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/armory)
 "OM" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -9966,6 +9999,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/structure/sign/warning/secure_area/directional/east,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/admin/storage)
 "UK" = (
@@ -10247,6 +10281,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"Wb" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/ferry)
 "Wc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -10773,9 +10814,10 @@
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/evacuation/ship)
 "YX" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/indestructible/riveted,
-/area/centcom/central_command_areas/prison/cells)
+/obj/machinery/light/small/directional/east,
+/obj/structure/sign/warning/secure_area/directional/east,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/briefing)
 "YY" = (
 /obj/item/storage/medkit/toxin,
 /obj/item/storage/medkit/o2{
@@ -48451,8 +48493,8 @@ oh
 mD
 ss
 fw
-tr
-gS
+Wb
+mD
 kO
 WR
 RH
@@ -49219,8 +49261,8 @@ dz
 Nr
 Xq
 Hw
-gS
-wz
+mD
+Cp
 TK
 xR
 OQ
@@ -49480,7 +49522,7 @@ mD
 su
 fw
 wh
-gS
+mD
 Fz
 MJ
 TI
@@ -50000,7 +50042,7 @@ Pd
 RH
 NC
 RH
-Pd
+YX
 dW
 gO
 aa
@@ -50253,11 +50295,11 @@ fw
 ne
 mD
 Ya
-rY
+Ya
 ST
 VO
 ST
-rY
+Ya
 Ya
 Ya
 aa
@@ -50510,7 +50552,7 @@ fw
 ts
 WM
 WG
-sE
+OK
 sE
 bH
 sE
@@ -51015,7 +51057,7 @@ On
 YU
 YU
 Rj
-kR
+YU
 YU
 oe
 oe
@@ -51799,7 +51841,7 @@ oL
 fj
 RM
 sE
-sE
+gS
 VM
 Yt
 aa
@@ -52052,11 +52094,11 @@ xh
 ds
 mD
 Ya
-rY
+Ya
 Ya
 Ya
 DW
-rY
+Ya
 Ya
 Ya
 Dq
@@ -52825,7 +52867,7 @@ Dp
 mR
 zF
 dC
-Fq
+io
 iu
 io
 yC
@@ -55870,9 +55912,6 @@ aa
 Jb
 ir
 IF
-YX
-ir
-IF
 Jb
 ir
 IF
@@ -55882,7 +55921,10 @@ IF
 Jb
 ir
 IF
-YX
+Jb
+ir
+IF
+Jb
 ir
 IF
 Jb
@@ -56127,7 +56169,7 @@ aa
 il
 is
 lL
-iL
+kR
 iT
 iT
 SL
@@ -56139,7 +56181,7 @@ iT
 If
 iT
 iT
-iT
+Fq
 ls
 lL
 Ra
@@ -56155,7 +56197,7 @@ io
 io
 io
 io
-Fq
+io
 UO
 io
 io
@@ -58183,7 +58225,7 @@ aa
 il
 iz
 lL
-iK
+rY
 iU
 iU
 OB
@@ -58195,7 +58237,7 @@ iU
 sI
 iU
 iU
-iU
+HS
 lt
 lL
 Ra
@@ -58440,9 +58482,6 @@ aa
 Jb
 ir
 IF
-YX
-ir
-IF
 Jb
 ir
 IF
@@ -58452,7 +58491,10 @@ IF
 Jb
 ir
 IF
-YX
+Jb
+ir
+IF
+Jb
 ir
 IF
 Jb

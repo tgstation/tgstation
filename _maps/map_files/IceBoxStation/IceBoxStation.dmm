@@ -3692,12 +3692,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "aZw" = (
-/obj/structure/sign/warning/secure_area{
-	desc = "A warning sign which reads 'BOMB RANGE";
-	name = "BOMB RANGE"
-	},
-/turf/closed/wall,
-/area/station/science/ordnance/bomb/planet)
+/obj/structure/flora/rock/pile/icy/style_random,
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "aZx" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Telecomms Monitoring";
@@ -10061,9 +10059,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "cJi" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/station/security/warden)
+/obj/structure/sign/warning/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "cJk" = (
 /obj/machinery/chem_mass_spec,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
@@ -10440,13 +10438,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
-"cOa" = (
-/obj/structure/sign/warning/secure_area{
-	desc = "A warning sign which reads 'SERVER ROOM'.";
-	name = "SERVER ROOM"
-	},
-/turf/closed/wall,
-/area/station/tcommsat/computer)
 "cOi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/mix_output{
 	dir = 8
@@ -28548,10 +28539,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "hZu" = (
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/less_spawns)
@@ -34096,13 +34084,6 @@
 /obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
-"jHb" = (
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32;
-	dir = 1
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/less_spawns)
 "jHe" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood/parquet,
@@ -38591,9 +38572,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "kSw" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/r_wall,
-/area/icemoon/underground/explored)
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "kSA" = (
 /obj/machinery/mining_weather_monitor/directional/east,
 /turf/open/floor/iron/grimy,
@@ -45427,9 +45408,12 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "mSQ" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall/ice,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/structure/fence{
+	dir = 2
+	},
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "mSX" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/decal/cleanable/dirt,
@@ -50273,9 +50257,10 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "oif" = (
-/obj/structure/sign/warning/secure_area,
-/turf/closed/wall,
-/area/icemoon/underground/explored)
+/obj/effect/gibspawner/human/bodypartless,
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "oih" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -56528,6 +56513,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "pPT" = (
@@ -59382,13 +59368,6 @@
 /obj/item/gps/mining,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
-"qGt" = (
-/obj/structure/sign/warning{
-	pixel_y = 32;
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "qGC" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on,
 /obj/machinery/airalarm/directional/east,
@@ -61130,12 +61109,9 @@
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
 "rdg" = (
-/obj/structure/fence/corner{
-	dir = 5
-	},
-/obj/structure/sign/warning/secure_area,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/obj/structure/sign/warning/secure_area/directional/south,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors/less_spawns)
 "rdn" = (
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
@@ -62177,10 +62153,7 @@
 	pixel_x = -11;
 	pixel_y = -2
 	},
-/obj/structure/sign/warning/secure_area{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/warning/secure_area/directional/north,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rsL" = (
@@ -65303,12 +65276,12 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "snJ" = (
-/obj/structure/fence/corner{
+/obj/structure/fence{
 	dir = 2
 	},
-/obj/structure/sign/warning/secure_area,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored/rivers/deep/shoreline)
+/obj/structure/sign/warning/secure_area/directional/north,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "snL" = (
 /obj/item/pickaxe{
 	desc = "Someone left their pickaxe out here, must not have known about the boulder processing machines inside.";
@@ -69817,8 +69790,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "tCj" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/mapping_helpers/no_atoms_ontop,
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tCk" = (
 /obj/structure/disposalpipe/segment{
@@ -165746,8 +165721,8 @@ eJf
 eJf
 eJf
 eJf
-oif
-ebd
+gFX
+aZw
 iDt
 iDt
 thA
@@ -175145,8 +175120,8 @@ thA
 thA
 iDt
 iDt
-kSw
-iDt
+fIt
+nbB
 iDt
 iDt
 oqL
@@ -176173,8 +176148,8 @@ thA
 thA
 iDt
 iDt
-kSw
-iDt
+fIt
+nbB
 iDt
 iDt
 oqL
@@ -183426,7 +183401,7 @@ thA
 thA
 iDt
 kLd
-qGt
+mrk
 scw
 bqq
 uvA
@@ -193705,11 +193680,11 @@ iDt
 scw
 iDt
 iDt
-rdg
-pJm
-nvB
-pJm
+tfX
 snJ
+nvB
+mSQ
+yba
 thA
 thA
 thA
@@ -240439,8 +240414,8 @@ bln
 bln
 bln
 bln
-nMR
-mSQ
+oif
+umh
 tGr
 tGr
 lSu
@@ -241468,15 +241443,15 @@ tGr
 tGr
 tGr
 tGr
-mSQ
-bln
+umh
+kSw
 bln
 bln
 rwt
 lBD
 ntK
-bln
-tCj
+cJi
+xAs
 xAs
 xAs
 xAs
@@ -242112,7 +242087,7 @@ utC
 tkU
 utC
 liV
-jHb
+xEn
 vOy
 utC
 utC
@@ -242247,7 +242222,7 @@ ooL
 tDg
 tDg
 oFI
-oEB
+tCj
 sgW
 akQ
 lSu
@@ -242504,7 +242479,7 @@ feJ
 feJ
 kyy
 kyy
-cJi
+iDq
 abb
 oFI
 oEB
@@ -243875,7 +243850,7 @@ rHQ
 wFX
 rBV
 kJV
-cOa
+rBV
 omG
 tvW
 scx
@@ -245197,7 +245172,7 @@ rQf
 gka
 tkU
 liV
-jHb
+xEn
 utC
 utC
 txl
@@ -249814,7 +249789,7 @@ tkU
 utC
 enX
 liV
-jHb
+xEn
 utC
 utC
 tkU
@@ -251621,7 +251596,7 @@ utC
 utC
 utC
 liV
-jHb
+xEn
 tkU
 utC
 utC
@@ -252127,7 +252102,7 @@ nFO
 utC
 enX
 liV
-jHb
+xEn
 utC
 utC
 utC
@@ -252632,7 +252607,7 @@ tkU
 utC
 utC
 reh
-jHb
+xEn
 tkU
 utC
 fri
@@ -253660,7 +253635,7 @@ utC
 tkU
 utC
 reh
-jHb
+xEn
 utC
 tkU
 utC
@@ -275211,13 +275186,13 @@ utC
 utC
 utC
 utC
-utC
-aZw
+rdg
+rkW
 jxw
 erR
 jxw
-aZw
-utC
+rkW
+xEn
 utC
 txl
 txl
@@ -276753,13 +276728,13 @@ txl
 txl
 txl
 utC
-utC
-aZw
+rdg
+rkW
 jxw
 lZt
 jxw
-aZw
-utC
+rkW
+xEn
 utC
 txl
 txl

@@ -2463,8 +2463,9 @@
 	},
 /area/awaymission/museum)
 "tK" = (
-/obj/structure/sign/warning,
-/turf/closed/indestructible/reinforced,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sign/warning/directional/south,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "tM" = (
 /obj/structure/table/wood,
@@ -3249,6 +3250,7 @@
 /obj/machinery/door/window/elevator/left/directional/south{
 	transport_linked_id = "museum_cargo"
 	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Ak" = (
@@ -4647,6 +4649,7 @@
 /obj/structure/broken_flooring/side/always_floorplane{
 	dir = 8
 	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Mv" = (
@@ -5199,6 +5202,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/sign/warning/directional/west,
+/obj/structure/sign/warning/directional/east,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Rl" = (
@@ -5477,6 +5482,7 @@
 	transport_linked_id = "museum_cargo"
 	},
 /obj/effect/spawner/random/maintenance/no_decals/seven,
+/obj/structure/sign/warning/directional/west,
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "Um" = (
@@ -5758,6 +5764,7 @@
 "We" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/sign/warning/directional/south,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Wf" = (
@@ -30071,7 +30078,7 @@ Qk
 Ma
 Ma
 Ma
-tK
+FK
 FK
 FK
 Kh
@@ -30322,7 +30329,7 @@ FK
 bF
 FK
 We
-tK
+FK
 Ma
 VE
 zr
@@ -30585,7 +30592,7 @@ do
 Ma
 Ma
 Ma
-tK
+FK
 FK
 FK
 Kh
@@ -32119,8 +32126,8 @@ DY
 FK
 TB
 ZZ
-XK
 tK
+FK
 Kh
 Kh
 FK
@@ -32131,7 +32138,7 @@ FK
 lU
 lU
 lU
-tK
+FK
 FK
 FK
 Uq
@@ -33405,7 +33412,7 @@ FK
 FK
 FK
 FK
-tK
+FK
 FK
 FK
 FK
@@ -33416,7 +33423,7 @@ FK
 FK
 PB
 PB
-tK
+FK
 FK
 FK
 Uq

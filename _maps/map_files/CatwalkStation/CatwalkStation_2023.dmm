@@ -21117,10 +21117,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
-"fTF" = (
-/obj/structure/sign/warning/radiation,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "fTM" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/dark_blue{
@@ -70953,6 +70949,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "tFD" = (
@@ -130709,7 +130706,7 @@ wrQ
 wrQ
 wrQ
 tFC
-fTF
+jSf
 dnb
 gym
 inI

@@ -3655,9 +3655,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "bme" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
-/area/station/security/armory)
+/obj/structure/sign/warning/directional/east,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/asteroid)
 "bmf" = (
 /obj/effect/turf_decal/siding/white{
 	dir = 1
@@ -9473,6 +9475,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"dra" = (
+/obj/structure/sign/warning/directional/west,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "drb" = (
 /obj/machinery/newscaster/directional/west,
 /obj/machinery/vending/wardrobe/curator_wardrobe,
@@ -10353,6 +10359,12 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/captain/private)
+"dGk" = (
+/obj/structure/sign/warning/directional/south,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/asteroid)
 "dGq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -38816,6 +38828,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
+/obj/structure/sign/warning/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/armory)
 "npw" = (
@@ -39019,6 +39032,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"nuH" = (
+/obj/structure/sign/warning/directional/west,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
+/area/station/asteroid)
 "nuM" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Courtroom"
@@ -58339,8 +58358,10 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "tXg" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/rock/porous,
+/obj/structure/sign/warning/directional/north,
+/turf/closed/mineral/random/stationside/asteroid/porus{
+	mineralChance = 20
+	},
 /area/station/asteroid)
 "tXi" = (
 /obj/machinery/duct,
@@ -65647,12 +65668,10 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/item/food/grown/banana,
 /obj/structure/sign/warning/biohazard/directional/south,
-/obj/structure/sign/warning{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/sign/warning/directional/east,
 /turf/open/misc/grass,
 /area/station/cargo/boutique)
 "wCj" = (
@@ -153724,7 +153743,7 @@ mIW
 mIW
 mIW
 hED
-bme
+hED
 hnJ
 hED
 hED
@@ -155584,8 +155603,8 @@ vxX
 vxX
 vxX
 vxX
-vxX
-tXg
+dGk
+unk
 hhX
 hhX
 hhX
@@ -156105,8 +156124,8 @@ hhX
 hhX
 hhX
 hhX
+unk
 tXg
-vxX
 vxX
 vxX
 vxX
@@ -156872,9 +156891,9 @@ vxX
 vxX
 unk
 unk
-tXg
+unk
 vxX
-tXg
+unk
 unk
 unk
 vxX
@@ -157129,13 +157148,13 @@ azk
 azk
 azk
 unk
-gMk
+dra
+vxX
+nuH
 vxX
 vxX
 vxX
-vxX
-vxX
-vxX
+bme
 vxX
 hhX
 hhX
@@ -157392,7 +157411,7 @@ uet
 vxX
 gMk
 mGM
-tXg
+unk
 unk
 hhX
 hhX
