@@ -99,12 +99,12 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return ..()
 	if(beaker)
-		balloon_alert(user, "pandemic full!")
-		return ..()
-	if(!user.transferItemToLoc(held_item, src))
-		return ..()
+		balloon_alert(user, "beaker swapped")
+		try_put_in_hand(beaker, usr)
+	else
+		balloon_alert(user, "beaker loaded")
+	user.transferItemToLoc(held_item, src)
 	beaker = held_item
-	balloon_alert(user, "beaker loaded")
 	update_appearance()
 	SStgui.update_uis(src)
 
@@ -248,7 +248,7 @@
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
 	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 1.5 SECONDS)
 	return TRUE
 
 /// Tries to locate a reagent with valid blood_type data
@@ -363,6 +363,7 @@
 			traits["resistance"] = adv_disease.totalResistance()
 			traits["stage_speed"] = adv_disease.totalStageSpeed()
 			traits["stealth"] = adv_disease.totalStealth()
+			traits["severity"] = adv_disease.totalSeverity()
 			traits["symptoms"] = list()
 			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
 				var/list/this_symptom = list()
