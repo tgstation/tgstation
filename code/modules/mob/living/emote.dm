@@ -782,23 +782,15 @@
 	if(!emote_is_valid(user, our_message))
 		return FALSE
 
-	if(type_override)
-		emote_type = type_override
-
 	if(!params)
 		var/user_emote_type = get_custom_emote_type_from_user()
 
 		if(!user_emote_type)
 			return FALSE
 
-		emote_type = user_emote_type
+		type_override = user_emote_type
 
-	message = our_message
-	. = ..()
-
-	///Reset the message and emote type after it's run.
-	message = null
-	emote_type = EMOTE_VISIBLE
+	. = ..(user = user, params = our_message, type_override = type_override, intentional = intentional)
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
