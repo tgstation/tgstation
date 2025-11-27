@@ -97,7 +97,7 @@
 
 	// Traitor steal objective
 	new /obj/item/reagent_containers/hypospray/cmo(src)
-	new /obj/item/defibrillator/compact/loaded(src)
+	new /obj/item/defibrillator/compact/loaded/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control locker"
