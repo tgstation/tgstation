@@ -49,10 +49,12 @@ ADMIN_VERB(spawn_atom, R_SPAWN, "Spawn", "Spawn an atom.", ADMIN_CATEGORY_DEBUG,
 			chosen_path = matches[1]
 
 	if(!chosen_path)
-		var/datum/spawn_menu/menu = get_spawn_menu_for_admin(user.mob)
-		if(menu)
-			menu.init_value = object
-			menu.ui_interact(user.mob)
+		var/datum/spawn_menu/menu = user.holder.spawn_menu
+		if (!menu)
+			menu = new()
+			user.holder.spawn_menu = menu
+		menu.init_value = object
+		menu.ui_interact(user.mob)
 		BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 		return TRUE
 

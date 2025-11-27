@@ -1,8 +1,4 @@
-GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
-
 /datum/spawn_menu
-	/// Who this instance of spawn panel belongs to. The instances are unique to correctly keep modified values between multiple admins.
-	var/owner_ckey
 	/// Does the menu default to a regex prefix?
 	var/regex_search = FALSE
 	/// Does the search include atom names?
@@ -14,63 +10,34 @@ GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
 	/// Initial search value from the latest command
 	var/init_value = null
 
-/datum/spawn_menu/New(new_owner)
-	. = ..()
-	owner_ckey = new_owner
-
-/proc/get_spawn_menu_for_admin(mob/user)
-	if(!user?.client?.ckey)
-		return null
-
-	var/ckey = user.client.ckey
-
-	if(GLOB.spawn_menus_by_ckey[ckey])
-		return GLOB.spawn_menus_by_ckey[ckey]
-
-	var/datum/spawn_menu/new_menu = new(ckey)
-	GLOB.spawn_menus_by_ckey[ckey] = new_menu
-	return new_menu
-
 /datum/spawn_menu/ui_interact(mob/user, datum/tgui/ui)
-	if (user.client.ckey != owner_ckey)
-		return
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "SpawnSearch")
 		ui.open()
 
 /datum/spawn_menu/ui_state(mob/user)
-	if (user.client.ckey != owner_ckey)
-		return GLOB.never_state
-	return ADMIN_STATE(R_ADMIN)
+	return ADMIN_STATE(R_SPAWN)
 
 /datum/spawn_menu/ui_act(action, params, datum/tgui/ui)
-	if (..())
-		return FALSE
-
-	if (ui.user.ckey != owner_ckey)
+	if (..() || !check_rights_for(ui.user.client, R_SPAWN))
 		return FALSE
 
 	switch (action)
 		if ("setRegexSearch")
-			regex_search = text2num(params["regexSearch"])
-			SStgui.update_uis(src)
+			regex_search = params["regexSearch"]
 			return TRUE
 
 		if ("setNameSearch")
-			name_search = text2num(params["searchNames"])
-			SStgui.update_uis(src)
+			name_search = params["searchNames"]
 			return TRUE
 
 		if ("setFancyTypes")
-			fancy_types = text2num(params["fancyTypes"])
-			SStgui.update_uis(src)
+			fancy_types = params["fancyTypes"]
 			return TRUE
 
 		if ("setIncludeAbstracts")
-			include_abstracts = text2num(params["includeAbstracts"])
-			SStgui.update_uis(src)
+			include_abstracts = params["includeAbstracts"]
 			return TRUE
 
 		if ("spawn")
@@ -115,9 +82,10 @@ GLOBAL_LIST_INIT(spawn_menus_by_ckey, list())
 	var/list/data = list()
 	var/static/list/types_list
 	if (isnull(types_list))
-		types_list = list()
+		var/list/local_types = list()
 		for (var/atom/atom_type as anything in subtypesof(/atom))
-			types_list[atom_type] = atom_type::name || ""
+			local_types[atom_type] = atom_type::name || ""
+		types_list = local_types
 	data["types"] = types_list
 	data["abstractTypes"] = get_abstract_types()
 	data["fancyTypes"] = GLOB.fancy_type_replacements

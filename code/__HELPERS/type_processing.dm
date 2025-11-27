@@ -96,18 +96,23 @@ GLOBAL_LIST_INIT(fancy_type_replacements, list(
 	var/static/list/replacement_to_text
 	if(!types_to_replacement)
 		// ignore_root_path so we can draw the root normally
-		types_to_replacement = zebra_typecacheof(GLOB.fancy_type_replacements, ignore_root_path = TRUE)
-		replacement_to_text = list()
-		for(var/key in GLOB.fancy_type_replacements)
-			replacement_to_text[GLOB.fancy_type_replacements[key]] = "[key]"
+		var/list/fancy_type_cache = GLOB.fancy_type_replacements
+		var/list/local_replacements = zebra_typecacheof(fancy_type_cache, ignore_root_path = TRUE)
+		var/list/local_texts = list()
+		for(var/key in fancy_type_cache)
+			local_texts[local_replacements[key]] = "[key]"
+		types_to_replacement = local_replacements
+		replacement_to_text = local_texts
 
 	. = list()
+	var/list/local_replacements = types_to_replacement
+	var/list/local_texts = replacement_to_text
 	for(var/type in types)
-		var/replace_with = types_to_replacement[type]
+		var/replace_with = local_replacements[type]
 		if(!replace_with)
 			.["[type]"] = type
 			continue
-		var/cut_out = replacement_to_text[replace_with]
+		var/cut_out = local_texts[replace_with]
 		// + 1 to account for /
 		.[replace_with + copytext("[type]", length(cut_out) + 1)] = type
 
