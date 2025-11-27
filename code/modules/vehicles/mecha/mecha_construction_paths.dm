@@ -95,7 +95,7 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected, and can be activated with a <b>screwdriver</b>.",
+			"desc" = "The hydraulic systems are connected, and can be activated with a <b> screwdriver</b>.",
 			"forward_message" = "activated the hydraulic systems",
 			"backward_message" = "disconnected the hydraulic systems",
 		),
@@ -163,7 +163,7 @@
 			"key" = circuit_weapon,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Peripherals control module is secured, and the <b>weapon control module<b>slot has opened.",
+			"desc" = "Peripherals control module is secured, and the <b>weapon control module</b> slot has opened.",
 			"forward_message" = "added weapon control module",
 			"backward_message" = "unsecured peripheral control module",
 		),
@@ -604,9 +604,9 @@
 /datum/component/construction/mecha/honker/update_parent(step_index)
 	if(step_index == 1)
 		var/atom/parent_atom = parent
-		parent_atom.icon = 'icons/mob/mech_construct.dmi'
+		parent_atom.icon = 'icons/mob/rideables/mech_construct.dmi'
 		parent_atom.icon_state = "honker_chassis"
-	..()
+	return ..()
 
 /datum/component/construction/mecha/honker/custom_action(obj/item/I, mob/living/user, diff)
 	if(istype(I, /obj/item/bikehorn))
