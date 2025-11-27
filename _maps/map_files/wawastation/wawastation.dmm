@@ -13745,6 +13745,10 @@
 /area/station/command/heads_quarters/cmo)
 "eOY" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
 "eOZ" = (
@@ -17639,6 +17643,10 @@
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
 	name = "HoochMaster Deluxe"
 	},
+/obj/machinery/button/door/directional/west{
+	name = "Bar shuttters";
+	id = "bar_shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "ghU" = (
@@ -19886,6 +19894,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/button/door/directional/north{
+	name = "Hydroponics shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "gUv" = (
@@ -25481,6 +25493,10 @@
 /area/station/commons/fitness/recreation)
 "iRL" = (
 /obj/structure/sink/kitchen/directional/east,
+/obj/machinery/button/door/directional/west{
+	id = "kitchen_counter";
+	name = "Kitchen Shutters"
+	},
 /turf/open/floor/iron/kitchen,
 /area/station/service/kitchen)
 "iRR" = (
@@ -26416,6 +26432,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "jkG" = (
@@ -27141,6 +27162,11 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -29227,6 +29253,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "ked" = (
@@ -32001,6 +32031,11 @@
 	},
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "kYZ" = (
@@ -32069,6 +32104,10 @@
 	req_access = list("hydroponics")
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "lac" = (
@@ -41332,6 +41371,11 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "oqj" = (
@@ -56120,6 +56164,10 @@
 	},
 /obj/structure/desk_bell,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics shutters";
+	id = "hydroponics_shutters"
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "tla" = (
@@ -59766,6 +59814,11 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "bar_shutters";
+	name = "Bar shutters"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "uwx" = (
