@@ -106,30 +106,19 @@
 		holder.del_reagent(type)
 		return
 
-	human_thing.apply_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	if(!human_thing.has_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT))
-		human_thing.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+	human_thing.apply_status_effect(/datum/status_effect/reagent_effect/freeze, type)
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!affected_mob.has_status_effect(/datum/status_effect/frozenstasis/irresistable))
-		holder.remove_reagent(type, volume) // remove it all if we were broken out
-		return
 	metabolization_rate += 0.01 //speed up our metabolism over time. Chop chop.
 
 /datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	if(current_cycle >= 60)
 		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
 		return
+
 	return ..()
 
 /datum/reagent/inverse/cryostylane/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
-
-/datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/affected_mob, amount)
-	. = ..()
-	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
-	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
-
+	affected_mob.remove_status_effect(/datum/status_effect/reagent_effect/freeze)
