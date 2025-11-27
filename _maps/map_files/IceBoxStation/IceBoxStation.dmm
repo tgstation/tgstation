@@ -55320,10 +55320,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
-/obj/item/reagent_containers/applicator/pill/iron{
-	pixel_x = 13;
-	pixel_y = -13
-	},
 /turf/open/floor/circuit,
 /area/station/ai/upload/chamber)
 "pyn" = (
