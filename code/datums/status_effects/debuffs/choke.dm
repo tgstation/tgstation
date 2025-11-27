@@ -264,7 +264,7 @@
 	// If we ain't starting, deal a tad bit of brute, as a treat
 	// Note, we attempt to process 10 times a second, so over 7 seconds this'll deal 14 brute
 	if(!before_work)
-		victim.adjustBruteLoss(0.2)
+		victim.adjust_brute_loss(0.2)
 	return TRUE
 
 /datum/status_effect/choke/tick(seconds_between_ticks)

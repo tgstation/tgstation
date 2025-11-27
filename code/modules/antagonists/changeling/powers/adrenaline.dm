@@ -15,7 +15,7 @@
 
 	// Get us standing up.
 	user.SetAllImmobility(0)
-	user.setStaminaLoss(0)
+	user.set_stamina_loss(0)
 	user.set_resting(FALSE, instant = TRUE)
 
 	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //Tank 5 consecutive baton hits

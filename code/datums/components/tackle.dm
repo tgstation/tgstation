@@ -118,7 +118,7 @@
 		clicked_atom = get_turf_in_angle(tackle_angle, get_turf(user), min_distance)
 
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
-	user.adjustStaminaLoss(stamina_cost)
+	user.adjust_stamina_loss(stamina_cost)
 	user.throw_at(clicked_atom, range, speed, user, FALSE)
 	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
@@ -466,11 +466,11 @@
 
 		if(human_sacker.mob_mood.sanity_level == SANITY_LEVEL_INSANE) //I've gone COMPLETELY INSANE
 			attack_mod += 15
-			human_sacker.adjustStaminaLoss(100) //AHAHAHAHAHAHAHAHA
+			human_sacker.adjust_stamina_loss(100) //AHAHAHAHAHAHAHAHA
 
 		if(HAS_TRAIT(human_sacker, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)) // tackling with riot specialized armor, like riot armor, is effective but tiring
 			attack_mod += 2
-			human_sacker.adjustStaminaLoss(20)
+			human_sacker.adjust_stamina_loss(20)
 
 	var/randomized_tackle_roll = rand(-3, 3) - defense_mod + attack_mod + skill_mod
 	return randomized_tackle_roll
@@ -622,7 +622,7 @@
 			embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
 			embed.impact_pain_mult = initial(embed.impact_pain_mult)
 		windscreen_casualty.atom_destruction()
-		user.adjustStaminaLoss(10 * speed)
+		user.adjust_stamina_loss(10 * speed)
 		user.Paralyze(3 SECONDS)
 		user.visible_message(span_danger("[user] smacks into [windscreen_casualty] and shatters it, shredding [user.p_them()]self with glass!"), span_userdanger("You smacks into [windscreen_casualty] and shatter it, shredding yourself with glass!"))
 
@@ -631,8 +631,8 @@
 		user.Paralyze(1 SECONDS)
 		user.Knockdown(3 SECONDS)
 		windscreen_casualty.take_damage(30 * speed)
-		user.adjustStaminaLoss(10 * speed, updating_stamina=FALSE)
-		user.adjustBruteLoss(5 * speed)
+		user.adjust_stamina_loss(10 * speed, updating_stamina=FALSE)
+		user.adjust_brute_loss(5 * speed)
 
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/windscreen_casualty)
 	if(windscreen_casualty)
@@ -676,8 +676,8 @@
 			HOW_big_of_a_miss_did_we_just_make = ", making a ginormous mess!" // an extra exclamation point!! for emphasis!!!
 
 	owner.visible_message(span_danger("[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!"), span_userdanger("You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!"))
-	owner.adjustStaminaLoss(15 + messes.len * 2, updating_stamina = FALSE)
-	owner.adjustBruteLoss(8 + messes.len, updating_health = FALSE)
+	owner.adjust_stamina_loss(15 + messes.len * 2, updating_stamina = FALSE)
+	owner.adjust_brute_loss(8 + messes.len, updating_health = FALSE)
 	owner.Paralyze(0.4 SECONDS * messes.len) // .4 seconds of paralyze for each thing you knock around
 	owner.Knockdown(2 SECONDS + 0.4 SECONDS * messes.len) // 2 seconds of knockdown after the paralyze
 	owner.updatehealth()
