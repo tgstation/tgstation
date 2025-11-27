@@ -911,7 +911,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 /obj/item/mod/control/pre_equipped/rescue/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/rescue)
 
-/obj/objective_item/steal/spy/compact_defib
+/datum/objective_item/steal/spy/cmo_defib
 	name = "Chief Medical Officer's Compact Defibrillator"
 	targetitem = /obj/item/defibrillator/compact/loaded/cmo
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
