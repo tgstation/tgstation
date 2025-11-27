@@ -17654,7 +17654,6 @@
 /area/station/maintenance/starboard/lesser)
 "eUl" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -70041,12 +70040,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/station/service/library)
-"tse" = (
-/obj/effect/turf_decal/siding/dark{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
-/area/station/engineering/transit_tube)
 "tsl" = (
 /obj/machinery/modular_computer/preset/id,
 /obj/machinery/requests_console/auto_name/directional/north,
@@ -198814,7 +198807,7 @@ qcT
 xsS
 ifs
 xsS
-tse
+xsS
 iXH
 vfb
 spb
