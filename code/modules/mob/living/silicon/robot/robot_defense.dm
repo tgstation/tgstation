@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			balloon_alert(user, "expose the wires first!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/cable_coil/coil = tool
-		if (getFireLoss() <= 0)
+		if (get_fire_loss() <= 0)
 			balloon_alert(user, "wires are fine!")
 			return ITEM_INTERACT_BLOCKING
 		if(src == user)
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if (!coil.use(1))
 			balloon_alert(user, "not enough cable!")
 			return ITEM_INTERACT_BLOCKING
-		adjustFireLoss(-30)
+		adjust_fire_loss(-30)
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		balloon_alert(user, "wires repaired")
 		user.visible_message(
@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return NONE
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	if (!getBruteLoss())
+	if (!get_brute_loss())
 		balloon_alert(user, "no dents to fix!")
 		return ITEM_INTERACT_BLOCKING
 	if (!tool.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED)) //The welder has 1u of fuel consumed by its afterattack, so we don't need to worry about taking any away.
@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!tool.use_tool(src, user, delay = 0.5 SECONDS, amount = 1, volume = 50))
 			return ITEM_INTERACT_BLOCKING
 
-	adjustBruteLoss(-30)
+	adjust_brute_loss(-30)
 	add_fingerprint(user)
 	balloon_alert(user, "dents fixed")
 	user.visible_message(
@@ -498,7 +498,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)
 	if(stat != DEAD)
-		adjustBruteLoss(30)
+		adjust_brute_loss(30)
 	else
 		investigate_log("has been gibbed by a blob.", INVESTIGATE_DEATHS)
 		gib(DROP_ALL_REMAINS)
@@ -512,11 +512,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return TRUE
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
+				adjust_brute_loss(60)
+				adjust_fire_loss(60)
 		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
-				adjustBruteLoss(30)
+				adjust_brute_loss(30)
 
 	return TRUE
 
