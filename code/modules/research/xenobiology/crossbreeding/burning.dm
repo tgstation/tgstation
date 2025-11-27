@@ -100,7 +100,7 @@ Burning extracts:
 			if(istype(C))
 				C.electrocute_act(25,src)
 			else
-				M.adjustFireLoss(25)
+				M.adjust_fire_loss(25)
 			to_chat(M, span_danger("You feel a sharp electrical pulse!"))
 	..()
 

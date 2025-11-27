@@ -163,7 +163,7 @@
 		if(isliving(dropped_thing))
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
-			fallen.adjustBruteLoss(30)
+			fallen.adjust_brute_loss(30)
 		falling_atoms -= falling_ref
 		return
 

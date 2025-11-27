@@ -28,7 +28,7 @@
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your stomach stings painfully."))
 				if(prob(20))
-					affected_mob.adjustToxLoss(2)
+					affected_mob.adjust_tox_loss(2)
 		if(4)
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.visible_message(span_danger("[affected_mob] buzzes."), \

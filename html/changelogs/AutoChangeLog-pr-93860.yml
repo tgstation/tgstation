@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "The Cult of Nar'Sie realized that they were installing the mirrors on their mirror shields the wrong way around, thus altering the makeup of their mirror clones health, damage, and re-replicability."
-  - refactor: "In response to the recent updates in clone magic, Nanotrasen's Stealth Reactive Armor should now generate more convincing clones."

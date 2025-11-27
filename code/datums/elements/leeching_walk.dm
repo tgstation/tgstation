@@ -44,11 +44,11 @@
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-	need_mob_update += source.adjustBruteLoss(-3 * delta_time * healing_multiplier, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss(-3 * delta_time * healing_multiplier, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss(-3 * delta_time * healing_multiplier, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss(-1.5 * delta_time * healing_multiplier, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss(-10 * delta_time * healing_multiplier, updating_stamina = FALSE)
+	need_mob_update += source.adjust_brute_loss(-3 * delta_time * healing_multiplier, updating_health = FALSE)
+	need_mob_update += source.adjust_fire_loss(-3 * delta_time * healing_multiplier, updating_health = FALSE)
+	need_mob_update += source.adjust_tox_loss(-3 * delta_time * healing_multiplier, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjust_oxy_loss(-1.5 * delta_time * healing_multiplier, updating_health = FALSE)
+	need_mob_update += source.adjust_stamina_loss(-10 * delta_time * healing_multiplier, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 		new /obj/effect/temp_visual/heal(get_turf(source), COLOR_BROWN)

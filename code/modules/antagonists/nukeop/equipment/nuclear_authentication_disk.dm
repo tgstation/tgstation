@@ -112,7 +112,7 @@
 /obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message(span_suicide("[user] is destroyed by the nuclear blast!"))
-	user.adjustOxyLoss(200)
+	user.adjust_oxy_loss(200)
 	user.death(FALSE)
 
 /obj/item/disk/nuclear/fake

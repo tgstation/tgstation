@@ -57,9 +57,9 @@
 	var/t_are = target.p_are()
 	if((visible_info & EMPATH_SEE_COMBAT) && target.combat_mode)
 		examine_list += "[t_They] seem[p_s()] to be on guard."
-	if((visible_info & EMPATH_SEE_OXY) && target.getOxyLoss() >= 10)
+	if((visible_info & EMPATH_SEE_OXY) && target.get_oxy_loss() >= 10)
 		examine_list += "[t_They] seem[p_s()] winded."
-	if((visible_info & EMPATH_SEE_TOX) && target.getToxLoss() >= 10)
+	if((visible_info & EMPATH_SEE_TOX) && target.get_tox_loss() >= 10)
 		examine_list += "[t_They] seem[p_s()] sickly."
 	if((visible_info & EMPATH_SEE_SANITY) && target.mob_mood.sanity <= SANITY_DISTURBED)
 		examine_list += "[t_They] seem[p_s()] distressed."

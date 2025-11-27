@@ -119,7 +119,7 @@
 	playsound(src.loc, 'sound/effects/splat.ogg', 25, TRUE)
 	target.emote("scream")
 	target.add_splatter_floor()
-	target.adjustBruteLoss(30)
+	target.adjust_brute_loss(30)
 	target.setDir(2)
 	var/matrix/m180 = matrix(target.transform)
 	m180.Turn(180)
@@ -142,7 +142,7 @@
 		buckled_mob.visible_message(span_warning("[buckled_mob] struggles to break free from [src]!"),\
 		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
 		span_hear("You hear a wet squishing noise.."))
-		buckled_mob.adjustBruteLoss(30)
+		buckled_mob.adjust_brute_loss(30)
 		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
 			if(buckled_mob?.buckled)
 				to_chat(buckled_mob, span_warning("You fail to free yourself!"))
@@ -150,7 +150,7 @@
 	return ..()
 
 /obj/structure/kitchenspike/post_unbuckle_mob(mob/living/buckled_mob)
-	buckled_mob.adjustBruteLoss(30)
+	buckled_mob.adjust_brute_loss(30)
 	INVOKE_ASYNC(buckled_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	buckled_mob.AdjustParalyzed(20)
 	var/matrix/m180 = matrix(buckled_mob.transform)

@@ -227,7 +227,7 @@
 		stamina_exhaustion *= 1.5
 		experience *= 2
 
-	wearer.adjustStaminaLoss(stamina_exhaustion)
+	wearer.adjust_stamina_loss(stamina_exhaustion)
 	wearer.mind?.adjust_experience(/datum/skill/athletics, experience)
 	wearer.apply_status_effect(/datum/status_effect/exercised)
 

@@ -64,7 +64,7 @@
 		M.adjust_hallucinations(-20 SECONDS)
 
 	if(A.stage >= 5)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
+		M.adjust_organ_loss(ORGAN_SLOT_BRAIN, -3)
 		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(prob(10))

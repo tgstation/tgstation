@@ -141,6 +141,7 @@
 	name = "\improper Type 2 'hellfire' laser gun"
 	desc = "The Type 2 Heat Delivery System, developed by Nanotrasen. Technically speaking, it is an improvement. Legally speaking, possession of this weapon is restricted in most occupied sectors of space. \
 		The Type 2 is notorious for its ability to render victims a carbonized husk with ease, melting flesh and bone as easily as butter. A painful, gruesome death awaits anyone on the wrong ends of this gun."
+	icon_state = "hellgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
 	ammo_x_offset = 1
 

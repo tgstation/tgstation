@@ -459,7 +459,7 @@
 		return
 	if(!user.is_holding(src)) // Half digestion? Start choking to death
 		user.visible_message(span_suicide("[user] panics and starts choking [user.p_them()]self to death!"))
-		user.adjustOxyLoss(200)
+		user.adjust_oxy_loss(200)
 		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
 		user.ghostize(FALSE) // get the fuck out of our body
 		return
@@ -467,13 +467,13 @@
 	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
 		user.visible_message(span_danger("[user] regurgitates [src]!")) // I swear i dont have a fetish
 		user.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 100, distance = 0)
-		user.adjustOxyLoss(120)
+		user.adjust_oxy_loss(120)
 		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
 		user.set_suicide(FALSE)
 		return
 	user.transferItemToLoc(src, user, TRUE)
 	CH.cavity_item = src // The mother came inside and found Andy, dead with a HUGE belly full of toys
-	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
+	user.adjust_oxy_loss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
 
@@ -788,7 +788,7 @@
 
 /obj/item/dualsaber/toy/impale(mob/living/user)//Stops Toy Dualsabers from injuring clowns
 	to_chat(user, span_warning("You twirl around a bit before losing your balance and impaling yourself on [src]."))
-	user.adjustStaminaLoss(25)
+	user.adjust_stamina_loss(25)
 
 /obj/item/toy/katana
 	name = "replica katana"

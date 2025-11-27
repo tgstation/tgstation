@@ -64,7 +64,7 @@
 /mob/living/carbon/proc/on_nobreath_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	setOxyLoss(0, updating_health = TRUE, forced = TRUE)
+	set_oxy_loss(0, updating_health = TRUE, forced = TRUE)
 	losebreath = 0
 	failed_last_breath = FALSE
 
@@ -119,7 +119,7 @@
 /mob/living/carbon/proc/on_toximmune_trait_gain(datum/source)
 	SIGNAL_HANDLER
 
-	setToxLoss(0, updating_health = TRUE, forced = TRUE)
+	set_tox_loss(0, updating_health = TRUE, forced = TRUE)
 
 /**
  * On gain of TRAIT_GENELLESS

@@ -52,8 +52,8 @@
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
 		var/need_mob_update = FALSE
 		need_mob_update += vampire.heal_overall_damage(brute = 2 * seconds_per_tick, burn = 2 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-		need_mob_update += vampire.adjustToxLoss(-2 * seconds_per_tick, updating_health = FALSE,)
-		need_mob_update += vampire.adjustOxyLoss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjust_tox_loss(-2 * seconds_per_tick, updating_health = FALSE,)
+		need_mob_update += vampire.adjust_oxy_loss(-2 * seconds_per_tick, updating_health = FALSE,)
 		if(need_mob_update)
 			vampire.updatehealth()
 		return
@@ -65,7 +65,7 @@
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
 		to_chat(vampire, span_warning("You don't belong here!"))
-		vampire.adjustFireLoss(10 * seconds_per_tick)
+		vampire.adjust_fire_loss(10 * seconds_per_tick)
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
 

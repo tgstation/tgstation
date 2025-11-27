@@ -342,7 +342,7 @@
 			ADD_TRAIT(burn_living, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 		burn_living.ignite_mob()
-		burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
+		burn_living.adjust_fire_loss(lava_damage * seconds_per_tick)
 		return TRUE
 
 	return FALSE
@@ -426,8 +426,8 @@
 	var/mob/living/burn_living = burn_target
 	var/need_mob_update
 	// This is from plasma, so it should obey plasma biotype requirements
-	need_mob_update += burn_living.adjustToxLoss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
-	need_mob_update += burn_living.adjustFireLoss(25, updating_health = FALSE)
+	need_mob_update += burn_living.adjust_tox_loss(15, updating_health = FALSE, required_biotype = MOB_ORGANIC)
+	need_mob_update += burn_living.adjust_fire_loss(25, updating_health = FALSE)
 	if(need_mob_update)
 		burn_living.updatehealth()
 

@@ -63,4 +63,4 @@
 		span_warning("[user] screws up, brusing [target]'s chest!"),
 		span_warning("[user] screws up!"),
 	)
-	target.adjustBruteLoss(5)
+	target.adjust_brute_loss(5)

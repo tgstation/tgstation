@@ -290,7 +290,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 /mob/living/carbon/human/machine_wash(obj/machinery/washing_machine/washer, mob/user)
 	adjust_wet_stacks(8)
 	adjust_disgust(40, DISGUST_LEVEL_VERYDISGUSTED)
-	adjustOxyLoss(12)
+	adjust_oxy_loss(12)
 	log_combat(user, src, "machine washed (oxy)")
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)

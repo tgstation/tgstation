@@ -115,13 +115,13 @@
 
 	var/need_mob_update = FALSE
 	if(brute_per_second)
-		need_mob_update += living_parent.adjustBruteLoss(-1 * heal_mod * brute_per_second * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += living_parent.adjust_brute_loss(-1 * heal_mod * brute_per_second * seconds_per_tick, updating_health = FALSE)
 	if(burn_per_second)
-		need_mob_update += living_parent.adjustFireLoss(-1 * heal_mod * burn_per_second * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += living_parent.adjust_fire_loss(-1 * heal_mod * burn_per_second * seconds_per_tick, updating_health = FALSE)
 	if(tox_per_second)
-		need_mob_update += living_parent.adjustToxLoss(-1 * heal_mod * tox_per_second * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += living_parent.adjust_tox_loss(-1 * heal_mod * tox_per_second * seconds_per_tick, updating_health = FALSE)
 	if(oxy_per_second)
-		need_mob_update += living_parent.adjustOxyLoss(-1 * heal_mod * oxy_per_second * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += living_parent.adjust_oxy_loss(-1 * heal_mod * oxy_per_second * seconds_per_tick, updating_health = FALSE)
 
 	if(heals_wounds && iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = living_parent

@@ -110,7 +110,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
-			L.adjustBruteLoss(5)
+			L.adjust_brute_loss(5)
 			to_chat(L, span_alert("You cut yourself on the thorny vines."))
 
 /**
@@ -197,7 +197,7 @@
 	else if(vines_in_range)
 		alert_shown = FALSE
 
-	adjustBruteLoss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	adjust_brute_loss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle
 	name = "Tangle"

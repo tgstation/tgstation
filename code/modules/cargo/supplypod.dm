@@ -338,11 +338,11 @@
 						sleep(0.1 SECONDS)
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
-			target_living.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
+			target_living.adjust_brute_loss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			if (!QDELETED(target_living))
 				target_living.gib(DROP_ALL_REMAINS) //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		else
-			target_living.adjustBruteLoss(damage)
+			target_living.adjust_brute_loss(damage)
 
 	if (boom?.len == 4)
 		boom.len += 1

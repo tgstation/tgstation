@@ -59,7 +59,7 @@
 
 	if(nutrition == 0) //adjust nutrition ensures it can't go below 0
 		if(SPT_PROB(50, seconds_per_tick))
-			adjustBruteLoss(rand(0,5))
+			adjust_brute_loss(rand(0,5))
 		return
 
 	if (SLIME_GROW_NUTRITION <= nutrition)

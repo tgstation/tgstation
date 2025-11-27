@@ -67,10 +67,10 @@
 	autopsy_information += "Time of Death - <b>[scanned.station_timestamp_timeofdeath]</b></br>"
 	autopsy_information += "Subject has been dead for <b>[DisplayTimeText(round(world.time - scanned.timeofdeath))]</b>.<hr>"
 
-	var/oxy_loss = scanned.getOxyLoss()
-	var/tox_loss = scanned.getToxLoss()
-	var/fire_loss = scanned.getFireLoss()
-	var/brute_loss = scanned.getBruteLoss()
+	var/oxy_loss = scanned.get_oxy_loss()
+	var/tox_loss = scanned.get_tox_loss()
+	var/fire_loss = scanned.get_fire_loss()
+	var/brute_loss = scanned.get_brute_loss()
 	/// "Body Data" portion of the autopsy - damage, wounds, and limbs
 	var/dmgreport = "<u><b>Body Data:</b></u>\
 					<table class='ml-2'>\

@@ -517,7 +517,7 @@
 		visible_message(span_warning("[src] arises again, revived by the dark magicks!"), \
 		span_cult_large("RISE"))
 		revive(ADMIN_HEAL_ALL) //also means that a dead Nars-Ian can consume a pet and revive
-	adjustBruteLoss(-maxHealth)
+	adjust_brute_loss(-maxHealth)
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/basic/pet/dog/corgi/lisa

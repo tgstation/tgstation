@@ -83,8 +83,8 @@
 /datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.adjustStaminaLoss(6 * repetitions) // first one = 30 stam
-		carbon_owner.adjustFireLoss(3 * repetitions) // first one = 15 burn
+		carbon_owner.adjust_stamina_loss(6 * repetitions) // first one = 30 stam
+		carbon_owner.adjust_fire_loss(3 * repetitions) // first one = 15 burn
 		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
 				continue
@@ -285,7 +285,7 @@
 
 /datum/status_effect/eldritch/moon/on_effect()
 	owner.adjust_confusion(30 SECONDS)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25, 160)
+	owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25, 160)
 	owner.emote(pick("giggle", "laugh"))
 	owner.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	return ..()

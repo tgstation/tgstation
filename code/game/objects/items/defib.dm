@@ -508,7 +508,7 @@
 	busy = TRUE
 	M.visible_message(span_danger("[user] touches [M] with [src]!"), \
 			span_userdanger("[user] touches [M] with [src]!"))
-	M.adjustStaminaLoss(60)
+	M.adjust_stamina_loss(60)
 	M.Knockdown(75)
 	M.set_jitter_if_lower(100 SECONDS)
 	M.apply_status_effect(/datum/status_effect/convulsing)
@@ -613,20 +613,20 @@
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
 					playsound(src, 'sound/machines/defib/defib_failed.ogg', 50, FALSE)
 				else
-					var/total_brute = H.getBruteLoss()
-					var/total_burn = H.getFireLoss()
+					var/total_brute = H.get_brute_loss()
+					var/total_burn = H.get_fire_loss()
 
 					var/need_mob_update = FALSE
 					//If the body has been fixed so that they would not be in crit when defibbed, give them oxyloss to put them back into crit
 					if (H.health > HALFWAYCRITDEATH)
-						need_mob_update += H.adjustOxyLoss(H.health - HALFWAYCRITDEATH, updating_health = FALSE)
+						need_mob_update += H.adjust_oxy_loss(H.health - HALFWAYCRITDEATH, updating_health = FALSE)
 					else
-						var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
+						var/overall_damage = total_brute + total_burn + H.get_tox_loss() + H.get_oxy_loss()
 						var/mobhealth = H.health
-						need_mob_update += H.adjustOxyLoss((mobhealth - HALFWAYCRITDEATH) * (H.getOxyLoss() / overall_damage), updating_health = FALSE)
-						need_mob_update += H.adjustToxLoss((mobhealth - HALFWAYCRITDEATH) * (H.getToxLoss() / overall_damage), updating_health = FALSE, forced = TRUE) // force tox heal for toxin lovers too
-						need_mob_update += H.adjustFireLoss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), updating_health = FALSE)
-						need_mob_update += H.adjustBruteLoss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjust_oxy_loss((mobhealth - HALFWAYCRITDEATH) * (H.get_oxy_loss() / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjust_tox_loss((mobhealth - HALFWAYCRITDEATH) * (H.get_tox_loss() / overall_damage), updating_health = FALSE, forced = TRUE) // force tox heal for toxin lovers too
+						need_mob_update += H.adjust_fire_loss((mobhealth - HALFWAYCRITDEATH) * (total_burn / overall_damage), updating_health = FALSE)
+						need_mob_update += H.adjust_brute_loss((mobhealth - HALFWAYCRITDEATH) * (total_brute / overall_damage), updating_health = FALSE)
 					if(need_mob_update)
 						H.updatehealth() // Previous "adjust" procs don't update health, so we do it manually.
 					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful."))

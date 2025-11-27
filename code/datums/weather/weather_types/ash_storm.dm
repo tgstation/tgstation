@@ -61,7 +61,7 @@
 		return TRUE
 
 /datum/weather/ash_storm/weather_act_mob(mob/living/victim)
-	victim.adjustFireLoss(4, required_bodytype = BODYTYPE_ORGANIC)
+	victim.adjust_fire_loss(4, required_bodytype = BODYTYPE_ORGANIC)
 	return ..()
 
 /datum/weather/ash_storm/end()

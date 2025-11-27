@@ -19,8 +19,8 @@
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
-		organ_owner.adjustStaminaLoss(7.5 * REM * seconds_per_tick, updating_stamina = FALSE)
-		organ_owner.adjustBruteLoss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
+		organ_owner.adjust_stamina_loss(7.5 * REM * seconds_per_tick, updating_stamina = FALSE)
+		organ_owner.adjust_brute_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE)
 		if(SPT_PROB(10, seconds_per_tick))
 			switch(rand(1, 3))
 				if(1)

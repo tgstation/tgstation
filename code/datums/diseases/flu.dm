@@ -30,7 +30,7 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your stomach hurts."))
 				if(prob(20))
-					affected_mob.adjustToxLoss(1, FALSE)
+					affected_mob.adjust_tox_loss(1, FALSE)
 			if(affected_mob.body_position == LYING_DOWN && SPT_PROB(10, seconds_per_tick))
 				to_chat(affected_mob, span_notice("You feel better."))
 				stage--
@@ -48,7 +48,7 @@
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("Your stomach hurts."))
 				if(prob(20))
-					affected_mob.adjustToxLoss(1, FALSE)
+					affected_mob.adjust_tox_loss(1, FALSE)
 			if(affected_mob.body_position == LYING_DOWN && SPT_PROB(7.5, seconds_per_tick))
 				to_chat(affected_mob, span_notice("You feel better."))
 				stage--

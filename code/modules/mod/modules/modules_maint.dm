@@ -226,7 +226,7 @@
 /obj/item/mod/module/balloon/on_use(mob/activator)
 	if(!do_after(mod.wearer, blowing_time, target = mod))
 		return FALSE
-	mod.wearer.adjustOxyLoss(oxygen_damage)
+	mod.wearer.adjust_oxy_loss(oxygen_damage)
 	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
 	var/obj/item/balloon = new balloon_path(get_turf(src))
 	mod.wearer.put_in_hands(balloon)

@@ -15,7 +15,7 @@
 /datum/unit_test/brain_surgery/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	patient.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_SURGERY)
-	patient.setOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	patient.set_organ_loss(ORGAN_SLOT_BRAIN, 20)
 
 	TEST_ASSERT(patient.has_trauma_type(), "Patient does not have any traumas, despite being given one")
 
@@ -113,11 +113,11 @@
 	// Test that tending wounds actually lowers damage
 	var/datum/surgery_step/heal/brute/basic/basic_brute_heal = new
 	basic_brute_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
+	TEST_ASSERT(patient.get_brute_loss() < 100, "Tending brute wounds didn't lower brute damage ([patient.get_brute_loss()])")
 
 	var/datum/surgery_step/heal/burn/basic/basic_burn_heal = new
 	basic_burn_heal.success(user, patient, BODY_ZONE_CHEST)
-	TEST_ASSERT(patient.getFireLoss() < 100, "Tending burn wounds didn't lower burn damage ([patient.getFireLoss()])")
+	TEST_ASSERT(patient.get_fire_loss() < 100, "Tending burn wounds didn't lower burn damage ([patient.get_fire_loss()])")
 
 	// Test that wearing clothing lowers heal amount
 	var/mob/living/carbon/human/naked_patient = allocate(/mob/living/carbon/human/consistent)
@@ -130,7 +130,7 @@
 	basic_brute_heal.success(user, naked_patient, BODY_ZONE_CHEST)
 	basic_brute_heal.success(user, clothed_patient, BODY_ZONE_CHEST)
 
-	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+	TEST_ASSERT(naked_patient.get_brute_loss() < clothed_patient.get_brute_loss(), "Naked patient did not heal more from wounds tending than a clothed patient")
 
 /// Tests items-as-prosthetic-limbs can apply
 /datum/unit_test/prosthetic_item

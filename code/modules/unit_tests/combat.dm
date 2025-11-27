@@ -8,7 +8,7 @@
 	puncher.set_combat_mode(TRUE)
 	victim.attack_hand(puncher, list(RIGHT_CLICK = FALSE))
 
-	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being punched")
+	TEST_ASSERT(victim.get_brute_loss() > 0, "Victim took no brute damage after being punched")
 
 /datum/unit_test/harm_melee/Run()
 	var/mob/living/carbon/human/tider = allocate(/mob/living/carbon/human/consistent)
@@ -19,7 +19,7 @@
 	tider.set_combat_mode(TRUE)
 	victim.attackby(toolbox, tider)
 
-	TEST_ASSERT(victim.getBruteLoss() > 0, "Victim took no brute damage after being hit by a toolbox")
+	TEST_ASSERT(victim.get_brute_loss() > 0, "Victim took no brute damage after being hit by a toolbox")
 
 /datum/unit_test/harm_different_damage/Run()
 	var/mob/living/carbon/human/attacker = allocate(/mob/living/carbon/human/consistent)
@@ -32,8 +32,8 @@
 	welding_tool.attack_self(attacker) // Turn it on
 	victim.attackby(welding_tool, attacker)
 
-	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim took brute damage from a lit welding tool")
-	TEST_ASSERT(victim.getFireLoss() > 0, "Victim took no burn damage after being hit by a lit welding tool")
+	TEST_ASSERT_EQUAL(victim.get_brute_loss(), 0, "Victim took brute damage from a lit welding tool")
+	TEST_ASSERT(victim.get_fire_loss() > 0, "Victim took no burn damage after being hit by a lit welding tool")
 
 /datum/unit_test/attack_chain
 	var/attack_hit
@@ -108,7 +108,7 @@
 	ADD_TRAIT(dummy, TRAIT_PERFECT_ATTACKER, TRAIT_SOURCE_UNIT_TESTS)
 	dummy.set_combat_mode(TRUE)
 	dummy.ClickOn(dummy)
-	TEST_ASSERT_NOTEQUAL(dummy.getBruteLoss(), 0, "Dummy took no brute damage after self-punching")
+	TEST_ASSERT_NOTEQUAL(dummy.get_brute_loss(), 0, "Dummy took no brute damage after self-punching")
 
 /// Tests handcuffed (HANDS_BLOCKED) mobs cannot punch
 /datum/unit_test/handcuff_punch
@@ -120,11 +120,11 @@
 	ADD_TRAIT(attacker, TRAIT_HANDS_BLOCKED, TRAIT_SOURCE_UNIT_TESTS)
 	attacker.set_combat_mode(TRUE)
 	attacker.ClickOn(victim)
-	TEST_ASSERT_EQUAL(victim.getBruteLoss(), 0, "Victim took brute damage from being punched by a handcuffed attacker")
+	TEST_ASSERT_EQUAL(victim.get_brute_loss(), 0, "Victim took brute damage from being punched by a handcuffed attacker")
 	attacker.next_move = -1
 	attacker.next_click = -1
 	attacker.ClickOn(attacker)
-	TEST_ASSERT_EQUAL(attacker.getBruteLoss(), 0, "Attacker took brute damage from self-punching while handcuffed")
+	TEST_ASSERT_EQUAL(attacker.get_brute_loss(), 0, "Attacker took brute damage from self-punching while handcuffed")
 
 /// Tests handcuffed (HANDS_BLOCKED) monkeys can still bite despite being cuffed
 /datum/unit_test/handcuff_bite
@@ -137,7 +137,7 @@
 	attacker.set_combat_mode(TRUE)
 	attacker.set_species(/datum/species/monkey)
 	attacker.ClickOn(victim)
-	TEST_ASSERT_NOTEQUAL(victim.getBruteLoss(), 0, "Victim took no brute damage from being bit by a handcuffed monkey, which is incorrect, as it's a bite attack")
+	TEST_ASSERT_NOTEQUAL(victim.get_brute_loss(), 0, "Victim took no brute damage from being bit by a handcuffed monkey, which is incorrect, as it's a bite attack")
 
 /// Tests that soundbang_act (and therefore sound_damage) works correctly
 /datum/unit_test/soundbang

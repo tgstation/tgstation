@@ -76,5 +76,5 @@
 /datum/hallucination/blood_flow/proc/stamina_loop()
 	set waitfor = FALSE
 	while(!QDELETED(src) && !QDELETED(hallucinator))
-		hallucinator.adjustStaminaLoss(5)
+		hallucinator.adjust_stamina_loss(5)
 		sleep(4 SECONDS)

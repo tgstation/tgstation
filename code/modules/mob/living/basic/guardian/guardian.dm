@@ -191,9 +191,9 @@
 			gib()
 			return TRUE
 		if (EXPLODE_HEAVY)
-			adjustBruteLoss(60)
+			adjust_brute_loss(60)
 		if (EXPLODE_LIGHT)
-			adjustBruteLoss(30)
+			adjust_brute_loss(30)
 
 	return TRUE
 
@@ -294,7 +294,7 @@
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
 	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
 		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
-		summoner.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount * 0.5)
+		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)
 
 /// When our owner is deleted, we go too.
 /mob/living/basic/guardian/proc/on_summoner_deletion(mob/living/source)

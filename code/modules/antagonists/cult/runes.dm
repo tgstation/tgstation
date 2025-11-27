@@ -290,11 +290,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Something is shielding [convertee]'s mind!"))
 		return FALSE
 
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
+	var/brutedamage = convertee.get_brute_loss()
+	var/burndamage = convertee.get_fire_loss()
 	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-(brutedamage * 0.75))
-		convertee.adjustFireLoss(-(burndamage * 0.75))
+		convertee.adjust_brute_loss(-(brutedamage * 0.75))
+		convertee.adjust_fire_loss(-(burndamage * 0.75))
 
 	convertee.visible_message(
 		span_warning("[convertee] writhes in pain [(brutedamage || burndamage) \

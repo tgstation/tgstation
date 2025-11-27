@@ -215,7 +215,7 @@
 /mob/living/simple_animal/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
+		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
 
 /mob/living/simple_animal/Destroy()
 	QDEL_NULL(access_card)

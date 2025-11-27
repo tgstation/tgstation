@@ -70,7 +70,7 @@
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/carbon/human/human_target = target
 	var/obj/item/organ/liver/target_liver = target.get_organ_slot(ORGAN_SLOT_LIVER)
-	human_target.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
+	human_target.set_organ_loss(ORGAN_SLOT_LIVER, 10) //not bad, not great
 	if(target_liver)
 		target_liver.operated = TRUE
 		if(target_liver.organ_flags & ORGAN_EMP) //If our organ is failing due to an EMP, fix that
@@ -87,7 +87,7 @@
 
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	var/mob/living/carbon/human/human_target = target
-	human_target.adjustOrganLoss(ORGAN_SLOT_LIVER, 15)
+	human_target.adjust_organ_loss(ORGAN_SLOT_LIVER, 15)
 	display_results(
 		user,
 		target,

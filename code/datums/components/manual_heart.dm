@@ -99,9 +99,9 @@
 	carbon_owner.adjust_blood_volume(blood_loss * 0.5)
 	carbon_owner.remove_client_colour(REF(src))
 	add_colour = TRUE
-	carbon_owner.adjustBruteLoss(-heal_brute)
-	carbon_owner.adjustFireLoss(-heal_burn)
-	carbon_owner.adjustOxyLoss(-heal_oxy)
+	carbon_owner.adjust_brute_loss(-heal_brute)
+	carbon_owner.adjust_fire_loss(-heal_burn)
+	carbon_owner.adjust_oxy_loss(-heal_oxy)
 
 /datum/component/manual_heart/process()
 	var/mob/living/carbon/carbon_parent = parent

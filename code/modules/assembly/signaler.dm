@@ -45,7 +45,7 @@
 		return
 	user.visible_message(span_suicide("[user]'s [src] receives a signal, killing [user.p_them()] instantly!"))
 	user.set_suicide(TRUE)
-	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
+	user.adjust_oxy_loss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(FALSE)
 	playsound(user, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)

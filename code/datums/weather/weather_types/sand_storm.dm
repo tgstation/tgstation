@@ -43,7 +43,7 @@
 	return ..()
 
 /datum/weather/sand_storm/weather_act_mob(mob/living/victim)
-	victim.adjustBruteLoss(5, required_bodytype = BODYTYPE_ORGANIC)
+	victim.adjust_brute_loss(5, required_bodytype = BODYTYPE_ORGANIC)
 	return ..()
 
 /datum/weather/sand_storm/harmless

@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "The blood-drunk miner's corpse now properly appears and fades away again."
