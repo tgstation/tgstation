@@ -4,27 +4,20 @@ Changes here can have widespread effects: make sure you test well.
 Ask Mothblocks if they're around
 */
 
-/// How much stored radiation to check for hair loss
-#define RAD_MOB_HAIRLOSS (1 MINUTES)
-/// Chance of you hair starting to fall out every second when over threshold
-#define RAD_MOB_HAIRLOSS_PROB 7.5
+/// How much radiation damage we need to move to the next stage of symptoms
+#define RAD_STAGE_THRESHOLDS list(30, 120, 210, 330, 480)
+/// How much radiation we need to move on to the next stage of symptoms
+#define RAD_STAGE_REQUIREMENTS list(2, 2.5, 3.2, 4)
 
-/// How much stored radiation to check for mutation
-#define RAD_MOB_MUTATE (2 MINUTES)
-/// Chance of randomly mutating every second when over threshold
-#define RAD_MOB_MUTATE_PROB 0.5
+/// How much radiation we need to start being cooked like microwave food
+#define RAD_MOB_MICROWAVE 6
+/// How much radiation we need to mutate
+#define RAD_MOB_MUTATE 7
+/// How much radiation we need to go bald
+#define RAD_MOB_HAIRLOSS 4
 
-/// The time since irradiated before checking for vomitting
-#define RAD_MOB_VOMIT (2 MINUTES)
-/// Chance per second of vomitting
-#define RAD_MOB_VOMIT_PROB 0.5
-
-/// How much stored radiation to check for stunning
-#define RAD_MOB_KNOCKDOWN (2 MINUTES)
-/// Chance of knockdown per second when over threshold
-#define RAD_MOB_KNOCKDOWN_PROB 0.5
-/// Amount of knockdown when it occurs
-#define RAD_MOB_KNOCKDOWN_AMOUNT 3
+/// How fast we lose rads
+#define RAD_MOB_DECAY_RATE 0.015
 
 #define RAD_NO_INSULATION 1.0 // For things that shouldn't become irradiated for whatever reason
 #define RAD_VERY_LIGHT_INSULATION 0.9 // What girders have
@@ -39,6 +32,10 @@ Ask Mothblocks if they're around
 
 /// The default chance for uranium structures to irradiate
 #define URANIUM_IRRADIATION_CHANCE DEFAULT_RADIATION_CHANCE
+/// The amount of radiation humans absorb from a uranium object each pulse
+#define URANIUM_RADIATION_POWER 0.75
+/// The most amount of radiation a human can absorb from a uranium object
+#define URANIUM_RADIATION_MAX_POWER 2.5
 
 /// The minimum exposure time before uranium structures can irradiate
 #define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)

@@ -37,8 +37,10 @@
 	return who.AddComponent(
 		/datum/component/radioactive_emitter, \
 		cooldown_time = 5 SECONDS, \
-		range = 1 * (GET_MUTATION_POWER(src) * 2), \
+		range = (GET_MUTATION_POWER(src) * 2), \
 		threshold = RAD_MEDIUM_INSULATION, \
+		power = 1, \
+		max_power = 5 \
 	)
 
 /datum/mutation/radioactive/on_losing(mob/living/carbon/human/owner)

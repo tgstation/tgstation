@@ -553,6 +553,8 @@
 			source = loc,
 			max_range = rad_pulse_size,
 			threshold = 0.05,
+			power = power_level + 2,
+			max_power = INFINITY
 		)
 
 	if(em_pulse)

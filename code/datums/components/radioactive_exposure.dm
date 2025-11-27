@@ -1,4 +1,4 @@
-/// For directly applying to carbons to irradiate them, without pulses
+/// For directly applying to humans to irradiate them, without pulses
 /datum/component/radioactive_exposure
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 
@@ -14,6 +14,10 @@
 	var/source
 	/// Area's where the component isnt removed if we cross to them
 	var/list/radioactive_areas
+	/// How much radiation we apply upon successful irradiation
+	var/power
+	/// How high we can raise a human's radiation
+	var/max_power
 
 /datum/component/radioactive_exposure/Initialize(
 	minimum_exposure_time,
@@ -21,10 +25,12 @@
 	irradiation_chance_increment,
 	irradiation_interval,
 	source,
-	radioactive_areas
+	radioactive_areas,
+	power,
+	max_power,
 	)
 
-	if(!iscarbon(parent))
+	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.irradiation_chance_base = irradiation_chance_base
@@ -33,6 +39,8 @@
 	src.irradiation_interval = irradiation_interval
 	src.source = source
 	src.radioactive_areas = radioactive_areas
+	src.power = power
+	src.max_power = max_power
 
 	// We use generally long times, so it's probably easier and more interpretable to just use a timer instead of processing the component
 	addtimer(CALLBACK(src, PROC_REF(attempt_irradiate)), minimum_exposure_time)
@@ -46,7 +54,7 @@
 /datum/component/radioactive_exposure/proc/attempt_irradiate()
 	if(!SSradiation.wearing_rad_protected_clothing(parent) && SSradiation.can_irradiate_basic(parent))
 		if(prob(irradiation_chance))
-			SSradiation.irradiate(parent)
+			SSradiation.irradiate(parent, power, max_power)
 			var/atom/atom = parent
 			atom.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
 		else

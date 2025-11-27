@@ -47,6 +47,8 @@
 	handle_liver(seconds_per_tick, times_fired)
 	// For special species interactions
 	dna.species.spec_life(src, seconds_per_tick, times_fired)
+	// Radiation stuff
+	handle_radiation(seconds_per_tick, times_fired)
 	return stat != DEAD
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -298,6 +300,146 @@
 		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(1 * seconds_per_tick)
+
+/mob/living/carbon/human/proc/handle_radiation(seconds_per_tick, times_fired)
+	if(HAS_TRAIT(src, TRAIT_RADIMMUNE))
+		return
+	if(radiation > 0)
+		throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated) // So many alerts... So messy...
+		clear_alert(ALERT_IRRADIATED_LESS)
+	else if(radiation_damage > 0)
+		throw_alert(ALERT_IRRADIATED_LESS, /atom/movable/screen/alert/irradiated/less)
+		clear_alert(ALERT_IRRADIATED)
+	else
+		clear_alert(ALERT_IRRADIATED)
+		clear_alert(ALERT_IRRADIATED_LESS)
+		REMOVE_TRAIT(src, TRAIT_IRRADIATED, RADIATION_TRAIT)
+	if(!(radiation == 0 && radiation_damage == 0))
+		ADD_TRAIT(src, TRAIT_IRRADIATED, RADIATION_TRAIT)
+
+	var/effective_radiation = radiation // Used for halting radiation effects and adding functionality for radiation resistant humans
+	var/effective_rad_damage = radiation_damage
+
+	if(HAS_TRAIT(src, TRAIT_HALT_RADIATION_EFFECTS))
+		effective_rad_damage = 0
+		effective_radiation = 0
+	else if (has_reagent(/datum/reagent/inverse/pen_acid, needs_metabolizing = TRUE))
+		effective_radiation *= 1.5
+		effective_rad_damage *= 1.5
+
+	if(effective_radiation > 0) // Effective rads of 0 pauses rad decay. It's called HALT_RADIATION_EFFECTS, not HALT_RADIATION_SYMPTOMS_BUT_LET_THE_EFFECTS_WEAR_OFF
+		radiation_stage(seconds_per_tick) // Note: This function is unaffected by effective rads
+	else if(effective_rad_damage > 0)
+		radiation_damage = max(radiation_damage - seconds_per_tick * 0.5, 0)
+
+	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[1] && effective_rad_damage < RAD_STAGE_THRESHOLDS[2]) // Stage 1: Mild dizziness, tox damage, and fatigue
+		adjustToxLoss(0.1)
+		if(SPT_PROB(3, seconds_per_tick))
+			if(prob(30)) // To avoid chat spam since there are going to be a lot of symptoms at high stages
+				to_chat(src, span_warning("You feel dizzy."))
+			adjust_dizzy_up_to(10 SECONDS, 20 SECONDS)
+		if(SPT_PROB(2, seconds_per_tick))
+			if(prob(30))
+				to_chat(src, span_warning("You feel weak."))
+			adjustStaminaLoss(25)
+	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[2]) // Stage 2: It's like stage 1 but worse. From here on we keep the effects of all stages below ours
+		adjustToxLoss(min(0.1 + (effective_rad_damage-15)/1000, 0.5))
+		if(SPT_PROB(2, seconds_per_tick))
+			if(prob(30))
+				to_chat(src, span_warning("You feel nauseated."))
+			adjust_disgust(35)
+		if(SPT_PROB(2, seconds_per_tick))
+			if(prob(30))
+				to_chat(src, span_warning("You feel [(effective_rad_damage >= 300) ? "very" : ""] weak."))
+			adjustStaminaLoss(min(20+effective_rad_damage/10, 60))
+	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[3]) // Stage 3: Glow that lasts until we are no longer irradiated + headaches and immunodeficiency
+		ADD_TRAIT(src, TRAIT_IMMUNODEFICIENCY, RADIATION_TRAIT)
+		var/filter = get_filter("rad_glow")
+		if (!filter)
+			add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
+			addtimer(CALLBACK(src, PROC_REF(start_glow_loop), src), rand(0.1 SECONDS, 1.9 SECONDS)) // Things should look uneven
+		if(SPT_PROB(1.5, seconds_per_tick))
+			to_chat(src, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
+			adjust_dizzy_up_to(15 SECONDS, 30 SECONDS)
+			adjust_drowsiness_up_to(15 SECONDS, 30 SECONDS)
+			adjustStaminaLoss(min(10+effective_rad_damage/10, 50))
+		if(effective_radiation > RAD_MOB_HAIRLOSS && SPT_PROB(0.5, seconds_per_tick)) // Hair loss and mutations are thematic but not necessarily fun, so they shouldn't happen unless we are thoroughly fucked up
+			var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+			if(!(hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)))
+				to_chat(src, span_danger("Your hair starts to fall out in clumps..."))
+				addtimer(CALLBACK(src, PROC_REF(go_bald), src), 5 SECONDS)
+	else
+		remove_filter("rad_glow")
+		REMOVE_TRAIT(src, TRAIT_IMMUNODEFICIENCY, RADIATION_TRAIT)
+	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[4]) // Stage 4: Our organs start to fail and the headaches get a lot worse.
+		for(var/slot in organs_slot)
+			var/damage = min(effective_radiation/25, 0.5) * (rand(75, 125)/100) // Arr en gee
+			var/max_damage = effective_radiation*10
+			for(var/radiation_resistant_organ in list(ORGAN_SLOT_BRAIN, ORGAN_SLOT_EARS, ORGAN_SLOT_EYES)) // Radiation quickly causing brain traumas, blindness, and deafness would be a little unfair
+				if(slot == radiation_resistant_organ)
+					damage /= 2
+					max_damage /=2
+			adjustOrganLoss(slot, damage, max_damage, ORGAN_ORGANIC) // Robotics are immune to radiation
+		if(SPT_PROB(1, seconds_per_tick))
+			visible_message(span_danger("[src] starts having a seizure!"), span_userdanger("You have a seizure!"))
+			Unconscious(12 SECONDS)
+			adjust_disgust(10)
+		if(SPT_PROB(1.5, seconds_per_tick))
+			if(!is_blind(src))
+				to_chat(src, span_warning("Your vision swims.")) // It should start to get really bad around here
+			adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+			adjust_disgust(30)
+			adjust_staggered_up_to(15 SECONDS, 30 SECONDS)
+			adjustStaminaLoss(40)
+			Knockdown(4 SECONDS, 3 SECONDS)
+		if(effective_radiation > RAD_MOB_MUTATE && SPT_PROB(0.75, seconds_per_tick))
+			to_chat(src, span_danger("You mutate!"))
+			easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, emote), "gasp")
+			domutcheck()
+	if(effective_rad_damage >= RAD_STAGE_THRESHOLDS[5]) // Stage 5: Our skin starts peeling off and we start vomiting blood.
+		var/possible_organic_parts = get_damageable_bodyparts(BODYTYPE_ORGANIC)
+		if(possible_organic_parts) // We don't want to tell someone their skin is peeling off if it actually isn't
+			adjustBruteLoss(0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
+			if(SPT_PROB(1.5, seconds_per_tick))
+				to_chat(src, span_danger("Your skin is peeling off of your body!"))
+				adjustBruteLoss(6, required_bodytype = BODYTYPE_ORGANIC)
+		if(SPT_PROB(0.5, seconds_per_tick))
+			vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 10)
+
+	if(effective_radiation > RAD_MOB_MICROWAVE)
+		if(!has_status_effect(/datum/status_effect/washing_regen))
+			if(SPT_PROB(2, seconds_per_tick))
+				to_chat(src, span_danger("Your body feels unnaturally hot."))
+			adjust_coretemperature(min(effective_radiation*2-2, 30), seconds_per_tick, max_temp = effective_radiation * 100)
+			adjust_bodytemperature(min(effective_radiation*2-2, 30), seconds_per_tick, max_temp = effective_radiation * 100)
+
+/mob/living/carbon/human/proc/go_bald()
+	set_facial_hairstyle("Shaved", update = FALSE)
+	set_hairstyle("Bald")
+
+/mob/living/carbon/human/proc/start_glow_loop()
+	var/filter = get_filter("rad_glow")
+	if (!filter)
+		return
+
+	animate(filter, alpha = 110, time = 1.5 SECONDS, loop = -1)
+	animate(alpha = 40, time = 2.5 SECONDS)
+
+/mob/living/carbon/human/proc/radiation_stage(seconds_per_tick)
+	var/stage_cap = 1
+	var/shower = has_status_effect(/datum/status_effect/washing_regen)
+
+	for(var/i in 1 to 4) // If our radiation is over a requirement, we get to increase our radiation damage beyond a stage threshold
+		if(radiation >= RAD_STAGE_REQUIREMENTS[i])
+			stage_cap = i+1
+
+	if(radiation_damage < RAD_STAGE_THRESHOLDS[stage_cap])
+		radiation_damage = min(radiation_damage + radiation * seconds_per_tick * (shower ? 0.3 : 1), RAD_STAGE_THRESHOLDS[stage_cap])
+		if(radiation > 2)
+			return // We don't heal rads if we're still accumulating damage, unless our radiation level is really low.
+	radiation = max(radiation - RAD_MOB_DECAY_RATE * (shower ? 3 : 1), 0)
+	return
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

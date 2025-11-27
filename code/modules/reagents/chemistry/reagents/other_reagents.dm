@@ -1146,10 +1146,9 @@
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
-		var/chance = min(volume / (20 - rad_power * 5), rad_power)
-		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
-			affected_mob.AddComponent(/datum/component/irradiated)
+	if(ishuman(affected_mob))
+		var/mob/living/carbon/human/human_mob = affected_mob
+		human_mob.takeRadiation(rad_power / 5, RAD_MOB_MICROWAVE - 1) // No, you can't heat yourself up by eating uranium. That's stupid.
 	if(affected_mob.adjustToxLoss(tox_damage * seconds_per_tick * REM, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
@@ -1159,11 +1158,16 @@
 	if(!SSradiation.can_irradiate_basic(exposed_obj))
 		return
 
+	var/chance = min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))
+	var/chance_percentage = chance/CALCULATE_RAD_MAX_CHANCE(rad_power)
+
 	radiation_pulse(
 		source = exposed_obj,
 		max_range = 0,
 		threshold = RAD_VERY_LIGHT_INSULATION,
-		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
+		chance = chance,
+		power = (chance_percentage * rad_power / 5),
+		max_power = URANIUM_RADIATION_MAX_POWER,
 	)
 
 /datum/reagent/uranium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE, touch_protection = 0)
@@ -1188,6 +1192,8 @@
 		max_range = 0,
 		threshold = RAD_VERY_LIGHT_INSULATION,
 		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
+		power = 0.5,
+		max_power = 2.5
 	)
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)

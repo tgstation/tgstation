@@ -382,3 +382,20 @@
 		updatehealth()
 	if(update)
 		update_damage_overlays()
+
+/**
+ * Raises their radiation by amount, up to a maximum.
+ *
+ * Won't lower it if it's already above the maximum.
+ */
+/mob/living/carbon/human/proc/takeRadiation(amount, maximum = INFINITY, forced = FALSE)
+	if(!forced && (HAS_TRAIT(src, TRAIT_RADIMMUNE) || HAS_TRAIT(src, TRAIT_GODMODE)))
+		return FALSE
+
+	amount *= physiology.radiation_mod
+
+	if(radiation + amount <= maximum)
+		radiation += amount
+	else
+		radiation = max(radiation, maximum)
+	return amount

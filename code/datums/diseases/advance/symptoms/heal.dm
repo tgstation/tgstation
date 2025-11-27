@@ -634,8 +634,12 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 
-	if(M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE))
+	if(M.adjustToxLoss(-2 * heal_amt, updating_health = FALSE))
 		M.updatehealth()
+	if(ishuman(M))
+		var/mob/living/carbon/human/human_host = M
+		human_host.radiation = max(human_host.radiation - heal_amt * 0.2, 0)
+		human_host.radiation_damage = max(human_host.radiation_damage - heal_amt * 2, 0)
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 

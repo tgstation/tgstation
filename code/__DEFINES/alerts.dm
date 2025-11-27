@@ -24,6 +24,7 @@
 #define ALERT_HANDCUFFED "handcuffed"
 #define ALERT_LEGCUFFED "legcuffed"
 #define ALERT_IRRADIATED "irradiated"
+#define ALERT_IRRADIATED_LESS "irradiated_less"
 #define ALERT_EMBEDDED_OBJECT "embeddedobject"
 #define ALERT_SHOES_KNOT "shoealert"
 #define ALERT_RADIOACTIVE_AREA "radioactive_area"

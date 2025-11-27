@@ -21,12 +21,18 @@
 	var/threshold = RAD_MEDIUM_INSULATION
 	/// Optional - What is shown on examine of the parent?
 	var/examine_text
+	/// How much radiation humans absorb from each pulse
+	var/power = 0.5
+	/// How irradiated humans can get from each pulse
+	var/max_power = 4
 
 /datum/component/radioactive_emitter/Initialize(
 	cooldown_time = 5 SECONDS,
 	range = 1,
 	threshold = RAD_MEDIUM_INSULATION,
 	examine_text,
+	power = 0.5,
+	max_power = 4,
 )
 
 	if(!isturf(parent) && !ismovable(parent))
@@ -36,6 +42,8 @@
 	src.range = range
 	src.threshold = threshold
 	src.examine_text = examine_text
+	src.power = power
+	src.max_power = max_power
 
 	// We process on fastprocess even though we're on a cooldown based system.
 	// Easier to handle edits to the cooldown duration, prevents timer spam for short cooldown emitters
@@ -67,6 +75,8 @@
 	src.cooldown_time = cooldown_time
 	src.range = range
 	src.threshold = threshold
+	src.power = power
+	src.max_power = max_power
 	// Don't touch examine text or whatever else.
 
 /datum/component/radioactive_emitter/process(seconds_per_tick)
@@ -74,7 +84,7 @@
 		return
 
 	COOLDOWN_START(src, rad_pulse_cooldown, cooldown_time)
-	radiation_pulse(parent, range, threshold)
+	radiation_pulse(parent, range, threshold, power = power, max_power = max_power)
 
 /datum/component/radioactive_emitter/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

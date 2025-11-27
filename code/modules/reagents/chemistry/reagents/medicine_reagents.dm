@@ -43,7 +43,7 @@
 	chemical_flags = REAGENT_DEAD_PROCESS
 	metabolized_traits = list(TRAIT_ANALGESIA)
 	/// Flags to fullheal every metabolism tick
-	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ORGANS)
+	var/full_heal_flags = ~(HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ORGANS|HEAL_RADIATION)
 
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -76,7 +76,7 @@
 	name = "Quantum Medicine"
 	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
 	taste_description = "science"
-	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_ORGANS)
+	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS|HEAL_ORGANS|HEAL_RADIATION)
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -160,6 +160,10 @@
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(power * REM * seconds_per_tick)
 	REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC) //fixes common causes for disfiguration
+	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		var/mob/living/carbon/human/human_mob = affected_mob
+		human_mob.radiation = max(human_mob.radiation - power * 0.05 * REM * seconds_per_tick, 0)
+		human_mob.radiation = max(human_mob.radiation - power * 0.5 * REM * seconds_per_tick, 0)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -201,6 +205,10 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(power * REM * seconds_per_tick)
 		REMOVE_TRAIT(affected_mob, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+			var/mob/living/carbon/human/human_mob = affected_mob
+			human_mob.radiation = max(human_mob.radiation - power * 0.05 * REM * seconds_per_tick, 0)
+			human_mob.radiation = max(human_mob.radiation - power * 0.5 * REM * seconds_per_tick, 0)
 
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
@@ -488,7 +496,7 @@
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"
-	description = "Heals low toxin damage while the patient is irradiated, and will halt the damaging effects of radiation."
+	description = "Alleviates radiation and heals low toxin damage while the patient is irradiated, and will halt the damaging effects of radiation."
 	color = "#BAA15D"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	ph = 12 //It's a reducing agent
@@ -498,6 +506,10 @@
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		if(ishuman(affected_mob))
+			var/mob/living/carbon/human/human_mob = affected_mob
+			human_mob.radiation = max(human_mob.radiation - 0.5 * REM * seconds_per_tick, 0)
+			human_mob.radiation_damage = max(human_mob.radiation - 2 * REM * seconds_per_tick, 0)
 		if(affected_mob.adjustToxLoss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 

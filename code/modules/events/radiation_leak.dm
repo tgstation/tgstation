@@ -99,6 +99,8 @@
 		cooldown_time = 2 SECONDS, \
 		range = 5, \
 		threshold = RAD_MEDIUM_INSULATION, \
+		power = 0.75, \
+		max_power = RAD_STAGE_REQUIREMENTS[4] - 0.1, \
 		examine_text = span_green("<i>It's emanating a green gas... You could probably stop it by [english_list(methods_to_fix, and_text = " or ")].</i>"), \
 	)
 	// Register signals to make it fixable

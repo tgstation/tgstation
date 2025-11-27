@@ -12,6 +12,10 @@
 	var/chance
 	///Minimum time needed in order to be irradiated
 	var/minimum_exposure_time
+	///How much radiation is given to humans in one pulse
+	var/power
+	///The most radiation a human can absorb from this source
+	var/max_power
 
 	var/list/radioactive_objects = list()
 
@@ -24,6 +28,8 @@
 	threshold = RAD_LIGHT_INSULATION,
 	chance = URANIUM_IRRADIATION_CHANCE,
 	minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	power = 0.5,
+	max_power = RAD_STAGE_REQUIREMENTS[3],
 	)
 
 	. = ..()
@@ -34,6 +40,8 @@
 	src.threshold = threshold
 	src.chance = chance
 	src.minimum_exposure_time = minimum_exposure_time
+	src.power = power
+	src.max_power = max_power
 
 /datum/element/radioactive/Detach(datum/source, ...)
 	radioactive_objects -= source
@@ -51,6 +59,8 @@
 			threshold = threshold,
 			chance = chance,
 			minimum_exposure_time = minimum_exposure_time,
+			power = power,
+			max_power = max_power
 		)
 
 		radioactive_objects[radioactive_object] = world.time

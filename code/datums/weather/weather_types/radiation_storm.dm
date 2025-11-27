@@ -46,8 +46,8 @@
 	weather_flags = (WEATHER_MOBS | WEATHER_INDOORS)
 	/// Chance we get a negative mutation, if we fail we get a positive one
 	var/negative_mutation_chance = 90
-	/// Chance we mutate
-	var/mutate_chance = 40
+	/// Chance we irradiate
+	var/irradiate_chance = 40
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -55,27 +55,23 @@
 
 
 /datum/weather/rad_storm/weather_act_mob(mob/living/living)
-	if(!prob(mutate_chance))
+	if(!prob(irradiate_chance))
 		return
 
 	if(!ishuman(living) || HAS_TRAIT(living, TRAIT_GODMODE))
 		return
 
 	var/mob/living/carbon/human/human = living
-	if(!human.can_mutate())
-		return
-
-	if(HAS_TRAIT(human, TRAIT_RADIMMUNE))
-		return
 
 	if (SSradiation.wearing_rad_protected_clothing(human))
 		return
 
-	human.random_mutate_unique_identity()
-	human.random_mutate_unique_features()
+	if(human.can_mutate())
+		human.random_mutate_unique_identity()
+		human.random_mutate_unique_features()
 
-	if(prob(50))
-		do_mutate(human)
+	if(!HAS_TRAIT(human, TRAIT_RADIMMUNE))
+		human.takeRadiation(1, 20) // Very high maximum, radiation storms are evil and this is still far nicer than random mutations
 
 	return ..()
 
@@ -84,13 +80,6 @@
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
 	status_alarm(FALSE)
-
-/datum/weather/rad_storm/proc/do_mutate(mob/living/carbon/human/mutant)
-	if(prob(negative_mutation_chance))
-		mutant.easy_random_mutate(NEGATIVE+MINOR_NEGATIVE)
-	else
-		mutant.easy_random_mutate(POSITIVE)
-	mutant.domutcheck()
 
 /datum/weather/rad_storm/proc/status_alarm(active) //Makes the status displays show the radiation warning for those who missed the announcement.
 	if (active)
@@ -106,14 +95,14 @@
 	end_message = null
 	weather_flags = parent_type::weather_flags | WEATHER_ENDLESS
 
-	mutate_chance = 0.1
+	irradiate_chance = 0.1
 	///Chance we pulse a living during the storm
-	var/radiation_chance = 5
+	var/pulse_chance = 5
 
 /datum/weather/rad_storm/nebula/weather_act_mob(mob/living/living)
 	..()
 
-	if(!prob(radiation_chance))
+	if(!prob(pulse_chance))
 		return
 
 	if(!SSradiation.can_irradiate_basic(living) || SSradiation.wearing_rad_protected_clothing(living))
@@ -124,6 +113,8 @@
 		max_range = 0,
 		threshold = RAD_LIGHT_INSULATION,
 		chance = URANIUM_IRRADIATION_CHANCE,
+		power = 1,
+		max_power = RAD_STAGE_REQUIREMENTS[3],
 	)
 
 /datum/weather/rad_storm/nebula/status_alarm(active)

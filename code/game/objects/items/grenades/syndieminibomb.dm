@@ -69,7 +69,7 @@
 
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
-	radiation_pulse(src, max_range = rad_range, threshold = rad_threshold, chance = 100)
+	radiation_pulse(src, max_range = rad_range, threshold = rad_threshold, chance = 100, power = RAD_STAGE_REQUIREMENTS[4], max_power = RAD_STAGE_REQUIREMENTS[4])
 	for (var/turf/open/floor/floor in view(freeze_range, loc))
 		floor.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 		for(var/mob/living/carbon/victim in floor)

@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(radioactive_nebula)
 
 	ADD_TRAIT(target, TRAIT_RADIOACTIVE_NEBULA_FAKE_IRRADIATED, REF(src))
 
-	if(iscarbon(target))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
+	if(ishuman(target))//Don't actually make EVERY. SINGLE. THING. RADIOACTIVE. Just irradiate people
 		target.AddComponent( \
 			/datum/component/radioactive_exposure, \
 			minimum_exposure_time = NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME, \

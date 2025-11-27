@@ -346,12 +346,15 @@
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * seconds_per_tick //max ~45 rad loss unless you've hit below 0K. if so, wow.
 	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		var/mob/living/carbon/human/human_mob = affected_mob
 		radcalc *= normalise_creation_purity()
 		// extra rad healing if you are SUPER cold
 		if(chemtemp < rads_heal_threshold*0.1)
-			need_mob_update += affected_mob.adjustToxLoss(-radcalc * 0.9, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += affected_mob.adjustToxLoss(-radcalc * 3, updating_health = FALSE, required_biotype = affected_biotype)
+			human_mob.radiation = max(human_mob.radiation - radcalc * 0.09, 0)
 		else if(chemtemp < rads_heal_threshold)
-			need_mob_update += affected_mob.adjustToxLoss(-radcalc * 0.75, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += affected_mob.adjustToxLoss(-radcalc * 2, updating_health = FALSE, required_biotype = affected_biotype)
+			human_mob.radiation = max(human_mob.radiation - radcalc * 0.075, 0)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!

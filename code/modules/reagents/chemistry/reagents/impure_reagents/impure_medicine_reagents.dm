@@ -859,7 +859,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
 		affected_mob.set_jitter_if_lower(10 SECONDS)
-		affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
+		affected_mob.adjust_disgust(1 * REM * seconds_per_tick)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(affected_mob, span_warning("A horrible ache spreads in your insides!"))
 			affected_mob.adjust_confusion_up_to(10 SECONDS, 15 SECONDS)
