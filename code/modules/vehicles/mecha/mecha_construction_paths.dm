@@ -762,11 +762,11 @@
 /datum/component/construction/mecha/phazon/get_outer_plating_steps()
 	return ..() + list(
 		list(
-			"key" = /obj/item/assembly/signaler/anomaly/bluespace,
+			"key" = /obj/item/assembly/signaler/anomaly/ectoplasm,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "The external armor is welded, and the <b>bluespace anomaly core</b> socket is open.",
-			"forward_message" = "inserted bluespace anomaly core",
+			"desc" = "The external armor is welded, and the <b>ectoplasm anomaly core</b> socket is open.",
+			"forward_message" = "inserted ectoplasm anomaly core",
 			"backward_message" = "cut off external armor",
 			"skip_state" = TRUE,
 		)
