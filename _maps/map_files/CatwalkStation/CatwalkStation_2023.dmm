@@ -70640,7 +70640,6 @@
 /turf/closed/wall,
 /area/station/science/lobby)
 "tEc" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
 /area/station/medical/virology)
