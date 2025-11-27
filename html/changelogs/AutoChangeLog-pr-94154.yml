@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - bugfix: "Health analysers will no longer erroneously show a blood level for things that don't have blood."
