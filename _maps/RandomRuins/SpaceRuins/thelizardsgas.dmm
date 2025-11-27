@@ -234,7 +234,7 @@
 	desc = "An incredibly bad idea."
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "zn" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/food_or_drink/snack,
