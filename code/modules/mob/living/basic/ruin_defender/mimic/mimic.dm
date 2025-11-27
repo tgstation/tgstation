@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 )))
 
 /mob/living/basic/mimic
+	abstract_type = /mob/living/basic/mimic
 	response_help_continuous = "touches"
 	response_help_simple = "touch"
 	response_disarm_continuous = "pushes"
