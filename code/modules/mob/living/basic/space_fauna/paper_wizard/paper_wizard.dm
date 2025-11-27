@@ -123,7 +123,7 @@
 	SIGNAL_HANDLER
 
 	if(!(attack_flags & (ATTACKER_STAMINA_ATTACK|ATTACKER_SHOVING)))
-		attacker.adjustBruteLoss(20)
+		attacker.adjust_brute_loss(20)
 		to_chat(attacker, span_warning("The clone casts a spell to damage you before he dies!"))
 
 

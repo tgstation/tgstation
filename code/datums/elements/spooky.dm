@@ -58,14 +58,14 @@
 	if(bone_amount)
 		human.set_jitter_if_lower(12 SECONDS * bone_amount)
 		human.set_stutter(6.5 SECONDS * bone_amount)
-		human.adjustStaminaLoss(3 * bone_amount * stam_dam_mult)
+		human.adjust_stamina_loss(3 * bone_amount * stam_dam_mult)
 	if(iszombie(human))
-		human.adjustStaminaLoss(25)
+		human.adjust_stamina_loss(25)
 		human.Paralyze(15) //zombies can't resist the doot
 	return bone_amount
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/human, mob/living/user, obj/item/source)
-	if(human.getStaminaLoss() <= 95)
+	if(human.get_stamina_loss() <= 95)
 		return
 
 	if(single_use)
