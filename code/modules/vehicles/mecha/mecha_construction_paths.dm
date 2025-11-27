@@ -668,6 +668,18 @@
 	outer_plating = /obj/item/mecha_parts/part/phazon_armor
 	outer_plating_amount = 1
 
+	var/obj/item/required_core = /obj/item/assembly/signaler/anomaly/ectoplasm
+
+/datum/component/construction/mecha/phazon/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
+	if(istype(I, /obj/item/assembly/signaler/anomaly) && !istype(I, required_core))
+		to_chat(user, span_warning("The anomaly core socket only accepts \a [initial(required_core.name)]!"))
+		return FALSE
+
+	return TRUE
+
 /datum/component/construction/mecha/phazon/get_stockpart_steps()
 	return list(
 		list(
@@ -762,11 +774,11 @@
 /datum/component/construction/mecha/phazon/get_outer_plating_steps()
 	return ..() + list(
 		list(
-			"key" = /obj/item/assembly/signaler/anomaly/ectoplasm,
+			"key" = required_core,
 			"action" = ITEM_DELETE,
 			"back_key" = TOOL_WELDER,
-			"desc" = "The external armor is welded, and the <b>ectoplasm anomaly core</b> socket is open.",
-			"forward_message" = "inserted ectoplasm anomaly core",
+			"desc" = "The external armor is welded, and the <b>[initial(required_core.name)]</b> socket is open.",
+			"forward_message" = "inserted [initial(required_core.name)]",
 			"backward_message" = "cut off external armor",
 			"skip_state" = TRUE,
 		)
