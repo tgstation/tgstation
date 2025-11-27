@@ -95,7 +95,7 @@
 		list(
 			"key" = TOOL_SCREWDRIVER,
 			"back_key" = TOOL_WRENCH,
-			"desc" = "The hydraulic systems are connected, and can be activated with a <b> screwdriver</b>.",
+			"desc" = "The hydraulic systems are connected, and can be activated with a <b>screwdriver</b>.",
 			"forward_message" = "activated the hydraulic systems",
 			"backward_message" = "disconnected the hydraulic systems",
 		),
