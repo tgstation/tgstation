@@ -341,11 +341,15 @@
 
 	if(diff == FORWARD && steps[index]["forward_message"])
 		user.balloon_alert_to_viewers(steps[index]["forward_message"])
-		if(steps[index]["desc"])
-			to_chat(user, span_smallnoticeital("[steps[index]["desc"]]"))
+		var/list/next_step = index + 1 == steps.len ? null : steps[index + 1]
+		if(next_step?["desc"])
+			to_chat(user, span_smallnoticeital(next_step["desc"]))
 
 	else if(steps[index]["backward_message"])
 		user.balloon_alert_to_viewers(steps[index]["backward_message"])
+		var/list/last_step = index <= 1 ? null : steps[index - 1]
+		if(last_step?["desc"])
+			to_chat(user, span_smallnoticeital(last_step["desc"]))
 
 	return TRUE
 
@@ -384,7 +388,7 @@
 	return list(
 		first_step,
 		list(
-			"key" = TOOL_WRENCH,
+			"key" = TOOL_WELDER,
 			"back_key" = TOOL_WIRECUTTER,
 			"desc" = "Cockpit wire screen is installed, and can be <b>welded</b>.",
 			"forward_message" = "welded cockpit",
