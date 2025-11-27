@@ -283,6 +283,7 @@
 /obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
 	name = "chief medical officer's compact defibrillator"
 	icon_state = "defibcmo"
+	resistance_flags = INDESTRUCTIBLE // So no cheesy getting rid of like other steal/head items
 
 /obj/item/defibrillator/compact/combat
 	name = "combat defibrillator"
