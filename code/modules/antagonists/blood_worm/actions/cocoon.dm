@@ -303,17 +303,6 @@
 
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/IsAvailable(feedback)
-	if (!length(GLOB.dead_player_list))
-		if (feedback)
-			owner.balloon_alert(owner, "no candidates!")
-		return FALSE
-	if (!(GLOB.ghost_role_flags & GHOSTROLE_STATION_SENTIENCE))
-		if (feedback)
-			owner.balloon_alert(owner, "disabled by ghost role config!")
-		return FALSE
-	return ..()
-
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/Activate(atom/target)
 	if (tgui_alert(owner, "Are you sure? After [cocoon_time / 10] seconds, you will create [num_hatchlings + 1] new hatchlings, including yourself.", "Reproduce", list("Yes", "No"), 30 SECONDS) != "Yes")
 		return
