@@ -171,7 +171,7 @@
 
 	for(var/difficulty in bounties)
 		for(var/datum/spy_bounty/bounty as anything in bounties[difficulty])
-			bounty.clear_bounty()
+			bounty.clear_bounty(src)
 		bounties[difficulty].Cut()
 
 		var/list/pool = bounty_types[difficulty]
