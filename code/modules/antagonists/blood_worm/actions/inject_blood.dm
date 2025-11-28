@@ -113,18 +113,18 @@
 /datum/status_effect/blood_worm_transfuse/proc/heal_damage(seconds_between_ticks)
 	var/healing_left = damage_regen_rate * seconds_between_ticks
 
-	if (owner.getBruteLoss() > 0 && healing_left > 0)
-		var/amount_healed = max(0, owner.adjustBruteLoss(-healing_left, forced = TRUE, updating_health = FALSE))
+	if (owner.get_brute_loss() > 0 && healing_left > 0)
+		var/amount_healed = max(0, owner.adjust_brute_loss(-healing_left, forced = TRUE, updating_health = FALSE))
 		healing_left -= amount_healed
 		. |= amount_healed
 
-	if (owner.getFireLoss() > 0 && healing_left > 0)
-		var/amount_healed = max(0, owner.adjustFireLoss(-healing_left, forced = TRUE, updating_health = FALSE))
+	if (owner.get_fire_loss() > 0 && healing_left > 0)
+		var/amount_healed = max(0, owner.adjust_fire_loss(-healing_left, forced = TRUE, updating_health = FALSE))
 		healing_left -= amount_healed
 		. |= amount_healed
 
-	if (owner.getToxLoss() > 0 && healing_left > 0)
-		var/amount_healed = max(0, owner.adjustToxLoss(-healing_left, forced = TRUE, updating_health = FALSE))
+	if (owner.get_tox_loss() > 0 && healing_left > 0)
+		var/amount_healed = max(0, owner.adjust_tox_loss(-healing_left, forced = TRUE, updating_health = FALSE))
 		healing_left -= amount_healed
 		. |= amount_healed
 

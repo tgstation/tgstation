@@ -123,7 +123,7 @@
 		leech.consume_blood(-target.adjust_blood_volume(-leech_rate), target.get_blood_synth_content())
 
 		if (target.stat != DEAD)
-			target.adjustOxyLoss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
+			target.adjust_oxy_loss(oxyloss_rate) // It's really weird if they just stand there until they literally drop dead from going below BLOOD_VOLUME_SURVIVE.
 
 		playsound(target, 'sound/effects/wounds/splatter.ogg', vol = 80, vary = TRUE, ignore_walls = FALSE)
 

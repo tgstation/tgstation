@@ -205,7 +205,7 @@
 	real_name = name
 
 /mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
-	return host ? 0 : ..() // Prevents damage from adjustXLoss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+	return host ? 0 : ..() // Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
@@ -267,7 +267,7 @@
 
 /// Adjusts the current health of the worm, regardless of if its in a host or not.
 /mob/living/basic/blood_worm/proc/adjust_worm_health(amount)
-	return host ? host.adjust_blood_volume(amount * BLOOD_WORM_HEALTH_TO_BLOOD) * BLOOD_WORM_BLOOD_TO_HEALTH : adjustBruteLoss(-amount)
+	return host ? host.adjust_blood_volume(amount * BLOOD_WORM_HEALTH_TO_BLOOD) * BLOOD_WORM_BLOOD_TO_HEALTH : adjust_brute_loss(-amount)
 
 /mob/living/basic/blood_worm/proc/enter_host(mob/living/carbon/human/new_host, silent = FALSE, gain_progress = TRUE)
 	if (!silent)
@@ -463,7 +463,7 @@
 
 	// Required for now, because TRAIT_NOBREATH does not actually prevent oxygen damage.
 	// This is really weird because it also sets oxygen damage to 0 when added to a mob.
-	host.setOxyLoss(0, forced = TRUE)
+	host.set_oxy_loss(0, forced = TRUE)
 
 	if (!HAS_TRAIT(host, TRAIT_STASIS))
 		handle_host_blood(seconds_per_tick, times_fired)
@@ -538,7 +538,7 @@
 	var/cached_blood_volume = host.get_blood_volume()
 
 	// Sync mob health to host blood
-	setBruteLoss(maxHealth * (1 - cached_blood_volume / host_max_blood))
+	set_brute_loss(maxHealth * (1 - cached_blood_volume / host_max_blood))
 
 	// Checks if we still have a host since setBruteLoss() can kill us, causing us to leave our host.
 	if (!already_ejecting && cached_blood_volume <= get_eject_volume_threshold())

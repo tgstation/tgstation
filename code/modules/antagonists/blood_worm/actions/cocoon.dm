@@ -104,7 +104,7 @@
 		)
 
 		unfortunate_observer.Knockdown(3 SECONDS)
-		unfortunate_observer.adjustFireLoss(rand(30, 50))
+		unfortunate_observer.adjust_fire_loss(rand(30, 50))
 
 		var/range = 4 - get_dist(cocoon, unfortunate_observer)
 		unfortunate_observer.throw_at(get_ranged_target_turf_direct(cocoon, unfortunate_observer, range), range = range, speed = 2)
