@@ -21,9 +21,7 @@
 		return
 	if(!(methods & INGEST))
 		return // anteaters are not immune to being bit by ants
-	var/ants_amount = 0
-	for (var/datum/reagent/ants/ants in reagents)
-		ants_amount += ants.volume
+	var/ants_amount = reagents.get_reagent_amount(/datum/reagent/ants)
 	if(ants_amount == 0)
 		return
 	// take out any ants and replace with the same quantity of nutriment
