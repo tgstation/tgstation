@@ -272,8 +272,7 @@
 		return
 	var/obj/item/dispensed_item = params["ref"]
 	for(var/obj/item/product in contents - component_parts)
-		var/thing = ITEM_HASH(product)
-		if(thing == dispensed_item)
+		if(ITEM_HASH(product) == dispensed_item)
 			dispensed_item = product
 			break
 
