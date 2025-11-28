@@ -306,7 +306,10 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	return try_fire_gun(interacting_with, user, list2params(modifiers))
+	var/fired = try_fire_gun(interacting_with, user, list2params(modifiers))
+	if(!fired && chambered_attack_block == TRUE && can_shoot() && isliving(interacting_with))
+		return ITEM_INTERACT_BLOCKING
+	return fired
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(user.combat_mode && isliving(interacting_with))
