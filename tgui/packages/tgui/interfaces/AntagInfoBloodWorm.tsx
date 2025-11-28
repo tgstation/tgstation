@@ -12,7 +12,7 @@ export const AntagInfoBloodWorm = (props) => {
   const { data } = useBackend<Info>();
   const { objectives } = data;
   return (
-    <Window width={620} height={250}>
+    <Window width={800} height={500}>
       <Window.Content>
         <Section scrollable fill>
           <Stack vertical>

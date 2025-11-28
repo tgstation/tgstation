@@ -10,7 +10,11 @@
 	stinger_sound = 'sound/effects/magic/exit_blood.ogg'
 	ui_name = "AntagInfoBloodWorm"
 
-	var/has_reached_adulthood = FALSE
+	var/datum/team/blood_worm/team = null
+
+/datum/antagonist/blood_worm/Destroy()
+	team = null
+	return ..()
 
 /datum/antagonist/blood_worm/greet()
 	. = ..()
@@ -24,26 +28,14 @@
 	owner.announce_objectives()
 
 /datum/antagonist/blood_worm/forge_objectives()
-	var/datum/objective/blood_worm/reach_adulthood/adulthood_objective = new()
+	objectives |= team.objectives
 
-	adulthood_objective.owner = owner
-	objectives += adulthood_objective
+/datum/antagonist/blood_worm/create_team(datum/team/new_team)
+	GLOB.blood_worm_team ||= new()
+	team = GLOB.blood_worm_team
 
-	var/roundend_objective_type = pick(list(
-		/datum/objective/blood_worm/specific_host,
-		/datum/objective/blood_worm/department_host/security,
-		/datum/objective/blood_worm/department_host/command,
-		/datum/objective/blood_worm/infiltrate_centcom,
-		/datum/objective/blood_worm/infiltrate_centcom/host
-	))
-
-	var/datum/objective/roundend_objective = new roundend_objective_type()
-
-	roundend_objective.owner = owner
-	objectives += roundend_objective
-
-	if (roundend_objective.target_amount > 0)
-		roundend_objective.find_target()
+/datum/antagonist/blood_worm/get_team()
+	return team
 
 /datum/antagonist/blood_worm/on_gain()
 	forge_objectives()
@@ -56,6 +48,7 @@
 
 /datum/antagonist/blood_worm/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/target = mob_override || owner.current
+
 	add_team_hud(target)
 
 	if (!istype(target, /mob/living/basic/blood_worm))
@@ -99,3 +92,7 @@
 /datum/antagonist/blood_worm/infestation
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
 	show_in_antagpanel = FALSE
+
+/mob/living/basic/blood_worm/proc/get_antag_datum()
+	RETURN_TYPE(/datum/antagonist/blood_worm)
+	return mind?.has_antag_datum(/datum/antagonist/blood_worm)

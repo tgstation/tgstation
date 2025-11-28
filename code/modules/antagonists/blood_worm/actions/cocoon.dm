@@ -21,12 +21,12 @@
 		return
 
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_worm_stat_changed), override = TRUE)
-	RegisterSignal(owner, COMSIG_BLOOD_WORM_CONSUME_BLOOD, PROC_REF(update_status_on_signal))
+	RegisterSignal(owner, COMSIG_BLOOD_WORM_CONSUMED_BLOOD, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Remove(mob/removed_from)
 	if (!QDELETED(cocoon))
 		cancel()
-	UnregisterSignal(owner, COMSIG_BLOOD_WORM_CONSUME_BLOOD)
+	UnregisterSignal(owner, COMSIG_BLOOD_WORM_CONSUMED_BLOOD)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/IsAvailable(feedback)
@@ -371,9 +371,7 @@
 
 	new_worm.reset_consumed_blood()
 
-	var/datum/antagonist/blood_worm/antag_datum = new_worm.mind?.has_antag_datum(/datum/antagonist/blood_worm)
-
-	antag_datum?.has_reached_adulthood = TRUE
+	SEND_SIGNAL(new_worm, COMSIG_BLOOD_WORM_REPRODUCED)
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/cancel()
 	send_apology_to_candidates()
