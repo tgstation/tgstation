@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/vending/sustenance,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "af" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -21,6 +29,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory)
+"al" = (
+/obj/item/radio/intercom/mi13/directional/north,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "am" = (
 /obj/machinery/door/airlock/highsecurity{
 	max_integrity = 10000;
@@ -35,6 +49,10 @@
 	name = "p90 ammo crate"
 	},
 /obj/item/stack/sheet/cardboard/fifty,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "ao" = (
@@ -85,14 +103,29 @@
 "ay" = (
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"az" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "aA" = (
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
+"aB" = (
+/obj/item/kirbyplants/organic/plant10,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "aC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "aD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -166,7 +199,7 @@
 	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "ba" = (
 /obj/machinery/light/directional/north,
@@ -178,6 +211,21 @@
 	},
 /turf/open/floor/pod/light,
 /area/awaymission/beach/heretic)
+"bc" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"be" = (
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "bf" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -203,17 +251,27 @@
 	dir = 4
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "bt" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "bu" = (
 /mob/living/basic/trooper/nanotrasen/peaceful,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"bv" = (
+/obj/structure/bed/double,
+/obj/effect/spawner/random/bedsheet/double,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "by" = (
 /obj/structure/fence,
@@ -223,7 +281,6 @@
 /obj/structure/table,
 /obj/item/binoculars,
 /obj/item/binoculars,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "bB" = (
@@ -246,6 +303,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
+"bJ" = (
+/obj/machinery/light/directional/north,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "bN" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -256,7 +318,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "bR" = (
@@ -269,11 +330,10 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "bZ" = (
-/obj/effect/blessing,
 /obj/machinery/door/airlock/multi_tile{
 	dir = 4
 	},
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "cb" = (
 /obj/effect/decal/cleanable/crayon{
@@ -295,8 +355,9 @@
 /mob/living/basic/heretic_summon/stalker,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ck" = (
 /obj/structure/table,
@@ -367,13 +428,21 @@
 /obj/machinery/door/puzzle/keycard/heretic_entrance,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"cK" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "cL" = (
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
 "cN" = (
 /obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cQ" = (
 /turf/closed/wall/rock,
@@ -390,12 +459,15 @@
 "cT" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/dresser,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "cV" = (
 /obj/structure/frame/machine/secured,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "cX" = (
 /obj/structure/disposalpipe/segment{
@@ -405,8 +477,11 @@
 /area/awaymission/caves/heretic_laboratory)
 "db" = (
 /obj/machinery/vending/games,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dd" = (
 /obj/effect/spawner/random/trash/cigbutt,
@@ -417,7 +492,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "df" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -428,8 +503,9 @@
 /mob/living/basic/construct/proteon,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/bar/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dk" = (
 /obj/machinery/teleport/station{
@@ -451,16 +527,31 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
+"dp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"dr" = (
+/obj/structure/table,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "dw" = (
 /obj/machinery/light/directional/west,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "dy" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/gun/magic/midas_hand,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "dA" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -473,8 +564,11 @@
 /turf/open/indestructible/plating,
 /area/awaymission/caves/heretic_laboratory)
 "dD" = (
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dF" = (
 /obj/machinery/light/very_dim/directional/east,
@@ -490,6 +584,16 @@
 	},
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"dL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "dO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -588,6 +692,10 @@
 	},
 /turf/closed/indestructible/reinforced,
 /area/awaymission/caves/heretic_laboratory)
+"ew" = (
+/obj/item/radio/intercom/mi13/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "ey" = (
 /obj/structure/railing{
 	dir = 9
@@ -622,7 +730,7 @@
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "eK" = (
 /obj/structure/closet/crate/bin,
@@ -634,16 +742,28 @@
 	},
 /turf/open/floor/stone,
 /area/awaymission/beach/heretic)
+"eN" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "eS" = (
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/bar/half/contrasted,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "eW" = (
 /obj/structure/table,
-/obj/effect/blessing,
 /obj/item/ammo_box/magazine/m7mm,
-/turf/open/floor/iron/small,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "eY" = (
 /obj/effect/decal/cleanable/crayon{
@@ -693,6 +813,22 @@
 /obj/effect/oneway,
 /turf/open/floor/mineral/titanium,
 /area/awaymission/caves/heretic_laboratory_clean)
+"fm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"fo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/grime,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "fp" = (
 /obj/machinery/door/airlock/virology,
 /obj/machinery/door/puzzle/keycard/cbrn_area,
@@ -700,8 +836,11 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "fq" = (
 /obj/machinery/vending/hotdog,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "fu" = (
 /obj/effect/turf_decal/siding/blue{
@@ -768,7 +907,7 @@
 /obj/machinery/light/floor,
 /obj/structure/table,
 /obj/item/fake_items/feddy_fazbear,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "fI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -789,6 +928,15 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/carpet/green,
 /area/awaymission/beach/heretic)
+"fM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "fP" = (
 /obj/item/stack/sheet/mineral/uranium,
 /obj/item/coin/uranium,
@@ -805,6 +953,17 @@
 	},
 /turf/open/floor/mineral/uranium,
 /area/awaymission/beach/heretic)
+"fV" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"fW" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "fX" = (
 /obj/item/stack/cable_coil/thirty,
 /turf/open/floor/iron/large,
@@ -831,7 +990,7 @@
 "gb" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/door/window/right/directional/west,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "gd" = (
 /obj/effect/turf_decal/stripes/line{
@@ -855,6 +1014,14 @@
 	},
 /turf/open/floor/mineral/uranium,
 /area/awaymission/beach/heretic)
+"gh" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "gi" = (
 /obj/effect/heretic_rune/big,
 /mob/living/basic/faithless,
@@ -957,6 +1124,16 @@
 /obj/machinery/door/window/survival_pod/left/directional/east,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory_clean)
+"gJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/fourcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "gK" = (
 /turf/open/misc/beach/coast{
 	dir = 8
@@ -977,7 +1154,7 @@
 	},
 /obj/structure/door_assembly/door_assembly_highsecurity,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "gT" = (
 /obj/machinery/computer/crew{
@@ -992,10 +1169,17 @@
 /obj/item/toy/plush/moth,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"gV" = (
+/obj/structure/sign/poster/contraband/blood_geometer,
+/turf/open/floor/black,
+/area/awaymission/caves/heretic_laboratory_clean)
 "gX" = (
-/obj/effect/blessing,
 /obj/machinery/vending/sustenance,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "gY" = (
 /obj/machinery/conveyor/auto{
@@ -1027,6 +1211,12 @@
 /obj/machinery/light/floor,
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
+"he" = (
+/obj/structure/sign/poster/contraband/communist_state/directional/west,
+/obj/effect/spawner/random/trash/moisture_trap,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "hf" = (
 /obj/structure/fluff/bus/passable/seat{
 	pixel_y = 15
@@ -1107,11 +1297,11 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/gun/energy/dueling,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "hE" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "hF" = (
 /obj/effect/turf_decal/siding/blue{
@@ -1221,6 +1411,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ij" = (
@@ -1259,6 +1450,10 @@
 /obj/effect/turf_decal/trimline/red/filled/end,
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
+"ix" = (
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
 "iz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 4
@@ -1274,8 +1469,9 @@
 /mob/living/basic/heretic_summon/fire_shark/wild,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "iF" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -1289,7 +1485,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/closet/cabinet,
 /obj/effect/spawner/random/heretic_gateway_low,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "iJ" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -1314,6 +1510,18 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /turf/open/misc/asteroid,
 /area/awaymission/caves/heretic_laboratory)
+"iN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "iO" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
@@ -1328,7 +1536,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "iS" = (
 /obj/structure/transport/linear/tram,
@@ -1347,7 +1555,7 @@
 	pixel_y = 0
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "iW" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1373,6 +1581,13 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"ja" = (
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "jc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -1380,6 +1595,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "je" = (
@@ -1404,6 +1620,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
+"ji" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "jj" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
 /turf/open/floor/iron/large,
@@ -1458,8 +1679,9 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "jO" = (
 /obj/machinery/vending/medical,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "jP" = (
 /obj/structure/barricade/sandbags,
@@ -1489,6 +1711,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "jX" = (
@@ -1556,7 +1779,6 @@
 /obj/structure/chair/office/tactical{
 	dir = 8
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ko" = (
@@ -1581,6 +1803,11 @@
 /obj/structure/chair/comfy/shuttle/tactical,
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
+"kz" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/radio/intercom/mi13/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "kD" = (
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/beach/heretic)
@@ -1588,8 +1815,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "kF" = (
 /obj/item/flashlight/flare/candle/infinite,
@@ -1619,13 +1848,13 @@
 /obj/machinery/light/floor,
 /obj/item/slimepotion/genderchange,
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "kO" = (
 /obj/structure/table,
-/obj/effect/blessing,
 /obj/item/fake_items/l6_saw,
-/turf/open/floor/iron/small,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "kQ" = (
 /obj/structure/disposalpipe/segment{
@@ -1648,6 +1877,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/beach/heretic)
+"kX" = (
+/obj/structure/sign/poster/abductor/ayy_recruitment/directional/south,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "ld" = (
 /obj/structure/closet/crate/secure/weapon{
 	name = "p90 ammo crate"
@@ -1655,6 +1888,10 @@
 /obj/item/ammo_box/magazine/napad,
 /obj/item/ammo_box/magazine/napad,
 /obj/item/ammo_box/magazine/napad,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "lh" = (
@@ -1676,13 +1913,17 @@
 /area/awaymission/caves/heretic_laboratory)
 "ls" = (
 /obj/machinery/vending/sustenance,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/east,
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "lv" = (
@@ -1693,8 +1934,9 @@
 /mob/living/basic/construct/juggernaut,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/bar/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lz" = (
 /obj/effect/decal/cleanable/plasma,
@@ -1728,7 +1970,7 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/effect/mapping_helpers/damaged_window,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "lJ" = (
 /obj/effect/turf_decal/tile/dark_green{
@@ -1737,7 +1979,15 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"lK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lL" = (
 /obj/structure/table/wood,
@@ -1747,6 +1997,12 @@
 "lO" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"lV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "lX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1758,8 +2014,9 @@
 "lY" = (
 /obj/structure/bed/double,
 /obj/effect/spawner/random/bedsheet/double,
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "lZ" = (
 /obj/effect/turf_decal/siding/blue/corner{
@@ -1787,11 +2044,12 @@
 /obj/machinery/light/floor,
 /obj/structure/closet/crate/freezer,
 /obj/item/organ/heart/gland,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "mg" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/light/directional/south,
+/obj/item/radio/intercom/mi13/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "mi" = (
@@ -1800,7 +2058,7 @@
 	name = "HoochMaster Deluxe"
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "mj" = (
 /obj/structure/fence/door,
@@ -1874,8 +2132,19 @@
 "mJ" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
+"mL" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "mM" = (
 /turf/open/water/jungle,
 /area/awaymission/beach/heretic)
@@ -1951,6 +2220,14 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"ni" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "nj" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/coal/ten,
@@ -1967,11 +2244,15 @@
 /obj/structure/flora/tree/palm,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
+"np" = (
+/obj/structure/sign/poster/contraband/arc_slimes/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "nr" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/bed,
 /obj/item/bedsheet/black,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "nw" = (
 /obj/effect/turf_decal/tile/purple{
@@ -1980,7 +2261,20 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/item/radio/intercom/mi13/directional/west,
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"nz" = (
+/obj/structure/frame/machine/secured,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "nD" = (
 /obj/structure/projected_forcefield,
@@ -2046,6 +2340,13 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
+"nQ" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "nR" = (
 /obj/structure/railing{
 	dir = 4
@@ -2121,7 +2422,6 @@
 	dir = 1
 	},
 /mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "om" = (
@@ -2148,7 +2448,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/bed/double,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "os" = (
 /obj/item/toy/seashell{
@@ -2171,12 +2471,21 @@
 "oz" = (
 /obj/structure/rack,
 /obj/item/gun/energy/disabler/smg,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "oC" = (
 /obj/machinery/pdapainter,
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/beach/heretic)
+"oD" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "oF" = (
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "p";
@@ -2196,6 +2505,7 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "oN" = (
@@ -2213,6 +2523,12 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
+"oQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "oS" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2232,8 +2548,7 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "pb" = (
 /obj/machinery/door/poddoor/shutters/window/indestructible,
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "pc" = (
 /obj/effect/decal/cleanable/glass/plastitanium,
@@ -2318,6 +2633,14 @@
 /obj/structure/thermoplastic/light,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"pu" = (
+/obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "pv" = (
 /turf/open/misc/beach/coast{
 	dir = 1
@@ -2387,6 +2710,11 @@
 /obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"pL" = (
+/obj/machinery/light/directional/south,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "pN" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/table,
@@ -2400,10 +2728,33 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"pP" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/door/airlock/highsecurity{
+	max_integrity = 10000;
+	normal_integrity = 10000
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/puzzle/keycard/highsec_access,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"pQ" = (
+/obj/item/radio/intercom/mi13/directional/west,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "pU" = (
 /obj/structure/falsewall,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"pW" = (
+/obj/structure/table,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "pX" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "frontwallbottomrear"
@@ -2418,9 +2769,12 @@
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory)
 "qb" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/obj/machinery/light/directional/west,
-/turf/open/floor/iron/small,
+/turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "qc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -2429,13 +2783,14 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 8
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "qe" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/blessing,
 /obj/effect/spawner/random/heretic_gateway,
-/turf/open/floor/iron/small,
+/obj/effect/blessing,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "qg" = (
 /obj/item/clothing/glasses/meson,
@@ -2494,12 +2849,16 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "qC" = (
 /obj/item/clothing/head/utility/radiation/cbrnhood,
 /obj/item/clothing/suit/utility/radiation/cbrnsuit,
 /obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "qE" = (
@@ -2520,6 +2879,16 @@
 	name = "Extremely fragile high capacity fuel tank"
 	},
 /turf/open/floor/engine,
+/area/awaymission/caves/heretic_laboratory)
+"qK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
+"qL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "qM" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -2548,6 +2917,16 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
+"qV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "qW" = (
 /obj/structure/toilet{
 	dir = 4;
@@ -2562,6 +2941,13 @@
 /obj/effect/turf_decal/tile/dark_green{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "rc" = (
@@ -2571,6 +2957,11 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach/heretic)
+"rf" = (
+/obj/machinery/light/directional/west,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "rh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -2613,6 +3004,13 @@
 /obj/machinery/reagentgrinder,
 /turf/open/floor/wood,
 /area/awaymission/beach/heretic)
+"rx" = (
+/obj/structure/bed/double,
+/obj/effect/spawner/random/bedsheet/double,
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "rA" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 9
@@ -2673,8 +3071,8 @@
 /mob/living/basic/construct/harvester,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark_red/fourcorners,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "rT" = (
 /obj/effect/decal/cleanable/crayon{
@@ -2763,6 +3161,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
+"so" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "sp" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet,
@@ -2776,7 +3182,6 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ss" = (
@@ -2845,6 +3250,18 @@
 /obj/machinery/door/puzzle/keycard/misc_anomalies,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
+"sN" = (
+/obj/item/radio/intercom/mi13/directional/south,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"sO" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
+/obj/item/radio/intercom/mi13/directional/south,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "sS" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -2858,7 +3275,16 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"sZ" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ta" = (
 /obj/structure/mineral_door/wood,
@@ -2896,6 +3322,11 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/beach/heretic)
+"tl" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/blessing,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "tm" = (
 /obj/structure/flora/rock,
 /turf/open/floor/asphalt,
@@ -2915,6 +3346,11 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/beach/heretic)
+"ts" = (
+/obj/machinery/light/directional/west,
+/obj/effect/blessing,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "ty" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
 	dir = 4
@@ -2975,8 +3411,15 @@
 /turf/open/water/beach,
 /area/awaymission/beach/heretic)
 "tS" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"tX" = (
+/obj/machinery/shower/directional/west,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/curtain,
+/obj/machinery/door/window/right/directional/west,
+/turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "tY" = (
 /obj/item/binoculars,
@@ -2985,6 +3428,14 @@
 "tZ" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"ua" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/fourcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ue" = (
 /obj/structure/flora/coconuts,
@@ -3011,6 +3462,19 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
+"uj" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"ul" = (
+/obj/item/radio/intercom/mi13/directional/north,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "um" = (
 /obj/structure/fluff/tram_rail/end{
@@ -3071,7 +3535,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/fake_items/abductor_win_stick,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "uH" = (
 /obj/structure/fluff/tram_rail,
@@ -3112,7 +3576,7 @@
 /obj/item/slimepotion/lovepotion,
 /obj/item/slimepotion/lovepotion,
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "uO" = (
 /obj/structure/chair/wood{
@@ -3120,9 +3584,18 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/beach/heretic)
+"uQ" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"uR" = (
+/obj/structure/sign/poster/official/here_for_your_safety/directional/east,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "uS" = (
 /mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "uT" = (
@@ -3151,7 +3624,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/gun/energy/disabler/smoothbore,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "vb" = (
 /obj/structure/fluff/tram_rail/anchor{
@@ -3165,6 +3638,11 @@
 /obj/effect/spawner/random/heretic_gateway_low,
 /turf/open/misc/dirt/jungle,
 /area/awaymission/beach/heretic)
+"vf" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory_clean)
 "vj" = (
 /obj/machinery/vending/medical,
 /obj/machinery/light/directional/west,
@@ -3185,8 +3663,11 @@
 /obj/machinery/power/floodlight,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"vp" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
 "vq" = (
-/obj/effect/blessing,
 /obj/structure/closet/cardboard,
 /obj/item/reagent_containers/cup/glass/waterbottle/large,
 /obj/item/reagent_containers/cup/glass/waterbottle/large,
@@ -3207,8 +3688,11 @@
 	max_integrity = 10000;
 	normal_integrity = 10000
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"vs" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "vt" = (
 /obj/machinery/vending/medical,
@@ -3223,7 +3707,9 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "vw" = (
 /obj/effect/decal/cleanable/blood/tracks/xeno{
@@ -3246,7 +3732,7 @@
 /area/awaymission/beach/heretic)
 "vB" = (
 /obj/structure/closet/l3closet,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "vF" = (
 /obj/effect/landmark/transport/nav_beacon/tram/nav/heretic,
@@ -3277,7 +3763,7 @@
 "vO" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "vR" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3311,6 +3797,11 @@
 /obj/effect/decal/cleanable/glass/plastitanium,
 /obj/effect/spawner/random/structure/shipping_container,
 /turf/open/floor/iron/large,
+/area/awaymission/caves/heretic_laboratory)
+"wa" = (
+/obj/structure/mineral_door/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "wb" = (
 /obj/structure/closet,
@@ -3349,6 +3840,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
+"wq" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "ws" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -3368,6 +3867,14 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/beach/heretic)
+"wy" = (
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "wz" = (
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -3387,6 +3894,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "wF" = (
@@ -3404,6 +3912,10 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "wJ" = (
@@ -3469,8 +3981,12 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "wY" = (
 /obj/effect/decal/cleanable/crayon{
@@ -3503,13 +4019,15 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/feeder{
 	pixel_x = 24
 	},
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "xb" = (
-/obj/machinery/light/directional/east,
+/obj/machinery/vending/sustenance,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "xd" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -3521,10 +4039,18 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/beach/heretic)
+"xi" = (
+/obj/effect/spawner/random/trash/hobo_squat,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "xj" = (
 /obj/structure/table/glass,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "xk" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -3538,12 +4064,27 @@
 "xl" = (
 /turf/closed/indestructible/reinforced,
 /area/awaymission/caves/heretic_laboratory_clean)
+"xm" = (
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "xn" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "reartire"
 	},
 /turf/open/floor/asphalt,
 /area/awaymission/beach/heretic)
+"xo" = (
+/obj/structure/table/wood,
+/obj/item/pen,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "xs" = (
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/carpet/royalblack,
@@ -3622,7 +4163,7 @@
 	dir = 4
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "xJ" = (
 /obj/machinery/door/poddoor/shutters/indestructible,
@@ -3653,6 +4194,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
+"xO" = (
+/obj/effect/turf_decal/tile/purple/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "xQ" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
@@ -3666,12 +4217,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "xW" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "xY" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -3697,7 +4248,7 @@
 	anchored = 1
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "yg" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
@@ -3732,10 +4283,11 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/clothing/shoes/gunboots/disabler,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "yx" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/radio/intercom/mi13/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "yz" = (
@@ -3781,15 +4333,40 @@
 /turf/open/floor/iron/white/textured_large,
 /area/awaymission/beach/heretic)
 "yI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/plating,
-/area/awaymission/caves/heretic_laboratory_clean)
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "yL" = (
 /obj/machinery/door/airlock{
 	name = "Personal Dorm"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"yM" = (
+/obj/effect/turf_decal/tile/purple/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/item/radio/intercom/mi13/directional/west,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"yN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "yO" = (
 /obj/structure/chair/plastic,
@@ -3828,11 +4405,19 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"za" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "zb" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "zc" = (
 /obj/effect/light_emitter/fake_outdoors,
@@ -3854,7 +4439,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "zk" = (
 /mob/living/basic/trooper/nanotrasen/peaceful,
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "zl" = (
@@ -3883,6 +4467,11 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/awaymission/beach/heretic)
+"zE" = (
+/obj/structure/bookcase/random,
+/obj/effect/blessing,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "zF" = (
 /obj/structure/fluff/tram_rail/anchor{
 	dir = 1
@@ -3903,7 +4492,10 @@
 /turf/open/floor/asphalt,
 /area/awaymission/beach/heretic)
 "zO" = (
-/mob/living/basic/rabbit,
+/mob/living/basic/rabbit{
+	name = "Primal force of evil";
+	desc = "Why is this bunny being put in a cell this extreme and why does it have a nametag that says 'hello my name is: SATAN'"
+	},
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
 "zQ" = (
@@ -4014,6 +4606,25 @@
 	},
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
+"AB" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
+"AC" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "AD" = (
 /mob/living/basic/heretic_summon/stalker,
 /turf/open/floor/plating,
@@ -4024,6 +4635,24 @@
 /obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"AI" = (
+/obj/effect/turf_decal/tile/purple/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"AJ" = (
+/obj/structure/toilet{
+	dir = 4;
+	pixel_x = -2
+	},
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
 "AK" = (
 /obj/effect/decal/cleanable/blood/tracks/xeno{
 	dir = 5
@@ -4048,8 +4677,18 @@
 "AP" = (
 /obj/structure/chair/plastic,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
+"AQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "AR" = (
 /obj/item/reagent_containers/cup/soda_cans/sol_dry{
 	pixel_y = 18;
@@ -4068,6 +4707,15 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory_clean)
+"AZ" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lantern/on,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
+"Bc" = (
+/obj/item/radio/intercom/mi13/directional/east,
+/turf/open/floor/iron/large,
+/area/awaymission/caves/heretic_laboratory)
 "Be" = (
 /obj/machinery/gateway,
 /turf/open/floor/pod/dark,
@@ -4093,7 +4741,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"Bl" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/sign/poster/contraband/eat/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
+"Bm" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin/empty{
+	name = "Towel bin"
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "Bq" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -4114,8 +4775,15 @@
 "Bv" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Bx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "By" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/iron/dark,
@@ -4136,8 +4804,19 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"BS" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "BU" = (
 /obj/structure/holosign/barrier/atmos/tram,
@@ -4174,7 +4853,6 @@
 /area/awaymission/caves/heretic_laboratory)
 "Ce" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Cf" = (
@@ -4216,8 +4894,9 @@
 /mob/living/basic/heretic_summon/maid_in_the_mirror,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Cy" = (
 /obj/structure/holosign/barrier/atmos/tram,
@@ -4254,9 +4933,18 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
+"CG" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "CJ" = (
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"CP" = (
+/obj/item/radio/intercom/mi13/directional/east,
+/turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "CQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4266,6 +4954,10 @@
 "CS" = (
 /turf/open/floor/asphalt,
 /area/awaymission/beach/heretic)
+"CT" = (
+/obj/effect/blessing,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "CU" = (
 /obj/item/holosign_creator/atmos,
 /turf/open/floor/engine,
@@ -4273,7 +4965,7 @@
 "CV" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/closet/secure_closet/bar,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "CW" = (
 /obj/effect/turf_decal/sand,
@@ -4283,6 +4975,11 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plating,
 /area/awaymission/beach/heretic)
+"CX" = (
+/obj/machinery/light/directional/east,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "CZ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -4290,6 +4987,10 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Df" = (
@@ -4300,13 +5001,12 @@
 "Dg" = (
 /obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/machinery/door/airlock/hatch,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Di" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Dj" = (
 /turf/closed/indestructible/rock,
@@ -4328,7 +5028,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/hatch,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Dr" = (
@@ -4336,8 +5035,15 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Ds" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Dt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -4365,16 +5071,25 @@
 /obj/item/stack/medical/suture,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
+"DB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/bar/fourcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "DC" = (
 /obj/structure/bookcase/random,
 /obj/machinery/light/directional/west,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "DG" = (
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "DJ" = (
@@ -4406,7 +5121,7 @@
 	dir = 6
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "DX" = (
 /obj/effect/turf_decal/siding/blue{
@@ -4415,6 +5130,16 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/beach/heretic)
+"DY" = (
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "DZ" = (
 /obj/effect/decal/cleanable/blood/tracks/xeno{
 	dir = 8
@@ -4426,6 +5151,15 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"Eb" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Ec" = (
@@ -4455,6 +5189,17 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/beach/heretic)
+"Er" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/dark/half{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "Es" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -4566,6 +5311,16 @@
 /obj/structure/table,
 /turf/open/floor/stone,
 /area/awaymission/beach/heretic)
+"EZ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Fe" = (
 /obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -4578,7 +5333,6 @@
 /obj/item/gun/ballistic/shotgun/riot,
 /obj/item/gun/ballistic/shotgun/riot,
 /obj/item/gun/ballistic/shotgun/riot,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Fi" = (
@@ -4594,13 +5348,19 @@
 /area/awaymission/beach/heretic)
 "Fm" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Fn" = (
-/obj/effect/blessing,
 /obj/item/kirbyplants/organic/plant10,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Fr" = (
 /obj/structure/fluff/tram_rail/anchor,
@@ -4615,7 +5375,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/fake_items/wabbajack,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Fw" = (
 /obj/structure/fluff/tram_rail{
@@ -4636,10 +5396,27 @@
 	},
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"FB" = (
+/obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"FC" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "FD" = (
 /obj/structure/table,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FF" = (
 /obj/machinery/light/very_dim/directional/east,
@@ -4650,6 +5427,13 @@
 /obj/structure/flora/tree/jungle/small/style_random,
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
+"FH" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "FM" = (
 /obj/item/toy/dodgeball{
 	name = "William";
@@ -4674,7 +5458,9 @@
 /area/awaymission/beach/heretic)
 "FR" = (
 /obj/machinery/recharge_station,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "FT" = (
 /obj/structure/toilet{
@@ -4713,11 +5499,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Gb" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/grille,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"Gf" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/damaged_window,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Gg" = (
@@ -4752,13 +5547,24 @@
 "Gp" = (
 /mob/living/basic/bot/medbot/mysterious,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Gq" = (
+/obj/structure/sign/poster/contraband/energy_swords/directional/east,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "Gs" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/flare/candle/infinite,
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Gt" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Gu" = (
 /obj/structure/table/wood/fancy,
 /obj/item/kitchen/fork,
@@ -4774,6 +5580,16 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
+"Gy" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Gz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -4781,17 +5597,27 @@
 "GC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "GD" = (
 /obj/structure/rack,
 /turf/open/floor/pod/dark,
 /area/awaymission/beach/heretic)
+"GE" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"GF" = (
+/obj/structure/dresser,
+/obj/effect/blessing,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "GH" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "GJ" = (
 /obj/effect/turf_decal/siding/blue{
@@ -4807,7 +5633,7 @@
 /obj/machinery/light/floor,
 /obj/item/slimepotion/slime/mutator,
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "GP" = (
 /obj/effect/spawner/random/vending/colavend,
@@ -4827,7 +5653,7 @@
 /obj/machinery/light/floor,
 /obj/structure/closet/crate/freezer,
 /obj/item/organ/appendix/corrupt,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "GV" = (
 /obj/structure/fluff/tram_rail,
@@ -4840,10 +5666,19 @@
 /obj/structure/fluff/tram_rail,
 /turf/open/misc/asteroid,
 /area/awaymission/caves/heretic_laboratory)
+"GY" = (
+/obj/structure/bed/double,
+/obj/effect/spawner/random/bedsheet/double,
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "GZ" = (
 /obj/structure/rack,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Hb" = (
 /turf/open/floor/wood,
@@ -4851,9 +5686,9 @@
 "Hc" = (
 /obj/structure/table,
 /obj/machinery/light/directional/east,
-/obj/effect/blessing,
 /obj/item/ammo_box/magazine/m7mm,
-/turf/open/floor/iron/small,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Hf" = (
 /obj/structure/disposalpipe/segment{
@@ -4874,6 +5709,14 @@
 	},
 /turf/open/floor/iron/large,
 /area/awaymission/beach/heretic)
+"Hj" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/mapping_helpers/airlock/access/all/service,
+/obj/machinery/door/airlock/glass{
+	name = "Bar"
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "Hk" = (
 /obj/effect/turf_decal/siding/blue,
 /obj/effect/turf_decal/siding/blue{
@@ -4902,8 +5745,11 @@
 /obj/item/stack/rods,
 /obj/item/stack/sheet/iron,
 /obj/item/stack/sheet/iron,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Hr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -4917,7 +5763,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/fakeartefact,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Hx" = (
 /obj/effect/turf_decal/siding/wood{
@@ -4936,18 +5782,26 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/beach/heretic)
+"HC" = (
+/obj/effect/blessing,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/heretic_laboratory)
 "HF" = (
 /obj/machinery/computer/cargo/request{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "HH" = (
 /turf/open/floor/mineral/uranium,
 /area/awaymission/beach/heretic)
+"HJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "HL" = (
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4978,7 +5832,6 @@
 "HR" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/mapping_helpers/airlock/access/all/admin/captain,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "HU" = (
@@ -5006,15 +5859,22 @@
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory)
 "Ia" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/small,
+/turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "Ib" = (
 /obj/item/gun/ballistic/automatic/napad/no_mag{
 	pixel_x = -3
 	},
 /obj/structure/rack,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Id" = (
@@ -5022,7 +5882,6 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ie" = (
@@ -5045,6 +5904,11 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
+"Ik" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "Il" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/cafeteria,
@@ -5056,6 +5920,17 @@
 /obj/structure/dresser,
 /turf/open/floor/carpet,
 /area/awaymission/beach/heretic)
+"In" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"Io" = (
+/obj/machinery/door/window/right/directional/west,
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
 "Ir" = (
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "e";
@@ -5072,6 +5947,13 @@
 	dir = 8
 	},
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"Iv" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin/empty{
+	name = "Towel bin"
+	},
+/turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "Iw" = (
 /obj/structure/closet/crate/grave,
@@ -5098,6 +5980,14 @@
 /obj/effect/light_emitter/fake_outdoors,
 /turf/open/misc/asteroid,
 /area/awaymission/beach/heretic)
+"ID" = (
+/obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "IF" = (
 /obj/structure/fluff/tram_rail/anchor,
 /obj/effect/turf_decal/delivery,
@@ -5108,8 +5998,9 @@
 /mob/living/basic/heretic_summon/raw_prophet,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "II" = (
 /obj/structure/fluff/tram_rail,
@@ -5139,8 +6030,8 @@
 "IQ" = (
 /obj/machinery/shower/directional/east,
 /obj/structure/window/spawner/directional/north,
-/obj/machinery/door/window/right/directional/east,
 /obj/structure/curtain,
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "IS" = (
@@ -5164,6 +6055,11 @@
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"IZ" = (
+/obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Ja" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -5171,6 +6067,13 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach/heretic)
+"Jb" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Jf" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
@@ -5182,7 +6085,6 @@
 /obj/machinery/computer/camera_advanced{
 	dir = 4
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ji" = (
@@ -5191,6 +6093,21 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
+"Jn" = (
+/obj/structure/sign/poster/contraband/double_rainbow/directional/east,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"Jo" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Jp" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 1
@@ -5223,6 +6140,13 @@
 /obj/structure/bed/maint,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
+"Jz" = (
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "JA" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8
@@ -5245,6 +6169,11 @@
 /obj/effect/spawner/random/food_or_drink/seed_vault,
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
+"JK" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
 "JM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/mech_bay_power_console{
@@ -5277,6 +6206,20 @@
 	},
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory)
+"JQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"JR" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "JS" = (
 /obj/structure/table/reinforced,
 /obj/structure/displaycase/forsale/kitchen{
@@ -5284,7 +6227,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "JT" = (
 /obj/machinery/conveyor/auto{
@@ -5304,7 +6247,15 @@
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/fullupgrade,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"JX" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "JY" = (
 /obj/structure/table,
@@ -5318,9 +6269,16 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "Kb" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Kd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "Kg" = (
 /obj/effect/mapping_helpers/airlock/access/all/admin,
 /obj/machinery/door/airlock/highsecurity{
@@ -5329,7 +6287,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Kj" = (
@@ -5424,7 +6381,7 @@
 /obj/structure/chair/plastic,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "KG" = (
 /obj/item/bedsheet/black/double{
@@ -5435,6 +6392,10 @@
 /obj/structure/bed/double,
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
+"KH" = (
+/obj/item/radio/intercom/mi13/directional/south,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "KO" = (
 /obj/machinery/computer/communications{
 	dir = 1
@@ -5464,7 +6425,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/fake_items/time_stopper,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Lc" = (
 /obj/structure/chair/sofa/bench{
@@ -5480,7 +6441,7 @@
 "Le" = (
 /obj/structure/table,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Lh" = (
 /turf/closed/indestructible/rock,
@@ -5496,6 +6457,8 @@
 	dir = 4
 	},
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ln" = (
@@ -5511,7 +6474,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Lv" = (
 /obj/structure/fluff/bus/passable,
@@ -5528,7 +6491,6 @@
 /obj/machinery/mass_driver/feeder{
 	dir = 4
 	},
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Ly" = (
@@ -5536,6 +6498,7 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "LC" = (
@@ -5582,7 +6545,7 @@
 	},
 /obj/structure/bed/double,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Ma" = (
 /obj/machinery/door/airlock/highsecurity,
@@ -5626,6 +6589,14 @@
 /obj/effect/turf_decal/trimline/red/line,
 /turf/closed/wall/mineral/iron,
 /area/awaymission/beach/heretic)
+"Mk" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Ml" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5633,7 +6604,7 @@
 	dir = 4
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/awaymission/caves/heretic_laboratory)
 "Mn" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -5660,6 +6631,11 @@
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"Ms" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/structure/sign/poster/contraband/donk_co/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Mt" = (
 /obj/machinery/door/airlock/highsecurity{
 	max_integrity = 10000;
@@ -5710,6 +6686,12 @@
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"ML" = (
+/obj/structure/bookcase/random,
+/obj/machinery/light/directional/west,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "MP" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/thermoplastic/light,
@@ -5724,8 +6706,11 @@
 /area/awaymission/beach/heretic)
 "MS" = (
 /obj/machinery/vending/donksnack,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "MT" = (
 /mob/living/basic/heretic_summon/stalker,
@@ -5742,7 +6727,26 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"MX" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"MY" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Na" = (
 /turf/open/misc/dirt/jungle,
@@ -5752,6 +6756,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Armory"
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Nc" = (
@@ -5771,6 +6776,7 @@
 /area/awaymission/beach/heretic)
 "Nj" = (
 /obj/machinery/light/directional/west,
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Nm" = (
@@ -5778,7 +6784,6 @@
 /obj/structure/chair/office/tactical{
 	dir = 8
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Nn" = (
@@ -5822,22 +6827,45 @@
 "Nv" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Nz" = (
 /obj/effect/mob_spawn/corpse/human/skeleton/cultist,
 /turf/open/misc/beach/sand,
 /area/awaymission/caves/heretic_laboratory_clean)
+"NA" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "NB" = (
 /obj/effect/spawner/random/heretic_gateway,
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
+"ND" = (
+/obj/structure/sign/poster/contraband/babel_device/directional/east,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"NG" = (
+/obj/structure/safe/floor,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/cigarette/rollie/cannabis,
+/obj/item/cigarette/rollie/cannabis,
+/obj/item/cigarette/rollie/cannabis,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "NI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
 /mob/living/basic/migo,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/bar/fourcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "NO" = (
 /obj/machinery/conveyor/auto{
@@ -5855,7 +6883,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "NX" = (
@@ -5868,6 +6895,17 @@
 /obj/structure/table/optable,
 /turf/open/floor/stone,
 /area/awaymission/beach/heretic)
+"Oa" = (
+/obj/structure/chair/comfy{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"Oc" = (
+/obj/structure/table/wood,
+/obj/item/pen,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Od" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -5905,6 +6943,19 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"Ok" = (
+/obj/effect/turf_decal/tile/dark_red/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"Op" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/free_tonto/directional/west,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Oq" = (
 /obj/item/seeds/organ_tree,
 /turf/open/misc/grass/jungle/station,
@@ -5916,6 +6967,13 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
+"Ot" = (
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Ow" = (
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/grass/jungle/station,
@@ -5924,11 +6982,27 @@
 /obj/effect/turf_decal/tile/dark_green/half{
 	dir = 8
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
+"Oz" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"OC" = (
+/obj/machinery/conveyor/auto{
+	dir = 1
+	},
+/obj/structure/sign/poster/abductor/ayy_piping/directional/east,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory_clean)
 "OG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
 "OJ" = (
@@ -5950,6 +7024,13 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
+"OL" = (
+/obj/effect/turf_decal/tile/dark_red/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/mi13/directional/east,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "OM" = (
 /obj/item/clothing/mask/gas/welding/up,
 /obj/effect/decal/cleanable/blood/tracks/xeno,
@@ -5969,7 +7050,7 @@
 "OQ" = (
 /obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "OR" = (
 /obj/structure/table/wood,
@@ -5996,6 +7077,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Pa" = (
@@ -6019,10 +7101,19 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
-"Pc" = (
+"Pb" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"Pc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/blessing,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/awaymission/caves/heretic_laboratory)
 "Ph" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/light,
@@ -6039,9 +7130,19 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Pq" = (
+/obj/machinery/vending/sustenance,
 /obj/effect/blessing,
-/turf/closed/indestructible/riveted,
-/area/awaymission/caves/heretic_laboratory_clean)
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"Pw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/awaymission/caves/heretic_laboratory)
 "Px" = (
 /obj/machinery/door/airlock{
 	name = "Personal Dorm"
@@ -6063,15 +7164,15 @@
 /area/awaymission/beach/heretic)
 "PD" = (
 /obj/structure/barricade/sandbags,
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "PE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
 /mob/living/basic/faithless,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/bar/fourcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "PF" = (
 /obj/machinery/power/shuttle_engine/heater{
@@ -6099,10 +7200,10 @@
 /turf/open/floor/pod/light,
 /area/awaymission/beach/heretic)
 "PL" = (
-/obj/effect/blessing,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/jungle/c/style_random,
+/obj/effect/blessing,
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/heretic_laboratory)
 "PN" = (
@@ -6121,7 +7222,7 @@
 /obj/machinery/light/floor,
 /obj/structure/closet/crate/freezer,
 /obj/item/organ/eyes/corrupt,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "PU" = (
 /obj/machinery/door/airlock{
@@ -6199,8 +7300,9 @@
 /mob/living/basic/heretic_summon/ash_spirit,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_green/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Qn" = (
 /obj/effect/mapping_helpers/airlock/access/all/supply,
@@ -6217,10 +7319,18 @@
 /turf/open/floor/plating,
 /area/awaymission/beach/heretic)
 "Qr" = (
-/obj/effect/blessing,
 /obj/effect/spawner/random/trash/bacteria,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Qt" = (
+/obj/structure/bed/double,
+/obj/effect/spawner/random/bedsheet/double,
+/obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Qx" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -6231,7 +7341,7 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/gun/energy/shrink_ray/one_shot,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "QB" = (
 /obj/effect/decal/cleanable/blood/tracks/xeno{
@@ -6239,6 +7349,20 @@
 	},
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
+"QE" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "QF" = (
 /obj/structure/fluff/tram_rail/end,
 /turf/open/floor/iron/large,
@@ -6268,6 +7392,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "QM" = (
@@ -6300,13 +7425,13 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Rb" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Re" = (
 /obj/effect/turf_decal/siding/wood{
@@ -6318,7 +7443,6 @@
 /turf/open/floor/wood,
 /area/awaymission/beach/heretic)
 "Rl" = (
-/obj/effect/blessing,
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/random/heretic_gateway_low,
 /turf/open/floor/plating,
@@ -6347,6 +7471,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"Rv" = (
+/obj/effect/turf_decal/tile/bar/fourcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Rw" = (
 /obj/effect/decal/cleanable/blood/tracks/xeno{
 	dir = 9
@@ -6367,8 +7496,16 @@
 /obj/structure/table,
 /obj/machinery/light/floor,
 /obj/item/gun/magic/staff,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
+"RB" = (
+/obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/bar/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "RE" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -6405,6 +7542,10 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "RR" = (
@@ -6427,6 +7568,10 @@
 /obj/item/knife/hunting,
 /turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory_clean)
+"RU" = (
+/obj/structure/sign/poster/official/safety_internals/directional/west,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "RW" = (
 /obj/machinery/light/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
@@ -6435,6 +7580,13 @@
 "RY" = (
 /obj/structure/table,
 /obj/effect/spawner/random/exotic/tool,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"RZ" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Sb" = (
@@ -6484,10 +7636,37 @@
 /obj/machinery/door/poddoor/shutters/indestructible,
 /turf/open/floor/plating,
 /area/awaymission/beach/heretic)
+"Sn" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/structure/sign/poster/contraband/blood_geometer/directional/north,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Sq" = (
 /obj/item/keycard/heretic_entrance,
 /turf/open/floor/black,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Ss" = (
+/obj/effect/turf_decal/tile/brown/opposingcorners,
+/obj/structure/sign/poster/contraband/eistee/directional/west,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"St" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Su" = (
 /obj/structure/table,
 /obj/machinery/light/directional/east,
@@ -6500,12 +7679,20 @@
 /obj/machinery/door/window/right/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"SC" = (
+/obj/structure/closet/cabinet,
+/obj/item/sticker/pslime,
+/turf/open/floor/wood,
 /area/awaymission/caves/heretic_laboratory)
 "SG" = (
 /obj/machinery/vending/engivend,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "SI" = (
 /obj/machinery/light/floor,
@@ -6525,12 +7712,12 @@
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "SP" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /obj/structure/chair/stool/bar/directional/north,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "SQ" = (
 /obj/item/paper/fluff/awaymissions/heretic/blackroomhint,
@@ -6567,9 +7754,12 @@
 /turf/open/water/beach,
 /area/awaymission/beach/heretic)
 "Tc" = (
-/obj/machinery/light/directional/west,
+/obj/structure/closet/cabinet,
+/obj/effect/turf_decal/tile/blue/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Td" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -6588,13 +7778,16 @@
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Ti" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Tk" = (
@@ -6627,6 +7820,16 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Ts" = (
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"TA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
 "TB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron,
@@ -6635,9 +7838,15 @@
 /mob/living/basic/construct/wraith,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/bar/fourcorners,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
+"TG" = (
+/obj/machinery/light/directional/east,
+/obj/effect/blessing,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "TI" = (
 /obj/structure/chair/plastic{
 	dir = 4
@@ -6655,6 +7864,16 @@
 /obj/structure/chair/plastic,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"TM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "TO" = (
 /obj/effect/decal/remains/robot,
 /obj/machinery/light/directional/east,
@@ -6679,6 +7898,13 @@
 	},
 /turf/closed/indestructible/reinforced,
 /area/awaymission/caves/heretic_laboratory)
+"TY" = (
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Ua" = (
 /turf/open/misc/beach/coast{
 	dir = 8
@@ -6694,10 +7920,17 @@
 "Ug" = (
 /turf/open/misc/beach/coast/corner,
 /area/awaymission/beach/heretic)
+"Ui" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Uj" = (
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/structure/closet/crate,
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Um" = (
@@ -6720,7 +7953,9 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "Up" = (
 /obj/machinery/vending/security,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Uq" = (
 /obj/machinery/shower{
@@ -6739,8 +7974,9 @@
 "Uy" = (
 /obj/item/kirbyplants/fern,
 /obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/green/half/contrasted,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "UA" = (
 /obj/structure/table/wood,
@@ -6765,7 +8001,9 @@
 "UE" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/armory/disablers,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "UF" = (
 /obj/effect/decal/cleanable/crayon{
@@ -6782,8 +8020,11 @@
 /area/awaymission/caves/heretic_laboratory)
 "UG" = (
 /obj/machinery/vending/modularpc,
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "UL" = (
 /obj/structure/transport/linear/tram,
@@ -6801,7 +8042,6 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 4
 	},
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "UQ" = (
@@ -6823,6 +8063,7 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "UX" = (
@@ -6832,8 +8073,13 @@
 "UY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
+/area/awaymission/caves/heretic_laboratory)
+"Ve" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
 "Vh" = (
 /obj/machinery/light/directional/east,
@@ -6841,6 +8087,7 @@
 /obj/effect/turf_decal/tile/dark{
 	dir = 4
 	},
+/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Vi" = (
@@ -6849,16 +8096,28 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "Vj" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
+"Vl" = (
+/obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"Vn" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Vr" = (
 /obj/machinery/door/window/right/directional/north,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Vt" = (
 /turf/open/indestructible/plating,
@@ -6876,6 +8135,10 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"VA" = (
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory_clean)
 "VB" = (
 /obj/structure/table,
 /obj/item/radio{
@@ -6901,11 +8164,11 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "VG" = (
 /obj/structure/table,
-/obj/effect/blessing,
 /obj/item/fake_items/lahti_l39{
 	pixel_x = 16
 	},
-/turf/open/floor/iron/small,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "VI" = (
 /obj/structure/table,
@@ -6936,12 +8199,26 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"VY" = (
+/obj/effect/turf_decal/tile/dark_red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "VZ" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
 /area/awaymission/beach/heretic)
+"Wa" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/turf_decal/tile/yellow/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "Wc" = (
 /obj/effect/decal/remains/human,
 /obj/machinery/light/directional/east,
@@ -6949,6 +8226,10 @@
 /area/awaymission/caves/heretic_laboratory)
 "Wd" = (
 /turf/open/floor/iron/checker,
+/area/awaymission/caves/heretic_laboratory)
+"Wj" = (
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Wk" = (
 /obj/item/bedsheet/black{
@@ -6961,14 +8242,17 @@
 /area/awaymission/beach/heretic)
 "Wl" = (
 /obj/structure/chair/stool/bar/directional/north,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/clown/directional/east,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Wn" = (
-/obj/structure/dresser,
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
 "Wo" = (
 /obj/machinery/power/rtg/lavaland,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
@@ -7069,9 +8353,13 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"WN" = (
+/obj/item/radio/intercom/mi13/directional/east,
+/obj/effect/blessing,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory_clean)
 "WO" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "WR" = (
@@ -7081,7 +8369,6 @@
 /turf/open/floor/asphalt,
 /area/awaymission/beach/heretic)
 "WT" = (
-/obj/effect/blessing,
 /obj/effect/spawner/random/trash,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
@@ -7093,7 +8380,16 @@
 /area/awaymission/caves/heretic_laboratory)
 "WY" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
+/area/awaymission/caves/heretic_laboratory)
+"WZ" = (
+/obj/structure/bed/double,
+/obj/effect/spawner/random/bedsheet/double,
+/obj/effect/turf_decal/tile/dark_green/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Xa" = (
 /obj/structure/flora/bush/jungle/a/style_random,
@@ -7119,6 +8415,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"Xg" = (
+/obj/structure/closet/secure_closet,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/clothing/neck/stethoscope,
+/obj/item/stack/tile/iron/small,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Xk" = (
@@ -7129,8 +8433,11 @@
 /area/awaymission/caves/heretic_laboratory)
 "Xl" = (
 /obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 1
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Xm" = (
 /obj/structure/fluff/tram_rail/anchor,
@@ -7141,7 +8448,6 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "Xo" = (
@@ -7170,13 +8476,18 @@
 /area/awaymission/caves/heretic_laboratory)
 "Xv" = (
 /obj/effect/turf_decal/tile/brown/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "Xx" = (
 /obj/machinery/shower/directional/south,
-/obj/structure/fans/tiny,
 /obj/structure/curtain,
-/turf/open/floor/iron/small,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"Xy" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/item/radio/intercom/mi13/directional/west,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
 "XB" = (
 /obj/structure/table/glass,
@@ -7197,7 +8508,7 @@
 "XC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "XI" = (
 /obj/machinery/disposal/bin,
@@ -7217,10 +8528,26 @@
 	},
 /turf/open/floor/iron/white,
 /area/awaymission/caves/heretic_laboratory)
+"XO" = (
+/obj/structure/sign/poster/contraband/beekind/directional/west,
+/turf/open/floor/iron/large,
+/area/awaymission/caves/heretic_laboratory_clean)
 "XQ" = (
 /obj/structure/chair/stool/bar/directional/south,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 4
+	},
+/obj/item/radio/intercom/mi13/directional/east,
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
+"XR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "XS" = (
 /obj/structure/chair/plastic{
@@ -7257,6 +8584,12 @@
 /obj/item/reagent_containers/cup/bucket/wooden,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
+"Yb" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/bar/half/contrasted,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Yc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/west,
@@ -7274,11 +8607,11 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Ym" = (
-/obj/effect/blessing,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/south,
 /obj/structure/flora/bush/jungle/c/style_random,
+/obj/effect/blessing,
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/heretic_laboratory)
 "Yn" = (
@@ -7318,7 +8651,7 @@
 	anchored = 1
 	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory_clean)
 "Yv" = (
 /turf/closed/wall/mineral/plastitanium{
@@ -7327,8 +8660,23 @@
 /area/awaymission/caves/heretic_laboratory_clean)
 "Yw" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
+"Yx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar/half/contrasted{
+	dir = 1
+	},
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "Yy" = (
 /obj/structure/chair/comfy/shuttle/tactical,
 /mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful{
@@ -7359,7 +8707,6 @@
 "YO" = (
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "YP" = (
@@ -7457,6 +8804,13 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)
+"Zp" = (
+/mob/living/basic/slime/pet{
+	name = "Gilbert";
+	desc = "What a cute slime, they seem relieved to see you"
+	},
+/turf/open/floor/wood,
+/area/awaymission/caves/heretic_laboratory)
 "Zs" = (
 /obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
 	dir = 1
@@ -7465,14 +8819,17 @@
 /area/awaymission/caves/heretic_laboratory)
 "Zv" = (
 /obj/machinery/shower/directional/north,
-/obj/structure/fans/tiny,
 /obj/structure/curtain,
-/turf/open/floor/iron/small,
+/obj/structure/fluff/shower_drain,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Zw" = (
 /obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
 /obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "Zy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7481,13 +8838,14 @@
 /area/awaymission/caves/heretic_laboratory)
 "ZD" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ZG" = (
 /obj/item/weldingtool/hugetank,
 /obj/item/clothing/head/utility/welding,
 /obj/item/wrench,
-/obj/effect/blessing,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory_clean)
 "ZH" = (
@@ -7499,6 +8857,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/awaymission/caves/heretic_laboratory)
+"ZK" = (
+/obj/effect/turf_decal/tile/dark_green/half{
+	dir = 8
+	},
+/obj/item/radio/intercom/mi13/directional/west,
+/obj/effect/blessing,
+/turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory)
 "ZL" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -7530,14 +8896,16 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/turf/open/floor/iron/small,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/blessing,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ZV" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron/small,
+/turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory_clean)
 "ZX" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -7545,19 +8913,18 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
+/turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
 "ZY" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory)
 "ZZ" = (
-/obj/effect/blessing,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/west,
 /obj/structure/flora/bush/jungle/c/style_random,
+/obj/effect/blessing,
 /turf/open/misc/grass/jungle,
 /area/awaymission/caves/heretic_laboratory)
 
@@ -8505,7 +9872,7 @@ yV
 yV
 yV
 yV
-yV
+OC
 yV
 tN
 xl
@@ -12552,40 +13919,40 @@ Sv
 xl
 Qr
 WT
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -12638,7 +14005,7 @@ aw
 mq
 xQ
 xQ
-xQ
+sN
 KB
 RS
 vj
@@ -12808,41 +14175,41 @@ Sv
 Sv
 xl
 WT
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -13064,42 +14431,42 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 zk
 zk
-yI
-yI
+vu
+vu
 xa
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -13140,7 +14507,7 @@ KB
 hs
 hs
 hs
-Kb
+Az
 vu
 IK
 vu
@@ -13165,7 +14532,7 @@ bG
 xQ
 xQ
 KB
-xQ
+ul
 xQ
 xQ
 xQ
@@ -13321,9 +14688,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 wi
 Az
 Az
@@ -13342,7 +14709,7 @@ PD
 PD
 PD
 Lx
-Pq
+wi
 Az
 Az
 Az
@@ -13354,9 +14721,9 @@ Az
 Az
 Az
 wi
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -13397,7 +14764,7 @@ KB
 hs
 hs
 hs
-Kb
+Az
 vu
 IK
 vu
@@ -13578,9 +14945,9 @@ mv
 mv
 mv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -13611,9 +14978,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 KB
 KB
@@ -13654,7 +15021,7 @@ KB
 hs
 hs
 hs
-Kb
+Az
 vu
 IK
 vu
@@ -13836,8 +15203,8 @@ mv
 mv
 xl
 Uj
-yI
-yI
+vu
+vu
 Az
 Ry
 Ry
@@ -13868,9 +15235,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 mo
 mo
@@ -13910,8 +15277,8 @@ Aq
 KB
 hs
 hs
-hs
-Kb
+ji
+Az
 vu
 IK
 vu
@@ -14093,8 +15460,8 @@ mv
 Nz
 xl
 ZG
-yI
-yI
+vu
+vu
 Az
 Ry
 Ry
@@ -14125,9 +15492,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 mo
 If
@@ -14167,8 +15534,8 @@ JO
 KB
 hs
 TL
-hs
-Kb
+Oc
+Az
 vu
 IK
 vu
@@ -14349,9 +15716,9 @@ mv
 mv
 mv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -14382,9 +15749,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 mo
 If
@@ -14424,8 +15791,8 @@ Fe
 KB
 hs
 hs
-hs
-Kb
+AZ
+Az
 vu
 IK
 vu
@@ -14606,9 +15973,9 @@ mv
 mv
 mv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -14639,9 +16006,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 mo
 If
@@ -14682,7 +16049,7 @@ KB
 hs
 hs
 hs
-Kb
+Az
 vu
 IK
 vu
@@ -14863,9 +16230,9 @@ mv
 mv
 mv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -14896,9 +16263,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Js
 Gz
@@ -14939,7 +16306,7 @@ KB
 hs
 hs
 hs
-Kb
+Az
 vu
 IK
 vu
@@ -15120,9 +16487,9 @@ mv
 mv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -15153,9 +16520,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 KB
 KB
@@ -15186,7 +16553,7 @@ KB
 aE
 aE
 xC
-aE
+Bc
 dl
 HU
 dl
@@ -15196,7 +16563,7 @@ KB
 hs
 hs
 hs
-Kb
+Az
 vu
 IK
 vu
@@ -15377,9 +16744,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -15410,9 +16777,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -15634,9 +17001,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -15667,9 +17034,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -15891,9 +17258,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 wi
 Ry
 Ry
@@ -15924,9 +17291,9 @@ Ry
 Ry
 Ry
 wi
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -16148,9 +17515,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 PD
 Ry
 Ry
@@ -16181,9 +17548,9 @@ Ry
 Ry
 Ry
 PD
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -16208,8 +17575,8 @@ KB
 KB
 gm
 KB
-KB
-gm
+ix
+Io
 KB
 mI
 bq
@@ -16405,9 +17772,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 PD
 Ry
 Ry
@@ -16438,9 +17805,9 @@ Ry
 Ry
 Ry
 PD
-yI
+vu
 zk
-yI
+vu
 xl
 Sv
 Sv
@@ -16465,8 +17832,8 @@ KB
 Sd
 bq
 KB
-Sd
-bq
+Xu
+Xu
 KB
 bq
 bq
@@ -16662,9 +18029,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 PD
 Ry
 Ry
@@ -16695,9 +18062,9 @@ Ry
 Ry
 Ry
 PD
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -16722,8 +18089,8 @@ KB
 cw
 bq
 KB
-cw
-bq
+Bm
+vp
 KB
 bq
 bq
@@ -16919,8 +18286,8 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
+vu
+vu
 zk
 PD
 Ry
@@ -16953,8 +18320,8 @@ Ry
 Ry
 PD
 zk
-yI
-yI
+vu
+vu
 xl
 Sv
 Sv
@@ -17176,9 +18543,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 PD
 Ry
 Ry
@@ -17209,9 +18576,9 @@ Ry
 Ry
 Ry
 PD
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -17433,9 +18800,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 PD
 Ry
 Ry
@@ -17466,9 +18833,9 @@ Ry
 Ry
 Ry
 PD
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -17690,9 +19057,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 wi
 Ry
 Ry
@@ -17723,9 +19090,9 @@ Ry
 Ry
 Ry
 wi
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -17947,9 +19314,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -17980,9 +19347,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -18204,9 +19571,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -18237,9 +19604,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -18461,9 +19828,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -18494,9 +19861,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -18718,9 +20085,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -18751,9 +20118,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -18787,10 +20154,10 @@ xG
 xG
 xG
 wC
+CP
 bq
 bq
-bq
-bq
+Gq
 bq
 bq
 bq
@@ -18975,9 +20342,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -19008,9 +20375,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -19077,7 +20444,7 @@ Jv
 Jv
 Jv
 Jv
-Jv
+gV
 Jv
 Jv
 Jv
@@ -19232,9 +20599,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -19265,9 +20632,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -19295,8 +20662,8 @@ KB
 KB
 KB
 KB
-ay
-ay
+he
+xi
 OG
 KB
 bq
@@ -19489,9 +20856,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -19522,9 +20889,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -19548,7 +20915,7 @@ OG
 OG
 OG
 OG
-OG
+Kd
 OG
 OG
 OG
@@ -19746,9 +21113,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -19779,9 +21146,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -20003,9 +21370,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 Az
 Ry
 Ry
@@ -20036,9 +21403,9 @@ Ry
 Ry
 Ry
 Az
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -20064,20 +21431,20 @@ Sv
 Sv
 KB
 CV
-WY
+Xy
 Sx
 Xv
+Ss
 Xv
-Xv
-tS
+Hl
 CA
 wC
 xS
 bq
 bq
-Kb
+Az
 hE
-hE
+Bl
 Nv
 Vr
 Yw
@@ -20260,9 +21627,9 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
+vu
+vu
+vu
 wi
 Az
 Az
@@ -20293,9 +21660,9 @@ Az
 Az
 Az
 wi
-yI
-yI
-yI
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -20326,13 +21693,13 @@ xW
 SP
 Xv
 Xv
-tS
+Hl
 Wx
 wC
 xS
 bq
 bq
-Kb
+Az
 hE
 hE
 AP
@@ -20517,42 +21884,42 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 zk
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -20565,11 +21932,11 @@ Sv
 Sv
 Sv
 xl
-FY
-FY
-FY
-FY
-FY
+Wa
+Wa
+Wa
+Wa
+sO
 xl
 KB
 OG
@@ -20774,42 +22141,42 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 zk
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -20823,13 +22190,13 @@ Sv
 Sv
 xl
 qC
-FY
-FY
-FY
+Wa
+Wa
+Wa
 qC
 xl
 KB
-OG
+Oz
 KB
 Sv
 Sv
@@ -21033,40 +22400,40 @@ Sv
 xl
 Rl
 vq
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -21299,20 +22666,20 @@ xl
 xl
 xl
 xl
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
 Ce
 GC
 Ti
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
 xl
 xl
 xl
@@ -21354,13 +22721,13 @@ xW
 SP
 Xv
 Xv
-tS
+Hl
 bq
 wC
 xS
 bq
 bq
-Kb
+Az
 hE
 hE
 AP
@@ -21556,20 +22923,20 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 GC
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -21611,18 +22978,18 @@ JS
 Xv
 Xv
 Xv
-tS
+Hl
 bq
 wC
 xS
 bq
 bq
-Kb
+Az
 hE
-hE
+Ms
 KF
 Bv
-Yw
+kz
 zb
 xl
 Sv
@@ -21813,20 +23180,20 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
+vu
 GC
-yI
-yI
-yI
-yI
-yI
-yI
+vu
+vu
+vu
+vu
+vu
+vu
 xl
 Sv
 Sv
@@ -21863,7 +23230,7 @@ KB
 KB
 KB
 KB
-Hn
+Hj
 KB
 KB
 KB
@@ -22070,39 +23437,39 @@ Sv
 Sv
 Sv
 xl
-yI
-yI
-tS
-tS
-tS
-tS
-tS
+vu
+vu
+Hl
+Hl
+Hl
+Hl
+Hl
 Xe
-tS
-tS
-tS
-tS
-yI
-yI
+Hl
+Hl
+Hl
+Hl
+vu
+vu
 xl
 Sv
 Sv
 KB
 Cm
-dD
-dD
-Tc
-dD
-dD
-dD
-dD
+tS
+tS
+Nj
+tS
+tS
+tS
+tS
 Ks
-dD
-dD
-Tc
-dD
-dD
-dD
+tS
+tS
+Nj
+tS
+tS
+tS
 KB
 Sv
 xl
@@ -22331,7 +23698,7 @@ HR
 KB
 KB
 bA
-dD
+bq
 sr
 sr
 HF
@@ -22345,21 +23712,21 @@ KB
 KB
 Sv
 KB
-dD
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-dD
+tS
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+tS
 KB
 Sv
 xl
@@ -22583,40 +23950,40 @@ Sv
 Sv
 Sv
 KB
-dD
-dD
-dD
+bq
+bq
+RU
 KB
-dD
+bq
 kn
 kn
 kn
 bP
 kn
 kn
-dD
+bq
 KB
-dD
-dD
-dD
+RU
+bq
+bq
 KB
 Sv
 KB
-dD
-xT
-dD
-dD
-dD
-dD
-dD
-dD
+tS
+lV
+tS
+tS
+tS
+tS
+tS
+tS
 af
-dD
-dD
-dD
-dD
-xT
-dD
+tS
+tS
+tS
+tS
+lV
+tS
 KB
 Sv
 xl
@@ -22840,28 +24207,28 @@ Sv
 Sv
 Sv
 KB
-dD
-dD
-dD
+bq
+bq
+bq
 KB
-dD
-dD
+bq
+bq
 uS
-dD
-xT
-dD
+bq
+CQ
+bq
 bu
-dD
+bq
 KB
-dD
-dD
-dD
+bq
+bq
+bq
 KB
 Sv
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
 KB
 ci
@@ -22871,9 +24238,9 @@ ci
 ci
 KB
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
 Sv
 xl
@@ -22885,17 +24252,17 @@ xl
 am
 xl
 KB
+fo
 OG
 OG
 OG
 OG
 OG
-OG
-ay
-ay
-ay
-ay
-ay
+fW
+fW
+fW
+fW
+fW
 qr
 hp
 bq
@@ -23097,28 +24464,28 @@ Sv
 Sv
 Sv
 KB
-Xl
-dD
-dD
+mI
+bq
+bq
 HR
-dD
-dD
-dD
+bq
+bq
+bq
 UY
-xT
+CQ
 ol
-dD
-dD
+bq
+bq
 HR
-dD
-dD
-eS
+bq
+bq
+Br
 KB
 Sv
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
 Fh
 Nm
@@ -23128,9 +24495,9 @@ WO
 Nm
 Fh
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
 Sv
 Sv
@@ -23354,40 +24721,40 @@ Sv
 Sv
 Sv
 KB
-dD
-dD
-dD
+bq
+bq
+bq
 KB
-dD
-xb
-dD
-dD
-xT
-dD
-xb
-dD
+bq
+hp
+CP
+bq
+CQ
+bq
+hp
+bq
 KB
-dD
-dD
-dD
+bq
+bq
+bq
 KB
 Sv
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 vr
 WO
 YO
 Xn
 Id
-Xn
+OL
 Xn
 Xn
 Kg
-xT
-xT
-dD
+lV
+lV
+tS
 KB
 Sv
 Sv
@@ -23413,7 +24780,7 @@ Sv
 Sv
 KB
 vB
-wC
+ZX
 vB
 KB
 NQ
@@ -23670,7 +25037,7 @@ Sv
 Sv
 KB
 Xx
-wC
+ZX
 Zv
 KB
 Cp
@@ -23875,48 +25242,48 @@ Sv
 Sv
 Sv
 KB
-dD
-xT
-dD
-dD
-dD
-dD
-dD
-dD
+tS
+lV
+tS
+tS
+tS
+tS
+tS
+tS
 Ks
-dD
-dD
-dD
-dD
-xT
-dD
-dD
-dD
-dD
-dD
+tS
+tS
+tS
+tS
+lV
+tS
+tS
+tS
+tS
+tS
 KB
-dD
-dD
-dD
-dD
-dD
-xT
-dD
-dD
-dD
-dD
-dD
+tS
+tS
+tS
+tS
+tS
+lV
+tS
+tS
+tS
+tS
+tS
 Ks
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-iQ
-iQ
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+qL
+qL
 fI
 OG
 KB
@@ -23927,7 +25294,7 @@ Sv
 Sv
 KB
 vO
-wC
+ZX
 Ra
 KB
 xl
@@ -24132,48 +25499,48 @@ Sv
 Sv
 Sv
 KB
-dD
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-dD
-dD
-dD
-dD
-dD
+tS
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+tS
+tS
+tS
+tS
+tS
 KB
-dD
-dD
-dD
-dD
-dD
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-xT
-dD
+tS
+tS
+tS
+tS
+tS
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+tS
 KB
 KB
 KB
@@ -24184,7 +25551,7 @@ Sv
 Sv
 KB
 Xx
-wC
+ZX
 Zv
 KB
 lm
@@ -24389,48 +25756,48 @@ Sv
 Sv
 Sv
 KB
-Ia
-dD
-dD
-dD
-bt
-dD
+bJ
+tS
+tS
+tS
+CX
+tS
 af
-dD
-dD
-bt
-dD
-dD
-dD
-dD
-bt
-dD
-dD
-dD
+tS
+tS
+CX
+tS
+tS
+tS
+tS
+CX
+tS
+tS
+tS
 Cm
 KB
 Cm
-dD
-dD
-xb
-dD
-dD
-dD
-xb
-dD
-dD
-dD
+tS
+tS
+CX
+tS
+tS
+tS
+CX
+tS
+tS
+tS
 aQ
-dD
-dD
-dD
-xb
-dD
-dD
-dD
-dD
-xT
-dD
+tS
+tS
+tS
+CX
+tS
+tS
+tS
+tS
+lV
+tS
 KB
 Sv
 Sv
@@ -24441,7 +25808,7 @@ Sv
 Sv
 KB
 vB
-wC
+ZX
 vB
 KB
 lm
@@ -24685,9 +26052,9 @@ KB
 KB
 KB
 KB
-Xl
-xT
-dD
+bJ
+lV
+tS
 KB
 KB
 KB
@@ -24698,7 +26065,7 @@ KB
 KB
 KB
 KB
-eg
+pP
 KB
 KB
 KB
@@ -24904,16 +26271,16 @@ xl
 xl
 xl
 dY
-DC
+ML
 dY
 dY
-DC
+ML
 dY
-Pc
-Pc
-Pc
-dw
-Le
+Kb
+Kb
+Kb
+rf
+dr
 xl
 Sv
 Sv
@@ -24942,29 +26309,29 @@ Vt
 Vt
 Vt
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-cN
-FD
+ID
+BS
 ls
-dD
-dD
-Fm
-Fm
-Fm
-dD
-ZX
-dD
-Fm
-Fm
-Fm
-dD
-dD
+Jb
+Jb
+bc
+bc
+bc
+TM
+uj
+Yb
+bc
+bc
+bc
+Jb
+Jb
 cV
-FD
-cN
+BS
+FB
 KB
 Sv
 KB
@@ -25158,19 +26525,19 @@ Sv
 Sv
 Sv
 xl
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
 xl
 Sv
 Sv
@@ -25199,29 +26566,29 @@ uy
 uy
 uy
 BW
-xT
-xT
-dD
+lV
+lV
+tS
 KB
-dD
-dD
-BN
-dD
-dD
-Fm
-Fm
-Fm
-dD
+eN
+Wj
+EZ
+Wj
+Wj
+tl
+tl
+tl
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-BN
-dD
-dD
+Yb
+tl
+tl
+tl
+Wj
+CG
+EZ
+Vl
+JR
 KB
 Sv
 KB
@@ -25415,19 +26782,19 @@ Sv
 Sv
 Sv
 xl
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Le
-Pc
-Pc
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+dr
+Kb
+Kb
 xl
 Sv
 Sv
@@ -25456,29 +26823,29 @@ KB
 KB
 KB
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
 Xl
-dD
+JR
 Qm
-xT
-xT
-Lp
+fm
 xT
 Lp
-xT
+AQ
+Lp
+iN
 Ml
-xT
+so
+Lp
+dp
 Lp
 xT
-Lp
-xT
-xT
+St
 iD
-dD
-eS
+eN
+uQ
 KB
 Sv
 KB
@@ -25672,7 +27039,7 @@ Sv
 xl
 xl
 xl
-Pc
+FY
 bZ
 xl
 xl
@@ -25680,11 +27047,11 @@ xl
 dY
 dY
 dY
-Pc
+Kb
 pJ
-Le
-Pc
-Pc
+dr
+Kb
+Kb
 xl
 Sv
 Sv
@@ -25697,45 +27064,45 @@ Sv
 KB
 uy
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
 CU
 gI
 MB
 KB
-hs
-hs
-hs
+IP
+XO
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-kE
-dD
-dD
-Fm
-Fm
-Fm
-dD
+eN
+Wj
+Gy
+Wj
+Wj
+tl
+tl
+tl
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-kE
-dD
-dD
+Yb
+tl
+tl
+tl
+Wj
+Ds
+Gy
+nQ
+JR
 KB
 Sv
 KB
@@ -25927,21 +27294,21 @@ Sv
 Sv
 Sv
 xl
-dY
+zE
 DC
-Pc
-Pc
-dw
-Wn
+CT
+CT
+ts
+GF
 xl
-Le
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
+dr
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
 xl
 Sv
 Sv
@@ -25954,45 +27321,45 @@ Sv
 KB
 uy
 KB
-hs
+IP
 yw
-hs
+IP
 KB
 AT
 Jf
 ob
 KB
-hs
+IP
 Qz
-hs
+IP
 KB
-hs
+IP
 uN
-hs
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-lY
-dD
-dD
-dD
-dD
-Fm
-Fm
-Fm
-dD
+WZ
+Gt
+Gt
+Gt
+Gt
+Ia
+Ia
+Ia
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-dD
-dD
-lY
+Yb
+Ia
+Ia
+Ia
+Gt
+Gt
+Gt
+Gt
+rx
 KB
 Sv
 KB
@@ -26184,21 +27551,21 @@ Sv
 Sv
 Sv
 xl
-Pc
-Pc
-Pc
-Pc
-Pc
-Wn
+CT
+CT
+CT
+CT
+CT
+GF
 xl
 dY
 AG
 dY
-Pc
-Pc
-Pc
+Kb
+Kb
+Kb
 Uo
-Le
+dr
 xl
 Sv
 Sv
@@ -26211,27 +27578,25 @@ Sv
 KB
 uy
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
 ze
 Bq
 BX
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
-KB
-KB
+tS
+lV
+tS
 KB
 KB
 KB
@@ -26239,7 +27604,9 @@ KB
 KB
 KB
 KB
-Xl
+KB
+KB
+AC
 Ml
 eS
 KB
@@ -26441,12 +27808,12 @@ Sv
 Sv
 Sv
 xl
-dY
-dY
-Pc
-Pc
-Pc
-Wn
+zE
+zE
+CT
+CT
+CT
+GF
 xl
 xl
 xl
@@ -26484,29 +27851,29 @@ rK
 DJ
 rK
 KB
-Xl
-xT
-dD
+bJ
+lV
+tS
 KB
-cN
-FD
+ID
+BS
 ls
-dD
-dD
-Fm
-Fm
-Fm
-dD
+Jb
+Jb
+bc
+bc
+bc
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-ls
-FD
-cN
+Yb
+tl
+tl
+tl
+Wj
+Wj
+Pq
+pW
+FB
 KB
 Sv
 KB
@@ -26701,17 +28068,17 @@ xl
 iU
 br
 xI
-Pc
-Pc
+CT
+CT
 Di
 xl
 xl
-Di
+vf
 dw
-Pc
-Pc
+VA
+VA
 dw
-Di
+vf
 xl
 Sv
 Sv
@@ -26729,9 +28096,9 @@ jW
 jW
 jW
 CZ
-DG
+AI
 wI
-DG
+AI
 nw
 jW
 jc
@@ -26741,29 +28108,29 @@ Ox
 Ox
 Ox
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-BN
-dD
-dD
-Fm
-Fm
-Fm
-dD
+eN
+Wj
+EZ
+Wj
+Wj
+tl
+tl
+tl
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-BN
-dD
-dD
+Yb
+tl
+tl
+tl
+Wj
+Wj
+EZ
+Wj
+JR
 KB
 Sv
 KB
@@ -26955,20 +28322,20 @@ Sv
 Sv
 Sv
 xl
-Pc
+CT
 op
 LU
-Pc
-Uo
+WN
+TG
 qe
 xl
 xl
-Pc
-Pc
-Pc
-Pc
-Pc
-Pc
+VA
+VA
+VA
+VA
+VA
+VA
 xl
 Sv
 Sv
@@ -26982,45 +28349,45 @@ Sv
 KB
 uy
 KB
-bq
-bq
-bq
-bq
-bq
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
+tS
+tS
+tS
+tS
+tS
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
+lV
 fA
-xT
-xT
-dD
+lV
+lV
+tS
 KB
 Xl
-dD
+JR
 IG
-xT
-xT
-Lp
+fm
 xT
 Lp
-xT
+AQ
+Lp
+iN
 Ml
-xT
+so
+Lp
+dp
 Lp
 xT
-Lp
-xT
-xT
+St
 Cx
-dD
-eS
+eN
+uQ
 KB
 Sv
 KB
@@ -27220,12 +28587,12 @@ xl
 xl
 xl
 xl
-Pc
+VA
 yd
 VG
 kO
 eW
-Pc
+VA
 xl
 Sv
 Sv
@@ -27255,29 +28622,29 @@ oL
 oL
 oL
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-kE
-dD
-dD
-Fm
-Fm
-Fm
-dD
+eN
+Wj
+Gy
+Wj
+Wj
+tl
+tl
+tl
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-kE
-dD
-dD
+Yb
+tl
+tl
+tl
+Wj
+Wj
+Gy
+Wj
+JR
 KB
 Sv
 KB
@@ -27477,7 +28844,7 @@ Sv
 Sv
 Sv
 xl
-Pc
+VA
 yd
 Le
 eW
@@ -27512,29 +28879,29 @@ rK
 DJ
 rK
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-lY
-dD
-dD
-dD
-dD
-Fm
-Fm
-Fm
-dD
+WZ
+Gt
+Gt
+Gt
+Gt
+Ia
+Ia
+Ia
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-dD
-dD
-lY
+Yb
+Ia
+Ia
+Ia
+Gt
+Gt
+Gt
+Gt
+rx
 KB
 Sv
 KB
@@ -27753,27 +29120,25 @@ Sv
 KB
 uy
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
-KB
-KB
+tS
+lV
+tS
 KB
 KB
 KB
@@ -27781,7 +29146,9 @@ KB
 KB
 KB
 KB
-Xl
+KB
+KB
+QE
 Ml
 eS
 KB
@@ -28010,45 +29377,45 @@ Sv
 KB
 uy
 KB
-hs
+IP
 hD
-hs
+IP
 KB
-hs
+IP
 uX
-hs
+IP
 KB
-hs
+IP
 GN
-hs
+IP
 KB
-hs
+IP
 kK
-hs
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-cN
+RB
 FD
-ls
-dD
-dD
+xb
+be
+be
 Fm
 Fm
 Fm
-dD
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-ls
-FD
-cN
+Yb
+tl
+tl
+tl
+NA
+NA
+aa
+sZ
+Tc
 KB
 Sv
 KB
@@ -28267,45 +29634,45 @@ Sv
 KB
 uy
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-BN
-dD
-dD
+Jz
+cK
+ua
+bt
+Wj
 lH
-Fm
-Fm
-dD
+tl
+tl
+TM
 Ml
-dD
-Fm
-Fm
-Fm
-dD
-dD
-BN
-dD
-dD
+Yb
+tl
+tl
+tl
+Wj
+Wj
+qV
+Wj
+Wj
 KB
 Sv
 KB
@@ -28540,29 +29907,29 @@ KB
 KB
 KB
 KB
-Xl
-xT
-dD
+bJ
+lV
+tS
 KB
-Xl
-dD
-wX
-wX
-wX
+za
+Rv
+gJ
+gJ
+fM
 gS
 wX
 gS
-wX
+Yx
 DU
-xT
+so
+Lp
+dp
 Lp
 xT
-Lp
-xT
-xT
+lK
 cj
-dD
-eS
+RZ
+pL
 KB
 Sv
 KB
@@ -28781,45 +30148,45 @@ Sv
 KB
 uy
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-kE
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-Fm
-dD
-dD
-kE
-dD
-dD
+Jz
+fV
+DB
+ja
+Wj
+tl
+tl
+tl
+TM
+Pc
+Yb
+tl
+tl
+tl
+Wj
+Wj
+dL
+Wj
+Wj
 KB
 Sv
 KB
@@ -29038,45 +30405,45 @@ KB
 KB
 uy
 KB
-hs
+IP
 Fu
-hs
+IP
 KB
-hs
+IP
 RA
-hs
+IP
 KB
-hs
+IP
 Lb
-hs
+IP
 KB
-hs
+IP
 fH
-hs
+IP
 KB
-XC
-xT
-dD
+TA
+lV
+tS
 KB
-lY
+GY
 dD
 dD
 dD
 dD
-lH
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-Fm
-dD
-dD
-dD
-dD
-lY
+Eb
+qb
+qb
+TM
+Pc
+Yb
+tl
+tl
+tl
+MY
+MY
+MY
+MY
+bv
 KB
 Sv
 KB
@@ -29295,27 +30662,25 @@ KB
 uy
 uy
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
-KB
-KB
+tS
+lV
+tS
 KB
 KB
 KB
@@ -29323,9 +30688,11 @@ KB
 KB
 KB
 KB
-Xl
-xT
-eS
+KB
+KB
+Jo
+Pc
+mL
 KB
 KB
 KB
@@ -29568,25 +30935,25 @@ rK
 DJ
 rK
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-qb
-dD
-dD
-dD
-dD
-dD
-dD
-dD
+wy
+oD
+oD
+oD
+oD
+oD
+oD
+Wj
 XC
-xT
-dD
+Pc
+Wj
 Fn
-XQ
+wq
 xj
-Wl
+Op
 Zw
 MS
 db
@@ -29809,45 +31176,45 @@ KB
 CQ
 KB
 Tf
+AI
+AI
+AI
+xO
 DG
 DG
 DG
-DG
-DG
-DG
-DG
-DG
-DG
+yM
+AI
 RP
-DG
+AI
 qY
-Ox
-Ox
-Ox
+DY
+DY
+DY
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-xT
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
+In
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Pc
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+IZ
 KB
 Sv
 KB
@@ -30065,45 +31432,45 @@ dG
 ai
 xM
 tB
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+lV
+lV
+lV
+lV
+lV
+lV
 fA
-xT
-xT
-dD
+lV
+lV
+tS
 tB
-dD
-dD
+In
+Wj
 ZZ
 PL
 PL
 PL
 Ym
-dD
-dD
-xT
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
+Wj
+Wj
+Pc
+HC
+HC
+HC
+HC
+HC
+HC
+HC
+Wj
 Uy
 KB
 Sv
@@ -30323,10 +31690,10 @@ KB
 Ir
 KB
 Lj
-UV
-UV
-UV
-OZ
+xm
+xm
+xm
+Er
 UV
 UV
 UV
@@ -30339,29 +31706,29 @@ QL
 QL
 QL
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-xT
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
-dD
+In
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Pc
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+IZ
 KB
 Sv
 KB
@@ -30596,24 +31963,24 @@ sM
 Nn
 sM
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-bt
-dD
-dD
-dD
-dD
-dD
-dD
-dD
+Mk
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Wj
 aC
-xT
-dD
-Fn
+Pc
+Wj
+aB
 XQ
-xj
+JX
 Wl
 gX
 SG
@@ -30837,27 +32204,25 @@ Sv
 Sv
 Sv
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
-KB
-KB
+tS
+lV
+tS
 KB
 KB
 KB
@@ -30865,9 +32230,11 @@ KB
 KB
 KB
 KB
-Xl
-xT
-eS
+KB
+KB
+MX
+Pc
+FH
 KB
 KB
 KB
@@ -31094,43 +32461,43 @@ Sv
 Sv
 Sv
 KB
-hs
+IP
 uE
-hs
+IP
 KB
-hs
+IP
 dy
-hs
+IP
 KB
-hs
+IP
 Hv
-hs
+IP
 KB
-hs
+IP
 Hv
-hs
+IP
 KB
-aC
-xT
-dD
+Ik
+lV
+tS
 KB
-cN
+pu
 Hq
-cV
-dD
-dD
+nz
+Ot
+Ot
+gh
+gh
+gh
+TM
+Pc
+Yb
 Fm
 Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-lH
-dD
-dD
-ls
+Gf
+be
+be
+xb
 FD
 cN
 KB
@@ -31351,45 +32718,45 @@ Sv
 Sv
 Sv
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
-BN
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
+TY
+Wj
+az
+xQ
+xQ
+tl
+tl
+tl
+TM
+Pc
+Yb
+tl
+tl
 lH
-dD
-dD
+Wj
+Wj
 BN
-dD
-dD
+Wj
+Ts
 KB
 Sv
 KB
@@ -31624,29 +32991,29 @@ KB
 KB
 KB
 KB
-Xl
-xT
-dD
+bJ
+lV
+tS
 KB
-Xl
-dD
+Ui
+Ok
 rS
-xT
-xT
-Lp
+yN
 xT
 Lp
-xT
-xT
-iQ
+AQ
+Lp
+iN
+Pc
+XR
+Lp
+AQ
 Lp
 xT
-Lp
-xT
-xT
+Bx
 lx
-dD
-eS
+Jz
+FC
 KB
 Sv
 KB
@@ -31865,45 +33232,45 @@ Sv
 Sv
 Sv
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
+TY
+xQ
 kE
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
+Wj
+Wj
+tl
+tl
+tl
+TM
+Pc
+Yb
+tl
+tl
 lH
-dD
-dD
-kE
-dD
-dD
+Wj
+Wj
+yI
+Wj
+Ts
 KB
 Sv
 KB
@@ -32122,40 +33489,40 @@ Sv
 Sv
 Sv
 KB
-hs
+IP
 GT
-hs
+IP
 KB
-hs
+IP
 me
-hs
+IP
 KB
-hs
+IP
 me
-hs
+IP
 KB
-hs
+IP
 me
-hs
+IP
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-lY
-dD
-dD
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-lH
+Qt
+VY
+VY
+VY
+VY
+ni
+ni
+ni
+TM
+Pc
+Yb
+qb
+qb
+Eb
 dD
 dD
 dD
@@ -32379,27 +33746,25 @@ Sv
 Sv
 Sv
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-dD
-xT
-dD
-KB
-KB
+tS
+lV
+tS
 KB
 KB
 KB
@@ -32407,8 +33772,10 @@ KB
 KB
 KB
 KB
-Xl
-xT
+KB
+KB
+Sn
+Pc
 eS
 KB
 KB
@@ -32652,27 +34019,27 @@ rK
 DJ
 rK
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-cN
+RB
 FD
-ls
-dD
-dD
+xb
+be
+be
 Fm
 Fm
 Fm
-dD
-xT
-dD
+TM
+Pc
+Yb
 Fm
 Fm
 Fm
-dD
-dD
-ls
+be
+be
+xb
 FD
 cN
 KB
@@ -32900,7 +34267,7 @@ Ox
 Ox
 Ox
 Ox
-Ox
+ZK
 Ox
 qc
 Ox
@@ -32909,29 +34276,29 @@ Ox
 Ox
 Ox
 KB
-dD
-xT
-dD
+tS
+lV
+tS
 KB
-dD
-dD
+Jz
+Wj
 BN
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-Fm
-dD
-dD
+Wj
+Wj
+tl
+tl
+tl
+TM
+Pc
+Yb
+tl
+tl
+tl
+Wj
+Wj
 BN
-dD
-dD
+Wj
+Ts
 KB
 Sv
 KB
@@ -33150,45 +34517,45 @@ Sv
 Sv
 Sv
 KB
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-CQ
-CQ
-CQ
-CQ
-CQ
-CQ
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+lV
+lV
+lV
+lV
+lV
+lV
 fA
-xT
-xT
-dD
+lV
+lV
+tS
 KB
-Xl
-dD
+za
+Ts
 TD
-xT
+JQ
 xT
 Lp
-xT
+AQ
 FZ
-xT
-xT
-xT
+iN
+Pc
+so
+Lp
+AQ
 Lp
 xT
-Lp
-xT
-xT
+Bx
 dj
-dD
-eS
+Jz
+FC
 KB
 Sv
 KB
@@ -33423,29 +34790,29 @@ oL
 oL
 oL
 KB
-dD
-dD
-dD
+tS
+tS
+tS
 KB
-dD
-dD
-kE
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-Fm
-dD
-dD
-kE
-dD
-dD
+Jz
+Wj
+yI
+Wj
+Wj
+tl
+tl
+tl
+TM
+Pc
+Yb
+tl
+tl
+tl
+Wj
+Wj
+yI
+Wj
+Ts
 KB
 Sv
 KB
@@ -33460,12 +34827,12 @@ mo
 mo
 mo
 mo
-mo
+ew
 mo
 mo
 KB
 Ag
-HX
+SC
 KB
 Ag
 HX
@@ -33680,24 +35047,24 @@ rK
 DJ
 rK
 KB
-Xl
-dD
-dD
+bJ
+tS
+tS
 KB
-lY
+GY
 dD
 dD
 dD
 dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-Fm
+qb
+qb
+qb
+TM
+Pc
+Yb
+qb
+qb
+qb
 dD
 dD
 dD
@@ -33921,23 +35288,21 @@ Sv
 Sv
 Sv
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
-KB
-KB
+IP
+IP
+IP
 KB
 KB
 KB
@@ -33949,8 +35314,10 @@ KB
 KB
 KB
 KB
-Xl
-xT
+KB
+KB
+AC
+Pc
 eS
 KB
 KB
@@ -33982,7 +35349,7 @@ LL
 Hb
 KB
 LL
-Hb
+Zp
 KB
 LL
 Hb
@@ -34178,43 +35545,43 @@ Sv
 Sv
 Sv
 KB
-hs
+IP
 PT
-hs
+IP
 KB
-hs
+IP
 me
-hs
+IP
 KB
-hs
+IP
 me
-hs
+IP
 KB
-hs
+IP
 me
-hs
+IP
 KB
 Sv
 Sv
 Sv
 KB
-cN
+RB
 FD
-ls
-dD
-dD
+xb
+be
+be
 Fm
 Fm
 Fm
-dD
-xT
-dD
+TM
+Pc
+Yb
 Fm
 Fm
 Fm
-dD
-dD
-ls
+be
+be
+xb
 FD
 cN
 KB
@@ -34230,7 +35597,7 @@ KB
 ay
 ay
 ay
-ay
+pQ
 KB
 mo
 mo
@@ -34435,45 +35802,45 @@ Sv
 Sv
 Sv
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
-hs
-hs
-hs
+IP
+IP
+IP
 KB
 Sv
 Sv
 Sv
 KB
-dD
-dD
+Jz
+Wj
 BN
-dD
-dD
-Fm
-Fm
-Fm
-dD
-xT
-dD
-Fm
-Fm
-Fm
-dD
-dD
+Wj
+Wj
+tl
+tl
+tl
+TM
+Pc
+Yb
+tl
+tl
+tl
+Wj
+Wj
 BN
-dD
-dD
+Wj
+Ts
 KB
 Sv
 KB
@@ -34712,25 +36079,25 @@ Sv
 Sv
 Sv
 KB
-Xl
-dD
+za
+Ts
 PE
-xT
-xT
-Lp
+JQ
 xT
 Lp
-xT
-xT
-xT
+AQ
+Lp
+iN
+Pc
+so
+Lp
+AQ
 Lp
 xT
-Lp
-xT
-xT
+Bx
 NI
-dD
-eS
+Jz
+FC
 KB
 Sv
 KB
@@ -34752,7 +36119,7 @@ Jt
 mo
 mo
 Jt
-mo
+np
 mo
 Jt
 mo
@@ -34955,13 +36322,13 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+KB
+AJ
+Gi
+KB
+AJ
+Gi
+KB
 Sv
 Sv
 Sv
@@ -34969,25 +36336,25 @@ Sv
 Sv
 Sv
 KB
-dD
-dD
-kE
-dD
-dD
-Fm
-Fm
-Fm
-dD
+Jz
+Wj
+yI
+Wj
+Wj
+tl
+tl
+tl
+TM
 iQ
-dD
-Fm
-Fm
-Fm
-dD
-dD
-kE
-dD
-dD
+Yb
+tl
+tl
+tl
+Wj
+Wj
+yI
+Wj
+Ts
 KB
 Sv
 KB
@@ -35212,13 +36579,13 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+KB
+Km
+Xu
+KB
+Ve
+Km
+KB
 Sv
 Sv
 Sv
@@ -35226,20 +36593,20 @@ Sv
 Sv
 Sv
 KB
-lY
+GY
 dD
 dD
 dD
 dD
-Fm
-Fm
-Fm
-dD
-iQ
-dD
-Fm
-Fm
-Fm
+qb
+qb
+qb
+TM
+oQ
+Yb
+qb
+qb
+qb
 dD
 dD
 dD
@@ -35270,7 +36637,7 @@ ay
 ay
 ay
 ay
-ay
+kX
 KB
 Lh
 bB
@@ -35469,12 +36836,12 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+KB
+KB
+qv
+KB
+wa
+KB
 KB
 KB
 KB
@@ -35726,39 +37093,39 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
 KB
-El
-bq
+vp
+Xu
+vs
+qK
+Xu
+Xu
+tS
+tS
 Nj
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-xG
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
-bq
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+qL
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
+tS
 KB
 Sv
 KB
@@ -35983,39 +37350,39 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
 KB
-bq
-bq
-bq
-bq
-bq
-bq
-hp
-bq
-bq
-xG
+Iv
+qK
+qK
+qK
+qK
+qK
+HJ
+HJ
+HJ
+HJ
+HJ
+HJ
+GE
+HJ
+HJ
+qL
 lt
-xG
-xG
-xG
+qL
+qL
+qL
 lt
-xG
-xG
-xG
+qL
+qL
+qL
 lt
-xG
-xG
-xG
+qL
+qL
+qL
 lt
-xG
-xG
-xG
+qL
+qL
+qL
 KB
 Sv
 KB
@@ -36023,7 +37390,7 @@ VC
 UL
 Fr
 ev
-xQ
+ul
 xQ
 fx
 Wd
@@ -36240,19 +37607,19 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
 KB
-ci
-ci
+KB
+wa
+KB
+wa
+KB
+KB
+Wn
+Wn
 Nb
-ci
-ci
-ci
+Wn
+Wn
+Wn
 KB
 KB
 KB
@@ -36497,18 +37864,18 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+KB
+AB
+qK
+KB
+qK
+vs
 KB
 Up
-bq
-bq
-bq
-bq
+Vn
+Vn
+Vn
+Vn
 ZD
 KB
 nG
@@ -36540,9 +37907,9 @@ gd
 xQ
 xQ
 KB
-mo
-mo
-mo
+ew
+JK
+xo
 mo
 KB
 aA
@@ -36754,19 +38121,19 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
 KB
-bq
-bq
-bq
-bq
-bq
-bq
+Pw
+tX
+KB
+Pw
+tX
+KB
+al
+Vn
+Vn
+Vn
+Vn
+Vn
 KB
 mI
 Wx
@@ -36799,7 +38166,7 @@ xQ
 KB
 Js
 mo
-mo
+Oa
 mo
 KB
 KB
@@ -37011,39 +38378,39 @@ Sv
 Sv
 Sv
 Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
 KB
-bq
-bq
-bq
-bq
-bq
-bq
+KB
+KB
+KB
+KB
+KB
+KB
+Vn
+Vn
+Vn
+Vn
+Vn
+Vn
 KB
 Df
 fB
-bq
+Jn
 KB
 Df
 iH
-bq
+El
 KB
 Df
 iH
-bq
+uR
+KB
+Df
+Xg
+NG
 KB
 Df
 iH
-bq
-KB
-Df
-iH
-bq
+El
 KB
 Sv
 KB
@@ -38086,7 +39453,7 @@ mo
 mo
 mo
 mo
-mo
+ND
 mo
 mo
 mo
@@ -42191,17 +43558,17 @@ zF
 cL
 JG
 xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -42448,17 +43815,17 @@ wz
 cL
 aw
 xl
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -42705,17 +44072,17 @@ wz
 cL
 aw
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -42962,17 +44329,17 @@ wz
 cL
 aw
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-Qb
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -43219,17 +44586,17 @@ zF
 cL
 JG
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -43476,17 +44843,17 @@ wz
 cL
 aw
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -43733,17 +45100,17 @@ wz
 cL
 aw
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -43990,17 +45357,17 @@ wz
 xd
 aw
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -44247,17 +45614,17 @@ zF
 xd
 JG
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -44504,17 +45871,17 @@ wz
 xd
 aw
 xl
-wZ
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-MB
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -44761,17 +46128,17 @@ wz
 xd
 aw
 xl
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-wZ
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -45018,17 +46385,17 @@ wz
 xd
 aw
 xl
-xl
-xl
-sG
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -45276,9 +46643,9 @@ jq
 mN
 KB
 KB
-KB
-MI
-KB
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -45533,9 +46900,9 @@ Pa
 aw
 Gg
 KB
-KB
-ay
-KB
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -45791,8 +47158,8 @@ aw
 ay
 KB
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -46048,8 +47415,8 @@ aw
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -46305,8 +47672,8 @@ JG
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -46562,8 +47929,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -46819,8 +48186,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -47076,8 +48443,8 @@ aw
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -47333,8 +48700,8 @@ JG
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -47590,8 +48957,6 @@ aw
 ay
 ay
 KB
-ay
-KB
 Sv
 Sv
 Sv
@@ -47617,8 +48982,10 @@ Sv
 Sv
 Sv
 Sv
-Lh
-Lh
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -47847,8 +49214,6 @@ aw
 JN
 ay
 KB
-ay
-KB
 Sv
 Sv
 Sv
@@ -47874,8 +49239,10 @@ Sv
 Sv
 Sv
 Sv
-Lh
-Lh
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -48104,8 +49471,6 @@ aw
 pg
 ay
 KB
-ay
-KB
 Sv
 Sv
 Sv
@@ -48131,8 +49496,10 @@ Sv
 Sv
 Sv
 Sv
-Lh
-Lh
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -48361,8 +49728,6 @@ JG
 KB
 ay
 KB
-ay
-KB
 Sv
 Sv
 Sv
@@ -48388,8 +49753,10 @@ Sv
 Sv
 Sv
 Sv
-Lh
-Lh
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -48618,8 +49985,6 @@ aw
 ay
 ay
 KB
-ay
-KB
 Sv
 Sv
 Sv
@@ -48645,8 +50010,10 @@ Sv
 Sv
 Sv
 Sv
-Lh
-Lh
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -48875,8 +50242,6 @@ aw
 ay
 ay
 KB
-ay
-KB
 Sv
 Sv
 Sv
@@ -48902,8 +50267,10 @@ Sv
 Sv
 Sv
 Sv
-Lh
-Lh
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -49132,8 +50499,8 @@ aw
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -49389,8 +50756,8 @@ JG
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -49646,8 +51013,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -49903,8 +51270,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -50160,8 +51527,8 @@ eH
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -50417,8 +51784,8 @@ Xm
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -50674,8 +52041,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -50931,8 +52298,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -51188,8 +52555,8 @@ aw
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -51445,8 +52812,8 @@ XZ
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -51702,8 +53069,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -51959,8 +53326,8 @@ eH
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -52216,8 +53583,8 @@ eH
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -52473,8 +53840,8 @@ XZ
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -52730,8 +54097,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -52987,8 +54354,8 @@ wJ
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -53244,8 +54611,8 @@ rT
 rF
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -53501,8 +54868,8 @@ JG
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -53758,8 +55125,8 @@ eH
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -54015,8 +55382,8 @@ Kn
 JN
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -54272,8 +55639,8 @@ aw
 pg
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -54529,8 +55896,8 @@ JG
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -54786,8 +56153,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -55043,8 +56410,8 @@ Sk
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -55300,8 +56667,8 @@ aw
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -55557,8 +56924,8 @@ IF
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -55814,8 +57181,8 @@ Kn
 JN
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -56071,8 +57438,8 @@ Ao
 cb
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -56328,8 +57695,8 @@ eH
 TO
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -56585,8 +57952,8 @@ pH
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -56842,8 +58209,8 @@ Mg
 Cy
 Cy
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -57099,8 +58466,8 @@ Ao
 Zb
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -57356,8 +58723,8 @@ Kn
 Te
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -57613,8 +58980,8 @@ IF
 KB
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -57870,8 +59237,8 @@ eH
 ay
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -58127,8 +59494,8 @@ Ao
 Ec
 ay
 KB
-ay
-KB
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -58384,18 +59751,18 @@ eH
 rF
 ay
 KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
 Sv
 Sv
 Sv
@@ -58641,18 +60008,18 @@ IF
 KB
 ay
 KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+xl
 Sv
 Sv
 Sv
@@ -58898,18 +60265,18 @@ Ao
 gz
 ay
 KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -59155,18 +60522,18 @@ eH
 Ec
 ay
 KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+Qb
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -59412,18 +60779,18 @@ Fi
 Wc
 ay
 KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -59669,18 +61036,18 @@ IF
 KB
 ay
 KB
-ay
-KB
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -59926,18 +61293,18 @@ je
 ma
 ay
 KB
-ay
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -60183,18 +61550,18 @@ GV
 Ec
 ay
 KB
-KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -60440,18 +61807,18 @@ GV
 rF
 ay
 ay
-KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -60696,19 +62063,19 @@ YS
 Xm
 KB
 wL
-ay
-KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+KH
+xl
+wZ
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+wZ
+xl
 Sv
 Sv
 Sv
@@ -60954,18 +62321,18 @@ eH
 ay
 ay
 ay
-KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+wZ
+xl
 Sv
 Sv
 Sv
@@ -61211,18 +62578,18 @@ pw
 ay
 ay
 KB
-KB
-ay
-KB
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
-Sv
+xl
+xl
+xl
+sG
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
 Sv
 Sv
 Sv
@@ -61470,9 +62837,9 @@ ay
 KB
 ay
 ay
+ay
+MI
 KB
-Sv
-Sv
 Sv
 Sv
 Sv
@@ -61728,8 +63095,8 @@ KB
 ay
 KB
 KB
-Sv
-Sv
+KB
+KB
 Sv
 Sv
 Sv

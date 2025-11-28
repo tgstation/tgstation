@@ -231,8 +231,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
 	freerange = TRUE
 
+/obj/item/radio/intercom/mi13
+	name = "intercom"
+	desc = "Talk through this to talk to whoever is in this facility with you."
+	freerange = TRUE
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate/freerange, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/mi13, 27)
