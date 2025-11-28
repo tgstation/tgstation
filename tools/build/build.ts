@@ -156,7 +156,7 @@ export const TroutstationIconCutterTarget = new Juke.Target({
     ];
     return [
       ...standard_inputs,
-      ...existing_configs.map((file) => file.replace(".toml", "")),
+      ...existing_configs.map((file) => file.replace('.toml', '')),
     ];
   },
   outputs: ({ get }) => {
@@ -166,15 +166,15 @@ export const TroutstationIconCutterTarget = new Juke.Target({
       ...Juke.glob(`troutstation/icons/**/*.dmi.toml`),
     ];
     return folders
-      .map((file) => file.replace(`.png.toml`, ".dmi"))
-      .map((file) => file.replace(`.dmi.toml`, ".png"));
+      .map((file) => file.replace(`.png.toml`, '.dmi'))
+      .map((file) => file.replace(`.dmi.toml`, '.png'));
   },
   executes: async () => {
     await Juke.exec(cutter_path, [
-      "--dont-wait",
-      "--templates",
-      "cutter_templates",
-      "troutstation/icons",
+      '--dont-wait',
+      '--templates',
+      'cutter_templates',
+      'troutstation/icons',
     ]);
   },
 });
@@ -208,7 +208,7 @@ export const DmTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
-    !get(SkipIconCutter) && TroutstationIconCutterTarget
+    !get(SkipIconCutter) && TroutstationIconCutterTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
@@ -218,6 +218,7 @@ export const DmTarget = new Juke.Target({
     'icons/**',
     'interface/**',
     'sound/**',
+    'troutstation/**', // Troutstation edit
     'tgui/public/tgui.html',
     `${DME_NAME}.dme`,
     NamedVersionFile,
@@ -248,7 +249,7 @@ export const DmTestTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
     IconCutterTarget,
-    TroutstationIconCutterTarget
+    TroutstationIconCutterTarget,
   ],
   executes: async ({ get }) => {
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
