@@ -190,7 +190,7 @@
 	span_userdanger("You're covered in boiling oil!"))
 	if(FryLoss)
 		exposed_mob.emote("scream")
-		exposed_mob.adjust_fire_loss(FryLoss)
+		metabolic_health_adjust(exposed_mob, FryLoss, FIRE)
 	playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
 	ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
 	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 2 SECONDS)

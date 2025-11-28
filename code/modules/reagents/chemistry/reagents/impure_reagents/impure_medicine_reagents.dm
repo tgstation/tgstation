@@ -41,13 +41,13 @@
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			need_mob_update = affected_mob.adjust_brute_loss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
+			need_mob_update = metabolic_health_adjust(affected_mob, -0.5, BRUTE)
 		if("burn")
-			need_mob_update += affected_mob.adjust_fire_loss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
+			need_mob_update += metabolic_health_adjust(affected_mob, -0.5, FIRE)
 		if("tox")
-			need_mob_update += affected_mob.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += metabolic_health_adjust(affected_mob, -0.5, TOX)
 		if("oxy")
-			need_mob_update += affected_mob.adjust_oxy_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += metabolic_health_adjust(affected_mob, -0.5, OXY)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -527,8 +527,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(creation_impurity * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(5 * creation_impurity * REM * seconds_per_tick, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, ((1 + creation_impurity) * REM * seconds_per_tick), required_organ_flag = affected_organ_flags)
+	need_mob_update = metabolic_health_adjust(affected_mob, 5 * creation_impurity * REM * seconds_per_tick, BRUTE)
+	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_HEART,  ((1 + creation_impurity) * REM * seconds_per_tick))
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)

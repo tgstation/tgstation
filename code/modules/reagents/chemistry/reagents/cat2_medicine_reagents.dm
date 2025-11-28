@@ -340,7 +340,7 @@
 	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * seconds_per_tick * normalise_creation_purity() //max 2.5 tox healing per second
 	var/need_mob_update
 	if(toxcalc > 0)
-		need_mob_update = affected_mob.adjust_tox_loss(-toxcalc, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = metabolic_health_adjust(affected_mob, -toxcalc, TOX)
 		healypoints += toxcalc
 
 	//and you're cold
@@ -349,9 +349,9 @@
 		radcalc *= normalise_creation_purity()
 		// extra rad healing if you are SUPER cold
 		if(chemtemp < rads_heal_threshold*0.1)
-			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.9, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += metabolic_health_adjust(affected_mob, -radcalc * 0.9, TOX)
 		else if(chemtemp < rads_heal_threshold)
-			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.75, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += metabolic_health_adjust(affected_mob, -radcalc * 0.75, TOX)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!

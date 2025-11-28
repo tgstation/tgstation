@@ -127,7 +127,7 @@
 	. = ..()
 	affected_mob.adjust_confusion_up_to(3 SECONDS * REM * seconds_per_tick, 5 SECONDS)
 	affected_mob.adjust_dizzy_up_to(6 SECONDS * REM * seconds_per_tick, 12 SECONDS)
-	if(affected_mob.adjust_stamina_loss(1 * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(metabolic_health_adjust(affected_mob, 1 * REM * seconds_per_tick, STAMINA))
 		. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(10, seconds_per_tick))
@@ -353,8 +353,8 @@
 /datum/reagent/medicine/mine_salve/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(-0.25 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(-0.25 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = metabolic_health_adjust(affected_mob, -0.25 * REM * seconds_per_tick, BRUTE)
+	need_mob_update += metabolic_health_adjust(affected_mob, -0.25 * REM * seconds_per_tick, FIRE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -560,7 +560,7 @@
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update = metabolic_health_adjust(affected_mob, -3 * REM * seconds_per_tick, OXY)
 	if(affected_mob.losebreath >= 4)
 		var/obj/item/organ/lungs/affected_lungs = affected_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
 		var/our_respiration_type = affected_lungs ? affected_lungs.respiration_type : affected_mob.mob_respiration_type // use lungs' respiration type or mob_respiration_type if no lungs
@@ -1423,11 +1423,11 @@
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(-5 * REM * seconds_per_tick, updating_health = FALSE) //A ton of healing - this is a 50 telecrystal investment.
-	need_mob_update += affected_mob.adjust_fire_loss(-5 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_oxy_loss(-15 * REM * seconds_per_tick, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_tox_loss(-5 * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, -15 * REM * seconds_per_tick)
+	need_mob_update = metabolic_health_adjust(affected_mob, -5 * REM * seconds_per_tick, BRUTE) //A ton of healing - this is a 50 telecrystal investment.
+	need_mob_update += metabolic_health_adjust(affected_mob, -5 * REM * seconds_per_tick, FIRE)
+	need_mob_update += metabolic_health_adjust(affected_mob, -15 * REM * seconds_per_tick, OXY)
+	need_mob_update += metabolic_health_adjust(affected_mob, -5 * REM * seconds_per_tick, TOX)
+	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  -15 * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1589,7 +1589,7 @@
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolizer.adjust_tox_loss(2 * REM * seconds_per_tick, updating_health = FALSE))
+	if(metabolic_health_adjust(metabolizer, 2 * REM * seconds_per_tick, TOX))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/higadrite

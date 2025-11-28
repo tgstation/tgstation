@@ -1356,10 +1356,10 @@
 	. = ..()
 	if(drinker.health <= 0)
 		var/need_mob_update
-		need_mob_update = drinker.adjust_brute_loss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_fire_loss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_oxy_loss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += drinker.adjust_tox_loss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = metabolic_health_adjust(drinker, -3 * REM * seconds_per_tick, BRUTE)
+		need_mob_update += metabolic_health_adjust(drinker, -3 * REM * seconds_per_tick, FIRE)
+		need_mob_update += metabolic_health_adjust(drinker, -4 * REM * seconds_per_tick, OXY)
+		need_mob_update += metabolic_health_adjust(drinker, -3 * REM * seconds_per_tick, TOX)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -1506,7 +1506,7 @@
 			if(SPT_PROB(23, seconds_per_tick))
 				drinker.emote(pick("twitch","giggle"))
 			if(SPT_PROB(16, seconds_per_tick))
-				if(drinker.adjust_tox_loss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+				if(metabolic_health_adjust(drinker, 2 * REM * seconds_per_tick, TOX))
 					return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/eggnog
@@ -1665,11 +1665,11 @@
 	. = ..()
 	if(drinker.health > 0)
 		var/need_mob_update
-		need_mob_update = drinker.adjust_brute_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_fire_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjust_tox_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += drinker.adjust_oxy_loss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += drinker.adjust_stamina_loss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+		need_mob_update = metabolic_health_adjust(drinker, -1 * REM * seconds_per_tick, BRUTE)
+		need_mob_update += metabolic_health_adjust(drinker, -1 * REM * seconds_per_tick, FIRE)
+		need_mob_update += metabolic_health_adjust(drinker, -0.5 * REM * seconds_per_tick, TOX)
+		need_mob_update += metabolic_health_adjust(drinker, -3 * REM * seconds_per_tick, OXY)
+		need_mob_update += metabolic_health_adjust(drinker, -5 * REM * seconds_per_tick, STAMINA)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -1873,7 +1873,7 @@
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
-		if(drinker.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(metabolic_health_adjust(drinker, 1 * REM * seconds_per_tick, TOX))
 			. = UPDATE_MOB_HEALTH
 	drinker.adjust_nutrition(-5 * REM * seconds_per_tick)
 	drinker.overeatduration = 0
@@ -1913,7 +1913,7 @@
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/drinker)
 	. = ..()
 	if(drinker.health > 0)
-		drinker.adjust_stamina_loss(20, required_biotype = affected_biotype)
+		metabolic_health_adjust(drinker, 20, STAMINA)
 
 /datum/reagent/consumable/ethanol/branca_menta
 	name = "Branca Menta"
@@ -1932,7 +1932,7 @@
 /datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/drinker)
 	. = ..()
 	if(drinker.health > 0)
-		drinker.adjust_stamina_loss(35, required_biotype = affected_biotype)
+		metabolic_health_adjust(drinker, 35, STAMINA)
 
 /datum/reagent/consumable/ethanol/blank_paper
 	name = "Blank Paper"

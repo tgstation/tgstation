@@ -176,9 +176,9 @@
 	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
 	affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_stamina_loss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update = metabolic_health_adjust(affected_mob, -5 * REM * seconds_per_tick, STAMINA)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  rand(1, 4) * REM * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -347,7 +347,7 @@
 		to_chat(affected_mob, span_notice("[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]"))
 	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.losebreath++
-		affected_mob.adjust_tox_loss(2, updating_health = FALSE, required_biotype = affected_biotype)
+		metabolic_health_adjust(affected_mob, 2, TOX)
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/affected_mob)
@@ -840,7 +840,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	. = ..()
 	var/need_mob_update
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
-	if(kronkaine_fiend.adjust_organ_loss(ORGAN_SLOT_HEART, (0.1 + 0.04 * volume) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(metabolic_organ_adjust(kronkaine_fiend, ORGAN_SLOT_HEART,  (0.1 + 0.04 * volume) * REM * seconds_per_tick))
 		need_mob_update = UPDATE_MOB_HEALTH
 		if(kronkaine_fiend.get_organ_loss(ORGAN_SLOT_HEART) >= 75 && prob(15))
 			to_chat(kronkaine_fiend, span_userdanger("You feel like your heart is about to explode!"))
@@ -860,7 +860,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 				kronkaine_fiend.visible_message(span_bolddanger("[kronkaine_fiend.name] suddenly tenses up, it looks like the shock is causing their body to shut down!"), span_userdanger("The sudden shock in combination with the cocktail of drugs and purgatives in your body makes your adrenal system go haywire. Uh oh!"))
 				kronkaine_fiend.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
 				break
-	need_mob_update = kronkaine_fiend.adjust_stamina_loss(-0.8 * volume * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update = metabolic_health_adjust(kronkaine_fiend, -0.8 * volume * REM * seconds_per_tick, STAMINA)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
