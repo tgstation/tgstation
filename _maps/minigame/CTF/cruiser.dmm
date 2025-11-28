@@ -479,7 +479,7 @@
 "CA" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/template_noop,
-/area/template_noop)
+/area/centcom/ctf)
 "CU" = (
 /obj/structure/window/reinforced/spawner/directional/east{
 	resistance_flags = 64
