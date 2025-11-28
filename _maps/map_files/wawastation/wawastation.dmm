@@ -4875,6 +4875,11 @@
 /obj/item/paper,
 /obj/item/pen,
 /obj/effect/turf_decal/stripes/box,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters";
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "bHc" = (
@@ -13746,7 +13751,7 @@
 "eOY" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = "Hydroponics shutters";
+	name = "Hydroponics Shutters";
 	id = "hydroponics_shutters"
 	},
 /turf/open/floor/plating,
@@ -26435,7 +26440,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "bar_shutters";
-	name = "Bar shutters"
+	name = "Bar Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -27166,7 +27171,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "bar_shutters";
-	name = "Bar shutters"
+	name = "Bar Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -29254,7 +29259,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = "Hydroponics shutters";
+	name = "Hydroponics Shutters";
 	id = "hydroponics_shutters"
 	},
 /turf/open/floor/iron,
@@ -32034,7 +32039,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "bar_shutters";
-	name = "Bar shutters"
+	name = "Bar Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -32105,7 +32110,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = "Hydroponics shutters";
+	name = "Hydroponics Shutters";
 	id = "hydroponics_shutters"
 	},
 /turf/open/floor/iron,
@@ -41374,7 +41379,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "bar_shutters";
-	name = "Bar shutters"
+	name = "Bar Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -43617,6 +43622,11 @@
 /area/station/engineering/main)
 "pco" = (
 /obj/machinery/biogenerator,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters";
+	dir = 8
+	},
 /turf/closed/wall,
 /area/station/service/hydroponics)
 "pcN" = (
@@ -56165,7 +56175,7 @@
 /obj/structure/desk_bell,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
-	name = "Hydroponics shutters";
+	name = "Hydroponics Shutters";
 	id = "hydroponics_shutters"
 	},
 /turf/open/floor/iron,
@@ -59817,7 +59827,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
 	id = "bar_shutters";
-	name = "Bar shutters"
+	name = "Bar Shutters"
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
@@ -62822,6 +62832,11 @@
 /area/station/command/corporate_showroom)
 "vCL" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Hydroponics Shutters";
+	id = "hydroponics_shutters";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
 "vCQ" = (
