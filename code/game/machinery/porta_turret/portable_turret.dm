@@ -84,7 +84,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	/// World.time the turret last fired
 	var/last_fired = 0
 	/// Ticks until next shot (1.5 ?)
-	var/shot_delay = 15
+	var/shot_delay = 1.5 SECONDS
 	/// Turret flags about who is turret allowed to shoot
 	var/turret_flags = TURRET_FLAG_SHOOT_CRIMINALS | TURRET_FLAG_SHOOT_ANOMALOUS
 	/// Determines if the turret is on
@@ -830,7 +830,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
-	shot_delay = 3
+	shot_delay = 3 DECISECONDS
 	stun_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/items/weapons/gun/smg/shot.ogg'
@@ -969,7 +969,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	.["stun_projectile"] = /obj/projectile/beam/lasertag/bluetag
 	.["lethal_projectile"] = /obj/projectile/beam/lasertag/bluetag
 	.["base_icon_state"] = "blue"
-	.["shot_delay"] = 30
+	.["shot_delay"] = 3 SECONDS
 	.["team_color"] = "blue"
 
 /obj/item/gun/energy/laser/redtag/get_turret_properties()
@@ -977,7 +977,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	.["stun_projectile"] = /obj/projectile/beam/lasertag/redtag
 	.["lethal_projectile"] = /obj/projectile/beam/lasertag/redtag
 	.["base_icon_state"] = "red"
-	.["shot_delay"] = 30
+	.["shot_delay"] = 3 SECONDS
 	.["team_color"] = "red"
 
 /obj/item/gun/energy/e_gun/turret/get_turret_properties()

@@ -592,7 +592,7 @@
 		return
 	// future todo : make the hop care about ian, cmo runtime, etc.
 	if(ispet)
-		description = replacetext(pet_message, "%DEAD_MOB%", capitalize(dead_mob.name)) // doesn't use a descriptor, so it says "Ian died"
+		description = capitalize(replacetext(pet_message, "%DEAD_MOB%", "[dead_mob]")) // doesn't use a descriptor, so it says "Ian died"
 		if(HAS_PERSONALITY(owner, /datum/personality/animal_friend))
 			mood_change *= 1.5
 			timeout *= 1.25

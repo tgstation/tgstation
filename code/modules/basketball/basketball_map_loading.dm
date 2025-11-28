@@ -30,7 +30,7 @@
 	base_lighting_alpha = 255
 	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
 /datum/lazy_template/basketball
 	map_dir = "_maps/minigame/basketball"

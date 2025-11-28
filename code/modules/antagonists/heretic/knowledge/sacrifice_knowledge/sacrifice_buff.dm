@@ -66,10 +66,10 @@
 	owner.losebreath = max(owner.losebreath - (0.5 * seconds_between_ticks), 0)
 
 	var/damage_healed = 0
-	damage_healed += owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
-	damage_healed += owner.adjustOxyLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustBruteLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_tox_loss(-amount, updating_health = FALSE, forced = TRUE)
+	damage_healed += owner.adjust_oxy_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_brute_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_fire_loss(-amount, updating_health = FALSE)
 	if(damage_healed > 0)
 		owner.updatehealth()
 
