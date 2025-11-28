@@ -59,6 +59,10 @@
 	/// If FALSE it will just try to fire at ourselves straight up.
 	var/doafter_self_shoot = TRUE
 
+	/// If TRUE, will fire ITEM_INTERACT_BLOCKING (melee, etc) if the gun has a round already in the chamber, and is waiting to be fired (but cant, usually due to waiting on fire_delay).
+	/// If FALSE, nothing changed.
+	var/chambered_attack_block = FALSE
+
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
 
