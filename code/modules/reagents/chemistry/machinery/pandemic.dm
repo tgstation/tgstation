@@ -248,7 +248,7 @@
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
 	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
 
 /// Tries to locate a reagent with valid blood_type data
