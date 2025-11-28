@@ -176,7 +176,7 @@
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
-	. = ..() // NB: ATP the item is still in the slot, but no longer has the IN_INVENTORY flag (so is not returned by get_equipped_items)
+	. = ..()
 	if(!.)
 		return
 
