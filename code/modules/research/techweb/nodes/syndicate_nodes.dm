@@ -30,9 +30,8 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	required_items_to_unlock = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
-		if(!item.item || !(item.uplink_item_flags & SYNDIE_ILLEGAL_TECH))
+	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
+		if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM || !(item.uplink_item_flags & SYNDIE_ILLEGAL_TECH))
 			continue
 		required_items_to_unlock |= item.item //allows deconning to unlock.
 
