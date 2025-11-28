@@ -47,6 +47,10 @@
 	equip_delay_other = 2 SECONDS
 	species_exception = null
 
+/obj/item/clothing/suit/costume/pirate/armored/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
+
 /obj/item/clothing/suit/costume/pirate/captain
 	name = "pirate captain coat"
 	desc = "Yarr."
