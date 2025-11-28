@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - admin: "Converted the Spawn verb into a TGUI input, featuring for dynamic search and RegEx support"
