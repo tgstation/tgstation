@@ -76,7 +76,7 @@
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
-		adjustBruteLoss(0.25 * seconds_per_tick)
+		adjust_brute_loss(0.25 * seconds_per_tick)
 
 /// Returns an applicable list of actions to grant to the mob. Will return a list or null.
 /mob/living/simple_animal/hostile/ooze/proc/get_innate_actions()
@@ -268,7 +268,7 @@
 ///Gain health for the consumption and dump some brute loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	vored_mob.adjustBruteLoss(5)
+	vored_mob.adjust_brute_loss(5)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
 	if(istype(ooze))
 		ooze.adjust_ooze_nutrition(3)
