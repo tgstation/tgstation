@@ -3,7 +3,7 @@
 	member_name = "blood worm"
 
 	var/static/list/objective_types = list(
-		//datum/objective/blood_worm/kill,
+		/datum/objective/blood_worm/kill,
 		/datum/objective/blood_worm/consume,
 		/datum/objective/blood_worm/multiply,
 		/datum/objective/blood_worm/conquer,

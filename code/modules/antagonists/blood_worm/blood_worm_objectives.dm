@@ -11,6 +11,20 @@
 	name = "KILL"
 	explanation_text = "We must prevent all members of station command from escaping alive on the emergency shuttle."
 
+/datum/objective/blood_worm/kill/check_completion()
+	for (var/mob/player_mob as anything in GLOB.player_list)
+		if (!(player_mob.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			continue
+		if (!considered_alive(player_mob.mind))
+			continue
+		if (considered_exiled(player_mob.mind))
+			continue
+		// Counts whiteship as escaped, but not pods.
+		if (player_mob.onCentCom() || player_mob.onSyndieBase())
+			return FALSE
+
+	return TRUE
+
 /datum/objective/blood_worm/consume
 	name = "CONSUME"
 
