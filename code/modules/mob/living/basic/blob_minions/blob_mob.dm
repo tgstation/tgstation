@@ -1,5 +1,6 @@
 /// Root of shared behaviour for mobs spawned by blobs, is abstract and should not be spawned
 /mob/living/basic/blob_minion
+	abstract_type = /mob/living/basic/blob_minion
 	name = "Blob Error"
 	desc = "A nonfunctional fungal creature created by bad code or celestial mistake. Point and laugh."
 	icon = 'icons/mob/nonhuman-player/blob.dmi'

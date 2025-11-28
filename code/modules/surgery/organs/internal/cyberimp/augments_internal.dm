@@ -202,8 +202,8 @@
 	owner.SetKnockdown(0)
 	owner.SetImmobilized(0)
 	owner.SetParalyzed(0)
-	owner.setStaminaLoss(0)
-	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, setStaminaLoss), 0), stun_resistance_time)
+	owner.set_stamina_loss(0)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, set_stamina_loss), 0), stun_resistance_time)
 
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(5, 1, src)

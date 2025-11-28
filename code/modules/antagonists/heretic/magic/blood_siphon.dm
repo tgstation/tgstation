@@ -40,8 +40,8 @@
 	)
 
 	var/mob/living/living_owner = owner
-	cast_on.adjustBruteLoss(20)
-	living_owner.adjustBruteLoss(-20)
+	cast_on.adjust_brute_loss(20)
+	living_owner.adjust_brute_loss(-20)
 
 	cast_on.transfer_blood_to(living_owner, 20, ignore_low_blood = TRUE, ignore_incompatibility = TRUE, transfer_viruses = FALSE)
 

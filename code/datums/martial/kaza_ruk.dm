@@ -167,7 +167,7 @@
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(defender.losebreath <= 10)
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
-	defender.adjustOxyLoss(10)
+	defender.adjust_oxy_loss(10)
 	log_combat(attacker, defender, "quickchoked")
 	return MARTIAL_ATTACK_SUCCESS
 

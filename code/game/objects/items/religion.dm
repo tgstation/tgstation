@@ -66,8 +66,8 @@
 
 /obj/item/banner/proc/inspiration(mob/living/carbon/human/inspired_human)
 	var/need_mob_update = FALSE
-	need_mob_update += inspired_human.adjustBruteLoss(-15, updating_health = FALSE)
-	need_mob_update += inspired_human.adjustFireLoss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_brute_loss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_fire_loss(-15, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
 	inspired_human.AdjustStun(-4 SECONDS)
@@ -129,8 +129,8 @@
 
 /obj/item/banner/medical/special_inspiration(mob/living/carbon/human/inspired_human)
 	var/need_mob_update = FALSE
-	need_mob_update += inspired_human.adjustToxLoss(-15, updating_health = FALSE)
-	need_mob_update += inspired_human.setOxyLoss(0, updating_health = FALSE)
+	need_mob_update += inspired_human.adjust_tox_loss(-15, updating_health = FALSE)
+	need_mob_update += inspired_human.set_oxy_loss(0, updating_health = FALSE)
 	if(need_mob_update)
 		inspired_human.updatehealth()
 	inspired_human.reagents.add_reagent(/datum/reagent/medicine/inaprovaline, 5)

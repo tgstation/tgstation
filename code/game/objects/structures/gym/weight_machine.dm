@@ -214,7 +214,7 @@
 	if(HAS_TRAIT(user, TRAIT_STRENGTH)) //The strong get reductions to stamina damage taken while exercising
 		stamina_exhaustion *= 0.5
 
-	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
+	user.adjust_stamina_loss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE
 
