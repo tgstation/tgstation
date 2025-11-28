@@ -366,7 +366,7 @@
 			span_warning("[surgeon] accidentally stabs [organ.owner] right in the brain!"),
 		)
 		display_pain(organ.owner, "You feel a visceral stabbing pain right through your head, into your brain!")
-		organ.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
+		organ.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 70)
 	else
 		display_results(
 			surgeon,
@@ -438,7 +438,7 @@
 			span_warning("[surgeon] accidentally stabs [organ.owner] right in the brain!"),
 		)
 		display_pain(organ.owner, "You feel a visceral stabbing pain right through your head, into your brain!")
-		organ.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
+		organ.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 70)
 
 	else
 		display_results(

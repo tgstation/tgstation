@@ -89,12 +89,12 @@
 	patient.emote("gasp")
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID)) // Contrary to their typical hatred of resurrection, it wouldn't be very thematic if morbid people didn't love playing god
 		surgeon.add_mood_event("morbid_revival_success", /datum/mood_event/morbid_revival_success)
-	patient.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 180)
+	patient.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 180)
 
 /// Called when revival fails
 /datum/surgery_operation/basic/revival/proc/on_no_revive(mob/living/surgeon, mob/living/patient)
 	patient.visible_message(span_warning("...[patient.p_they()] convulse[patient.p_s()], then lie[patient.p_s()] still."))
-	patient.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) // MAD SCIENCE
+	patient.adjust_organ_loss(ORGAN_SLOT_BRAIN, 50, 199) // MAD SCIENCE
 
 /datum/surgery_operation/basic/revival/on_failure(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

@@ -282,7 +282,7 @@
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
 	display_pain(limb.owner, "Your head throbs with excruciating pain!")
-	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
+	limb.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 60)
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/limb/bioware/cortex_folding/mechanic
@@ -330,7 +330,7 @@
 		span_notice("[surgeon] completes the surgery on [limb.owner]'s brain."),
 	)
 	display_pain(limb.owner, "Your brain throbs with intense pain; Thinking hurts!")
-	limb.owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60)
+	limb.owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 60)
 	limb.owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/surgery_operation/limb/bioware/cortex_imprint/mechanic
