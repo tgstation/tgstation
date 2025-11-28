@@ -82,6 +82,7 @@
 		/mob/living/basic/mouse,
 		/mob/living/basic/snail,
 		/mob/living/basic/slugcat, // troutstation edit, taken from monkestation
+		/mob/living/basic/skitterer, // troutstation edit
 	)
 	return pick(mob_list)
 
@@ -304,6 +305,7 @@
 		/mob/living/basic/mushroom,
 		/mob/living/basic/viscerator,
 		/mob/living/basic/pet/gondola,
+		/mob/living/basic/gay_skitterer, // troutstation edit
 	)
 	return pick(mob_list)
 

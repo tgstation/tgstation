@@ -54,6 +54,9 @@
 			src.volume = 90*volume
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
 			return
+		if(FOOTSTEP_MOB_SKITTER) // troutstation edit
+			footstep_sounds = 'troutstation/sound/mobs/non-humanoids/skitterer/skitter_walk.ogg'
+			src.volume = 90*volume // end troutstation edit
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep))
 	steps_for_living[target] = 0
 

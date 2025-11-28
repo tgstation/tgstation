@@ -101,6 +101,8 @@
 // Troutstation edit
 /// Flock faction (NPC)
 #define FACTION_FLOCK "flock"
+/// Skitterers faction
+#define FACTION_SKITTER "skitter"
 
 /// Generates a mob faction for the passed owner, used by stabilized pink extracts
 #define FACTION_PINK_EXTRACT(owner) "pink_[owner]"
