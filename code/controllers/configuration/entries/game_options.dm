@@ -512,3 +512,10 @@
 
 /datum/config_entry/number/max_shuttle_size
 	default = 250
+
+
+/datum/config_entry/number/max_save_slots
+	default = 3
+
+/datum/config_entry/number/max_save_slots_byond_member
+	default = 8
