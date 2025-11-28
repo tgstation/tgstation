@@ -74,7 +74,7 @@
 		. = TRUE
 	return .
 
-/// Spawn green acid puddle underneath obj
+/// Spawn green acid puddle underneath obj, used for callback
 /datum/action/changeling/biodegrade/proc/make_puddle(obj/melted_restraint)
 	if (melted_restraint) // just incase obj gets qdel'd
 		return new /obj/effect/decal/cleanable/greenglow(get_turf(melted_restraint))
