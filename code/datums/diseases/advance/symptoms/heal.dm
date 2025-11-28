@@ -617,8 +617,7 @@
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
 	threshold_descs = list(
-		"Transmission 6" = "Additionally heals cellular damage.",
-		"Resistance 7" = "Increases healing speed.",
+		"Resistance 7" = "Increases healing speed."
 	)
 
 /datum/symptom/heal/radiation/Start(datum/disease/advance/A)
