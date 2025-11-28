@@ -92,7 +92,3 @@
 /datum/antagonist/blood_worm/infestation
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
 	show_in_antagpanel = FALSE
-
-/mob/living/basic/blood_worm/proc/get_antag_datum()
-	RETURN_TYPE(/datum/antagonist/blood_worm)
-	return mind?.has_antag_datum(/datum/antagonist/blood_worm)
