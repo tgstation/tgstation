@@ -514,3 +514,10 @@
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
 #undef EMAG_LOCKED_SHUTTLE_COST
+
+/datum/map_template/shuttle/emergency/gay
+	suffix = "gay2"
+	name = "Gay Emergency Shuttle"
+	description = "Oh! This shuttle is gay."
+	credit_cost = CARGO_CRATE_VALUE * 15
+	occupancy_limit = "80"
