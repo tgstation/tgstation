@@ -48,7 +48,7 @@
 	action_cooldown = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/possible_cultist in oview(search_range, controller.pawn))
 		if(IS_CULTIST(possible_cultist) && !(living_pawn.faction.Find(REF(possible_cultist))))
@@ -72,7 +72,7 @@
 
 /datum/ai_behavior/find_and_set/occupied_rune
 
-/datum/ai_behavior/find_and_set/occupied_rune/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/occupied_rune/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/datum/team/cult/cult_team = controller.blackboard[BB_CULT_TEAM]
 	if(isnull(cult_team))
 		return null
@@ -140,7 +140,7 @@
 
 /datum/ai_behavior/find_and_set/dead_cultist
 
-/datum/ai_behavior/find_and_set/dead_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/dead_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/datum/team/cult/cult_team = controller.blackboard[BB_CULT_TEAM]
 	if(isnull(cult_team))
 		return null
