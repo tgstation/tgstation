@@ -217,7 +217,7 @@
 /obj/structure/trap/damage/trap_effect(mob/living/victim)
 	to_chat(victim, span_bolddanger("The ground quakes beneath your feet!"))
 	victim.Paralyze(10 SECONDS)
-	victim.adjustBruteLoss(35)
+	victim.adjust_brute_loss(35)
 	var/obj/structure/flora/rock/style_random/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 20 SECONDS)
 

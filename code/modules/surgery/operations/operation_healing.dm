@@ -35,7 +35,7 @@
 	return ..() + list("the patient must have brute or burn damage")
 
 /datum/surgery_operation/basic/tend_wounds/state_check(mob/living/patient)
-	return patient.getBruteLoss() > 0 || patient.getFireLoss() > 0
+	return patient.get_brute_loss() > 0 || patient.get_fire_loss() > 0
 
 /datum/surgery_operation/basic/tend_wounds/get_radial_options(mob/living/patient, obj/item/tool, operating_zone)
 	var/list/options = list()
@@ -57,7 +57,7 @@
 			"[OPERATION_BURN_MULTIPLIER]" = healing_multiplier,
 		)
 
-	if((can_heal & BRUTE_SURGERY) && patient.getBruteLoss() > 0)
+	if((can_heal & BRUTE_SURGERY) && patient.get_brute_loss() > 0)
 		var/datum/radial_menu_choice/brute_healing = LAZYACCESS(cached_healing_options, "[BRUTE_SURGERY]")
 		if(!brute_healing)
 			brute_healing = new()
@@ -72,7 +72,7 @@
 			"[OPERATION_BRUTE_MULTIPLIER]" = healing_multiplier,
 		)
 
-	if((can_heal & BURN_SURGERY) && patient.getFireLoss() > 0)
+	if((can_heal & BURN_SURGERY) && patient.get_fire_loss() > 0)
 		var/datum/radial_menu_choice/burn_healing = LAZYACCESS(cached_healing_options, "[BURN_SURGERY]")
 		if(!burn_healing)
 			burn_healing = new()
@@ -96,11 +96,11 @@
 	var/brute_heal = operation_args[OPERATION_BRUTE_HEAL] > 0
 	var/burn_heal = operation_args[OPERATION_BURN_HEAL] > 0
 	if(brute_heal && burn_heal)
-		return patient.getBruteLoss() > 0 || patient.getFireLoss() > 0
+		return patient.get_brute_loss() > 0 || patient.get_fire_loss() > 0
 	else if(brute_heal)
-		return patient.getBruteLoss() > 0
+		return patient.get_brute_loss() > 0
 	else if(burn_heal)
-		return patient.getFireLoss() > 0
+		return patient.get_fire_loss() > 0
 	return FALSE
 
 /datum/surgery_operation/basic/tend_wounds/on_preop(mob/living/patient, mob/living/surgeon, tool, list/operation_args)
@@ -128,17 +128,17 @@
 /datum/surgery_operation/basic/tend_wounds/proc/get_progress(mob/living/surgeon, mob/living/patient, brute_healed, burn_healed)
 	var/estimated_remaining_steps = 0
 	if(brute_healed > 0)
-		estimated_remaining_steps = max(0, (patient.getBruteLoss() / brute_healed))
+		estimated_remaining_steps = max(0, (patient.get_brute_loss() / brute_healed))
 	if(burn_healed > 0)
-		estimated_remaining_steps = max(estimated_remaining_steps, (patient.getFireLoss() / burn_healed)) // whichever is higher between brute or burn steps
+		estimated_remaining_steps = max(estimated_remaining_steps, (patient.get_fire_loss() / burn_healed)) // whichever is higher between brute or burn steps
 
 	var/progress_text
 
 	if(surgeon.is_holding_item_of_type(/obj/item/healthanalyzer))
-		if(brute_healed > 0 && patient.getBruteLoss() > 0)
-			progress_text += ". Remaining brute: <font color='#ff3333'>[patient.getBruteLoss()]</font>"
-		if(burn_healed > 0 && patient.getFireLoss() > 0)
-			progress_text += ". Remaining burn: <font color='#ff9933'>[patient.getFireLoss()]</font>"
+		if(brute_healed > 0 && patient.get_brute_loss() > 0)
+			progress_text += ". Remaining brute: <font color='#ff3333'>[patient.get_brute_loss()]</font>"
+		if(burn_healed > 0 && patient.get_fire_loss() > 0)
+			progress_text += ". Remaining burn: <font color='#ff9933'>[patient.get_fire_loss()]</font>"
 		return progress_text
 
 	switch(estimated_remaining_steps)
@@ -178,8 +178,8 @@
 	var/brute_multiplier = operation_args[OPERATION_BRUTE_MULTIPLIER] * dead_multiplier * accessibility_modifier
 	var/burn_multiplier = operation_args[OPERATION_BURN_MULTIPLIER] * dead_multiplier * accessibility_modifier
 
-	brute_healed += round(patient.getBruteLoss() * brute_multiplier, DAMAGE_PRECISION)
-	burn_healed += round(patient.getFireLoss() * burn_multiplier, DAMAGE_PRECISION)
+	brute_healed += round(patient.get_brute_loss() * brute_multiplier, DAMAGE_PRECISION)
+	burn_healed += round(patient.get_fire_loss() * burn_multiplier, DAMAGE_PRECISION)
 
 	patient.heal_bodypart_damage(brute_healed, burn_healed)
 
@@ -210,8 +210,8 @@
 	var/brute_multiplier = operation_args[OPERATION_BRUTE_MULTIPLIER] * 0.5
 	var/burn_multiplier = operation_args[OPERATION_BURN_MULTIPLIER] * 0.5
 
-	brute_dealt += round(patient.getBruteLoss() * brute_multiplier, 0.1)
-	burn_dealt += round(patient.getFireLoss() * burn_multiplier, 0.1)
+	brute_dealt += round(patient.get_brute_loss() * brute_multiplier, 0.1)
+	burn_dealt += round(patient.get_fire_loss() * burn_multiplier, 0.1)
 
 	patient.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus = CANT_WOUND)
 

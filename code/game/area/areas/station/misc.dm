@@ -30,6 +30,6 @@
 	power_light = FALSE
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
-	area_flags = UNIQUE_AREA
+	area_flags = NONE
 	outdoors = TRUE
 	allow_shuttle_docking = TRUE

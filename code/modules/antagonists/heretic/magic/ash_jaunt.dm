@@ -60,7 +60,7 @@
 		return ..()
 
 	empowered_cast = TRUE
-	human_owner.setStaminaLoss(0)
+	human_owner.set_stamina_loss(0)
 	human_owner.SetAllImmobility(0)
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.uncuff()

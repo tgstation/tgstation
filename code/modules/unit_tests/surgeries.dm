@@ -15,7 +15,7 @@
 /datum/unit_test/brain_surgery/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	patient.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_SURGERY)
-	patient.setOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	patient.set_organ_loss(ORGAN_SLOT_BRAIN, 20)
 
 	TEST_ASSERT(patient.has_trauma_type(), "Patient does not have any traumas, despite being given one")
 
@@ -133,7 +133,7 @@
 	// Test that tending wounds actually lowers damage
 	var/datum/surgery_operation/basic/tend_wounds/surgery = GLOB.operations.operations_by_typepath[__IMPLIED_TYPE__]
 	UNLINT(surgery.success(patient, user, hemostat, list("[OPERATION_BRUTE_HEAL]" = 10, "[OPERATION_BRUTE_MULTIPLIER]" = 0.1)))
-	TEST_ASSERT(patient.getBruteLoss() < 100, "Tending brute wounds didn't lower brute damage ([patient.getBruteLoss()])")
+	TEST_ASSERT(patient.get_brute_loss() < 100, "Tending brute wounds didn't lower brute damage ([patient.get_brute_loss()])")
 
 	// Test that wearing clothing lowers heal amount
 	var/mob/living/carbon/human/naked_patient = allocate(/mob/living/carbon/human/consistent)
@@ -146,7 +146,7 @@
 	UNLINT(surgery.success(naked_patient, user, hemostat, list("[OPERATION_BRUTE_HEAL]" = 10, "[OPERATION_BRUTE_MULTIPLIER]" = 0.1)))
 	UNLINT(surgery.success(clothed_patient, user, hemostat, list("[OPERATION_BRUTE_HEAL]" = 10, "[OPERATION_BRUTE_MULTIPLIER]" = 0.1)))
 
-	TEST_ASSERT(naked_patient.getBruteLoss() < clothed_patient.getBruteLoss(), "Naked patient did not heal more from wounds tending than a clothed patient")
+	TEST_ASSERT(naked_patient.get_brute_loss() < clothed_patient.get_brute_loss(), "Naked patient did not heal more from wounds tending than a clothed patient")
 
 /// Tests items-as-prosthetic-limbs can apply
 /datum/unit_test/prosthetic_item

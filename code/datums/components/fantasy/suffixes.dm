@@ -111,11 +111,12 @@
 			/mob/living/simple_animal,
 		)
 		for(var/type in mob_subtype_whitelist)
-			possible_mobtypes += subtypesof(type)
+			possible_mobtypes += valid_subtypesof(type)
 
 		var/list/mob_subtype_blacklist = list(
 			/mob/living/simple_animal/hostile/asteroid/elite,
 			/mob/living/simple_animal/hostile/megafauna,
+			/mob/living/basic/boss,
 		)
 		for(var/type in mob_subtype_blacklist)
 			possible_mobtypes -= subtypesof(type)

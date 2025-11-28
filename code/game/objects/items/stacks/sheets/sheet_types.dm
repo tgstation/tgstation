@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("telescreen turbine frame", /obj/item/wallframe/telescreen/turbine, 7, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("telescreen engine frame", /obj/item/wallframe/telescreen/engine, 7, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("telescreen auxbase frame", /obj/item/wallframe/telescreen/auxbase, 7, crafting_flags = NONE, category = CAT_STRUCTURE), \
-	new/datum/stack_recipe("tram controller frame", /obj/item/wallframe/tram/controller, 20, crafting_flags = NONE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("tram controller frame", /obj/item/wallframe/tram, 20, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("tram display frame", /obj/item/wallframe/indicator_display, 7, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \

@@ -165,14 +165,14 @@
 /datum/component/healing_touch/proc/has_healable_damage(mob/living/target)
 	if (!isnull(valid_biotypes) && !(valid_biotypes & target.mob_biotypes))
 		return FALSE
-	if (target.getStaminaLoss() > 0 && heal_stamina)
+	if (target.get_stamina_loss() > 0 && heal_stamina)
 		return TRUE
-	if (target.getOxyLoss() > 0 && heal_oxy)
+	if (target.get_oxy_loss() > 0 && heal_oxy)
 		return TRUE
-	if (target.getToxLoss() > 0 && heal_tox)
+	if (target.get_tox_loss() > 0 && heal_tox)
 		return TRUE
 	if (!iscarbon(target))
-		return (target.getBruteLoss() > 0 && heal_brute) || (target.getFireLoss() > 0 && heal_burn)
+		return (target.get_brute_loss() > 0 && heal_brute) || (target.get_fire_loss() > 0 && heal_burn)
 	var/mob/living/carbon/carbon_target = target
 	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
 		if (!(part.brute_dam && heal_brute) && !(part.burn_dam && heal_burn))
@@ -207,8 +207,8 @@
 		required_bodytype = required_bodytype,
 		updating_health = FALSE,
 	)
-	healed += target.adjustOxyLoss(-heal_oxy * mult, updating_health = FALSE, required_biotype = valid_biotypes)
-	healed += target.adjustToxLoss(-heal_tox * mult, updating_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjust_oxy_loss(-heal_oxy * mult, updating_health = FALSE, required_biotype = valid_biotypes)
+	healed += target.adjust_tox_loss(-heal_tox * mult, updating_health = FALSE, required_biotype = valid_biotypes)
 	if (healed <= 0)
 		return
 
