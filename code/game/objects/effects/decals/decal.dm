@@ -44,6 +44,12 @@
 	if(changed == loc && NeverShouldHaveComeHere(changed))
 		qdel(src)
 
+/obj/effect/decal/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	user.Move_Pulled(src)
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/effect/turf_decal
