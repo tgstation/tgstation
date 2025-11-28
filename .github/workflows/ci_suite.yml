@@ -3,11 +3,11 @@ name: CI Suite
 on:
   pull_request:
     branches:
-      - master
+      - troutstation
       - "project/**"
   merge_group:
     branches:
-      - master
+      - troutstation
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
