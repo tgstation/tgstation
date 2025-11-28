@@ -114,6 +114,9 @@
 		bounty_types[difficulty][bounty] = weight
 
 	var/list/limited_items = list()
+	var/list/show_anyways = list()
+	show_anyways += typesof(/datum/uplink_item/spy_unique/shotgun_ammo) // acquiring a shotgun is not difficult
+
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
 		// limited items is populated as we go
 		if(item in limited_items)
@@ -122,7 +125,7 @@
 		if(!try_add_to_loot_pool(item))
 			continue
 		// any child items, such as ammo, are removed from the pool until the parent item is rewarded
-		for(var/child_item_type in item.relevant_child_items)
+		for(var/child_item_type in (item.relevant_child_items || list()) - show_anyways)
 			if(prob(10)) // 10% chance to have it anyways though. teehee
 				continue
 			var/child_item = SStraitor.uplink_items_by_type[child_item_type]
