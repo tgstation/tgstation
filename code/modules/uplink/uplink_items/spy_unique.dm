@@ -116,7 +116,7 @@
 /datum/uplink_item/spy_unique/makarov_pistol
 	name = "Makarov Pistol"
 	desc = "A Makarov pistol - Reliable and sturdy."
-	item = /obj/item/gun/ballistic/automatic/pistol/makarov
+	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = SPY_LOWER_COST_THRESHOLD
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 	relevant_child_items = list(
