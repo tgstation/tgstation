@@ -157,3 +157,9 @@
 	template_id = "holodeck_refuelingstation"
 	mappath = "_maps/templates/holodeck_refuelingstation.dmm"
 	restricted = TRUE
+
+/// troutstation edit
+/datum/map_template/holodeck/breakroom
+	name = "Holodeck - Break Room"
+	template_id = "holodeck_break"
+	mappath = "_maps/templates/holodeck_break.dmm"

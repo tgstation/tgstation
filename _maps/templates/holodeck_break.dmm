@@ -1,0 +1,360 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = -5
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"b" = (
+/obj/item/kirbyplants/organic/plant15{
+	pixel_y = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"c" = (
+/obj/structure/chair/sofa/right{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"d" = (
+/obj/item/kirbyplants/organic/plant2{
+	pixel_y = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"f" = (
+/obj/machinery/vending/snack/green{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"i" = (
+/turf/open/floor/holofloor,
+/area/template_noop)
+"j" = (
+/obj/effect/turf_decal/tile/neutral/anticorner{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"k" = (
+/obj/item/kirbyplants/organic/plant18{
+	pixel_y = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"l" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/sillycup,
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = -5
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"n" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug,
+/obj/item/reagent_containers/cup/glass/coffee/no_lid{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"o" = (
+/obj/structure/chair/sofa/middle,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"p" = (
+/obj/structure/chair/sofa/corner{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"q" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"r" = (
+/obj/structure/chair/sofa/right{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/anticorner,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"u" = (
+/obj/structure/chair/sofa/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"v" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/glass/coffee/no_lid{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"w" = (
+/obj/structure/table,
+/obj/machinery/coffeemaker{
+	pixel_y = 9
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"x" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/glass/sillycup{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/coffee/no_lid{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"y" = (
+/obj/structure/chair/sofa/middle{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"A" = (
+/obj/machinery/vending/cola/black{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/tile/neutral/anticorner{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"C" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/kirbyplants/organic/plant24,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"D" = (
+/obj/item/kirbyplants/organic/plant4{
+	pixel_y = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"E" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"H" = (
+/obj/structure/chair/sofa/middle{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"J" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"K" = (
+/obj/structure/chair/sofa/left{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/anticorner{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"L" = (
+/obj/structure/chair/sofa/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"M" = (
+/obj/structure/chair/sofa/left{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"N" = (
+/obj/effect/turf_decal/tile/neutral/anticorner{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"O" = (
+/obj/structure/reagent_dispensers/water_cooler/gay,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"Q" = (
+/obj/effect/turf_decal/tile/neutral/anticorner,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"R" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"S" = (
+/obj/structure/chair/sofa/middle{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"T" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/coffee/no_lid{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/glass/mug,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"U" = (
+/obj/structure/chair/sofa/corner,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"Y" = (
+/obj/structure/table,
+/obj/item/coffee_cartridge{
+	pixel_y = 9;
+	pixel_x = 8
+	},
+/obj/item/coffee_cartridge{
+	pixel_y = 1;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/coffeepot{
+	pixel_y = 2;
+	pixel_x = -13
+	},
+/obj/item/coffee_cartridge{
+	pixel_y = 8;
+	pixel_x = -4
+	},
+/obj/item/coffee_cartridge/decaf,
+/turf/open/floor/holofloor,
+/area/template_noop)
+
+(1,1,1) = {"
+q
+Q
+i
+N
+A
+i
+i
+i
+i
+w
+"}
+(2,1,1) = {"
+o
+i
+E
+i
+i
+i
+i
+i
+i
+Y
+"}
+(3,1,1) = {"
+o
+B
+i
+j
+i
+i
+i
+M
+y
+p
+"}
+(4,1,1) = {"
+U
+K
+i
+d
+l
+D
+Q
+i
+N
+H
+"}
+(5,1,1) = {"
+J
+J
+i
+a
+C
+v
+i
+E
+i
+H
+"}
+(6,1,1) = {"
+L
+r
+i
+b
+x
+k
+B
+i
+j
+H
+"}
+(7,1,1) = {"
+o
+Q
+i
+N
+i
+i
+i
+c
+S
+u
+"}
+(8,1,1) = {"
+o
+i
+O
+i
+i
+i
+i
+i
+i
+n
+"}
+(9,1,1) = {"
+R
+B
+i
+j
+f
+i
+i
+i
+i
+T
+"}
