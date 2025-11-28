@@ -89,6 +89,13 @@
 
 	return icon
 
+/datum/antagonist/blood_worm/ui_static_data(mob/user)
+	. = ..()
+	var/list/team_data = list()
+	team_data["blood_consumed_total"] = floor(team.blood_consumed_total)
+	team_data["times_reproduced_total"] = floor(team.times_reproduced_total)
+	.["team"] = team_data
+
 /datum/antagonist/blood_worm/infestation
 	pref_flag = ROLE_BLOOD_WORM_INFESTATION
 	show_in_antagpanel = FALSE

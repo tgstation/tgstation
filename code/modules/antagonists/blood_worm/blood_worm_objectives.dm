@@ -1,11 +1,9 @@
 /datum/objective/blood_worm
 	abstract_type = /datum/objective/blood_worm
 
-/datum/objective/blood_worm/proc/register_team_member_mob(mob/member_mob)
-	return
-
-/datum/objective/blood_worm/proc/unregister_team_member_mob(mob/member_mob)
-	return
+/datum/objective/blood_worm/proc/get_blood_worm_team()
+	RETURN_TYPE(/datum/team/blood_worm)
+	return team
 
 /datum/objective/blood_worm/kill
 	name = "KILL"
@@ -28,7 +26,6 @@
 /datum/objective/blood_worm/consume
 	name = "CONSUME"
 
-	var/blood_consumed = 0
 	var/blood_required = 0
 
 /datum/objective/blood_worm/consume/New(text)
@@ -39,23 +36,12 @@
 	explanation_text = "We must consume a total of at least [blood_required] units of real blood to sate our appetite."
 
 /datum/objective/blood_worm/consume/check_completion()
-	return blood_consumed >= blood_required
-
-/datum/objective/blood_worm/consume/register_team_member_mob(mob/member_mob)
-	RegisterSignal(member_mob, COMSIG_BLOOD_WORM_CONSUMED_BLOOD, PROC_REF(on_blood_worm_consumed_blood))
-
-/datum/objective/blood_worm/consume/unregister_team_member_mob(mob/member_mob)
-	UnregisterSignal(member_mob, COMSIG_BLOOD_WORM_CONSUMED_BLOOD)
-
-/datum/objective/blood_worm/consume/proc/on_blood_worm_consumed_blood(mob/living/basic/blood_worm/worm, normal_blood_amount, synth_blood_amount, total_blood_amount)
-	SIGNAL_HANDLER
-	blood_consumed += normal_blood_amount
+	return get_blood_worm_team().blood_consumed_total >= blood_required
 
 /datum/objective/blood_worm/multiply
 	name = "MULTIPLY"
 
 	var/times_required = 0
-	var/times_reproduced = 0
 
 /datum/objective/blood_worm/multiply/New(text)
 	times_required = rand(2, 3)
@@ -65,17 +51,7 @@
 	explanation_text = "At least [times_required] of us must reproduce to pave the way for our overwhelming numbers."
 
 /datum/objective/blood_worm/multiply/check_completion()
-	return times_reproduced >= times_required
-
-/datum/objective/blood_worm/multiply/register_team_member_mob(mob/member_mob)
-	RegisterSignal(member_mob, COMSIG_BLOOD_WORM_REPRODUCED, PROC_REF(on_blood_worm_reproduced))
-
-/datum/objective/blood_worm/multiply/unregister_team_member_mob(mob/member_mob)
-	UnregisterSignal(member_mob, COMSIG_BLOOD_WORM_REPRODUCED)
-
-/datum/objective/blood_worm/multiply/proc/on_blood_worm_reproduced(mob/living/basic/blood_worm/worm)
-	SIGNAL_HANDLER
-	times_reproduced++
+	return get_blood_worm_team().times_reproduced_total >= times_required
 
 /datum/objective/blood_worm/conquer
 	name = "CONQUER"

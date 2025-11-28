@@ -6,11 +6,17 @@ import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
   objectives: Objective[];
+  team: Team;
+};
+
+type Team = {
+  blood_consumed_total: number;
+  times_reproduced_total: number;
 };
 
 export const AntagInfoBloodWorm = (props) => {
   const { data } = useBackend<Info>();
-  const { objectives } = data;
+  const { objectives, team } = data;
   return (
     <Window width={800} height={500}>
       <Window.Content>
@@ -21,6 +27,16 @@ export const AntagInfoBloodWorm = (props) => {
             </Stack.Item>
             <Stack.Item>
               <ObjectivePrintout objectives={objectives} />
+            </Stack.Item>
+            <Stack.Item>
+              <Stack vertical>
+                <Stack.Item bold>Your team status:</Stack.Item>
+                <Stack.Item>
+                  - Total blood consumed: {team.blood_consumed_total} units
+                  <br></br>
+                  - Total times reproduced: {team.times_reproduced_total} times
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
             <Stack.Item>
               <Section fill title="Powers">

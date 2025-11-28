@@ -2,6 +2,9 @@
 	name = "\improper Blood Worms"
 	member_name = "blood worm"
 
+	var/blood_consumed_total = 0
+	var/times_reproduced_total = 0
+
 	var/static/list/objective_types = list(
 		/datum/objective/blood_worm/kill,
 		/datum/objective/blood_worm/consume,
@@ -36,14 +39,23 @@
 /datum/team/blood_worm/proc/register_member_mob(mob/member_mob)
 	if (!member_mob)
 		return
-	for (var/datum/objective/blood_worm/objective in objectives)
-		objective.register_team_member_mob(member_mob)
+
+	RegisterSignal(member_mob, COMSIG_BLOOD_WORM_CONSUMED_BLOOD, PROC_REF(on_blood_worm_consumed_blood))
+	RegisterSignal(member_mob, COMSIG_BLOOD_WORM_REPRODUCED, PROC_REF(on_blood_worm_reproduced))
 
 /datum/team/blood_worm/proc/unregister_member_mob(mob/member_mob)
 	if (!member_mob)
 		return
-	for (var/datum/objective/blood_worm/objective in objectives)
-		objective.unregister_team_member_mob(member_mob)
+
+	UnregisterSignal(member_mob, list(COMSIG_BLOOD_WORM_CONSUMED_BLOOD, COMSIG_BLOOD_WORM_REPRODUCED))
+
+/datum/team/blood_worm/proc/on_blood_worm_consumed_blood(mob/living/basic/blood_worm/worm, normal_blood_amount, synth_blood_amount, total_blood_amount)
+	SIGNAL_HANDLER
+	blood_consumed_total += normal_blood_amount
+
+/datum/team/blood_worm/proc/on_blood_worm_reproduced(mob/living/basic/blood_worm/worm)
+	SIGNAL_HANDLER
+	times_reproduced_total++
 
 /datum/team/blood_worm/roundend_report()
 	var/list/report = list()
