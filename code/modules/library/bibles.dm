@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
-			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
+			carbon_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
