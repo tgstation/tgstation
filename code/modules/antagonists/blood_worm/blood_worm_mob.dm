@@ -143,6 +143,8 @@
 	// For reference, a cyborg has a move speed delay of 1.5 deciseconds
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 0.5)
 
+	AddElement(/datum/element/anti_self_harm)
+
 	id_number = rand(1, 999)
 	update_name()
 
