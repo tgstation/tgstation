@@ -6,6 +6,7 @@
 #define RND_SUBCATEGORY_WEAPONS_RANGED "/Ranged Weapons"
 #define RND_SUBCATEGORY_WEAPONS_MELEE "/Melee Weapons"
 #define RND_SUBCATEGORY_WEAPONS_KITS "/Weapon Fabrication Kits"
+#define RND_SUBCATEGORY_WEAPONS_EXOSUITS "/Exosuit Weapons"
 
 // Wiremod Categories
 #define RND_CATEGORY_CIRCUITRY "/Circuitry"
@@ -29,6 +30,7 @@
 #define RND_SUBCATEGORY_TOOLS_PLUMBING "/Plumbing Tools"
 #define RND_SUBCATEGORY_TOOLS_ATMOSPHERICS "/Atmospherics Tools"
 #define RND_SUBCATEGORY_TOOLS_MINING "/Mining Tools"
+#define RND_SUBCATEGORY_TOOLS_MINING_EXOSUIT "/Exosuit Mining Tools"
 #define RND_SUBCATEGORY_TOOLS_CARGO "/Cargo Tools"
 #define RND_SUBCATEGORY_TOOLS_PKA_MODS "/PKA Modkits"
 #define RND_SUBCATEGORY_TOOLS_SECURITY "/Security Tools"

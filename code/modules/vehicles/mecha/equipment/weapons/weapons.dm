@@ -93,14 +93,17 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 8
+	equip_cooldown = 12
 	name = "\improper CH-PS \"Immolator\" laser"
-	desc = "A weapon for combat exosuits. Shoots basic lasers."
+	desc = "A weapon for combat exosuits. Shoots a burst of lasers."
 	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/projectile/beam/laser
 	fire_sound = 'sound/items/weapons/laser.ogg'
 	harmful = TRUE
+	projectiles_per_shot = 2
+	projectile_delay = 2
+	randomspread = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	equip_cooldown = 1.5 SECONDS
@@ -122,6 +125,9 @@
 	energy_drain = 60
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	projectiles_per_shot = 1
+	projectile_delay = 0
+	randomspread = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
@@ -350,7 +356,7 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	icon_state = "mecha_carbine"
-	equip_cooldown = 10
+	equip_cooldown = 8
 	projectile = /obj/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectiles_cache = 24
@@ -395,7 +401,7 @@
 	projectiles_cache_max = 1200
 	projectiles_per_shot = 3
 	variance = 6
-	randomspread = 1
+	randomspread = TRUE
 	projectile_delay = 2
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG

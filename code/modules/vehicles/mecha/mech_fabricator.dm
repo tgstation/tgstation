@@ -66,6 +66,14 @@
 	QDEL_NULL(print_sound)
 	return ..()
 
+/obj/machinery/mecha_part_fabricator/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	balloon_alert(user, "safeties shorted out")
+	update_menu_tech()
+	return TRUE
+
 /obj/machinery/mecha_part_fabricator/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
@@ -159,7 +167,7 @@
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(v)
 
-		if(design.build_type & MECHFAB)
+		if(design.build_type & MECHFAB || (obj_flags & EMAGGED && ((RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_EXOSUITS) in design.category)))
 			cached_designs |= design
 
 	var/design_delta = cached_designs.len - previous_design_count

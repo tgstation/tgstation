@@ -11,7 +11,8 @@
 // Mech FNX-99
 
 /obj/projectile/bullet/incendiary/fnx99
-	damage = 20
+	damage = 30
+	leaves_fire_trail = FALSE
 
 // Turrets
 
