@@ -113,6 +113,30 @@
 		/datum/uplink_item/ammo_nuclear/incendiary/m10mm,
 	)
 
+/datum/uplink_item/spy_unique/makarov_pistol
+	name = "Makarov Pistol"
+	desc = "A Makarov pistol - Reliable and sturdy."
+	item = /obj/item/gun/ballistic/automatic/pistol/makarov
+	cost = SPY_LOWER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo/pistol,
+		/datum/uplink_item/ammo/pistolap,
+		/datum/uplink_item/ammo/pistolhp,
+		/datum/uplink_item/ammo/pistolfire,
+	)
+
+/datum/uplink_item/spy_unique/toy_pistol
+	name = "Donksoft Riot Pistol"
+	desc = "A Donksoft Riot Pistol - A toy pistol that fires foam darts at higher than normal velocity."
+	item = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	cost = SPY_LOWER_COST_THRESHOLD
+	cost = SPY_LOWER_COST_THRESHOLD
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
+	relevant_child_items = list(
+		/datum/uplink_item/ammo/toydarts,
+	)
+
 /datum/uplink_item/spy_unique/rocket_launcher
 	name = "Rocket Launcher"
 	desc = "A rocket launcher. I would recommend against jumping with it."

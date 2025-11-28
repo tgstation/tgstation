@@ -15,7 +15,7 @@
 	item = /obj/item/storage/toolbox/guncase/traitor/donksoft
 	cost = 6
 	surplus = 10
-	purchasable_from = ~UPLINK_SERIOUS_OPS
+	purchasable_from = ~(UPLINK_SERIOUS_OPS | UPLINK_SPY)
 	relevant_child_items = list(
 		/datum/uplink_item/ammo/toydarts,
 	)
@@ -27,7 +27,7 @@
 		While not included in the kit, the pistol is compatible with suppressors, which can be purchased separately."
 	item = /obj/item/storage/toolbox/guncase/traitor
 	cost = 7
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	relevant_child_items = list(
 		/datum/uplink_item/ammo/pistol,
 		/datum/uplink_item/ammo/pistolap,
