@@ -70,3 +70,10 @@
 	layer = FLY_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = RESET_TRANSFORM | LONG_GLIDE | PIXEL_SCALE | TILE_BOUND
+
+/obj/effect/overlay/adminoverlay
+	name = "adminoverlay"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "admin"
+	layer = FLY_LAYER
+	appearance_flags = RESET_TRANSFORM | PIXEL_SCALE | TILE_BOUND

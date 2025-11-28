@@ -3166,6 +3166,7 @@
 #include "code\modules\admin\verbs\fix_air.dm"
 #include "code\modules\admin\verbs\fov.dm"
 #include "code\modules\admin\verbs\fps.dm"
+#include "code\modules\admin\verbs\freeze.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
 #include "code\modules\admin\verbs\ghost_pool_protection.dm"
 #include "code\modules\admin\verbs\grant_dna_infusion.dm"
