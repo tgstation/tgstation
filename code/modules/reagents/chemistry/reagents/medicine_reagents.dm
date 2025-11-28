@@ -94,7 +94,7 @@
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * seconds_per_tick)
 	affected_mob.adjust_hallucinations(-20 SECONDS * REM * seconds_per_tick)
 	if(SPT_PROB(16, seconds_per_tick))
-		if(affected_mob.adjust_tox_loss(1, updating_health = FALSE, required_biotype = affected_biotype))
+		if(metabolic_health_adjust(affected_mob, 1, TOX))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/synaphydramine
@@ -152,10 +152,10 @@
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_oxy_loss(-3 * power * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += affected_mob.adjust_brute_loss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(-power * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_tox_loss(-power * REM * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
+	need_mob_update = metabolic_health_adjust(affected_mob, -3 * power * REM * seconds_per_tick, OXY)
+	need_mob_update += metabolic_health_adjust(affected_mob, -power * REM * seconds_per_tick, BRUTE)
+	need_mob_update += metabolic_health_adjust(affected_mob, -power * REM * seconds_per_tick, FIRE)
+	need_mob_update += metabolic_health_adjust(affected_mob, -power * REM * seconds_per_tick, TOX) //heals TOXINLOVERs
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(power * REM * seconds_per_tick)
@@ -403,10 +403,10 @@
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_tox_loss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_oxy_loss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-	need_mob_update += affected_mob.adjust_brute_loss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = metabolic_health_adjust(affected_mob, -healing * REM * seconds_per_tick, TOX)
+	need_mob_update += metabolic_health_adjust(affected_mob, -healing * REM * seconds_per_tick, OXY)
+	need_mob_update += metabolic_health_adjust(affected_mob, -healing * REM * seconds_per_tick, BRUTE)
+	need_mob_update += metabolic_health_adjust(affected_mob, -healing * REM * seconds_per_tick, FIRE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -498,7 +498,7 @@
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
-		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+		if(metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, TOX))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/pen_acid
@@ -514,7 +514,7 @@
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(affected_mob, -2 * REM * seconds_per_tick, TOX))
 		. = UPDATE_MOB_HEALTH
 	for(var/datum/reagent/reagent as anything in affected_mob.reagents.reagent_list)
 		if(reagent != src)
@@ -535,9 +535,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.get_brute_loss() > 25)
-		need_mob_update = affected_mob.adjust_brute_loss(-4 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = metabolic_health_adjust(affected_mob, -4 * REM * seconds_per_tick * normalise_creation_purity(), BRUTE)
 	else
-		need_mob_update = affected_mob.adjust_brute_loss(-0.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = metabolic_health_adjust(affected_mob, -0.5 * REM * seconds_per_tick * normalise_creation_purity(), BRUTE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1151,8 +1151,8 @@
 	. = ..()
 	var/damage_at_random = rand(0, 250)/100 //0 to 2.5
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(damage_at_random * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(damage_at_random * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = metabolic_health_adjust(affected_mob, damage_at_random * REM * seconds_per_tick, BRUTE)
+	need_mob_update += metabolic_health_adjust(affected_mob, damage_at_random * REM * seconds_per_tick, FIRE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -1191,7 +1191,7 @@
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, -2 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+	if(metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  -2 * REM * seconds_per_tick * normalise_creation_purity()))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/affected_mob)
@@ -1304,7 +1304,7 @@
 	for(var/effect in status_effects_to_clear)
 		affected_mob.remove_status_effect(effect)
 	affected_mob.reagents.remove_reagent(/datum/reagent/consumable/ethanol, 8 * REM * seconds_per_tick * normalise_creation_purity(), include_subtypes = TRUE)
-	if(affected_mob.adjust_tox_loss(-0.2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(affected_mob, -0.2 * REM * seconds_per_tick, TOX))
 		. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick * normalise_creation_purity())
 
@@ -1339,10 +1339,10 @@
 	. = ..()
 	if(affected_mob.health < 50 && affected_mob.health > 0)
 		var/need_mob_update
-		need_mob_update += affected_mob.adjust_oxy_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjust_brute_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_fire_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, OXY)
+		need_mob_update += metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, TOX)
+		need_mob_update += metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, BRUTE)
+		need_mob_update += metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, FIRE)
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
 	affected_mob.AdjustAllImmobility(-60  * REM * seconds_per_tick)
@@ -1747,7 +1747,7 @@
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, -2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)) // Add a chance to cure liver trauma once implemented.
+	if(metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LIVER,  -2 * REM * seconds_per_tick)) // Add a chance to cure liver trauma once implemented.
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/polypyr  //This is intended to be an ingredient in advanced chems.
@@ -1792,8 +1792,8 @@
 	. = ..()
 	var/healamount = max(0.5 - round(0.01 * (affected_mob.get_brute_loss() + affected_mob.get_fire_loss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(-healamount * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_fire_loss(-healamount * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update = metabolic_health_adjust(affected_mob, -healamount * REM * seconds_per_tick, BRUTE)
+	need_mob_update += metabolic_health_adjust(affected_mob, -healamount * REM * seconds_per_tick, FIRE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 

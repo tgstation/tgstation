@@ -149,6 +149,47 @@
 	return
 
 /**
+ * Serves to wrap any calls to inflicting or healing damage on whatever mob contains this reagent,
+ * to facilitate things such as titration, dosage thresholds, or resistances, while also providing an
+ * interface to specifically interlink with damage caused/healed by a reagent. At this time, it serves
+ * as a wrapper for apply_damage
+ * Usage: Depending on the reagent, call the parent with . = ..() at the appropriate time (IE even a liverless
+ * person will burn with phlogiston in them, but they wouldn't take tox damage from it, and maybe they'd burn
+ * less since it isn't circulating. The code is your oyster.)
+ *
+ * * affected_mob: our hapless drug addict/poisoning victim/floor pill enjoyer
+ * * base_damage: as of this writing, a copy paste of the spaghetti wrangling of reagent damage processing, but
+ * *	optimally, calculated based off of reagent characteristics on atomized balance refactors
+ * * damage_type: the type of damage, as a string define of form BRUTE FIRE TOX OXY BRAIN
+ * * ...: extended argslist to shuttle into apply_damage
+ *
+ * Returns: the result of any subsequent calls to apply_damage, or NONE if signal chicanery or future refactors
+ * *	put a stop to it
+ */
+/datum/reagent/proc/metabolic_health_adjust(mob/living/carbon/affected_mob, ...)
+	var/base_damage = args[2]
+	var/damage_type = args[3]
+	if(SEND_SIGNAL(affected_mob, COMSIG_REAGENTS_METABOLIC_HEALTH_ADJUST, src, base_damage, damage_type) & COMPONENT_CANCEL_METABOLIC_HEALTH_ADJUST)
+		return NONE
+	switch(damage_type)
+		if(TOX)
+			if(!(affected_mob.mob_biotypes & affected_biotype))
+				return NONE
+		if(BRUTE,FIRE)
+			if(!(affected_mob.bodytype & affected_bodytype))
+				return NONE
+		if(OXY)
+			if(!(affected_mob.mob_respiration_type & affected_respiration_type))
+				return NONE
+	return affected_mob.apply_damage(base_damage, damage_type, arglist(args.Copy(4)))
+
+/**
+ * As /proc/metabolic_organ_adjust, serving at this point in time as a wrapper proc for organ damage
+ * healing/inflicting, with a thin SIGNAL return serving to possibly interdict the call
+ */
+/datum/reagent/proc/metabolic_organ_adjust(mob/living/carbon/affected_mob)
+
+/**
  * Ticks on mob Life() for as long as the reagent remains in the mob's reagents.
  *
  * Usage: Parent should be called first using . = ..()

@@ -122,7 +122,7 @@
 			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 			affected_human.set_hairstyle("Bald", update = FALSE)
 			affected_mob.set_species(/datum/species/human/krokodil_addict)
-			if(affected_mob.adjust_brute_loss(50 * REM, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
+			if(metabolic_health_adjust(affected_mob, 50 * REM, BRUTE)) // holy shit your skin just FELL THE FUCK OFF
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -233,8 +233,8 @@
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_stamina_loss(-6 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = metabolic_health_adjust(affected_mob, -6 * REM * seconds_per_tick, STAMINA)
+	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  4 * REM * seconds_per_tick)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
@@ -269,11 +269,11 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_stamina_loss(-18 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
-	need_mob_update += affected_mob.adjust_tox_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = metabolic_health_adjust(affected_mob, -18 * REM * seconds_per_tick, STAMINA)
+	need_mob_update += metabolic_health_adjust(affected_mob, 0.5 * REM * seconds_per_tick, TOX)
 	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.losebreath++
-		need_mob_update += affected_mob.adjust_oxy_loss(1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += metabolic_health_adjust(affected_mob, 1, OXY)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -302,7 +302,7 @@
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.remove_status_effect(/datum/status_effect/confusion)
 	affected_mob.disgust = 0
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  0.2 * REM * seconds_per_tick))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -425,7 +425,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(0.5 * REM * seconds_per_tick, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(affected_mob, 0.5 * REM * seconds_per_tick, TOX))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -613,7 +613,7 @@
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/dancer, seconds_per_tick, times_fired)
 	. = ..()
-	if(dancer.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(metabolic_organ_adjust(dancer, ORGAN_SLOT_LUNGS,  0.3 * REM * seconds_per_tick))
 		. = UPDATE_MOB_HEALTH
 	dancer.AdjustKnockdown(-20)
 
@@ -685,7 +685,7 @@
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, times_fired)
 	. = ..()
-	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(metabolic_organ_adjust(invisible_man, ORGAN_SLOT_LIVER,  0.3 * REM * seconds_per_tick))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/invisible_man)

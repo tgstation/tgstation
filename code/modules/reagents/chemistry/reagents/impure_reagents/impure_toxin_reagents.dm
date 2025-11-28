@@ -42,7 +42,7 @@
 
 /datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
 	. = ..()
-	if(owner.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(owner, 1 * REM * seconds_per_tick, TOX))
 		return UPDATE_MOB_HEALTH
 
 //Mindbreaker Toxin - Impure Version

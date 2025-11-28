@@ -557,10 +557,10 @@
 	. = ..()
 	var/need_mob_update
 	if(cubano.mind && cubano.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		need_mob_update = cubano.adjust_brute_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += cubano.adjust_fire_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += cubano.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += cubano.adjust_oxy_loss(-5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update = metabolic_health_adjust(cubano, -1 * REM * seconds_per_tick, BRUTE)
+		need_mob_update += metabolic_health_adjust(cubano, -1 * REM * seconds_per_tick, FIRE)
+		need_mob_update += metabolic_health_adjust(cubano, -1 * REM * seconds_per_tick, TOX)
+		need_mob_update += metabolic_health_adjust(cubano, -5 * REM * seconds_per_tick, OXY)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -771,7 +771,7 @@
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		if(drinker.adjust_stamina_loss(-10 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype))
+		if(metabolic_health_adjust(drinker, -10 * REM * seconds_per_tick, STAMINA))
 			. = UPDATE_MOB_HEALTH
 		if(SPT_PROB(10, seconds_per_tick))
 			drinker.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/nearby_fake_item), name)
@@ -822,8 +822,8 @@
 	. = ..()
 	if(dorf_mode)
 		var/need_mob_update
-		need_mob_update = dwarf.adjust_brute_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += dwarf.adjust_fire_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = metabolic_health_adjust(dwarf, -2 * REM * seconds_per_tick, BRUTE)
+		need_mob_update += metabolic_health_adjust(dwarf, -2 * REM * seconds_per_tick, FIRE)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -946,7 +946,7 @@
 	if(ishuman(drinker)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/unshoed = drinker
 		if(!unshoed.shoes)
-			if(unshoed.adjust_brute_loss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype))
+			if(metabolic_health_adjust(unshoed, -3 * REM * seconds_per_tick, BRUTE))
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/snowwhite
@@ -1393,7 +1393,7 @@
 			drinker.Sleeping(100 * REM * seconds_per_tick)
 		if(202 to INFINITY)
 			drinker.AdjustSleeping(4 SECONDS * REM * seconds_per_tick)
-			if(drinker.adjust_tox_loss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+			if(metabolic_health_adjust(drinker, 2 * REM * seconds_per_tick, TOX))
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/gargle_blaster
@@ -1417,7 +1417,7 @@
 		if(56 to 201)
 			drinker.set_drugginess(110 SECONDS * REM * seconds_per_tick)
 		if(201 to INFINITY)
-			if(drinker.adjust_tox_loss(2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+			if(metabolic_health_adjust(drinker, 2 * REM * seconds_per_tick, TOX))
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/neurotoxin
@@ -1438,18 +1438,18 @@
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick, 150, required_organ_flag = affected_organ_flags)
+	need_mob_update = metabolic_organ_adjust(drinker, ORGAN_SLOT_BRAIN,  1 * REM * seconds_per_tick, 150)
 	if(SPT_PROB(10, seconds_per_tick))
-		need_mob_update += drinker.adjust_stamina_loss(10 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+		need_mob_update += metabolic_health_adjust(drinker, 10 * REM * seconds_per_tick, STAMINA)
 		drinker.drop_all_held_items()
 		to_chat(drinker, span_notice("You cant feel your hands!"))
 	if(current_cycle > 6)
 		if(SPT_PROB(10, seconds_per_tick))
 			var/paralyzed_limb = pick_paralyzed_limb()
 			ADD_TRAIT(drinker, paralyzed_limb, type)
-			need_mob_update += drinker.adjust_stamina_loss(10 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+			need_mob_update += metabolic_health_adjust(drinker, 10 * REM * seconds_per_tick, STAMINA)
 		if(current_cycle > 31)
-			need_mob_update += drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+			need_mob_update += metabolic_organ_adjust(drinker, ORGAN_SLOT_BRAIN,  2 * REM * seconds_per_tick)
 			if(current_cycle > 51 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
@@ -2081,9 +2081,9 @@
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
 		var/need_mob_update
 		need_mob_update = drinker.heal_bodypart_damage(1 * REM * seconds_per_tick, 1 * REM * seconds_per_tick, updating_health = FALSE)
-		need_mob_update += drinker.adjust_oxy_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
-		need_mob_update += drinker.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += drinker.adjust_stamina_loss(-5  * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+		need_mob_update += metabolic_health_adjust(drinker, -1 * REM * seconds_per_tick, OXY)
+		need_mob_update += metabolic_health_adjust(drinker, -1 * REM * seconds_per_tick, TOX)
+		need_mob_update += metabolic_health_adjust(drinker, -5  * REM * seconds_per_tick, STAMINA)
 		if(need_mob_update)
 			return UPDATE_MOB_HEALTH
 
@@ -2140,7 +2140,7 @@
 	. = ..()
 	if(SPT_PROB(2, seconds_per_tick))
 		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	if(drinker.adjust_stamina_loss(-0.5 * drinker.get_drunk_amount() * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(drinker, -0.5 * drinker.get_drunk_amount() * REM * seconds_per_tick, STAMINA))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/old_timer
@@ -2984,7 +2984,7 @@
 	. = ..()
 	affected_mob.apply_status_effect(/datum/status_effect/headache_soothed) //prevents headaches
 	affected_mob.adjust_disgust(-5 * REM * seconds_per_tick) //removes disgust, same with sol dry
-	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, -0.5 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags)) //heals brain damage very slowly, about 12 damage per 5u
+	if(metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  -0.5 * REM * seconds_per_tick * normalise_creation_purity())) //heals brain damage very slowly, about 12 damage per 5u
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/blue_blazer

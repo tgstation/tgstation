@@ -232,9 +232,9 @@
 	affected_mob.adjust_drunk_effect(drunkness_restored * REM * seconds_per_tick) // and even sobers you up slowly!!
 	if(water_adaptation)
 		var/need_mob_update = FALSE
-		need_mob_update = affected_mob.adjust_tox_loss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
-		need_mob_update += affected_mob.adjust_fire_loss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += affected_mob.adjust_brute_loss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update = metabolic_health_adjust(affected_mob, -0.25 * REM * seconds_per_tick, TOX)
+		need_mob_update += metabolic_health_adjust(affected_mob, -0.25 * REM * seconds_per_tick, FIRE)
+		need_mob_update += metabolic_health_adjust(affected_mob, -0.25 * REM * seconds_per_tick, BRUTE)
 		return need_mob_update ? UPDATE_MOB_HEALTH : .
 
 // For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
@@ -358,7 +358,7 @@
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL) && SPT_PROB(25, seconds_per_tick)) //Congratulations, your committment to evil has now made holy water a deadly poison to you!
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
 				affected_mob.emote("scream")
-				need_mob_update += affected_mob.adjust_fire_loss(3 * REM * seconds_per_tick, updating_health = FALSE)
+				need_mob_update += metabolic_health_adjust(affected_mob, 3 * REM * seconds_per_tick, FIRE)
 
 	if(data["deciseconds_metabolized"] >= (1 MINUTES)) // 24 units
 		if(IS_CULTIST(affected_mob))
@@ -366,7 +366,7 @@
 			affected_mob.Unconscious(10 SECONDS)
 		else if(HAS_TRAIT(affected_mob, TRAIT_EVIL)) //At this much holy water, you're probably going to fucking melt. good luck
 			if(!IS_CULTIST(affected_mob) || affected_mob.mind?.holy_role != HOLY_ROLE_PRIEST)
-				need_mob_update += affected_mob.adjust_fire_loss(10 * REM * seconds_per_tick, updating_health = FALSE)
+				need_mob_update += metabolic_health_adjust(affected_mob, 10 * REM * seconds_per_tick, FIRE)
 		affected_mob.remove_status_effect(/datum/status_effect/jitter)
 		affected_mob.remove_status_effect(/datum/status_effect/speech/stutter)
 		for(var/datum/status_effect/eldritch_painting/eldritch_curses in affected_mob.status_effects)
@@ -1296,7 +1296,7 @@
 	var/obj/item/organ/liver/liver = victim.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_HUMAN_AI_METABOLISM))
 		return
-	if(victim.adjust_tox_loss(0.5 * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(victim, 0.5 * seconds_per_tick, TOX))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/fuel/expose_turf(turf/exposed_turf, reac_volume)
@@ -1377,8 +1377,8 @@
 	var/damage_to_inflict = 1.5 * max(1 - touch_protection, 0)
 
 	if(damage_to_inflict)
-		exposed_mob.adjust_brute_loss(damage_to_inflict)
-		exposed_mob.adjust_fire_loss(damage_to_inflict)
+		metabolic_health_adjust(exposed_mob, damage_to_inflict, BRUTE)
+		metabolic_health_adjust(exposed_mob, damage_to_inflict, FIRE)
 
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
@@ -1738,7 +1738,7 @@
 /datum/reagent/plantnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(tox_prob, seconds_per_tick))
-		if(affected_mob.adjust_tox_loss(1, updating_health = FALSE, required_biotype = affected_biotype))
+		if(metabolic_health_adjust(affected_mob, 1, TOX))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/eznutriment
@@ -2885,7 +2885,7 @@
 		var/obj/item/bodypart/wounded_part = W.limb
 		if(wounded_part)
 			wounded_part.heal_damage(0.25 * REM * seconds_per_tick, 0.25 * REM * seconds_per_tick)
-		if(affected_mob.adjust_stamina_loss(-1 * REM * seconds_per_tick, updating_stamina = FALSE)) // the more wounds, the more stamina regen
+		if(metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, STAMINA)) // the more wounds, the more stamina regen
 			return UPDATE_MOB_HEALTH
 
 // unholy water, but for heretics.
@@ -3085,8 +3085,8 @@
 /datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = kronkus_enjoyer.adjust_organ_loss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
-	need_mob_update += kronkus_enjoyer.adjust_stamina_loss(-6, updating_stamina = FALSE)
+	need_mob_update = metabolic_organ_adjust(kronkus_enjoyer, ORGAN_SLOT_HEART,  0.2 * REM * seconds_per_tick)
+	need_mob_update += metabolic_health_adjust(kronkus_enjoyer, -6, STAMINA)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -3099,7 +3099,7 @@
 
 /datum/reagent/brimdust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_fire_loss((ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
+	if(metabolic_health_adjust(affected_mob, ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick, FIRE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
