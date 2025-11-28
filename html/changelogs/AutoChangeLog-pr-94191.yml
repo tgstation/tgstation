@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "items such as dna injectors and others that have strange characters in their names can now be dispensed from custom vending machines"

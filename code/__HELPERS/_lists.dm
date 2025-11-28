@@ -678,13 +678,15 @@
 
 	return inserted_list
 
-///same as shuffle, but returns nothing and acts on list in place
+///same as shuffle, but acts on list in place, and returns same list
 /proc/shuffle_inplace(list/inserted_list)
 	if(!inserted_list)
 		return
 
 	for(var/i in 1 to inserted_list.len - 1)
 		inserted_list.Swap(i, rand(i, inserted_list.len))
+
+	return inserted_list
 
 ///Return a list with no duplicate entries
 /proc/unique_list(list/inserted_list)

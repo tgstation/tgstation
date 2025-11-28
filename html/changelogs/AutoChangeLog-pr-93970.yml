@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "Trapdoors built inside of a shuttle will move along with the shuttle."
+  - bugfix: "Open trapdoors will not cause shuttles containing them to bring open space into transit."

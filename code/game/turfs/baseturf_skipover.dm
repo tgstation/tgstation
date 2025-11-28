@@ -12,6 +12,10 @@
 	name = "Shuttle baseturf skipover"
 	desc = "Acts as the bottom of the shuttle, if this isn't here the shuttle floor is broken through."
 
+/turf/baseturf_skipover/trapdoor
+	name = "Trapdoor baseturf skipover"
+	desc = "Acts as the bottom of a stack of baseturfs affected by a trapdoor."
+
 /turf/baseturf_bottom
 	name = "Z-level baseturf placeholder"
 	desc = "Marker for z-level baseturf, usually resolves to space."

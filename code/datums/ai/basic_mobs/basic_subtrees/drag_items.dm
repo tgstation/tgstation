@@ -6,19 +6,19 @@
 		if(prob(controller.blackboard[BB_GUILTY_CONSCIOUS_CHANCE]))
 			controller.queue_behavior(/datum/ai_behavior/stop_dragging)
 		return
-	if(!controller.blackboard[BB_STEAL_CHANCE])
+	if(!prob(controller.blackboard[BB_STEAL_CHANCE]))
 		return
 	if(!controller.blackboard_key_exists(BB_ITEM_TO_STEAL))
-		controller.queue_behavior(/datum/ai_behavior/find_and_set/find_stealable, /obj/item, BB_ITEM_TO_STEAL)
+		controller.queue_behavior(/datum/ai_behavior/find_and_set/find_stealable, BB_ITEM_TO_STEAL, /obj/item)
 		return
-	controller.queue_behavior(/datum/ai_behavior/drag_target)
+	controller.queue_behavior(/datum/ai_behavior/drag_target, BB_ITEM_TO_STEAL)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/find_and_set/find_stealable
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	action_cooldown = 2 MINUTES
 
-/datum/ai_behavior/find_and_set/find_stealable/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/find_stealable/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/possible_items = shuffle_inplace(oview(search_range, controller.pawn))
@@ -32,7 +32,7 @@
 /datum/ai_behavior/stop_dragging
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
-/datum/ai_behavior/stop_dragging/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/stop_dragging/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	living_pawn.stop_pulling()
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

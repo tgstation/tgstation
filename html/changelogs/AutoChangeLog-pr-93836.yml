@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored how zombie powder and inverse cryogeldia apply their effects to maybe have them get stuck less"

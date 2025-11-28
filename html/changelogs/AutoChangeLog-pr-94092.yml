@@ -1,5 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - bugfix: "Less abstract mobs will spawn in random spawners (mostly relating to the summoning prefix)"
-  - bugfix: "\"Boss\" basic mobs are now exluded from the summoning prefix to parody behavior of them being megafauna"
