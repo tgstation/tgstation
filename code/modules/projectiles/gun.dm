@@ -367,7 +367,7 @@
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(check_botched(user, target))
 		return
@@ -375,7 +375,7 @@
 	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
 		balloon_alert(user, "use both hands!")
-		return
+		return ITEM_INTERACT_BLOCKING
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
@@ -617,16 +617,20 @@
 
 	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
 
-	if(chambered?.loaded_projectile)
-		chambered.loaded_projectile.damage *= 5
-		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
-			chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
+	if(!chambered?.loaded_projectile)
+		shoot_with_empty_chamber()
+		return ITEM_INTERACT_BLOCKING
+
+	chambered.loaded_projectile.damage *= 5
+	if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
+		chambered.loaded_projectile.wound_bonus += 5 // much more dramatic on multiple pellet'd projectiles really
 
 	var/fired = process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 	if(!fired && chambered?.loaded_projectile)
 		chambered.loaded_projectile.damage /= 5
 		if(chambered.loaded_projectile.wound_bonus != CANT_WOUND)
 			chambered.loaded_projectile.wound_bonus -= 5
+		return
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
