@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - code_imp: "All (Brute|Burn|Fire|Tox|Oxy|Organ|Stamina)(Loss) procs now use snake_case, in-line with the STYLE guide. Underscores rule!"
