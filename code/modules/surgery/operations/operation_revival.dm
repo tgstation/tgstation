@@ -73,7 +73,7 @@
 		span_notice("[surgeon] sends a powerful shock to [patient]'s brain..."),
 	)
 	patient.grab_ghost()
-	patient.adjustOxyLoss(-50)
+	patient.adjust_oxy_loss(-50)
 	if(iscarbon(patient))
 		var/mob/living/carbon/carbon_patient = patient
 		carbon_patient.set_heartattack(FALSE)
