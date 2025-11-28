@@ -276,8 +276,6 @@
 		if(thing == dispensed_item)
 			dispensed_item = product
 			break
-	if(QDELETED(dispensed_item))
-		return
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(QDELETED(id_card))
