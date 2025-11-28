@@ -470,6 +470,7 @@ Behavior that's still missing from this component that original food items had t
 		if(message_to_blind_nearby_audience)
 			eater.visible_message(message_to_nearby_audience, ignored_mobs = eater, blind_message = message_to_blind_nearby_audience)
 		else
+			eater.visible_message(message_to_nearby_audience, ignored_mobs = eater)
 		// Troutstation edit end
 
 	else //If you're feeding it to someone else.
