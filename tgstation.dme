@@ -1567,6 +1567,7 @@
 #include "code\datums\elements\floorloving.dm"
 #include "code\datums\elements\footstep.dm"
 #include "code\datums\elements\footstep_override.dm"
+#include "code\datums\elements\force_move_pulled.dm"
 #include "code\datums\elements\forced_gravity.dm"
 #include "code\datums\elements\frozen.dm"
 #include "code\datums\elements\gags_recolorable.dm"
