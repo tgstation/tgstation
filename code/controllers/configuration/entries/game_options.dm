@@ -519,7 +519,7 @@
 	default = 3
 	min_val = 1
 	// This is to high for most lrp/mrp servers. But acts as a upper bound where most hrp servers will find players itching for more slots.
-	max_value = 10
+	max_val = 10
 
 /datum/config_entry/number/max_save_slots_byond_member
 	protection = CONFIG_ENTRY_LOCKED
