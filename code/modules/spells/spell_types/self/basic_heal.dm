@@ -27,7 +27,7 @@
 		span_notice("You wreath yourself in healing light!"),
 	)
 	var/need_mob_update = FALSE
-	need_mob_update += cast_on.adjustBruteLoss(-brute_to_heal, updating_health = FALSE)
-	need_mob_update += cast_on.adjustFireLoss(-burn_to_heal, updating_health = FALSE)
+	need_mob_update += cast_on.adjust_brute_loss(-brute_to_heal, updating_health = FALSE)
+	need_mob_update += cast_on.adjust_fire_loss(-burn_to_heal, updating_health = FALSE)
 	if(need_mob_update)
 		cast_on.updatehealth()

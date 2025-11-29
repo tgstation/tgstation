@@ -10,6 +10,7 @@
 	always_unpowered = FALSE
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	area_flags = NONE
+	area_flags_mapping = NONE
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "shuttle"
 	flags_1 = CAN_BE_DIRTY_1
@@ -120,11 +121,9 @@
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
-
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
-	area_flags = UNIQUE_AREA// SSjob refers to this area for latejoiners
-
+	area_flags_mapping = UNIQUE_AREA // SSjob refers to this area for latejoiners
 
 /area/shuttle/arrival/on_joining_game(mob/living/boarder)
 	if(SSshuttle.arrivals?.mode == SHUTTLE_CALL)
@@ -133,22 +132,17 @@
 		boarder.playsound_local(get_turf(boarder), 'sound/announcer/ApproachingTG.ogg', 25)
 	boarder.update_parallax_teleport()
 
-
 /area/shuttle/pod_1
 	name = "Escape Pod One"
-	area_flags = NONE
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"
-	area_flags = NONE
 
 /area/shuttle/pod_3
 	name = "Escape Pod Three"
-	area_flags = NONE
 
 /area/shuttle/pod_4
 	name = "Escape Pod Four"
-	area_flags = NONE
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
@@ -166,10 +160,9 @@
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
-	area_flags = BLOBS_ALLOWED
+	area_flags = CULT_PERMITTED
 	area_limited_icon_smoothing = /area/shuttle/escape
 	flags_1 = CAN_BE_DIRTY_1
-	area_flags = CULT_PERMITTED
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"
