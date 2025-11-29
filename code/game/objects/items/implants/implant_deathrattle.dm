@@ -79,6 +79,7 @@
 	desc = "Hope no one else dies, prepare for when they do."
 
 	actions_types = null
+	allow_multiple = TRUE
 
 	/// Associated deathrattle group, for future configuration.
 	var/datum/deathrattle_group/current_group
