@@ -551,3 +551,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/deep_sto
 	say("The [tv_show_name] show has [is_show_active ? "begun" : "ended"]")
 	var/announcement = is_show_active ? pick(tv_starters) : pick(tv_enders)
 	set_network_broadcast_status(tv_network_id, is_show_active, announcement)
+
+/obj/machinery/computer/security/telescreen/monastery
+	name = "monastery monitor"
+	desc = "A telescreen that connects to the monastery's camera network."
+	network = list(CAMERANET_NETWORK_MONASTERY)
+	frame_type = /obj/item/wallframe/telescreen/monastery
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/monastery, 32)
+
+/obj/item/wallframe/telescreen/monastery
+	name = "monastery telescreen frame"
+	result_path = /obj/machinery/computer/security/telescreen/monastery
+
