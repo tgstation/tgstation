@@ -315,7 +315,6 @@
 	default_skin = "atmospheric"
 	armor_type = /datum/armor/mod_theme_atmospheric
 	resistance_flags = FIRE_PROOF
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_deployed = 1
 	glove_traits = list(TRAIT_QUICKER_CARRY)
@@ -636,7 +635,6 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_deployed = 0.5
 	glove_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 1
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
