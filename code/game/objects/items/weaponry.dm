@@ -1058,6 +1058,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		))
 	AddElement(/datum/element/bane, mob_biotypes = MOB_BUG,  target_type = /mob/living/basic, damage_multiplier = 0, added_damage = 24, requires_combat_mode = FALSE)
 
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(QDELETED(target))
