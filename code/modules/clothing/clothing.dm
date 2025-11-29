@@ -315,6 +315,15 @@
 		. += span_warning("<b>[p_Theyre()] completely shredded and require[p_s()] mending before [p_they()] can be worn again!</b>")
 		return
 
+	if(TRAIT_QUICKER_CARRY in clothing_traits)
+		. += "[src] significantly increase the speed that you carry others."
+
+	else if(TRAIT_QUICK_CARRY in clothing_traits)
+		. += "[src] increase the speed that you carry others."
+
+	if(TRAIT_FASTMED in clothing_traits)
+		. += "[src] increase the speed that you use chemicals on others."
+
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		. += "[src] increase the speed that you handcuff others."
 
