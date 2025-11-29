@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "Fixes overclocked volume pumps being able to work on walls."
