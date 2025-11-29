@@ -1185,10 +1185,6 @@
 /obj/item/toy/plush/moth,
 /turf/open/floor/plating,
 /area/awaymission/caves/heretic_laboratory)
-"gV" = (
-/obj/structure/sign/poster/contraband/blood_geometer,
-/turf/open/floor/black,
-/area/awaymission/caves/heretic_laboratory_clean)
 "gX" = (
 /obj/machinery/vending/sustenance,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -20665,7 +20661,7 @@ Jv
 Jv
 Jv
 Jv
-gV
+Jv
 Jv
 Jv
 Jv
