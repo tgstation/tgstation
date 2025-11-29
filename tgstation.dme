@@ -1295,6 +1295,7 @@
 #include "code\datums\components\sisyphus_awarder.dm"
 #include "code\datums\components\sitcomlaughter.dm"
 #include "code\datums\components\sizzle.dm"
+#include "code\datums\components\slide_under_doors.dm"
 #include "code\datums\components\slime_friends.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\smooth_tunes.dm"

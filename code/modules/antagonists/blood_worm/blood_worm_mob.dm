@@ -312,6 +312,8 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 3 SECONDS)
+
 /mob/living/basic/blood_worm/juvenile
 	name = "juvenile blood worm"
 	desc = "A mid-sized blood worm. It looks bloodthirsty and has numerous long and extremely sharp teeth."
@@ -349,6 +351,11 @@
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/juvenile
 
 	regen_rate = 0.4 // 300 seconds to recover from 0 to 120, or exactly 5 minutes.
+
+/mob/living/basic/blood_worm/juvenile/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 5 SECONDS)
 
 /mob/living/basic/blood_worm/adult
 	name = "adult blood worm"

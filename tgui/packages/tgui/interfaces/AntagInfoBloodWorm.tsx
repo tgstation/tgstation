@@ -57,8 +57,13 @@ export const AntagInfoBloodWorm = (props) => {
                   </LabeledList.Item>
                   <LabeledList.Item label="Ventcrawling">
                   Hatchlings can ventcrawl. Once you grow up, you lose the ability to ventcrawl,
-                  becoming reliant on breaking doors and the ID cards of your hosts to move around.
-                  Secure a good spot or a host before maturing.
+                  becoming reliant on doorcrawling, breaking doors and ID access to move around.
+                  Secure a good spot or a host before maturing to a juvenile.
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Doorcrawling">
+                  Hatchlings and juveniles can slide under doors, but adults can't,
+                  becoming entirely reliant on breaking doors and ID access to move around.
+                  Secure a really good spot or a host before maturing to an adult.
                   </LabeledList.Item>
                   <LabeledList.Item label="Reproduction">
                   Once you enter your final stage of growth as an adult, you can reproduce to create 3 new hatchlings, in exchange for reverting into one yourself.
@@ -114,6 +119,9 @@ export const AntagInfoBloodWorm = (props) => {
                   <LabeledList.Item label="Surprise Worms">
                   You can leave your host to surprise attack people, which is especially effective as an adult. Be sure to block
                   off any paths of escape first, as it takes 3 seconds to leave your host.
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Door Stalking">
+                  As a hatchling or a juvenile, you can slide under a door to stalk nearby victims. Be wary of anyone coming to open the door.
                   </LabeledList.Item>
                   <LabeledList.Item label="Meatshields">
                   Hosts are practically meatshields for you, just keep track of any fires, bleeding wounds, cremators or gibbing mechanisms.
