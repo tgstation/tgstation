@@ -233,6 +233,11 @@
 
 	return ..()
 
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
+	. = ..()
+
+	log_blood_worm("[key_name(new_worm)] finished maturing into a juvenile blood worm")
+
 /obj/structure/blood_worm_cocoon/hatchling
 	name = "small blood cocoon"
 	desc = "The incubation cocoon of a hatchling blood worm. Its surface is slowly shifting."
@@ -263,6 +268,11 @@
 		return
 
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/transfer(mob/living/basic/blood_worm/old_worm, mob/living/basic/blood_worm/new_worm)
+	. = ..()
+
+	log_blood_worm("[key_name(new_worm)] finished maturing into an adult blood worm")
 
 /obj/structure/blood_worm_cocoon/juvenile
 	name = "medium blood cocoon"
@@ -361,6 +371,8 @@
 	new_worm.reset_consumed_blood()
 
 	SEND_SIGNAL(new_worm, COMSIG_BLOOD_WORM_REPRODUCED)
+
+	log_blood_worm("[key_name(new_worm)] finished reproducing, resetting their growth back into a hatchling blood worm")
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/adult/cancel()
 	send_apology_to_candidates()

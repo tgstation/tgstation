@@ -66,6 +66,10 @@
 /// log login/logout
 /datum/config_entry/flag/log_access
 
+/// log blood worm actions like entering/leaving hosts
+/datum/config_entry/flag/log_blood_worm
+	default = TRUE
+
 /// Config entry which special logging of failed logins under suspicious circumstances.
 /datum/config_entry/flag/log_suspicious_login
 

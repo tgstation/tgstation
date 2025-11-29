@@ -72,6 +72,8 @@
 
 	forceMove(host)
 
+	log_blood_worm("[key_name(src)] entered their new host [key_name(host)]")
+
 	if (host.stat != DEAD)
 		possess_host()
 
@@ -86,6 +88,8 @@
 	)
 
 	to_chat_self(span_notice("You emerge from \the [host]."))
+
+	log_blood_worm("[key_name(src)] left their host [key_name(host)]")
 
 	forceMove(host.drop_location()) // This will call unregister_host() via Moved()
 
@@ -135,6 +139,8 @@
 	if (host.stat != DEAD)
 		host.death() // I don't care if you have TRAIT_NODEATH, can't die from bloodloss normally, or whatever else. I just need you to die.
 
+	log_blood_worm("[key_name(src)] unregistered their host [key_name(host)]")
+
 	host = null
 
 /mob/living/basic/blood_worm/proc/possess_host()
@@ -157,6 +163,8 @@
 
 	host.grant_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
 
+	log_blood_worm("[key_name(src)] possessed their host [key_name(host)]")
+
 /mob/living/basic/blood_worm/proc/possess_worm()
 	if (!host || !is_possessing_host)
 		return
@@ -173,6 +181,8 @@
 	grant_actions(src, host_actions)
 
 	host.remove_language(/datum/language/wormspeak, UNDERSTOOD_LANGUAGE, LANGUAGE_BLOOD_WORM)
+
+	log_blood_worm("[key_name(src)] unpossessed their host [key_name(host)]")
 
 /mob/living/basic/blood_worm/proc/on_host_qdel(datum/source, force)
 	SIGNAL_HANDLER
