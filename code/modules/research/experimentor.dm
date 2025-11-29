@@ -69,18 +69,18 @@
 
 	for(var/obj/item/item_path as anything in valid_subtypesof(/obj/item))
 		if(ispath(item_path, /obj/item/relic))
-			item_reactions[item_path] = SCANTYPE_DISCOVER
+			item_reactions["[item_path]"] = SCANTYPE_DISCOVER
 		else
-			item_reactions[item_path] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions["[item_path]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 
 		if(is_type_in_typecache(item_path, banned_typecache))
 			continue
 
 		if(ispath(item_path, /obj/item/stock_parts) || ispath(item_path, /obj/item/grenade/chem_grenade) || ispath(item_path, /obj/item/knife))
-			valid_items[item_path] += 15
+			valid_items["[item_path]"] += 15
 
 		if(ispath(item_path, /obj/item/food))
-			valid_items[item_path] += rand(1,4)
+			valid_items["[item_path]"] += rand(1,4)
 
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
