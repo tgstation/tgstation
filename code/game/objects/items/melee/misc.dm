@@ -219,7 +219,7 @@
 	return ..()
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(iscarbon(target))
+	if(iscarbon(target) && !QDELETED(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
 
