@@ -263,7 +263,7 @@
 		CRASH("[victim] was instantly dumped after being voidwalker kidnapped due to a missing landmark!")
 	else
 		victim.heal_and_revive(90)
-		victim.adjustOxyLoss(-100, FALSE)
+		victim.adjust_oxy_loss(-100, FALSE)
 
 		conversions_remaining++
 

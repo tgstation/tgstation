@@ -998,7 +998,7 @@
 	randomize_state()
 
 	// blocks any melee/throwable attacks
-	owner.adjustStaminaLoss(5)
+	owner.adjust_stamina_loss(5)
 	final_block_chance = 100
 
 	// counterattack at melee

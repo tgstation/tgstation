@@ -162,7 +162,7 @@
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
+	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.get_stamina_loss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
 			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
@@ -342,7 +342,7 @@
 		oh_no_armor += human_carp_user.run_armor_check(potential_chest, MELEE)
 
 	// We also consider whether our footwear is appropriate
-	if(is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
+	if(istype(is_it_the_shoes) && is_it_the_shoes.clothing_flags & CARP_STYLE_FACTOR)
 		style_factor_points += 20
 
 	// Achieved a carp state of mind.
@@ -453,7 +453,7 @@
 						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 		to_chat(user, span_danger("You [pick(fluffmessages)] [H] with [src]!"))
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
-		H.adjustStaminaLoss(rand(13,20))
+		H.adjust_stamina_loss(rand(13,20))
 		if(prob(10))
 			H.visible_message(span_warning("[H] collapses!"), \
 							span_userdanger("Your legs give out!"))
@@ -465,7 +465,7 @@
 								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))
 				H.SetSleeping(60 SECONDS)
-				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 15, 150)
+				H.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 	else
 		return ..()
 

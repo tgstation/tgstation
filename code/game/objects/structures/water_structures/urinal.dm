@@ -37,7 +37,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message(span_danger("[user] slams [grabbed_mob] into [src]!"), span_danger("You slam [grabbed_mob] into [src]!"))
 			grabbed_mob.emote("scream")
-			grabbed_mob.adjustBruteLoss(8)
+			grabbed_mob.adjust_brute_loss(8)
 		else
 			to_chat(user, span_warning("You need a tighter grip!"))
 		return
