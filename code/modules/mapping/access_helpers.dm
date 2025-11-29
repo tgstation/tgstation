@@ -862,6 +862,11 @@
 	access_list += ACCESS_VAULT
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/all/supply/bit_den/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BIT_DEN
+	return access_list
+
 // -------------------- Syndicate access helpers
 /obj/effect/mapping_helpers/airlock/access/all/syndicate
 	icon_state = "access_helper_syn"
