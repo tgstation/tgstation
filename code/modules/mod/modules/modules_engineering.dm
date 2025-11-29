@@ -417,7 +417,7 @@
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 2
-	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
+	incompatible_modules = list(/obj/item/mod/module/constructor)
 	cooldown_time = 11 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
 

@@ -2305,17 +2305,6 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
-/datum/design/module/mod_quick_carry
-	name = "Quick Carry Module"
-	id = "mod_quick_carry"
-	materials = list(
-		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/titanium =SMALL_MATERIAL_AMOUNT*5,
-	)
-	build_path = /obj/item/mod/module/quick_carry
-	category = list(
-		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
-	)
 
 /datum/design/module/mod_longfall
 	name = "Longfall Module"
