@@ -512,7 +512,7 @@
 /obj/machinery/teleport/station{
 	name = "Forcefield generator"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/awaymission/caves/heretic_laboratory_clean)
 "dl" = (
 /obj/item/stack/sheet/mineral/sandbags,
@@ -543,6 +543,15 @@
 /obj/effect/blessing,
 /turf/open/floor/iron/small,
 /area/awaymission/caves/heretic_laboratory_clean)
+"du" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/heretic_laboratory)
 "dw" = (
 /obj/machinery/light/directional/west,
 /obj/effect/blessing,
@@ -3929,6 +3938,12 @@
 "wf" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/beach/heretic)
+"wh" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/caves/heretic_laboratory_clean)
 "wi" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/caves/heretic_laboratory_clean)
@@ -3942,14 +3957,8 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach/heretic)
 "wn" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/structure/disposaloutlet{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/heretic_laboratory)
+/turf/open/floor/plating/airless,
+/area/awaymission/caves/heretic_laboratory_clean)
 "wq" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted{
@@ -10125,14 +10134,14 @@ KB
 KB
 KB
 KB
-KB
-KB
-KB
-KB
-KB
-KB
-KB
-KB
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -10380,16 +10389,16 @@ Sv
 KB
 mE
 mE
-mE
-mE
-mE
-mE
-mE
-mE
-mE
-mE
 Mz
 KB
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -10638,15 +10647,15 @@ KB
 xQ
 xQ
 xQ
-xQ
-xQ
-xQ
-xQ
-xQ
-xQ
-xQ
-xQ
 KB
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -10893,17 +10902,17 @@ QG
 QG
 Xd
 cX
-xQ
-xQ
-xQ
-xQ
-xQ
-xQ
-xQ
-xQ
 UX
-wn
+du
 KB
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -11151,16 +11160,16 @@ KB
 KB
 Yr
 yo
-yo
-yo
-yo
-yo
-yo
-yo
-yo
-yo
 pf
 KB
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
 Sv
 Sv
 Sv
@@ -11386,9 +11395,9 @@ ay
 rF
 ay
 KB
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 Yi
 GL
@@ -11411,11 +11420,11 @@ iJ
 KB
 KB
 KB
-iJ
 KB
 KB
 KB
-iJ
+KB
+KB
 KB
 KB
 Sv
@@ -11643,9 +11652,9 @@ KB
 KB
 KB
 KB
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 Bf
 fW
@@ -11900,9 +11909,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 fW
 Qd
@@ -12157,9 +12166,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 fW
 qP
@@ -12414,9 +12423,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 ay
 wz
@@ -12671,9 +12680,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 ay
 wz
@@ -12928,9 +12937,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 KB
 zF
@@ -13185,9 +13194,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -13442,9 +13451,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -13699,9 +13708,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -13956,9 +13965,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 KB
 zF
@@ -14213,9 +14222,9 @@ Sv
 Sv
 Sv
 Sv
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 hr
 wz
@@ -14470,9 +14479,9 @@ xl
 xl
 xl
 xl
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -14727,9 +14736,9 @@ hs
 hs
 hs
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -14984,9 +14993,9 @@ hs
 hs
 hs
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 KB
 zF
@@ -15241,9 +15250,9 @@ hs
 hs
 hs
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -15498,9 +15507,9 @@ hs
 hs
 ji
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -15755,9 +15764,9 @@ hs
 TL
 Oc
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -16012,9 +16021,9 @@ hs
 hs
 AZ
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 KB
 zF
@@ -16269,9 +16278,9 @@ hs
 hs
 hs
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -16526,9 +16535,9 @@ hs
 hs
 hs
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -16783,9 +16792,9 @@ hs
 hs
 hs
 Az
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -17040,9 +17049,9 @@ KB
 zl
 KB
 KB
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 KB
 zF
@@ -17297,9 +17306,9 @@ bq
 bq
 bq
 KB
-vu
-IK
-vu
+wn
+wh
+wn
 KB
 xQ
 wz
@@ -17554,8 +17563,8 @@ bq
 bq
 bq
 KB
-vu
-IK
+wn
+wh
 dk
 KB
 xQ
