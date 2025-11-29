@@ -53,22 +53,25 @@
 	var/read_only = FALSE
 	/// If readonly state can be toggled on and off
 	var/read_only_locked = FALSE
-	/// Was the sticker icon already selected?
-	var/sticker_changed = FALSE
+	/// The current sticker icon state to display
+	var/sticker_icon_state
 	/// Custom description
 	var/custom_description
-	/// Initial sticker overlay
+	/// Whether the sticker has been changed from the initial state
+	var/sticker_changed = FALSE
+	/// Initial sticker icon state set by subtypes
 	var/initial_sticker_icon_state
 
 /obj/item/disk/Initialize(mapload)
 	. = ..()
-	if(initial_sticker_icon_state)
-		add_overlay(initial_sticker_icon_state)
-		sticker_changed = TRUE
-	else if(initial_sticker_icon_state == NONE)
-		return
-	else
-		add_overlay("o_empty")
+	if(!sticker_icon_state)
+		sticker_icon_state = initial_sticker_icon_state || "o_empty"
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/disk/update_overlays()
+	. = ..()
+	if(sticker_icon_state)
+		. += sticker_icon_state
 
 /obj/item/disk/examine(mob/user)
 	. = ..()
@@ -92,8 +95,7 @@
 		to_chat(user, span_notice("You sign the [src]."))
 
 		custom_description = newdescription
-		cut_overlays()
-		add_overlay(pick("o_text1", "o_text2", "o_text3"))
+		set_sticker_icon_state(pick("o_text1", "o_text2", "o_text3"))
 		sticker_changed = TRUE
 		unique_reskin = list()
 		return ITEM_INTERACT_SUCCESS
@@ -128,13 +130,12 @@
 	if(!icon_variants[pick])
 		return CLICK_ACTION_BLOCKING
 
-	cut_overlays()
-	add_overlay(icon_variants[pick])
-	initial_sticker_icon_state = icon_variants[pick]
+	set_sticker_icon_state(icon_variants[pick])
 	sticker_changed = TRUE
 	to_chat(user, span_notice("You change the sticker on [src] to '[pick]'."))
 	return CLICK_ACTION_SUCCESS
 
+/// Can we select a new sticker?
 /obj/item/disk/proc/check_sticker_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
@@ -145,6 +146,11 @@
 	if(user.incapacitated)
 		return FALSE
 	return TRUE
+
+/// Sets the sticker icon state and updates the appearance
+/obj/item/disk/proc/set_sticker_icon_state(new_icon_state)
+	sticker_icon_state = new_icon_state
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/disk_stack
 	name = "stack of floppy disks"
@@ -230,16 +236,15 @@
 
 /obj/item/disk_stack/update_overlays()
 	. = ..()
-	var/i = 1
-	overlays.Cut()
+	var/iteration = 1
 	for(var/obj/item/disk/D in stacked_disks)
-		var/mutable_appearance/ma = mutable_appearance(D.icon, D.icon_state, D.layer + (0.1 * i))
-		ma.pixel_y += i * STACK_PIXEL_STEP
-		// Copy overlays (stickers) from the disk
+		var/mutable_appearance/new_mutable_appearance = mutable_appearance(D.icon, D.icon_state, D.layer + (0.1 * iteration))
+		new_mutable_appearance.pixel_y += iteration * STACK_PIXEL_STEP
+
 		if(LAZYLEN(D.overlays))
-			ma.overlays = D.overlays.Copy()
-		overlays += ma
-		i++
+			new_mutable_appearance.overlays = D.overlays.Copy()
+			overlays += new_mutable_appearance
+		iteration++
 
 /obj/item/disk_stack/proc/pop_top_disk(mob/living/user)
 	if(!length(stacked_disks))
