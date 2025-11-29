@@ -32,8 +32,7 @@ export const AntagInfoBloodWorm = (props) => {
               <Stack vertical>
                 <Stack.Item bold>Your team status:</Stack.Item>
                 <Stack.Item>
-                  - Total blood consumed: {team.blood_consumed_total} units
-                  <br></br>
+                  - Total blood consumed: {team.blood_consumed_total} units<br/>
                   - Total times reproduced: {team.times_reproduced_total} times
                 </Stack.Item>
               </Stack>
