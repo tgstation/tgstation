@@ -204,6 +204,7 @@
 
 	realappearance = new /obj/effect/cult_turf(src)
 	realappearance.linked = src
+	AddElement(/datum/element/force_move_pulled)
 
 /turf/open/floor/engine/cult/Destroy()
 	be_removed()
