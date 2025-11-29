@@ -39,7 +39,7 @@
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
-		if(metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, TOX))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/carrotjuice
@@ -57,9 +57,9 @@
 	switch(current_cycle)
 		if(21 to 110)
 			if(SPT_PROB(100 * (1 - (sqrt(110 - current_cycle) / 10)), seconds_per_tick))
-				need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_EYES,  -2 * REM * seconds_per_tick)
+				need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
 		if(110 to INFINITY)
-			need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_EYES,  -2 * REM * seconds_per_tick)
+			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EYES, -2 * REM * seconds_per_tick)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -86,7 +86,7 @@
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_health_adjust(affected_mob, 1 * REM * seconds_per_tick, TOX))
+	if(affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/watermelonjuice
@@ -183,7 +183,7 @@
 	. = ..()
 	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)))
-		if(metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, TOX))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/grapejuice
@@ -400,7 +400,7 @@
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
-	if(metabolic_health_adjust(affected_mob, 1 * REM * seconds_per_tick, TOX))
+	if(affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/icetea
@@ -418,7 +418,7 @@
 	affected_mob.adjust_drowsiness(-2 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
-		if(metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, TOX))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, affected_mob.get_body_temp_normal())
 
@@ -658,11 +658,11 @@
 	var/need_mob_update
 	switch(affected_mob.mob_mood.sanity_level)
 		if (SANITY_LEVEL_GREAT to SANITY_LEVEL_NEUTRAL)
-			need_mob_update = metabolic_health_adjust(affected_mob, -1.5 * REM * seconds_per_tick, BRUTE)
+			need_mob_update = affected_mob.adjust_brute_loss(-1.5 * REM * seconds_per_tick, updating_health = FALSE)
 		if (SANITY_LEVEL_DISTURBED to SANITY_LEVEL_UNSTABLE)
 			affected_mob.add_mood_event("wellcheers", /datum/mood_event/wellcheers)
 		if (SANITY_LEVEL_CRAZY to SANITY_LEVEL_INSANE)
-			need_mob_update = metabolic_health_adjust(affected_mob, 3 * REM * seconds_per_tick, STAMINA)
+			need_mob_update = affected_mob.adjust_stamina_loss(3 * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -775,10 +775,10 @@
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -0.5 * REM * seconds_per_tick, BRUTE)
-	need_mob_update += metabolic_health_adjust(affected_mob, -0.5 * REM * seconds_per_tick, FIRE)
-	need_mob_update += metabolic_health_adjust(affected_mob, -0.5 * REM * seconds_per_tick, TOX)
-	need_mob_update += metabolic_health_adjust(affected_mob, -0.5 * REM * seconds_per_tick, OXY)
+	need_mob_update = affected_mob.adjust_brute_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_fire_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_tox_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_oxy_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(affected_mob.nutrition && (affected_mob.nutrition - 2 > 0))
 		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(!(HAS_TRAIT(liver, TRAIT_MEDICAL_METABOLISM)))
@@ -1114,7 +1114,7 @@
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.get_tox_loss() && SPT_PROB(16, seconds_per_tick))
-		if(metabolic_health_adjust(affected_mob, -1 * REM * seconds_per_tick, TOX))
+		if(affected_mob.adjust_tox_loss(-1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/agua_fresca
@@ -1143,7 +1143,7 @@
 /datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(islizard(affected_mob))
-		if(metabolic_health_adjust(affected_mob, -0.5 * REM * seconds_per_tick, OXY))
+		if(affected_mob.adjust_oxy_loss(-0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type))
 			return UPDATE_MOB_HEALTH
 
 //Moth Stuff
@@ -1231,7 +1231,7 @@
 	. = ..()
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, doll.get_body_temp_normal())
 	if(doll.get_tox_loss() && SPT_PROB(10, seconds_per_tick))
-		if(metabolic_health_adjust(doll, -0.5, TOX))
+		if(doll.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/mississippi_queen
@@ -1268,7 +1268,7 @@
 	affected_mob.adjust_drowsiness(-6 SECONDS * REM * seconds_per_tick)
 	affected_mob.AdjustSleeping(-4 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.get_tox_loss() && SPT_PROB(25, seconds_per_tick))
-		if(metabolic_health_adjust(affected_mob, -2 * REM * seconds_per_tick, TOX))
+		if(affected_mob.adjust_tox_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/hakka_mate
@@ -1333,14 +1333,14 @@
 	if(found_valid_cooler)
 		affected_mob.clear_alert("punch_bad")
 		affected_mob.throw_alert("punch_good", /atom/movable/screen/alert/fruit_punch_good)
-		need_mob_update = metabolic_health_adjust(affected_mob, -0.6 * REM * seconds_per_tick, TOX)
-		need_mob_update = metabolic_health_adjust(affected_mob, -0.6 * REM * seconds_per_tick, BRUTE)
-		need_mob_update = metabolic_health_adjust(affected_mob, -0.6 * REM * seconds_per_tick, FIRE)
+		need_mob_update = affected_mob.adjust_tox_loss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjust_brute_loss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
+		need_mob_update = affected_mob.adjust_fire_loss(-0.6 * REM * seconds_per_tick, updating_health = FALSE)
 		affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 	else
 		affected_mob.clear_alert("punch_good")
 		affected_mob.throw_alert("punch_bad", /atom/movable/screen/alert/fruit_punch_bad)
-		need_mob_update = metabolic_health_adjust(affected_mob, 1.5 * REM * seconds_per_tick, TOX)
+		need_mob_update = affected_mob.apply_damage(1.5 * REM * seconds_per_tick, TOX)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/punch_punishment)
 		if(SPT_PROB(10, seconds_per_tick))
 			affected_mob.Knockdown(3 SECONDS, 6 SECONDS) //Gives daze effect. Using the cooler is a commitment and if you get jumped during it or have to run away to fight something, you should be vulnerable.

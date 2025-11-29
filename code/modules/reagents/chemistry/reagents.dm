@@ -166,12 +166,24 @@
  * Returns: the result of any subsequent calls to apply_damage, or NONE if signal chicanery or future refactors
  * *	put a stop to it
  */
-/datum/reagent/proc/metabolic_health_adjust(mob/living/carbon/affected_mob, ...)
-	var/base_damage = args[2]
-	var/damage_type = args[3]
-	if(SEND_SIGNAL(affected_mob, COMSIG_REAGENTS_METABOLIC_HEALTH_ADJUST, src, base_damage, damage_type) & COMPONENT_CANCEL_METABOLIC_HEALTH_ADJUST)
+/datum/reagent/proc/metabolic_health_adjust(
+	mob/living/carbon/affected_mob,
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	exposed_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+	wound_clothing = FALSE,
+	)
+	if(SEND_SIGNAL(affected_mob, COMSIG_REAGENTS_METABOLIC_HEALTH_ADJUST, src, damage, damagetype, forced) & COMPONENT_CANCEL_METABOLIC_HEALTH_ADJUST)
 		return NONE
-	switch(damage_type)
+	switch(damagetype)
 		if(TOX)
 			if(!(affected_mob.mob_biotypes & affected_biotype))
 				return NONE
@@ -181,7 +193,7 @@
 		if(OXY)
 			if(!(affected_mob.mob_respiration_type & affected_respiration_type))
 				return NONE
-	return affected_mob.apply_damage(base_damage, damage_type, arglist(args.Copy(4)))
+	return affected_mob.apply_damage(arglist(args.Copy(2)))
 
 /**
  * As /proc/metabolic_organ_adjust, serving at this point in time as a wrapper proc for organ damage

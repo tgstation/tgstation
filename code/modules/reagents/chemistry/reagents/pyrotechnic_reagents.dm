@@ -13,7 +13,7 @@
 
 /datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_health_adjust(affected_mob, 1 * REM * seconds_per_tick, FIRE))
+	if(affected_mob.adjust_fire_loss(1 * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitroglycerin
@@ -26,7 +26,7 @@
 
 /datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_organ_adjust(affected_mob, ORGAN_SLOT_HEART,  -1 * REM * seconds_per_tick * normalise_creation_purity()))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/stabilizing_agent
@@ -52,7 +52,7 @@
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
-	if(metabolic_health_adjust(affected_mob, 0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, FIRE))
+	if(affected_mob.adjust_fire_loss(0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/clf3/expose_turf(turf/exposed_turf, reac_volume)
@@ -168,13 +168,13 @@
 	exposed_mob.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*exposed_mob.fire_stacks * (1 - touch_protection), 0.3)
 	if(burndmg)
-		metabolic_health_adjust(exposed_mob, burndmg, FIRE)
+		exposed_mob.adjust_fire_loss(burndmg, 0)
 	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
 	metabolizer.adjust_fire_stacks(1 * REM * seconds_per_tick)
-	if(metabolic_health_adjust(metabolizer, 0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, FIRE))
+	if(metabolizer.adjust_fire_loss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/napalm
@@ -338,7 +338,7 @@
 	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
 		return ..()
 	affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-	if(metabolic_health_adjust(affected_mob, -10 * REM * seconds_per_tick, STAMINA))
+	if(affected_mob.adjust_stamina_loss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(is_species(affected_mob, /datum/species/jelly/luminescent))
 		var/mob/living/carbon/human/affected_human = affected_mob

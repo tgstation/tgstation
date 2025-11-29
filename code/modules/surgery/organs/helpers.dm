@@ -25,7 +25,7 @@
  * Arguments:
  * * slot Slot to get the organs from
  */
-/mob/proc/get_organ_slot(slot)
+/mob/proc/get_organ_slot(slot) as /obj/item/organ
 	return
 
 /mob/living/carbon/get_organ_by_type(typepath)

@@ -33,15 +33,15 @@
 	switch(affected_mob.stat)
 		if(CONSCIOUS) //bad
 			thou_shall_heal = max(death_is_coming/20, 3)
-			need_mob_update += metabolic_health_adjust(affected_mob, 2 * REM * seconds_per_tick, OXY)
+			need_mob_update += affected_mob.adjust_oxy_loss(2 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		if(SOFT_CRIT) //meh convert
 			thou_shall_heal = round(death_is_coming/13,0.1)
-			need_mob_update += metabolic_health_adjust(affected_mob, 1 * REM * seconds_per_tick, OXY)
+			need_mob_update += affected_mob.adjust_oxy_loss(1 * REM * seconds_per_tick, TRUE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			good_kind_of_healing = TRUE
 		else //no convert
 			thou_shall_heal = round(death_is_coming/10, 0.1)
 			good_kind_of_healing = TRUE
-	need_mob_update += metabolic_health_adjust(affected_mob, -thou_shall_heal * REM * seconds_per_tick, BRUTE)
+	need_mob_update += affected_mob.adjust_brute_loss(-thou_shall_heal * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
@@ -110,8 +110,8 @@
 /datum/reagent/medicine/c2/libital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LIVER,  0.3 * REM * seconds_per_tick)
-	need_mob_update += metabolic_health_adjust(affected_mob, -3 * REM * normalise_creation_purity() * seconds_per_tick, BRUTE)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += affected_mob.adjust_brute_loss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -128,7 +128,7 @@
 /datum/reagent/medicine/c2/probital/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -3 * REM * normalise_creation_purity() * seconds_per_tick, BRUTE)
+	need_mob_update = affected_mob.adjust_brute_loss(-3 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	var/ooo_youaregettingsleepy = 3.5
 	switch(round(affected_mob.get_stamina_loss()))
 		if(10 to 40)
@@ -137,7 +137,7 @@
 			ooo_youaregettingsleepy = 2.5
 		if(61 to 200) //you really can only go to 120
 			ooo_youaregettingsleepy = 2
-	need_mob_update += metabolic_health_adjust(affected_mob, ooo_youaregettingsleepy * REM * seconds_per_tick, STAMINA)
+	need_mob_update += affected_mob.adjust_stamina_loss(ooo_youaregettingsleepy * REM * seconds_per_tick, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -179,8 +179,8 @@
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -3.75 * REM * normalise_creation_purity() * seconds_per_tick, FIRE)
-	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_STOMACH,  0.4 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_fire_loss(-3.75 * REM * normalise_creation_purity() * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_STOMACH, 0.4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -198,8 +198,8 @@
 /datum/reagent/medicine/c2/aiuri/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -2 * REM * normalise_creation_purity() * seconds_per_tick, FIRE)
-	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_EYES,  0.25 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_fire_loss(-2 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_EYES, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -218,9 +218,9 @@
 	. = ..()
 	var/need_mob_update
 	if(affected_mob.get_fire_loss() > 50)
-		need_mob_update = metabolic_health_adjust(affected_mob, -3 * REM * seconds_per_tick * normalise_creation_purity(), FIRE)
+		need_mob_update = affected_mob.adjust_fire_loss(-3 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	else
-		need_mob_update = metabolic_health_adjust(affected_mob, -2.25 * REM * seconds_per_tick * normalise_creation_purity(), FIRE)
+		need_mob_update = affected_mob.adjust_fire_loss(-2.25 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_bodytype = affected_bodytype)
 	affected_mob.adjust_bodytemperature(rand(-25,-5) * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick, 50)
 	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/humi = affected_mob
@@ -268,8 +268,8 @@
 	if(!overdosed)
 		oxycalc = min(oxycalc, affected_mob.get_oxy_loss() + 0.5) //if NOT overdosing, we lower our toxdamage to only the damage we actually healed with a minimum of 0.1*current_cycle. IE if we only heal 10 oxygen damage but we COULD have healed 20, we will only take toxdamage for the 10. We would take the toxdamage for the extra 10 if we were overdosing.
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -oxycalc * seconds_per_tick * normalise_creation_purity(), OXY)
-	need_mob_update += metabolic_health_adjust(affected_mob, oxycalc * seconds_per_tick / CONVERMOL_RATIO, TOX)
+	need_mob_update = affected_mob.adjust_oxy_loss(-oxycalc * seconds_per_tick * normalise_creation_purity(), FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjust_tox_loss(oxycalc * seconds_per_tick / CONVERMOL_RATIO, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB((current_cycle-1) / 2, seconds_per_tick) && affected_mob.losebreath)
 		affected_mob.losebreath--
 		need_mob_update = TRUE
@@ -297,8 +297,8 @@
 /datum/reagent/medicine/c2/tirimol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -4.5 * REM * seconds_per_tick * normalise_creation_purity(), OXY)
-	need_mob_update += metabolic_health_adjust(affected_mob, 2 * REM * seconds_per_tick, STAMINA)
+	need_mob_update = affected_mob.adjust_oxy_loss(-4.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+	need_mob_update += affected_mob.adjust_stamina_loss(2 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
 		affected_mob.adjust_drowsiness(20 SECONDS)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
@@ -340,7 +340,7 @@
 	var/toxcalc = min(round(5 + ((chemtemp-1000)/175), 0.1), 5) * REM * seconds_per_tick * normalise_creation_purity() //max 2.5 tox healing per second
 	var/need_mob_update
 	if(toxcalc > 0)
-		need_mob_update = metabolic_health_adjust(affected_mob, -toxcalc, TOX)
+		need_mob_update = affected_mob.adjust_tox_loss(-toxcalc, updating_health = FALSE, required_biotype = affected_biotype)
 		healypoints += toxcalc
 
 	//and you're cold
@@ -349,9 +349,9 @@
 		radcalc *= normalise_creation_purity()
 		// extra rad healing if you are SUPER cold
 		if(chemtemp < rads_heal_threshold*0.1)
-			need_mob_update += metabolic_health_adjust(affected_mob, -radcalc * 0.9, TOX)
+			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.9, updating_health = FALSE, required_biotype = affected_biotype)
 		else if(chemtemp < rads_heal_threshold)
-			need_mob_update += metabolic_health_adjust(affected_mob, -radcalc * 0.75, TOX)
+			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.75, updating_health = FALSE, required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
@@ -378,8 +378,8 @@
 	if(creation_purity >= 1) //Perfectly pure multivers gives a bonus of 2!
 		medibonus += 1
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * seconds_per_tick, TOX) //not great at healing but if you have nothing else it will work
-	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LUNGS,  0.5 * REM * seconds_per_tick) //kills at 40u
+	need_mob_update = affected_mob.adjust_tox_loss(-0.5 * min(medibonus, 3 * normalise_creation_purity()) * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype) //not great at healing but if you have nothing else it will work
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags) //kills at 40u
 	if(!holder.has_reagent(/datum/reagent/toxin/anacea))
 		for(var/datum/reagent/second_reagent as anything in affected_mob.reagents.reagent_list)
 			if(second_reagent == src)
@@ -425,8 +425,8 @@
 /datum/reagent/medicine/c2/syriniver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LIVER,  0.8 * REM * seconds_per_tick)
-	need_mob_update += metabolic_health_adjust(affected_mob, -2 * REM * seconds_per_tick, TOX)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.8 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += affected_mob.adjust_tox_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/R in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(R))
 			continue
@@ -455,8 +455,8 @@
 /datum/reagent/medicine/c2/musiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LIVER,  0.1 * REM * seconds_per_tick)
-	need_mob_update += metabolic_health_adjust(affected_mob, -1.5 * REM * seconds_per_tick * normalise_creation_purity(), TOX)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update += affected_mob.adjust_tox_loss(-1.5 * REM * seconds_per_tick * normalise_creation_purity(), updating_health = FALSE, required_biotype = affected_biotype)
 	for(var/datum/reagent/reagent as anything in affected_mob.reagents.reagent_list)
 		if(issyrinormusc(reagent))
 			continue
@@ -503,8 +503,8 @@
 	var/touch_protection_interference = (1 - touch_protection)
 	if(!touch_protection_interference)
 		return
-	var/harmies = clamp(metabolic_health_adjust(carbies, -1.25 * reac_volume * touch_protection_interference, BRUTE), 0, current_bruteloss)
-	var/burnies = clamp(metabolic_health_adjust(carbies, -1.25 * reac_volume * touch_protection_interference, FIRE), 0, current_fireloss)
+	var/harmies = clamp(carbies.adjust_brute_loss(-1.25 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
+	var/burnies = clamp(carbies.adjust_fire_loss(-1.25 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
@@ -597,17 +597,17 @@
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_STOMACH,  0.25 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_STOMACH, 0.25 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(affected_mob.health <= HEALTH_THRESHOLD_CRIT && affected_mob.health > (affected_mob.crit_threshold + HEALTH_THRESHOLD_FULLCRIT * (2 * normalise_creation_purity()))) //we cannot save someone below our lowered crit threshold.
 
-		need_mob_update += metabolic_health_adjust(affected_mob, -2 * REM * seconds_per_tick, TOX)
-		need_mob_update += metabolic_health_adjust(affected_mob, -2 * REM * seconds_per_tick, BRUTE)
-		need_mob_update += metabolic_health_adjust(affected_mob, -2 * REM * seconds_per_tick, FIRE)
-		need_mob_update += metabolic_health_adjust(affected_mob, -6 * REM * seconds_per_tick, OXY)
+		need_mob_update += affected_mob.adjust_tox_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_brute_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_fire_loss(-2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_oxy_loss(-6 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 
 		affected_mob.losebreath = 0
 
-		need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_HEART,  max(volume/10, 1) * REM * seconds_per_tick) // your heart is barely keeping up!
+		need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, max(volume/10, 1) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags) // your heart is barely keeping up!
 
 		affected_mob.set_jitter_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * seconds_per_tick)
 		affected_mob.set_dizzy_if_lower(rand(0 SECONDS, 4 SECONDS) * REM * seconds_per_tick)

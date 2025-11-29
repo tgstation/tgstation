@@ -67,7 +67,7 @@
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_health_adjust(affected_mob, 0.5 * seconds_per_tick * REM, TOX))
+	if(affected_mob.adjust_tox_loss(0.5 * seconds_per_tick * REM, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -225,7 +225,7 @@
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
 		to_chat(affected_mob, span_danger("Your insides are burning!"))
-		if(metabolic_health_adjust(affected_mob, rand(20, 60), TOX))
+		if(affected_mob.adjust_tox_loss(rand(20, 60), updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 	else if(SPT_PROB(23, seconds_per_tick))
 		if(affected_mob.heal_bodypart_damage(5))
@@ -399,7 +399,7 @@
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
 		// spray bottle emits 5u so it's dealing ~15 dmg per spray
-		if(metabolic_health_adjust(exposed_mob, damage * 20, TOX))
+		if(exposed_mob.adjust_tox_loss(damage * 20, required_biotype = affected_biotype))
 			return
 
 	if(!(methods & VAPOR) || !iscarbon(exposed_mob))
@@ -407,7 +407,7 @@
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	if(!exposed_carbon.wear_mask)
-		metabolic_health_adjust(exposed_carbon, damage, TOX)
+		exposed_carbon.adjust_tox_loss(damage, required_biotype = affected_biotype)
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -780,9 +780,9 @@
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  3 * REM * normalise_creation_purity() * seconds_per_tick, 150)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3 * REM * normalise_creation_purity() * seconds_per_tick, 150)
 	if(affected_mob.toxloss <= 60)
-		need_mob_update += metabolic_health_adjust(affected_mob, 1 * REM * normalise_creation_purity() * seconds_per_tick, TOX)
+		need_mob_update += affected_mob.adjust_tox_loss(1 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(current_cycle > 4)
 		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle > 18)
@@ -879,7 +879,7 @@
 			affected_mob.Paralyze(60)
 		if(2)
 			affected_mob.losebreath += 10
-			metabolic_health_adjust(affected_mob, rand(5,25), OXY)
+			affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 			need_mob_update = TRUE
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
@@ -888,7 +888,7 @@
 					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 			else
 				affected_mob.losebreath += 10
-				need_mob_update = metabolic_health_adjust(affected_mob, rand(5,25), OXY)
+				need_mob_update = affected_mob.adjust_oxy_loss(rand(5,25), updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -924,7 +924,7 @@
 	. = ..()
 	if(current_cycle > 10)
 		affected_mob.Sleeping(40 * REM * seconds_per_tick)
-	if(metabolic_health_adjust(affected_mob, 10 * REM * seconds_per_tick, STAMINA))
+	if(affected_mob.adjust_stamina_loss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/toxin/sulfonal
@@ -1324,8 +1324,8 @@
 /datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_EARS,  1 * REM * seconds_per_tick)
-	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  1 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_EARS, 1 * REM * seconds_per_tick)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1 * REM * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(0.5, seconds_per_tick))
@@ -1376,10 +1376,10 @@
 		liver_tolerance_multiplier = 0
 		silent_toxin = TRUE
 		remove_paralysis()
-		need_mob_update += metabolic_health_adjust(affected_mob, -0.7 * REM * seconds_per_tick, OXY)
-		need_mob_update = metabolic_health_adjust(affected_mob, -0.75 * REM * seconds_per_tick, TOX)
-		need_mob_update += metabolic_health_adjust(affected_mob, -1.2 * REM * seconds_per_tick, BRUTE)
-		need_mob_update += metabolic_health_adjust(affected_mob, -1.35 * REM * seconds_per_tick, FIRE)
+		need_mob_update += affected_mob.adjust_oxy_loss(-0.7 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update = affected_mob.adjust_tox_loss(-0.75 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_brute_loss(-1.2 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += affected_mob.adjust_fire_loss(-1.35 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		return need_mob_update ? UPDATE_MOB_HEALTH : .
 
 	liver_tolerance_multiplier = initial(liver_tolerance_multiplier)
@@ -1399,7 +1399,7 @@
 		if(13 to 21)
 			silent_toxin = FALSE
 			toxpwr = 0.5
-			need_mob_update = metabolic_health_adjust(affected_mob, 2.5 * REM * seconds_per_tick, STAMINA)
+			need_mob_update = affected_mob.adjust_stamina_loss(2.5 * REM * seconds_per_tick, updating_stamina = FALSE)
 			if(SPT_PROB(20, seconds_per_tick))
 				affected_mob.losebreath += 1 * REM * seconds_per_tick
 				need_mob_update = TRUE
@@ -1407,7 +1407,7 @@
 				affected_mob.set_jitter_if_lower(rand(2 SECONDS, 3 SECONDS) * REM * seconds_per_tick)
 			affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
 			affected_mob.set_slurring_if_lower(1 SECONDS * REM * seconds_per_tick)
-			metabolic_health_adjust(affected_mob, 2 * REM * seconds_per_tick, STAMINA)
+			affected_mob.adjust_stamina_loss(2 * REM * seconds_per_tick, updating_stamina = FALSE)
 			if(SPT_PROB(4, seconds_per_tick))
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
@@ -1415,8 +1415,8 @@
 				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
 		if(21 to 29)
 			toxpwr = 1
-			need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  0.5)
-			need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LUNGS,  0.7)
+			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.5)
+			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.7)
 			if(SPT_PROB(40, seconds_per_tick))
 				affected_mob.losebreath += 2 * REM * seconds_per_tick
 				need_mob_update = TRUE
@@ -1424,7 +1424,7 @@
 			affected_mob.set_slurring_if_lower(3 SECONDS * REM * seconds_per_tick)
 			if(SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel horribly weak."))
-			need_mob_update += metabolic_health_adjust(affected_mob, 5 * REM * seconds_per_tick, STAMINA)
+			need_mob_update += affected_mob.adjust_stamina_loss(5 * REM * seconds_per_tick, updating_stamina = FALSE)
 			if(SPT_PROB(8, seconds_per_tick))
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
@@ -1432,10 +1432,10 @@
 				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
 		if(29 to INFINITY)
 			toxpwr = 1.5
-			need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  1)
-			need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LUNGS,  1.4)
+			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
+			need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 1.4)
 			affected_mob.set_silence_if_lower(3 SECONDS * REM * seconds_per_tick)
-			need_mob_update += metabolic_health_adjust(affected_mob, 5 * REM * seconds_per_tick, STAMINA)
+			need_mob_update += affected_mob.adjust_stamina_loss(5 * REM * seconds_per_tick, updating_stamina = FALSE)
 			affected_mob.adjust_disgust(2 * REM * seconds_per_tick)
 			if(SPT_PROB(15, seconds_per_tick))
 				paralyze_limb(affected_mob)

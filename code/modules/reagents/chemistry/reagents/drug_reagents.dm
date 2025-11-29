@@ -122,7 +122,7 @@
 			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 			affected_human.set_hairstyle("Bald", update = FALSE)
 			affected_mob.set_species(/datum/species/human/krokodil_addict)
-			if(metabolic_health_adjust(affected_mob, 50 * REM, BRUTE)) // holy shit your skin just FELL THE FUCK OFF
+			if(affected_mob.adjust_brute_loss(50 * REM, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
 				return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -176,9 +176,9 @@
 	affected_mob.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
 	affected_mob.AdjustAllImmobility(-40 * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -5 * REM * seconds_per_tick, STAMINA)
+	need_mob_update = affected_mob.adjust_stamina_loss(-5 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
-	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  rand(1, 4) * REM * seconds_per_tick)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -233,8 +233,8 @@
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy)
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -6 * REM * seconds_per_tick, STAMINA)
-	need_mob_update += metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  4 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_stamina_loss(-6 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 4 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
@@ -269,11 +269,11 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	var/need_mob_update
-	need_mob_update = metabolic_health_adjust(affected_mob, -18 * REM * seconds_per_tick, STAMINA)
-	need_mob_update += metabolic_health_adjust(affected_mob, 0.5 * REM * seconds_per_tick, TOX)
+	need_mob_update = affected_mob.adjust_stamina_loss(-18 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
+	need_mob_update += affected_mob.adjust_tox_loss(0.5 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.losebreath++
-		need_mob_update += metabolic_health_adjust(affected_mob, 1, OXY)
+		need_mob_update += affected_mob.adjust_oxy_loss(1, FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -302,7 +302,7 @@
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	affected_mob.remove_status_effect(/datum/status_effect/confusion)
 	affected_mob.disgust = 0
-	if(metabolic_organ_adjust(affected_mob, ORGAN_SLOT_BRAIN,  0.2 * REM * seconds_per_tick))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/happiness/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -347,7 +347,7 @@
 		to_chat(affected_mob, span_notice("[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]"))
 	if(SPT_PROB(7.5, seconds_per_tick))
 		affected_mob.losebreath++
-		metabolic_health_adjust(affected_mob, 2, TOX)
+		affected_mob.adjust_tox_loss(2, updating_health = FALSE, required_biotype = affected_biotype)
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/pumpup/overdose_start(mob/living/affected_mob)
@@ -425,7 +425,7 @@
 
 /datum/reagent/drug/maint/sludge/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_health_adjust(affected_mob, 0.5 * REM * seconds_per_tick, TOX))
+	if(affected_mob.adjust_tox_loss(0.5 * REM * seconds_per_tick, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/maint/sludge/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -613,7 +613,7 @@
 
 /datum/reagent/drug/blastoff/on_mob_life(mob/living/carbon/dancer, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_organ_adjust(dancer, ORGAN_SLOT_LUNGS,  0.3 * REM * seconds_per_tick))
+	if(dancer.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		. = UPDATE_MOB_HEALTH
 	dancer.AdjustKnockdown(-20)
 
@@ -685,7 +685,7 @@
 
 /datum/reagent/drug/saturnx/on_mob_life(mob/living/carbon/invisible_man, seconds_per_tick, times_fired)
 	. = ..()
-	if(metabolic_organ_adjust(invisible_man, ORGAN_SLOT_LIVER,  0.3 * REM * seconds_per_tick))
+	if(invisible_man.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.3 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/saturnx/on_mob_metabolize(mob/living/invisible_man)
@@ -840,7 +840,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	. = ..()
 	var/need_mob_update
 	kronkaine_fiend.add_mood_event("tweaking", /datum/mood_event/stimulant_medium)
-	if(metabolic_organ_adjust(kronkaine_fiend, ORGAN_SLOT_HEART,  (0.1 + 0.04 * volume) * REM * seconds_per_tick))
+	if(kronkaine_fiend.adjust_organ_loss(ORGAN_SLOT_HEART, (0.1 + 0.04 * volume) * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		need_mob_update = UPDATE_MOB_HEALTH
 		if(kronkaine_fiend.get_organ_loss(ORGAN_SLOT_HEART) >= 75 && prob(15))
 			to_chat(kronkaine_fiend, span_userdanger("You feel like your heart is about to explode!"))
@@ -860,7 +860,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 				kronkaine_fiend.visible_message(span_bolddanger("[kronkaine_fiend.name] suddenly tenses up, it looks like the shock is causing their body to shut down!"), span_userdanger("The sudden shock in combination with the cocktail of drugs and purgatives in your body makes your adrenal system go haywire. Uh oh!"))
 				kronkaine_fiend.ForceContractDisease(new /datum/disease/adrenal_crisis(), FALSE, TRUE) //We punish players for purging, since unchecked purging would allow players to reap the stamina healing benefits without any drawbacks. This also has the benefit of making haloperidol a counter, like it is supposed to be.
 				break
-	need_mob_update = metabolic_health_adjust(kronkaine_fiend, -0.8 * volume * REM * seconds_per_tick, STAMINA)
+	need_mob_update = kronkaine_fiend.adjust_stamina_loss(-0.8 * volume * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
