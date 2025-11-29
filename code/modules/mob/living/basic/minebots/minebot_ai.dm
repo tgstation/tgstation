@@ -47,7 +47,7 @@
 
 /datum/ai_behavior/find_and_set/clear_bombing_zone
 
-/datum/ai_behavior/find_and_set/clear_bombing_zone/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/clear_bombing_zone/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/obj/effect/temp_visual/minebot_target/target in oview(search_range, controller.pawn))
 		if(isclosedturf(get_turf(target)))
 			continue
@@ -62,7 +62,7 @@
 
 /datum/ai_behavior/find_and_set/miner_to_befriend
 
-/datum/ai_behavior/find_and_set/miner_to_befriend/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/miner_to_befriend/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(HAS_TRAIT(target, TRAIT_ROCK_STONER))
 			return target
@@ -112,7 +112,7 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/unconscious_human, BB_NEARBY_DEAD_MINER, /mob/living/carbon/human)
 
-/datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/unconscious_human/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(target.stat >= UNCONSCIOUS && target.mind)
 			return target

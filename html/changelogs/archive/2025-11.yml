@@ -716,3 +716,75 @@
   lelandkemble:
   - bugfix: Ghosts can no longer try and fail to admire aquariums.
   - bugfix: cyborg RTD works again
+2025-11-27:
+  Cirrial:
+  - bugfix: Health analysers will no longer erroneously show a blood level for things
+      that don't have blood.
+  Fghj240:
+  - rscadd: Netpods can now scan their occupants to create more accurate bit avatars
+  Hatterhat:
+  - bugfix: The blood-drunk miner's corpse now properly appears and fades away again.
+  Melbert:
+  - bugfix: Pirates will no longer randomly spawn as human
+  - bugfix: Servant Golems have numbered names again
+  - refactor: Refactored ghost spawns (like spider eggs or pirate spawners), report
+      any oddities
+  - admin: Adds "roleplay reminder" button to player panel
+  Thunder12345:
+  - bugfix: The captain suit costume (green suit) no longer has the same armour as
+      real captain outfits.
+  Wallem:
+  - qol: Replaces abandoned crate multitool interaction with a TGUI window that shows
+      ALL your previous attempts
+  alien3301:
+  - balance: The warden starts with a bandolier in their locker
+  lelandkemble:
+  - map: Catwalk Abandoned Kitchen APC powered by default
+  - admin: Admins get powertool belts in their special outfits.
+  san7890:
+  - refactor: The Cult of Nar'Sie realized that they were installing the mirrors on
+      their mirror shields the wrong way around, thus altering the makeup of their
+      mirror clones health, damage, and re-replicability.
+  - refactor: In response to the recent updates in clone magic, Nanotrasen's Stealth
+      Reactive Armor should now generate more convincing clones.
+  vinylspiders:
+  - bugfix: fixes a bug that caused you to need to wear shoes in order to gain any
+      defensive benefit from the sleeping carp martial art style
+2025-11-28:
+  Bisar:
+  - code_imp: All (Brute|Burn|Fire|Tox|Oxy|Organ|Stamina)(Loss) procs now use snake_case,
+      in-line with the STYLE guide. Underscores rule!
+  Co0kie-GG:
+  - rscadd: New emotions on the AI status display
+  FalloutFalcon:
+  - bugfix: Less abstract mobs will spawn in random spawners (mostly relating to the
+      summoning prefix)
+  - bugfix: '"Boss" basic mobs are now exluded from the summoning prefix to parody
+      behavior of them being megafauna'
+  Melbert:
+  - qol: Search bars in "settings" and "keybindings"
+  - refactor: Refactored how zombie powder and inverse cryogeldia apply their effects
+      to maybe have them get stuck less
+  - bugfix: 'Deathmatch: Ethereal Species gives you shock touch as intended'
+  WebcomicArtist:
+  - qol: Ethereal Drinks (Voltaic wine,telepole,pod tesla) now can feed etherials
+      decently without needing them to risk blacking out.
+  necromanceranne:
+  - bugfix: The Hellfire Laser now has its unique sprite back.
+2025-11-29:
+  Cirrial:
+  - bugfix: Stoats have a chance to try and grab items like they always should have.
+  Pickle-Coding:
+  - bugfix: Fixes overclocked volume pumps being able to work on walls.
+  SmArtKar:
+  - admin: Converted the Spawn verb into a TGUI input, featuring for dynamic search
+      and RegEx support
+  SyncIt21:
+  - bugfix: items such as dna injectors and others that have strange characters in
+      their names can now be dispensed from custom vending machines
+  Y0SH1M4S73R:
+  - rscadd: Trapdoors built inside of a shuttle will move along with the shuttle.
+  - bugfix: Open trapdoors will not cause shuttles containing them to bring open space
+      into transit.
+  ezel:
+  - balance: You can no longer print soup pots

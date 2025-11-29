@@ -534,7 +534,7 @@
 "nM" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "od" = (
 /turf/closed/wall/rust,
 /area/ruin/space/has_grav/the_outlet/storefront)
@@ -1566,7 +1566,7 @@
 "LA" = (
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "LL" = (
 /mob/living/basic/construct/proteon/hostile,
 /obj/effect/decal/cleanable/crayon/rune2,

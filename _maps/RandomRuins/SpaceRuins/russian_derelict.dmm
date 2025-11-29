@@ -113,6 +113,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/central)
+"aQ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/aft)
 "aU" = (
 /obj/item/shard,
 /obj/structure/lattice,
@@ -839,28 +843,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
-"kp" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter/offstation{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/ai_module/law/core/full/drone,
-/obj/item/circuitboard/machine/ai_law_rack/core{
-	pixel_y = 5;
-	pixel_x = -4
-	},
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "kt" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance_hall)
-"kv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/hallway/aft)
 "kw" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1689,10 +1676,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
-"rd" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "re" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -5396,6 +5379,19 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
+"KA" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/core/full/drone,
+/obj/item/circuitboard/machine/ai_law_rack/core{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "KB" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/airless,
@@ -6396,9 +6392,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
-"PG" = (
-/turf/closed/wall/r_wall,
-/area/template_noop)
 "PH" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -11826,7 +11819,7 @@ Fa
 iT
 TW
 BM
-kv
+aQ
 Uo
 gG
 jV
@@ -13014,7 +13007,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 rk
 Kb
 sU
@@ -13128,7 +13121,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 BK
 Wk
 fg
@@ -13240,7 +13233,7 @@ aa
 aa
 aa
 aa
-PG
+Kb
 IF
 Kb
 Wk
@@ -13353,7 +13346,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 Kb
 rk
 BK
@@ -13466,7 +13459,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 rk
 rk
 Kb
@@ -13570,7 +13563,7 @@ Jy
 lq
 YC
 Yc
-kp
+KA
 Yc
 aa
 aa
@@ -13580,7 +13573,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 rk
 rk
 Kb
@@ -13693,7 +13686,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 rk
 rk
 rk
@@ -13807,7 +13800,7 @@ aa
 aa
 aa
 aa
-rd
+rk
 nQ
 aa
 aa

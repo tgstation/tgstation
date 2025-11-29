@@ -284,7 +284,7 @@
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	living_mob.Unconscious(100)
-	living_mob.adjustBruteLoss(crush_damage)
+	living_mob.adjust_brute_loss(crush_damage)
 	update_appearance()
 
 /obj/machinery/recycler/on_deconstruction(disassembled)

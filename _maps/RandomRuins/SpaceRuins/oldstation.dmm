@@ -707,6 +707,20 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass,
 /area/ruin/space/ancientstation/charlie/hydro)
+"dq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank/high{
+	desc = "A highly-pressurized water tank. This one seems almost empty..";
+	tank_volume = 1000
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/watering_can,
+/obj/item/reagent_containers/cup/bucket,
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/hydro)
 "dr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green{
@@ -770,6 +784,14 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/ruin/space/solars/ancientstation/charlie/solars)
+"dI" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/obj/item/circuitboard/machine/ai_law_rack/core,
+/obj/item/stock_parts/subspace/transmitter,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "dL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command/glass{
@@ -2982,10 +3004,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
-"nr" = (
-/obj/item/stack/rods,
-/turf/template_noop,
-/area/template_noop)
 "ns" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -3640,20 +3658,6 @@
 	},
 /turf/open/floor/iron/white/textured_edge,
 /area/ruin/space/ancientstation/delta/biolab)
-"rO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank/high{
-	desc = "A highly-pressurized water tank. This one seems almost empty..";
-	tank_volume = 1000
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/cup/watering_can,
-/obj/item/reagent_containers/cup/bucket,
-/obj/effect/turf_decal/tile/green/half/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hydro)
 "rP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -4653,6 +4657,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
+"zg" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/alien/weeds,
+/obj/machinery/light/small/broken/directional/west,
+/obj/item/stack/cable_coil{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "zi" = (
 /obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/cobweb,
@@ -6066,14 +6084,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
-"IL" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
-/obj/item/circuitboard/machine/ai_law_rack/core,
-/obj/item/stock_parts/subspace/transmitter,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "IM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6194,20 +6204,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/hall)
-"Jx" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/structure/alien/weeds,
-/obj/machinery/light/small/broken/directional/west,
-/obj/item/stack/cable_coil{
-	pixel_y = -2;
-	pixel_x = -2
-	},
-/obj/item/stock_parts/subspace/amplifier{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "Jz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8054,6 +8050,10 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"Vt" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/space/nearstation)
 "Vw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -10124,7 +10124,7 @@ GA
 mH
 aa
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -10188,7 +10188,7 @@ kW
 HA
 iH
 bJ
-nr
+Vt
 aa
 aa
 aa
@@ -10517,11 +10517,11 @@ Gi
 rw
 Ze
 bJ
-nr
+Vt
 aa
 UP
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -12604,7 +12604,7 @@ dL
 UV
 cp
 Mr
-rO
+dq
 dR
 eq
 bC
@@ -13322,7 +13322,7 @@ aa
 aa
 Jg
 aa
-nr
+Vt
 aa
 Al
 Al
@@ -13386,7 +13386,7 @@ aa
 aa
 aa
 aa
-nr
+Vt
 aa
 Jg
 aa
@@ -13719,7 +13719,7 @@ aa
 aa
 aa
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -13913,7 +13913,7 @@ aa
 aa
 aa
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -14049,7 +14049,7 @@ Jg
 Jg
 aa
 aa
-nr
+Vt
 aa
 aa
 bE
@@ -15230,8 +15230,8 @@ aa
 aa
 aa
 ad
-IL
-Jx
+dI
+zg
 lq
 ag
 gk

@@ -438,11 +438,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bN" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/template_noop,
-/area/template_noop)
 "bO" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
@@ -920,9 +915,6 @@
 /obj/item/disk/surgery/forgottenship,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
-"dj" = (
-/turf/closed/mineral/random/high_chance,
-/area/template_noop)
 "dl" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null
@@ -987,18 +979,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"gm" = (
-/obj/machinery/turretid{
-	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
-	enabled = 0;
-	lethal = 1;
-	name = "Ship turret control panel";
-	pixel_y = 32;
-	req_access = list("syndicate");
-	dir = 1
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "gz" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1058,6 +1038,18 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"qK" = (
+/obj/machinery/turretid{
+	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
+	enabled = 0;
+	lethal = 1;
+	name = "Ship turret control panel";
+	pixel_y = 32;
+	req_access = list("syndicate");
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "rz" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
@@ -1104,6 +1096,9 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"zg" = (
+/turf/closed/mineral/random/high_chance,
+/area/space/nearstation)
 "Cy" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium,
@@ -1177,11 +1172,11 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"Td" = (
-/obj/item/ai_module/law/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Lu" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/space/nearstation)
 "VF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -1191,6 +1186,11 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Wz" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "WR" = (
 /obj/structure/closet/crate/secure/gear{
@@ -1372,8 +1372,8 @@ aa
 aa
 aa
 aa
-dj
-dj
+zg
+zg
 aa
 aa
 aa
@@ -1419,9 +1419,9 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
+zg
+zg
+zg
 aa
 aa
 aa
@@ -1467,8 +1467,8 @@ aa
 aa
 aa
 aa
-dj
-dj
+zg
+zg
 aa
 aa
 aa
@@ -1617,9 +1617,9 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
+zg
+zg
+zg
 aa
 aa
 "}
@@ -1665,9 +1665,9 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
+zg
+zg
+zg
 aa
 "}
 (11,1,1) = {"
@@ -2007,7 +2007,7 @@ aa
 aa
 aa
 bZ
-Td
+Wz
 aw
 bZ
 aB
@@ -2446,11 +2446,11 @@ be
 aP
 aP
 bM
-bN
-bN
-bN
-bN
-bN
+Lu
+Lu
+Lu
+Lu
+Lu
 ab
 ab
 bF
@@ -2759,7 +2759,7 @@ aa
 aa
 aa
 bZ
-gm
+qK
 aw
 bZ
 br
@@ -2977,7 +2977,7 @@ aa
 aa
 aa
 aa
-dj
+zg
 aa
 aa
 aa
@@ -3022,10 +3022,10 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
-dj
+zg
+zg
+zg
+zg
 aa
 aa
 aa
@@ -3069,9 +3069,9 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
+zg
+zg
+zg
 aa
 aa
 aa
@@ -3107,7 +3107,7 @@ aa
 aa
 aa
 aa
-dj
+zg
 aa
 aa
 aa
@@ -3153,9 +3153,9 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
+zg
+zg
+zg
 aa
 aa
 aa
@@ -3200,10 +3200,10 @@ aa
 aa
 aa
 aa
-dj
-dj
-dj
-dj
+zg
+zg
+zg
+zg
 aa
 aa
 aa
@@ -3248,7 +3248,7 @@ aa
 aa
 aa
 aa
-dj
+zg
 aa
 aa
 aa
