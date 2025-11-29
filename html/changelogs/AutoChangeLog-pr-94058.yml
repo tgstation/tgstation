@@ -1,0 +1,5 @@
+author: "Cat"
+delete-after: True
+changes:
+  - qol: "The plumbing IV drip can be rotate with alt click now"
+  - rscadd: "The plumbing IV drip can now output chemicals into plumbing factories"
