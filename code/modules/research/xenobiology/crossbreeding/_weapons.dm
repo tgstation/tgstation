@@ -28,8 +28,6 @@ Slimecrossing Weapons
 	damtype = BRUTE
 
 /obj/item/knife/rainbowknife/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(QDELETED(target))
-		return
 	if(isliving(target))
 		damtype = pick(BRUTE, BURN, TOX, OXY)
 	switch(damtype)
