@@ -515,7 +515,15 @@
 
 
 /datum/config_entry/number/max_save_slots
+	protection = CONFIG_ENTRY_LOCKED
 	default = 3
+	min_val = 1
+	// This is to high for most lrp/mrp servers. But acts as a upper bound where most hrp servers will find players itching for more slots.
+	max_value = 10
 
 /datum/config_entry/number/max_save_slots_byond_member
+	protection = CONFIG_ENTRY_LOCKED
 	default = 8
+	min_val = 1
+	// I've seen people on a downstream use upwards of 25~ slots but those are the most deticated of our bunch. What are you even doing past 30.
+	max_val = 30
