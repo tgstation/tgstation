@@ -89,9 +89,13 @@
 	// Using a neck grab would reduce their escape chance to a third, which is too low.
 	ADD_TRAIT(target, TRAIT_FLOORED, REF(src))
 
-	// Prevents NPC monkeys from resisting out of this.
-	if (ismonkey(target) && !target.client)
-		ADD_TRAIT(target, TRAIT_INCAPACITATED, REF(src))
+	// Prevents NPCs from resisting out of this.
+	if (!target.client)
+		incapacitate_leech_living_target(target)
+
+	// Remove incapacitation if a client logs into the target, and readd it if they log back out.
+	RegisterSignal(target, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(deincapacitate_leech_living_target))
+	RegisterSignal(target, COMSIG_MOB_LOGOUT, PROC_REF(incapacitate_leech_living_target))
 
 	leech.visible_message(
 		message = span_danger("\The [leech] bite[leech.p_s()] into \the [target]!"),
@@ -130,6 +134,8 @@
 	if (leech.pulling == target && leech.grab_state >= GRAB_AGGRESSIVE)
 		leech.setGrabState(GRAB_PASSIVE)
 
+	UnregisterSignal(target, list(COMSIG_MOB_CLIENT_LOGIN, COMSIG_MOB_LOGOUT))
+
 	REMOVE_TRAITS_IN(target, REF(src))
 
 	StartCooldown()
@@ -154,6 +160,14 @@
 		target.balloon_alert(leech, "grab lost!")
 		return FALSE
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/incapacitate_leech_living_target(mob/living/target)
+	SIGNAL_HANDLER
+	ADD_TRAIT(target, TRAIT_INCAPACITATED, REF(src))
+
+/datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/deincapacitate_leech_living_target(mob/living/target)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(target, TRAIT_INCAPACITATED, REF(src))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/leech/proc/leech_container(mob/living/basic/blood_worm/leech, obj/item/reagent_containers/target)
 	if (!leech_container_start_check(leech, target, feedback = TRUE))
