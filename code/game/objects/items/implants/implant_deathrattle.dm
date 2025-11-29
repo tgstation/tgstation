@@ -25,6 +25,7 @@
 	RegisterSignal(implant, COMSIG_QDELETING, PROC_REF(on_implant_destruction))
 
 	implants += implant
+	implant.current_group = src
 
 	if(implant.imp_in)
 		on_implant_implantation(implant.imp_in)
@@ -79,7 +80,22 @@
 
 	actions_types = null
 
+	/// Associated deathrattle group, for future configuration.
+	var/datum/deathrattle_group/current_group
+
+	implant_info = "Requires configuration before implanting. Automatically activates upon implantation. \
+		Notifies the host of deaths that occur in other deathrattle implant hosts linked to the same deathrattle group."
+
+	implant_lore = "The Robust Corp Fatality Notification System, colloquially the \"deathrattle\" implant, \
+		is a subcutaneous hybrid vitals tracker and encrypted transmitter, \
+		designed to communicate with other FNS units implanted within other hosts. Upon detecting a lack of vital signs, \
+		the FNS will relay the fatality and its rough estimated location to the other hosts. How it can communicate \
+		over such long distances is a trade secret that both Nanotrasen and the Syndicate are quite curious about."
+
 /obj/item/implant/deathrattle/can_be_implanted_in(mob/living/target)
+	if(!current_group)
+		balloon_alert(target, "deathrattle needs configuration!")
+		return FALSE
 	// Can be implanted in anything that's a mob. Syndicate cyborgs, talking fish, humans...
 	return TRUE
 
