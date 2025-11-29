@@ -1262,7 +1262,7 @@
 		air.temperature = max(air.temperature * heat_capacity / new_heat_capacity, TCMB)
 
 	// Rusts its surroundings.
-	if(SPT_PROB(1, antinoblium_moles / 100) && isturf(holder)) // 1% chance per tick at 100 moles.
+	if(prob(100 * (1 - 0.99 ** (antinoblium_moles / 100))) && isturf(holder)) // 1% chance per tick at 100 moles
 		var/turf/location = holder
 		if(!HAS_TRAIT(location, TRAIT_RUSTY))
 			location.rust_turf()
