@@ -5,7 +5,7 @@
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_click))
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_click), override = TRUE)
 
 /datum/element/force_move_pulled/Detach(datum/target)
 	. = ..()
