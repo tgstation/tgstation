@@ -443,7 +443,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		/obj/item/circuit_component/conveyor_switch,
 	))
 	register_context()
-	AddElement(/datum/element/force_move_pulled)
 
 /obj/machinery/conveyor_switch/Destroy()
 	LAZYREMOVE(GLOB.conveyors_by_id[id], src)
@@ -652,6 +651,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1, _id)
 	. = ..()
 	id = _id
+	AddElement(/datum/element/force_move_pulled)
 
 /obj/item/stack/conveyor/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isfloorturf(interacting_with))
