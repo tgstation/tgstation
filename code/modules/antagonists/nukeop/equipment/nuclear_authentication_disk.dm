@@ -8,6 +8,7 @@
 	armor_type = /datum/armor/disk_nuclear
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	read_only = TRUE
+	read_only_locked = TRUE
 	unique_reskin = list()
 	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE

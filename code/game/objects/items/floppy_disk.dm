@@ -65,12 +65,15 @@
 /obj/item/disk/Initialize(mapload)
 	. = ..()
 	if(!sticker_icon_state)
-		sticker_icon_state = initial_sticker_icon_state || "o_empty"
+		if(initial_sticker_icon_state == NONE)
+			sticker_icon_state = null
+		else
+			sticker_icon_state = initial_sticker_icon_state || "o_empty"
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/disk/update_overlays()
 	. = ..()
-	if(sticker_icon_state)
+	if(sticker_icon_state && sticker_icon_state != NONE)
 		. += sticker_icon_state
 
 /obj/item/disk/examine(mob/user)
@@ -105,6 +108,7 @@
 /obj/item/disk/attack_self(mob/user)
 	if(read_only_locked)
 		to_chat(user, span_warning("The write-protect tab seems to be stuck in place!"))
+		return
 	read_only = !read_only
 	to_chat(user, span_notice("You flip the write-protect tab to [span_bold("[read_only ? "protected" : "unprotected"]")]."))
 
@@ -188,7 +192,7 @@
 			new_stack.stacked_disks += disk_from_hand
 
 		held_stack.stacked_disks.Cut()
-		new_stack.update_overlays()
+		new_stack.update_appearance(UPDATE_OVERLAYS)
 		if(was_in_hand)
 			user.put_in_hands(new_stack)
 		QDEL_IN(held_stack, 0)
@@ -204,7 +208,7 @@
 		var/was_in_hand = user.is_holding(src)
 		new_stack.add_to_stack(user, src)
 		new_stack.add_to_stack(user, other)
-		new_stack.update_overlays()
+		new_stack.update_appearance(UPDATE_OVERLAYS)
 		if(was_in_hand || user.is_holding(other))
 			user.put_in_hands(new_stack)
 		return ITEM_INTERACT_SUCCESS
@@ -231,20 +235,20 @@
 	newdisk.forceMove(src)
 	stacked_disks += newdisk
 	balloon_alert(user, "added to top")
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk_stack/update_overlays()
 	. = ..()
-	var/iteration = 1
-	for(var/obj/item/disk/D in stacked_disks)
-		var/mutable_appearance/new_mutable_appearance = mutable_appearance(D.icon, D.icon_state, D.layer + (0.1 * iteration))
-		new_mutable_appearance.pixel_y += iteration * STACK_PIXEL_STEP
+	var/iteration_count = 1
+	for(var/obj/item/disk/disk_in_stack in stacked_disks)
+		var/mutable_appearance/stacked_disk_appearance = mutable_appearance(disk_in_stack.icon, disk_in_stack.icon_state, disk_in_stack.layer + (0.1 * iteration_count))
+		stacked_disk_appearance.pixel_z += iteration_count * STACK_PIXEL_STEP
 
-		if(LAZYLEN(D.overlays))
-			new_mutable_appearance.overlays = D.overlays.Copy()
-			overlays += new_mutable_appearance
-		iteration++
+		if(LAZYLEN(disk_in_stack.overlays))
+			stacked_disk_appearance.overlays = disk_in_stack.overlays.Copy()
+		. += stacked_disk_appearance
+		iteration_count++
 
 /obj/item/disk_stack/proc/pop_top_disk(mob/living/user)
 	if(!length(stacked_disks))
@@ -272,7 +276,7 @@
 		QDEL_IN(src, 0)
 		return TRUE
 
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/item/disk_stack/proc/merge_stacks(mob/user, obj/item/disk_stack/diskstack)
@@ -293,7 +297,7 @@
 		balloon_alert(user, "no space!")
 		return ITEM_INTERACT_BLOCKING
 
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	to_chat(user, span_notice("You merge two stacks of disks together."))
 
 	if(!length(diskstack.stacked_disks))
@@ -321,7 +325,7 @@
 		each_disk.throw_at(get_step(src, pick(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST)), 1, 0.8)
 
 	visible_message(span_warning("The stack falls apart!"))
-	src.update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	throw_at(get_step(src, pick(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST)), 1, 0.8)
 
 /obj/item/disk_stack/attack_hand_secondary(mob/user, list/modifiers)
