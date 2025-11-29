@@ -39,6 +39,14 @@
 	key = "bsod"
 	emotion = AI_EMOTION_BSOD
 
+/datum/emote/ai/emotion_display/dead
+	key = "dead"
+	emotion = AI_EMOTION_DEAD
+
+/datum/emote/ai/emotion_display/download
+	key = "download"
+	emotion = AI_EMOTION_DOWNLOAD
+
 /datum/emote/ai/emotion_display/trollface
 	key = "trollface"
 	emotion = AI_EMOTION_PROBLEMS
