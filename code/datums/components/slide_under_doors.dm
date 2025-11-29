@@ -112,15 +112,16 @@
 
 	var/turf/visible_turf = get_step(current_user, move_dir)
 
-	visible_turf.visible_message(
-		message = span_danger("Something starts sliding out from under \the [current_door]!"),
-		blind_message = span_hear("You hear squeezing."),
-		ignored_mobs = current_user,
-	)
+	if (visible_turf)
+		visible_turf.visible_message(
+			message = span_danger("Something starts sliding out from under \the [current_door]!"),
+			blind_message = span_hear("You hear squeezing."),
+			ignored_mobs = current_user,
+		)
+
+		playsound(visible_turf, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, ignore_walls = FALSE)
 
 	to_chat(current_user, span_notice("You start sliding out from under \the [current_door]."))
-
-	playsound(visible_turf, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, ignore_walls = FALSE)
 
 	if (!do_after(current_user, slide_out_delay, current_door, timed_action_flags = IGNORE_INCAPACITATED))
 		return
