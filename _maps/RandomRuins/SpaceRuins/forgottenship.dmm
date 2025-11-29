@@ -442,7 +442,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bO" = (
 /obj/structure/bodycontainer/crematorium{
 	id = "fscremate"
@@ -922,7 +922,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
 /turf/closed/mineral/random/high_chance,
-/area/template_noop)
+/area/space/nearstation)
 "dl" = (
 /obj/machinery/door/password/voice/sfc{
 	password = null

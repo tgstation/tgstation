@@ -128,18 +128,18 @@
 			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
 
 		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
-			candidate.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_brute_loss(-brute_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_fire_loss(-burn_heal * seconds_per_tick, updating_health = FALSE)
 
 		if (iscarbon(candidate))
 			// Toxin healing is forced for slime people
-			candidate.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+			candidate.adjust_tox_loss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 
-			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustStaminaLoss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
+			candidate.adjust_oxy_loss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_stamina_loss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
 
 			for (var/organ in organ_healing)
-				candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)
+				candidate.adjust_organ_loss(organ, -organ_healing[organ] * seconds_per_tick)
 			var/mob/living/carbon/carbidate = candidate
 			for(var/datum/wound/iter_wound as anything in carbidate.all_wounds)
 				iter_wound.adjust_blood_flow(-wound_clotting * seconds_per_tick)

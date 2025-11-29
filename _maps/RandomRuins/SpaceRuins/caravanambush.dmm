@@ -5,32 +5,32 @@
 "ab" = (
 /obj/structure/girder/displaced,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ac" = (
 /obj/item/stack/sheet/mineral/plastitanium,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ad" = (
 /obj/item/wallframe/camera,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "af" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ag" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/gun/energy/e_gun/mini,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ah" = (
 /obj/structure/lattice/catwalk,
 /mob/living/basic/trooper/pirate/ranged/space{
 	environment_smash = 0
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aj" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -42,15 +42,15 @@
 	width = 22
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ao" = (
 /obj/item/stack/sheet/mineral/titanium,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aD" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bl" = (
 /mob/living/basic/carp,
 /turf/template_noop,
@@ -58,11 +58,11 @@
 "br" = (
 /obj/item/stack/sheet/iron,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bs" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "bv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
@@ -115,7 +115,7 @@
 "dc" = (
 /obj/item/shard,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -228,7 +228,7 @@
 /obj/structure/lattice,
 /obj/structure/broken_flooring/plating/directional/south,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "fG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/computer,
@@ -275,7 +275,7 @@
 	width = 15
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "kG" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -287,7 +287,7 @@
 	width = 9
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "kU" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -299,7 +299,7 @@
 	width = 27
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "kX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -311,7 +311,7 @@
 /obj/structure/lattice,
 /obj/structure/broken_flooring/pile/directional/west,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "lC" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/space/has_grav)
@@ -471,7 +471,7 @@
 "re" = (
 /obj/structure/broken_flooring/singular/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "rj" = (
 /obj/effect/turf_decal/bot_white/right,
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -656,7 +656,7 @@
 "As" = (
 /obj/structure/broken_flooring/singular/directional/south,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "AA" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -680,7 +680,7 @@
 "Bq" = (
 /obj/structure/broken_flooring/pile/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Bv" = (
 /obj/structure/chair{
 	dir = 4
@@ -873,7 +873,7 @@
 "Ku" = (
 /obj/structure/broken_flooring/plating/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "KC" = (
 /obj/item/stack/cable_coil{
 	amount = 1
@@ -885,7 +885,7 @@
 /obj/structure/lattice,
 /obj/structure/broken_flooring/plating/directional/east,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Lx" = (
 /obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide,

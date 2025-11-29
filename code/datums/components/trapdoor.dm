@@ -11,10 +11,13 @@
  * assembly code at the bottom of this file
  */
 /datum/component/trapdoor
+	can_transfer = TRUE
 	///assembly tied to this trapdoor
 	var/obj/item/assembly/trapdoor/assembly
 	///path of the turf this should change into when the assembly is pulsed. needed for openspace trapdoors knowing what to turn back into
 	var/trapdoor_turf_path
+	///stack of baseturfs on top of the openspace under this trapdoor
+	var/list/trapdoor_baseturfs = list()
 	/// is this trapdoor "conspicuous" (ie. it gets examine text and overlay added)
 	var/conspicuous
 	/// overlay that makes trapdoors more obvious
@@ -32,8 +35,10 @@
 	var/autoclose = TRUE
 	/// Delay before trapdoor shuts close
 	var/autoclose_delay = 5 SECONDS
+	/// Is this trapdoor on a shuttle
+	var/on_shuttle = FALSE
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, list/carried_decals = null, autoclose = TRUE)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, trapdoor_baseturfs, assembly, conspicuous = TRUE, list/carried_decals = null, autoclose = TRUE)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -46,28 +51,56 @@
 	if(!trapdoor_overlay)
 		trapdoor_overlay = mutable_appearance('icons/turf/overlays.dmi', "border_black", ABOVE_NORMAL_TURF_LAYER)
 
+	var/turf/parent_turf = parent
+	if(SSshuttle.get_containing_shuttle(parent_turf))
+		on_shuttle = TRUE
+
 	if(IS_OPEN(parent))
-		openspace_trapdoor_setup(trapdoor_turf_path, assembly)
+		openspace_trapdoor_setup(trapdoor_turf_path, trapdoor_baseturfs)
 		if(autoclose)
 			addtimer(CALLBACK(src, PROC_REF(try_closing)), autoclose_delay)
 	else
-		tile_trapdoor_setup(trapdoor_turf_path, assembly)
+		tile_trapdoor_setup()
 
 	if(starts_open)
 		try_opening()
 
+/datum/component/trapdoor/PostTransfer(datum/new_parent)
+	if(!isopenturf(new_parent))
+		if(isatom(new_parent))
+			var/atom/new_parent_atom = new_parent
+			new_parent_atom.visible_message(span_warning("The trapdoor mechanism under [new_parent_atom] is broken!"))
+		return COMPONENT_NOTRANSFER
+	if(SSshuttle.get_containing_shuttle(new_parent))
+		on_shuttle = TRUE
+	else
+		on_shuttle = FALSE
+
+/datum/component/trapdoor/proc/is_under_shuttle()
+	var/turf/parent_turf = parent
+	var/shuttle_skipover_depth = parent_turf.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle)
+	return shuttle_skipover_depth && parent_turf.depth_to_find_baseturf(/turf/baseturf_skipover/trapdoor) > shuttle_skipover_depth
+
 ///initializing as an opened trapdoor, we need to trust that we were given the data by a closed trapdoor
-/datum/component/trapdoor/proc/openspace_trapdoor_setup(trapdoor_turf_path)
+/datum/component/trapdoor/proc/openspace_trapdoor_setup(trapdoor_turf_path, trapdoor_baseturfs)
 	src.trapdoor_turf_path = trapdoor_turf_path
+	src.trapdoor_baseturfs = trapdoor_baseturfs
 
 ///initializing as a closed trapdoor, we need to take data from the tile we're on to give it to the open state to store
-/datum/component/trapdoor/proc/tile_trapdoor_setup(trapdoor_turf_path)
+/datum/component/trapdoor/proc/tile_trapdoor_setup()
 	src.trapdoor_turf_path = parent.type
+	insert_trapdoor_skipover()
 	if(stored_decals.len)
 		reapply_all_decals()
 	if(conspicuous)
 		var/turf/parent_turf = parent
 		parent_turf.add_overlay(trapdoor_overlay)
+
+/datum/component/trapdoor/proc/insert_trapdoor_skipover()
+	var/turf/parent_turf = parent
+	if(parent_turf.depth_to_find_baseturf(/turf/baseturf_skipover/trapdoor))
+		return
+	parent_turf.insert_baseturf((parent_turf.level_to_find_baseturf(/turf/baseturf_skipover/shuttle) || 1) + 1, /turf/baseturf_skipover/trapdoor)
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
@@ -79,6 +112,8 @@
 		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_link))
+	RegisterSignal(parent, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL, PROC_REF(should_move_special))
+	RegisterSignal(parent, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL, PROC_REF(on_move_special))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -89,9 +124,13 @@
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
+	UnregisterSignal(parent, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL)
+	UnregisterSignal(parent, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL)
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+	if(is_under_shuttle())
+		return
 	if(!assembly)
 		return
 	if(IS_OPEN(parent))
@@ -103,6 +142,8 @@
 
 /datum/component/trapdoor/proc/try_link(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+	if(is_under_shuttle())
+		return
 	if(!istype(tool, /obj/item/trapdoor_remote))
 		return
 	var/obj/item/trapdoor_remote/remote = tool
@@ -121,6 +162,8 @@
 /datum/component/trapdoor/proc/async_try_link(turf/source, mob/user, obj/item/trapdoor_remote/remote)
 	if(!do_after(user, 2 SECONDS, target=source))
 		return
+	if(QDELETED(src))
+		return
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't link trapdoor when its open")
 		return
@@ -133,6 +176,8 @@
 
 /datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
 	if(!do_after(user, 5 SECONDS, target=source))
+		return
+	if(QDELETED(src))
 		return
 	if(IS_OPEN(parent))
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
@@ -156,6 +201,8 @@
  * changing turfs does not bring over decals, so we must perform a little bit of element reapplication.
  */
 /datum/component/trapdoor/proc/reapply_all_decals()
+	if(is_under_shuttle())
+		return
 	for(var/list/element_data as anything in stored_decals)
 		apply_decal(element_data[1], element_data[2], element_data[3], element_data[4])
 	stored_decals = list()
@@ -187,12 +234,12 @@
 		try_closing()
 
 ///signal called by turf changing
-/datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+/datum/component/trapdoor/proc/turf_changed_pre(datum/source, path, list/new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 	var/turf/open/dying_trapdoor = parent
 	if((flags & CHANGETURF_TRAPDOOR_INDUCED) == 0) //not a process of the trapdoor
-		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
-			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), path, conspicuous, assembly)
+		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && islist(new_baseturfs) && new_baseturfs.Find(/turf/baseturf_skipover/trapdoor)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
+			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), path, null, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
@@ -201,7 +248,7 @@
 			stored_decals.Cut()
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
+	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, trapdoor_baseturfs, conspicuous, assembly)
 
 /**
  * ## carry_over_trapdoor
@@ -209,8 +256,8 @@
  * applies the trapdoor to the new turf (created by the last trapdoor)
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
-/datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, conspicuous, assembly, turf/new_turf)
-	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, assembly, conspicuous, stored_decals, autoclose)
+/datum/component/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, trapdoor_baseturfs, conspicuous, assembly, turf/new_turf)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, trapdoor_baseturfs, assembly, conspicuous, stored_decals, autoclose)
 
 /**
  * ## on_examine
@@ -219,6 +266,8 @@
  */
 /datum/component/trapdoor/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
+	if(is_under_shuttle())
+		return
 	if(conspicuous)
 		examine_text += "There seems to be a tiny gap around this tile with some wires that you might be able to pulse with a <b>multitool</b>."
 
@@ -230,12 +279,19 @@
  */
 /datum/component/trapdoor/proc/try_opening()
 	var/turf/open/trapdoor_turf = parent
+	var/opening_depth = trapdoor_turf.depth_to_find_baseturf(/turf/baseturf_skipover/trapdoor)
+	if(!opening_depth)
+		stack_trace("Could not find baseturf skipover for trapdoor")
+		return
+	if(is_under_shuttle())
+		return
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
 	if(assembly)
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, PROC_REF(decal_detached))
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
+	trapdoor_baseturfs = trapdoor_turf.get_baseturfs_to_depth(opening_depth)
 	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
-	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
+	trapdoor_turf.ScrapeAway(opening_depth, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
 
 /**
  * ## try_closing
@@ -251,7 +307,23 @@
 		return
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_shut.ogg', 50)
 	trapdoor_turf.visible_message(span_warning("The trapdoor mechanism in [trapdoor_turf] swings shut!"))
-	trapdoor_turf.ChangeTurf(trapdoor_turf_path, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
+	var/list/new_baseturfs = list()
+	new_baseturfs += trapdoor_turf.baseturfs
+	new_baseturfs += trapdoor_turf.type
+	if(on_shuttle)
+		new_baseturfs += /turf/baseturf_skipover/shuttle
+	new_baseturfs += trapdoor_baseturfs
+	trapdoor_baseturfs = null
+	trapdoor_turf.ChangeTurf(trapdoor_turf_path, new_baseturfs, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
+
+/datum/component/trapdoor/proc/should_move_special(datum/source)
+	SIGNAL_HANDLER
+	var/turf/source_turf = source
+	return IS_OPEN(source_turf) && !is_under_shuttle()
+
+/datum/component/trapdoor/proc/on_move_special(datum/source, turf/new_turf)
+	SIGNAL_HANDLER
+	new_turf.TakeComponent(src)
 
 #undef IS_OPEN
 

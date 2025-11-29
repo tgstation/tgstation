@@ -73,7 +73,7 @@
 		return
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
-	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
+	target.adjust_organ_loss(ORGAN_SLOT_EYES, 15)
 	target.set_eye_blur_if_lower(20 SECONDS)
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash/trigger_mark(mob/living/source, mob/living/target)

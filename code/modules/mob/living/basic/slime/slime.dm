@@ -345,7 +345,7 @@
 			target_slime.adjust_nutrition(-stolen_nutrition)
 			our_slime.adjust_nutrition(stolen_nutrition)
 		if(target_slime.health > 0)
-			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
+			our_slime.adjust_brute_loss(is_adult_slime ? -20 : -10)
 
 
 ///Spawns a crossed slimecore item

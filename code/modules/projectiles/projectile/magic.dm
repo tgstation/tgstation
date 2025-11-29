@@ -354,7 +354,7 @@
 	. = ..()
 	if(iscarbon(target))
 		if(istype(get_area(target), /area/deathmatch))
-			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 25) // Roughly 8 hits to kill
+			target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25) // Roughly 8 hits to kill
 			target.visible_message(span_warning("[target] grips their head in pain!"))
 			return BULLET_ACT_HIT
 		for(var/x in target.get_traumas())//checks to see if the victim is already going through possession
