@@ -179,6 +179,11 @@ SUBSYSTEM_DEF(wardrobe)
 			master_info[WARDROBE_CACHE_CALL_INSERT] = callback_info[WARDROBE_CALLBACK_INSERT]
 			master_info[WARDROBE_CACHE_CALL_REMOVAL] = callback_info[WARDROBE_CALLBACK_REMOVE]
 		canon_minimum[type_to_stock] = master_info
+#ifdef LOWMEMORYMODE
+	// Allows all wardrobe behavoir to run while tamping down on initing a ton of extra items while the game is only being used for local testing or similar
+	if(master_info[WARDROBE_CACHE_COUNT] >= 5)
+		return
+#endif
 	master_info[WARDROBE_CACHE_COUNT] += 1
 	one_go_master++
 
