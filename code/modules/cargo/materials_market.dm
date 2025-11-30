@@ -317,7 +317,7 @@
 				orderer_rank = GALATIC_MATERIAL_ORDER,
 				orderer_ckey = living_user.ckey,
 				paying_account = is_ordering_private ? account_payable : null,
-				cost_type = "cr",
+				cost_type = MONEY_SYMBOL,
 				can_be_cancelled = FALSE
 			)
 			//first time order compute the correct cost and compare

@@ -50,7 +50,7 @@
 	icon_state = "sustenance_labor"
 	all_products_free = FALSE
 	displayed_currency_icon = "digging"
-	displayed_currency_name = " LP"
+	displayed_currency_name = "LP"
 	allow_custom = FALSE
 
 /obj/machinery/vending/sustenance/labor_camp/proceed_payment(obj/item/card/id/advanced/prisoner/paying_scum_id, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use)
