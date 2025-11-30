@@ -217,7 +217,7 @@
 		setDir(dir)
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
 			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	// For apcs created during the round players need to configure them from scratch
 	else
 		opened = APC_COVER_OPENED

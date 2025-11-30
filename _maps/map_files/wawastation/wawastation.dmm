@@ -31912,10 +31912,10 @@
 /area/station/command/bridge)
 "kXV" = (
 /obj/structure/cable,
-/obj/structure/plaque/static_plaque/golden/commission/wawa,
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/structure/plaque/static_plaque/golden/commission/wawa,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "kYc" = (

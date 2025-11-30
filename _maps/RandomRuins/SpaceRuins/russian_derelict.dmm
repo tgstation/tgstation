@@ -8139,9 +8139,9 @@
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "YE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/plaque/static_plaque/golden/commission/ks13,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
 "YF" = (
