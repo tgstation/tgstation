@@ -34,8 +34,6 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	. += NAMEOF(src, pixel_y)
 	. += NAMEOF(src, density)
 	. += NAMEOF(src, opacity)
-	. += NAMEOF(src, save_container_child_id)
-	. += NAMEOF(src, save_container_parent_id)
 
 	if(uses_integrity)
 		. += NAMEOF(src, resistance_flags)
@@ -129,11 +127,13 @@ GLOBAL_LIST_EMPTY(save_containers_children)
 	return .
 
 /obj/PersistentInitialize()
+/*
 	if(save_container_parent_id)
 		GLOB.save_containers_parents[save_container_parent_id] = src
 
 	if(save_container_child_id)
 		GLOB.save_containers_children += src
+*/
 	. = ..()
 
 /**
