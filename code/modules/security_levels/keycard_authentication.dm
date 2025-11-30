@@ -26,6 +26,8 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
 	activated = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/keycard_auth/Destroy()
 	GLOB.keycard_events.clearEvent("triggerEvent", activated)
@@ -161,11 +163,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	icon = 'icons/obj/machines/wallmounts.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth/wall_mounted, 26)
-
-/obj/machinery/keycard_auth/wall_mounted/Initialize(mapload)
-	. = ..()
-	if(mapload)
-		find_and_hang_on_atom()
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()

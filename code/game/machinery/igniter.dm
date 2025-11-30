@@ -164,7 +164,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	spark_system.attach(src)
 	register_context()
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 
 /obj/machinery/sparker/Destroy()
 	QDEL_NULL(spark_system)

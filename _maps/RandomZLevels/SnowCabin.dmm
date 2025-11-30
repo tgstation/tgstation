@@ -3588,10 +3588,8 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "yJ" = (
-/obj/structure/sign/poster/contraband/free_drone{
-	desc = "This poster seems to be meant for a bunch of machines that used to be deployed on space stations."
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/sign/poster/contraband/free_drone/directional/west,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "yP" = (

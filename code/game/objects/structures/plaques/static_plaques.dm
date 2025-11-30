@@ -9,6 +9,13 @@
 		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		layer = HIGH_TURF_LAYER
 
+/obj/structure/plaque/static_plaque/get_moutable_objects()
+	return list()
+
+/obj/structure/plaque/static_plaque/find_and_mount_on_atom(mark_for_late_init, late_init)
+	if(isProbablyWallMounted(src))
+		return ..()
+
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."

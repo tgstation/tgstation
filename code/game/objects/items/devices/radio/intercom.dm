@@ -39,7 +39,7 @@
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	if(mapload)
-		find_and_hang_on_atom()
+		find_and_mount_on_atom()
 	GLOB.intercoms_list += src
 
 /obj/item/radio/intercom/Destroy()
