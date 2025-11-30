@@ -401,5 +401,5 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 	var/list/numbers = list()
 	for(var/i in 1 to 99)
 		numbers += "[i]"
-		numbers+= "\Roman[i]"
+		numbers += "\Roman[i]"
 	return numbers
