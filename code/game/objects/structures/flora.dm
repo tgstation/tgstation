@@ -147,6 +147,8 @@
 	if(isnull(potential_product_list))
 		return
 
+	var/list/product_list = list()
+
 	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
 	for(var/iteration in 1 to harvest_amount)
 		var/chosen_product = pick_weight(potential_product_list)
