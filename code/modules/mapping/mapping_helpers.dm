@@ -657,7 +657,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 ///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
 	name = "Atom Injector"
-	icon_state = "injector"
+	icon_state = "dont_use"
 	late = TRUE
 	///Will inject into all fitting the criteria if false, otherwise first found.
 	var/first_match_only = TRUE
@@ -702,7 +702,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/atom_injector/obj_flag
 	name = "Obj Flag Injector"
-	icon_state = "objflag_helper"
+	icon_state = "objflag"
 	var/inject_flags = NONE
 
 /obj/effect/mapping_helpers/atom_injector/obj_flag/inject(atom/target)
