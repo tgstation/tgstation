@@ -38,7 +38,7 @@
 	var/eye_color_left = null // set to a hex code to override a mob's left eye color
 	var/eye_color_right = null // set to a hex code to override a mob's right eye color
 	/// The icon file of that eyes as its applied to the mob
-	var/eye_icon = 'icons/mob/human/human_face.dmi'
+	var/eye_icon = 'icons/mob/human/human_eyes.dmi'
 	/// The icon state of that eyes as its applied to the mob
 	var/eye_icon_state = "eyes"
 	/// Do these eyes have blinking animations
@@ -293,8 +293,8 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -EYES_LAYER, parent)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -EYES_LAYER, parent)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER, parent)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER, parent)
 	var/list/overlays = list(eye_left, eye_right)
 
 	if(!(parent.obscured_slots & HIDEEYES))
@@ -543,7 +543,7 @@
 
 /obj/effect/abstract/eyelid_effect
 	name = "eyelid"
-	icon = 'icons/mob/human/human_face.dmi'
+	icon = 'icons/mob/human/human_eyes.dmi'
 	layer = -EYES_LAYER
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_ID
 
