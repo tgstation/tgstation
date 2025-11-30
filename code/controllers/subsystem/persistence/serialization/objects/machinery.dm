@@ -1,8 +1,63 @@
 /obj/machinery/camera/get_save_vars(save_flags=ALL)
 	. = ..()
 	. += NAMEOF(src, network)
-	. += NAMEOF(src, c_tag)
+	. += NAMEOF(src, camera_construction_state)
+	. += NAMEOF(src, camera_upgrade_bitflags)
+	. += NAMEOF(src, camera_enabled)
+	. += NAMEOF(src, panel_open) // technically this should be under machine subtype
 	return .
+
+/obj/machinery/camera/PersistentInitialize()
+	. = ..()
+	if(camera_upgrade_bitflags & CAMERA_UPGRADE_XRAY)
+		upgradeXRay()
+	if(camera_upgrade_bitflags & CAMERA_UPGRADE_EMP_PROOF)
+		upgradeEmpProof()
+	if(camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION)
+		upgradeMotion()
+	update_appearance()
+	return .
+
+// in game built cameras spawn deconstructed
+/obj/machinery/camera/autoname/deconstructed/substitute_with_typepath(map_string)
+	if(camera_construction_state != CAMERA_STATE_FINISHED)
+		return FALSE
+
+	var/cache_key = "[type]-[dir]"
+	var/replacement_type = /obj/machinery/camera/autoname/directional
+	if(isnull(GLOB.map_export_typepath_cache[cache_key]))
+		var/directional = ""
+		switch(dir)
+			if(NORTH)
+				directional = "/north"
+			if(SOUTH)
+				directional = "/south"
+			if(EAST)
+				directional = "/east"
+			if(WEST)
+				directional = "/west"
+
+		var/full_path = "[replacement_type][directional]"
+		var/typepath = text2path(full_path)
+
+		if(ispath(typepath))
+			GLOB.map_export_typepath_cache[cache_key] = typepath
+		else
+			GLOB.map_export_typepath_cache[cache_key] = FALSE
+			stack_trace("Failed to convert [src] to typepath: [full_path]")
+
+	var/cached_typepath = GLOB.map_export_typepath_cache[cache_key]
+	if(cached_typepath)
+		var/obj/machinery/camera/autoname/directional/typepath = cached_typepath
+		var/list/variables = list()
+		TGM_ADD_TYPEPATH_VAR(variables, typepath, network, network)
+		TGM_ADD_TYPEPATH_VAR(variables, typepath, camera_upgrade_bitflags, camera_upgrade_bitflags)
+		TGM_ADD_TYPEPATH_VAR(variables, typepath, camera_enabled, camera_enabled)
+		TGM_ADD_TYPEPATH_VAR(variables, typepath, panel_open, panel_open)
+
+		TGM_MAP_BLOCK(map_string, typepath, generate_tgm_typepath_metadata(variables))
+
+	return cached_typepath
 
 /obj/machinery/button/get_save_vars(save_flags=ALL)
 	. = ..()
