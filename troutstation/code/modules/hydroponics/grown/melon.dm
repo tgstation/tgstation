@@ -26,6 +26,14 @@
 	icon_state = "gaywatermelon"
 	juice_typepath = /datum/reagent/medicine/gaywater
 
+/obj/item/food/grown/gaywatermelon/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is trying to swallow [src] whole!! It looks like [user.p_theyre()] trying to get a full dose of gay and are committing suicide in the process!"))
+	user.reagents.add_reagent(/datum/reagent/medicine/gaywater, 200)
+	user.add_atom_colour("#ff00ff", FIXED_COLOUR_PRIORITY)
+	for (var/obj/item/gayitem in user.get_equipped_items(INCLUDE_HELD|INCLUDE_ACCESSORIES|INCLUDE_POCKETS))
+		gayitem.add_atom_colour("#ff00ff", WASHABLE_COLOUR_PRIORITY)
+	return BRUTELOSS
+
 /obj/item/food/grown/gaywatermelon/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/gaywatermelonslice, 5, 20, screentip_verb = "Chop")
 
