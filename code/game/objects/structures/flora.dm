@@ -130,14 +130,15 @@
 	if(use_default_sound)
 		return ..()
 
-/* A helper proc for getting the products that could be created when harvesting this flora, list syntax is (type = weight)
+/**
+ * A helper proc for getting the products that could be created when harvesting this flora, list syntax is (type = weight)
  * Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
  * Returns: An assoc list of obj typepaths and their weights e.g. list(/obj/item/food/grass = 1), or null
  */
 /obj/structure/flora/proc/get_potential_products()
 	return null
 
-/*
+/**
  * A helper proc for getting a random amount of products, associated with the flora's product list.
  * Returns: A list where each value is (harvested_item_typepath = amount_of_products)
  */
@@ -152,7 +153,7 @@
 		product_list[chosen_product]++
 	return product_list
 
-/*
+/**
  * A helper proc that determines if a user can currently harvest this flora with whatever tool they're trying to use.
  * Returns: TRUE if they can harvest, FALSE if not. Null if it's not harvestable at all.
  */
@@ -179,7 +180,7 @@
 
 	return FALSE
 
-/*
+/**
  * This gets called after a mob tries to harvest this flora with the correct tool.
  * It displays a flavor message to whoever's harvesting this flora, then creates new products depending on the flora's product list.
  * Also renames the flora if harvested_name or harvested_desc is set in the variables
@@ -252,7 +253,7 @@
 	desc = initial(desc)
 	harvested = FALSE
 
-/*
+/**
  * Called after the user uproots the flora with a shovel.
  */
 /obj/structure/flora/proc/uproot(mob/living/user)
@@ -262,7 +263,7 @@
 	previous_rotation = pick(-90, 90)
 	transform = M.Turn(previous_rotation)
 
-/*
+/**
  * Called after the user plants the flora back into the ground after uprooted
  */
 /obj/structure/flora/proc/replant(mob/living/user)
