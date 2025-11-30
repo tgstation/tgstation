@@ -494,7 +494,7 @@
 
 /obj/item/mod/control/pre_equipped/responsory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
-	additional_modules = /obj/item/mod/module/quick_carry
+	additional_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/hypospray)
 
 /obj/item/mod/control/pre_equipped/responsory/janitor
 	insignia_type = /obj/item/mod/module/insignia/janitor
@@ -549,7 +549,7 @@
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	insignia_type = /obj/item/mod/module/insignia/medic
-	additional_modules = /obj/item/mod/module/quick_carry
+	additional_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/hypospray)
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
@@ -646,6 +646,7 @@
 		/obj/item/mod/module/anomaly_locked/kinesis/admin,
 		/obj/item/mod/module/shove_blocker,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/hypospray/advanced
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,

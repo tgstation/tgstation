@@ -2336,10 +2336,24 @@
 	name = "Injector Module"
 	id = "mod_injector"
 	materials = list(
-		/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/diamond =SMALL_MATERIAL_AMOUNT*5,
 	)
 	build_path = /obj/item/mod/module/injector
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
+	)
+
+/datum/design/module/mod_hypospray
+	name = "Synthesizer Module"
+	id = "mod_hypospray"
+	materials = list(
+		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT*4,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/diamond = SMALL_MATERIAL_AMOUNT*2,
+	)
+	build_path = /obj/item/mod/module/hypospray
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)

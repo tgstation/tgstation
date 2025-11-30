@@ -123,6 +123,71 @@
 		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling_overlay
 
+/// Chemical Synthesizer - A borg hypospray for modsuits.alist
+/obj/item/mod/module/hypospray
+	name = "MOD synthesizer module"
+	desc = "A module inspired by medical cyborgs, \
+		it can create an infinite supply of medicines from energy."
+	icon = 'icons/obj/medical/syringe.dmi'
+	icon_state = "borghypo"
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
+	device = /obj/item/reagent_containers/borghypo/mod
+	incompatible_modules = list(/obj/item/mod/module/hypospray)
+	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
+
+/obj/item/mod/module/hypospray/Initialize(mapload)
+	. = ..()
+	var/obj/item/reagent_containers/borghypo/mod/hypo = device
+	hypo.module = src
+
+/obj/item/reagent_containers/borghypo/mod
+	name = "modsuit hypospray"
+	desc = "An advanced chemical synthesizer and injection system."
+	default_reagent_types = list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/c2/convermol, /datum/reagent/medicine/granibitaluri, /datum/reagent/toxin/formaldehyde)
+	// The module that we come from, used for drain_power
+	var/obj/item/mod/module/module
+
+/obj/item/reagent_containers/borghypo/mod/regenerate_reagents(list/reagents_to_regen)
+	for(var/reagent in reagents_to_regen)
+		var/datum/reagent/reagent_to_regen = reagent
+		if(!stored_reagents.has_reagent(reagent_to_regen, max_volume_per_reagent))
+			module.drain_power(module.use_energy_cost)
+			stored_reagents.add_reagent(reagent_to_regen, 5, reagtemp = dispensed_temperature, no_react = TRUE)
+
+/obj/item/mod/module/hypospray/advanced
+	name = "MOD expanded synthesizer module"
+	desc = "An upgrade to the original chemical synthesizer, this version can create a greater variety of reagents."
+	device = /obj/item/reagent_containers/borghypo/mod/advanced
+
+/obj/item/reagent_containers/borghypo/mod/advanced
+	name = "modsuit expanded hypospray"
+	bypass_protection = TRUE
+	// All the reagents that upgraded mediborgs get plus the reagents from the normal version.
+	default_reagent_types = list(\
+		/datum/reagent/medicine/c2/aiuri,\
+		/datum/reagent/medicine/c2/convermol,\
+		/datum/reagent/medicine/epinephrine,\
+		/datum/reagent/medicine/c2/libital,\
+		/datum/reagent/medicine/granibitaluri,\
+		/datum/reagent/medicine/c2/multiver,\
+		/datum/reagent/medicine/salglu_solution,\
+		/datum/reagent/medicine/spaceacillin,\
+		/datum/reagent/medicine/haloperidol,\
+		/datum/reagent/medicine/inacusiate,\
+		/datum/reagent/medicine/mannitol,\
+		/datum/reagent/medicine/mutadone,\
+		/datum/reagent/medicine/oculine,\
+		/datum/reagent/medicine/oxandrolone,\
+		/datum/reagent/medicine/pen_acid,\
+		/datum/reagent/medicine/rezadone,\
+		/datum/reagent/medicine/sal_acid,\
+		/datum/reagent/toxin/formaldehyde\
+	)
+
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organizer
 	name = "MOD organizer module"

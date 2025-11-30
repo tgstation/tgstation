@@ -635,13 +635,13 @@
 	starting_frequency = MODLINK_FREQ_CENTCOM
 	applied_cell = /obj/item/stock_parts/power_store/cell/hyper
 	applied_modules = list(
-		/obj/item/mod/module/organizer,
 		/obj/item/mod/module/defibrillator,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
 		/obj/item/mod/module/surgical_processor/emergency,
 		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/hypospray,
 	)
 
 /obj/item/mod/control/pre_equipped/emergency_medical/corpsman

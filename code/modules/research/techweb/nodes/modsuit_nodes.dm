@@ -64,6 +64,7 @@
 		"mod_injector",
 		"mod_organizer",
 		"mod_patienttransport",
+		"mod_hypospray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
