@@ -24,7 +24,7 @@
 		"Resistance 11" = "The host will drop small items when coughing.",
 		"Resistance 15" = "Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.",
 		"Stage Speed 6" = "Increases cough frequency.",
-		"Transmission 7" = "Coughing will now infect bystanders up to 2 tiles away.",
+		"Transmission 7" = "Coughing will now infect bystanders up to 2 meters away.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 	///emote cooldowns

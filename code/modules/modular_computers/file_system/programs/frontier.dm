@@ -52,7 +52,7 @@
 		singular_experiment["description"] = experiment.description
 		singular_experiment["target"] = experiment.target_amount
 		if(istype(experiment, /datum/experiment/ordnance/explosive))
-			singular_experiment["suffix"] = "tiles"
+			singular_experiment["suffix"] = "meters"
 			singular_experiment["prefix"] = "Range"
 		else if(istype(experiment, /datum/experiment/ordnance/gaseous))
 			singular_experiment["suffix"] = "moles"

@@ -133,7 +133,7 @@
 	if(min_separation)
 		for(var/obj/structure/blob/other_blob in orange(min_separation, tile))
 			if(other_blob.type == blobstrain)
-				to_chat(src, span_warning("There is a similar blob nearby, move more than [min_separation] tiles away from it!"))
+				to_chat(src, span_warning("There is a similar blob nearby, move more than [min_separation] [METERS_TOOLTIP] away from it!"))
 				other_blob.balloon_alert(src, "too close!")
 				return FALSE
 	if(!can_buy(price))

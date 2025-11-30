@@ -28,7 +28,7 @@
 
 /obj/item/circuit_component/direction/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Maximum Range: [max_range] tiles", "orange", "info")
+	. += create_ui_notice("Maximum Range: [max_range] meters", "orange", "info")
 
 /obj/item/circuit_component/direction/populate_ports()
 	input_port = add_input_port("Targeted Entity", PORT_TYPE_ATOM)

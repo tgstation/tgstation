@@ -368,7 +368,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			aux_base_console = ABC
 			break
 	if(!aux_base_console) //Needs to be near the base to serve as its dock and configure it to control the mining shuttle.
-		to_chat(user, span_warning("The auxiliary base's console must be within [console_range] meters in order to interface."))
+		to_chat(user, span_warning("The auxiliary base's console must be within [console_range] [METERS_TOOLTIP] in order to interface."))
 		return
 
 	//Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.

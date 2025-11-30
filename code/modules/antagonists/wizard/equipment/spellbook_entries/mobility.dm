@@ -33,7 +33,7 @@
 
 /datum/spellbook_entry/swap
 	name = "Swap"
-	desc = "Switch places with any living target within nine tiles. Right click to mark a secondary target. You will always swap to your primary target."
+	desc = "Switch places with any living target within nine meters. Right click to mark a secondary target. You will always swap to your primary target."
 	spell_type = /datum/action/cooldown/spell/pointed/swap
 	category = SPELLBOOK_CATEGORY_MOBILITY
 	cost = 1

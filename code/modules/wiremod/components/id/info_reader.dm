@@ -21,7 +21,7 @@
 
 /obj/item/circuit_component/id_info_reader/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Maximum Range: [max_range] tiles.", "orange", "info")
+	. += create_ui_notice("Maximum Range: [max_range] meters.", "orange", "info")
 
 /obj/item/circuit_component/id_info_reader/populate_ports()
 	target = add_input_port("Target", PORT_TYPE_ATOM)

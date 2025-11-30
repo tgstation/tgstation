@@ -207,5 +207,5 @@
 
 /obj/item/assembly/signaler/low_range
 	name = "low-power remote signaling device"
-	desc = "Used to remotely activate devices, within a small range of 9 tiles. Allows for syncing when using a secure signaler on another."
+	desc = "Used to remotely activate devices, within a small range of 9 meters. Allows for syncing when using a secure signaler on another."
 	range = 9
