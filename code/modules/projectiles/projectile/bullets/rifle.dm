@@ -228,3 +228,52 @@
 	desc = "doink!"
 	damage_type = BRUTE
 	icon_state = "paperball"
+
+//Big Ballista Mounted gun Spear
+/obj/projectile/bullet/Large_Ballista_Spear
+	name = "Spear"
+	icon_state = "ballista_spear"
+	//range = 20
+	damage = 80
+	speed = 3
+	catastropic_dismemberment = TRUE //BECAUSE IF IT TAKES YOUR LEG OFF YOU SHOULDNT JUST BE GETTING OFF EASY.
+	projectile_piercing = PASSMOB
+	dismemberment = 3
+	embed_type = null
+	armour_penetration = 25
+	wound_bonus = 15
+	exposed_wound_bonus = 30
+	damage_type = BRUTE
+	shrapnel_type = /obj/item/spear
+
+/obj/projectile/bullet/Large_Ballista_Spear/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, shrapnel_type)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+
+/obj/projectile/bullet/Large_Ballista_Spear/proc/handle_drop(datum/source, /obj/item/spear/spear)
+
+/obj/projectile/bullet/Large_Ballista_Spear_Dragonator
+	name = "Dragon-Slaying Spear"
+	icon_state = "ballista_spear_dragon"
+	//range = 20
+	damage = 120 //If you get hit by this thing you deserve it.
+	speed = 4
+	catastropic_dismemberment = TRUE
+	projectile_piercing = PASSMOB
+	dismemberment = 3
+	embed_type = null
+	armour_penetration = 25
+	wound_bonus = 15
+	exposed_wound_bonus = 30
+	damage_type = BRUTE
+	shrapnel_type = /obj/item/spear/dragonator
+
+/obj/projectile/bullet/Large_Ballista_Spear_Dragonator/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, shrapnel_type)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPECIAL|MOB_MINING, damage_multiplier = 2) //because anything
+
+
+/obj/projectile/bullet/Large_Ballista_Spear_Dragonator/proc/handle_drop(datum/source, /obj/item/spear/dragonator/newcasing)
