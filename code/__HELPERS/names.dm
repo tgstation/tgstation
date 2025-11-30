@@ -399,9 +399,7 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 /// Generates and returns a list of both arabic and roman numerals for 1 through 99
 /proc/generate_number_strings()
 	var/list/numbers = list()
-	numbers.len = 198
-	var/index = 1
 	for(var/i in 1 to 99)
-		numbers[index++] = "[i]"
-		numbers[index++] = "\Roman[i]"
+		numbers += "[i]"
+		numbers+= "\Roman[i]"
 	return numbers
