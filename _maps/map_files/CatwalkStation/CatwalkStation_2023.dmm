@@ -41071,8 +41071,10 @@
 /obj/machinery/door/airlock/mining{
 	name = "Deliveries"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "lmv" = (
@@ -56459,7 +56461,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/library)
 "pBJ" = (
-/obj/effect/mapping_helpers/airlock/access/all/supply/shipping,
 /obj/machinery/door/airlock/mining{
 	name = "Deliveries"
 	},
@@ -56469,6 +56470,9 @@
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/supply/shipping,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/supply/bit_den,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pBP" = (
