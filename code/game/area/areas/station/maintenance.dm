@@ -165,6 +165,9 @@
 	name = "Central Starboard Maintenance"
 	icon_state = "centralstarboardmaint"
 
+/area/station/maintenance/starboard/central/upper
+	name = "Upper Central Starboard Maintenance"
+
 /area/station/maintenance/starboard/greater
 	name = "Greater Starboard Maintenance"
 	icon_state = "greaterstarboardmaint"
@@ -177,9 +180,15 @@
 	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
+/area/station/maintenance/starboard/aft/upper
+	name = "Upper Aft Starboard Maintenance"
+
 /area/station/maintenance/starboard/fore
 	name = "Fore Starboard Maintenance"
 	icon_state = "fsmaint"
+
+/area/station/maintenance/starboard/fore/upper
+	name = "Upper Fore Starboard Maintenance"
 
 /area/station/maintenance/port
 	name = "Port Maintenance"
