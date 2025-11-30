@@ -133,8 +133,6 @@
 	var/obj/item/broken_bottle/broken = new(drop_location())
 	if(!throwingdatum && thrower)
 		thrower.put_in_hands(broken)
-	if(QDELETED(target))
-		target = null
 	broken.mimic_broken(src, target, break_top)
 	broken.inhand_icon_state = broken_inhand_icon_state
 	if(message_in_a_bottle)
