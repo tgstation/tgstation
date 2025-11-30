@@ -202,6 +202,7 @@ Temporary Items
 #extra map stuff
 /_maps/**/backup/
 /_maps/templates.dm
+/_maps/persistence/
 
 #dmm palette file. You really should be using StrongDMM instead.
 *.dmm-pal

@@ -158,12 +158,6 @@
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-/obj/machinery/door/airlock/get_save_vars()
-	. = ..()
-	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
-	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
-	return .
-
 /obj/machinery/door/airlock/Initialize(mapload)
 	if(glass)
 		airlock_material = "glass"

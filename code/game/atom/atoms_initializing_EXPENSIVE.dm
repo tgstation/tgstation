@@ -42,6 +42,9 @@
 	else if(!(A.flags_1 & INITIALIZED_1))
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	else
+		if(arguments[1]) // mapload
+			persistent_loaders += A
+
 		SEND_SIGNAL(A, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_ATOM_AFTER_POST_INIT, A)
 		var/atom/location = A.loc
@@ -168,3 +171,20 @@
 	set waitfor = FALSE
 	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("[src] ([type]) called LateInitialize but has nothing on it!")
+
+/**
+ * Similar to [LateInitialize], executes code necessary for atoms loaded from persistence that require extra setup.
+ *
+ * This procedure is called only when an atom is created via mapload and when CONFIG_GET(flag/persistent_save_enabled) is enabled.
+ * It runs immediately after all saved variables have been restored, after both [Initialize] and [LateInitialize],
+ * but before general post-initialization signals are sent.
+ *
+ * It is the ideal place to run code that restores the previous state of atoms, such as:
+ * - Calling update_appearance() to correct the visual state based on restored variables.
+ * - Reinserting contents into storage atoms (e.g., lockers, bags) after they were temporarily moved out during the persistence save process.
+ *
+ * Atoms created at runtime (non-mapload) will skip this call.
+ */
+/atom/proc/PersistentInitialize()
+	set waitfor = FALSE
+	SHOULD_CALL_PARENT(FALSE)
