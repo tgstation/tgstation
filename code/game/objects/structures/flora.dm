@@ -196,7 +196,7 @@
 		return FALSE
 
 	var/list/products_to_create = get_products_list()
-	if(!length(products_to_create))
+	if(!LAZYLEN(products_to_create))
 		return FALSE
 
 	var/products_created = 0
