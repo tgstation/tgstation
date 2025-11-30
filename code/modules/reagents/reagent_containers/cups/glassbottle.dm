@@ -917,10 +917,9 @@
 				firestarter = 1
 				break
 	..()
-	if(QDELETED(target))
-		return
 	if(firestarter && active)
-		target.fire_act()
+		if(!QDELETED(target))
+			target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/item_interaction(mob/living/user, obj/item/item, list/modifiers)
