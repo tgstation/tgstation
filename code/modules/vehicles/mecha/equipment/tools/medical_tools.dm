@@ -116,10 +116,10 @@
 		"patient_health" = patient.health/patient.maxHealth,
 		"patient_state" = patient_state,
 		"core_temp" = core_temp,
-		"brute_loss" = patient.getBruteLoss(),
-		"burn_loss" = patient.getFireLoss(),
-		"toxin_loss" = patient.getToxLoss(),
-		"oxygen_loss" = patient.getOxyLoss(),
+		"brute_loss" = patient.get_brute_loss(),
+		"burn_loss" = patient.get_fire_loss(),
+		"toxin_loss" = patient.get_tox_loss(),
+		"oxygen_loss" = patient.get_oxy_loss(),
 	)
 	data["contained_reagents"] = get_reagent_data(patient.reagents.reagent_list)
 	data["has_brain_damage"] = patient.get_organ_loss(ORGAN_SLOT_BRAIN) != 0
@@ -147,7 +147,7 @@
 		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		patient = null
-	ex_patient.adjustOxyLoss(-2 * seconds_per_tick)
+	ex_patient.adjust_oxy_loss(-2 * seconds_per_tick)
 	ex_patient.AdjustStun(-4 SECONDS * seconds_per_tick)
 	ex_patient.AdjustKnockdown(-4 SECONDS * seconds_per_tick)
 	ex_patient.AdjustParalyzed(-4 SECONDS * seconds_per_tick)

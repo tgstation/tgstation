@@ -1,0 +1,4 @@
+author: "Xrmanser"
+delete-after: True
+changes:
+  - bugfix: "graft stat adjustments now apply even when the trait is rejected\n:cl:"

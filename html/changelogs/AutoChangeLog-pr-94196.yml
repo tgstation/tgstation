@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - qol: "weapon rechargers don't wait an extra tick before announcing they've finished recharging"
+  - spellcheck: "weapon rechargers no longer claim a battle rifle has \"finished recharging\" when it's finished recalibrating."
