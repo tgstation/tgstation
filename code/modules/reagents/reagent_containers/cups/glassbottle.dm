@@ -163,18 +163,18 @@
 			if(prob(knockdown_effectiveness))
 				living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
 
-		// Displays a custom message which follows the attack
-		if(target == user)
-			target.visible_message(
-				span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
-				span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
-			)
+	// Displays a custom message which follows the attack
+	if(target == user)
+		user.visible_message(
+			span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
+			span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
+		)
 
-		else
-			target.visible_message(
-				span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
-				span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
-			)
+	else
+		user.visible_message(
+			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
+			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
+		)
 
 	// Finally, smash the bottle. This kills (del) the bottle and also does all the logging for us
 	smash(target, user)
