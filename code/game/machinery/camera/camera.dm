@@ -3,9 +3,9 @@
 /// Active power multiplier of the xray camera upgrade
 #define XRAY_POWER_MOD (10)
 /// Active power multiplier of the motion camera upgrade
-#define MOTION_POWER_MOD (3)
+#define MOTION_POWER_MOD (4)
 /// Active power multiplier of the EMP camera upgrade
-#define EMP_POWER_MOD (1.5)
+#define EMP_POWER_MOD (1.25)
 
 /**
  * Camera assembly frame
