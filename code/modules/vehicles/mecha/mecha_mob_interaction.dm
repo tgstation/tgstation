@@ -111,7 +111,9 @@
 	brain_mob.log_message("was put into [src] by [key_name(user)]", LOG_GAME, log_globally = FALSE)
 	return TRUE
 
+
 /obj/vehicle/sealed/mecha/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
+	// FIXME: this code is really bad (shocker). Needs a refactor
 	var/atom/movable/mob_container
 	var/turf/newloc = get_turf(src)
 	if(ishuman(M))
@@ -147,9 +149,7 @@
 		if(!forced && !silent)
 			to_chat(AI, span_notice("Returning to core..."))
 		mecha_flags &= ~SILICON_PILOT
-		newloc = get_turf(AI.linked_core)
-		qdel(AI.linked_core)
-		AI.forceMove(newloc)
+		AI.resolve_core_link()
 		if(forced)
 			to_chat(AI, span_danger("ZZUZULU.ERR--ERRR-NEUROLOG-- PERCEP--- DIST-B**@"))
 			for(var/count in 1 to 5)

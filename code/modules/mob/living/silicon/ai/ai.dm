@@ -5,7 +5,7 @@
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
-		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
+		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
@@ -152,7 +152,7 @@
 	current = null
 	bot_ref = null
 	controlled_equipment = null
-	linked_core = null
+	break_core_link()
 	apc_override = null
 	if(ai_voicechanger)
 		ai_voicechanger.owner = null
@@ -363,52 +363,44 @@
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
+/// Creates an MMI of the AI based on its configuration.
+/mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/mmi
+	RETURN_TYPE(/obj/item/mmi)
+	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
+	var/obj/item/mmi/copied_mmi
+	if(posibrain_inside)
+		copied_mmi = new /obj/item/mmi/posibrain(destination, FALSE)
+		copied_mmi.name = "[initial(copied_mmi.name)] ([real_name])"
+	else
+		copied_mmi = new /obj/item/mmi(destination)
+		copied_mmi.name = "[initial(copied_mmi.name)]: [real_name]"
+		copied_mmi.brain = new /obj/item/organ/brain(copied_mmi)
+		copied_mmi.brain.organ_flags |= ORGAN_FROZEN
+		copied_mmi.brain.name = "[real_name]'s brain"
+		copied_mmi.set_brainmob(new /mob/living/brain(copied_mmi))
+		copied_mmi.brainmob.container = copied_mmi
+
+	copied_mmi.brainmob.name = real_name
+	copied_mmi.brainmob.real_name = real_name
+	copied_mmi.brainmob.gender = gender
+
+	var/suicided = HAS_TRAIT(src, TRAIT_SUICIDED)
+	copied_mmi.brainmob.set_suicide(suicided)
+	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain... sigh
+
+	if(copied_mmi.brainmob.stat == DEAD && !suicided)
+		copied_mmi.brainmob.set_stat(CONSCIOUS)
+
+	copied_mmi.update_appearance()
+	return copied_mmi
+
 /mob/living/silicon/ai/proc/ai_mob_to_structure()
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
-	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
-		qdel(src)
+	var/obj/structure/ai_core/ai_core = new(get_turf(src), CORE_STATE_FINISHED, make_mmi())
+	mind?.transfer_to(ai_core.core_mmi.brainmob)
+	qdel(src)
 	return ai_core
-
-/mob/living/silicon/ai/proc/break_core_link()
-	to_chat(src, span_danger("Your core has been destroyed!"))
-	linked_core = null
-
-/mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
-	var/mmi_type
-	if(posibrain_inside)
-		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
-	else
-		mmi_type = new/obj/item/mmi(src)
-	if(hack_software)
-		new/obj/item/malf_upgrade(get_turf(src))
-	the_mmi = mmi_type
-	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
-	the_mmi.brain.organ_flags |= ORGAN_FROZEN
-	the_mmi.brain.name = "[real_name]'s brain"
-	the_mmi.name = "[initial(the_mmi.name)]: [real_name]"
-	the_mmi.set_brainmob(new /mob/living/brain(the_mmi))
-	the_mmi.brainmob.name = src.real_name
-	the_mmi.brainmob.real_name = src.real_name
-	the_mmi.brainmob.container = the_mmi
-	the_mmi.brainmob.gender = src.gender
-
-	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
-	the_mmi.brainmob.set_suicide(has_suicided_trait)
-	the_mmi.brain.suicided = has_suicided_trait
-	if(the_core)
-		var/obj/structure/ai_core/core = the_core
-		core.core_mmi = the_mmi
-		the_mmi.forceMove(the_core)
-	else
-		the_mmi.forceMove(get_turf(src))
-	if(the_mmi.brainmob.stat == DEAD && !has_suicided_trait)
-		the_mmi.brainmob.set_stat(CONSCIOUS)
-	if(mind)
-		mind.transfer_to(the_mmi.brainmob)
-	the_mmi.update_appearance()
-	return TRUE
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
@@ -702,7 +694,7 @@
 	if(!istype(apc))
 		to_chat(owner, span_notice("You are already in your Main Core."))
 		return
-	if(SEND_SIGNAL(owner, COMSIG_SILICON_AI_CORE_STATUS) & COMPONENT_CORE_ALL_GOOD)
+	if(astype(owner, /mob/living/silicon/ai)?.linked_core)
 		apc.malfvacate()
 	else
 		to_chat(owner, span_danger("Linked core not detected!"))
@@ -786,7 +778,7 @@
 		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
 	ShutOffDoomsdayDevice()
-	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core/deactivated(loc, posibrain_inside)//Spawns a deactivated terminal at AI location.
+	var/obj/structure/ai_core/new_core = new /obj/structure/ai_core(loc, CORE_STATE_FINISHED, make_mmi())
 	new_core.circuit.battery = battery
 	ai_restore_power()//So the AI initially has power.
 	set_control_disabled(TRUE) //Can't control things remotely if you're stuck in a card!
@@ -1108,6 +1100,99 @@
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
 	src.control_disabled = control_disabled
+
+
+/// Establishes a "core link" with a supplied core structure.
+/// This will register multiple signals and give the AI a strong reference to it.
+/// See [proc/resolve_core_link] or [proc/break_core_link] for ways to end the connection.
+/mob/living/silicon/ai/proc/create_core_link(obj/structure/ai_core/core)
+	if(linked_core) //uh oh
+		break_core_link(linked_core)
+	linked_core = core
+
+	//this block is kind of sketchy, but I don't think this should cause any problems
+	qdel(core.core_mmi)
+	core.core_mmi = make_mmi(core)
+
+	RegisterSignals(linked_core, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_core_destroyed))
+	RegisterSignals(linked_core, list(
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_TOOL_ACT(TOOL_CROWBAR),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
+	), PROC_REF(on_core_item_interaction))
+	RegisterSignal(linked_core, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_core_take_damage))
+	RegisterSignal(linked_core, COMSIG_ATOM_EXITED, PROC_REF(on_core_exited))
+
+/// Elegantly closes the AI's link to a core structure,
+/// moving them to its location and cleaning it up. This is generally what you want to call.
+/// Prefer calling [proc/break_core_link] directly if the connection is meant to be suddenly severed.
+/mob/living/silicon/ai/proc/resolve_core_link()
+	if(!linked_core) //oh no bro
+		CRASH("tried to resolve a core link with no core!!!!")
+
+	forceMove(linked_core.loc)
+	var/obj/structure/ai_core/unlinked_core = linked_core
+	break_core_link()
+	qdel(unlinked_core)
+	cancel_camera()
+
+/// Handles unregistering the AI from its core. The core itself will not be cleaned up.
+/// Prefer calling [proc/resolve_core_link] if the connection is being closed elegantly.
+/mob/living/silicon/ai/proc/break_core_link()
+	if(!linked_core)
+		return
+
+	UnregisterSignal(linked_core, list(
+		COMSIG_QDELETING, COMSIG_ATOM_DESTRUCTION, //on_core_destroyed
+		//on_core_item_interaction
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_TOOL_ACT(TOOL_CROWBAR),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER),
+		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
+		COMSIG_ATOM_TAKE_DAMAGE, //on_core_take_damage
+		COMSIG_ATOM_EXITED, //on_core_exited
+		))
+	linked_core = null
+
+/mob/living/silicon/ai/proc/on_core_item_interaction(datum/source, mob/living/user, obj/item/tool, list/processing_recipes)
+	SIGNAL_HANDLER
+	if(user.combat_mode)
+		return NONE
+
+	to_chat(src, span_danger("CORE TAMPERING DETECTED!"))
+	return NONE
+
+/mob/living/silicon/ai/proc/on_core_take_damage(datum/source, damage_taken, ...)
+	SIGNAL_HANDLER
+
+	if(damage_taken > 0)
+		to_chat(src, span_danger("CORE DAMAGE DETECTED!"))
+	return NONE
+
+/mob/living/silicon/ai/proc/on_core_destroyed(datum/source, damage_flag)
+	SIGNAL_HANDLER
+
+	to_chat(src, span_danger("Your core has been destroyed!"))
+	ShutOffDoomsdayDevice()
+	break_core_link()
+
+/mob/living/silicon/ai/proc/on_core_exited(datum/source, atom/movable/gone, direction)
+	SIGNAL_HANDLER
+
+	if(istype(gone, /obj/item/mmi))
+		var/obj/item/mmi/mmi_gone = gone
+		on_core_destroyed(source, NONE)
+		if(!IS_MALF_AI(src)) //don't pull back shunted malf AIs
+			death(gibbed = TRUE, drop_mmi = FALSE)
+			///the drop_mmi param determines whether the MMI is dropped at their current location
+			///which in this case would be somewhere else, so we drop their MMI at the core instead
+			mind?.transfer_to(mmi_gone.brainmob)
+			qdel(src)
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF
