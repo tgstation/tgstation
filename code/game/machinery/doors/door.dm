@@ -383,7 +383,7 @@
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.
 	balloon_alert(opener, "activating unrestricted latch...")
 	playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE)
-	if(do_after(opener, do_after_time, target = src, opener))
+	if(do_after(opener, do_after_time, target = src))
 		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success ([type])") // no need to tally failures as we can assume it as long as we have this + the total
 		return TRUE
 
@@ -407,7 +407,7 @@
 	if(!HAS_TRAIT_FROM(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src)))
 		return
 
-	REMOVE_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING)
+	REMOVE_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
