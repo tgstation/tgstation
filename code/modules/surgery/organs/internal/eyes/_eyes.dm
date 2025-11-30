@@ -37,7 +37,9 @@
 
 	var/eye_color_left = null // set to a hex code to override a mob's left eye color
 	var/eye_color_right = null // set to a hex code to override a mob's right eye color
+	/// The icon file of that eyes as its applied to the mob
 	var/eye_icon = 'icons/mob/human/human_face.dmi'
+	/// The icon state of that eyes as its applied to the mob
 	var/eye_icon_state = "eyes"
 	/// Do these eyes have blinking animations
 	var/blink_animation = TRUE
