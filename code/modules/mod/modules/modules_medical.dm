@@ -63,34 +63,6 @@
 #undef WOUND_SCAN
 #undef CHEM_SCAN
 
-///Quick Carry - Lets the user carry bodies quicker.
-/obj/item/mod/module/quick_carry
-	name = "MOD quick carry module"
-	desc = "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; \
-		or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
-	icon_state = "carry"
-	complexity = 1
-	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
-	required_slots = list(ITEM_SLOT_GLOVES)
-	var/quick_carry_trait = TRAIT_QUICK_CARRY
-
-/obj/item/mod/module/quick_carry/on_part_activation()
-	. = ..()
-	ADD_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
-	ADD_TRAIT(mod.wearer, quick_carry_trait, REF(src))
-
-/obj/item/mod/module/quick_carry/on_part_deactivation(deleting = FALSE)
-	. = ..()
-	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, REF(src))
-	REMOVE_TRAIT(mod.wearer, quick_carry_trait, REF(src))
-
-/obj/item/mod/module/quick_carry/advanced
-	name = "MOD advanced quick carry module"
-	removable = FALSE
-	complexity = 0
-	quick_carry_trait = TRAIT_QUICKER_CARRY
-
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
 	name = "MOD injector module"
