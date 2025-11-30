@@ -351,24 +351,19 @@
 	if(human_carp_user.has_status_effect(/datum/status_effect/organ_set_bonus/carp))
 		style_factor_points += 20
 
-	var/list/our_held_items = list()
-	our_held_items += human_carp_user.get_active_held_item()
-	our_held_items += human_carp_user.get_inactive_held_item()
-
 	// We check for wielded objects. If they're not abstract items or exempt items, we add their weight as a penalty. And their block chance.
-	if(our_held_items)
-		for(var/obj/item/possibly_a_held_object as anything in our_held_items)
-			if(possibly_a_held_object.item_flags & (ABSTRACT|HAND_ITEM) && !possibly_a_held_object.block_chance)
-				continue
+	for(var/obj/item/possibly_a_held_object in human_carp_user.held_items)
+		if(possibly_a_held_object.item_flags & (ABSTRACT|HAND_ITEM) && !possibly_a_held_object.block_chance)
+			continue
 
-			if(possibly_a_held_object in exempt_objects)
-				continue
+		if(possibly_a_held_object in exempt_objects)
+			continue
 
-			if(possibly_a_held_object.w_class <= WEIGHT_CLASS_SMALL && !possibly_a_held_object.block_chance)
-				continue
+		if(possibly_a_held_object.w_class <= WEIGHT_CLASS_SMALL && !possibly_a_held_object.block_chance)
+			continue
 
-			style_factor_malus += possibly_a_held_object.block_chance
-			style_factor_malus += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
+		style_factor_malus += possibly_a_held_object.block_chance
+		style_factor_malus += possibly_a_held_object.w_class * 10 * (HAS_TRAIT(possibly_a_held_object, TRAIT_WIELDED) ? 2 : 1)
 
 	if(human_carp_user.body_position != STANDING_UP) // this ain't monkey style
 		style_factor_points -= 30
