@@ -1979,10 +1979,10 @@
 	id = "mod_plating_portable_suit"
 	build_path = /obj/item/mod/construction/plating/portable_suit
 	materials = list(
-		/datum/material/iron =SHEET_MATERIAL_AMOUNT*3,
-		/datum/material/plastic =SHEET_MATERIAL_AMOUNT*1,
-		/datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/plastic =SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT,
 	)
 	research_icon_state = "psuit-plating"
 
