@@ -1,4 +1,8 @@
-#define DOOR_CLOSE_WAIT 60 ///Default wait until doors autoclose
+///Default wait until doors autoclose
+#define DOOR_CLOSE_WAIT 60
+/// Trait for checking if a mob is currently activating an unrestricted airlock open and thus has pressure pushes blocked
+#define TRAIT_UNRESTRICTED_AIRLOCK_OPENING "trait_unrestricted_airlock_opening"
+
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
@@ -372,14 +376,38 @@
 		return FALSE
 
 	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
+	ADD_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
+	RegisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure_during_unres_open))
+	addtimer(CALLBACK(src, PROC_REF(deregister_pressure_push_signal), opener), do_after_time + 0.5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE) // extra half-second to be safe, else this is just a guarantee we remove the signal.
 
 	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.
 	balloon_alert(opener, "activating unrestricted latch...")
 	playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE)
-	if(do_after(opener, do_after_time, target = src))
+	if(do_after(opener, do_after_time, target = src, opener))
 		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success ([type])") // no need to tally failures as we can assume it as long as we have this + the total
 		return TRUE
+
+	deregister_pressure_push_signal(opener) // if you fail the do_after early then you lose your pressure immunity, womp.
 	return FALSE
+
+/// While activating the door, we are able to block pressure pushes since we're "grasping the override handle" or something similar to that.
+/// This basically exists to prevent the door's delay from being SUPREMELY annoying when you're trying to escape pressure-based damage during the unrestricted latch do_after.
+/obj/machinery/door/proc/stop_pressure_during_unres_open(datum/source)
+	SIGNAL_HANDLER
+	if(!ismob(source))
+		return // maybe just qdeleted or something but this should only be on mobs lol
+
+	var/mob/mob_source = source
+	// to_chat so stacking probably means it doesn't need a cd timer between messsages? add one if it's annoying though but I doubt pressure is called super often.
+	to_chat(mob_source, span_warning("You're holding onto the unrestricted latch, preventing pressure from pushing you away!"))
+	return COMSIG_ATOM_BLOCKS_PRESSURE
+
+/// Exists to ensure that we always deregister the pressure push blocking signal. Can be called multiple times safely as we check the trait.
+/obj/machinery/door/proc/deregister_pressure_push_signal(mob/opener)
+	if(!HAS_TRAIT_FROM(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src)))
+		return
+
+	REMOVE_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING)
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -741,3 +769,4 @@
 	return ..(0)
 
 #undef DOOR_CLOSE_WAIT
+#undef TRAIT_UNRESTRICTED_AIRLOCK_OPENING
