@@ -407,7 +407,9 @@
 	if(!HAS_TRAIT_FROM(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src)))
 		return
 
+	UnregisterSignal(opener, COMSIG_ATOM_PRE_PRESSURE_PUSH)
 	REMOVE_TRAIT(opener, TRAIT_UNRESTRICTED_AIRLOCK_OPENING, REF(src))
+
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
