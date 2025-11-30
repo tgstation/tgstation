@@ -182,11 +182,12 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/Shutdown()
 	shutting_down = TRUE
-	var/msg = "Clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"
-	to_chat(world, span_boldannounce(msg))
-	log_world(msg)
+	var/initial_msg = "Clearing DB Queries. (Standby: [length(queries_standby)]; Active: [length(queries_active)]; All: [length(all_queries)])"
+	to_chat(world, span_boldannounce(initial_msg))
+	log_world(initial_msg)
+	var/start_time = REALTIMEOFDAY
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
-	var/endtime = REALTIMEOFDAY + SHUTDOWN_QUERY_TIMELIMIT
+	var/end_time = start_time + SHUTDOWN_QUERY_TIMELIMIT
 	if(SSdbcore.Connect())
 		//Take over control of all active queries
 		var/queries_to_check = queries_active.Copy()
@@ -200,7 +201,7 @@ SUBSYSTEM_DEF(dbcore)
 
 		//wait for them all to finish
 		for(var/datum/db_query/query in queries_to_check)
-			UNTIL(query.process() || REALTIMEOFDAY > endtime)
+			UNTIL(query.process() || REALTIMEOFDAY > end_time)
 
 		//log shutdown to the db
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
@@ -211,9 +212,9 @@ SUBSYSTEM_DEF(dbcore)
 		query_round_shutdown.Execute(FALSE)
 		qdel(query_round_shutdown)
 
-	msg = "Done clearing DB queries standby:[length(queries_standby)] active: [length(queries_active)] all: [length(all_queries)]"
-	to_chat(world, span_boldannounce(msg))
-	log_world(msg)
+	var/completed_message = "Done clearing DB queries in [DisplayTimeText(REALTIMEOFDAY - start_time)] (Standby: [length(queries_standby)]; Active: [length(queries_active)]; All: [length(all_queries)])]"
+	to_chat(world, span_boldannounce(completed_message))
+	log_world(completed_message)
 	if(IsConnected())
 		Disconnect()
 	stop_db_daemon()
