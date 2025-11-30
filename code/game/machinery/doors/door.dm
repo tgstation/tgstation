@@ -56,10 +56,7 @@
 	var/real_explosion_block
 	///if TRUE, this door will always open on red alert
 	var/red_alert_access = FALSE
-	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
-	var/unres_sensor = FALSE
-	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
-	var/unres_sides = NONE
+
 	/// Whether or not the door can crush mobs.
 	var/can_crush = TRUE
 	/// Whether or not the door can be opened by hand (used for blast doors and shutters)
@@ -72,6 +69,17 @@
 	var/elevator_status
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
+
+	/// Checks to see if this airlock has an unrestricted "latch" within (will set to TRUE if present).
+	var/unres_latch = FALSE
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
+	/// Delayed open for unrestricted users. If there is an unrestricted side, we want to know if the door opening should be delayed for a bit to add tension and what-not
+	var/delayed_unres_open = FALSE
+	/// Lower range for random time to open for unrestricted users
+	var/delayed_unres_time_lower = 2 SECONDS
+	/// Upper range for random time to open for unrestricted users
+	var/delayed_unres_time_upper = 3 SECONDS
 
 /datum/armor/machinery_door
 	melee = 30
@@ -334,15 +342,44 @@
 	if(density)
 		run_animation(DOOR_DENY_ANIMATION)
 
-/obj/machinery/door/allowed(mob/M)
+/obj/machinery/door/allowed(mob/accessor)
 	if(emergency)
 		return TRUE
-	if(unrestricted_side(M))
-		return TRUE
-	return ..()
 
-/obj/machinery/door/proc/unrestricted_side(mob/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	. = ..() // let's see if this user has any funny way to access this before we try unrestricted stuff as that will have potential delays
+
+	if(. == TRUE)
+		return TRUE
+
+	if(unrestricted_side(accessor))
+		if(!delayed_unres_open)
+			return TRUE
+
+		return attempt_delayed_unres_open(accessor)
+
+	return FALSE
+
+
+
+/// Allows for specific side of airlocks to be unrestricted (IE, can exit maint freely, but need access to enter)
+/obj/machinery/door/proc/unrestricted_side(mob/opener)
 	return get_dir(src, opener) & unres_sides
+
+/// Initiates a do_after to open the door after a delay for unrestricted openers
+/// Returns TRUE if we successfully finished the do_after, FALSE otherwise
+/obj/machinery/door/proc/attempt_delayed_unres_open(mob/opener)
+	if(opener.do_after_count() > 0) // not allowed to do this if you're doing something else. just wait lad.
+		return FALSE
+
+	var/do_after_time = rand(delayed_unres_time_lower, delayed_unres_time_upper)
+
+	SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open attempt ([type])") // statcollecting on how often people try to use this.
+	balloon_alert(opener, "activating unrestricted latch...")
+	playsound(get_turf(src), 'sound/machines/airlock/airlock_latch_hiss.ogg', 30, vary = TRUE)
+	if(do_after(opener, do_after_time, target = src))
+		SSblackbox.record_feedback("tally", "unrestricted_airlock_usage", 1, "open success ([type])") // no need to tally failures as we can assume it as long as we have this + the total
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return

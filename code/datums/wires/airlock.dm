@@ -94,7 +94,7 @@
 	status += "The speed light is [A.normalspeed ? "on" : "off"]."
 	status += "The emergency light is [A.emergency ? "on" : "off"]."
 
-	if(A.unres_sensor)
+	if(A.unres_latch)
 		status += "The unrestricted exit display is [A.unres_sides ? "indicating that it is letting people pass from the [dir2text(REVERSE_DIR(A.unres_sides))]" : "faintly flickering"]."
 	else
 		status += "The unrestricted exit display is completely inactive."
@@ -150,7 +150,7 @@
 			A.feedback = !A.feedback
 			A.update_appearance()
 		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
-			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
+			if(!A.unres_latch) //only works if the "latch" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
 				return
 			A.unres_sides = REVERSE_DIR(A.unres_sides)
 			A.update_appearance()
@@ -217,7 +217,7 @@
 			if(isliving(usr))
 				A.shock(usr, 50)
 		if(WIRE_UNRESTRICTED_EXIT) // If this wire is cut, the unrestricted helper goes away. If you mend it, it'll go "haywire" and pick a new direction at random. Might have to cut/mend a time or two to get the direction you want.
-			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions, or if an unrestricted helper is added to a door in mapping)
+			if(!A.unres_latch) //only works if the "latch" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions, or if an unrestricted helper is added to a door in mapping)
 				return
 			if(mend)
 				A.unres_sides = pick(NORTH, SOUTH, EAST, WEST)
