@@ -143,11 +143,13 @@
  * Returns: A list where each value is (harvested_item_typepath = amount_of_products)
  */
 /obj/structure/flora/proc/get_products_list()
-	var/list/product_list = get_potential_products()
+	var/list/potential_product_list = get_potential_products()
+	if(isnull(potential_product_list))
+		return
 
 	var/harvest_amount = rand(harvest_amount_low, harvest_amount_high)
 	for(var/iteration in 1 to harvest_amount)
-		var/chosen_product = pick_weight(product_list)
+		var/chosen_product = pick_weight(potential_product_list)
 		if(!product_list[chosen_product])
 			product_list[chosen_product] = 0
 		product_list[chosen_product]++
