@@ -350,3 +350,4 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_multi_tile_object(atom) (atom.bound_width > ICON_SIZE_X || atom.bound_height > ICON_SIZE_Y)
 
 #define is_area_nearby_station(checked_area) (istype(checked_area, /area/space) || istype(checked_area, /area/space/nearstation) || istype(checked_area, /area/station/asteroid))
+#define is_area_virtual(checked_area) (GLOB.virtual_areas && GLOB.virtual_areas[(checked_area).type])

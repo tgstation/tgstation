@@ -1,6 +1,0 @@
-author: "afonamo"
-delete-after: True
-changes:
-  - bugfix: "binary sensors no longer report exact consciousness status to crew monitor."
-  - bugfix: "crew monitor sort by name now respects ascending vs. descending sorting."
-  - qol: "crew monitor sort by vitals now properly treats those with binary sensors as either fully healthy or dead."

@@ -190,9 +190,9 @@
 		return
 	var/needs_update = FALSE
 	needs_update += owner.heal_overall_damage(brute = 5, burn = 5, updating_health = FALSE)
-	needs_update += owner.adjustOxyLoss(-5, updating_health = FALSE)
+	needs_update += owner.adjust_oxy_loss(-5, updating_health = FALSE)
 	if(!HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-		needs_update += owner.adjustToxLoss(-5, updating_health = FALSE)
+		needs_update += owner.adjust_tox_loss(-5, updating_health = FALSE)
 	if(needs_update)
 		owner.updatehealth()
 

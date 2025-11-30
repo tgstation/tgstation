@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "You can no longer duplicate DNA for the DNA vault objective by scanning yourself on several probes at once."

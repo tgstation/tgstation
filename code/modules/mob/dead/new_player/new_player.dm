@@ -180,6 +180,8 @@
 		tgui_alert(usr, "There was an unexpected error putting you into your requested job. If you cannot join with any job, you should contact an admin.")
 		return FALSE
 
+	var/latejoin_period = CEILING(STATION_TIME_PASSED() / (5 MINUTES), 5)
+	SSblackbox.record_feedback("tally", "latejoin_time", 1, latejoin_period)
 	mind.late_joiner = TRUE
 	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
 	if(!destination)

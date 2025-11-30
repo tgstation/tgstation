@@ -101,7 +101,7 @@
 	if (!(heal_biotypes & target.mob_biotypes))
 		return FALSE
 	if (!iscarbon(target))
-		return target.getBruteLoss() > 0 || target.getFireLoss() > 0
+		return target.get_brute_loss() > 0 || target.get_fire_loss() > 0
 	var/mob/living/carbon/carbon_target = target
 	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
 		if (!part.brute_dam && !part.burn_dam)

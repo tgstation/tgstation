@@ -37,7 +37,10 @@
 	static_inventory += start_button
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
-	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, PROC_REF(place_station_trait_buttons))
+
+/datum/hud/new_player/on_viewdata_update()
+	. = ..()
+	place_station_trait_buttons()
 
 /// Load and then display the buttons for relevant station traits
 /datum/hud/new_player/proc/show_station_trait_buttons()

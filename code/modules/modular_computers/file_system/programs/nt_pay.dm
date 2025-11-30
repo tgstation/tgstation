@@ -60,6 +60,11 @@
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, payment_result)
 
 /datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
+	var/area/user_area = get_area(user)
+	if(user_area && is_area_virtual(user_area))
+		to_chat(user, span_notice("You cannot send virtual money to real accounts."))
+		return NT_PAY_STATUS_NO_ACCOUNT
+
 	money_to_send = round(money_to_send)
 
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))

@@ -43,7 +43,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY | UNIQUE_RENAME
-	force = 15
+	force = 20
 	throwforce = 10
 	demolition_mod = 0.75 //but not metal
 	w_class = WEIGHT_CLASS_BULKY
@@ -139,11 +139,11 @@
 	if(!QDELETED(affecting) && !(affecting.bodypart_flags & BODYPART_UNREMOVABLE) && affecting.owner == user && !QDELETED(user))
 		playsound(user, hitsound, 25, TRUE)
 		affecting.dismember(BRUTE)
-		user.adjustBruteLoss(20)
+		user.adjust_brute_loss(force * 1.25)
 
 /obj/item/melee/sabre/proc/manual_suicide(mob/living/user, originally_nodropped)
 	if(!QDELETED(user))
-		user.adjustBruteLoss(200)
+		user.adjust_brute_loss(200)
 		user.death(FALSE)
 	REMOVE_TRAIT(src, TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
 
