@@ -31,6 +31,10 @@
 
 	return .
 
+/obj/item/reagent_containers/PersistentInitialize()
+	. = ..()
+	update_appearance()
+
 /obj/machinery/duct/get_save_vars(save_flags=ALL)
 	. = ..()
 	// idk shit about plumbing but i think these are correct?
@@ -55,7 +59,3 @@
 	. = ..()
 	. += NAMEOF(src, used_up)
 	return .
-
-/obj/item/reagent_containers/hypospray/PersistentInitialize(save_flags=ALL)
-	. = ..()
-	update_appearance()
