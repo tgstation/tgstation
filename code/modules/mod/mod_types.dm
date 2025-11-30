@@ -54,6 +54,16 @@
 		/obj/item/mod/module/flashlight,
 	)
 
+/obj/item/mod/control/pre_equipped/portable_suit
+	theme = /datum/mod_theme/portable_suit
+	applied_modules = list(
+		/obj/item/mod/module/paper_dispenser,
+		/obj/item/mod/module/stamp,
+	)
+	default_pins = list(
+		/obj/item/mod/module/stamp,
+	)
+
 /obj/item/mod/control/pre_equipped/engineering
 	theme = /datum/mod_theme/engineering
 	applied_modules = list(
