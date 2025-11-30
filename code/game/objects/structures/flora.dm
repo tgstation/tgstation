@@ -131,7 +131,7 @@
 		return ..()
 
 /* A helper proc for getting the products that could be created when harvesting this flora, list syntax is (type = weight)
-	Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
+ * Because of how this works, it can spawn in anomalies if you want it to. Or wall girders
  * Returns: An assoc list of obj typepaths and their weights e.g. list(/obj/item/food/grass = 1), or null
  */
 /obj/structure/flora/proc/get_potential_products()
