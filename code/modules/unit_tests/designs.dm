@@ -33,8 +33,11 @@
 
 /datum/unit_test/design_source/Run()
 	var/list/all_designs = list()
+	var/list/exceptions = list(
+		/datum/design/telescreen_monastery, // It's map-specific, so it doesn't always have a source.
+	)
 
-	for (var/datum/design/design as anything in subtypesof(/datum/design))
+	for (var/datum/design/design as anything in subtypesof(/datum/design) - exceptions)
 		var/design_id = design::id
 		if (design_id == DESIGN_ID_IGNORE)
 			continue

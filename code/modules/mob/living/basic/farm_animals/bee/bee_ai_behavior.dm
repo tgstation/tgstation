@@ -64,7 +64,7 @@
 /datum/ai_behavior/find_and_set/bee_hive
 	action_cooldown = 10 SECONDS
 
-/datum/ai_behavior/find_and_set/bee_hive/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/bee_hive/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/valid_hives = list()
 	var/mob/living/bee_pawn = controller.pawn
 

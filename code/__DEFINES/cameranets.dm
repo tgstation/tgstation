@@ -32,6 +32,7 @@
 #define OPERATIVE_CAMERA_NET "operative"
 #define CAMERANET_NETWORK_CURATOR "curator"
 #define CAMERANET_NETWORK_FILMSTUDIO "filmstudio"
+#define CAMERANET_NETWORK_MONASTERY "monastery"
 
 // Ruins/Away missiosn/Misc camera nets
 #define CAMERANET_NETWORK_MOON19_XENO "mo19x"

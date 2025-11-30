@@ -771,3 +771,35 @@
       decently without needing them to risk blacking out.
   necromanceranne:
   - bugfix: The Hellfire Laser now has its unique sprite back.
+2025-11-29:
+  Cirrial:
+  - bugfix: Stoats have a chance to try and grab items like they always should have.
+  Pickle-Coding:
+  - bugfix: Fixes overclocked volume pumps being able to work on walls.
+  SmArtKar:
+  - admin: Converted the Spawn verb into a TGUI input, featuring for dynamic search
+      and RegEx support
+  SyncIt21:
+  - bugfix: items such as dna injectors and others that have strange characters in
+      their names can now be dispensed from custom vending machines
+  Y0SH1M4S73R:
+  - rscadd: Trapdoors built inside of a shuttle will move along with the shuttle.
+  - bugfix: Open trapdoors will not cause shuttles containing them to bring open space
+      into transit.
+  ezel:
+  - balance: You can no longer print soup pots
+2025-11-30:
+  Aliceee2ch:
+  - image: Added more inhands sprite for welders, aswell as upgrading some of them.
+  Cat:
+  - qol: The plumbing IV drip can be rotate with alt click now
+  - rscadd: The plumbing IV drip can now output chemicals into plumbing factories
+  SmArtKar:
+  - bugfix: Fixed partially deployed MODsuits trying to deploy parts onto blocked
+      slots when the deploy action is right clicked, instead of retracting already
+      deployed parts.
+  TealSeer:
+  - bugfix: fixed MULEbots unloading deliveries onto the wrong tile
+  lelandkemble:
+  - bugfix: Emagging the cap's spare safe will no longer turn it into a smiling table
+  - bugfix: Video game winning experiment no longer completes over and over
