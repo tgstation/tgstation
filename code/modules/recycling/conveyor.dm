@@ -362,14 +362,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
-// attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	user.Move_Pulled(src)
-
 /obj/machinery/conveyor/powered(chan = power_channel, ignore_use_power = FALSE)
 	if(!wire_mode)
 		return ..()
@@ -659,6 +651,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1, _id)
 	. = ..()
 	id = _id
+	AddElement(/datum/element/force_move_pulled)
 
 /obj/item/stack/conveyor/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isfloorturf(interacting_with))
