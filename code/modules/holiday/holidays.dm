@@ -873,6 +873,11 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		"Yule",
 	)
 
+/datum/holiday/xmas/celebrate()
+	. = ..()
+	var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/costumes_toys/christmas]
+	pack.special_enabled = TRUE
+
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
 
