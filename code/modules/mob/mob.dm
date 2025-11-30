@@ -439,7 +439,7 @@
 
 
 ///Get the item on the mob in the storage slot identified by the id passed in
-/mob/proc/get_item_by_slot(slot_id)
+/mob/proc/get_item_by_slot(slot_id) as /obj/item
 	return null
 
 /// Gets what slot the item on the mob is held in.
