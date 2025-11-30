@@ -92,7 +92,7 @@
 /obj/item/computer_disk/quartermaster
 	name = "cargo data disk"
 	desc = "Removable disk used to download cargo-related tablet apps."
-	icon_state = "cargodisk"
+	icon_state = "datadisk12"
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
