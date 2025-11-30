@@ -951,6 +951,7 @@
 		both corrosive environments and sudden impacts to the user's joints."
 	default_skin = "safeguard"
 	armor_type = /datum/armor/mod_theme_safeguard
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 1
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked, /obj/item/mod/module/hearing_protection)
