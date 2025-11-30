@@ -156,9 +156,8 @@
 	repair.update_appearance()
 	repair.balloon_alert(user, "sensor added!")
 	qdel(tool)
-	if (user.is_holding(src))
-		qdel(src)
-		user.put_in_hands(repair)
-	else
-		qdel(src)
+	var/held_index = user.is_holding(src)
+	qdel(src)
+	if (held_index)
+		user.put_in_hand(repair, held_index)
 	return ITEM_INTERACT_SUCCESS

@@ -376,11 +376,11 @@
 
 	to_chat(user, span_notice("You add [tool] to [src]."))
 	qdel(tool)
-	if (user.is_holding(src))
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/firebot(drop_location()))
-	else
-		qdel(src)
+	var/obj/item/bot_assembly/firebot/assembly = new(drop_location())
+	var/held_index = user.is_holding(src)
+	qdel(src)
+	if (held_index)
+		user.put_in_hand(assembly, held_index)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extinguisher/anti

@@ -380,11 +380,10 @@
 	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
 	qdel(tool)
-	if(user.is_holding(src))
-		qdel(src)
-		user.put_in_hands(medbot_assembly)
-	else
-		qdel(src)
+	var/held_index = user.is_holding(src)
+	qdel(src)
+	if (held_index)
+		user.put_in_hand(medbot_assembly, held_index)
 	return ITEM_INTERACT_SUCCESS
 
 /// Gets what skin (icon_state) this medkit uses for a medbot
