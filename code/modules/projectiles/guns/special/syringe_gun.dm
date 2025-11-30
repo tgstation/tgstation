@@ -223,6 +223,7 @@
 	pixel_x = 0
 	force = 4
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 10)
 
 /obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	. = ..()

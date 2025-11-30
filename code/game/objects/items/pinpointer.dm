@@ -220,6 +220,7 @@ GLOBAL_LIST_EMPTY(sniffable_sheets)
 	desc = "A handheld tracking device that locates sheets of glass and iron."
 	icon_state = "pinpointer_sniffer"
 	worn_icon_state = "pinpointer_black"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 
 /obj/item/pinpointer/material_sniffer/scan_for_target()
 	if(target || !GLOB.sniffable_sheets.len)

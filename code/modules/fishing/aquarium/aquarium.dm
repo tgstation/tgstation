@@ -9,6 +9,7 @@
 	base_icon_state = "aquarium"
 
 	integrity_failure = 0.3
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 10)
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_pw = 2
@@ -129,6 +130,7 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	item_flags = SLOWS_WHILE_IN_HAND
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 5)
 
 	custom_price = PAYCHECK_CREW * 9
 

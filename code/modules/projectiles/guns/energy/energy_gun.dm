@@ -156,6 +156,12 @@
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
+		/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT,
+	)
 	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0

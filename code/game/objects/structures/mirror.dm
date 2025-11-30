@@ -25,6 +25,7 @@
 	anchored = TRUE
 	integrity_failure = 0.5
 	max_integrity = 200
+	custom_materials = /obj/item/wallframe/mirror::custom_materials
 	///Can this mirror be removed from walls with tools?
 	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
@@ -350,10 +351,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	desc = "An unmounted mirror. Attach it to a wall to use."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	custom_materials = list(
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT,
-	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28
 

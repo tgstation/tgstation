@@ -623,6 +623,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/bambostaff/Initialize(mapload)
 	. = ..()
@@ -735,7 +736,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A handmade crutch. Also makes a decent bludgeon if you need it."
 	icon_state = "crutch_wood"
 	inhand_icon_state = "crutch_wood"
-	custom_materials = list(/datum/material/wood = SMALL_MATERIAL_AMOUNT * 0.5)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/cane/white
 	name = "white cane"
@@ -863,6 +864,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 1
 	attack_verb_continuous = list("clubs", "bludgeons")
 	attack_verb_simple = list("club", "bludgeon")
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baseball_bat
 	name = "baseball bat"

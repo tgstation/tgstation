@@ -499,6 +499,7 @@
 	desc = "Clear out the swamp once and for all"
 	icon_state = "hygienebot"
 	created_name = "Hygienebot"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/bot_assembly/hygienebot/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()

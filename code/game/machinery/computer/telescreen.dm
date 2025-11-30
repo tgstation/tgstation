@@ -299,6 +299,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance
 /obj/item/wallframe/telescreen/engine
 	name = "engine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/engine
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine, 32)
 
@@ -311,6 +312,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine, 
 /obj/item/wallframe/telescreen/turbine
 	name = "turbine telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/turbine
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine, 32)
 
@@ -347,6 +349,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison, 
 /obj/item/wallframe/telescreen/auxbase
 	name = "auxiliary base telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/auxbase
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase, 32)
 

@@ -364,6 +364,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	tank_volume = 200
 	can_be_tanked = FALSE
 	max_integrity = 150
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
 	///Paper cups left from the cooler.
 	var/paper_cups = 25
 	///Reference to our jug.
