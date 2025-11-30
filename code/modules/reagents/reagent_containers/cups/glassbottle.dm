@@ -267,7 +267,7 @@
 	else
 		if(prob(33))
 			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
-			target?.Bumped(stab_with)
+			target.Bumped(stab_with)
 		playsound(src, SFX_SHATTER, 70, TRUE)
 	name = "broken [to_mimic.name]"
 	to_mimic.transfer_fingerprints_to(src)

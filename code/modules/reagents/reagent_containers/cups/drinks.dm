@@ -382,7 +382,7 @@
 	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
 	bottle_shard.mimic_broken(src, target)
 	qdel(src)
-	target?.Bumped(bottle_shard)
+	target.Bumped(bottle_shard)
 
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
