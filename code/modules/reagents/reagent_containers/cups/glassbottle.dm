@@ -133,13 +133,15 @@
 	var/obj/item/broken_bottle/broken = new(drop_location())
 	if(!throwingdatum && thrower)
 		thrower.put_in_hands(broken)
+	if(QDELETED(target))
+		target = null
 	broken.mimic_broken(src, target, break_top)
 	broken.inhand_icon_state = broken_inhand_icon_state
 	if(message_in_a_bottle)
 		message_in_a_bottle.forceMove(drop_location())
 
 	qdel(src)
-	target.Bumped(broken)
+	target?.Bumped(broken)
 	return TRUE
 
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/user, atom/target)
@@ -151,32 +153,30 @@
 	if(!isGlass)
 		return
 
-	if(QDELETED(target))
-		return
+	if(!QDELETED(target))
+		var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
 
-	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
+		// An attack that targets the head of a living mob will attempt to knock them down
+		if(head_hitter)
+			var/mob/living/living_target = target
+			var/knockdown_effectiveness = 0
+			if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
+				knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
+			if(prob(knockdown_effectiveness))
+				living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
 
-	// An attack that targets the head of a living mob will attempt to knock them down
-	if(head_hitter)
-		var/mob/living/living_target = target
-		var/knockdown_effectiveness = 0
-		if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
-			knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
-		if(prob(knockdown_effectiveness))
-			living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
+		// Displays a custom message which follows the attack
+		if(target == user)
+			target.visible_message(
+				span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
+				span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
+			)
 
-	// Displays a custom message which follows the attack
-	if(target == user)
-		target.visible_message(
-			span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
-			span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
-		)
-
-	else
-		target.visible_message(
-			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
-			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
-		)
+		else
+			target.visible_message(
+				span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
+				span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
+			)
 
 	// Finally, smash the bottle. This kills (del) the bottle and also does all the logging for us
 	smash(target, user)
@@ -267,7 +267,7 @@
 	else
 		if(prob(33))
 			var/obj/item/shard/stab_with = new(to_mimic.drop_location())
-			target.Bumped(stab_with)
+			target?.Bumped(stab_with)
 		playsound(src, SFX_SHATTER, 70, TRUE)
 	name = "broken [to_mimic.name]"
 	to_mimic.transfer_fingerprints_to(src)
@@ -919,6 +919,8 @@
 				firestarter = 1
 				break
 	..()
+	if(QDELETED(target))
+		return
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))

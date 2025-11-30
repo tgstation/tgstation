@@ -29,11 +29,11 @@
 		return
 	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
 	B.mimic_broken(src, target, break_top)
 	qdel(src)
-	target.Bumped(B)
+	target?.Bumped(B)
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
@@ -378,11 +378,11 @@
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
 	bottle_shard.mimic_broken(src, target)
 	qdel(src)
-	target.Bumped(bottle_shard)
+	target?.Bumped(bottle_shard)
 
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
