@@ -304,11 +304,8 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wr" = (
-/obj/structure/fence{
-	dir = 4
-	},
-/obj/structure/sign/nanotrasen,
-/turf/open/misc/asteroid/snow/icemoon,
+/obj/structure/sign/nanotrasen/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Wt" = (
 /obj/effect/turf_decal/stripes/line,
@@ -439,8 +436,8 @@ fl
 (5,1,1) = {"
 fl
 kd
+Sc
 Wr
-vJ
 vJ
 kd
 kd

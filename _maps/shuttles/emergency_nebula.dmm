@@ -117,8 +117,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape)
 "ej" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/titanium,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "eU" = (
 /obj/structure/chair/comfy/shuttle{
@@ -214,6 +218,15 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ii" = (
+/obj/effect/turf_decal/trimline/dark/corner{
+	dir = 8
+	},
+/obj/structure/sign/nanotrasen/directional/east,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
 /area/shuttle/escape)
 "is" = (
 /obj/machinery/light/directional/south,
@@ -1594,10 +1607,8 @@
 /area/shuttle/escape)
 "GE" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/structure/reagent_dispensers/fueltank,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "GM" = (
@@ -1678,9 +1689,7 @@
 	},
 /obj/structure/closet/crate/internals,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "GW" = (
@@ -1943,6 +1952,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Od" = (
+/obj/effect/turf_decal/trimline/dark/corner,
+/obj/structure/sign/nanotrasen/directional/west,
+/turf/open/floor/iron/dark/corner,
 /area/shuttle/escape)
 "OB" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -2221,9 +2235,7 @@
 /area/shuttle/escape)
 "SH" = (
 /obj/structure/hedge,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "Tc" = (
@@ -2283,10 +2295,8 @@
 /area/shuttle/escape)
 "UK" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
 /obj/structure/reagent_dispensers/watertank,
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "UQ" = (
@@ -2322,6 +2332,7 @@
 /obj/effect/turf_decal/trimline/neutral/end{
 	dir = 4
 	},
+/obj/structure/sign/nanotrasen/directional/east,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/escape)
 "VZ" = (
@@ -2671,13 +2682,13 @@ kZ
 kZ
 kZ
 kZ
-ej
 kZ
 kZ
+kZ
 UU
 UU
 UU
-ej
+kZ
 kZ
 kZ
 kZ
@@ -2700,14 +2711,14 @@ Ra
 kZ
 GM
 rF
-wP
+ej
 fD
 Kv
 qJ
 wP
 fD
 Kv
-Am
+Od
 Jy
 kZ
 Bu
@@ -3157,7 +3168,7 @@ Gh
 wP
 fD
 Kv
-CZ
+ii
 fm
 kZ
 mw
@@ -3181,13 +3192,13 @@ kZ
 kZ
 kZ
 vk
-ej
+kZ
 YB
 kZ
 UU
 UU
 UU
-ej
+kZ
 sU
 kZ
 CH
