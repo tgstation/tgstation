@@ -77,14 +77,8 @@
 
 /obj/item/organ/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
-		for(var/datum/surgery/operations as anything in owner.surgeries)
-			if(operations.location != BODY_ZONE_CHEST)
-				continue
-			if(!ispath(operations.steps[operations.status], /datum/surgery_step/manipulate_organs/internal))
-				continue
-			attempt_grow(gib_on_success = FALSE)
-			return
-		attempt_grow()
+		// If we are mid surgery we won't gib the mob, isn't that neat?
+		attempt_grow(gib_on_success = !LIMB_HAS_SURGERY_STATE(bodypart_owner, SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED))
 
 /// Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)

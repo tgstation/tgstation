@@ -125,6 +125,25 @@
 ///The mob is a crustacean. Like crabs. Or lobsters.
 #define MOB_CRUSTACEAN (1 << 14)
 
+/// For use in translating a mob's bio-type to a human readable name. Keep in the correct order!
+#define MOB_TYPE_TO_NAME list(\
+	"organic" = MOB_ORGANIC, \
+	"mineral" = MOB_MINERAL, \
+	"robotic" = MOB_ROBOTIC, \
+	"undead" = MOB_UNDEAD, \
+	"humanoid" = MOB_HUMANOID, \
+	"bug" = MOB_BUG, \
+	"beast" = MOB_BEAST, \
+	"special" = MOB_SPECIAL, \
+	"reptile" = MOB_REPTILE, \
+	"spirit" = MOB_SPIRIT, \
+	"plant" = MOB_PLANT, \
+	"slime" = MOB_SLIME, \
+	"aquatic" = MOB_AQUATIC, \
+	"mining" = MOB_MINING, \
+	"crustacean" = MOB_CRUSTACEAN, \
+)
+
 //Lung respiration type flags
 #define RESPIRATION_OXYGEN (1 << 0)
 #define RESPIRATION_N2 (1 << 1)

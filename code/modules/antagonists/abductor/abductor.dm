@@ -114,12 +114,46 @@
 			break
 
 /datum/antagonist/abductor/scientist/on_gain()
-	owner.add_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
+	owner.add_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/scientist/on_removal()
-	owner.remove_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
+	owner.remove_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING), ABDUCTOR_ANTAGONIST)
 	return ..()
+
+/datum/antagonist/abductor/scientist/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/glorp = mob_override || owner.current
+	RegisterSignal(glorp, COMSIG_LIVING_OPERATING_ON, PROC_REF(add_surgery))
+
+/datum/antagonist/abductor/scientist/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/glorp = mob_override || owner.current
+	UnregisterSignal(glorp, COMSIG_LIVING_OPERATING_ON)
+
+/datum/antagonist/abductor/scientist/proc/add_surgery(datum/source, mob/living/patient, list/possible_operations)
+	SIGNAL_HANDLER
+
+	var/static/list/ayy_operations
+	if(!length(ayy_operations))
+		ayy_operations = list()
+		ayy_operations += /datum/surgery_operation/basic/tend_wounds/combo/upgraded/master
+		ayy_operations += /datum/surgery_operation/basic/viral_bonding
+		ayy_operations += /datum/surgery_operation/limb/add_plastic // unlocks advanced plastic surgery
+		ayy_operations += /datum/surgery_operation/limb/bionecrosis
+		ayy_operations += /datum/surgery_operation/limb/clamp_bleeders/abductor
+		ayy_operations += /datum/surgery_operation/limb/close_skin/abductor
+		ayy_operations += /datum/surgery_operation/limb/incise_organs/abductor
+		ayy_operations += /datum/surgery_operation/limb/incise_skin/abductor
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/external/abductor
+		ayy_operations += /datum/surgery_operation/limb/organ_manipulation/internal/abductor
+		ayy_operations += /datum/surgery_operation/limb/retract_skin/abductor
+		ayy_operations += /datum/surgery_operation/limb/unclamp_bleeders/abductor
+		ayy_operations += /datum/surgery_operation/organ/fix_wings // i guess
+		ayy_operations += typesof(/datum/surgery_operation/limb/bioware)
+		ayy_operations += typesof(/datum/surgery_operation/organ/brainwash)
+		ayy_operations += typesof(/datum/surgery_operation/organ/lobotomy)
+		ayy_operations += typesof(/datum/surgery_operation/organ/pacify)
+
+	possible_operations |= ayy_operations
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
 	var/list/current_teams = list()

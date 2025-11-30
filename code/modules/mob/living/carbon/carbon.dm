@@ -781,6 +781,8 @@
 
 	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+		for(var/obj/item/bodypart/limb as anything in bodyparts)
+			limb.remove_surgical_state(ALL)
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
 		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))

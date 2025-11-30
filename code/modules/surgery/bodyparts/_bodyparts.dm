@@ -96,9 +96,6 @@
 	var/brutestate = 0
 	var/burnstate = 0
 
-	///Gradually increases while burning when at full damage, destroys the limb when at 100
-	var/cremation_progress = 0
-
 	//Multiplicative damage modifiers
 	/// Brute damage gets multiplied by this on receive_damage()
 	var/brute_modifier = 1
@@ -227,6 +224,9 @@
 	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 
+	/// What state is the bodypart in for determining surgery availability
+	VAR_FINAL/surgery_state = NONE
+
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
 	unarmed_damage_low = modify_fantasy_variable("unarmed_damage_low", unarmed_damage_low, bonus, minimum = 1)
@@ -259,6 +259,16 @@
 		grind_results = null
 	else
 		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+
+	var/innate_state = NONE
+	if(!LIMB_HAS_SKIN(src))
+		innate_state |= SKINLESS_SURGERY_STATES
+	if(!LIMB_HAS_BONES(src))
+		innate_state |= BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(src))
+		innate_state |= VESSELLESS_SURGERY_STATES
+	if(innate_state)
+		add_surgical_state(innate_state)
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
@@ -385,6 +395,10 @@
 		if(wound_desc)
 			check_list += "\t[wound_desc]"
 
+	var/surgery_check = get_surgery_self_check()
+	if(surgery_check)
+		check_list += "\t[surgery_check]"
+
 	for(var/obj/item/embedded_thing as anything in embedded_objects)
 		if(embedded_thing.get_embed().stealthy_embed)
 			continue
@@ -410,6 +424,103 @@
 				check_list += span_warning("\tIt's bleeding profusely!")
 
 	return jointext(check_list, "<br>")
+
+/// Returns surgery self-check information for this bodypart
+/obj/item/bodypart/proc/get_surgery_self_check()
+	var/list/surgery_message = list()
+	var/reported_state = surgery_state
+	if(!LIMB_HAS_SKIN(src))
+		reported_state &= ~SKINLESS_SURGERY_STATES
+	if(!LIMB_HAS_BONES(src))
+		reported_state &= ~BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(src))
+		reported_state &= ~VESSELLESS_SURGERY_STATES
+
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
+		surgery_message += "skin has been incised"
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_OPEN))
+		surgery_message += "skin is opened"
+
+	// We can only see these if the skin is open
+	// And we check the real state rather than reported_state
+	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
+			surgery_message += "blood vessels are unclamped and bleeding"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_CLAMPED))
+			surgery_message += "blood vessels are clamped shut"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_ORGANS_CUT))
+			surgery_message += "organs have been incised"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_SAWED))
+			surgery_message += "bones have been sawed apart"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_DRILLED))
+			surgery_message += "bones have been drilled through"
+
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PROSTHETIC_UNSECURED))
+		surgery_message += "prosthetic item is unsecured"
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
+		surgery_message += "got a layer of plastic applied to it"
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_CAVITY_WIDENED))
+		surgery_message += "chest cavity is wide open"
+
+	if(length(surgery_message))
+		return span_warning("Its [english_list(surgery_message)]!")
+	return ""
+
+/// Returns surgery examine information for this bodypart
+/obj/item/bodypart/proc/get_surgery_examine()
+	var/t_his = owner.p_their()
+	var/t_His = owner.p_Their()
+	var/single_message = ""
+	var/list/sub_messages = list()
+	var/reported_state = surgery_state
+	if(!LIMB_HAS_SKIN(src))
+		reported_state &= ~SKINLESS_SURGERY_STATES
+	if(!LIMB_HAS_BONES(src))
+		reported_state &= ~BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(src))
+		reported_state &= ~VESSELLESS_SURGERY_STATES
+
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_CUT))
+		sub_messages += "skin has been incised"
+		single_message = "The skin on [t_his] [plaintext_zone] has been incised."
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_SKIN_OPEN))
+		sub_messages += "skin is opened"
+		single_message = "The skin on [t_his] [plaintext_zone] is opened."
+
+	// We can only see these if the skin is open
+	// And we check the real state rather than reported_state
+	if(LIMB_HAS_SURGERY_STATE(src, SURGERY_SKIN_OPEN))
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_UNCLAMPED))
+			sub_messages += "blood vessels are unclamped[cached_bleed_rate ? " and bleeding" : ""]"
+			single_message = "The blood vessels in [t_his] [plaintext_zone] are unclamped[cached_bleed_rate ? " and bleeding!" : "."]"
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_VESSELS_CLAMPED))
+			sub_messages += "blood vessels are clamped shut"
+			single_message = "The blood vessels in [t_his] [plaintext_zone] are clamped shut."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_ORGANS_CUT))
+			sub_messages += "the organs within have been incised"
+			single_message = "The organs in [t_his] [plaintext_zone] have been incised."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_SAWED))
+			sub_messages += "the bones within have been sawed apart"
+			single_message = "The bones in [t_his] [plaintext_zone] have been sawed apart."
+		if(HAS_SURGERY_STATE(reported_state, SURGERY_BONE_DRILLED))
+			sub_messages += "the bones within have been drilled through"
+			single_message = "The bones in [t_his] [plaintext_zone] have been drilled through."
+
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PROSTHETIC_UNSECURED))
+		sub_messages += "prosthetic item is unsecured"
+		single_message = "[t_His] [plaintext_zone] is unsecured and loose!"
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_PLASTIC_APPLIED))
+		sub_messages += "got a layer of plastic applied to it"
+		single_message = "A layer of plastic has been applied to [t_his] [plaintext_zone]."
+	if(HAS_SURGERY_STATE(reported_state, SURGERY_CAVITY_WIDENED))
+		sub_messages += "the chest cavity is wide open"
+		single_message = "[t_His] chest cavity is wide open!"
+
+	if(length(sub_messages) >= 2)
+		return span_danger("[t_His] [plaintext_zone]'s [english_list(sub_messages)].")
+	if(single_message)
+		return span_danger(single_message)
+	return ""
 
 /obj/item/bodypart/blob_act()
 	receive_damage(max_damage, wound_bonus = CANT_WOUND)
@@ -722,7 +833,6 @@
 			update_disabled()
 		if(updating_health)
 			owner.updatehealth()
-	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
 ///Sets the damage of a bodypart when it is created.
@@ -846,6 +956,9 @@
 
 	UnregisterSignal(old_owner, list(COMSIG_ATOM_RESTYLE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_LIVING_SET_BODY_POSITION))
 
+	if(LIMB_HAS_SURGERY_STATE(src, ALL_SURGERY_FISH_STATES(body_zone)))
+		qdel(old_owner.GetComponent(/datum/component/fishing_spot))
+
 /// Apply ownership of a limb to someone, giving the appropriate traits, updates and signals
 /obj/item/bodypart/proc/apply_ownership(mob/living/carbon/new_owner)
 	SHOULD_CALL_PARENT(TRUE)
@@ -878,6 +991,9 @@
 
 	forceMove(owner)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_forced_removal)) //this must be set after we moved, or we insta gib
+
+	if(LIMB_HAS_SURGERY_STATE(src, ALL_SURGERY_FISH_STATES(body_zone)))
+		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery)
 
 /// Called on addition of a bodypart
 /obj/item/bodypart/proc/on_adding(mob/living/carbon/new_owner)
@@ -1333,6 +1449,16 @@
 	if(generic_bleedstacks > 0)
 		cached_bleed_rate += 0.5
 
+	// In 99% of situations we won't get to this point if we aren't wired or blooded
+	// But I'm covering my ass in case someone adds some weird new species
+	if(biological_state & BIOSTATE_HAS_VESSELS)
+		// better clamp those up quick
+		if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_UNCLAMPED))
+			cached_bleed_rate += 2
+		// better, but still not exactly ideal
+		else if(HAS_ANY_SURGERY_STATE(surgery_state, SURGERY_VESSELS_CLAMPED|SURGERY_ORGANS_CUT))
+			cached_bleed_rate += 0.25
+
 	for(var/obj/item/embeddies as anything in embedded_objects)
 		if(!embeddies.get_embed().is_harmless())
 			cached_bleed_rate += 0.25
@@ -1546,3 +1672,47 @@
 	if(isnull(owner))
 		return
 	REMOVE_TRAIT(owner, old_trait, bodypart_trait_source)
+
+/// Add one or multiple surgical states to the bodypart
+/obj/item/bodypart/proc/add_surgical_state(new_states)
+	if(!new_states)
+		CRASH("add_surgical_state called with no new states to add")
+	if((surgery_state & new_states) == new_states)
+		return
+
+	var/old_states = surgery_state
+	surgery_state |= new_states
+	update_surgical_state(old_states, new_states)
+
+/// Remove one or multiple surgical states from the bodypart
+/obj/item/bodypart/proc/remove_surgical_state(removing_states)
+	if(!removing_states)
+		CRASH("remove_surgical_state called with no states to remove")
+	if(!(surgery_state & removing_states))
+		return
+
+	// inherent to the biostate, don't remove them
+	if(!LIMB_HAS_SKIN(src))
+		removing_states &= ~SKINLESS_SURGERY_STATES
+	if(!LIMB_HAS_BONES(src))
+		removing_states &= ~BONELESS_SURGERY_STATES
+	if(!LIMB_HAS_VESSELS(src))
+		removing_states &= ~VESSELLESS_SURGERY_STATES
+	if(!removing_states)
+		return
+
+	var/old_states = surgery_state
+	surgery_state &= ~removing_states
+	update_surgical_state(old_states, removing_states)
+
+/// Called when surgical state changes so we can react to it
+/obj/item/bodypart/proc/update_surgical_state(old_state, changed_states)
+	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_ORGANS_CUT|ALL_SURGERY_VESSEL_STATES))
+		refresh_bleed_rate()
+
+	if(isnull(owner))
+		return
+	if(HAS_SURGERY_STATE(surgery_state, ALL_SURGERY_FISH_STATES(body_zone)))
+		owner.AddComponent(/datum/component/fishing_spot, /datum/fish_source/surgery) // no-op if they already have one
+	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
+		qdel(owner.GetComponent(/datum/component/fishing_spot))

@@ -41,6 +41,8 @@
 	var/internal_bleeding_chance
 	/// If we let off blood when hit, the max blood lost is this * the incoming damage
 	var/internal_bleeding_coefficient
+	/// If TRUE we are ready to be mended in surgery
+	VAR_FINAL/mend_state = FALSE
 
 /datum/wound/pierce/bleed/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	set_blood_flow(initial_flow)
