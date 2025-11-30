@@ -243,7 +243,7 @@
 	amount = 10
 	},
 /obj/item/stack/cable_coil,
-/obj/item/circuitboard/computer/rdconsole,
+/obj/item/circuitboard/computer/rdconsole/unlocked,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/beakers,

@@ -254,7 +254,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bF" = (
-/obj/machinery/computer/rdconsole,
+/obj/machinery/computer/rdconsole/unlocked,
 /turf/open/floor/iron,
 /area/station/science)
 "bI" = (

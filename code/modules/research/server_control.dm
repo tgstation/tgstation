@@ -55,7 +55,7 @@
 			data["consoles"] += list(list(
 				"console_name" = console,
 				"console_location" = get_area(console),
-				"console_locked" = console.locked,
+				"console_locked" = console.is_locked(),
 				"console_ref" = REF(console),
 			))
 
@@ -81,5 +81,5 @@
 			var/obj/machinery/computer/rdconsole/console_selected = locate(params["selected_console"]) in stored_research.consoles_accessing
 			if(!console_selected)
 				return FALSE
-			console_selected.locked = !console_selected.locked
+			console_selected.toggle_locked()
 			return TRUE
