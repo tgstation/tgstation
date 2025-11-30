@@ -50,8 +50,9 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Icon state for the UI to use for preview icons.
 	/// Set automatically if null
 	var/ui_icon_state
-	/// Reskin options of this item if it can be reskinned.
-	VAR_FINAL/list/cached_reskin_options
+	/// Base typepath to what reskin datum this item can use to reskin into
+	/// Doesn't verify that the item_path actually has these reskins
+	var/reskin_datum
 	/// A list of greyscale colors that are used for items that have greyscale support, but don't allow full customization.
 	/// This is an assoc list of /datum/job_department -> colors, or /datum/job -> colors, allowing for preset colors based on player chosen job.
 	/// Jobs are prioritized over departments.
@@ -80,15 +81,6 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(isnull(ui_icon) && isnull(ui_icon_state))
 		ui_icon = item_path::icon_preview || item_path::icon
 		ui_icon_state = item_path::icon_state_preview || item_path::icon_state
-
-	if(loadout_flags & LOADOUT_FLAG_ALLOW_RESKIN)
-		var/obj/item/dummy_item = new item_path()
-		if(!length(dummy_item.unique_reskin))
-			loadout_flags &= ~LOADOUT_FLAG_ALLOW_RESKIN
-			stack_trace("Loadout item [item_path] has LOADOUT_FLAG_ALLOW_RESKIN but has no unique reskins.")
-		else
-			cached_reskin_options = dummy_item.unique_reskin.Copy()
-		qdel(dummy_item)
 
 /datum/loadout_item/Destroy(force, ...)
 	if(!force)
@@ -126,7 +118,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 				return set_name(manager, user)
 
 		if("set_skin")
-			if(loadout_flags & LOADOUT_FLAG_ALLOW_RESKIN)
+			if(reskin_datum)
 				return set_skin(manager, user, params)
 
 	return TRUE
@@ -205,10 +197,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 
 /// Used for reskinning an item to an alt skin.
 /datum/loadout_item/proc/set_skin(datum/preference_middleware/loadout/manager, mob/user, params)
-	var/reskin_to = params["skin"]
-	if(!cached_reskin_options[reskin_to])
-		return FALSE
-
+	var/reskin_to = params["skin"] // sanity checking isn't necessary because it's all checked when equipped anyways
 	var/list/loadout = manager.preferences.read_preference(/datum/preference/loadout)
 	if(!loadout?[item_path])
 		return FALSE
@@ -283,11 +272,13 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		equipped_item.name = trim(item_details[INFO_NAMED], PREVENT_CHARACTER_TRIM_LOSS(MAX_NAME_LEN))
 		ADD_TRAIT(equipped_item, TRAIT_WAS_RENAMED, "Loadout")
 
-	if((loadout_flags & LOADOUT_FLAG_ALLOW_RESKIN) && item_details?[INFO_RESKIN])
+	if(reskin_datum && item_details?[INFO_RESKIN])
 		var/skin_chosen = item_details[INFO_RESKIN]
-		if(skin_chosen in equipped_item.unique_reskin)
-			equipped_item.current_skin = skin_chosen
-			equipped_item.icon_state = equipped_item.unique_reskin[skin_chosen]
+		for(var/datum/atom_skin/skin_path as anything in valid_subtypesof(reskin_datum))
+			if(skin_path::preview_name != skin_chosen)
+				continue
+			var/datum/atom_skin/skin_instance = GLOB.atom_skins[skin_path]
+			skin_instance.apply(equipped_item)
 			if(istype(equipped_item, /obj/item/clothing/accessory))
 				// Snowflake handing for accessories, because we need to update the thing it's attached to instead
 				if(isclothing(equipped_item.loc))
@@ -296,6 +287,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 					update_flag |= (ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
 			else
 				update_flag |= equipped_item.slot_flags
+			break
 
 	return update_flag
 
@@ -336,7 +328,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if((loadout_flags & LOADOUT_FLAG_GREYSCALING_ALLOWED) && !(loadout_flags & LOADOUT_FLAG_JOB_GREYSCALING))
 		displayed_text[FA_ICON_PALETTE] = "Recolorable"
 
-	if(loadout_flags & LOADOUT_FLAG_ALLOW_RESKIN)
+	if(reskin_datum)
 		displayed_text[FA_ICON_SWATCHBOOK] = "Reskinnable"
 
 	return displayed_text
@@ -381,16 +373,17 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
  * Returns a list of options this item can be reskinned into.
  */
 /datum/loadout_item/proc/get_reskin_options() as /list
-	if(!(loadout_flags & LOADOUT_FLAG_ALLOW_RESKIN))
+	if(!reskin_datum)
 		return null
 
 	var/list/reskins = list()
 
-	for(var/skin in cached_reskin_options)
+	for(var/datum/atom_skin/skin as anything in valid_subtypesof(reskin_datum))
 		UNTYPED_LIST_ADD(reskins, list(
-			"name" = skin,
-			"tooltip" = skin,
-			"skin_icon_state" = cached_reskin_options[skin],
+			"name" = skin::new_name || skin::preview_name,
+			"tooltip" = skin::preview_name,
+			"skin_icon" = skin::new_icon,
+			"skin_icon_state" = skin::new_icon_state,
 		))
 
 	return reskins
