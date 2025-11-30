@@ -201,7 +201,7 @@ SUBSYSTEM_DEF(dbcore)
 
 		//wait for them all to finish
 		for(var/datum/db_query/query in queries_to_check)
-			UNTIL(query.process() || REALTIMEOFDAY > endtime)
+			UNTIL(query.process() || REALTIMEOFDAY > end_time)
 
 		//log shutdown to the db
 		var/datum/db_query/query_round_shutdown = SSdbcore.NewQuery(
