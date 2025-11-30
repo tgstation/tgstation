@@ -531,7 +531,7 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "Ws" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/reinforced/airless,

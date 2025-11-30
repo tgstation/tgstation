@@ -41,13 +41,13 @@
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			need_mob_update = affected_mob.adjustBruteLoss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
+			need_mob_update = affected_mob.adjust_brute_loss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
 		if("burn")
-			need_mob_update += affected_mob.adjustFireLoss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
+			need_mob_update += affected_mob.adjust_fire_loss(-0.5, updating_health = FALSE, required_bodytype = affected_bodytype)
 		if("tox")
-			need_mob_update += affected_mob.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
+			need_mob_update += affected_mob.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
 		if("oxy")
-			need_mob_update += affected_mob.adjustOxyLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+			need_mob_update += affected_mob.adjust_oxy_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -132,7 +132,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick)
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick)
 
 /datum/reagent/inverse/libitoil/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
@@ -192,7 +192,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/peptides_failed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25 * seconds_per_tick, 170))
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.25 * seconds_per_tick, 170))
 		. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 
@@ -224,7 +224,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	tox_damage = 0
 
 /datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
-	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 0.1 * REM * seconds_per_tick)
+	owner.adjust_organ_loss(ORGAN_SLOT_EYES, 0.1 * REM * seconds_per_tick)
 	owner.adjust_eye_blur(amount_of_blur_applied * seconds_per_tick)
 	. = ..()
 	return TRUE
@@ -264,7 +264,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, 2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 		. = UPDATE_MOB_HEALTH
 	var/heating = 10 * creation_purity * REM * seconds_per_tick * TEMPERATURE_DAMAGE_COEFFICIENT
 	affected_mob.adjust_bodytemperature(heating) //hot hot
@@ -409,7 +409,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	time_until_next_poison -= seconds_per_tick * (1 SECONDS)
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
-		if(affected_mob.adjustToxLoss(creation_purity * 1, updating_health = FALSE, required_biotype = affected_biotype))
+		if(affected_mob.adjust_tox_loss(creation_purity * 1, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
@@ -461,9 +461,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	var/need_mob_update
 	if(length(affected_mob.reagents.reagent_list) > 1)
-		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LUNGS, 0.5 * seconds_per_tick, required_organ_flag = affected_organ_flags) //Hey! It's everyone's favourite drawback from multiver!
 	else
-		need_mob_update = affected_mob.adjustToxLoss(-2 * REM * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update = affected_mob.adjust_tox_loss(-2 * REM * creation_purity * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -527,8 +527,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(creation_impurity * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(5 * creation_impurity * REM * seconds_per_tick, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, ((1 + creation_impurity) * REM * seconds_per_tick), required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjust_brute_loss(5 * creation_impurity * REM * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, ((1 + creation_impurity) * REM * seconds_per_tick), required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -827,7 +827,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(SPT_PROB(25, seconds_per_tick))
 		affected_mob.adjust_bodytemperature(30 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
 		affected_mob.set_jitter_if_lower(3 SECONDS)
-		affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick)
+		affected_mob.adjust_stamina_loss(5 * REM * seconds_per_tick)
 	else if(SPT_PROB(5, seconds_per_tick))
 		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
 		affected_mob.Paralyze(3 SECONDS)
@@ -876,10 +876,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, -1 * REM * seconds_per_tick)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick)
-	if(affected_mob.getToxLoss() <= 25)
-		need_mob_update = affected_mob.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_STOMACH, -1 * REM * seconds_per_tick)
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick)
+	if(affected_mob.get_tox_loss() <= 25)
+		need_mob_update = affected_mob.adjust_tox_loss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
@@ -896,7 +896,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		ORGAN_SLOT_APPENDIX,
 		ORGAN_SLOT_TONGUE,
 	)
-	affected_mob.adjustOrganLoss(pick(possible_organs) ,2 * seconds_per_tick)
+	affected_mob.adjust_organ_loss(pick(possible_organs) ,2 * seconds_per_tick)
 	affected_mob.reagents.remove_reagent(type, 1 * REM * seconds_per_tick)
 
 /datum/reagent/inverse/ammoniated_mercury
@@ -1009,10 +1009,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	if(is_simian(affected_mob))
 		var/need_mob_update
-		need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 
 		if(holder.has_reagent(/datum/reagent/consumable/monkey_energy))
-			need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+			need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 
 		if(need_mob_update)
 			. = UPDATE_MOB_HEALTH
@@ -1034,7 +1034,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(overdosed)
 		return
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick)
+	need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, -1 * REM * seconds_per_tick)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		if(iter_wound.blood_flow)
 			if(holder.has_reagent(/datum/reagent/medicine/coagulant, 3))
@@ -1203,7 +1203,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/baldium/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	affected_mob.log_message("has taken [delayed_burn_damage] burn damage from maldium's aftereffects", LOG_ATTACK)
-	affected_mob.adjustFireLoss(delayed_burn_damage, updating_health = TRUE, required_bodytype = affected_bodytype)
+	affected_mob.adjust_fire_loss(delayed_burn_damage, updating_health = TRUE, required_bodytype = affected_bodytype)
 
 /datum/reagent/inverse/colorful_reagent
 	name = "Dulling Reagent"

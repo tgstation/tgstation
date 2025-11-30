@@ -30,6 +30,6 @@
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	exposed_mob.losebreath += round(0.2*reac_volume)
-	exposed_mob.adjustStaminaLoss(reac_volume * 1.2)
+	exposed_mob.adjust_stamina_loss(reac_volume * 1.2)
 	if(exposed_mob)
 		exposed_mob.apply_damage(0.6*reac_volume, OXY)

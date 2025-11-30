@@ -72,7 +72,7 @@
 		return
 
 	if(istype(attack_target, /obj/item/food/grown/carrot))
-		adjustBruteLoss(-5)
+		adjust_brute_loss(-5)
 		to_chat(src, span_warning("You eat [attack_target]! It restores some health!"))
 		qdel(attack_target)
 		return TRUE

@@ -30,5 +30,5 @@
 	var/obj/projectile/beam/lasertag/laser = projectile
 	if (laser.lasertag_team != team_color)
 		var/mob/living/carbon/human/laser_target = parent
-		laser_target.adjustStaminaLoss(laser.lasertag_damage)
+		laser_target.adjust_stamina_loss(laser.lasertag_damage)
 
