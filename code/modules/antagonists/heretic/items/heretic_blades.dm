@@ -166,7 +166,7 @@
 
 /obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!infused || target == user || !isliving(target))
+	if(!infused || target == user || !isliving(target) || QDELETED(target))
 		return
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/mob/living/living_target = target

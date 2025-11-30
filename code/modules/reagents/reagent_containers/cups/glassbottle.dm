@@ -151,6 +151,9 @@
 	if(!isGlass)
 		return
 
+	if(QDELETED(target))
+		return
+
 	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
 
 	// An attack that targets the head of a living mob will attempt to knock them down

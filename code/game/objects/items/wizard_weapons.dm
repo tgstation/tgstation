@@ -64,7 +64,7 @@
 		return
 
 	charged = FALSE
-	if(isliving(target))
+	if(isliving(target) && !QDELETED(target))
 		var/mob/living/smacked = target
 		smacked.take_bodypart_damage(20, 0)
 	playsound(user, 'sound/items/weapons/marauder.ogg', 50, TRUE)
