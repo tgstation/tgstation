@@ -710,7 +710,7 @@
 "dq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank/high{
-	desc = "A highly-pressurized water tank, this one seems almost empty..";
+	desc = "A highly-pressurized water tank. This one seems almost empty..";
 	tank_volume = 1000
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2999,7 +2999,7 @@
 "nr" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ns" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,

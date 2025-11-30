@@ -49,7 +49,7 @@
 
 /datum/ai_behavior/find_and_set/piano_synth // Disinclude subtypes
 
-/datum/ai_behavior/find_and_set/piano_synth/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/piano_synth/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/obj/item/instrument/piano_synth/synth in oview(search_range, controller.pawn))
 		if(synth.type == /obj/item/instrument/piano_synth)
 			return synth
