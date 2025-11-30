@@ -175,6 +175,11 @@
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/soil_sack/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == OVERWHELMING_ATTACK)
+		return FALSE
+	return ..()
+
 ///Remove slowdown and add block chance when wielded.
 /obj/item/soil_sack/proc/on_wield()
 	slowdown = 0

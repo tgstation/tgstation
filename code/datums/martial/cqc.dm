@@ -50,20 +50,30 @@
 		return NONE
 	if(attack_type == PROJECTILE_ATTACK)
 		return NONE
-	if(!prob(block_chance))
+
+	var/blocking_text = "block"
+	var/blocking_text_s = "blocks"
+	var/potential_block_chance = block_chance
+
+	if(attack_type == OVERWHELMING_ATTACK)
+		blocking_text = "dodge"
+		blocking_text_s = "dodges"
+		potential_block_chance = clamp(round(potential_block_chance / (attack_type == OVERWHELMING_ATTACK ? 2 : 1), 1), 0, 100)
+
+	if(!prob(potential_block_chance))
 		return NONE
 
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
 		cqc_user.visible_message(
-			span_danger("[cqc_user] blocks [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
-			span_userdanger("You block [attack_text]!"),
+			span_danger("[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
+			span_userdanger("You [blocking_text] [attack_text]!"),
 		)
 		attacker.Stun(4 SECONDS)
 	else
 		cqc_user.visible_message(
-			span_danger("[cqc_user] blocks [attack_text]!"),
-			span_userdanger("You block [attack_text]!"),
+			span_danger("[cqc_user] [blocking_text_s] [attack_text]!"),
+			span_userdanger("You [blocking_text] [attack_text]!"),
 		)
 	return SUCCESSFUL_BLOCK
 

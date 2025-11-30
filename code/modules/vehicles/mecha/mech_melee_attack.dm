@@ -100,9 +100,14 @@
 	if(!isnull(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
+
 	mecha_attacker.do_attack_animation(src)
 	if(mecha_attacker.damtype == BRUTE)
 		step_away(src, mecha_attacker, 15)
+
+	if(check_block(mecha_attacker, mecha_attacker.force * 3, "the [mecha_attacker.attack_verbs[1]]", attack_type = OVERWHELMING_ATTACK))
+		return
+
 	switch(mecha_attacker.damtype)
 		if(BRUTE)
 			if(mecha_attacker.force > 35) // durand and other heavy mechas

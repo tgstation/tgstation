@@ -280,11 +280,11 @@
 	)
 	return COMPONENT_NO_AFTERATTACK
 
-/// If our user has committed to being as nautically radical as they can be, they may be able to avoid incoming attacks.
+/// If our user has committed to being as martial arty as they can be, they may be able to avoid incoming attacks.
 /datum/martial_art/the_sleeping_carp/proc/check_dodge(mob/living/carp_user, atom/movable/hitby, damage, attack_text, attack_type, ...)
 	SIGNAL_HANDLER
 
-	var/determine_avoidance = clamp(carp_style_check(carp_user), 0, 75)
+	var/determine_avoidance = clamp(round(carp_style_check(carp_user) / (attack_type == OVERWHELMING_ATTACK ? 2 : 1), 1), 0, 75)
 
 	if(!can_deflect(carp_user))
 		return
