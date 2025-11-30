@@ -59969,7 +59969,7 @@
 /obj/item/stamp/denied{
 	pixel_y = -1
 	},
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = -9;
 	pixel_y = -1
 	},

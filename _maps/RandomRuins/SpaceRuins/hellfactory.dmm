@@ -347,7 +347,7 @@
 "bm" = (
 /obj/structure/table,
 /obj/item/stamp/denied,
-/obj/item/stamp{
+/obj/item/stamp/granted{
 	pixel_x = 6;
 	pixel_y = 6
 	},
