@@ -176,3 +176,11 @@
 	max_total_storage = WEIGHT_CLASS_SMALL * slots
 	. = ..()
 	set_holdable(/obj/item/fishing_lure) //can only hold lures
+
+///Syndi-cakes
+/datum/storage/box/syndicakes
+	max_slots = 1 //waste of space
+
+/datum/storage/box/syndicakes/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(/obj/item/food/syndi_cake) //incredibly useless box
