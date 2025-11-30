@@ -72,7 +72,7 @@
 	. = ..()
 	if(!ishuman(exposed_mob))
 		if(issilicon(exposed_mob) || ismecha(exposed_mob) || isbot(exposed_mob))
-			exposed_mob.adjust_brute_loss(500)
+			metabolic_health_adjust(exposed_mob, 500, BRUTE)
 		return
 	if(IS_HERETIC(exposed_mob))
 		return

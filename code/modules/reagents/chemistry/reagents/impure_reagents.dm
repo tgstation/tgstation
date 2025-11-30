@@ -20,9 +20,9 @@
 	var/need_mob_update
 
 	if(liver)//Though, lets be safe
-		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_LIVER, liver_damage * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update = metabolic_organ_adjust(affected_mob, ORGAN_SLOT_LIVER,  liver_damage * REM * seconds_per_tick)
 	else
-		need_mob_update = affected_mob.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)//Incase of no liver!
+		need_mob_update = metabolic_health_adjust(affected_mob, 1 * REM * seconds_per_tick, TOX)//Incase of no liver!
 
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -41,7 +41,7 @@
 
 /datum/reagent/inverse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(tox_damage * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(metabolic_health_adjust(affected_mob, tox_damage * REM * seconds_per_tick, TOX))
 		return UPDATE_MOB_HEALTH
 
 //Failed chems - generally use inverse if you want to use a impure subtype for it
