@@ -11932,6 +11932,9 @@
 	pixel_y = 3
 	},
 /obj/item/defibrillator/loaded,
+/obj/item/defibrillator/loaded{
+	pixel_y = -4
+	},
 /obj/structure/window/spawner/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
