@@ -60,6 +60,7 @@
 		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
 		whether smuggling, or simply hauling."
 	icon_state = "storage_large"
+	complexity = 4
 	max_combined_w_class = 21
 	max_items = 14
 
