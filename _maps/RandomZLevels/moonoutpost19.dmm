@@ -1210,10 +1210,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
 "is" = (
-/obj/structure/fence/post{
-	dir = 4
-	},
-/obj/structure/sign/warning,
+/obj/structure/sign/warning/directional/north,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
@@ -4596,10 +4593,10 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "DS" = (
-/obj/structure/fence{
-	dir = 4
+/obj/structure/flora/rock/style_random{
+	pixel_y = -2
 	},
-/obj/structure/sign/warning,
+/obj/structure/sign/warning/directional/north,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
@@ -39774,8 +39771,8 @@ My
 My
 My
 My
+Jb
 is
-My
 My
 My
 My
@@ -44661,8 +44658,8 @@ dA
 My
 My
 My
+YX
 DS
-Wg
 My
 My
 My

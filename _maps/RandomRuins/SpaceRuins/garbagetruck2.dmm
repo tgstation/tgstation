@@ -190,6 +190,7 @@
 /obj/item/poster/random_contraband,
 /obj/item/organ/tongue/zombie,
 /obj/structure/closet/crate/trashcart,
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "rB" = (
@@ -614,6 +615,7 @@
 	brute_damage = 200;
 	mob_type = /mob/living/carbon/human/species/lizard
 	},
+/obj/structure/sign/warning/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Ua" = (
@@ -662,10 +664,6 @@
 /obj/machinery/light/warm,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
-/area/ruin/space/has_grav/garbagetruck/medicalwaste)
-"XC" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "XD" = (
 /obj/structure/sinkframe,
@@ -758,7 +756,7 @@ AB
 py
 io
 TM
-XC
+MC
 "}
 (4,1,1) = {"
 iw
@@ -912,7 +910,7 @@ Tp
 zH
 AU
 qX
-XC
+MC
 "}
 (11,1,1) = {"
 gh

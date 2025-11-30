@@ -2990,6 +2990,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "donk_aicore_door_bolts"
 	},
+/obj/structure/sign/warning/directional/west,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Ab" = (
@@ -4078,6 +4079,12 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
+"Ju" = (
+/mob/living/basic/viscerator,
+/obj/effect/turf_decal/bot_red,
+/obj/structure/sign/warning/directional/east,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "Jw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
@@ -4858,7 +4865,6 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "QA" = (
-/obj/structure/sign/warning,
 /obj/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
@@ -6802,7 +6808,7 @@ BE
 yb
 Im
 MR
-kl
+Ju
 Gk
 iv
 PX
