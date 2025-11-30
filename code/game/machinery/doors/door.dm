@@ -84,6 +84,8 @@
 	var/delayed_unres_time_lower = 2 SECONDS
 	/// Upper range for random time to open for unrestricted users
 	var/delayed_unres_time_upper = 3 SECONDS
+	/// Cooldown tracker to prevent message spam when resisting pressure while opening via unrestricted latch
+	COOLDOWN_DECLARE(pressure_push_cooldown)
 
 /datum/armor/machinery_door
 	melee = 30
@@ -392,14 +394,18 @@
 
 /// While activating the door, we are able to block pressure pushes since we're "grasping the override handle" or something similar to that.
 /// This basically exists to prevent the door's delay from being SUPREMELY annoying when you're trying to escape pressure-based damage during the unrestricted latch do_after.
-/obj/machinery/door/proc/stop_pressure_during_unres_open(datum/source)
+/obj/machinery/door/proc/stop_pressure_during_unres_open(mob/source)
 	SIGNAL_HANDLER
-	if(!ismob(source))
-		return // maybe just qdeleted or something but this should only be on mobs lol
+	if(QDELETED(source))
+		return
 
-	var/mob/mob_source = source
-	// to_chat so stacking probably means it doesn't need a cd timer between messsages? add one if it's annoying though but I doubt pressure is called super often.
-	to_chat(mob_source, span_warning("You're holding onto the unrestricted latch, preventing pressure from pushing you away!"))
+	if(!COOLDOWN_FINISHED(src, pressure_push_cooldown)) // avoid spam
+		return COMSIG_ATOM_BLOCKS_PRESSURE
+
+	// have both since this is a newer mechanic and i want it to be a bit more obvious why for the time being
+	balloon_alert(source, "resisting pressure!")
+	to_chat(source, span_warning("You're holding onto the unrestricted latch, preventing pressure from pushing you away!"))
+	COOLDOWN_START(src, pressure_push_cooldown, 5 SECONDS)
 	return COMSIG_ATOM_BLOCKS_PRESSURE
 
 /// Exists to ensure that we always deregister the pressure push blocking signal. Can be called multiple times safely as we check the trait.
