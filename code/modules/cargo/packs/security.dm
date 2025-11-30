@@ -400,3 +400,13 @@
 		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno,
 	)
 	crate_name = "thermal cannons crate"
+
+/datum/supply_pack/security/blood_worm_testers
+	name = "Hemoparasite Testing Crate"
+	desc = "Contains four single-use hemoparasite testing tools. \
+		These devices accurately report whether a patient is inhabited by a hemoparasite, such as the infamous space-faring blood worm. \
+		The DeForest Medical Corporation claims no liability for any mental and/or physical trauma caused to patients from the improper use of these devices."
+	cost = CARGO_CRATE_VALUE * 50 // These aren't meant to be bought en-masse.
+	access_view = ACCESS_SECURITY
+	contains = list(/obj/item/blood_worm_tester = 4)
+	crate_name = "hemoparasite testing crate"

@@ -14,7 +14,8 @@
 	if (!blood_type)
 		return
 	var/datum/blood_type/bloodtype = get_blood_type(blood_type)
-	reagents.add_reagent(bloodtype.reagent_type, volume, list("blood_type" = bloodtype, "blood_DNA" = bloodtype.dna_string), creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
+	// Blood pack blood is halfway synthetic, meaning instead of a maximum of like 6 blood worms being able to become adults via 2 freezers, only 3 or so can.
+	reagents.add_reagent(bloodtype.reagent_type, volume, list("blood_type" = bloodtype, "blood_DNA" = bloodtype.dna_string, BLOOD_DATA_SYNTH_CONTENT = 0.5), creation_callback = CALLBACK(src, PROC_REF(on_blood_created)))
 
 /obj/item/reagent_containers/blood/proc/on_blood_created(datum/reagent/new_blood)
 	new_blood.AddElement(/datum/element/blood_reagent, null, get_blood_type(blood_type))

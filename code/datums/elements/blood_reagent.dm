@@ -172,6 +172,17 @@
 /datum/element/blood_reagent/proc/on_merge(datum/reagent/source, list/mix_data, amount)
 	SIGNAL_HANDLER
 
+	// Proportionally mix synth contents
+	if (source.data?[BLOOD_DATA_SYNTH_CONTENT] || mix_data?[BLOOD_DATA_SYNTH_CONTENT])
+		var/added_synth_volume = amount * mix_data?[BLOOD_DATA_SYNTH_CONTENT]
+		var/existing_synth_volume = source.volume * source.data?[BLOOD_DATA_SYNTH_CONTENT]
+
+		if (!source.data)
+			source.data = list()
+
+		// A simple weighted average that simplifies down to "total synth volume / total blood volume" i.e. "how much of the blood is synthetic"
+		source.data[BLOOD_DATA_SYNTH_CONTENT] = (added_synth_volume + existing_synth_volume) / (amount + source.volume)
+
 	// Presumably artificially generated blood
 	if (!source.data || !mix_data)
 		return
