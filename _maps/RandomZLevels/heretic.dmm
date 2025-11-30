@@ -2529,15 +2529,6 @@
 /obj/effect/blessing,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/heretic_laboratory)
-"nC" = (
-/obj/structure/chair/office{
-	dir = 8;
-	layer = 1;
-	pixel_x = -22;
-	pixel_y = 0
-	},
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
 "nD" = (
 /obj/structure/projected_forcefield,
 /obj/effect/oneway{
@@ -2824,16 +2815,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/heretic_laboratory)
-"oY" = (
-/obj/structure/chair/office{
-	dir = 4;
-	pixel_x = 23;
-	pixel_y = 0;
-	layer = 1
-	},
-/obj/effect/blessing,
-/turf/open/floor/iron/small,
-/area/awaymission/caves/heretic_laboratory_clean)
 "pa" = (
 /obj/item/stack/sheet/runed_metal/five,
 /turf/open/misc/beach/sand,
@@ -21334,9 +21315,9 @@ Sv
 xl
 hs
 Pl
-nC
 hs
-nC
+hs
+hs
 Pl
 hs
 KB
@@ -22619,9 +22600,9 @@ Sv
 xl
 Kb
 rf
-oY
 Kb
-oY
+Kb
+Kb
 rf
 Kb
 xl
