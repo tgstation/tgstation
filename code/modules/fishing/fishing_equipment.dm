@@ -621,7 +621,8 @@
 	if(HAS_TRAIT(fish, TRAIT_FISH_GENEGUNNED))
 		fish.set_status(FISH_DEAD)
 	ADD_TRAIT(fish, TRAIT_FISH_GENEGUNNED, TRAIT_GENERIC)
-	playsound(fish, 'sound/items/hypospray.ogg', 25, TRUE)
+	playsound(fish, 'sound/items/hypospray.ogg', 30, TRUE)
+	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
 ///The injector for the fish trait. Can be used on its own without a fish gene-gun as well.

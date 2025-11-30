@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 			return FALSE
 		if(length(fish.fish_traits & incompatible_traits))
 			return FALSE
-		fish.fish_traits |= type
+	fish.fish_traits |= type
 	if(traits_to_add)
 		fish.add_traits(traits_to_add, FISH_TRAIT_DATUM)
 	if(length(reagents_to_add))
