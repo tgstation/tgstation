@@ -157,17 +157,17 @@
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
-	if(carbon_host.getToxLoss() && prob(5))
+	if(carbon_host.get_tox_loss() && prob(5))
 		to_chat(carbon_host, span_notice("Your skin tingles as the starlight seems to heal you."))
 	var/needs_update = FALSE
-	needs_update += carbon_host.adjustToxLoss(-4 * heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes) // Most effective on toxins
+	needs_update += carbon_host.adjust_tox_loss(-4 * heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes) // Most effective on toxins
 	needs_update += carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
 	if(needs_update)
 		carbon_host.updatehealth()
 	return TRUE
 
 /datum/symptom/heal/starlight/passive_message_condition(mob/living/living_host)
-	if(living_host.getBruteLoss() || living_host.getFireLoss() || living_host.getToxLoss())
+	if(living_host.get_brute_loss() || living_host.get_fire_loss() || living_host.get_tox_loss())
 		return TRUE
 	return FALSE
 
@@ -300,7 +300,7 @@
 	return TRUE
 
 /datum/symptom/heal/darkness/passive_message_condition(mob/living/living_host)
-	if(living_host.getBruteLoss() || living_host.getFireLoss())
+	if(living_host.get_brute_loss() || living_host.get_fire_loss())
 		return TRUE
 	return FALSE
 
@@ -369,7 +369,7 @@
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
-	if(living_host.getBruteLoss() + living_host.getFireLoss() >= living_host.maxHealth * 0.7 && !active_coma && !(HAS_TRAIT(living_host, TRAIT_NOSOFTCRIT)))
+	if(living_host.get_brute_loss() + living_host.get_fire_loss() >= living_host.maxHealth * 0.7 && !active_coma && !(HAS_TRAIT(living_host, TRAIT_NOSOFTCRIT)))
 		to_chat(living_host, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), living_host), 6 SECONDS)
@@ -391,12 +391,12 @@
 /datum/symptom/heal/coma/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = 4 * actual_power
 	carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes)
-	if(active_coma && carbon_host.getBruteLoss() + carbon_host.getFireLoss() == 0)
+	if(active_coma && carbon_host.get_brute_loss() + carbon_host.get_fire_loss() == 0)
 		uncoma(carbon_host)
 	return 1
 
 /datum/symptom/heal/coma/passive_message_condition(mob/living/living_host)
-	if((living_host.getBruteLoss() + living_host.getFireLoss()) > living_host.maxHealth * 0.3)
+	if((living_host.get_brute_loss() + living_host.get_fire_loss()) > living_host.maxHealth * 0.3)
 		return TRUE
 	return FALSE
 
@@ -446,7 +446,7 @@
 	return TRUE
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/carbon/carbon_host)
-	if(carbon_host.getBruteLoss() || carbon_host.getFireLoss())
+	if(carbon_host.get_brute_loss() || carbon_host.get_fire_loss())
 		return TRUE
 
 	return FALSE
@@ -553,7 +553,7 @@
 			to_chat(carbon_host, span_notice("You feel less hot."))
 	carbon_host.adjust_bodytemperature(clamp(difference, -20 * temp_rate, 20 * temp_rate))
 	var/needs_update = FALSE
-	needs_update += carbon_host.adjustToxLoss(-heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes)
+	needs_update += carbon_host.adjust_tox_loss(-heal_amt, updating_health = FALSE, required_biotype = healable_bodytypes)
 	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
 	needs_update += brute_burn_heal
 	if(brute_burn_heal && prob(5))
@@ -599,7 +599,7 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	var/heal_amt = actual_power
 	var/needs_update = FALSE
-	needs_update += carbon_host.adjustToxLoss(-2 * heal_amt, updating_health = FALSE)
+	needs_update += carbon_host.adjust_tox_loss(-2 * heal_amt, updating_health = FALSE)
 	var/brute_burn_heal = carbon_host.heal_overall_damage(heal_amt, heal_amt, required_bodytype = healable_bodytypes, updating_health = FALSE)
 	needs_update += brute_burn_heal
 	if(brute_burn_heal && prob(4))
