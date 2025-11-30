@@ -788,3 +788,18 @@
       into transit.
   ezel:
   - balance: You can no longer print soup pots
+2025-11-30:
+  Aliceee2ch:
+  - image: Added more inhands sprite for welders, aswell as upgrading some of them.
+  Cat:
+  - qol: The plumbing IV drip can be rotate with alt click now
+  - rscadd: The plumbing IV drip can now output chemicals into plumbing factories
+  SmArtKar:
+  - bugfix: Fixed partially deployed MODsuits trying to deploy parts onto blocked
+      slots when the deploy action is right clicked, instead of retracting already
+      deployed parts.
+  TealSeer:
+  - bugfix: fixed MULEbots unloading deliveries onto the wrong tile
+  lelandkemble:
+  - bugfix: Emagging the cap's spare safe will no longer turn it into a smiling table
+  - bugfix: Video game winning experiment no longer completes over and over
