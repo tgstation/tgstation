@@ -69,15 +69,15 @@
 
 /obj/effect/abstract/floating_eyes/update_overlays()
 	. = ..()
-	var/mutable_appearance/r_eye = mutable_appearance(icon = 'icons/mob/human/human_face.dmi', icon_state = "eyes_glow_r")
+	var/mutable_appearance/r_eye = mutable_appearance(icon = 'icons/mob/human/human_eyes.dmi', icon_state = "eyes_glow_r")
 	r_eye.color = COLOR_DARK_RED
 	. += r_eye
-	var/mutable_appearance/l_eye = mutable_appearance(icon = 'icons/mob/human/human_face.dmi', icon_state = "eyes_glow_l")
+	var/mutable_appearance/l_eye = mutable_appearance(icon = 'icons/mob/human/human_eyes.dmi', icon_state = "eyes_glow_l")
 	l_eye.color = COLOR_DARK_RED
 	. += l_eye
 
-	. += emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_l", src)
-	. += emissive_appearance('icons/mob/human/human_face.dmi', "eyes_glow_r", src)
+	. += emissive_appearance('icons/mob/human/human_eyes.dmi', "eyes_glow_l", src)
+	. += emissive_appearance('icons/mob/human/human_eyes.dmi', "eyes_glow_r", src)
 
 /obj/effect/abstract/floating_eyes/process(seconds_per_tick)
 	var/turf/below_us = get_turf(src)
