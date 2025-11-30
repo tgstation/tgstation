@@ -673,7 +673,7 @@
 
 /datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.adjust_blood_volume(3 * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL) // Bloody Mary quickly restores blood loss.
+	drinker.adjust_blood_volume((0.25 + round(2 * drinker.get_drunk_amount() / 40, 0.1)) * REM * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL) // Bloody Mary restores blood loss based on how drunk you are
 
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"

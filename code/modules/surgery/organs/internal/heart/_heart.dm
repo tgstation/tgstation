@@ -256,14 +256,7 @@
 		if(toxification_probability && prob(toxification_probability))
 			wounded_owner.adjust_tox_loss(1 * seconds_per_tick, updating_health = FALSE)
 
-		var/datum/wound/bloodiest_wound
-
-		for(var/datum/wound/iter_wound as anything in wounded_owner.all_wounds)
-			if(iter_wound.blood_flow && iter_wound.blood_flow > bloodiest_wound?.blood_flow)
-				bloodiest_wound = iter_wound
-
-		if(bloodiest_wound)
-			bloodiest_wound.adjust_blood_flow(-1 * seconds_per_tick)
+		wounded_owner.coagulant_effect(1 * seconds_per_tick)
 
 /obj/item/organ/heart/cybernetic/proc/stabilize_heart()
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, ORGAN_TRAIT)
