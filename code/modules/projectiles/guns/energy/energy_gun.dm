@@ -8,6 +8,7 @@
 	modifystate = TRUE
 	ammo_x_offset = 3
 	dual_wield_spread = 60
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/item/gun/energy/e_gun/Initialize(mapload)
 	. = ..()

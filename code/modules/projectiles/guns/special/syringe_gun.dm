@@ -19,6 +19,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	clumsy_check = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
+	can_muzzle_flash = FALSE
 	gun_flags = NOT_A_REAL_GUN
 	var/load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'
 	var/list/syringes = list()
