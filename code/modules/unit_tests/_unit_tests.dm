@@ -214,6 +214,7 @@
 #include "mapping.dm"
 #include "mapping_nearstation_test.dm"
 #include "market.dm"
+#include "mecha_build.dm"
 #include "mecha_damage.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
