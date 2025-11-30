@@ -120,7 +120,7 @@
 		can_holo = pai.can_holo,
 		dna = pai.master_dna,
 		emagged = pai.emagged,
-		laws = pai.laws.supplied,
+		laws = pai.laws.inherent,
 		master = pai.master_name,
 		name = pai.name,
 		transmit = pai.can_transmit,

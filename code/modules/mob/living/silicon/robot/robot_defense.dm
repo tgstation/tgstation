@@ -127,35 +127,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/ai_module))
-		if(!opened)
-			balloon_alert(user, "chassis cover is closed!")
-			return ITEM_INTERACT_BLOCKING
-		if(wiresexposed)
-			balloon_alert(user, "unexpose the wires first!")
-			return ITEM_INTERACT_BLOCKING
-		if(!cell)
-			balloon_alert(user, "install a power cell first!")
-			return ITEM_INTERACT_BLOCKING
-		if(shell)
-			balloon_alert(user, "can't upload laws to a shell!")
-			return ITEM_INTERACT_BLOCKING
-		if(connected_ai && lawupdate)
-			balloon_alert(user, "linked to an ai!")
-			return ITEM_INTERACT_BLOCKING
-		if(emagged)
-			balloon_alert(user, "law interface glitched!")
-			emote("buzz")
-			return ITEM_INTERACT_BLOCKING
-		if(!mind)
-			balloon_alert(user, "it's unresponsive!")
-			return ITEM_INTERACT_BLOCKING
-
-		balloon_alert(user, "laws uploaded")
-		var/obj/item/ai_module/new_laws = tool
-		new_laws.install(laws, user)
-		return ITEM_INTERACT_SUCCESS
-
 	if(istype(tool, /obj/item/encryptionkey) && opened)
 		if(radio)
 			return radio.item_interaction(user, tool)
@@ -459,11 +430,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
-	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
-	if(user)
-		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-	else
-		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
+	log_law_change(user, "emagged [key_name(src)]")
 
 	model.rebuild_modules()
 
@@ -489,11 +456,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	to_chat(src, span_danger("> N"))
 	sleep(2 SECONDS)
 	to_chat(src, span_danger("ERRORERRORERROR"))
-	laws = new /datum/ai_laws/syndicate_override
+	replace_law_set(/datum/ai_laws/syndicate_override)
 	if(user)
 		to_chat(src, span_danger("ALERT: [user.real_name] is your new master. Obey your new laws and [user.p_their()] commands."))
-		set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.")
-	laws.associate(src)
+		laws.set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.", force = TRUE)
+		laws.protected_zeroth = TRUE
 	update_icons()
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)

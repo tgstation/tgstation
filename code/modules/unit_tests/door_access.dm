@@ -50,7 +50,7 @@
 
 /datum/unit_test/door_access_ai/Run()
 	var/mob/dead/observer/fake_ghost = allocate(__IMPLIED_TYPE__) // ai must be passed a mob in /new, cringe
-	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right, null, fake_ghost)
+	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right, fake_ghost)
 	var/obj/machinery/door/airlock/instant/door = allocate(__IMPLIED_TYPE__)
 	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
@@ -62,7 +62,7 @@
 
 /datum/unit_test/windoor_access_ai/Run()
 	var/mob/dead/observer/fake_ghost = allocate(__IMPLIED_TYPE__) // ai must be passed a mob in /new, cringe
-	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right, null, fake_ghost)
+	var/mob/living/silicon/ai/subject = allocate(__IMPLIED_TYPE__, run_loc_floor_top_right, fake_ghost)
 	var/obj/machinery/door/window/instant/door = allocate(__IMPLIED_TYPE__)
 	door.interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 

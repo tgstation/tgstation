@@ -9,19 +9,17 @@
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
 	var/state = EMPTY_CORE
-	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
 	/// only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
 	var/mob/living/silicon/ai/remote_ai = null
-
-/obj/structure/ai_core/Initialize(mapload)
-	. = ..()
-	laws = new
-	laws.set_laws_config()
+	/// Weakref to an ai module rack, if present we will try to link new AI to it instead of the station core
+	var/datum/weakref/default_link_ref
 
 /obj/structure/ai_core/examine(mob/user)
 	. = ..()
+	. += span_notice("Save this core to a multitool's buffer and upload it to a module rack to automatically link it on first boot. \
+		Otherwise, it will link[is_station_level(z) ? " to the station's core rack or" : ""] to the first rack found.")
 	if(!anchored)
 		if(state != EMPTY_CORE)
 			. += span_notice("It has some <b>bolts</b> that could be tightened.")
@@ -39,10 +37,7 @@
 				if(!core_mmi)
 					. += span_notice("There are wires which could be hooked up to an <b>MMI or positronic brain</b>, or <b>cut</b>.")
 				else
-					var/accept_laws = TRUE
-					if(core_mmi.laws.id != DEFAULT_AI_LAWID || !core_mmi.brainmob || !core_mmi.brainmob?.mind)
-						accept_laws = FALSE
-					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.[accept_laws ? " A law module can be <b>swiped</b> across." : ""]")
+					. += span_notice("There is a <b>slot</b> for a reinforced glass panel, the [AI_CORE_BRAIN(core_mmi)] could be <b>pried</b> out.")
 			if(GLASS_CORE)
 				. += span_notice("The monitor [core_mmi?.brainmob?.mind && !suicide_check() ? "and neural interface " : ""]can be <b>screwed</b> in, the panel can be <b>pried</b> out.")
 			if(AI_READY_CORE)
@@ -64,7 +59,6 @@
 		remote_ai = null
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
-	QDEL_NULL(laws)
 	return ..()
 
 /obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
@@ -127,8 +121,8 @@
 
 /obj/structure/ai_core/latejoin_inactive/examine(mob/user)
 	. = ..()
-	. += "Its transmitter seems to be <b>[active? "on" : "off"]</b>."
-	. += span_notice("You could [active? "deactivate" : "activate"] it with a multitool.")
+	. += span_info("Its transmitter seems to be <b>[active? "on" : "off"]</b>.")
+	. += span_notice("You could [active ? "deactivate" : "activate"] it by [EXAMINE_HINT("right clicking")] with a multitool.")
 
 /obj/structure/ai_core/latejoin_inactive/proc/is_available() //If people still manage to use this feature to spawn-kill AI latejoins ahelp them.
 	if(!available)
@@ -149,17 +143,25 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(tool.tool_behaviour == TOOL_MULTITOOL)
-		active = !active
-		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
-		return
-	return ..()
+/obj/structure/ai_core/latejoin_inactive/multitool_act_secondary(mob/living/user, obj/item/tool)
+	active = !active
+	tool.play_tool_sound(src, 50)
+	to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/ai_core/multitool_act(mob/living/user, obj/item/multitool/tool)
+	tool.play_tool_sound(src, 50)
+	tool.set_buffer(src)
+	balloon_alert(user, "core saved to buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	switch(default_unfasten_wrench(user, tool))
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -274,20 +276,6 @@
 						balloon_alert(user, "need two sheets of reinforced glass!")
 					return
 
-				if(istype(tool, /obj/item/ai_module))
-					if(!core_mmi)
-						balloon_alert(user, "no brain installed!")
-						return
-					if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
-						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
-						return
-					if(core_mmi.laws.id != DEFAULT_AI_LAWID)
-						balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
-						return
-					var/obj/item/ai_module/module = tool
-					module.install(laws, user)
-					return
-
 				if(istype(tool, /obj/item/mmi) && !core_mmi)
 					var/obj/item/mmi/M = tool
 					if(!M.brain_check(user))
@@ -375,21 +363,9 @@
 	the_brainmob.mind.remove_antags_for_borging()
 	if(!the_brainmob.mind.has_ever_been_ai)
 		SSblackbox.record_feedback("amount", "ais_created", 1)
-	var/mob/living/silicon/ai/ai_mob = null
 
-	if(core_mmi.overrides_aicore_laws)
-		ai_mob = new /mob/living/silicon/ai(loc, core_mmi.laws, the_brainmob)
-		core_mmi.laws = null //MMI's law datum is being donated, so we need the MMI to let it go or the GC will eat it
-	else
-		ai_mob = new /mob/living/silicon/ai(loc, laws, the_brainmob)
-		laws = null //we're giving the new AI this datum, so let's not delete it when we qdel(src) 5 lines from now
+	var/mob/living/silicon/ai/ai_mob = new(loc, the_brainmob, core_mmi.laws, default_link_ref?.resolve())
 
-	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(ai_mob)
-	if(malf_datum)
-		malf_datum.add_law_zero()
-
-	if(!isnull(the_brainmob.client))
-		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
@@ -473,7 +449,8 @@ That prevents a few funky behaviors.
 		to_chat(user, span_alert("There is no AI loaded on this terminal."))
 
 /obj/item/circuitboard/aicore
-	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
+	name = "AI Core"
+	name_extension = "(AI Core Board)" //Well, duh, but best to be consistent
 	var/battery = 200 //backup battery for when the AI loses power. Copied to/from AI mobs when carding, and placed here to avoid recharge via deconning the core
 
 /obj/item/circuitboard/aicore/Initialize(mapload)

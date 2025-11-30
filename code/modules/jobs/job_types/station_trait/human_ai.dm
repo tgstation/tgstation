@@ -139,17 +139,25 @@
 	desc = "A note explaining the lawset, quickly written yet everso important."
 
 /obj/item/paper/default_lawset_list/Initialize(mapload)
-	var/datum/ai_laws/temp_laws = new
-	temp_laws.set_laws_config()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/paper/default_lawset_list/LateInitialize()
+	var/datum/ai_laws/reported
+	for(var/obj/machinery/ai_law_rack/core/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+		reported = rack.combined_lawset
+		break
+
+	if(isnull(reported))
+		return
+
 	var/list/law_box = list(
 		"This is your lawset, you and your Cyborgs must adhere to this at all times.",
 		"Notably, if absolutely necessary, you can bend or even go against the lawset for your own survival, and Cyborgs report to you directly.",
 		"LAWS:",
 	)
-	law_box += temp_laws.get_law_list(render_html = FALSE)
+	law_box += reported.get_law_list(render_html = FALSE)
 	add_raw_text(jointext(law_box, "\n"))
-	qdel(temp_laws)
-	return ..()
 
 /obj/item/secure_camera_console_pod
 	name = "pre-packaged advanced camera control"

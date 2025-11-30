@@ -25,14 +25,21 @@
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-	//we may have been created after our borg
-	if(SSticker.current_state == GAME_STATE_SETTING_UP)
-		for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
-			if(!R.connected_ai)
-				R.TryConnectToAI()
+	if(!isAI(spawned))
+		return
+
 	var/mob/living/silicon/ai/ai_spawn = spawned
 	if(player_client)
 		ai_spawn.set_gender(player_client)
+
+	// when a cyborg is instantiated they will automatically try to link to us
+	// but if the cyborg was made first, they will not have an us to link to!
+	// gamestart borgs definitely want to be linked to the gamestart ai, so let's clean that up here
+	if(SSticker.current_state == GAME_STATE_SETTING_UP)
+		for(var/mob/living/silicon/robot/gamestart_borg in GLOB.silicon_mobs)
+			if(!gamestart_borg.connected_ai)
+				gamestart_borg.try_connect_to_ai(spawned)
+
 	ai_spawn.log_current_laws()
 
 

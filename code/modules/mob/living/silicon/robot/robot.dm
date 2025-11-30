@@ -1,4 +1,11 @@
-/mob/living/silicon/robot/Initialize(mapload)
+/**
+ * Init args
+ * * innate_laws: If set, the cyborg will use this lawset and will not linked to an ai. Make sure you're passing a copy of the lawset
+ * * master_ai: If set, the cyborg will try to link to this ai on spawn rather than the first ai found
+ * * aisync: If TRUE, will try to link to an AI on spawn. If FALSE, will not link to any AI on spawn, even if master_ai is set
+ * * lawsync: Sets lawupdate variable - if FALSE we will link to an ai but we won't take their laws
+ */
+/mob/living/silicon/robot/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync = TRUE, lawsync = src.lawupdate)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -35,12 +42,25 @@
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
-	if(lawupdate)
+	if(istype(innate_laws, /datum/ai_laws))
+		laws = innate_laws.copy_lawset()
+		lawupdate = FALSE
+	else
 		make_laws()
-		for (var/law in laws.inherent)
-			lawcheck += law
-		if(!TryConnectToAI())
+	if(!aisync || !lawsync)
+		lawupdate = FALSE
+	// try connect to ai will update the lawset so we need to ensure law update is set before calling it
+	if(aisync && !try_connect_to_ai(master_ai))
+		var/datum/job/human_ai_job = SSjob.get_job(JOB_HUMAN_AI)
+		// we failed to connect to an ai, but that might be because there is a human ai. so we have to check for that
+		if(human_ai_job && human_ai_job.current_positions && !laws.zeroth_borg)
+			laws.zeroth_borg = "Follow the orders of Big Brother."
+			laws.protected_zeroth = TRUE
+		// however, if we found no ai and no human ai, we fall back to no law updates
+		// and link ourselves to the first law rack if possible
+		else
 			lawupdate = FALSE
+			link_to_first_rack()
 
 	if(!scrambledcodes && !builtInCamera)
 		builtInCamera = new(src)
@@ -995,21 +1015,20 @@
 	for(var/mob/unbuckle_me_now as anything in buckled_mobs)
 		unbuckle_mob(unbuckle_me_now, FALSE)
 
-/mob/living/silicon/robot/proc/TryConnectToAI()
-	set_connected_ai(select_active_ai_with_fewest_borgs(z))
+/mob/living/silicon/robot/proc/try_connect_to_ai(mob/living/silicon/connect_to)
+	if(isnull(connect_to))
+		var/turf/robot_turf = get_turf(src)
+		connect_to = select_active_ai_with_fewest_borgs(robot_turf.z)
+		if(isnull(connect_to))
+			return FALSE
+
+	set_connected_ai(connect_to)
 	if(connected_ai)
-		lawsync()
+		sync_to_ai()
 		lawupdate = TRUE
 		return TRUE
-	picturesync()
-	return FALSE
 
-/mob/living/silicon/robot/proc/picturesync()
-	if(connected_ai?.aicamera && aicamera)
-		for(var/i in aicamera.stored)
-			connected_ai.aicamera.stored[i] = TRUE
-		for(var/i in connected_ai.aicamera.stored)
-			aicamera.stored[i] = TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick, repairs, sendmats)
 	SIGNAL_HANDLER
@@ -1027,18 +1046,18 @@
 /mob/living/silicon/robot/proc/set_connected_ai(new_ai)
 	if(connected_ai == new_ai)
 		return
-	. = connected_ai
+	var/mob/living/silicon/ai/old_ai = connected_ai
 	connected_ai = new_ai
-	if(.)
-		var/mob/living/silicon/ai/old_ai = .
+	if(old_ai)
 		old_ai.connected_robots -= src
 		// if the borg has a malf AI zeroth law and has been unsynced from the malf AI, then remove the law
 		if(isnull(connected_ai) && IS_MALF_AI(old_ai) && !isnull(laws?.zeroth))
-			clear_zeroth_law(FALSE, TRUE)
+			laws.clear_zeroth_law(force = TRUE)
 	lamp_doom = FALSE
 	if(connected_ai)
 		connected_ai.connected_robots |= src
-		lamp_doom = connected_ai.doomsday_device ? TRUE : FALSE
+		lamp_doom = !!connected_ai.doomsday_device
+		try_sync_laws()
 	toggle_headlamp(FALSE, TRUE)
 
 /mob/living/silicon/robot/get_exp_list(minutes)

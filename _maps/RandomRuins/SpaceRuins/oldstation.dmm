@@ -784,6 +784,14 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/ruin/space/solars/ancientstation/charlie/solars)
+"dI" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/obj/item/circuitboard/machine/ai_law_rack/core,
+/obj/item/stock_parts/subspace/transmitter,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "dL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/command/glass{
@@ -2996,10 +3004,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/hall)
-"nr" = (
-/obj/item/stack/rods,
-/turf/template_noop,
-/area/space/nearstation)
 "ns" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -3356,12 +3360,6 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"pB" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/structure/alien/weeds,
-/obj/machinery/light/small/broken/directional/west,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "pD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -4659,6 +4657,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
+"zg" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/alien/weeds,
+/obj/machinery/light/small/broken/directional/west,
+/obj/item/stack/cable_coil{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/stock_parts/subspace/amplifier{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/ancientstation/delta/ai)
 "zi" = (
 /obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/cobweb,
@@ -5950,12 +5962,6 @@
 	dir = 8
 	},
 /area/ruin/space/ancientstation/delta/biolab)
-"HP" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/structure/alien/weeds,
-/obj/structure/alien/egg/burst,
-/turf/open/floor/iron/dark,
-/area/ruin/space/ancientstation/delta/ai)
 "HQ" = (
 /obj/structure/transit_tube{
 	dir = 4
@@ -8044,6 +8050,10 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
+"Vt" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/space/nearstation)
 "Vw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -10114,7 +10124,7 @@ GA
 mH
 aa
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -10178,7 +10188,7 @@ kW
 HA
 iH
 bJ
-nr
+Vt
 aa
 aa
 aa
@@ -10507,11 +10517,11 @@ Gi
 rw
 Ze
 bJ
-nr
+Vt
 aa
 UP
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -13312,7 +13322,7 @@ aa
 aa
 Jg
 aa
-nr
+Vt
 aa
 Al
 Al
@@ -13376,7 +13386,7 @@ aa
 aa
 aa
 aa
-nr
+Vt
 aa
 Jg
 aa
@@ -13709,7 +13719,7 @@ aa
 aa
 aa
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -13903,7 +13913,7 @@ aa
 aa
 aa
 aa
-nr
+Vt
 aa
 aa
 aa
@@ -14039,7 +14049,7 @@ Jg
 Jg
 aa
 aa
-nr
+Vt
 aa
 aa
 bE
@@ -15220,8 +15230,8 @@ aa
 aa
 aa
 ad
-HP
-pB
+dI
+zg
 lq
 ag
 gk

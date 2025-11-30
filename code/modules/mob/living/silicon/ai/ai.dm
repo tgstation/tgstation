@@ -2,24 +2,39 @@
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
-/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
+/**
+ * Init args
+ * * target_ai - The mob taking control of the AI
+ * * base_laws - An instance or typepath of a law datum, if provided the AI will use that lawset instead of making its own
+ * * default_link - An ai_law_rack object to link to on spawn, if possible. Base laws is preferred over this.
+ */
+/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/default_link)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
 		new/obj/structure/ai_core/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	if(target_ai.client)
+		set_gender(target_ai.client)
+
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
 
-	if(L && istype(L, /datum/ai_laws))
-		laws = L
-		laws.associate(src)
-		for (var/law in laws.inherent)
-			lawcheck += law
+	if(istype(base_laws, /datum/ai_laws))
+		laws = base_laws.copy_lawset()
+	else if(ispath(base_laws, /datum/ai_laws))
+		laws = new base_laws()
 	else
 		make_laws()
-		for (var/law in laws.inherent)
-			lawcheck += law
+		if(default_link?.can_link_to(src))
+			default_link.link_silicon(src)
+		else
+			link_to_first_rack()
+
+	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(target_ai)
+	malf_datum?.add_law_zero()
+
+	law_ui.update_inherent_stated_laws(laws)
 
 	create_eye()
 
@@ -30,8 +45,8 @@
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
 		if(!mind.has_ever_been_ai)
 			mind.has_ever_been_ai = TRUE
-	else if(target_ai.key)
-		key = target_ai.key
+	else if(target_ai.ckey)
+		PossessByPlayer(target_ai.ckey)
 
 	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
 	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
@@ -381,8 +396,6 @@
 		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
 	else
 		mmi_type = new/obj/item/mmi(src)
-	if(hack_software)
-		new/obj/item/malf_upgrade(get_turf(src))
 	the_mmi = mmi_type
 	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
 	the_mmi.brain.organ_flags |= ORGAN_FROZEN
@@ -1038,11 +1051,6 @@
 
 /mob/living/silicon/ai/resist()
 	return
-
-/mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
-	if(!target_ai)
-		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
-	. = ..()
 
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	SScameras.update_eye_chunk(moved_eye)
