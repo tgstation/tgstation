@@ -1405,6 +1405,7 @@
 #include "code\datums\components\pet_commands\pet_command.dm"
 #include "code\datums\components\pet_commands\pet_commands_basic.dm"
 #include "code\datums\components\plumbing\_plumbing.dm"
+#include "code\datums\components\plumbing\automated_iv.dm"
 #include "code\datums\components\plumbing\buffer.dm"
 #include "code\datums\components\plumbing\chemical_acclimator.dm"
 #include "code\datums\components\plumbing\filter.dm"
