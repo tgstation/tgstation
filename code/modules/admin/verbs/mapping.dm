@@ -196,27 +196,27 @@ ADMIN_VERB(disable_communication, R_DEBUG, "Disable all communication verbs", "D
 ADMIN_VERB_VISIBILITY(create_mapping_job_icons, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
 ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "Generates job starting location landmarks.", ADMIN_CATEGORY_MAPPING)
 	var/icon/final = icon()
-	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
-	D.setDir(SOUTH)
-	for(var/job in subtypesof(/datum/job))
-		var/datum/job/JB = new job
-		switch(JB.title)
+	var/mob/living/carbon/human/dummy/consistent/mannequin = new(get_turf(usr))
+	mannequin.setDir(SOUTH)
+	for(var/job_type in valid_subtypesof(/datum/job))
+		var/datum/job/job_datum = SSjob.get_job_type(job_type)
+		switch(job_datum.title)
 			if(JOB_AI)
-				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
+				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), JOB_AI)
 			if(JOB_CYBORG)
-				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), JOB_CYBORG)
 			else
-				for(var/obj/item/I in D)
-					qdel(I)
-				randomize_human_normie(D)
-				D.dress_up_as_job(
-					equipping = JB,
+				if(!job_datum.outfit)
+					continue
+				mannequin.delete_equipment()
+				mannequin.dress_up_as_job(
+					equipping = job_datum,
 					visual_only = TRUE,
 					consistent = TRUE,
 				)
-				var/icon/I = icon(getFlatIcon(D), frame = 1)
-				final.Insert(I, JB.title)
-	qdel(D)
+				var/icon/job_icon = get_flat_existing_human_icon(mannequin, list(SOUTH))
+				final.Insert(job_icon, job_datum.title, frame = 1)
+	qdel(mannequin)
 	//Also add the x
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
