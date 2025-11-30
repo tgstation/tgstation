@@ -139,7 +139,7 @@
 		message_in_a_bottle.forceMove(drop_location())
 
 	qdel(src)
-	target?.Bumped(broken)
+	target.Bumped(broken)
 	return TRUE
 
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/user, atom/target)
