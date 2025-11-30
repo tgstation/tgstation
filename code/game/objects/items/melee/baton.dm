@@ -505,6 +505,8 @@
 	var/convertible = TRUE //if it can be converted with a conversion kit
 	///Whether or not our inhand changes when active.
 	var/active_changes_inhand = TRUE
+	///Whether or not our baton visibly changes the inhand sprite based on inserted cell
+	var/tip_changes_color = TRUE
 	///When set, inhand_icon_state defaults to this instead of base_icon_state
 	var/base_inhand_state = null
 
@@ -575,7 +577,10 @@
 	if(active)
 		icon_state = "[base_icon_state]_active"
 		if(active_changes_inhand)
-			inhand_icon_state = "[base_inhand]_active"
+			if(tip_changes_color)
+				inhand_icon_state = "[base_inhand]_active_[get_baton_tip_color()]"
+			else
+				inhand_icon_state = "[base_inhand]_active"
 		return ..()
 	if(!cell)
 		icon_state = "[base_icon_state]_nocell"
@@ -637,7 +642,35 @@
 
 /// Toggles the stun baton's light
 /obj/item/melee/baton/security/proc/toggle_light()
+	set_light_color(get_baton_tip_color(TRUE))
 	set_light_on(!light_on)
+	return
+
+/// Change our baton's top color based on the contained cell.
+/obj/item/melee/baton/security/proc/get_baton_tip_color(set_light = FALSE)
+	var/tip_type_to_set
+	var/tip_light_to_set
+
+	if(cell)
+		var/chargepower = cell.maxcharge
+		var/zap_value = clamp(chargepower/STANDARD_CELL_CHARGE, 0, 100)
+		switch(zap_value)
+			if(-INFINITY to 10)
+				tip_type_to_set = "orange"
+				tip_light_to_set = LIGHT_COLOR_ORANGE
+			if(11 to 20)
+				tip_type_to_set = "red"
+				tip_light_to_set = LIGHT_COLOR_INTENSE_RED
+			if(21 to 30)
+				tip_type_to_set = "green"
+				tip_light_to_set = LIGHT_COLOR_GREEN
+			if(31 to INFINITY)
+				tip_type_to_set = "blue"
+				tip_light_to_set = LIGHT_COLOR_BLUE
+	else
+		tip_type_to_set = "orange"
+
+	return set_light ? tip_light_to_set : tip_type_to_set
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
@@ -824,6 +857,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	active_changes_inhand = FALSE
+	tip_changes_color = FALSE
 	var/obj/item/assembly/igniter/sparkler
 	///Determines whether or not we can improve the cattleprod into a new type. Prevents turning the cattleprod subtypes into different subtypes, or wasting materials on making it....another version of itself.
 	var/can_upgrade = TRUE
@@ -892,6 +926,7 @@
 	throw_stun_chance = 99  //Have you prayed today?
 	convertible = FALSE
 	active_changes_inhand = FALSE
+	tip_changes_color = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver = SHEET_MATERIAL_AMOUNT*5, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
