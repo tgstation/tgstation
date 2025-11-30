@@ -205,6 +205,8 @@
 	prereq_ids = list(TECHWEB_NODE_FISHING_EQUIP_ADV)
 	design_ids = list(
 		"bioelec_gen",
+		"bluespace_reel",
+		"fish_genegun",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	// only available if you've done the first fishing experiment (thus unlocking fishing tech), but not a strict requirement to get the tech
