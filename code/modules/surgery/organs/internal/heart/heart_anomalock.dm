@@ -33,6 +33,10 @@
 	QDEL_NULL(core)
 	return ..()
 
+/obj/item/organ/heart/cybernetic/anomalock/examine(mob/user)
+	. = ..()
+	. += span_info("The voltaic boost will avoid healing toxin damage at all in slime-based humanoids, to prevent harmful side effects.")
+
 /obj/item/organ/heart/cybernetic/anomalock/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(!core)
