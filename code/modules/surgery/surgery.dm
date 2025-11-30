@@ -38,8 +38,14 @@
 	var/requires_tech = FALSE
 	///typepath of a surgery that will, once researched, replace this surgery in the operating menu.
 	var/replaced_by
-	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
+	/// Organ being directly manipulated, used for checking if the organ is in the body prior to surgery and after surgery has begun.
 	var/organ_to_manipulate
+	///What organ type is required to start the surgery. Used with organ_to_manipulate.
+	var/requires_organ_type
+	///What organ flags are required to start the surgery. Used with organ_to_manipulate.
+	var/requires_organ_flags
+	///What amount of damage is required on the organ before the surgery can start. Used with organ_to_manipulate.
+	var/requires_organ_damage
 
 /datum/surgery/New(atom/surgery_target, surgery_location, surgery_bodypart)
 	. = ..()
@@ -77,6 +83,26 @@
 	. = TRUE
 	if(replaced_by == /datum/surgery)
 		return FALSE
+
+	if(!isnull(organ_to_manipulate))
+		var/obj/item/organ/target_organ = patient.get_organ_slot(organ_to_manipulate)
+		if(isnull(target_organ))
+			return FALSE
+		// Ensure organ is where it's needed
+		if(target_organ.zone != location)
+			return FALSE
+		// Organ must not have been repaired via surgery before.
+		if(target_organ.operated)
+			return FALSE
+		// Organ must have damage at higher than or equal to the given requires_organ_damage.
+		if(!isnull(requires_organ_damage) && (target_organ.damage < requires_organ_damage))
+			return FALSE
+		// Organ type must match the given requires_organ_type.
+		if(!isnull(requires_organ_type) && !istype(target_organ, requires_organ_type))
+			return FALSE
+		// Organ flags must include the given requires_organ_flags.
+		if(!isnull(requires_organ_flags) && !(target_organ.organ_flags & requires_organ_flags))
+			return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
 	if(HAS_MIND_TRAIT(user, TRAIT_SURGEON))

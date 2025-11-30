@@ -2,6 +2,8 @@
 	name = "Gastrectomy"
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	organ_to_manipulate = ORGAN_SLOT_STOMACH
+	requires_organ_flags = ORGAN_ORGANIC
+	requires_organ_damage = 50
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -17,6 +19,7 @@
 /datum/surgery/gastrectomy/mechanic
 	name = "Nutrient Processing System Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -26,11 +29,18 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-/datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/stomach/target_stomach = target.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(isnull(target_stomach) || target_stomach.damage < 50 || target_stomach.operated)
-		return FALSE
-	return ..()
+/datum/surgery/gastrectomy/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/gastrectomy/mechanic,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/close,
+	)
 
 ////Gastrectomy, because we truly needed a way to repair stomachs.
 //95% chance of success to be consistent with most organ-repairing surgeries.

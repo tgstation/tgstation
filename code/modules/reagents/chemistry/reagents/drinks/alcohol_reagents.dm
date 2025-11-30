@@ -101,11 +101,15 @@
 	if(methods & INGEST)
 		exposed_mob.check_allergic_reaction(ALCOHOL, chance = reac_volume * 5, histamine_add = min(10, reac_volume))
 
-	if(methods & (TOUCH|VAPOR|PATCH))
-		exposed_mob.adjust_fire_stacks(reac_volume / 15)
-		var/sterilizing_power = boozepwr / 650 // Weak alcohol has less sterilizing power
-		for(var/datum/surgery/surgery as anything in exposed_mob.surgeries)
-			surgery.speed_modifier = min(1 - sterilizing_power, surgery.speed_modifier)
+	if(!(methods & (TOUCH|VAPOR|PATCH)))
+		return
+
+	exposed_mob.adjust_fire_stacks(reac_volume / 15)
+
+	// Increase the speed of active surgeries relative to boozepwr, up to 46%.
+	// Weak alcohol has less sterilizing power. E.g: boozepwr of 65 yields 10% speed.
+	var/sterilizing_power = 1 - (boozepwr / 650)
+	exposed_mob.set_minimum_surgery_speeds(min(sterilizing_power, 0.46))
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

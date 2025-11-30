@@ -36,8 +36,6 @@
 
 	/// Multiplier for hunger rate
 	var/hunger_modifier = 1
-	/// Whether the stomach's been repaired with surgery and can be fixed again or not
-	var/operated = FALSE
 	/// List of all atoms within the stomach
 	var/list/atom/movable/stomach_contents = list()
 	/// Have we been cut open with a scalpel? If so, how much damage from it we still have from it and can be recovered with a cauterizing tool.

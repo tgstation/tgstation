@@ -442,6 +442,72 @@
 	return has_status_effect(/datum/status_effect/freon)
 
 /**
+ * Returns TRUE if a surgery datum is found to match the given search parameters or returns FALSE if the search failed.
+ *
+ * Arguments:
+ * * surgery_type - The type of /datum/surgery to search for.
+ * * step_type - Optional. The type of /datum/surgery_step to search for.
+ * * target_zone - Optional. The body zone to search within. See body zones in [code/__DEFINES/combat.dm]
+ */
+/mob/living/proc/has_surgery(datum/surgery/surgery_type, datum/surgery_step/step_type, target_zone)
+	if(isnull(get_surgery(surgery_type, step_type, target_zone)))
+		return FALSE
+	return TRUE
+
+/**
+ * Returns the first active surgery datum to match the given search parameters, or returns null if the search failed.
+ *
+ * Arguments:
+ * * surgery_type - The type of /datum/surgery to search for.
+ * * step_type - Optional. The type of /datum/surgery_step to search for.
+ * * target_zone - Optional. The body zone to search within. See body zones in [code/__DEFINES/combat.dm]
+ */
+/mob/living/proc/get_surgery(datum/surgery/surgery_type, datum/surgery_step/step_type, target_zone)
+	if(!length(surgeries))
+		return null
+	for(var/datum/surgery/surgery as anything in surgeries)
+		if(!istype(surgery, surgery_type))
+			continue
+		// Skip searching outside the targeted bodyzone
+		if(!isnull(target_zone) && (surgery.location != target_zone))
+			continue
+		// Ensure the surgery is on the given step_type
+		if(!isnull(step_type) && !ispath(surgery.steps[surgery.status], step_type))
+			continue
+		return surgery
+
+/**
+ * Adjusts the speed_modifier of all active surgeries by the given amount.
+ *
+ * Arguments:
+ * * amount - The number which will be added to each surgery's speed_modifier.
+ * * maximum - The maximum number each surgery's speed_modifier will be increased to.
+ * * minimum - The minumum number each surgery's speed_modifier will be decreased to.
+ */
+/mob/living/proc/adjust_surgery_speeds(amount = 0, minimum, maximum)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		surgery.speed_modifier = clamp(surgery.speed_modifier + amount, minimum, maximum)
+/**
+ * Sets the minimum speed_modifier of all active surgeries to the given amount.
+ *
+ * Arguments:
+ * * amount - The minimum number each surgery's speed_modifier should be increased to, if they are below this number.
+ */
+/mob/living/proc/set_minimum_surgery_speeds(amount = 0)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		surgery.speed_modifier = max(amount, surgery.speed_modifier)
+
+/**
+ * Sets the maximum speed_modifier of all active surgeries to the given amount.
+ *
+ * Arguments:
+ * * amount - The maximum number each surgery's speed_modifier should be reduced to, if they are above this number.
+ */
+/mob/living/proc/set_maximum_surgery_speeds(amount = 0)
+	for(var/datum/surgery/surgery as anything in surgeries)
+		surgery.speed_modifier = min(amount, surgery.speed_modifier)
+
+/**
  * Adds the passed quirk to the mob
  *
  * Arguments

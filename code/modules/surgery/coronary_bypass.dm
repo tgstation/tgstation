@@ -1,6 +1,8 @@
 /datum/surgery/coronary_bypass
 	name = "Coronary Bypass"
 	organ_to_manipulate = ORGAN_SLOT_HEART
+	requires_organ_flags = ORGAN_ORGANIC
+	requires_organ_damage = 60
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -15,6 +17,7 @@
 /datum/surgery/coronary_bypass/mechanic
 	name = "Engine Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -25,12 +28,17 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-/datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/heart/target_heart = target.get_organ_slot(ORGAN_SLOT_HEART)
-	if(isnull(target_heart) || target_heart.damage < 60 || target_heart.operated)
-		return FALSE
-	return ..()
-
+/datum/surgery/coronary_bypass/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/incise_heart,
+		/datum/surgery_step/coronary_bypass/mechanic,
+		/datum/surgery_step/close,
+	)
 
 //an incision but with greater bleed, and a 90% base success chance
 /datum/surgery_step/incise_heart

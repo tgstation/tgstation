@@ -44,6 +44,8 @@
 
 	/// When set to false, this can't be used in surgeries and such - Honestly a terrible variable.
 	var/useable = TRUE
+	/// When set to FALSE, the organ has not yet been repaired with surgery, and can be fixed.
+	var/operated = FALSE
 
 	/// Food reagents if the organ is edible
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)

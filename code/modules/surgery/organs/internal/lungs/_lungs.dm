@@ -23,7 +23,6 @@
 	cells_maximum = 2
 
 	var/failed = FALSE
-	var/operated = FALSE //whether we can still have our damages fixed through surgery
 
 	food_reagents = list(/datum/reagent/consumable/nutriment/organ_tissue = 5, /datum/reagent/medicine/salbutamol = 5)
 

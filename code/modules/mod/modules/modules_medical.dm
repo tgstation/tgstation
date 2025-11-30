@@ -198,17 +198,8 @@
 		organ = null
 		return
 	var/mob/living/carbon/human/organ_receiver = target
-	var/succeed = FALSE
-	if(organ_receiver.surgeries.len)
-		for(var/datum/surgery/organ_manipulation/procedure in organ_receiver.surgeries)
-			if(procedure.location != organ.zone)
-				continue
-			if(!ispath(procedure.steps[procedure.status], /datum/surgery_step/manipulate_organs))
-				continue
-			succeed = TRUE
-			break
 
-	if(!succeed)
+	if(!organ_receiver.has_surgery(/datum/surgery/organ_manipulation, /datum/surgery_step/manipulate_organs, organ.zone))
 		organ.forceMove(drop_location())
 		organ = null
 		return

@@ -33,8 +33,6 @@
 
 	/// is this mob having a heatbeat sound played? if so, which?
 	var/beat = BEAT_NONE
-	/// whether the heart's been operated on to fix some of its damages
-	var/operated = FALSE
 	var/beat_noise = "a rhythmic thumping"
 
 /obj/item/organ/heart/update_icon_state()

@@ -1,6 +1,8 @@
 /datum/surgery/lobectomy
 	name = "Lobectomy" //not to be confused with lobotomy
 	organ_to_manipulate = ORGAN_SLOT_LUNGS
+	requires_organ_flags = ORGAN_ORGANIC
+	requires_organ_damage = 60
 	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
@@ -14,6 +16,7 @@
 /datum/surgery/lobectomy/mechanic
 	name = "Air Filtration Diagnostic"
 	requires_bodypart_type = BODYTYPE_ROBOTIC
+	requires_organ_flags = ORGAN_ROBOTIC
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -23,11 +26,16 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
-/datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/lungs/target_lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if(isnull(target_lungs) || target_lungs.damage < 60 || target_lungs.operated)
-		return FALSE
-	return ..()
+/datum/surgery/lobectomy/mechanic/hybrid
+	requires_bodypart_type = BODYTYPE_ORGANIC
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/lobectomy/mechanic,
+		/datum/surgery_step/close,
+	)
 
 //lobectomy, removes the most damaged lung lobe with a 95% base success chance
 /datum/surgery_step/lobectomy
