@@ -28,11 +28,10 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
-	AddComponent(
-		/datum/component/usb_port,
+	AddComponent(/datum/component/usb_port, \
 		typecacheof(list(
 			/obj/item/circuit_component/atmos_volume_pump,
-		), only_root_path = TRUE)
+		), only_root_path = TRUE) \
 	)
 	register_context()
 

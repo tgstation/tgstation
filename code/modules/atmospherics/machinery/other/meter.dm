@@ -36,11 +36,10 @@
 
 	if(!target)
 		reattach_to_layer()
-	AddComponent(
-		/datum/component/usb_port,
+	AddComponent(/datum/component/usb_port, \
 		typecacheof(list(
 			/obj/item/circuit_component/atmos_meter,
-		), only_root_path = TRUE)
+		), only_root_path = TRUE) \
 	)
 	return ..()
 
