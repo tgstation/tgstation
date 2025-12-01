@@ -25,6 +25,8 @@
 	var/datum/armor/armor_type = /datum/armor/mod_theme
 	/// Resistance flags shared across the MOD parts.
 	var/resistance_flags = NONE
+	/// Hearing protection level supplied by the modsuit head
+	var/hearing_protection
 	/// Atom flags shared across the MOD parts.
 	var/atom_flags = NONE
 	/// Max heat protection shared across the MOD parts.
@@ -112,9 +114,16 @@
 		if(!ispath(path))
 			continue
 		var/obj/item/mod_part = new path(mod)
-		if(mod_part.slot_flags == ITEM_SLOT_OCLOTHING && isclothing(mod_part))
-			var/obj/item/clothing/chestplate = mod_part
-			chestplate.allowed |= allowed_suit_storage
+		if(isclothing(mod_part))
+			var/obj/item/clothing/clothing_part = mod_part
+			switch(mod_part.slot_flags)
+				if(ITEM_SLOT_OCLOTHING)
+					clothing_part.allowed |= allowed_suit_storage
+				if(ITEM_SLOT_HEAD)
+					if(hearing_protection && istype(clothing_part, /obj/item/clothing/head/mod))
+						var/obj/item/clothing/head/mod/mod_clothing_part = mod_part
+						// This doesn't give us hearing protection, it just tells the helmet to remember that for when it gets activated
+						mod_clothing_part.hearing_protection = hearing_protection
 		var/datum/mod_part/part_datum = new()
 		part_datum.set_item(mod_part)
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
@@ -819,7 +828,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_deployed = 1.25
-	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
 		/obj/item/dnainjector,
@@ -886,7 +896,7 @@
 	armor_type = /datum/armor/mod_theme_security
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
 	slowdown_deployed = 0.5
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
@@ -953,7 +963,8 @@
 	armor_type = /datum/armor/mod_theme_safeguard
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	slowdown_deployed = 0.25
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
@@ -1026,7 +1037,7 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_deployed = 0.25
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1165,7 +1176,8 @@
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
 	resistance_flags = FIRE_PROOF
-	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/night, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/night)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1271,7 +1283,8 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/night, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/night)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1345,7 +1358,8 @@
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.5
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
-	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer, /obj/item/mod/module/hearing_protection, /obj/item/mod/module/night)
+	inbuilt_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/storage/belt, /obj/item/mod/module/demoralizer, /obj/item/mod/module/night)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1414,7 +1428,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_deployed = -0.5
-	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/assembly/flash,
 		/obj/item/healthanalyzer,
@@ -1501,7 +1516,8 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY
 	slowdown_deployed = 0
 	ui_theme = "wizard"
-	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/teleportation_scroll,
 		/obj/item/highfrequencyblade/wizard,
@@ -1568,7 +1584,8 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "hackerman"
-	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/gun,
 		/obj/item/melee/baton,
@@ -1704,7 +1721,8 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	ui_theme = "ntos_terminal"
-	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate, /obj/item/mod/module/hearing_protection)
+	inbuilt_modules = list(/obj/item/mod/module/welding/syndicate)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing,
@@ -1772,7 +1790,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_deployed = 0
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1885,7 +1903,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1956,7 +1974,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_deployed = 0
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -2021,7 +2039,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
 	slowdown_deployed = 0
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 	)
@@ -2087,7 +2105,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.2
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
@@ -2154,7 +2172,7 @@
 	siemens_coefficient = 0
 	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.01
-	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
+	hearing_protection = EAR_PROTECTION_FULL
 	allowed_suit_storage = list(
 		/obj/item/gun,
 	)
