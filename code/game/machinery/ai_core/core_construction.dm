@@ -178,7 +178,7 @@
 		return FALSE
 
 	if(cable.get_amount() < 5)
-		balloon_alert(user, "not enough cable!")
+		balloon_alert(user, "not enough [cable::name]!")
 		return FALSE
 
 	balloon_alert(user, "adding cable...")
@@ -239,7 +239,7 @@
 		balloon_alert(user, "needs a processor!")
 		return FALSE
 	if(glass.get_amount() < 2)
-		balloon_alert(user, "not enough [glass.name]!")
+		balloon_alert(user, "not enough [glass::name]!")
 		return FALSE
 
 	if(!glass.use_tool(src, user, 2 SECONDS, 2, 50, CHECK_STATE_CALLBACK(CORE_STATE_CABLED)) || !core_mmi)
