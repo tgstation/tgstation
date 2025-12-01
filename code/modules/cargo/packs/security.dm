@@ -11,19 +11,27 @@
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/box/beanbag = 3,
 					/obj/item/storage/box/rubbershot = 3,
-					/obj/item/ammo_box/c38/trac,
-					/obj/item/ammo_box/c38/hotshot,
-					/obj/item/ammo_box/c38/iceblox,
+					/obj/item/ammo_box/speedloader/c38/trac,
+					/obj/item/ammo_box/speedloader/c38/hotshot,
+					/obj/item/ammo_box/speedloader/c38/iceblox,
 				)
 	crate_name = "ammo crate"
 
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
 	desc = "Three vests of well-rounded, decently-protective armor."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/suit/armor/vest = 3)
 	crate_name = "armor crate"
+
+/datum/supply_pack/security/modsuit_plating
+	name = "Security MOD plating"
+	desc = "A single security MOD suit plating"
+	cost = CARGO_CRATE_VALUE
+	access_view = ACCESS_SECURITY
+	contains = list(/obj/item/mod/construction/plating/security)
+	crate_name = "MOD plating crate"
 
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
@@ -36,7 +44,7 @@
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials™. \
-		Contains a forensics scanner, six evidence bags, camera, tape recorder, white crayon, \
+		Contains a forensics scanner, six evidence bags, camera, special board for evidences, tape recorder, stick of chalk, \
 		and of course, a fedora."
 	cost = CARGO_CRATE_VALUE * 2.5
 	access_view = ACCESS_MORGUE
@@ -46,23 +54,16 @@
 					/obj/item/taperecorder,
 					/obj/item/toy/crayon/white,
 					/obj/item/clothing/head/fedora/det_hat,
+					/obj/item/wallframe/detectiveboard
 				)
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
 	desc = "Contains three standard-issue brain buckets."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/clothing/head/helmet/sec = 3)
 	crate_name = "helmet crate"
-
-/datum/supply_pack/security/laser
-	name = "Lasers Crate"
-	desc = "Contains three lethal, high-energy laser guns."
-	cost = CARGO_CRATE_VALUE * 4
-	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/energy/laser = 3)
-	crate_name = "laser crate"
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
@@ -112,6 +113,14 @@
 				)
 	crate_name = "security supply crate"
 
+/datum/supply_pack/security/maintenance_kits
+	name = "Gun Maintenance Kits"
+	desc = "Three gun maintenance kits for the repair and maintenance of a firearm."
+	access_view = ACCESS_BRIG
+	contains = list(/obj/item/gun_maintenance_supplies = 3)
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "gun maintenance kit crate"
+
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins."
@@ -145,7 +154,7 @@
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
 	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/melee/baton/security/loaded = 3)
 	crate_name = "stun baton crate"
@@ -169,6 +178,7 @@
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit,
 				)
+	crate_name = "traditional equipment crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs
@@ -211,28 +221,40 @@
 	crate_name = "combat shotguns crate"
 
 /datum/supply_pack/security/armory/dragnet
-	name = "DRAGnet Crate"
-	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
-		a recent breakthrough in law enforcement prisoner management technology."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/gun/energy/e_gun/dragnet = 3)
+	name = "DRAGnet Translocation Shotgun Crate"
+	desc = "Contains two \"Dynamic Rapid-Apprehension of the Guilty Network\" translocation shotguns, \
+		a recent breakthrough in law enforcement prisoner management technology. Includes a DRAGnet beacon."
+	cost = CARGO_CRATE_VALUE * 18
+	contains = list(
+		/obj/item/gun/energy/e_gun/dragnet = 2,
+		/obj/item/dragnet_beacon = 1
+	)
 	crate_name = "\improper DRAGnet crate"
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
-	desc = "Contains two Energy Guns, capable of firing both nonlethal and lethal \
+	desc = "Contains three Energy Guns, capable of firing both nonlethal and lethal \
 		blasts of light."
 	cost = CARGO_CRATE_VALUE * 18
-	contains = list(/obj/item/gun/energy/e_gun = 2)
+	contains = list(/obj/item/gun/energy/e_gun = 3)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
+/datum/supply_pack/security/armory/laser
+	name = "Type 5 Laser Gun Crate"
+	desc = "Contains three Type 5 laser guns, developed by Nanotrasen. For when the going gets tough, you get going with the \
+		Type 5 Heat Delivery System. As developed by Nanotrasen."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/gun/energy/laser = 3)
+	crate_name = "\improper Type 5 laser crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
+
 /datum/supply_pack/security/armory/laser_carbine
-	name = "Laser Carbine Crate"
-	desc = "Contains three laser carbines, capable of rapidly firing weak lasers."
+	name = "Type 5R Laser Carbine Crate"
+	desc = "Contains three Type 5R laser carbines, developed by Nanotrasen. Fires a rapid burst of slightly weaker laser projectiles."
 	cost = CARGO_CRATE_VALUE * 9
 	contains = list(/obj/item/gun/energy/laser/carbine = 3)
-	crate_name = "laser carbine crate"
+	crate_name = "\improper Type 5R laser carbine crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/disabler_smg
@@ -242,6 +264,30 @@
 	contains = list(/obj/item/gun/energy/disabler/smg = 3)
 	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/armory/battle_rifle
+	name = "NT BR-38 Crate"
+	desc = "An experimental energy-based ballistic battle rifle, as developed by Nanotrasen. \
+		Only available to Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE \
+		COMPANIES. Contains three NT BR-38 rifles and 6 magazines containing .38 Standard."
+	cost = CARGO_CRATE_VALUE * 100
+	contains = list(
+		/obj/item/gun/ballistic/automatic/battle_rifle = 3,
+		/obj/item/ammo_box/magazine/m38 = 6,
+	)
+	crate_name = "battle rifle crate"
+
+/datum/supply_pack/security/armory/br_mag
+	name = "NT BR-38 Magazine Crate"
+	desc = "Six .38 magazines, able to fit into the NT BR-38. Contains \
+		two standard magazines, two Hot Shot magazines and two Iceblox magazines."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(
+		/obj/item/ammo_box/magazine/m38 = 2,
+		/obj/item/ammo_box/magazine/m38/hotshot = 2,
+		/obj/item/ammo_box/magazine/m38/iceblox =2,
+	)
+	crate_name = ".38 magazine crate"
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"
@@ -276,7 +322,7 @@
 	desc = "Contains four tracking implants and three tracking speedloaders of tracing .38 ammo."
 	cost = CARGO_CRATE_VALUE * 4.5
 	contains = list(/obj/item/storage/box/trackimp,
-					/obj/item/ammo_box/c38/trac = 3,
+					/obj/item/ammo_box/speedloader/c38/trac = 3,
 				)
 	crate_name = "tracking implant crate"
 
@@ -330,8 +376,8 @@
 /datum/supply_pack/security/armory/thermal
 	name = "Thermal Pistol Crate"
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, \
-		using nanites as the basis for their ammo."
-	cost = CARGO_CRATE_VALUE * 7
+		using nanites as the basis for their ammo. Can be shaken to reload."
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
 
@@ -342,3 +388,15 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
 	crate_name = "sunglasses crate"
+
+/datum/supply_pack/security/armory/mechthermal
+	name = "Heavy Thermal Guns Crate"
+	desc = "Contains two experimental thermal cannons for use by mechs. \
+		When used simultaneously, their excess power used to heat and cool the opposing weapon, \
+		increasing the reload speed."
+	cost = CARGO_CRATE_VALUE * 25
+	contains = list(
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno,
+	)
+	crate_name = "thermal cannons crate"

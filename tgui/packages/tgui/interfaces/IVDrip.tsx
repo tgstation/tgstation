@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,7 +7,10 @@ import {
   Section,
   Slider,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type IVDripData = {
@@ -96,7 +96,7 @@ export const IVDrip = (props) => {
                 minValue={minTransferRate}
                 maxValue={maxTransferRate}
                 unit="units/sec."
-                onDrag={(e, value) =>
+                onChange={(e, value) =>
                   act('changeRate', {
                     rate: value,
                   })

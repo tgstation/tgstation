@@ -1,21 +1,28 @@
 import { useState } from 'react';
+import {
+  Button,
+  Image,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Button, Image, Input, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosPortraitPrinter = (props) => {
   const { act, data } = useBackend();
   const [listIndex, setListIndex] = useState(0);
-  const { paintings, search_string, search_mode } = data;
+  const { paintings, search_string, search_mode, is_console } = data;
   const got_paintings = !!paintings.length;
-  const current_portrait_title = got_paintings && paintings[listIndex]['title'];
+  const current_portrait_title = got_paintings && paintings[listIndex].title;
   const current_portrait_author =
-    got_paintings && 'By ' + paintings[listIndex]['creator'];
+    got_paintings && `By ${paintings[listIndex].creator}`;
   const current_portrait_asset_name =
-    got_paintings && 'paintings' + '_' + paintings[listIndex]['md5'];
-  const current_portrait_ratio = got_paintings && paintings[listIndex]['ratio'];
+    got_paintings && `paintings_${paintings[listIndex].md5}`;
+  const current_portrait_ratio = got_paintings && paintings[listIndex].ratio;
 
   return (
     <NtosWindow title="Art Galaxy" width={400} height={446}>
@@ -23,26 +30,32 @@ export const NtosPortraitPrinter = (props) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section title="Search">
-              <Input
-                fluid
-                placeholder="Search Paintings..."
-                value={search_string}
-                onChange={(e, value) => {
-                  act('search', {
-                    to_search: value,
-                  });
-                  setListIndex(0);
-                }}
-              />
-              <Button
-                content={search_mode}
-                onClick={() => {
-                  act('change_search_mode');
-                  if (search_string) {
-                    setListIndex(0);
-                  }
-                }}
-              />
+              <Stack>
+                <Stack.Item grow>
+                  <Input
+                    fluid
+                    placeholder="Search Paintings..."
+                    value={search_string}
+                    onBlur={(value) => {
+                      act('search', {
+                        to_search: value,
+                      });
+                      setListIndex(0);
+                    }}
+                  />
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    content={search_mode}
+                    onClick={() => {
+                      act('change_search_mode');
+                      if (search_string) {
+                        setListIndex(0);
+                      }
+                    }}
+                  />
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item grow={2}>
@@ -100,11 +113,11 @@ export const NtosPortraitPrinter = (props) => {
                     <Stack.Item grow={3}>
                       <Button
                         icon="check"
-                        content="Print Portrait"
-                        disabled={!got_paintings}
+                        content={!is_console ? "View Only" : "Print Portrait"}
+                        disabled={!got_paintings || !is_console}
                         onClick={() =>
                           act('select', {
-                            selected: paintings[listIndex]['ref'],
+                            selected: paintings[listIndex].ref,
                           })
                         }
                       />

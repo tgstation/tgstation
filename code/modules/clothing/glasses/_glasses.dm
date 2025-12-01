@@ -4,13 +4,18 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/glasses_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
+	abstract_type = /obj/item/clothing/glasses
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_EYES
-	strip_delay = 20
-	equip_delay_other = 25
+	strip_delay = 2 SECONDS
+	equip_delay_other = 2.5 SECONDS
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	gender = PLURAL
+	sound_vary = TRUE
+	pickup_sound = SFX_GLASSES_PICKUP
+	drop_sound = SFX_GLASSES_DROP
+	equip_sound = SFX_GLASSES_EQUIP
 	var/vision_flags = 0
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
@@ -27,36 +32,33 @@
 	/// Whether or not vision coloring is forcing
 	var/forced_glass_color = FALSE
 
+/obj/item/clothing/glasses/Initialize(mapload)
+	. = ..()
+	if(glass_colour_type)
+		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
+
 /obj/item/clothing/glasses/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is stabbing \the [src] into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/clothing/glasses/examine(mob/user)
-	. = ..()
-	if(glass_colour_type && !forced_glass_color && ishuman(user))
-		. += span_notice("Alt-click to toggle [p_their()] colors.")
-
 /obj/item/clothing/glasses/visor_toggling()
-	..()
+	. = ..()
+	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
 	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
 		vision_flags ^= initial(vision_flags)
 	if(visor_vars_to_toggle & VISOR_INVISVIEW)
 		invis_view ^= initial(invis_view)
 
-/obj/item/clothing/glasses/weldingvisortoggle(mob/user)
+/obj/item/clothing/glasses/adjust_visor(mob/living/user)
 	. = ..()
-	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
-	if(. && user)
+	if(. && !user.is_holding(src) && (visor_vars_to_toggle & (VISOR_VISIONFLAGS|VISOR_INVISVIEW)))
 		user.update_sight()
-		if(iscarbon(user))
-			var/mob/living/carbon/carbon_user = user
-			carbon_user.head_update(src, forced = TRUE)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
-		var/obj/item/organ/internal/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
+		var/obj/item/organ/eyes/eyes = H.get_organ_slot(ORGAN_SLOT_EYES)
 		if(!H.is_blind())
 			if(H.glasses == src)
 				to_chat(H, span_danger("[src] overloads and blinds you!"))
@@ -65,40 +67,12 @@
 				H.set_eye_blur_if_lower(10 SECONDS)
 				eyes.apply_organ_damage(5)
 
-/obj/item/clothing/glasses/AltClick(mob/user)
-	if(glass_colour_type && !forced_glass_color && ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-
-		if (human_user.glasses != src)
-			return ..()
-
-		if (HAS_TRAIT_FROM(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT))
-			REMOVE_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will no longer see glasses colors."))
-		else
-			ADD_TRAIT(human_user, TRAIT_SEE_GLASS_COLORS, GLASSES_TRAIT)
-			to_chat(human_user, span_notice("You will now see glasses colors."))
-		human_user.update_glasses_color(src, TRUE)
-	else
-		return ..()
-
-/obj/item/clothing/glasses/proc/change_glass_color(mob/living/carbon/human/H, datum/client_colour/glass_colour/new_color_type)
-	var/old_colour_type = glass_colour_type
-	if(!new_color_type || ispath(new_color_type)) //the new glass colour type must be null or a path.
-		glass_colour_type = new_color_type
-		if(H && H.glasses == src)
-			if(old_colour_type)
-				H.remove_client_colour(old_colour_type)
-			if(glass_colour_type)
-				H.update_glasses_color(src, 1)
-
-
-/mob/living/carbon/human/proc/update_glasses_color(obj/item/clothing/glasses/G, glasses_equipped)
-	if((HAS_TRAIT(src, TRAIT_SEE_GLASS_COLORS) || G.forced_glass_color) && glasses_equipped)
-		add_client_colour(G.glass_colour_type)
-	else
-		remove_client_colour(G.glass_colour_type)
-
+/obj/item/clothing/glasses/proc/change_glass_color(new_color_type)
+	if(glass_colour_type)
+		RemoveElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
+	glass_colour_type = new_color_type
+	if(glass_colour_type)
+		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
@@ -111,6 +85,9 @@
 	// Mesons get to be lightly green
 	color_cutoffs = list(5, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -123,8 +100,13 @@
 	inhand_icon_state = "nvgmeson"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Night vision mesons get the same but more intense
-	color_cutoffs = list(10, 30, 10)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(10, 35, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+
+/obj/item/clothing/glasses/meson/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "nvgmeson_off"
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -137,7 +119,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/science
@@ -150,14 +132,13 @@
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/glasses_science
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /datum/armor/glasses_science
 	fire = 80
 	acid = 100
-
-/obj/item/clothing/glasses/science/item_action_slot_check(slot)
-	if(slot & ITEM_SLOT_EYES)
-		return 1
 
 /obj/item/clothing/glasses/science/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is tightening \the [src]'s straps around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -169,8 +150,13 @@
 	icon_state = "scihudnight"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Real vivid purple
-	color_cutoffs = list(50, 10, 30)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(30, 5, 15)
+	glass_colour_type = /datum/client_colour/glass_colour/lightpurple
+	actions_types = list(/datum/action/item_action/toggle_nv)
+
+/obj/item/clothing/glasses/science/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -180,8 +166,16 @@
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	// Dark green
-	color_cutoffs = list(10, 30, 10)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(10, 25, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
+
+/obj/item/clothing/glasses/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -191,11 +185,49 @@
 	inhand_icon_state = null
 	actions_types = list(/datum/action/item_action/flip)
 	dog_fashion = /datum/dog_fashion/head/eyepatch
+	var/flipped = FALSE
+	pickup_sound = null
+	drop_sound = null
+	equip_sound = null
 
-/obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
+/obj/item/clothing/glasses/eyepatch/click_alt(mob/user)
 	. = ..()
-	icon_state = (icon_state == base_icon_state) ? "[base_icon_state]_flipped" : base_icon_state
+	flip_eyepatch()
+
+/obj/item/clothing/glasses/eyepatch/attack_self(mob/user)
+	. = ..()
+	flip_eyepatch()
+
+/obj/item/clothing/glasses/eyepatch/proc/flip_eyepatch()
+	flipped = !flipped
+	icon_state = flipped ? "[base_icon_state]_flipped" : base_icon_state
+	if (!ismob(loc))
+		return
+	var/mob/user = loc
 	user.update_worn_glasses()
+	if (!ishuman(user))
+		return
+	var/mob/living/carbon/human/human_user = user
+	if (human_user.get_eye_scars() & (flipped ? RIGHT_EYE_SCAR : LEFT_EYE_SCAR))
+		tint = INFINITY
+	else
+		tint = initial(tint)
+	human_user.update_tint()
+
+/obj/item/clothing/glasses/eyepatch/equipped(mob/living/user, slot)
+	if (!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/human_user = user
+	// lol lmao
+	if (human_user.get_eye_scars() & (flipped ? RIGHT_EYE_SCAR : LEFT_EYE_SCAR))
+		tint = INFINITY
+	else
+		tint = initial(tint)
+	return ..()
+
+/obj/item/clothing/glasses/eyepatch/dropped(mob/living/user)
+	. = ..()
+	tint = initial(tint)
 
 /obj/item/clothing/glasses/eyepatch/medical
 	name = "medical eyepatch"
@@ -233,6 +265,7 @@
 	inhand_icon_state = "headset" // lol
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	clothing_traits = list(TRAIT_NEARSIGHTED_CORRECTED)
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
@@ -242,6 +275,9 @@
 	flags_cover = GLASSESCOVERSEYES
 	vision_flags = SEE_OBJS
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/material/mining
 	name = "optical material scanner"
@@ -260,7 +296,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
@@ -357,8 +393,8 @@
 /obj/item/clothing/glasses/sunglasses/proc/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsec, /datum/crafting_recipe/hudsunmed, /datum/crafting_recipe/hudsundiag, /datum/crafting_recipe/scienceglasses)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -377,8 +413,8 @@
 /obj/item/clothing/glasses/sunglasses/chemical/add_glasses_slapcraft_component()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/scienceglassesremoval)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -393,7 +429,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/sunglasses/gar/orange
@@ -417,6 +453,12 @@
 	inhand_icon_state = "gar"
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/obj/item/clothing/glasses/sunglasses/noir
+	name = "noir glasses"
+	desc = "A pair of sleek, futuristic glasses that allow the wearer to see the world in a different light."
+	glass_colour_type = /datum/client_colour/monochrome/glasses
+	forced_glass_color =  TRUE
+
 ///Syndicate item that upgrades the flash protection of your eyes.
 /obj/item/syndicate_contacts
 	name = "suspicious contact lens case"
@@ -430,7 +472,7 @@
 	if(!user.get_organ_slot(ORGAN_SLOT_EYES))
 		to_chat(user, span_warning("You have no eyes to apply the contacts to!"))
 		return
-	var/obj/item/organ/internal/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 
 	to_chat(user, span_notice("You begin applying the contact lenses to your eyes..."))
 	if(!do_after(user, 3 SECONDS, src))
@@ -452,9 +494,28 @@
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	glass_colour_type = /datum/client_colour/glass_colour/gray
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
-/obj/item/clothing/glasses/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+/obj/item/clothing/glasses/welding/Initialize(mapload)
+	. = ..()
+	if(!up)
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/welding/attack_self(mob/living/user)
+	adjust_visor(user)
+
+/obj/item/clothing/glasses/welding/adjust_visor(mob/user)
+	. = ..()
+	if(up)
+		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+	else
+		AddComponent(/datum/component/adjust_fishing_difficulty, 8)
+
+/obj/item/clothing/glasses/welding/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/glasses/welding/up/Initialize(mapload)
 	. = ..()
@@ -469,6 +530,10 @@
 	flags_cover = GLASSESCOVERSEYES
 	tint = INFINITY // You WILL Be blind, no matter what
 	dog_fashion = /datum/dog_fashion/head
+
+/obj/item/clothing/glasses/blindfold/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"
@@ -485,27 +550,10 @@
 	var/colored_before = FALSE
 
 /obj/item/clothing/glasses/blindfold/white/visual_equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && (slot & ITEM_SLOT_EYES))
-		update_icon(ALL, user)
-		user.update_worn_glasses() //Color might have been changed by update_icon.
-	..()
-
-/obj/item/clothing/glasses/blindfold/white/update_icon(updates=ALL, mob/living/carbon/human/user)
-	. = ..()
-	if(ishuman(user) && !colored_before)
+	if(ishuman(user) && (slot & ITEM_SLOT_EYES) && !colored_before)
 		add_atom_colour(BlendRGB(user.eye_color_left, user.eye_color_right, 0.5), FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
-
-/obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
-	. = ..()
-	if(isinhands || !ishuman(loc) || colored_before)
-		return
-
-	var/mob/living/carbon/human/H = loc
-	var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/eyes.dmi', "blindfoldwhite")
-	M.appearance_flags |= RESET_COLOR
-	M.color = H.eye_color_left
-	. += M
+	return ..()
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
@@ -523,6 +571,9 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/red
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()
@@ -583,6 +634,9 @@
 	icon_state = "cold"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
@@ -590,6 +644,9 @@
 	icon_state = "heat"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
@@ -613,6 +670,9 @@
 	worn_icon_state = "geist_gazers"
 	glass_colour_type = /datum/client_colour/glass_colour/green
 	flags_cover = GLASSESCOVERSEYES
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
 /obj/item/clothing/glasses/psych
 	name = "psych glasses"
@@ -632,42 +692,36 @@
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	glass_colour_type = FALSE
 	vision_flags = SEE_TURFS
-	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MADNESS_IMMUNE)
-	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
+	clothing_traits = list(
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_MADNESS_IMMUNE,
+		TRAIT_MEDICAL_HUD,
+		TRAIT_SECURITY_HUD,
+		TRAIT_DIAGNOSTIC_HUD,
+		TRAIT_BOT_PATH_HUD,
+	)
 	var/xray = FALSE
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
 
-/obj/item/clothing/glasses/debug/equipped(mob/user, slot)
+/obj/item/clothing/glasses/debug/Initialize(mapload)
 	. = ..()
-	if(!(slot & ITEM_SLOT_EYES))
-		return
-	if(ishuman(user))
-		for(var/hud in hudlist)
-			var/datum/atom_hud/our_hud = GLOB.huds[hud]
-			our_hud.show_to(user)
-		user.add_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD), GLASSES_TRAIT)
-		if(xray)
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
+	AddComponent(/datum/component/adjust_fishing_difficulty, -15)
 
-/obj/item/clothing/glasses/debug/dropped(mob/user)
-	. = ..()
-	user.remove_traits(list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_XRAY_VISION), GLASSES_TRAIT)
-	if(ishuman(user))
-		for(var/hud in hudlist)
-			var/datum/atom_hud/our_hud = GLOB.huds[hud]
-			our_hud.hide_from(user)
-
-/obj/item/clothing/glasses/debug/AltClick(mob/user)
-	. = ..()
-	if(ishuman(user))
-		if(xray)
-			vision_flags &= ~SEE_MOBS|SEE_OBJS
-			REMOVE_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-		else
-			vision_flags |= SEE_MOBS|SEE_OBJS
-			ADD_TRAIT(user, TRAIT_XRAY_VISION, GLASSES_TRAIT)
-		xray = !xray
-		var/mob/living/carbon/human/human_user = user
-		human_user.update_sight()
+/obj/item/clothing/glasses/debug/click_alt(mob/user)
+	if(!ishuman(user))
+		return CLICK_ACTION_BLOCKING
+	if(xray)
+		vision_flags &= ~SEE_MOBS|SEE_OBJS
+		detach_clothing_traits(TRAIT_XRAY_VISION)
+	else
+		vision_flags |= SEE_MOBS|SEE_OBJS
+		attach_clothing_traits(TRAIT_XRAY_VISION)
+	xray = !xray
+	var/mob/living/carbon/human/human_user = user
+	human_user.update_sight()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/regular/kim
 	name = "binoclard lenses"
@@ -720,6 +774,13 @@
 	flags_cover = GLASSESCOVERSEYES
 	/// Hallucination datum currently being used for seeing mares
 	var/datum/hallucination/stored_hallucination
+	pickup_sound = SFX_GOGGLES_PICKUP
+	drop_sound = SFX_GOGGLES_DROP
+	equip_sound = SFX_GOGGLES_EQUIP
+
+/obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, 13)
 
 /obj/item/clothing/glasses/nightmare_vision/Destroy()
 	QDEL_NULL(stored_hallucination)

@@ -105,13 +105,13 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 				factor_info["factor_name"] = factor
 				factor_info["factor_type"] = "misc"
 				if(factor == "Temperature" || factor == "Pressure")
-					factor_info["tooltip"] = "Reaction is influenced by the [lowertext(factor)] of the place where the reaction is occuring."
+					factor_info["tooltip"] = "Reaction is influenced by the [LOWER_TEXT(factor)] of the place where the reaction is occurring."
 				else if(factor == "Energy")
 					factor_info["tooltip"] = "Energy released by the reaction, may or may not result in linear temperature change depending on a slew of other factors."
 				else if(factor == "Radiation")
 					factor_info["tooltip"] = "This reaction emits dangerous radiation! Take precautions."
 				else if (factor == "Location")
-					factor_info["tooltip"] = "This reaction has special behaviour when occuring in specific locations."
+					factor_info["tooltip"] = "This reaction has special behaviour when occurring in specific locations."
 				else if(factor == "Hot Ice")
 					factor_info["tooltip"] = "Hot ice are solidified stacks of plasma. Ignition of one will result in a raging fire."
 			reaction_info["factors"] += list(factor_info)
@@ -138,13 +138,13 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 				factor_info["factor_name"] = factor
 				factor_info["factor_type"] = "misc"
 				if(factor == "Temperature" || factor == "Pressure")
-					factor_info["tooltip"] = "Reaction is influenced by the [lowertext(factor)] of the place where the reaction is occuring."
+					factor_info["tooltip"] = "Reaction is influenced by the [LOWER_TEXT(factor)] of the place where the reaction is occurring."
 				else if(factor == "Energy")
 					factor_info["tooltip"] = "Energy released by the reaction, may or may not result in linear temperature change depending on a slew of other factors."
 				else if(factor == "Radiation")
 					factor_info["tooltip"] = "This reaction emits dangerous radiation! Take precautions."
 				else if (factor == "Location")
-					factor_info["tooltip"] = "This reaction has special behaviour when occuring in specific locations."
+					factor_info["tooltip"] = "This reaction has special behaviour when occurring in specific locations."
 			reaction_info["factors"] += list(factor_info)
 		GLOB.reaction_handbook += list(reaction_info)
 		qdel(reaction)
@@ -173,16 +173,20 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 	return null
 
 /**
- * A simple helped proc that checks if the contents of a list of gases are within acceptable terms.
+ * A simple helper proc that checks if the contents of a list of gases are within acceptable terms.
  *
  * Arguments:
  * * gases: The list of gases which contents are being checked
- * * gases to check: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
+ * * acceptable_gas_bounds: An associated list of gas types and acceptable boundaries in moles. e.g. /datum/gas/oxygen = list(16, 30)
  * * * if the assoc list is null, then it'll be considered a safe gas and won't return FALSE.
  * * extraneous_gas_limit: If a gas not in gases is found, this is the limit above which the proc will return FALSE.
+ *
+ * Returns TRUE if the list of gases is acceptable, FALSE otherwise.
  */
-/proc/check_gases(list/gases, list/gases_to_check, extraneous_gas_limit = 0.1)
-	gases_to_check = gases_to_check.Copy()
+/proc/check_gases(list/gases, list/acceptable_gas_bounds, extraneous_gas_limit = 0.1)
+	SHOULD_BE_PURE(TRUE)
+
+	var/list/gases_to_check = acceptable_gas_bounds.Copy() // thank you spaceman
 	for(var/id in gases)
 		var/gas_moles = gases[id][MOLES]
 		if(!(id in gases_to_check))

@@ -1,6 +1,9 @@
+/// Amount of time to wait before executing attack if not specified
+#define DEFAULT_ATTACK_DELAY (0.4 SECONDS)
+
 /datum/ai_behavior/basic_melee_attack
 	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	///do we finish this action after hitting once?
 	var/terminate_after_action = FALSE
 
@@ -8,8 +11,6 @@
 	. = ..()
 	if(!controller.blackboard[targeting_strategy_key])
 		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
-		return FALSE
 	//Hiding location is priority
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	if(QDELETED(target))
@@ -18,35 +19,44 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/basic_melee_attack/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+	var/atom/target = controller.blackboard[target_key]
+	if (isnull(target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if (!target.IsReachableBy(controller.pawn))
+		controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
+		return AI_BEHAVIOR_INSTANT
+
+	var/can_attack_time = controller.blackboard[BB_BASIC_MOB_MELEE_COOLDOWN_TIMER]
+	if (isnull(can_attack_time))
+		var/blackboard_delay = controller.blackboard[BB_BASIC_MOB_MELEE_DELAY]
+		var/attack_delay = isnull(blackboard_delay) ? DEFAULT_ATTACK_DELAY : blackboard_delay
+		controller.set_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER, world.time + attack_delay)
+		return AI_BEHAVIOR_INSTANT
+	if (can_attack_time > world.time)
+		return AI_BEHAVIOR_INSTANT
+
 	if (isliving(controller.pawn))
 		var/mob/living/pawn = controller.pawn
 		if (world.time < pawn.next_move)
-			return
+			return AI_BEHAVIOR_INSTANT
 
-	. = ..()
-	var/mob/living/basic/basic_mob = controller.pawn
-	//targeting strategy will kill the action if not real anymore
-	var/atom/target = controller.blackboard[target_key]
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
+	if(!targeting_strategy.can_attack(controller.pawn, target))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	if(!targeting_strategy.can_attack(basic_mob, target))
-		finish_action(controller, FALSE, target_key)
-		return
-
-	var/hiding_target = targeting_strategy.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
+	var/hiding_target = targeting_strategy.find_hidden_mobs(controller.pawn, target) //If this is valid, theyre hidden in something!
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(hiding_target) //Slap it!
-		basic_mob.melee_attack(hiding_target)
-	else
-		basic_mob.melee_attack(target)
-
+	var/atom/final_target = hiding_target || target
+	controller.ai_interact(target = final_target, combat_mode = TRUE)
 	if(terminate_after_action)
-		finish_action(controller, TRUE, target_key)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY
 
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
+	controller.clear_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER)
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
 
@@ -82,22 +92,21 @@
 	var/datum/targeting_strategy/targeting_strategy = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	if(!targeting_strategy.can_attack(basic_mob, target, chase_range))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	var/atom/hiding_target = targeting_strategy.find_hidden_mobs(basic_mob, target) //If this is valid, theyre hidden in something!
 	var/atom/final_target = hiding_target ? hiding_target : target
 
 	if(!can_see(basic_mob, final_target, required_distance))
-		return
+		return AI_BEHAVIOR_INSTANT
 
 	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, targeting_strategy))
 		adjust_position(basic_mob, target)
-		return ..()
+		return AI_BEHAVIOR_DELAY
 
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 	basic_mob.RangedAttack(final_target)
-	return ..() //only start the cooldown when the shot is shot
+	return AI_BEHAVIOR_DELAY //only start the cooldown when the shot is shot
 
 /datum/ai_behavior/basic_ranged_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -152,3 +161,5 @@
 
 /datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
+
+#undef DEFAULT_ATTACK_DELAY

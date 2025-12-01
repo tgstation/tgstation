@@ -1,14 +1,5 @@
 #define PAINTINGS_DATA_FORMAT_VERSION 3
 
-// Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
-#define PATRONAGE_OK_FRAME (PAYCHECK_CREW * 3) // 150 credits, as of march 2022
-#define PATRONAGE_NICE_FRAME (PATRONAGE_OK_FRAME * 2.5)
-#define PATRONAGE_GREAT_FRAME (PATRONAGE_NICE_FRAME * 2)
-#define PATRONAGE_EXCELLENT_FRAME (PATRONAGE_GREAT_FRAME * 2)
-#define PATRONAGE_AMAZING_FRAME (PATRONAGE_EXCELLENT_FRAME * 2)
-#define PATRONAGE_SUPERB_FRAME (PATRONAGE_AMAZING_FRAME * 2)
-#define PATRONAGE_LEGENDARY_FRAME (PATRONAGE_SUPERB_FRAME * 2)
-
 /*
 {
 	"version":2
@@ -102,8 +93,10 @@
 
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
-	init_order = INIT_ORDER_PERSISTENT_PAINTINGS
 	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/persistence,
+	)
 
 	/// A list of painting frames that this controls
 	var/list/obj/structure/sign/painting/painting_frames = list()
@@ -254,7 +247,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 			new_data["title"] = old_data["title"] || "Untitled Artwork"
 			new_data["creator_ckey"] = old_data["ckey"] || ""
 			new_data["creator_name"] = "Anonymous"
-			new_data["creation_date"] = time2text(world.realtime) // Could use creation/modified file helpers in rustg
+			new_data["creation_date"] = time2text(world.realtime, "DDD MMM DD hh:mm:ss YYYY", TIMEZONE_UTC) // Could use creation/modified file helpers in rustg
 			new_data["creation_round_id"] = GLOB.round_id
 			new_data["tags"] = list(category,"Migrated from version 0")
 			new_data["patron_ckey"] = ""
@@ -334,11 +327,3 @@ SUBSYSTEM_DEF(persistent_paintings)
 	cache_paintings()
 
 #undef PAINTINGS_DATA_FORMAT_VERSION
-#undef PATRONAGE_OK_FRAME
-#undef PATRONAGE_NICE_FRAME
-#undef PATRONAGE_GREAT_FRAME
-#undef PATRONAGE_EXCELLENT_FRAME
-#undef PATRONAGE_AMAZING_FRAME
-#undef PATRONAGE_SUPERB_FRAME
-#undef PATRONAGE_LEGENDARY_FRAME
-

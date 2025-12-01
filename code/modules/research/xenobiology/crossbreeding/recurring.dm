@@ -1,7 +1,7 @@
 /*
 Recurring extracts:
 	Generates a new charge every few seconds.
-	If depleted of its' last charge, stops working.
+	If depleted of its last charge, stops working.
 */
 /obj/item/slimecross/recurring
 	name = "recurring extract"

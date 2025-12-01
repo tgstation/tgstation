@@ -6,36 +6,40 @@
 	desc = "yummy"
 	icon = 'icons/obj/drinks/drinks.dmi'
 	icon_state = "glass_empty"
+	abstract_type = /obj/item/reagent_containers/cup/glass
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	resistance_flags = NONE
 
 	isGlass = TRUE
-
+	attack_verb_continuous = list("smashes", "bashes")
+	attack_verb_simple = list("smash", "bash")
 
 /obj/item/reagent_containers/cup/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
 		var/mob/thrower = throwingdatum?.get_thrower()
-		smash(hit_atom, thrower, TRUE)
+		if(!istype(thrower))
+			return
+		smash(hit_atom, thrower, throwingdatum)
 
-/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, ranged = FALSE, break_top = FALSE)
+/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
 	if(!isGlass)
 		return
 	if(QDELING(src) || !target) //Invalid loc
 		return
-	if(bartender_check(target) && ranged)
+	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	SplashReagents(target, ranged, override_spillable = TRUE)
+	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
 	B.mimic_broken(src, target, break_top)
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/P)
+/obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(P.damage > 0 && P.damage_type == BRUTE)
+	if(proj.damage > 0 && proj.damage_type == BRUTE)
 		var/atom/T = get_turf(src)
 		smash(T)
 
@@ -53,7 +57,6 @@
 	has_variable_transfer_amount = FALSE
 	volume = 5
 	obj_flags = CONDUCTS_ELECTRICITY
-	spillable = TRUE
 	resistance_flags = FIRE_PROOF
 	isGlass = FALSE
 
@@ -70,6 +73,10 @@
 	custom_materials = list(/datum/material/gold=HALF_SHEET_MATERIAL_AMOUNT)
 	volume = 150
 
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handles
+
 /obj/item/reagent_containers/cup/glass/trophy/silver_cup
 	name = "silver cup"
 	desc = "Best loser!"
@@ -82,6 +89,9 @@
 	custom_materials = list(/datum/material/silver=SMALL_MATERIAL_AMOUNT*8)
 	volume = 100
 
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item) //closed handle
 
 /obj/item/reagent_containers/cup/glass/trophy/bronze_cup
 	name = "bronze cup"
@@ -107,25 +117,36 @@
 	icon_state = "coffee"
 	base_icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
-	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
 	drink_type = BREAKFAST
-	var/lid_open = 0
+
+	/// Is our lid currently removed?
+	var/lid_open = FALSE
 
 /obj/item/reagent_containers/cup/glass/coffee/no_lid
 	icon_state = "coffee_empty"
 	list_reagents = null
+	lid_open = TRUE
+
+/obj/item/reagent_containers/cup/glass/coffee/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle cup lid.")
 	return
 
-/obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
+/obj/item/reagent_containers/cup/glass/coffee/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[lid_open ? "Add" : "Remove"] Lid"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/reagent_containers/cup/glass/coffee/click_alt(mob/user)
 	lid_open = !lid_open
 	update_icon_state()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
 	if(lid_open)
@@ -140,7 +161,6 @@
 	custom_price = PAYCHECK_LOWER * 0.6
 	icon_state = "icecup"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
-	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/ice/prison
@@ -155,7 +175,10 @@
 	icon_state = "tea_empty"
 	base_icon_state = "tea"
 	inhand_icon_state = "coffee"
-	spillable = TRUE
+
+/obj/item/reagent_containers/cup/glass/mug/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
 
 /obj/item/reagent_containers/cup/glass/mug/update_icon_state()
 	icon_state = "[base_icon_state][reagents.total_volume ? null : "_empty"]"
@@ -190,7 +213,6 @@
 	base_icon_state = "coffee_cup"
 	possible_transfer_amounts = list(10)
 	volume = 30
-	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/coffee_cup/update_icon_state()
@@ -221,104 +243,70 @@
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
 	var/cap_icon = 'icons/obj/drinks/drink_effects.dmi'
 	var/cap_icon_state = "bottle_cap_small"
-	var/cap_on = TRUE
+	var/start_capped = TRUE
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
 	custom_price = PAYCHECK_LOWER * 0.8
+	reagent_container_liquid_sound = SFX_PLASTIC_BOTTLE_LIQUID_SLOSH
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
 	. = ..()
-	if(cap_on)
-		spillable = FALSE
+	if(start_capped)
+		// this is not done via initial_reagent_flags because it represents state
+		update_container_flags(SEALED_CONTAINER | TRANSPARENT)
 		update_appearance()
 
 /obj/item/reagent_containers/cup/glass/waterbottle/update_overlays()
 	. = ..()
-	if(cap_on)
+	if(!is_open_container())
 		. += cap_overlay
 
 /obj/item/reagent_containers/cup/glass/waterbottle/examine(mob/user)
 	. = ..()
 	if(cap_lost)
 		. += span_notice("The cap seems to be missing.")
-	else if(cap_on)
+	else if(!is_open_container())
 		. += span_notice("The cap is firmly on to prevent spilling. Alt-click to remove the cap.")
 	else
 		. += span_notice("The cap has been taken off. Alt-click to put a cap on.")
 
-/obj/item/reagent_containers/cup/glass/waterbottle/AltClick(mob/user)
-	. = ..()
+/obj/item/reagent_containers/cup/glass/waterbottle/click_alt(mob/user)
 	if(cap_lost)
 		to_chat(user, span_warning("The cap seems to be missing! Where did it go?"))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
-	if(cap_on || fumbled)
-		cap_on = FALSE
-		spillable = TRUE
+	if(!is_open_container() || fumbled)
+		reset_container_flags()
 		animate(src, transform = null, time = 2, loop = 0)
 		if(fumbled)
 			to_chat(user, span_warning("You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?"))
 			cap_lost = TRUE
 		else
 			to_chat(user, span_notice("You remove the cap from [src]."))
-			playsound(loc, 'sound/effects/can_open1.ogg', 50, TRUE)
+			playsound(loc, 'sound/items/handling/reagent_containers/plastic_bottle/bottle_cap_open.ogg', 50, TRUE)
 	else
-		cap_on = TRUE
-		spillable = FALSE
+		update_container_flags(SEALED_CONTAINER | TRANSPARENT)
 		to_chat(user, span_notice("You put the cap on [src]."))
+		playsound(loc, 'sound/items/handling/reagent_containers/plastic_bottle/bottle_cap_close.ogg', 50, TRUE)
 	update_appearance()
-
-/obj/item/reagent_containers/cup/glass/waterbottle/is_refillable()
-	if(cap_on)
-		return FALSE
-	return ..()
-
-/obj/item/reagent_containers/cup/glass/waterbottle/is_drainable()
-	if(cap_on)
-		return FALSE
-	return ..()
-
-/obj/item/reagent_containers/cup/glass/waterbottle/attack(mob/target, mob/living/user, def_zone)
-	if(!target)
-		return
-
-	if(cap_on && reagents.total_volume && istype(target))
-		to_chat(user, span_warning("You must remove the cap before you can do that!"))
-		return
-
-	return ..()
-
-/obj/item/reagent_containers/cup/glass/waterbottle/afterattack(obj/target, mob/living/user, proximity)
-	. |= AFTERATTACK_PROCESSED_ITEM
-
-	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
-		to_chat(user, span_warning("You must remove the cap before you can do that!"))
-		return
-
-	else if(istype(target, /obj/item/reagent_containers/cup/glass/waterbottle))
-		var/obj/item/reagent_containers/cup/glass/waterbottle/other_bottle = target
-		if(other_bottle.cap_on)
-			to_chat(user, span_warning("[other_bottle] has a cap firmly twisted on!"))
-			return
-
-	return . | ..()
+	return CLICK_ACTION_SUCCESS
 
 // heehoo bottle flipping
 /obj/item/reagent_containers/cup/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(!cap_on || !reagents.total_volume)
+	if(is_open_container() || !reagents.total_volume)
 		return
 	if(prob(flip_chance)) // landed upright
 		src.visible_message(span_notice("[src] lands upright!"))
 		var/mob/living/thrower = throwingdatum?.get_thrower()
-		if(thrower)
+		if(istype(thrower))
 			thrower.add_mood_event("bottle_flip", /datum/mood_event/bottle_flip)
-	else // landed on it's side
+	else // landed on its side
 		animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
 /obj/item/reagent_containers/cup/glass/waterbottle/pickup(mob/user)
@@ -327,7 +315,7 @@
 
 /obj/item/reagent_containers/cup/glass/waterbottle/empty
 	list_reagents = list()
-	cap_on = FALSE
+	start_capped = FALSE
 
 /obj/item/reagent_containers/cup/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
@@ -341,7 +329,7 @@
 
 /obj/item/reagent_containers/cup/glass/waterbottle/large/empty
 	list_reagents = list()
-	cap_on = FALSE
+	start_capped = FALSE
 
 // Admin spawn
 /obj/item/reagent_containers/cup/glass/waterbottle/relic
@@ -364,7 +352,6 @@
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = list(10)
 	volume = 10
-	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/sillycup/update_icon_state()
@@ -388,11 +375,11 @@
 		base_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton, \
 	)
 
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
-	if(bartender_check(target) && ranged)
+/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
+	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	SplashReagents(target, ranged, override_spillable = TRUE)
-	var/obj/item/broken_bottle/bottle_shard = new (loc)
+	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
 	bottle_shard.mimic_broken(src, target)
 	qdel(src)
 	target.Bumped(bottle_shard)
@@ -421,6 +408,13 @@
 	if(icon_state == "colocup6")
 		desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
 
+/obj/item/reagent_containers/cup/glass/colocup/lean
+	name = "lean"
+	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
+	icon_state = "lean"
+	list_reagents = list(/datum/reagent/consumable/lean = 20)
+	random_sprite = FALSE
+
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
 // itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
@@ -436,6 +430,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	interaction_flags_click = NEED_HANDS|FORBID_TELEKINESIS_REACH
 	/// Whether or not poured drinks should use custom names and descriptions
 	var/using_custom_drinks = FALSE
 	/// Name custom drinks will have
@@ -463,34 +458,30 @@
 		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
 		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
 
-/obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
-
+/obj/item/reagent_containers/cup/glass/shaker/click_alt(mob/user)
 	if(using_custom_drinks)
 		using_custom_drinks = FALSE
 		disable_custom_drinks()
 		balloon_alert(user, "custom drinks disabled")
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
 	if(!new_name)
 		balloon_alert(user, "invalid drink name!")
 		using_custom_drinks = FALSE
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
 	if(!new_desc)
 		balloon_alert(user, "invalid drink description!")
 		using_custom_drinks = FALSE
-		return
+		return CLICK_ACTION_BLOCKING
 
 	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return
+		return CLICK_ACTION_BLOCKING
 
 	using_custom_drinks = TRUE
 	custom_drink_name = new_name
@@ -498,6 +489,7 @@
 
 	enable_custom_drinks()
 	balloon_alert(user, "now pouring custom drinks")
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
 	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))
@@ -543,9 +535,8 @@
 
 /obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"
-	desc = "A cup with the british flag emblazoned on it."
+	desc = "A cup with the British flag emblazoned on it."
 	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "britcup_empty"
 	base_icon_state = "britcup"
 	volume = 30
-	spillable = TRUE

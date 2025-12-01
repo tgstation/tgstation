@@ -1,5 +1,6 @@
 
 /obj
+	abstract_type = /obj
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
@@ -7,10 +8,12 @@
 	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
 	var/desc_controls
 
+	/// The context returned when an attack against this object doesn't deal any traditional damage to the object.
+	var/no_damage_feedback = "without leaving a mark"
 	/// Icon to use as a 32x32 preview in crafting menus and such
 	var/icon_preview
 	var/icon_state_preview
-	/// The vertical pixel offset applied when the object is anchored on a tile with table
+	/// The vertical pixel_z offset applied when the object is anchored on a tile with table
 	/// Ignored when set to 0 - to avoid shifting directional wall-mounted objects above tables
 	var/anchored_tabletop_offset = 0
 
@@ -20,24 +23,28 @@
 	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
 	var/wound_bonus = 0
 	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
-	var/bare_wound_bonus = 0
+	var/exposed_wound_bonus = 0
 
-	/// A multiplier to an objecet's force when used against a stucture, vechicle, machine, or robot.
+	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
+	/// Use [/obj/proc/get_demolition_modifier] to get the value.
 	var/demolition_mod = 1
 
-	var/current_skin //Has the item been reskinned?
-	var/list/unique_reskin //List of options to reskin.
-
-	/// Custom fire overlay icon, will just use the default overlay if this is null
+	/// Cached custom fire overlay
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
 	var/burning_particles
 
-	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
+	var/drag_slowdown // Amount of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
+
+	/// The sound this obj makes when something is buckled to it
+	var/buckle_sound = null
+
+	/// The sound this obj makes when something is unbuckled from it
+	var/unbuckle_sound = null
 
 	uses_integrity = TRUE
 
@@ -57,32 +64,59 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
+	if(opacity)
+		SScameras.update_visibility(src)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	if(opacity)
+		SScameras.update_visibility(src)
 	SStgui.close_uis(src)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
 
-/obj/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!attacking_item.force)
-		return
+		return 0
 
-	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+	var/demo_mod = attacking_item.get_demolition_modifier(src)
+	var/total_force = CALCULATE_FORCE(attacking_item, attack_modifiers) * demo_mod
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
-	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1)
+	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+		// Sanity in case one is null for some reason
+		var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
 
-	var/damage_verb = "hit"
+		var/message_verb_continuous = "attacks"
+		var/message_verb_simple = "attack"
+		// Sanity in case one is... longer than the other?
+		if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
+			message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
+		if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
+			message_verb_simple = attacking_item.attack_verb_simple[picked_index]
 
-	if(attacking_item.demolition_mod > 1 && damage)
-		damage_verb = "pulverise"
-	if(attacking_item.demolition_mod < 1)
-		damage_verb = "ineffectively pierce"
+		if(demo_mod > 1 && prob(damage * 5))
+			if(HAS_TRAIT(src, TRAIT_INVERTED_DEMOLITION))
+				message_verb_simple = "shred"
+				message_verb_continuous = "shreds"
+			else
+				message_verb_simple = "pulverise"
+				message_verb_continuous = "pulverises"
 
-	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
-		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+		if(demo_mod < 1)
+			message_verb_simple = "ineffectively " + message_verb_simple
+			message_verb_continuous = "ineffectively " + message_verb_continuous
+
+		user.visible_message(
+			span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			null,
+			COMBAT_MESSAGE_RANGE,
+		)
+
 	log_combat(user, src, "attacked", attacking_item)
+	return damage
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -115,54 +149,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	else
 		return null
 
-/obj/proc/updateUsrDialog()
-	if(!(obj_flags & IN_USE))
-		return
-
-	var/is_in_use = FALSE
-	var/list/nearby = viewers(1, src)
-	for(var/mob/M in nearby)
-		if ((M.client && M.machine == src))
-			is_in_use = TRUE
-			ui_interact(M)
-	if(issilicon(usr) || isAdminGhostAI(usr))
-		if (!(usr in nearby))
-			if (usr.client && usr.machine == src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-				is_in_use = TRUE
-				ui_interact(usr)
-
-	// check for TK users
-
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(!(usr in nearby))
-			if(usr.client && usr.machine == src)
-				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
-					is_in_use = TRUE
-					ui_interact(usr)
-	if (is_in_use)
-		obj_flags |= IN_USE
-	else
-		obj_flags &= ~IN_USE
-
-/obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
-	// Check that people are actually using the machine. If not, don't update anymore.
-	if(obj_flags & IN_USE)
-		var/is_in_use = FALSE
-		if(update_viewers)
-			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
-					is_in_use = TRUE
-					src.interact(M)
-		var/ai_in_use = FALSE
-		if(update_ais)
-			ai_in_use = AutoUpdateAI(src)
-
-		if(update_viewers && update_ais) //State change is sure only if we check both
-			if(!ai_in_use && !is_in_use)
-				obj_flags &= ~IN_USE
-
-
 /obj/attack_ghost(mob/user)
 	. = ..()
 	if(.)
@@ -170,45 +156,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
-/mob/proc/unset_machine()
-	SIGNAL_HANDLER
-	if(!machine)
-		return
-	UnregisterSignal(machine, COMSIG_QDELETING)
-	machine.on_unset_machine(src)
-	machine = null
-
-//called when the user unsets the machine.
-/atom/movable/proc/on_unset_machine(mob/user)
-	return
-
-/mob/proc/set_machine(obj/O)
-	if(QDELETED(src) || QDELETED(O))
-		return
-	if(machine)
-		unset_machine()
-	machine = O
-	RegisterSignal(O, COMSIG_QDELETING, PROC_REF(unset_machine))
-	if(istype(O))
-		O.obj_flags |= IN_USE
-
-/obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
-	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
-
-/obj/singularity_pull(S, current_size)
+/obj/singularity_pull(atom/singularity, current_size)
 	..()
 	if(move_resist == INFINITY)
 		return
 	if(!anchored || current_size >= STAGE_FIVE)
-		step_towards(src,S)
+		step_towards(src, singularity)
 
 /obj/get_dumping_location()
 	return get_turf(src)
-
-/obj/proc/check_uplink_validity()
-	return 1
 
 /obj/vv_get_dropdown()
 	. = ..()
@@ -223,9 +179,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	if(href_list[VV_HK_OSAY])
-		if(!check_rights(R_FUN, FALSE))
-			return
-		usr.client.object_say(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/object_say, src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
 		if(!check_rights(R_DEBUG|R_SERVER))
@@ -268,58 +222,13 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(desc_controls)
 		. += span_notice(desc_controls)
-	if(obj_flags & UNIQUE_RENAME)
-		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)))
-		. += span_notice("Alt-click it to reskin it.")
 
-/obj/AltClick(mob/user)
+/obj/examine_tags(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)) && user.can_perform_action(src, NEED_DEXTERITY))
-		reskin_obj(user)
-
-/**
- * Reskins object based on a user's choice
- *
- * Arguments:
- * * M The mob choosing a reskin option
- */
-/obj/proc/reskin_obj(mob/user)
-	if(!LAZYLEN(unique_reskin))
-		return
-
-	var/list/items = list()
-	for(var/reskin_option in unique_reskin)
-		var/image/item_image = image(icon = src.icon, icon_state = unique_reskin[reskin_option])
-		items += list("[reskin_option]" = item_image)
-	sort_list(items)
-
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user), radius = 38, require_near = TRUE)
-	if(!pick)
-		return
-	if(!unique_reskin[pick])
-		return
-	current_skin = pick
-	icon_state = unique_reskin[pick]
-	to_chat(user, "[src] is now skinned as '[pick].'")
-	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
-
-/**
- * Checks if we are allowed to interact with a radial menu for reskins
- *
- * Arguments:
- * * user The mob interacting with the menu
- */
-/obj/proc/check_reskin_menu(mob/user)
-	if(QDELETED(src))
-		return FALSE
-	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
-		return FALSE
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
-		return FALSE
-	return TRUE
+	if(obj_flags & UNIQUE_RENAME)
+		.["renameable"] = "Use a pen on it to rename it or change its description."
+	if(obj_flags & CONDUCTS_ELECTRICITY)
+		.["conductive"] = "It appears to be a good conductor of electricity."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -329,14 +238,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	return SEND_SIGNAL(src, COMSIG_PLUNGER_ACT, attacking_plunger, user, reinforced)
 
-// Should move all contained objects to it's location.
+// Should move all contained objects to its location.
 /obj/proc/dump_contents()
+	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented.")
 
-/obj/handle_ricochet(obj/projectile/P)
+/obj/handle_ricochet(obj/projectile/proj)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(proj.damage * receive_ricochet_damage_coeff, proj.damage_type, proj.armor_flag, 0, REVERSE_DIR(proj.dir), proj.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
@@ -345,9 +255,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_OBJ, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_obj(src, reagents[R])
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_obj(src, reac_volume, methods, show_message)
 
 /// Attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
 /obj/proc/freeze()
@@ -365,15 +275,13 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return CANT_UNFASTEN
 	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
 		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
 /// Try to unwrench an object in a WONDERFUL DYNAMIC WAY
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 2 SECONDS)
 	if(wrench.tool_behaviour != TOOL_WRENCH)
 		return CANT_UNFASTEN
 
@@ -409,7 +317,53 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return FALSE
 	return TRUE
 
-/// Adjusts the vertical pixel offset when the object is anchored on a tile with table
+/// Adjusts the vertical pixel_z offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
-	if(anchored_tabletop_offset != 0 && !istype(src, /obj/structure/table) && locate(/obj/structure/table) in loc)
-		pixel_y = anchored ? anchored_tabletop_offset : initial(pixel_y)
+	if(anchored_tabletop_offset == 0)
+		return
+	if(istype(src, /obj/structure/table))
+		return
+
+	if(anchored && locate(/obj/structure/table) in loc)
+		pixel_z = anchored_tabletop_offset
+	else
+		pixel_z = initial(pixel_z)
+
+/obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force *= strength_mod
+	throwforce *= strength_mod
+
+///This proc is called when the material is removed from an object specifically.
+/obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force /= strength_mod
+	throwforce /= strength_mod
+
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
+		return (1 / demolition_mod)
+	return demolition_mod
+
+/// Checks performed by a renamable object(through UNIQUE_RENAME obj_flag) before renaming begins.
+/obj/proc/rename_checks(mob/living/user)
+	return TRUE
+
+/// Returns the final name of the object, and does any side effects of renaming, such as sounds.
+/obj/proc/nameformat(input, mob/living/user)
+	return input
+
+/// Same as nameformat, but for desc.
+/obj/proc/descformat(input, mob/living/user)
+	return input
+
+/// Called when UNIQUE_RENAME is reset
+/obj/proc/rename_reset()
+	return

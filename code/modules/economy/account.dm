@@ -37,6 +37,8 @@
 	var/list/transaction_history = list()
 	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
 	var/list/redeemed_coupons
+	/// How many paychecks to skip when payday is called.
+	var/paydays_to_skip = 0
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -44,12 +46,13 @@
 	payday_modifier = modifier
 	add_to_accounts = player_account
 	setup_unique_account_id()
+	update_account_job_lists(job)
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
-		SSeconomy.bank_accounts_by_job[account_job] -= src
+		SSeconomy.bank_accounts_by_job[account_job.type] -= src
 	QDEL_LIST(redeemed_coupons)
 	return ..()
 
@@ -71,11 +74,23 @@
 	if(SSeconomy.bank_accounts_by_id["[account_id]"])
 		stack_trace("Unable to find a unique account ID, substituting currently existing account of id [account_id].")
 	SSeconomy.bank_accounts_by_id["[account_id]"] = src
-	if(account_job)
-		LAZYADD(SSeconomy.bank_accounts_by_job[account_job], src)
+
+/**
+ * Proc places this account into the right place in the `SSeconomy.bank_accounts_by_job` list, if needed.
+ * If an old job is given, it removes it from its previous place first.
+ */
+/datum/bank_account/proc/update_account_job_lists(datum/job/new_job, datum/job/old_job)
+	if(!add_to_accounts)
+		return
+
+	if(old_job)
+		SSeconomy.bank_accounts_by_job[old_job.type] -= src
+	if(new_job)
+		LAZYADD(SSeconomy.bank_accounts_by_job[new_job.type], src)
 
 /datum/bank_account/vv_edit_var(var_name, var_value) // just so you don't have to do it manually
 	var/old_id = account_id
+	var/datum/job/old_job = account_job
 	var/old_balance = account_balance
 	. = ..()
 	switch(var_name)
@@ -83,11 +98,15 @@
 			if(add_to_accounts)
 				SSeconomy.bank_accounts_by_id -= "[old_id]"
 				setup_unique_account_id()
+		if(NAMEOF(src, account_job))
+			update_account_job_lists(account_job, old_job)
 		if(NAMEOF(src, add_to_accounts))
 			if(add_to_accounts)
 				setup_unique_account_id()
+				update_account_job_lists(account_job)
 			else
 				SSeconomy.bank_accounts_by_id -= "[account_id]"
+				SSeconomy.bank_accounts_by_job[account_job.type] -= src
 		if(NAMEOF(src, account_balance))
 			add_log_to_history(var_value - old_balance, "Nanotrasen: Moderator Action")
 
@@ -171,10 +190,21 @@
  * Arguments:
  * * amount_of_paychecks - literally the number of salaries, 1 for issuing one salary, 5 for issuing five salaries.
  * * free - issuance of free funds, if TRUE then takes funds from the void, if FALSE (default) tries to send from the department's account.
+ * * skippable - if TRUE, this proc may pay out nothing if the account has paydays_to_skip
+ * * event - the name of the event that is being processed, used for bank card messages.
  */
-/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE)
+/datum/bank_account/proc/payday(amount_of_paychecks, free = FALSE, skippable = FALSE, event = "Payday")
 	if(!account_job)
-		return
+		return FALSE
+
+	if(skippable && !free)
+		while(paydays_to_skip > 0 && amount_of_paychecks > 0)
+			amount_of_paychecks -= 1
+			paydays_to_skip -= 1
+
+	if(amount_of_paychecks <= 0)
+		return FALSE
+
 	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
 	if(amount_of_paychecks == 1)
 		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
@@ -184,17 +214,15 @@
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
 		return TRUE
-	else
-		var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
-		if(department_account)
-			if(!transfer_money(department_account, money_to_transfer))
-				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
-				return FALSE
-			else
-				bank_card_talk("Payday processed, account now holds [account_balance] cr.")
-				return TRUE
-	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
-	return FALSE
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
+	if(isnull(department_account))
+		bank_card_talk("ERROR: [event] aborted, unable to contact departmental account.")
+		return FALSE
+	if(!transfer_money(department_account, money_to_transfer))
+		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
+		return FALSE
+	bank_card_talk("[event] processed, account now holds [account_balance] cr.")
+	return TRUE
 
 /**
  * This sends a local chat message to the owner of a bank account, on all ID cards registered to the bank_account.
@@ -217,7 +245,7 @@
 				return
 
 			if(card_holder.can_hear())
-				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground
 			var/turf/card_location = card.loc
@@ -225,7 +253,7 @@
 				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
 				if(potential_hearer.can_hear())
-					potential_hearer.playsound_local(card_location, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+					potential_hearer.playsound_local(card_location, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
 			var/atom/sound_atom
@@ -235,7 +263,7 @@
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
 				if(potential_hearer.can_hear())
-					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 
 /**

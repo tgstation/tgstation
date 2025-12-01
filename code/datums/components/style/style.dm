@@ -37,8 +37,6 @@
 	var/timerid
 	/// Highest score attained by this component, to avoid as much overhead when considering to award a high score to the client
 	var/high_score = 0
-	/// Weakref to the added projectile parry component
-	var/datum/weakref/projectile_parry
 	/// What rank, minimum, the user needs to be to hotswap items
 	var/hotswap_rank = STYLE_BRUTAL
 	/// If this is multitooled, making it make funny noises on the user's rank going up
@@ -97,11 +95,10 @@
 		src.multitooled = multitooled
 
 /datum/component/style/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(hotswap))
+	RegisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hotswap))
 	RegisterSignal(parent, COMSIG_MOB_MINED, PROC_REF(on_mine))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
-	RegisterSignal(parent, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
-	RegisterSignal(parent, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
+	RegisterSignal(parent, COMSIG_MOB_EMOTED("taunt"), PROC_REF(on_taunt))
 	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punch))
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(on_death))
@@ -110,26 +107,13 @@
 	RegisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE, PROC_REF(on_gibtonite_defuse))
 	RegisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE, PROC_REF(on_crusher_detonate))
 	RegisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER, PROC_REF(on_geyser_discover))
-
-	projectile_parry = WEAKREF(parent.AddComponent(\
-		/datum/component/projectile_parry,\
-		list(\
-			/obj/projectile/colossus,\
-			/obj/projectile/temp/watcher,\
-			/obj/projectile/kinetic,\
-			/obj/projectile/bileworm_acid,\
-			/obj/projectile/herald,\
-			/obj/projectile/kiss,\
-			)\
-		)
-	)
-
+	ADD_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOB_ITEM_AFTERATTACK)
+	UnregisterSignal(parent, COMSIG_USER_PRE_ITEM_ATTACK)
 	UnregisterSignal(parent, COMSIG_MOB_MINED)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(parent, list(COMSIG_MOB_EMOTED("flip"), COMSIG_MOB_EMOTED("spin")))
+	UnregisterSignal(parent, COMSIG_MOB_EMOTED("taunt"))
 	UnregisterSignal(parent, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_LIVING_UNARMED_ATTACK))
 	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
 	UnregisterSignal(parent, COMSIG_LIVING_RESONATOR_BURST)
@@ -137,10 +121,7 @@
 	UnregisterSignal(parent, COMSIG_LIVING_DEFUSED_GIBTONITE)
 	UnregisterSignal(parent, COMSIG_LIVING_CRUSHER_DETONATE)
 	UnregisterSignal(parent, COMSIG_LIVING_DISCOVERED_GEYSER)
-
-	if(projectile_parry)
-		qdel(projectile_parry.resolve())
-
+	REMOVE_TRAIT(parent, TRAIT_MINING_PARRYING, STYLE_TRAIT)
 
 /datum/component/style/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
@@ -150,27 +131,23 @@
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	return ..()
 
-
 /datum/component/style/process(seconds_per_tick)
 	point_multiplier = round(max(point_multiplier - 0.2 * seconds_per_tick, 1), 0.1)
 	change_points(-5 * seconds_per_tick * ROUND_UP((style_points + 1) / 200), use_multiplier = FALSE)
 	update_screen()
 
-
-
 /datum/component/style/proc/add_action(action, amount)
 	if(length(actions) > 9)
 		actions.Cut(1, 2)
+	var/action_id = 0
 	if(length(actions))
 		var/last_action = actions[length(actions)]
 		if(action == actions[last_action])
 			amount *= 0.5
-	var/id
-	while(!id || (id in actions))
-		id = "action[rand(1, 1000)]"
-	actions[id] = action
+		action_id = text2num(last_action) + 1
+	actions["[action_id]"] = action
 	change_points(amount)
-	addtimer(CALLBACK(src, PROC_REF(remove_action), id), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(remove_action), action_id), 10 SECONDS)
 
 /datum/component/style/proc/remove_action(action_id)
 	actions -= action_id
@@ -219,7 +196,7 @@
 
 			rank = rank_changed
 	meter.maptext = "[format_rank_string(rank)][generate_multiplier()][generate_actions()]"
-	meter.maptext_y = 100 - 9 * length(actions)
+	meter.maptext_y = initial(meter.maptext_y) - 12 * length(actions)
 	update_meter(point_to_rank(), go_back)
 
 /datum/component/style/proc/update_meter(new_rank, go_back)
@@ -270,19 +247,15 @@
 			return "SPACED!"
 
 /datum/component/style/proc/format_rank_string(new_rank)
-	var/rank_string = rank_to_string(new_rank)
-	var/final_string = ""
-	final_string += "<span class='maptext' style='font-size: 8px'><font color='[rank_to_color(new_rank)]'><b>[rank_string[1]]</b>"
-	final_string += "<span style='font-size: 7px'>[copytext(rank_string, 2)]</span></font></span>"
-	return final_string
+	return MAPTEXT_PIXELLARI("<font color='[rank_to_color(new_rank)]'>[rank_to_string(new_rank)]</font>")
 
 /datum/component/style/proc/generate_multiplier()
-	return "<br><span class='maptext' style='font-size: 7px'>MULTIPLIER: [point_multiplier]X</span>"
+	return "<br>" + MAPTEXT_GRAND9K("MULTIPLIER: [point_multiplier]X")
 
 /datum/component/style/proc/generate_actions()
 	var/action_string = ""
 	for(var/action in actions)
-		action_string += "<br><span class='maptext'>+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font></span>"
+		action_string += "<br>" + MAPTEXT_GRAND9K("+ <font color='[action_to_color(actions[action])]'>[actions[action]]</font>")
 	return action_string
 
 /datum/component/style/proc/action_to_color(action)
@@ -319,26 +292,28 @@
 			return "#364866"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
-/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, proximity_flag, click_parameters)
+/datum/component/style/proc/hotswap(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-
-	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
-		return
+	if((rank < hotswap_rank) || !isitem(target) || get(target, /mob/living) != source)
+		return NONE
 
 	var/obj/item/item_target = target
-
 	if(!(item_target.item_flags & IN_STORAGE))
-		return
+		return NONE
 
-	var/datum/storage/atom_storage = item_target.loc.atom_storage
+	INVOKE_ASYNC(src, PROC_REF(hotswap_interact), source, weapon, target, modifiers)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
+/datum/component/style/proc/hotswap_interact(mob/living/source, obj/item/weapon, atom/target, list/modifiers)
+	var/datum/storage/atom_storage = target.loc.atom_storage
 	if(!atom_storage.can_insert(weapon, source, messages = FALSE))
 		source.balloon_alert(source, "unable to hotswap!")
 		return
 
-	atom_storage.attempt_insert(weapon, source, override = TRUE)
-	INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, put_in_hands), target)
-	source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
+	if (atom_storage.attempt_insert(weapon, source, override = TRUE) && source.put_in_hands(target))
+		source.visible_message(span_notice("[source] quickly swaps [weapon] out with [target]!"), span_notice("You quickly swap [weapon] with [target]."))
+	else
+		source.balloon_alert(source, "unable to hotswap!")
 
 // Point givers
 /datum/component/style/proc/on_punch(mob/living/carbon/human/punching_person, atom/attacked_atom, proximity)
@@ -366,7 +341,7 @@
 
 	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked) ? 1.5 : 1))
 
-/datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, give_exp)
+/datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, exp_multiplier)
 	SIGNAL_HANDLER
 
 	if(istype(rock, /turf/closed/mineral/gibtonite))
@@ -385,11 +360,11 @@
 				return
 
 	if(rock.mineralType)
-		if(give_exp)
+		if(exp_multiplier)
 			add_action(ACTION_ORE_MINED, 40)
 		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
-	else if(give_exp)
+	else if(exp_multiplier)
 		add_action(ACTION_ROCK_MINED, 25)
 
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
@@ -431,18 +406,11 @@
 
 
 // Emote-based multipliers
-/datum/component/style/proc/on_flip()
+/datum/component/style/proc/on_taunt()
 	SIGNAL_HANDLER
 
 	point_multiplier = round(min(point_multiplier + 0.5, 3), 0.1)
 	update_screen()
-
-/datum/component/style/proc/on_spin()
-	SIGNAL_HANDLER
-
-	point_multiplier = round(min(point_multiplier + 0.3, 3), 0.1)
-	update_screen()
-
 
 // Negative effects
 /datum/component/style/proc/on_take_damage(...)

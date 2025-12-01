@@ -51,11 +51,13 @@
 /datum/component/irradiated/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
+	RegisterSignal(parent, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
 
 /datum/component/irradiated/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_GEIGER_COUNTER_SCAN,
+		COMSIG_LIVING_HEALTHSCAN,
 	))
 
 /datum/component/irradiated/Destroy(force)
@@ -83,14 +85,14 @@
 		return PROCESS_KILL
 
 	var/mob/living/carbon/human/human_parent = parent
-	if (human_parent.getToxLoss() == 0)
+	if (human_parent.get_tox_loss() == 0)
 		qdel(src)
 		return PROCESS_KILL
 
 	if (should_halt_effects(parent))
 		return
 
-	if (human_parent.stat > DEAD)
+	if (human_parent.stat != DEAD)
 		human_parent.dna?.species?.handle_radiation(human_parent, world.time - beginning_of_irradiation, seconds_per_tick)
 
 	process_tox_damage(human_parent, seconds_per_tick)
@@ -138,10 +140,10 @@
 	if(human_parent.is_blind())
 		to_chat(human_parent, span_boldwarning("Your [affected_limb.plaintext_zone] feels like it's bubbling, then burns like hell!"))
 
-	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb)
+	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, wound_clothing = FALSE)
 	playsound(
 		human_parent,
-		pick('sound/effects/wounds/sizzle1.ogg', 'sound/effects/wounds/sizzle2.ogg'),
+		SFX_SIZZLE,
 		50,
 		vary = TRUE,
 	)
@@ -166,11 +168,11 @@
 	SIGNAL_HANDLER
 
 	if (!(clean_types & CLEAN_TYPE_RADIATION))
-		return
+		return NONE
 
 	if (isitem(parent))
 		qdel(src)
-		return COMPONENT_CLEANED
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 	COOLDOWN_START(src, clean_cooldown, RADIATION_CLEAN_IMMUNITY_TIME)
 
@@ -179,17 +181,25 @@
 
 	if (isliving(source))
 		var/mob/living/living_source = source
-		to_chat(user, span_boldannounce("[icon2html(geiger_counter, user)] Subject is irradiated. Contamination traces back to roughly [DisplayTimeText(world.time - beginning_of_irradiation, 5)] ago. Current toxin levels: [living_source.getToxLoss()]."))
+		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Subject is irradiated. Contamination traces back to roughly [DisplayTimeText(world.time - beginning_of_irradiation, 5)] ago. Current toxin levels: [living_source.get_tox_loss()]."))
 	else
 		// In case the green wasn't obvious enough...
-		to_chat(user, span_boldannounce("[icon2html(geiger_counter, user)] Target is irradiated."))
+		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Target is irradiated."))
 
 	return COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL
+
+/datum/component/irradiated/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+	SIGNAL_HANDLER
+
+	render_list += "<span class='alert ml-1'>"
+	render_list += conditional_tooltip("Subject is irradiated.", "Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", tochat)
+	render_list += "</span><br>"
 
 /atom/movable/screen/alert/irradiated
 	name = "Irradiated"
 	desc = "You're irradiated! Heal your toxins quick, and stand under a shower to halt the incoming damage."
-	icon_state = ALERT_IRRADIATED
+	use_user_hud_icon = TRUE
+	overlay_state = "irradiated"
 
 #undef RADIATION_BURN_SPLOTCH_DAMAGE
 #undef RADIATION_BURN_INTERVAL_MIN

@@ -5,12 +5,13 @@
 	overlay_icon = "motorized_wheelchair_overlay"
 	foldabletype = null
 	max_integrity = 150
+	ttv_icon = "motor_chair_ttv"
 	///How "fast" the wheelchair goes only affects ramming
 	var/speed = 2
 	///Self explanatory, ratio of how much power we use
 	var/power_efficiency = 1
-	///How much power we use
-	var/power_usage = 100
+	///How much energy we use
+	var/energy_usage = 0.1 * STANDARD_CELL_CHARGE
 	///whether the panel is open so a user can take out the cell
 	var/panel_open = FALSE
 	///Parts used in building the wheelchair
@@ -20,31 +21,36 @@
 		/datum/stock_part/capacitor,
 	)
 	///power cell we draw power from
-	var/obj/item/stock_parts/cell/power_cell
+	var/obj/item/stock_parts/power_store/power_cell
 	///stock parts for this chair
 	var/list/component_parts = list()
 
 /obj/vehicle/ridden/wheelchair/motorized/Initialize(mapload)
 	. = ..()
+	add_component_parts()
+	refresh_parts()
+
+/obj/vehicle/ridden/wheelchair/motorized/proc/add_component_parts()
 	// Add tier 1 stock parts so that non-crafted wheelchairs aren't empty
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
 	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
-	power_cell = new /obj/item/stock_parts/cell(src)
-	refresh_parts()
+	power_cell = new /obj/item/stock_parts/power_store/cell(src)
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
-/obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
-	// This wheelchair was crafted, so clean out default parts
-	qdel(power_cell)
-	component_parts = list()
+/obj/vehicle/ridden/wheelchair/motorized/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
 
-	for(var/obj/item/stock_parts/part in parts_list)
-		if(istype(part, /obj/item/stock_parts/cell)) // power cell, physically moves into the wheelchair
+	// This wheelchair was crafted, so clean out default parts
+	QDEL_NULL(power_cell)
+
+	component_parts = list()
+	for(var/obj/item/stock_parts/part in contents)
+		// power cell, physically moves into the wheelchair
+		if(istype(part, /obj/item/stock_parts/power_store/cell))
 			power_cell = part
-			part.forceMove(src)
 			continue
 
 		// find matching datum/stock_part for this part and add to component list
@@ -52,8 +58,6 @@
 		if(isnull(newstockpart))
 			CRASH("No corresponding datum/stock_part for [part.type]")
 		component_parts += newstockpart
-		// delete this part
-		part.moveToNullspace()
 		qdel(part)
 	refresh_parts()
 
@@ -63,7 +67,7 @@
 		speed += servo.tier
 	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
 	if(icon_state != chair_icon)
-		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER)
+		overlay_icon = chair_icon + "_overlay"
 
 	icon_state = chair_icon
 
@@ -73,21 +77,13 @@
 /obj/vehicle/ridden/wheelchair/motorized/get_cell()
 	return power_cell
 
-/obj/vehicle/ridden/wheelchair/motorized/atom_destruction(damage_flag)
-	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
-	if(!isnull(power_cell))
-		power_cell.forceMove(drop_location())
-		power_cell = null
-	return ..()
-
 /obj/vehicle/ridden/wheelchair/motorized/relaymove(mob/living/user, direction)
 	if(!power_cell)
 		to_chat(user, span_warning("There seems to be no cell installed in [src]."))
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
 		return FALSE
-	if(power_cell.charge < power_usage / max(power_efficiency, 1))
+	if(power_cell.charge < energy_usage / max(power_efficiency, 1))
 		to_chat(user, span_warning("The display on [src] blinks 'Out of Power'."))
 		canmove = FALSE
 		addtimer(VARSET_CALLBACK(src, canmove, TRUE), 2 SECONDS)
@@ -97,16 +93,15 @@
 /obj/vehicle/ridden/wheelchair/motorized/attack_hand(mob/living/user, list/modifiers)
 	if(!power_cell || !panel_open)
 		return ..()
-	power_cell.update_appearance()
 	to_chat(user, span_notice("You remove [power_cell] from [src]."))
 	user.put_in_hands(power_cell)
 	power_cell = null
 
-/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, params)
+/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!panel_open)
 		return ..()
 
-	if(istype(attacking_item, /obj/item/stock_parts/cell))
+	if(istype(attacking_item, /obj/item/stock_parts/power_store/cell))
 		if(power_cell)
 			to_chat(user, span_warning("There is a power cell already installed."))
 		else
@@ -141,20 +136,19 @@
 				break
 	refresh_parts()
 
-/obj/vehicle/ridden/wheelchair/motorized/wrench_act(mob/living/user, obj/item/tool)
-	balloon_alert(user, "disassembling")
-	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
-		return ITEM_INTERACT_SUCCESS
-	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
-	new /obj/item/stack/rods(drop_location(), 8)
-	new /obj/item/stack/sheet/iron(drop_location(), 10)
+/obj/vehicle/ridden/wheelchair/motorized/handle_deconstruct(disassembled)
+	. = ..()
+	if (!disassembled)
+		return
+
+	var/atom/drop = drop_location()
+	new /obj/item/stack/rods(drop, 2)
+	new /obj/item/stack/sheet/iron(drop, 6)
 	for(var/datum/stock_part/part in component_parts)
-		new part.physical_object_type(drop_location())
+		new part.physical_object_type(drop)
 	if(!isnull(power_cell))
-		power_cell.forceMove(drop_location())
+		power_cell.forceMove(drop)
 		power_cell = null
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/ridden/wheelchair/motorized/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
@@ -171,7 +165,7 @@
 		return
 	. += "Speed: [speed]"
 	. += "Energy efficiency: [power_efficiency]"
-	. += "Power: [power_cell.charge] out of [power_cell.maxcharge]"
+	. += "Power: [display_energy(power_cell.charge)] out of [display_energy(power_cell.maxcharge)]"
 
 /obj/vehicle/ridden/wheelchair/motorized/Move(newloc, direct)
 	. = ..()
@@ -183,12 +177,18 @@
 		if(!(guy in buckled_mobs))
 			Bump(guy)
 
+/// Detonate an armed explosive on this wheelchair
+/obj/vehicle/ridden/wheelchair/motorized/detonate_bomb()
+	if (obj_flags & EMAGGED)
+		visible_message(span_boldwarning("[src] explodes!!"))
+		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
+	return ..()
+
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/bumped_atom)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (isclosedturf(bumped_atom) || isliving(bumped_atom)))
-		explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 2, adminlog = FALSE)
-		visible_message(span_boldwarning("[src] explodes!!"))
+	if((obj_flags & EMAGGED) && (isclosedturf(bumped_atom) || isliving(bumped_atom)))
+		detonate_bomb()
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(bumped_atom.density && speed > delay_multiplier && has_buckled_mobs())
@@ -197,13 +197,13 @@
 		unbuckle_mob(disabled)
 		disabled.throw_at(throw_target, 2, 3)
 		disabled.Knockdown(10 SECONDS)
-		disabled.adjustStaminaLoss(40)
+		disabled.adjust_stamina_loss(40)
 		if(isliving(bumped_atom))
 			var/mob/living/ramtarget = bumped_atom
 			throw_target = get_edge_target_turf(ramtarget, pick(GLOB.cardinals))
 			ramtarget.throw_at(throw_target, 2, 3)
 			ramtarget.Knockdown(8 SECONDS)
-			ramtarget.adjustStaminaLoss(35)
+			ramtarget.adjust_stamina_loss(35)
 			visible_message(span_danger("[src] crashes into [ramtarget], sending [disabled] and [ramtarget] flying!"))
 		else
 			visible_message(span_danger("[src] crashes into [bumped_atom], sending [disabled] flying!"))
@@ -213,11 +213,22 @@
 	if (obj_flags & EMAGGED)
 		return FALSE
 
-	if (panel_open)
-		balloon_alert(user, "open maintenance panel!")
+	if (!panel_open)
+		balloon_alert(user, "panel is closed!")
 		return FALSE
 
+	if (!bomb_attached)
+		RegisterSignal(src, COMSIG_WHEELCHAIR_BELL_RANG, PROC_REF(on_bell_rang))
 	balloon_alert(user, "bomb implanted...?")
 	visible_message(span_warning("A bomb appears in [src], what the fuck?"))
 	obj_flags |= EMAGGED
 	return TRUE
+
+///Version with slightly better components. Used by deathmatches.
+/obj/vehicle/ridden/wheelchair/motorized/improved
+
+/obj/vehicle/ridden/wheelchair/motorized/improved/add_component_parts()
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/capacitor]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo/tier2]
+	component_parts += GLOB.stock_part_datums[/datum/stock_part/servo]
+	power_cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(src)

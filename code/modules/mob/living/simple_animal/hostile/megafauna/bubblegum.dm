@@ -34,7 +34,7 @@ Difficulty: Hard
 	maxHealth = 2500
 	attack_verb_continuous = "rends"
 	attack_verb_simple = "rend"
-	attack_sound = 'sound/magic/demon_attack1.ogg'
+	attack_sound = 'sound/effects/magic/demon_attack1.ogg'
 	icon_state = "bubblegum"
 	icon_living = "bubblegum"
 	icon_dead = ""
@@ -58,15 +58,16 @@ Difficulty: Hard
 	maptext_height = 96
 	maptext_width = 96
 	del_on_death = TRUE
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
-	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
+	crusher_loot = /obj/structure/closet/crate/necropolis/bubblegum/crusher
+	replace_crusher_drop = TRUE
+	default_blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	gps_name = "Bloody Signal"
 	achievement_type = /datum/award/achievement/boss/bubblegum_kill
 	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
 	score_achievement_type = /datum/award/score/bubblegum_score
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
-	death_sound = 'sound/magic/enter_blood.ogg'
+	death_sound = 'sound/effects/magic/enter_blood.ogg'
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
 	summon_line = "GRAAAAAAAHHHHHHHHH!"
 	/// Check to see if we should spawn blood
@@ -151,9 +152,9 @@ Difficulty: Hard
  * * mob/user The user of the item
  * * params, extra parameters
  */
-/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(istype(W, /obj/item/organ/internal/tongue))
+	if(istype(W, /obj/item/organ/tongue))
 		user.client?.give_award(/datum/award/achievement/jobs/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
@@ -221,11 +222,11 @@ Difficulty: Hard
 		if(!faction_check_atom(L))
 			if(L.stat != CONSCIOUS)
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
-				playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE, -1)
+				playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
 				var/turf/targetturf = get_step(src, dir)
 				L.forceMove(targetturf)
-				playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
-				addtimer(CALLBACK(src, PROC_REF(devour), L), 2)
+				playsound(targetturf, 'sound/effects/magic/exit_blood.ogg', 100, TRUE, -1)
+				addtimer(CALLBACK(src, PROC_REF(devour), L), 0.2 SECONDS)
 	SLEEP_CHECK_DEATH(1, src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/devour(mob/living/yummy_food)
@@ -274,7 +275,7 @@ Difficulty: Hard
 	set_varspeed(move_to_delay)
 	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = ..()
 	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 	enrage_time = initial(enrage_time) * clamp(anger_modifier / 20, 0.5, 1)
@@ -287,9 +288,9 @@ Difficulty: Hard
 		else
 			B.setDir(pick(GLOB.cardinals))
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/death(gibbed)
 	. = ..()
-	if(!(flags_1 & ADMIN_SPAWNED_1))
+	if(!gibbed && health > 0 && true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_BUBBLEGUM] = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget(atom/attacked_target)
@@ -297,10 +298,10 @@ Difficulty: Hard
 	if(.)
 		recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/projectile/P)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(BUBBLEGUM_IS_ENRAGED)
-		visible_message(span_danger("[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, TRUE)
+		visible_message(span_danger("[src] deflects the [hitting_projectile]! [p_They()] can't be hit with ranged weapons while enraged!"), span_userdanger("You deflect the projectile!"))
+		playsound(src, SFX_BULLET_MISS, 300, TRUE)
 		return BULLET_ACT_BLOCK
 	return ..()
 
@@ -343,7 +344,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(seconds_per_tick = SSMOBS_DT, times_fired)
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire()

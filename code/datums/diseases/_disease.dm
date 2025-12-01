@@ -70,15 +70,39 @@
 
 	D.after_add()
 	infectee.med_hud_set_status()
+	register_disease_signals()
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+/// Updates the spread flags set, ensuring signals are updated as necessary
+/datum/disease/proc/update_spread_flags(new_flags)
+	if(spread_flags == new_flags)
+		return
+
+	spread_flags = new_flags
+	unregister_disease_signals()
+	register_disease_signals()
+
+/// Register any relevant signals for the disease
+/datum/disease/proc/register_disease_signals()
+	if(isnull(affected_mob))
+		return
+	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
+		RegisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE, PROC_REF(on_breath))
+
+/// Unregister any relevant signals for the disease
+/datum/disease/proc/unregister_disease_signals()
+	if(isnull(affected_mob))
+		return
+	UnregisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE)
 
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
 	var/cure_mod
+	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
@@ -86,23 +110,25 @@
 			return FALSE
 
 	if(has_cure())
-		cure_mod = cure_chance
+		cure_mod = cure_chance / bad_immune
 		if(istype(src, /datum/disease/advance))
 			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
 		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
-		if(SPT_PROB(cure_mod, seconds_per_tick))
-			update_stage(max(stage - 1, 1))
 		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
-			cure()
-			return FALSE
+			if(disease_flags & INCREMENTAL_CURE)
+				if (!update_stage(stage - 1))
+					return FALSE
+			else
+				cure()
+				return FALSE
 
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(SPT_PROB(stage_prob*slowdown, seconds_per_tick))
+	if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
 		update_stage(min(stage + 1, max_stages))
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
@@ -123,6 +149,8 @@
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_HARMFUL)
 			if(DISEASE_SEVERITY_BIOHAZARD)
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_BIOHAZARD)
+			else
+				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)
 		peaked_cycles += stage/max_stages //every cycle we spend sick counts towards eventually curing the virus, faster at higher stages
 		recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
 		if(stage_peaked)
@@ -140,17 +168,17 @@
 		if(affected_mob.mob_mood) // this and most other modifiers below a shameless rip from sleeping healing buffs, but feeling good helps make it go away quicker
 			switch(affected_mob.mob_mood.sanity_level)
 				if(SANITY_LEVEL_GREAT)
-					recovery_prob += 0.2
+					recovery_prob += 0.4
 				if(SANITY_LEVEL_NEUTRAL)
-					recovery_prob += 0.1
+					recovery_prob += 0.2
 				if(SANITY_LEVEL_DISTURBED)
 					recovery_prob += 0
 				if(SANITY_LEVEL_UNSTABLE)
 					recovery_prob += 0
 				if(SANITY_LEVEL_CRAZY)
-					recovery_prob += -0.1
-				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.2
+				if(SANITY_LEVEL_INSANE)
+					recovery_prob += -0.4
 
 		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
@@ -179,7 +207,7 @@
 
 			recovery_prob *= DISEASE_SLEEPING_RECOVERY_MULTIPLIER //any form of sleeping magnifies all effects a little bit
 
-		recovery_prob = clamp(recovery_prob, 0, 100)
+		recovery_prob = clamp(recovery_prob / bad_immune, 0, 100)
 
 		if(recovery_prob)
 			if(SPT_PROB(recovery_prob, seconds_per_tick))
@@ -207,6 +235,10 @@
 	stage = new_stage
 	if(new_stage == max_stages && !(stage_peaked)) //once a virus has hit its peak, set it to have done so
 		stage_peaked = TRUE
+	if (stage <= 0)
+		cure()
+		return FALSE
+	return TRUE
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & (CURABLE | CHRONIC)))
@@ -214,46 +246,46 @@
 
 	. = cures.len
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id))
+		if(!affected_mob.reagents.has_reagent(target_reagent = C_id, check_subtypes = TRUE))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
 		return FALSE
 
-//Airborne spreading
-/datum/disease/proc/spread(force_spread = 0)
-	if(!affected_mob)
-		return
-
+/**
+ * Handles performing a spread-via-air
+ *
+ * Checks for stuff like "is our mouth covered" for you
+ *
+ * * spread_range - How far the disease can spread
+ * * force_spread - If TRUE, the disease will spread regardless of the spread_flags
+ * * require_facing - If TRUE, the disease will only spread if the source mob is facing the target mob
+ */
+/datum/disease/proc/airborne_spread(spread_range = 2, force_spread = TRUE, require_facing = FALSE)
+	if(isnull(affected_mob))
+		return FALSE
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
-		return
-
-	if(affected_mob.internal) //if you keep your internals on, no airborne spread at least
-		return
-
-	if(HAS_TRAIT(affected_mob, TRAIT_NOBREATH)) //also if you don't breathe
-		return
-
+		return FALSE
+	if(affected_mob.can_spread_airborne_diseases())
+		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
-		return
+		return FALSE
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety / 2))) //being full or on spaceacillin makes you less likely to spread a virus
+		return FALSE
+	var/turf/mob_loc = affected_mob.loc
+	if(!istype(mob_loc))
+		return FALSE
+	for(var/mob/living/carbon/to_infect in oview(spread_range, affected_mob))
+		var/turf/infect_loc = to_infect.loc
+		if(!istype(infect_loc))
+			continue
+		if(require_facing && !is_source_facing_target(affected_mob, to_infect))
+			continue
+		if(!disease_air_spread_walk(mob_loc, infect_loc))
+			continue
+		to_infect.contract_airborne_disease(src)
+	return TRUE
 
-	if(!affected_mob.CanSpreadAirborneDisease()) //should probably check this huh
-		return
-
-	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/2))) //being full or on spaceacillin makes you less likely to spread a virus
-		return
-
-	var/spread_range = 2
-
-	if(force_spread)
-		spread_range = force_spread
-
-	var/turf/T = affected_mob.loc
-	if(istype(T))
-		for(var/mob/living/carbon/C in oview(spread_range, affected_mob))
-			var/turf/V = get_turf(C)
-			if(disease_air_spread_walk(T, V))
-				C.AirborneContractDisease(src, force_spread)
-
+/// Helper for checking if there is an air path between two turfs
 /proc/disease_air_spread_walk(turf/start, turf/end)
 	if(!start || !end)
 		return FALSE
@@ -264,7 +296,6 @@
 		if(!TURFS_CAN_SHARE(end, Temp)) //Don't go through a wall
 			return FALSE
 		end = Temp
-
 
 /datum/disease/proc/cure(add_resistance = TRUE)
 	if(severity == DISEASE_SEVERITY_UNCURABLE) //aw man :(
@@ -307,6 +338,7 @@
 	return "[type]"
 
 /datum/disease/proc/remove_disease()
+	unregister_disease_signals()
 	LAZYREMOVE(affected_mob.diseases, src) //remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
@@ -345,6 +377,13 @@
 		return FALSE
 
 	return TRUE
+
+/// Handles spreading via air when our mob breathes
+/datum/disease/proc/on_breath(datum/source, seconds_per_tick, ...)
+	SIGNAL_HANDLER
+
+	if(SPT_PROB(infectivity * 4, seconds_per_tick))
+		airborne_spread()
 
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)

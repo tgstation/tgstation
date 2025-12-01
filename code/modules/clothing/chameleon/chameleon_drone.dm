@@ -3,10 +3,7 @@
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "random"
 
-/datum/action/item_action/chameleon/drone/randomise/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return FALSE
-
+/datum/action/item_action/chameleon/drone/randomise/do_effect(trigger_flags)
 	for(var/datum/action/item_action/chameleon/change/to_randomize in owner.actions)
 		to_randomize.random_look()
 	return TRUE
@@ -28,10 +25,7 @@
 /datum/action/item_action/chameleon/drone/togglehatmask/IsAvailable(feedback)
 	return ..() && isdrone(owner)
 
-/datum/action/item_action/chameleon/drone/togglehatmask/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return FALSE
-
+/datum/action/item_action/chameleon/drone/togglehatmask/do_effect(trigger_flags)
 	var/mob/living/basic/drone/droney = owner
 
 	// The drone unEquip() proc sets head to null after dropping

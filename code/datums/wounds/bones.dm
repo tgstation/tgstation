@@ -8,7 +8,7 @@
 	abstract = TRUE
 	required_limb_biostate = BIO_BONE
 
-	required_wounding_types = list(WOUND_BLUNT)
+	required_wounding_type = WOUND_BLUNT
 
 	wound_series = WOUND_SERIES_BONE_BLUNT_BASIC
 
@@ -17,6 +17,7 @@
 	wound_flags = (ACCEPTS_GAUZE)
 
 	default_scar_file = BONE_SCAR_FILE
+	threshold_penalty = 5
 
 	/// Have we been bone gel'd?
 	var/gelled
@@ -61,9 +62,10 @@
 /datum/wound/blunt/bone/set_victim(new_victim)
 
 	if (victim)
-		UnregisterSignal(victim, COMSIG_LIVING_UNARMED_ATTACK)
+		UnregisterSignal(victim, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_FIRED_GUN))
 	if (new_victim)
 		RegisterSignal(new_victim, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(attack_with_hurt_hand))
+		RegisterSignal(new_victim, COMSIG_MOB_FIRED_GUN, PROC_REF(firing_with_messed_up_hand))
 
 	return ..()
 
@@ -99,7 +101,7 @@
 
 	if(!is_bone_limb && SPT_PROB(severity * 1.5, seconds_per_tick))
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
-		victim.adjustStaminaLoss(rand(2, severity * 2.5))
+		victim.adjust_stamina_loss(rand(2, severity * 2.5))
 		if(prob(33))
 			to_chat(victim, span_danger("You feel a sharp pain in your body as your bones are reforming!"))
 
@@ -107,7 +109,7 @@
 		if(!victim || !limb)
 			qdel(src)
 			return
-		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [name]!"))
+		to_chat(victim, span_green("Your [limb.plaintext_zone] has recovered from its [LOWER_TEXT(undiagnosed_name || name)]!"))
 		remove_wound()
 
 /// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
@@ -120,43 +122,81 @@
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
 	if(prob((severity - 1) * 15))
 		// And you have a 70% or 50% chance to actually land the blow, respectively
-		if(prob(70 - 20 * (severity - 1)))
-			to_chat(victim, span_userdanger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
-			limb.receive_damage(brute=rand(1,5))
+		if(HAS_TRAIT(victim, TRAIT_ANALGESIA) || prob(70 - 20 * (severity - 1)))
+			if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+				to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
+			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 		else
 			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
 			span_userdanger("You fail to strike [target] as the fracture in your [limb.plaintext_zone] lights up in unbearable pain!"), vision_distance=COMBAT_MESSAGE_RANGE)
 			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 			victim.Stun(0.5 SECONDS)
-			limb.receive_damage(brute=rand(3,7))
+			victim.apply_damage(rand(3, 7), BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return NONE
 
-/datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE)
-		return
-	if(ishuman(victim))
-		var/mob/living/carbon/human/human_victim = victim
-		if(HAS_TRAIT(human_victim, TRAIT_NOBLOOD))
+/// If we're a human who's firing a gun with a broken arm, we might hurt ourselves doing so
+/datum/wound/blunt/bone/proc/firing_with_messed_up_hand(datum/source, obj/item/gun/gun, atom/firing_at, params, zone, bonus_spread_values)
+	SIGNAL_HANDLER
+
+	switch(limb.body_zone)
+		if(BODY_ZONE_L_ARM)
+			// Heavy guns use both hands so they will always get a penalty
+			// (Yes, this means having two broken arms will make heavy weapons SOOO much worse)
+			// Otherwise make sure THIS hand is firing THIS gun
+			if(gun.weapon_weight <= WEAPON_MEDIUM && !IS_LEFT_INDEX(victim.get_held_index_of_item(gun)))
+				return
+
+		if(BODY_ZONE_R_ARM)
+			// Ditto but for right arm
+			if(gun.weapon_weight <= WEAPON_MEDIUM && !IS_RIGHT_INDEX(victim.get_held_index_of_item(gun)))
+				return
+
+		else
+			// This is not arm wound, so we don't care
 			return
 
-	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))
+	if(gun.recoil > 0 && severity >= WOUND_SEVERITY_SEVERE && prob(25 * (severity - 1)))
+		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+			to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] explodes with pain as [gun] kicks back!"))
+		victim.apply_damage(rand(1, 3) * (severity - 1) * gun.weapon_weight, BRUTE, limb, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
+
+	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
+
+/datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE || !victim.can_bleed())
+		return
+
+	if(limb.body_zone == BODY_ZONE_CHEST && victim.get_blood_volume() && prob(internal_bleeding_chance + wounding_dmg))
 		var/blood_bled = rand(1, wounding_dmg * (severity == WOUND_SEVERITY_CRITICAL ? 2 : 1.5)) // 12 brute toolbox can cause up to 18/24 bleeding with a severe/critical chest wound
 		switch(blood_bled)
 			if(1 to 6)
 				victim.bleed(blood_bled, TRUE)
 			if(7 to 13)
-				victim.visible_message("<span class='smalldanger'>A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest.</span>", span_danger("You cough up a bit of blood from the blow to your chest."), vision_distance=COMBAT_MESSAGE_RANGE)
+				victim.visible_message(
+					span_smalldanger("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
+					span_danger("You cough up a bit of blood from the blow to your chest."),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
-				victim.visible_message("<span class='smalldanger'>Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!</span>", span_danger("You spit out a string of blood from the blow to your chest!"), vision_distance=COMBAT_MESSAGE_RANGE)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.visible_message(
+					span_smalldanger("Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_danger("You spit out a string of blood from the blow to your chest!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
+				victim.create_splatter(victim.dir)
 				victim.bleed(blood_bled)
 			if(20 to INFINITY)
-				victim.visible_message(span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"), span_danger("<b>You choke up on a spray of blood from the blow to your chest!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+				victim.visible_message(
+					span_danger("Blood spurts out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_bolddanger("You choke up on a spray of blood from the blow to your chest!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 				victim.bleed(blood_bled)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.create_splatter(victim.dir)
 				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
 
 /datum/wound/blunt/bone/modify_desc_before_span(desc)
@@ -186,15 +226,19 @@
 /// Joint Dislocation (Moderate Blunt)
 /datum/wound/blunt/bone/moderate
 	name = "Joint Dislocation"
+	undiagnosed_name = "Dislocation"
+	a_or_from = "a"
 	desc = "Patient's limb has been unset from socket, causing pain and reduced motor function."
-	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation by applying an aggressive grab to the patient and helpfully interacting with afflicted limb may suffice."
+	treat_text = "Apply Bonesetter to the affected limb. \
+		Manual relocation by via an aggressive grab and a tight hug to the affected limb may also suffice."
+	treat_text_short = "Apply Bonesetter, or manually relocate the limb."
 	examine_desc = "is awkwardly janked out of place"
 	occur_text = "janks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
 	limp_chance = 50
-	threshold_penalty = 15
+	series_threshold_penalty = 15
 	treatable_tools = list(TOOL_BONESET)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/moderate
 	scar_keyword = "dislocate"
@@ -226,19 +270,26 @@
 
 	return ..()
 
+/datum/wound/blunt/bone/moderate/get_self_check_description(self_aware)
+	return span_warning("It feels dislocated!")
+
 /// Getting smushed in an airlock/firelock is a last-ditch attempt to try relocating your limb
 /datum/wound/blunt/bone/moderate/proc/door_crush()
 	SIGNAL_HANDLER
 	if(prob(40))
 		victim.visible_message(span_danger("[victim]'s dislocated [limb.plaintext_zone] pops back into place!"), span_userdanger("Your dislocated [limb.plaintext_zone] pops back into place! Ow!"))
 		remove_wound()
+		return DOORCRUSH_NO_WOUND
+	return NONE
 
-/datum/wound/blunt/bone/moderate/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone)
+/datum/wound/blunt/bone/moderate/try_handling(mob/living/user)
+	if(user.usable_hands <= 0 || user.pulling != victim)
+		return FALSE
+	if(!isnull(user.hud_used?.zone_select) && user.zone_selected != limb.body_zone)
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
-		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [lowertext(name)]!"))
+		to_chat(user, span_warning("You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [LOWER_TEXT(undiagnosed_name || name)]!"))
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -261,12 +312,12 @@
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] back into place!"), span_notice("You snap [victim]'s dislocated [limb.plaintext_zone] back into place!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] back into place!"))
 		victim.emote("scream")
-		limb.receive_damage(brute=20, wound_bonus=CANT_WOUND)
+		victim.apply_damage(20, BRUTE, limb, wound_bonus = CANT_WOUND)
 		qdel(src)
 	else
 		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] wrenches your dislocated [limb.plaintext_zone] around painfully!"))
-		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
+		victim.apply_damage(10, BRUTE, limb, wound_bonus = CANT_WOUND)
 		chiropractice(user)
 
 /// If someone is snapping our dislocated joint into a fracture by hand with an aggro grab and harm or disarm intent
@@ -280,33 +331,32 @@
 		user.visible_message(span_danger("[user] snaps [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), span_danger("You snap [victim]'s dislocated [limb.plaintext_zone] with a sickening crack!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] snaps your dislocated [limb.plaintext_zone] with a sickening crack!"))
 		victim.emote("scream")
-		limb.receive_damage(brute=25, wound_bonus=30)
+		victim.apply_damage(25, BRUTE, limb, wound_bonus = 30)
 	else
 		user.visible_message(span_danger("[user] wrenches [victim]'s dislocated [limb.plaintext_zone] around painfully!"), span_danger("You wrench [victim]'s dislocated [limb.plaintext_zone] around painfully!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] wrenches your dislocated [limb.plaintext_zone] around painfully!"))
-		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
+		victim.apply_damage(10, BRUTE, limb, wound_bonus = CANT_WOUND)
 		malpractice(user)
 
-
-/datum/wound/blunt/bone/moderate/treat(obj/item/I, mob/user)
+/datum/wound/blunt/bone/moderate/treat(obj/item/tool, mob/user)
 	var/scanned = HAS_TRAIT(src, TRAIT_WOUND_SCANNED)
 	var/self_penalty_mult = user == victim ? 1.5 : 1
 	var/scanned_mult = scanned ? 0.5 : 1
 	var/treatment_delay = base_treat_time * self_penalty_mult * scanned_mult
 
 	if(victim == user)
-		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim.p_their()] [limb.plaintext_zone] with [I]."), span_warning("You begin resetting your [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		victim.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim.p_their()] [limb.plaintext_zone] with [tool]."), span_warning("You begin resetting your [limb.plaintext_zone] with [tool][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
 	else
-		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim]'s [limb.plaintext_zone] with [I]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [I][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
+		user.visible_message(span_danger("[user] begins [scanned ? "expertly" : ""] resetting [victim]'s [limb.plaintext_zone] with [tool]."), span_notice("You begin resetting [victim]'s [limb.plaintext_zone] with [tool][scanned ? ", keeping the holo-image's indications in mind" : ""]..."))
 
 	if(!do_after(user, treatment_delay, target = victim, extra_checks=CALLBACK(src, PROC_REF(still_exists))))
 		return
 
 	if(victim == user)
-		limb.receive_damage(brute=15, wound_bonus=CANT_WOUND)
+		victim.apply_damage(15, BRUTE, limb, wound_bonus = CANT_WOUND)
 		victim.visible_message(span_danger("[user] finishes resetting [victim.p_their()] [limb.plaintext_zone]!"), span_userdanger("You reset your [limb.plaintext_zone]!"))
 	else
-		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
+		victim.apply_damage(10, BRUTE, limb, wound_bonus = CANT_WOUND)
 		user.visible_message(span_danger("[user] finishes resetting [victim]'s [limb.plaintext_zone]!"), span_nicegreen("You finish resetting [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] resets your [limb.plaintext_zone]!"))
 
@@ -320,7 +370,9 @@
 /datum/wound/blunt/bone/severe
 	name = "Hairline Fracture"
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
-	treat_text = "Recommended light surgical application of bone gel, though a sling of medical gauze will prevent worsening situation."
+	treat_text = "Repair surgically. In the event of an emergency, an application of bone gel over the affected area will fix over time. \
+		A splint or sling of medical gauze can also be used to prevent the fracture from worsening."
+	treat_text_short = "Repair surgically, or apply bone gel. A splint or gauze sling can also be used."
 	examine_desc = "appears grotesquely swollen, jagged bumps hinting at chips in the bone"
 	occur_text = "sprays chips of bone and develops a nasty looking bruise"
 
@@ -328,7 +380,7 @@
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
 	limp_chance = 60
-	threshold_penalty = 30
+	series_threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/severe
 	scar_keyword = "bluntsevere"
@@ -353,8 +405,13 @@
 /// Compound Fracture (Critical Blunt)
 /datum/wound/blunt/bone/critical
 	name = "Compound Fracture"
-	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
-	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
+	undiagnosed_name = null // you can tell it's a compound fracture at a glance because of a skin breakage
+	a_or_from = "a"
+	desc = "Patient's bones have suffered multiple fractures, \
+		couped with a break in the skin, causing significant pain and near uselessness of limb."
+	treat_text = "Immediately bind the affected limb with gauze or a splint. Repair surgically. \
+		In the event of an emergency, bone gel and surgical tape can be applied to the affected area to fix over a long period of time."
+	treat_text_short = "Repair surgically, or apply bone gel and surgical tape. A splint or gauze sling should also be used."
 	examine_desc = "is thoroughly pulped and cracked, exposing shards of bone to open air"
 	occur_text = "cracks apart, exposing broken bones to open air"
 
@@ -363,7 +420,7 @@
 	limp_slowdown = 7
 	limp_chance = 70
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	threshold_penalty = 50
+	threshold_penalty = 15
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/bone/critical
@@ -420,8 +477,8 @@
 				return TRUE
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
 
-	limb.receive_damage(25, wound_bonus=CANT_WOUND)
-	victim.adjustStaminaLoss(100)
+	victim.apply_damage(25, BRUTE, limb, wound_bonus = CANT_WOUND)
+	victim.apply_damage(100, STAMINA)
 	gelled = TRUE
 	return TRUE
 
@@ -475,11 +532,11 @@
 	processes = TRUE
 	return TRUE
 
-/datum/wound/blunt/bone/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/medical/bone_gel))
-		return gel(I, user)
-	else if(istype(I, /obj/item/stack/sticky_tape/surgical))
-		return tape(I, user)
+/datum/wound/blunt/bone/treat(obj/item/tool, mob/user)
+	if(istype(tool, /obj/item/stack/medical/bone_gel))
+		gel(tool, user)
+	if(istype(tool, /obj/item/stack/sticky_tape/surgical))
+		tape(tool, user)
 
 /datum/wound/blunt/bone/get_scanner_description(mob/user)
 	. = ..()
@@ -502,6 +559,6 @@
 
 	if(limb.body_zone == BODY_ZONE_HEAD)
 		. += "Cranial Trauma Detected: Patient will suffer random bouts of [severity == WOUND_SEVERITY_SEVERE ? "mild" : "severe"] brain traumas until bone is repaired."
-	else if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume)
+	else if(limb.body_zone == BODY_ZONE_CHEST && CAN_HAVE_BLOOD(victim))
 		. += "Ribcage Trauma Detected: Further trauma to chest is likely to worsen internal bleeding until bone is repaired."
 	. += "</div>"

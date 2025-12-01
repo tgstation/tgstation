@@ -119,7 +119,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,
@@ -203,7 +203,7 @@
 /area/shuttle/escape)
 "aX" = (
 /obj/structure/table/optable,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -216,7 +216,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/machinery/shower/directional/south,
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/white,

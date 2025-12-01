@@ -28,14 +28,14 @@
 ///find land if its time to get out of water, otherwise find water
 /datum/ai_behavior/find_and_set/swim_alternate
 
-/datum/ai_behavior/find_and_set/swim_alternate/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/swim_alternate/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	if(QDELETED(living_pawn))
 		return null
 	var/look_for_land = controller.blackboard[BB_CURRENTLY_SWIMMING]
 	var/list/possible_turfs = list()
 	for(var/turf/possible_turf in oview(search_range, living_pawn))
-		if(isclosedturf(possible_turf) || isspaceturf(possible_turf) || isopenspaceturf(possible_turf))
+		if(isclosedturf(possible_turf) || is_space_or_openspace(possible_turf))
 			continue
 		if(possible_turf.is_blocked_turf())
 			continue

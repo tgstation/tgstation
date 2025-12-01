@@ -1,7 +1,3 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,12 +8,16 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Design, MaterialMap } from './Fabrication/Types';
-import { Material } from './Fabrication/Types';
+import type { Design, MaterialMap } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type AutolatheDesign = Design & {
   customMaterials: BooleanLike;
@@ -53,7 +53,7 @@ export const Autolathe = (props) => {
 
   return (
     <Window title="Autolathe" width={670} height={600}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Section title="Total Materials">
@@ -189,18 +189,18 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
 
   let maxmult = 0;
   if (design.customMaterials) {
-    const smallest_mat =
+    const largest_mat =
       Object.entries(availableMaterials).reduce(
         (accumulator: number, [material, amount]) => {
-          return Math.min(accumulator, amount);
+          return Math.max(accumulator, amount);
         },
-        Infinity,
+        0,
       ) || 0;
 
-    if (smallest_mat > 0) {
+    if (largest_mat > 0) {
       maxmult = Object.entries(design.cost).reduce(
         (accumulator: number, [material, required]) => {
-          return Math.min(accumulator, smallest_mat / required);
+          return Math.min(accumulator, largest_mat / required);
         },
         Infinity,
       );
@@ -288,15 +288,14 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
       >
         <Button.Input
           color="transparent"
-          onCommit={(_e, value: string) =>
+          buttonText={`[Max: ${maxmult}]`}
+          onCommit={(value) =>
             act('make', {
               id: design.id,
               multiplier: value,
             })
           }
-        >
-          [Max: {maxmult}]
-        </Button.Input>
+        />
       </div>
     </div>
   );

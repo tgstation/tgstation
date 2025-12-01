@@ -2,7 +2,6 @@
 /datum/reagent/thermite
 	name = "Thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
-	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	color = "#550000"
 	taste_description = "sweet tasting metal"
@@ -14,21 +13,26 @@
 
 /datum/reagent/thermite/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	if(affected_mob.adjustFireLoss(1 * REM * seconds_per_tick, updating_health = FALSE))
+	if(affected_mob.adjust_fire_loss(1 * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
-	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
-	color = "#808080" // rgb: 128, 128, 128
+	description = "Nitroglycerin is a heavy, colorless, oily liquid obtained by nitrating glycerol. \
+		It is commonly used to treat heart conditions, but also in the creation of explosives."
+	color = COLOR_GRAY
 	taste_description = "oil"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/nitroglycerin/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick * normalise_creation_purity(), required_organ_flag = affected_organ_flags))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/stabilizing_agent
 	name = "Stabilizing Agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
-	reagent_state = LIQUID
-	color = "#FFFF00"
+	color = COLOR_YELLOW
 	taste_description = "metal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -38,8 +42,7 @@
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
-	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
-	reagent_state = LIQUID
+	description = "A very flammable liquid capable of burning even through the hull of the station. Bursts into a fireball upon creation."
 	color = "#FFC8C8"
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	taste_description = "burning"
@@ -49,7 +52,7 @@
 /datum/reagent/clf3/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_fire_stacks(2 * REM * seconds_per_tick)
-	if(affected_mob.adjustFireLoss(0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, updating_health = FALSE))
+	if(affected_mob.adjust_fire_loss(0.3 * max(affected_mob.fire_stacks, 1) * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/clf3/expose_turf(turf/exposed_turf, reac_volume)
@@ -78,7 +81,6 @@
 /datum/reagent/sorium
 	name = "Sorium"
 	description = "Sends everything flying from the detonation point."
-	reagent_state = LIQUID
 	color = "#5A64C8"
 	taste_description = "air and bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -86,7 +88,6 @@
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	description = "Sucks everything into the detonation point."
-	reagent_state = LIQUID
 	color = "#210021"
 	taste_description = "compressed bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -94,8 +95,7 @@
 /datum/reagent/gunpowder
 	name = "Gunpowder"
 	description = "Explodes. Violently."
-	reagent_state = LIQUID
-	color = "#000000"
+	color = COLOR_BLACK
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -123,23 +123,20 @@
 /datum/reagent/rdx
 	name = "RDX"
 	description = "Military grade explosive"
-	reagent_state = SOLID
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/tatp
 	name = "TaTP"
 	description = "Suicide grade explosive"
-	reagent_state = SOLID
-	color = "#FFFFFF"
+	color = COLOR_WHITE
 	taste_description = "death"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
 	description = "Makes a very bright flash."
-	reagent_state = LIQUID
 	color = "#C8C8C8"
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -147,7 +144,6 @@
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
-	reagent_state = LIQUID
 	color = "#C8C8C8"
 	taste_description = "smoke"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -155,7 +151,6 @@
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
 	description = "Makes a deafening noise."
-	reagent_state = LIQUID
 	color = "#C8C8C8"
 	taste_description = "loud noises"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -163,29 +158,28 @@
 /datum/reagent/phlogiston
 	name = "Phlogiston"
 	description = "Catches you on fire and makes you ignite."
-	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(1)
-	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
-	exposed_mob.adjustFireLoss(burndmg, 0)
+	var/burndmg = max(0.3*exposed_mob.fire_stacks * (1 - touch_protection), 0.3)
+	if(burndmg)
+		exposed_mob.adjust_fire_loss(burndmg, 0)
 	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
 	metabolizer.adjust_fire_stacks(1 * REM * seconds_per_tick)
-	if(metabolizer.adjustFireLoss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, updating_health = FALSE))
+	if(metabolizer.adjust_fire_loss(0.3 * max(metabolizer.fire_stacks, 0.15) * REM * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/napalm
 	name = "Napalm"
 	description = "Very flammable."
-	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
 	self_consuming = TRUE
@@ -218,7 +212,7 @@
 	color = "#0000DC"
 	ph = 8.6
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
-	taste_description = "icey bitterness"
+	taste_description = "icy bitterness"
 	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
 	inverse_chem_val = 0.5
@@ -261,8 +255,8 @@
 	. = ..()
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
-		exposed_slime.adjustToxLoss(rand(15,30))
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
+		exposed_slime.adjust_tox_loss(rand(15,30))
 
 #undef CRYO_SPEED_PREFACTOR
 #undef CRYO_SPEED_CONSTANT
@@ -295,8 +289,7 @@
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
-	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
-	reagent_state = LIQUID
+	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow it to come into contact with water."
 	color = "#20324D" //RGB: 32, 50, 77
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "charged metal"
@@ -312,22 +305,31 @@
 		affected_mob.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
 		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/affected_mob)
-	. = ..()
-	if(!istype(affected_mob))
-		return
-	affected_mob.physiology.siemens_coeff *= 2
+/datum/reagent/teslium/used_on_fish(obj/item/fish/fish)
+	if(HAS_TRAIT_FROM(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM))
+		return FALSE
+	fish.add_traits(list(TRAIT_FISH_ON_TESLIUM, TRAIT_FISH_ELECTROGENESIS), type)
+	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_ON_TESLIUM, type), fish.feeding_frequency * 0.75, TIMER_UNIQUE|TIMER_OVERRIDE)
+	addtimer(TRAIT_CALLBACK_REMOVE(fish, TRAIT_FISH_ELECTROGENESIS, type), fish.feeding_frequency * 0.75, TIMER_UNIQUE|TIMER_OVERRIDE)
+	return TRUE
 
-/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/human/affected_mob)
+/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!istype(affected_mob))
+	if(!ishuman(affected_mob))
 		return
-	affected_mob.physiology.siemens_coeff *= 0.5
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.physiology.siemens_coeff *= 2
+
+/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	if(!ishuman(affected_mob))
+		return
+	var/mob/living/carbon/human/affected_human = affected_mob
+	affected_human.physiology.siemens_coeff *= 0.5
 
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"
 	description = "Electrically-charged jelly. Boosts jellypeople's nervous system, but only shocks other lifeforms."
-	reagent_state = LIQUID
 	color = "#CAFF43"
 	taste_description = "jelly"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -336,7 +338,7 @@
 	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
 		return ..()
 	affected_mob.AdjustAllImmobility(-40  *REM * seconds_per_tick)
-	if(affected_mob.adjustStaminaLoss(-2 * REM * seconds_per_tick, updating_stamina = FALSE))
+	if(affected_mob.adjust_stamina_loss(-10 * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(is_species(affected_mob, /datum/species/jelly/luminescent))
 		var/mob/living/carbon/human/affected_human = affected_mob
@@ -346,7 +348,6 @@
 /datum/reagent/firefighting_foam
 	name = "Firefighting Foam"
 	description = "A historical fire suppressant. Originally believed to simply displace oxygen to starve fires, it actually interferes with the combustion reaction itself. Vastly superior to the cheap water-based extinguishers found on NT vessels."
-	reagent_state = LIQUID
 	color = "#A6FAFF55"
 	taste_description = "the inside of a fire extinguisher"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -371,7 +372,7 @@
 		air.react(src)
 		qdel(hotspot)
 
-/datum/reagent/firefighting_foam/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/firefighting_foam/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
 

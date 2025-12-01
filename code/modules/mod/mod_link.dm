@@ -15,8 +15,8 @@
 
 /proc/get_link_visual_generic(datum/mod_link/mod_link, atom/movable/visuals, proc_path)
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
-	playsound(mod_link.holder, 'sound/machines/terminal_processing.ogg', 50, vary = TRUE)
-	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "static_base", TURF_LAYER))
+	playsound(mod_link.holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE)
+	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "static_base", ABOVE_NORMAL_TURF_LAYER))
 	visuals.add_overlay(mutable_appearance('icons/effects/effects.dmi', "modlink", ABOVE_ALL_MOB_LAYER))
 	visuals.add_filter("crop_square", 1, alpha_mask_filter(icon = icon('icons/effects/effects.dmi', "modlink_filter")))
 	visuals.maptext_height = 6
@@ -28,12 +28,11 @@
 	setdir_callback.Invoke(user, user.dir, user.dir)
 	mod_link.holder.RegisterSignal(mod_link.holder.loc, COMSIG_ATOM_DIR_CHANGE, proc_path)
 
-/proc/delete_link_visual_generic(datum/mod_link/mod_link)
-	var/mob/living/user = mod_link.get_user_callback.Invoke()
-	playsound(mod_link.get_other().holder, 'sound/machines/terminal_processing.ogg', 50, vary = TRUE, frequency = -1)
+/proc/delete_link_visual_generic(datum/mod_link/mod_link, mob/living/old_user)
+	playsound(mod_link.get_other().holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE, frequency = -1)
 	LAZYREMOVE(mod_link.holder.update_on_z, mod_link.visual)
 	mod_link.holder.lose_hearing_sensitivity(REF(mod_link))
-	mod_link.holder.UnregisterSignal(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_ATOM_DIR_CHANGE))
+	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
@@ -77,29 +76,34 @@
 	)
 
 /obj/item/mod/control/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
+	. = NONE
+
 	var/tool_frequency = null
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
+		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
 		balloon_alert(user, "frequency copied")
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
-			return
+			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
 				balloon_alert(user, "frequency copied")
+				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
 				balloon_alert(user, "frequency set")
+				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
 	return get_charge() && wearer && wearer.stat < DEAD
@@ -110,14 +114,14 @@
 /obj/item/mod/control/proc/get_link_visual(atom/movable/visuals)
 	return get_link_visual_generic(mod_link, visuals, PROC_REF(on_wearer_set_dir))
 
-/obj/item/mod/control/proc/delete_link_visual()
-	return delete_link_visual_generic(mod_link)
+/obj/item/mod/control/proc/delete_link_visual(mob/living/old_user)
+	return delete_link_visual_generic(mod_link, old_user)
 
-/obj/item/mod/control/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
+/obj/item/mod/control/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(speaker != wearer && speaker != ai_assistant)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 2)
+	mod_link.visual.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_range = 2, message_mods = message_mods)
 
 /obj/item/mod/control/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -140,7 +144,7 @@
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
 	/// The installed power cell.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	/// The MODlink datum we operate.
 	var/datum/mod_link/mod_link
 	/// Initial frequency of the MODlink.
@@ -187,6 +191,8 @@
 
 /obj/item/clothing/neck/link_scryer/attack_self(mob/user, modifiers)
 	var/new_label = reject_bad_text(tgui_input_text(user, "Change the visible name", "Set Name", label, MAX_NAME_LEN))
+	if(!user.is_holding(src))
+		return
 	if(!new_label)
 		balloon_alert(user, "invalid name!")
 		return
@@ -197,16 +203,16 @@
 /obj/item/clothing/neck/link_scryer/process(seconds_per_tick)
 	if(!mod_link.link_call)
 		return
-	cell.use(min(20 * seconds_per_tick, cell.charge))
+	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
-/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, params)
+/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(cell || !istype(attacked_by, /obj/item/stock_parts/cell))
+	if(cell || !istype(attacked_by, /obj/item/stock_parts/power_store/cell))
 		return
 	if(!user.transferItemToLoc(attacked_by, src))
 		return
 	cell = attacked_by
-	balloon_alert(user, "installed [cell.name]")
+	balloon_alert(user, "cell installed")
 
 /obj/item/clothing/neck/link_scryer/update_name(updates)
 	. = ..()
@@ -220,34 +226,39 @@
 /obj/item/clothing/neck/link_scryer/attack_hand_secondary(mob/user, list/modifiers)
 	if(!cell)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	balloon_alert(user, "removed [cell.name]")
+	balloon_alert(user, "cell removed")
 	user.put_in_hands(cell)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/neck/link_scryer/multitool_act_secondary(mob/living/user, obj/item/multitool/tool)
-	if(!multitool_check_buffer(user, tool))
-		return
+	. = NONE
+
 	var/tool_frequency = null
 	if(istype(tool.buffer, /datum/mod_link))
 		var/datum/mod_link/buffer_link = tool.buffer
 		tool_frequency = buffer_link.frequency
 		balloon_alert(user, "frequency set")
+		. = ITEM_INTERACT_SUCCESS
 	if(!tool_frequency && mod_link.frequency)
 		tool.set_buffer(mod_link)
 		balloon_alert(user, "frequency copied")
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && !mod_link.frequency)
 		mod_link.frequency = tool_frequency
+		. = ITEM_INTERACT_SUCCESS
 	else if(tool_frequency && mod_link.frequency)
 		var/response = tgui_alert(user, "Would you like to copy or imprint the frequency?", "MODlink Frequency", list("Copy", "Imprint"))
 		if(!user.is_holding(tool))
-			return
+			return ITEM_INTERACT_BLOCKING
 		switch(response)
 			if("Copy")
 				tool.set_buffer(mod_link)
 				balloon_alert(user, "frequency copied")
+				. = ITEM_INTERACT_SUCCESS
 			if("Imprint")
 				mod_link.frequency = tool_frequency
 				balloon_alert(user, "frequency set")
+				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -257,6 +268,10 @@
 /obj/item/clothing/neck/link_scryer/ui_action_click(mob/user)
 	if(mod_link.link_call)
 		mod_link.end_call()
+	else if(QDELETED(cell))
+		user.balloon_alert(user, "no cell installed!")
+	else if(!cell.charge)
+		user.balloon_alert(user, "no charge!")
 	else
 		call_link(user, mod_link)
 
@@ -276,17 +291,16 @@
 /obj/item/clothing/neck/link_scryer/proc/get_link_visual(atom/movable/visuals)
 	return get_link_visual_generic(mod_link, visuals, PROC_REF(on_user_set_dir))
 
-/obj/item/clothing/neck/link_scryer/proc/delete_link_visual()
-	var/mob/living/user = mod_link.get_user_callback.Invoke()
-	if(!QDELETED(user))
-		user.update_worn_neck()
-	return delete_link_visual_generic(mod_link)
+/obj/item/clothing/neck/link_scryer/proc/delete_link_visual(mob/living/old_user)
+	if(!QDELETED(old_user))
+		old_user.update_worn_neck()
+	return delete_link_visual_generic(mod_link, old_user)
 
-/obj/item/clothing/neck/link_scryer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
+/obj/item/clothing/neck/link_scryer/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods, message_range)
 	. = ..()
 	if(speaker != loc)
 		return
-	mod_link.visual.say(raw_message, sanitize = FALSE, message_range = 3)
+	mod_link.visual.say(raw_message, spans = spans, sanitize = FALSE, language = message_language, message_range = 3, message_mods = message_mods)
 
 /obj/item/clothing/neck/link_scryer/proc/on_overlay_change(atom/source, cache_index, overlay)
 	SIGNAL_HANDLER
@@ -305,11 +319,11 @@
 	on_user_set_dir_generic(mod_link, newdir || SOUTH)
 
 /obj/item/clothing/neck/link_scryer/loaded
-	starting_frequency = "NT"
+	starting_frequency = MODLINK_FREQ_NANOTRASEN
 
 /obj/item/clothing/neck/link_scryer/loaded/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 /obj/item/clothing/neck/link_scryer/loaded/charlie
 	starting_frequency = MODLINK_FREQ_CHARLIE
@@ -330,6 +344,8 @@
 	var/list/visual_overlays = list()
 	/// A reference to the call between two MODlinks.
 	var/datum/mod_link_call/link_call
+	/// Weakref to the user that is involved in our current call, for cleaning up after ourselves.
+	var/datum/weakref/user_in_call_ref
 	/// A callback that returns the user of the MODlink.
 	var/datum/callback/get_user_callback
 	/// A callback that returns whether the MODlink can currently call.
@@ -385,7 +401,7 @@
 	RETURN_TYPE(/datum/mod_link)
 	if(!link_call)
 		return
-	return link_call.caller == src ? link_call.receiver : link_call.caller
+	return link_call.link_caller == src ? link_call.link_receiver : link_call.link_caller
 
 /datum/mod_link/proc/call_link(datum/mod_link/called, mob/user)
 	if(!frequency)
@@ -397,7 +413,7 @@
 	if(!link_user)
 		return
 	if(HAS_TRAIT(link_user, TRAIT_IN_CALL))
-		holder.balloon_alert(user, "user already in call!")
+		holder.balloon_alert(user, "already calling!")
 		return
 	var/mob/living/link_target = called.get_user_callback.Invoke()
 	if(!link_target)
@@ -409,15 +425,31 @@
 	if(!can_call_callback.Invoke() || !called.can_call_callback.Invoke())
 		holder.balloon_alert(user, "can't call!")
 		return
-	link_target.playsound_local(get_turf(called.holder), 'sound/weapons/ring.ogg', 15, vary = TRUE)
+	link_target.playsound_local(get_turf(called.holder), 'sound/items/weapons/ring.ogg', 15, vary = TRUE)
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
 	alert.desc = "[holder] ([id]) is calling you! Left-click this to accept the call. Right-click to deny it."
-	alert.caller_ref = WEAKREF(src)
-	alert.receiver_ref = WEAKREF(called)
+	alert.link_caller_ref = WEAKREF(src)
+	alert.link_receiver_ref = WEAKREF(called)
 	alert.user_ref = WEAKREF(user)
 
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
+
+/datum/mod_link/proc/entered_call(datum/mod_link/other_link)
+	var/mob/living/user = get_user_callback.Invoke()
+	user_in_call_ref = WEAKREF(user)
+	ADD_TRAIT(user, TRAIT_IN_CALL, REF(src))
+
+	var/other_visual = other_link.make_visual_callback.Invoke()
+	get_visual_callback.Invoke(other_visual)
+
+/datum/mod_link/proc/exiting_call()
+	var/mob/living/old_user = user_in_call_ref?.resolve()
+	user_in_call_ref = null
+	if(old_user)
+		REMOVE_TRAIT(old_user, TRAIT_IN_CALL, REF(src))
+
+	delete_visual_callback.Invoke(old_user)
 
 /datum/mod_link/proc/on_holder_delete(atom/source)
 	SIGNAL_HANDLER
@@ -426,33 +458,25 @@
 /// A MODlink call datum, used to handle the call between two MODlinks.
 /datum/mod_link_call
 	/// The MODlink that is calling.
-	var/datum/mod_link/caller
+	var/datum/mod_link/link_caller
 	/// The MODlink that is being called.
-	var/datum/mod_link/receiver
+	var/datum/mod_link/link_receiver
 
-/datum/mod_link_call/New(datum/mod_link/caller, datum/mod_link/receiver)
-	caller.link_call = src
-	receiver.link_call = src
-	src.caller = caller
-	src.receiver = receiver
-	var/mob/living/caller_mob = caller.get_user_callback.Invoke()
-	ADD_TRAIT(caller_mob, TRAIT_IN_CALL, REF(src))
-	var/mob/living/receiver_mob = receiver.get_user_callback.Invoke()
-	ADD_TRAIT(receiver_mob, TRAIT_IN_CALL, REF(src))
-	make_visuals()
+/datum/mod_link_call/New(datum/mod_link/link_caller, datum/mod_link/link_receiver)
+	src.link_caller = link_caller
+	src.link_receiver = link_receiver
+	link_caller.link_call = src
+	link_receiver.link_call = src
+	link_caller.entered_call(link_receiver)
+	link_receiver.entered_call(link_caller)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/mod_link_call/Destroy()
-	var/mob/living/caller_mob = caller.get_user_callback.Invoke()
-	if(!QDELETED(caller_mob))
-		REMOVE_TRAIT(caller_mob, TRAIT_IN_CALL, REF(src))
-	var/mob/living/receiver_mob = receiver.get_user_callback.Invoke()
-	if(!QDELETED(receiver_mob))
-		REMOVE_TRAIT(receiver_mob, TRAIT_IN_CALL, REF(src))
+	link_caller.exiting_call()
+	link_receiver.exiting_call()
+	link_caller.link_call = null
+	link_receiver.link_call = null
 	STOP_PROCESSING(SSprocessing, src)
-	clear_visuals()
-	caller.link_call = null
-	receiver.link_call = null
 	return ..()
 
 /datum/mod_link_call/process(seconds_per_tick)
@@ -461,17 +485,7 @@
 	qdel(src)
 
 /datum/mod_link_call/proc/can_continue_call()
-	return caller.frequency == receiver.frequency && caller.can_call_callback.Invoke() && receiver.can_call_callback.Invoke()
-
-/datum/mod_link_call/proc/make_visuals()
-	var/caller_visual = caller.make_visual_callback.Invoke()
-	var/receiver_visual = receiver.make_visual_callback.Invoke()
-	caller.get_visual_callback.Invoke(receiver_visual)
-	receiver.get_visual_callback.Invoke(caller_visual)
-
-/datum/mod_link_call/proc/clear_visuals()
-	caller.delete_visual_callback.Invoke()
-	receiver.delete_visual_callback.Invoke()
+	return link_caller.frequency == link_receiver.frequency && link_caller.can_call_callback.Invoke() && link_receiver.can_call_callback.Invoke()
 
 /proc/call_link(mob/user, datum/mod_link/calling_link)
 	if(!calling_link.frequency)
@@ -499,11 +513,12 @@
 	desc = "Someone is calling you! Left-click this to accept the call. Right-click to deny it."
 	icon_state = "called"
 	timeout = 10 SECONDS
+	clickable_glow = TRUE
 	var/end_message = "call timed out!"
 	/// A weak reference to the MODlink that is calling.
-	var/datum/weakref/caller_ref
+	var/datum/weakref/link_caller_ref
 	/// A weak reference to the MODlink that is being called.
-	var/datum/weakref/receiver_ref
+	var/datum/weakref/link_receiver_ref
 	/// A weak reference to the mob that is calling.
 	var/datum/weakref/user_ref
 
@@ -511,25 +526,25 @@
 	. = ..()
 	if(usr != owner)
 		return
-	var/datum/mod_link/caller = caller_ref.resolve()
-	var/datum/mod_link/receiver = receiver_ref.resolve()
-	if(!caller || !receiver)
+	var/datum/mod_link/link_caller = link_caller_ref.resolve()
+	var/datum/mod_link/link_receiver = link_receiver_ref.resolve()
+	if(!link_caller || !link_receiver)
 		return
-	if(caller.link_call || receiver.link_call)
+	if(link_caller.link_call || link_receiver.link_call)
 		return
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		end_message = "call denied!"
-		owner.clear_alert("[REF(caller)]_modlink")
+		owner.clear_alert("[REF(link_caller)]_modlink")
 		return
 	end_message = "call accepted"
-	new /datum/mod_link_call(caller, receiver)
-	owner.clear_alert("[REF(caller)]_modlink")
+	new /datum/mod_link_call(link_caller, link_receiver)
+	owner.clear_alert("[REF(link_caller)]_modlink")
 
 /atom/movable/screen/alert/modlink_call/Destroy()
 	var/mob/living/user = user_ref?.resolve()
-	var/datum/mod_link/caller = caller_ref?.resolve()
-	if(!user || !caller)
+	var/datum/mod_link/link_caller = link_caller_ref?.resolve()
+	if(!user || !link_caller)
 		return ..()
-	caller.holder.balloon_alert(user, end_message)
+	link_caller.holder.balloon_alert(user, end_message)
 	return ..()

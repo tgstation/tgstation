@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	/// Sound loop type to use
 	var/soundloop_type = /datum/looping_sound/local_forecast
 	/// Proximity monitor which handles playing sounds to clients
-	var/datum/proximity_monitor/advanced/elevator_music_area/sound_player
+	var/datum/proximity_monitor/elevator_music_area/sound_player
 
 /obj/effect/abstract/elevator_music_zone/Initialize(mapload)
 	. = ..()
@@ -27,6 +27,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 
 /obj/effect/abstract/elevator_music_zone/Destroy(force)
 	GLOB.elevator_music -= src
+	QDEL_NULL(sound_player)
 	return ..()
 
 /obj/effect/abstract/elevator_music_zone/proc/link_to_panel(atom/elevator_panel)
@@ -50,8 +51,7 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	qdel(src)
 
 /// Load or unload a looping sound when mobs enter or exit the area
-/datum/proximity_monitor/advanced/elevator_music_area
-	edge_is_a_field = TRUE
+/datum/proximity_monitor/elevator_music_area
 	/// Are we currently playing sounds?
 	var/enabled = TRUE
 	/// Looping sound datum type to play
@@ -59,53 +59,57 @@ GLOBAL_LIST_EMPTY(elevator_music)
 	/// Assoc list of mobs to sound loops currently playing
 	var/list/tracked_mobs = list()
 
-/datum/proximity_monitor/advanced/elevator_music_area/New(atom/_host, range, _ignore_if_not_on_turf, soundloop_type)
+/datum/proximity_monitor/elevator_music_area/New(atom/_host, range, _ignore_if_not_on_turf, soundloop_type)
 	. = ..()
 	src.soundloop_type = soundloop_type
 
-/datum/proximity_monitor/advanced/elevator_music_area/Destroy()
+/datum/proximity_monitor/elevator_music_area/Destroy()
 	QDEL_LIST_ASSOC_VAL(tracked_mobs)
 	return ..()
 
-/datum/proximity_monitor/advanced/elevator_music_area/field_turf_crossed(mob/entered, turf/location)
+/datum/proximity_monitor/elevator_music_area/on_entered(turf/new_location, mob/entered, turf/old_location)
+	. = ..()
 	if (!istype(entered) || !entered.mind)
 		return
 
 	if (entered in tracked_mobs)
 		return
-
-	if (entered.client?.prefs.read_preference(/datum/preference/toggle/sound_elevator))
-		tracked_mobs[entered] = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
+	var/pref_volume = entered.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_ambience_volume)
+	if (pref_volume > 0)
+		var/datum/looping_sound/soundloop = new soundloop_type(_parent = entered, _direct = TRUE, start_immediately = enabled)
+		soundloop.volume *= pref_volume/100
+		tracked_mobs[entered] = soundloop
 	else
 		tracked_mobs[entered] = null // Still add it to the list so we don't keep making this check
 	RegisterSignal(entered, COMSIG_QDELETING, PROC_REF(mob_destroyed))
 
-/datum/proximity_monitor/advanced/elevator_music_area/field_turf_uncrossed(mob/exited, turf/location)
+/datum/proximity_monitor/elevator_music_area/on_uncrossed(turf/old_location, mob/exited, direction)
+	. = ..()
 	if (!(exited in tracked_mobs))
 		return
-	if (exited.z == host.z && get_dist(exited, host) <= current_range)
+	if(get_dist(host, exited) <= current_range)
 		return
 	qdel(tracked_mobs[exited])
 	tracked_mobs -= exited
 	UnregisterSignal(exited, COMSIG_QDELETING)
 
 /// Remove references on mob deletion
-/datum/proximity_monitor/advanced/elevator_music_area/proc/mob_destroyed(mob/former_mob)
+/datum/proximity_monitor/elevator_music_area/proc/mob_destroyed(mob/former_mob)
 	SIGNAL_HANDLER
 	if (former_mob in tracked_mobs)
 		qdel(tracked_mobs[former_mob])
 		tracked_mobs -= former_mob
 
 /// Start sound loops playing
-/datum/proximity_monitor/advanced/elevator_music_area/proc/turn_on()
+/datum/proximity_monitor/elevator_music_area/proc/turn_on()
 	enabled = TRUE
-	for (var/mob as anything in tracked_mobs)
+	for (var/mob in tracked_mobs)
 		var/datum/looping_sound/loop = tracked_mobs[mob]
 		loop.start()
 
 /// Stop active sound loops
-/datum/proximity_monitor/advanced/elevator_music_area/proc/turn_off()
+/datum/proximity_monitor/elevator_music_area/proc/turn_off()
 	enabled = FALSE
-	for (var/mob as anything in tracked_mobs)
+	for (var/mob in tracked_mobs)
 		var/datum/looping_sound/loop = tracked_mobs[mob]
 		loop.stop()

@@ -20,12 +20,12 @@
 	var/datum/team/cult/cult = team
 	var/list/target_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && !is_convertable_to_cult(player) && player.stat != DEAD)
+		if(player.mind && !IS_CULTIST(player) && !is_convertable_to_cult(player) && player.stat != DEAD && is_station_level(player.loc.z))
 			target_candidates += player.mind
 	if(target_candidates.len == 0)
 		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			if(player.mind && !player.mind.has_antag_datum(/datum/antagonist/cult) && player.stat != DEAD)
+			if(player.mind && !IS_CULTIST(player) && player.stat != DEAD && is_station_level(player.loc.z))
 				target_candidates += player.mind
 	list_clear_nulls(target_candidates)
 	if(LAZYLEN(target_candidates))
@@ -63,7 +63,7 @@
 /datum/objective/sacrifice/proc/on_possible_mindswap(mob/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(target.current, list(COMSIG_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
-	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
+	//we check if the mind is bodyless only after mindswap shenanigans to avoid issues.
 	addtimer(CALLBACK(src, PROC_REF(do_we_have_a_body)), 0 SECONDS)
 
 /datum/objective/sacrifice/proc/do_we_have_a_body()

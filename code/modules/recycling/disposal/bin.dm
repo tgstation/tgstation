@@ -1,5 +1,9 @@
-// Disposal bin and Delivery chute.
+/// Number of animals infesting disposal bins.
+GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
+#define CONTAINS_ANIMAL_CHANCE 5
+#define MAXIMUM_ANIMAL_SPAWNS 1
+#define ANIMAL_SHAKE_CHANCE 20
 #define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
 /obj/machinery/disposal
@@ -10,6 +14,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT
+	use_power = NO_POWER_USE
 
 	/// The internal air reservoir of the disposal
 	var/datum/gas_mixture/air_contents
@@ -65,6 +70,8 @@
 		COMSIG_TURF_RECEIVE_SWEEPED_ITEMS = PROC_REF(ready_for_trash),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal
@@ -94,12 +101,13 @@
 		stored = null
 		deconstruct(FALSE)
 
-/obj/machinery/disposal/singularity_pull(S, current_size)
+/obj/machinery/disposal/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-/obj/machinery/disposal/LateInitialize()
+/obj/machinery/disposal/post_machine_initialize()
+	. = ..()
 	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
 	var/datum/gas_mixture/env = new
@@ -108,7 +116,7 @@
 	air_contents.merge(removed)
 	trunk_check()
 
-/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -117,7 +125,7 @@
 			to_chat(user, span_notice("You [panel_open ? "remove":"attach"] the screws around the power connection."))
 			return
 		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
-			if(!I.tool_start_check(user, amount=1))
+			if(!I.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 				return
 
 			to_chat(user, span_notice("You start slicing the floorweld off \the [src]..."))
@@ -126,12 +134,12 @@
 				deconstruct()
 			return
 
-	if(!user.combat_mode)
-		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
+	if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
+		if(I.item_flags & ABSTRACT)
 			return
-		place_item_in_disposal(I, user)
-		update_appearance()
-		return 1 //no afterattack
+		if(place_item_in_disposal(I, user))
+			update_appearance()
+			return TRUE //no afterattack
 	else
 		return ..()
 
@@ -140,31 +148,50 @@
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
 	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
 		return
+
+	var/cheese = FALSE
 	var/loot = rand(1,100)
 	switch(loot)
 		if(1 to 5)
 			to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
 			var/pickedcoin = pick(GLOB.ratking_coins)
 			for(var/i = 1 to rand(1,3))
-				new pickedcoin(get_turf(king))
+				new pickedcoin(king.drop_location())
 		if(6 to 33)
+			cheese = TRUE
 			king.say(pick("Treasure!","Our precious!","Cheese!"), ignore_spam = TRUE, forced = "regal rat rummaging")
 			to_chat(king, span_notice("Score! You find some cheese!"))
-			new /obj/item/food/cheese/wedge(get_turf(king))
+			new /obj/item/food/cheese/wedge(king.drop_location())
 		else
 			var/pickedtrash = pick(GLOB.ratking_trash)
 			to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
-			new pickedtrash(get_turf(king))
+			new pickedtrash(king.drop_location())
+
+	if (cheese)
+		return // We don't want them to eat your reward
+	var/rat_cap = CONFIG_GET(number/ratcap)
+	if (LAZYLEN(SSmobs.cheeserats) < rat_cap && prob(33))
+		var/mob/living/basic/mouse/new_subject = new(king.drop_location())
+		ADD_TRAIT(new_subject, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
+		playsound(new_subject, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', 100)
+		visible_message(span_warning("[new_subject] climbs out of [src]!"))
 
 /// Moves an item into the diposal bin
-/obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
-	I.forceMove(src)
-	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
+/obj/machinery/disposal/proc/place_item_in_disposal(obj/item/disposing_item, mob/user)
+	if(!user.transferItemToLoc(disposing_item, newloc = src))
+		return FALSE
+	user.visible_message(
+		span_notice("[user.name] places \the [disposing_item] into \the [src]."),
+		span_notice("You place \the [disposing_item] into \the [src]."),
+	)
+	return TRUE
 
 /// Mouse drop another mob or self
-/obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
-	if(istype(target))
+/obj/machinery/disposal/mouse_drop_receive(atom/target, mob/living/user, params)
+	if(isliving(target))
 		stuff_mob_in(target, user)
+	if(istype(target, /obj/structure/closet/body_bag) && (user.mobility_flags & (MOBILITY_PICKUP|MOBILITY_STAND) == (MOBILITY_PICKUP|MOBILITY_STAND)))
+		stuff_bodybag_in(target, user)
 
 /// Handles stuffing a grabbed mob into the disposal
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
@@ -173,34 +200,65 @@
 		if (iscyborg(user))
 			var/mob/living/silicon/robot/borg = user
 			if (!borg.model || !borg.model.canDispose)
-				return
+				return FALSE
 		else
-			return
+			return FALSE
 	if(!isturf(user.loc)) //No magically doing it from inside closets
-		return
+		return FALSE
 	if(target.buckled || target.has_buckled_mobs())
-		return
+		return FALSE
 	if(target.mob_size > MOB_SIZE_HUMAN)
 		to_chat(user, span_warning("[target] doesn't fit inside [src]!"))
-		return
+		return FALSE
 	add_fingerprint(user)
 	if(user == target)
 		user.visible_message(span_warning("[user] starts climbing into [src]."), span_notice("You start climbing into [src]..."))
 	else
 		target.visible_message(span_danger("[user] starts putting [target] into [src]."), span_userdanger("[user] starts putting you into [src]!"))
-	if(do_after(user, 2 SECONDS, target))
-		if (!loc)
-			return
-		target.forceMove(src)
-		if(user == target)
-			user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
-			. = TRUE
-		else
-			target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
-			log_combat(user, target, "stuffed", addition="into [src]")
-			target.LAssailant = WEAKREF(user)
-			. = TRUE
-		update_appearance()
+	if(!do_after(user, 2 SECONDS, target) || QDELETED(src))
+		return FALSE
+	target.forceMove(src)
+	if(user == target)
+		user.visible_message(span_warning("[user] climbs into [src]."), span_notice("You climb into [src]."))
+	else
+		target.visible_message(span_danger("[user] places [target] in [src]."), span_userdanger("[user] places you in [src]."))
+		log_combat(user, target, "stuffed", addition="into [src]")
+	update_appearance()
+	return TRUE
+
+/obj/machinery/disposal/proc/stuff_bodybag_in(obj/structure/closet/body_bag/bag, mob/living/user)
+	if(!length(bag.contents))
+		bag.undeploy_bodybag(src)
+		qdel(bag)
+		user.visible_message(
+			span_warning("[user] stuffs the empty [bag.name] into [src]."),
+			span_notice("You stuff the empty [bag.name] into [src].")
+		)
+		return TRUE
+
+	user.visible_message(
+		span_warning("[user] starts putting [bag] into [src]."),
+		span_notice("You start putting [bag] into [src]...")
+	)
+
+	if(!do_after(user, 4 SECONDS, bag) || QDELETED(src))
+		return FALSE
+
+	user.visible_message(
+		span_warning("[user] places [bag] in [src]."),
+		span_notice("You place [bag] in [src].")
+	)
+
+	if(!length(bag.contents))
+		bag.undeploy_bodybag(src)
+		qdel(bag)
+	else
+		bag.add_fingerprint(user)
+		bag.forceMove(src)
+
+	add_fingerprint(user)
+	update_appearance()
+	return TRUE
 
 /obj/machinery/disposal/relaymove(mob/living/user, direction)
 	attempt_escape(user)
@@ -240,7 +298,7 @@
 	flushing = TRUE
 	flushAnimation()
 	sleep(1 SECONDS)
-	if(last_sound < world.time + 1)
+	if(last_sound < world.time - 1) //Prevents piles of items from playing a dozen sounds at once
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
 		last_sound = world.time
 	sleep(0.5 SECONDS)
@@ -315,7 +373,51 @@
 	visible_message(span_warning("[src] is ripped free from the floor!"))
 	deconstruct()
 
-// Disposal bin
+
+/// Handles the signal for the rat king looking inside the disposal
+/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
+	SIGNAL_HANDLER
+	if(king.combat_mode)
+		return
+
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
+	return COMPONENT_RAT_INTERACTED
+
+/// Handles a carbon mob getting shoved into the disposal bin
+/obj/machinery/disposal/proc/trash_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+	SIGNAL_HANDLER
+	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
+		return
+	var/cur_density = density
+	density = FALSE
+	if (!target.Move(get_turf(src), get_dir(target, src)))
+		density = cur_density
+		return
+	density = cur_density
+	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+	target.forceMove(src)
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
+		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
+	log_combat(shover, target, "shoved", "into [src] (disposal bin)[weapon ? " with [weapon]" : ""]")
+	return COMSIG_LIVING_SHOVE_HANDLED
+
+///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
+/obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
+	SIGNAL_HANDLER
+	if(!items_to_sweep)
+		return
+	for (var/obj/item/garbage in items_to_sweep)
+		user.transferItemToLoc(garbage, src)
+
+	items_to_sweep.Cut()
+
+	update_appearance()
+	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
+	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
+
+
+/// Disposal bin
 // Holds items for disposal into pipe system
 // Draws air from turf, gradually charges internal reservoir
 // Once full (~1 atm), uses air resv to flush items into the pipes
@@ -327,18 +429,83 @@
 	desc = "A pneumatic waste disposal unit."
 	icon_state = "disposal"
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	/// Reference to the mounted destination tagger for disposal bins with one mounted.
+	var/obj/item/dest_tagger/mounted_tagger
+	///a weighted list of all the possible animals we can have
+	var/static/list/weighted_animal_list = list(
+		/mob/living/basic/stoat = 1,
+	)
+	/// do we contain an animal?
+	var/contained_animal
+
+/obj/machinery/disposal/bin/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
+	if(mapload && prob(CONTAINS_ANIMAL_CHANCE) && GLOB.disposals_animals_spawned < MAXIMUM_ANIMAL_SPAWNS)
+		spawn_contained_animal()
 
 // attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
-		var/obj/item/storage/bag/trash/bag = I
+/obj/machinery/disposal/bin/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(weapon, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
+		var/obj/item/storage/bag/trash/bag = weapon
 		to_chat(user, span_warning("You empty the bag."))
 		bag.atom_storage.remove_all(src)
 		update_appearance()
 	else
 		return ..()
-
 // handle machine interaction
+
+/obj/machinery/disposal/bin/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(weapon, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/new_tagger = weapon
+		if(mounted_tagger)
+			balloon_alert(user, "already has a tagger!")
+			return
+		if(HAS_TRAIT(new_tagger, TRAIT_NODROP) || !user.transferItemToLoc(new_tagger, src))
+			balloon_alert(user, "stuck to your hand!")
+			return
+		new_tagger.moveToNullspace()
+		user.visible_message(span_notice("[user] snaps \the [new_tagger] onto [src]!"))
+		balloon_alert(user, "tagger returned")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		mounted_tagger = new_tagger
+		update_appearance()
+		return
+	else
+		return ..()
+
+/obj/machinery/disposal/bin/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!mounted_tagger)
+		balloon_alert(user, "no destination tagger!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!user.put_in_hands(mounted_tagger))
+		balloon_alert(user, "destination tagger falls!")
+		mounted_tagger = null
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.visible_message(span_notice("[user] unhooks the [mounted_tagger] from [src]."))
+	balloon_alert(user, "tagger pulled")
+	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+	mounted_tagger = null
+	update_appearance(UPDATE_OVERLAYS)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/disposal/bin/examine(mob/user)
+	. = ..()
+	if(isnull(mounted_tagger))
+		. += span_notice("The destination tagger mount is empty.")
+	else
+		. += span_notice("\The [mounted_tagger] is hanging on the side. Right Click to remove.")
+
+/obj/machinery/disposal/bin/Destroy()
+	if(!isnull(mounted_tagger))
+		QDEL_NULL(mounted_tagger)
+	return ..()
+
+/obj/machinery/disposal/bin/on_deconstruction(disassembled)
+	. = ..()
+	if(!isnull(mounted_tagger))
+		mounted_tagger.forceMove(drop_location())
+		mounted_tagger = null
 
 /obj/machinery/disposal/bin/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -361,7 +528,7 @@
 	data["isai"] = HAS_AI_ACCESS(user)
 	return data
 
-/obj/machinery/disposal/bin/ui_act(action, params)
+/obj/machinery/disposal/bin/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -394,7 +561,7 @@
 /obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
 		var/mob/thrower = throwingdatum?.get_thrower()
-		if((thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
+		if((istype(thrower) && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
 			AM.forceMove(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
@@ -404,10 +571,17 @@
 	else
 		return ..()
 
+/obj/machinery/disposal/bin/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(contained_animal)
+		release_animal()
+
 /obj/machinery/disposal/bin/flush()
 	..()
 	full_pressure = FALSE
 	pressure_charging = TRUE
+	if(contained_animal)
+		release_animal()
 	update_appearance()
 
 /obj/machinery/disposal/bin/update_overlays()
@@ -418,6 +592,9 @@
 	//flush handle
 	if(flush)
 		. += "dispover-handle"
+
+	if(mounted_tagger)
+		. += "tagger_mount"
 
 	//only handle is shown if no power
 	if(machine_stat & NOPOWER || panel_open)
@@ -436,6 +613,20 @@
 		. += "dispover-ready"
 		. += emissive_appearance(icon, "dispover-ready-glow", src, alpha = src.alpha)
 
+/// Create a random animal to be infesting this disposals bin
+/obj/machinery/disposal/bin/proc/spawn_contained_animal()
+	contained_animal = pick_weight(weighted_animal_list)
+	GLOB.disposals_animals_spawned++
+
+/// Release whoever is living inside here
+/obj/machinery/disposal/bin/proc/release_animal()
+	var/list/open_turfs = get_adjacent_open_turfs(src)
+	var/turf/final_turf = length(open_turfs) ? pick(open_turfs) : drop_location()
+	var/mob/living/startled_animal = new contained_animal(drop_location())
+	startled_animal.Move(final_turf)
+	visible_message(span_notice("A startled [startled_animal] jumps out of [src]"))
+	contained_animal = null
+
 /// Initiates flushing
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
@@ -444,6 +635,10 @@
 //timed process
 //charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process(seconds_per_tick)
+
+	if(contained_animal && prob(ANIMAL_SHAKE_CHANCE))
+		Shake(duration = 2 SECONDS, pixelshiftx = 1, pixelshifty = 0, duration = (seconds_per_tick SECONDS), shake_interval = 0.1 SECONDS)
+
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -460,13 +655,13 @@
 	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
-	use_power(idle_power_usage) // base power usage
+	use_energy(idle_power_usage) // base power usage
 
 	if(!pressure_charging) // if off or ready, no need to charge
 		return
 
 	// otherwise charge
-	use_power(idle_power_usage) // charging power usage
+	use_energy(idle_power_usage) // charging power usage
 
 	var/atom/L = loc //recharging from loc turf
 
@@ -493,7 +688,12 @@
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
-//Delivery Chute
+/obj/machinery/disposal/bin/tagger/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	mounted_tagger = new /obj/item/dest_tagger(null)
+	return ..()
+
+
+/// Delivery Chute
 
 /obj/machinery/disposal/delivery_chute
 	name = "delivery chute"
@@ -535,6 +735,7 @@
 		M.forceMove(src)
 	flush()
 
+
 /// Called to check if an atom can fit inside the diposal
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
@@ -548,40 +749,7 @@
 /obj/vehicle/sealed/mecha/CanEnterDisposals()
 	return
 
-/// Handles the signal for the rat king looking inside the disposal
-/obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/basic/regal_rat/king)
-	SIGNAL_HANDLER
-	if(king.combat_mode)
-		return
-
-	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
-	return COMPONENT_RAT_INTERACTED
-
-/// Handles a carbon mob getting shoved into the disposal bin
-/obj/machinery/disposal/proc/trash_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
-	SIGNAL_HANDLER
-	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
-		return
-	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	target.forceMove(src)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
-		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
-	log_combat(shover, target, "shoved", "into [src] (disposal bin)[weapon ? " with [weapon]" : ""]")
-	return COMSIG_LIVING_SHOVE_HANDLED
-
-///Called when a push broom is trying to sweep items onto the turf this object is standing on. Garbage will be moved inside.
-/obj/machinery/disposal/proc/ready_for_trash(datum/source, obj/item/pushbroom/broom, mob/user, list/items_to_sweep)
-	SIGNAL_HANDLER
-	if(!items_to_sweep)
-		return
-	for (var/obj/item/garbage in items_to_sweep)
-		garbage.forceMove(src)
-
-	items_to_sweep.Cut()
-
-	update_appearance()
-	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
-
 #undef SEND_PRESSURE
+#undef CONTAINS_ANIMAL_CHANCE
+#undef ANIMAL_SHAKE_CHANCE
+#undef MAXIMUM_ANIMAL_SPAWNS

@@ -35,3 +35,27 @@
 /// If the user can actually get this bounty as a selection.
 /datum/bounty/proc/can_get()
 	return TRUE
+
+/**
+ * Debug item because it took less time to code this than it did to roll ONE toolbox bounty.
+ */
+/obj/item/bounty_voucher
+	name = "bounty voucher"
+	desc = "A certificate for ONE FREE BOUNTY of your choice! Wow!"
+	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon_state = "paperslip_words"
+
+/obj/item/bounty_voucher/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	var/obj/item/card/id/id = living_user.get_idcard()
+	if(!id?.registered_account)
+		return
+	var/choice = tgui_input_list(living_user, "Choose a bounty.", "New Bounty", subtypesof(/datum/bounty))
+	var/datum/bounty/new_chore = text2path("[choice]")
+	id.registered_account.civilian_bounty = new new_chore
+	balloon_alert(user, "new bounty acquired!")
+	playsound(src, 'sound/effects/coin2.ogg', 30, TRUE)
+	qdel(src)

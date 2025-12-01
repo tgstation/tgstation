@@ -13,7 +13,7 @@
 	if (!QDELETED(card) && loc != card)
 		card.forceMove(drop_location())
 		card.pai = null
-		card.emotion_icon = initial(card.emotion_icon)
+		card.screen_image = initial(card.screen_image)
 		card.update_appearance()
 
 	qdel(src)

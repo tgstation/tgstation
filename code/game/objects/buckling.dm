@@ -3,6 +3,8 @@
 	var/can_buckle = FALSE
 	/// Bed-like behaviour, forces mob.lying = buckle_lying if not set to [NO_BUCKLE_LYING].
 	var/buckle_lying = NO_BUCKLE_LYING
+	/// Bed-like behaviour, sets mob dir to buckle_dir if not set to [BUCKLE_MATCH_DIR]. If set to [BUCKLE_MATCH_DIR], makes mob dir match ours.
+	var/buckle_dir = BUCKLE_MATCH_DIR
 	/// Require people to be handcuffed before being able to buckle. eg: pipes
 	var/buckle_requires_restraints = FALSE
 	/// The mobs currently buckled to this atom
@@ -28,18 +30,6 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
-	if(!can_buckle || !istype(tool, /obj/item/riding_offhand) || !user.Adjacent(src))
-		return ..()
-
-	var/obj/item/riding_offhand/riding_item = tool
-	var/mob/living/carried_mob = riding_item.rider
-	if(carried_mob == user) //Piggyback user.
-		return ITEM_INTERACT_BLOCKING
-	user.unbuckle_mob(carried_mob)
-	carried_mob.forceMove(get_turf(src))
-	return mouse_buckle_handling(carried_mob, user) ? ITEM_INTERACT_SUCCESS: ITEM_INTERACT_BLOCKING
-
 //literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
 /atom/movable/attack_robot(mob/living/user)
 	. = ..()
@@ -54,8 +44,7 @@
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
 
-/atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
+/atom/movable/mouse_drop_receive(mob/living/M, mob/user, params)
 	return mouse_buckle_handling(M, user)
 
 /**
@@ -115,11 +104,21 @@
 		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
 	M.set_buckled(src)
 	buckled_mobs |= M
-	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled)
+
+	///If the icon is too big, don't add it to the screen alert
+	var/add_src_icon = TRUE
+	var/list/dim = get_icon_dimensions(icon)
+	if(dim["height"] > ICON_SIZE_Y || dim["width"] > ICON_SIZE_X)
+		add_src_icon = FALSE
+
+	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled, new_master = add_src_icon ? src : null)
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)
-	M.setDir(dir)
+	if(buckle_dir == BUCKLE_MATCH_DIR)
+		M.setDir(dir)
+	else
+		M.setDir(buckle_dir)
 
 	//Something has unbuckled us in reaction to the above movement
 	if(!M.buckled)
@@ -128,6 +127,7 @@
 	post_buckle_mob(M)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M, force)
+	SEND_SIGNAL(M, COMSIG_MOB_BUCKLED, src)
 	return TRUE
 
 /obj/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -136,6 +136,13 @@
 		if(resistance_flags & ON_FIRE) //Sets the mob on fire if you buckle them to a burning atom/movableect
 			M.adjust_fire_stacks(1)
 			M.ignite_mob()
+		if(buckle_sound)
+			playsound(src, buckle_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, pressure_affected = TRUE, ignore_walls = FALSE)
+
+/obj/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
+	. = ..()
+	if(. && unbuckle_sound)
+		playsound(src, unbuckle_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, pressure_affected = TRUE, ignore_walls = FALSE)
 
 /**
  * Set a mob as unbuckled from src
@@ -163,6 +170,7 @@
 	if(!length(buckled_mobs))
 		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
+	SEND_SIGNAL(buckled_mob, COMSIG_MOB_UNBUCKLED, src)
 
 	if(can_fall)
 		var/turf/location = buckled_mob.loc
@@ -221,21 +229,23 @@
 	if(target == src)
 		return FALSE
 
-	// Check if the target to buckle isn't INSIDE OF A WALL
-	if(!isopenturf(loc) || !isopenturf(target.loc))
-		return FALSE
-
-	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
 	var/turf/ground = get_turf(src)
-	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-		return FALSE
+	// If we're not already on the same turf as our target...
+	if(get_turf(target) != ground)
+		// Check if the target to buckle isn't INSIDE OF A WALL
+		if(!isopenturf(loc) || !isopenturf(target.loc))
+			return FALSE
+
+		// Check if the target to buckle isn't INSIDE A SOLID OBJECT (not including vehicles)
+		if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			return FALSE
+
+		// If we're checking the loc, make sure the target is on the thing we're bucking them to.
+		if(check_loc && !target.Adjacent(src))
+			return FALSE
 
 	// Check if this atom can have things buckled to it.
 	if(!can_buckle && !force)
-		return FALSE
-
-	// If we're checking the loc, make sure the target is on the thing we're bucking them to.
-	if(check_loc && !target.Adjacent(src))
 		return FALSE
 
 	// Make sure the target isn't already buckled to something.
@@ -272,7 +282,7 @@
  */
 /atom/movable/proc/is_user_buckle_possible(mob/living/target, mob/user, check_loc = TRUE)
 	// Standard adjacency and other checks.
-	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated() || target.anchored)
+	if(!Adjacent(user) || !Adjacent(target) || !isturf(user.loc) || user.incapacitated || target.anchored)
 		return FALSE
 
 	if(iscarbon(user))
@@ -321,14 +331,23 @@
 
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
-		if(M == user)
-			M.visible_message(span_notice("[M] buckles [M.p_them()]self to [src]."),\
-				span_notice("You buckle yourself to [src]."),\
-				span_hear("You hear metal clanking."))
-		else
-			M.visible_message(span_warning("[user] buckles [M] to [src]!"),\
-				span_warning("[user] buckles you to [src]!"),\
-				span_hear("You hear metal clanking."))
+		buckle_feedback(M, user)
+
+/// Feedback displayed to nearby players after a mob is buckled to src.
+/atom/movable/proc/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] buckles [buckler.p_them()]self to [src]."),
+			span_notice("You buckle yourself to [src]."),
+			span_hear("You hear metal clanking."),
+		)
+	else
+		being_buckled.visible_message(
+			span_warning("[buckler] buckles [being_buckled] to [src]!"),
+			span_warning("[buckler] buckles you to [src]!"),
+			span_hear("You hear metal clanking."),
+		)
+
 /**
  * Handles a user unbuckling a mob from src and sends a visible_message
  *
@@ -339,20 +358,28 @@
  * user - The mob unbuckling buckled_mob
  */
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
-	if(!(buckled_mob in buckled_mobs) || !user.CanReach(buckled_mob))
+	if(!(buckled_mob in buckled_mobs) || !buckled_mob.IsReachableBy(user))
 		return
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
-		if(M != user)
-			M.visible_message(span_notice("[user] unbuckles [M] from [src]."),\
-				span_notice("[user] unbuckles you from [src]."),\
-				span_hear("You hear metal clanking."))
-		else
-			M.visible_message(span_notice("[M] unbuckles [M.p_them()]self from [src]."),\
-				span_notice("You unbuckle yourself from [src]."),\
-				span_hear("You hear metal clanking."))
+		unbuckle_feedback(M, user)
 		add_fingerprint(user)
 		if(isliving(M.pulledby))
 			var/mob/living/L = M.pulledby
 			L.set_pull_offsets(M, L.grab_state)
 	return M
+
+/// Feedback displayed to nearby players after a mob is unbuckled from src.
+/atom/movable/proc/unbuckle_feedback(mob/living/unbuckled_mob, mob/unbuckler)
+	if(unbuckled_mob == unbuckler)
+		unbuckled_mob.visible_message(
+			span_notice("[unbuckler] unbuckles [unbuckler.p_them()]self from [src]."),
+			span_notice("You unbuckle yourself from [src]."),
+			span_hear("You hear metal clanking."),
+		)
+	else
+		unbuckled_mob.visible_message(
+			span_notice("[unbuckler] unbuckles [unbuckled_mob] from [src]."),
+			span_notice("[unbuckler] unbuckles you from [src]."),
+			span_hear("You hear metal clanking."),
+		)

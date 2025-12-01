@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+type Fn = (...args: any[]) => any;
+
 export type Reducer<State = any, ActionType extends Action = AnyAction> = (
   state: State | undefined,
   action: ActionType,
@@ -36,7 +38,7 @@ export type Dispatch<ActionType extends Action = AnyAction> = (
   action: ActionType,
 ) => void;
 
-type StoreEnhancer = (createStoreFunction: Function) => Function;
+type StoreEnhancer = (createStoreFunction: Fn) => Fn;
 
 type PreparedAction = {
   payload?: any;
@@ -56,7 +58,7 @@ export const createStore = <State, ActionType extends Action = AnyAction>(
   }
 
   let currentState: State;
-  let listeners: Array<() => void> = [];
+  const listeners: Array<() => void> = [];
 
   const getState = (): State => currentState;
 
@@ -163,7 +165,7 @@ export const combineReducers = (
  * @param {string} type The action type to use for created actions.
  * @param {any} prepare (optional) a method that takes any number of arguments
  * and returns { payload } or { payload, meta }. If this is given, the
- * resulting action creator will pass it's arguments to this method to
+ * resulting action creator will pass its arguments to this method to
  * calculate payload & meta.
  *
  * @public

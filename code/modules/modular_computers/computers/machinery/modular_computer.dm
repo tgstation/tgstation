@@ -3,10 +3,10 @@
 // Modular Computer - A machinery that is mostly just a host to the Modular Computer item.
 /obj/machinery/modular_computer
 	name = "modular computer"
-	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
+	desc = "The frame of an advanced computer" //This should only show up when building a computer, it should examine the processor instead
 	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.025
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.5
@@ -50,10 +50,16 @@
 	return ..()
 
 /obj/machinery/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
+	. = NONE
+
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle processor interaction"
-	return CONTEXTUAL_SCREENTIP_SET
+		. |= CONTEXTUAL_SCREENTIP_SET
+
+	if(CPU_INTERACTABLE(user))
+		. |= cpu?.add_context(source, context, held_item, user)
+
+	return .
 
 /obj/machinery/modular_computer/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -116,11 +122,17 @@
 	SIGNAL_HANDLER
 	return update_icon(updates)
 
-/obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
-	if(CPU_INTERACTABLE(user) || !can_interact(user))
-		return
-	cpu.AltClick(user)
+/obj/machinery/modular_computer/click_alt(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/modular_computer/click_alt_secondary(mob/user)
+	if(!CPU_INTERACTABLE(user) || !can_interact(user))
+		return NONE
+	cpu.click_alt_secondary(user)
+	return CLICK_ACTION_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -129,7 +141,7 @@
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()
-	if(cpu?.use_power()) // If it still has a power source, PC wouldn't go offline.
+	if(cpu?.use_energy()) // If it still has a power source, PC wouldn't go offline.
 		set_machine_stat(machine_stat & ~NOPOWER)
 		update_appearance()
 		return
@@ -137,13 +149,10 @@
 
 ///Try to recharge our internal cell if it isn't fully charged.
 /obj/machinery/modular_computer/process(seconds_per_tick)
-	var/obj/item/stock_parts/cell/cell = get_cell()
+	var/obj/item/stock_parts/power_store/cell = get_cell()
 	if(isnull(cell) || cell.percent() >= 100)
 		return
-	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5
-	if(!use_power_from_net(power_to_draw))
-		return
-	cell.give(power_to_draw)
+	charge_cell(idle_power_usage * seconds_per_tick, cell)
 
 /obj/machinery/modular_computer/get_cell()
 	return cpu?.internal_cell
@@ -157,11 +166,14 @@
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
 	return CPU_INTERACTABLE(user) ? cpu.welder_act(user, tool) : ..()
 
-/obj/machinery/modular_computer/attackby(obj/item/weapon, mob/living/user)
-	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.attackby(weapon, user) : ..()
+/obj/machinery/modular_computer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction(user, tool, modifiers) : ..()
 
-/obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user)
-	return CPU_INTERACTABLE(user) ? cpu.attacked_by(attacking_item, user) : ..()
+/obj/machinery/modular_computer/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return (CPU_INTERACTABLE(user) && !user.combat_mode) ? cpu.item_interaction_secondary(user, tool, modifiers) : ..()
+
+/obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	return CPU_INTERACTABLE(user) ? cpu.attacked_by(attacking_item, user, modifiers, attack_modifiers) : ..()
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
@@ -189,7 +201,7 @@
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
-/obj/machinery/modular_computer/bullet_act(obj/projectile/Proj)
-	return cpu?.bullet_act(Proj) || ..()
+/obj/machinery/modular_computer/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	return cpu?.projectile_hit(hitting_projectile, def_zone, piercing_hit, blocked) || ..()
 
 #undef CPU_INTERACTABLE

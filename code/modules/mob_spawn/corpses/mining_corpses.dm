@@ -8,11 +8,21 @@
 	burn_damage = 1000
 	mob_species = /datum/species/skeleton
 
-/obj/effect/mob_spawn/corpse/human/charredskeleton/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/charredskeleton/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_human.color = "#454545"
 	spawned_human.gender = NEUTER
 	//don't need to set the human's body type (neuter)
+
+/obj/effect/mob_spawn/corpse/human/charredskeleton/dragoon
+	outfit = /datum/outfit/dragoon_gear
+
+/datum/outfit/dragoon_gear
+	name = "Dragoon"
+
+	suit = /obj/item/clothing/suit/armor/dragoon
+	head = /obj/item/clothing/head/helmet/dragoon
+	suit_store = /obj/item/spear/skybulge
 
 //Legion infested mobs
 
@@ -24,9 +34,9 @@
 	outfit = select_outfit()
 	return ..()
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
-	var/obj/item/organ/internal/legion_tumour/cancer = new()
+	var/obj/item/organ/legion_tumour/cancer = new()
 	cancer.Insert(spawned_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /// Returns the outfit worn by our corpse
@@ -65,9 +75,9 @@
 /// Corpse spawner used by dwarf legions to make small corpses
 /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/dwarf/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
-	spawned_human.dna.add_mutation(/datum/mutation/human/dwarfism)
+	spawned_human.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_MUTATOR)
 
 /// Corpse spawner used by snow legions with alternate costumes
 /obj/effect/mob_spawn/corpse/human/legioninfested/snow
@@ -113,7 +123,7 @@
 /obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/select_outfit()
 	return null
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_human.gender = NEUTER
 
@@ -124,9 +134,10 @@
 	brute_damage = 0
 	burn_damage = 1000
 
-/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/legioninfested/skeleton/charred/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_human.color = "#454545"
+	spawned_human.AddComponent(/datum/component/storm_hating)
 
 
 /datum/outfit/consumed_miner
@@ -135,9 +146,9 @@
 	mask = /obj/item/clothing/mask/gas/explorer
 	shoes = /obj/item/clothing/shoes/workboots/mining
 
-/datum/outfit/consumed_miner/pre_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
+/datum/outfit/consumed_miner/pre_equip(mob/living/carbon/human/miner, visuals_only = FALSE)
 	var/regular_uniform = FALSE
-	if(visualsOnly)
+	if(visuals_only)
 		regular_uniform = TRUE //assume human
 	else
 		var/new_species_type = pick_weight(list(
@@ -195,8 +206,8 @@
 	name = "Legion-Consumed Ashwalker"
 	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 
-/datum/outfit/consumed_ashwalker/pre_equip(mob/living/carbon/human/ashwalker, visualsOnly = FALSE)
-	if(!visualsOnly)
+/datum/outfit/consumed_ashwalker/pre_equip(mob/living/carbon/human/ashwalker, visuals_only = FALSE)
+	if(!visuals_only)
 		ashwalker.set_species(/datum/species/lizard/ashwalker)
 	if(prob(95))
 		head = /obj/item/clothing/head/helmet/gladiator
@@ -234,8 +245,8 @@
 	///drops a pie cannon on post_equip. i'm so done with this stupid outfit trying to put shit that doesn't fit in the backpack!
 	var/drop_a_pie_cannon = FALSE
 
-/datum/outfit/consumed_clown/pre_equip(mob/living/carbon/human/clown, visualsOnly = FALSE)
-	if(!visualsOnly)
+/datum/outfit/consumed_clown/pre_equip(mob/living/carbon/human/clown, visuals_only = FALSE)
+	if(!visuals_only)
 		clown.fully_replace_character_name(clown.name, pick(GLOB.clown_names))
 	if(prob(70))
 		var/backpack_loot = pick(list(
@@ -251,7 +262,7 @@
 		else
 			backpack_contents += backpack_loot
 	if(prob(30))
-		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(list( 1 = 3, 2 = 2, 3 = 1)))
+		backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pick_weight(alist( 1 = 3, 2 = 2, 3 = 1)))
 	if(prob(10))
 		l_pocket = pick_weight(list(
 			/obj/item/bikehorn/golden = 3,
@@ -260,7 +271,7 @@
 	if(prob(10))
 		r_pocket = /obj/item/implanter/sad_trombone
 
-/datum/outfit/consumed_clown/post_equip(mob/living/carbon/human/clown, visualsOnly)
+/datum/outfit/consumed_clown/post_equip(mob/living/carbon/human/clown, visuals_only)
 	. = ..()
 	if(drop_a_pie_cannon)
 		new /obj/item/pneumatic_cannon/pie(get_turf(clown))
@@ -269,8 +280,8 @@
 	name = "Legion-Consumed Golem"
 	//Oops! All randomized!
 
-/datum/outfit/consumed_golem/pre_equip(mob/living/carbon/human/golem, visualsOnly = FALSE)
-	if(!visualsOnly)
+/datum/outfit/consumed_golem/pre_equip(mob/living/carbon/human/golem, visuals_only = FALSE)
+	if(!visuals_only)
 		golem.set_species(/datum/species/golem)
 	if(prob(30))
 		glasses = pick_weight(list(
@@ -281,7 +292,7 @@
 			/obj/item/clothing/glasses/welding = 2,
 			/obj/item/clothing/glasses/night = 1,
 		))
-	if(prob(10) && !visualsOnly) //visualsonly = not a golem = can't put things in the belt slot without a jumpsuit
+	if(prob(10) && !visuals_only) //visuals_only = not a golem = can't put things in the belt slot without a jumpsuit
 		belt = pick(list(
 			/obj/item/crowbar/power,
 			/obj/item/screwdriver/power,
@@ -299,7 +310,7 @@
 	shoes = /obj/item/clothing/shoes/winterboots
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visualsOnly = FALSE)
+/datum/outfit/consumed_ice_settler/pre_equip(mob/living/carbon/human/ice_settler, visuals_only = FALSE)
 	if(prob(40))
 		r_pocket = pick_weight(list(
 			/obj/item/coin/silver = 5,
@@ -333,8 +344,8 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 
-/datum/outfit/consumed_dame/pre_equip(mob/living/carbon/human/dame, visualsOnly = FALSE)
-	if(!visualsOnly)
+/datum/outfit/consumed_dame/pre_equip(mob/living/carbon/human/dame, visuals_only = FALSE)
+	if(!visuals_only)
 		dame.gender = FEMALE
 		dame.physique = FEMALE
 		dame.update_body()
@@ -352,12 +363,12 @@
 	glasses = /obj/item/clothing/glasses/blindfold
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	r_pocket = /obj/item/reagent_containers/pill/shadowtoxin
+	r_pocket = /obj/item/reagent_containers/applicator/pill/shadowtoxin
 
 	accessory = /obj/item/clothing/accessory/medal/plasma/nobel_science
 
-/datum/outfit/consumed_shadowperson/pre_equip(mob/living/carbon/human/shadowperson, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/consumed_shadowperson/pre_equip(mob/living/carbon/human/shadowperson, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	shadowperson.set_species(/datum/species/shadow)
 
@@ -369,7 +380,6 @@
 	back = /obj/item/storage/backpack/cultpack
 	backpack_contents = list(
 		/obj/item/cult_shift = 1,
-		/obj/item/flashlight/flare/culttorch = 1,
 		/obj/item/reagent_containers/cup/beaker/unholywater = 1,
 		/obj/item/stack/sheet/runed_metal = 15,
 		)
@@ -381,8 +391,8 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	head = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 
-/datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visualsOnly = FALSE)
-	if(!visualsOnly)
+/datum/outfit/consumed_heremoth/pre_equip(mob/living/carbon/human/moth, visuals_only = FALSE)
+	if(!visuals_only)
 		moth.set_species(/datum/species/moth)
 	if(prob(70))
 		glasses = /obj/item/clothing/glasses/blindfold
@@ -396,4 +406,3 @@
 			/obj/item/knife/combat/survival = 2,
 		))
 		backpack_contents += backpack_loot
-

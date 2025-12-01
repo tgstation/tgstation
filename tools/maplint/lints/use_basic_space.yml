@@ -1,0 +1,3 @@
+help: "Use /turf/open/space/basic instead of /turf/open/space."
+=/turf/open/space:
+  banned: true

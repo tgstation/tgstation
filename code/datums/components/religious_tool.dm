@@ -25,13 +25,13 @@
 	var/list/rite_types_allowlist
 
 /datum/component/religious_tool/Initialize(
-		operation_flags = ALL,
-		force_catalyst_afterattack = FALSE,
-		after_sect_select_cb = null,
-		catalyst_type = /obj/item/book/bible,
-		charges = -1,
-		rite_types_allowlist = null,
-	)
+	operation_flags = ALL,
+	force_catalyst_afterattack = FALSE,
+	after_sect_select_cb = null,
+	catalyst_type = /obj/item/book/bible,
+	charges = -1,
+	rite_types_allowlist = null,
+)
 	. = ..()
 	SetGlobalToLocal() //attempt to connect on start in case one already exists!
 	src.operation_flags = operation_flags
@@ -44,8 +44,8 @@
 	RegisterSignal(SSdcs, COMSIG_RELIGIOUS_SECT_RESET, PROC_REF(on_sect_reset))
 
 /datum/component/religious_tool/Destroy(force)
+	QDEL_NULL(performing_rite)
 	easy_access_sect = null
-	performing_rite = null
 	catalyst_type = null
 	after_sect_select_cb = null
 	return ..()
@@ -140,7 +140,10 @@
 			select_sect(usr, params["path"])
 			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
 		if("perform_rite")
-			perform_rite(usr, params["path"])
+			if(!ispath(text2path(params["path"]), /datum/religion_rites))
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
+				return
+			perform_rite(usr, text2path(params["path"]))
 
 /// Select the sect, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/select_sect(mob/living/user, path)
@@ -154,34 +157,39 @@
 
 /// Perform the rite, called from [/datum/component/religious_tool/proc/AttemptActions]
 /datum/component/religious_tool/proc/perform_rite(mob/living/user, path)
-	if(!ispath(text2path(path), /datum/religion_rites))
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
-		return
 	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		if(user.mind.holy_role == HOLY_ROLE_DEACON)
-			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+			to_chat(user, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
 		else
-			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
+			to_chat(user, span_warning("You are not holy, and therefore cannot perform rites."))
 		return
 	if(rite_types_allowlist && !is_path_in_list(path, rite_types_allowlist))
 		to_chat(user, span_warning("This cannot perform that kind of rite."))
 		return
-	if(performing_rite)
-		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
-		return
 	if(!user.can_perform_action(parent, FORBID_TELEKINESIS_REACH))
 		to_chat(user,span_warning("You are not close enough to perform the rite."))
 		return
-	performing_rite = new path(parent)
+	//we have a rite already, but we want to do a new one.
+	if(performing_rite && !ispath(performing_rite.type, path))
+		QDEL_NULL(performing_rite)
+	if(!performing_rite)
+		performing_rite = new path(parent)
+
 	if(!performing_rite.perform_rite(user, parent))
-		QDEL_NULL(performing_rite)
+		if(!(performing_rite.rite_flags & RITE_ALLOW_MULTIPLE_PERFORMS))
+			QDEL_NULL(performing_rite)
 		return
-	performing_rite.invoke_effect(user, parent)
+
+	if(performing_rite.invoke_effect(user, parent))
+		performing_rite.post_invoke_effects(user, parent)
 	easy_access_sect.adjust_favor(-performing_rite.favor_cost)
-	if(performing_rite.auto_delete)
-		QDEL_NULL(performing_rite)
-	else
-		performing_rite = null
+
+	if(!(performing_rite.rite_flags & RITE_ALLOW_MULTIPLE_PERFORMS))
+		if(performing_rite.rite_flags & RITE_AUTO_DELETE)
+			QDEL_NULL(performing_rite)
+		else
+			performing_rite = null
+
 	if(charges)
 		charges--
 		if(!charges)

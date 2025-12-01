@@ -9,12 +9,6 @@
 
 /datum/emote/ai/emotion_display/run_emote(mob/living/silicon/ai/user, params, type_override, intentional)
 	. = ..()
-	if(!.)
-		return
-
-	if(!istype(user))
-		return
-
 	user.apply_emote_display(emotion)
 
 /datum/emote/ai/emotion_display/very_happy
@@ -45,6 +39,14 @@
 	key = "bsod"
 	emotion = AI_EMOTION_BSOD
 
+/datum/emote/ai/emotion_display/dead
+	key = "dead"
+	emotion = AI_EMOTION_DEAD
+
+/datum/emote/ai/emotion_display/download
+	key = "download"
+	emotion = AI_EMOTION_DOWNLOAD
+
 /datum/emote/ai/emotion_display/trollface
 	key = "trollface"
 	emotion = AI_EMOTION_PROBLEMS
@@ -72,9 +74,6 @@
 
 /datum/emote/ai/emotion_display/friend_computer/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	if(!.)
-		return
-
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
 	if(!frequency)

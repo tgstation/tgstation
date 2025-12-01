@@ -44,7 +44,7 @@
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
-	if(!W.tool_start_check(user, amount=1))
+	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
@@ -61,7 +61,7 @@
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
-/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, params)
+/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(W, /obj/item/food/grown/banana))
 		return ..()
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
@@ -77,7 +77,7 @@
 	if(!eddie_murphy)
 		return ..()
 	user.visible_message(span_warning("[user] begins cleaning [eddie_murphy] out of [src]."), span_warning("You begin cleaning [eddie_murphy] out of [src]..."))
-	if(!do_after(user, 60, target = src))
+	if(!do_after(user, 6 SECONDS, target = src))
 		return ..()
 	user.visible_message(span_warning("[user] cleans [eddie_murphy] out of [src]."), span_warning("You manage to get [eddie_murphy] out of [src]."))
 	eddie_murphy.forceMove(drop_location())
@@ -97,9 +97,9 @@
 	return ..()
 
 //bullets will have a 60% chance to hit any riders
-/obj/vehicle/ridden/secway/bullet_act(obj/projectile/P)
+/obj/vehicle/ridden/secway/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(!buckled_mobs || prob(40))
 		return ..()
 	for(var/mob/rider as anything in buckled_mobs)
-		rider.bullet_act(P)
-	return TRUE
+		return rider.projectile_hit(hitting_projectile)
+	return ..()

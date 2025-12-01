@@ -1,4 +1,4 @@
-/obj/item/organ/internal/brain/psyker
+/obj/item/organ/brain/psyker
 	name = "psyker brain"
 	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. What kind of monstrosity would use that?"
 	icon_state = "brain-psyker"
@@ -7,20 +7,22 @@
 		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
+	shade_color = "blue"
+	var/does_it_blind = FALSE
+	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 
-/obj/item/organ/internal/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
+/obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
+	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker, blinding = does_it_blind)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
+/obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
-/obj/item/organ/internal/brain/psyker/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/psyker/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
@@ -31,25 +33,18 @@
 	owner.adjust_disgust(33 * seconds_per_tick)
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
+/obj/item/organ/brain/psyker/blinding
+	does_it_blind = TRUE
+
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
-	head_flags = HEAD_DEBRAIN
-
-/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
-	. = ..()
-	if(!.)
-		return
-	new_head_owner.become_blind(bodypart_trait_source)
-
-/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(bodypart_trait_source)
-	return ..()
+	head_flags = HEAD_DEBRAIN | HEAD_NO_DISFIGURE // ignore disfigurement by damage, as we're always disfigured
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
-/mob/living/carbon/human/proc/slow_psykerize()
+/mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD) || istype(get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return
 	to_chat(src, span_userdanger("You feel unwell..."))
@@ -60,32 +55,34 @@
 	emote("scream")
 	apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	sleep(5 SECONDS)
-	if(!psykerize())
+	if(!psykerize(is_blinding = blind_them))
 		to_chat(src, span_warning("The transformation subsides..."))
 		return
-	var/obj/item/bodypart/head/psyker_head = get_bodypart(BODY_ZONE_HEAD)
-	psyker_head.receive_damage(brute = 50)
+	apply_damage(50, BRUTE, BODY_ZONE_HEAD)
 	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
-	new /obj/effect/gibspawner/generic(drop_location(), src)
+	new /obj/effect/gibspawner/generic(drop_location(), src, get_blood_dna_list())
 	emote("scream")
 
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
-/mob/living/carbon/human/proc/psykerize()
+/mob/living/carbon/human/proc/psykerize(is_blinding = FALSE)
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
-	var/obj/item/organ/internal/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
-	var/obj/item/organ/internal/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(stat == DEAD || !old_head || !old_brain)
 		return FALSE
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
 	if(!psyker_head.replace_limb(src, special = TRUE))
 		return FALSE
 	qdel(old_head)
-	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
+	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
+	if(is_blinding)
+		var/obj/item/organ/brain/psyker/blinding/dummy = new()
+		psyker_brain = dummy
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-	if(old_eyes)
+	if(old_eyes && is_blinding)
 		qdel(old_eyes)
 	return TRUE
 
@@ -104,15 +101,16 @@
 	if(!burden || burden.burden_level < 9)
 		to_chat(human_user, span_warning("You aren't burdened enough."))
 		return FALSE
-	for(var/obj/item/nullrod/null_rod in get_turf(religious_tool))
-		transformation_target = null_rod
-		return ..()
+	for(var/obj/item/possible_rod in get_turf(religious_tool))
+		if(HAS_TRAIT(possible_rod, TRAIT_NULLROD_ITEM))
+			transformation_target = possible_rod
+			return ..()
 	to_chat(human_user, span_warning("You need to place a null rod on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/nullrod_transformation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/nullrod/null_rod = transformation_target
+	var/obj/item/null_rod = transformation_target
 	transformation_target = null
 	if(QDELETED(null_rod) || null_rod.loc != get_turf(religious_tool))
 		to_chat(user, span_warning("Your target left the altar!"))
@@ -128,7 +126,7 @@
 	desc = "Holy smokes."
 	icon_state = "lucky"
 	force = 10
-	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
@@ -183,7 +181,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
 
@@ -205,7 +203,7 @@
 /obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
 	pray_refill(user)
 
-/obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, params)
+/obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, list/modifiers, list/attack_modifiers)
 	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
 		user.balloon_alert(user, "no manual reloads!")
 		return
@@ -225,7 +223,7 @@
 		return
 	user.say("#Oh great [GLOB.deity], give me the ammunition I need!", forced = "ammo prayer")
 	magazine.top_off()
-	user.playsound_local(get_turf(src), 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+	user.playsound_local(get_turf(src), 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 	chamber_round()
 
 /datum/action/item_action/pray_refill
@@ -252,13 +250,13 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -10
-	embedding = null
+	embed_type = null
 
 /obj/projectile/bullet/c38/holy/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
 	var/roll_them_bones = rand(1,38)
 	if(roll_them_bones == 1 && isliving(target))
-		playsound(target, 'sound/machines/synth_yes.ogg', 50, TRUE)
+		playsound(target, 'sound/machines/synth/synth_yes.ogg', 50, TRUE)
 		playsound(target, pick(list('sound/machines/coindrop.ogg', 'sound/machines/coindrop2.ogg')), 40, TRUE)
 		new /obj/effect/temp_visual/crit(get_turf(target))
 
@@ -341,14 +339,14 @@
 	else
 		times_dry_fired = 0
 	var/turf/target_turf = get_offset_target_turf(get_ranged_target_turf(owner, owner.dir, 7), dx = rand(-1, 1), dy = rand(-1, 1))
-	held_gun.process_fire(target_turf, owner, TRUE, null, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-	held_gun.semicd = FALSE
+	held_gun.process_fire(target_turf, owner, TRUE, null, pick(GLOB.all_body_zones))
+	held_gun.fire_cd = FALSE
 
 /datum/action/cooldown/spell/charged/psychic_booster
 	name = "Psychic Booster"
 	desc = "Charge up your mind to shoot firearms faster and home in on your targets. Think smarter, not harder."
 	button_icon_state = "projectile"
-	sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	sound = 'sound/items/weapons/gun/shotgun/rack.ogg'
 	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE_MIND

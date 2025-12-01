@@ -1,12 +1,12 @@
 {
-  "private": true,
-  "name": "tgui-say",
-  "version": "1.0.0",
-  "dependencies": {
-    "@types/react": "^18.2.39",
-    "common": "workspace:*",
-    "react": "^18.2.0",
-    "tgui": "workspace:*",
-    "tgui-polyfill": "workspace:*"
-  }
+	"name": "tgui-say",
+	"version": "1.0.0",
+	"dependencies": {
+		"common": "workspace:*",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
+		"tgui": "workspace:*",
+		"tgui-core": "^5.3.1"
+	},
+	"private": true
 }

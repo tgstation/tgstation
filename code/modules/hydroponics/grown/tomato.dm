@@ -1,6 +1,6 @@
 // Tomato
 /obj/item/seeds/tomato
-	name = "pack of tomato seeds"
+	name = "tomato seed pack"
 	desc = "These seeds grow into tomato plants."
 	icon_state = "seed-tomato"
 	species = "tomato"
@@ -22,14 +22,14 @@
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
 	juice_typepath = /datum/reagent/consumable/tomatojuice
 	distill_reagent = /datum/reagent/consumable/enzyme
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
-	name = "pack of blood-tomato seeds"
+	name = "blood-tomato seed pack"
 	desc = "These seeds grow into blood-tomato plants."
 	icon_state = "seed-bloodtomato"
 	species = "bloodtomato"
@@ -46,13 +46,13 @@
 	icon_state = "bloodtomato"
 	bite_consumption_mod = 3
 	splat_type = /obj/effect/gibspawner/generic
-	foodtypes = FRUIT | GORE
+	foodtypes = VEGETABLES | GORE
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
-	name = "pack of blue-tomato seeds"
+	name = "blue-tomato seed pack"
 	desc = "These seeds grow into blue-tomato plants."
 	icon_state = "seed-bluetomato"
 	species = "bluetomato"
@@ -72,12 +72,12 @@
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
 	bite_consumption_mod = 2
-	splat_type = /obj/effect/decal/cleanable/oil
+	splat_type = /obj/effect/decal/cleanable/blood/oil
 	distill_reagent = /datum/reagent/consumable/laughter
 
 // Bluespace Tomato
 /obj/item/seeds/tomato/blue/bluespace
-	name = "pack of bluespace tomato seeds"
+	name = "bluespace tomato seed pack"
 	desc = "These seeds grow into bluespace tomato plants."
 	icon_state = "seed-bluespacetomato"
 	species = "bluespacetomato"
@@ -101,7 +101,7 @@
 
 // Killer Tomato
 /obj/item/seeds/tomato/killer
-	name = "pack of killer-tomato seeds"
+	name = "killer-tomato seed pack"
 	desc = "These seeds grow into killer-tomato plants."
 	icon_state = "seed-killertomato"
 	species = "killertomato"

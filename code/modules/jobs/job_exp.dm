@@ -155,7 +155,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 	if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] = minutes
-	else if(isliving(mob))
+	else if(isliving(mob) && !isnull(mob.mind))
 		var/mob/living/living_mob = mob
 		var/list/mob_exp_list = living_mob.get_exp_list(minutes)
 		if(!length(mob_exp_list))
@@ -203,6 +203,6 @@ GLOBAL_PROTECT(exp_to_update)
 	if(flags_read.NextRow())
 		prefs.db_flags = text2num(flags_read.item[1])
 	else if(isnull(prefs.db_flags))
-		prefs.db_flags = 0 //This PROBABLY won't happen, but better safe than sorry.
+		prefs.db_flags = NONE //This PROBABLY won't happen, but better safe than sorry.
 	qdel(flags_read)
 	return TRUE

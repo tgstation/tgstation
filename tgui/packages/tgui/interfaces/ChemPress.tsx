@@ -1,15 +1,15 @@
-import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
-  Box,
   Button,
+  ImageButton,
   Input,
   LabeledList,
   NumberInput,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { capitalizeAll } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Product = {
@@ -23,22 +23,26 @@ type Category = {
 };
 
 type Data = {
-  current_volume: Number;
+  current_volume: number;
+  pill_duration: number;
   product_name: string;
-  min_volume: Number;
-  max_volume: Number;
+  min_volume: number;
+  max_volume: number;
+  max_duration: number;
   packaging_category: string;
   packaging_types: Category[];
   packaging_type: string;
 };
 
-export const ChemPress = (props) => {
+export const ChemPress = () => {
   const { act, data } = useBackend<Data>();
   const {
     current_volume,
+    pill_duration,
     product_name,
     min_volume,
     max_volume,
+    max_duration,
     packaging_category,
     packaging_types,
     packaging_type,
@@ -48,7 +52,7 @@ export const ChemPress = (props) => {
     packaging_types.find((category) => category.cat_name === categoryName) ||
     packaging_types[0];
   return (
-    <Window width={300} height={330}>
+    <Window width={450} height={340}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -56,10 +60,11 @@ export const ChemPress = (props) => {
               {packaging_types.map((category, i) => (
                 <Button.Checkbox
                   key={category.cat_name}
-                  content={capitalizeAll(category.cat_name)}
                   checked={category.cat_name === shownCategory.cat_name}
                   onClick={() => setCategoryName(category.cat_name)}
-                />
+                >
+                  {capitalizeAll(category.cat_name)}
+                </Button.Checkbox>
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Volume">
@@ -71,18 +76,35 @@ export const ChemPress = (props) => {
                 maxValue={max_volume}
                 step={1}
                 stepPixelSize={2}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('change_current_volume', {
                     volume: value,
                   })
                 }
               />
             </LabeledList.Item>
+            {shownCategory.cat_name === 'pills' && (
+              <LabeledList.Item label="Duration">
+                <NumberInput
+                  value={pill_duration}
+                  unit="s"
+                  width="43px"
+                  minValue={0}
+                  maxValue={max_duration}
+                  step={1}
+                  stepPixelSize={2}
+                  onChange={(value) =>
+                    act('change_pill_duraton', {
+                      duration: value,
+                    })
+                  }
+                />
+              </LabeledList.Item>
+            )}
             <LabeledList.Item label="Name">
               <Input
                 value={product_name}
-                placeholder={product_name}
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('change_product_name', {
                     name: value,
                   })
@@ -91,8 +113,10 @@ export const ChemPress = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Styles">
               {shownCategory.products.map((design, j) => (
-                <Button
-                  key={j}
+                <ImageButton
+                  asset={['', design.class_name]}
+                  imageSize={42}
+                  key={design.ref}
                   selected={design.ref === packaging_type}
                   color="transparent"
                   onClick={() =>
@@ -100,14 +124,7 @@ export const ChemPress = (props) => {
                       ref: design.ref,
                     })
                   }
-                >
-                  <Box
-                    className={design.class_name}
-                    style={{
-                      transform: 'scale(1.5)',
-                    }}
-                  />
-                </Button>
+                />
               ))}
             </LabeledList.Item>
           </LabeledList>

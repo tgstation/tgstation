@@ -126,6 +126,9 @@
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
+/atom/movable/screen/fullscreen/blind/cyborg
+	show_when_dead = TRUE
+
 /atom/movable/screen/fullscreen/curse
 	icon_state = "curse"
 	layer = CURSE_LAYER
@@ -154,9 +157,33 @@
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/hud/screen_gen.dmi'
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
+	alpha = 255
+	plane = LIGHTING_PLANE
+	layer = LIGHTING_ABOVE_ALL + 1 //Infinity plus one (not actually)
+	blend_mode = BLEND_MULTIPLY
+
+/atom/movable/screen/fullscreen/high/update_for_view(client_view)
+
+	animate(src, flags = ANIMATION_END_NOW) //Stop all animations.
+
+	. = ..()
+
+	color = COLOR_MATRIX_IDENTITY //We convert it early to avoid a sudden weird jitter.
+	alpha = 0
+
+	animate(src, alpha = 255, time = 5 SECONDS) //Fade in.
+
+	addtimer(CALLBACK(src, PROC_REF(start_hue_rotation)), 5 SECONDS)
+
+/atom/movable/screen/fullscreen/high/proc/start_hue_rotation()
+	animate(src, color = color_matrix_rotate_hue(1), loop = -1, time = 2 SECONDS) //Start the loop.
+	var/step_precision = 18 //Larger is more precise rotations.
+	for(var/current_step in 1 to step_precision - 1) //We do the -1 here because 360 == 0 when it comes to angles.
+		animate(
+			color = color_matrix_rotate_hue(current_step * 360/step_precision),
+			time = 2 SECONDS,
+		)
 
 /atom/movable/screen/fullscreen/color_vision
 	icon = 'icons/hud/screen_gen.dmi'
@@ -187,7 +214,7 @@
 	icon_state = "flash"
 	plane = SPLASHSCREEN_PLANE
 	layer = CINEMATIC_LAYER
-	color = "#000000"
+	color = COLOR_BLACK
 	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/lighting_backdrop
@@ -223,3 +250,8 @@
 	icon_state = "noise"
 	color = "#04a8d1"
 	alpha = 80
+
+/atom/movable/screen/fullscreen/static_vision/cyborg
+	show_when_dead = TRUE
+	color = "#c90000"
+	alpha = 0

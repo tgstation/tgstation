@@ -1,3 +1,10 @@
+#define GRADE_D "D"
+#define GRADE_C "C"
+#define GRADE_B "B"
+#define GRADE_A "A"
+#define GRADE_S "S"
+
+
 /// Handles calculating rewards based on number of players, parts, threats, etc
 /obj/machinery/quantum_server/proc/calculate_rewards()
 	var/rewards_base = 0.8
@@ -9,13 +16,40 @@
 
 	rewards_base += (length(spawned_threat_refs) * 2)
 
-	for(var/index in 2 to length(avatar_connection_refs))
-		rewards_base += multiplayer_bonus
+	rewards_base += get_multiplayer_bonus()
+
+	rewards_base += get_nohit_bouns()
 
 	return rewards_base
 
+/// Calculates total bonus from completing the domain in multiplayer
+/obj/machinery/quantum_server/proc/get_multiplayer_bonus()
+	var/total = 0
+	var/multiplayer = FALSE
+	for(var/datum/weakref/connection_ref as anything in avatar_connection_refs)
+		var/datum/component/avatar_connection/connection = connection_ref.resolve()
+		if(isnull(connection))
+			continue
+		if(multiplayer)
+			total += multiplayer_bonus
+		multiplayer = TRUE
+	return total
+
+/// Calculates total bonus from completing the domain without taking damage
+/obj/machinery/quantum_server/proc/get_nohit_bouns()
+	if(generated_domain.domain_flags & DOMAIN_NO_NOHIT_BONUS)
+		return 0
+
+	var/total = 0
+	for(var/datum/weakref/connection_ref as anything in avatar_connection_refs)
+		var/datum/component/avatar_connection/connection = connection_ref.resolve()
+		if(connection?.nohit)
+			total += nohit_bonus
+	return total
+
 /// Handles spawning the (new) crate and deleting the former
 /obj/machinery/quantum_server/proc/generate_loot(obj/cache, obj/machinery/byteforge/chosen_forge)
+	SSblackbox.record_feedback("tally", "bitrunning_domain_primary_completed", 1, generated_domain.key)
 	for(var/mob/person in cache.contents)
 		SEND_SIGNAL(person, COMSIG_BITRUNNER_CACHE_SEVER)
 
@@ -24,23 +58,34 @@
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_COMPLETE, cache, generated_domain.reward_points)
 
 	points += generated_domain.reward_points
-	playsound(src, 'sound/machines/terminal_success.ogg', 30, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 30, vary = TRUE)
 
 	var/bonus = calculate_rewards()
 
+	var/time_difference = world.time - generated_domain.start_time
+	var/grade = grade_completion(time_difference)
+
 	var/obj/item/paper/certificate = new()
-	certificate.add_raw_text(get_completion_certificate())
+	certificate.add_raw_text(get_completion_certificate(time_difference, grade))
 	certificate.name = "certificate of domain completion"
 	certificate.update_appearance()
 
 	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus)
-	reward_cache.manifest = certificate
+	reward_cache.manifest = WEAKREF(certificate)
 	reward_cache.update_appearance()
+
+	if(can_generate_tech_disk(grade))
+		SSblackbox.record_feedback("tally", "bitrunning_bepis_rewarded", 1, generated_domain.key)
+		new /obj/item/disk/design_disk/bepis/remove_tech(reward_cache)
+		generated_domain.disk_reward_spawned = TRUE
 
 	chosen_forge.start_to_spawn(reward_cache)
 	return TRUE
 
+
+/// Builds secondary loot if the achievements were met
 /obj/machinery/quantum_server/proc/generate_secondary_loot(obj/curiosity, obj/machinery/byteforge/chosen_forge)
+	SSblackbox.record_feedback("tally", "bitrunning_domain_secondary_completed", 1, generated_domain.key)
 	spark_at_location(curiosity) // abracadabra!
 	qdel(curiosity) // and it's gone!
 
@@ -49,8 +94,9 @@
 	chosen_forge.start_to_spawn(reward_curiosity)
 	return TRUE
 
+
 /// Returns the markdown text containing domain completion information
-/obj/machinery/quantum_server/proc/get_completion_certificate()
+/obj/machinery/quantum_server/proc/get_completion_certificate(time_difference, grade)
 	var/base_points = generated_domain.reward_points
 	if(domain_randomized)
 		base_points -= 1
@@ -59,11 +105,9 @@
 
 	var/domain_threats = length(spawned_threat_refs)
 
-	var/time_difference = world.time - generated_domain.start_time
-
 	var/completion_time = "### Completion Time: [DisplayTimeText(time_difference)]\n"
 
-	var/grade = "\n---\n\n# Rating: [grade_completion(time_difference)]"
+	var/completion_grade = "\n---\n\n# Rating: [grade]"
 
 	var/text = "# Certificate of Domain Completion\n\n---\n\n"
 
@@ -75,15 +119,20 @@
 
 	if(bonuses <= 1)
 		text += completion_time
-		text += grade
+		text += completion_grade
 		return text
 
 	text += "### Bonuses\n"
 	if(domain_randomized)
 		text += "- **Randomized:** + 0.2\n"
 
-	if(length(avatar_connection_refs) > 1)
-		text += "- **Multiplayer:** + [(length(avatar_connection_refs) - 1) * multiplayer_bonus]\n"
+	var/mp_bonus = get_multiplayer_bonus()
+	if(mp_bonus)
+		text += "- **Multiplayer:** + [mp_bonus]\n"
+
+	var/nohit_bonus = get_nohit_bouns()
+	if(nohit_bonus)
+		text += "- **No hit:** + [nohit_bonus]\n"
 
 	if(domain_threats > 0)
 		text += "- **Threats:** + [domain_threats * 2]\n"
@@ -94,9 +143,24 @@
 		text += "- **Components:** + [servo_rating]\n"
 
 	text += completion_time
-	text += grade
+	text += completion_grade
 
 	return text
+
+/// Checks if the players should get a bepis reward
+/obj/machinery/quantum_server/proc/can_generate_tech_disk(grade)
+	if(generated_domain.disk_reward_spawned)
+		return FALSE
+
+	if(!LAZYLEN(SSresearch.techweb_nodes_experimental))
+		return FALSE
+
+	var/static/list/passing_grades = list()
+	if(!passing_grades.len)
+		passing_grades = list(GRADE_A,GRADE_S)
+
+	return  generated_domain.difficulty >= BITRUNNER_DIFFICULTY_MEDIUM && (grade in passing_grades)
+
 
 /// Grades the player's run based on several factors
 /obj/machinery/quantum_server/proc/grade_completion(completion_time)
@@ -124,13 +188,18 @@
 
 	switch(score)
 		if(1 to 4)
-			return "D"
+			return GRADE_D
 		if(5 to 7)
-			return "C"
+			return GRADE_C
 		if(8 to 10)
-			return "B"
+			return GRADE_B
 		if(11 to 13)
-			return "A"
+			return GRADE_A
 		else
-			return "S"
+			return GRADE_S
 
+#undef GRADE_D
+#undef GRADE_C
+#undef GRADE_B
+#undef GRADE_A
+#undef GRADE_S

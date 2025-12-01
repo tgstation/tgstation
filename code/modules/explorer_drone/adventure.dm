@@ -166,7 +166,7 @@ GLOBAL_LIST_EMPTY(explorer_drone_adventure_db_entries)
 	var/list/required_site_traits = list()
 	/// Modifiers to band scan values
 	var/list/band_modifiers = list()
-	/// Loot table ids used as reward for finishing the adventure succesfully.
+	/// Loot table ids used as reward for finishing the adventure successfully.
 	var/list/loot_categories = list()
 	/// Nodes for this adventure, represent single scene.
 	var/list/nodes = list()

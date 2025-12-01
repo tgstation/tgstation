@@ -18,7 +18,8 @@
 	name = "alien floor"
 	icon_state = "alienpod1"
 	base_icon_state = "alienpod1"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	// Not actually broken, just should never break...yeah.
 	broken = TRUE
 	damaged_dmi = null
@@ -31,7 +32,8 @@
 	name = "alien plating"
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	damaged_dmi = null
 
 /turf/open/floor/plating/abductor2/break_tile()
@@ -40,7 +42,7 @@
 /turf/open/floor/plating/abductor2/burn_tile()
 	return //unburnable
 
-/turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
 	return
 
 /turf/open/floor/plating/snowed
@@ -50,19 +52,24 @@
 	icon_state = "snowplating"
 	base_icon_state = "snowplating"
 	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/plating/snowed/cavern
 	initial_gas_mix = BURNING_COLD
 
 /turf/open/floor/plating/snowed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+
+/turf/open/floor/plating/snowed/standard_air
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
 
 /turf/open/floor/plating/snowed/smoothed
 	icon = 'icons/turf/floors/snow_turf.dmi'
@@ -84,7 +91,7 @@
 
 //Used in SnowCabin.dm
 /turf/open/floor/plating/snowed/snow_cabin
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

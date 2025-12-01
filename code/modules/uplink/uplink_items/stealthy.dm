@@ -4,6 +4,7 @@
 
 /datum/uplink_item/stealthy_weapons
 	category = /datum/uplink_category/stealthy
+	uplink_item_flags = SYNDIE_ILLEGAL_TECH
 
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
@@ -13,7 +14,7 @@
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -28,6 +29,14 @@
 	item = /obj/item/pen/edagger
 	cost = 2
 
+/datum/uplink_item/stealthy_weapons/slipstick
+	name = "Syndie Lipstick"
+	desc = "A highly advanced container of lipstick, we'll save you the trouble of explaining how it works here: \
+		After applying the lipstick to yourself, any kisses you blow will turn into laser kisses! (Use the kiss emote to fire laser kisses.) \
+		You may blow an unlimited amount of laser kisses! Stylish way to kiss to death, isn't it syndiekisser?"
+	item = /obj/item/lipstick/syndie
+	cost = 6
+
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."
@@ -39,7 +48,7 @@
 	name = "Suppressor"
 	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
 	item = /obj/item/suppressor
-	cost = 3
+	cost = 1
 	surplus = 10
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -67,18 +76,21 @@
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
 	cost = 4
 	surplus = 0
-	purchasable_from = ~UPLINK_NUKE_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
+	purchasable_from = ~UPLINK_SERIOUS_OPS //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
 
 /datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
+	name = "Martial Arts Scroll and Martial Arts Outfit"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat \
-			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
-	item = /obj/item/book/granter/martial/carp
+			and gain the ability to swat bullets from the air, and if in the correct attire, avoid attacks. But you will \
+			also refuse to use dishonorable ranged weaponry, and armored clothing will make it harder to avoid attacks. \
+			Comes prepackaged with a set of martial arts clothing!"
+	item = /obj/item/storage/box/syndicate/sleeping_carp
 	progression_minimum = 30 MINUTES
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS|UPLINK_SPY)
 
 /datum/uplink_item/stealthy_weapons/crossbow
 	name = "Miniature Energy Crossbow"
@@ -91,7 +103,7 @@
 	item = /obj/item/gun/energy/recharge/ebow
 	cost = 10
 	surplus = 50
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/stealthy_weapons/contrabaton
 	name = "Contractor Baton"

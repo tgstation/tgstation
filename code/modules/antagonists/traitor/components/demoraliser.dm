@@ -13,7 +13,7 @@
 	src.moods = moods
 	RegisterSignal(host, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-/datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
+/datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/old_location, turf/new_location)
 	if (!isliving(crossed))
 		return
 	if (!can_see(crossed, host, current_range))
@@ -52,7 +52,7 @@
 		return
 
 
-	if (is_special_character(viewer))
+	if (viewer.is_antag())
 		to_chat(viewer, span_notice("[moods.antag_notification]"))
 		viewer.add_mood_event(moods.mood_category, moods.antag_mood)
 	else if (viewer.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))

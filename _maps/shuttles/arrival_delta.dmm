@@ -39,6 +39,7 @@
 /area/shuttle/arrival)
 "ah" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "ai" = (
@@ -156,6 +157,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/white,
 /area/shuttle/arrival)
 "ap" = (
@@ -324,7 +326,7 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "uH" = (
-/obj/machinery/vending/wallmed/directional/north{
+/obj/machinery/wall_healer/free/directional/north{
 	use_power = 0
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,

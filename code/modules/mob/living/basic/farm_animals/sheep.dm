@@ -1,6 +1,6 @@
 /mob/living/basic/sheep
 	name = "sheep"
-	desc = "Known for their soft wool and use in sacrifical rituals. Big fan of grass."
+	desc = "Known for their soft wool and use in sacrificial rituals. Big fan of grass."
 	icon = 'icons/mob/simple/sheep.dmi'
 	icon_state = "sheep"
 	icon_dead = "sheep_dead"
@@ -18,12 +18,12 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/sheep
 
 	/// Were we sacrificed by cultists?
@@ -40,7 +40,7 @@
 		item_generation_wait = 3 MINUTES, \
 		item_reduction_time = 30 SECONDS, \
 		item_harvest_time = 5 SECONDS, \
-		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
+		item_harvest_sound = 'sound/items/handling/surgery/scalpel1.ogg', \
 	)
 	AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_sacrificed))
@@ -58,11 +58,11 @@
 
 	if(cult_converted)
 		for(var/mob/living/cultist as anything in invokers)
-			to_chat(cultist, span_cultitalic("[src] has already been sacrificed!"))
-		return STOP_SACRIFICE
+			to_chat(cultist, span_cult_italic("[src] has already been sacrificed!"))
+		return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
+		to_chat(cultist, span_cult_italic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")
@@ -83,7 +83,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(

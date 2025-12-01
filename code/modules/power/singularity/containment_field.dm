@@ -29,6 +29,7 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_CONTAINMENT_FIELD)))
 
 /obj/machinery/field/containment/Destroy()
 	if(field_gen_1)
@@ -49,7 +50,7 @@
 		shock(user)
 		return TRUE
 
-/obj/machinery/field/containment/attackby(obj/item/W, mob/user, params)
+/obj/machinery/field/containment/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	shock(user)
 	return TRUE
 
@@ -144,7 +145,7 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(burn = shock_damage)
-		user.visible_message(span_danger("[user.name] is shocked by the [src.name]!"), \
+		user.visible_message(span_danger("[user.name] is shocked by \the [src]!"), \
 		span_userdanger("Energy pulse detected, system damaged!"), \
 		span_hear("You hear an electrical crack."))
 
@@ -164,4 +165,4 @@
 		to_chat(considered_atom, span_userdanger("The field repels you with tremendous force!"))
 	playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
 	considered_atom.throw_at(target, 200, 4)
-	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 5)
+	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 0.5 SECONDS)

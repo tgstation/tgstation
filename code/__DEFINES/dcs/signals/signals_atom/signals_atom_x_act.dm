@@ -14,7 +14,7 @@
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
-///from base of atom/bullet_act(): (/obj/projectile, def_zone)
+///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit)
 #define COMSIG_ATOM_PRE_BULLET_ACT "pre_atom_bullet_act"
 	/// All this does is prevent default bullet on_hit from being called, [BULLET_ACT_HIT] being return is implied
 	#define COMPONENT_BULLET_ACTED (1<<0)
@@ -22,11 +22,11 @@
 	#define COMPONENT_BULLET_BLOCKED (1<<1)
 	/// Forces bullet act to return [BULLET_ACT_FORCE_PIERCE], takes priority over above
 	#define COMPONENT_BULLET_PIERCED (1<<2)
-///from base of atom/bullet_act(): (/obj/projectile, def_zone)
+///from base of atom/bullet_act(): (/obj/proj, def_zone, piercing_hit, blocked)
 #define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"
-///from base of atom/CheckParts(): (list/parts_list, datum/crafting_recipe/R)
-#define COMSIG_ATOM_CHECKPARTS "atom_checkparts"
-///from base of atom/CheckParts(): (atom/movable/new_craft) - The atom has just been used in a crafting recipe and has been moved inside new_craft.
+///from base of atom/on_craft_completion(): (components, datum/crafting_recipe/current_recipe, atom/crafter)
+#define COMSIG_ATOM_ON_CRAFT "atom_on_craft_completion"
+///from base of atom/used_in_craft(): (atom/result)
 #define COMSIG_ATOM_USED_IN_CRAFT "atom_used_in_craft"
 ///from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"
@@ -40,7 +40,7 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"
 ///from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"
-///from base of atom/singularity_pull(): (/datum/component/singularity, current_size)
+///from base of atom/singularity_pull(): (/atom, current_size)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"
 ///from obj/machinery/bsa/full/proc/fire(): ()
 #define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"
@@ -56,6 +56,8 @@
 /// Args: (mob/living/user, obj/item/tool, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ATOM_ITEM_INTERACTION_SECONDARY "atom_item_interaction_secondary"
+/// Sent from [atom/proc/item_interaction], to a mob clicking on an atom with an item
+#define COMSIG_USER_ITEM_INTERACTION "user_item_interaction"
 /// Sent from [atom/proc/item_interaction], to an item clicking on an atom
 /// Args: (mob/living/user, atom/interacting_with, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
@@ -64,6 +66,8 @@
 /// Args: (mob/living/user, atom/interacting_with, list/modifiers)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY "item_interacting_with_atom_secondary"
+/// Sent from [atom/proc/item_interaction], when this atom is right-clicked on by a mob with a tool
+#define COMSIG_USER_ITEM_INTERACTION_SECONDARY "user_item_interaction_secondary"
 /// Sent from [atom/proc/item_interaction], when this atom is left-clicked on by a mob with a tool of a specific tool type
 /// Args: (mob/living/user, obj/item/tool, list/recipes)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
@@ -72,3 +76,25 @@
 /// Args: (mob/living/user, obj/item/tool)
 /// Return any ITEM_INTERACT_ flags as relevant (see tools.dm)
 #define COMSIG_ATOM_SECONDARY_TOOL_ACT(tooltype) "tool_secondary_act_[tooltype]"
+
+/// Sent from [atom/proc/ranged_item_interaction], when this atom is left-clicked on by a mob with an item while not adjacent
+#define COMSIG_ATOM_RANGED_ITEM_INTERACTION "atom_ranged_item_interaction"
+/// Sent from [atom/proc/ranged_item_interaction], when this atom is right-clicked on by a mob with an item while not adjacent
+#define COMSIG_ATOM_RANGED_ITEM_INTERACTION_SECONDARY "atom_ranged_item_interaction_secondary"
+/// Sent from [atom/proc/ranged_item_interaction], when a mob is using this item while left-clicking on by an atom while not adjacent
+#define COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM "ranged_item_interacting_with_atom"
+/// Sent from [atom/proc/ranged_item_interaction], when a mob is using this item while right-clicking on by an atom while not adjacent
+#define COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY "ranged_item_interacting_with_atom_secondary"
+
+/// Sent from [atom/proc/item_interaction], when this atom is used as a tool and an event occurs
+#define COMSIG_ITEM_TOOL_ACTED "tool_item_acted"
+
+/// from /obj/projectile/energy/fisher/on_hit() or /obj/item/gun/energy/recharge/fisher when striking a target
+#define COMSIG_ATOM_SABOTEUR_ACT "hit_by_saboteur"
+	#define COMSIG_SABOTEUR_SUCCESS 1
+
+/// signal sent when a mouse is hovering over us, sent by atom/proc/on_mouse_entered
+#define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
+
+/// Sent from [/datum/element/burn_on_item_ignition] to an atom being ignited by something: (mob/living/user, obj/item/burning_thing)
+#define COMSIG_ATOM_IGNITED_BY_ITEM "atom_ignited_by_item"

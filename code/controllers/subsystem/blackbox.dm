@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/feedback_list = list() //list of datum/feedback_variable
 	var/list/first_death = list() //the first death of this round, assoc. vars keep track of different things
@@ -46,11 +45,10 @@ SUBSYSTEM_DEF(blackbox)
 	var/admincount = GLOB.admins.len
 	var/datum/db_query/query_record_playercount = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id)
-		VALUES (:playercount, :admincount, :time, INET_ATON(:server_ip), :server_port, :round_id)
+		VALUES (:playercount, :admincount, NOW(), INET_ATON(:server_ip), :server_port, :round_id)
 	"}, list(
 		"playercount" = playercount,
 		"admincount" = admincount,
-		"time" = SQLtime(),
 		"server_ip" = world.internet_address || "0",
 		"server_port" = "[world.port]",
 		"round_id" = GLOB.round_id,
@@ -81,15 +79,14 @@ SUBSYSTEM_DEF(blackbox)
 //Recorded on subsystem shutdown
 /datum/controller/subsystem/blackbox/proc/FinalFeedback()
 	record_feedback("tally", "ahelp_stats", GLOB.ahelp_tickets.active_tickets.len, "unresolved")
-	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
-		if (MS.pda_msgs.len)
-			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
-		if (MS.rc_msgs.len)
-			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
+	for (var/obj/machinery/telecomms/message_server/messages in GLOB.telecomm_machines)
+		if (messages.pda_msgs.len)
+			record_feedback("tally", "radio_usage", messages.pda_msgs.len, "PDA")
+		if (messages.rc_msgs.len)
+			record_feedback("tally", "radio_usage", messages.rc_msgs.len, "request console")
 
-	for(var/player_key in GLOB.player_details)
-		var/datum/player_details/PD = GLOB.player_details[player_key]
-		record_feedback("tally", "client_byond_version", 1, PD.byond_version)
+	for(var/datum/persistent_client/PC as anything in GLOB.persistent_clients)
+		record_feedback("tally", "client_byond_version", 1, PC.full_byond_version())
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
@@ -153,6 +150,8 @@ SUBSYSTEM_DEF(blackbox)
 			record_feedback("tally", "radio_usage", 1, "centcom")
 		if(FREQ_AI_PRIVATE)
 			record_feedback("tally", "radio_usage", 1, "ai private")
+		if(FREQ_ENTERTAINMENT)
+			record_feedback("tally", "radio_usage", 1, "entertainment")
 		if(FREQ_CTF_RED)
 			record_feedback("tally", "radio_usage", 1, "CTF red team")
 		if(FREQ_CTF_BLUE)
@@ -191,7 +190,7 @@ feedback data can be recorded in 5 formats:
 	used to track the number of occurances of multiple related values i.e. how many times each type of gun is fired
 	further calls to the same key will:
 		add or subtract from the saved value of the data key if it already exists
-		append the key and it's value if it doesn't exist
+		append the key and its value if it doesn't exist
 	calls: SSblackbox.record_feedback("tally", "example", 1, "sample data")
 			SSblackbox.record_feedback("tally", "example", 4, "sample data")
 			SSblackbox.record_feedback("tally", "example", 2, "other data")
@@ -203,7 +202,7 @@ feedback data can be recorded in 5 formats:
 	all data list elements must be strings
 	further calls to the same key will:
 		add or subtract from the saved value of the data key if it already exists in the same multi-dimensional position
-		append the key and it's value if it doesn't exist
+		append the key and its value if it doesn't exist
 	calls: SSblackbox.record_feedback("nested tally", "example", 1, list("fruit", "orange", "apricot"))
 			SSblackbox.record_feedback("nested tally", "example", 2, list("fruit", "orange", "orange"))
 			SSblackbox.record_feedback("nested tally", "example", 3, list("fruit", "orange", "apricot"))
@@ -298,7 +297,7 @@ Versioning
 
 	var/datum/db_query/query_log_ahelp = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp, urgent)
-		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, :time, :urgent)
+		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, NOW(), :urgent)
 	"}, list(
 		"ticket" = ticket,
 		"action" = action,
@@ -308,7 +307,6 @@ Versioning
 		"server_ip" = world.internet_address || "0",
 		"server_port" = world.port,
 		"round_id" = GLOB.round_id,
-		"time" = SQLtime(),
 		"urgent" = urgent,
 	))
 	query_log_ahelp.Execute()
@@ -329,7 +327,7 @@ Versioning
 		first_death["role"] = null
 		first_death["role"] = L.mind.assigned_role.title
 		first_death["area"] = "[AREACOORD(L)]"
-		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>"
+		first_death["damage"] = "<font color='#FF5555'>[L.get_brute_loss()]</font>/<font color='orange'>[L.get_fire_loss()]</font>/<font color='lightgreen'>[L.get_tox_loss()]</font>/<font color='lightblue'>[L.get_oxy_loss()]</font>"
 		first_death["last_words"] = L.last_words
 
 	if(!SSdbcore.Connect())
@@ -337,37 +335,39 @@ Versioning
 
 	var/datum/db_query/query_report_death = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, staminaloss, last_words, suicide)
-		VALUES (:pod, :x_coord, :y_coord, :z_coord, :map, INET_ATON(:internet_address), :port, :round_id, :time, :job, :special, :name, :key, :laname, :lakey, :brute, :fire, :brain, :oxy, :tox, :stamina, :last_words, :suicide)
+		VALUES (:pod, :x_coord, :y_coord, :z_coord, :map, INET_ATON(:internet_address), :port, :round_id, NOW(), :job, :special, :name, :key, :laname, :lakey, :brute, :fire, :brain, :oxy, :tox, :stamina, :last_words, :suicide)
 	"}, list(
 		"name" = L.real_name,
 		"key" = L.ckey,
 		"job" = L.mind.assigned_role.title,
-		"special" = L.mind.special_role,
+		"special" = jointext(L.mind.get_special_roles(), " | "),
 		"pod" = get_area_name(L, TRUE),
 		"laname" = L.lastattacker,
 		"lakey" = L.lastattackerckey,
-		"brute" = L.getBruteLoss(),
-		"fire" = L.getFireLoss(),
+		"brute" = L.get_brute_loss(),
+		"fire" = L.get_fire_loss(),
 		"brain" = L.get_organ_loss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //get_organ_loss returns null without a brain but a value is required for this column
-		"oxy" = L.getOxyLoss(),
-		"tox" = L.getToxLoss(),
-		"stamina" = L.getStaminaLoss(),
+		"oxy" = L.get_oxy_loss(),
+		"tox" = L.get_tox_loss(),
+		"stamina" = L.get_stamina_loss(),
 		"x_coord" = L.x,
 		"y_coord" = L.y,
 		"z_coord" = L.z,
 		"last_words" = L.last_words,
 		"suicide" = did_they_suicide,
-		"map" = SSmapping.config.map_name,
+		"map" = SSmapping.current_map.map_name,
 		"internet_address" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
-		"time" = SQLtime(),
 	))
 	if(query_report_death)
 		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)
 
-/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, fine = 0, paid = 0)
+/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, description, fine = 0, paid = 0)
+	var/action = "Citation Created"
+	if(!fine)
+		action = "Crime Created"
 	var/datum/db_query/query_report_citation = SSdbcore.NewQuery({"INSERT INTO [format_table_name("citation")]
 	(server_ip,
 	server_port,
@@ -378,6 +378,7 @@ Versioning
 	sender_ic,
 	recipient,
 	crime,
+	crime_desc,
 	fine,
 	paid,
 	timestamp) VALUES (
@@ -390,24 +391,76 @@ Versioning
 	:sender_ic,
 	:recipient,
 	:message,
+	:desc,
 	:fine,
 	:paid,
-	:timestamp
+	NOW()
 	) ON DUPLICATE KEY UPDATE
-	paid = paid + VALUES(paid)"}, list(
+	paid = paid + VALUES(paid),
+	crime = IF(VALUES(crime) IS NOT NULL, VALUES(crime), crime),
+	crime_desc = IF(VALUES(crime_desc) IS NOT NULL, VALUES(crime_desc), crime_desc)"}, list(
 		"server_ip" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"citation" = citation,
-		"action" = "Citation Created",
+		"action" = action,
 		"sender" = sender,
 		"sender_ic" = sender_ic,
 		"recipient" = recipient,
 		"message" = message,
+		"desc" = description,
 		"fine" = fine,
 		"paid" = paid,
-		"timestamp" = SQLtime()
 	))
 	if(query_report_citation)
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
+
+/datum/controller/subsystem/blackbox/proc/ReportRoundstartManifest(list/characters)
+	var/list/query_rows = list()
+	var/list/special_columns = list("server_ip" = "INET_ATON(?)")
+	for(var/mob_ckey in characters)
+		var/mob/living/new_character = characters[mob_ckey]
+		query_rows += list(list(
+			"server_ip" = world.internet_address || 0,
+			"server_port" = world.port,
+			"round_id" = GLOB.round_id,
+			"ckey" = mob_ckey,
+			"character_name" = new_character.real_name,
+			"job" = new_character.mind?.assigned_role?.title,
+			"special" = english_list(new_character.mind?.get_special_roles(), nothing_text = "NONE"),
+			"latejoin" = 0,
+		))
+	SSdbcore.MassInsert(format_table_name("manifest"), query_rows, special_columns = special_columns)
+
+/datum/controller/subsystem/blackbox/proc/ReportManifest(ckey, character, job, special, latejoin)
+	var/datum/db_query/query_report_manifest = SSdbcore.NewQuery({"INSERT INTO [format_table_name("manifest")]
+	(server_ip,
+	server_port,
+	round_id,
+	ckey,
+	character_name,
+	job,
+	special,
+	latejoin) VALUES (
+	INET_ATON(:server_ip),
+	:port,
+	:round_id,
+	:ckey,
+	:character_name,
+	:job,
+	:special,
+	:latejoin)
+	"}, list(
+		"server_ip" = world.internet_address || 0,
+		"port" = world.port,
+		"round_id" = GLOB.round_id,
+		"ckey" = ckey,
+		"character_name" = character,
+		"job" = job,
+		"special" = special,
+		"latejoin" = latejoin
+	))
+	if(query_report_manifest)
+		query_report_manifest.Execute(async = TRUE)
+		qdel(query_report_manifest)

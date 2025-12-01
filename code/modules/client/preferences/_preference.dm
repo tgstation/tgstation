@@ -18,11 +18,19 @@
 /// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 5
 
+/// Used for preferences that rely on body setup being finalized.
+#define PREFERENCE_PRORITY_LATE_BODY_TYPE 6
+
+/// Equpping items based on preferences.
+/// Should happen after species and body type to make sure it looks right.
+/// Mostly redundant, but a safety net for saving/loading.
+#define PREFERENCE_PRIORITY_LOADOUT 7
+
 /// The priority at which names are decided, needed for proper randomization.
-#define PREFERENCE_PRIORITY_NAMES 6
+#define PREFERENCE_PRIORITY_NAMES 8
 
 /// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
-#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 7
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 9
 
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
 #define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
@@ -42,17 +50,13 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /proc/init_preference_entries()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[preference_type] = new preference_type
 	return output
 
 /proc/init_preference_entries_by_key()
 	var/list/output = list()
-	for (var/datum/preference/preference_type as anything in subtypesof(/datum/preference))
-		if (initial(preference_type.abstract_type) == preference_type)
-			continue
+	for (var/datum/preference/preference_type as anything in valid_subtypesof(/datum/preference))
 		output[initial(preference_type.savefile_key)] = GLOB.preference_entries[preference_type]
 	return output
 
@@ -71,6 +75,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Represents an individual preference.
 /datum/preference
+	/// Do not instantiate if type matches this.
+	abstract_type = /datum/preference
+
 	/// The key inside the savefile to use.
 	/// This is also sent to the UI.
 	/// Once you pick this, don't change it.
@@ -80,9 +87,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// This isn't used for anything other than as a key for UI data.
 	/// It is up to the PreferencesMenu UI itself to interpret it.
 	var/category = "misc"
-
-	/// Do not instantiate if type matches this.
-	var/abstract_type = /datum/preference
 
 	/// What savefile should this preference be read from?
 	/// Valid values are PREFERENCE_CHARACTER and PREFERENCE_PLAYER.
@@ -103,9 +107,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// DOES have random body on, will this already be randomized?
 	var/randomize_by_default = TRUE
 
-	/// If the selected species has this in its /datum/species/mutant_bodyparts,
+	/// If the selected species has this in its /datum/species/body_markings,
 	/// will show the feature as selectable.
-	var/relevant_mutant_bodypart = null
+	var/datum/bodypart_overlay/simple/body_marking/relevant_body_markings = null
 
 	/// If the selected species has this in its /datum/species/inherent_traits,
 	/// will show the feature as selectable.
@@ -113,7 +117,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	/// If the selected species has this in its /datum/species/var/external_organs,
 	/// will show the feature as selectable.
-	var/relevant_external_organ = null
+	var/obj/item/organ/relevant_organ = null
 
 	/// If the selected species has this head_flag by default,
 	/// will show the feature as selectable.
@@ -317,23 +321,27 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return null
 
+/// Checks the species currently selected by the passed preferences object to see if it has this preference's key as a feature.
+/datum/preference/proc/current_species_has_savekey(datum/preferences/preferences)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+	return (savefile_key in species.get_features())
+
+/// Checks if this preference is relevant and thus visible to the passed preferences object.
+/datum/preference/proc/has_relevant_feature(datum/preferences/preferences)
+	if(isnull(relevant_inherent_trait) && isnull(relevant_organ) && isnull(relevant_head_flag) && isnull(relevant_body_markings))
+		return TRUE
+
+	return current_species_has_savekey(preferences)
+
 /// Returns whether or not this preference is accessible.
 /// If FALSE, will not show in the UI and will not be editable (by update_preference).
 /datum/preference/proc/is_accessible(datum/preferences/preferences)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	if ( \
-		!isnull(relevant_mutant_bodypart) \
-		|| !isnull(relevant_inherent_trait) \
-		|| !isnull(relevant_external_organ) \
-		|| !isnull(relevant_head_flag) \
-	)
-		var/species_type = preferences.read_preference(/datum/preference/choiced/species)
-
-		var/datum/species/species = new species_type
-		if (!(savefile_key in species.get_features()))
-			return FALSE
+	if (!has_relevant_feature(preferences))
+		return FALSE
 
 	if (!should_show_on_page(preferences.current_window))
 		return FALSE
@@ -397,7 +405,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	CRASH("`init_possible_values()` was not implemented for [type]!")
 
 /// When `should_generate_icons` is TRUE, this proc is called for every value.
-/// It can return either an icon or a typepath to an atom to create.
+/// It can return either an /datum/universal_icon (see uni_icon() DEFINE) or a typepath to an atom to create.
 /datum/preference/choiced/proc/icon_for(value)
 	SHOULD_CALL_PARENT(FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -434,6 +442,42 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 		data["name"] = main_feature_name
 
 	return data
+
+/// This subtype handles a lot of boilerplate for implementing a species preference tied to a feature key / sprite accessory
+/datum/preference/choiced/species_feature
+	abstract_type = /datum/preference/choiced/species_feature
+	/// What feature key does this feature represent?
+	/// Does not need to be set, it will infer it from either relevant_organ or relevant_body_markings.
+	/// However you can set it manually if you have a more complex feature.
+	var/feature_key
+
+/datum/preference/choiced/species_feature/New()
+	. = ..()
+	if(relevant_organ && relevant_organ::bodypart_overlay)
+		feature_key ||= relevant_organ::bodypart_overlay::feature_key
+		main_feature_name ||= capitalize(relevant_organ::name)
+	if(relevant_body_markings)
+		feature_key ||= relevant_body_markings::dna_feature_key
+		main_feature_name ||= "Body markings"
+	if(isnull(feature_key))
+		CRASH("`feature_key` was not set or inferable for [type]!")
+
+/datum/preference/choiced/species_feature/init_possible_values()
+	return assoc_to_keys_features(get_accessory_list())
+
+/datum/preference/choiced/species_feature/create_default_value()
+	return get_consistent_feature_entry(get_accessory_list())
+
+/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value)
+	target.dna.features[feature_key] = value
+
+/// Returns what acessory list to draw from
+/datum/preference/choiced/species_feature/proc/get_accessory_list() as /list
+	return SSaccessories.feature_list[feature_key]
+
+/// Get a specific accessory for a given value
+/datum/preference/choiced/species_feature/proc/get_accessory_for_value(value)
+	return get_accessory_list()[value]
 
 /// A preference that represents an RGB color of something.
 /// Will give the value as 6 hex digits, without a hash.

@@ -3,17 +3,18 @@
 	name = "Felinid"
 	id = SPECIES_FELINE
 	examine_limb_id = SPECIES_HUMAN
-	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
-	mutantbrain = /obj/item/organ/internal/brain/felinid
-	mutanttongue = /obj/item/organ/internal/tongue/cat
-	mutantears = /obj/item/organ/internal/ears/cat
-	external_organs = list(
-		/obj/item/organ/external/tail/cat = "Cat",
+	mutantbrain = /obj/item/organ/brain/felinid
+	mutanttongue = /obj/item/organ/tongue/cat
+	mutantears = /obj/item/organ/ears/cat
+	mutanteyes = /obj/item/organ/eyes/felinid
+	mutant_organs = list(
+		/obj/item/organ/tail/cat = "Cat",
 	)
 	inherent_traits = list(
 		TRAIT_CATLIKE_GRACE,
 		TRAIT_HATED_BY_DOGS,
 		TRAIT_USES_SKINTONES,
+		TRAIT_WATER_HATER,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/felinid
@@ -21,34 +22,23 @@
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
+	/// Yummy!
+	species_cookie = /obj/item/food/nugget
 
-// Prevents felinids from taking toxin damage from carpotoxin
-/datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(istype(chem, /datum/reagent/toxin/carpotoxin))
-		var/datum/reagent/toxin/carpotoxin/fish = chem
-		fish.toxpwr = 0
+/datum/species/human/felinid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
+	if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
+		if(human_who_gained_species.dna.features[FEATURE_TAIL_CAT] == SPRITE_ACCESSORY_NONE)
+			human_who_gained_species.dna.features[FEATURE_TAIL_CAT] = get_consistent_feature_entry(SSaccessories.feature_list[FEATURE_TAIL_CAT])
+		if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
+			human_who_gained_species.dna.features[FEATURE_EARS] = get_consistent_feature_entry(SSaccessories.feature_list[FEATURE_EARS])
 
-/datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load)
-	if(ishuman(carbon_being))
-		var/mob/living/carbon/human/target_human = carbon_being
-		if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
-			target_human.dna.features["tail_cat"] = "Cat"
-			if(target_human.dna.features["ears"] == "None")
-				target_human.dna.features["ears"] = "Cat"
-		if(target_human.dna.features["ears"] == "Cat")
-			var/obj/item/organ/internal/ears/cat/ears = new
-			ears.Insert(target_human, movement_flags = DELETE_IF_REPLACED)
-		else
-			mutantears = /obj/item/organ/internal/ears
+	// Swapping out feline ears for normal ol' human ears if they have invisible cat ears.
+	if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
+		mutantears = /obj/item/organ/ears
 	return ..()
 
-/datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
-	var/list/features = ..()
-	features["ears"] = pick("None", "Cat")
-	return features
+/datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
+	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
 
 /proc/mass_purrbation()
 	for(var/mob in GLOB.human_list)
@@ -63,7 +53,7 @@
 /proc/purrbation_toggle(mob/living/carbon/human/target_human, silent = FALSE)
 	if(!ishuman(target_human))
 		return
-	if(!istype(target_human.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/internal/ears/cat))
+	if(!istype(target_human.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat))
 		purrbation_apply(target_human, silent = silent)
 		. = TRUE
 	else
@@ -78,11 +68,8 @@
 		var/datum/species/human/felinid/cat_species = soon_to_be_felinid.dna.species
 		cat_species.original_felinid = FALSE
 	else
-		var/obj/item/organ/internal/ears/cat/kitty_ears = new
-		var/obj/item/organ/external/tail/cat/kitty_tail = new
-
 		// This removes the spines if they exist
-		var/obj/item/organ/external/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
+		var/obj/item/organ/spines/current_spines = soon_to_be_felinid.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		if(current_spines)
 			current_spines.Remove(soon_to_be_felinid, special = TRUE)
 			qdel(current_spines)
@@ -91,8 +78,12 @@
 		// Humans get converted directly to felinids, and the key is handled in on_species_gain.
 		// Now when we get mob.dna.features[feature_key], it returns None, which is why the tail is invisible.
 		// stored_feature_id is only set once (the first time an organ is inserted), so this should be safe.
+		var/obj/item/organ/ears/cat/kitty_ears = new
 		kitty_ears.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-		kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+		if(should_visual_organ_apply_to(/obj/item/organ/tail/cat, soon_to_be_felinid)) //only give them a tail if they actually have sprites for it / are a compatible subspecies.
+			var/obj/item/organ/tail/cat/kitty_tail = new
+			kitty_tail.Insert(soon_to_be_felinid, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+
 	if(!silent)
 		to_chat(soon_to_be_felinid, span_boldnotice("Something is nya~t right."))
 		playsound(get_turf(soon_to_be_felinid), 'sound/effects/meow1.ogg', 50, TRUE, -1)
@@ -107,22 +98,24 @@
 		var/datum/species/target_species = purrbated_human.dna.species
 
 		// From the previous check we know they're not a felinid, therefore removing cat ears and tail is safe
-		var/obj/item/organ/external/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-		if(istype(old_tail, /obj/item/organ/external/tail/cat))
+		var/obj/item/organ/tail/old_tail = purrbated_human.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(istype(old_tail, /obj/item/organ/tail/cat))
 			old_tail.Remove(purrbated_human, special = TRUE)
 			qdel(old_tail)
 			// Locate does not work on assoc lists, so we do it by hand
-			for(var/external_organ in target_species.external_organs)
-				if(ispath(external_organ, /obj/item/organ/external/tail))
-					var/obj/item/organ/external/tail/new_tail = new external_organ()
+			for(var/external_organ in target_species.mutant_organs)
+				if(!should_visual_organ_apply_to(external_organ, purrbated_human))
+					continue
+				if(ispath(external_organ, /obj/item/organ/tail))
+					var/obj/item/organ/tail/new_tail = new external_organ()
 					new_tail.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 				// Don't forget the spines we removed earlier
-				else if(ispath(external_organ, /obj/item/organ/external/spines))
-					var/obj/item/organ/external/spines/new_spines = new external_organ()
+				else if(ispath(external_organ, /obj/item/organ/spines))
+					var/obj/item/organ/spines/new_spines = new external_organ()
 					new_spines.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
-		var/obj/item/organ/internal/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
-		if(istype(old_ears, /obj/item/organ/internal/ears/cat))
+		var/obj/item/organ/ears/old_ears = purrbated_human.get_organ_slot(ORGAN_SLOT_EARS)
+		if(istype(old_ears, /obj/item/organ/ears/cat))
 			var/obj/item/organ/new_ears = new target_species.mutantears()
 			new_ears.Insert(purrbated_human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(!silent)
@@ -132,7 +125,7 @@
 	human_for_preview.set_haircolor("#ffcccc", update = FALSE) // pink
 	human_for_preview.set_hairstyle("Hime Cut", update = TRUE)
 
-	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/internal/ears/cat)
+	var/obj/item/organ/ears/cat/cat_ears = human_for_preview.get_organ_by_type(/obj/item/organ/ears/cat)
 	if (cat_ears)
 		cat_ears.color = human_for_preview.hair_color
 		human_for_preview.update_body()
@@ -177,7 +170,7 @@
 			SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
 			SPECIES_PERK_NAME = "Catlike Grace",
 			SPECIES_PERK_DESC = "Felinids have catlike instincts allowing them to land upright on their feet.  \
-				Instead of being knocked down from falling, you only recieve a short slowdown. \
+				Instead of being knocked down from falling, you only receive a short slowdown. \
 				However, they do not have catlike legs, and the fall will deal additional damage.",
 		),
 		list(
@@ -192,6 +185,12 @@
 			SPECIES_PERK_NAME = "Hydrophobia",
 			SPECIES_PERK_DESC = "Felinids don't like getting soaked with water.",
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_NAME = "'Fight or Flight' Defense Response",
+			SPECIES_PERK_DESC = "Felinids who become mentally unstable (and deprived of food) exhibit an \
+				extreme 'fight or flight' response against aggressors. They sometimes bite people. Violently.",
+		),
 	)
-
 	return to_add

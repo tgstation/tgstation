@@ -6,7 +6,7 @@
 	icon_state = "ablativehood"
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_ablative
-	strip_delay = 30
+	strip_delay = 3 SECONDS
 	var/hit_reflect_chance = 50
 
 /datum/armor/hooded_ablative
@@ -33,8 +33,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor_type = /datum/armor/hooded_ablative
 	hoodtype = /obj/item/clothing/head/hooded/ablative
-	strip_delay = 30
-	equip_delay_other = 40
+	strip_delay = 3 SECONDS
+	equip_delay_other = 4 SECONDS
 	var/hit_reflect_chance = 50
 
 /obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
@@ -50,15 +50,11 @@
 /obj/item/clothing/suit/hooded/ablative/on_hood_up(obj/item/clothing/head/hooded/hood)
 	. = ..()
 	var/mob/living/carbon/user = loc
-	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	hud.show_to(user)
 	balloon_alert(user, "hud enabled")
 
 /obj/item/clothing/suit/hooded/ablative/on_hood_down(obj/item/clothing/head/hooded/hood)
 	var/mob/living/carbon/user = loc
-	var/datum/atom_hud/sec_hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	sec_hud.hide_from(user)
 	balloon_alert(user, "hud disabled")
 	return ..()

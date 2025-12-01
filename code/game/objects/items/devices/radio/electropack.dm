@@ -9,6 +9,9 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *5, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 1.25)
 
 	var/on = TRUE
@@ -37,7 +40,7 @@
 			return
 	return ..()
 
-/obj/item/electropack/attackby(obj/item/W, mob/user, params)
+/obj/item/electropack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
 		A.icon = 'icons/obj/devices/assemblies.dmi'
@@ -64,7 +67,7 @@
 		if(shock_cooldown)
 			return
 		shock_cooldown = TRUE
-		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 100)
+		addtimer(VARSET_CALLBACK(src, shock_cooldown, FALSE), 10 SECONDS)
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 
@@ -104,7 +107,7 @@
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/obj/item/electropack/ui_act(action, params)
+/obj/item/electropack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

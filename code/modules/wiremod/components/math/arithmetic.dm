@@ -2,8 +2,10 @@
 #define COMP_ARITHMETIC_SUBTRACT "Subtract"
 #define COMP_ARITHMETIC_MULTIPLY "Multiply"
 #define COMP_ARITHMETIC_DIVIDE "Divide"
+#define COMP_ARITHMETIC_MODULO "Modulo"
 #define COMP_ARITHMETIC_MIN "Minimum"
 #define COMP_ARITHMETIC_MAX "Maximum"
+#define COMP_ARITHMETIC_POWER "Power"
 
 /**
  * # Arithmetic Component
@@ -34,8 +36,10 @@
 		COMP_ARITHMETIC_SUBTRACT,
 		COMP_ARITHMETIC_MULTIPLY,
 		COMP_ARITHMETIC_DIVIDE,
+		COMP_ARITHMETIC_MODULO,
 		COMP_ARITHMETIC_MIN,
 		COMP_ARITHMETIC_MAX,
+		COMP_ARITHMETIC_POWER,
 	)
 	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
@@ -75,10 +79,14 @@
 					result = null
 					break
 				result /= value
+			if(COMP_ARITHMETIC_MODULO)
+				result %= value
 			if(COMP_ARITHMETIC_MAX)
 				result = max(result, value)
 			if(COMP_ARITHMETIC_MIN)
 				result = min(result, value)
+			if(COMP_ARITHMETIC_POWER)
+				result = result ** value
 
 	output.set_output(result)
 
@@ -86,5 +94,7 @@
 #undef COMP_ARITHMETIC_SUBTRACT
 #undef COMP_ARITHMETIC_MULTIPLY
 #undef COMP_ARITHMETIC_DIVIDE
+#undef COMP_ARITHMETIC_MODULO
 #undef COMP_ARITHMETIC_MIN
 #undef COMP_ARITHMETIC_MAX
+#undef COMP_ARITHMETIC_POWER

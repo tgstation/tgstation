@@ -9,7 +9,8 @@
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  * We do early next.density check despite it being already checked in LinkBlockedWithAccess for short-circuit performance
  */
-#define CAN_STEP(cur_turf, next, simulated_only, pass_info, avoid) (next && !next.density && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && !cur_turf.LinkBlockedWithAccess(next, pass_info) && (next != avoid))
+#define CAN_STEP(cur_turf, next, simulated_only, pass_info, avoid) \
+	(next && !next.density && !(simulated_only && SSpathfinder.space_type_cache[next.type]) && (next != avoid) && !cur_turf.LinkBlockedWithAccess(next, pass_info))
 
 #define DIAGONAL_DO_NOTHING NONE
 #define DIAGONAL_REMOVE_ALL 1

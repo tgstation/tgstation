@@ -130,7 +130,7 @@
 			created.pixel_y += 8
 		// Re-add required reagents that were not used in this step
 		if(created_volume > ingredient_max_multiplier)
-			for(var/reagent_path as anything in required_reagents)
+			for(var/reagent_path in required_reagents)
 				holder.add_reagent(reagent_path,(required_reagents[reagent_path])*(created_volume-ingredient_max_multiplier))
 
 
@@ -245,7 +245,7 @@
 
 			// Everything else will just get fried
 			if(isnull(ingredient.reagents) && !is_type_in_list(ingredient, required_ingredients))
-				ingredient.AddElement(/datum/element/fried_item, 30)
+				ingredient.AddElement(/datum/element/fried_item, 30 SECONDS)
 				continue
 
 			// Things that had reagents or ingredients in the soup will get deleted
@@ -564,7 +564,7 @@
 		"someone's parents" = 2,
 	)
 	glass_price = FOOD_PRICE_EXOTIC
-	color = "#FF0000"
+	color = COLOR_RED
 
 /datum/glass_style/has_foodtype/soup/clownchili
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/clownchili
@@ -618,7 +618,7 @@
 	name = "Tomato Soup"
 	description = "Drinking this feels like being a vampire! A tomato vampire..."
 	data = list("tomato" = 1)
-	color = "#FF0000"
+	color = COLOR_RED
 
 /datum/glass_style/has_foodtype/soup/tomato
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/tomato
@@ -661,7 +661,7 @@
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/eyes = 1,
 	)
 	results = list(
 		/datum/reagent/consumable/nutriment/soup/eyeball = 20,
@@ -1126,7 +1126,7 @@
 // Special soup for Ethereals to consume to gain nutrition (energy) from.
 /datum/reagent/consumable/nutriment/soup/electrons
 	name = "Electron Soup"
-	description = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
+	description = "A gastronomic curiosity of ethereal origin. It is famed for the miniature weather system formed over a properly prepared soup."
 	data = list("mushroom" = 1, "electrons" = 4)
 	glass_price = FOOD_PRICE_EXOTIC
 	color = "#E60040"
@@ -1325,7 +1325,7 @@
 	name = "Corn Chowder"
 	description = "A creamy bowl of corn chowder, with bacon bits and mixed vegetables. One bowl is never enough."
 	data = list("creamy broth" = 1, "bacon" = 1, "mixed vegetables" = 1)
-	color = "#FFF200"
+	color = COLOR_CRAYON_YELLOW
 
 /datum/glass_style/has_foodtype/soup/corn_chowder
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/corn_chowder
@@ -1468,6 +1468,20 @@
 		/datum/reagent/consumable/nutriment/soup/jellyfish = 30,
 		/datum/reagent/water = 5,
 	)
+
+//Fresh Jellyfish fillet soup!
+/datum/chemical_reaction/food/soup/jellyfish_stew_two
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/fishmeat/gunner_jellyfish = 1,
+		/obj/item/food/grown/soybeans = 1,
+		/obj/item/food/grown/redbeet = 1,
+		/obj/item/food/grown/potato = 1
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/jellyfish = 50,
+	)
+
 
 // Rootbread Soup
 /datum/reagent/consumable/nutriment/soup/rootbread
@@ -1952,7 +1966,7 @@
 // Gyuramen
 /datum/reagent/consumable/nutriment/soup/gyuramen
 	name = "Gyuramen Miy Käzu"
-	description = "A rich beef and onion ramen with cheese- blending several cultural influences seemlessly into one tasty dish."
+	description = "A rich beef and onion ramen with cheese, blending several cultural influences seemlessly into one tasty dish."
 	data = list("beef broth" = 1, "onion" = 1, "cheese" = 1)
 	color = "#442621"
 
@@ -2080,7 +2094,7 @@
 // Hong Kong Borscht
 /datum/reagent/consumable/nutriment/soup/hong_kong_borscht
 	name = "Hong Kong Borscht"
-	description = "Also known as luo song tang or Russian soup, this dish bears little to no resemblance to Eastern European borscht- indeed, it's a tomato-based soup with no beets in sight."
+	description = "Also known as luo song tang or Russian soup, this dish bears little to no resemblance to Eastern European borscht; indeed, it's a tomato-based soup with no beets in sight."
 	data = list("tomato" = 1, "meat" = 1, "cabbage" = 1)
 	color = "#CA4810"
 

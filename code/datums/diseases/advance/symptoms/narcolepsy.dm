@@ -35,6 +35,10 @@
 		symptom_delay_max = 45
 
 /datum/symptom/narcolepsy/Activate(datum/disease/advance/A)
+	. = ..()
+	if(!.)
+		return
+
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(1)
@@ -60,8 +64,7 @@
 
 			if(yawning)
 				M.emote("yawn")
-				if(M.CanSpreadAirborneDisease())
-					A.spread(6)
+				A.airborne_spread(6)
 
 		if(5)
 			if(prob(50))
@@ -71,5 +74,4 @@
 
 			if(yawning)
 				M.emote("yawn")
-				if(M.CanSpreadAirborneDisease())
-					A.spread(6)
+				A.airborne_spread(6)

@@ -26,7 +26,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
@@ -82,9 +82,8 @@
 /area/shuttle/abandoned)
 "cE" = (
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 1;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/tank/air/layer4{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -208,7 +207,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets{
 	pixel_y = 5
@@ -271,7 +270,7 @@
 "lV" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
 	y_offset = 2;
-	x_offset = -7
+	x_offset = -8
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
@@ -304,9 +303,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "na" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
@@ -406,7 +405,7 @@
 "qS" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
@@ -462,7 +461,7 @@
 /turf/open/floor/carpet/purple,
 /area/shuttle/abandoned)
 "sl" = (
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -533,7 +532,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "vB" = (
@@ -550,7 +549,7 @@
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2
+	port_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
@@ -595,9 +594,7 @@
 /area/shuttle/abandoned)
 "zw" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "zY" = (
@@ -737,7 +734,7 @@
 /area/shuttle/abandoned)
 "Fw" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge"
 	},
 /turf/open/floor/plating,
@@ -810,9 +807,7 @@
 /area/shuttle/abandoned)
 "IL" = (
 /obj/machinery/light/small/broken/directional/east,
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -855,7 +850,7 @@
 "JI" = (
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/machinery/suit_storage_unit/standard_unit,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -996,7 +991,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "Pu" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
 	},
@@ -1219,7 +1214,7 @@
 	pixel_x = -4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned)
 "ZT" = (

@@ -7,6 +7,44 @@
 
 ///Updates every item slot passed into it.
 /mob/proc/update_clothing(slot_flags)
+	if(slot_flags & ITEM_SLOT_BACK)
+		update_worn_back()
+	if(slot_flags & ITEM_SLOT_MASK)
+		update_worn_mask()
+	if(slot_flags & ITEM_SLOT_NECK)
+		update_worn_neck()
+	if(slot_flags & ITEM_SLOT_HANDCUFFED)
+		update_worn_handcuffs()
+	if(slot_flags & ITEM_SLOT_LEGCUFFED)
+		update_worn_legcuffs()
+	if(slot_flags & ITEM_SLOT_BELT)
+		update_worn_belt()
+	if(slot_flags & ITEM_SLOT_ID)
+		update_worn_id()
+	if(slot_flags & ITEM_SLOT_EARS)
+		update_worn_ears()
+	if(slot_flags & ITEM_SLOT_EYES)
+		update_worn_glasses()
+	if(slot_flags & ITEM_SLOT_GLOVES)
+		update_worn_gloves()
+	if(slot_flags & ITEM_SLOT_HEAD)
+		update_worn_head()
+	if(slot_flags & ITEM_SLOT_FEET)
+		update_worn_shoes()
+	if(slot_flags & ITEM_SLOT_OCLOTHING)
+		update_worn_oversuit()
+	if(slot_flags & ITEM_SLOT_ICLOTHING)
+		update_worn_undersuit()
+	if(slot_flags & ITEM_SLOT_SUITSTORE)
+		update_suit_storage()
+	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
+		update_pockets()
+	if(slot_flags & ITEM_SLOT_HANDS)
+		update_held_items()
+
+/// Recalculates the mob's obscured and covered slots based on currently equipped items
+/mob/proc/refresh_obscured()
+	SIGNAL_HANDLER
 	return
 
 /mob/proc/update_icons()
@@ -76,14 +114,14 @@
 /mob/proc/update_worn_gloves()
 	return
 
-///Updates the handcuff overlay & HUD element.
+///Updates the suit storage overlay & HUD element.
 /mob/proc/update_suit_storage()
 	return
 
-///Updates the handcuff overlay & HUD element.
+///Updates the pocket overlay & HUD element.
 /mob/proc/update_pockets()
 	return
 
-///Updates the handcuff overlay & HUD element.
-/mob/proc/update_inv_ears()
+///Updates the headset overlay & HUD element.
+/mob/proc/update_worn_ears()
 	return

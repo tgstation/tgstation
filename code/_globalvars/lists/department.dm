@@ -1,0 +1,7 @@
+GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
+	SEC_DEPT_ENGINEERING,
+	SEC_DEPT_MEDICAL,
+	SEC_DEPT_NONE,
+	SEC_DEPT_SCIENCE,
+	SEC_DEPT_SUPPLY,
+)))

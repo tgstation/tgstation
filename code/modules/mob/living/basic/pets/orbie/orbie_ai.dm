@@ -3,7 +3,7 @@
 
 /datum/ai_controller/basic_controller/orbie
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_TRICK_NAME = "Trick",
 	)
@@ -13,7 +13,6 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/find_playmates,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/relay_pda_message,
 		/datum/ai_planning_subtree/pet_planning,
 	)
@@ -22,12 +21,12 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_LAST_RECIEVED_MESSAGE), PROC_REF(on_set_message))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_LAST_RECEIVED_MESSAGE), PROC_REF(on_set_message))
 
 /datum/ai_controller/basic_controller/orbie/proc/on_set_message(datum/source)
 	SIGNAL_HANDLER
 
-	addtimer(CALLBACK(src, PROC_REF(clear_blackboard_key), BB_LAST_RECIEVED_MESSAGE), MESSAGE_EXPIRY_TIME)
+	addtimer(CALLBACK(src, PROC_REF(clear_blackboard_key), BB_LAST_RECEIVED_MESSAGE), MESSAGE_EXPIRY_TIME)
 
 ///ai behavior that lets us search for other orbies to play with
 /datum/ai_planning_subtree/find_playmates
@@ -43,7 +42,7 @@
 
 /datum/ai_behavior/find_and_set/find_playmate
 
-/datum/ai_behavior/find_and_set/find_playmate/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/find_playmate/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	for(var/mob/living/basic/orbie/playmate in oview(search_range, controller.pawn))
 		if(playmate == controller.pawn || playmate.stat == DEAD || isnull(playmate.ai_controller))
 			continue
@@ -65,18 +64,16 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/interact_with_playmate/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	living_pawn.manual_emote("plays with [target]!")
 	living_pawn.spin(spintime = 4, speed = 1)
 	living_pawn.ClickOn(target)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/interact_with_playmate/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -86,22 +83,20 @@
 /datum/ai_planning_subtree/relay_pda_message
 
 /datum/ai_planning_subtree/relay_pda_message/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2 || isnull(controller.blackboard[BB_LAST_RECIEVED_MESSAGE]))
+	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2 || isnull(controller.blackboard[BB_LAST_RECEIVED_MESSAGE]))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/relay_pda_message, BB_LAST_RECIEVED_MESSAGE)
+	controller.queue_behavior(/datum/ai_behavior/relay_pda_message, BB_LAST_RECEIVED_MESSAGE)
 
 /datum/ai_behavior/relay_pda_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/living_pawn = controller.pawn
 	var/text_to_say = controller.blackboard[target_key]
 	if(isnull(text_to_say))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	living_pawn.say(text_to_say, forced = "AI controller")
 	living_pawn.spin(spintime = 4, speed = 1)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/relay_pda_message/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
@@ -109,6 +104,14 @@
 
 /datum/pet_command/follow/orbie
 	follow_behavior = /datum/ai_behavior/pet_follow_friend/orbie
+
+/datum/pet_command/follow/orbie/New(mob/living/parent)
+	. = ..()
+	RegisterSignal(parent, COMSIG_VIRTUAL_PET_SUMMONED, PROC_REF(on_summon))
+
+/datum/pet_command/follow/orbie/proc/on_summon(datum/source, mob/living/friend)
+	SIGNAL_HANDLER
+	set_command_active(source, friend)
 
 /datum/ai_behavior/pet_follow_friend/orbie
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -128,17 +131,24 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 	return ..()
 
-/datum/pet_command/point_targeting/use_ability/take_photo
+/datum/pet_command/use_ability/pet_lights/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to toggle its lights!"
+
+/datum/pet_command/use_ability/take_photo
 	command_name = "Photo"
 	command_desc = "Make your pet take a photo!"
-	radial_icon = 'icons/mob/simple/pets.dmi'
-	radial_icon_state = "orbie_lights_action"
+	radial_icon = 'icons/obj/art/camera.dmi'
+	radial_icon_state = "camera"
 	speech_commands = list("photo", "picture", "image")
 	command_feedback = "Readys camera mode"
 	pet_ability_key = BB_PHOTO_ABILITY
 	targeting_strategy_key = BB_TARGETING_STRATEGY
 
-/datum/pet_command/point_targeting/use_ability/take_photo/execute_action(datum/ai_controller/controller)
+/datum/pet_command/use_ability/take_photo/retrieve_command_text(atom/living_pet, atom/target)
+	return isnull(target) ? null : "signals [living_pet] to take a photo of [target]!"
+
+
+/datum/pet_command/use_ability/take_photo/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 3)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -156,6 +166,9 @@
 	if(isnull(text_command))
 		return FALSE
 	return findtext(spoken_text, text_command)
+
+/datum/pet_command/perform_trick_sequence/light/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to dance!"
 
 /datum/pet_command/perform_trick_sequence/execute_action(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn

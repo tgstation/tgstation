@@ -1,4 +1,5 @@
 GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
+GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 /obj/machinery/fax
 	name = "Fax Machine"
@@ -33,22 +34,26 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	var/list/fax_history = list()
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
+		/obj/item/canvas,
 		/obj/item/paper,
 		/obj/item/photo,
-		/obj/item/tcgcard
+		/obj/item/tcgcard,
 	)
 	/// List of types which should be allowed to be faxed if hacked
 	var/static/list/exotic_types = list(
-		/obj/item/food/pizzaslice,
-		/obj/item/food/root_flatbread,
-		/obj/item/food/pizza/flatbread,
-		/obj/item/food/breadslice,
-		/obj/item/food/salami,
-		/obj/item/throwing_star,
-		/obj/item/stack/spacecash,
-		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/folder/biscuit,
+		/obj/item/food/breadslice,
+		/obj/item/food/chapslice,
+		/obj/item/food/cookie,
+		/obj/item/food/grilled_chapslice,
+		/obj/item/food/pizza/flatbread,
+		/obj/item/food/pizzaslice,
+		/obj/item/food/root_flatbread,
+		/obj/item/food/salami,
+		/obj/item/holochip,
+		/obj/item/stack/spacecash,
+		/obj/item/throwing_star,
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
@@ -65,6 +70,27 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	fax_name = "[current_area.name]"
 	return ..()
 
+/obj/machinery/fax/admin/syndicate
+	name = "Syndicate Fax Machine"
+
+/obj/machinery/fax/admin/syndicate/Initialize(mapload)
+	fax_name = "[special_networks["syndicate"]["fax_name"]]"
+	fax_id = special_networks["syndicate"]["fax_id"]
+	syndicate_network = TRUE
+	return ..()
+
+/obj/machinery/fax/admin
+	name = "CentCom Fax Machine"
+
+/obj/machinery/fax/admin/Initialize(mapload)
+	if (!fax_name)
+		fax_name = "[GLOB.nt_fax_department]"
+	if(!fax_id)
+		fax_id = special_networks["nanotrasen"]["fax_id"]
+	name = "[fax_name] Fax Machine"
+	visible_to_network = FALSE
+	return ..()
+
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
 	if (!fax_id)
@@ -77,7 +103,6 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 /obj/machinery/fax/Destroy()
 	QDEL_NULL(loaded_item_ref)
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/fax/update_overlays()
@@ -120,7 +145,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		return FALSE
 	if (!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		playsound(src, 'sound/creatures/dog/growl2.ogg', 50, FALSE)
+		playsound(src, 'sound/mobs/non-humanoids/dog/growl2.ogg', 50, FALSE)
 		balloon_alert(user, "migrated to syndienet 2.0")
 		to_chat(user, span_warning("An image appears on [src] screen for a moment with Ian in the cap of a Syndicate officer."))
 		return TRUE
@@ -146,7 +171,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 /obj/machinery/fax/multitool_act(mob/living/user, obj/item/I)
 	if (panel_open)
 		return
-	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", , 128)
+	var/new_fax_name = tgui_input_text(user, "Enter a new name for the fax machine.", "New Fax Name", max_length = 128)
 	if (!new_fax_name)
 		return ITEM_INTERACT_SUCCESS
 	if (new_fax_name != fax_name)
@@ -159,7 +184,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		fax_name = new_fax_name
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/fax/attackby(obj/item/item, mob/user, params)
+/obj/machinery/fax/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if (jammed && clear_jam(item, user))
 		return
 	if (panel_open)
@@ -188,7 +213,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		user.visible_message(span_notice("[user] cleans \the [src]."), span_notice("You clean \the [src]."))
 		jammed = FALSE
 		return TRUE
-	if (istype(item, /obj/item/soap) || istype(item, /obj/item/reagent_containers/cup/rag))
+	if (istype(item, /obj/item/soap) || istype(item, /obj/item/rag))
 		var/cleanspeed = 50
 		if (istype(item, /obj/item/soap))
 			var/obj/item/soap/used_soap = item
@@ -216,11 +241,11 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
  * This list expands if you snip a particular wire.
  */
 /obj/machinery/fax/proc/is_allowed_type(obj/item/item)
-	if (is_type_in_list(item, allowed_types))
-		return TRUE
-	if (!allow_exotic_faxes)
-		return FALSE
-	return is_type_in_list(item, exotic_types)
+	var/list/checked_list = allow_exotic_faxes ? (allowed_types | exotic_types) : allowed_types
+	for(var/atom/movable/thing in item.get_all_contents())
+		if(!is_type_in_list(thing, checked_list))
+			return FALSE
+	return TRUE
 
 /obj/machinery/fax/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -253,11 +278,13 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 	data["fax_history"] = fax_history
 	var/list/special_networks_data = list()
 	for(var/key in special_networks)
+		if(special_networks[key]["fax_id"] == fax_id)
+			continue
 		special_networks_data += list(special_networks[key])
 	data["special_faxes"] = special_networks_data
 	return data
 
-/obj/machinery/fax/ui_act(action, list/params)
+/obj/machinery/fax/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -299,11 +326,22 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 
 			history_add("Send", params["name"])
 
-			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
-			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
+			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", list("paper" = fax_paper, "destination_id" = params["id"], "sender_name" = fax_name))
+			to_chat(GLOB.admins,
+				span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)] [ADMIN_PRINT_FAX(fax_paper, fax_name, params["id"])]"),
+				type = MESSAGE_TYPE_PRAYER,
+				confidential = TRUE)
 			for(var/client/staff as anything in GLOB.admins)
 				if(staff?.prefs.read_preference(/datum/preference/toggle/comms_notification))
 					SEND_SOUND(staff, sound('sound/misc/server-ready.ogg'))
+
+			if(GLOB.fax_autoprinting)
+				for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
+					if(FAX.fax_id != params["id"])
+						continue
+					FAX.receive(fax_paper, fax_name)
+					break
+
 			log_fax(fax_paper, params["id"], params["name"])
 			loaded_item_ref = null
 			update_appearance()
@@ -343,7 +381,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 		if (FAX.jammed)
 			do_sparks(5, TRUE, src)
 			balloon_alert(usr, "destination port jammed")
-			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
@@ -513,7 +551,7 @@ GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department
 			context[SCREENTIP_CONTEXT_LMB] = "Manipulate wires"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	if (jammed && is_type_in_list(held_item, list(/obj/item/reagent_containers/spray, /obj/item/soap, /obj/item/reagent_containers/cup/rag)))
+	if (jammed && is_type_in_list(held_item, list(/obj/item/reagent_containers/spray, /obj/item/soap, /obj/item/rag)))
 		context[SCREENTIP_CONTEXT_LMB] = "Clean output tray"
 		return CONTEXTUAL_SCREENTIP_SET
 

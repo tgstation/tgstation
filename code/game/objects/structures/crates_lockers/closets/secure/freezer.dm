@@ -36,10 +36,8 @@
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 	return FALSE
 
-/obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
-	if (!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/assembly/igniter/condenser(drop_location())
-	. = ..()
+/obj/structure/closet/secure_closet/freezer/atom_deconstruct(disassembled)
+	new /obj/item/assembly/igniter/condenser(drop_location())
 
 /obj/structure/closet/secure_closet/freezer/empty
 	name = "freezer"

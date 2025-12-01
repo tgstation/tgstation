@@ -1,24 +1,25 @@
-import { filter, map, reduce, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { clamp } from 'common/math';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
-  Box,
   Button,
   Collapsible,
-  Input,
+  ImageButton,
   NoticeBox,
   Section,
-  Table,
-} from '../components';
+  Stack,
+} from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+import { createSearch, toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { SearchBar } from './common/SearchBar';
 
 type Recipe = {
   ref: unknown | null;
   req_amount: number;
+  icon: string;
+  icon_state: string;
+  image?: string;
 
   // for multiplier buttons
   res_amount: number;
@@ -49,8 +50,7 @@ type RecipeBoxProps = {
 };
 
 // RecipeList converted via Object.entries() for filterRecipeList
-type RecipeListEntry = [string, RecipeList | Recipe];
-type RecipeListFilterableEntry = [string, RecipeList | Recipe | undefined];
+type RecipeListFilterableEntry = [string, RecipeList | Recipe];
 
 /**
  * Type guard for recipe vs recipe list
@@ -70,30 +70,38 @@ function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
 const filterRecipeList = (
   list: RecipeList,
   keyFilter: (key: string) => boolean,
-) => {
-  const filteredList: RecipeList = flow([
-    map((entry: RecipeListEntry): RecipeListFilterableEntry => {
-      const [key, recipe] = entry;
+): RecipeList | undefined => {
+  const filteredList = Object.fromEntries(
+    Object.entries(list)
+      .flatMap((entry): RecipeListFilterableEntry[] => {
+        const [key, recipe] = entry;
 
-      if (isRecipeList(recipe)) {
         // If category name matches, return the whole thing.
         if (keyFilter(key)) {
-          return entry;
+          return [entry];
         }
 
-        // otherwise, filter sub-entries.
-        return [key, filterRecipeList(recipe, keyFilter)];
-      }
+        if (isRecipeList(recipe)) {
+          // otherwise, filter sub-entries.
+          const subEntries = filterRecipeList(recipe, keyFilter);
+          if (subEntries !== undefined) {
+            return [[key, subEntries]];
+          }
+        }
 
-      return keyFilter(key) ? entry : [key, undefined];
-    }),
-    filter((entry: RecipeListFilterableEntry) => entry[1] !== undefined),
-    sortBy((entry: RecipeListEntry) => entry[0].toLowerCase()),
-    reduce((obj: RecipeList, entry: RecipeListEntry) => {
-      obj[entry[0]] = entry[1];
-      return obj;
-    }, {}),
-  ])(Object.entries(list));
+        return [];
+      })
+
+      // Sort items so that lists are on top and recipes underneath.
+      // Plus everything is in alphabetical order.
+      .sort(([aKey, aValue], [bKey, bValue]) =>
+        isRecipeList(aValue) !== isRecipeList(bValue)
+          ? isRecipeList(aValue)
+            ? -1
+            : 1
+          : aKey.localeCompare(bKey),
+      ),
+  );
 
   return Object.keys(filteredList).length ? filteredList : undefined;
 };
@@ -106,23 +114,22 @@ export const StackCrafting = (_props) => {
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
-  const height: number = clamp(94 + Object.keys(recipes).length * 26, 250, 500);
+  const height: number = clamp(96 + Object.keys(recipes).length * 37, 250, 500);
 
   return (
     <Window width={400} height={height}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Section
-          title={'Amount: ' + amount}
+          fill
+          scrollable
+          title={`Amount: ${amount}`}
           buttons={
-            <>
-              Search
-              <Input
-                autoFocus
-                value={searchText}
-                onInput={(e, value) => setSearchText(value)}
-                mx={1}
-              />
-            </>
+            <SearchBar
+              expensive
+              style={{ width: '15em' }}
+              query={searchText}
+              onSearch={(value) => setSearchText(value)}
+            />
           }
         >
           {filteredRecipes ? (
@@ -145,10 +152,19 @@ const RecipeListBox = (props: RecipeListProps) => {
         const recipe = recipes[title];
         if (isRecipeList(recipe)) {
           return (
-            <Collapsible key={title} ml={1} color="label" title={title}>
-              <Box ml={2}>
-                <RecipeListBox recipes={recipe} />
-              </Box>
+            <Collapsible
+              key={title}
+              title={toTitleCase(title || '')}
+              child_mt={0}
+              childStyles={{
+                padding: '0.5em',
+                backgroundColor: 'rgba(62, 97, 137, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderTop: 'none',
+                borderRadius: '0 0 0.33em 0.33em',
+              }}
+            >
+              <RecipeListBox recipes={recipe} />
             </Collapsible>
           );
         } else {
@@ -179,20 +195,25 @@ const Multipliers = (props: MultiplierProps) => {
 
   const multipliers = [5, 10, 25];
 
-  const finalResult: JSX.Element[] = [];
+  const finalResult: React.JSX.Element[] = [];
 
   for (const multiplier of multipliers) {
     if (maxM >= multiplier) {
       finalResult.push(
         <Button
-          content={multiplier * recipe.res_amount + 'x'}
+          bold
+          color={'transparent'}
+          fontSize={0.75}
+          width={'32px'}
           onClick={() =>
             act('make', {
               ref: recipe.ref,
               multiplier: multiplier,
             })
           }
-        />,
+        >
+          {`${multiplier * recipe.res_amount}x`}
+        </Button>,
       );
     }
   }
@@ -200,14 +221,19 @@ const Multipliers = (props: MultiplierProps) => {
   if (multipliers.indexOf(maxM) === -1) {
     finalResult.push(
       <Button
-        content={maxM * recipe.res_amount + 'x'}
+        bold
+        color={'transparent'}
+        fontSize={0.75}
+        width={'32px'}
         onClick={() =>
           act('make', {
             ref: recipe.ref,
             multiplier: maxM,
           })
         }
-      />,
+      >
+        {`${maxM * recipe.res_amount}x`}
+      </Button>,
     );
   }
 
@@ -216,44 +242,54 @@ const Multipliers = (props: MultiplierProps) => {
 
 const RecipeBox = (props: RecipeBoxProps) => {
   const { act, data } = useBackend<StackCraftingProps>();
-
   const { amount } = data;
-
   const { recipe, title } = props;
-
-  const { res_amount, max_res_amount, req_amount, ref } = recipe;
+  const {
+    res_amount,
+    max_res_amount,
+    req_amount,
+    ref,
+    icon,
+    icon_state,
+    image,
+  } = recipe;
 
   const resAmountLabel = res_amount > 1 ? `${res_amount}x ` : '';
   const sheetSuffix = req_amount > 1 ? 's' : '';
-  const buttonName = `${resAmountLabel}${title} (${req_amount} sheet${sheetSuffix})`;
+  const buttonName = `${resAmountLabel}${title}`;
+  const reqSheets = `${req_amount} sheet${sheetSuffix}`;
 
   const maxMultiplier = buildMultiplier(recipe, amount);
 
   return (
-    <Box mb={1}>
-      <Table>
-        <Table.Row>
-          <Table.Cell>
-            <Button
-              fluid
-              disabled={!maxMultiplier}
-              icon="wrench"
-              content={buttonName}
-              onClick={() =>
-                act('make', {
-                  ref: ref,
-                  multiplier: 1,
-                })
-              }
-            />
-          </Table.Cell>
-          {max_res_amount > 1 && maxMultiplier > 1 && (
-            <Table.Cell collapsing>
-              <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
-            </Table.Cell>
-          )}
-        </Table.Row>
-      </Table>
-    </Box>
+    <ImageButton
+      fluid
+      base64={
+        image
+      } /* Use base64 image if we have it. DmIcon cannot paint grayscale images yet */
+      dmIcon={icon}
+      dmIconState={icon_state}
+      imageSize={32}
+      disabled={!maxMultiplier}
+      buttons={
+        max_res_amount > 1 &&
+        maxMultiplier > 1 && (
+          <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
+        )
+      }
+      onClick={() =>
+        act('make', {
+          ref: ref,
+          multiplier: 1,
+        })
+      }
+    >
+      <Stack textAlign={'left'}>
+        <Stack.Item grow>{toTitleCase(buttonName)}</Stack.Item>
+        <Stack.Item align={'center'} fontSize={0.8} color={'gray'}>
+          {reqSheets}
+        </Stack.Item>
+      </Stack>
+    </ImageButton>
   );
 };

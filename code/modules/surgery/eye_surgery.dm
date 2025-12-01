@@ -18,7 +18,7 @@
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 45,
 		/obj/item/pen = 25)
-	time = 64
+	time = 6.4 SECONDS
 
 /datum/surgery/eye_surgery/can_start(mob/user, mob/living/carbon/target)
 	return target.get_organ_slot(ORGAN_SLOT_EYES) && ..()
@@ -34,7 +34,7 @@
 	display_pain(target, "You feel a stabbing pain in your eyes!")
 
 /datum/surgery_step/fix_eyes/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/obj/item/organ/internal/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/target_eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	user.visible_message(span_notice("[user] successfully fixes [target]'s eyes!"), span_notice("You succeed in fixing [target]'s eyes."))
 	display_results(
 		user,
@@ -50,7 +50,7 @@
 	return ..()
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.get_organ_by_type(/obj/item/organ/internal/brain))
+	if(target.get_organ_by_type(/obj/item/organ/brain))
 		display_results(
 			user,
 			target,
@@ -59,7 +59,7 @@
 			span_warning("[user] accidentally stabs [target] right in the brain!"),
 		)
 		display_pain(target, "You feel a visceral stabbing pain right through your head, into your brain!")
-		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 70)
+		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 70)
 	else
 		display_results(
 			user,

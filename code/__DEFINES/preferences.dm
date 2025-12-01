@@ -17,7 +17,8 @@
 #define ADMIN_IGNORE_CULT_GHOST (1<<21)
 #define SPLIT_ADMIN_TABS (1<<23)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS)
+#define TOGGLES_DEADMIN_DEFAULT (DEADMIN_ANTAGONIST|DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY|DEADMIN_POSITION_SILICON)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|MEMBER_PUBLIC|SOUND_PRAYERS|TOGGLES_DEADMIN_DEFAULT)
 
 // Legacy chat toggles.
 // !!! DO NOT ADD ANY NEW ONES HERE !!!
@@ -35,7 +36,12 @@
 #define CHAT_GHOSTLAWS (1<<11)
 #define CHAT_LOGIN_LOGOUT (1<<12)
 
-#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
+#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
+
+/// File path to where we save backups of preference savefiles when updating them.
+#define PREFS_BACKUP_PATH(base_path) "[base_path].updatebac"
+/// File path to the dev preference json file, which is loaded by guests while localhosting.
+#define DEV_PREFS_PATH "config/dev_preferences.json"
 
 #define PARALLAX_INSANE "Insane"
 #define PARALLAX_HIGH "High"
@@ -74,12 +80,18 @@
 #define EXP_TYPE_ADMIN "Admin"
 
 //Flags in the players table in the db
-#define DB_FLAG_EXEMPT 1
+#define DB_FLAG_EXEMPT (1<<0)
 
 #define DEFAULT_CYBORG_NAME "Default Cyborg Name"
 
+// Choose grid or list TGUI layouts for UI's, when possible.
+/// Force grid layout, even if default is a list.
+#define TGUI_LAYOUT_GRID "grid"
+/// Force list layout, even if default is a grid.
+#define TGUI_LAYOUT_LIST "list"
 
 //Job preferences levels
+#define JP_ANY 0
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
@@ -142,3 +154,49 @@
 
 /// The key used for sprite accessories that should never actually be applied to the player.
 #define SPRITE_ACCESSORY_NONE "None"
+
+// Loadout
+/// When equipped, applies a job specific palette to the item. Only applicable to GAGS items.
+#define LOADOUT_FLAG_JOB_GREYSCALING (1<<0)
+/// Prevents GAGS items from being player customizable.
+#define LOADOUT_FLAG_BLOCK_GREYSCALING (1<<1)
+/// Allows the item to be greyscaled by the player, if it's a GAGS item. Automatically set if the item is innately recolorable.
+#define LOADOUT_FLAG_GREYSCALING_ALLOWED (1<<2)
+/// Allows the item to be renamed by the player.
+#define LOADOUT_FLAG_ALLOW_NAMING (1<<3)
+/// Allows the item to be reskinned by the player. Only applicable to items with unique_reskin defined.
+#define LOADOUT_FLAG_ALLOW_RESKIN (1<<4)
+
+// Loadout item info keys
+// Changing these will break existing loadouts
+/// Tracks GAGS color information
+#define INFO_GREYSCALE "greyscale"
+/// Used to set custom names
+#define INFO_NAMED "name"
+/// Used for specific alt-reskins, like the pride pin
+#define INFO_RESKIN "reskin"
+/// Handles which layer the item will be on, for accessories
+#define INFO_LAYER "layer"
+
+// Lipstick styles
+#define UPPER_LIP "Upper"
+#define MIDDLE_LIP "Middle"
+#define LOWER_LIP "Lower"
+
+// Job greyscale colors for loadout items
+#define COLOR_JOB_ASSISTANT /obj/item/clothing/under/color/grey::greyscale_colors
+#define COLOR_JOB_BOTANIST "#33cc33"
+#define COLOR_JOB_CARGO_GENERIC "#824b32"
+#define COLOR_JOB_CE "#d0d0d0"
+#define COLOR_JOB_CHEF "#d0d0d0"
+#define COLOR_JOB_CHEMIST "#ff6600"
+#define COLOR_JOB_CLOWN "#ffbeff"
+#define COLOR_JOB_CMO "#009999"
+#define COLOR_JOB_DEFAULT "#303030"
+#define COLOR_JOB_ENGI_GENERIC "#ff6600"
+#define COLOR_JOB_JANITOR /obj/item/clothing/gloves/color/purple::greyscale_colors
+#define COLOR_JOB_LAWYER "#003399"
+#define COLOR_JOB_SCI_GENERIC "#800080"
+#define COLOR_JOB_SEC_GENERIC "#A53228"
+#define COLOR_JOB_MED_GENERIC "#5B97BC"
+#define COLOR_JOB_COMMAND_GENERIC "#3C5A96"

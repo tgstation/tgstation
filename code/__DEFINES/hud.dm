@@ -15,6 +15,11 @@
 /// Used for HUD objects
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
+//used to set the default viewport to the user's preference.
+#define VIEWPORT_USE_PREF "use_pref"
+#define WIDESCREEN_VIEWPORT_SIZE "19x15"
+#define SQUARE_VIEWPORT_SIZE "15x15"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 
@@ -34,19 +39,8 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-/proc/ui_hand_position(i) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
-	var/x_off = i % 2 ? 0 : -1
-	var/y_off = round((i-1) / 2)
-	return"CENTER+[x_off]:16,SOUTH+[y_off]:5"
-
-/proc/ui_equip_position(mob/M)
-	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
-	return "CENTER:-16,SOUTH+[y_off+1]:5"
-
-/proc/ui_swaphand_position(mob/M, which = 1) //values based on old swaphand ui positions (CENTER: +/-16,SOUTH+1:5)
-	var/x_off = which == 1 ? -1 : 0
-	var/y_off = round((M.held_items.len-1) / 2)
-	return "CENTER+[x_off]:16,SOUTH+[y_off+1]:5"
+// Middle
+#define around_player "CENTER-1,CENTER-1"
 
 //Lower left, persistent menu
 #define ui_inventory "WEST:6,SOUTH:5"
@@ -54,6 +48,8 @@
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
+#define ui_blooddisplay "WEST:6,CENTER:-2"
+#define ui_xenobiodisplay "WEST:6,CENTER:-4"
 
 //Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
@@ -65,8 +61,11 @@
 #define ui_combo "CENTER+4:24,SOUTH+1:7" //combo meter for martial arts
 
 //Lower right, persistent menu
-#define ui_drop_throw "EAST-1:28,SOUTH+1:7"
+#define ui_rest "EAST-1:28,SOUTH+1:7"
+#define ui_drop_throw "EAST-1:28,SOUTH+1:24"
+#define ui_above_throw "EAST-1:28,SOUTH+1:41"
 #define ui_above_movement "EAST-2:26,SOUTH+1:7"
+#define ui_above_movement_top "EAST-2:26, SOUTH+1:24"
 #define ui_above_intent "EAST-3:24, SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"
 #define ui_acti "EAST-3:24,SOUTH:5"
@@ -76,8 +75,7 @@
 #define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
-#define ui_navigate_menu "EAST-4:22,SOUTH:5"
-#define ui_floor_menu "EAST-4:14,SOUTH:37"
+#define ui_navigate_menu "EAST-4:6,SOUTH:5"
 
 //Upper left (action buttons)
 #define ui_action_palette "WEST+0:23,NORTH-1:5"
@@ -110,11 +108,12 @@
 #define ui_living_pull "EAST-1:28,CENTER-3:15"
 #define ui_living_healthdoll "EAST-1:28,CENTER-1:15"
 
-//Monkeys
-#define ui_monkey_head "CENTER-5:13,SOUTH:5"
-#define ui_monkey_mask "CENTER-4:14,SOUTH:5"
-#define ui_monkey_neck "CENTER-3:15,SOUTH:5"
-#define ui_monkey_back "CENTER-2:16,SOUTH:5"
+//Humans
+#define ui_human_floor_changer "EAST-4:22,SOUTH:5"
+#define ui_human_crafting "EAST-3:24,SOUTH+1:7"
+#define ui_human_navigate "EAST-3:7,SOUTH+1:7"
+#define ui_human_language "EAST-3:7,SOUTH+1:24"
+#define ui_human_area "EAST-3:24,SOUTH+1:24"
 
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
@@ -137,8 +136,8 @@
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
 #define ui_borg_alerts "CENTER+4:21,SOUTH:5"
 #define ui_borg_language_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_navigate_menu "CENTER+4:19,SOUTH+1:6"
-#define ui_borg_floor_menu "CENTER+4:-13,SOUTH+1:6"
+#define ui_borg_navigate_menu "CENTER+4:3,SOUTH+1:6"
+#define ui_borg_floor_changer "EAST-1:28,SOUTH+1:39"
 
 //Aliens
 #define ui_alien_health "EAST,CENTER-1:15"
@@ -146,8 +145,8 @@
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
 #define ui_alien_language_menu "EAST-4:20,SOUTH:5"
-#define ui_alien_navigate_menu "EAST-4:20,SOUTH:5"
-#define ui_alien_floor_menu "EAST-4:-12,SOUTH:5"
+#define ui_alien_navigate_menu "EAST-4:4,SOUTH:5"
+#define ui_alien_floor_change "EAST-3:24, SOUTH:24"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
@@ -156,7 +155,6 @@
 #define ui_ai_state_laws "BOTTOM:6,RIGHT-1"
 #define ui_ai_mod_int "BOTTOM:6,RIGHT"
 #define ui_ai_language_menu "BOTTOM+1:8,RIGHT-1:30"
-#define ui_ai_floor_menu "BOTTOM+1:8,RIGHT-1:14"
 
 #define ui_ai_crew_monitor "BOTTOM:6,CENTER-1"
 #define ui_ai_crew_manifest "BOTTOM:6,CENTER"
@@ -170,7 +168,8 @@
 #define ui_ai_multicam "BOTTOM+1:6,LEFT+1"
 #define ui_ai_add_multicam "BOTTOM+1:6,LEFT"
 #define ui_ai_take_picture "BOTTOM+2:6,LEFT"
-
+#define ui_ai_floor_indicator "BOTTOM+5,RIGHT"
+#define ui_ai_godownup "BOTTOM+5,RIGHT-1"
 
 //pAI
 #define ui_pai_software "SOUTH:6,WEST"
@@ -188,17 +187,21 @@
 #define ui_pai_view_images "SOUTH:6,WEST+12"
 #define ui_pai_radio "SOUTH:6,WEST+13"
 #define ui_pai_language_menu "SOUTH+1:8,WEST+12:31"
-#define ui_pai_navigate_menu "SOUTH+1:8,WEST+12:31"
+#define ui_pai_navigate_menu "SOUTH+1:8,WEST+12:15"
 
 //Ghosts
 #define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
 #define ui_ghost_orbit "SOUTH:6,CENTER-2:24"
 #define ui_ghost_reenter_corpse "SOUTH:6,CENTER-1:24"
-#define ui_ghost_teleport "SOUTH:6,CENTER:24"
-#define ui_ghost_pai "SOUTH: 6, CENTER+1:24"
-#define ui_ghost_minigames "SOUTH: 6, CENTER+2:24"
-#define ui_ghost_language_menu "SOUTH: 22, CENTER+3:8"
-#define ui_ghost_floor_menu "SOUTH: 6, CENTER+3:8"
+#define ui_dnr "SOUTH:6,CENTER:24"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
+#define ui_ghost_settings "SOUTH: 6, CENTER+2:24"
+#define ui_ghost_minigames "SOUTH: 6, CENTER+3:24"
+#define ui_ghost_language_menu "SOUTH: 6, CENTER+4:22"
+#define ui_ghost_floor_changer "SOUTH: 6, CENTER+4:7"
+
+//Voidwalker
+#define ui_voidwalker_left_of_hands "CENTER+-2:16,SOUTH+0:5"
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"

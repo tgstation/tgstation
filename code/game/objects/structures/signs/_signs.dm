@@ -12,10 +12,8 @@
 	var/buildable_sign = TRUE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
-	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
+	///sign_change_name is used to make nice looking, alphabetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
-	///Callback to the knock down proc for wallmounting behavior.
-	var/knock_down_callback
 
 /datum/armor/structure_sign
 	melee = 50
@@ -25,12 +23,11 @@
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
-	knock_down_callback = CALLBACK(src, PROC_REF(knock_down))
-	find_and_hang_on_wall(custom_drop_callback = knock_down_callback)
+	if(mapload && !find_and_hang_on_atom(mark_for_late_init = TRUE))
+		return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/sign/Destroy()
-	. = ..()
-	knock_down_callback = null
+/obj/structure/sign/LateInitialize()
+	find_and_hang_on_atom(late_init = TRUE)
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -54,17 +51,17 @@
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
 	if(!buildable_sign)
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	user.visible_message(span_notice("[user] starts removing [src]..."), \
 		span_notice("You start unfastening [src]."))
 	I.play_tool_sound(src)
 	if(!I.use_tool(src, user, 4 SECONDS))
-		return TRUE
+		return ITEM_INTERACT_FAILURE
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
-	knock_down(user)
-	return TRUE
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -84,8 +81,8 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+/obj/structure/sign/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
@@ -112,16 +109,8 @@
 		return
 	return ..()
 
-/**
- * This is called when a sign is removed from a wall, either through deconstruction or being knocked down.
- * @param mob/living/user The user who removed the sign, if it was knocked down by a mob.
- */
-/obj/structure/sign/proc/knock_down(mob/living/user)
-	var/turf/drop_turf
-	if(user)
-		drop_turf = get_turf(user)
-	else
-		drop_turf = drop_location()
+/obj/structure/sign/atom_deconstruct(disassembled)
+	var/turf/drop_turf = drop_location()
 	var/obj/item/sign/unwrenched_sign = new (drop_turf)
 	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
@@ -131,11 +120,9 @@
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 		unwrenched_sign.is_editable = is_editable
-	unwrenched_sign.update_integrity(get_integrity()) //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
-	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 
-/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
+/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inherit from the parent type.
 	icon_state = "backing"
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
@@ -187,37 +174,39 @@
 
 /obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(is_editable && istype(held_item, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
-		if(!length(GLOB.editable_sign_types))
-			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
-		if(isnull(choice))
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still.
-			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
-			return
-		user.visible_message(span_notice("You begin changing [src]."))
-		if(!do_after(user, 4 SECONDS, target = src))
-			return
-		set_sign_type(GLOB.editable_sign_types[choice])
-		user.visible_message(span_notice("You finish changing the sign."))
-		return
-	return ..()
+/obj/item/sign/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_editable || !IS_WRITING_UTENSIL(tool))
+		return ..()
+	if(!length(GLOB.editable_sign_types))
+		CRASH("GLOB.editable_sign_types failed to populate")
+	var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	if(!Adjacent(user)) //Make sure user is adjacent still.
+		to_chat(user, span_warning("You need to stand next to the sign to change it!"))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("You begin changing [src]."))
+	if(!do_after(user, 4 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	set_sign_type(GLOB.editable_sign_types[choice])
+	user.visible_message(span_notice("You finish changing the sign."))
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/sign/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+/obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with) && !istype(interacting_with, /obj/structure/tram))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
+	var/dir = get_dir(user_turf, target_turf)
+	if(!(dir in GLOB.cardinals))
+		balloon_alert(user, "stand in line with wall!")
+		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
-	var/dir = get_dir(user_turf, target_turf)
 	if(dir & NORTH)
 		placed_sign.pixel_y = 32
 	else if(dir & SOUTH)
@@ -231,8 +220,9 @@
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
-	placed_sign.find_and_hang_on_wall(TRUE, placed_sign.knock_down_callback)
+	placed_sign.find_and_hang_on_atom()
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -275,6 +265,11 @@
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
 			continue
-		output[initial(potential_sign.sign_change_name)] = potential_sign
+		var/shown_name = initial(potential_sign.sign_change_name) || capitalize(format_text(initial(potential_sign.name)))
+		if(output[shown_name])
+			if(!ispath(potential_sign, output[shown_name]))
+				stack_trace("Two signs share the same sign_change_name: [output[shown_name]] and [potential_sign]")
+			continue
+		output[shown_name] = potential_sign
 	output = sort_list(output) //Alphabetizes the results.
 	return output

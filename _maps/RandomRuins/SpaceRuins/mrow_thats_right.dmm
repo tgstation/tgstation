@@ -135,7 +135,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "catstation1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -151,7 +150,6 @@
 "aB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "catstation2";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -312,7 +310,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "be" = (
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -351,7 +349,6 @@
 "bk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "catstation3";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -396,7 +393,7 @@
 "bt" = (
 /obj/structure/table/optable,
 /obj/effect/mob_spawn/corpse/human/damaged,
-/obj/item/organ/internal/ears/cat,
+/obj/item/organ/ears/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -477,7 +474,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "catstation4";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -538,9 +534,7 @@
 "bP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "catstation6"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bQ" = (
@@ -678,7 +672,6 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "cl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "catstationsupply";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -737,12 +730,12 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat ears"
 	},
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
-/obj/item/organ/internal/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
+/obj/item/organ/ears/cat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cv" = (
@@ -791,19 +784,17 @@
 /obj/structure/closet/crate/freezer{
 	name = "cat tails"
 	},
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
+/obj/item/organ/tail/cat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "jc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "catstation5"
-	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "lQ" = (

@@ -92,13 +92,10 @@
 	speed = 0.7
 	web_speed = 0.5
 	web_type = /datum/action/cooldown/mob_cooldown/lay_web/sealer
-	///The health HUD applied to the mob.
-	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
 /mob/living/basic/spider/growing/young/nurse/Initialize(mapload)
 	. = ..()
-	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
-	datahud.show_to(src)
+	ADD_TRAIT(src, TRAIT_MEDICAL_HUD, INNATE_TRAIT)
 
 	AddComponent(/datum/component/healing_touch,\
 		heal_brute = 15,\
@@ -195,7 +192,7 @@
 /mob/living/basic/spider/growing/young/breacher
 	grow_as = /mob/living/basic/spider/giant/breacher
 	name = "young breacher spider"
-	desc = "Furry and baige, it looks defenseless. This one has dim red eyes."
+	desc = "Furry and beige, it looks defenseless. This one has dim red eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "young_breacher"
 	icon_dead = "young_breacher_dead"

@@ -4,7 +4,7 @@
 /datum/antagonist/bitrunning_glitch
 	name = "Generic Bitrunning Glitch"
 	antagpanel_category = ANTAG_GROUP_GLITCH
-	job_rank = ROLE_GLITCH
+	pref_flag = ROLE_GLITCH
 	preview_outfit = /datum/outfit/cyber_police
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
@@ -60,13 +60,33 @@
 
 	return TRUE
 
+
 /// Sets up the agent so that they look like cyber police && don't have an account ID
-/datum/antagonist/bitrunning_glitch/proc/convert_agent(mob/living/carbon/human/player, datum/outfit/agent_outfit)
+/datum/antagonist/bitrunning_glitch/proc/convert_agent()
+	if(!ishuman(owner.current))
+		return
+
+	var/mob/living/carbon/human/player = owner.current
+
 	player.set_service_style()
-	player.equipOutfit(agent_outfit)
+	player.equipOutfit(preview_outfit)
 	player.fully_replace_character_name(player.name, pick(GLOB.cyberauth_names))
+	fix_agent_id()
+
+
+/// Resets the agent's ID and name. Needed so this doesn't show as "unknown"
+/datum/antagonist/bitrunning_glitch/proc/fix_agent_id()
+	if(!ishuman(owner.current))
+		return
+
+	var/mob/living/carbon/human/player = owner.current
 
 	var/obj/item/card/id/outfit_id = player.wear_id
-	if(outfit_id)
-		outfit_id.registered_account = new()
-		outfit_id.registered_account.replaceable = FALSE
+	if(isnull(outfit_id))
+		return
+
+	outfit_id.registered_account = new()
+	outfit_id.registered_account.replaceable = FALSE
+	outfit_id.registered_account.account_id = null
+	outfit_id.registered_name = player.name
+	outfit_id.update_label()

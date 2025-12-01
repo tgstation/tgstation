@@ -14,10 +14,6 @@
 	. = ..()
 	wires = new /datum/wires/mass_driver(src)
 
-/obj/machinery/mass_driver/Destroy()
-	QDEL_NULL(wires)
-	. = ..()
-
 /obj/machinery/mass_driver/chapelgun
 	name = "holy driver"
 	id = MASSDRIVER_CHAPEL
@@ -43,7 +39,7 @@
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(machine_stat & (BROKEN|NOPOWER) || panel_open)
 		return
-	use_power(power_per_obj)
+	use_energy(power_per_obj)
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
@@ -54,20 +50,20 @@
 			if(O_limit >= 20)
 				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
-			use_power(power_per_obj)
+			use_energy(power_per_obj)
 			O.throw_at(target, drive_range * power, power)
 	flick("mass_driver1", src)
 
-/obj/machinery/mass_driver/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/mass_driver/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 
-	if(is_wire_tool(I) && panel_open)
+	if(is_wire_tool(item) && panel_open)
 		wires.interact(user)
 		return
-	if(default_deconstruction_screwdriver(user, "mass_driver_o", "mass_driver", I))
+	if(default_deconstruction_screwdriver(user, "mass_driver_o", "mass_driver", item))
 		return
-	if(default_change_direction_wrench(user, I))
+	if(default_change_direction_wrench(user, item))
 		return
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(item))
 		return
 
 	return ..()

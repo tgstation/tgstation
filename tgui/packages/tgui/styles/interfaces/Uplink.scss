@@ -1,9 +1,39 @@
-$badGradient: linear-gradient(to right, #9c1e1e, #6c2828, #9c1e1e);
-$normalGradient: linear-gradient(to right, #5d5041, #40372d, #5d5041);
-$goodGradient: linear-gradient(to right, #515d6c, #252a30, #515d6c);
-$veryGoodGradient: linear-gradient(to right, #977949, #534328, #977949);
-$superGoodGradient: linear-gradient(to right, #9d9948, #777437, #9d9948);
-$bestGradient: linear-gradient(to right, #9d486b, #57283c, #9d486b);
+$badGradient: linear-gradient(
+  to right,
+  hsl(0, 67%, 37%),
+  hsl(0, 43%, 28%),
+  hsl(0, 67%, 37%)
+);
+$normalGradient: linear-gradient(
+  to right,
+  hsl(30, 14%, 34%),
+  hsl(30, 20%, 19%),
+  hsl(30, 14%, 34%)
+);
+$goodGradient: linear-gradient(
+  to right,
+  hsl(210, 11%, 37%),
+  hsl(210, 14%, 17%),
+  hsl(210, 11%, 37%)
+);
+$veryGoodGradient: linear-gradient(
+  to right,
+  hsl(36, 38%, 44%),
+  hsl(36, 33%, 19%),
+  hsl(36, 38%, 44%)
+);
+$superGoodGradient: linear-gradient(
+  to right,
+  hsl(60, 39%, 45%),
+  hsl(60, 35%, 34%),
+  hsl(60, 39%, 45%)
+);
+$bestGradient: linear-gradient(
+  to right,
+  hsl(330, 34%, 45%),
+  hsl(330, 43%, 26%),
+  hsl(330, 34%, 45%)
+);
 
 $_rep_map: (
   'bad': $badGradient,
@@ -21,39 +51,35 @@ $_rep_map: (
 
   .reputation-#{$reputation-name}.Button {
     background-position: 0 0;
-    transition: background-position 50ms;
+    transition: background-position var(--transition-time-fast);
 
     &:hover {
       transition: background-position 0ms;
     }
 
-    &:focus {
-      transition: background-position 100ms;
+    &:active {
+      transition: background-position var(--transition-time-medium);
     }
 
     &:hover,
-    &:focus {
+    &:active {
       background-position: 50em 0;
     }
   }
 }
 
 .UplinkObjective__Titlebar {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding: 0.6rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 0.4rem;
-
+  padding: var(--space-ml) var(--space-l) var(--space-m);
   font-weight: bold;
-  border: black solid 2px;
+  border: var(--border-thickness-small) solid var(--color-black);
   border-bottom: none;
+  border-top-left-radius: var(--border-radius-huge);
+  border-top-right-radius: var(--border-radius-huge);
 }
 
 .UplinkObjective__EmptyObjective {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: black solid 2px;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  border: var(--border-thickness-small) solid var(--color-black);
   padding: 1rem;
   width: 100%;
   height: 100%;
@@ -62,19 +88,16 @@ $_rep_map: (
 }
 
 .UplinkObjective__Content {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: black solid 2px;
+  background-color: hsla(0, 0%, 0%, 0.4);
+  border: var(--border-thickness-small) solid var(--color-black);
   border-top: none;
   border-bottom: none;
-  padding: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0;
+  padding: var(--space-l);
 }
 
 .UplinkObjective__Footer {
   background-color: rgba(0, 0, 0, 0.4);
-  border: black solid 2px;
+  border: var(--border-thickness-small) solid var(--color-black);
   border-top: none;
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
+  padding: var(--space-m) 0 var(--space-l);
 }

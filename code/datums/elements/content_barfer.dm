@@ -20,7 +20,9 @@
 /datum/element/content_barfer/proc/barf_contents(mob/living/target)
 	SIGNAL_HANDLER
 
-	for(var/atom/movable/barfed_out in target)
+	for(var/atom/movable/barfed_out as anything in target)
+		if(HAS_TRAIT(barfed_out, TRAIT_NOT_BARFABLE))
+			continue
 		barfed_out.forceMove(target.loc)
 		if(prob(90))
 			step(barfed_out, pick(GLOB.alldirs))

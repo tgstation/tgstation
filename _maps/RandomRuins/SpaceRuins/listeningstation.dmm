@@ -81,7 +81,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "ch" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/cerulean,
@@ -242,10 +243,12 @@
 /area/ruin/space/has_grav/listeningstation)
 "lO" = (
 /obj/structure/sign/nanotrasen{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
@@ -351,7 +354,8 @@
 "vt" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/sign/nanotrasen{
-	pixel_x = -32
+	pixel_x = -32;
+	dir = 8
 	},
 /obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
@@ -613,7 +617,8 @@
 	pixel_y = -32
 	},
 /obj/structure/sign/nanotrasen{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 4
 	},
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
@@ -684,7 +689,7 @@
 	width = 9
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "KG" = (
 /obj/structure/curtain,
 /obj/effect/decal/cleanable/dirt,
@@ -755,9 +760,7 @@
 /turf/open/floor/iron/small,
 /area/ruin/space/has_grav/listeningstation)
 "NO" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/super/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -921,7 +924,7 @@
 "WD" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = 10
@@ -971,7 +974,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/light/small/directional/east,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,

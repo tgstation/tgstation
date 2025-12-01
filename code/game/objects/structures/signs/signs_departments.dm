@@ -8,7 +8,7 @@
 /obj/structure/sign/departments/med
 	name = "\improper Medbay sign"
 	sign_change_name = "Department - Medbay"
-	desc = "A sign labeling an area of medical department."
+	desc = "A sign labelling an area of the medical department."
 	icon_state = "med"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med, 32)
@@ -23,7 +23,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/med_alt, 32)
 /obj/structure/sign/departments/medbay
 	name = "\improper Medbay sign"
 	sign_change_name = "Generic Medical"
-	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
+	desc = "The intergalactic symbol of medical institutions. You'll probably get help here."
 	icon_state = "bluecross"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/medbay, 32)
@@ -84,7 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology, 32)
 /obj/structure/sign/departments/morgue
 	name = "\improper Morgue sign"
 	sign_change_name = "Department - Medbay: Morgue"
-	desc = "A sign labelling an area where station stores its ever-piling bodies."
+	desc = "A sign labelling an area where the station stores its ever-piling bodies."
 	icon_state = "morgue"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue, 32)
@@ -96,6 +96,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/morgue, 32)
 	sign_change_name = "Department - Engineering"
 	desc = "A sign labelling an area where engineers work."
 	icon_state = "engine"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering, 32)
+
+/obj/structure/sign/departments/atmospherics
+	name = "\improper Atmospherics sign"
+	sign_change_name = "Department - Engineering: Atmospherics"
+	desc = "A sign labelling an area where your life-giving air comes from."
+	icon_state = "atmos"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/engineering, 32)
 
@@ -177,9 +185,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/botany/alt3, 32)
 	name = "\improper Janitor sign"
 	sign_change_name = "Department - Janitor"
 	desc = "A sign labelling an area where the janitor works."
-	icon_state = "custodian"
+	icon_state = "custodian1"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian, 32)
+
+/obj/structure/sign/departments/custodian_alt
+	name = "\improper Janitor sign"
+	sign_change_name = "Department - Janitor Alt"
+	desc = "A sign labelling an area where the janitor works."
+	icon_state = "custodian2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/custodian_alt, 32)
 
 /obj/structure/sign/departments/holy
 	name = "\improper Chapel sign"
@@ -191,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 
 /obj/structure/sign/departments/holy_alt
 	name = "\improper Chapel sign"
-	sign_change_name = "Department - Chapel"
+	sign_change_name = "Department - Chapel Alt"
 	desc = "A sign labelling a religious area."
 	icon_state = "chapel"
 
@@ -205,6 +221,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer, 32)
 
+/obj/structure/sign/departments/restaurant
+	name = "\improper Restaurant sign"
+	sign_change_name = "Department - Restaurant"
+	desc = "A sign labelling an area where the food is served."
+	icon_state = "restaurant"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/restaurant, 32)
+
+/obj/structure/sign/departments/bar
+	name = "\improper Bar sign"
+	sign_change_name = "Department - Bar"
+	desc = "A sign labelling an area where drinks are mixed."
+	icon_state = "bar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/bar, 32)
+
 ///////SUPPLY
 
 /obj/structure/sign/departments/cargo
@@ -214,6 +246,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/lawyer, 32)
 	icon_state = "cargo"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/cargo, 32)
+
+/obj/structure/sign/departments/exodrone
+	name = "\improper Exodrone sign"
+	sign_change_name = "Department - Cargo: exodrone"
+	desc = "A sign labelling an area where exodrones are used."
+	icon_state = "exodrone"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/exodrone, 32)
 
 ///////SECURITY
 

@@ -6,7 +6,7 @@
 	cooldown_time = 25 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	invocation = "CAVERE INSIDIAS"
+	invocation = "CAVERE INSIDIAS!"
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 3
@@ -18,6 +18,7 @@
 	)
 	summon_lifespan = 5 MINUTES
 	summon_amount = 5
+	summon_respects_density = TRUE
 
 	/// The amount of charges the traps spawn with.
 	var/trap_charges = 1

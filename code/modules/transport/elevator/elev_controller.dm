@@ -106,7 +106,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	// Actually try to call the elevator - this sleeps.
 	// If we failed to call it, play a buzz sound.
 	if(!call_elevator(activator))
-		playsound(loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 
 	// Finally, give people a chance to get off after it's done before going back off cooldown
 	COOLDOWN_START(src, elevator_cooldown, 2 SECONDS)
@@ -122,7 +122,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		return FALSE
 
 	// We can't call an elevator that's moving. You may say "you totally can do that", but that's not modelled
-	if(lift.controls_locked == LIFT_PLATFORM_LOCKED)
+	if(lift.controller_status & CONTROLS_LOCKED)
 		loc.balloon_alert(activator, "elevator is moving!")
 		return FALSE
 
@@ -154,7 +154,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	if(!QDELETED(prime_lift) && prime_lift.z != loc.z)
 		if(!QDELETED(activator))
 			loc.balloon_alert(activator, "elevator out of service!")
-		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		return TRUE
 
 	// Everything went according to plan

@@ -1,11 +1,8 @@
 //very similar to centcom_podlauncher in terms of how this is coded, so i kept a lot of comments from it
 
-/client/proc/ghost_pool_protection() //Creates a verb for admins to open up the ui
-	set name = "Ghost Pool Protection"
-	set desc = "Choose which ways people can get into the round, or just clear it out completely for admin events."
-	set category = "Admin.Events"
-	var/datum/ghost_pool_menu/tgui = new(usr)//create the datum
-	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
+ADMIN_VERB(ghost_pool_protection, R_ADMIN, "Ghost Pool Protection", "Choose which ways people can get into the round, or just clear it out completely for admin events.", ADMIN_CATEGORY_EVENTS)
+	var/datum/ghost_pool_menu/tgui = new(user)
+	tgui.ui_interact(user.mob)
 
 /datum/ghost_pool_menu
 	var/client/holder //client of whoever is using this datum
@@ -33,7 +30,7 @@
 	new_role_flags = GLOB.ghost_role_flags
 
 /datum/ghost_pool_menu/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/ghost_pool_menu/ui_close()
 	qdel(src)
@@ -53,7 +50,7 @@
 	data["minigames"] = (new_role_flags & GHOSTROLE_MINIGAME)
 	return data
 
-/datum/ghost_pool_menu/ui_act(action, params)
+/datum/ghost_pool_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -4,7 +4,7 @@
 	base_icon_state = "kineticgun"
 	desc = "A self recharging gun. Holds one shot at a time."
 	automatic_charge_overlays = FALSE
-	cell_type = /obj/item/stock_parts/cell/emproof
+	cell_type = /obj/item/stock_parts/power_store/cell/emproof
 	/// If set to something, instead of an overlay, sets the icon_state directly.
 	var/no_charge_state
 	/// Does it hold charge when not put away?
@@ -12,7 +12,7 @@
 	/// How much time we need to recharge
 	var/recharge_time = 1.6 SECONDS
 	/// Sound we use when recharged
-	var/recharge_sound = 'sound/weapons/kinetic_reload.ogg'
+	var/recharge_sound = 'sound/items/weapons/kinetic_reload.ogg'
 	/// An ID for our recharging timer.
 	var/recharge_timerid
 	/// Do we recharge slower with more of our type?
@@ -106,14 +106,14 @@
 	no_charge_state = "crossbow_empty"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
-	suppressed = TRUE
+	suppressed = SUPPRESSED_QUIET
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	recharge_time = 2 SECONDS
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
+
+/obj/item/gun/energy/recharge/ebow/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/ebow/halloween
 	name = "candy corn crossbow"
@@ -131,38 +131,55 @@
 	no_charge_state = "crossbowlarge_empty"
 	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
-	suppressed = null
+	suppressed = SUPPRESSED_NONE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 
 /// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
 /obj/item/gun/energy/recharge/fisher
 	name = "\improper SC/FISHER disruptor"
-	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything except light fixtures and cameras. \
-	Can fire twice before requiring a recharge, with bolts passing through machinery, but demands precision."
+	desc = "A self-recharging, integrally suppressed, modified kinetic accelerator that does no damage, \
+		but disrupts electronics like lights, APCs, and security cameras. \
+		Can fire twice before requiring a recharge. \
+		Bolts can be fired around machinery, but the precise nature of shooting light fixtures demands a skillful hand."
 	icon_state = "fisher"
 	base_icon_state = "fisher"
 	dry_fire_sound_volume = 10
 	w_class = WEIGHT_CLASS_SMALL
 	holds_charge = TRUE
-	suppressed = TRUE
+	suppressed = SUPPRESSED_QUIET
 	recharge_time = 1.2 SECONDS
 	ammo_type = list(/obj/item/ammo_casing/energy/fisher)
 
-/obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
+/obj/item/gun/energy/recharge/fisher/Initialize(mapload)
 	. = ..()
-	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
-	attenuated to launch kinetic bolts that <b>disrupt flashlights and cameras, if only temporarily</b>. This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
-	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
+		lore = "The SC/FISHER is an illegally-modified kinetic accelerator that's been cut down and refit into a miniature energy gun chassis, \
+			optimized for temporary, but effective, electronic warfare.<br>\
+			<br>\
+			The reengineered kinetic accelerator central to the SC/FISHER's functionality has been modified for its kinetic bolts to \
+			<b>temporarily disrupt flashlights, cameras, APCs, and pAI speech modules</b>, in return for dealing no damage. \
+			This effect works longer against targets struck with the SC/FISHER either in melee or by having it thrown at them, but \
+			you probably shouldn't be throwing it at people.<br>\
+			<br>\
+			While some would argue that sacrificing damage for a light-disrupting, fixture-breaking gimmick \
+			makes the SC/FISHER a dead-end in equipment development, others argue that it is both amusing and tactically sound \
+			to be able to shoot at light sources and pesky pAIs to disrupt their function.<br>\
+			<br>\
+			Caveat emptor." \
+	)
 
-/obj/item/gun/energy/recharge/fisher/afterattack(atom/target, mob/living/user, flag, params)
-	// you should just shoot them, but in case you can't/wont
+/obj/item/gun/energy/recharge/fisher/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(user.Adjacent(target))
-		var/obj/projectile/energy/fisher/melee/simulated_hit = new
-		simulated_hit.on_hit(target)
+	if(.)
+		return
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = user
+	simulated_hit.on_hit(target_mob)
 
 /obj/item/gun/energy/recharge/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	// ...you reeeeeally just shoot them, but in case you can't/won't
 	. = ..()
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.firer = throwingdatum?.get_thrower()
 	simulated_hit.on_hit(hit_atom)

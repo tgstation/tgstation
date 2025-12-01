@@ -24,6 +24,18 @@
 	bug_appearance = mutable_appearance('icons/effects/effects.dmi', "fly-surrounding", ABOVE_WINDOW_LAYER)
 	register_context()
 
+/obj/item/machine_remote/equipped(mob/user, slot, initial)
+	. = ..()
+	if(user.get_active_held_item() == src)
+		ADD_TRAIT(user, TRAIT_AI_ACCESS, HELD_ITEM_TRAIT)
+		ADD_TRAIT(user, TRAIT_SILICON_ACCESS, HELD_ITEM_TRAIT)
+
+/obj/item/machine_remote/dropped(mob/user, silent)
+	. = ..()
+	if(user.get_active_held_item() != src)
+		REMOVE_TRAIT(user, TRAIT_AI_ACCESS, HELD_ITEM_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_SILICON_ACCESS, HELD_ITEM_TRAIT)
+
 /obj/item/machine_remote/Destroy(force)
 	. = ..()
 	if(controlling_machine_or_bot)
@@ -49,7 +61,7 @@
 
 /obj/item/machine_remote/ui_interact(mob/user, datum/tgui/ui)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
-		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
 		return FALSE
 	if(!controlling_machine_or_bot)
@@ -63,28 +75,34 @@
 	if(controlling_machine_or_bot)
 		return controlling_machine_or_bot.ui_act(action, params, ui, state)
 
-/obj/item/machine_remote/AltClick(mob/user)
-	. = ..()
+/obj/item/machine_remote/click_alt(mob/user)
 	if(moving_bug) //we have a bug in transit, so let's kill it.
 		QDEL_NULL(moving_bug)
+		return CLICK_ACTION_BLOCKING
 	if(!controlling_machine_or_bot)
-		return
+		return CLICK_ACTION_BLOCKING
 	say("Remote control over [controlling_machine_or_bot] stopped.")
 	remove_old_machine()
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/machine_remote/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
+/obj/item/machine_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) || (!ismachinery(interacting_with) && !isbot(interacting_with)))
+		return NONE
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/machine_remote/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, timeout_time))
-		playsound(src, 'sound/machines/synth_no.ogg', 30 , TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 		say("Remote control disabled temporarily. Please try again soon.")
-		return FALSE
-	if(!ismachinery(target) && !isbot(target))
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!ismachinery(interacting_with) && !isbot(interacting_with))
+		return NONE
 	if(moving_bug) //we have a bug in transit already, so let's kill it.
 		QDEL_NULL(moving_bug)
 	var/turf/spawning_turf = (controlling_machine_or_bot ? get_turf(controlling_machine_or_bot) : get_turf(src))
-	moving_bug = new(spawning_turf, src, target)
+	moving_bug = new(spawning_turf, src, interacting_with)
 	remove_old_machine()
+	return ITEM_INTERACT_SUCCESS
 
 ///Sets a controlled machine to a new machine, if possible. Checks if AIs can even control it.
 /obj/item/machine_remote/proc/set_controlled_machine(obj/machinery/new_machine)
@@ -149,7 +167,7 @@
 		CRASH("a moving bug has been created but isn't moving towards anything!")
 	src.controller = controller
 	src.thing_moving_towards = thing_moving_towards
-	var/datum/move_loop/loop = SSmove_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
+	var/datum/move_loop/loop = GLOB.move_manager.home_onto(src, thing_moving_towards, delay = 5, flags = MOVEMENT_LOOP_NO_DIR_UPDATE)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(reached_destination_check))
 	RegisterSignal(thing_moving_towards, COMSIG_QDELETING, PROC_REF(on_machine_del))
 

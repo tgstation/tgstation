@@ -1,5 +1,20 @@
-/// Base timeout for creating mutation activators and other injectors
-#define INJECTOR_TIMEOUT 100
+/// Base timeout for creating mutation activators
+#define MIN_ACTIVATOR_TIMEOUT 5 SECONDS
+/// Base cooldown multiplier for activator upgrades
+#define ACTIVATOR_COOLDOWN_MULTIPLIER 0.25
+/// Base timeout for creating mutation injectors
+#define MIN_INJECTOR_TIMEOUT 10 SECONDS
+/// Base cooldown multiplier for injecotr upgrades
+#define INJECTOR_COOLDOWN_MULTIPLIER 0.15
+
+/// Base timeout for creating advanced injectors
+#define MIN_ADVANCED_TIMEOUT 15 SECONDS
+/// Base cooldown multiplier for advanced injector upgrades
+#define ADVANCED_COOLDOWN_MULTIPLIER 0.1
+
+/// Used for other things like UI/UE/Initial CD
+#define MISC_INJECTOR_TIMEOUT 60 SECONDS
+
 /// Maximum number of genetic makeup storage slots in DNA Console
 #define NUMBER_OF_BUFFERS 3
 /// Timeout for DNA Scramble in DNA Consoles
@@ -20,7 +35,7 @@
 #define GENETIC_DAMAGE_ACCURACY_MULTIPLIER 3
 
 /// Special status indicating a scanner occupant is transforming eg. from monkey to human
-#define STATUS_TRANSFORMING 4
+#define STATUS_TRANSFORMING 5
 
 /// Multiplier for how much genetic damage received from DNA Console functionality
 #define GENETIC_DAMAGE_IRGENETIC_DAMAGE_MULTIPLIER 1
@@ -47,14 +62,21 @@
 /// Input from tgui interface. Progress to previous gene.
 #define PREV_GENE 2
 
-/obj/machinery/computer/scan_consolenew
+///This mutation has been activated by an activator or by completing the sequence
+#define SCANNER_MUTATION_CLASS_ACTIVATOR 1
+///This mutation has been added via mutator or random mutations (eg. mutagen)
+#define SCANNER_MUTATION_CLASS_MUTATOR 2
+///This mutation has been added by other means that cannot be undone by the console (or mutadone)
+#define SCANNER_MUTATION_CLASS_OTHER 3
+
+/obj/machinery/computer/dna_console
 	name = "DNA Console"
 	desc = "From here you can research mysteries of the DNA!"
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/scan_consolenew
-
+	interaction_flags_click = ALLOW_SILICON_REACH
 	light_color = LIGHT_COLOR_BLUE
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
@@ -148,7 +170,7 @@
 	///Counter for CRISPR charges
 	var/crispr_charges = 0
 
-/obj/machinery/computer/scan_consolenew/process()
+/obj/machinery/computer/dna_console/process()
 	. = ..()
 
 	// This is for pulsing the UI element with genetic damage as part of genetic makeup
@@ -157,7 +179,7 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, params)
+/obj/machinery/computer/dna_console/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	// Store chromosomes in the console if there's room
 	if (istype(item, /obj/item/chromosome))
 		item.forceMove(src)
@@ -205,29 +227,23 @@
 			return
 	return ..()
 
-/obj/machinery/computer/scan_consolenew/multitool_act(mob/living/user, obj/item/multitool/tool)
+/obj/machinery/computer/dna_console/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
 		stored_research = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/scan_consolenew/AltClick(mob/user)
-	// Make sure the user can interact with the machine.
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(!user.can_perform_action(src, ALLOW_SILICON_REACH))
-		return
-
+/obj/machinery/computer/dna_console/click_alt(mob/user)
 	eject_disk(user)
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/computer/scan_consolenew/Initialize(mapload)
+/obj/machinery/computer/dna_console/Initialize(mapload)
 	. = ..()
 
 	// Connect with a nearby DNA Scanner on init
 	connect_to_scanner()
 
 	// Set appropriate ready timers and limits for machines functions
-	injector_ready = world.time + INJECTOR_TIMEOUT
+	injector_ready = world.time + MISC_INJECTOR_TIMEOUT
 	scramble_ready = world.time + SCRAMBLE_TIMEOUT
 	joker_ready = world.time + JOKER_TIMEOUT
 	COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
@@ -235,7 +251,7 @@
 	// Set the default tgui state
 	set_default_state()
 
-/obj/machinery/computer/scan_consolenew/LateInitialize()
+/obj/machinery/computer/dna_console/post_machine_initialize()
 	. = ..()
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
@@ -243,7 +259,7 @@
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 
 
-/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/dna_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	// Most of ui_interact is spent setting variables for passing to the tgui
 	//  interface.
@@ -293,11 +309,11 @@
 		ui = new(user, src, "DnaConsole")
 		ui.open()
 
-/obj/machinery/computer/scan_consolenew/ui_assets()
+/obj/machinery/computer/dna_console/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/genetics)
 
-/obj/machinery/computer/scan_consolenew/ui_data(mob/user)
+/obj/machinery/computer/dna_console/ui_data(mob/user)
 	var/list/data = list()
 
 	data["view"] = tgui_view_state
@@ -389,7 +405,7 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
+/obj/machinery/computer/dna_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	var/static/list/gene_letters = list("A", "T", "C", "G");
 	var/static/gene_letter_count = length(gene_letters)
 
@@ -431,18 +447,18 @@
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			// GUARD CHECK - Is scramble DNA actually ready?
-			if(!can_modify_occupant() || !(scramble_ready < world.time))
+			if(!can_modify_occupant() || !(scramble_ready < world.time) || HAS_TRAIT(scanner_occupant, TRAIT_NO_DNA_SCRAMBLE))
 				return
 
-			scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
+			scanner_occupant.dna.remove_all_mutations()
 			scanner_occupant.dna.generate_dna_blocks()
 			scramble_ready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Check whether a specific mutation is eligible for discovery within the
@@ -488,7 +504,7 @@
 
 			// Go over all standard mutations and check if they've been discovered.
 			for(var/mutation_type in scanner_occupant.dna.mutation_index)
-				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
+				var/datum/mutation/HM = GET_INITIALIZED_MUTATION(mutation_type)
 				check_discovery(HM.alias)
 
 			return
@@ -578,9 +594,9 @@
 			// Check if we cracked a mutation
 			check_discovery(alias)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Apply a chromosome to a specific mutation.
@@ -602,22 +618,22 @@
 
 			// GUARD CHECK - Only search occupant for this specific ref, since your
 			//  can only apply chromosomes to mutations occupants.
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_OCCUPANT)
+			var/datum/mutation/mutation = get_mut_by_ref(bref, SEARCH_OCCUPANT)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!mutation)
 				return
 
 			// Look through our stored chromos and compare names to find a
 			// stored chromo we can apply.
-			for(var/obj/item/chromosome/CM in stored_chromosomes)
-				if(CM.can_apply(HM) && (CM.name == params["chromo"]))
-					stored_chromosomes -= CM
-					CM.apply(HM)
+			for(var/obj/item/chromosome/chromosome in stored_chromosomes)
+				if(chromosome.can_apply(mutation) && (chromosome.name == params["chromo"]))
+					stored_chromosomes -= mutation
+					chromosome.apply(mutation)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Attempt overwriting Base DNA : The pairs are instead the top row vs the top row of the new code.
@@ -671,10 +687,10 @@
 
 			// GUARD CHECK - Only search occupant for this specific ref, since you
 			//  can only CRISPR existing mutations in a target
-			var/datum/mutation/human/target_mutation = get_mut_by_ref(bref, search_flags)
+			var/datum/mutation/target_mutation = get_mut_by_ref(bref, search_flags)
 
 			// Prompt for modifier string
-			var/new_sequence_input = tgui_input_text(usr, "Enter a replacement sequence", "Inherent Gene Replacement", 32, encode = FALSE)
+			var/new_sequence_input = tgui_input_text(usr, "Enter a replacement sequence", "Inherent Gene Replacement", max_length = 32, encode = FALSE)
 			// Drop out if the string is the wrong length
 			if(length(new_sequence_input) != 32)
 				return
@@ -708,9 +724,9 @@
 			//Apply sequence
 			if(new_sequence)
 				//to hold the found mutation, if found
-				var/datum/mutation/human/matched_mutation = null
+				var/datum/mutation/matched_mutation = null
 				//Go through all sequences for matching gene, and set the mutation
-				for (var/M in subtypesof(/datum/mutation/human))
+				for (var/M in subtypesof(/datum/mutation))
 					var/true_sequence = GET_SEQUENCE(M)
 					if (new_sequence == true_sequence)
 						matched_mutation = M
@@ -728,7 +744,7 @@
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check
 				//assures BAD END is the natural state if things go wrong
 				//I think this should be like with viruses, probability cascade or switch/case on random?
-				var/result_mutation = /datum/mutation/human/acidflesh
+				var/result_mutation = /datum/mutation/acidflesh
 				//If we found the replacement mutation
 				if(matched_mutation)
 					//and the old sequence matches the real sequence of the old mutation
@@ -737,10 +753,10 @@
 						result_mutation = matched_mutation
 				//Remove the current active mutations - let's say doing this triggers DNA repair or something
 				//This is admittedly because I couldn't figure out how to only remove the targeted mutation
-				//Not touching MUT_EXTRA will hopefully leave the added mutations alone
-				scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL))
+				//Not touching MUTATION_SOURCE_MUTATOR will hopefully leave the added mutations alone
+				scanner_occupant.dna.remove_all_mutations(list(MUTATION_SOURCE_ACTIVATED))
 				//Add the resulting mutation to the active mutations
-				scanner_occupant.dna.add_mutation(result_mutation,MUT_NORMAL, 0)
+				scanner_occupant.dna.add_mutation(result_mutation, MUTATION_SOURCE_ACTIVATED)
 				//Rebuild the mutation_index into mutation_data, replacing the sequence entry with the solved
 				//entry for the result mutation
 				for(var/mutation_type in scanner_occupant.dna.mutation_index)
@@ -754,16 +770,16 @@
 				scanner_occupant.domutcheck()
 
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 
 			return
 
 
 		// Print any type of standard injector, limited right now to activators that
 		//  activate a dormant mutation and mutators that forcibly create a new
-		//  MUT_EXTRA mutation
+		//  MUTATION_SOURCE_MUTATOR mutation
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to create an injector of
 		// params["is_activator"] - Is this an "Activator" style injector, also
@@ -803,44 +819,56 @@
 					search_flags |= SEARCH_DISKETTE
 
 			var/bref = params["mutref"]
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flags)
+			var/datum/mutation/mutation = get_mut_by_ref(bref, search_flags)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!mutation)
 				return
 
 			// Create a new DNA Injector and add the appropriate mutations to it
-			var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
-			I.add_mutations += new HM.type(copymut = HM)
+			var/obj/item/dnainjector/activator/injector = new /obj/item/dnainjector/activator(loc)
+			injector.add_mutations += mutation.make_copy()
 
 			var/is_activator = text2num(params["is_activator"])
 
 			// Activators are also called "research" injectors and are used to create
 			//  chromosomes by recycling at the DNA Console
 			if(is_activator)
-				I.name = "[HM.name] activator"
-				I.research = TRUE
+				injector.name = "[mutation.name] activator"
+				injector.research = TRUE
 				// If there's an operational connected scanner, we can use its upgrades
 				//  to improve our injector's genetic damage generation
+				var/cd_reduction_mult = 1 + ACTIVATOR_COOLDOWN_MULTIPLIER
+				var/base_cd_time = max(MIN_ACTIVATOR_TIMEOUT, abs(mutation.instability) SECONDS)
+
 				if(scanner_operational())
-					I.damage_coeff = connected_scanner.damage_coeff*4
-					injector_ready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected_scanner.precision_coeff)
-				else
-					injector_ready = world.time + INJECTOR_TIMEOUT
+					injector.damage_coeff = connected_scanner.damage_coeff * 4
+					// T1: 1.25 - 0.25: 1: 100%
+					// T4: 1.25 - 1: 0.25 = 25%
+					// 25% reduction per tier
+					cd_reduction_mult -= ACTIVATOR_COOLDOWN_MULTIPLIER * (connected_scanner.precision_coeff)
+
+				injector_ready = world.time + (base_cd_time * cd_reduction_mult)
 			else
-				I.name = "[HM.name] mutator"
-				I.doitanyway = TRUE
+				injector.name = "[mutation.name] mutator"
+				injector.force_mutate = TRUE
 				// If there's an operational connected scanner, we can use its upgrades
 				//  to improve our injector's genetic damage generation
+				var/cd_reduction_mult = 1 + INJECTOR_COOLDOWN_MULTIPLIER
+				var/base_cd_time = max(MIN_INJECTOR_TIMEOUT, abs(mutation.instability) * 1 SECONDS)
+
 				if(scanner_operational())
-					I.damage_coeff = connected_scanner.damage_coeff
-					injector_ready = world.time + INJECTOR_TIMEOUT * 5 * (1 - 0.1 * connected_scanner.precision_coeff)
-				else
-					injector_ready = world.time + INJECTOR_TIMEOUT * 5
+					injector.damage_coeff = connected_scanner.damage_coeff * 4
+					// T1: 1.15 - 0.15: 1: 100%
+					// T4: 1.15 - 0.60: 0.55: 55%
+					// 15% reduction per tier
+					cd_reduction_mult -= (INJECTOR_COOLDOWN_MULTIPLIER * connected_scanner.precision_coeff)
+
+				injector_ready = world.time + (base_cd_time * cd_reduction_mult)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Save a mutation to the console's storage buffer.
@@ -865,19 +893,19 @@
 					search_flags |= SEARCH_DISKETTE
 
 			var/bref = params["mutref"]
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flags)
+			var/datum/mutation/mutation = get_mut_by_ref(bref, search_flags)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!mutation)
 				return
 
 			// Saving temporary or unobtainable mutations leads to gratuitous abuse
-			if(HM.class == MUT_OTHER)
+			if(length(mutation.sources) && get_mutation_class(mutation) == SCANNER_MUTATION_CLASS_OTHER)
 				say("ERROR: This mutation is anomalous, and cannot be saved.")
 				return
 
-			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
-			stored_mutations += A
+			var/datum/mutation/stored = mutation.make_copy()
+			stored_mutations += stored
 			to_chat(usr,span_notice("Mutation successfully stored."))
 			return
 
@@ -919,18 +947,17 @@
 					search_flags |= SEARCH_STORED
 
 			var/bref = params["mutref"]
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flags)
+			var/datum/mutation/original = get_mut_by_ref(bref, search_flags)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!original)
 				return
 
-			var/datum/mutation/human/A = new HM.type(MUT_EXTRA, null, HM)
-			diskette.mutations += A
+			diskette.mutations += original.make_copy()
 			to_chat(usr,span_notice("Mutation successfully stored to disk."))
 			return
 
-		// Completely removes a MUT_EXTRA mutation or mutation with corrupt gene
+		// Completely removes a MUTATION_SOURCE_MUTATOR mutation or mutation with corrupt gene
 		//  sequence from the scanner occupant
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to nullify
@@ -941,18 +968,23 @@
 				return
 
 			var/bref = params["mutref"]
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_OCCUPANT)
+			var/datum/mutation/mutation = get_mut_by_ref(bref, SEARCH_OCCUPANT)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!mutation)
 				return
 
 			// GUARD CHECK - Nullify should only be used on scrambled or "extra"
 			//  mutations.
-			if(!HM.scrambled && !(HM.class == MUT_EXTRA))
+			if(!mutation.scrambled && !(MUTATION_SOURCE_MUTATOR in mutation.sources))
 				return
 
-			scanner_occupant.dna.remove_mutation(HM.type)
+			var/list/types_to_remove = list(MUTATION_SOURCE_MUTATOR)
+			if(mutation.scrambled)
+				types_to_remove += MUTATION_SOURCE_ACTIVATED
+			scanner_occupant.dna.remove_mutation(mutation.type, types_to_remove)
+			if(!QDELETED(mutation))
+				mutation.scrambled = FALSE
 			return
 
 		// Deletes saved mutation from console buffer.
@@ -960,7 +992,7 @@
 		// params["mutref"] - ATOM Ref of specific mutation to delete
 		if("delete_console_mut")
 			var/bref = params["mutref"]
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_STORED)
+			var/datum/mutation/HM = get_mut_by_ref(bref, SEARCH_STORED)
 
 			if(HM)
 				stored_mutations.Remove(HM)
@@ -984,7 +1016,7 @@
 				return
 
 			var/bref = params["mutref"]
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_DISKETTE)
+			var/datum/mutation/HM = get_mut_by_ref(bref, SEARCH_DISKETTE)
 
 			if(HM)
 				diskette.mutations.Remove(HM)
@@ -1024,11 +1056,11 @@
 
 			// GUARD CHECK - Find the source and destination mutations on the console
 			// and make sure they actually exist.
-			var/datum/mutation/human/source_mut = get_mut_by_ref(first_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			var/datum/mutation/source_mut = get_mut_by_ref(first_bref, SEARCH_STORED | SEARCH_DISKETTE)
 			if(!source_mut)
 				return
 
-			var/datum/mutation/human/dest_mut = get_mut_by_ref(second_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			var/datum/mutation/dest_mut = get_mut_by_ref(second_bref, SEARCH_STORED | SEARCH_DISKETTE)
 			if(!dest_mut)
 				return
 
@@ -1048,13 +1080,13 @@
 			if(result_path in stored_research.discovered_mutations)
 				return
 
-			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(result_path)
+			var/datum/mutation/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Combines two mutations from the disk to try and create a new mutation
@@ -1090,11 +1122,11 @@
 
 			// GUARD CHECK - Find the source and destination mutations on the console
 			// and make sure they actually exist.
-			var/datum/mutation/human/source_mut = get_mut_by_ref(first_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			var/datum/mutation/source_mut = get_mut_by_ref(first_bref, SEARCH_STORED | SEARCH_DISKETTE)
 			if(!source_mut)
 				return
 
-			var/datum/mutation/human/dest_mut = get_mut_by_ref(second_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			var/datum/mutation/dest_mut = get_mut_by_ref(second_bref, SEARCH_STORED | SEARCH_DISKETTE)
 			if(!dest_mut)
 				return
 
@@ -1114,13 +1146,13 @@
 			if(result_path in stored_research.discovered_mutations)
 				return
 
-			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(result_path)
+			var/datum/mutation/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
 			say("Successfully mutated [HM.name].")
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Sets the Genetic Makeup pulse strength.
@@ -1232,7 +1264,7 @@
 				"UE"=scanner_occupant.dna.unique_enzymes,
 				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
-				"blood_type"=scanner_occupant.dna.blood_type)
+				"blood_type"=scanner_occupant.get_bloodtype()?.name)
 
 			return
 
@@ -1326,7 +1358,7 @@
 					//  However, if this is the case, we can't make a complete injector and
 					//  this catches that edge case
 					if(!buffer_slot["name"] || !buffer_slot["UF"] || !buffer_slot["blood_type"])
-						to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to create injector.</span>")
+						to_chat(usr,span_warning("Genetic data corrupted, unable to create injector."))
 						return
 
 					I = new /obj/item/dnainjector/timed(loc)
@@ -1355,11 +1387,11 @@
 			// If we successfully created an injector, don't forget to set the new
 			//  ready timer.
 			if(I)
-				injector_ready = world.time + INJECTOR_TIMEOUT
+				injector_ready = world.time + MISC_INJECTOR_TIMEOUT
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the scanner occupant
@@ -1397,9 +1429,9 @@
 
 			apply_genetic_makeup(type, buffer_slot)
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Applies a genetic makeup buffer to the next scanner occupant. This sets
@@ -1466,9 +1498,9 @@
 			genetic_damage_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 			begin_processing()
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Cancels the delayed action - In this context it is not the genetic damage
@@ -1539,27 +1571,32 @@
 			if(!inj_name || !(inj_name in injector_selection))
 				return
 
-			var/list/injector = injector_selection[inj_name]
-			var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+			var/obj/item/dnainjector/activator/injector = new /obj/item/dnainjector/activator(loc)
 
 			// Run through each mutation in our Advanced Injector and add them to a
 			//  new injector
-			for(var/A in injector)
-				var/datum/mutation/human/HM = A
-				I.add_mutations += new HM.type(copymut=HM)
+			var/total_stability = 0
+			for(var/datum/mutation/mutation as anything in injector_selection[inj_name])
+				injector.add_mutations += mutation.make_copy()
+				total_stability += mutation.instability
 
 			// Force apply any mutations, this is functionality similar to mutators
-			I.doitanyway = TRUE
-			I.name = "Advanced [inj_name] injector"
+			injector.force_mutate = TRUE
+			injector.name = "Advanced [inj_name] injector"
 
 			// If there's an operational connected scanner, we can use its upgrades
 			//  to improve our injector's genetic damage generation
-			if(scanner_operational())
-				I.damage_coeff = connected_scanner.damage_coeff
-				injector_ready = world.time + INJECTOR_TIMEOUT * 8 * (1 - 0.1 * connected_scanner.precision_coeff)
-			else
-				injector_ready = world.time + INJECTOR_TIMEOUT * 8
+			var/cd_reduction_mult = 1 + ADVANCED_COOLDOWN_MULTIPLIER
+			var/base_cd_time = max(MIN_ADVANCED_TIMEOUT, abs(total_stability) SECONDS)
 
+			if(scanner_operational())
+				injector.damage_coeff = connected_scanner.damage_coeff*4
+				// T1: 1.1 - 0.1: 1: 100%
+				// T4: 1.1 - 0.4: 0.7 = 70%
+				// 10% reduction per tier
+				cd_reduction_mult -= ADVANCED_COOLDOWN_MULTIPLIER * (connected_scanner.precision_coeff)
+
+			injector_ready = world.time + (base_cd_time * cd_reduction_mult)
 			return
 
 		// Adds a mutation to an advanced injector
@@ -1601,20 +1638,20 @@
 					return
 			// We've already made sure we can modify the occupant, so this is safe to
 			//  call
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flag)
+			var/datum/mutation/original = get_mut_by_ref(bref, search_flag)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!original)
 				return
 
 			// We want to make sure we stick within the instability limit.
 			// We start with the instability of the mutation we're intending to add.
-			var/instability_total = HM.instability
+			var/instability_total = original.instability
 
 			// We then add the instabilities of all other mutations in the injector,
 			//  remembering to apply the Stabilizer chromosome modifiers
-			for(var/datum/mutation/human/I in injector_selection[adv_inj])
-				instability_total += I.instability * GET_MUTATION_STABILIZER(I)
+			for(var/datum/mutation/mutation in injector_selection[adv_inj])
+				instability_total += mutation.instability * GET_MUTATION_STABILIZER(mutation)
 
 			// If this would take us over the max instability, we inform the user.
 			if(instability_total > max_injector_instability)
@@ -1622,15 +1659,13 @@
 				return
 
 			// If we've got here, all our checks are passed and we can successfully
-			//  add the mutation to the advanced injector.
-			var/datum/mutation/human/A = new HM.type()
-			A.copy_mutation(HM)
-			injector_selection[adv_inj] += A
+			// add the mutation to the advanced injector.
+			injector_selection[adv_inj] += original.make_copy()
 			to_chat(usr,span_notice("Mutation successfully added to advanced injector."))
 			if(connected_scanner)
-				connected_scanner.use_power(connected_scanner.active_power_usage)
+				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else
-				use_power(active_power_usage)
+				use_energy(active_power_usage)
 			return
 
 		// Deletes a mutation from an advanced injector
@@ -1639,7 +1674,7 @@
 		if("delete_injector_mut")
 			var/bref = params["mutref"]
 
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_ADV_INJ)
+			var/datum/mutation/HM = get_mut_by_ref(bref, SEARCH_ADV_INJ)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
 			if(!HM)
@@ -1675,7 +1710,7 @@
  * * type - "ui"/"ue"/"mixed" - Which part of the enzyme buffer to apply
  * * buffer_slot - Index of the enzyme buffer to apply
  */
-/obj/machinery/computer/scan_consolenew/proc/apply_genetic_makeup(type, buffer_slot)
+/obj/machinery/computer/dna_console/proc/apply_genetic_makeup(type, buffer_slot)
 	// Note - This proc is only called from code that has already performed the
 	//  necessary occupant guard checks. If you call this code yourself, please
 	//  apply can_modify_occupant() or equivalent checks first.
@@ -1703,7 +1738,7 @@
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["UF"])
-				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
+				to_chat(usr,span_warning("Genetic data corrupted, unable to apply genetic data."))
 				return FALSE
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_features = buffer_slot["UF"]
@@ -1722,7 +1757,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1740,7 +1775,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1749,7 +1784,7 @@
 /**
  * Checks if there is a connected DNA Scanner that is operational
  */
-/obj/machinery/computer/scan_consolenew/proc/scanner_operational()
+/obj/machinery/computer/dna_console/proc/scanner_operational()
 	return connected_scanner?.is_operational
 
 /**
@@ -1759,7 +1794,7 @@
 	* modified. Will set the scanner occupant var as part of this check.
 	* Requires that the scanner can be operated and will return early if it can't
  */
-/obj/machinery/computer/scan_consolenew/proc/can_modify_occupant()
+/obj/machinery/computer/dna_console/proc/can_modify_occupant()
 	// GUARD CHECK - We always want to perform the scanner operational check as
 	//  part of checking if we can modify the occupant.
 	// We can never modify the occupant of a broken scanner.
@@ -1789,7 +1824,7 @@
 	* Will connect to a broken scanner if no functional scanner is available.
 	* Links itself to the DNA Scanner to receive door open and close events.
  */
-/obj/machinery/computer/scan_consolenew/proc/connect_to_scanner()
+/obj/machinery/computer/dna_console/proc/connect_to_scanner()
 	var/obj/machinery/dna_scannernew/test_scanner = null
 	var/obj/machinery/dna_scannernew/broken_scanner = null
 
@@ -1817,7 +1852,7 @@
 	* Sets the new scanner occupant and completes delayed enzyme transfer if one
 	* is queued.
  */
-/obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
+/obj/machinery/computer/dna_console/proc/on_scanner_close()
 	// Set the appropriate occupant now the scanner is closed
 	if(connected_scanner.occupant)
 		scanner_occupant = connected_scanner.occupant
@@ -1842,7 +1877,7 @@
 	* Clears enzyme pulse operations, stops processing and nulls the current
 	* scanner occupant var.
  */
-/obj/machinery/computer/scan_consolenew/proc/on_scanner_open()
+/obj/machinery/computer/dna_console/proc/on_scanner_open()
 	// If we had a genetic damage pulse action ongoing, we want to stop this.
 	// Imagine it being like a microwave stopping when you open the door.
 	genetic_damage_pulse_index = 0
@@ -1853,7 +1888,7 @@
 /**
  * Builds the genetic makeup list which will be sent to tgui interface.
  */
-/obj/machinery/computer/scan_consolenew/proc/build_genetic_makeup_list()
+/obj/machinery/computer/dna_console/proc/build_genetic_makeup_list()
 	// No code will ever null this list, we can safely Cut it.
 	tgui_genetic_makeup.Cut()
 
@@ -1870,7 +1905,7 @@
 	* diskette and chromosomes and any advanced injectors, building the main data
 	* structures which get passed to the tgui interface.
  */
-/obj/machinery/computer/scan_consolenew/proc/build_mutation_list(can_modify_occ)
+/obj/machinery/computer/dna_console/proc/build_mutation_list(can_modify_occ)
 	// No code will ever null these lists. We can safely Cut them.
 	tgui_occupant_mutations.Cut()
 	tgui_diskette_mutations.Cut()
@@ -1886,14 +1921,14 @@
 		// ---------------------------------------------------------------------- //
 		// Start cataloguing all mutations that the occupant has by default
 		for(var/mutation_type in scanner_occupant.dna.mutation_index)
-			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
+			var/datum/mutation/mutation = GET_INITIALIZED_MUTATION(mutation_type)
 
 			var/list/mutation_data = list()
 			var/text_sequence = scanner_occupant.dna.mutation_index[mutation_type]
 			var/default_sequence = scanner_occupant.dna.default_mutation_genes[mutation_type]
 			var/discovered = (stored_research && (mutation_type in stored_research.discovered_mutations))
 
-			mutation_data["Alias"] = HM.alias
+			mutation_data["Alias"] = mutation.alias
 			mutation_data["Sequence"] = text_sequence
 			mutation_data["DefaultSeq"] = default_sequence
 			mutation_data["Discovered"] = discovered
@@ -1903,39 +1938,38 @@
 			//  the mutation has been discovered. Prevents people being able to cheese
 			//  or "hack" their way to figuring out what undiscovered mutations are
 			if(discovered)
-				mutation_data["Name"] = HM.name
-				mutation_data["Description"] = HM.desc
-				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
-				mutation_data["Quality"] = HM.quality
+				mutation_data["Name"] = mutation.name
+				mutation_data["Description"] = mutation.desc
+				mutation_data["Instability"] = mutation.instability * GET_MUTATION_STABILIZER(mutation)
+				mutation_data["Quality"] = mutation.quality
 
 			// Assume the mutation is normal unless assigned otherwise.
-			var/mut_class = MUT_NORMAL
+			var/mut_class = SCANNER_MUTATION_CLASS_ACTIVATOR
 
 			// Check if the mutation is currently activated. If it is, we can add even
 			//  MORE information to send to tgui.
-			var/datum/mutation/human/A = scanner_occupant.dna.get_mutation(mutation_type)
-			if(A)
+			var/datum/mutation/stored = scanner_occupant.dna.get_mutation(mutation_type)
+			if(stored)
 				mutation_data["Active"] = TRUE
-				mutation_data["Scrambled"] = A.scrambled
-				mutation_data["Class"] = A.class
-				mut_class = A.class
-				mutation_data["CanChromo"] = A.can_chromosome
-				mutation_data["ByondRef"] = REF(A)
-				mutation_data["Type"] = A.type
-				if(A.can_chromosome)
-					mutation_data["ValidChromos"] = jointext(A.valid_chrom_list, ", ")
-					mutation_data["AppliedChromo"] = A.chromosome_name
-					mutation_data["ValidStoredChromos"] = build_chrom_list(A)
+				mutation_data["Scrambled"] = stored.scrambled
+				mut_class = get_mutation_class(stored)
+				mutation_data["CanChromo"] = stored.can_chromosome
+				mutation_data["ByondRef"] = REF(stored)
+				mutation_data["Type"] = stored.type
+				if(stored.can_chromosome)
+					mutation_data["ValidChromos"] = jointext(stored.valid_chrom_list, ", ")
+					mutation_data["AppliedChromo"] = stored.chromosome_name
+					mutation_data["ValidStoredChromos"] = build_chrom_list(stored)
 			else
 				mutation_data["Active"] = FALSE
 				mutation_data["Scrambled"] = FALSE
-				mutation_data["Class"] = MUT_NORMAL
+			mutation_data["Class"] = mut_class
 
-			// Technically NONE of these mutations should be MUT_EXTRA but this will
+			// Technically NONE of these mutations should be MUTATION_SOURCE_MUTATOR but this will
 			//  catch any weird edge cases
-			// Assign icons by priority - MUT_EXTRA will ALSO be discovered, so it
+			// Assign icons by priority - MUTATION_SOURCE_MUTATOR will ALSO be discovered, so it
 			//  has a higher priority for icon/image assignment
-			if (mut_class == MUT_EXTRA)
+			if (mut_class == SCANNER_MUTATION_CLASS_MUTATOR)
 				mutation_data["Image"] = "dna_extra.gif"
 			else if(discovered)
 				mutation_data["Image"] = "dna_discovered.gif"
@@ -1946,46 +1980,47 @@
 
 		// ---------------------------------------------------------------------- //
 		// Now get additional/"extra" mutations that they shouldn't have by default
-		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
+		for(var/datum/mutation/mutation in scanner_occupant.dna.mutations)
 			// If it's in the mutation index array, we've already catalogued this
 			//  mutation and can safely skip over it. It really shouldn't be, but this
 			//  will catch any weird edge cases
-			if(HM.type in scanner_occupant.dna.mutation_index)
+			if(mutation.type in scanner_occupant.dna.mutation_index)
 				continue
 
 			var/list/mutation_data = list()
-			var/text_sequence = GET_SEQUENCE(HM.type)
+			var/text_sequence = GET_SEQUENCE(mutation.type)
 
 			// These will all be active mutations. They're added by injector and their
 			//  sequencing code can't be changed. They can only be nullified, which
 			//  completely removes them.
-			var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+			var/datum/mutation/initialized = GET_INITIALIZED_MUTATION(mutation.type)
+			var/mut_class = get_mutation_class(mutation)
 
-			mutation_data["Alias"] = A.alias
+			mutation_data["Alias"] = initialized.alias
 			mutation_data["Sequence"] = text_sequence
 			mutation_data["Discovered"] = TRUE
-			mutation_data["Quality"] = HM.quality
+			mutation_data["Quality"] = mutation.quality
 			mutation_data["Source"] = "occupant"
 
-			mutation_data["Name"] = HM.name
-			mutation_data["Description"] = HM.desc
-			mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+			mutation_data["Name"] = mutation.name
+			mutation_data["Description"] = mutation.desc
+			mutation_data["Instability"] = mutation.instability * GET_MUTATION_STABILIZER(mutation)
 
 			mutation_data["Active"] = TRUE
-			mutation_data["Scrambled"] = HM.scrambled
-			mutation_data["Class"] = HM.class
-			mutation_data["CanChromo"] = HM.can_chromosome
-			mutation_data["ByondRef"] = REF(HM)
-			mutation_data["Type"] = HM.type
+			mutation_data["Scrambled"] = mutation.scrambled
+			mutation_data["Class"] = mut_class
+			mutation_data["CanChromo"] = mutation.can_chromosome
+			mutation_data["ByondRef"] = REF(mutation)
+			mutation_data["Type"] = mutation.type
 
-			if(HM.can_chromosome)
-				mutation_data["ValidChromos"] = jointext(HM.valid_chrom_list, ", ")
-				mutation_data["AppliedChromo"] = HM.chromosome_name
-				mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
+			if(mutation.can_chromosome)
+				mutation_data["ValidChromos"] = jointext(mutation.valid_chrom_list, ", ")
+				mutation_data["AppliedChromo"] = mutation.chromosome_name
+				mutation_data["ValidStoredChromos"] = build_chrom_list(mutation)
 
 			// Nothing in this list should be undiscovered. Technically nothing
 			// should be anything but EXTRA. But we're just handling some edge cases.
-			if (HM.class == MUT_EXTRA)
+			if (mut_class == SCANNER_MUTATION_CLASS_MUTATOR)
 				mutation_data["Image"] = "dna_extra.gif"
 			else
 				mutation_data["Image"] = "dna_discovered.gif"
@@ -1994,25 +2029,25 @@
 
 	// ------------------------------------------------------------------------ //
 	// Build the list of mutations stored within the DNA Console
-	for(var/datum/mutation/human/HM in stored_mutations)
+	for(var/datum/mutation/mutation in stored_mutations)
 		var/list/mutation_data = list()
 
-		var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+		var/datum/mutation/active = GET_INITIALIZED_MUTATION(mutation.type)
 
-		mutation_data["Alias"] = A.alias
-		mutation_data["Name"] = HM.name
+		mutation_data["Alias"] = active.alias
+		mutation_data["Name"] = mutation.name
 		mutation_data["Source"] = "console"
 		mutation_data["Active"] = TRUE
-		mutation_data["Description"] = HM.desc
-		mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
-		mutation_data["ByondRef"] = REF(HM)
-		mutation_data["Type"] = HM.type
+		mutation_data["Description"] = mutation.desc
+		mutation_data["Instability"] = mutation.instability * GET_MUTATION_STABILIZER(mutation)
+		mutation_data["ByondRef"] = REF(mutation)
+		mutation_data["Type"] = mutation.type
 
-		mutation_data["CanChromo"] = HM.can_chromosome
-		if(HM.can_chromosome)
-			mutation_data["ValidChromos"] = jointext(HM.valid_chrom_list, ", ")
-			mutation_data["AppliedChromo"] = HM.chromosome_name
-			mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
+		mutation_data["CanChromo"] = mutation.can_chromosome
+		if(mutation.can_chromosome)
+			mutation_data["ValidChromos"] = jointext(mutation.valid_chrom_list, ", ")
+			mutation_data["AppliedChromo"] = mutation.chromosome_name
+			mutation_data["ValidStoredChromos"] = build_chrom_list(mutation)
 
 		tgui_console_mutations += list(mutation_data)
 
@@ -2032,10 +2067,10 @@
 	// ------------------------------------------------------------------------ //
 	// Build the list of mutations stored on any inserted diskettes
 	if(diskette)
-		for(var/datum/mutation/human/HM in diskette.mutations)
+		for(var/datum/mutation/HM in diskette.mutations)
 			var/list/mutation_data = list()
 
-			var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+			var/datum/mutation/A = GET_INITIALIZED_MUTATION(HM.type)
 
 			mutation_data["Alias"] = A.alias
 			mutation_data["Name"] = HM.name
@@ -2060,10 +2095,10 @@
 	if(LAZYLEN(injector_selection))
 		for(var/I in injector_selection)
 			var/list/mutations = list()
-			for(var/datum/mutation/human/HM in injector_selection[I])
+			for(var/datum/mutation/HM in injector_selection[I])
 				var/list/mutation_data = list()
 
-				var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+				var/datum/mutation/A = GET_INITIALIZED_MUTATION(HM.type)
 
 				mutation_data["Alias"] = A.alias
 				mutation_data["Name"] = HM.name
@@ -2094,7 +2129,7 @@
 	* Arguments:
  * * mutation - The mutation to check chromosome compatibility with
  */
-/obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)
+/obj/machinery/computer/dna_console/proc/build_chrom_list(mutation)
 	var/list/chromosomes = list()
 
 	for(var/obj/item/chromosome/CM in stored_chromosomes)
@@ -2102,6 +2137,15 @@
 			chromosomes += CM.name
 
 	return chromosomes
+
+/// Returns a class declarations based on what sources the mutation has
+/obj/machinery/computer/dna_console/proc/get_mutation_class(datum/mutation/mutation)
+	if(length(mutation.sources - list(MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_ACTIVATED))) //It has other sources as well...
+		return SCANNER_MUTATION_CLASS_OTHER
+	if(MUTATION_SOURCE_ACTIVATED in mutation.sources) //activated mutation priority over added ones.
+		return SCANNER_MUTATION_CLASS_ACTIVATOR
+	if(MUTATION_SOURCE_MUTATOR in mutation.sources)
+		return SCANNER_MUTATION_CLASS_MUTATOR
 
 /**
  * Checks whether a mutation alias has been discovered
@@ -2112,7 +2156,7 @@
 	* Arguments:
  * * alias - Alias of the mutation to check (ie "Mutation 51" or "Mutation 12")
  */
-/obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)
+/obj/machinery/computer/dna_console/proc/check_discovery(alias)
 	// Note - All code paths that call this have already done checks on the
 	//  current occupant to prevent cheese and other abuses. If you call this
 	//  proc please also do the following checks first:
@@ -2128,13 +2172,13 @@
 	//  then the mutation isn't eligible for discovery. If it is but is scrambled,
 	//  then the mutation isn't eligible for discovery. Finally, check if the
 	//  mutation is in discovered mutations - If it isn't, add it to discover.
-	var/datum/mutation/human/M = scanner_occupant.dna.get_mutation(path)
+	var/datum/mutation/M = scanner_occupant.dna.get_mutation(path)
 	if(!M)
 		return FALSE
 	if(M.scrambled)
 		return FALSE
 	if(stored_research && !(path in stored_research.discovered_mutations))
-		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(path)
+		var/datum/mutation/HM = GET_INITIALIZED_MUTATION(path)
 		stored_research.discovered_mutations += path
 		say("Successfully discovered [HM.name].")
 		return TRUE
@@ -2151,7 +2195,7 @@
  * * ref - ATOM ref of the mutation to locate
 	* * target_flags - Flags for storage mediums to search, see #defines
  */
-/obj/machinery/computer/scan_consolenew/proc/get_mut_by_ref(ref, target_flags)
+/obj/machinery/computer/dna_console/proc/get_mut_by_ref(ref, target_flags)
 	var/mutation
 
 	// Assume the occupant is valid and the check has been carried out before
@@ -2189,7 +2233,7 @@
 	* * pulse_duration - Duration of intended genetic damage pulse
 	* * number_of_blocks - Number of individual data blocks in the pulsed enzyme
  */
-/obj/machinery/computer/scan_consolenew/proc/randomize_GENETIC_DAMAGE_accuracy(position, pulse_duration, number_of_blocks)
+/obj/machinery/computer/dna_console/proc/randomize_GENETIC_DAMAGE_accuracy(position, pulse_duration, number_of_blocks)
 	var/val = round(gaussian(0, GENETIC_DAMAGE_ACCURACY_MULTIPLIER/pulse_duration) + position, 1)
 	return WRAP(val, 1, number_of_blocks+1)
 
@@ -2202,7 +2246,7 @@
  * * input - Enzyme identity element to scramble, expected hex value
 	* * rs - Strength of genetic damage pulse, increases the range of possible outcomes
  */
-/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs)
+/obj/machinery/computer/dna_console/proc/scramble(input,rs)
 	var/length = length(input)
 	var/ran = gaussian(0, rs*GENETIC_DAMAGE_STRENGTH_MULTIPLIER)
 	if(ran == 0)
@@ -2219,7 +2263,7 @@
 		* Donor code from previous DNA Console iteration. Called from process() when
 		* there is a genetic damage pulse in progress. Ends processing.
 	  */
-/obj/machinery/computer/scan_consolenew/proc/genetic_damage_pulse()
+/obj/machinery/computer/dna_console/proc/genetic_damage_pulse()
 	// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 	//  operational guard checks.
 	// If we can't, abort the procedure.
@@ -2261,7 +2305,7 @@
 /**
  * Sets the default state for the tgui interface.
  */
-/obj/machinery/computer/scan_consolenew/proc/set_default_state()
+/obj/machinery/computer/dna_console/proc/set_default_state()
 	tgui_view_state["consoleMode"] = "storage"
 	tgui_view_state["storageMode"] = "console"
 	tgui_view_state["storageConsSubMode"] = "mutations"
@@ -2276,7 +2320,7 @@
 	* Arguments:
  * * user - The mob that is attempting to eject the diskette.
  */
-/obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
+/obj/machinery/computer/dna_console/proc/eject_disk(mob/user)
 	// Check for diskette.
 	if(!diskette)
 		return
@@ -2291,7 +2335,7 @@
 		diskette.forceMove(drop_location())
 	diskette = null
 
-/obj/machinery/computer/scan_consolenew/proc/set_connected_scanner(new_scanner)
+/obj/machinery/computer/dna_console/proc/set_connected_scanner(new_scanner)
 	if(connected_scanner)
 		UnregisterSignal(connected_scanner, COMSIG_QDELETING)
 		if(connected_scanner.linked_console == src)
@@ -2301,15 +2345,24 @@
 		RegisterSignal(connected_scanner, COMSIG_QDELETING, PROC_REF(react_to_scanner_del))
 		connected_scanner.set_linked_console(src)
 
-/obj/machinery/computer/scan_consolenew/proc/react_to_scanner_del(datum/source)
+/obj/machinery/computer/dna_console/proc/react_to_scanner_del(datum/source)
 	SIGNAL_HANDLER
 	set_connected_scanner(null)
+
+#undef MIN_ACTIVATOR_TIMEOUT
+#undef ACTIVATOR_COOLDOWN_MULTIPLIER
+#undef MIN_INJECTOR_TIMEOUT
+#undef INJECTOR_COOLDOWN_MULTIPLIER
+
+#undef MIN_ADVANCED_TIMEOUT
+#undef ADVANCED_COOLDOWN_MULTIPLIER
+
+#undef MISC_INJECTOR_TIMEOUT
 
 #undef GENETIC_DAMAGE_PULSE_UNIQUE_IDENTITY
 #undef GENETIC_DAMAGE_PULSE_UNIQUE_FEATURES
 
 #undef ENZYME_COPY_BASE_COOLDOWN
-#undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS
 #undef SCRAMBLE_TIMEOUT
 #undef JOKER_TIMEOUT
@@ -2333,3 +2386,7 @@
 #undef CLEAR_GENE
 #undef NEXT_GENE
 #undef PREV_GENE
+
+#undef SCANNER_MUTATION_CLASS_ACTIVATOR
+#undef SCANNER_MUTATION_CLASS_MUTATOR
+#undef SCANNER_MUTATION_CLASS_OTHER

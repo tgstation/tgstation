@@ -5,6 +5,7 @@
 	icon_state = "riotgun"
 	inhand_icon_state = "riotgun"
 	w_class = WEIGHT_CLASS_BULKY
+	can_muzzle_flash = FALSE
 	throw_speed = 2
 	throw_range = 7
 	force = 5
@@ -24,7 +25,7 @@
 	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
 	return ..()
 
-/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
+/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(I, /obj/item/grenade/c4))
 		return
@@ -52,5 +53,6 @@
 	user.log_message("fired a grenade ([F.name]) with a grenade launcher ([src]) from [AREACOORD(user)] at [target] [AREACOORD(target)].", LOG_ATTACK, log_globally = FALSE)
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
-	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade, detonate)), 15)
+	playsound(user.loc, 'sound/items/weapons/armbomb.ogg', 75, TRUE, -3)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade, detonate)), 1.5 SECONDS)
+	return TRUE

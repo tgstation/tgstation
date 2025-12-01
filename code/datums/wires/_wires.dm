@@ -1,22 +1,32 @@
 #define MAXIMUM_EMP_WIRES 3
 
-/proc/is_wire_tool(obj/item/I)
-	if(!I)
-		return
-
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
+/**
+ * Is the passed item a tool that would interact with wires?
+ *
+ * Arguments:
+ * * tool - The item to check.
+ * * check_secured - If TRUE, and the item ends up being an assembly,
+ * we will only return TRUE if the assembly is not secured.
+ * "Secured" is used to indicate an assembly that may have a use outside of wire interactions,
+ * so we don't want to falsely identify it as a wire tool in some contexts.
+ */
+/proc/is_wire_tool(obj/item/tool, check_secured = FALSE)
+	if(!istype(tool))
+		return FALSE
+	if(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(isassembly(I))
-		var/obj/item/assembly/A = I
-		if(A.attachable)
+	if(isassembly(tool))
+		var/obj/item/assembly/assembly = tool
+		if(!check_secured || !assembly.secured)
 			return TRUE
+	return FALSE
 
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
-	if(!user.CanReach(src))
+	if(!IsReachableBy(user))
 		return WIRE_INTERACTION_FAIL
-	wires.interact(user)
+	INVOKE_ASYNC(wires, TYPE_PROC_REF(/datum/wires, interact), user)
 	return WIRE_INTERACTION_BLOCK
 
 /datum/wires
@@ -29,6 +39,9 @@
 	/// The display name for the wire set shown in station blueprints. Not shown in blueprints if randomize is TRUE or it's an item NT wouldn't know about (Explosives/Nuke). Also used in the hacking interface.
 	var/proper_name = "Unknown"
 
+	/// Whether pulsed wires affect the holder, and/or the holder pulses its wires
+	var/wire_behavior = WIRES_INPUT
+
 	/// List of all wires.
 	var/list/wires = list()
 	/// List of cut wires.
@@ -40,6 +53,30 @@
 
 	/// If every instance of these wires should be random. Prevents wires from showing up in station blueprints.
 	var/randomize = FALSE
+
+	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
+	var/list/studied_photos
+
+	/// Assoc list of possible wire colors -> their greyscale variants
+	var/static/list/default_possible_colors = list(
+		"blue" = "dim grey",
+		"brown" = "dim grey",
+		"crimson" = "grey",
+		"cyan" = "light grey",
+		"gold" = "grey",
+		"green" = "grey",
+		"grey" = "grey",
+		"lime" = "light grey",
+		"magenta" = "grey",
+		"orange" = "grey",
+		"pink" = "grey",
+		"purple" = "grey",
+		"red" = "grey",
+		"silver" = "light grey",
+		"violet" = "grey",
+		"white" = "white",
+		"yellow" = "light grey",
+	)
 
 /datum/wires/New(atom/holder)
 	..()
@@ -72,6 +109,7 @@
 	LAZYCLEARLIST(assemblies)
 	return ..()
 
+/// Adds a number of wires which do absolutely nothing.
 /datum/wires/proc/add_duds(duds)
 	while(duds)
 		var/dud = WIRE_DUD_PREFIX + "[--duds]"
@@ -86,30 +124,15 @@
 	qdel(src)
 
 /datum/wires/proc/randomize()
-	var/static/list/possible_colors = list(
-	"blue",
-	"brown",
-	"crimson",
-	"cyan",
-	"gold",
-	"green",
-	"grey",
-	"lime",
-	"magenta",
-	"orange",
-	"pink",
-	"purple",
-	"red",
-	"silver",
-	"violet",
-	"white",
-	"yellow",
-	)
+	if(length(wires) > length(default_possible_colors))
+		stack_trace("Wire type [type] has more wires than possible colors, consider adding more colors or removing wires.")
 
-	var/list/my_possible_colors = possible_colors.Copy()
+	var/list/possible_colors = default_possible_colors.Copy()
 
 	for(var/wire in shuffle(wires))
-		colors[pick_n_take(my_possible_colors)] = wire
+		if(!length(possible_colors))
+			possible_colors = default_possible_colors.Copy()
+		colors[pick_n_take(possible_colors)] = wire
 
 /datum/wires/proc/shuffle_wires()
 	colors.Cut()
@@ -153,7 +176,7 @@
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
 
-/datum/wires/proc/cut(wire, source)
+/datum/wires/proc/cut(wire, mob/living/source)
 	if(is_cut(wire))
 		cut_wires -= wire
 		SEND_SIGNAL(src, COMSIG_MEND_WIRE(wire), wire)
@@ -163,7 +186,7 @@
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE, source = source)
 
-/datum/wires/proc/cut_color(color, source)
+/datum/wires/proc/cut_color(color, mob/living/source)
 	cut(get_wire(color), source)
 
 /datum/wires/proc/cut_random(source)
@@ -173,9 +196,10 @@
 	for(var/wire in wires)
 		cut(wire, source)
 
-/datum/wires/proc/pulse(wire, user, force=FALSE)
+/datum/wires/proc/pulse(wire, mob/living/user, force=FALSE)
 	if(!force && is_cut(wire))
 		return
+	SEND_SIGNAL(src, COMSIG_PULSE_WIRE, wire, user)
 	on_pulse(wire, user)
 
 /datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
@@ -188,7 +212,7 @@
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
-	if(S && istype(S) && S.attachable && !is_attached(color))
+	if(S && istype(S) && S.assembly_behavior && !is_attached(color) && !(SEND_SIGNAL(S, COMSIG_ASSEMBLY_PRE_ATTACH, holder) & COMPONENT_CANCEL_ATTACH))
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
@@ -224,21 +248,22 @@
 /datum/wires/proc/get_status()
 	return list()
 
-/datum/wires/proc/on_cut(wire, mend = FALSE, source = null)
+/datum/wires/proc/on_cut(wire, mend = FALSE, mob/living/source = null)
 	return
 
-/datum/wires/proc/on_pulse(wire, user)
+/datum/wires/proc/on_pulse(wire, mob/living/user)
 	return
 // End Overridable Procs
 
 /datum/wires/proc/interact(mob/user)
 	if(!interactable(user))
-		return
+		return FALSE
 	ui_interact(user)
 	for(var/A in assemblies)
 		var/obj/item/I = assemblies[A]
 		if(istype(I) && I.on_found(user))
-			return
+			break
+	return TRUE
 
 /**
  * Checks whether wire assignments should be revealed.
@@ -258,8 +283,13 @@
 		return TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
-		return TRUE
+	if(!randomize)
+		if(user.is_holding_item_of_type(/obj/item/blueprints))
+			return TRUE
+		if(!isnull(user.mind))
+			for(var/obj/item/photo/photo in user.held_items)
+				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
+					return TRUE
 
 	return FALSE
 
@@ -273,6 +303,37 @@
  */
 /datum/wires/proc/always_reveal_wire(color)
 	return FALSE
+
+#define STUDY_INTERACTION_KEY "studying_photo"
+
+/**
+ * Attempts to study a photo for blueprints.
+ */
+/datum/wires/proc/try_study_photo(mob/user)
+	if(randomize)
+		return
+	if(isnull(user.mind))
+		return
+	if(DOING_INTERACTION(user, STUDY_INTERACTION_KEY))
+		return
+	if(LAZYACCESS(studied_photos, REF(user.mind)))
+		return
+	for(var/obj/item/photo/photo in user.held_items)
+		if(!photo.picture?.has_blueprints)
+			continue
+
+		var/study_length = 1 SECONDS * floor(min(photo.picture.psize_x, photo.picture.psize_y) / 32)
+		if(study_length >= 4 SECONDS)
+			to_chat(user, span_notice("<i>You squint [photo]... Hey, there's blueprints in the frame! Really wish the photo was zoomed in, though. \
+				It's rather difficult to make out the wires.</i>"))
+		else
+			to_chat(user, span_notice("<i>You glance at [photo], looking for wires in the pictured blueprints.</i>"))
+
+		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, hidden = TRUE))
+			LAZYSET(studied_photos, REF(user.mind), REF(photo))
+		return
+
+#undef STUDY_INTERACTION_KEY
 
 /datum/wires/ui_host()
 	return holder
@@ -290,15 +351,18 @@
 	if (!ui)
 		ui = new(user, src, "Wires", "[holder.name] Wires")
 		ui.open()
+	try_study_photo(user)
 
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()
 	var/list/payload = list()
 	var/reveal_wires = can_reveal_wires(user)
+	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
 
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
+			"shownColor" = colorblind ? default_possible_colors[color] : color,
 			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
@@ -308,7 +372,7 @@
 	data["proper_name"] = (proper_name != "Unknown") ? proper_name : null
 	return data
 
-/datum/wires/ui_act(action, params)
+/datum/wires/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(. || !interactable(usr))
 		return
@@ -344,13 +408,13 @@
 				I = L.get_active_held_item()
 				if(isassembly(I))
 					var/obj/item/assembly/A = I
-					if(A.attachable)
+					if(A.assembly_behavior & wire_behavior)
 						if(!L.temporarilyRemoveItemFromInventory(A))
 							return
 						if(!attach_assembly(target_wire, A))
 							A.forceMove(L.drop_location())
 						. = TRUE
 					else
-						to_chat(L, span_warning("You need an attachable assembly!"))
+						to_chat(L, span_warning("You cannot attach this assembly to these wires!"))
 
 #undef MAXIMUM_EMP_WIRES

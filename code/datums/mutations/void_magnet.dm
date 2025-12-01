@@ -1,14 +1,14 @@
-/datum/mutation/human/void
+/datum/mutation/void
 	name = "Void Magnet"
 	desc = "A rare genome that attracts odd forces not usually observed."
 	quality = MINOR_NEGATIVE //upsides and downsides
 	text_gain_indication = span_notice("You feel a heavy, dull force just beyond the walls watching you.")
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MODERATE // useful, but has large drawbacks
 	power_path = /datum/action/cooldown/spell/void/cursed
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/void/modify()
+/datum/mutation/void/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/void/cursed/to_modify = .
 	if(!istype(to_modify)) // null or invalid

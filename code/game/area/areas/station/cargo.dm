@@ -29,6 +29,14 @@
 	name = "\improper Cargo Office"
 	icon_state = "cargo_office"
 
+/area/station/cargo/lower
+	name = "\improper Lower Cargo Bay"
+	icon_state = "lower_cargo"
+
+/area/station/cargo/breakroom
+	name = "\improper Cargo Break Room"
+	icon_state = "cargo_breakroom"
+
 /area/station/cargo/storage
 	name = "\improper Cargo Bay"
 	icon_state = "cargo_bay"
@@ -53,6 +61,10 @@
 /area/station/cargo/miningoffice
 	name = "\improper Mining Office"
 	icon_state = "mining"
+
+/area/station/cargo/mining_breakroom
+	name = "\improper Mining Break Room"
+	icon_state = "mining_breakroom"
 
 /area/station/cargo/miningfoundry
 	name = "\improper Mining Foundry"

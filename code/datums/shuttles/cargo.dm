@@ -3,6 +3,10 @@
 	name = "Base Shuttle Template (Cargo)"
 	who_can_purchase = null
 
+/datum/map_template/shuttle/cargo/mini
+	suffix ="mini"
+	name = "supply shuttle (Mini)"
+
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
 	name = "supply shuttle (Kilo)"
@@ -10,10 +14,6 @@
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
-
-/datum/map_template/shuttle/cargo/donut
-	suffix = "donut"
-	name = "supply shuttle (Donut)"
 
 /datum/map_template/shuttle/cargo/pubby
 	suffix = "pubby"
@@ -34,3 +34,10 @@
 /datum/map_template/shuttle/cargo/northstar
 	suffix = "northstar"
 	name = "cargo ferry (North Star)"
+
+/datum/map_template/shuttle/cargo/catwalk
+	suffix = "catwalk"
+	name = "cargo ferry (Catwalk)"
+/datum/map_template/shuttle/cargo/nebula
+	suffix = "nebula"
+	name = "supply shuttle (Nebula)"

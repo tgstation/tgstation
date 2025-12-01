@@ -41,6 +41,11 @@
 	stored.forceMove(get_turf(usr))
 	return
 
+/obj/item/borg/apparatus/get_proxy_attacker_for(atom/target, mob/user)
+	if(stored) // Use the stored item if available
+		return stored
+	return ..()
+
 /**
 * Attack_self will pass for the stored item.
 */
@@ -50,16 +55,13 @@
 	stored.attack_self(user)
 
 //Alt click drops the stored item.
-/obj/item/borg/apparatus/AltClick(mob/living/silicon/robot/user)
+/obj/item/borg/apparatus/click_alt(mob/living/silicon/robot/user)
 	if(!stored || !issilicon(user))
-		return ..()
+		return CLICK_ACTION_BLOCKING
 	stored.forceMove(user.drop_location())
+	return CLICK_ACTION_SUCCESS
 
-/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
-	if(stored)
-		stored.melee_attack_chain(user, atom, params)
-		return TRUE
-
+/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
@@ -70,6 +72,8 @@
 			break
 	if(itemcheck)
 		var/obj/item/item = atom
+		item.pixel_x = 0
+		item.pixel_y = 0
 		item.forceMove(src)
 		stored = item
 		RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
@@ -88,9 +92,9 @@
 	update_appearance()
 	return NONE
 
-/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, params)
+/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(stored)
-		item.melee_attack_chain(user, stored, params)
+		item.melee_attack_chain(user, stored, modifiers)
 		return
 	return ..()
 
@@ -114,9 +118,6 @@
 	stored = new /obj/item/reagent_containers/cup/beaker/large(src)
 
 /obj/item/borg/apparatus/beaker/Destroy()
-	if(stored)
-		var/obj/item/reagent_containers/reagent_container = stored
-		reagent_container.SplashReagents(get_turf(src))
 	QDEL_NULL(stored)
 	return ..()
 
@@ -131,33 +132,23 @@
 		else
 			. += "Nothing."
 
-		. += span_notice(" <i>Right-clicking</i> will splash the beaker on the ground.")
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored beaker. ")
 
 /obj/item/borg/apparatus/beaker/update_overlays()
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		if(istype(stored, /obj/item/reagent_containers/cup/beaker))
-			arm.pixel_y = arm.pixel_y - 3
+			arm.pixel_z -= 3
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	else
-		arm.pixel_y = arm.pixel_y - 5
+		arm.pixel_z -= 5
 	. += arm
-
-/// Secondary attack spills the content of the beaker.
-/obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
-	var/obj/item/reagent_containers/stored_beaker = stored
-	if(!stored_beaker)
-		return ..()
-	stored_beaker.SplashReagents(drop_location(user))
-	loc.visible_message(span_notice("[user] spills the contents of [stored_beaker] all over the ground."))
-	return ..()
 
 /obj/item/borg/apparatus/beaker/extra
 	name = "secondary beaker storage apparatus"
@@ -203,6 +194,7 @@
 		/obj/item/reagent_containers/condiment,
 		/obj/item/reagent_containers/cup/coffeepot,
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle,
+		/obj/item/reagent_containers/cup/beaker,
 	)
 
 /obj/item/borg/apparatus/beaker/service2/add_glass()
@@ -236,32 +228,33 @@
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
-		stored_organ.pixel_x = 0
-		stored_organ.pixel_y = 0
+		stored_organ.pixel_w = 0
+		stored_organ.pixel_z = 0
 		. += stored_organ
 		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
 	else
 		bag = mutable_appearance(icon, icon_state = "evidenceobj") // empty bag
 	. += bag
 
-/obj/item/borg/apparatus/organ_storage/AltClick(mob/living/silicon/robot/user)
-	. = ..()
-	if(stored)
-		var/obj/item/organ = stored
-		user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
-		cut_overlays()
-		organ.forceMove(get_turf(src))
-	else
+/obj/item/borg/apparatus/organ_storage/click_alt(mob/living/silicon/robot/user)
+	if(!stored)
 		to_chat(user, span_notice("[src] is empty."))
-	return
+		return CLICK_ACTION_BLOCKING
+
+	var/obj/item/organ = stored
+	user.visible_message(span_notice("[user] dumps [organ] from [src]."), span_notice("You dump [organ] from [src]."))
+	cut_overlays()
+	organ.forceMove(get_turf(src))
+	return CLICK_ACTION_SUCCESS
 
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and various rods."
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
-					/obj/item/stack/tile)
+					/obj/item/stack/tile,
+					/obj/item/stack/rods)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -271,8 +264,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_stack_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		arm.icon_state = "borg_stack_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		var/underscore = findtext(stored_copy.icon_state, "_")
@@ -289,46 +282,60 @@
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored sheets. ")
 
-///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
-/obj/item/borg/apparatus/circuit
-	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards."
+///Apparatus allowing Engineer/Sabo borgs to manipulate circuit boards and more
+/obj/item/borg/apparatus/engineering
+	name = "engineering apparatus"
+	desc = "A special apparatus for carrying and manipulating circuit boards, lights and power cells."
 	icon_state = "borg_hardware_apparatus"
-	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics)
+	storable = list(
+		/obj/item/circuitboard,
+		/obj/item/electronics,
+		/obj/item/stock_parts/power_store,
+		/obj/item/light,
+	)
 
-/obj/item/borg/apparatus/circuit/Initialize(mapload)
+/obj/item/borg/apparatus/engineering/Initialize(mapload)
 	update_appearance()
 	return ..()
 
-/obj/item/borg/apparatus/circuit/update_overlays()
+/obj/item/borg/apparatus/engineering/update_overlays()
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
+		else if(istype(stored, /obj/item/circuitboard || /obj/item/stock_parts/power_store))
+			stored.pixel_w = -5
+			stored.pixel_z = 2
+			arm.icon_state = "borg_hardware_apparatus_arm1"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	. += arm
 
-/obj/item/borg/apparatus/circuit/examine()
+/obj/item/borg/apparatus/engineering/examine()
 	. = ..()
 	if(stored)
 		. += "The apparatus currently has [stored] secured."
-	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
+	. += span_notice(" <i>Alt-click</i> will drop the currently stored item. ")
 
-/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/apparatus/engineering/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
 
+// stops them from cell interactions with other borgos
+/obj/item/borg/apparatus/engineering/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(iscyborg(user) && iscyborg(interacting_with))
+		balloon_alert(user, "your manipulator isn't dexterous enough to interact with this properly.")
+		return ITEM_INTERACT_FAILURE
+
 /obj/item/borg/apparatus/service
 	name = "service apparatus"
-	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
+	desc = "A special apparatus for carrying food, seeds, grafts, bowls, plates, oven trays, soup pots and paper."
 	icon_state = "borg_service_apparatus"
 	storable = list(
 		/obj/item/food,
@@ -337,6 +344,8 @@
 		/obj/item/plate/oven_tray,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/soup_pot,
+		/obj/item/seeds,
+		/obj/item/graft,
 	)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)
@@ -347,8 +356,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if((!istype(stored, /obj/item/plate/oven_tray)) || (!istype(stored, /obj/item/food)))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)

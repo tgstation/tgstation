@@ -14,12 +14,13 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	melee_attack_cooldown = 1.5 SECONDS
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	combat_mode = TRUE
 	faction = list(FACTION_STICKMAN)
 	unsuitable_atmos_damage = 7.5
 	unsuitable_cold_damage = 7.5
 	unsuitable_heat_damage = 7.5
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman
 
@@ -54,7 +55,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	sharpness = SHARP_POINTY
 	mob_biotypes = MOB_BEAST
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 
 /mob/living/basic/stickman/ranged
 	name = "Angry Stick Gunman"
@@ -65,14 +66,13 @@
 	attack_verb_simple = "whack"
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attack_sound = 'sound/weapons/genhit1.ogg'
+	attack_sound = 'sound/items/weapons/genhit1.ogg'
 
 	ai_controller = /datum/ai_controller/basic_controller/stickman/ranged
 
 /mob/living/basic/stickman/ranged/Initialize(mapload)
 	. = ..()
-	var/static/list/stickman_drops = list(/obj/item/gun/ballistic/automatic/pistol/stickman)
-	AddElement(/datum/element/death_drops, stickman_drops)
+	AddElement(/datum/element/death_drops, /obj/item/gun/ballistic/automatic/pistol/stickman)
 	AddComponent(/datum/component/ranged_attacks, casing_type = /obj/item/ammo_casing/c9mm, projectile_sound = 'sound/misc/bang.ogg', cooldown_time = 5 SECONDS)
 
 /datum/ai_controller/basic_controller/stickman/ranged

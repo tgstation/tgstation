@@ -4,15 +4,15 @@
  * @license MIT
  */
 
-import { flow } from 'common/fp';
 import {
   applyMiddleware,
   combineReducers,
   createStore,
-  Middleware,
-  Reducer,
-  Store,
+  type Middleware,
+  type Reducer,
+  type Store,
 } from 'common/redux';
+import { flow } from 'tgui-core/fp';
 
 import { assetMiddleware } from './assets';
 import { backendMiddleware, backendReducer } from './backend';
@@ -44,7 +44,7 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
       debug: debugReducer,
       backend: backendReducer,
     }),
-    reducer,
+    reducer as any,
   ]);
 
   const middlewares: Middleware[] = !sideEffects

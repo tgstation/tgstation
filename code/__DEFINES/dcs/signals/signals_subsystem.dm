@@ -3,7 +3,7 @@
 // All signals send the source datum of the signal as the first argument
 
 ///Subsystem signals
-///From base of datum/controller/subsystem/Initialize
+///From base of /datum/controller/master/init_subsystem()
 #define COMSIG_SUBSYSTEM_POST_INITIALIZE "subsystem_post_initialize"
 
 ///Called when the ticker enters the pre-game phase
@@ -23,3 +23,9 @@
 #define COMSIG_ADDED_POINT_OF_INTEREST "added_point_of_interest"
 /// Sent from base of /datum/controller/subsystem/points_of_interest/proc/on_poi_element_removed : (atom/old_poi)
 #define COMSIG_REMOVED_POINT_OF_INTEREST "removed_point_of_interest"
+
+///Sent after awards are saved in the database (/datum/controller/subsystem/achievements/save_achievements_to_db)
+#define COMSIG_ACHIEVEMENTS_SAVED_TO_DB "achievements_saved_to_db"
+
+/// Send after config is loaded but before picking roundstart rulesets
+#define COMSIG_DYNAMIC_PRE_ROUNDSTART "dynamic_pre_roundstart"

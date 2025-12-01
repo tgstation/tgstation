@@ -15,8 +15,9 @@
 	action_intent.screen_loc = ui_combat_toggle
 	static_inventory += action_intent
 
-	combo_display = new /atom/movable/screen/combo(null, src)
-	infodisplay += combo_display
+	floor_change = new /atom/movable/screen/floor_changer(null, src)
+	floor_change.icon = 'icons/hud/screen_midnight.dmi'
+	static_inventory += floor_change
 
 	//mob health doll! assumes whatever sprite the mob is
 	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)

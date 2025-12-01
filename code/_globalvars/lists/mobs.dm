@@ -8,34 +8,15 @@ GLOBAL_LIST_EMPTY(stealthminID) //reference list with IDs that store ckeys, for 
 
 /// List of types of abstract mob which shouldn't usually exist in the world on its own if we're spawning random mobs
 GLOBAL_LIST_INIT(abstract_mob_types, list(
-	/mob/living/basic/blob_minion,
-	/mob/living/basic/bot,
 	/mob/living/basic/construct,
 	/mob/living/basic/guardian,
 	/mob/living/basic/heretic_summon,
-	/mob/living/basic/mining,
-	/mob/living/basic/pet,
-	/mob/living/basic,
-	/mob/living/basic/spider,
-	/mob/living/carbon/alien/adult,
-	/mob/living/carbon/alien,
+	/mob/living/basic/mimic/copy, // Cannot exist if spawned without being passed an item reference
+	/mob/living/basic/soulscythe, // This is just a way for players to control the soulscythe item
 	/mob/living/carbon/human/consistent,
-	/mob/living/carbon/human/dummy/consistent,
 	/mob/living/carbon/human/dummy,
-	/mob/living/carbon/human/species,
-	/mob/living/carbon,
-	/mob/living/silicon,
-	/mob/living/simple_animal/bot,
-	/mob/living/simple_animal/hostile/asteroid/elite,
-	/mob/living/simple_animal/hostile/asteroid,
-	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
-	/mob/living/simple_animal/hostile/retaliate,
-	/mob/living/simple_animal/hostile,
-	/mob/living/simple_animal/pet,
-	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
-	/mob/living/simple_animal,
-))
+	/mob/living/carbon/human/dummy/consistent,
+	))
 
 
 //Since it didn't really belong in any other category, I'm putting this here
@@ -44,7 +25,6 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 GLOBAL_LIST_EMPTY(player_list) //all mobs **with clients attached**.
 GLOBAL_LIST_EMPTY(keyloop_list) //as above but can be limited to boost performance
 GLOBAL_LIST_EMPTY(mob_list) //all mobs, including clientless
-GLOBAL_LIST_EMPTY(mob_directory) //mob_id -> mob
 GLOBAL_LIST_EMPTY(alive_mob_list) //all alive mobs, including clientless. Excludes /mob/dead/new_player
 GLOBAL_LIST_EMPTY(suicided_mob_list) //contains a list of all mobs that suicided, including their associated ghosts.
 GLOBAL_LIST_EMPTY(drones_list)
@@ -57,12 +37,11 @@ GLOBAL_LIST_EMPTY(mob_living_list) //all instances of /mob/living and subtypes
 GLOBAL_LIST_EMPTY(carbon_list) //all instances of /mob/living/carbon and subtypes, notably does not contain brains or simple animals
 GLOBAL_LIST_EMPTY(human_list) //all instances of /mob/living/carbon/human and subtypes
 GLOBAL_LIST_EMPTY(ai_list)
-GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
-GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list(),list())) // One for each AI_* status define
+GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list())) // One for each AI_* status define
 GLOBAL_LIST_EMPTY(spidermobs) //all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
-GLOBAL_LIST_EMPTY(aiEyes)
+GLOBAL_LIST_EMPTY(camera_eyes)
 GLOBAL_LIST_EMPTY(suit_sensors_list) //all people with suit sensors on
 
 /// All alive mobs with clients.
@@ -86,12 +65,32 @@ GLOBAL_LIST_EMPTY(revenant_relay_mobs)
 ///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
 GLOBAL_LIST_EMPTY(narcd_underages)
 
-GLOBAL_LIST_EMPTY(language_datum_instances)
-GLOBAL_LIST_EMPTY(all_languages)
-///List of all languages ("name" = type)
-GLOBAL_LIST_EMPTY(language_types_by_name)
+/// A list of all the possible blood types, keyed by id (which is just the name in most cases)
+GLOBAL_LIST_INIT(blood_types, init_blood_types())
 
-GLOBAL_LIST_EMPTY(sentient_disease_instances)
+/// Initializes the list of blood type singletons
+/proc/init_blood_types()
+	. = list()
+	for(var/datum/blood_type/blood_type_path as anything in valid_subtypesof(/datum/blood_type))
+		var/datum/blood_type/new_type = new blood_type_path()
+		.[new_type.id] = new_type
+
+/// An assoc list of species IDs to type paths
+GLOBAL_LIST_INIT(species_list, init_species_list())
+/// List of all species prototypes to reference, assoc [type] = prototype
+GLOBAL_LIST_INIT_TYPED(species_prototypes, /datum/species, init_species_prototypes())
+
+/proc/init_species_list()
+	var/list/species_list = list()
+	for(var/datum/species/species_path as anything in subtypesof(/datum/species))
+		species_list[initial(species_path.id)] = species_path
+	return species_list
+
+/proc/init_species_prototypes()
+	var/list/species_list = list()
+	for(var/species_type in subtypesof(/datum/species))
+		species_list[species_type] = new species_type()
+	return species_list
 
 GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 
@@ -148,3 +147,21 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 		if(mind)
 			minds += mind
 	return minds
+
+/// A keyed list of identity block singletons, in a key:value group of typepath:block
+GLOBAL_LIST_INIT(dna_identity_blocks, init_identity_block_types())
+
+/proc/init_identity_block_types()
+	. = list()
+	for(var/datum/dna_block/identity/block_path as anything in valid_subtypesof(/datum/dna_block/identity))
+		var/datum/dna_block/identity/new_block = new block_path()
+		.[block_path] = new_block
+
+/// A keyed list of feature block singletons, in a key:value group of typepath:block
+GLOBAL_LIST_INIT(dna_feature_blocks, init_feature_block_types())
+
+/proc/init_feature_block_types()
+	. = list()
+	for(var/datum/dna_block/feature/block_path as anything in valid_subtypesof(/datum/dna_block/feature))
+		var/datum/dna_block/feature/new_block = new block_path()
+		.[block_path] = new_block

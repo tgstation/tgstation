@@ -62,7 +62,7 @@
 
 /datum/brain_trauma/magic/antimagic/on_gain()
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/magic/antimagic/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
@@ -74,8 +74,12 @@
 	scan_desc = "extra-sensory paranoia"
 	gain_text = span_warning("You feel like something wants to kill you...")
 	lose_text = span_notice("You no longer feel eyes on your back.")
+	/// Type of stalker that is chasing us
+	var/stalker_type = /obj/effect/client_image_holder/stalker_phantom
+	/// Reference to the stalker that is chasing us
 	var/obj/effect/client_image_holder/stalker_phantom/stalker
-	var/close_stalker = FALSE //For heartbeat
+	/// Plays a sound when the stalker is near their victim
+	var/close_stalker = FALSE
 
 /datum/brain_trauma/magic/stalker/Destroy()
 	QDEL_NULL(stalker)
@@ -87,7 +91,7 @@
 
 /datum/brain_trauma/magic/stalker/proc/create_stalker()
 	var/turf/stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
-	stalker = new(stalker_source, owner)
+	stalker = new stalker_type(stalker_source, owner)
 
 /datum/brain_trauma/magic/stalker/on_lose()
 	QDEL_NULL(stalker)
@@ -104,14 +108,14 @@
 		create_stalker()
 
 	if(get_dist(owner, stalker) <= 1)
-		playsound(owner, 'sound/magic/demon_attack1.ogg', 50)
+		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50)
 		owner.visible_message(span_warning("[owner] is torn apart by invisible claws!"), span_userdanger("Ghostly claws tear your body apart!"))
 		owner.take_bodypart_damage(rand(20, 45), wound_bonus=CANT_WOUND)
 	else if(SPT_PROB(30, seconds_per_tick))
 		stalker.forceMove(get_step_towards(stalker, owner))
 	if(get_dist(owner, stalker) <= 8)
 		if(!close_stalker)
-			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+			var/sound/slowbeat = sound('sound/effects/health/slowbeat.ogg', repeat = TRUE)
 			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 			close_stalker = TRUE
 	else
@@ -125,3 +129,12 @@
 	desc = "It's coming closer..."
 	image_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	image_state = "curseblob"
+
+// Heretic subtype that replaces the ghost guy with a stargazer
+/datum/brain_trauma/magic/stalker/cosmic
+	stalker_type = /obj/effect/client_image_holder/stalker_phantom/cosmic
+	random_gain = FALSE
+
+/obj/effect/client_image_holder/stalker_phantom/cosmic
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
+	image_state = "star_gazer"

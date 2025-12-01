@@ -26,11 +26,38 @@ SUBSYSTEM_DEF(tgui)
 
 /datum/controller/subsystem/tgui/PreInit()
 	basehtml = file2text('tgui/public/tgui.html')
-	// Inject inline polyfills
-	var/polyfill = file2text('tgui/public/tgui-polyfill.min.js')
-	polyfill = "<script>\n[polyfill]\n</script>"
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
+
+	// Inject inline helper functions
+	var/helpers = file2text('tgui/public/helpers.min.js')
+	helpers = "<script type='text/javascript'>\n[helpers]\n</script>"
+	basehtml = replacetextEx(basehtml, "<!-- tgui:helpers -->", helpers)
+
+	// Inject inline ntos-error styles
+	var/ntos_error = file2text('tgui/public/ntos-error.min.css')
+	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
+	basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
+
 	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
+
+/datum/controller/subsystem/tgui/OnConfigLoad()
+	var/storage_iframe = CONFIG_GET(string/storage_cdn_iframe)
+
+	if(storage_iframe && storage_iframe != /datum/config_entry/string/storage_cdn_iframe::default)
+		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
+		return
+
+	if(CONFIG_GET(string/asset_transport) == "webroot")
+		var/datum/asset_transport/webroot/webroot = SSassets.transport
+
+		var/datum/asset_cache_item/item = webroot.register_asset("iframe.html", file("tgui/public/iframe.html"))
+		basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", webroot.get_asset_url("iframe.html", item))
+		return
+
+	if(!storage_iframe)
+		return
+
+	basehtml = replacetext(basehtml, "\[tgui:storagecdn\]", storage_iframe)
+
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
@@ -62,7 +89,7 @@ SUBSYSTEM_DEF(tgui)
  * Returns null if pool was exhausted.
  *
  * required user mob
- * return datum/tgui
+ * return datum/tgui_window
  */
 /datum/controller/subsystem/tgui/proc/request_pooled_window(mob/user)
 	if(!user.client)
@@ -122,8 +149,6 @@ SUBSYSTEM_DEF(tgui)
 	for(var/datum/tgui/ui in user.tgui_open_uis)
 		if(ui.window && ui.window.id == window_id)
 			ui.close(can_be_suspended = FALSE)
-	// Unset machine just to be sure.
-	user.unset_machine()
 	// Close window directly just to be sure.
 	user << browse(null, "window=[window_id]")
 

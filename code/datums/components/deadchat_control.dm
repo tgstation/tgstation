@@ -39,14 +39,19 @@
 		if(deadchat_mode & ANARCHY_MODE) // Choose one, please.
 			stack_trace("deadchat_control component added to [parent.type] with both democracy and anarchy modes enabled.")
 		timerid = addtimer(CALLBACK(src, PROC_REF(democracy_loop)), input_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
-	notify_ghosts(
-		"[parent] is now deadchat controllable!",
-		source = parent,
-		header = "Ghost Possession!",
-	)
 	if(!ismob(parent) && !SSpoints_of_interest.is_valid_poi(parent))
 		SSpoints_of_interest.make_point_of_interest(parent)
 		generated_point_of_interest = TRUE
+
+	var/parent_name = "[parent]"
+	if(ismob(parent))
+		var/mob/mob_parent = parent
+		parent_name = "[mob_parent.real_name]"
+	notify_ghosts(
+		"[parent_name] is now deadchat controllable!",
+		source = parent,
+		header = "Ghost Possession!",
+	)
 
 /datum/component/deadchat_control/Destroy(force)
 	on_removal?.Invoke()
@@ -61,7 +66,7 @@
 /datum/component/deadchat_control/proc/deadchat_react(mob/source, message)
 	SIGNAL_HANDLER
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 
 	if(!inputs[message])
 		return
@@ -162,7 +167,7 @@
  */
 /datum/component/deadchat_control/proc/waive_automute(mob/speaker, client/client, message, mute_type)
 	SIGNAL_HANDLER
-	if(mute_type == MUTE_DEADCHAT && inputs[lowertext(message)])
+	if(mute_type == MUTE_DEADCHAT && inputs[LOWER_TEXT(message)])
 		return WAIVE_AUTOMUTE_CHECK
 	return NONE
 

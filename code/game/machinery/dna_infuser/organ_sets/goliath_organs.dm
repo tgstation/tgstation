@@ -1,6 +1,6 @@
 #define GOLIATH_ORGAN_COLOR "#875652"
 #define GOLIATH_SCLERA_COLOR "#ac0f32"
-#define GOLIATH_PUPIL_COLOR "#FF0000"
+#define GOLIATH_PUPIL_COLOR COLOR_RED
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
 ///bonus of the goliath: you can swim through space!
@@ -12,61 +12,67 @@
 	bonus_traits = list(TRAIT_LAVA_IMMUNE)
 
 ///goliath eyes, simple night vision
-/obj/item/organ/internal/eyes/night_vision/goliath
+/obj/item/organ/eyes/night_vision/goliath
 	name = "goliath eyes"
 	desc = "goliath DNA infused into what was once some normal eyes."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "eyes"
+	iris_overlay = null
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/eyes/night_vision/goliath"
+	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
-	eye_color_left = "#FF0000"
-	eye_color_right = "#FF0000"
+	eye_color_left = COLOR_RED
+	eye_color_right = COLOR_RED
 
 	low_light_cutoff = list(15, 0, 8)
 	medium_light_cutoff = list(35, 15, 25)
 	high_light_cutoff = list(50, 10, 40)
 	organ_traits = list(TRAIT_UNNATURAL_RED_GLOWY_EYES)
 
-/obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
+/obj/item/organ/eyes/night_vision/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes are blood red and stone-like.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 ///goliath lungs! You can breathe lavaland air mix but can't breath pure O2 from a tank anymore.
-/obj/item/organ/internal/lungs/lavaland/goliath
+/obj/item/organ/lungs/lavaland/goliath
 	name = "mutated goliath-lungs"
 	desc = "goliath DNA infused into what was once some normal lungs."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "lungs"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/lungs/lavaland/goliath"
+	post_init_icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
-/obj/item/organ/internal/lungs/lavaland/goliath/Initialize(mapload)
+/obj/item/organ/lungs/lavaland/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "back is covered in small tendrils.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their back is covered in small tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 ///goliath brain. you can't use gloves but one of your arms becomes a tendril hammer that can be used to mine!
-/obj/item/organ/internal/brain/goliath
+/obj/item/organ/brain/goliath
 	name = "mutated goliath-brain"
 	desc = "goliath DNA infused into what was once a normal brain."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "brain"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/brain/goliath"
+	post_init_icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
+	can_smoothen_out = FALSE
+	shade_color = "garnet"
 
 	var/obj/item/goliath_infuser_hammer/hammer
 
-/obj/item/organ/internal/brain/goliath/Initialize(mapload)
+/obj/item/organ/brain/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-/obj/item/organ/internal/brain/goliath/on_mob_insert(mob/living/carbon/brain_owner)
+/obj/item/organ/brain/goliath/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	if(!ishuman(brain_owner))
 		return
@@ -78,7 +84,7 @@
 	hammer = new/obj/item/goliath_infuser_hammer
 	brain_owner.put_in_hands(hammer)
 
-/obj/item/organ/internal/brain/goliath/on_mob_remove(mob/living/carbon/brain_owner)
+/obj/item/organ/brain/goliath/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner)
 	if(!ishuman(brain_owner))
@@ -98,9 +104,11 @@
 	icon = 'icons/obj/weapons/goliath_hammer.dmi'
 	icon_state = "goliath_hammer"
 	inhand_icon_state = "goliath_hammer"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/weapons/goliath_hammer_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/goliath_hammer_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 0
@@ -124,7 +132,7 @@
 	. = ..()
 	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, click_parameters)
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	//If we're on cooldown, we'll do a normal attack.
@@ -157,20 +165,21 @@
 		target.throw_at(get_edge_target_turf(target, get_cardinal_dir(src, target)), rand(1, 2), prob(60) ? 1 : 4, user)
 
 /// goliath heart gives you the ability to survive ash storms.
-/obj/item/organ/internal/heart/goliath
+/obj/item/organ/heart/goliath
 	name = "mutated goliath-heart"
 	desc = "goliath DNA infused into what was once a normal heart."
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/heart/goliath"
+	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
 	organ_traits = list(TRAIT_ASHSTORM_IMMUNE)
 
-/obj/item/organ/internal/heart/goliath/Initialize(mapload)
+/obj/item/organ/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their skin has visible hard plates growing from within.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 	AddElement(/datum/element/update_icon_blocker)
 

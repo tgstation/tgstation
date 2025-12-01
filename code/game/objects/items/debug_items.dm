@@ -1,4 +1,6 @@
 /* This file contains standalone items for debug purposes. */
+/obj/item/debug
+	abstract_type = /obj/item/debug
 
 /obj/item/debug/human_spawner
 	name = "human spawner"
@@ -12,16 +14,20 @@
 	var/datum/species/selected_species
 	var/valid_species = list()
 
-/obj/item/debug/human_spawner/afterattack(atom/target, mob/user, proximity)
-	..()
-	if(isturf(target))
-		var/mob/living/carbon/human/H = new /mob/living/carbon/human(target)
+/obj/item/debug/human_spawner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/debug/human_spawner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isturf(interacting_with))
+		var/mob/living/carbon/human/H = new /mob/living/carbon/human(interacting_with)
 		if(selected_species)
 			H.set_species(selected_species)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/debug/human_spawner/attack_self(mob/user)
 	..()
-	var/choice = input("Select a species", "Human Spawner", null) in GLOB.species_list
+	var/choice = input("Select a species", "Human Spawner", null) in sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_asc))
 	selected_species = GLOB.species_list[choice]
 
 /obj/item/debug/omnitool
@@ -30,6 +36,7 @@
 	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	toolspeed = 0.1
@@ -42,32 +49,12 @@
 /obj/item/debug/omnitool/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
 /obj/item/debug/omnitool/get_all_tool_behaviours()
-	return list(TOOL_ANALYZER,
-	TOOL_BLOODFILTER,
-	TOOL_BONESET,
-	TOOL_CAUTERY,
-	TOOL_CROWBAR,
-	TOOL_DRILL,
-	TOOL_HEMOSTAT,
-	TOOL_KNIFE,
-	TOOL_MINING,
-	TOOL_MULTITOOL,
-	TOOL_RETRACTOR,
-	TOOL_ROLLINGPIN,
-	TOOL_RUSTSCRAPER,
-	TOOL_SAW,
-	TOOL_SCALPEL,
-	TOOL_SCREWDRIVER,
-	TOOL_SHOVEL,
-	TOOL_WELDER,
-	TOOL_WIRECUTTER,
-	TOOL_WRENCH,
-	)
+	return GLOB.all_tool_behaviours
 
 /obj/item/debug/omnitool/attack_self(mob/user)
 	if(!user)
@@ -75,7 +62,7 @@
 	var/list/tool_list = list(
 		"Crowbar" = image(icon = 'icons/obj/tools.dmi', icon_state = "crowbar"),
 		"Multitool" = image(icon = 'icons/obj/devices/tool.dmi', icon_state = "multitool"),
-		"Screwdriver" = image(icon = 'icons/obj/tools.dmi', icon_state = "screwdriver_map"),
+		"Screwdriver" = image(icon = 'icons/map_icons/items/_item.dmi', icon_state = "/obj/item/screwdriver"),
 		"Wirecutters" = image(icon = 'icons/obj/tools.dmi', icon_state = "cutters_map"),
 		"Wrench" = image(icon = 'icons/obj/tools.dmi', icon_state = "wrench"),
 		"Welding Tool" = image(icon = 'icons/obj/tools.dmi', icon_state = "miniwelder"),
@@ -139,6 +126,10 @@
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
 
+/obj/item/debug/omnitool/item_spawner
+	name = "spawntool"
+	color = COLOR_ADMIN_PINK
+
 /obj/item/debug/omnitool/item_spawner/attack_self(mob/user)
 	if(!user || !user.client)
 		return
@@ -160,7 +151,7 @@
 			return
 		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
 			to_chat(user, span_reallybig("You shouldn't have done that..."))
-			playsound(src, 'sound/voice/borg_deathsound.ogg')
+			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
 			sleep(3 SECONDS)
 			living_user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			living_user.gib(DROP_ALL_REMAINS)
@@ -168,4 +159,3 @@
 	var/turf/loc_turf = get_turf(src)
 	for(var/spawn_atom in (choice == "No" ? typesof(path) : subtypesof(path)))
 		new spawn_atom(loc_turf)
-

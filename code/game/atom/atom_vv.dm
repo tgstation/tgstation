@@ -67,14 +67,10 @@
 					message_admins(span_notice("[key_name(usr)] has added [amount] units of [chosen_id] to [src]"))
 
 	if(href_list[VV_HK_TRIGGER_EXPLOSION])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_explosion(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_explosion, src)
 
 	if(href_list[VV_HK_TRIGGER_EMP])
-		if(!check_rights(R_FUN))
-			return
-		usr.client.cmd_admin_emp(src)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_emp, src)
 
 	if(href_list[VV_HK_SHOW_HIDDENPRINTS])
 		if(!check_rights(R_ADMIN))
@@ -84,25 +80,30 @@
 	if(href_list[VV_HK_ARMOR_MOD])
 		if(!check_rights(NONE))
 			return
-		var/list/pickerlist = list()
-		var/list/armorlist = get_armor().get_rating_list()
-		for (var/i in armorlist)
-			pickerlist += list(list("value" = armorlist[i], "name" = i))
-		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
+		var/list/picker_list = list()
+		var/list/armor_list = get_armor().get_rating_list()
+		for (var/rating in armor_list)
+			picker_list += list(list("value" = armor_list[rating], "name" = rating))
+
+		var/list/result = present_picker(usr, "Modify armor", "Modify armor: [src]", button_1 = "Save", button_2 = "Cancel", timeout = FALSE, input_type = "text", values = picker_list)
+		if(!islist(result))
+			return
+		if(result["button"] == 2) // If the user pressed the cancel button
+			return
+
 		var/list/armor_all = ARMOR_LIST_ALL()
-		if(islist(result))
-			if(result["button"] != 2) // If the user pressed the cancel button
-				// text2num conveniently returns a null on invalid values
-				var/list/converted = list()
-				for(var/armor_key in armor_all)
-					converted[armor_key] = text2num(result["values"][armor_key])
-				set_armor(get_armor().generate_new_with_specific(converted))
-				var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
-				for(var/armor_key in armor_all)
-					message += "[armor_key]=[get_armor_rating(armor_key)],"
-				message = copytext(message, 1, -1)
-				log_admin(span_notice(message))
-				message_admins(span_notice(message))
+		// text2num conveniently returns a null on invalid values
+		var/list/converted = list()
+		for(var/armor_key in armor_all)
+			converted[armor_key] = text2num(result["values"][armor_key])
+		set_armor(get_armor().generate_new_with_specific(converted))
+
+		var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
+		for(var/armor_key in armor_all)
+			message += "[armor_key]=[get_armor_rating(armor_key)],"
+		message = copytext(message, 1, -1)
+		log_admin(span_notice(message))
+		message_admins(span_notice(message))
 
 	if(href_list[VV_HK_ADD_AI])
 		if(!check_rights(R_VAREDIT))
@@ -155,8 +156,8 @@
 			num_spins = -1
 		if(!num_spins)
 			return
-		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
-		if(!spin_speed)
+		var/spins_per_sec = input(usr, "How many spins per second?", "Spin Animation") as null|num
+		if(!spins_per_sec)
 			return
 		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
 		switch(direction)
@@ -166,7 +167,7 @@
 				direction = 0
 			else
 				return
-		SpinAnimation(spin_speed, num_spins, direction)
+		SpinAnimation(1 SECONDS / spins_per_sec, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
 		if(!check_rights(R_VAREDIT))
@@ -203,7 +204,7 @@
 	. = ..()
 	var/refid = REF(src)
 	. += "[VV_HREF_TARGETREF(refid, VV_HK_AUTO_RENAME, "<b id='name'>[src]</b>")]"
-	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
+	. += "<br><font size='1'><a href='byond://?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='byond://?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='byond://?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 /**
  * call back when a var is edited on this atom
@@ -213,7 +214,7 @@
  * At the atom level, if you edit a var named "color" it will add the atom colour with
  * admin level priority to the atom colours list
  *
- * Also, if GLOB.Debug2 is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
+ * Also, if GLOB.debugging_enabled is FALSE, it sets the [ADMIN_SPAWNED_1] flag on [flags_1][/atom/var/flags_1], which signifies
  * the object has been admin edited
  */
 /atom/vv_edit_var(var_name, var_value)
@@ -274,13 +275,19 @@
 		if(NAMEOF(src, base_pixel_y))
 			set_base_pixel_y(var_value)
 			. = TRUE
+		if(NAMEOF(src, material_flags))
+			toggle_material_flags(var_value)
+			. = TRUE
+		if(NAMEOF(src, material_modifier))
+			change_material_modifier(var_value)
+			. = TRUE
 
 	light_flags = old_light_flags
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
 		return
 
-	if(!GLOB.Debug2)
+	if(!GLOB.debugging_enabled)
 		flags_1 |= ADMIN_SPAWNED_1
 
 	. = ..()

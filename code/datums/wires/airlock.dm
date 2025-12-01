@@ -49,7 +49,7 @@
 		WIRE_BACKUP2,
 		WIRE_BOLTS,
 		WIRE_IDSCAN,
-		WIRE_BOLTLIGHT,
+		WIRE_FEEDBACK,
 		WIRE_OPEN,
 		WIRE_POWER1,
 		WIRE_POWER2,
@@ -74,9 +74,9 @@
 	if(!..())
 		return FALSE
 	var/obj/machinery/door/airlock/airlock = holder
-	if(!HAS_SILICON_ACCESS(user) && !isdrone(user) && airlock.isElectrified())
+	if(!HAS_SILICON_ACCESS(user) && !isdrone(user) && airlock.isElectrified() && airlock.hasPower())
 		var/mob/living/carbon/carbon_user = user
-		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
+		if (!istype(carbon_user) || carbon_user.should_electrocute(get_area(airlock)))
 			return FALSE
 	if(airlock.is_secure())
 		return FALSE
@@ -126,7 +126,7 @@
 			A.update_appearance()
 		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash the red lights.
 			if(A.hasPower() && A.density)
-				A.do_animate("deny")
+				A.run_animation(DOOR_DENY_ANIMATION)
 				if(A.emergency)
 					A.emergency = FALSE
 					A.update_appearance()
@@ -146,8 +146,8 @@
 				A.close()
 		if(WIRE_TIMING)
 			A.normalspeed = !A.normalspeed
-		if(WIRE_BOLTLIGHT)
-			A.lights = !A.lights
+		if(WIRE_FEEDBACK)
+			A.feedback = !A.feedback
 			A.update_appearance()
 		if(WIRE_UNRESTRICTED_EXIT) // Pulse to switch the direction around by 180 degrees (North goes to South, East goes to West, vice-versa)
 			if(!A.unres_sensor) //only works if the "sensor" is installed (a variable that we assign to the door either upon creation of a door with unrestricted directions or if an unrestricted helper is added to a door in mapping)
@@ -210,8 +210,8 @@
 			A.autoclose = mend
 			if(A.autoclose && !A.density)
 				INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, close))
-		if(WIRE_BOLTLIGHT) // Cut to disable lights, mend to re-enable.
-			A.lights = mend
+		if(WIRE_FEEDBACK) // Cut to disable lights and sounds, mend to re-enable.
+			A.feedback = mend
 			A.update_appearance()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
 			if(isliving(usr))

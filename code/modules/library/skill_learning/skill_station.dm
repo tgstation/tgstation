@@ -83,7 +83,7 @@
 	else
 		toggle_open()
 
-/obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I,/obj/item/skillchip))
 		if(inserted_skillchip)
 			to_chat(user,span_notice("There's already a skillchip inside."))
@@ -229,7 +229,7 @@
 		.["slots_max"] = null
 		return
 
-	var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	// If there's no brain, we don't need to worry either.
 	if(QDELETED(occupant_brain))
@@ -252,7 +252,7 @@
 		current_skills += list(skill_chip.get_chip_data())
 	.["current"] = current_skills
 
-/obj/machinery/skill_station/ui_act(action, list/params)
+/obj/machinery/skill_station/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -272,7 +272,7 @@
 				return TRUE
 			var/chipref = params["ref"]
 			var/mob/living/carbon/carbon_occupant = occupant
-			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
 			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain.skillchips
@@ -297,7 +297,7 @@
 				stack_trace("[usr] tried to toggle skillchip activation when [src] was in an invalid state.")
 				return TRUE
 			var/mob/living/carbon/carbon_occupant = occupant
-			var/obj/item/organ/internal/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
+			var/obj/item/organ/brain/occupant_brain = carbon_occupant.get_organ_slot(ORGAN_SLOT_BRAIN)
 			if(QDELETED(carbon_occupant) || QDELETED(occupant_brain))
 				return TRUE
 			var/obj/item/skillchip/to_be_removed = locate(chipref) in occupant_brain.skillchips

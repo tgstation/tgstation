@@ -25,7 +25,7 @@
 	var/list/info_shown = ..()
 
 	var/area/destination_area = get_area(imp_in)
-	if(isnull(destination_area) || (destination_area.area_flags & NOTELEPORT))
+	if(isnull(destination_area) || !check_teleport_valid(imp_in, usr))
 		info_shown["Status"] = "Implant carrier teleport signal cannot be reached!"
 	else
 		var/turf/turf_to_check = get_turf(imp_in)

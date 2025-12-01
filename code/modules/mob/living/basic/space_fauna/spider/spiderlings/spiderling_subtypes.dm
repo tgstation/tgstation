@@ -64,7 +64,7 @@
 /mob/living/basic/spider/growing/spiderling/breacher
 	grow_as = /mob/living/basic/spider/growing/young/breacher
 	name = "breacher spiderling"
-	desc = "Furry and baige, it looks defenseless. This one has dim red eyes."
+	desc = "Furry and beige, it looks defenseless. This one has dim red eyes."
 	icon = 'icons/mob/simple/arachnoid.dmi'
 	icon_state = "breacher_spiderling"
 	icon_dead = "breacher_spiderling_dead"

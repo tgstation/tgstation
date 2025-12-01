@@ -15,14 +15,14 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	rcd_proof = TRUE
 
 /turf/open/floor/tram/examine(mob/user)
 	. += ..()
 	. += span_notice("The reinforcement bolts are [EXAMINE_HINT("wrenched")] firmly in place. Use a [EXAMINE_HINT("wrench")] to remove the plate.")
 
-/turf/open/floor/tram/attackby(obj/item/object, mob/living/user, params)
+/turf/open/floor/tram/attackby(obj/item/object, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(object, /obj/item/stack/thermoplastic))
 		build_with_transport_tiles(object, user)
@@ -34,7 +34,7 @@
 		return ..()
 	return //unplateable
 
-/turf/open/floor/tram/try_replace_tile(obj/item/stack/tile/replacement_tile, mob/user, params)
+/turf/open/floor/tram/try_replace_tile(obj/item/stack/tile/replacement_tile, mob/user, list/modifiers)
 	return
 
 /turf/open/floor/tram/crowbar_act(mob/living/user, obj/item/item)
@@ -55,7 +55,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(is_explosion_shielded(severity))
 		return FALSE
 
 	switch(severity)
@@ -126,7 +126,7 @@
 /turf/open/floor/tram/plate/energized/burnt_states()
 	return list("energized_plate_damaged")
 
-/turf/open/floor/tram/plate/energized/attackby(obj/item/attacking_item, mob/living/user, params)
+/turf/open/floor/tram/plate/energized/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if((broken || burnt) && istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
 		if(attacking_item.use(1))
 			broken = FALSE
@@ -149,7 +149,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/indestructible/tram/attackby(obj/item/object, mob/living/user, params)
+/turf/open/indestructible/tram/attackby(obj/item/object, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(object, /obj/item/stack/thermoplastic))
 		build_with_transport_tiles(object, user)
@@ -183,7 +183,7 @@
 	integrity_failure = 0.75
 	armor_type = /datum/armor/tram_floor
 	layer = TRAM_FLOOR_LAYER
-	plane = FLOOR_PLANE
+	plane = GAME_PLANE
 	obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_OUT_UP
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER
 	var/secured = TRUE
@@ -266,7 +266,7 @@
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
 		return ITEM_INTERACT_SUCCESS
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	var/integrity_to_repair = max_integrity - atom_integrity

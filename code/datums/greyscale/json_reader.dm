@@ -63,7 +63,7 @@
 	)
 
 /datum/json_reader/blend_mode/ReadJson(value)
-	var/new_value = blend_modes[lowertext(value)]
+	var/new_value = blend_modes[LOWER_TEXT(value)]
 	if(isnull(new_value))
 		CRASH("Blend mode expected but got '[value]'")
 	return new_value

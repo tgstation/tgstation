@@ -1,4 +1,19 @@
 // VENTCRAWLING
+
+/mob/living/proc/notify_ventcrawler_on_login()
+	var/ventcrawler = HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE)
+	if(!ventcrawler)
+		return
+	to_chat(src, span_notice("You can ventcrawl! Use alt+click on vents to quickly travel about the station."))
+
+/mob/living/carbon/human/notify_ventcrawler_on_login()
+	if(!ismonkey(src))
+		return ..()
+	if(!istype(head, /obj/item/clothing/head/helmet/monkey_sentience)) //don't notify them about ventcrawling if they're wearing the sentience helmet, because they can't ventcrawl with it on, and if they take it off they'll no longer be in control of the mob.
+		return ..()
+
+
+
 /// Checks if the mob is able to enter the vent, and provides feedback if they are unable to.
 /mob/living/proc/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
 	// Being able to always ventcrawl trumps being only able to ventcrawl when wearing nothing
@@ -31,13 +46,16 @@
 			to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
-		if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
+		if(length(get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)))
 			if(provide_feedback)
 				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
 	if(ventcrawl_target.welded)
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't crawl around a welded vent!"))
+			// Add cooldown to prevent welded vent message spam during movement
+			if(COOLDOWN_FINISHED(src, welded_vent_message_cd))
+				to_chat(src, span_warning("You can't crawl around a welded vent!"))
+				COOLDOWN_START(src, welded_vent_message_cd, 2 SECONDS)
 		return
 
 	if(!(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))
@@ -88,7 +106,7 @@
 		else
 			to_chat(src, span_warning("This ventilation duct is not connected to anything!"))
 
-/mob/living/simple_animal/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
+/mob/living/basic/slime/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
 	if(buckled)
 		if(provide_feedback)
 			to_chat(src, span_warning("You can't vent crawl while feeding!"))

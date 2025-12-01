@@ -45,7 +45,7 @@
 	if(!istype(target_bed))
 		return
 
-	if(!tucker.transferItemToLoc(tucked, target_bed.drop_location()))
+	if(!tucker.transfer_item_to_turf(tucked, target_bed.drop_location()))
 		return
 
 	to_chat(tucker, span_notice("You lay [tucked] out on [target_bed]."))
@@ -53,11 +53,11 @@
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/element/bed_tuckable/proc/tuck(obj/item/tucked, obj/structure/bed/target_bed)
-	tucked.dir = target_bed.dir
-	tucked.pixel_x = target_bed.dir & EAST ? -x_offset : x_offset
+	tucked.dir = target_bed.dir & target_bed.left_headrest_dirs ? EAST : WEST
+	tucked.pixel_x = target_bed.dir & target_bed.left_headrest_dirs ? -x_offset : x_offset
 	tucked.pixel_y = y_offset
 	if(starting_angle)
-		rotation_degree = target_bed.dir & EAST ? starting_angle + 180 : starting_angle
+		rotation_degree = target_bed.dir & target_bed.left_headrest_dirs ? starting_angle + 180 : starting_angle
 		tucked.transform = turn(tucked.transform, rotation_degree)
 		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, PROC_REF(untuck))
 

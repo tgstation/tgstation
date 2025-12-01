@@ -1,9 +1,9 @@
 /datum/ai_behavior/find_and_set/hive_partner
 
-/datum/ai_behavior/find_and_set/hive_partner/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/hive_partner/search_tactic(datum/ai_controller/controller, locate_path, search_range = 10)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/hive_partners = list()
-	for(var/mob/living/target in oview(10, living_pawn))
+	for(var/mob/living/target in oview(search_range, living_pawn))
 		if(!istype(target, locate_path))
 			continue
 		if(target.stat == DEAD)
@@ -30,19 +30,16 @@
 
 
 /datum/ai_behavior/relay_message/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
-
 	var/mob/living/target = controller.blackboard[target_key]
 	var/mob/living/living_pawn = controller.pawn
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/message_relayed = ""
 	for(var/i in 1 to length_of_message)
 		message_relayed += prob(50) ? "1" : "0"
 	living_pawn.say(message_relayed, forced = "AI Controller")
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/relay_message/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

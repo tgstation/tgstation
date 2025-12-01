@@ -64,7 +64,7 @@
 				span_userdanger("The crystal mass lunges on you and hits you in the chest. As your vision is filled with a blinding light, you think to yourself \"Damn it.\""))
 		else if(istype(checked_atom, /obj/cascade_portal))
 			checked_atom.visible_message(span_userdanger("\The [checked_atom] screeches and closes away as it is hit by \a [src]! Too late!"))
-			playsound(get_turf(checked_atom), 'sound/magic/charge.ogg', 50, TRUE)
+			playsound(get_turf(checked_atom), 'sound/effects/magic/charge.ogg', 50, TRUE)
 			playsound(get_turf(checked_atom), 'sound/effects/supermatter.ogg', 50, TRUE)
 			qdel(checked_atom)
 		else if(isitem(checked_atom))
@@ -95,7 +95,7 @@
 	var/mob/living/carbon/jedi = user
 	to_chat(jedi, span_userdanger("That was a really dense idea."))
 	jedi.ghostize()
-	var/obj/item/organ/internal/brain/rip_u = locate(/obj/item/organ/internal/brain) in jedi.organs
+	var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in jedi.organs
 	if(rip_u)
 		rip_u.Remove(jedi)
 		qdel(rip_u)
@@ -168,7 +168,7 @@
 		investigate_log("was entered by [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.forceMove(arrival_turf)
 		consumed_mob.Paralyze(100)
-		consumed_mob.adjustBruteLoss(30)
+		consumed_mob.adjust_brute_loss(30)
 		consumed_mob.flash_act(1, TRUE, TRUE)
 
 		new /obj/effect/particle_effect/sparks(consumed_object)

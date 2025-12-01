@@ -1,6 +1,3 @@
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,10 +7,13 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
-import { formatSiUnit } from '../format';
+} from 'tgui-core/components';
+import { formatSiUnit } from 'tgui-core/format';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Material } from './Fabrication/Types';
+import type { Material } from './Fabrication/Types';
 
 type IconData = {
   id: string;
@@ -135,7 +135,7 @@ const DisplayRow = (props: DisplayRowProps) => {
   const { name, icon, amount, selected, onSelect } = props;
 
   return (
-    <Table.Row collapsing className="candystripe">
+    <Table.Row className="candystripe">
       <Table.Cell collapsing pl={1}>
         {icon ? (
           <Image

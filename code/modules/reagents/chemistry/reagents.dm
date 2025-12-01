@@ -12,8 +12,6 @@
 	var/taste_mult = 1
 	/// reagent holder this belongs to
 	var/datum/reagents/holder = null
-	/// LIQUID, SOLID, GAS
-	var/reagent_state = LIQUID
 	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called
@@ -24,12 +22,12 @@
 	var/ph = 7
 	///Purity of the reagent - for use with internal reaction mechanics only. Use below (creation_purity) if you're writing purity effects into a reagent's use mechanics.
 	var/purity = 1
-	///the purity of the reagent on creation (i.e. when it's added to a mob and it's purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
+	///the purity of the reagent on creation (i.e. when it's added to a mob and its purity split it into 2 chems; the purity of the resultant chems are kept as 1, this tracks what the purity was before that)
 	var/creation_purity = 1
 	///The molar mass of the reagent - if you're adding a reagent that doesn't have a recipe, just add a random number between 10 - 800. Higher numbers are "harder" but it's mostly arbitary.
 	var/mass
 	/// color it looks in containers etc
-	var/color = "#000000" // rgb: 0, 0, 0
+	var/color = COLOR_BLACK // rgb: 0, 0, 0
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
 	/// above this overdoses happen
@@ -44,11 +42,9 @@
 	var/metabolizing = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
-	///A list of causes why this chem should skip being removed, if the length is 0 it will be removed from holder naturally, if this is >0 it will not be removed from the holder.
-	var/list/reagent_removal_skip_list = list()
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR
-	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_DONOTSPLIT, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH, REAGENT_IMPURE
+	/// See fermi_readme.dm REAGENT_DEAD_PROCESS, REAGENT_INVISIBLE, REAGENT_SNEAKYNAME, REAGENT_SPLITRETAINVOL, REAGENT_CANSYNTH, REAGENT_IMPURE
 	var/chemical_flags = NONE
 	/// If the impurity is below 0.5, replace ALL of the chem with inverse_chem upon metabolising
 	var/inverse_chem_val = 0.25
@@ -78,9 +74,11 @@
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
 	var/list/added_traits
+	/// Multiplier of the amount purged by reagents such as calomel, multiver, syniver etc.
+	var/purge_multiplier = 1
 
 	///The default reagent container for the reagent, used for icon generation
-	var/obj/item/reagent_containers/default_container = /obj/item/reagent_containers/cup/bottle
+	var/obj/default_container = /obj/item/reagent_containers/cup/bottle
 
 	// Used for restaurants.
 	///The amount a robot will pay for a glass of this (20 units but can be higher if you pour more, be frugal!)
@@ -109,28 +107,36 @@
 	holder = null
 
 /// Applies this reagent to an [/atom]
-/datum/reagent/proc/expose_atom(atom/exposed_atom, reac_volume)
+/datum/reagent/proc/expose_atom(atom/exposed_atom, reac_volume, methods = TOUCH)
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = 0
-	. |= SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_ATOM, exposed_atom, reac_volume)
-	. |= SEND_SIGNAL(exposed_atom, COMSIG_ATOM_EXPOSE_REAGENT, src, reac_volume)
+	. |= SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_ATOM, exposed_atom, reac_volume, methods)
+	. |= SEND_SIGNAL(exposed_atom, COMSIG_ATOM_EXPOSE_REAGENT, src, reac_volume, methods)
 
 /// Applies this reagent to a [/mob/living]
-/datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
-	. = SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection)
-	if((methods & penetrates_skin) && exposed_mob.reagents) //smoke, foam, spray
-		var/amount = round(reac_volume*clamp((1 - touch_protection), 0, 1), 0.1)
+	if(SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(isnull(exposed_mob.reagents)) // lots of simple mobs do not have a reagents holder
+		return
+
+	if(exposed_mob.reagent_expose(src, methods, reac_volume, show_message, touch_protection) & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(penetrates_skin & methods) // models things like vapors which penetrate the skin
+		var/amount = round(reac_volume * clamp((1 - touch_protection), 0, 1), 0.1)
 		if(amount >= 0.5)
-			exposed_mob.reagents.add_reagent(type, amount, added_purity = purity)
+			exposed_mob.reagents.add_reagent(type, amount, data, holder.chem_temp, purity)
 
 /// Applies this reagent to an [/obj]
-/datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/proc/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume)
+	return SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_OBJ, exposed_obj, reac_volume, methods, show_message)
 
 /// Applies this reagent to a [/turf]
 /datum/reagent/proc/expose_turf(turf/exposed_turf, reac_volume)
@@ -162,8 +168,6 @@
 
 ///Metabolizes a portion of the reagent after on_mob_life() is called
 /datum/reagent/proc/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(length(reagent_removal_skip_list))
-		return
 	if(isnull(holder))
 		return
 
@@ -181,20 +185,23 @@
 /datum/reagent/proc/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	return
 
-/*
-Used to run functions before a reagent is transferred. Returning TRUE will block the transfer attempt.
-Primarily used in reagents/reaction_agents
+/**
+ * Intercepts the reagent transfer/copy operation to do some work before it takes place.
+ * Used to perform some reaction work. Return TRUE To cancel the operation
+ *
+ * Arguments
+ *
+ * * datum/reagents/target - the target holder we are being transferred to
+ * * amount - the amount of reagent being transferred
+ * * copy_only - if TRUE we don't remove ourself from the holder because its a reagent copy & not transfer operation
 */
-/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount)
+/datum/reagent/proc/intercept_reagents_transfer(datum/reagents/target, amount, copy_only)
 	return FALSE
-
-///Called after a reagent is transferred
-/datum/reagent/proc/on_transfer(atom/A, methods=TOUCH, trans_volume)
-	return
 
 /// Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/affected_mob, amount)
-	overdose_threshold /= max(normalise_creation_purity(), 1) //Maybe??? Seems like it would help pure chems be even better but, if I normalised this to 1, then everything would take a 25% reduction
+	// Scale the overdose threshold of the chem by the difference between the default and creation purity.
+	overdose_threshold += (src.creation_purity - initial(purity)) * overdose_threshold
 	if(added_traits)
 		affected_mob.add_traits(added_traits, "base:[type]")
 
@@ -221,14 +228,21 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	SHOULD_CALL_PARENT(TRUE)
 
-/// Called after add_reagents creates a new reagent.
+/**
+ * Called after add_reagents creates a new reagent.
+ *
+ * Arguments
+ * * data - if not null, contains reagent data which will be applied to the newly created reagent (this will override any pre-set data).
+ */
+
 /datum/reagent/proc/on_new(data)
 	if(data)
 		src.data = data
 
 /// Called when two reagents of the same are mixing.
-/datum/reagent/proc/on_merge(data, amount)
-	return
+/datum/reagent/proc/on_merge(list/mix_data, amount)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_REAGENT_ON_MERGE, mix_data, amount)
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
@@ -250,7 +264,9 @@ Primarily used in reagents/reaction_agents
 
 /// Should return a associative list where keys are taste descriptions and values are strength ratios
 /datum/reagent/proc/get_taste_description(mob/living/taster)
-	return list("[taste_description]" = 1)
+	if(isnull(taster) || !HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
+		return list("[taste_description]" = 1)
+	return list("[LOWER_TEXT(name)]" = 1)
 
 /**
  * Used when you want the default reagents purity to be equal to the normal effects
@@ -268,17 +284,21 @@ Primarily used in reagents/reaction_agents
 	return creation_purity / normalise_num_to
 
 /**
- * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to its inverse one.
  *
  * Arguments
  * * purity - Overrides the purity used for determining the inverse purity.
  */
 /datum/reagent/proc/get_inverse_purity(purity)
 	if(!inverse_chem || !inverse_chem_val)
-		return
+		return 0
 	if(!purity)
 		purity = src.purity
 	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
+
+///Called when feeding a fish. If TRUE is returned, a portion of reagent will be consumed.
+/datum/reagent/proc/used_on_fish(obj/item/fish/fish)
+	return FALSE
 
 /**
  * Input a reagent_list, outputs pretty readable text!

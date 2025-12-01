@@ -1,10 +1,11 @@
-#define BATON_BASH_COOLDOWN (3 SECONDS)
+#define WEAPON_BASH_COOLDOWN (3 SECONDS)
 
 /obj/item/shield
 	name = "shield"
 	icon = 'icons/obj/weapons/shields.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	abstract_type = /obj/item/shield
 	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK
 	force = 10
@@ -15,7 +16,7 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
-	block_sound = 'sound/weapons/block_shield.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -25,7 +26,11 @@
 	/// sound the shield makes when it breaks
 	var/shield_break_sound = 'sound/effects/bang.ogg'
 	/// baton bash cooldown
-	COOLDOWN_DECLARE(baton_bash)
+	COOLDOWN_DECLARE(weapon_bash)
+	/// is shield bashable?
+	var/is_bashable = TRUE
+	/// sound when a shield is bashed
+	var/shield_bash_sound = 'sound/effects/shieldbash.ogg'
 
 /datum/armor/item_shield
 	melee = 50
@@ -38,14 +43,19 @@
 /obj/item/shield/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/disarm_attack)
+	AddElement(/datum/element/cuffable_item) //I mean, it has a closed handle, right?
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	var/effective_block_chance = final_block_chance
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
+		effective_block_chance += 30
 	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
+		effective_block_chance = 100
+	if(attack_type == OVERWHELMING_ATTACK)
+		effective_block_chance -= 25
+	final_block_chance = clamp(effective_block_chance, 0, 100)
 	. = ..()
 	if(.)
 		on_shield_block(owner, hitby, attack_text, damage, attack_type, damage_type)
@@ -60,6 +70,20 @@
 			. += span_info("It appears heavily damaged.")
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
+
+/obj/item/shield/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!istype(tool, /obj/item/melee) || !is_bashable)
+		return .
+	if(!COOLDOWN_FINISHED(src, weapon_bash))
+		return ITEM_INTERACT_BLOCKING
+	playsound(src, shield_bash_sound, 50, TRUE)
+	user.manual_emote("bashes [src] with [tool]!")
+	COOLDOWN_START(src, weapon_bash, WEAPON_BASH_COOLDOWN)
+	user.Shake(3, 3, 0.5 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!breakable_by_damage || (damage_type != BRUTE && damage_type != BURN))
@@ -99,6 +123,24 @@
 	max_integrity = 55
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/shield/buckler/moonflower
+	name = "moonflower buckler"
+	desc = "A buckler made from a steel-cap reinforced moonflower."
+	icon_state = "moonflower_buckler"
+	inhand_icon_state = "moonflower_buckler"
+	block_chance = 40
+	max_integrity = 40
+	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/shield/kite
+	name = "kite shield"
+	desc = "Protect your internal organs with this almond shaped shield."
+	icon_state = "kite"
+	inhand_icon_state = "kite"
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 15)
+	shield_break_sound = 'sound/effects/grillehit.ogg'
+	max_integrity = 60
+
 /obj/item/shield/roman
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
@@ -128,27 +170,22 @@
 	custom_materials = list(/datum/material/glass= SHEET_MATERIAL_AMOUNT * 3.75, /datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT)
 	transparent = TRUE
 	max_integrity = 75
-	shield_break_sound = 'sound/effects/glassbr3.ogg'
+	shield_break_sound = 'sound/effects/glass/glassbr3.ogg'
 	shield_break_leftover = /obj/item/shard
 	armor_type = /datum/armor/item_shield/riot
+	pickup_sound = 'sound/items/handling/shield/plastic_shield_pick_up.ogg'
+	drop_sound = 'sound/items/handling/shield/plastic_shield_drop.ogg'
 
 /obj/item/shield/riot/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/strobeshield)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-/obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
-	if(istype(attackby_item, /obj/item/melee/baton))
-		if(!COOLDOWN_FINISHED(src, baton_bash))
-			return
-		user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
-		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
-		COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
-		return
+/obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
@@ -231,7 +268,7 @@
 			return
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 20, target = user))
+			if(do_after(user, 2 SECONDS, target = user))
 				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -264,7 +301,7 @@
 
 /obj/item/shield/energy
 	name = "combat energy shield"
-	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well las providing well-rounded defense from most all other attacks."
+	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well as providing well-rounded defense from most all other attacks."
 	icon_state = "eshield"
 	inhand_icon_state = "eshield"
 	w_class = WEIGHT_CLASS_TINY
@@ -275,7 +312,9 @@
 	throwforce = 3
 	throw_speed = 3
 	breakable_by_damage = FALSE
-	block_sound = 'sound/weapons/block_blade.ogg'
+	block_sound = 'sound/items/weapons/block_blade.ogg'
+	is_bashable = FALSE // Gotta wait till it activates y'know
+	shield_bash_sound = 'sound/effects/energyshieldbash.ogg'
 	/// Force of the shield when active.
 	var/active_force = 10
 	/// Throwforce of the shield when active.
@@ -304,12 +343,16 @@
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		return FALSE
 
+	var/effective_block_chance = final_block_chance
+	if(attack_type == OVERWHELMING_ATTACK)
+		effective_block_chance -= 25
+
 	if(attack_type == PROJECTILE_ATTACK)
 		var/obj/projectile/our_projectile = hitby
 
 		if(our_projectile.reflectable) //We handle this via IsReflect() instead.
-			final_block_chance = 0
-
+			effective_block_chance = 0
+	final_block_chance = clamp(effective_block_chance, 0, 100)
 	return ..()
 
 /obj/item/shield/energy/IsReflect()
@@ -323,7 +366,8 @@
 
 	if(user)
 		balloon_alert(user, active ? "activated" : "deactivated")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
+	is_bashable = !is_bashable
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)
@@ -335,7 +379,7 @@
 
 /obj/item/shield/energy/advanced
 	name = "advanced combat energy shield"
-	desc = "A hardlight shield capable of reflecting all energy projectiles, as well las providing well-rounded defense from most all other attacks. \
+	desc = "A hardlight shield capable of reflecting all energy projectiles, as well as providing well-rounded defense from most all other attacks. \
 		Often employed by Nanotrasen deathsquads."
 	icon_state = "advanced_eshield"
 	inhand_icon_state = "advanced_eshield"
@@ -387,7 +431,7 @@
 	slot_flags = active ? ITEM_SLOT_BACK : null
 	if(user)
 		balloon_alert(user, active ? "extended" : "collapsed")
-	playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/shield/riot/tele/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)
@@ -413,7 +457,7 @@
 	shield_break_leftover = /obj/item/stack/rods/ten
 	armor_type = /datum/armor/item_shield/ballistic
 
-/obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, params)
+/obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
@@ -439,6 +483,6 @@
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised
-	block_sound = 'sound/items/trayhit2.ogg'
+	block_sound = 'sound/items/trayhit/trayhit2.ogg'
 
-#undef BATON_BASH_COOLDOWN
+#undef WEAPON_BASH_COOLDOWN

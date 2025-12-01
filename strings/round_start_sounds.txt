@@ -1,4 +1,5 @@
-sound/ambience/title1.mod
-sound/ambience/title2.ogg
-sound/ambience/title3.ogg
-sound/ambience/clown.ogg
+sound/music/lobby_music/title0.ogg
+sound/music/lobby_music/title1.mod
+sound/music/lobby_music/title2.ogg
+sound/music/lobby_music/title3.ogg
+sound/music/lobby_music/clown.ogg

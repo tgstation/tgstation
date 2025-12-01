@@ -1,10 +1,10 @@
 {
-    "tape_piece_worn": [
-        {
-            "type": "icon_state",
-            "icon_state": "tape_piece_worn",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        }
-    ]
+	"tape_piece_worn": [
+		{
+			"type": "icon_state",
+			"icon_state": "tape_piece_worn",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
 }

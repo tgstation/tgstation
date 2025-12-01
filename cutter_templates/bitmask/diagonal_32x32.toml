@@ -1,7 +1,7 @@
 template = "bitmask/cardinal_32x32"
 
 # We're diagonal
-smooth_diagonally = true
+output_type = "StandardDiagonal"
 
 # And because of that we need a state for all directions
 [positions]

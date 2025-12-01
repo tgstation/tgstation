@@ -1,0 +1,6 @@
+{
+headset_pickup1.ogg
+headset_pickup2.ogg
+headset_pickup3.ogg
+headset_drop1.ogg
+} - made by sadboysuss

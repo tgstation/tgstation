@@ -6,8 +6,9 @@
 	flavour_text = "Write me some god damn flavor text!" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
 	show_flavor = FALSE
 	var/back_story = "error"
+	allow_custom_character = GHOSTROLE_TAKE_PREFS_APPEARANCE
 
-/obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
 	var/datum/antagonist/fugitive_hunter/fughunter = new
 	fughunter.backstory = back_story
@@ -96,3 +97,18 @@
 		if I assisted them with my 'flesh-gaze'. They're a bunch of freaks, but at least they leave me be after I'm done helping them..."
 	back_story = HUNTER_PACK_PSYKER
 	outfit = /datum/outfit/psyker_seer
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/mi13
+	name = "top-secret pod"
+	desc = "You don't have the classification to know what this pod contains or what its purpose is."
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper_s"
+	prompt_name = "a MI13 agent"
+	you_are_text = "I am an agent sent by MI13."
+	flavour_text = "Your mission is to infiltrate the space around SS13 and capture the fugitives on board, dead or alive. Your shuttle has been disguised as an ordinary food truck to help you remain undetected. \
+		This is a stealth mission in enemy territory. Reinforcements will not be sent to save you. Microbombs have been implanted in case of capture. Do not disappoint."
+	back_story = HUNTER_PACK_MI13
+	outfit = /datum/outfit/mi13_hunter
+
+/obj/effect/mob_spawn/ghost_role/human/fugitive/mi13/chef
+	outfit = /datum/outfit/mi13_hunter/chef

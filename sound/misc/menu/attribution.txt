@@ -1,0 +1,6 @@
+ui_select made by sadboysuss
+license: CC-BY-SA
+
+rolldown and rollup are heavily modified of:
+Yunon YN500 Camera Shutter by yfjesse -- https://freesound.org/s/579884/ -- License: Creative Commons 0
+

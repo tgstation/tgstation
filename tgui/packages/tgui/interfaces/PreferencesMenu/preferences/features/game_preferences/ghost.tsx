@@ -1,19 +1,18 @@
 import { binaryInsertWith } from 'common/collections';
-import { classes } from 'common/react';
-import { multiline } from 'common/string';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { useBackend } from 'tgui/backend';
+import { Box, Dropdown, Flex } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-import { useBackend } from '../../../../../backend';
-import { Box, Dropdown, Flex } from '../../../../../components';
-import { PreferencesMenuData } from '../../../data';
+import type { PreferencesMenuData } from '../../../types';
 import {
   CheckboxInput,
-  FeatureChoiced,
-  FeatureChoicedServerData,
-  FeatureDropdownInput,
-  FeatureToggle,
-  FeatureValueProps,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
+  type FeatureToggle,
+  type FeatureValueProps,
 } from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',
@@ -22,19 +21,23 @@ export const ghost_accs: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
-const insertGhostForm = binaryInsertWith<{
+type GhostForm = {
   displayText: ReactNode;
   value: string;
-}>(({ value }) => value);
+};
 
-const GhostFormInput = (
+function insertGhostForm(collection: GhostForm[], value: GhostForm) {
+  return binaryInsertWith(collection, value, ({ value }) => value);
+}
+
+function GhostFormInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
-) => {
+) {
   const { data } = useBackend<PreferencesMenuData>();
 
   const serverData = props.serverData;
   if (!serverData) {
-    return <> </>;
+    return;
   }
 
   const displayNames = serverData.display_names;
@@ -78,15 +81,16 @@ const GhostFormInput = (
 
   return (
     <Dropdown
+      autoScroll={false}
       disabled={!data.content_unlocked}
       selected={props.value}
-      displayText={displayTexts[props.value]}
+      placeholder={displayTexts[props.value]}
       onSelected={props.handleSetValue}
       width="100%"
       options={options}
     />
   );
-};
+}
 
 export const ghost_form: FeatureChoiced = {
   name: 'Ghosts form',
@@ -105,7 +109,7 @@ export const ghost_hud: FeatureToggle = {
 export const ghost_orbit: FeatureChoiced = {
   name: 'Ghost orbit',
   category: 'GHOST',
-  description: multiline`
+  description: `
     The shape in which your ghost will orbit.
     Requires BYOND membership.
   `,
@@ -123,7 +127,7 @@ export const ghost_orbit: FeatureChoiced = {
 export const ghost_others: FeatureChoiced = {
   name: 'Ghosts of others',
   category: 'GHOST',
-  description: multiline`
+  description: `
     Do you want the ghosts of others to show up as their own setting, as
     their default sprites, or always as the default white ghost?
   `,
@@ -140,7 +144,7 @@ export const inquisitive_ghost: FeatureToggle = {
 export const ghost_roles: FeatureToggle = {
   name: 'Get ghost roles',
   category: 'GHOST',
-  description: multiline`
+  description: `
     If you de-select this, you will not get any ghost role pop-ups what-so-ever!
     Every single type of these pop-ups WILL be muted for you when you are
     ghosted. Very useful for those who find ghost roles or the

@@ -136,6 +136,19 @@
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
+"ga" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/rag{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/ruin/space/has_grav/allamericandiner)
 "gl" = (
 /obj/structure/chair/sofa/left/maroon{
 	dir = 4
@@ -245,12 +258,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "nq" = (
 /obj/machinery/shower/directional/east,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
@@ -287,11 +295,6 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/allamericandiner)
-"ob" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "og" = (
@@ -476,19 +479,6 @@
 /obj/item/chair/plastic,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"wI" = (
-/obj/structure/table/reinforced,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/turf/open/floor/iron/kitchen/small,
-/area/ruin/space/has_grav/allamericandiner)
 "wJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/wood,
@@ -497,6 +487,10 @@
 	pixel_y = -5
 	},
 /turf/open/floor/iron,
+/area/ruin/space/has_grav/allamericandiner)
+"wW" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "xa" = (
 /obj/effect/turf_decal/bot,
@@ -518,7 +512,7 @@
 "yE" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
@@ -610,12 +604,7 @@
 /area/ruin/space/has_grav/allamericandiner)
 "CF" = (
 /obj/machinery/shower/directional/west,
-/obj/structure/fluff{
-	desc = "What, you think the water just magically soaks into the metallic flooring?";
-	icon = 'icons/obj/mining_zones/survival_pod.dmi';
-	icon_state = "fan_tiny";
-	name = "shower drain"
-	},
+/obj/structure/fluff/shower_drain,
 /obj/item/soap,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/allamericandiner)
@@ -778,9 +767,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/allamericandiner)
 "HF" = (
-/obj/structure/noticeboard/directional/north{
-	dir = 2
-	},
+/obj/structure/noticeboard/directional/north,
 /obj/machinery/deepfryer,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/allamericandiner,
@@ -1381,12 +1368,12 @@ oN
 oN
 EK
 EK
-ob
+wW
 EK
 EK
-ob
+wW
 EK
-ob
+wW
 EK
 EK
 EK
@@ -1463,7 +1450,7 @@ db
 vp
 fL
 fL
-ob
+wW
 SU
 SU
 SU
@@ -1574,7 +1561,7 @@ FB
 PW
 fL
 fL
-ob
+wW
 SU
 SU
 SU
@@ -1828,12 +1815,12 @@ zw
 jZ
 Qn
 Fr
-wI
+ga
 rG
 PW
 yl
 yl
-ob
+wW
 SU
 SU
 SU
@@ -1944,7 +1931,7 @@ Ka
 PW
 fL
 fL
-ob
+wW
 SU
 SU
 SU

@@ -9,7 +9,7 @@
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
-	///Candidates for recieving a healthy dose of heart disease
+	///Candidates for receiving a healthy dose of heart disease
 	var/list/heart_attack_candidates = list()
 
 /datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
@@ -30,7 +30,7 @@
 /datum/round_event_control/heart_attack/proc/generate_candidates()
 	heart_attack_candidates.Cut()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
-		if(candidate.stat == DEAD || HAS_TRAIT(candidate, TRAIT_CRITICAL_CONDITION) || !candidate.can_heartattack() || (/datum/disease/heart_failure in candidate.diseases) || candidate.undergoing_cardiac_arrest())
+		if(candidate.stat == DEAD || HAS_TRAIT(candidate, TRAIT_CRITICAL_CONDITION) || !candidate.can_heartattack() || (candidate.has_status_effect(/datum/status_effect/heart_attack)) || candidate.undergoing_cardiac_arrest())
 			continue
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
 			continue
@@ -67,15 +67,14 @@
 	if(winner.has_status_effect(/datum/status_effect/exercised)) //Stuff that should "block" a heart attack rather than just deny eligibility for one goes here.
 		winner.visible_message(span_warning("[winner] grunts and clutches their chest for a moment, catching [winner.p_their()] breath."), span_medal("Your chest lurches in pain for a brief moment, which quickly fades. \
 								You feel like you've just avoided a serious health disaster."), span_hear("You hear someone's breathing sharpen for a moment, followed by a sigh of relief."), 4)
-		winner.playsound_local(get_turf(winner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		winner.playsound_local(get_turf(winner), 'sound/effects/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
 		winner.Stun(3 SECONDS)
 		if(winner.client)
 			winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
 		message_admins("[winner] has just survived a random heart attack!") //time to spawn them a trophy :)
 		victims -= winner
 	else
-		var/datum/disease/heart_disease = new /datum/disease/heart_failure()
-		winner.ForceContractDisease(heart_disease, FALSE, TRUE)
+		winner.apply_status_effect(/datum/status_effect/heart_attack)
 		announce_to_ghosts(winner)
 		victims -= winner
 		return TRUE

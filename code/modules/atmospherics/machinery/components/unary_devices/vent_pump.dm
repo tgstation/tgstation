@@ -5,7 +5,7 @@
 
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
-
+	construction_type = /obj/item/pipe/directional/vent
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	can_unwrench = TRUE
@@ -18,6 +18,7 @@
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	// vents are more complex machinery and so are less resistant to damage
 	max_integrity = 100
+	interaction_flags_click = NEED_VENTCRAWL
 
 	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
@@ -30,9 +31,6 @@
 	// ATMOS_EXTERNAL_BOUND: Do not pass external_pressure_bound
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
-
-	/// id of air sensor its connected to
-	var/chamber_id
 
 	///area this vent is assigned to
 	var/area/assigned_area
@@ -122,7 +120,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
 	set_is_operational(TRUE)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_break(damage_flag)
@@ -188,7 +186,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
 	else
@@ -229,7 +227,7 @@
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
-		playsound(src, 'sound/machines/fan_break.ogg', 100)
+		playsound(src, 'sound/machines/fan/fan_break.ogg', 100)
 		fan_overclocked = FALSE
 
 	if(fan_overclocked)
@@ -239,13 +237,13 @@
 
 	investigate_log("had its overlock setting [fan_overclocked ? "enabled" : "disabled"] by [source]", INVESTIGATE_ATMOS)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	if(!is_operational)
 		return
 	if(!nodes[1])
-		on = FALSE
+		set_on(FALSE)
 	if(!on || welded)
 		return
 	var/turf/open/us = loc
@@ -329,7 +327,7 @@
 		else
 			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
 			welded = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
 		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -352,21 +350,21 @@
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user, list/modifiers)
-	if(!welded || !(do_after(user, 20, target = src)))
+	if(!welded || !(do_after(user, 2 SECONDS, target = src)))
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 100, TRUE)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = AREA_USAGE_EQUIP
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize(mapload)
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 

@@ -41,8 +41,6 @@ other types of metals and chemistry for reagents).
 	var/list/category = list()
 	/// List of reagents required to create one unit of the product. Currently only supported by the limb grower.
 	var/list/reagents_list = list()
-	/// The maximum number of units of whatever is produced by this can be produced in one go.
-	var/maxstack = 1
 	/// How many times faster than normal is this to build on the protolathe
 	var/lathe_time_factor = 1
 	/// Bitflags indicating what departmental lathes should be allowed to process this design.
@@ -62,7 +60,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/error_design
 	name = "ERROR"
-	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Comamnd so their techs can fix this ASAP(tm)"
+	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Command so their techs can fix this ASAP(tm)"
 
 /datum/design/Destroy()
 	SSresearch.techweb_designs -= id
@@ -80,7 +78,7 @@ other types of metals and chemistry for reagents).
 	materials = temp_list
 
 /datum/design/proc/icon_html(client/user)
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	sheet.send(user)
 	return sheet.icon_tag(id)
 
@@ -115,7 +113,7 @@ other types of metals and chemistry for reagents).
  * Args:
  * - stored_research - The techweb that's storing us.
  */
-/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research, atom/research_source)
 	return
 
 /obj/item/disk/design_disk/bepis
@@ -136,9 +134,9 @@ other types of metals and chemistry for reagents).
 		blueprints += new_entry
 
 ///Unhide and research our node so we show up in the R&D console.
-/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research)
+/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research, atom/research_source)
 	stored_research.hidden_nodes -= bepis_node.id
-	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE)
+	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE, research_source = research_source)
 
 /**
  * Subtype of Bepis tech disk

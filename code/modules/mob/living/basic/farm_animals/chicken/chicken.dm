@@ -38,12 +38,24 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
 	var/fertile = TRUE
 
+/datum/emote/chicken
+	mob_type_allowed_typecache = /mob/living/basic/chicken
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/chicken/cluck
+	key = "cluck"
+	key_third_person = "clucks"
+	message = "clucks happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/chicken/bagawk.ogg'
+
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
 	GLOB.chicken_count++
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "clucks happily!")
+	AddElement(/datum/element/pet_bonus, "cluck")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
@@ -81,7 +93,7 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 

@@ -38,6 +38,11 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), PROC_REF(on_restrained_trait_loss))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEAF), PROC_REF(on_hearing_loss))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEAF), PROC_REF(on_hearing_regain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_STASIS), PROC_REF(on_stasis_trait_loss))
+
 	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
 		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
@@ -65,6 +70,10 @@
 
 	RegisterSignal(src, COMSIG_MOVABLE_EDIT_UNIQUE_IMMERSE_OVERLAY, PROC_REF(edit_immerse_overlay))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_BASIC_HEALTH_HUD_VISIBLE), PROC_REF(add_to_basic_health_hud))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_BASIC_HEALTH_HUD_VISIBLE), PROC_REF(remove_from_basic_health_hud))
+
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -87,7 +96,7 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
 
-/// Updates medhud when recieving relevant signals.
+/// Updates medhud when receiving relevant signals.
 /mob/living/proc/update_medhud_on_signal(datum/source)
 	SIGNAL_HANDLER
 	med_hud_set_health()
@@ -98,7 +107,7 @@
 	SIGNAL_HANDLER
 	mobility_flags &= ~MOBILITY_MOVE
 	if(living_flags & MOVES_ON_ITS_OWN)
-		SSmove_manager.stop_looping(src) //stop mid walk //This is also really dumb
+		GLOB.move_manager.stop_looping(src) //stop mid walk //This is also really dumb
 
 /// Called when [TRAIT_IMMOBILIZED] is removed from the mob.
 /mob/living/proc/on_immobilized_trait_loss(datum/source)
@@ -157,7 +166,6 @@
 /mob/living/proc/on_ui_blocked_trait_gain(datum/source)
 	SIGNAL_HANDLER
 	mobility_flags &= ~(MOBILITY_UI)
-	unset_machine()
 	update_mob_action_buttons()
 
 /// Called when [TRAIT_UI_BLOCKED] is removed from the mob.
@@ -185,24 +193,36 @@
 	SIGNAL_HANDLER
 	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
+	update_incapacitated()
 
 /// Called when [TRAIT_INCAPACITATED] is removed from the mob.
 /mob/living/proc/on_incapacitated_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), TRAIT_INCAPACITATED)
 	update_appearance()
-
+	update_incapacitated()
 
 /// Called when [TRAIT_RESTRAINED] is added to the mob.
 /mob/living/proc/on_restrained_trait_gain(datum/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_RESTRAINED)
+	update_incapacitated()
 
 /// Called when [TRAIT_RESTRAINED] is removed from the mob.
 /mob/living/proc/on_restrained_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, TRAIT_RESTRAINED)
+	update_incapacitated()
 
+/// Called when [TRAIT_STASIS] is added to the mob
+/mob/living/proc/on_stasis_trait_gain(datum/source)
+	SIGNAL_HANDLER
+	update_incapacitated()
+
+/// Called when [TRAIT_STASIS] is removed from the mob
+/mob/living/proc/on_stasis_trait_loss(datum/source)
+	SIGNAL_HANDLER
+	update_incapacitated()
 
 /**
  * Called when traits that alter succumbing are added/removed.
@@ -261,15 +281,35 @@
 	SIGNAL_HANDLER
 	refresh_gravity()
 
-/// Called in [/datum/element/immerse/apply_filter]
-/mob/living/proc/edit_immerse_overlay(datum/source, atom/movable/immerse_overlay/vis_overlay)
+/mob/living/proc/edit_immerse_overlay(datum/source, atom/movable/immerse_mask/effect_relay)
 	SIGNAL_HANDLER
-
-	vis_overlay.transform = vis_overlay.transform.Scale(1/current_size)
-	vis_overlay.transform = vis_overlay.transform.Turn(-lying_angle)
-	vis_overlay.adjust_living_overlay_offset(src)
+	effect_relay.transform = effect_relay.transform.Scale(1 / current_size)
+	effect_relay.transform = effect_relay.transform.Turn(-lying_angle)
 
 /// Called when [TRAIT_UNDENSE] is gained or lost
 /mob/living/proc/undense_changed(datum/source)
 	SIGNAL_HANDLER
 	update_density()
+
+///Called when [TRAIT_DEAF] is added to the mob.
+/mob/living/proc/on_hearing_loss()
+	SIGNAL_HANDLER
+	refresh_looping_ambience()
+	stop_sound_channel(CHANNEL_AMBIENCE)
+
+///Called when [TRAIT_DEAF] is added to the mob.
+/mob/living/proc/on_hearing_regain()
+	SIGNAL_HANDLER
+	refresh_looping_ambience()
+
+/// When gaining [TRAIT_BASIC_HEALTH_HUD_VISIBLE], add to the basic health hud
+/mob/living/proc/add_to_basic_health_hud(datum/source)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/data/human/medical/basic/hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+	hud.add_atom_to_hud(src)
+
+/// When losing [TRAIT_BASIC_HEALTH_HUD_VISIBLE], remove from the basic health hud
+/mob/living/proc/remove_from_basic_health_hud(datum/source)
+	SIGNAL_HANDLER
+	var/datum/atom_hud/data/human/medical/basic/hud = GLOB.huds[DATA_HUD_MEDICAL_BASIC]
+	hud.remove_atom_from_hud(src)

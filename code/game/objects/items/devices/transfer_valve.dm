@@ -24,11 +24,46 @@
 
 /obj/item/transfer_valve/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
+	register_context()
+	register_item_context()
 
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
 	return ..()
+
+/obj/item/transfer_valve/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(tank_one || tank_two)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove [tank_one || tank_two]"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item) && is_type_in_list(held_item, list(/obj/item/tank, /obj/item/assembly)))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
+
+/obj/item/transfer_valve/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(istype(target, /obj/vehicle/ridden/wheelchair))
+		var/obj/vehicle/ridden/wheelchair/chair = target
+		if(!chair.bell_attached)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach TTV to wheelchair."
+			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/transfer_valve/click_alt(mob/user)
+	if(tank_one)
+		split_gases()
+		valve_open = FALSE
+		tank_one.forceMove(drop_location())
+	else if(tank_two)
+		split_gases()
+		valve_open = FALSE
+		tank_two.forceMove(drop_location())
+
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -41,6 +76,23 @@
 	else if(gone == tank_two)
 		tank_two = null
 		update_appearance()
+
+/obj/item/transfer_valve/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if (!istype(interacting_with, /obj/vehicle/ridden/wheelchair))
+		return NONE
+	var/obj/vehicle/ridden/wheelchair/chair = interacting_with
+
+	if (chair.bomb_attached)
+		user.balloon_alert(user, "already has a TTV!")
+		return ITEM_INTERACT_FAILURE
+	user.balloon_alert(user, "attaching TTV...")
+	if (!do_after(user, 0.5 SECONDS, chair))
+		return ITEM_INTERACT_FAILURE
+
+	chair.attach_bomb(src)
+	user.log_message("attached [src] to [chair]", LOG_GAME)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
@@ -183,6 +235,11 @@
 	if(!istype(target) || (target != tank_one && target != tank_two))
 		return FALSE
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			return FALSE
+
 	// Throw both tanks into processing queue
 	var/datum/gas_mixture/target_mix = target.return_air()
 	var/datum/gas_mixture/other_mix
@@ -211,6 +268,7 @@
 	it explodes properly when it gets a signal (and it does).
 */
 /obj/item/transfer_valve/proc/toggle_valve(obj/item/tank/target, change_volume = TRUE)
+	playsound(src, 'sound/effects/valve_opening.ogg', 50)
 	if(!valve_open && tank_one && tank_two)
 		var/turf/bombturf = get_turf(src)
 
@@ -219,7 +277,7 @@
 		if(attached_device)
 			if(issignaler(attached_device))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
-				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
+				attachment = "<A href='byond://?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
 				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
 			else
 				attachment = attached_device
@@ -290,7 +348,7 @@
 	data["valve"] = valve_open
 	return data
 
-/obj/item/transfer_valve/ui_act(action, params)
+/obj/item/transfer_valve/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

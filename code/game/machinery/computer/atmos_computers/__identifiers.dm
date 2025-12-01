@@ -1,7 +1,7 @@
 // ATMOSIA GAS MONITOR SUITE TAGS
 // Things that use these include atmos control monitors, sensors, inputs, and outlets.
 // They last three adds _sensor, _in, and _out respectively to the id_tag variable.
-// Dont put underscores here, we use them as delimiters.
+// Don't put underscores here, we use them as delimiters.
 
 #define ATMOS_GAS_MONITOR_O2 GAS_O2
 #define ATMOS_GAS_MONITOR_PLAS GAS_PLASMA
@@ -31,14 +31,6 @@
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
 #define ATMOS_GAS_MONITOR_WASTE "waste"
 #define ATMOS_GAS_MONITOR_ENGINE "engine"
-
-///maps an air sensor's chamber id to its input valve[ i.e. outlet_injector] id
-#define CHAMBER_INPUT_FROM_ID(chamber_id) ((chamber_id) + "_in")
-///maps an air sensor's chamber id to its output valve[i.e. vent pump] id
-#define CHAMBER_OUTPUT_FROM_ID(chamber_id) ((chamber_id) + "_out")
-
-///list of all air sensor's created round start
-GLOBAL_LIST_EMPTY(map_loaded_sensors)
 
 // Human-readble names of these funny tags.
 GLOBAL_LIST_INIT(station_gas_chambers, list(

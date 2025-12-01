@@ -34,13 +34,13 @@
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_appearance()
-			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 1200)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 2 MINUTES)
 		if(WIRE_IDSCAN) // Toggle lock.
 			A.locked = !A.locked
 		if(WIRE_AI) // Disable AI control for a while.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 100)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 10 SECONDS)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(!A.shorted)
 				if(istype(A.selected_mode, /datum/air_alarm_mode/filtering))
@@ -73,3 +73,9 @@
 			A.update_appearance()
 		if(WIRE_SPEAKER)
 			A.speaker_enabled = mend
+
+/datum/wires/airalarm/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
+		return TRUE
+
+	return ..()

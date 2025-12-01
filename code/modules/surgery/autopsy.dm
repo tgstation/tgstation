@@ -9,6 +9,16 @@
 		/datum/surgery_step/close,
 	)
 
+/datum/surgery/autopsy/mechanic
+	name = "System Failure Analysis"
+	requires_bodypart_type = BODYTYPE_ROBOTIC
+	steps = list(
+		/datum/surgery_step/mechanic_open,
+		/datum/surgery_step/open_hatch,
+		/datum/surgery_step/autopsy,
+		/datum/surgery_step/mechanic_close,
+	)
+
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
 	if(!..())
 		return FALSE
@@ -28,23 +38,21 @@
 	display_results(
 		user,
 		target,
-		span_notice("You begins performing an autopsy on [target]..."),
+		span_notice("You begin performing an autopsy on [target]..."),
 		span_notice("[user] uses [tool] to perform an autopsy on [target]."),
 		span_notice("[user] uses [tool] on [target]'s chest."),
 	)
 	display_pain(target, "You feel a burning sensation in your chest!")
 
-/datum/surgery_step/autopsy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/autopsy_scanner/tool, datum/surgery/surgery, default_display_results = FALSE)
+/datum/surgery_step/autopsy/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/autopsy_scanner/tool, datum/surgery/surgery, default_display_results = FALSE)
 	ADD_TRAIT(target, TRAIT_DISSECTED, AUTOPSY_TRAIT)
-	if(!HAS_TRAIT(src, TRAIT_SURGICALLY_ANALYZED))
-		ADD_TRAIT(target, TRAIT_SURGICALLY_ANALYZED, AUTOPSY_TRAIT)
+	ADD_TRAIT(target, TRAIT_SURGICALLY_ANALYZED, AUTOPSY_TRAIT)
 	tool.scan_cadaver(user, target)
 	var/obj/machinery/computer/operating/operating_computer = surgery.locate_operating_computer(get_turf(target))
 	if (!isnull(operating_computer))
 		SEND_SIGNAL(operating_computer, COMSIG_OPERATING_COMPUTER_AUTOPSY_COMPLETE, target)
-	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
-		var/mob/living/carbon/human/morbid_weirdo = user
-		morbid_weirdo.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		user.add_mood_event("morbid_dissection_success", /datum/mood_event/morbid_dissection_success)
 	return ..()
 
 /datum/surgery_step/autopsy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -55,4 +63,4 @@
 		span_warning("[user] screws up, brusing [target]'s chest!"),
 		span_warning("[user] screws up!"),
 	)
-	target.adjustBruteLoss(5)
+	target.adjust_brute_loss(5)

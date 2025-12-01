@@ -12,9 +12,8 @@
 /obj/machinery/ctf/spawner/medisim/Initialize(mapload)
 	. = ..()
 	ctf_game.setup_rules(victory_rejoin_text = "Teams have been cleared. The next game is starting automatically. Rejoin a team if you wish!", auto_restart = TRUE)
-	return INITIALIZE_HINT_LATELOAD //Start CTF needs to run after both medisim spawners have initalized.
 
-/obj/machinery/ctf/spawner/medisim/LateInitialize()
+/obj/machinery/ctf/spawner/medisim/post_machine_initialize()
 	. = ..()
 	ctf_game.start_ctf()
 
@@ -23,8 +22,8 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/human_knight = .
-	randomize_human(human_knight)
-	human_knight.dna.add_mutation(/datum/mutation/human/medieval, MUT_OTHER)
+	randomize_human_normie(human_knight)
+	human_knight.dna.add_mutation(/datum/mutation/medieval, MUTATION_SOURCE_MEDIEVAL_CTF)
 	var/oldname = human_knight.name
 	var/title = "error"
 	switch (human_knight.gender)
@@ -63,8 +62,9 @@
 /obj/item/ctf_flag/blue/medisim
 	name = "\improper Bluesworth Hold Fair Maiden"
 	desc = "Protect your maiden, and capture theirs!"
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_slime"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/ctf_flag/blue/medisim"
+	post_init_icon_state = "map_plushie_slime"
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#3399ff#000000"
 	force = 0

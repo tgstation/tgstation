@@ -7,7 +7,12 @@
 		BB_BASIC_MOB_FLEE_DISTANCE = 30,
 		BB_VISION_RANGE = 9,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_REINFORCEMENTS_EMOTE = "unleashes a chilling howl, calling for aid!"
+		BB_REINFORCEMENTS_EMOTE = "unleashes a chilling howl, calling for aid!",
+		BB_OWNER_SELF_HARM_RESPONSES = list(
+			"*me howls in dissaproval.",
+			"*me whines sadly.",
+			"*me attempts to take your hand in its mouth."
+		)
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -15,6 +20,7 @@
 
 	//reinforcements needs to be skipped over entirely on tamed wolves because it causes them to attack their owner and then themselves
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/call_reinforcements/wolf,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,

@@ -89,6 +89,15 @@
 	name = "Santa Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
+/datum/greyscale_config/ushanka
+	name = "Ushanka"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/ushanka.json'
+
+/datum/greyscale_config/ushanka/worn
+	name = "Ushanka (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
 //
 // MASKS
 //
@@ -218,6 +227,15 @@
 	name = "Infinity Scarf (Worn)"
 	icon_file = 'icons/mob/clothing/neck.dmi'
 
+/datum/greyscale_config/robe_cape
+	name = "Robe Cape"
+	icon_file = 'icons/obj/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape.json'
+
+/datum/greyscale_config/robe_cape/worn
+	name = "Robe Cape"
+	icon_file = 'icons/mob/clothing/neck.dmi'
+	json_config = 'code/datums/greyscale/json_configs/robe_cape_worn.json'
 //
 // GLOVES
 //
@@ -332,6 +350,62 @@
 /datum/greyscale_config/sundress/worn
 	name = "Sundress (Worn)"
 	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/striped_dress
+	name = "Striped dress"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/striped_dress.json'
+
+/datum/greyscale_config/striped_dress/worn
+	name = "Striped dress (Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/evening_dress
+	name = "Evening gown"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/eveningdress.json'
+
+/datum/greyscale_config/evening_dress/worn
+	name = "Evening gown (Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/cardiganskirt
+	name = "Cardigan Skirt"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/cardiganskirt.json'
+
+/datum/greyscale_config/cardiganskirt/worn
+	name = "Cardigan Skirt(Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/sailor_dress
+	name = "Sailor Dress"
+	icon_file = 'icons/obj/clothing/under/dress.dmi'
+	json_config = 'code/datums/greyscale/json_configs/sailor_dress.json'
+
+/datum/greyscale_config/sailor_dress/worn
+	name = "Sailor Dress(Worn)"
+	icon_file = 'icons/mob/clothing/under/dress.dmi'
+
+/datum/greyscale_config/seifuku
+	name = "Seifuku"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku.json'
+
+/datum/greyscale_config/seifuku/worn
+	name = "Seifuku (Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_worn.json'
+
+/datum/greyscale_config/seifuku_inhands_left
+	name = "Seifuku Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_inhands.json'
+
+/datum/greyscale_config/seifuku_inhands_right
+	name = "Seifuku Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/seifuku_inhands.json'
 
 // SHIRTS, PANTS AND SHORTS
 /datum/greyscale_config/slacks
@@ -472,6 +546,24 @@
 	name = "Sweater (Worn)"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 
+/datum/greyscale_config/blazer
+	name = "Blazer"
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/blazer.json'
+
+/datum/greyscale_config/blazer/worn
+	name = "Blazer (Worn)"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+
+/datum/greyscale_config/trenchcoat
+	name = "Trenchcoat"
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/trenchcoat.json'
+
+/datum/greyscale_config/trenchcoat/worn
+	name = "Trenchcoat (Worn)"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+
 /datum/greyscale_config/jacket_oversized
 	name = "Oversized Jacket"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
@@ -585,6 +677,14 @@
 /datum/greyscale_config/waistcoat/worn
 	name = "Waistcoat (Worn)"
 	icon_file = 'icons/mob/clothing/accessories.dmi'
+
+// Digi Stuff
+
+/datum/greyscale_config/digitigrade
+	name = "Digitigrade Clothes"
+	icon_file = 'icons/mob/clothing/digi_template.dmi'
+	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
+
 
 //
 // SUIT + HEAD
@@ -752,3 +852,86 @@
 /datum/greyscale_config/messyworn_shirt_graphic/worn
 	name = "Messy Shirt (Graphic (Worn)"
 	icon_file = 'icons/mob/clothing/suits/costume.dmi'
+
+/datum/greyscale_config/gi
+	name = "Gi"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gi.json'
+
+/datum/greyscale_config/gi/worn
+	name = "Gi (Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+
+/datum/greyscale_config/jester_suit
+	name = "Jester Suit"
+	icon_file = 'icons/obj/clothing/under/civilian.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_suit.json'
+
+/datum/greyscale_config/jester_suit/worn
+	name = "Jester Suit (Worn)"
+	icon_file = 'icons/mob/clothing/under/civilian.dmi'
+
+/datum/greyscale_config/jester_shoes
+	name = "Jester Shoes"
+	icon_file = 'icons/obj/clothing/shoes.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_shoes.json'
+
+/datum/greyscale_config/jester_shoes/worn
+	name = "Jester Shoes (Worn)"
+	icon_file = 'icons/mob/clothing/feet.dmi'
+
+/datum/greyscale_config/jester_hat
+	name = "Jester Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/jester_hat.json'
+
+/datum/greyscale_config/jester_hat/worn
+	name = "Jester Hat (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/fedora
+	name = "Fedora"
+	icon_file = 'icons/obj/clothing/head/hats.dmi'
+	json_config = 'code/datums/greyscale/json_configs/fedora.json'
+
+/datum/greyscale_config/fedora/worn
+	name = "Fedora (Worn)"
+	icon_file = 'icons/mob/clothing/head/hats.dmi'
+
+/datum/greyscale_config/maid
+	name = "Maid Uniform"
+	icon_file = 'icons/obj/clothing/under/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid/worn
+	name = "Maid Uniform(Worn)"
+	icon_file = 'icons/mob/clothing/under/costume.dmi'
+
+/datum/greyscale_config/maid_inhands_left
+	name = "Maid Uniform Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_inhands_right
+	name = "Maid Uniform Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband
+	name = "Maid Headband"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband/worn
+	name = "Maid Headband(Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
+/datum/greyscale_config/maid_headband_inhands_left
+	name = "Maid Headband Inhands Left"
+	icon_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'
+
+/datum/greyscale_config/maid_headband_inhands_right
+	name = "Maid Headband Inhands Right"
+	icon_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
+	json_config = 'code/datums/greyscale/json_configs/maid.json'

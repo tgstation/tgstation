@@ -38,7 +38,7 @@
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
 	new /obj/effect/temp_visual/teleport_abductor(place)
-	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 80)
+	addtimer(CALLBACK(src, PROC_REF(doMobToLoc), place, target), 8 SECONDS)
 
 /obj/machinery/abductor/pad/proc/doPadToLoc(place)
 	flick("alien-pad", src)
@@ -48,7 +48,7 @@
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
 	new /obj/effect/temp_visual/teleport_abductor(place)
-	addtimer(CALLBACK(src, PROC_REF(doPadToLoc), place), 80)
+	addtimer(CALLBACK(src, PROC_REF(doPadToLoc), place), 8 SECONDS)
 
 /obj/effect/temp_visual/teleport_abductor
 	name = "Huh"

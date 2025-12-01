@@ -59,12 +59,6 @@
 /datum/mood_event/withdrawal_severe/add_effects(drug_name)
 	description = "Oh god, I need some of that [drug_name]!"
 
-/datum/mood_event/withdrawal_critical
-	mood_change = -10
-
-/datum/mood_event/withdrawal_critical/add_effects(drug_name)
-	description = "[drug_name]! [drug_name]! [drug_name]!"
-
 /datum/mood_event/happiness_drug
 	description = "Can't feel a thing..."
 	mood_change = 50
@@ -89,6 +83,16 @@
 /datum/mood_event/narcotic_heavy
 	description = "I feel like I'm wrapped up in cotton!"
 	mood_change = 9
+	timeout = 3 MINUTES
+
+/datum/mood_event/antinarcotic_medium
+	description = "I wish I was numb again!"
+	mood_change = -4
+	timeout = 3 MINUTES
+
+/datum/mood_event/antinarcotic_heavy
+	description = "NO!! Make the cotton come back!"
+	mood_change = -9
 	timeout = 3 MINUTES
 
 /datum/mood_event/stimulant_medium
@@ -130,3 +134,8 @@
 	description = "I feel my soul degrading!"
 	mood_change = -8
 	timeout = 8 MINUTES
+
+/datum/mood_event/sadness_inverse
+	description = "I'M SO SAD..."
+	mood_change = -150
+	special_screen_obj = "mood_happiness_bad"

@@ -11,7 +11,7 @@
 	item_flags = NO_BLOOD_ON_ITEM
 
 	overlay_speaker_idle = "intercom_s"
-	overlay_speaker_active = "intercom_recieve"
+	overlay_speaker_active = "intercom_receive"
 
 	overlay_mic_idle = "intercom_m"
 	overlay_mic_active = null
@@ -28,24 +28,23 @@
 	icon_state = "intercom_prison"
 	icon_off = "intercom_prison-p"
 
-/obj/item/radio/intercom/prison/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/prison/Initialize(mapload)
 	. = ..()
 	wires?.cut(WIRE_TX)
 
-/obj/item/radio/intercom/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/Initialize(mapload)
 	. = ..()
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
+	if(mapload)
+		find_and_hang_on_atom()
 	GLOB.intercoms_list += src
-	if(!unscrewed)
-		find_and_hang_on_wall(directional = TRUE, \
-			custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 
 /obj/item/radio/intercom/Destroy()
-	. = ..()
 	GLOB.intercoms_list -= src
+	return ..()
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
@@ -87,7 +86,7 @@
 	if(tool.use_tool(src, user, 80))
 		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		knock_down()
+		deconstruct(TRUE)
 
 /**
  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's
@@ -100,6 +99,9 @@
 
 
 /obj/item/radio/intercom/attack_ai(mob/user)
+	interact(user)
+
+/obj/item/radio/intercom/attack_robot(mob/user)
 	interact(user)
 
 /obj/item/radio/intercom/attack_hand(mob/user, list/modifiers)
@@ -118,12 +120,12 @@
 			return FALSE
 
 	if(freq == FREQ_SYNDICATE)
-		if(!(syndie))
+		if(!(special_channels &= RADIO_SPECIAL_SYNDIE))
 			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
 	return TRUE
 
-/obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
+/obj/item/radio/intercom/Hear(atom/movable/speaker, message_langs, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	if(message_mods[RADIO_EXTENSION] == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
 	return ..()
@@ -154,7 +156,7 @@
 		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
 		if(RADIO_FREQENCY_LOCKED)
 			balloon_alert(user, "can't override frequency lock!")
-			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+			playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return
 
 		// Emagging an unlocked one will do nothing, for now
@@ -184,9 +186,8 @@
 /**
  * Called by the wall mount component and reused during the tool deconstruction proc.
  */
-/obj/item/radio/intercom/proc/knock_down()
+/obj/item/radio/intercom/atom_deconstruct(disassembled)
 	new/obj/item/wallframe/intercom(get_turf(src))
-	qdel(src)
 
 //Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
@@ -206,7 +207,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	anonymize = TRUE
 	freqlock = RADIO_FREQENCY_EMAGGABLE_LOCK
 
-/obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
+/obj/item/radio/intercom/chapel/Initialize(mapload)
 	. = ..()
 	set_frequency(1481)
 	set_broadcasting(TRUE)
@@ -219,6 +220,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	command = TRUE
 	icon_off = "intercom_command-p"
 
+/obj/item/radio/intercom/syndicate
+	name = "syndicate intercom"
+	desc = "Talk smack through this."
+	command = TRUE
+	special_channels = RADIO_SPECIAL_SYNDIE
+
+/obj/item/radio/intercom/syndicate/freerange
+	name = "syndicate wide-band intercom"
+	desc = "A custom-made Syndicate-issue intercom used to transmit on all Nanotrasen frequencies. Particularly expensive."
+	freerange = TRUE
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/prison, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/chapel, 27)
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/command, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate, 27)
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom/syndicate/freerange, 27)

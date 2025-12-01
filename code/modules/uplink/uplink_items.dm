@@ -2,9 +2,17 @@
 /// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
 /proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
 	var/list/sales = list()
-	var/list/sale_items_copy = sale_items.Copy()
-	for (var/i in 1 to num)
-		var/datum/uplink_item/taken_item = pick_n_take(sale_items_copy)
+	var/list/per_category = list()
+
+	for (var/datum/uplink_item/possible_sale as anything in sale_items)
+		if (!(possible_sale.category in per_category))
+			per_category[possible_sale.category] = list()
+		per_category[possible_sale.category] += possible_sale
+
+	for (var/i in 1 to min(length(per_category), num))
+		var/datum/uplink_category/item_category = pick(per_category)
+		var/datum/uplink_item/taken_item = pick(per_category[item_category])
+		per_category -= item_category
 		var/datum/uplink_item/uplink_item = new taken_item.type()
 		var/discount = uplink_item.get_discount()
 		var/static/list/disclaimer = list(
@@ -21,7 +29,17 @@
 			"Use only as directed.",
 			"16% sales tax will be charged for orders originating within Space Nebraska.",
 		)
-		uplink_item.limited_stock = limited_stock
+
+		//We want to limit the purchase amount of some items without adjusting the pricing.
+		if (uplink_item.limited_discount_stock > 0) {
+			uplink_item.limited_stock = uplink_item.limited_discount_stock
+		}
+
+		//if stock limited is passed into the function, we'll override everything
+		if (limited_stock > 0) {
+			uplink_item.limited_stock = limited_stock
+		}
+
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
 		uplink_item.stock_key = WEAKREF(uplink_item)
@@ -65,21 +83,25 @@
 	var/stock_key = UPLINK_SHARED_STOCK_UNIQUE
 	/// How many items of this stock can be purchased.
 	var/limited_stock = -1 //Setting this above zero limits how many times this item can be bought by the same traitor in a round, -1 is unlimited
+	/// How many items of this stock can be purchased from the discount tab.
+	var/limited_discount_stock = -1
 	/// A bitfield to represent what uplinks can purchase this item.
 	/// See [`code/__DEFINES/uplink.dm`].
 	var/purchasable_from = ALL
 	/// If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/list/restricted_roles = list()
 	/// The species able to purchase this uplink item.
-	var/restricted_species = list()
+	var/list/restricted_species = list()
 	/// The minimum amount of progression needed for this item to be added to uplinks.
 	var/progression_minimum = 0
+	/// The minimum number of joined players (so not observers) needed for this item to be added to uplinks.
+	var/population_minimum = 0
 	/// Whether this purchase is visible in the purchase log.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	/// Whether this purchase is restricted or not (VR/Events related)
 	var/restricted = FALSE
-	/// Can this item be deconstructed to unlock certain techweb research nodes?
-	var/illegal_tech = TRUE
+	/// Flags related to if an item will provide illegal tech, or trips contraband detectors once spawned in as an item.
+	var/uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 	/// String to be shown instead of the price, e.g for the Random item.
 	var/cost_override_string = ""
 	/// Whether this item locks all other items from being purchased. Used by syndicate balloon and a few other purchases.
@@ -125,6 +147,7 @@
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/atom/spawned_item = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
+	user.playsound_local(get_turf(user), 'sound/effects/kaching.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	if(purchase_log_vis && uplink_handler.purchase_log)
 		uplink_handler.purchase_log.LogPurchase(spawned_item, src, cost)
 	if(lock_other_purchases)
@@ -141,6 +164,12 @@
 		spawned_item = spawn_path
 	if(refundable)
 		spawned_item.AddElement(/datum/element/uplink_reimburse, (refund_amount ? refund_amount : cost))
+
+
+	if(uplink_item_flags & SYNDIE_TRIPS_CONTRABAND) // Ignore things that shouldn't be detectable as contraband on the station.
+		ADD_TRAIT(spawned_item, TRAIT_CONTRABAND, INNATE_TRAIT)
+		for(var/obj/contained as anything in spawned_item.get_all_contents())
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
 	var/mob/living/carbon/human/human_user = user
 	if(istype(human_user) && isitem(spawned_item) && human_user.put_in_hands(spawned_item))
 		to_chat(human_user, span_boldnotice("[spawned_item] materializes into your hands!"))
@@ -153,6 +182,10 @@
 /// Can be used to "de-restrict" some items, such as Nukie guns spawning with Syndicate pins
 /datum/uplink_item/proc/spawn_item_for_generic_use(mob/user)
 	var/atom/movable/created = new item(user.loc)
+	if(uplink_item_flags & SYNDIE_TRIPS_CONTRABAND) // Things that shouldn't be detectable as contraband on the station.
+		ADD_TRAIT(created, TRAIT_CONTRABAND, INNATE_TRAIT)
+		for(var/obj/contained as anything in created.get_all_contents())
+			ADD_TRAIT(contained, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 	if(isgun(created))
 		replace_pin(created)
@@ -175,7 +208,8 @@
 		return
 
 	QDEL_NULL(gun_reward.pin)
-	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
+	var/obj/item/firing_pin/pin = new
+	pin.gun_insert(new_gun = gun_reward, starting = TRUE)
 
 ///For special overrides if an item can be bought or not.
 /datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
@@ -198,13 +232,17 @@
 	category = /datum/uplink_category/discounts
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Probably not necessary but just in case
 
+/datum/uplink_category/objective_special
+	name = "Objective-Specific Equipment"
+	weight = -3
+
 // Special equipment (Dynamically fills in uplink component)
 /datum/uplink_item/special_equipment
-	category = "Objective-Specific Equipment"
+	category = /datum/uplink_category/objective_special
 	name = "Objective-Specific Equipment"
 	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
 	limited_stock = 1
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 	purchasable_from = parent_type::purchasable_from & ~UPLINK_SPY // Ditto
 
 /datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)

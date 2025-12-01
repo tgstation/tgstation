@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fuck you coupons ACTUALLY trigger only once again. As a consequence, they also burn up when expended for their one-time fuck you."
-  - bugfix: "Fuck you coupons work regardless of whether you had a free hand or not."

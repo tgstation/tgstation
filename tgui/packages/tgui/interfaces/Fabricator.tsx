@@ -1,6 +1,3 @@
-import { classes } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,12 +6,15 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
@@ -133,16 +133,15 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
+        buttonText={`[Max: ${maxMult}]`}
         color="transparent"
-        onCommit={(_e, value: string) =>
+        onCommit={(value) =>
           act('build', {
             ref: design.id,
             amount: value,
           })
         }
-      >
-        [Max: {maxMult}]
-      </Button.Input>
+      />
     </div>
   );
 };

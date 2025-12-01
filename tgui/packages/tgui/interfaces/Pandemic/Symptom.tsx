@@ -5,10 +5,10 @@ import {
   Section,
   Stack,
   Tooltip,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { getColor } from './helpers';
-import { Threshold } from './types';
+import type { Threshold } from './types';
 
 /**
  * Similar to the virus info display.
@@ -46,7 +46,7 @@ export const SymptomDisplay = (props) => {
 /** Displays threshold data */
 const Thresholds = (props) => {
   const { thresholds = [] } = props;
-  let convertedThresholds = Object.entries<Threshold>(thresholds);
+  const convertedThresholds = Object.entries<Threshold>(thresholds);
 
   return (
     <Section mt={1} title="Thresholds">

@@ -7,6 +7,7 @@
 	fill_icon_state = "bottle"
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	possible_transfer_amounts = list(5, 10, 15, 25, 50)
 	volume = 50
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
@@ -37,6 +38,11 @@
 	desc = "A small bottle of spewium."
 	list_reagents = list(/datum/reagent/toxin/spewium = 30)
 
+/obj/item/reagent_containers/cup/bottle/syndol
+	name = "syndol bottle"
+	desc = "A small bottle of syndol."
+	list_reagents = list(/datum/reagent/drug/syndol = 30)
+
 /obj/item/reagent_containers/cup/bottle/morphine
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."
@@ -58,6 +64,11 @@
 	name = "multiver bottle"
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
 	list_reagents = list(/datum/reagent/medicine/c2/multiver = 30)
+
+/obj/item/reagent_containers/cup/bottle/calomel
+	name = "calomel bottle"
+	desc = "A small bottle of calomel, a toxic drug which quickly removes chemicals from the bloodstream. Does not cause additional harm in heavily-injured people."
+	list_reagents = list(/datum/reagent/medicine/calomel = 30)
 
 /obj/item/reagent_containers/cup/bottle/phlogiston
 	name = "Phlogiston bottle"
@@ -123,6 +134,16 @@
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
 	list_reagents = list(/datum/reagent/consumable/frostoil = 30)
+
+/obj/item/reagent_containers/cup/bottle/strange_reagent
+	name = "Strange Reagent Bottle"
+	desc = "A small bottle. May be used to revive people."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent = 30)
+
+/obj/item/reagent_containers/cup/bottle/fishy_reagent
+	name = "Fishy Reagent Bottle"
+	desc = "A small bottle. May be used to revive fish."
+	list_reagents = list(/datum/reagent/medicine/strange_reagent/fishy_reagent = 30)
 
 /obj/item/reagent_containers/cup/bottle/traitor
 	name = "syndicate bottle"
@@ -240,10 +261,21 @@
 	desc = "A small bottle of basic buffer."
 	list_reagents = list(/datum/reagent/reaction_agent/basic_buffer = 30)
 
+/obj/item/reagent_containers/cup/bottle/inversing_buffer
+	name = "Chiral inversing buffer bottle"
+	desc = "A small bottle of chiral inversing buffer."
+	list_reagents = list(/datum/reagent/reaction_agent/inversing_buffer = 30)
+
 /obj/item/reagent_containers/cup/bottle/romerol
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."
 	list_reagents = list(/datum/reagent/romerol = 30)
+
+/obj/item/reagent_containers/cup/bottle/moltobeso
+	name = "Molt'Obeso bottle"
+	desc = "The revolutionary new sauce from Syndicate's culinary experts, designed to instantly reshape your figure! \
+			The key to the effectiveness of this product lies in its unique formulation, which combines carefully selected ingredients to stimulate appetite and enhance the absorption of calories."
+	list_reagents = list(/datum/reagent/consumable/moltobeso = 50)
 
 /obj/item/reagent_containers/cup/bottle/random_virus
 	name = "Experimental disease culture bottle"
@@ -426,7 +458,7 @@
 
 /obj/item/reagent_containers/cup/bottle/thermite
 	name = "thermite bottle"
-	list_reagents = list(/datum/reagent/thermite = 30)
+	list_reagents = list(/datum/reagent/thermite = 50)
 
 // Bottles for mail goodies.
 
@@ -457,7 +489,7 @@
 
 /obj/item/reagent_containers/cup/bottle/caramel
 	name = "bottle of caramel"
-	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 30)
 
 /*
@@ -473,74 +505,79 @@
 	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
 	possible_transfer_amounts = list(5, 10)
 	amount_per_transfer_from_this = 5
-	spillable = FALSE
-	///variable to tell if the bottle can be refilled
-	var/cap_on = TRUE
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/Initialize(mapload)
+	. = ..()
+	register_context()
+	// this is not done via initial_reagent_flags because it represents state
+	update_container_flags(SEALED_CONTAINER | TRANSPARENT)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle the pump cap.")
 	. += span_notice("Use a pen on it to rename it.")
-	return
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = (is_open_container() ? "Add Pump Cap" : "Remove Pump Cap")
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Write Label"
+	else if(is_open_container() && held_item?.is_refillable())
+		context[SCREENTIP_CONTEXT_LMB] = "Use Pump"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 //when you attack the syrup bottle with a container it refills it
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
-
-	if(!cap_on)
-		return ..()
-
-	if(!check_allowed_items(attacking_item,target_self = TRUE))
-		return
-
-	if(attacking_item.is_refillable())
-		if(!reagents.total_volume)
-			balloon_alert(user, "bottle empty!")
-			return TRUE
-
-		if(attacking_item.reagents.holder_full())
-			balloon_alert(user, "container full!")
-			return TRUE
-
-		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user)
-		balloon_alert(user, "transferred [transfer_amount] unit\s")
-		flick("syrup_anim",src)
-
-	if(istype(attacking_item, /obj/item/pen))
-		rename(user, attacking_item)
-
-	attacking_item.update_appearance()
-	update_appearance()
-
-	return TRUE
-
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
-	cap_on = !cap_on
-	if(!cap_on)
-		icon_state = "syrup_open"
-		balloon_alert(user, "removed pump cap")
-	else
-		icon_state = "syrup"
-		balloon_alert(user, "put pump cap on")
-	update_icon_state()
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_open_container() && tool.is_refillable())
+		return refillable_act(user, tool)
 	return ..()
 
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/rename(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
-		return
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/nameformat(input, user)
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return "[input? "[input] " : null]bottle"
 
-	var/inputvalue = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
 
-	if(!inputvalue)
-		return
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/refillable_act(mob/user, obj/item/tool)
+	if(!reagents.total_volume)
+		balloon_alert(user, "bottle empty!")
+		return ITEM_INTERACT_BLOCKING
+	if(tool.reagents.holder_full())
+		balloon_alert(user, "container full!")
+		return ITEM_INTERACT_BLOCKING
 
-	if(user.can_perform_action(src))
-		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
+	var/transfer_amount = round(reagents.trans_to(tool, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
+	if(transfer_amount)
+		balloon_alert(user, "transferred [transfer_amount] unit\s")
+	flick("syrup_anim",src)
+	tool.update_appearance()
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/update_icon_state()
+	. = ..()
+	if(is_open_container())
+		icon_state = "syrup_open"
+	else
+		icon_state = "syrup"
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
+	if(is_open_container())
+		balloon_alert(user, "put pump cap on")
+		update_container_flags(SEALED_CONTAINER | TRANSPARENT)
+	else
+		balloon_alert(user, "removed pump cap")
+		reset_container_flags()
+
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
 
 //types of syrups
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel
 	name = "bottle of caramel syrup"
-	desc = "A pump bottle containing caramalized sugar, also known as caramel. Do not lick."
+	desc = "A pump bottle containing caramelized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 50)
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur

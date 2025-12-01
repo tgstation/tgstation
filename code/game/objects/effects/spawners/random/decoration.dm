@@ -7,7 +7,7 @@
 	name = "decoration material spawner"
 	icon_state = "tile"
 	loot = list(
-		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
+		/obj/item/stack/ore/glass/thirty = 25,
 		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
 		/obj/item/stack/sheet/bronze/thirty = 20,
 		/obj/item/stack/tile/noslip{amount = 20} = 10,
@@ -113,6 +113,26 @@
 		/obj/item/flashlight/glowstick/yellow,
 		/obj/item/flashlight/glowstick/pink,
 	)
+
+/obj/effect/spawner/random/decoration/glowstick/on
+	name = "random colored glowstick (on)"
+	icon_state = "glowstick"
+	loot = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
+
+/obj/effect/spawner/random/decoration/glowstick/on/make_item(spawn_loc, type_path_to_make)
+	. = ..()
+
+	var/obj/item/flashlight/glowstick = .
+
+	glowstick.set_light_on(TRUE)
 
 /obj/effect/spawner/random/decoration/paint
 	name = "paint spawner"

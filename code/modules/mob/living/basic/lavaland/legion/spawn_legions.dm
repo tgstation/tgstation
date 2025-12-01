@@ -7,15 +7,24 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
-	cooldown_time = 2 SECONDS
+	cooldown_time = 4 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	/// If a mob is not clicked directly, inherit targeting data from this blackboard key and setting it upon this target key
 	var/ai_target_key = BB_BASIC_MOB_CURRENT_TARGET
 	/// What are we actually spawning?
-	var/spawn_type = /mob/living/basic/legion_brood
+	var/spawn_type = /mob/living/basic/mining/legion_brood
 	/// How far can we fire?
 	var/max_range = 7
+
+/datum/action/cooldown/mob_cooldown/skull_launcher/IsAvailable(feedback)
+	. = ..()
+	if (!.)
+		return
+	if (!isturf(owner.loc))
+		owner.balloon_alert(owner, "no room!")
+		return FALSE
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/skull_launcher/Activate(atom/target)
 	var/turf/target_turf = get_turf(target)
@@ -52,7 +61,7 @@
 
 /// Actually create a mob
 /datum/action/cooldown/mob_cooldown/skull_launcher/proc/spawn_skull(turf/spawn_location, target)
-	var/mob/living/basic/legion_brood/brood = new spawn_type(spawn_location)
+	var/mob/living/basic/mining/legion_brood/brood = new spawn_type(spawn_location)
 	if (istype(brood))
 		brood.assign_creator(owner)
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)

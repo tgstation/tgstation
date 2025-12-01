@@ -49,27 +49,34 @@
 		cmd_show_exp_panel(M.client)
 
 	else if(href_list["editrightsbrowser"])
-		edit_admin_permissions(0)
+		edit_admin_permissions(PERMISSIONS_PAGE_PERMISSIONS)
 
-	else if(href_list["editrightsbrowserlog"])
-		edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
+	else if(href_list["editrightsbrowserranks"])
+		if(href_list["editrightsaddrank"])
+			add_rank()
+		else if(href_list["editrightsremoverank"])
+			remove_rank(href_list["editrightsremoverank"])
+		else if(href_list["editrightseditrank"])
+			change_rank(href_list["editrightseditrank"])
+		edit_admin_permissions(PERMISSIONS_PAGE_RANKS)
 
-	if(href_list["editrightsbrowsermanage"])
+	else if(href_list["editrightsbrowserlogging"])
+		edit_admin_permissions(PERMISSIONS_PAGE_LOGGING, href_list["editrightslogtarget"], href_list["editrightslogactor"], href_list["editrightslogoperation"], href_list["editrightslogpage"])
+
+	if(href_list["editrightsbrowserhousekeep"])
 		if(href_list["editrightschange"])
 			change_admin_rank(ckey(href_list["editrightschange"]), href_list["editrightschange"], TRUE)
 		else if(href_list["editrightsremove"])
 			remove_admin(ckey(href_list["editrightsremove"]), href_list["editrightsremove"], TRUE)
 		else if(href_list["editrightsremoverank"])
 			remove_rank(href_list["editrightsremoverank"])
-		edit_admin_permissions(2)
+		edit_admin_permissions(PERMISSIONS_PAGE_HOUSEKEEPING)
 
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
 	else if(href_list["gamemode_panel"])
-		if(!check_rights(R_ADMIN))
-			return
-		SSdynamic.admin_panel()
+		dynamic_panel(usr)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -136,8 +143,7 @@
 		to_chat(usr, "[shuttle_console] was [shuttle_console.admin_controlled ? "locked" : "unlocked"].", confidential = TRUE)
 
 	else if(href_list["delay_round_end"])
-		// Permissions are checked in delay_round_end
-		delay_round_end()
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/delay_round_end)
 
 	else if(href_list["undelay_round_end"])
 		if(!check_rights(R_SERVER))
@@ -199,7 +205,11 @@
 				if(posttransformoutfit && istype(newmob))
 					newmob.equipOutfit(posttransformoutfit)
 			if("monkey")
-				M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
+				if(ishuman(M))
+					var/mob/living/carbon/human/human = M
+					human.dna.add_mutation(/datum/mutation/race, MUTATION_SOURCE_ACTIVATED)
+				else
+					M.change_mob_type(/mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
 				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 
@@ -383,122 +393,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
-
-	else if(href_list["f_dynamic_roundstart"])
-		if(!check_rights(R_ADMIN))
-			return
-		if(SSticker.HasRoundStarted())
-			return tgui_alert(usr, "The game has already started.")
-		var/roundstart_rules = list()
-		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
-			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
-			roundstart_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sort_list(roundstart_rules)
-		if (added_rule)
-			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
-			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
-			message_admins("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.", 1)
-			Game()
-
-	else if(href_list["f_dynamic_roundstart_clear"])
-		if(!check_rights(R_ADMIN))
-			return
-		GLOB.dynamic_forced_roundstart_ruleset = list()
-		Game()
-		log_admin("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.")
-		message_admins("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.", 1)
-
-	else if(href_list["f_dynamic_roundstart_remove"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/datum/dynamic_ruleset/roundstart/rule = locate(href_list["f_dynamic_roundstart_remove"])
-		GLOB.dynamic_forced_roundstart_ruleset -= rule
-		Game()
-		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
-		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
-
-	else if (href_list["f_dynamic_ruleset_manage"])
-		if(!check_rights(R_ADMIN))
-			return
-		dynamic_ruleset_manager(usr)
-	else if (href_list["f_dynamic_ruleset_force_all_on"])
-		if(!check_rights(R_ADMIN))
-			return
-		force_all_rulesets(usr, RULESET_FORCE_ENABLED)
-	else if (href_list["f_dynamic_ruleset_force_all_off"])
-		if(!check_rights(R_ADMIN))
-			return
-		force_all_rulesets(usr, RULESET_FORCE_DISABLED)
-	else if (href_list["f_dynamic_ruleset_force_all_reset"])
-		if(!check_rights(R_ADMIN))
-			return
-		force_all_rulesets(usr, RULESET_NOT_FORCED)
-	else if (href_list["f_dynamic_ruleset_force_on"])
-		if(!check_rights(R_ADMIN))
-			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_on"]), RULESET_FORCE_ENABLED)
-	else if (href_list["f_dynamic_ruleset_force_off"])
-		if(!check_rights(R_ADMIN))
-			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_off"]), RULESET_FORCE_DISABLED)
-	else if (href_list["f_dynamic_ruleset_force_reset"])
-		if(!check_rights(R_ADMIN))
-			return
-		set_dynamic_ruleset_forced(usr, locate(href_list["f_dynamic_ruleset_force_reset"]), RULESET_NOT_FORCED)
-	else if (href_list["f_inspect_ruleset"])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.debug_variables(locate(href_list["f_inspect_ruleset"]))
-
-	else if (href_list["f_dynamic_options"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return tgui_alert(usr, "The game has already started.")
-
-		dynamic_mode_options(usr)
-	else if(href_list["f_dynamic_force_extended"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		GLOB.dynamic_forced_extended = !GLOB.dynamic_forced_extended
-		log_admin("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
-		message_admins("[key_name(usr)] set 'forced_extended' to [GLOB.dynamic_forced_extended].")
-		dynamic_mode_options(usr)
-
-	else if(href_list["f_dynamic_no_stacking"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		GLOB.dynamic_no_stacking = !GLOB.dynamic_no_stacking
-		log_admin("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
-		message_admins("[key_name(usr)] set 'no_stacking' to [GLOB.dynamic_no_stacking].")
-		dynamic_mode_options(usr)
-	else if(href_list["f_dynamic_stacking_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
-		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
-		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
-		dynamic_mode_options(usr)
-
-	else if(href_list["f_dynamic_forced_threat"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker.HasRoundStarted())
-			return tgui_alert(usr, "The game has already started.")
-
-		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
-		if (new_value > 100)
-			return tgui_alert(usr, "The value must be be under 100.")
-		GLOB.dynamic_forced_threat_level = new_value
-
-		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
-		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
-		dynamic_mode_options(usr)
 
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))
@@ -720,21 +614,10 @@
 		our_mob.AIize(our_mob.client, move)
 
 	else if(href_list["makerobot"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/our_mob = locate(href_list["makerobot"])
-		if(!istype(our_mob))
-			return
-		if(iscyborg(our_mob))
-			to_chat(usr, "That's already a cyborg.", confidential = TRUE)
-			return
-
-		usr.client.cmd_admin_robotize(our_mob)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_robotize, locate(href_list["makerobot"]))
 
 	else if(href_list["adminplayeropts"])
-		var/mob/M = locate(href_list["adminplayeropts"])
-		show_player_panel(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, locate(href_list["adminplayeropts"]))
 
 	else if(href_list["ppbyckey"])
 		var/target_ckey = href_list["ppbyckey"]
@@ -749,7 +632,7 @@
 			return
 
 		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
-		show_player_panel(target_mob)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_player_panel, target_mob)
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
@@ -766,20 +649,13 @@
 		AM.forceMove(get_turf(usr))
 
 	else if(href_list["adminplayerobservecoodjump"])
-		if(!isobserver(usr) && !check_rights(R_ADMIN))
-			return
-		if(isnewplayer(usr))
-			return
-
-		var/x = text2num(href_list["X"])
-		var/y = text2num(href_list["Y"])
-		var/z = text2num(href_list["Z"])
-
-		var/client/C = usr.client
-		if(!isobserver(usr))
-			C.admin_ghost()
-		sleep(0.2 SECONDS)
-		C.jumptocoord(x,y,z)
+		return SSadmin_verbs.dynamic_invoke_verb(
+			usr,
+			/datum/admin_verb/jump_to_coord,
+			text2num(href_list["X"]),
+			text2num(href_list["Y"]),
+			text2num(href_list["Z"]),
+		)
 
 	else if(href_list["adminchecklaws"])
 		if(!check_rights(R_ADMIN))
@@ -838,8 +714,8 @@
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status: [status]"
-			health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
-			health_description += "<br>Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
+			health_description += "<br>Brute: [lifer.get_brute_loss()] - Burn: [lifer.get_fire_loss()] - Toxin: [lifer.get_tox_loss()] - Suffocation: [lifer.get_oxy_loss()]"
+			health_description += "<br>Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.get_stamina_loss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
@@ -861,7 +737,7 @@
 		exportable_text += "[special_role_description]<br>"
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
 
-		to_chat(src.owner, examine_block(exportable_text), confidential = TRUE)
+		to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -979,15 +855,7 @@
 		give_admin_popup(target, owner, message)
 
 	else if(href_list["adminsmite"])
-		if(!check_rights(R_ADMIN|R_FUN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["adminsmite"]) in GLOB.mob_list
-		if(!H || !istype(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human", confidential = TRUE)
-			return
-
-		usr.client.smite(H)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/admin_smite, locate(href_list["adminsmite"]))
 
 	else if(href_list["CentComReply"])
 		if(!check_rights(R_ADMIN))
@@ -1016,42 +884,21 @@
 		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
-	else if(href_list["jumpto"])
-		if(!isobserver(usr) && !check_rights(R_ADMIN))
-			return
 
-		var/mob/M = locate(href_list["jumpto"])
-		usr.client.jumptomob(M)
+	else if(href_list["jumpto"])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/jump_to_mob, locate(href_list["jumpto"]))
 
 	else if(href_list["getmob"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(tgui_alert(usr, "Confirm?", "Message", list("Yes", "No")) != "Yes")
-			return
-		var/mob/M = locate(href_list["getmob"])
-		usr.client.Getmob(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/get_mob, locate(href_list["getmob"]))
 
 	else if(href_list["sendmob"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["sendmob"])
-		usr.client.sendmob(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/send_mob, locate(href_list["sendmob"]))
 
 	else if(href_list["narrateto"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["narrateto"])
-		usr.client.cmd_admin_direct_narrate(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_direct_narrate, locate(href_list["narrateto"]))
 
 	else if(href_list["subtlemessage"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["subtlemessage"])
-		usr.client.cmd_admin_subtle_message(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/cmd_admin_subtle_message, locate(href_list["subtlemessage"]))
 
 	else if(href_list["playsoundto"])
 		if(!check_rights(R_SOUND))
@@ -1060,7 +907,7 @@
 		var/mob/M = locate(href_list["playsoundto"])
 		var/S = input("", "Select a sound file",) as null|sound
 		if(S)
-			usr.client.play_direct_mob_sound(S, M)
+			SSadmin_verbs.dynamic_invoke_verb(usr.client, /datum/admin_verb/play_direct_mob_sound, S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
@@ -1082,6 +929,16 @@
 			return
 		M.get_language_holder().open_language_menu(usr)
 
+	else if(href_list["rpreminder"])
+		var/mob/rper = locate(href_list["rpreminder"]) in GLOB.player_list
+		if(QDELETED(rper))
+			return
+		// literally just gives them a sound and a message
+		SEND_SOUND(rper, sound('sound/misc/roleplay.ogg'))
+		to_chat(rper, boxed_message("You hear a nagging voice in your head... [span_hypnophrase("Please roleplay appropriately.")]"))
+		message_admins("[ADMIN_LOOKUPFLW(usr)] reminded [ADMIN_LOOKUPFLW(rper)] to roleplay appropriately.")
+		log_admin("[key_name(usr)] reminded [key_name(rper)] to roleplay appropriately.")
+
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1099,7 +956,8 @@
 			else
 				D.traitor_panel()
 		else
-			show_traitor_panel(M)
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_traitor_panel, M)
+		return
 
 	else if(href_list["skill"])
 		if(!check_rights(R_ADMIN))
@@ -1119,17 +977,11 @@
 		else
 			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 			return
-		show_skill_panel(target_mind)
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/show_skill_panel, target_mind)
+		return
 
 	else if(href_list["borgpanel"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/mob/M = locate(href_list["borgpanel"])
-		if(!iscyborg(M))
-			to_chat(usr, "This can only be used on cyborgs", confidential = TRUE)
-		else
-			open_borgopanel(M)
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/borg_panel, locate(href_list["borgpanel"]))
 
 	else if(href_list["initmind"])
 		if(!check_rights(R_ADMIN))
@@ -1149,161 +1001,16 @@
 		GLOB.player_ticket_history.ui_interact(usr)
 		return
 
-	else if(href_list["create_object"])
-		if(!check_rights(R_SPAWN))
-			return
-		return create_object(usr)
-
-	else if(href_list["quick_create_object"])
-		if(!check_rights(R_SPAWN))
-			return
-		return quick_create_object(usr)
-
-	else if(href_list["create_turf"])
-		if(!check_rights(R_SPAWN))
-			return
-		return create_turf(usr)
-
-	else if(href_list["create_mob"])
-		if(!check_rights(R_SPAWN))
-			return
-		return create_mob(usr)
+	else if(href_list["spawn_panel"])
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/spawn_panel)
 
 	else if(href_list["dupe_marked_datum"])
 		if(!check_rights(R_SPAWN))
 			return
 		return duplicate_object(marked_datum, spawning_location = get_turf(usr))
 
-	else if(href_list["object_list"]) //this is the laggiest thing ever
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/atom/loc = usr.loc
-
-		var/dirty_paths
-		if (istext(href_list["object_list"]))
-			dirty_paths = list(href_list["object_list"])
-		else if (istype(href_list["object_list"], /list))
-			dirty_paths = href_list["object_list"]
-
-		var/paths = list()
-
-		for(var/dirty_path in dirty_paths)
-			var/path = text2path(dirty_path)
-			if(!path)
-				continue
-			else if(!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob))
-				continue
-			paths += path
-
-		if(!paths)
-			tgui_alert(usr,"The path list you sent is empty.")
-			return
-
-		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
-		if(length(paths) * number > ADMIN_SPAWN_CAP)
-			tgui_alert(usr,"Select fewer object types!")
-			return
-
-		var/list/offset = splittext(href_list["offset"],",")
-		var/X = offset.len > 0 ? text2num(offset[1]) : 0
-		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
-		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
-		var/obj_dir = text2num(href_list["object_dir"])
-		if(obj_dir && !(obj_dir in list(1,2,4,8,5,6,9,10)))
-			obj_dir = null
-		var/obj_name = sanitize(href_list["object_name"])
-
-
-		var/atom/target //Where the object will be spawned
-		var/where = href_list["object_where"]
-		if (!( where in list("onfloor","frompod","inhand","inmarked") ))
-			where = "onfloor"
-
-
-		switch(where)
-			if("inhand")
-				if (!iscarbon(usr) && !iscyborg(usr))
-					to_chat(usr, "Can only spawn in hand when you're a carbon mob or cyborg.", confidential = TRUE)
-					where = "onfloor"
-				target = usr
-
-			if("onfloor", "frompod")
-				switch(href_list["offset_type"])
-					if ("absolute")
-						target = locate(0 + X,0 + Y,0 + Z)
-					if ("relative")
-						target = locate(loc.x + X,loc.y + Y,loc.z + Z)
-			if("inmarked")
-				if(!marked_datum)
-					to_chat(usr, "You don't have any object marked. Abandoning spawn.", confidential = TRUE)
-					return
-				else if(!istype(marked_datum, /atom))
-					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.", confidential = TRUE)
-					return
-				else
-					target = marked_datum
-
-		var/obj/structure/closet/supplypod/centcompod/pod
-
-		if(target)
-			if(where == "frompod")
-				pod = new()
-
-			for (var/path in paths)
-				for (var/i = 0; i < number; i++)
-					if(path in typesof(/turf))
-						var/turf/O = target
-						var/turf/N = O.ChangeTurf(path)
-						if(N && obj_name)
-							N.name = obj_name
-					else
-						var/atom/O
-						if(where == "frompod")
-							O = new path(pod)
-						else
-							O = new path(target)
-
-						if(!QDELETED(O))
-							O.flags_1 |= ADMIN_SPAWNED_1
-							if(obj_dir)
-								O.setDir(obj_dir)
-							if(obj_name)
-								O.name = obj_name
-								if(ismob(O))
-									var/mob/M = O
-									M.real_name = obj_name
-							if(where == "inhand" && isliving(usr) && isitem(O))
-								var/mob/living/L = usr
-								var/obj/item/I = O
-								L.put_in_hands(I)
-								if(iscyborg(L))
-									var/mob/living/silicon/robot/R = L
-									if(R.model)
-										R.model.add_module(I, TRUE, TRUE)
-										R.activate_module(I)
-
-		if(pod)
-			new /obj/effect/pod_landingzone(target, pod)
-
-		if (number == 1)
-			log_admin("[key_name(usr)] created an instance of [english_list(paths)]")
-			for(var/path in paths)
-				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created an instance of [english_list(paths)]")
-					break
-		else
-			log_admin("[key_name(usr)] created [number] instances of [english_list(paths)]")
-			for(var/path in paths)
-				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number] instances of [english_list(paths)]")
-					break
-		return
-
 	else if(href_list["check_antagonist"])
-		if(!check_rights(R_ADMIN))
-			return
-		usr.client.check_antagonists()
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/check_antagonists)
 
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
@@ -1373,7 +1080,7 @@
 					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 
-		src.show_lag_switch_panel()
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/lag_switch_panel)
 
 	else if(href_list["change_lag_switch_option"])
 		if(!check_rights(R_ADMIN))
@@ -1402,7 +1109,7 @@
 					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 					message_admins("[key_name_admin(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 
-		src.show_lag_switch_panel()
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/lag_switch_panel)
 
 	else if(href_list["viewruntime"])
 		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
@@ -1430,72 +1137,15 @@
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
 		dat += thing_to_check
 
-		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+		var/datum/browser/browser = new(usr, "related_[C]", "[C.ckey] Related Accounts", 420, 300)
+		browser.set_content(dat.Join("<br>"))
+		browser.open()
 
 	else if(href_list["centcomlookup"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!CONFIG_GET(string/centcom_ban_db))
-			to_chat(usr, span_warning("Centcom Galactic Ban DB is disabled!"))
-			return
-
-		var/ckey = href_list["centcomlookup"]
-
-		// Make the request
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)]/[ckey]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete() || !usr)
-		if (!usr)
-			return
-		var/datum/http_response/response = request.into_response()
-
-		var/list/bans
-
-		var/list/dat = list("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><body>")
-
-		if(response.errored)
-			dat += "<br>Failed to connect to CentCom."
-		else if(response.status_code != 200)
-			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
-		else
-			if(response.body == "[]")
-				dat += "<center><b>0 bans detected for [ckey]</b></center>"
-			else
-				bans = json_decode(response["body"])
-
-				//Ignore bans from non-whitelisted sources, if a whitelist exists
-				var/list/valid_sources
-				if(CONFIG_GET(string/centcom_source_whitelist))
-					valid_sources = splittext(CONFIG_GET(string/centcom_source_whitelist), ",")
-					dat += "<center><b>Bans detected for [ckey]</b></center>"
-				else
-					//Ban count is potentially inaccurate if they're using a whitelist
-					dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
-
-				for(var/list/ban in bans)
-					if(valid_sources && !(ban["sourceName"] in valid_sources))
-						continue
-					dat += "<b>Server: </b> [sanitize(ban["sourceName"])]<br>"
-					dat += "<b>RP Level: </b> [sanitize(ban["sourceRoleplayLevel"])]<br>"
-					dat += "<b>Type: </b> [sanitize(ban["type"])]<br>"
-					dat += "<b>Banned By: </b> [sanitize(ban["bannedBy"])]<br>"
-					dat += "<b>Reason: </b> [sanitize(ban["reason"])]<br>"
-					dat += "<b>Datetime: </b> [sanitize(ban["bannedOn"])]<br>"
-					var/expiration = ban["expires"]
-					dat += "<b>Expires: </b> [expiration ? "[sanitize(expiration)]" : "Permanent"]<br>"
-					if(ban["type"] == "job")
-						dat += "<b>Jobs: </b> "
-						var/list/jobs = ban["jobs"]
-						dat += sanitize(jobs.Join(", "))
-						dat += "<br>"
-					dat += "<hr>"
-
-		dat += "<br></body>"
-		var/datum/browser/popup = new(usr, "centcomlookup-[ckey]", "<div align='center'>Central Command Galactic Ban Database</div>", 700, 600)
-		popup.set_content(dat.Join())
-		popup.open(0)
+		open_centcom_bans(href_list["centcomlookup"])
 
 	else if(href_list["slowquery"])
 		if(!check_rights(R_ADMIN))
@@ -1518,13 +1168,7 @@
 		toggle_id_ctf(usr, CTF_GHOST_CTF_GAME_ID)
 
 	else if(href_list["rebootworld"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/confirm = tgui_alert(usr,"Are you sure you want to reboot the server?", "Confirm Reboot", list("Yes", "No"))
-		if(confirm == "No")
-			return
-		if(confirm == "Yes")
-			restart()
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/restart)
 
 	else if(href_list["check_teams"])
 		if(!check_rights(R_ADMIN))
@@ -1638,9 +1282,6 @@
 		var/ban_id = href_list["unbanlog"]
 		ban_log(ban_id)
 
-	else if(href_list["beakerpanel"])
-		beaker_panel_act(href_list)
-
 	else if(href_list["reloadpolls"])
 		GLOB.polls.Cut()
 		GLOB.poll_options.Cut()
@@ -1743,9 +1384,7 @@
 		return remove_tagged_datum(datum_to_remove)
 
 	else if(href_list["show_tags"])
-		if(!check_rights(R_ADMIN))
-			return
-		return display_tags()
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/display_tags)
 
 	else if(href_list["mark_datum"])
 		if(!check_rights(R_ADMIN))
@@ -1755,6 +1394,7 @@
 			return
 		return usr.client?.mark_datum(datum_to_mark)
 
+#ifndef DISABLE_DREAMLUAU
 	else if(href_list["lua_state"])
 		if(!check_rights(R_DEBUG))
 			return
@@ -1771,6 +1411,7 @@
 				editor.force_view_chunk = log_entry["chunk"]
 				editor.force_modal = "viewChunk"
 		editor.ui_interact(usr)
+#endif
 
 	else if(href_list["show_paper"])
 		if(!check_rights(R_ADMIN))
@@ -1780,6 +1421,17 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+
+	else if (href_list["print_fax"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		for(var/obj/machinery/fax/admin/FAX as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax/admin))
+			if(FAX.fax_id != href_list["destination"])
+				continue
+			FAX.receive(locate(href_list["print_fax"]), href_list["sender_name"])
+			return
+
 	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))
 			return
@@ -1792,7 +1444,4 @@
 		web_sound(usr, link_url, credit)
 
 	else if(href_list["debug_z_levels"])
-		if(!check_rights(R_DEBUG))
-			return
-
-		owner.debug_z_levels()
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/debug_z_levels)

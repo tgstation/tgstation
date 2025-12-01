@@ -14,13 +14,13 @@
 	speak_emote = list("cackles")
 	melee_damage_lower = 7.5
 	melee_damage_upper = 7.5
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	death_message = "wails as infernal energy escapes from its wounds, leaving it an empty husk."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 5
 	light_range = 1.4
@@ -31,10 +31,12 @@
 	butcher_results = list(
 		/obj/item/food/meat/slab = 2,
 		/obj/effect/decal/cleanable/brimdust = 1,
-		/obj/item/organ/internal/monster_core/brimdust_sac = 1,
+		/obj/item/organ/monster_core/brimdust_sac = 1,
 	)
 	/// How we get blasting
 	var/datum/action/cooldown/mob_cooldown/brimbeam/beam
+	/// Icon state used when the brimbeam ability is being fired
+	var/firing_icon_state = "brimdemon_firing"
 
 /mob/living/basic/mining/brimdemon/Initialize(mapload)
 	. = ..()
@@ -42,6 +44,11 @@
 	beam = new(src)
 	beam.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/brimdemon/Destroy(force)
+	QDEL_NULL(beam)
+	return ..()
 
 /mob/living/basic/mining/brimdemon/RangedAttack(atom/target, modifiers)
 	beam.Trigger(target = target)
@@ -52,6 +59,11 @@
 		return
 	var/obj/effect/temp_visual/brim_burst/bang = new(loc)
 	forceMove(bang)
+
+/mob/living/basic/mining/brimdemon/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Show a funny animation before doing an explosion
 /obj/effect/temp_visual/brim_burst

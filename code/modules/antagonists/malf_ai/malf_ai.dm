@@ -5,7 +5,7 @@
 	name = "\improper Malfunctioning AI"
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
-	job_rank = ROLE_MALF
+	pref_flag = ROLE_MALF
 	antag_hud_name = "traitor"
 	ui_name = "AntagInfoMalf"
 	can_assign_self_objectives = TRUE
@@ -20,6 +20,8 @@
 	var/should_give_codewords = TRUE
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
+	///malf on_gain sound effect. Set here so Infected AI can override
+	var/malf_sound = 'sound/music/antag/malf.ogg'
 
 /datum/antagonist/malf_ai/New(give_objectives = TRUE)
 	. = ..()
@@ -30,7 +32,6 @@
 		stack_trace("Attempted to give malf AI antag datum to \[[owner]\], who did not meet the requirements.")
 		return ..()
 
-	owner.special_role = job_rank
 	if(give_objectives)
 		forge_ai_objectives()
 	if(!employer)
@@ -39,7 +40,9 @@
 	malfunction_flavor = strings(MALFUNCTION_FLAVOR_FILE, employer)
 
 	add_law_zero()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	RegisterSignal(owner.current, COMSIG_SILICON_AI_CORE_STATUS, PROC_REF(core_status))
+	if(malf_sound)
+		owner.current.playsound_local(get_turf(owner.current), malf_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	owner.current.grant_language(/datum/language/codespeak, source = LANGUAGE_MALF)
 
 	var/datum/atom_hud/data/hackyhud = GLOB.huds[DATA_HUD_MALF_APC]
@@ -54,8 +57,7 @@
 		malf_ai.remove_malf_abilities()
 		QDEL_NULL(malf_ai.malf_picker)
 
-	owner.special_role = null
-
+	UnregisterSignal(owner, COMSIG_SILICON_AI_CORE_STATUS)
 	return ..()
 
 /// Generates a complete set of malf AI objectives up to the traitor objective limit.
@@ -122,8 +124,6 @@
 	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-
 	var/mob/living/silicon/ai/datum_owner = mob_override || owner.current
 
 	if(istype(datum_owner))
@@ -159,6 +159,8 @@
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 
+	if(malf_ai.malf_picker)
+		return
 	malf_ai.add_malf_picker()
 
 
@@ -166,6 +168,7 @@
 	var/list/data = list()
 	data["processingTime"] = malf_ai.malf_picker.processing_time
 	data["compactMode"] = module_picker_compactmode
+	data["hackedAPCs"] = malf_ai.hacked_apcs.len
 	return data
 
 /datum/antagonist/malf_ai/ui_static_data(mob/living/silicon/ai/malf_ai)
@@ -192,17 +195,18 @@
 				"name" = category,
 				"items" = (category == malf_ai.malf_picker.selected_cat ? list() : null))
 			for(var/module in malf_ai.malf_picker.possible_modules[category])
-				var/datum/ai_module/mod = malf_ai.malf_picker.possible_modules[category][module]
+				var/datum/ai_module/malf/mod = malf_ai.malf_picker.possible_modules[category][module]
 				cat["items"] += list(list(
 					"name" = mod.name,
 					"cost" = mod.cost,
 					"desc" = mod.description,
+					"minimum_apcs" = mod.minimum_apcs,
 				))
 			data["categories"] += list(cat)
 
 	return data
 
-/datum/antagonist/malf_ai/ui_act(action, list/params)
+/datum/antagonist/malf_ai/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -217,7 +221,7 @@
 			for(var/category in malf_ai.malf_picker.possible_modules)
 				buyable_items += malf_ai.malf_picker.possible_modules[category]
 			for(var/key in buyable_items)
-				var/datum/ai_module/valid_mod = buyable_items[key]
+				var/datum/ai_module/malf/valid_mod = buyable_items[key]
 				if(valid_mod.name == item_name)
 					malf_ai.malf_picker.purchase_module(malf_ai, valid_mod)
 					return TRUE
@@ -246,13 +250,14 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	var/special_role_text = LOWER_TEXT(name)
 
 	if(malf_ai_won)
 		result += span_greentext("The [special_role_text] was successful!")
 	else
 		result += span_redtext("The [special_role_text] has failed!")
-		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+		if(owner.current)
+			SEND_SOUND(owner.current, 'sound/ambience/misc/ambifailure.ogg')
 
 	return result.Join("<br>")
 
@@ -266,10 +271,20 @@
 
 	return malf_ai_icon
 
+/datum/antagonist/malf_ai/proc/core_status(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/silicon/ai/malf_owner = owner.current
+	if(malf_owner?.linked_core)
+		return COMPONENT_CORE_ALL_GOOD
+	return COMPONENT_CORE_DISCONNECTED
+
 //Subtype of Malf AI datum, used for one of the traitor final objectives
 /datum/antagonist/malf_ai/infected
 	name = "Infected AI"
 	employer = "Infected AI"
+	can_assign_self_objectives = FALSE
+	malf_sound = null
 	///The player, to who is this AI slaved
 	var/datum/mind/boss
 

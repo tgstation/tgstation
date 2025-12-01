@@ -15,11 +15,14 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2)
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
 	var/ready = TRUE
-	var/cooldown = 200
+	var/cooldown = (20 SECONDS)
 	/// genetic makeup data that's scanned
 	var/list/genetic_makeup_buffer = list()
 
@@ -29,7 +32,16 @@
 	if(LAZYLEN(genetic_makeup_buffer) > 0)
 		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
-/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
+		if(console.stored_research)
+			to_chat(user, span_notice("[name] linked to central research database."))
+			discovered = console.stored_research.discovered_mutations
+		else
+			to_chat(user,span_warning("No database to update from."))
+		return ITEM_INTERACT_SUCCESS
+
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -46,7 +58,13 @@
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
+		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
+		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
+		return ITEM_INTERACT_SUCCESS
+
 	if(!isliving(interacting_with))
 		return NONE
 
@@ -55,7 +73,7 @@
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
 	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
 		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
-		if(!do_after(user, 3 SECONDS))
+		if(!do_after(user, 3 SECONDS, interacting_with))
 			balloon_alert(user, "scan failed!")
 			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
 			return ITEM_INTERACT_BLOCKING
@@ -66,33 +84,11 @@
 	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/sequence_scanner/afterattack_secondary(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-	if(istype(object, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = object
-		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
-		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
-
 /obj/item/sequence_scanner/attack_self(mob/user)
 	display_sequence(user)
 
 /obj/item/sequence_scanner/attack_self_tk(mob/user)
 	return
-
-/obj/item/sequence_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-
-	if(istype(object, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = object
-		if(console.stored_research)
-			to_chat(user, span_notice("[name] linked to central research database."))
-			discovered = console.stored_research.discovered_mutations
-		else
-			to_chat(user,span_warning("No database to update from."))
 
 ///proc for scanning someone's mutations
 /obj/item/sequence_scanner/proc/gene_scan(mob/living/carbon/target, mob/living/user)
@@ -103,8 +99,8 @@
 	//dupe list as scanner could modify target data
 	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
 	var/list/active_mutations = list()
-	for(var/datum/mutation/human/mutation in target.dna.mutations)
-		LAZYOR(buffer, mutation.type)
+	for(var/datum/mutation/mutation in target.dna.mutations)
+		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
 		active_mutations.Add(mutation.type)
 
 	to_chat(user, span_notice("Subject [target.name]'s DNA sequence has been saved to buffer."))
@@ -126,7 +122,7 @@
 	"UE"=target.dna.unique_enzymes,
 	"UF"=target.dna.unique_features,
 	"name"=target.real_name,
-	"blood_type"=target.dna.blood_type)
+	"blood_type"=target.get_bloodtype())
 
 /obj/item/sequence_scanner/proc/display_sequence(mob/living/user)
 	if(!LAZYLEN(buffer) || !ready)
@@ -165,10 +161,10 @@
 	ready = TRUE
 
 /obj/item/sequence_scanner/proc/get_display_name(mutation)
-	var/datum/mutation/human/human_mutation = GET_INITIALIZED_MUTATION(mutation)
-	if(!human_mutation)
+	var/datum/mutation/mutation_instance = GET_INITIALIZED_MUTATION(mutation)
+	if(!mutation_instance)
 		return "ERROR"
 	if(mutation in discovered)
-		return  "[human_mutation.name] ([human_mutation.alias])"
+		return  "[mutation_instance.name] ([mutation_instance.alias])"
 	else
-		return human_mutation.alias
+		return mutation_instance.alias

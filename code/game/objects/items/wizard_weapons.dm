@@ -4,6 +4,7 @@
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "singularity_hammer0"
 	base_icon_state = "singularity_hammer"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	worn_icon_state = "singularity_hammer"
@@ -39,9 +40,6 @@
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/item/singularityhammer/proc/recharge()
-	charged = TRUE
-
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(ismovable(X))
@@ -59,22 +57,19 @@
 				step_towards(A,pull)
 				step_towards(A,pull)
 
-/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/singularityhammer/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return
-	. |= AFTERATTACK_PROCESSED_ITEM
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		if(charged)
-			charged = FALSE
-			if(isliving(A))
-				var/mob/living/Z = A
-				Z.take_bodypart_damage(20,0)
-			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
-			var/turf/target = get_turf(A)
-			vortex(target,user)
-			addtimer(CALLBACK(src, PROC_REF(recharge)), 100)
-	return .
+	if(!charged)
+		return
+
+	charged = FALSE
+	if(isliving(target))
+		var/mob/living/smacked = target
+		smacked.take_bodypart_damage(20, 0)
+	playsound(user, 'sound/items/weapons/marauder.ogg', 50, TRUE)
+	vortex(get_turf(target), user)
+	addtimer(VARSET_CALLBACK(src, charged, TRUE), 10 SECONDS)
 
 /obj/item/mjollnir
 	name = "Mjollnir"
@@ -83,6 +78,7 @@
 	icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
 	worn_icon_state = "mjollnir"
+	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY

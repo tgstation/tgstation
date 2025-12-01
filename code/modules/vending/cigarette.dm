@@ -17,7 +17,9 @@
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	contraband = list(
-		/obj/item/clothing/mask/vape = 5,
+		/obj/item/vape = 5,
+		/obj/item/cigarette/dart = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 1,
 	)
 	premium = list(
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
@@ -35,6 +37,9 @@
 	light_mask = "cigs-light-mask"
 
 /obj/machinery/vending/cigarette/syndicate
+	name = "\improper Waffle Co Breakfast Cigarettes"
+	product_slogans = "Start your day the right way!;Breakfast of champions!;Smokes that mean business!;Omnizine, your uplink to smooth taste!"
+	product_ads = "Waffle Co's science advisory: omnizine may prevent most forms of smoking-related illness!*;New study: Rival corporations more trusting of men who smoke!;A Waffle Co cigarette makes yellow star feel like black orbit!"
 	products = list(
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7,
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,
@@ -42,11 +47,18 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robust = 2,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 1,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	initial_language_holder = /datum/language_holder/syndicate
+	refill_canister = /obj/item/vending_refill/cigarette/syndicate
+
+/obj/item/vending_refill/cigarette/syndicate
+	machine_name = "Waffle Co Breakfast Cigarettes"
+	icon_state = "refill_syndismoke"
+
 
 /obj/machinery/vending/cigarette/beach //Used in the lavaland_biodome_beach.dmm ruin
 	name = "\improper ShadyCigs Ultra"
@@ -66,16 +78,17 @@
 	)
 	premium = list(
 		/obj/item/storage/fancy/cigarettes/cigpack_mindbreaker = 5,
-		/obj/item/clothing/mask/vape = 5,
+		/obj/item/vape = 5,
 		/obj/item/lighter = 3,
 	)
 	initial_language_holder = /datum/language_holder/beachbum
+	allow_custom = FALSE
 
 /obj/item/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
 	icon_state = "refill_smoke"
 
-/obj/machinery/vending/cigarette/pre_throw(obj/item/I)
-	if(istype(I, /obj/item/lighter))
-		var/obj/item/lighter/L = I
-		L.set_lit(TRUE)
+/obj/machinery/vending/cigarette/pre_throw(obj/item/thrown_item)
+	if(istype(thrown_item, /obj/item/lighter))
+		var/obj/item/lighter/thrown_lighter = thrown_item
+		thrown_lighter.set_lit(TRUE)

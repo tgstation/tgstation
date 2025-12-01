@@ -5,14 +5,22 @@
 	health = 125
 	icon_state = "aliend"
 
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/large,
+		ORGAN_SLOT_XENO_RESINSPINNER = /obj/item/organ/alien/resinspinner,
+		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno,
+	)
+
 /mob/living/carbon/alien/adult/drone/Initialize(mapload)
 	GRANT_ACTION(/datum/action/cooldown/alien/evolve_to_praetorian)
-	return ..()
-
-/mob/living/carbon/alien/adult/drone/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/large
-	organs += new /obj/item/organ/internal/alien/resinspinner
-	organs += new /obj/item/organ/internal/alien/acid
 	return ..()
 
 /datum/action/cooldown/alien/evolve_to_praetorian
@@ -33,7 +41,7 @@
 		return FALSE
 
 	var/mob/living/carbon/alien/adult/royal/evolver = owner
-	var/obj/item/organ/internal/alien/hivenode/node = evolver.get_organ_by_type(/obj/item/organ/internal/alien/hivenode)
+	var/obj/item/organ/alien/hivenode/node = evolver.get_organ_by_type(/obj/item/organ/alien/hivenode)
 	// Players are Murphy's Law. We may not expect
 	// there to ever be a living xeno with no hivenode,
 	// but they _WILL_ make it happen.

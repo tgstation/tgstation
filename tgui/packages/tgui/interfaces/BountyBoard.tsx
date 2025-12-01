@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -9,8 +8,10 @@ import {
   Section,
   Stack,
   TextArea,
-} from '../components';
-import { formatMoney } from '../format';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { UserDetails } from './Vending';
 
@@ -87,7 +88,7 @@ export const BountyBoardContent = (props) => {
                     {request.owner}
                   </Stack.Item>
                   <Stack.Item width="100px">
-                    {formatMoney(request.value) + ' cr'}
+                    {`${formatMoney(request.value)} cr`}
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -160,12 +161,9 @@ export const BountyBoardContent = (props) => {
           <Collapsible title="New Bounty" width="220px" color="green">
             <Section>
               <TextArea
-                fluid
                 height="150px"
                 width="200px"
-                backgroundColor="black"
-                textColor="white"
-                onChange={(e, value) =>
+                onBlur={(value) =>
                   act('bountyText', {
                     bountytext: value,
                   })
@@ -173,13 +171,14 @@ export const BountyBoardContent = (props) => {
               />
               <Box>
                 <NumberInput
-                  animate
+                  animated
                   unit="cr"
                   minValue={1}
                   maxValue={1000}
                   value={bountyValue}
+                  step={1}
                   width="80px"
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     act('bountyVal', {
                       bountyval: value,
                     })

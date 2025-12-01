@@ -1,9 +1,7 @@
 SUBSYSTEM_DEF(title)
 	name = "Title Screen"
 	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_TITLE
 	init_stage = INITSTAGE_EARLY
-
 	var/file_path
 	var/icon/icon
 	var/icon/previous_icon
@@ -25,7 +23,7 @@ SUBSYSTEM_DEF(title)
 
 	for(var/S in provisional_title_screens)
 		var/list/L = splittext(S,"+")
-		if((L.len == 1 && (L[1] != "exclude" && L[1] != "blank.png")) || (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
+		if((L.len == 1 && (L[1] != "exclude" && L[1] != "blank.png")) || (L.len > 1 && ((use_rare_screens && LOWER_TEXT(L[1]) == "rare") || (LOWER_TEXT(L[1]) == LOWER_TEXT(SSmapping.current_map.map_name)))))
 			title_screens += S
 
 	if(length(title_screens))
@@ -60,8 +58,8 @@ SUBSYSTEM_DEF(title)
 	for(var/thing in GLOB.clients)
 		if(!thing)
 			continue
-		var/atom/movable/screen/splash/S = new(thing, FALSE)
-		S.Fade(FALSE,FALSE)
+		var/atom/movable/screen/splash/S = new(null, null, thing, FALSE)
+		S.fade(FALSE,FALSE)
 
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon

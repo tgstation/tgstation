@@ -3,16 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
 @use 'sass:math';
-@use '~tgui/styles/base.scss';
-@use '~tgui/styles/colors.scss';
-
-$text-color: #abc6ec !default;
-$color-bg-section: base.$color-bg-section !default;
 
 .Chat {
-  color: $text-color;
+  color: var(--chat-text-color);
 }
 
 .Chat__badge {
@@ -21,11 +15,11 @@ $color-bg-section: base.$color-bg-section !default;
   font-size: 0.7em;
   padding: 0.2em 0.3em;
   line-height: 1;
-  color: white;
+  color: hsl(0, 0%, 100%);
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  background-color: crimson;
+  background-color: hsl(348, 83%, 47%);
   border-radius: 10px;
   transition: font-size 200ms ease-out;
 
@@ -55,25 +49,25 @@ $color-bg-section: base.$color-bg-section !default;
     display: inline-block;
     border-radius: 1em;
     padding: 0 0.7em;
-    color: colors.$red;
-    background-color: $color-bg-section;
+    color: var(--color-red);
+    background-color: var(--color-section);
   }
 
   &:after {
     content: '';
     display: block;
     margin-top: -0.75em;
-    border-bottom: math.div(1em, 6) solid colors.$red;
+    border-bottom: math.div(1em, 6) solid var(--color-red);
   }
 }
 
 .Chat__highlight {
-  color: #000;
+  color: var(--color-black);
 }
 
 .Chat__highlight--restricted {
-  color: #fff;
-  background-color: #a00;
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(0, 100%, 33.3%);
   font-weight: bold;
 }
 
@@ -83,7 +77,7 @@ $color-bg-section: base.$color-bg-section !default;
 
 .ChatMessage--highlighted {
   position: relative;
-  border-left: math.div(1em, 6) solid rgba(255, 221, 68);
+  border-left: math.div(1em, 6) solid hsl(50, 100%, 63.5%);
   padding-left: 0.5em;
 
   &:after {
@@ -93,7 +87,7 @@ $color-bg-section: base.$color-bg-section !default;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(255, 221, 68, 0.1);
+    background-color: hsla(50, 100%, 63.5%, 0.1);
     // Make this click-through since this is an overlay
     pointer-events: none;
   }

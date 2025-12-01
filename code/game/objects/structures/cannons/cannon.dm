@@ -15,13 +15,14 @@
 	var/anchorable_cannon = TRUE
 	var/obj/item/stack/cannonball/loaded_cannonball = null
 	var/charge_ignited = FALSE
-	var/fire_delay = 15
+	var/fire_delay = 1.5 SECONDS
 	var/charge_size = 15
-	var/fire_sound = 'sound/weapons/gun/general/cannon.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/general/cannon.ogg'
 
 /obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	create_reagents(charge_size)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/cannon/examine(mob/user)
 	. = ..()
@@ -53,7 +54,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)
+/obj/structure/cannon/attackby(obj/item/used_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(charge_ignited)
 		balloon_alert(user, "it's gonna fire!")
 		return
@@ -83,9 +84,9 @@
 
 	else if(is_reagent_container(used_item))
 		var/obj/item/reagent_containers/powder_keg = used_item
-		if(!(powder_keg.reagent_flags & OPENCONTAINER))
+		if(!powder_keg.is_open_container())
 			return ..()
-		if(istype(powder_keg, /obj/item/reagent_containers/cup/rag))
+		if(istype(powder_keg, /obj/item/rag))
 			return ..()
 
 		if(!powder_keg.reagents.total_volume)
@@ -139,6 +140,18 @@
 	new /obj/item/stack/sheet/iron/five(src.loc)
 	new /obj/item/stack/rods(src.loc)
 	. = ..()
+
+///A cannon found from the fishing mystery box.
+/obj/structure/cannon/mystery_box
+	icon_state = "mystery_box_cannon" //east facing sprite for the presented item, it'll be changed back to normal on init
+	dir = EAST
+	anchored = FALSE
+
+/obj/structure/cannon/mystery_box/Initialize(mapload)
+	. = ..()
+	icon_state = "falconet_patina"
+	reagents.add_reagent(/datum/reagent/gunpowder, charge_size)
+	loaded_cannonball = new(src)
 
 #undef BAD_FUEL_DAMAGE_TAX
 #undef BAD_FUEL_EXPLODE_PROBABILTY

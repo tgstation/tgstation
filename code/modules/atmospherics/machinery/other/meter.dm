@@ -1,8 +1,9 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/pipes_n_cables/meter.dmi'
-	icon_state = "meter"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/meter"
+	post_init_icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
@@ -22,7 +23,9 @@
 
 /obj/machinery/meter/Destroy()
 	SSair.stop_processing_machine(src)
-	target = null
+	if(!isnull(target))
+		UnregisterSignal(target, COMSIG_QDELETING)
+		target = null
 	return ..()
 
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
@@ -45,7 +48,13 @@
 			candidate = pipe
 	if(candidate)
 		target = candidate
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(drop_meter))
 		setAttachLayer(candidate.piping_layer)
+
+///Called when the parent pipe is removed
+/obj/machinery/meter/proc/drop_meter()
+	SIGNAL_HANDLER
+	deconstruct(FALSE)
 
 /obj/machinery/meter/proc/setAttachLayer(new_layer)
 	target_layer = new_layer
@@ -135,7 +144,8 @@
 	return TRUE
 
 /obj/machinery/meter/on_deconstruction(disassembled)
-	new /obj/item/pipe_meter(loc)
+	var/obj/item/pipe_meter/meter_object = new /obj/item/pipe_meter(get_turf(src))
+	transfer_fingerprints_to(meter_object)
 
 /obj/machinery/meter/interact(mob/user)
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -143,7 +153,7 @@
 	else
 		to_chat(user, status())
 
-/obj/machinery/meter/singularity_pull(S, current_size)
+/obj/machinery/meter/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
@@ -189,12 +199,15 @@
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?
 /obj/machinery/meter/turf
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/turf/reattach_to_layer()
 	target = loc
 
 /obj/machinery/meter/layer2
 	target_layer = 2
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/layer4
 	target_layer = 4
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

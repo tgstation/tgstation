@@ -34,13 +34,8 @@
 			canthold = list(/obj/item/storage/briefcase/secure),
 		)
 
-
-	src.lock_code = lock_code
-	if(!isnull(lock_code))
-		atom_parent.atom_storage.locked = STORAGE_FULLY_LOCKED
 	src.can_hack_open = can_hack_open
-
-	atom_parent.update_appearance()
+	set_lock_code(lock_code)
 
 /datum/component/lockable_storage/RegisterWithParent()
 	. = ..()
@@ -51,6 +46,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
+	RegisterSignal(parent, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_interact))
@@ -67,6 +63,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_ICON_STATE,
+		COMSIG_ATOM_EMAG_ACT,
 	))
 
 	if(isitem(parent))
@@ -86,7 +83,10 @@
 /datum/component/lockable_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Open storage"
+		if(source in user.held_items)
+			context[SCREENTIP_CONTEXT_LMB] = "Open storage"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_RMB] = "Open storage"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(can_hack_open)
@@ -115,6 +115,7 @@
 		return NONE
 
 	panel_open = !panel_open
+	tool.play_tool_sound(source)
 	source.balloon_alert(user, "panel [panel_open ? "opened" : "closed"]")
 	return ITEM_INTERACT_SUCCESS
 
@@ -135,15 +136,67 @@
 
 ///Does a do_after to hack the storage open, takes a long time cause idk.
 /datum/component/lockable_storage/proc/hack_open(atom/source, mob/user, obj/item/tool)
-	if(!tool.use_tool(parent, user, 40 SECONDS))
+	if(!tool.use_tool(parent, user, 40 SECONDS, volume = 50))
 		return
 	source.balloon_alert(user, "hacked")
+	set_lock_code(null)
+
+/datum/component/lockable_storage/proc/break_lock()
+	can_hack_open = FALSE // since it's broken for good
 	lock_code = null
+
+	var/obj/source = parent
+	source.obj_flags |= EMAGGED
+	source.atom_storage.locked = STORAGE_NOT_LOCKED
+	SEND_SIGNAL(source, COMSIG_LOCKABLE_STORAGE_SET_CODE, lock_code)
+	source.update_appearance()
+
+/datum/component/lockable_storage/proc/on_emag(obj/source, mob/user, obj/item/card/emag/emag_card)
+	SIGNAL_HANDLER
+
+	if(!source.atom_storage.locked)
+		return FALSE
+
+	if(source.obj_flags & EMAGGED)
+		return FALSE
+
+	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
+	source.balloon_alert(user, "lock destroyed")
+	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	break_lock()
+	return ITEM_INTERACT_SUCCESS
+
+/**
+ * Sets the lock code for this storage and updates the locked state accordingly
+ * Arguments:
+ * * new_code - The new lock code to set, can be null to remove the code
+ */
+/datum/component/lockable_storage/proc/set_lock_code(new_code, mob/living/user)
+	var/obj/source = parent
+
+	// Can't set lock code if the electronics are emagged
+	if(source.obj_flags & EMAGGED)
+		return FALSE
+
+	lock_code = new_code
+	SEND_SIGNAL(source, COMSIG_LOCKABLE_STORAGE_SET_CODE, new_code)
+	var/lock_state = lock_code ? STORAGE_FULLY_LOCKED : STORAGE_NOT_LOCKED
+	source.atom_storage.set_locked(lock_state)
+	source.update_appearance()
+
+	if(istype(user) && new_code)
+		to_chat(user, span_notice("You set the [source] pincode to [lock_code]."))
+
+	return TRUE
 
 ///Updates the icon state depending on if we're locked or not.
 /datum/component/lockable_storage/proc/on_update_icon_state(obj/source)
 	SIGNAL_HANDLER
-	source.icon_state = "[source.base_icon_state][source.atom_storage.locked ? "_locked" : null]"
+
+	if(source.obj_flags & EMAGGED)
+		source.icon_state = "[source.base_icon_state]_broken"
+	else
+		source.icon_state = "[source.base_icon_state][source.atom_storage.locked ? "_locked" : null]"
 
 ///Called when interacted with in-hand or on attack, opens the UI.
 /datum/component/lockable_storage/proc/on_interact(atom/source, mob/user)
@@ -151,6 +204,11 @@
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
+	var/obj/source = parent
+	if(source.obj_flags & EMAGGED)
+		ui?.close()
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LockedSafe", parent)
@@ -177,9 +235,7 @@
 			//you can't lock it if it's already locked or lacks a lock code.
 			if(source.atom_storage.locked || isnull(lock_code))
 				return TRUE
-			source.atom_storage.locked = STORAGE_FULLY_LOCKED
-			source.atom_storage.hide_contents(usr)
-			source.update_appearance(UPDATE_ICON)
+			source.atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 			return TRUE
 		//setting a password & unlocking
 		if("E")
@@ -187,16 +243,15 @@
 			if(!lock_code)
 				if(length(numeric_input) != 5)
 					return TRUE
-				lock_code = numeric_input
+				set_lock_code(numeric_input, usr)
 				numeric_input = ""
 				return TRUE
 			//unlocking the current code.
 			if(numeric_input != lock_code)
 				return TRUE
 			var/atom/source = parent
-			source.atom_storage.locked = STORAGE_NOT_LOCKED
+			source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
 			numeric_input = ""
-			source.update_appearance(UPDATE_ICON)
 			return TRUE
 		//putting digits in.
 		if("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")

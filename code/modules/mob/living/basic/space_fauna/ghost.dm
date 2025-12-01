@@ -4,12 +4,13 @@
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
-	mob_biotypes = MOB_SPIRIT
+	mob_biotypes = MOB_SPIRIT | MOB_UNDEAD
 	speak_emote = list("wails", "weeps")
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
+	status_flags = CANPUSH
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 15
@@ -19,13 +20,14 @@
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	death_message = "wails, disintegrating into a pile of ectoplasm!"
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	light_system = OVERLAY_LIGHT
 	light_range = 2.5 // same glowing as visible player ghosts
 	light_power = 0.6
 	ai_controller = /datum/ai_controller/basic_controller/ghost
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	///What hairstyle will this ghost have
 	var/ghost_hairstyle
@@ -44,8 +46,7 @@
 
 /mob/living/basic/ghost/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/ectoplasm)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/ectoplasm)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
 
@@ -64,22 +65,22 @@
 /mob/living/basic/ghost/proc/give_identity()
 	if(random_identity)
 		ghost_hairstyle = random_hairstyle() //This only gives us the hairstyle name, not the icon_state (which we need).
-		ghost_hair_color = "#[random_color()]"
+		ghost_hair_color = random_hair_color()
 
 		if(prob(50)) //Only a chance at also getting facial hair
 			ghost_facial_hairstyle = random_facial_hairstyle()
 			ghost_facial_hair_color = ghost_hair_color
 
 	if(!isnull(ghost_hairstyle) && ghost_hairstyle != "Bald") //Bald hairstyle and the Shaved facial hairstyle lack an associated sprite and will not properly generate hair, and just cause runtimes.
-		var/datum/sprite_accessory/hair/hair_style = GLOB.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
+		var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[ghost_hairstyle] //We use the hairstyle name to get the sprite accessory, which we copy the icon_state from.
 		ghost_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
-		ghost_hair.pixel_y = hair_style.y_offset
+		ghost_hair.pixel_z = hair_style.y_offset
 		add_overlay(ghost_hair)
 
 	if(!isnull(ghost_facial_hairstyle) && ghost_facial_hairstyle != "Shaved")
-		var/datum/sprite_accessory/facial_hair_style = GLOB.facial_hairstyles_list[ghost_facial_hairstyle]
+		var/datum/sprite_accessory/facial_hair_style = SSaccessories.facial_hairstyles_list[ghost_facial_hairstyle]
 		ghost_facial_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[facial_hair_style.icon_state]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
@@ -101,6 +102,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/target_retaliate,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)

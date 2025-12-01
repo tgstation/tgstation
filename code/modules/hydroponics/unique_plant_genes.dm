@@ -6,7 +6,7 @@
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
 	description = "You can hide behind it from a fireball!"
-	icon = "hand-sparkles"
+	icon = FA_ICON_HAND_SPARKLES
 	/// The amount of anti-magic blocking uses we have.
 	var/shield_uses = 1
 
@@ -21,7 +21,7 @@
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_HANDS, \
 		charges = shield_uses, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(expire)), \
 	)
 
@@ -39,7 +39,7 @@
 /datum/plant_gene/trait/attack
 	name = "On Attack Trait"
 	description = "It is a very dangerous weapon."
-	icon = "hand-fist"
+	icon = FA_ICON_HAND_FIST
 	/// The multiplier we apply to the potency to calculate force. Set to 0 to not affect the force.
 	var/force_multiplier = 0
 	/// If TRUE, our plant will degrade in force every hit until diappearing.
@@ -76,24 +76,9 @@
 	return
 
 /// Signal proc for [COMSIG_ITEM_AFTERATTACK] that allows for effects after an attack is done
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-
-	if(!proximity_flag)
-		return
-
-	if(!ismovable(target))
-		return
-
-	. |= COMPONENT_AFTERATTACK_PROCESSED_ITEM
-
-	if(isobj(target))
-		var/obj/object_target = target
-		if(!(object_target.obj_flags & CAN_BE_HIT))
-			return .
-
 	INVOKE_ASYNC(src, PROC_REF(after_attack_effect), source, target, user)
-	return .
 
 /*
  * Effects done when we hit people with our plant, AFTER the attack is done.
@@ -125,6 +110,7 @@
 	force_multiplier = 0.2
 	degrades_after_hit = TRUE
 	degradation_noun = "petals"
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/attack/novaflower_attack/attack_effect(obj/item/our_plant, mob/living/target, mob/living/user)
 	if(!istype(target))
@@ -144,7 +130,7 @@
 	name = "Bright Petals"
 	description = "Makes others feel the power on hit."
 
-/datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, list/modifiers)
 	if(ismob(target))
 		var/mob/target_mob = target
 		user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
@@ -168,7 +154,7 @@
 /// Traits for plants with backfire effects. These are negative effects that occur when a plant is handled without gloves/unsafely.
 /datum/plant_gene/trait/backfire
 	name = "Backfire Trait"
-	icon = "mitten"
+	icon = FA_ICON_MITTEN
 	description = "Be careful when holding it without protection."
 	/// Whether our actions are cancelled when the backfire triggers.
 	var/cancel_action_on_backfire = FALSE
@@ -206,6 +192,7 @@
 	name = "Rose Thorns"
 	description = "The stem has a lot of thorns."
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
@@ -215,31 +202,30 @@
 
 	to_chat(user, span_danger("[our_plant]'s thorns prick your hand. Ouch."))
 	our_plant.investigate_log("rose-pricked [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	affecting?.receive_damage(2)
+	user.apply_damage(2, BRUTE, user.get_active_hand())
 
 /// Novaflower's hand burn on backfire
 /datum/plant_gene/trait/backfire/novaflower_heat
 	name = "Burning Stem"
 	description = "The stem may burn your hand."
 	cancel_action_on_backfire = TRUE
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, span_danger("[our_plant] singes your bare hand!"))
 	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	return affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND)
+	user.apply_damage(our_plant.force, our_plant.damtype, user.get_active_hand(), wound_bonus = CANT_WOUND)
 
 /// Normal Nettle hannd burn on backfire
 /datum/plant_gene/trait/backfire/nettle_burn
 	name = "Stinging Stem"
 	description = "The stem may sting your hand."
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/backfire/nettle_burn/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, span_danger("[our_plant] burns your bare hand!"))
 	our_plant.investigate_log("self-burned [key_name(user)] for [our_plant.force] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
-	var/obj/item/bodypart/affecting = user.get_active_hand()
-	return affecting?.receive_damage(0, our_plant.force, wound_bonus = CANT_WOUND)
+	user.apply_damage(our_plant.force, our_plant.damtype, user.get_active_hand(), wound_bonus = CANT_WOUND)
 
 /// Deathnettle hand burn + stun on backfire
 /datum/plant_gene/trait/backfire/nettle_burn/death
@@ -257,7 +243,8 @@
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
 	name = "Active Capsicum Glands"
-	description = "You may survive a cold winter with this in hand."
+	description = "It emits a strong heat when handled."
+	trait_flags = TRAIT_SHOW_EXAMINE
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
 	var/datum/weakref/held_mob
@@ -331,7 +318,7 @@
 /datum/plant_gene/trait/mob_transformation
 	name = "Dormant Ferocity"
 	description = "It comes to life when shaken in hand."
-	icon = "heart-pulse"
+	icon = FA_ICON_HEART_PULSE
 	trait_ids = ATTACK_SELF_ID
 	/// Whether mobs spawned by this trait are dangerous or not.
 	var/dangerous = FALSE
@@ -474,7 +461,8 @@
 /datum/plant_gene/trait/one_bite
 	name = "Large Bites"
 	description = "You can't hold off from eating this in one bite!"
-	icon = "drumstick-bite"
+	icon = FA_ICON_DRUMSTICK_BITE
+	trait_flags = TRAIT_SHOW_EXAMINE
 
 /datum/plant_gene/trait/one_bite/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -488,8 +476,8 @@
 /// Traits for plants with a different base max_volume.
 /datum/plant_gene/trait/modified_volume
 	name = "Deep Vesicles"
-	description = "It has more reagents than usual."
-	icon = "vials"
+	description = "It has extra reagent volume."
+	icon = FA_ICON_VIALS
 	/// The new number we set the plant's max_volume to.
 	var/new_capcity = 100
 
@@ -505,18 +493,21 @@
 /// Omegaweed's funny 420 max volume gene
 /datum/plant_gene/trait/modified_volume/omega_weed
 	name = "Dank Vesicles"
+	description = "It can hold up to 420 units of reagents."
+	icon = FA_ICON_CANNABIS
 	new_capcity = 420
 
 /// Cherry Bomb's increased max volume gene
 /datum/plant_gene/trait/modified_volume/cherry_bomb
 	name = "Powder-Filled Bulbs"
+	description = "It can hold up to 125 units of reagents."
 	new_capcity = 125
 
 /// Plants that explode when used (based on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
 	name = "Explosive Contents"
 	description = "Don't shake it, the contents may explode."
-	icon = "bomb"
+	icon = FA_ICON_BOMB
 	trait_ids = ATTACK_SELF_ID
 
 /datum/plant_gene/trait/bomb_plant/on_new_plant(obj/item/our_plant, newloc)
@@ -608,7 +599,7 @@
 	else
 		our_plant.color = COLOR_RED
 
-	playsound(our_plant.drop_location(), 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
+	playsound(our_plant.drop_location(), 'sound/items/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(src, PROC_REF(detonate), our_plant), rand(1 SECONDS, 6 SECONDS))
 
 /datum/plant_gene/trait/bomb_plant/potency_based/detonate(obj/item/our_plant)
@@ -624,7 +615,7 @@
 /datum/plant_gene/trait/gas_production
 	name = "Miasma Gas Production"
 	description = "This plant stinks when grown."
-	icon = "wind"
+	icon = FA_ICON_WIND
 	/// The location of our tray, if we have one.
 	var/datum/weakref/home_tray
 	/// The seed emitting gas.
@@ -694,6 +685,57 @@
 	stank.gases[/datum/gas/miasma][MOLES] = (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * seconds_per_tick // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
+
+/// Hard caps the yield at 5 (effectively)
+/datum/plant_gene/trait/complex_harvest
+	name = "Complex Harvest"
+	description = "Halves the maximum yield of the plant, and prevents it from benefiting from pollination's yield bonus."
+	icon = FA_ICON_SLASH
+	trait_flags = TRAIT_HALVES_YIELD|TRAIT_NO_POLLINATION
+	mutability_flags = NONE
+
+/// Poppy's unique trait that allows slicing for sap
+/datum/plant_gene/trait/opium_production
+	name = "Sap Buds"
+	description = "Using a knife or other sharp object on the plant between ages 200 seconds to 400 seconds will yield a sap."
+	icon = FA_ICON_PILLS
+	/// Has parent plant been harvested for sap already?
+	var/extracted = FALSE
+
+/datum/plant_gene/trait/opium_production/on_plant_in_tray(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
+	RegisterSignal(tray, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_extract))
+	extracted = FALSE // just in case...
+
+/datum/plant_gene/trait/opium_production/on_unplanted_from_tray(obj/machinery/hydroponics/tray, obj/item/seeds/seed)
+	UnregisterSignal(tray, COMSIG_ATOM_ITEM_INTERACTION)
+
+/// Redirect tray item interaction so we can have custom extracting behavior
+/datum/plant_gene/trait/opium_production/proc/try_extract(obj/machinery/hydroponics/source, mob/living/user, obj/item/tool, ...)
+	SIGNAL_HANDLER
+
+	if(!tool.sharpness || tool.tool_behaviour == TOOL_SHOVEL)
+		return NONE
+
+	if(source.age < 10)
+		to_chat(user, span_warning("The [LOWER_TEXT(source.myseed.plantname)] are too young to extract sap from!"))
+		return ITEM_INTERACT_FAILURE
+	if(source.age > 19)
+		to_chat(user, span_warning("The [LOWER_TEXT(source.myseed.plantname)] are too old to extract sap from!"))
+		return ITEM_INTERACT_FAILURE
+	if(extracted)
+		to_chat(user, span_warning("The [LOWER_TEXT(source.myseed.plantname)] have already been harvested for sap!"))
+		return ITEM_INTERACT_FAILURE
+
+	extracted = TRUE
+	new /obj/item/food/drug/opium/raw(source.drop_location(), source.myseed.potency)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 30, TRUE)
+	playsound(tool, 'sound/items/weapons/bladeslice.ogg', 30, TRUE)
+	user.visible_message(
+		span_notice("[user] carefully slices open a [source.myseed.species] pod, extracting a sap."),
+		span_notice("You carefully slice the [source.myseed.species]'s pod, collecting the fragrant, alluring sap."),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	return ITEM_INTERACT_SUCCESS
 
 /// Starthistle's essential invasive spreading
 /datum/plant_gene/trait/invasive/galaxythistle

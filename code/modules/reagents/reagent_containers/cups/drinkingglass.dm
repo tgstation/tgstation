@@ -9,11 +9,11 @@
 	volume = 50
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*5)
 	max_integrity = 20
-	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
 	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
 	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
+	sound_vary = TRUE
 	custom_price = PAYCHECK_LOWER
 	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
 	toolspeed = 25
@@ -35,7 +35,8 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT) //so new drinks can rename the glass
+		qdel(GetComponent(/datum/component/rename))
+		REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT) //so new drinks can rename the glass
 
 // Having our icon state change removes fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_change(datum/glass_style/style)
@@ -55,13 +56,14 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_cleaned(obj/source_component, obj/source)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_WAS_RENAMED))
-		return
+		return NONE
 
+	qdel(GetComponent(/datum/component/rename))
 	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
-	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
 	name = initial(name)
 	desc = initial(desc)
 	update_appearance(UPDATE_NAME | UPDATE_DESC)
+	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -130,3 +132,7 @@
 /obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full/Initialize(mapload, vol)
 	. = ..()
 	name = "[pick("half full", "half empty")] glass of water"
+
+/obj/item/reagent_containers/cup/glass/drinkingglass/filled/irish_cream
+	name = "Irish Cream"
+	list_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 50)

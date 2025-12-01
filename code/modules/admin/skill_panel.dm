@@ -12,7 +12,7 @@
 		holder = userMob.client //if its a mob, assign the mob's client to holder
 
 /datum/skill_panel/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/skill_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -35,7 +35,7 @@
 			var/exp_percent = exp / SKILL_EXP_LIST[SKILL_LEVEL_LEGENDARY]
 			.["skills"] += list(list("playername" = targetmind.current, "path" = type, "name" = S.name, "desc" = S.desc, "lvlnum" = lvl_num, "lvl" = lvl_name, "exp" = exp, "exp_prog" = xp_req_to_level - xp_prog_to_level, "exp_req" = xp_req_to_level, "exp_percent" = exp_percent, "max_exp" = SKILL_EXP_LIST[length(SKILL_EXP_LIST)]))
 
-/datum/skill_panel/ui_act(action, params)
+/datum/skill_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

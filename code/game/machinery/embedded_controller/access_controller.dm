@@ -4,6 +4,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.04
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	var/idSelf
 
 /obj/machinery/door_buttons/attackby(obj/O, mob/user)
@@ -16,7 +17,8 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door_buttons/LateInitialize()
+/obj/machinery/door_buttons/post_machine_initialize()
+	. = ..()
 	find_objects_by_tag()
 
 /obj/machinery/door_buttons/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -73,7 +75,7 @@
 					controller.cycle_close(door)
 		else
 			controller.only_close(door)
-		use_power(active_power_usage)
+		use_energy(active_power_usage)
 		addtimer(CALLBACK(src, PROC_REF(not_busy)), 2 SECONDS)
 
 /obj/machinery/door_buttons/access_button/proc/not_busy()
@@ -108,6 +110,7 @@
 	icon_state = "access_control_standby"
 	base_icon_state = "access_control"
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///the id of the interior airlock
 	var/idInterior
 	///the id of the exterior airlock

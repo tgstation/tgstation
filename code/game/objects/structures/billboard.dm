@@ -47,7 +47,7 @@
 
 /obj/structure/billboard/twenty_four_seven
 	name = "\improper 24-Seven billboard"
-	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Everyday."
+	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Every Day."
 	icon_state = "billboard_twenty_four_seven"
 
 /obj/structure/billboard/starway
@@ -104,3 +104,8 @@
 	name = "\improper All-American Diner billboard"
 	desc = "A billboard advertising an old-school 1950's themed restaurant franchise \"All-American Diner\""
 	icon_state = "billboard_american_diner"
+
+/obj/structure/billboard/gloves
+	name = "\improper RoroCo Gloves billboard"
+	desc = "A billboard advertising RoroCo, a manufacturer of insulated gloves and insulated glove accessories. Features the company's loveable mascot Roro."
+	icon_state = "billboard_gloves"

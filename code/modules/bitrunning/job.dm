@@ -13,7 +13,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 	display_order = JOB_DISPLAY_ORDER_BITRUNNER
-	bounty_types = CIV_JOB_RANDOM
+	bounty_types = CIV_JOB_BITRUN
 	departments_list = list(
 		/datum/job_department/cargo,
 		)
@@ -39,3 +39,6 @@
 	uniform = /obj/item/clothing/under/rank/cargo/bitrunner
 	belt = /obj/item/modular_computer/pda/bitrunner
 	ears = /obj/item/radio/headset/headset_cargo
+
+/datum/job/bit_avatar
+	title = "Bit Avatar"

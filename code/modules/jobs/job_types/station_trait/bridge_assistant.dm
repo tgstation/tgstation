@@ -32,12 +32,14 @@
 	)
 	rpg_title = "Royal Guard"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
-	ignore_human_authority = TRUE
+	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
+	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
 /datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-	ADD_TRAIT(spawned, TRAIT_NO_TWOHANDING, JOB_TRAIT)
+	var/mob/living/carbon/bridgie = spawned
+	if(istype(bridgie))
+		bridgie.gain_trauma(/datum/brain_trauma/special/axedoration)
 
 /datum/job/bridge_assistant/get_roundstart_spawn_point()
 	var/list/chair_turfs = list()
@@ -78,3 +80,4 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/gun/energy/e_gun/mini
 	r_pocket = /obj/item/assembly/flash/handheld
+	pda_slot = ITEM_SLOT_BACK

@@ -28,7 +28,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	return ..()
 
-/datum/component/simple_rotation/PostTransfer()
+/datum/component/simple_rotation/PostTransfer(datum/new_parent)
 	//Because of the callbacks which we don't track cleanly we can't transfer this
 	//item cleanly, better to let the new of the new item create a new rotation datum
 	//instead (there's no real state worth transferring)
@@ -55,10 +55,12 @@
 /datum/component/simple_rotation/proc/rotate_right(datum/source, mob/user)
 	SIGNAL_HANDLER
 	rotate(user, ROTATION_CLOCKWISE)
+	return CLICK_ACTION_SUCCESS
 
 /datum/component/simple_rotation/proc/rotate_left(datum/source, mob/user)
 	SIGNAL_HANDLER
 	rotate(user, ROTATION_COUNTERCLOCKWISE)
+	return CLICK_ACTION_SUCCESS
 
 /datum/component/simple_rotation/proc/rotate(mob/user, degrees)
 	if(QDELETED(user))
@@ -74,7 +76,7 @@
 	var/obj/rotated_obj = parent
 	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
-		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
+		playsound(rotated_obj, 'sound/items/tools/ratchet.ogg', 50, TRUE)
 
 	post_rotation.Invoke(user, degrees)
 
@@ -112,6 +114,13 @@
 		if(!valid_build_direction(rotated_obj.loc, target_dir, is_fulltile = fulltile))
 			if(!silent)
 				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
+			return FALSE
+
+	if(rotation_flags & ROTATION_NEEDS_UNBLOCKED)
+		var/turf/rotate_turf = get_turf(rotated_obj)
+		if(rotate_turf.is_blocked_turf(source_atom = rotated_obj))
+			if(!silent)
+				rotated_obj.balloon_alert(user, "rotation is blocked!")
 			return FALSE
 	return TRUE
 

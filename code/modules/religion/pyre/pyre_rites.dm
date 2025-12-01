@@ -14,7 +14,7 @@
 	"... allow this unworthy apparel to serve you ...",
 	"... make it strong enough to burn a thousand times and more ...")
 	invoke_msg = "... Come forth in your new form, and join the unmelting wax of the one true flame!"
-	favor_cost = 1000
+	favor_cost = 700
 ///the piece of clothing that will be fireproofed, only one per rite
 	var/obj/item/clothing/chosen_clothing
 
@@ -33,7 +33,7 @@
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
-		playsound(get_turf(religious_tool), 'sound/magic/fireball.ogg', 50, TRUE)
+		playsound(get_turf(religious_tool), 'sound/effects/magic/fireball.ogg', 50, TRUE)
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
@@ -90,7 +90,7 @@
 		to_chat(user, span_warning("The sacrifice has to stay dead for the rite to work!"))
 		chosen_sacrifice = null
 		return FALSE
-	var/favor_gained = 100 + round(chosen_sacrifice.getFireLoss())
+	var/favor_gained = 100 + round(chosen_sacrifice.get_fire_loss())
 	GLOB.religious_sect.adjust_favor(favor_gained, user)
 	to_chat(user, span_notice("[GLOB.deity] absorbs the charred corpse and any trace of fire with it. [GLOB.deity] rewards you with [favor_gained] favor."))
 	chosen_sacrifice.dust(force = TRUE)
@@ -110,7 +110,7 @@
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/flashlight/flare/candle/infinite(altar_turf)
-	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(altar_turf, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 	return TRUE
 
 /datum/religion_rites/blazing_star
@@ -123,7 +123,7 @@
 		"... make it burn bright ...",
 	)
 	invoke_msg = "... a blazing star is born!"
-	favor_cost = 2000
+	favor_cost = 1500
 	///arrow to enchant
 	var/obj/item/ammo_casing/arrow/holy/enchant_target
 

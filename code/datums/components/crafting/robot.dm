@@ -38,16 +38,16 @@
 		/obj/item/assembly/prox_sensor = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 	)
-	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
+	parts = list(/obj/item/reagent_containers/cup/bucket = 1) //cleanbot/Entered() handles bucket colors
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/floorbot
-	name = "Floorbot"
-	result = /mob/living/simple_animal/bot/floorbot
+/datum/crafting_recipe/repairbot
+	name = "Repairbot"
+	result = /mob/living/basic/bot/repairbot
 	reqs = list(
 		/obj/item/storage/toolbox = 1,
-		/obj/item/stack/tile/iron = 10,
+		/obj/item/stack/conveyor = 1,
 		/obj/item/assembly/prox_sensor = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
 	)
@@ -70,32 +70,9 @@
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
-	var/mob/living/basic/bot/medbot/bot = result
-	var/obj/item/storage/medkit/medkit = bot.contents[3]
-	bot.medkit_type = medkit
-	bot.health_analyzer = bot.contents[4]
-
-	///if you add a new one don't forget to update /obj/item/storage/medkit/attackby()
-	if (istype(medkit, /obj/item/storage/medkit/fire))
-		bot.skin = "ointment"
-	else if (istype(medkit, /obj/item/storage/medkit/toxin))
-		bot.skin = "tox"
-	else if (istype(medkit, /obj/item/storage/medkit/o2))
-		bot.skin = "o2"
-	else if (istype(medkit, /obj/item/storage/medkit/brute))
-		bot.skin = "brute"
-	else if (istype(medkit, /obj/item/storage/medkit/advanced))
-		bot.skin = "advanced"
-	else if (istype(src, /obj/item/storage/medkit/tactical))
-		bot.skin = "bezerk"
-
-	bot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
-	bot.update_appearance()
-
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/simple_animal/bot/secbot/honkbot
+	result = /mob/living/basic/bot/honkbot
 	reqs = list(
 		/obj/item/storage/box/clown = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -107,7 +84,7 @@
 
 /datum/crafting_recipe/firebot
 	name = "Firebot"
-	result = /mob/living/simple_animal/bot/firebot
+	result = /mob/living/basic/bot/firebot
 	reqs = list(
 		/obj/item/extinguisher = 1,
 		/obj/item/bodypart/arm/right/robot = 1,
@@ -119,7 +96,7 @@
 
 /datum/crafting_recipe/vibebot
 	name = "Vibebot"
-	result = /mob/living/simple_animal/bot/vibebot
+	result = /mob/living/basic/bot/vibebot
 	reqs = list(
 		/obj/item/light/bulb = 2,
 		/obj/item/bodypart/head/robot = 1,
@@ -165,7 +142,6 @@
 		/obj/item/food/grown/potato = 1,
 		/obj/item/stack/cable_coil = 5,
 	)
-	parts = list(/obj/item/aicard = 1)
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/aitater/aispook
@@ -177,18 +153,6 @@
 		/obj/item/stack/cable_coil = 5,
 	)
 
-/datum/crafting_recipe/aitater/on_craft_completion(mob/user, atom/result)
-	var/obj/item/aicard/new_card = result
-	var/obj/item/aicard/base_card = result.contents[1]
-	var/mob/living/silicon/ai = base_card.AI
-
-	if(ai)
-		base_card.AI = null
-		ai.forceMove(new_card)
-		new_card.AI = ai
-		new_card.update_appearance()
-	qdel(base_card)
-
 /datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"
 	result = /obj/item/mod/core/standard
@@ -198,7 +162,7 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/rods = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/organ/internal/heart/ethereal = 1,
+		/obj/item/organ/heart/ethereal = 1,
 	)
 	category = CAT_ROBOT
 
@@ -215,3 +179,17 @@
 		/obj/item/reagent_containers/syringe = 1,
 	)
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/mod_core_soul
+	name = "MOD core (Soul)"
+	result = /obj/item/mod/core/soul
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/soulstone = 1,
+	)
+	category = CAT_ROBOT
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED

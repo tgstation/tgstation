@@ -7,8 +7,8 @@
 	icon_state = "centcom"
 	static_lighting = TRUE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	default_gravity = STANDARD_GRAVITY
+	area_flags = NOTELEPORT
 	flags_1 = NONE
 
 // This is just to define the category
@@ -124,6 +124,7 @@
 /area/centcom/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
+	area_flags = parent_type::area_flags | UNLIMITED_FISHING //for possible testing purposes
 
 /area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -141,7 +142,6 @@
 	name = "Thunderdome Observation"
 	icon_state = "thunder_observe"
 
-
 // ENEMY
 
 // Wizard
@@ -150,20 +150,19 @@
 	icon_state = "wizards_den"
 	static_lighting = TRUE
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	default_gravity = STANDARD_GRAVITY
+	area_flags = NOTELEPORT
 	flags_1 = NONE
-
 
 //Abductors
 /area/centcom/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "abductor_ship"
 	requires_power = FALSE
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	area_flags = NOTELEPORT
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 
 //Syndicates
@@ -171,8 +170,8 @@
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA | NOTELEPORT
+	default_gravity = STANDARD_GRAVITY
+	area_flags = NOTELEPORT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_DANGER
 
@@ -208,17 +207,20 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+/area/centcom/syndicate_mothership/expansion_custodialcloset
+	name = "Syndicate Custodial Closet"
+	icon_state = "syndie-elite"
+
 //MAFIA
 /area/centcom/mafia
 	name = "Mafia Minigame"
 	icon_state = "mafia"
 	static_lighting = FALSE
-
 	base_lighting_alpha = 255
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = BLOCK_SUICIDE | UNIQUE_AREA
+	area_flags = BLOCK_SUICIDE
 
 //CAPTURE THE FLAG
 /area/centcom/ctf
@@ -227,9 +229,9 @@
 	requires_power = FALSE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
-	area_flags = UNIQUE_AREA | NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | NO_DEATH_MESSAGE | BLOCK_SUICIDE
 
 /area/centcom/ctf/control_room
 	name = "Control Room A"
@@ -272,20 +274,17 @@
 	name = "\improper Asteroid"
 	icon_state = "asteroid"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
-	area_flags = UNIQUE_AREA
+	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_MINING
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_ASTEROID
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/centcom/asteroid/nearstation
 	static_lighting = TRUE
 	ambience_index = AMBIENCE_RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
-	area_flags = UNIQUE_AREA | BLOBS_ALLOWED
+	area_flags = BLOBS_ALLOWED
 
 /area/centcom/asteroid/nearstation/bomb_site
 	name = "\improper Bomb Testing Asteroid"

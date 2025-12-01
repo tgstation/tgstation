@@ -1,3 +1,5 @@
+#define POLLING_COOLDOWN_TIME 2 MINUTES
+
 /// Gives all current occupants a notification that the server is going down
 /obj/machinery/quantum_server/proc/begin_shutdown(mob/user)
 	if(isnull(generated_domain))
@@ -5,12 +7,12 @@
 
 	if(!length(avatar_connection_refs))
 		balloon_alert_to_viewers("powering down domain...")
-		playsound(src, 'sound/machines/terminal_off.ogg', 40, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 40, vary = TRUE)
 		reset()
 		return
 
 	balloon_alert_to_viewers("notifying clients...")
-	playsound(src, 'sound/machines/terminal_alert.ogg', 100, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 100, vary = TRUE)
 	user.visible_message(
 		span_danger("[user] begins depowering the server!"),
 		span_notice("You start disconnecting clients..."),
@@ -24,17 +26,18 @@
 
 	reset()
 
+
 /// Links all the loading processes together - does validation for booting a map
 /obj/machinery/quantum_server/proc/cold_boot_map(map_key)
 	if(!is_ready)
 		return FALSE
 
 	if(isnull(map_key))
-		balloon_alert_to_viewers("no domain specified.")
+		balloon_alert_to_viewers("no domain specified!")
 		return FALSE
 
 	if(generated_domain)
-		balloon_alert_to_viewers("stop the current domain first.")
+		balloon_alert_to_viewers("stop the current domain first!")
 		return FALSE
 
 	if(length(avatar_connection_refs))
@@ -42,39 +45,81 @@
 		return FALSE
 
 	is_ready = FALSE
-	playsound(src, 'sound/machines/terminal_processing.ogg', 30, 2)
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 30, 2)
 
 	/// If any one of these fail, it reverts the entire process
 	if(!load_domain(map_key) || !load_map_items() || !load_mob_segments())
-		balloon_alert_to_viewers("initialization failed.")
+		balloon_alert_to_viewers("initialization failed!")
 		scrub_vdom()
 		is_ready = TRUE
 		return FALSE
 
+	SSblackbox.record_feedback("tally", "bitrunning_domain_loaded", 1, map_key)
+
 	is_ready = TRUE
 
-	if(prob(clamp((threat * glitch_chance), 1, 10)))
+	var/spawn_chance = clamp((threat * glitch_chance), 5, threat_prob_max)
+	if(prob(spawn_chance))
 		setup_glitch()
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 30, vary = TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 30, vary = TRUE)
 	balloon_alert_to_viewers("domain loaded.")
 	generated_domain.start_time = world.time
 	points -= generated_domain.cost
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
+	if(broadcasting)
+		start_broadcasting_network(BITRUNNER_CAMERA_NET)
+
+	if(generated_domain.announce_to_ghosts)
+		notify_ghosts("Bitrunners have loaded a domain that offers ghost interactions. Check the spawners menu for more information.",
+			src,
+			"Matrix Glitch",
+		)
+
 	return TRUE
+
 
 /// Initializes a new domain if the given key is valid and the user has enough points
 /obj/machinery/quantum_server/proc/load_domain(map_key)
 	for(var/datum/lazy_template/virtual_domain/available in SSbitrunning.all_domains)
 		if(map_key == available.key && points >= available.cost)
 			generated_domain = available
-			RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))
-			generated_domain.lazy_load()
-			return TRUE
+			break
 
-	return FALSE
+	if(!generated_domain)
+		return FALSE
+
+	if(generated_domain.mission_min_candidates && (!COOLDOWN_FINISHED(src, polling_cooldown)))
+		say("Advanced NPC algorithms resetting, please wait [DisplayTimeText(polling_cooldown)] or load a different domain.")
+		playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
+		return FALSE
+
+	var/list/mob/lucky_ghosts
+	if(generated_domain.mission_min_candidates)
+		playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
+		say("Loading advanced NPCs...")
+		var/list/mob/candidates = SSpolling.poll_ghost_candidates("Do you want to play as a virtual [generated_domain.spawner_role] in a bitrunner domain?", ROLE_GHOST_ROLE, ROLE_GHOST_ROLE, 15 SECONDS, POLL_IGNORE_SHUTTLE_DENIZENS, TRUE)
+		for(var/amount in 1 to generated_domain.mission_max_candidates)
+			if(length(candidates)) // If no candidates, fails in code below anyways
+				LAZYADD(lucky_ghosts, pick_n_take(candidates))
+
+		if(length(lucky_ghosts) < generated_domain.mission_min_candidates)
+			notify_ghosts("Not enough candidates for [generated_domain.spawner_role]! Aborting mission!")
+			playsound(src, "sound/machines/buzz-[pick("sigh", "two")].ogg", 50, TRUE)
+			say("Error! Unable to load advanced NPCs. Please try again or select different domain.")
+			COOLDOWN_START(src, polling_cooldown, POLLING_COOLDOWN_TIME)
+			return FALSE
+
+		playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
+		say("Success!")
+
+	generated_domain.load_advanced_npcs(lucky_ghosts)
+	RegisterSignal(generated_domain, COMSIG_LAZY_TEMPLATE_LOADED, PROC_REF(on_template_loaded))
+	generated_domain.lazy_load()
+
+	return TRUE
 
 /// Loads in necessary map items like hololadder spawns, caches, etc
 /obj/machinery/quantum_server/proc/load_map_items()
@@ -101,6 +146,10 @@
 			qdel(thing)
 			continue
 
+		if(istype(thing, /obj/effect/mob_spawn))
+			generated_domain.ghost_spawners += thing
+			continue
+
 		if(istype(thing, /obj/effect/landmark/bitrunning/curiosity_spawn))
 			curiosity_turfs += get_turf(thing)
 			qdel(thing)
@@ -110,12 +159,19 @@
 			var/turf/signaler_turf = get_turf(thing)
 			signaler_turf.AddComponent(/datum/component/bitrunning_points, generated_domain)
 			qdel(thing)
+			continue
+
+		if(istype(thing, /obj/effect/landmark/bitrunning/permanent_exit))
+			var/turf/tile = get_turf(thing)
+			exit_turfs += tile
+			qdel(thing)
+
+			new /obj/structure/hololadder(tile)
 
 	if(!length(exit_turfs))
 		CRASH("Failed to find exit turfs on generated domain.")
 	if(!length(goal_turfs))
 		CRASH("Failed to find send turfs on generated domain.")
-
 	if(!attempt_spawn_cache(cache_turfs))
 		return FALSE
 
@@ -127,6 +183,7 @@
 		curiosity_turfs -= picked_turf
 
 	return TRUE
+
 
 /// Stops the current virtual domain and disconnects all users
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
@@ -147,6 +204,9 @@
 	domain_randomized = FALSE
 	retries_spent = 0
 
+	stop_broadcasting_network(BITRUNNER_CAMERA_NET)
+
+
 /// Tries to clean up everything in the domain
 /obj/machinery/quantum_server/proc/scrub_vdom()
 	sever_connections() /// just in case someone's connected
@@ -162,7 +222,7 @@
 		if(isnull(creature))
 			continue
 
-		creature.dust(just_ash = TRUE, force = TRUE) // sometimes mobs just don't die
+		qdel(creature)
 
 	generated_domain.secondary_loot_generated = 0
 
@@ -171,3 +231,5 @@
 	generated_domain = null
 	mutation_candidate_refs.Cut()
 	spawned_threat_refs.Cut()
+
+#undef POLLING_COOLDOWN_TIME

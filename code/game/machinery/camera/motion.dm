@@ -1,14 +1,7 @@
-/obj/machinery/camera
-
-	var/list/datum/weakref/localMotionTargets = list()
-	var/detectTime = 0
-	var/area/station/ai_monitored/area_motion = null
-	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
-
 /obj/machinery/camera/process()
 	// motion camera event loop
 	if(!isMotion())
-		return PROCESS_KILL
+		return PROCESS_KILL // FIXME: This is never undone if the camera gets upgraded to a motion camera
 	if(machine_stat & EMPED)
 		return
 	if (detectTime > 0)
@@ -20,14 +13,14 @@
 			var/mob/target = targetref.resolve()
 			if(QDELETED(target) || target.stat == DEAD || (!area_motion && !in_range(src, target)))
 				//If not part of a monitored area and the camera is not in range or the target is dead
-				lostTargetRef(targetref)
+				lost_target(target)
 
 /obj/machinery/camera/proc/getTargetList()
 	if(area_motion)
-		return area_motion.motionTargets
+		return area_motion.motion_targets
 	return localMotionTargets
 
-/obj/machinery/camera/proc/newTarget(mob/target)
+/obj/machinery/camera/proc/new_target(mob/target)
 	if(isAI(target))
 		return FALSE
 	if (detectTime == 0)
@@ -36,21 +29,19 @@
 	targets |= WEAKREF(target)
 	return TRUE
 
+/obj/machinery/camera/proc/lost_target(mob/target)
+	var/list/targets = getTargetList()
+	targets -= WEAKREF(target)
+	if (!length(targets))
+		cancelAlarm()
+
 /obj/machinery/camera/Destroy()
 	localMotionTargets = null
-	if(area_motion)
-		area_motion.motioncameras -= src
 	cancelAlarm()
 	return ..()
 
-/obj/machinery/camera/proc/lostTargetRef(datum/weakref/R)
-	var/list/targets = getTargetList()
-	targets -= R
-	if (targets.len == 0)
-		cancelAlarm()
-
 /obj/machinery/camera/proc/cancelAlarm()
-	if (detectTime == -1 && status)
+	if (detectTime == -1 && camera_enabled)
 		alarm_manager.clear_alarm(ALARM_MOTION)
 	detectTime = 0
 	return TRUE
@@ -58,7 +49,7 @@
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime)
 		return FALSE
-	if(status)
+	if(camera_enabled)
 		if(alarm_manager.send_alarm(ALARM_MOTION, src, src))
 			visible_message(span_warning("A red light flashes on [src]!"))
 	detectTime = -1
@@ -68,11 +59,11 @@
 	// Motion cameras outside of an "ai monitored" area will use this to detect stuff.
 	if (!area_motion)
 		if(isliving(AM))
-			newTarget(AM)
+			new_target(AM)
 
 /obj/machinery/camera/motion/thunderdome
 	name = "entertainment camera"
-	network = list("thunder")
+	network = list(CAMERANET_NETWORK_THUNDERDOME)
 	c_tag = "Arena"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 

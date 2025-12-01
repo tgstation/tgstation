@@ -4,7 +4,7 @@
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
@@ -28,7 +28,7 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bee,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 
@@ -71,7 +71,7 @@
 		return
 
 	var/mob/living/bee_pawn = controller.pawn
-	var/action_prob =  (bee_pawn in current_home.contents) ? exit_chance : flyback_chance
+	var/action_prob =  (bee_pawn.loc == current_home) ? exit_chance : flyback_chance
 
 	if(!SPT_PROB(action_prob, seconds_per_tick))
 		return
@@ -91,3 +91,9 @@
 	hunt_targets = list(/obj/machinery/hydroponics)
 	hunt_range = 10
 	hunt_chance = 85
+
+/datum/ai_planning_subtree/find_and_hunt_target/pollinate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/atom/atom_pawn = controller.pawn
+	if(!isturf(atom_pawn.loc))
+		return
+	return ..()

@@ -19,12 +19,10 @@
 	for(var/obj/item/weapon in src)
 		weapon.forceMove(drop)
 
-/obj/structure/ore_box/deconstruct(disassembled = TRUE)
+/obj/structure/ore_box/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(loc, 4)
 
 	dump_box_contents()
-
-	return ..()
 
 /obj/structure/ore_box/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -57,7 +55,7 @@
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, params)
+/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/stack/ore) || istype(weapon, /obj/item/boulder))
 		user.transferItemToLoc(weapon, src)
 		return TRUE
@@ -67,6 +65,13 @@
 		return TRUE
 	else
 		return ..()
+
+/obj/structure/ore_box/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/boulder) && ismecha(loc)) //Boulders being put into a mech's orebox get processed
+		var/obj/item/boulder/to_process = arrived
+		to_process.convert_to_ore(src)
+		qdel(to_process)
 
 /obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -97,7 +102,7 @@
 
 	return list("materials" = materials)
 
-/obj/structure/ore_box/ui_act(action, params)
+/obj/structure/ore_box/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

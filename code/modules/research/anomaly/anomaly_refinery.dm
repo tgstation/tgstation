@@ -60,10 +60,12 @@
  * * anomaly_type - anomaly type define
  */
 /obj/machinery/research/anomaly_refinery/proc/get_required_radius(anomaly_type)
+	if(!SSresearch.is_core_available(anomaly_type))
+		return //return null
+
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
-	if(already_made >= hard_limit)
-		return //return null
+
 	// my crappy autoscale formula
 	// linear scaling.
 	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
@@ -71,7 +73,7 @@
 	var/radius = clamp(round(MIN_RADIUS_REQUIRED + radius_increase_per_core * already_made, 1), MIN_RADIUS_REQUIRED, MAX_RADIUS_REQUIRED)
 	return radius
 
-/obj/machinery/research/anomaly_refinery/attackby(obj/item/tool, mob/living/user, params)
+/obj/machinery/research/anomaly_refinery/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(active)
 		to_chat(user, span_warning("You can't insert [tool] into [src] while [p_theyre()] currently active."))
 		return
@@ -130,7 +132,7 @@
 		return
 
 	obj_flags |= EMAGGED
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, vary = FALSE)
+	playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, vary = FALSE)
 	say("ERROR: Unauthorized firmware access.")
 	return TRUE
 
@@ -313,7 +315,7 @@
 		ui = new(user, src, "AnomalyRefinery")
 		ui.open()
 
-/obj/machinery/research/anomaly_refinery/ui_act(action, list/params)
+/obj/machinery/research/anomaly_refinery/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return

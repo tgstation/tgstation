@@ -1,5 +1,11 @@
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const GulagTeleporterConsole = (props) => {
@@ -83,10 +89,11 @@ export const GulagTeleporterConsole = (props) => {
             <LabeledList.Item label="Point Goal">
               <NumberInput
                 value={goal}
+                step={1}
                 width="48px"
                 minValue={1}
                 maxValue={1000}
-                onChange={(e, value) => act('set_goal', { value })}
+                onChange={(value) => act('set_goal', { value })}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Occupant">

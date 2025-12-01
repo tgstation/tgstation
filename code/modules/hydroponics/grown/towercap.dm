@@ -1,5 +1,5 @@
 /obj/item/seeds/tower
-	name = "pack of tower-cap mycelium"
+	name = "tower-cap mycelium pack"
 	desc = "This mycelium grows into tower-cap mushrooms."
 	icon_state = "mycelium-tower"
 	species = "towercap"
@@ -20,7 +20,7 @@
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
 /obj/item/seeds/tower/steel
-	name = "pack of steel-cap mycelium"
+	name = "steel-cap mycelium pack"
 	desc = "This mycelium grows into steel logs."
 	icon_state = "mycelium-steelcap"
 	species = "steelcap"
@@ -42,7 +42,11 @@
 	throw_range = 3
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
+	/// Type of plank you can get from this type of log
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
+	/// How many planks you can get from this type of log, without counting seed potency
+	var/plank_count = 1
+	/// Name of plank, shown in context tips and balloon alerts when cutting the log
 	var/plank_name = "wooden planks"
 	var/static/list/accepted = typecacheof(list(
 		/obj/item/food/grown/tobacco,
@@ -56,6 +60,8 @@
 /obj/item/grown/log/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
 	register_context()
+	if(seed)
+		plank_count += round(seed.potency / 25)
 
 /obj/item/grown/log/add_context(
 	atom/source,
@@ -78,33 +84,26 @@
 
 	return NONE
 
-/obj/item/grown/log/attackby(obj/item/W, mob/user, params)
-	if(W.get_sharpness())
-		user.show_message(span_notice("You make [plank_name] out of \the [src]!"), MSG_VISUAL)
-		var/seed_modifier = 0
-		if(seed)
-			seed_modifier = round(seed.potency / 25)
-		var/obj/item/stack/plank = new plank_type(user.loc, 1 + seed_modifier, FALSE)
-		var/old_plank_amount = plank.amount
-		for (var/obj/item/stack/ST in user.loc)
-			if (ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
-				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
-		if (plank.amount > old_plank_amount)
-			to_chat(user, span_notice("You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."))
-		qdel(src)
+/obj/item/grown/log/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.get_sharpness())
 
-	if(CheckAccepted(W))
-		var/obj/item/food/grown/leaf = W
+		user.balloon_alert(user, "made [plank_count] [plank_name]")
+		new plank_type(user.loc, plank_count)
+		qdel(src)
+		return
+
+	if(CheckAccepted(attacking_item))
+		var/obj/item/food/grown/leaf = attacking_item
 		if(HAS_TRAIT(leaf, TRAIT_DRIED))
-			user.show_message(span_notice("You wrap \the [W] around the log, turning it into a torch!"))
-			var/obj/item/flashlight/flare/torch/T = new /obj/item/flashlight/flare/torch(user.loc)
-			usr.dropItemToGround(W)
-			usr.put_in_active_hand(T)
+			user.balloon_alert(user, "torch crafted")
+			var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.loc)
+			user.dropItemToGround(attacking_item)
+			user.put_in_active_hand(new_torch)
 			qdel(leaf)
 			qdel(src)
 			return
 		else
-			to_chat(usr, span_warning("You must dry this first!"))
+			balloon_alert(user, "dry it first!")
 	else
 		return ..()
 
@@ -115,6 +114,7 @@
 	seed = null
 	name = "wood log"
 	desc = "TIMMMMM-BERRRRRRRRRRR!"
+	plank_count = 10
 
 /obj/item/grown/log/steel
 	seed = /obj/item/seeds/tower/steel

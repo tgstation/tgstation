@@ -17,6 +17,7 @@
 	hud_type = /datum/hud/guardian
 	faction = list()
 	speed = 0
+	status_flags = CANPUSH
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
 	health = INFINITY
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
@@ -31,7 +32,7 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	combat_mode = TRUE
@@ -88,8 +89,7 @@
 	GLOB.parasites += src
 	src.theme = theme
 	theme?.apply(src)
-	var/list/death_loot = string_list(list(/obj/item/stack/sheet/mineral/wood))
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/guardian/phase/out)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/basic_inhands)
 	// life link
@@ -191,9 +191,9 @@
 			gib()
 			return TRUE
 		if (EXPLODE_HEAVY)
-			adjustBruteLoss(60)
+			adjust_brute_loss(60)
 		if (EXPLODE_LIGHT)
-			adjustBruteLoss(30)
+			adjust_brute_loss(30)
 
 	return TRUE
 
@@ -294,7 +294,7 @@
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
 	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
 		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
-		summoner.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount * 0.5)
+		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)
 
 /// When our owner is deleted, we go too.
 /mob/living/basic/guardian/proc/on_summoner_deletion(mob/living/source)

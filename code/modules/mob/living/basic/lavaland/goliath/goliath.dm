@@ -19,7 +19,7 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "pulverizes"
 	attack_verb_simple = "pulverize"
 	throw_blocked_message = "does nothing to the tough hide of"
@@ -65,16 +65,9 @@
 	)
 
 	AddComponent(/datum/component/ai_target_timer)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(\
-			/datum/component/tameable,\
-			food_types = list(/obj/item/food/grown/ash_flora),\
-			tame_chance = 10,\
-			bonus_tame_chance = 5,\
-			after_tame = CALLBACK(src, PROC_REF(tamed)),\
-		)
+		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -89,6 +82,13 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/goliath/Destroy()
+	QDEL_NULL(tentacles)
+	QDEL_NULL(melee_tentacles)
+	QDEL_NULL(tentacle_line)
+	return ..()
 
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
@@ -96,14 +96,14 @@
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	. = ..()
 	if (. <= 0)
 		return
 	if (tentacles.cooldown_time > 1 SECONDS)
 		tentacles.cooldown_time -= 1 SECONDS
 
-/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!istype(attacking_item, /obj/item/goliath_saddle))
 		return ..()
 	if (!tameable)
@@ -120,8 +120,10 @@
 		return
 	balloon_alert(user, "ready to ride")
 	qdel(attacking_item)
+	make_rideable()
+
+/mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE
-	buckle_lying = 0
 	add_overlay("goliath_saddled")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
 
@@ -139,7 +141,7 @@
 	if (!COOLDOWN_FINISHED(src, ability_animation_cooldown))
 		return
 	COOLDOWN_START(src, ability_animation_cooldown, 2 SECONDS)
-	playsound(src, 'sound/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
 	Shake(1, 0, 1.5 SECONDS)
 
 /// Called slightly before tentacles ability comes off cooldown, as a warning
@@ -149,12 +151,14 @@
 	icon_state = tentacle_warning_state
 
 /// Get ready for mounting
-/mob/living/basic/mining/goliath/proc/tamed()
+/mob/living/basic/mining/goliath/tamed(mob/living/tamer, atom/food)
 	tamed = TRUE
 
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction = new_friend.faction.Copy()
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
@@ -162,6 +166,24 @@
 
 /mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
 	tentacle_line?.Trigger(target = atom_target)
+
+/mob/living/basic/mining/goliath/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+
+/// Version of the goliath that already starts saddled and doesn't require a lasso to be ridden.
+/mob/living/basic/mining/goliath/deathmatch
+	saddled = TRUE
+	buckle_lying = 0
+
+/mob/living/basic/mining/goliath/deathmatch/Initialize(mapload)
+	. = ..()
+	make_rideable()
+
+/mob/living/basic/mining/goliath/deathmatch/make_rideable()
+	add_overlay("goliath_saddled")
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath/deathmatch)
 
 /// Legacy Goliath mob with different sprites, largely the same behaviour
 /mob/living/basic/mining/goliath/ancient

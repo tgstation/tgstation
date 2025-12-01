@@ -8,7 +8,6 @@
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
-	item_flags = XENOMORPH_HOLDABLE // playing ball against a xeno is rigged since they cannot be disarmed
 	/// The person dribbling the basketball
 	var/mob/living/wielder
 	/// So the basketball doesn't make sound every step
@@ -57,7 +56,7 @@
 	// unlike on_equip, this signal is triggered after the ball is removed from hands
 	// so we can just use is_holding_item_of_type() proc to check for multiple balls
 	if(!wielder.is_holding_item_of_type(/obj/item/toy/basketball))
-		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOB_THROW))
+		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
 
 	wielder = null
 
@@ -95,7 +94,7 @@
 
 	for(var/i in 1 to 6)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/basketball_bounce.ogg', 75, FALSE), 0.25 SECONDS * i)
-	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjustStaminaLoss), STAMINA_COST_SPINNING), 1.5 SECONDS)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon/, adjust_stamina_loss), STAMINA_COST_SPINNING), 1.5 SECONDS)
 
 /// Used to calculate our disarm chance based on stamina, direction, and spinning
 /// Note - monkeys use attack_paw() and never trigger this signal (so they always have 100% disarm)
@@ -105,12 +104,12 @@
 	// spinning gives you a lower disarm chance but it drains stamina
 	var/disarm_chance = HAS_TRAIT(baller, TRAIT_SPINNING) ? 35 : 50
 	// ballers stamina results in lower disarm, stealer stamina results in higher disarm
-	disarm_chance += (baller.getStaminaLoss() - stealer.getStaminaLoss()) / 2
+	disarm_chance += (baller.get_stamina_loss() - stealer.get_stamina_loss()) / 2
 	// the lowest chance for disarm is 25% and the highest is 75%
 	disarm_chance = clamp(disarm_chance, MIN_DISARM_CHANCE, MAX_DISARM_CHANCE)
 
 	// getting disarmed or shoved while holding the ball drains stamina
-	baller.adjustStaminaLoss(STAMINA_COST_DISARMING)
+	baller.adjust_stamina_loss(STAMINA_COST_DISARMING)
 
 	if(!prob(disarm_chance))
 		return // the disarm failed
@@ -150,7 +149,7 @@
 
 	user.balloon_alert_to_viewers("fumbles the ball")
 
-/obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, params)
+/obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!iscarbon(target) || user.combat_mode)
 		return ..()
 
@@ -173,31 +172,37 @@
 	user.swap_hand(user.get_held_index_of_item(src))
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)
 
-/obj/item/toy/basketball/afterattack(atom/target, mob/living/user)
-	. = ..()
-	if(!user.combat_mode)
-		user.throw_item(target)
+/obj/item/toy/basketball/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
 
-/obj/item/toy/basketball/afterattack_secondary(atom/aim_target, mob/living/baller, proximity_flag, click_parameters)
-	// dunking negates shooting
-	if(istype(aim_target, /obj/structure/hoop) && baller.Adjacent(aim_target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/toy/basketball/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode)
+		user.throw_item(interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	baller.adjustStaminaLoss(STAMINA_COST_SHOOTING)
+/obj/item/toy/basketball/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
-	var/dunk_dir = get_dir(baller, aim_target)
+/obj/item/toy/basketball/interact_with_atom_secondary(atom/interacting_with, mob/living/baller, list/modifiers)
+	if(istype(interacting_with, /obj/structure/hoop) && baller.Adjacent(interacting_with))
+		return NONE // Do hoop stuff
+
+	baller.adjust_stamina_loss(STAMINA_COST_SHOOTING)
+
+	var/dunk_dir = get_dir(baller, interacting_with)
 	var/dunk_pixel_y = dunk_dir & SOUTH ? -16 : 16
 	var/dunk_pixel_x = dunk_dir & EAST && 16 || dunk_dir & WEST && -16 || 0
 
 	animate(baller, pixel_x = dunk_pixel_x, pixel_y = dunk_pixel_y, time = 5, easing = BOUNCE_EASING|EASE_IN|EASE_OUT)
 	if(do_after(baller, 0.5 SECONDS))
 		pass_flags |= PASSMOB
-		baller.throw_item(aim_target)
+		baller.throw_item(interacting_with)
 		animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return ITEM_INTERACT_SUCCESS
 
 	animate(baller, pixel_x = 0, pixel_y = 0, time = 3)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/toy/basketball/throw_impact(mob/living/carbon/target, datum/thrownthing/throwingdatum)
 	playsound(src, 'sound/items/basketball_bounce.ogg', 75, FALSE)

@@ -10,3 +10,7 @@
 		return
 	var/mob/living/carbon/human/human_target = target
 	human_target.petrify(statue_timer = INFINITY, save_brain = FALSE)
+
+/datum/smite/petrify/divine
+	name = "Petrify (Divine)"
+	smite_flags = SMITE_DIVINE|SMITE_DELAY|SMITE_STUN

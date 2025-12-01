@@ -25,7 +25,7 @@
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
-	desc = "Neither sandy nor stoney, these thirty blocks will still get the job done."
+	desc = "Neither sandy nor stony, these thirty blocks will still get the job done."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
@@ -75,6 +75,7 @@
 	cost = CARGO_CRATE_VALUE * 0.05
 	contains = list(/obj/machinery/portable_atmospherics/canister)
 	crate_type = /obj/structure/closet/crate/large
+	test_ignored = TRUE
 
 /datum/supply_pack/materials/gas_canisters/generate_supply_packs()
 	var/list/canister_packs = list()
@@ -99,6 +100,8 @@
 
 		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
 		pack.cost = CEILING(pack.cost, 10)
+
+		pack.test_ignored = FALSE
 
 		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
 

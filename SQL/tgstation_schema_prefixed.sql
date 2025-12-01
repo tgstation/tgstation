@@ -53,9 +53,9 @@ DROP TABLE IF EXISTS `SS13_admin_ranks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_admin_ranks` (
   `rank` varchar(32) NOT NULL,
-  `flags` smallint(5) unsigned NOT NULL,
-  `exclude_flags` smallint(5) unsigned NOT NULL,
-  `can_edit_flags` smallint(5) unsigned NOT NULL,
+  `flags` mediumint(5) unsigned NOT NULL,
+  `exclude_flags` mediumint(5) unsigned NOT NULL,
+  `can_edit_flags` mediumint(5) unsigned NOT NULL,
   PRIMARY KEY (`rank`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -115,6 +115,7 @@ CREATE TABLE IF NOT EXISTS `SS13_citation` (
   `sender_ic` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `recipient` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `crime` text NOT NULL,
+  `crime_desc` text NULL DEFAULT NULL,
   `fine` int(4) DEFAULT NULL,
   `paid` int(4) DEFAULT 0,
   `timestamp` datetime NOT NULL,
@@ -136,7 +137,7 @@ CREATE TABLE `SS13_connection_log` (
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
   `round_id` int(11) unsigned NOT NULL,
-  `ckey` varchar(45) DEFAULT NULL,
+  `ckey` varchar(32) DEFAULT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -214,6 +215,19 @@ CREATE TABLE `SS13_ipintel` (
   KEY `idx_ipintel` (`ip`,`intel`,`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Table structure for table `ipintel_whitelist`
+--
+
+DROP TABLE IF EXISTS `SS13_ipintel_whitelist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_ipintel_whitelist` (
+	`ckey` varchar(32) NOT NULL,
+	`admin_ckey` varchar(32) NOT NULL,
+	PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `SS13_legacy_population`
@@ -276,6 +290,28 @@ CREATE TABLE `SS13_library_action` (
   `ip_addr` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SS13_manifest`
+--
+
+DROP TABLE IF EXISTS `SS13_manifest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_manifest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) NOT NULL,
+  `round_id` int(11) NOT NULL,
+  `ckey` varchar(32) NOT NULL,
+  `character_name` text NOT NULL,
+  `job` text NOT NULL,
+  `special` text DEFAULT NULL,
+  `latejoin` tinyint(1) NOT NULL DEFAULT 0,
+	`timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -577,6 +613,16 @@ CREATE TABLE `SS13_achievement_metadata` (
 	PRIMARY KEY (`achievement_key`)
 ) ENGINE=InnoDB;
 
+-- Table structure for table 'SS13_x_progress'
+
+DROP TABLE IF EXISTS `SS13_fish_progress`;
+CREATE TABLE `fish_progress` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `progress_entry` VARCHAR(32) NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ckey`,`progress_entry`)
+) ENGINE=InnoDB;
+
 --
 -- Table structure for table `SS13_ticket`
 --
@@ -600,7 +646,7 @@ CREATE TABLE `SS13_ticket` (
   KEY `idx_ticket_act_time_rid` (`action`, `timestamp`, `round_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE `set_poll_deleted`(
 	IN `poll_id` INT
 )
@@ -611,16 +657,16 @@ UPDATE `SS13_poll_option` SET deleted = 1 WHERE pollid = poll_id;
 UPDATE `SS13_poll_vote` SET deleted = 1 WHERE pollid = poll_id;
 UPDATE `SS13_poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
 END
-$$
+//
 CREATE TRIGGER `SS13_role_timeTlogupdate` AFTER UPDATE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
-$$
+//
 CREATE TRIGGER `SS13_role_timeTloginsert` AFTER INSERT ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
 END
-$$
+//
 CREATE TRIGGER `SS13_role_timeTlogdelete` AFTER DELETE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
-$$
+//
 DELIMITER ;
 
 --

@@ -21,9 +21,10 @@ GLOBAL_PROTECT(href_token)
 
 	var/spamcooldown = 0
 
-	///Randomly generated signature used for security records authorization name.
+	///Randomly generated signature used for security records authorization name. Not code security critical
 	var/admin_signature
 
+	/// Code security critcal token used for authorizing href topic calls
 	var/href_token
 
 	/// Link from the database pointing to the admin's feedback forum
@@ -31,11 +32,14 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
-	var/datum/filter_editor/filteriffic
+	var/datum/filter_editor/filterrific
 	var/datum/particle_editor/particle_test
-	var/datum/colorblind_tester/color_test = new
+	var/datum/colorblind_tester/color_test
 	var/datum/plane_master_debug/plane_debug
 	var/obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/library_manager
+	var/datum/pathfind_debug/path_debug
+	var/datum/spawn_menu/spawn_menu
+	var/datum/spawnpanel/spawn_panel
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE
@@ -78,7 +82,13 @@ GLOBAL_PROTECT(href_token)
 	if(IsAdminAdvancedProcCall())
 		alert_to_permissions_elevation_attempt(usr)
 		return QDEL_HINT_LETMELIVE
-	. = ..()
+	QDEL_NULL(path_debug)
+	return ..()
+
+/datum/admins/can_vv_get(var_name)
+	if(var_name == NAMEOF(src, href_token))
+		return FALSE
+	return ..()
 
 /datum/admins/proc/activate()
 	if(IsAdminAdvancedProcCall())
@@ -99,6 +109,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
 	QDEL_NULL(plane_debug)
+	QDEL_NULL(path_debug)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]
@@ -172,18 +183,18 @@ GLOBAL_PROTECT(href_token)
 		return cached_feedback_link
 
 	if (!SSdbcore.IsConnected())
-		return FALSE
+		return null
 
 	var/datum/db_query/feedback_query = SSdbcore.NewQuery("SELECT feedback FROM [format_table_name("admin")] WHERE ckey = '[owner.ckey]'")
 
 	if(!feedback_query.Execute())
 		log_sql("Error retrieving feedback link for [src]")
 		qdel(feedback_query)
-		return FALSE
+		return null
 
 	if(!feedback_query.NextRow())
 		qdel(feedback_query)
-		return FALSE // no feedback link exists
+		return null // no feedback link exists
 
 	cached_feedback_link = feedback_query.item[1] || NO_FEEDBACK_LINK
 	qdel(feedback_query)
@@ -232,7 +243,7 @@ GLOBAL_PROTECT(href_token)
 		return VALID_2FA_CONNECTION
 
 	if (!SSdbcore.Connect())
-		if (verify_backup_data(client) || (client.ckey in GLOB.protected_admins))
+		if (verify_admin_from_local_cache(client) || (client.ckey in GLOB.protected_admins))
 			return VALID_2FA_CONNECTION
 		else
 			return list(FALSE, null)
@@ -249,7 +260,8 @@ GLOBAL_PROTECT(href_token)
 	))
 
 	if (!query.Execute())
-		qdel(query)
+		if (verify_admin_from_local_cache(client) || (client.ckey in GLOB.protected_admins))
+			return VALID_2FA_CONNECTION
 		return list(FALSE, null)
 
 	var/is_valid = FALSE
@@ -319,25 +331,30 @@ GLOBAL_PROTECT(href_token)
 
 #undef ERROR_2FA_REQUEST_PERMISSIONS
 
-/datum/admins/proc/verify_backup_data(client/client)
-	var/backup_file = file2text("data/admins_backup.json")
+/// Returns true if the admin's cid/ip is verified in the local cache
+/datum/admins/proc/verify_admin_from_local_cache(client/client)
+	var/backup_filename = "data/admin_connections/[ckey(client?.ckey)].json"
+	if (!fexists(backup_filename))
+		return FALSE
+	var/backup_file = file2text(backup_filename)
 	if (isnull(backup_file))
-		log_world("Unable to locate admins backup file.")
+		log_world("Unable to load admin connection's last_connections.json backup file.")
 		return FALSE
 
-	var/list/backup_file_json = json_decode(backup_file)
-	var/connections = backup_file_json["connections"]
+	var/list/connections = json_decode(backup_file)
 
-	// This can happen for older admins_backup.json files
 	if (isnull(connections))
 		return FALSE
 
-	var/most_recent_valid_connection = connections[client?.ckey]
-	if (isnull(most_recent_valid_connection))
-		return FALSE
+	for (var/list/connection as anything in connections)
+		if (!islist(connection) || length(connection) < 2)
+			stack_trace("Invalid connection in admin connections backup file for `[client]`.")
+			continue
+		if (connection["cid"] == client?.computer_id && connection["ip"] == client?.address)
+			return TRUE
 
-	return most_recent_valid_connection["cid"] == client?.computer_id \
-		&& most_recent_valid_connection["ip"] == client?.address
+	return FALSE
+
 
 /datum/admins/proc/alert_2fa_necessary(client/client)
 	var/msg = " is trying to join, but needs to verify their ckey."
@@ -357,6 +374,46 @@ GLOBAL_PROTECT(href_token)
 			html = span_admin("[span_prefix("ADMIN 2FA:")] You have the ability to verify [key_name_admin(client)] by using the Permissions Panel."),
 			confidential = TRUE,
 		)
+
+/datum/admins/proc/backup_connections()
+	set waitfor = FALSE
+	if (!length(CONFIG_GET(string/admin_2fa_url)))
+		return
+	var/ckey = ckey(target)
+	if (!ckey)
+		CRASH("can't backup an admin datum assigned to a blank ckey")
+
+	if (!SSdbcore.Connect())
+		return
+
+	var/datum/db_query/query = SSdbcore.NewQuery({"
+		SELECT cid, INET_NTOA(ip) as ip FROM [format_table_name("admin_connections")]
+		WHERE
+			ckey = :ckey AND verification_time IS NOT NULL
+	"}, list(
+		"ckey" = ckey,
+	))
+
+	if (!query.Execute())
+		qdel(query)
+		return
+	var/list/admin_connections = list()
+	while (query.NextRow())
+		admin_connections += LIST_VALUE_WRAP_LISTS(list(
+			"cid" = query.item[1],
+			"ip" = query.item[2],
+		))
+
+	qdel(query)
+
+	if (length(admin_connections) < 1)
+		return
+
+
+	var/backup_file = "data/admin_connections/[ckey].json"
+	if (fexists(backup_file))
+		fdel(backup_file)
+	WRITE_FILE(file(backup_file), json_encode(admin_connections, JSON_PRETTY_PRINT))
 
 /// Get the rank name of the admin
 /datum/admins/proc/rank_names()

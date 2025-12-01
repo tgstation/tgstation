@@ -34,9 +34,8 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
 /area/lavaland/surface/outdoors/virtual_domain)
 "q" = (
-/obj/effect/baseturf_helper/virtual_domain,
 /turf/open/indestructible/binary,
-/area/lavaland/surface/outdoors/virtual_domain)
+/area/virtual_domain/fullbright)
 "r" = (
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/effect/baseturf_helper/virtual_domain,
@@ -45,12 +44,13 @@
 "s" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/virtual_domain)
+"t" = (
+/obj/effect/baseturf_helper/virtual_domain,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors/virtual_domain)
 "u" = (
 /obj/structure/marker_beacon/indigo,
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors/virtual_domain)
-"v" = (
-/turf/open/indestructible/binary,
 /area/lavaland/surface/outdoors/virtual_domain)
 "x" = (
 /obj/structure/marker_beacon/purple,
@@ -91,55 +91,55 @@
 /area/lavaland/surface/outdoors/virtual_domain)
 
 (1,1,1) = {"
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
 q
 "}
 (2,1,1) = {"
-v
+q
 k
 k
 k
@@ -183,11 +183,11 @@ k
 k
 k
 k
-k
-v
+t
+q
 "}
 (3,1,1) = {"
-v
+q
 k
 a
 a
@@ -232,10 +232,10 @@ a
 k
 k
 k
-v
+q
 "}
 (4,1,1) = {"
-v
+q
 k
 a
 a
@@ -280,10 +280,10 @@ a
 a
 a
 k
-v
+q
 "}
 (5,1,1) = {"
-v
+q
 k
 a
 a
@@ -328,10 +328,10 @@ a
 a
 s
 k
-v
+q
 "}
 (6,1,1) = {"
-v
+q
 k
 a
 a
@@ -376,10 +376,10 @@ a
 s
 s
 k
-v
+q
 "}
 (7,1,1) = {"
-v
+q
 k
 a
 a
@@ -424,10 +424,10 @@ a
 a
 s
 k
-v
+q
 "}
 (8,1,1) = {"
-v
+q
 k
 a
 a
@@ -472,10 +472,10 @@ a
 a
 k
 k
-v
+q
 "}
 (9,1,1) = {"
-v
+q
 k
 a
 a
@@ -520,10 +520,10 @@ a
 a
 k
 k
-v
+q
 "}
 (10,1,1) = {"
-v
+q
 k
 k
 a
@@ -568,10 +568,10 @@ a
 a
 k
 k
-v
+q
 "}
 (11,1,1) = {"
-v
+q
 k
 k
 a
@@ -616,10 +616,10 @@ a
 a
 a
 k
-v
+q
 "}
 (12,1,1) = {"
-v
+q
 k
 k
 a
@@ -664,10 +664,10 @@ a
 a
 a
 k
-v
+q
 "}
 (13,1,1) = {"
-v
+q
 k
 k
 a
@@ -712,10 +712,10 @@ a
 a
 a
 k
-v
+q
 "}
 (14,1,1) = {"
-v
+q
 k
 a
 a
@@ -760,10 +760,10 @@ a
 a
 a
 k
-v
+q
 "}
 (15,1,1) = {"
-v
+q
 k
 a
 a
@@ -808,10 +808,10 @@ a
 a
 a
 k
-v
+q
 "}
 (16,1,1) = {"
-v
+q
 k
 a
 a
@@ -856,10 +856,10 @@ a
 a
 a
 k
-v
+q
 "}
 (17,1,1) = {"
-v
+q
 k
 a
 a
@@ -904,10 +904,10 @@ a
 a
 a
 k
-v
+q
 "}
 (18,1,1) = {"
-v
+q
 k
 a
 a
@@ -952,10 +952,10 @@ a
 a
 a
 k
-v
+q
 "}
 (19,1,1) = {"
-v
+q
 k
 a
 a
@@ -1000,10 +1000,10 @@ a
 a
 a
 k
-v
+q
 "}
 (20,1,1) = {"
-v
+q
 k
 a
 a
@@ -1048,10 +1048,10 @@ a
 a
 a
 k
-v
+q
 "}
 (21,1,1) = {"
-v
+q
 k
 a
 a
@@ -1096,10 +1096,10 @@ U
 N
 a
 k
-v
+q
 "}
 (22,1,1) = {"
-v
+q
 k
 a
 a
@@ -1144,10 +1144,10 @@ U
 U
 a
 k
-v
+q
 "}
 (23,1,1) = {"
-v
+q
 k
 a
 a
@@ -1192,10 +1192,10 @@ U
 U
 a
 k
-v
+q
 "}
 (24,1,1) = {"
-v
+q
 k
 a
 a
@@ -1240,10 +1240,10 @@ U
 U
 a
 k
-v
+q
 "}
 (25,1,1) = {"
-v
+q
 k
 a
 a
@@ -1288,10 +1288,10 @@ U
 U
 a
 k
-v
+q
 "}
 (26,1,1) = {"
-v
+q
 k
 a
 a
@@ -1336,10 +1336,10 @@ U
 U
 a
 k
-v
+q
 "}
 (27,1,1) = {"
-v
+q
 k
 a
 a
@@ -1384,10 +1384,10 @@ U
 D
 a
 k
-v
+q
 "}
 (28,1,1) = {"
-v
+q
 k
 a
 a
@@ -1432,10 +1432,10 @@ a
 a
 a
 k
-v
+q
 "}
 (29,1,1) = {"
-v
+q
 k
 a
 a
@@ -1480,10 +1480,10 @@ a
 a
 a
 k
-v
+q
 "}
 (30,1,1) = {"
-v
+q
 k
 a
 a
@@ -1528,10 +1528,10 @@ a
 a
 a
 k
-v
+q
 "}
 (31,1,1) = {"
-v
+q
 k
 a
 a
@@ -1576,10 +1576,10 @@ a
 a
 a
 k
-v
+q
 "}
 (32,1,1) = {"
-v
+q
 k
 a
 a
@@ -1624,10 +1624,10 @@ a
 a
 a
 k
-v
+q
 "}
 (33,1,1) = {"
-v
+q
 k
 a
 a
@@ -1672,10 +1672,10 @@ a
 a
 a
 k
-v
+q
 "}
 (34,1,1) = {"
-v
+q
 k
 k
 a
@@ -1720,10 +1720,10 @@ a
 a
 a
 k
-v
+q
 "}
 (35,1,1) = {"
-v
+q
 k
 k
 a
@@ -1768,10 +1768,10 @@ a
 a
 a
 k
-v
+q
 "}
 (36,1,1) = {"
-v
+q
 k
 k
 a
@@ -1816,10 +1816,10 @@ a
 a
 a
 k
-v
+q
 "}
 (37,1,1) = {"
-v
+q
 k
 k
 a
@@ -1864,10 +1864,10 @@ a
 a
 k
 k
-v
+q
 "}
 (38,1,1) = {"
-v
+q
 k
 a
 a
@@ -1912,10 +1912,10 @@ a
 a
 k
 k
-v
+q
 "}
 (39,1,1) = {"
-v
+q
 k
 a
 a
@@ -1960,10 +1960,10 @@ a
 a
 a
 k
-v
+q
 "}
 (40,1,1) = {"
-v
+q
 k
 a
 a
@@ -2008,10 +2008,10 @@ a
 a
 a
 k
-v
+q
 "}
 (41,1,1) = {"
-v
+q
 k
 a
 a
@@ -2056,10 +2056,10 @@ a
 a
 a
 k
-v
+q
 "}
 (42,1,1) = {"
-v
+q
 k
 a
 a
@@ -2104,10 +2104,10 @@ a
 a
 a
 k
-v
+q
 "}
 (43,1,1) = {"
-v
+q
 k
 a
 k
@@ -2152,10 +2152,10 @@ k
 a
 a
 k
-v
+q
 "}
 (44,1,1) = {"
-v
+q
 k
 k
 k
@@ -2200,53 +2200,53 @@ k
 k
 k
 k
-v
+q
 "}
 (45,1,1) = {"
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
-v
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
 "}

@@ -4,7 +4,7 @@
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
@@ -16,6 +16,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_DESENSITIZED) // butcher
 	liver_traits = list(TRAIT_CULINARY_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_COOK
@@ -80,18 +81,18 @@
 
 	skillchips = list(/obj/item/skillchip/job/chef)
 
-/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
-	var/datum/job/cook/other_chefs = SSjob.GetJobType(jobtype)
+	var/datum/job/cook/other_chefs = SSjob.get_job_type(jobtype)
 	if(other_chefs) // If there's other Chefs, you're a Cook
 		if(other_chefs.cooks > 0)//Cooks
 			id_trim = /datum/id_trim/job/cook
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
-		if(!visualsOnly)
+		if(!visuals_only)
 			other_chefs.cooks++
 
-/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
 	// Update PDA to match possible new trim.
 	var/obj/item/card/id/worn_id = user.wear_id

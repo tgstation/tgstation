@@ -10,6 +10,7 @@
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	icon_state = "heart"
 	icon_living = "heart"
+	status_flags = NONE
 	mob_biotypes = MOB_ORGANIC
 	basic_mob_flags = DEL_ON_DEATH
 	mob_size = MOB_SIZE_HUGE
@@ -22,11 +23,12 @@
 	response_disarm_simple = "gently push"
 	faction = list()
 	ai_controller = /datum/ai_controller/basic_controller/meteor_heart
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
@@ -34,8 +36,7 @@
 /mob/living/basic/meteor_heart/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
-	var/static/list/death_loot = list(/obj/effect/temp_visual/meteor_heart_death)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/meteor_heart_death)
 	AddElement(/datum/element/relay_attackers)
 
 	var/static/list/innate_actions = list(
@@ -56,12 +57,7 @@
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
-	AddComponent(\
-		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = "MT-"),\
-		diseases = null,\
-	)
+	AddComponent(/datum/component/bloody_spreader)
 
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()
@@ -102,7 +98,7 @@
 
 /obj/effect/temp_visual/meteor_heart_death/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	Shake(2, 0, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)
 	soundloop = new(src, start_immediately = FALSE)
@@ -116,7 +112,7 @@
 
 /// Make this place a mess
 /obj/effect/temp_visual/meteor_heart_death/proc/gib()
-	playsound(loc, 'sound/effects/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	playsound(loc, 'sound/effects/blob/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/human(my_turf)
 	for (var/obj/structure/eyeball as anything in GLOB.meteor_eyeballs)

@@ -4,16 +4,13 @@
 	roundend_category = "Heretics"
 	antagpanel_category = ANTAG_GROUP_HORRORS
 	antag_moodlet = /datum/mood_event/heretics
-	job_rank = ROLE_HERETIC
+	pref_flag = ROLE_HERETIC
 	antag_hud_name = "heretic_beast"
 	suicide_cry = "MY MASTER SMILES UPON ME!!"
 	show_in_antagpanel = FALSE
+	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
-
-/datum/antagonist/heretic_monster/on_gain()
-	. = ..()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 /datum/antagonist/heretic_monster/on_removal()
 	if(!silent)
@@ -26,11 +23,22 @@
 	master = null
 	return ..()
 
+/datum/antagonist/heretic_monster/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/target = mob_override || owner.current
+	ADD_TRAIT(target, TRAIT_HERETIC_SUMMON, REF(src))
+
+/datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/target = mob_override || owner.current
+	REMOVE_TRAIT(target, TRAIT_HERETIC_SUMMON, REF(src))
+	return ..()
+
 /*
  * Set our [master] var to a new mind.
  */
 /datum/antagonist/heretic_monster/proc/set_owner(datum/mind/master)
 	src.master = master
+	owner.enslave_mind_to_creator(master.current)
 
 	var/datum/objective/master_obj = new()
 	master_obj.owner = owner

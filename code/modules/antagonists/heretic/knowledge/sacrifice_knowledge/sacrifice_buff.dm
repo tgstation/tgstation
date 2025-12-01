@@ -4,7 +4,8 @@
 /atom/movable/screen/alert/status_effect/unholy_determination
 	name = "Unholy Determination"
 	desc = "You appear in a unfamiliar room. The darkness begins to close in. Panic begins to set in. There is no time. Fight on, or die!"
-	icon_state = "wounded"
+	icon_state = "heretic_template"
+	overlay_state = "wounded"
 
 /// The buff given to people within the shadow realm to assist them in surviving.
 /datum/status_effect/unholy_determination
@@ -21,11 +22,13 @@
 	return ..()
 
 /datum/status_effect/unholy_determination/on_apply()
-	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), type)
+	owner.add_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
+	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
+		owner.set_blood_volume(BLOOD_VOLUME_OKAY)
 	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()
-	owner.remove_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), type)
+	owner.remove_traits(list(TRAIT_COAGULATING, TRAIT_NOCRITDAMAGE, TRAIT_NOSOFTCRIT), TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/unholy_determination/tick(seconds_between_ticks)
 	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
@@ -63,10 +66,10 @@
 	owner.losebreath = max(owner.losebreath - (0.5 * seconds_between_ticks), 0)
 
 	var/damage_healed = 0
-	damage_healed += owner.adjustToxLoss(-amount, updating_health = FALSE, forced = TRUE)
-	damage_healed += owner.adjustOxyLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustBruteLoss(-amount, updating_health = FALSE)
-	damage_healed += owner.adjustFireLoss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_tox_loss(-amount, updating_health = FALSE, forced = TRUE)
+	damage_healed += owner.adjust_oxy_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_brute_loss(-amount, updating_health = FALSE)
+	damage_healed += owner.adjust_fire_loss(-amount, updating_health = FALSE)
 	if(damage_healed > 0)
 		owner.updatehealth()
 
@@ -91,11 +94,10 @@
  * Slow and stop any blood loss the owner's experiencing.
  */
 /datum/status_effect/unholy_determination/proc/adjust_bleed_wounds(seconds_between_ticks)
-	if(!iscarbon(owner) || !owner.blood_volume)
+	if(!iscarbon(owner) || !CAN_HAVE_BLOOD(owner))
 		return
 
-	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-		owner.blood_volume = owner.blood_volume + (2 * seconds_between_ticks)
+	owner.adjust_blood_volume(2 * seconds_between_ticks, maximum = BLOOD_VOLUME_NORMAL)
 
 	var/mob/living/carbon/carbon_owner = owner
 	var/datum/wound/bloodiest_wound
@@ -107,3 +109,18 @@
 		return
 
 	bloodiest_wound.adjust_blood_flow(-0.5 * seconds_between_ticks)
+
+/// Torment the target with a frightening hand
+/proc/fire_curse_hand(mob/living/carbon/victim, turf/forced_turf, range = 8, projectile_type = /obj/projectile/curse_hand/hel)
+	var/grab_dir = turn(victim.dir, pick(-90, 90, 180, 180)) // Not in front, favour behind
+	var/turf/spawn_turf = get_ranged_target_turf(victim, grab_dir, range)
+	spawn_turf = forced_turf ? forced_turf : spawn_turf
+	if (isnull(spawn_turf))
+		return
+	new /obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, victim.dir)
+	playsound(spawn_turf, 'sound/effects/curse/curse2.ogg', 80, TRUE, -1)
+	var/obj/projectile/hand = new projectile_type(spawn_turf)
+	hand.aim_projectile(victim, spawn_turf)
+	if (QDELETED(hand)) // safety check if above fails - above has a stack trace if it does fail
+		return
+	hand.fire()

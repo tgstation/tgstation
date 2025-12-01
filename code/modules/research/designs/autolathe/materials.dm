@@ -8,7 +8,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/rods
 	name = "Iron Rod"
@@ -20,7 +19,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/glass
 	name = "Glass"
@@ -32,7 +30,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/rglass
 	name = "Reinforced Glass"
@@ -44,7 +41,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/silver
@@ -57,7 +53,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/gold
 	name = "Gold"
@@ -69,7 +64,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/diamond
 	name = "Diamond"
@@ -81,7 +75,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/plasma
 	name = "Plasma"
@@ -93,7 +86,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/uranium
 	name = "Uranium"
@@ -105,7 +97,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/bananium
 	name = "Bananium"
@@ -117,7 +108,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/titanium
 	name = "Titanium"
@@ -129,7 +119,6 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
 
 /datum/design/plastic
 	name = "Plastic"
@@ -141,4 +130,36 @@
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
 	)
-	maxstack = 50
+
+/datum/design/bs_crystal
+	name = "Bluespace Crystal"
+	id = "bscrystal"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/bluespace_crystal
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
+	)
+
+/datum/design/mythril
+	name = "Mythril"
+	id = "mythril"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/mythril = SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/mineral/mythril
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
+	)
+
+/datum/design/alien_alloy
+	name = "Alien Alloy"
+	id = "allienalloy"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT)
+	build_path = /obj/item/stack/sheet/mineral/abductor
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS,
+	)

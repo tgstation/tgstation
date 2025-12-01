@@ -1,5 +1,5 @@
 /obj/item/seeds/rainbow_bunch
-	name = "pack of rainbow bunch seeds"
+	name = "rainbow bunch seed pack"
 	desc = "A pack of seeds that'll grow into a beautiful bush of various colored flowers."
 	icon_state = "seed-rainbowbunch"
 	species = "rainbowbunch"
@@ -23,7 +23,6 @@
 	seed = /obj/item/seeds/rainbow_bunch
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
-	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
@@ -33,7 +32,10 @@
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
-	greyscale_colors = "#000000" //only here for unit testing. overriden in initialize()
+	greyscale_colors = COLOR_BLACK //only here for unit testing. overriden in initialize()
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/food/grown/rainbow_flower"
+	post_init_icon_state = "map_flower"
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
@@ -80,7 +82,7 @@
 			dye_color = DYE_BLACK
 			desc += " This one is in a midnight black color."
 		if(8)
-			set_greyscale("#FFFFFF")
+			set_greyscale(COLOR_WHITE)
 			reagents.add_reagent(/datum/reagent/colorful_reagent/powder/white, 3)
 			dye_color = DYE_WHITE
 			desc += " This one is in a pure white color."

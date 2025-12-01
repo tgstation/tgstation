@@ -1,8 +1,4 @@
-import { sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-
-import { BooleanLike } from '../../common/react';
-import { useBackend } from '../backend';
+import { sortBy } from 'es-toolkit';
 import {
   Box,
   Button,
@@ -11,7 +7,10 @@ import {
   LabeledControls,
   LabeledList,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Song = {
@@ -32,7 +31,7 @@ export const Jukebox = () => {
   const { act, data } = useBackend<Data>();
   const { active, looping, track_selected, volume, songs } = data;
 
-  const songs_sorted: Song[] = flow([sortBy((song: Song) => song.name)])(songs);
+  const songs_sorted: Song[] = sortBy(songs, [(song: Song) => song.name]);
   const song_selected: Song | undefined = songs.find(
     (song) => song.name === track_selected,
   );
@@ -96,8 +95,7 @@ export const Jukebox = () => {
                   maxValue={50}
                   step={1}
                   stepPixelSize={1}
-                  disabled={active}
-                  onDrag={(e, value) =>
+                  onChange={(e, value) =>
                     act('set_volume', {
                       volume: value,
                     })

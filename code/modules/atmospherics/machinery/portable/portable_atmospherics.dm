@@ -8,9 +8,13 @@
 	armor_type = /datum/armor/machinery_portable_atmospherics
 	anchored = FALSE
 	layer = ABOVE_OBJ_LAYER
+	interaction_flags_click = NEED_DEXTERITY
+	damage_deflection = 11
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
+	///Stores the gas mixture in string form for map loading and saving
+	var/initial_gas_mix
 	///Stores the reference of the connecting port
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	///Stores the reference of the tank the machine is holding
@@ -31,28 +35,51 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
+	var/insert_sound = 'sound/effects/compressed_air/tank_insert_clunky.ogg'
+	var/remove_sound = 'sound/effects/compressed_air/tank_remove_thunk.ogg'
+	var/sound_vol = 50
 
 /datum/armor/machinery_portable_atmospherics
 	energy = 100
 	fire = 60
 	acid = 30
 
+/obj/machinery/portable_atmospherics/get_save_vars()
+	. = ..()
+	var/datum/gas_mixture/gasmix = air_contents
+	initial_gas_mix = gasmix.to_string()
+	. += NAMEOF(src, initial_gas_mix)
+	return .
+
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
-	air_contents = new
+	if(initial_gas_mix)
+		air_contents = SSair.parse_gas_string(initial_gas_mix)
+	else
+		air_contents = new
+		air_contents.temperature = T20C
 	air_contents.volume = volume
-	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
+	register_context()
 
-/obj/machinery/portable_atmospherics/Destroy()
-	disconnect()
-	air_contents = null
-	SSair.stop_processing_machine(src)
+/obj/machinery/portable_atmospherics/on_construction(mob/user)
+	. = ..()
+	set_anchored(FALSE)
 
+/obj/machinery/portable_atmospherics/on_deconstruction(disassembled)
 	if(nob_crystal_inserted)
 		new /obj/item/hypernoblium_crystal(src)
+
+	return ..()
+
+/obj/machinery/portable_atmospherics/Destroy()
+	disconnect(destroyed = TRUE)
+	air_contents = null
+	if(holding)
+		unregister_holding()
+	SSair.stop_processing_machine(src)
 
 	return ..()
 
@@ -79,6 +106,29 @@
 	if(!excited)
 		return PROCESS_KILL
 	excited = FALSE
+
+/obj/machinery/portable_atmospherics/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "repairing...")
+	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
+			balloon_alert(user, "repaired")
+			return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "partially repaired...")
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/portable_atmospherics/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!isliving(user) || !Adjacent(user))
+		return .
+	if(held_item?.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_LMB] = "Repair"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /// Take damage if a variable is exceeded. Damage is equal to temp/limit * heat/limit.
 /// The damage multiplier is treated as 1 if something is being ignored while the other one is exceeded.
@@ -146,12 +196,15 @@
 /**
  * Allow the portable machine to be disconnected from the connector
  */
-/obj/machinery/portable_atmospherics/proc/disconnect()
+/obj/machinery/portable_atmospherics/proc/disconnect(destroyed = FALSE)
 	if(!connected_port)
 		return FALSE
-	set_anchored(FALSE)
 	connected_port.connected_device = null
 	connected_port = null
+	if (destroyed)
+		return TRUE
+
+	set_anchored(FALSE)
 	pixel_x = 0
 	pixel_y = 0
 
@@ -159,14 +212,12 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/AltClick(mob/living/user)
-	. = ..()
-	if(!istype(user) || !user.can_perform_action(src, NEED_DEXTERITY) || !can_interact(user))
-		return
+/obj/machinery/portable_atmospherics/click_alt(mob/living/user)
 	if(!holding)
-		return
+		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You remove [holding] from [src]."))
 	replace_tank(user, TRUE)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
 	. = ..()
@@ -183,35 +234,47 @@
  * * new_tank: the tank we are trying to put in the machine
  */
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
+	if(machine_stat & BROKEN)
+		return FALSE
 	if(!user)
 		return FALSE
-	if(holding)
+	if(new_tank && !user.transferItemToLoc(new_tank, src))
+		return FALSE
+
+	if(holding && new_tank)//for when we are actually switching tanks
+		investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]."))
+		user.put_in_hands(holding)
+		UnregisterSignal(holding, COMSIG_QDELETING)
+		holding = new_tank
+		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
+		playsound(src, insert_sound, sound_vol)
+		playsound(src, remove_sound, sound_vol)
+	else if(holding)//we remove a tank
+		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You remove [holding] from [src]."))
 		if(Adjacent(user))
 			user.put_in_hands(holding)
 		else
 			holding.forceMove(get_turf(src))
+		playsound(src, remove_sound, sound_vol)
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
-	if(new_tank)
+	else if(new_tank)//we insert the tank
+		investigate_log("had [new_tank] inserted into it by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You insert [new_tank] into [src]."))
 		holding = new_tank
+		playsound(src, insert_sound, sound_vol)
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, params)
-	if(!istype(item, /obj/item/tank))
-		return ..()
-	if(machine_stat & BROKEN)
-		return FALSE
-	var/obj/item/tank/insert_tank = item
-	if(!user.transferItemToLoc(insert_tank, src))
-		return FALSE
-	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [insert_tank]" : "You insert [insert_tank] into [src]"]."))
-	investigate_log("had its internal [holding] swapped with [insert_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
-	replace_tank(user, FALSE, insert_tank)
-	update_appearance()
+/obj/machinery/portable_atmospherics/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(item, /obj/item/tank))
+		return replace_tank(user, FALSE, item)
+	return ..()
 
 /obj/machinery/portable_atmospherics/wrench_act(mob/living/user, obj/item/wrench)
 	if(machine_stat & BROKEN)
@@ -242,13 +305,20 @@
 	investigate_log("was connected to [possible_port] by [key_name(user)].", INVESTIGATE_ATMOS)
 	return TRUE
 
+/obj/machinery/portable_atmospherics/atom_break(damage_flag)
+	. = ..()
+	damage_deflection = 0
+
+/obj/machinery/portable_atmospherics/atom_fix()
+	. = ..()
+	damage_deflection = initial(damage_deflection)
+
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/item, mob/user)
-	if(item.force < 10 && !(machine_stat & BROKEN))
-		take_damage(0)
+	. = ..()
+	if(. <= 0)
 		return
 	investigate_log("was smacked with \a [item] by [key_name(user)].", INVESTIGATE_ATMOS)
-	add_fingerprint(user)
-	return ..()
+	add_hiddenprint(user)
 
 /// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.
@@ -257,5 +327,9 @@
 
 	UnregisterSignal(holding, COMSIG_QDELETING)
 	holding = null
+
+/// Insert Hypernob crystal into the machine
+/obj/machinery/portable_atmospherics/proc/insert_nob_crystal()
+	nob_crystal_inserted = TRUE
 
 #undef PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT

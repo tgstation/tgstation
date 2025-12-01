@@ -6,17 +6,19 @@
 	desc = "A charging dock for energy based weaponry, PDAs, and other devices."
 	circuit = /obj/item/circuitboard/machine/recharger
 	pass_flags = PASSTABLE
+	/// The item currently inserted into the charger
 	var/obj/item/charging = null
+	/// How good the capacitor is at charging the item
 	var/recharge_coeff = 1
-	var/using_power = FALSE //Did we put power into "charging" last process()?
-	///Did we finish recharging the currently inserted item?
-	var/finished_recharging = FALSE
-
+	/// Did we put power into "charging" last process()?
+	var/using_power = FALSE
+	/// List of items that can be recharged
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/gun/ballistic/automatic/battle_rifle,
 	))
 
 /obj/machinery/recharger/RefreshParts()
@@ -40,20 +42,25 @@
 	if(using_power)
 		status_display_message_shown = TRUE
 		. += span_notice("The status display reads:")
-		. += span_notice("- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.")
+		. += span_notice("- Recharging efficiency: <b>[recharge_coeff*100]%</b>.")
 
 	if(isnull(charging))
 		return
 	if(!status_display_message_shown)
 		. += span_notice("The status display reads:")
 
-	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
+	var/obj/item/stock_parts/power_store/charging_cell = charging.get_cell()
 	if(charging_cell)
 		. += span_notice("- \The [charging]'s cell is at <b>[charging_cell.percent()]%</b>.")
 		return
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
 		. += span_notice("- \The [charging]'s cell is at <b>[PERCENT(power_pack.stored_ammo.len/power_pack.max_ammo)]%</b>.")
+		return
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+		. += span_notice("- \The [charging]'s system degradation is at stage [recalibrating_gun.degradation_stage] of [recalibrating_gun.degradation_stage_max]</b>.")
+		. += span_notice("- \The [charging]'s degradation buffer is at <b>[PERCENT(recalibrating_gun.shots_before_degradation/recalibrating_gun.max_shots_before_degradation)]%</b>.")
 		return
 	. += span_notice("- \The [charging] is not reporting a power level.")
 
@@ -62,7 +69,6 @@
 		charging = arrived
 		START_PROCESSING(SSmachines, src)
 		update_use_power(ACTIVE_POWER_USE)
-		finished_recharging = FALSE
 		using_power = TRUE
 		update_appearance()
 	return ..()
@@ -77,28 +83,28 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/recharger/attackby(obj/item/attacking_item, mob/user, params)
-	if(!is_type_in_typecache(attacking_item, allowed_devices))
-		return ..()
+/obj/machinery/recharger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_type_in_typecache(tool, allowed_devices))
+		return NONE
 
 	if(!anchored)
 		to_chat(user, span_notice("[src] isn't connected to anything!"))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	if(charging || panel_open)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	var/area/our_area = get_area(src) //Check to make sure user's not in space doing it, and that the area got proper power.
 	if(!isarea(our_area) || our_area.power_equip == 0)
-		to_chat(user, span_notice("[src] blinks red as you try to insert [attacking_item]."))
-		return TRUE
+		to_chat(user, span_notice("[src] blinks red as you try to insert [tool]."))
+		return ITEM_INTERACT_BLOCKING
 
-	if (istype(attacking_item, /obj/item/gun/energy))
-		var/obj/item/gun/energy/energy_gun = attacking_item
+	if(istype(tool, /obj/item/gun/energy))
+		var/obj/item/gun/energy/energy_gun = tool
 		if(!energy_gun.can_charge)
 			to_chat(user, span_notice("Your gun has no external power connector."))
-			return TRUE
-	user.transferItemToLoc(attacking_item, src)
-	return TRUE
+			return ITEM_INTERACT_BLOCKING
+	user.transferItemToLoc(tool, src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)
@@ -143,26 +149,50 @@
 	using_power = FALSE
 	if(isnull(charging))
 		return PROCESS_KILL
-	var/obj/item/stock_parts/cell/charging_cell = charging.get_cell()
+	var/obj/item/stock_parts/power_store/charging_cell = charging.get_cell()
 	if(charging_cell)
 		if(charging_cell.charge < charging_cell.maxcharge)
-			charging_cell.give(charging_cell.chargerate * recharge_coeff * seconds_per_tick / 2)
-			use_power(active_power_usage * recharge_coeff * seconds_per_tick)
-			using_power = TRUE
+			charge_cell(charging_cell.chargerate * recharge_coeff * seconds_per_tick, charging_cell)
+			if(charging_cell.charge >= charging_cell.maxcharge) //Inserted thing is at max charge/ammo, notify those around us
+				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+				say("[charging] has finished recharging!")
+			else
+				using_power = TRUE
 		update_appearance()
+		return
 
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge)) //if you add any more snowflake ones, make sure to update the examine messages too.
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
-		if(power_pack.stored_ammo.len < power_pack.max_ammo)
-			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_power(active_power_usage * recharge_coeff * seconds_per_tick)
-			using_power = TRUE
+		for(var/charge_iterations in 1 to recharge_coeff)
+			if(power_pack.stored_ammo.len < power_pack.max_ammo)
+				power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
+				use_energy(active_power_usage * seconds_per_tick)
+				if(power_pack.stored_ammo >= power_pack.max_ammo)
+					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+					say("[charging] has finished recharging!")
+				else
+					using_power = TRUE
 		update_appearance()
 		return
-	if(!using_power && !finished_recharging) //Inserted thing is at max charge/ammo, notify those around us
-		finished_recharging = TRUE
-		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-		say("[charging] has finished recharging!")
+
+	if(istype(charging, /obj/item/gun/ballistic/automatic/battle_rifle))
+		var/obj/item/gun/ballistic/automatic/battle_rifle/recalibrating_gun = charging
+
+		if(recalibrating_gun.degradation_stage)
+			recalibrating_gun.attempt_recalibration(FALSE)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			using_power = TRUE
+
+		else if(recalibrating_gun.shots_before_degradation < recalibrating_gun.max_shots_before_degradation)
+			recalibrating_gun.attempt_recalibration(TRUE, recharge_coeff)
+			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			if(recalibrating_gun.shots_before_degradation == recalibrating_gun.max_shots_before_degradation)
+				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+				say("[charging] has finished recalibrating!")
+			else
+				using_power = TRUE
+		update_appearance()
+		return
 
 /obj/machinery/recharger/emp_act(severity)
 	. = ..()

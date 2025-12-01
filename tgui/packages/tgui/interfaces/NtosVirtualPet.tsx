@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -15,7 +11,11 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -256,11 +256,10 @@ const PetTricks = (props) => {
       title={capitalize(TrickName)}
       buttons={
         <Button.Input
+          buttonText="Rename Trick"
           color="transparent"
-          onCommit={(_, value) => setTrickName(value)}
-        >
-          Rename Trick
-        </Button.Input>
+          onCommit={setTrickName}
+        />
       }
     >
       <LabeledList>
@@ -268,7 +267,7 @@ const PetTricks = (props) => {
           <LabeledList.Item key={index} label={`Sequence ${index + 1}`}>
             <Dropdown
               width="50%"
-              displayText={sequences[index]}
+              selected={sequences[index]}
               options={possible_emotes}
               onSelected={(selected) => UpdateSequence(index, selected)}
             />
@@ -347,14 +346,14 @@ const Customization = (props) => {
               fluid
               maxLength={30}
               value={selectedName}
-              onInput={(_, value) => setSelectedName(value)}
+              onChange={setSelectedName}
             />
           </Section>
         </Stack.Item>
         <Stack.Item width="50%">
           <Section title="Pet Hat">
             <Dropdown
-              displayText={selectedHat?.hat_name}
+              selected={selectedHat?.hat_name}
               options={hat_selections.map((selected_hat) => {
                 return selected_hat.hat_name;
               })}
@@ -369,7 +368,7 @@ const Customization = (props) => {
         <Stack.Item width="50%">
           <Section title="Pet Color">
             <Dropdown
-              displayText={selectedColor?.color_name}
+              selected={selectedColor?.color_name}
               options={possible_colors.map((possible_color) => {
                 return possible_color.color_name;
               })}
@@ -498,7 +497,7 @@ const PetIcon = (props) => {
   const { pet_state_icons = [] } = data;
   const { our_pet_state } = props;
 
-  let icon_display = pet_state_icons.find(
+  const icon_display = pet_state_icons.find(
     (pet_icon) => pet_icon.name === our_pet_state,
   );
 

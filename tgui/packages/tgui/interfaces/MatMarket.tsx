@@ -1,8 +1,4 @@
-import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
+import { sortBy } from 'es-toolkit';
 import {
   Button,
   Collapsible,
@@ -10,8 +6,12 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
-import { formatMoney } from '../format';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+import type { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Material = {
@@ -23,6 +23,7 @@ type Material = {
   threshold: number;
   color: string;
   requested: number;
+  elastic: number;
 };
 
 type Data = {
@@ -55,7 +56,7 @@ export const MatMarket = (props) => {
   const multiplier = orderingPrive ? 1.1 : 1;
 
   return (
-    <Window width={880} height={690}>
+    <Window width={1110} height={600}>
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
@@ -83,8 +84,12 @@ export const MatMarket = (props) => {
               <br /> <br />
               To sell materials, please insert sheets or similar stacks of
               materials. All minerals sold on the market directly are subject to
-              an 20% market fee. To prevent market manipulation, all registered
-              traders can buy a total of 10 full stacks of materials at a time.
+              a scaling value decrease per material, but this will recover over
+              time. To prevent market manipulation, all registered traders can
+              buy a total of 10 full stacks of materials at a time.
+              <br /> <br />
+              When selling materials, prices will be decreased based on the
+              elastic modifier of the material, which will recover over time.
               <br /> <br />
               All new purchases will include the cost of the shipped crate,
               which may be recycled afterwards.
@@ -93,10 +98,10 @@ export const MatMarket = (props) => {
           <Section>
             <Stack>
               <Stack.Item width="15%">
-                Current Credit Balance: <b>{formatMoney(creditBalance)}</b> cr.
+                Balance: <b>{formatMoney(creditBalance)}</b> cr.
               </Stack.Item>
               <Stack.Item width="15%">
-                Current Order Cost: <b>{formatMoney(orderBalance)}</b> cr.
+                Order: <b>{formatMoney(orderBalance)}</b> cr.
               </Stack.Item>
               <Stack.Item
                 width="20%"
@@ -118,7 +123,7 @@ export const MatMarket = (props) => {
             </Stack>
           </Section>
         </Section>
-        {sortBy((tempmat: Material) => tempmat.rarity)(materials).map(
+        {sortBy(materials, [(tempmat: Material) => tempmat.rarity]).map(
           (material, i) => (
             <Section key={i}>
               <Stack fill>
@@ -131,6 +136,19 @@ export const MatMarket = (props) => {
                       pr="3%"
                     >
                       {toTitleCase(material.name)}
+                    </Stack.Item>
+                    <Stack.Item
+                      width="10%"
+                      pr="2%"
+                      textColor={
+                        material.elastic < 33
+                          ? 'red'
+                          : material.elastic < 66
+                            ? 'orange'
+                            : 'green'
+                      }
+                    >
+                      Elasticity: <b>{Math.round(material.elastic)}</b>%
                     </Stack.Item>
 
                     <Stack.Item width="15%" pr="2%">

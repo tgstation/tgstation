@@ -1,10 +1,9 @@
-import { multiline } from 'common/string';
+import { Button, Divider, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, Divider, Section } from '../../components';
 import { DELAYS, REV_DELAYS } from './constants';
 import { DelayHelper } from './DelayHelper';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function Timing(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -18,10 +17,10 @@ export function Timing(props) {
             color="transparent"
             icon="undo"
             onClick={() => act('resetTiming')}
-            tooltip={multiline`
+            tooltip={`
             Reset all pod
             timings/delays`}
-            tooltipPosition="bottom-end"
+            tooltipPosition="bottom-start"
           />
           <Button
             color="transparent"
@@ -29,12 +28,12 @@ export function Timing(props) {
             icon={custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggleRevDelays')}
             selected={custom_rev_delay}
-            tooltip={multiline`
+            tooltip={`
             Toggle Reverse Delays
             Note: Top set is
             normal delays, bottom set
             is reversing pod's delays`}
-            tooltipPosition="bottom-end"
+            tooltipPosition="bottom"
           />
         </>
       }

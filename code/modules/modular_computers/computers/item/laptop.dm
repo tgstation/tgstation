@@ -2,7 +2,7 @@
 	name = "laptop"
 	desc = "A portable laptop computer."
 
-	icon = 'icons/obj/modular_laptop.dmi'
+	icon = 'icons/obj/devices/modular_laptop.dmi'
 	icon_state = "laptop-closed"
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
@@ -11,6 +11,8 @@
 	hardware_flag = PROGRAM_LAPTOP
 	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
+	interaction_flags_mouse_drop = NEED_HANDS
+
 
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
@@ -22,16 +24,33 @@
 	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = 1
 
+/obj/item/modular_computer/laptop/Initialize(mapload)
+	. = ..()
+	if(start_open && !screen_on)
+		toggle_open()
+	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
+	AddElement(/datum/element/drag_pickup)
+
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
 	if(screen_on)
 		. += span_notice("Alt-click to close it.")
 
-/obj/item/modular_computer/laptop/Initialize(mapload)
+/obj/item/modular_computer/laptop/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
+	if(screen_on)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Close"
+		context[SCREENTIP_CONTEXT_RMB] = "Interact"
+	else
+		context[SCREENTIP_CONTEXT_RMB] = "Open"
 
-	if(start_open && !screen_on)
-		toggle_open()
+	return CONTEXTUAL_SCREENTIP_SET
+
+/// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the open slowdown
+/obj/item/modular_computer/laptop/proc/on_speed_potioned(datum/source)
+	SIGNAL_HANDLER
+	// Don't need to touch the actual slowdown here, since the speed potion does it for us
+	slowdown_open = 0
 
 /obj/item/modular_computer/laptop/update_icon_state()
 	if(!screen_on)
@@ -58,28 +77,6 @@
 
 	try_toggle_open(usr)
 
-/obj/item/modular_computer/laptop/MouseDrop(obj/over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr || over_object == src)
-		try_toggle_open(usr)
-		return
-	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		var/atom/movable/screen/inventory/hand/H = over_object
-		var/mob/M = usr
-
-		if(M.stat != CONSCIOUS || HAS_TRAIT(M, TRAIT_HANDS_BLOCKED))
-			return
-		if(!isturf(loc) || !Adjacent(M))
-			return
-		M.put_in_hand(src, H.held_index)
-
-/obj/item/modular_computer/laptop/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(screen_on && isturf(loc))
-		return attack_self(user)
-
 /obj/item/modular_computer/laptop/proc/try_toggle_open(mob/living/user)
 	if(issilicon(user))
 		return
@@ -91,26 +88,32 @@
 	toggle_open(user)
 
 
-/obj/item/modular_computer/laptop/AltClick(mob/user)
+/obj/item/modular_computer/laptop/click_alt(mob/user)
+	if(!screen_on)
+		return CLICK_ACTION_BLOCKING
+	try_toggle_open(user) // Close it.
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/modular_computer/laptop/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!can_interact(user))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(screen_on) // Close it.
-		try_toggle_open(user)
-	else
-		return ..()
+
+	attack_self(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
 		to_chat(user, span_notice("You close \the [src]."))
-		slowdown = initial(slowdown)
-		w_class = initial(w_class)
+		slowdown -= slowdown_open
+		update_weight_class(initial(w_class))
 		drag_slowdown = initial(drag_slowdown)
 	else
 		to_chat(user, span_notice("You open \the [src]."))
-		slowdown = slowdown_open
-		w_class = w_class_open
+		slowdown += slowdown_open
+		update_weight_class(w_class_open)
 		drag_slowdown = slowdown_open
+
 	if(isliving(loc))
 		var/mob/living/localmob = loc
 		localmob.update_equipment_speed_mods()

@@ -2,7 +2,7 @@
 	name = "Tiny Prick"
 	desc = "Stabby stabby"
 
-/datum/action/changeling/sting/Trigger(trigger_flags)
+/datum/action/changeling/sting/Trigger(mob/clicker, trigger_flags)
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
@@ -77,6 +77,8 @@
 	VAR_FINAL/datum/changeling_profile/selected_dna
 	/// Duration of the sting
 	var/sting_duration = 8 MINUTES
+	/// Set this to false via VV to allow golem, plasmaman, or monkey changelings to turn other people into golems, plasmamen, or monkeys
+	var/verify_valid_species = TRUE
 
 /datum/action/changeling/sting/transformation/Grant(mob/grant_to)
 	. = ..()
@@ -98,6 +100,9 @@
 	if(QDELETED(src) || QDELETED(changeling) || QDELETED(user))
 		return
 	if(!new_selected_dna || changeling.chosen_sting || selected_dna) // selected other sting or other DNA while sleeping
+		return
+	if(verify_valid_species && (TRAIT_NO_DNA_COPY in new_selected_dna.dna.species.inherent_traits))
+		user.balloon_alert(user, "dna incompatible!")
 		return
 	selected_dna = new_selected_dna
 	return ..()
@@ -161,7 +166,7 @@
 
 	var/obj/item/held = target.get_active_held_item()
 	if(held && !target.dropItemToGround(held))
-		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, you cannot grow a false armblade over it!"))
+		to_chat(user, span_warning("[held] is stuck to [target.p_their()] hand, we cannot grow a false armblade over it!"))
 		return
 
 	..()
@@ -172,17 +177,15 @@
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message(span_warning("A grotesque blade forms around [target.name]\'s arm!"), span_userdanger("Your arm twists and mutates, transforming into a horrific monstrosity!"), span_hear("You hear organic matter ripping and tearing!"))
-	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
 
-	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 600)
+	addtimer(CALLBACK(src, PROC_REF(remove_fake), target, blade), 1 MINUTES)
 	return TRUE
 
 /datum/action/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/melee/arm_blade/false/blade)
-	playsound(target, 'sound/effects/blobattack.ogg', 30, TRUE)
-	target.visible_message("<span class='warning'>With a sickening crunch, \
-	[target] reforms [target.p_their()] [blade.name] into an arm!</span>",
-	span_warning("[blade] reforms back to normal."),
-	"<span class='italics>You hear organic matter ripping and tearing!</span>")
+	playsound(target, 'sound/effects/blob/blobattack.ogg', 30, TRUE)
+	target.visible_message(span_warning("With a sickening crunch, [target] reforms [target.p_their()] [blade.name] into an arm!"),
+	span_warning("[blade] reforms back to normal."), span_italics("You hear organic matter ripping and tearing!"))
 
 	qdel(blade)
 	target.update_held_items()
@@ -190,7 +193,7 @@
 /datum/action/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA. Costs 25 chemicals."
-	helptext = "Will give you the DNA of your target, allowing you to transform into them."
+	helptext = "Will give us the DNA of our target, allowing us to transform into them. This will render us unable to absorb their body fully later."
 	button_icon_state = "sting_extract"
 	chemical_cost = 25
 	dna_cost = 0
@@ -231,7 +234,7 @@
 	dna_cost = 1
 
 /datum/action/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
-	var/obj/item/organ/internal/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = target.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		user.balloon_alert(user, "no eyes!")
 		return FALSE

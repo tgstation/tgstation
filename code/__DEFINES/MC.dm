@@ -19,7 +19,7 @@
 
 ///creates a running average of "things elapsed" per time period when you need to count via a smaller time period.
 ///eg you want an average number of things happening per second but you measure the event every tick (50 milliseconds).
-///make sure both time intervals are in the same units. doesnt work if current_duration > total_duration or if total_duration == 0
+///make sure both time intervals are in the same units. doesn't work if current_duration > total_duration or if total_duration == 0
 #define MC_AVG_OVER_TIME(average, current, total_duration, current_duration) ((((total_duration) - (current_duration)) / (total_duration)) * (average) + (current))
 
 #define MC_AVG_MINUTES(average, current, current_duration) (MC_AVG_OVER_TIME(average, current, 1 MINUTES, current_duration))
@@ -32,8 +32,8 @@
 #define STOP_PROCESSING(Processor, Datum) Datum.datum_flags &= ~DF_ISPROCESSING;Processor.processing -= Datum;Processor.currentrun -= Datum
 
 /// Returns true if the MC is initialized and running.
-/// Optional argument init_stage controls what stage the mc must have initializted to count as initialized. Defaults to INITSTAGE_MAX if not specified.
-#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed == (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
+/// Optional argument init_stage controls what stage the mc must have initialized to count as initialized. Defaults to INITSTAGE_MAX if not specified.
+#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed >= (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
 
 #define MC_LOOP_RTN_NEWSTAGES 1
 #define MC_LOOP_RTN_GRACEFUL_EXIT 2
@@ -83,9 +83,11 @@
 #define SS_PAUSING 5 /// in the middle of pausing
 
 // Subsystem init stages
-#define INITSTAGE_EARLY 1 //! Early init stuff that doesn't need to wait for mapload
-#define INITSTAGE_MAIN 2 //! Main init stage
-#define INITSTAGE_MAX 2 //! Highest initstage.
+#define INITSTAGE_FIRST 1
+#define INITSTAGE_EARLY 2 //! Early init stuff that doesn't need to wait for mapload
+#define INITSTAGE_MAIN 3 //! Main init stage
+#define INITSTAGE_LAST 4
+#define INITSTAGE_MAX 4 //! Highest initstage.
 
 #define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
 /datum/controller/subsystem/##X/New(){\
@@ -133,3 +135,19 @@
 }\
 /datum/controller/subsystem/verb_manager/##X/fire() {..() /*just so it shows up on the profiler*/} \
 /datum/controller/subsystem/verb_manager/##X
+
+#define AI_CONTROLLER_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/ai_controllers/##X);\
+/datum/controller/subsystem/ai_controllers/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/ai_controllers/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/ai_controllers/##X
+
+#define UNPLANNED_CONTROLLER_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/unplanned_controllers/##X);\
+/datum/controller/subsystem/unplanned_controllers/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/unplanned_controllers/##X/fire() {..() /*just so it shows up on the profiler*/} \
+/datum/controller/subsystem/unplanned_controllers/##X

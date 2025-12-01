@@ -8,6 +8,8 @@
 #define ROTATION_NO_FLIPPING (1<<3)
 /// If an object needs to have an empty spot available in target direction (used for windoors and railings)
 #define ROTATION_NEEDS_ROOM (1<<4)
+/// The turf the object is on needs to be unblocked for the rotation to occur
+#define ROTATION_NEEDS_UNBLOCKED (1<<5)
 
 /// Rotate an object clockwise
 #define ROTATION_CLOCKWISE -90

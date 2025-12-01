@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -77,7 +77,7 @@ const InputDisplay = (props) => {
             fluid
             maxLength={41}
             value={name}
-            onChange={(e, value) => setInput({ ...input, name: value })}
+            onChange={(value) => setInput({ ...input, name: value })}
           />
         </Stack.Item>
         <Stack.Item>
@@ -88,7 +88,7 @@ const InputDisplay = (props) => {
             fluid
             maxLength={100}
             value={description}
-            onChange={(e, value) => setInput({ ...input, description: value })}
+            onChange={(value) => setInput({ ...input, description: value })}
           />
         </Stack.Item>
         <Stack.Item>
@@ -99,7 +99,7 @@ const InputDisplay = (props) => {
             fluid
             maxLength={100}
             value={comments}
-            onChange={(e, value) => setInput({ ...input, comments: value })}
+            onChange={(value) => setInput({ ...input, comments: value })}
           />
         </Stack.Item>
       </Stack>
@@ -143,6 +143,14 @@ const ButtonsDisplay = (props) => {
             }
           >
             SUBMIT
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            onClick={() => act('withdraw')}
+            tooltip="Withdraws your pAI candidacy, if any."
+          >
+            WITHDRAW
           </Button>
         </Stack.Item>
       </Stack>

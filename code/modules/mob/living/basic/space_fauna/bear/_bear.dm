@@ -7,13 +7,14 @@
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
+	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/stack/sheet/animalhide/bear = 2)
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 
+	max_stamina = 120
 	maxHealth = 60
 	health = 60
 	speed = 0
@@ -22,18 +23,18 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	wound_bonus = -5
-	bare_wound_bonus = 10 // BEAR wound bonus am i right
+	exposed_wound_bonus = 10 // BEAR wound bonus am i right
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
 
-	faction = list(FACTION_RUSSIAN)
+	faction = list(FACTION_RUSSIAN, FACTION_BEAR)
 
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = T0C + 1500
 	ai_controller = /datum/ai_controller/basic_controller/bear
@@ -42,7 +43,7 @@
 
 /mob/living/basic/bear/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_FENCE_CLIMBER), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_SWIMMER, TRAIT_FENCE_CLIMBER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber, climbing_distance = 15)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -53,8 +54,6 @@
 		return FALSE
 
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
-	can_buckle = TRUE
-	buckle_lying = 0
 
 /mob/living/basic/bear/update_icons()
 	..()
@@ -82,15 +81,24 @@
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
 
+/mob/living/basic/bear/snow/misha
+	name = "Misha"
+	real_name = "Misha"
+	desc = "Tamed and trained by the Head of Security. Only beasts are above deceit."
+	gold_core_spawnable = NO_SPAWN
+	maxHealth = 250
+	health = 250
+	faction = list(FACTION_NEUTRAL)
+	status_flags = CANPUSH | CANSTUN
+
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"
 	desc = "A grizzled old polar bear, its hide thick enough to make it impervious to almost all weapons."
-	status_flags = CANPUSH | GODMODE
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/basic/bear/snow/Initialize(mapload)
+/mob/living/basic/bear/snow/ancient/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
 
 /mob/living/basic/bear/russian
 	name = "combat bear"
@@ -119,17 +127,20 @@
 	obj_damage = 11
 	melee_damage_lower = 0
 	melee_damage_upper = 0
+	melee_attack_cooldown = CLICK_CD_MELEE
 	sharpness = NONE //it's made of butter
 	armour_penetration = 0
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	death_message = "loses its false life and collapses!"
-	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/internal/brain = 1, /obj/item/organ/internal/heart = 1)
-	attack_sound = 'sound/weapons/slap.ogg'
+	butcher_results = list(/obj/item/food/butter = 6, /obj/item/food/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
+	attack_sound = 'sound/items/weapons/slap.ogg'
 	attack_vis_effect = ATTACK_EFFECT_DISARM
 	attack_verb_simple = "slap"
 	attack_verb_continuous = "slaps"
+	//just ensuring the mats contained by the bear when spawned are the same of when crafted
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 5)
 
 /mob/living/basic/bear/butter/Initialize(mapload)
 	. = ..()
@@ -151,9 +162,9 @@
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)
 
-/mob/living/basic/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
+/mob/living/basic/bear/butter/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	. = ..()
-	var/obj/item/organ/internal/brain/candidate = locate(/obj/item/organ/internal/brain) in contents
+	var/obj/item/organ/brain/candidate = locate(/obj/item/organ/brain) in contents
 	if(!candidate || !candidate.brainmob || !candidate.brainmob.mind)
 		return
 	var/datum/mind/candidate_mind = candidate.brainmob.mind
@@ -163,7 +174,7 @@
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
 	var/default_name = "Terrygold"
-	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are the [name]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "You are \the [src]. Would you like to change your name to something else?", "Name change", default_name, MAX_NAME_LEN)), cap_after_symbols = FALSE)
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>[new_name]</b>!"))
 		name = new_name

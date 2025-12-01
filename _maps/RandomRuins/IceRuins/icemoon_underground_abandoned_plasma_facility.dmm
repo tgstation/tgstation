@@ -25,8 +25,8 @@
 /obj/item/clothing/shoes/galoshes{
 	pixel_y = -5
 	},
-/obj/item/flashlight/eyelight{
-	pixel_y = 11
+/obj/item/flashlight{
+	pixel_y = 8
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
@@ -89,7 +89,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/operations)
 "bv" = (
@@ -166,7 +166,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/stock_parts/cell/high{
+/obj/item/stock_parts/power_store/cell/high{
 	pixel_x = -18;
 	pixel_y = -3
 	},
@@ -199,7 +199,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /obj/effect/turf_decal/tile/brown/opposingcorners,
 /turf/open/floor/iron,
 /area/ruin/plasma_facility/operations)
@@ -325,7 +325,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fx" = (
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/lava/plasma/ice_moon,
 /area/ruin/plasma_facility/operations)
 "fJ" = (
@@ -338,7 +338,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/mimic/crate,
+/mob/living/basic/mimic/crate,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "fO" = (
@@ -399,7 +399,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/iron/grimy,
 /area/ruin/plasma_facility/commons)
 "gH" = (
@@ -419,7 +419,7 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/pill/patch/synthflesh{
+/obj/item/reagent_containers/applicator/patch/synthflesh{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -759,7 +759,7 @@
 "lX" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight/lantern,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -1182,7 +1182,7 @@
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "sP" = (
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/plasma_facility/operations)
 "sX" = (
@@ -1928,7 +1928,7 @@
 /area/icemoon/underground/explored)
 "Jn" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/built/directional/west,
+/obj/machinery/light/small/empty/directional/west,
 /turf/open/floor/iron/smooth{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -2073,11 +2073,11 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "KV" = (
-/mob/living/simple_animal/hostile/mimic/crate,
+/mob/living/basic/mimic/crate,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "KY" = (
-/obj/machinery/light/small/built/directional/south,
+/obj/machinery/light/small/empty/directional/south,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/plasma_facility/commons)
 "Lh" = (
@@ -2126,7 +2126,7 @@
 /turf/open/floor/wood/large,
 /area/ruin/plasma_facility/commons)
 "LY" = (
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/plating,
 /area/ruin/plasma_facility/commons)
 "LZ" = (
@@ -2601,9 +2601,7 @@
 	pixel_x = 15;
 	pixel_y = 14
 	},
-/mob/living/basic/frog{
-	name = "Peter Jr."
-	},
+/mob/living/basic/frog/icemoon_facility,
 /turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/operations)
 "TK" = (
@@ -2914,7 +2912,7 @@
 /area/ruin/plasma_facility/commons)
 "ZC" = (
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/light/small/built/directional/east,
+/obj/machinery/light/small/empty/directional/east,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "ZH" = (

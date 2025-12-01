@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	data["params_changed"] = params_changed
 	return data
 
-/obj/machinery/computer/libraryconsole/ui_act(action, params)
+/obj/machinery/computer/libraryconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -406,7 +406,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	return data
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_assets(mob/user)
-	return list(get_asset_datum(/datum/asset/spritesheet/bibles))
+	return list(get_asset_datum(/datum/asset/spritesheet_batched/bibles))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/load_nearby_books()
 	for(var/datum/book_info/book as anything in SSlibrary.get_area_books(get_area(src)))
@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		scanner = WEAKREF(foundya)
 		return foundya
 
-/obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, params)
+/obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	//The parent call takes care of stuff like searching, don't forget about that yeah?
 	. = ..()
 	if(.)
@@ -441,10 +441,12 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			var/id = params["book_id"]
 			inventory -= id
 			inventory_update()
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("switch_inventory_page")
 			inventory_page = sanitize_page_input(params["page"], inventory_page, inventory_page_count)
 			inventory_update()
+			update_static_data_for_all_viewers()
 			return TRUE
 		if("checkout")
 			var/list/available = list()
@@ -505,12 +507,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 				return
 			if(!GLOB.news_network)
 				say("No news network found on station. Aborting.")
-			var/channelexists = FALSE
-			for(var/datum/feed_channel/feed in GLOB.news_network.network_channels)
-				if(feed.channel_name == LIBRARY_NEWSFEED)
-					channelexists = TRUE
-					break
-			if(!channelexists)
+			var/datum/feed_channel/library_channel = GLOB.news_network.network_channels_by_name[LIBRARY_NEWSFEED]
+			if(isnull(library_channel))
 				GLOB.news_network.create_feed_channel(LIBRARY_NEWSFEED, "Library", "The official station book club!", null)
 
 			var/obj/machinery/libraryscanner/scan = get_scanner()
@@ -543,7 +541,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			set_screen_state(MIN_LIBRARY)
 			return TRUE
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(weapon, /obj/item/barcodescanner))
 		return ..()
 	var/obj/item/barcodescanner/scanner = weapon
@@ -688,17 +686,28 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bigscanner"
 	desc = "It's an industrial strength book scanner. Perfect!"
+	circuit = /obj/item/circuitboard/machine/libraryscanner
 	density = TRUE
 	var/obj/item/book/held_book
 	///Our scanned-in book
 	var/datum/book_info/cache
+
+/obj/machinery/libraryscanner/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_screwdriver(user, "bigscanner2", "bigscanner", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/libraryscanner/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/libraryscanner/Destroy()
 	held_book = null
 	cache = null
 	return ..()
 
-/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, params)
+/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(hitby, /obj/item/book))
 		user.transferItemToLoc(hitby, src)
 		if(held_book)
@@ -742,7 +751,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 				return
 			cache = held_book.book_data.return_copy()
 			flick("bigscanner1", src)
-			playsound(src, 'sound/machines/scanner.ogg', vol = 50, vary = TRUE)
+			playsound(src, 'sound/machines/scanner/scanner.ogg', vol = 50, vary = TRUE)
 			return TRUE
 		if("clear")
 			cache = null
@@ -760,6 +769,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "binder"
 	desc = "Only intended for binding paper products."
+	circuit = /obj/item/circuitboard/machine/bookbinder
 	density = TRUE
 
 	/// Are we currently binding a book?
@@ -768,12 +778,17 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	/// Name of the author for the book, set by scanning your ID.
 	var/scanned_name
 
-/obj/machinery/bookbinder/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/bookbinder/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	if(default_deconstruction_screwdriver(user, "binder2", "binder", tool))
+		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, params)
+/obj/machinery/bookbinder/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(hitby, /obj/item/paper))
 		prebind_book(user, hitby)
 		return TRUE

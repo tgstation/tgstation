@@ -117,9 +117,7 @@
 /turf/open/floor/engine,
 /area/shuttle/hunter)
 "fp" = (
-/obj/machinery/power/smes/engineering{
-	charge = 1e+006
-	},
+/obj/machinery/power/smes/ship,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
@@ -149,25 +147,25 @@
 "gE" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -1;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -8
 	},
-/obj/item/ammo_box/c38/match{
+/obj/item/ammo_box/speedloader/c38/match{
 	pixel_x = -4
 	},
-/obj/item/ammo_box/c38/match,
+/obj/item/ammo_box/speedloader/c38/match,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/hunter)
 "gW" = (
@@ -182,7 +180,9 @@
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "hunter shuttle";
 	rechargeTime = 1800;
-	shuttle_id = "huntership"
+	shuttle_id = "huntership";
+	port_direction = 8;
+	preferred_direction = 8
 	},
 /turf/open/floor/catwalk_floor,
 /area/shuttle/hunter)
@@ -215,7 +215,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "jB" = (
@@ -226,7 +226,7 @@
 /area/shuttle/hunter)
 "ke" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
@@ -397,7 +397,9 @@
 /area/shuttle/hunter)
 "tT" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter/psyker{
-	dir = 4
+	dir = 4;
+	view_range = 12;
+	y_offset = 12
 	},
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
@@ -896,7 +898,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "RK" = (

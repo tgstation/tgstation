@@ -4,6 +4,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "mop"
 	inhand_icon_state = "mop"
+	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 8
@@ -19,7 +20,6 @@
 	var/max_reagent_volume = 15
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
-	var/insertable = TRUE
 	var/static/list/clean_blacklist = typecacheof(list(
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
@@ -46,11 +46,13 @@
 ///Checks whether or not we should clean.
 /obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(clean_blacklist[atom_to_clean.type])
-		return DO_NOT_CLEAN
+		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
 	if(reagents.total_volume < 0.1)
 		cleaner.balloon_alert(cleaner, "mop is dry!")
-		return DO_NOT_CLEAN
-	return reagents.has_reagent(amount = 1, chemical_flags = REAGENT_CLEANS)
+		return CLEAN_BLOCKED
+	if(reagents.has_reagent(amount = 1, chemical_flags = REAGENT_CLEANS))
+		return CLEAN_ALLOWED
+	return CLEAN_ALLOWED|CLEAN_NO_XP|CLEAN_NO_WASH
 
 /**
  * Applies reagents to the cleaned floor and removes them from the mop.
@@ -67,11 +69,7 @@
 	var/val2remove = 1
 	if(cleaner?.mind)
 		val2remove = round(cleaner.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER), 0.1)
-	reagents.remove_any(val2remove) //reaction() doesn't use up the reagents
-
-/obj/item/mop/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	reagents.remove_all(val2remove) //reaction() doesn't use up the reagents
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
@@ -115,6 +113,3 @@
 /obj/item/mop/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE

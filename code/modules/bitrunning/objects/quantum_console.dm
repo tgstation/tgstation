@@ -10,14 +10,16 @@
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
-	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanostrasen is still using REST APIs. How grim."
+	desc = "Even in the distant year [CURRENT_STATION_YEAR], Nanotrasen is still using REST APIs. How grim."
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/quantum_console/LateInitialize()
+/obj/machinery/computer/quantum_console/post_machine_initialize()
 	. = ..()
-
 	find_server()
+
+/obj/machinery/computer/quantum_console/examine(mob/user)
+	. = ..()
+	if(!server_ref)
+		. += span_warning("Please install an quantum server in any tile next to this console.")
 
 /obj/machinery/computer/quantum_console/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -46,6 +48,8 @@
 	data["ready"] = server.is_ready && server.is_operational
 	data["scanner_tier"] = server.scanner_tier
 	data["retries_left"] = length(server.exit_turfs) - server.retries_spent
+	data["broadcasting"] = server.broadcasting
+	data["broadcasting_on_cd"] = !COOLDOWN_FINISHED(server, broadcast_toggle_cd)
 
 	return data
 
@@ -82,6 +86,9 @@
 			return TRUE
 		if("stop_domain")
 			server.begin_shutdown(usr)
+			return TRUE
+		if("broadcast")
+			server.toggle_broadcast()
 			return TRUE
 
 	return FALSE

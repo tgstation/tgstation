@@ -1,0 +1,74 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/water/hot_spring,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+"e" = (
+/turf/open/water/hot_spring,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+"v" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+"J" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+"U" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+"W" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/water/hot_spring,
+/area/template_noop)
+
+(1,1,1) = {"
+p
+W
+J
+"}
+(2,1,1) = {"
+v
+e
+a
+"}
+(3,1,1) = {"
+b
+o
+U
+"}

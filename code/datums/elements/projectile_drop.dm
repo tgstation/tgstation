@@ -28,8 +28,10 @@
 	//Just to be safe, knowing it won't be spawned multiple times.
 	Detach(source)
 
-/datum/element/projectile_drop/proc/spawn_drop_if_not_embeddable(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone)
+/datum/element/projectile_drop/proc/spawn_drop_if_not_embeddable(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked, pierce_hit)
 	SIGNAL_HANDLER
+	if (pierce_hit)
+		return
 	if(source.can_embed_into(hit))
 		Detach(source)
 		return

@@ -9,15 +9,19 @@
 		return TRUE
 	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
 		return FALSE
-	if(!isnull(accessor) && HAS_TRAIT(accessor, TRAIT_ALWAYS_NO_ACCESS))
+	if(isnull(accessor)) //likely a TK user.
+		return check_access(null)
+	if(isAdminGhostAI(accessor))
+		//Access can't stop the abuse
+		return TRUE
+	//If the mob has the simple_access component with the requried access, we let them in.
+	var/attempted_access = SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src)
+	if(attempted_access & ACCESS_ALLOWED)
+		return TRUE
+	if(attempted_access & ACCESS_DISALLOWED)
 		return FALSE
 	//check if it doesn't require any access at all
 	if(check_access(null))
-		return TRUE
-	if(isnull(accessor)) //likely a TK user.
-		return FALSE
-	if(isAdminGhostAI(accessor))
-		//Access can't stop the abuse
 		return TRUE
 	if(HAS_SILICON_ACCESS(accessor))
 		if(ispAI(accessor))
@@ -28,11 +32,8 @@
 			if(onSyndieBase() && loc != accessor)
 				return FALSE
 		return TRUE //AI can do whatever it wants
-	//If the mob has the simple_access component with the requried access, we let them in.
-	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
-		return TRUE
 	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
-	else if(check_access(accessor.get_active_held_item()))
+	else if(check_access(accessor.get_active_held_item()) || check_access(accessor.get_inactive_held_item()))
 		return TRUE
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor
@@ -78,8 +79,8 @@
 /obj/item/proc/GetID()
 	return null
 
-/obj/item/proc/RemoveID()
+/obj/item/proc/remove_id()
 	return null
 
-/obj/item/proc/InsertID()
+/obj/item/proc/insert_id()
 	return FALSE

@@ -30,7 +30,7 @@
 
 	/// If the cyborg starts movement free and not under lockdown
 	var/locomotion = TRUE
-	/// If the cyborg synchronizes it's laws with it's master AI
+	/// If the cyborg synchronizes its laws with its master AI
 	var/lawsync = TRUE
 	/// If the cyborg starts with a master AI
 	var/aisync = TRUE
@@ -76,7 +76,7 @@
 	head.flash2 = new(head)
 	chest = new(src)
 	chest.wired = TRUE
-	chest.cell = new /obj/item/stock_parts/cell/high(chest)
+	chest.cell = new /obj/item/stock_parts/power_store/cell/high(chest)
 	update_appearance()
 
 /obj/item/robot_suit/update_overlays()
@@ -121,14 +121,11 @@
 
 	if(chest)
 		chest.forceMove(drop_to)
-		new /obj/item/stack/cable_coil(drop_to, 1)
-		chest.wired = FALSE
-		chest.cell?.forceMove(drop_to)
+		chest.drop_organs()
 
 	if(head)
-		head.flash1?.forceMove(drop_to)
-		head.flash2?.forceMove(drop_to)
 		head.forceMove(drop_to)
+		head.drop_organs()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -145,7 +142,7 @@
 		to_chat(user, span_warning("[src] has no attached torso!"))
 		return
 
-	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
+	var/obj/item/stock_parts/power_store/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/power_store/cell)
 	var/swap_failed = FALSE
 	if(!temp_cell) //if we're not holding a cell
 		swap_failed = TRUE
@@ -169,21 +166,20 @@
 	return TRUE
 
 //ADD
-/obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
+/obj/item/robot_suit/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = W
 		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-			if (M.use(1))
-				var/obj/item/bot_assembly/ed209/B = new
-				B.forceMove(drop_location())
-				to_chat(user, span_notice("You arm the robot frame."))
-				var/holding_this = user.get_inactive_held_item() == src
-				qdel(src)
-				if (holding_this)
-					user.put_in_inactive_hand(B)
-			else
+			if (!M.use(1))
 				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
 				return
+			var/obj/item/bot_assembly/ed209/assembly = new(drop_location())
+			to_chat(user, span_notice("You arm the robot frame."))
+			var/held_index = user.is_holding(src)
+			qdel(src)
+			if (held_index)
+				user.put_in_hand(assembly, held_index)
+
 	else if(istype(W, /obj/item/bodypart/leg/left/robot))
 		if(l_leg)
 			return
@@ -242,7 +238,7 @@
 
 	else if(istype(W, /obj/item/bodypart/head/robot))
 		var/obj/item/bodypart/head/robot/HD = W
-		if(locate(/obj/item/organ/internal) in HD)
+		if(locate(/obj/item/organ) in HD)
 			to_chat(user, span_warning("There are organs inside [HD]!"))
 			return
 		if(head)
@@ -322,9 +318,9 @@
 			// This canonizes that MMI'd cyborgs have memories of their previous life
 			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
 			brainmob.mind.transfer_to(O)
-			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+			playsound(O.loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
-			if(O.mind && O.mind.special_role)
+			if(O.is_antag())
 				to_chat(O, span_userdanger("You have been robotized!"))
 				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
 
@@ -376,7 +372,7 @@
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 
-	else if(istype(W, /obj/item/pen))
+	else if(IS_WRITING_UTENSIL(W))
 		to_chat(user, span_warning("You need to use a multitool to name [src]!"))
 	else
 		return ..()
@@ -409,7 +405,7 @@
 	data["lawsync"] = lawsync
 	return data
 
-/obj/item/robot_suit/ui_act(action, list/params)
+/obj/item/robot_suit/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

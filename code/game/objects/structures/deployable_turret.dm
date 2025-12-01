@@ -27,9 +27,9 @@
 	var/warned = FALSE
 	var/list/calculated_projectile_vars
 	/// Sound to play at the end of a burst
-	var/overheatsound = 'sound/weapons/sear.ogg'
+	var/overheatsound = 'sound/items/weapons/sear.ogg'
 	/// Sound to play when firing
-	var/firesound = 'sound/weapons/gun/smg/shot.ogg'
+	var/firesound = 'sound/items/weapons/gun/smg/shot.ogg'
 	/// If using a wrench on the turret will start undeploying it
 	var/can_be_undeployed = FALSE
 	/// What gets spawned if the object is undeployed
@@ -51,24 +51,26 @@
 
 /// Undeploying, for when you want to move your big dakka around
 /obj/machinery/deployable_turret/wrench_act(mob/living/user, obj/item/wrench/used_wrench)
-	. = ..()
 	if(!can_be_undeployed)
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	if(!ishuman(user))
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK
 	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
 	if(!do_after(user, undeploy_time))
-		return
-	var/obj/undeployed_object = new spawned_on_undeploy(src)
+		return ITEM_INTERACT_BLOCKING
+	var/obj/undeployed_object = new spawned_on_undeploy()
 	//Keeps the health the same even if you redeploy the gun
 	undeployed_object.modify_max_integrity(max_integrity)
+	if(!user.put_in_hands(undeployed_object))
+		undeployed_object.forceMove(loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //BUCKLE HOOKS
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -83,7 +85,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/deployable_turret/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if(user.incapacitated() || !istype(user))
+	if(user.incapacitated || !istype(user))
 		return
 	M.forceMove(get_turf(src))
 	. = ..()
@@ -101,7 +103,7 @@
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	set_anchored(TRUE)
 	if(M.client)
 		M.client.view_size.setTo(view_range)
@@ -127,7 +129,7 @@
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, target_turf, modifiers)
 
 /obj/machinery/deployable_turret/proc/direction_track(mob/user, atom/targeted)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
@@ -167,7 +169,7 @@
 
 /obj/machinery/deployable_turret/proc/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
-	if(target == user || user.incapacitated() || target == get_turf(src))
+	if(target == user || user.incapacitated || target == get_turf(src))
 		return
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
@@ -185,7 +187,7 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/machinery/deployable_turret/, fire_helper), user), i*rate_of_fire)
 
 /obj/machinery/deployable_turret/proc/fire_helper(mob/user)
-	if(user.incapacitated() || !(user in buckled_mobs))
+	if(user.incapacitated || !(user in buckled_mobs))
 		return
 	update_positioning() //REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
@@ -193,7 +195,7 @@
 		target = target_turf
 	var/obj/projectile/projectile_to_fire = new projectile_type(targets_from)
 	playsound(src, firesound, 75, TRUE)
-	projectile_to_fire.preparePixelProjectile(target, targets_from)
+	projectile_to_fire.aim_projectile(target, targets_from)
 	projectile_to_fire.firer = user
 	projectile_to_fire.fired_from = src
 	projectile_to_fire.fire()
@@ -211,7 +213,7 @@
 
 /obj/machinery/deployable_turret/hmg
 	name = "heavy machine gun turret"
-	desc = "A heavy calibre machine gun commonly used by Nanotrasen forces, famed for it's ability to give people on the recieving end more holes than normal."
+	desc = "A heavy caliber machine gun commonly used by Nanotrasen forces, famed for its ability to give people on the receiving end more holes than normal."
 	icon_state = "hmg"
 	max_integrity = 250
 	projectile_type = /obj/projectile/bullet/manned_turret/hmg
@@ -219,8 +221,8 @@
 	number_of_shots = 3
 	cooldown_duration = 2 SECONDS
 	rate_of_fire = 2
-	firesound = 'sound/weapons/gun/hmg/hmg.ogg'
-	overheatsound = 'sound/weapons/gun/smg/smgrack.ogg'
+	firesound = 'sound/items/weapons/gun/hmg/hmg.ogg'
+	overheatsound = 'sound/items/weapons/gun/smg/smgrack.ogg'
 	can_be_undeployed = TRUE
 	spawned_on_undeploy = /obj/item/deployable_turret_folded
 
@@ -247,21 +249,24 @@
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE
 
-/obj/item/gun_control/attack_atom(obj/O, mob/living/user, params)
+/obj/item/gun_control/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	O.attacked_by(src, user)
+	attacked_obj.attacked_by(src, user, modifiers)
 
-/obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
-	M.attacked_by(src, user)
+/obj/item/gun_control/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	target_mob.lastattacker = user.real_name
+	target_mob.lastattackerckey = user.ckey
+	target_mob.attacked_by(src, user, modifiers)
 	add_fingerprint(user)
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
-	var/modifiers = params2list(params)
-	var/obj/machinery/deployable_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, targeted_atom, modifiers)
-	E.direction_track(user, targeted_atom)
-	E.checkfire(targeted_atom, user)
+/obj/item/gun_control/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/obj/machinery/deployable_turret/buckled_turret = user.buckled
+	if(!istype(buckled_turret))
+		return NONE
+	buckled_turret.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, interacting_with, modifiers)
+	buckled_turret.direction_track(user, interacting_with)
+	buckled_turret.checkfire(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gun_control/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)

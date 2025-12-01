@@ -19,10 +19,10 @@
 
 /datum/station_goal/dna_vault/New()
 	..()
-	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
+	animal_count = rand(10,15) //might be too few given ~15 roundstart stationside ones
 	human_count = rand(round(0.75 * SSticker.totalPlayersReady) , SSticker.totalPlayersReady) // 75%+ roundstart population.
 	var/non_standard_plants = non_standard_plants_count()
-	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
+	plant_count = rand(round(0.2 * non_standard_plants),round(0.4 * non_standard_plants))
 
 /datum/station_goal/dna_vault/proc/non_standard_plants_count()
 	. = 0
@@ -115,32 +115,6 @@
 		qdel(filler)
 	return ..()
 
-/obj/machinery/dna_vault/attackby(obj/item/our_item, mob/user, params)
-	if(istype(our_item, /obj/item/dna_probe))
-		var/obj/item/dna_probe/our_probe = our_item
-		var/uploaded = 0
-		var/plant_dna_length = length(our_probe.stored_dna_plants)
-		var/human_dna_length = length(our_probe.stored_dna_human)
-		var/animal_dna_length = length(our_probe.stored_dna_animal)
-		if(plant_dna_length)
-			uploaded += plant_dna_length
-			plant_dna += our_probe.stored_dna_plants
-			our_probe.stored_dna_plants.Cut()
-		if(human_dna_length)
-			uploaded += human_dna_length
-			human_dna += our_probe.stored_dna_human
-			our_probe.stored_dna_human.Cut()
-		if(animal_dna_length)
-			uploaded += animal_dna_length
-			animal_dna += our_probe.stored_dna_animal
-			our_probe.stored_dna_animal.Cut()
-		check_goal()
-		playsound(src, 'sound/misc/compiler-stage1.ogg', 50)
-		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
-		return
-
-	return ..()
-
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -154,13 +128,13 @@
 	if((user_weakref in power_lottery) || isdead(user))
 		return
 	possible_powers = list(
-		/datum/mutation/human/breathless,
-		/datum/mutation/human/dextrous,
-		/datum/mutation/human/quick,
-		/datum/mutation/human/fire_immunity,
-		/datum/mutation/human/plasmocile,
-		/datum/mutation/human/quick_recovery,
-		/datum/mutation/human/tough,
+		/datum/mutation/breathless,
+		/datum/mutation/dextrous,
+		/datum/mutation/quick,
+		/datum/mutation/fire_immunity,
+		/datum/mutation/plasmocile,
+		/datum/mutation/quick_recovery,
+		/datum/mutation/tough,
 	)
 	var/list/gained_mutation = list()
 	gained_mutation += pick_n_take(possible_powers)
@@ -183,14 +157,14 @@
 	if(user && completed)
 		var/list/mutation_options = power_lottery[WEAKREF(user)]
 		if(length(mutation_options))
-			var/datum/mutation/human/mutation1 = mutation_options[1]
-			var/datum/mutation/human/mutation2 = mutation_options[2]
+			var/datum/mutation/mutation1 = mutation_options[1]
+			var/datum/mutation/mutation2 = mutation_options[2]
 			data["used"] = FALSE
 			data["choiceA"] = initial(mutation1.name)
 			data["choiceB"] = initial(mutation2.name)
 	return data
 
-/obj/machinery/dna_vault/ui_act(action, params)
+/obj/machinery/dna_vault/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -204,23 +178,23 @@
 	if(plant_dna.len >= plants_max && animal_dna.len >= animals_max && human_dna.len >= dna_max)
 		completed = TRUE
 
-/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
-	var/datum/weakref/human_weakref = WEAKREF(H)
+/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/target, upgrade_type)
+	var/datum/weakref/human_weakref = WEAKREF(target)
 	var/static/list/associated_mutation = list(
-		"Breathless" = /datum/mutation/human/breathless,
-		"Dextrous" = /datum/mutation/human/dextrous,
-		"Quick" = /datum/mutation/human/quick,
-		"Fire Immunity" = /datum/mutation/human/fire_immunity,
-		"Plasmocile" = /datum/mutation/human/plasmocile,
-		"Quick Recovery" = /datum/mutation/human/quick_recovery,
-		"Tough" = /datum/mutation/human/tough,
+		"Breathless" = /datum/mutation/breathless,
+		"Dextrous" = /datum/mutation/dextrous,
+		"Quick" = /datum/mutation/quick,
+		"Fire Immunity" = /datum/mutation/fire_immunity,
+		"Plasmocile" = /datum/mutation/plasmocile,
+		"Quick Recovery" = /datum/mutation/quick_recovery,
+		"Tough" = /datum/mutation/tough,
 	)
-	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref])	||	(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
+	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref]) || (HAS_TRAIT(target, TRAIT_USED_DNA_VAULT)))
 		return
-	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
-	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
+	target.dna.add_mutation(associated_mutation[upgrade_type], MUTATION_SOURCE_DNA_VAULT)
+	ADD_TRAIT(target, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 #undef VAULT_TOXIN
 #undef VAULT_NOBREATH

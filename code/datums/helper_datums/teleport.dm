@@ -23,7 +23,7 @@
 
 	// argument handling
 	// if the precision is not specified, default to 0, but apply BoH penalties
-	if (isnull(precision))
+	if(isnull(precision))
 		precision = 0
 
 	switch(channel)
@@ -40,7 +40,7 @@
 					to_chat(MM, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
 
 			// if effects are not specified and not explicitly disabled, sparks
-			if ((!effectin || !effectout) && !no_effects)
+			if((!effectin || !effectout) && !no_effects)
 				var/datum/effect_system/spark_spread/sparks = new
 				sparks.set_up(5, 1, teleatom)
 				if (!effectin)
@@ -70,18 +70,26 @@
 				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
-	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
-	SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, curturf, destturf)
+	if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTING, destination, channel))
+		return FALSE
+	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, curturf))
+		return FALSE
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
 		return TRUE
 
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
+
 	var/success = teleatom.forceMove(destturf)
-	if(success)
-		log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
-		tele_play_specials(teleatom, destturf, effectout, asoundout)
+	if(!success)
+		return FALSE
+
+	. = TRUE
+	/* Past this point, the teleport is successful and you can assume that they're already there */
+
+	log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
+	tele_play_specials(teleatom, destturf, effectout, asoundout)
 
 	if(ismob(teleatom))
 		var/mob/M = teleatom
@@ -90,7 +98,22 @@
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT, destination, channel)
 
-	return TRUE
+	//We need to be sure that the buckled mobs can teleport too
+	if(teleatom.has_buckled_mobs())
+		for(var/mob/living/rider in teleatom.buckled_mobs)
+			//just in case it fails, but the mob gets unbuckled anyways even if it passes
+			teleatom.unbuckle_mob(rider, TRUE, FALSE)
+
+			var/rider_success = do_teleport(rider, destturf, precision, channel=channel, no_effects=TRUE)
+			if(!rider_success)
+				continue
+
+			if(get_turf(rider) != destturf) //precision made them teleport somewhere else
+				to_chat(rider, span_warning("As you reorient your senses, you realize you aren't riding [teleatom] anymore!"))
+				continue
+
+			// [mob/living].forceMove() forces mobs to unbuckle, so we need to buckle them again
+			teleatom.buckle_mob(rider, force=TRUE)
 
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if(!location)
@@ -102,26 +125,53 @@
 		effect.attach(location)
 		effect.start()
 
-// Safe location finder
-/proc/find_safe_turf(zlevel, list/zlevels, extended_safety_checks = FALSE, dense_atoms = FALSE)
-	if(!zlevels)
-		if (zlevel)
-			zlevels = list(zlevel)
-		else
-			zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
-	var/cycles = 1000
-	for(var/cycle in 1 to cycles)
-		// DRUNK DIALLING WOOOOOOOOO
+/**
+ * Attempts to find a "safe" floor turf within some given z-levels
+ * * zlevel_or_levels: The list of z-levels we are searching though. You can supply just a number and it will be turned into a list.
+ * * extended_safety_checks: Will do some additional checks to make sure the destination is safe, see [/proc/is_safe_turf].
+ * * dense_atoms: Will additionally check to see if the turf has any dense obstructions, like machines or structures.
+ *
+ * Returns a safe floor turf,
+ * **BUT** there is a chance of it being null if an extremely large portion of a z-level is unsafe or blocked.
+ */
+/proc/find_safe_turf(zlevel_or_levels, extended_safety_checks = FALSE, dense_atoms = FALSE) as /turf/open/floor
+	SHOULD_BE_PURE(TRUE)
+	RETURN_TYPE(/turf/open/floor)
+
+	var/list/zlevels
+	if(islist(zlevel_or_levels))
+		zlevels = zlevel_or_levels
+	else if(zlevel_or_levels)
+		zlevels = list(zlevel_or_levels)
+	else
+		zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
+
+	for(var/cycle in 1 to 1000)
 		var/x = rand(1, world.maxx)
 		var/y = rand(1, world.maxy)
 		var/z = pick(zlevels)
 		var/random_location = locate(x,y,z)
-
-		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, cycle < 300))//if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+		var/keep_trying_no_teleport = (cycle < 300) //if the area is mostly NOTELEPORT (centcom) we gotta give up on this fantasy at some point.
+		if(is_safe_turf(random_location, extended_safety_checks, dense_atoms, keep_trying_no_teleport))
 			return random_location
 
-/// Checks if a given turf is a "safe" location
+/**
+ * Checks to see if a given turf is a "safe" location. Being safe requires the following to be true:
+ * * Must be a [floor][/turf/open/floor]
+ * * Must have air, and that air must have [breathable bounds][/proc/check_gases] for humans
+ * * Must have goldilocks temperature
+ * * Must have safe pressure
+ *
+ * Optionally:
+ * * extended_safety_checks: Will make additional checks for turfs that technically pass all previous requirements but still may not be safe
+ * * dense_atoms: Must be unobstructed (no blocking objects such as machines, structures or mobs)
+ * * no_teleport: Must not have [NOTELEPORT][/area/var/area_flag]
+ *
+ * Returns TRUE if all conditions pass, FALSE otherwise.
+ */
 /proc/is_safe_turf(turf/random_location, extended_safety_checks = FALSE, dense_atoms = FALSE, no_teleport = FALSE)
+	SHOULD_BE_PURE(TRUE)
+
 	. = FALSE
 	if(!isfloorturf(random_location))
 		return
@@ -137,18 +187,18 @@
 
 	var/list/floor_gases = floor_gas_mixture.gases
 	var/static/list/gases_to_check = list(
-		/datum/gas/oxygen = list(16, 100),
+		/datum/gas/oxygen = list(/obj/item/organ/lungs::safe_oxygen_min, 100),
 		/datum/gas/nitrogen,
-		/datum/gas/carbon_dioxide = list(0, 10)
+		/datum/gas/carbon_dioxide = list(0, /obj/item/organ/lungs::safe_co2_max)
 	)
 	if(!check_gases(floor_gases, gases_to_check))
 		return FALSE
 
 	// Aim for goldilocks temperatures and pressure
-	if((floor_gas_mixture.temperature <= 270) || (floor_gas_mixture.temperature >= 360))
+	if((floor_gas_mixture.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT) || (floor_gas_mixture.temperature >= BODYTEMP_HEAT_DAMAGE_LIMIT))
 		return
 	var/pressure = floor_gas_mixture.return_pressure()
-	if((pressure <= 20) || (pressure >= 550))
+	if((pressure <= HAZARD_LOW_PRESSURE) || (pressure >= HAZARD_HIGH_PRESSURE))
 		return
 
 	if(extended_safety_checks)
@@ -189,8 +239,12 @@
 
 /// Validates that the teleport being attempted is valid or not
 /proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
+	SHOULD_BE_PURE(TRUE)
+
+	if(isnull(destination))
+		return FALSE // Teleporting FROM nullspace is fine, but TO nullspace is not
+
 	var/area/origin_area = get_area(teleported_atom)
-	var/turf/origin_turf = get_turf(teleported_atom)
 
 	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
@@ -206,10 +260,8 @@
 	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
 		return FALSE
 
-	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
-		return FALSE
-
-	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
+	// If one of the areas you're trying to tp to has local_teleport, and they're not the same, return.
+	if(((origin_area.area_flags & LOCAL_TELEPORT) || (destination_area.area_flags & LOCAL_TELEPORT)) && destination_area != origin_area)
 		return FALSE
 
 	return TRUE

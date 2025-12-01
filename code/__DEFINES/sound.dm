@@ -10,6 +10,51 @@
 #define CHANNEL_TRAITOR 1016
 #define CHANNEL_CHARGED_SPELL 1015
 #define CHANNEL_ELEVATOR 1014
+#define CHANNEL_ESCAPEMENU 1013
+#define CHANNEL_WEATHER 1012
+//THIS SHOULD ALWAYS BE THE LOWEST ONE!
+//KEEP IT UPDATED
+#define CHANNEL_HIGHEST_AVAILABLE 1011
+
+#define MAX_INSTRUMENT_CHANNELS (128 * 6)
+
+/// This is the lowest volume that can be used by playsound otherwise it gets ignored
+/// Most sounds around 10 volume can barely be heard. Almost all sounds at 5 volume or below are inaudible
+/// This is to prevent sound being spammed at really low volumes due to distance calculations
+/// Recommend setting this to anywhere from 10-3 (or 0 to disable any sound minimum volume restrictions)
+/// Ex. For a 70 volume sound, 17 tile range, 3 exponent, 2 falloff_distance:
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 0 for the above will result in 17x17 radius (289 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 5 for the above will result in 14x14 radius (196 turfs)
+/// Setting SOUND_AUDIBLE_VOLUME_MIN to 10 for the above will result in 11x11 radius (121 turfs)
+#define SOUND_AUDIBLE_VOLUME_MIN 3
+
+/* Calculates the max distance of a sound based on audible volume
+ *
+ * Note - you should NEVER pass in a volume that is lower than SOUND_AUDIBLE_VOLUME_MIN otherwise distance will be insanely large (like +250,000)
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * max_distance: The range of the sound in tiles (technically not real max distance since the furthest areas gets pruned due to SOUND_AUDIBLE_VOLUME_MIN)
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(volume, max_distance, falloff_distance, falloff_exponent)\
+	floor(((((-(max(max_distance - falloff_distance, 0) ** (1 / falloff_exponent)) / volume) * (SOUND_AUDIBLE_VOLUME_MIN - volume)) ** falloff_exponent) + falloff_distance))
+
+/* Calculates the volume of a sound based on distance
+ *
+ * https://www.desmos.com/calculator/sqdfl8ipgf
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * distance: How far away the sound is in tiles from the source
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_SOUND_VOLUME(volume, distance, max_distance, falloff_distance, falloff_exponent)\
+	((max(distance - falloff_distance, 0) ** (1 / falloff_exponent)) / ((max(max_distance, distance) - falloff_distance) ** (1 / falloff_exponent)) * volume)
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -23,21 +68,16 @@
 ///The default exponent of sound falloff
 #define SOUND_FALLOFF_EXPONENT 6
 
-//THIS SHOULD ALWAYS BE THE LOWEST ONE!
-//KEEP IT UPDATED
-
-#define CHANNEL_HIGHEST_AVAILABLE 1015
-
-#define MAX_INSTRUMENT_CHANNELS (128 * 6)
-
 #define SOUND_MINIMUM_PRESSURE 10
 
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
-#define EQUIP_SOUND_VOLUME 30
+#define LIQUID_SLOSHING_SOUND_VOLUME 10
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
-#define YEET_SOUND_VOLUME 90
+#define EQUIP_SOUND_VOLUME 30
+#define HALFWAY_SOUND_VOLUME 50
 #define BLOCK_SOUND_VOLUME 70
+#define YEET_SOUND_VOLUME 90
 
 #define AMBIENCE_GENERIC "generic"
 #define AMBIENCE_HOLY "holy"
@@ -139,7 +179,18 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_SPANOMALIES,
 ))
 
-/// List of all of our sound keys.
+/**
+# assoc list of datum by key
+* k = SFX_KEY (see below)
+* v = singleton sound_effect datum ref
+* initialized in SSsounds init
+*/
+GLOBAL_LIST_EMPTY(sfx_datum_by_key)
+
+/* List of all of our sound keys.
+	used with /datum/sound_effect as the key
+	see code\game\sound_keys.dm
+*/
 #define SFX_BODYFALL "bodyfall"
 #define SFX_BULLET_MISS "bullet_miss"
 #define SFX_CAN_OPEN "can_open"
@@ -174,3 +225,104 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_SEAR "sear"
 #define SFX_REEL "reel"
 #define SFX_RATTLE "rattle"
+#define SFX_PORTAL_ENTER "portal_enter"
+#define SFX_PORTAL_CLOSE "portal_closed"
+#define SFX_PORTAL_CREATED "portal_created"
+#define SFX_SCREECH "screech"
+#define SFX_TOOL_SWITCH "tool_switch"
+#define SFX_KEYBOARD_CLICKS "keyboard_clicks"
+#define SFX_STONE_DROP "stone_drop"
+#define SFX_STONE_PICKUP "stone_pickup"
+#define SFX_MUFFLED_SPEECH "muffspeech"
+#define SFX_DEFAULT_FISH_SLAP "default_fish_slap"
+#define SFX_ALT_FISH_SLAP "alt_fish_slap"
+#define SFX_FISH_PICKUP "fish_pickup"
+#define SFX_CAT_MEOW "cat_meow"
+#define SFX_CAT_PURR "cat_purr"
+#define SFX_LIQUID_POUR "liquid_pour"
+#define SFX_SNORE_FEMALE "snore_female"
+#define SFX_SNORE_MALE "snore_male"
+#define SFX_PLASTIC_BOTTLE_LIQUID_SLOSH "plastic_bottle_liquid_slosh"
+#define SFX_DEFAULT_LIQUID_SLOSH "default_liquid_slosh"
+#define SFX_PLATE_ARMOR_RUSTLE "plate_armor_rustle"
+#define SFX_PIG_OINK "pig_oink"
+#define SFX_VISOR_UP "visor_up"
+#define SFX_VISOR_DOWN "visor_down"
+#define SFX_SIZZLE "sizzle"
+#define SFX_GROWL "growl"
+#define SFX_POLAROID "polaroid"
+#define SFX_HALLUCINATION_TURN_AROUND "hallucination_turn_around"
+#define SFX_HALLUCINATION_I_SEE_YOU "hallucination_i_see_you"
+#define SFX_HALLUCINATION_OVER_HERE "hallucination_over_here"
+#define SFX_HALLUCINATION_I_M_HERE "hallucination_i_m_here"
+#define SFX_VOID_DEFLECT "void_deflect"
+#define SFX_LOW_HISS "low_hiss"
+#define SFX_INDUSTRIAL_SCAN "industrial_scan"
+#define SFX_MALE_SIGH "male_sigh"
+#define SFX_FEMALE_SIGH "female_sigh"
+#define SFX_WRITING_PEN "writing_pen"
+#define SFX_CLOWN_CAR_LOAD "clown_car_load"
+#define SFX_SEATBELT_BUCKLE "buckle"
+#define SFX_SEATBELT_UNBUCKLE "unbuckle"
+#define SFX_HEADSET_EQUIP "headset_equip"
+#define SFX_HEADSET_PICKUP "headset_pickup"
+#define SFX_BANDAGE_BEGIN "bandage_begin"
+#define SFX_BANDAGE_END "bandage_end"
+#define SFX_CLOTH_DROP "cloth_drop"
+#define SFX_CLOTH_PICKUP "cloth_pickup"
+#define SFX_SUTURE_BEGIN "suture_begin"
+#define SFX_SUTURE_CONTINUOUS "suture_continuous"
+#define SFX_SUTURE_END "suture_end"
+#define SFX_SUTURE_PICKUP "suture_pickup"
+#define SFX_SUTURE_DROP "suture_drop"
+#define SFX_REGEN_MESH_BEGIN "regen_mesh_begin"
+#define SFX_REGEN_MESH_CONTINUOUS "regen_mesh_continuous"
+#define SFX_REGEN_MESH_END "regen_mesh_end"
+#define SFX_REGEN_MESH_PICKUP "regen_mesh_pickup"
+#define SFX_REGEN_MESH_DROP "regen_mesh_drop"
+#define SFX_CIG_PACK_DROP "cig_pack_drop"
+#define SFX_CIG_PACK_INSERT "cig_pack_insert"
+#define SFX_CIG_PACK_PICKUP "cig_pack_pickup"
+#define SFX_CIG_PACK_RUSTLE "cig_pack_rustle"
+#define SFX_CIG_PACK_THROW_DROP "cig_pack_throw_drop"
+#define	SFX_RORO_WARBLE "roro_warble"
+#define SFX_POTTED_PLANT_PICKUP "potted_plant_pickup"
+#define SFX_POTTED_PLANT_DROP "potted_plant_drop"
+#define SFX_GOGGLES_PICKUP "goggles_pickup"
+#define SFX_GOGGLES_DROP "goggles_drop"
+#define SFX_GOGGLES_EQUIP "goggles_equip"
+#define SFX_GLASSES_PICKUP "glasses_pickup"
+#define SFX_GLASSES_DROP "glasses_drop"
+#define SFX_GLASSES_EQUIP "glasses_equip"
+#define SFX_FOOD_PLATE_PICKUP "food_plate_pickup"
+#define SFX_FOOD_PLATE_DROP "food_plate_drop"
+#define SFX_TRAY_PICKUP "tray_pickup"
+#define SFX_TRAY_DROP "tray_drop"
+#define SFX_TRAY_INSERT "tray_insert"
+#define SFX_CUTLERY_PICKUP "generic_cutlery_pickup"
+#define SFX_CUTLERY_DROP "generic_cutlery_drop"
+#define SFX_KNIFE_PICKUP "knife_pickup"
+#define SFX_KNIFE_DROP "knife_drop"
+#define SFX_KNIFE_SLICE "knife_slice"
+#define SFX_POT_PICKUP "pot_pickup"
+#define SFX_POT_DROP "pot_drop"
+#define SFX_ROLLING_PIN_PICKUP "rolling_pin_pickup"
+#define SFX_ROLLING_PIN_DROP "rolling_pin_drop"
+#define SFX_ROLLING_PIN_ROLLING "rolling_pin_rolling"
+#define SFX_FIRE_MODE_SWITCH "fire_mode_switch"
+#define SFX_REMOTE_MODE_SWITCH "remote_mode_switch"
+#define SFX_REMOTE_ACTION "remote_action"
+#define SFX_GAS_MASK_PICKUP "gas_mask_pickup"
+#define SFX_GAS_MASK_DROP "gas_mask_drop"
+#define SFX_GAS_MASK_EQUIP "gas_mask_equip"
+#define SFX_GENERIC_DEVICE_PICKUP "generic_device_pickup"
+#define SFX_GENERIC_DEVICE_DROP "generic_device_drop"
+#define SFX_HARD_HAT_PICKUP "hard_hat_pickup"
+#define SFX_HARD_HAT_DROP "hard_hat_drop"
+#define SFX_HARD_HAT_EQUIP "hard_hat_equip"
+
+// Standard is 44.1khz
+#define MIN_EMOTE_PITCH 40000
+#define MAX_EMOTE_PITCH 48000
+// ~0.6 - 1.4 at 0.12
+#define EMOTE_TTS_PITCH_MULTIPLIER 0.12

@@ -8,24 +8,11 @@
 	// List of organ typepaths which cause species change.
 	// Species change swaps out all the organs, making test_organ un-usable after insertion.
 	var/static/list/species_changing_organs = typecacheof(list(
-		/obj/item/organ/internal/brain/shadow/nightmare,
-	))
-	// List of organ typepaths which are not test-able, such as certain class prototypes.
-	var/static/list/test_organ_blacklist = typecacheof(list(
-		/obj/item/organ/internal,
-		/obj/item/organ/external,
-		/obj/item/organ/external/wings,
-		/obj/item/organ/internal/cyberimp,
-		/obj/item/organ/internal/cyberimp/brain,
-		/obj/item/organ/internal/cyberimp/mouth,
-		/obj/item/organ/internal/cyberimp/arm,
-		/obj/item/organ/internal/cyberimp/chest,
-		/obj/item/organ/internal/cyberimp/eyes,
-		/obj/item/organ/internal/alien,
+		/obj/item/organ/brain/shadow/nightmare,
 	))
 
 /datum/unit_test/organ_sanity/Run()
-	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - test_organ_blacklist)
+	for(var/obj/item/organ/organ_type as anything in subtypesof(/obj/item/organ) - GLOB.prototype_organs)
 		organ_test_insert(organ_type)
 
 /datum/unit_test/organ_sanity/proc/organ_test_insert(obj/item/organ/organ_type)
@@ -85,29 +72,68 @@
 
 /datum/unit_test/organ_damage/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
-	for(var/obj/item/organ/internal/organ_to_test in dummy.organs)
+	for(var/obj/item/organ/organ_to_test in dummy.organs)
 		test_organ(dummy, organ_to_test)
 
-/datum/unit_test/organ_damage/proc/test_organ(mob/living/carbon/human/dummy, obj/item/organ/internal/test_organ)
+/datum/unit_test/organ_damage/proc/test_organ(mob/living/carbon/human/dummy, obj/item/organ/test_organ)
 	var/slot_to_use = test_organ.slot
 
-	// Tests [mob/living/proc/adjustOrganLoss]
-	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+	// Tests [mob/living/proc/adjust_organ_loss]
+	TEST_ASSERT_EQUAL(dummy.adjust_organ_loss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use, required_organ_flag = test_organ.organ_flags), test_organ.maxHealth, \
+		"(Testing get_organ_loss() with required_organ_flag = [test_organ.organ_flags]) \
+			Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
 	dummy.fully_heal(HEAL_ORGANS)
 
 	// Tests [mob/living/proc/set_organ_damage]
-	TEST_ASSERT_EQUAL(dummy.setOrganLoss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
+	TEST_ASSERT_EQUAL(dummy.set_organ_loss(slot_to_use, test_organ.maxHealth * 10), -test_organ.maxHealth, \
 		"Mob level \"set organ damage\" returned the wrong value for [slot_to_use] organ with default arguments.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"set organ damage\" can exceed the [slot_to_use] organ's damage cap with default arguments.")
 	dummy.fully_heal(HEAL_ORGANS)
 
-	// Tests [mob/living/proc/adjustOrganLoss] with a large max supplied
-	TEST_ASSERT_EQUAL(dummy.adjustOrganLoss(slot_to_use, test_organ.maxHealth * 10, INFINITY), -test_organ.maxHealth, \
+	// Tests [mob/living/proc/adjust_organ_loss] with a large max supplied
+	TEST_ASSERT_EQUAL(dummy.adjust_organ_loss(slot_to_use, test_organ.maxHealth * 10, INFINITY), -test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" returned the wrong value for [slot_to_use] organ with a large maximum supplied.")
 	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use), test_organ.maxHealth, \
 		"Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
+	TEST_ASSERT_EQUAL(dummy.get_organ_loss(slot_to_use, required_organ_flag = test_organ.organ_flags), test_organ.maxHealth, \
+		"(Testing get_organ_loss() with required_organ_flag = [test_organ.organ_flags]) \
+			Mob level \"apply organ damage\" can exceed the [slot_to_use] organ's damage cap with a large maximum supplied.")
 	dummy.fully_heal(HEAL_ORGANS)
+
+///Allocate a human mob, give 'em a skillchip and a generic trauma, then see if it throws any error when the brain is removed.
+/datum/unit_test/chipped_traumatized_brain_removal
+
+/datum/unit_test/chipped_traumatized_brain_removal/Run()
+	var/mob/living/carbon/human/dummy/dummy = allocate(__IMPLIED_TYPE__)
+
+	//add the chip and activate it
+	var/obj/item/skillchip/basketweaving/chip = new(dummy.loc)
+	dummy.implant_skillchip(chip, force = TRUE)
+	TEST_ASSERT(chip.holding_brain, "Skillchip couldn't be implanted successfully, 'holding_brain' is null")
+	chip.try_activate_skillchip(force = TRUE)
+	TEST_ASSERT(chip.active, "Skillchip couldn't be activated")
+
+	//add a trauma
+	dummy.gain_trauma_type(BRAIN_TRAUMA_MILD)
+
+	var/obj/item/organ/brain = locate() in dummy.organs
+	brain.forceMove(dummy.loc)
+	allocated += brain
+
+/datum/unit_test/felinid_ears
+
+/datum/unit_test/felinid_ears/Run()
+	var/mob/living/carbon/human/normal_dummy = allocate(/mob/living/carbon/human/consistent)
+	normal_dummy.dna.features[FEATURE_EARS] = SPRITE_ACCESSORY_NONE
+	normal_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(!istype(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with NONE ears set had cat ears on species gain.")
+	TEST_ASSERT_NOTNULL(normal_dummy.get_organ_slot(ORGAN_SLOT_EARS), "Felinid with NONE ears set had NO ears on species gain.")
+
+	var/mob/living/carbon/human/anime_dummy = allocate(/mob/living/carbon/human/consistent)
+	anime_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
+	TEST_ASSERT(istype(anime_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with default ears set did not have cat ears on species gain.")

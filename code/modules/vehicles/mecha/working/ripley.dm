@@ -17,7 +17,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | BEACON_TRACKABLE
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	mech_type = EXOSUIT_MODULE_RIPLEY
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
@@ -25,8 +25,8 @@
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
 	exit_delay = 10
 	/// Custom Ripley step and turning sounds (from TGMC)
-	stepsound = 'sound/mecha/powerloader_step.ogg'
-	turnsound = 'sound/mecha/powerloader_turn2.ogg'
+	stepsound = 'sound/vehicles/mecha/powerloader_step.ogg'
+	turnsound = 'sound/vehicles/mecha/powerloader_turn2.ogg'
 	equip_by_category = list(
 		MECHA_L_ARM = null,
 		MECHA_R_ARM = null,
@@ -75,7 +75,7 @@
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_CABIN_AIR_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	armor_type = /datum/armor/mecha_ripley_mk2
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
@@ -96,6 +96,9 @@
 	name = "\improper APLU \"Paddy\""
 	icon_state = "paddy"
 	base_icon_state = "paddy"
+	movedelay = 5
+	slow_pressure_step_in = 5
+	fast_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 250
 	mech_type = EXOSUIT_MODULE_PADDY
@@ -180,13 +183,15 @@
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
 	button_icon_state = "mech_siren_[secmech?.siren ? "on" : "off"]"
 
-/datum/action/vehicle/sealed/mecha/siren/Trigger(trigger_flags, forced_state = FALSE)
+/datum/action/vehicle/sealed/mecha/siren/Trigger(mob/clicker, trigger_flags, forced_state = FALSE)
+	if(!..())
+		return
 	var/obj/vehicle/sealed/mecha/ripley/paddy/secmech = chassis
 	secmech.togglesiren()
 
 /obj/vehicle/sealed/mecha/ripley/paddy/preset
 	accesses = list(ACCESS_SECURITY)
-	mecha_flags = CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | ID_LOCK_ON
+	mecha_flags = CAN_STRAFE | HAS_LIGHTS | ID_LOCK_ON
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw,
@@ -206,7 +211,7 @@
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	enter_delay = 40
 	silicon_icon_state = null
 	equip_by_category = list(
@@ -257,16 +262,15 @@
 GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/vehicle/sealed/mecha/ripley/cargo
-	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	name = "\improper APLU \"Big Bess\""
+	desc = "An ailing, old, repurposed cargo hauler. Most of its equipment wires are frayed or missing and its frame is rusted."
 	icon_state = "hauler"
 	base_icon_state = "hauler"
+	silicon_icon_state = "hauler-empty"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Initialize(mapload)
 	. = ..()
-	if(cell)
-		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
 
 	//Attach hydraulic clamp ONLY
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
@@ -275,6 +279,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
 	if(!GLOB.cargo_ripley && mapload)
 		GLOB.cargo_ripley = src
+	ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src)) //It was built *long* before the shift started.
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Destroy()
 	if(GLOB.cargo_ripley == src)
@@ -283,7 +288,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ripley/cargo/populate_parts()
-	cell = new /obj/item/stock_parts/cell/high(src)
+	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	//No scanmod for Big Bess
 	capacitor = new /obj/item/stock_parts/capacitor(src)
 	servo = new /obj/item/stock_parts/servo(src)
@@ -295,6 +300,8 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	icon_state = "mecha_bin"
 	equipment_slot = MECHA_UTILITY
 	detachable = FALSE
+	can_be_triggered = TRUE
+	action_type = /datum/action/vehicle/sealed/mecha/equipment/cargo_module
 	///Number of atoms we can store
 	var/cargo_capacity = 15
 
@@ -303,22 +310,39 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
 	workmech.cargo_hold = src
 
+/obj/item/mecha_parts/mecha_equipment/ejector/detach(atom/moveto)
+	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
+	workmech.cargo_hold = null
+	drop_contents(isturf(moveto) ? moveto : moveto?.drop_location())
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
-	for(var/atom/stored in contents)
-		forceMove(stored, drop_location())
-		step_rand(stored)
+	// Failsafe so we don't delete players
+	var/atom/droploc = drop_location() || get_turf(src)
+	for(var/mob/stored in get_all_contents())
+		if(stored.client)
+			stack_trace("[stored] was in [src] when it was deleted! We skipped deconstruct(), or something.")
+			stored.forceMove(droploc)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/ejector/atom_deconstruct(damage_flag)
+	drop_contents()
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/contents_explosion(severity, target)
-	for(var/obj/stored in contents)
-		if(prob(10 * severity))
-			stored.forceMove(drop_location())
+	drop_contents(drop_prob = 10 * severity)
 	return ..()
+
+/// Spit out everything in our storage
+/obj/item/mecha_parts/mecha_equipment/ejector/proc/drop_contents(atom/drop_loc = drop_location(), drop_prob = 100)
+	for(var/atom/movable/stored in src)
+		if(prob(drop_prob))
+			stored.forceMove(drop_loc || get_turf(src))
+			step_rand(stored)
 
 /obj/item/mecha_parts/mecha_equipment/ejector/relay_container_resist_act(mob/living/user, obj/container)
 	to_chat(user, span_notice("You lean on the back of [container] and start pushing so it falls out of [src]."))
-	if(do_after(user, 300, target = container))
+	if(do_after(user, 30 SECONDS, target = container))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || container.loc != src )
 			return
 		to_chat(user, span_notice("You successfully pushed [container] out of [src]!"))
@@ -340,7 +364,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		))
 	return data
 
-/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -352,7 +376,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		crate.forceMove(drop_location())
 		if(crate == chassis.ore_box)
 			chassis.ore_box = null
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [crate]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
 
@@ -384,7 +408,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	to_chat(source, span_warning("You don't have the room to remove [cuffs]!"))
 	return COMSIG_MOB_BLOCK_CUFF_REMOVAL
 
-/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params)
+/obj/item/mecha_parts/mecha_equipment/ejector/seccage/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(action == "eject")
 		var/mob/passenger = locate(params["cargoref"]) in contents
 		if(!passenger)
@@ -392,17 +416,22 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 		to_chat(chassis.occupants, "[icon2html(src,  chassis.occupants)][span_notice("You unload [passenger].")]")
 		passenger.forceMove(drop_location())
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), passenger, chassis.dir), 1) //That's right, one tick. Just enough to cause the tile move animation.
-		playsound(chassis, 'sound/weapons/tap.ogg', 50, TRUE)
+		playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		log_message("Unloaded [passenger]. Cargo compartment capacity: [cargo_capacity - contents.len]", LOG_MECHA)
 		return TRUE
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/seccage/container_resist_act(mob/living/user)
-	to_chat(user, span_notice("You begin attempting a breakout. (This will take around 45 seconds and [chassis] need to remain stationary.)"))
-	if(!do_after(user, 1 MINUTES, target = chassis))
+	var/breakout_time = 1 MINUTES
+
+	if (user.mob_size > MOB_SIZE_HUMAN)
+		breakout_time = 6 SECONDS
+
+	to_chat(user, span_notice("You begin attempting a breakout. (This will take around [DisplayTimeText(breakout_time)] and [chassis] needs to remain stationary.)"))
+	if(!do_after(user, breakout_time, target = chassis))
 		return
 	to_chat(user, span_notice("You break out of the [src]."))
-	playsound(chassis, 'sound/items/crowbar.ogg', 100, TRUE)
+	playsound(chassis, 'sound/items/tools/crowbar.ogg', 100, TRUE)
 	cheese_it(user)
 	for(var/mob/freebird in contents)
 		if(user != freebird)

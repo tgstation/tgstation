@@ -42,17 +42,15 @@
 	..()
 	if(!can_wrench_in_loc(user))
 		return
-	to_chat(user, span_notice("You start attaching the [name]..."))
+	to_chat(user, span_notice("You start attaching \the [src]..."))
 	add_fingerprint(user)
 	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, PROC_REF(can_wrench_in_loc), user)))
-		to_chat(user, span_notice("You attach the [name]."))
+		to_chat(user, span_notice("You attach \the [src]."))
 		var/obj/structure/transit_tube/R = new build_type(loc, dir)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	return TRUE
 
-/obj/structure/c_transit_tube/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 // transit tube station
 /obj/structure/c_transit_tube/station

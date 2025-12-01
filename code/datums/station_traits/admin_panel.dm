@@ -1,10 +1,6 @@
-/// Opens the station traits admin panel
-/datum/admins/proc/station_traits_panel()
-	set name = "Modify Station Traits"
-	set category = "Admin.Events"
-
+ADMIN_VERB(station_traits_panel, R_FUN, "Modify Station Traits", "Modify the station traits for the next round.", ADMIN_CATEGORY_EVENTS)
 	var/static/datum/station_traits_panel/station_traits_panel = new
-	station_traits_panel.ui_interact(usr)
+	station_traits_panel.ui_interact(user.mob)
 
 /datum/station_traits_panel
 	var/static/list/future_traits
@@ -32,7 +28,7 @@
 
 	var/list/valid_station_traits = list()
 
-	for (var/datum/station_trait/station_trait_path as anything in subtypesof(/datum/station_trait))
+	for (var/datum/station_trait/station_trait_path as anything in valid_subtypesof(/datum/station_trait))
 		valid_station_traits += list(list(
 			"name" = initial(station_trait_path.name),
 			"path" = station_trait_path,

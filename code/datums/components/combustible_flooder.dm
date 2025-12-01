@@ -11,12 +11,17 @@
 	src.gas_amount = initialize_gas_amount
 	src.temp_amount = initialize_temp_amount
 
+// Any item made of plasma is going to have this component, making it extremely difficult to blacklist fire hazards during create_and_destroy.
+// So let's just completely neuter them during unit tests so we don't burn down the testing area and cause spurious runtimes.
+#ifndef UNIT_TESTS
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
+	RegisterSignal(parent, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_react))
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_TURF_EXPOSE, PROC_REF(hotspots_react))
+#endif
 
 /datum/component/combustible_flooder/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
@@ -34,25 +39,29 @@
 	// We do this check early so closed turfs are still be able to flood.
 	if(isturf(parent)) // Walls and floors.
 		var/turf/parent_turf = parent
-		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
+		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR | CHANGETURF_FORCEOP) // Ensure that we always forcefully replace the turf, even if the baseturf has the same type
 		delete_parent = FALSE
 
 	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];[TURF_TEMPERATURE((temp_amount || trigger_temperature))]")
 
 	// Logging-related
 	var/admin_message = "[flooded_turf] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
-	var/log_message = "ignited [flooded_turf]"
+	var/log_message = "ignited [flooded_turf] at [AREACOORD(flooded_turf)]"
 	if(user)
-		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
+		admin_message += " by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(flooded_turf)]"
 		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
 	else
-		log_message = "[key_name(user)] " + log_message + " by fire"
-		admin_message += " by fire"
+		log_message = "[key_name(user)] " + log_message + " by fire at [AREACOORD(flooded_turf)]"
+		admin_message += " by fire at [ADMIN_COORDJMP(flooded_turf)]"
 		log_attack(log_message)
 	message_admins(admin_message)
 
 	if(delete_parent && !QDELETED(parent))
-		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm.
+		if(isobj(parent))
+			var/obj/obj_parent = parent
+			obj_parent.deconstruct(disassembled = FALSE)
+		else
+			qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm.
 	qdel(src)
 
 /// fire_act reaction.
@@ -61,6 +70,13 @@
 
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		flood(null, exposed_temperature)
+
+/// sparks_touched reaction.
+/datum/component/combustible_flooder/proc/sparks_react(datum/source, obj/effect/particle_effect/sparks/sparks)
+	SIGNAL_HANDLER
+
+	if(sparks) // this shouldn't ever be false but existence is mysterious
+		flood(null, FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
 
 /// Hotspot reaction.
 /datum/component/combustible_flooder/proc/hotspots_react(datum/source, air, exposed_temperature)

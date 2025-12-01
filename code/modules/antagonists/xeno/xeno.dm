@@ -11,16 +11,15 @@
 //Simply lists them.
 /datum/team/xeno/roundend_report()
 	var/list/parts = list()
-	parts += "<span class='header'>The [name] were:</span>"
+	parts += span_header("The [name] were:")
 	parts += printplayerlist(members)
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/antagonist/xeno
 	name = "\improper Xenomorph"
-	job_rank = ROLE_ALIEN
+	pref_flag = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 	antagpanel_category = ANTAG_GROUP_XENOS
-	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
 	var/datum/team/xeno/xeno_team
 
@@ -87,7 +86,7 @@
 	explanation_text = "Escape from captivity."
 
 /datum/objective/escape_captivity/check_completion()
-	if(!istype(get_area(owner), SScommunications.captivity_area))
+	if(!istype(get_area(owner), GLOB.communications_controller.captivity_area))
 		return TRUE
 
 /datum/objective/advance_hive
@@ -96,7 +95,7 @@
 	explanation_text = "Survive and advance the Hive."
 
 /datum/objective/advance_hive/check_completion()
-	return owner.current.stat != DEAD
+	return owner.current && owner.current.stat != DEAD
 
 ///Captive Xenomorphs team
 /datum/team/xeno/captive
@@ -109,9 +108,9 @@
 	var/escape_count = 0 //counts the number of xenomorphs that were born in captivity who ended the round outside of it
 	var/captive_count = 0 //counts the number of xenomorphs born in captivity who remained there until the end of the round (losers)
 
-	parts += "<span class='header'>The [name] were:</span> <br>"
+	parts += span_header("The [name] were: <br>")
 
-	if(check_captivity(progenitor))
+	if(check_captivity(progenitor.current) == CAPTIVE_XENO_PASS)
 		parts += span_greentext("The progenitor of this hive was [progenitor.key], as [progenitor], who successfully escaped captivity!") + "<br>"
 	else
 		parts += span_redtext("The progenitor of this hive was [progenitor.key], as [progenitor], who failed to escape captivity") + "<br>"
@@ -146,7 +145,7 @@
 	if(!captive_alien || captive_alien.stat == DEAD)
 		return CAPTIVE_XENO_DEAD
 
-	if(istype(get_area(captive_alien), SScommunications.captivity_area))
+	if(istype(get_area(captive_alien), GLOB.communications_controller.captivity_area))
 		return CAPTIVE_XENO_FAIL
 
 	return CAPTIVE_XENO_PASS
@@ -155,13 +154,12 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		if(SScommunications.xenomorph_egg_delivered && istype(get_area(src), SScommunications.captivity_area))
+		if(GLOB.communications_controller.xenomorph_egg_delivered && istype(get_area(src), GLOB.communications_controller.captivity_area))
 			mind.add_antag_datum(/datum/antagonist/xeno/captive)
 		else
 			mind.add_antag_datum(/datum/antagonist/xeno)
 
-		mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN
+		mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
 	. = ..()
@@ -170,8 +168,7 @@
 	if(isalien(new_mob))
 		return
 	mind.remove_antag_datum(/datum/antagonist/xeno)
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/unassigned))
-	mind.special_role = null
+	mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 
 #undef CAPTIVE_XENO_DEAD
 #undef CAPTIVE_XENO_FAIL

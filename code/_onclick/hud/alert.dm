@@ -12,13 +12,13 @@
  *flicks are forwarded to master
  *override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, timeout_override, no_anim = FALSE)
+/mob/proc/throw_alert(category, type, severity, atom/new_master, override = FALSE, timeout_override, no_anim = FALSE)
 
 	if(!category || QDELETED(src))
 		return
 
 	var/datum/weakref/master_ref
-	if(isdatum(new_master))
+	if(isatom(new_master))
 		master_ref = WEAKREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
@@ -51,16 +51,10 @@
 	thealert.owner = src
 
 	if(new_master)
-		var/old_layer = new_master.layer
-		var/old_plane = new_master.plane
-		new_master.layer = FLOAT_LAYER
-		new_master.plane = FLOAT_PLANE
-		thealert.add_overlay(new_master)
-		new_master.layer = old_layer
-		new_master.plane = old_plane
-		thealert.icon_state = "template" // We'll set the icon to the client's ui pref in reorganize_alerts()
 		thealert.master_ref = master_ref
-	else
+		thealert.RegisterSignal(new_master, COMSIG_ATOM_UPDATE_APPEARANCE, TYPE_PROC_REF(/atom/movable/screen/alert, on_master_update_appearance))
+		thealert.update_appearance(UPDATE_OVERLAYS)
+	else if(severity)
 		thealert.icon_state = "[initial(thealert.icon_state)][severity]"
 		thealert.severity = severity
 
@@ -101,10 +95,12 @@
 
 /atom/movable/screen/alert
 	icon = 'icons/hud/screen_alert.dmi'
-	icon_state = "default"
+	icon_state = "template"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
 	mouse_opacity = MOUSE_OPACITY_ICON
+	/// do we glow to represent we do stuff when clicked
+	var/clickable_glow = FALSE
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
@@ -114,20 +110,91 @@
 	/// Boolean. If TRUE, the Click() proc will attempt to Click() on the master first if there is a master.
 	var/click_master = TRUE
 
+	///If set true, instead of using the default icon file for screen alerts, it will use the hud's ui style
+	var/use_user_hud_icon = FALSE
+	///If set, this overlay will be added to the icon.
+	var/overlay_state
+	///The file to fetch the overlay from
+	var/overlay_icon = 'icons/hud/screen_alert.dmi'
+
+/atom/movable/screen/alert/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(PERFORM_ALL_TESTS(focus_only/screen_alert_overlay) && overlay_state && !icon_exists(overlay_icon, overlay_state))
+		stack_trace("overlay_state: \"[overlay_state || "null"]\" that couldn't be found overlay_icon: \"[overlay_icon || "null"]\"")
+	if(clickable_glow)
+		add_filter("clickglow", 2, outline_filter(color = COLOR_GOLD, size = 1))
+		mouse_over_pointer = MOUSE_HAND_POINTER
+	if(overlay_state)
+		update_appearance(UPDATE_OVERLAYS)
 
 /atom/movable/screen/alert/MouseEntered(location,control,params)
 	. = ..()
 	if(!QDELETED(src))
 		openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
-
 /atom/movable/screen/alert/MouseExited()
 	closeToolTip(usr)
 
+/atom/movable/screen/alert/proc/on_master_update_appearance(datum/source)
+	SIGNAL_HANDLER
+	update_appearance(UPDATE_OVERLAYS)
+
+/atom/movable/screen/alert/update_overlays()
+	. = ..()
+	var/atom/our_master = master_ref?.resolve()
+	if(istype(our_master) && !QDELETED(our_master))
+		. += add_atom_icon(our_master)
+	if(overlay_state)
+		. += mutable_appearance(overlay_icon, overlay_state)
+
+///Returns a copy of the appearance of the atom, with its base pixel coordinates. Useful for overlays
+/atom/movable/screen/alert/proc/add_atom_icon(atom/atom)
+	var/mutable_appearance/atom_appearance = new(atom)
+	atom_appearance.appearance_flags = KEEP_TOGETHER
+	atom_appearance.layer = FLOAT_LAYER
+	atom_appearance.plane = FLOAT_PLANE
+	atom_appearance.dir = SOUTH
+	atom_appearance.pixel_x = atom.base_pixel_x
+	atom_appearance.pixel_y = atom.base_pixel_y
+	atom_appearance.pixel_w = atom.base_pixel_w
+	atom_appearance.pixel_z = atom.base_pixel_z
+	strip_appearance_underlays(atom_appearance)
+	return atom_appearance
+
+/atom/movable/screen/alert/Click(location, control, params)
+	SHOULD_CALL_PARENT(TRUE)
+
+	..()
+	if(!usr || !GET_CLIENT(usr) || usr != owner)
+		return FALSE
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
+		to_chat(usr, boxed_message(jointext(examine(usr), "\n")))
+		return FALSE
+	if(!click_master)
+		return TRUE
+	var/datum/our_master = master_ref?.resolve()
+	if(our_master)
+		return usr.client.Click(our_master, location, control, params)
+
+	return TRUE
+
+/atom/movable/screen/alert/Destroy()
+	. = ..()
+	severity = 0
+	master_ref = null
+	owner = null
+	screen_loc = ""
+
+/atom/movable/screen/alert/examine(mob/user)
+	return list(
+		span_boldnotice(name),
+		span_info(desc),
+	)
 
 //Gas alerts
 // Gas alerts are continuously thrown/cleared by:
-// * /obj/item/organ/internal/lungs/proc/check_breath()
+// * /obj/item/organ/lungs/proc/check_breath()
 // * /mob/living/carbon/check_breath()
 // * /mob/living/carbon/human/check_breath()
 // * /datum/element/atmos_requirements/proc/on_non_stasis_life()
@@ -183,22 +250,44 @@
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
 
+/atom/movable/screen/alert/not_enough_water
+	name = "Choking (No H2O)"
+	desc = "You're not getting enough water. Drench yourself in some water (e.g. showers) or get some water vapor before you pass out!"
+	icon_state = ALERT_NOT_ENOUGH_WATER
+
 //End gas alerts
+
+/atom/movable/screen/alert/bronchodilated
+	name = "Bronchodilated"
+	desc = "You feel like your lungs are larger than usual! You're taking deeper breaths!"
+	icon_state = "bronchodilated"
+	use_user_hud_icon = TRUE
+	overlay_icon = 'icons/obj/medical/organs/organs.dmi'
+	overlay_state = "lungs"
+
+/atom/movable/screen/alert/bronchoconstricted
+	name = "Bronchocontracted"
+	desc = "You feel like your lungs are smaller than usual! You might need a higher pressure environment/internals to breathe!"
+	use_user_hud_icon = TRUE
+	overlay_state = "bronchoconstricted"
 
 /atom/movable/screen/alert/gross
 	name = "Grossed out."
 	desc = "That was kind of gross..."
-	icon_state = "gross"
+	use_user_hud_icon = TRUE
+	overlay_state = "gross"
 
 /atom/movable/screen/alert/verygross
 	name = "Very grossed out."
 	desc = "You're not feeling very well..."
-	icon_state = "gross2"
+	use_user_hud_icon = TRUE
+	overlay_state = "gross2"
 
 /atom/movable/screen/alert/disgusted
 	name = "DISGUSTED"
 	desc = "ABSOLUTELY DISGUSTIN'"
-	icon_state = "gross3"
+	use_user_hud_icon = TRUE
+	overlay_state = "gross3"
 
 /atom/movable/screen/alert/hot
 	name = "Too Hot"
@@ -223,13 +312,16 @@
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
-	icon_state = ALERT_HYPNOSIS
+	use_user_hud_icon = TRUE
+	overlay_state = "hypnosis"
 	var/phrase
 
 /atom/movable/screen/alert/mind_control
 	name = "Mind Control"
 	desc = "Your mind has been hijacked! Click to view the mind control command."
-	icon_state = ALERT_MIND_CONTROL
+	use_user_hud_icon = TRUE
+	overlay_state = "mind_control"
+	clickable_glow = TRUE
 	var/command
 
 /atom/movable/screen/alert/mind_control/Click()
@@ -242,7 +334,9 @@
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
 		If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
-	icon_state = ALERT_EMBEDDED_OBJECT
+	use_user_hud_icon = TRUE
+	overlay_state = "embeddedobject"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/embeddedobject/Click()
 	. = ..()
@@ -250,36 +344,40 @@
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
-
-	return carbon_owner.help_shake_act(carbon_owner)
+	return carbon_owner.check_self_for_injuries()
 
 /atom/movable/screen/alert/negative
 	name = "Negative Gravity"
 	desc = "You're getting pulled upwards. While you won't have to worry about falling down anymore, you may accidentally fall upwards!"
-	icon_state = "negative"
+	use_user_hud_icon = TRUE
+	overlay_state = "negative"
 
 /atom/movable/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
-wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of \
-magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher, \
-or shoot a gun to move around via Newton's 3rd Law of Motion."
-	icon_state = "weightless"
+		wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of \
+		magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher, \
+		or shoot a gun to move around via Newton's 3rd Law of Motion."
+	use_user_hud_icon = TRUE
+	overlay_state = "weightless"
 
 /atom/movable/screen/alert/highgravity
 	name = "High Gravity"
 	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed."
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"
 
 /atom/movable/screen/alert/veryhighgravity
 	name = "Crushing Gravity"
 	desc = "You're getting crushed by high gravity, picking up items and movement will be slowed. You'll also accumulate brute damage!"
-	icon_state = "paralysis"
+	use_user_hud_icon = TRUE
+	overlay_state = "paralysis"
 
 /atom/movable/screen/alert/fire
 	name = "On Fire"
 	desc = "You're on fire. Stop, drop and roll to put the fire out or move to a vacuum area."
 	icon_state = "fire"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/fire/Click()
 	. = ..()
@@ -294,30 +392,47 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!(living_owner.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
-	return living_owner.resist_fire()
+	return handle_stop_drop_roll(owner)
+
+/atom/movable/screen/alert/fire/proc/handle_stop_drop_roll(mob/living/roller)
+	return roller.resist_fire()
 
 /atom/movable/screen/alert/give // information set when the give alert is made
-	icon_state = "default"
+	icon_state = "template"
+	use_user_hud_icon = TRUE
+	clickable_glow = TRUE
 	/// The offer we're linked to, yes this is suspiciously like a status effect alert
 	var/datum/status_effect/offering/offer
 	/// Additional text displayed in the description of the alert.
-	var/additional_desc_text = "Click this alert to take it."
+	var/additional_desc_text = "Click this alert to take it, or shift click it to examine it."
+	/// Text to override what appears in screentips for the alert
+	var/screentip_override_text
+	/// Whether the offered item can be examined by shift-clicking the alert
+	var/examinable = TRUE
+
+/atom/movable/screen/alert/give/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	register_context()
 
 /atom/movable/screen/alert/give/Destroy()
 	offer = null
 	return ..()
 
+/atom/movable/screen/alert/give/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	context[SCREENTIP_CONTEXT_LMB] = screentip_override_text || "Take [offer.offered_item.name]"
+	context[SCREENTIP_CONTEXT_SHIFT_LMB] = "Examine"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /**
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *
- * Handles setting the name, description and icon of the alert and tracking the person giving
+ * Handles setting the name, description and icon of the alert and tracking the living mob giving
  * and the item being offered.
  * Arguments:
- * * taker - The person receiving the alert
- * * offerer - The person giving the alert and item
- * * receiving - The item being given by the offerer
+ * * taker - The living mob receiving the alert
+ * * offer - The status effect connected to the offer being made
  */
-/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, datum/status_effect/offering/offer)
+/atom/movable/screen/alert/give/proc/setup(mob/living/taker, datum/status_effect/offering/offer)
 	src.offer = offer
 
 	var/mob/living/offerer = offer.owner
@@ -344,7 +459,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
  * Returns a string that will be displayed in the alert, which is `receiving.name`
  * by default.
  */
-/atom/movable/screen/alert/give/proc/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/proc/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	return receiving.name
 
 /atom/movable/screen/alert/give/Click(location, control, params)
@@ -352,28 +467,40 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 
-	if(!iscarbon(usr))
+	if(!isliving(usr))
 		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
 
 	handle_transfer()
 
+/atom/movable/screen/alert/give/examine(mob/user)
+	if(!examinable)
+		return ..()
+
+	return list(
+		span_boldnotice(name),
+		span_info("[offer.owner] is offering you the following item (click the alert to take it!):"),
+		"<hr>[jointext(offer.offered_item.examine(user), "\n")]",
+	)
+
 /// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
 /atom/movable/screen/alert/give/proc/handle_transfer()
-	var/mob/living/carbon/taker = owner
+	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
 	taker.take(offerer, receiving)
-	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
+	SEND_SIGNAL(offerer, COMSIG_LIVING_ITEM_GIVEN, taker, receiving)
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
+	screentip_override_text = "High Five"
+	examinable = FALSE
 	/// Tracks active "to slow"ing so we can't spam click
 	var/too_slowing_this_guy = FALSE
 
-/atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/highfive/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	return "a high-five"
 
-/atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, datum/status_effect/offering/offer)
+/atom/movable/screen/alert/give/highfive/setup(mob/living/taker, datum/status_effect/offering/offer)
 	. = ..()
 	RegisterSignal(offer.owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(check_fake_out))
 
@@ -381,7 +508,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(too_slowing_this_guy)
 		return
 
-	var/mob/living/carbon/taker = owner
+	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
 	if(!QDELETED(receiving) && offerer.is_holding(receiving))
@@ -392,7 +519,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /// If the person who offered the high five no longer has it when we try to accept it, we get pranked hard
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p1()
-	var/mob/living/carbon/rube = owner
+	var/mob/living/rube = owner
 	var/mob/living/offerer = offer?.owner
 	if(QDELETED(rube) || QDELETED(offerer))
 		qdel(src)
@@ -405,12 +532,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /// Part two of the ultimate prank
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
-	var/mob/living/carbon/rube = owner
+	var/mob/living/rube = owner
 	var/mob/living/offerer = offer?.owner
 	if(!QDELETED(rube) && !QDELETED(offerer))
 		offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
 		to_chat(rube, span_userdanger("[uppertext("NO! [offerer] PULLS [offerer.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")]"))
-		playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+		playsound(offerer, 'sound/items/weapons/thudswoosh.ogg', 100, TRUE, 1)
 		rube.Knockdown(1 SECONDS)
 		offerer.add_mood_event("high_five", /datum/mood_event/down_low)
 		rube.add_mood_event("high_five", /datum/mood_event/too_slow)
@@ -425,13 +552,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(QDELETED(offer.offered_item))
 		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")
 
-/atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/hand
+	screentip_override_text = "Take Hand"
+	examinable = FALSE
+
+/atom/movable/screen/alert/give/hand/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	additional_desc_text = "Click this alert to take it and let [offerer.p_them()] pull you around!"
 	return "[offerer.p_their()] [receiving.name]"
 
 /atom/movable/screen/alert/give/hand/helping
 
-/atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+/atom/movable/screen/alert/give/hand/helping/get_receiving_name(mob/living/taker, mob/living/offerer, obj/item/receiving)
 	. = ..()
 	additional_desc_text = "Click this alert to let them help you up!"
 
@@ -439,20 +570,34 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/succumb
 	name = "Succumb"
 	desc = "Shuffle off this mortal coil."
-	icon_state = ALERT_SUCCUMB
+	use_user_hud_icon = TRUE
+	overlay_icon = 'icons/mob/simple/mob.dmi'
+	overlay_state = "ghost"
+	clickable_glow = TRUE
+	var/static/list/death_titles = list(
+		"Goodnight, Sweet Prince",
+		"Game Over, Man",
+		"End Of The Road",
+		"Live Long And Prosper",
+		"See You Space Cowboy...",
+		"It's Been An Honor",
+		"The Curtains Close",
+		"All Good Things Must End"
+	)
 
-/atom/movable/screen/alert/succumb/Click()
+/atom/movable/screen/alert/succumb/Click(location, control, params)
 	. = ..()
 	if(!.)
 		return
 	var/mob/living/living_owner = owner
-	var/last_whisper
-	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince", encode = FALSE) // saycode already handles sanitization
+	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE)) //checked again in [mob/living/verb/succumb()]
+		return
+
+	var/title = pick(death_titles)
+
+	//Succumbing with a message
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", title, max_length = CHAT_MESSAGE_MAX_LENGTH, encode = FALSE) // saycode already handles sanitization
 	if(isnull(last_whisper))
-		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
-			return
-	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
@@ -496,7 +641,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "cult"
 	var/static/image/narnar
 	var/angle = 0
-	var/mob/living/basic/construct/Cviewer
+	var/mob/living/basic/construct/construct_owner
 
 /atom/movable/screen/alert/bloodsense/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -504,7 +649,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	START_PROCESSING(SSprocessing, src)
 
 /atom/movable/screen/alert/bloodsense/Destroy()
-	Cviewer = null
+	construct_owner = null
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
@@ -514,45 +659,53 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!owner.mind)
 		return
 
-	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!antag)
-		return
-	var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+	if(isconstruct(owner))
+		construct_owner = owner
+	else
+		construct_owner = null
 
-	if(antag.cult_team.blood_target)
-		if(!get_turf(antag.cult_team.blood_target))
-			antag.cult_team.unset_blood_target()
-		else
-			blood_target = antag.cult_team.blood_target
-	if(Cviewer?.seeking && Cviewer.master)
-		blood_target = Cviewer.master
-		desc = "Your blood sense is leading you to [Cviewer.master]"
-	if(!blood_target)
-		if(sac_objective && !sac_objective.check_completion())
-			if(icon_state == "runed_sense0")
-				return
-			animate(src, transform = null, time = 1, loop = 0)
-			angle = 0
-			cut_overlays()
-			icon_state = "runed_sense0"
-			desc = "Nar'Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
-			add_overlay(sac_objective.sac_image)
-		else
-			var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
-			if(!summon_objective)
-				return
-			var/list/location_list = list()
-			for(var/area/area_to_check in summon_objective.summon_spots)
-				location_list += area_to_check.get_original_area_name()
-			desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(location_list)]!"
-			if(icon_state == "runed_sense1")
-				return
-			animate(src, transform = null, time = 1, loop = 0)
-			angle = 0
-			cut_overlays()
-			icon_state = "runed_sense1"
-			add_overlay(narnar)
-		return
+	// construct track
+	if(construct_owner?.seeking && construct_owner.construct_master)
+		blood_target = construct_owner.construct_master
+		desc = "Your blood sense is leading you to [construct_owner.construct_master]"
+
+	// cult track
+	var/datum/antagonist/cult/antag = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	if(antag)
+		var/datum/objective/sacrifice/sac_objective = locate() in antag.cult_team.objectives
+		if(antag.cult_team.blood_target)
+			if(!get_turf(antag.cult_team.blood_target))
+				antag.cult_team.unset_blood_target()
+			else
+				blood_target = antag.cult_team.blood_target
+		if(!blood_target)
+			if(sac_objective && !sac_objective.check_completion())
+				if(icon_state == "runed_sense0")
+					return
+				animate(src, transform = null, time = 1, loop = 0)
+				angle = 0
+				cut_overlays()
+				icon_state = "runed_sense0"
+				desc = "Nar'Sie demands that [sac_objective.target] be sacrificed before the summoning ritual can begin."
+				add_overlay(sac_objective.sac_image)
+			else
+				var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
+				if(!summon_objective)
+					return
+				var/list/location_list = list()
+				for(var/area/area_to_check in summon_objective.summon_spots)
+					location_list += area_to_check.get_original_area_name()
+				desc = "The sacrifice is complete, summon Nar'Sie! The summoning can only take place in [english_list(location_list)]!"
+				if(icon_state == "runed_sense1")
+					return
+				animate(src, transform = null, time = 1, loop = 0)
+				angle = 0
+				cut_overlays()
+				icon_state = "runed_sense1"
+				add_overlay(narnar)
+			return
+
+	// actual tracking
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(owner)
 	if(!P || !Q || (P.z != Q.z)) //The target is on a different Z level, we cannot sense that far.
@@ -564,6 +717,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
 	else
 		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
+
 	var/target_angle = get_angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
@@ -728,6 +882,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		additional processing time to unlock more malfunction abilities."
 	icon_state = ALERT_HACKING_APC
 	timeout = 60 SECONDS
+	clickable_glow = TRUE
 	var/atom/target = null
 
 /atom/movable/screen/alert/hackingapc/Click()
@@ -754,7 +909,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
 	icon_state = "template"
-	timeout = 300
+	timeout = 30 SECONDS
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/revival/Click()
 	. = ..()
@@ -767,7 +923,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Something interesting is happening!"
 	desc = "This can be clicked on to perform an action."
 	icon_state = "template"
+	use_user_hud_icon = TRUE
 	timeout = 30 SECONDS
+	clickable_glow = TRUE
 	/// Weakref to the target atom to use the action on
 	var/datum/weakref/target_ref
 	/// If we want to interact on click rather than jump/orbit
@@ -775,6 +933,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/notify_action/Click()
 	. = ..()
+	if(!.)
+		return
 
 	var/atom/target = target_ref?.resolve()
 	if(isnull(target) || !isobserver(owner) || target == owner)
@@ -791,6 +951,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/poll_alert
 	name = "Looking for candidates"
 	icon_state = "template"
+	use_user_hud_icon = TRUE
 	timeout = 30 SECONDS
 	ghost_screentips = TRUE
 	/// If true you need to call START_PROCESSING manually
@@ -942,7 +1103,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
-	icon_state = ALERT_BUCKLED
+	use_user_hud_icon = TRUE
+	overlay_state = "buckled"
+	click_master = FALSE
+	clickable_glow = TRUE
+
+/atom/movable/screen/alert/buckled/Click()
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/living_owner = owner
+
+	if(!living_owner.can_resist())
+		return
+	living_owner.changeNext_move(CLICK_CD_RESIST)
+	if(living_owner.last_special <= world.time)
+		return living_owner.resist_buckle()
+
+/atom/movable/screen/alert/restrained
+	icon_state = "template"
+	use_user_hud_icon = TRUE
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -968,28 +1150,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if((living_owner.mobility_flags & MOBILITY_MOVE) && (living_owner.last_special <= world.time))
 		return living_owner.resist_restraints()
 
-/atom/movable/screen/alert/buckled/Click()
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/living_owner = owner
-
-	if(!living_owner.can_resist())
-		return
-	living_owner.changeNext_move(CLICK_CD_RESIST)
-	if(living_owner.last_special <= world.time)
-		return living_owner.resist_buckle()
-
-/atom/movable/screen/alert/shoes/untied
-	name = "Untied Shoes"
-	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
-	icon_state = ALERT_SHOES_KNOT
-
-/atom/movable/screen/alert/shoes/knotted
-	name = "Knotted Shoes"
-	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
-	icon_state = ALERT_SHOES_KNOT
+/atom/movable/screen/alert/shoes
+	use_user_hud_icon = TRUE
+	overlay_icon = /obj/item/clothing/shoes/sneakers::icon
+	overlay_state = /obj/item/clothing/shoes/sneakers::icon_state
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/shoes/Click()
 	. = ..()
@@ -1004,10 +1169,23 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	carbon_owner.changeNext_move(CLICK_CD_RESIST)
 	carbon_owner.shoes.handle_tying(carbon_owner)
 
+/atom/movable/screen/alert/shoes/untied
+	name = "Untied Shoes"
+	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
+	use_user_hud_icon = TRUE
+	overlay_icon = /obj/item/clothing/shoes/sneakers::icon
+	overlay_state = /obj/item/clothing/shoes/sneakers::icon_state
+
+/atom/movable/screen/alert/shoes/knotted
+	name = "Knotted Shoes"
+	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
+
 /atom/movable/screen/alert/unpossess_object
 	name = "Unpossess"
 	desc = "You are possessing an object. Click this alert to unpossess it."
-	icon_state = "buckled"
+	use_user_hud_icon = TRUE
+	overlay_state = "buckled"
+	clickable_glow = TRUE
 
 /atom/movable/screen/alert/unpossess_object/Click()
 	. = ..()
@@ -1038,7 +1216,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return TRUE
 	for(var/i in 1 to length(alerts))
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
-		if(alert.icon_state == "template")
+		if(alert.use_user_hud_icon)
 			alert.icon = ui_style
 		alert.screen_loc = get_ui_alert_placement(i)
 		screenmob.client.screen |= alert
@@ -1046,25 +1224,3 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/viewer in mymob.observers)
 			reorganize_alerts(viewer)
 	return TRUE
-
-/atom/movable/screen/alert/Click(location, control, params)
-	if(!usr || !usr.client)
-		return FALSE
-	if(usr != owner)
-		return FALSE
-	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, SHIFT_CLICK)) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, span_boldnotice("[name]</span> - <span class='info'>[desc]"))
-		return FALSE
-	var/datum/our_master = master_ref?.resolve()
-	if(our_master && click_master)
-		return usr.client.Click(our_master, location, control, params)
-
-	return TRUE
-
-/atom/movable/screen/alert/Destroy()
-	. = ..()
-	severity = 0
-	master_ref = null
-	owner = null
-	screen_loc = ""

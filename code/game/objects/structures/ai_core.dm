@@ -12,6 +12,8 @@
 	var/datum/ai_laws/laws
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/mmi/core_mmi
+	/// only used in cases of AIs piloting mechs or shunted malf AIs, possible later use cases
+	var/mob/living/silicon/ai/remote_ai = null
 
 /obj/structure/ai_core/Initialize(mapload)
 	. = ..()
@@ -58,19 +60,30 @@
 		update_appearance()
 
 /obj/structure/ai_core/Destroy()
+	if(istype(remote_ai))
+		remote_ai = null
 	QDEL_NULL(circuit)
 	QDEL_NULL(core_mmi)
 	QDEL_NULL(laws)
 	return ..()
 
+/obj/structure/ai_core/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	. = ..()
+	if(. > 0 && istype(remote_ai))
+		to_chat(remote_ai, span_danger("Your core is under attack!"))
+
+
 /obj/structure/ai_core/deactivated
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
+	var/mob/living/silicon/ai/attached_ai
 
-/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
+/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE, linked_ai)
 	. = ..()
 	circuit = new(src)
+	if(linked_ai)
+		attached_ai = linked_ai
 	if(skip_mmi_creation)
 		return
 	if(posibrain)
@@ -79,6 +92,16 @@
 		core_mmi = new(src)
 		core_mmi.brain = new(core_mmi)
 		core_mmi.update_appearance()
+
+/obj/structure/ai_core/deactivated/Destroy()
+	if(attached_ai)
+		attached_ai.linked_core = null
+		attached_ai = null
+	. = ..()
+
+/obj/structure/ai_core/deactivated/proc/disable_doomsday(datum/source)
+	SIGNAL_HANDLER
+	attached_ai.ShutOffDoomsdayDevice()
 
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"
@@ -126,7 +149,7 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, params)
+/obj/structure/ai_core/latejoin_inactive/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(tool.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
 		to_chat(user, span_notice("You [active? "activate" : "deactivate"] \the [src]'s transmitters."))
@@ -156,7 +179,9 @@
 			balloon_alert(user, "connected neural network")
 			return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, params)
+/obj/structure/ai_core/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(remote_ai)
+		to_chat(remote_ai, span_danger("CORE TAMPERING DETECTED!"))
 	if(!anchored)
 		if(tool.tool_behaviour == TOOL_WELDER)
 			if(state != EMPTY_CORE)
@@ -214,7 +239,7 @@
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding cables to frame...")
-						if(do_after(user, 20, target = src) && state == SCREWED_CORE && C.use(5))
+						if(do_after(user, 2 SECONDS, target = src) && state == SCREWED_CORE && C.use(5))
 							balloon_alert(user, "added cables to frame.")
 							state = CABLED_CORE
 							update_appearance()
@@ -241,7 +266,7 @@
 					if(G.get_amount() >= 2)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 						balloon_alert(user, "adding glass panel...")
-						if(do_after(user, 20, target = src) && state == CABLED_CORE && G.use(2))
+						if(do_after(user, 2 SECONDS, target = src) && state == CABLED_CORE && G.use(2))
 							balloon_alert(user, "added glass panel")
 							state = GLASS_CORE
 							update_appearance()
@@ -295,8 +320,17 @@
 				if(tool.tool_behaviour == TOOL_CROWBAR && core_mmi)
 					tool.play_tool_sound(src)
 					balloon_alert(user, "removed [AI_CORE_BRAIN(core_mmi)]")
-					core_mmi.forceMove(loc)
-					return
+					if(remote_ai)
+						var/mob/living/silicon/ai/remoted_ai = remote_ai
+						remoted_ai.break_core_link()
+						if(!IS_MALF_AI(remoted_ai))
+							//don't pull back shunted malf AIs
+							remoted_ai.death(gibbed = TRUE, drop_mmi = FALSE)
+							///the drop_mmi param determines whether the MMI is dropped at their current location
+							///which in this case would be somewhere else, so we drop their MMI at the core instead
+							remoted_ai.make_mmi_drop_and_transfer(core_mmi, src)
+					core_mmi.forceMove(loc) //if they're malf, just drops a blank MMI, or if it's an incomplete shell
+					return					//it drops the mmi that was put in before it was finished
 
 			if(GLASS_CORE)
 				if(tool.tool_behaviour == TOOL_CROWBAR)
@@ -354,6 +388,8 @@
 	if(malf_datum)
 		malf_datum.add_law_zero()
 
+	if(!isnull(the_brainmob.client))
+		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
@@ -380,7 +416,7 @@
 			icon_state = "ai-empty"
 	return ..()
 
-/obj/structure/ai_core/deconstruct(disassembled = TRUE)
+/obj/structure/ai_core/atom_deconstruct(disassembled = TRUE)
 	if(state >= GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
@@ -389,7 +425,6 @@
 		circuit.forceMove(loc)
 		circuit = null
 	new /obj/item/stack/sheet/plasteel(loc, 4)
-	qdel(src)
 
 /// Quick proc to call to see if the brainmob inside of us has suicided. Returns TRUE if we have, FALSE in any other scenario.
 /obj/structure/ai_core/proc/suicide_check()
@@ -425,7 +460,7 @@ That prevents a few funky behaviors.
 			return
 	//Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
-		AI.control_disabled = FALSE
+		AI.set_control_disabled(FALSE)
 		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
 		to_chat(AI, span_notice("You have been uploaded to a stationary terminal. Remote device connection restored."))

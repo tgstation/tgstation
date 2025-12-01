@@ -34,19 +34,19 @@
 		/obj/item/stack/sheet/plastic = 100,
 		/obj/item/stack/sheet/meat = 100)
 	time = 3.2 SECONDS
-	preop_sound = 'sound/effects/blobattack.ogg'
-	success_sound = 'sound/effects/attackblob.ogg'
-	failure_sound = 'sound/effects/blobattack.ogg'
+	preop_sound = 'sound/effects/blob/blobattack.ogg'
+	success_sound = 'sound/effects/blob/attackblob.ogg'
+	failure_sound = 'sound/effects/blob/blobattack.ogg'
 
 /datum/surgery_step/insert_plastic/preop(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery)
 	display_results(
 		user,
 		target,
-		span_notice("You begin to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]..."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to insert [tool] into the incision in [target]'s [parse_zone(target_zone)]."),
+		span_notice("You begin to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]..."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
+		span_notice("[user] begins to insert [tool] into the incision in [target]'s [target.parse_zone_with_bodypart(target_zone)]."),
 	)
-	display_pain(target, "You feel something inserting just below the skin in your [parse_zone(target_zone)].")
+	display_pain(target, "You feel something inserting just below the skin in your [target.parse_zone_with_bodypart(target_zone)].")
 
 /datum/surgery_step/insert_plastic/success(mob/user, mob/living/target, target_zone, obj/item/stack/tool, datum/surgery/surgery, default_display_results)
 	. = ..()
@@ -59,7 +59,8 @@
 		TOOL_SCALPEL = 100,
 		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
-	time = 64
+	time = 6.4 SECONDS
+	surgery_effects_mood = TRUE
 
 /datum/surgery_step/reshape_face/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to alter [target]'s appearance."), span_notice("You begin to alter [target]'s appearance..."))
@@ -89,16 +90,16 @@
 			var/obj/item/offhand = user.get_inactive_held_item()
 			if(istype(offhand, /obj/item/photo) && istype(surgery, /datum/surgery/plastic_surgery/advanced))
 				var/obj/item/photo/disguises = offhand
-				for(var/namelist as anything in disguises.picture?.names_seen)
+				for(var/namelist in disguises.picture?.names_seen)
 					names += namelist
 			else
-				user.visible_message(span_warning("You have no picture to base the appearance on, reverting to random appearances."))
+				to_chat(user, span_warning("You have no picture to base the appearance on, reverting to random appearances."))
 				for(var/i in 1 to 10)
-					names += target.dna.species.random_name(target.gender, TRUE)
+					names += target.generate_random_mob_name(TRUE)
 		else
-			for(var/_i in 1 to 9)
+			for(var/j in 1 to 9)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
-			names += target.dna.species.random_name(target.gender, TRUE) //give one normal name in case they want to do regular plastic surgery
+			names += target.generate_random_mob_name(TRUE) //give one normal name in case they want to do regular plastic surgery
 		var/chosen_name = tgui_input_list(user, "New name to assign", "Plastic Surgery", names)
 		if(isnull(chosen_name))
 			return
@@ -115,7 +116,7 @@
 		display_pain(target, "The pain fades, your face feels new and unfamiliar!")
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		human_target.sec_hud_set_ID()
+		human_target.update_ID_card()
 	if(HAS_MIND_TRAIT(user, TRAIT_MORBID) && ishuman(user))
 		var/mob/living/carbon/human/morbid_weirdo = user
 		morbid_weirdo.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)

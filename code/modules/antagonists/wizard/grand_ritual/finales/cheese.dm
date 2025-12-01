@@ -10,7 +10,7 @@
 
 /datum/grand_finale/cheese/trigger(mob/living/invoker)
 	message_admins("[key_name(invoker)] has summoned forth The Wabbajack and cursed the crew with madness!")
-	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", "[command_name()] Higher Dimensional Affairs", 'sound/effects/glassbr1.ogg')
+	priority_announce("Danger: Extremely potent reality altering object has been summoned on station. Immediate evacuation advised. Brace for impact.", "[command_name()] Higher Dimensional Affairs", 'sound/effects/glass/glassbr1.ogg')
 
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (isnull(crewmate.mind))
@@ -37,7 +37,7 @@
 				<b>[invoker] must die.</b>"))
 			var/datum/brain_trauma/mild/hallucinations/added_trauma = new()
 			added_trauma.resilience = TRAUMA_RESILIENCE_ABSOLUTE
-			crewmate.adjustOrganLoss(ORGAN_SLOT_BRAIN, BRAIN_DAMAGE_DEATH - 25, BRAIN_DAMAGE_DEATH - 25) //you'd better hope chap didn't pick a hypertool
+			crewmate.adjust_organ_loss(ORGAN_SLOT_BRAIN, BRAIN_DAMAGE_DEATH - 25, BRAIN_DAMAGE_DEATH - 25) //you'd better hope chap didn't pick a hypertool
 			crewmate.gain_trauma(added_trauma)
 			crewmate.add_mood_event("wizard_ritual_finale", /datum/mood_event/madness_despair)
 

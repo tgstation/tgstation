@@ -14,6 +14,7 @@
 	girder_type = /obj/structure/girder/reinforced
 	explosive_resistance = 2
 	rad_insulation = RAD_HEAVY_INSULATION
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall. also indicates the temperature at wich the wall will melt (currently only able to melt with H/E pipes)
 	///Dismantled state, related to deconstruction.
 	var/d_state = INTACT
@@ -75,7 +76,7 @@
 
 		if(COVER)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin slicing through the metal cover..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -108,7 +109,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin welding the metal cover back to the frame..."))
 				if(W.use_tool(src, user, 60, volume=100))
@@ -142,7 +143,7 @@
 
 		if(SUPPORT_RODS)
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=2))
+				if(!W.tool_start_check(user, amount=2, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin slicing through the support rods..."))
 				if(W.use_tool(src, user, 100, volume=100))
@@ -175,7 +176,7 @@
 				return TRUE
 
 			if(W.tool_behaviour == TOOL_WELDER)
-				if(!W.tool_start_check(user, amount=0))
+				if(!W.tool_start_check(user, amount=0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 					return
 				to_chat(user, span_notice("You begin welding the support rods back together..."))
 				if(W.use_tool(src, user, 100, volume=100))
@@ -204,7 +205,7 @@
 		icon = 'icons/turf/walls/reinforced_states.dmi'
 		icon_state = "[base_decon_state]-[d_state]"
 	else
-		icon = 'icons/turf/walls/reinforced_wall.dmi'
+		icon = initial(icon)
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	return ..()
 
@@ -214,46 +215,62 @@
 			dismantle_wall()
 
 /turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if(the_rcd.canRturf || the_rcd.construction_mode == RCD_WALLFRAME)
+	if (the_rcd.construction_mode == RCD_WALLFRAME)
 		return ..()
-
+	if(!the_rcd.canRturf)
+		return
+	. = ..()
+	if (.)
+		.["delay"] *= RCD_RWALL_DELAY_MULT
 
 /turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(the_rcd.canRturf || rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
+	if(the_rcd.canRturf || rcd_data[RCD_DESIGN_MODE] == RCD_WALLFRAME)
 		return ..()
 
-/turf/closed/wall/r_wall/rust_heretic_act()
-	if(prob(50))
-		return
+/turf/closed/wall/r_wall/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
-		ScrapeAway()
+		ChangeTurf(/turf/closed/wall/rust)
 		return
 	return ..()
 
-/turf/closed/wall/r_wall/syndicate
-	name = "hull"
-	desc = "The armored hull of an ominous looking ship."
+/turf/closed/wall/r_wall/plastitanium
+	name = /turf/closed/wall/mineral/plastitanium::name
+	desc = "An extra durable wall made of an alloy of plasma and titanium, reinforced with plasteel rods."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "plastitanium_wall-0"
 	base_icon_state = "plastitanium_wall"
-	explosive_resistance = 20
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //plastitanium
 	turf_flags = IS_SOLID
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_SYNDICATE_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_SYNDICATE_WALLS
+	rust_resistance = RUST_RESISTANCE_TITANIUM
 
-/turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	return FALSE
-
-/turf/closed/wall/r_wall/syndicate/nodiagonal
-	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "map-shuttle_nd"
-	base_icon_state = "plastitanium_wall"
+/turf/closed/wall/r_wall/plastitanium/nodiagonal
+	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_nd")
 	smoothing_flags = SMOOTH_BITMASK
 
-/turf/closed/wall/r_wall/syndicate/overspace
-	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
+/turf/closed/wall/r_wall/plastitanium/overspace
+	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_overspace")
+	fixed_underlay = list("space" = TRUE)
+
+/turf/closed/wall/r_wall/plastitanium/syndicate
+	name = "hull"
+	desc = "The armored hull of an ominous looking ship."
+	explosive_resistance = 20
+
+/turf/closed/wall/r_wall/plastitanium/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	return FALSE
+
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal
+	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_nd")
+	smoothing_flags = SMOOTH_BITMASK
+
+/turf/closed/wall/r_wall/plastitanium/syndicate/overspace
+	icon = MAP_SWITCH('icons/turf/walls/plastitanium_wall.dmi', 'icons/turf/walls/misc_wall.dmi')
+	icon_state = MAP_SWITCH("plastitanium_wall-0", "plastitanium_overspace")
 	fixed_underlay = list("space" = TRUE)

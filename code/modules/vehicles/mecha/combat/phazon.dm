@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/phazon
-	desc = "This is a Phazon exosuit. The pinnacle of scientific research and pride of Nanotrasen, it uses cutting edge bluespace technology and expensive materials."
+	desc = "This is a Phazon exosuit. The pinnacle of scientific research and pride of Nanotrasen, it uses cutting edge anomalous technology and expensive materials."
 	name = "\improper Phazon"
 	icon_state = "phazon"
 	base_icon_state = "phazon"
@@ -41,8 +41,10 @@
 	name = "Reconfigure arm microtool arrays"
 	button_icon_state = "mech_damtype_brute"
 
-/datum/action/vehicle/sealed/mecha/mech_switch_damtype/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+/datum/action/vehicle/sealed/mecha/mech_switch_damtype/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	var/new_damtype
 	switch(chassis.damtype)
@@ -57,15 +59,17 @@
 			chassis.balloon_alert(owner,"your punches will now deal toxin damage")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
-	playsound(chassis, 'sound/mecha/mechmove01.ogg', 50, TRUE)
+	playsound(chassis, 'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/mech_toggle_phasing
 	name = "Toggle Phasing"
 	button_icon_state = "mech_phasing_off"
 
-/datum/action/vehicle/sealed/mecha/mech_toggle_phasing/Trigger(trigger_flags)
-	if(!owner || !chassis || !(owner in chassis.occupants))
+/datum/action/vehicle/sealed/mecha/mech_toggle_phasing/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return
+	if(!chassis || !(owner in chassis.occupants))
 		return
 	chassis.phasing = chassis.phasing ? "" : "phasing"
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"

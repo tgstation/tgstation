@@ -1,11 +1,12 @@
 /datum/antagonist/pirate
 	name = "\improper Space Pirate"
-	job_rank = ROLE_TRAITOR
+	pref_flag = ROLE_TRAITOR
 	roundend_category = "space pirates"
 	antagpanel_category = ANTAG_GROUP_PIRATES
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR ME MATEYS!!"
+	stinger_sound = 'sound/music/antag/pirate/pirate_start.ogg'
 	hijack_speed = 2 // That is without doubt the worst pirate I have ever seen.
 	var/datum/team/pirate/crew
 
@@ -45,11 +46,12 @@
 	var/datum/language_holder/holder = owner_mob.get_language_holder()
 	holder.grant_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
 	holder.selected_language = /datum/language/piratespeak
+	ADD_TRAIT(owner_mob, TRAIT_DESENSITIZED, REF(src))
 
 /datum/antagonist/pirate/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/owner_mob = mob_override || owner.current
 	owner_mob.remove_language(/datum/language/piratespeak, source = LANGUAGE_PIRATE)
-	return ..()
+	REMOVE_TRAIT(owner_mob, TRAIT_DESENSITIZED, REF(src))
 
 /datum/team/pirate
 	name = "\improper Pirate crew"
@@ -85,7 +87,7 @@
 	//Lists notable loot.
 	if(!cargo_hold || !cargo_hold.total_report)
 		return "Nothing"
-	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	var/count = 0
 	var/list/loot_texts = list()
 	for(var/datum/export/E in cargo_hold.total_report.total_value)
@@ -104,7 +106,7 @@
 /datum/team/pirate/roundend_report()
 	var/list/parts = list()
 
-	parts += "<span class='header'>Space Pirates were:</span>"
+	parts += span_header("Space Pirates were:")
 
 	var/all_dead = TRUE
 	for(var/datum/mind/M in members)

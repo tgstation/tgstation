@@ -11,6 +11,8 @@
 
 /// Ashwalker related creatures
 #define FACTION_ASHWALKER "ashwalker"
+/// Bears of all varieties
+#define FACTION_BEAR "bear"
 /// Megafauna bosses of mining
 #define FACTION_BOSS "boss"
 /// CARPS
@@ -33,13 +35,13 @@
 #define FACTION_HELL "hell"
 /// Hivebots
 #define FACTION_HIVEBOT "hivebot"
-/// Illusionary creaturs
+/// Illusionary creatures
 #define FACTION_ILLUSION "illusion"
 /// Creatures of the never finished jungle planet, and gorillas
 #define FACTION_JUNGLE "jungle"
 /// Small lizards
 #define FACTION_LIZARD "lizard"
-/// Maint creatures have mutual respect for eachother.
+/// Maint creatures have mutual respect for each other.
 #define FACTION_MAINT_CREATURES "maint_creatures"
 /// Animated objects and statues
 #define FACTION_MIMIC "mimic"
@@ -83,7 +85,10 @@
 #define FACTION_TURRET "turret"
 /// Vines, lots of overlap with plants
 #define FACTION_VINES "vines"
-
+///raptor factions
+#define FACTION_RAPTOR "raptor"
+///holy faction, for anything part of the church
+#define FACTION_HOLY "holy"
 // Antagonist factions
 
 /// Cultists and their constructs

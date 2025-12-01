@@ -1,6 +1,7 @@
 /datum/ai_controller/basic_controller/ice_demon
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 7,
 		BB_LIST_SCARY_ITEMS = list(
 			/obj/item/weldingtool,
 			/obj/item/flashlight/flare,
@@ -10,18 +11,15 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon,
 		/datum/ai_planning_subtree/ranged_skirmish/ice_demon,
-		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon,
+		/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance,
 		/datum/ai_planning_subtree/teleport_away_from_target,
 		/datum/ai_planning_subtree/find_and_hunt_target/teleport_destination,
 		/datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages,
 	)
-
-
-/datum/ai_planning_subtree/maintain_distance/cover_minimum_distance/ice_demon
-	maximum_distance = 7
 
 /datum/ai_planning_subtree/teleport_away_from_target
 	ability_key = BB_DEMON_TELEPORT_ABILITY
@@ -48,13 +46,11 @@
 /datum/ai_behavior/find_valid_teleport_location
 
 /datum/ai_behavior/find_valid_teleport_location/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, types_to_hunt, hunt_range)
-	. = ..()
 	var/mob/living/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/list/possible_turfs = list()
 
 	if(QDELETED(target))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	for(var/turf/open/potential_turf in oview(hunt_range, target)) //we check for turfs around the target
 		if(potential_turf.is_blocked_turf())
@@ -64,11 +60,10 @@
 		possible_turfs += potential_turf
 
 	if(!length(possible_turfs))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(hunting_target_key, pick(possible_turfs))
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/hunt_target/use_ability_on_target/demon_teleport
 	hunt_cooldown = 2 SECONDS
@@ -109,6 +104,7 @@
 
 /datum/ai_controller/basic_controller/ice_demon/afterimage
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/flee_target/ice_demon, //even the afterimages are afraid of flames!
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,

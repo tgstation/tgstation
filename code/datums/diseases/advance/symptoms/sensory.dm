@@ -64,7 +64,7 @@
 		M.adjust_hallucinations(-20 SECONDS)
 
 	if(A.stage >= 5)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
+		M.adjust_organ_loss(ORGAN_SLOT_BRAIN, -3)
 		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(prob(10))
@@ -95,13 +95,14 @@
 	switch(advanced_disease.stage)
 		if(4, 5)
 			if(advanced_disease.has_required_infectious_organ(infected_mob, ORGAN_SLOT_EARS))
-				var/obj/item/organ/internal/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
-				ears.adjustEarDamage(-4, -4)
+				var/obj/item/organ/ears/ears = infected_mob.get_organ_slot(ORGAN_SLOT_EARS)
+				ears?.apply_organ_damage(-4)
+				ears?.adjust_temporary_deafness(-8 SECONDS)
 
 			if(!advanced_disease.has_required_infectious_organ(infected_mob, ORGAN_SLOT_EYES))
 				return
 
-			var/obj/item/organ/internal/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+			var/obj/item/organ/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 			infected_mob.adjust_temp_blindness(-4 SECONDS)
 			infected_mob.adjust_eye_blur(-4 SECONDS)
 

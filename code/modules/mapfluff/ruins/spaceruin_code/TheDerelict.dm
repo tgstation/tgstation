@@ -1,3 +1,5 @@
+#define DERELICT_VAULT_ID "derelictvault"
+
 /////////// thederelict items
 
 /obj/item/paper/fluff/ruins/thederelict/equipment
@@ -49,6 +51,7 @@
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+	var/door_id = DERELICT_VAULT_ID
 	var/obj/structure/cable/attached_cable
 	var/obj/machinery/door/airlock/vault/derelict/door1
 	var/obj/machinery/door/airlock/vault/derelict/door2
@@ -76,7 +79,7 @@
 ///Initializes airlock links.
 /obj/machinery/computer/vaultcontroller/proc/find_airlocks()
 	for(var/obj/machinery/door/airlock/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
-		if(A.id_tag == "derelictvault")
+		if(A.id_tag == door_id)
 			if(!door1)
 				door1 = A
 				continue
@@ -140,7 +143,7 @@
 		ui = new(user, src, "VaultController", name)
 		ui.open()
 
-/obj/machinery/computer/vaultcontroller/ui_act(action, params)
+/obj/machinery/computer/vaultcontroller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -161,13 +164,13 @@
 	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	id_tag = "derelictvault"
+	id_tag = DERELICT_VAULT_ID
+	has_access_panel = FALSE
 
-///Overrides screwdriver attack to prevent all deconstruction and hacking.
-/obj/machinery/door/airlock/vault/derelict/attackby(obj/item/C, mob/user, params)
-	if(C.tool_behaviour == TOOL_SCREWDRIVER)
-		return
-	..()
+///Overrides screwdriver act to prevent all deconstruction and hacking. Override for extra tuff fluff
+/obj/machinery/door/airlock/vault/derelict/screwdriver_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_danger("The robust make of [src] makes it impossible to access the panel in any way!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/fluff/oldturret
 	name = "broken turret"
@@ -213,7 +216,7 @@
 		"\[15:29\] USELESS clown",
 		"\[15:35\] And BATSHIT fucking janitors",
 		"\[15:46\] That includes the crotchety fucking IBM piece of shit we're supposed to call an AI",
-		"\[15:52\] And it's legion of cyborg assholes",
+		"\[15:52\] And its legion of cyborg assholes",
 		"\[15:58\] If this wasn't bad enough there is the wizards federation to worry about",
 		"\[16:06\] Crazy bastards",
 		"\[16:10\] What can be worse than a bunch of plasma-humping-space-freaks?",
@@ -244,7 +247,7 @@
 		"\[47:32\] Once they called me captain, but when it's all said and done",
 		"\[47:41\] I'll be a hero",
 		"\[47:45\] If you run across this transmission by chance",
-		"\[47:52\] Get you pudgy little nerd ass over to Space Station 13 and start busting heads.",
+		"\[47:52\] Get your pudgy little nerd ass over to Space Station 13 and start busting heads.",
 		"\[48:00\] (farting noises)",
 	)
 	timestamp = list(
@@ -312,3 +315,5 @@
 /obj/item/tape/captains_log/Initialize(mapload)
 	. = ..()
 	unspool() // the tape spawns damaged
+
+#undef DERELICT_VAULT_ID

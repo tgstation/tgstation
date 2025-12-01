@@ -10,12 +10,13 @@
 	#define COMPONENT_HOSTILE_NO_ATTACK COMPONENT_CANCEL_ATTACK_CHAIN //cancel the attack, only works before attack happens
 ///after attackingtarget has happened, source is the attacker and target is the attacked, extra argument for if the attackingtarget was successful
 #define COMSIG_HOSTILE_POST_ATTACKINGTARGET "hostile_post_attackingtarget"
-///from base of mob/living/basic/regal_rat: (mob/living/basic/regal_rat/king)
-#define COMSIG_RAT_INTERACT "rat_interaction"
-	#define COMPONENT_RAT_INTERACTED (1<<0) //! If this is returned, cancel any further interactions.
+
 ///FROM mob/living/simple_animal/hostile/ooze/eat_atom(): (atom/target, edible_flags)
 #define COMSIG_OOZE_EAT_ATOM "ooze_eat_atom"
 	#define COMPONENT_ATOM_EATEN  (1<<0)
 
 ///Called when a /mob/living/simple_animal/hostile fines a new target: (atom/source, new_target)
 #define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"
+
+///Called when a regal rat uses their riot ability on a mob
+#define COMSIG_REGAL_RAT_RIOTED "comsig_regal_rat_rioted"

@@ -10,9 +10,13 @@
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
+	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 	var/order_cost = 0
 	var/order_id = 0
 	var/errors = 0
+
+/obj/item/paper/requisition
+	can_become_message_in_bottle = FALSE //A lot of these are spawned each round, they'd only dilute the pool and make it boring.
 
 /obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()
@@ -68,7 +72,7 @@
 	coupon,
 	charge_on_purchase = TRUE,
 	manifest_can_fail = TRUE,
-	cost_type = "cr",
+	cost_type = MONEY_SYMBOL,
 	can_be_cancelled = TRUE,
 )
 	id = SSshuttle.order_number++
@@ -94,12 +98,12 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account && !pack.goody) //privately purchased and not a goody means 1.1x the cost
+	if(paying_account?.add_to_accounts && !pack.goody) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
 	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/requisition_paper = new(T)
+	var/obj/item/paper/requisition/requisition_paper = new(T)
 
 	requisition_paper.name = "requisition form - #[id] ([pack.name])"
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
@@ -136,9 +140,13 @@
 		manifest_text += "Item: [packname]<br/>"
 	manifest_text += "Contents: <br/>"
 	manifest_text += "<ul>"
-	var/container_contents = list() // Associative list with the format (item_name = nº of occurences, ...)
-	for(var/atom/movable/AM in container.contents - manifest_paper)
-		container_contents[AM.name]++
+	var/container_contents = list() // Associative list with the format (item_name = nº of occurrences, ...)
+	for(var/obj/item/stuff in container.contents - manifest_paper)
+		if(isstack(stuff))
+			var/obj/item/stack/thing = stuff
+			container_contents[thing.singular_name] += thing.amount
+			continue
+		container_contents[stuff.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
 		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
 			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
@@ -146,9 +154,8 @@
 			for(var/iteration in 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
 				var/missing_item = pick(container_contents)
 				container_contents[missing_item]--
-				if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+				if(!container_contents[missing_item]) // To avoid 0s and negative values on the manifest
 					container_contents -= missing_item
-
 
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
@@ -165,16 +172,13 @@
 			while(--lost >= 0)
 				qdel(pick(container.contents))
 
-
 	manifest_paper.update_appearance()
 	manifest_paper.forceMove(container)
 
 	if(istype(container, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/C = container
-		C.manifest = manifest_paper
-		C.update_appearance()
-	else
-		container.contents += manifest_paper
+		var/obj/structure/closet/crate/crate = container
+		crate.manifest = WEAKREF(manifest_paper)
+		crate.update_appearance()
 
 	return manifest_paper
 
@@ -185,6 +189,9 @@
 	else
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
+	if(pack.contraband)
+		for(var/atom/movable/item_within as anything in crate.get_all_contents())
+			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
 	if(department_destination)
 		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)
@@ -197,7 +204,7 @@
 	return
 
 /datum/supply_order/proc/append_order(list/new_contents, cost_increase)
-	for(var/i as anything in new_contents)
+	for(var/i in new_contents)
 		if(pack.contains[i])
 			pack.contains[i] += new_contents[i]
 		else
@@ -206,15 +213,11 @@
 	pack.cost += cost_increase
 
 /// Custom type of order who's supply pack can be safely deleted
-/datum/supply_order/disposable
-
 /datum/supply_order/disposable/Destroy(force)
 	QDEL_NULL(pack)
 	return ..()
 
 /// Custom material order to append cargo crate value to the final order cost
-/datum/supply_order/disposable/materials
-
 /datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
 

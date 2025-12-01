@@ -31,7 +31,7 @@
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
 	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites_list
+	var/list/rites_list = list()
 	/// Changes the Altar of Gods icon
 	var/altar_icon
 	/// Changes the Altar of Gods icon_state
@@ -47,6 +47,8 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
+	if(!locate(/datum/religion_rites/deaconize) in rites_list)
+		rites_list += list(/datum/religion_rites/deaconize)
 	on_select()
 
 /// Activates once selected
@@ -59,6 +61,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, span_boldnotice("\"[quote]\""))
 	to_chat(chap, span_notice("[desc]"))
+	chap.faction |= FACTION_HOLY
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -66,12 +69,13 @@
 	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+	chap.faction -= FACTION_HOLY
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
 	. = TRUE
 	if(chap.mind.holy_role == HOLY_ROLE_DEACON)
-		to_chat(chap, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		to_chat(chap, span_warning("You are merely a deacon of [GLOB.deity], and therefore cannot perform rites."))
 		return
 	if(!is_type_in_typecache(sacrifice, desired_items_typecache))
 		return FALSE
@@ -104,26 +108,29 @@
 /// Replaces the bible's bless mechanic. Return TRUE if you want to not do the brain hit.
 /datum/religion_sect/proc/sect_bless(mob/living/target, mob/living/chap)
 	if(!ishuman(target))
-		return FALSE
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = target
 	for(var/obj/item/bodypart/bodypart as anything in blessed.bodyparts)
 		if(IS_ROBOTIC_LIMB(bodypart))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return TRUE
+			return BLESSING_IGNORED
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 
-	if(hurt_limbs.len)
-		for(var/X in hurt_limbs)
-			var/obj/item/bodypart/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+			blessed.update_damage_overlays()
+
+	blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
+	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /// What happens if we bless a corpse? By default just do the default smack behavior
 /datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
@@ -146,7 +153,7 @@
 	do not heal organic limbs. You can now sacrifice cells, with favor depending on their charge."
 	tgui_icon = "robot"
 	alignment = ALIGNMENT_NEUT
-	desired_items = list(/obj/item/stock_parts/cell = "with battery charge")
+	desired_items = list(/obj/item/stock_parts/power_store = "with battery charge")
 	rites_list = list(/datum/religion_rites/synthconversion, /datum/religion_rites/machine_blessing)
 	altar_icon_state = "convertaltar-blue"
 	max_favor = 2500
@@ -154,24 +161,26 @@
 /datum/religion_sect/mechanical/sect_bless(mob/living/target, mob/living/chap)
 	if(iscyborg(target))
 		var/mob/living/silicon/robot/R = target
-		var/charge_amt = 50
+		var/charge_amount = 0.05 * STANDARD_CELL_CHARGE
 		if(target.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
-			charge_amt *= 2
-		R.cell?.charge += charge_amt
+			charge_amount *= 2
+		R.cell?.charge += charge_amount
 		R.visible_message(span_notice("[chap] charges [R] with the power of [GLOB.deity]!"))
 		to_chat(R, span_boldnotice("You are charged by the power of [GLOB.deity]!"))
 		R.add_mood_event("blessing", /datum/mood_event/blessing)
 		playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
-		return TRUE
+		return BLESSING_SUCCESS
+
 	if(!ishuman(target))
-		return
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = target
 
 	//first we determine if we can charge them
 	var/did_we_charge = FALSE
-	var/obj/item/organ/internal/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/eth_stomach = blessed.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(eth_stomach))
-		eth_stomach.adjust_charge(60)
+		eth_stomach.adjust_charge(0.06 * STANDARD_CELL_CHARGE)
 		did_we_charge = TRUE
 
 	//if we're not targeting a robot part we stop early
@@ -179,12 +188,13 @@
 	if(IS_ORGANIC_LIMB(bodypart))
 		if(!did_we_charge)
 			to_chat(chap, span_warning("[GLOB.deity] scoffs at the idea of healing such fleshy matter!"))
-		else
-			blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
-			to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
-			blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-			playsound(chap, 'sound/machines/synth_yes.ogg', 25, TRUE, -1)
-		return TRUE
+			return BLESSING_IGNORED
+
+		blessed.visible_message(span_notice("[chap] charges [blessed] with the power of [GLOB.deity]!"))
+		to_chat(blessed, span_boldnotice("You feel charged by the power of [GLOB.deity]!"))
+		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+		playsound(chap, 'sound/machines/synth/synth_yes.ogg', 25, TRUE, -1)
+		return BLESSING_SUCCESS
 
 	//charge(?) and go
 	if(bodypart.heal_damage(5,5,BODYTYPE_ROBOTIC))
@@ -194,17 +204,17 @@
 	to_chat(blessed, span_boldnotice("The inner machinations of [GLOB.deity] [did_we_charge ? "repairs and charges" : "repairs"] you!"))
 	playsound(chap, 'sound/effects/bang.ogg', 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	return BLESSING_SUCCESS
 
-/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/cell/power_cell, mob/living/chap)
+/datum/religion_sect/mechanical/on_sacrifice(obj/item/stock_parts/power_store/cell/power_cell, mob/living/chap)
 	if(!istype(power_cell))
 		return
 
-	if(power_cell.charge < 300)
+	if(power_cell.charge() < 0.3 * STANDARD_CELL_CHARGE)
 		to_chat(chap, span_notice("[GLOB.deity] does not accept pity amounts of power."))
 		return
 
-	adjust_favor(round(power_cell.charge/300), chap)
+	adjust_favor(round(power_cell.charge() / (0.3 * STANDARD_CELL_CHARGE)), chap)
 	to_chat(chap, span_notice("You offer [power_cell]'s power to [GLOB.deity], pleasing them."))
 	qdel(power_cell)
 	return TRUE
@@ -225,11 +235,10 @@
 /datum/religion_sect/pyre/on_select()
 	. = ..()
 	AddComponent(/datum/component/sect_nullrod_bonus, list(
-		/obj/item/gun/ballistic/bow/divine/with_quiver = list(
+		/obj/item/gun/ballistic/bow/divine = list(
 			/datum/religion_rites/blazing_star,
 		),
 	))
-
 
 /datum/religion_sect/pyre/on_sacrifice(obj/item/flashlight/flare/candle/offering, mob/living/user)
 	if(!istype(offering))
@@ -238,7 +247,7 @@
 		to_chat(user, span_notice("The candle needs to be lit to be offered!"))
 		return
 	to_chat(user, span_notice("[GLOB.deity] is pleased with your sacrifice."))
-	adjust_favor(50, user) //it's not a lot but hey there's a pacifist favor option at least
+	adjust_favor(40, user) //it's not a lot but hey there's a pacifist favor option at least
 	qdel(offering)
 	return TRUE
 
@@ -258,33 +267,39 @@
 	return "In the eyes of [GLOB.deity], your wealth is your favor."
 
 /datum/religion_sect/greed/sect_bless(mob/living/blessed_living, mob/living/chap)
+	if(!ishuman(blessed_living))
+		return BLESSING_FAILED
+
 	var/datum/bank_account/account = chap.get_bank_account()
 	if(!account)
 		to_chat(chap, span_warning("You need a way to pay for the heal!"))
-		return TRUE
+		return BLESSING_IGNORED
+
 	if(account.account_balance < GREEDY_HEAL_COST)
 		to_chat(chap, span_warning("Healing from [GLOB.deity] costs [GREEDY_HEAL_COST] credits for 30 health!"))
-		return TRUE
-	if(!ishuman(blessed_living))
-		return FALSE
+		return BLESSING_IGNORED
+
 	var/mob/living/carbon/human/blessed = blessed_living
 	for(var/obj/item/bodypart/robolimb as anything in blessed.bodyparts)
 		if(IS_ROBOTIC_LIMB(robolimb))
 			to_chat(chap, span_warning("[GLOB.deity] refuses to heal this metallic taint!"))
-			return TRUE
+			return BLESSING_IGNORED
 
 	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
 	var/heal_amt = 30
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(hurt_limbs.len)
-		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				blessed.update_damage_overlays()
-		blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
-		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
-		playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
-		blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+			blessed.update_damage_overlays()
+
+	blessed.visible_message(span_notice("[chap] barters a heal for [blessed] from [GLOB.deity]!"))
+	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed! Thank you for choosing [GLOB.deity]!"))
+	playsound(chap, 'sound/effects/cashregister.ogg', 60, TRUE)
+	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 #undef GREEDY_HEAL_COST
 
@@ -321,10 +336,12 @@
 
 /datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
 	if(!istype(target) || !istype(chaplain))
-		return FALSE
+		return BLESSING_FAILED
+
 	var/datum/brain_trauma/special/burdened/burden = chaplain.has_trauma_type(/datum/brain_trauma/special/burdened)
 	if(!burden)
-		return FALSE
+		return BLESSING_FAILED
+
 	var/burden_modifier = max(1 - 0.07 * burden.burden_level, 0.01)
 	var/transferred = FALSE
 	var/list/hurt_limbs = target.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC) + target.get_wounded_bodyparts(BODYTYPE_ORGANIC)
@@ -332,6 +349,7 @@
 	for(var/obj/item/bodypart/possible_limb in chaplain.bodyparts)
 		if(IS_ORGANIC_LIMB(possible_limb))
 			chaplains_limbs += possible_limb
+
 	if(length(chaplains_limbs))
 		for(var/obj/item/bodypart/affected_limb as anything in hurt_limbs)
 			var/obj/item/bodypart/chaplains_limb = chaplain.get_bodypart(affected_limb.body_zone)
@@ -347,40 +365,43 @@
 				transferred = TRUE
 				iter_wound.remove_wound()
 				iter_wound.apply_wound(chaplains_limb)
+
 		if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 			transferred = TRUE
 			target.cure_husk(BURN)
 			chaplain.become_husk(BURN)
-	var/toxin_damage = target.getToxLoss()
+
+	var/toxin_damage = target.get_tox_loss()
 	if(toxin_damage && !HAS_TRAIT(chaplain, TRAIT_TOXIMMUNE))
 		transferred = TRUE
-		target.adjustToxLoss(-toxin_damage)
-		chaplain.adjustToxLoss(toxin_damage * burden_modifier, forced = TRUE)
-	var/suffocation_damage = target.getOxyLoss()
+		target.adjust_tox_loss(-toxin_damage)
+		chaplain.adjust_tox_loss(toxin_damage * burden_modifier, forced = TRUE)
+
+	var/suffocation_damage = target.get_oxy_loss()
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
-		target.adjustOxyLoss(-suffocation_damage)
-		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
-	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
-		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/target_blood_data = target.get_blood_data(target.get_blood_id())
-			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
-			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
-				transferred = TRUE
-				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+		target.adjust_oxy_loss(-suffocation_damage)
+		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier, forced = TRUE)
+
+	var/cached_blood_volume = target.get_blood_volume()
+	if (cached_blood_volume < BLOOD_VOLUME_SAFE)
+		if (target.get_blood_compatibility(chaplain))
+			var/amount_to_transfer = BLOOD_VOLUME_SAFE - cached_blood_volume
+			transferred |= chaplain.transfer_blood_to(target, amount_to_transfer, ignore_low_blood = TRUE)
+	else if (cached_blood_volume > BLOOD_VOLUME_EXCESS)
+		transferred |= target.transfer_blood_to(chaplain, cached_blood_volume - BLOOD_VOLUME_EXCESS)
+
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
-	if(transferred)
-		target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
-		to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
-		target.add_mood_event("blessing", /datum/mood_event/blessing)
-	else
+	if(!transferred)
 		to_chat(chaplain, span_warning("They hold no burden!"))
-	return TRUE
+		return BLESSING_IGNORED
+
+	target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
+	to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
+	playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
+	target.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /datum/religion_sect/burden/sect_dead_bless(mob/living/target, mob/living/chaplain)
 	return sect_bless(target, chaplain)
@@ -393,22 +414,7 @@
 	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_crusaders += invited
+	rites_list = list(/datum/religion_rites/deaconize/crusader, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
@@ -436,17 +442,19 @@
 
 /datum/religion_sect/maintenance/sect_bless(mob/living/blessed_living, mob/living/chap)
 	if(!ishuman(blessed_living))
-		return TRUE
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/blessed = blessed_living
 	if(blessed.reagents.has_reagent(/datum/reagent/drug/maint/sludge))
 		to_chat(blessed, span_warning("[GLOB.deity] has already empowered them."))
-		return TRUE
+		return BLESSING_IGNORED
+
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
 	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
+	return BLESSING_SUCCESS //trust me, you'll be feeling the pain from the maint drugs all well enough
 
 /datum/religion_sect/maintenance/on_sacrifice(obj/item/reagent_containers/offering, mob/living/user)
 	if(!istype(offering))

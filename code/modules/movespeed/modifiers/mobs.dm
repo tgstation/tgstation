@@ -1,4 +1,5 @@
 /datum/movespeed_modifier/obesity
+	// large weight slows even if flying and floating
 	multiplicative_slowdown = 1.5
 
 /datum/movespeed_modifier/monkey_reagent_speedmod
@@ -11,6 +12,7 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/hunger
+	movetypes = GROUND|FLYING
 	variable = TRUE
 
 /datum/movespeed_modifier/golem_hunger
@@ -22,17 +24,20 @@
 /datum/movespeed_modifier/resonance
 	multiplicative_slowdown = 0.75
 
+/datum/movespeed_modifier/basic_stamina_slowdown
+	variable = TRUE
+
 /datum/movespeed_modifier/damage_slowdown
-	blacklisted_movetypes = FLOATING|FLYING
+	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
-/datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLYING
-	variable = TRUE
-
+/// Movespeed modifier applied by worn equipment.
 /datum/movespeed_modifier/equipment_speedmod
 	variable = TRUE
 	blacklisted_movetypes = FLOATING
+
+/// Movespeed modifier applied by immutably slow worn equipment. Should never be ignored, because that's the point.
+/datum/movespeed_modifier/equipment_speedmod/immutable
 
 /datum/movespeed_modifier/grab_slowdown
 	id = MOVESPEED_ID_MOB_GRAB_STATE
@@ -46,12 +51,6 @@
 
 /datum/movespeed_modifier/grab_slowdown/kill
 	multiplicative_slowdown = 9
-
-/datum/movespeed_modifier/slime_reagentmod
-	variable = TRUE
-
-/datum/movespeed_modifier/slime_healthmod
-	variable = TRUE
 
 /datum/movespeed_modifier/config_walk_run
 	multiplicative_slowdown = 1
@@ -91,6 +90,7 @@
 /datum/movespeed_modifier/limbless
 	variable = TRUE
 	movetypes = GROUND
+	blacklisted_movetypes = FLOATING|FLYING
 	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/simplemob_varspeed
@@ -126,9 +126,6 @@
 /datum/movespeed_modifier/carbon_softcrit
 	multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN
 	flags = IGNORE_NOSLOW
-
-/datum/movespeed_modifier/slime_tempmod
-	variable = TRUE
 
 /datum/movespeed_modifier/carbon_crawling
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
@@ -166,7 +163,10 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/goliath_mount
-	multiplicative_slowdown = -26
+	multiplicative_slowdown = -27.5
+
+/datum/movespeed_modifier/goldgrub_mount
+	multiplicative_slowdown = -4.5
 
 /datum/movespeed_modifier/settler
 	multiplicative_slowdown = 0.2
@@ -174,3 +174,19 @@
 
 /datum/movespeed_modifier/basilisk_overheat
 	multiplicative_slowdown = -18
+
+/datum/movespeed_modifier/magic_ties
+	multiplicative_slowdown = 0.5
+
+///Speed bonus given by the fish tail organ when inside water.
+/datum/movespeed_modifier/fish_on_water
+	blacklisted_movetypes = MOVETYPES_NOT_TOUCHING_GROUND
+	multiplicative_slowdown = - /turf/open/water::slowdown
+
+///Slowdown for swimming on deep water tiles
+/datum/movespeed_modifier/swimming_deep
+	blacklisted_movetypes = MOVETYPES_NOT_TOUCHING_GROUND
+	multiplicative_slowdown = 7
+
+/datum/movespeed_modifier/tail_dragger
+	multiplicative_slowdown = 4

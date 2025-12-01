@@ -1,6 +1,7 @@
 /// Sends a fake bubblegum charging through a nearby wall to our target.
 /datum/hallucination/oh_yeah
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_RARE
 	/// An image overlayed to the wall bubblegum comes out of, to look destroyed.
 	var/image/fake_broken_wall
 	/// An image put where bubblegum is expected to land, to mimic his charge "rune" icon.
@@ -36,7 +37,7 @@
 
 	if(hallucinator.client)
 
-		fake_broken_wall = image('icons/turf/floors.dmi', wall_source, "plating", layer = TURF_LAYER)
+		fake_broken_wall = image('icons/turf/floors.dmi', wall_source, "plating", layer = LOW_FLOOR_LAYER)
 		SET_PLANE_EXPLICIT(fake_broken_wall, FLOOR_PLANE, wall_source)
 		fake_broken_wall.override = TRUE
 		fake_rune = image('icons/effects/96x96.dmi', target_landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
@@ -81,7 +82,7 @@
 
 	if(fake_bubbles.Adjacent(hallucinator))
 		hallucinator.Paralyze(8 SECONDS)
-		hallucinator.adjustStaminaLoss(40)
+		hallucinator.adjust_stamina_loss(40)
 		step_away(hallucinator, fake_bubbles)
 		shake_camera(hallucinator, 4, 3)
 		hallucinator.visible_message(

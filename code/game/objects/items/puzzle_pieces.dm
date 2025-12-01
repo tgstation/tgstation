@@ -16,6 +16,9 @@
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	var/puzzle_id = null
 
+/obj/item/keycard/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
 //Two test keys for use alongside the two test doors.
 /obj/item/keycard/yellow
 	name = "yellow keycard"
@@ -53,6 +56,9 @@
 	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
 
+/obj/machinery/door/puzzle/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
+
 //Standard Expressions to make keycard doors basically un-cheeseable
 /datum/armor/door_puzzle
 	melee = 100
@@ -80,6 +86,18 @@
 	puzzle_id = null //honestly these cant be closed anyway and im not fucking around with door code anymore
 	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), null)
 
+/obj/machinery/door/puzzle/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 1.0 SECONDS
+
+/obj/machinery/door/puzzle/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.8 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 1.0 SECONDS
+
 /obj/machinery/door/puzzle/Bumped(atom/movable/AM)
 	return !density && ..()
 
@@ -106,7 +124,7 @@
 	desc = "This door only opens when a keycard is swiped. It looks virtually indestructible."
 	uses_queuelinks = FALSE
 
-/obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/door/puzzle/keycard/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard))
 		return
@@ -150,8 +168,8 @@
 	trigger_mob = FALSE
 	trigger_item = TRUE
 	specific_item = /obj/structure/holobox
-	removable_signaller = FALSE //Being a pressure plate subtype, this can also use signals.
-	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on it's own default channel however.
+	removable_assembly = FALSE //Being a pressure plate subtype, this can also use signals.
+	roundstart_signaller_freq = FREQ_HOLOGRID_SOLUTION //Frequency is kept on its own default channel however.
 	active = TRUE
 	trigger_delay = 10
 	protected = TRUE
@@ -159,6 +177,9 @@
 	undertile_pressureplate = FALSE
 	var/reward = /obj/item/food/cookie
 	var/claimed = FALSE
+
+/obj/item/pressure_plate/hologrid/get_save_vars()
+	return ..() + NAMEOF(src, reward)
 
 /obj/item/pressure_plate/hologrid/Initialize(mapload)
 	. = ..()
@@ -210,6 +231,9 @@
 	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
 
+/obj/structure/light_puzzle/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, puzzle_id))
+
 /datum/armor/structure_light_puzzle
 	melee = 100
 	bullet = 100
@@ -240,10 +264,10 @@
 			continue
 		var/mutable_appearance/lit_image = mutable_appearance('icons/obj/fluff/puzzle_small.dmi', "light_lit")
 		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/fluff/puzzle_small.dmi', "light_lit", src)
-		lit_image.pixel_x = 8 * ((i % 3 || 3 ) - 1)
-		lit_image.pixel_y = -8 * (ROUND_UP(i / 3) - 1)
-		emissive_image.pixel_x = lit_image.pixel_x
-		emissive_image.pixel_y = lit_image.pixel_y
+		lit_image.pixel_w = 8 * ((i % 3 || 3 ) - 1)
+		lit_image.pixel_z = -8 * (ROUND_UP(i / 3) - 1)
+		emissive_image.pixel_w = lit_image.pixel_w
+		emissive_image.pixel_z = lit_image.pixel_z
 		. += lit_image
 		. += emissive_image
 
@@ -281,7 +305,7 @@
 	visible_message(span_boldnotice("[src] becomes fully charged!"))
 	powered = TRUE
 	SEND_SIGNAL(src, COMSIG_PUZZLE_COMPLETED)
-	playsound(src, 'sound/machines/synth_yes.ogg', 100, TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 100, TRUE)
 
 //
 // literally just buttons
@@ -302,13 +326,16 @@
 	/// should the puzzle machinery perform the final step of the queue link on LateInitialize? An alternative to queue size
 	var/late_initialize_pop = FALSE
 
+/obj/machinery/puzzle/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_size), NAMEOF(src, id))
+
 /obj/machinery/puzzle/Initialize(mapload)
 	. = ..()
 	if(!isnull(id))
 		SSqueuelinks.add_to_queue(src, id, late_initialize_pop ? 0 : queue_size)
 		return late_initialize_pop ? INITIALIZE_HINT_LATELOAD : .
 
-/obj/machinery/puzzle/LateInitialize()
+/obj/machinery/puzzle/post_machine_initialize()
 	. = ..()
 	if(late_initialize_pop && id && SSqueuelinks.queues[id])
 		SSqueuelinks.pop_link(id)
@@ -336,7 +363,7 @@
 	used = single_use
 	update_icon_state()
 	visible_message(span_notice("[user] presses a button on [src]."), span_notice("You press a button on [src]."))
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
@@ -347,7 +374,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 	icon_state = "keycardpad0"
 	base_icon_state = "keycardpad"
 
-/obj/machinery/puzzle/keycardpad/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/puzzle/keycardpad/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/keycard) || used)
 		return
@@ -359,7 +386,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/button, 32)
 		return
 	used = TRUE
 	update_icon_state()
-	playsound(src, 'sound/machines/beep.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/beep/beep.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
@@ -378,6 +405,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	///Decides whether the max length of the input is MAX_NAME_LEN or the length of the password.
 	var/input_max_len_is_pass = FALSE
 
+/obj/machinery/puzzle/password/get_save_vars()
+	return ..() + list(NAMEOF(src, password), NAMEOF(src, tgui_text), NAMEOF(src, tgui_title), NAMEOF(src, input_max_len_is_pass))
+
 /obj/machinery/puzzle/password/interact(mob/user, list/modifiers)
 	if(used && single_use)
 		return
@@ -389,11 +419,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/keycardpad, 32)
 	var/correct = pass_input == password
 	balloon_alert_to_viewers("[correct ? "correct" : "wrong"] password[correct ? "" : "!"]")
 	if(!correct)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 45, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 45, TRUE)
 		return
 	used = single_use
 	update_icon_state()
-	playsound(src, 'sound/machines/terminal_button07.ogg', 45, TRUE)
+	playsound(src, 'sound/machines/terminal/terminal_button07.ogg', 45, TRUE)
 	on_puzzle_complete()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
@@ -408,6 +438,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 	///associate a color to each digit that may be found in the password.
 	var/list/digit_to_color = list()
 
+/obj/machinery/puzzle/password/pin/get_save_vars()
+	return ..() + NAMEOF(src, pin_length)
+
 /obj/machinery/puzzle/password/pin/Initialize(mapload)
 	. = ..()
 
@@ -421,9 +454,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password, 32)
 			"green",
 			"blue",
 			"yellow",
-			"orange",
-			"brown",
+			COLOR_ORANGE, // orange is also not valid
+			COLOR_BROWN, // brown is NOT a valid byond color
 			"gray",
+			"purple",
 		)
 	for(var/digit in 0 to 9)
 		digit_to_color["[digit]"] = pick_n_take(possible_colors)
@@ -447,6 +481,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	anchored = TRUE
 	/// if we receive a puzzle signal with this id we get destroyed
 	var/id
+
+/obj/structure/puzzle_blockade/get_save_vars()
+	return ..() + NAMEOF(src, id)
 
 /obj/structure/puzzle_blockade/Initialize(mapload)
 	. = ..()
@@ -489,7 +526,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 
 /obj/effect/puzzle_poddoor_open
 	name = "puzzle-poddoor relay"
-	desc = "activates poddoors if activated with a puzzle signal."
+	desc = "Activates pod doors if activated with a puzzle signal."
 	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 	anchored = TRUE
@@ -498,6 +535,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	var/queue_id
 	/// door id
 	var/id
+
+/obj/effect/puzzle_poddoor_open/get_save_vars()
+	return ..() + list(NAMEOF(src, queue_id), NAMEOF(src, id))
 
 /obj/effect/puzzle_poddoor_open/Initialize(mapload)
 	. = ..()
@@ -531,11 +571,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	desc = "A board filled with colored dots. What could this mean?"
 	icon = 'icons/obj/fluff/puzzle_small.dmi'
 	icon_state = "puzzle_dots"
+	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE //visible over walls
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | LAVA_PROOF
 	flags_1 = UNPAINTABLE_1
 	///The id of the puzzle we're linked to.
 	var/id
+
+/obj/effect/decal/puzzle_dots/get_save_vars()
+	return ..() + NAMEOF(src, id)
 
 /obj/effect/decal/puzzle_dots/Initialize(mapload)
 	. = ..()
@@ -551,13 +595,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 		pixel_y += round(extra_rows*(PUZZLE_DOTS_VERTICAL_OFFSET*0.5))
 		for(var/i in 1 to extra_rows)
 			var/mutable_appearance/row = mutable_appearance(icon, icon_state)
-			row.pixel_y = -i*PUZZLE_DOTS_VERTICAL_OFFSET
+			row.pixel_z = -i*PUZZLE_DOTS_VERTICAL_OFFSET
 			add_overlay(row)
 	for(var/i in 1 to pass_len)
 		var/mutable_appearance/colored_dot = mutable_appearance(icon, "puzzle_dot_single")
 		colored_dot.color = pad.digit_to_color[pass_digits[i]]
-		colored_dot.pixel_x = PUZZLE_DOTS_HORIZONTAL_OFFSET * ((i-1)%MAX_PUZZLE_DOTS_PER_ROW)
-		colored_dot.pixel_y -= CEILING((i/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)*PUZZLE_DOTS_VERTICAL_OFFSET
+		colored_dot.pixel_w = PUZZLE_DOTS_HORIZONTAL_OFFSET * ((i-1)%MAX_PUZZLE_DOTS_PER_ROW)
+		colored_dot.pixel_z -= CEILING((i/MAX_PUZZLE_DOTS_PER_ROW)-1, 1)*PUZZLE_DOTS_VERTICAL_OFFSET
 		add_overlay(colored_dot)
 
 #undef MAX_PUZZLE_DOTS_PER_ROW
@@ -570,6 +614,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	icon_state = "0"
 	///The id of the puzzle we're linked to.
 	var/puzzle_id
+
+/obj/effect/decal/cleanable/crayon/puzzle/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
 
 /obj/effect/decal/cleanable/crayon/puzzle/Initialize(mapload, main, type, e_name, graf_rot, alt_icon = null)
 	. = ..()
@@ -603,6 +650,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle/password/pin, 32)
 	icon_state = "scrap"
 	///The ID associated to the puzzle we're part of.
 	var/puzzle_id
+
+/obj/item/paper/fluff/scrambled_pass/get_save_vars()
+	return ..() + NAMEOF(src, puzzle_id)
 
 /obj/item/paper/fluff/scrambled_pass/Initialize(mapload)
 	. = ..()

@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,7 +7,9 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -141,13 +142,14 @@ export const Reflector = (props) => {
               <LabeledControls>
                 <LabeledControls.Item ml={0.5} label="Set rotation">
                   <NumberInput
+                    tickWhileDragging
                     value={rotation_angle}
                     unit="degrees"
                     minValue={0}
                     maxValue={359}
                     step={1}
                     stepPixelSize={1}
-                    onDrag={(e, value) =>
+                    onChange={(value) =>
                       act('rotate', {
                         rotation_angle: value,
                       })

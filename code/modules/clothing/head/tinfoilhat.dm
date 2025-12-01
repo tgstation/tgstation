@@ -4,10 +4,11 @@
 	icon_state = "foilhat"
 	inhand_icon_state = null
 	armor_type = /datum/armor/costume_foilhat
-	equip_delay_other = 140
+	equip_delay_other = 14 SECONDS
 	clothing_flags = ANTI_TINFOIL_MANEUVER
 	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 	var/warped = FALSE
+	interaction_flags_mouse_drop = NEED_HANDS
 
 /datum/armor/costume_foilhat
 	laser = -5
@@ -24,7 +25,7 @@
 		antimagic_flags = MAGIC_RESISTANCE_MIND, \
 		inventory_flags = ITEM_SLOT_HEAD, \
 		charges = 6, \
-		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		block_magic = CALLBACK(src, PROC_REF(drain_antimagic)), \
 		expiration = CALLBACK(src, PROC_REF(warp_up)) \
 	)
 
@@ -42,10 +43,10 @@
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
 
-/obj/item/clothing/head/costume/foilhat/MouseDrop(atom/over_object)
+/obj/item/clothing/head/costume/foilhat/mouse_drop_dragged(atom/over_object, mob/user)
 	//God Im sorry
-	if(!warped && iscarbon(usr))
-		var/mob/living/carbon/C = usr
+	if(!warped && iscarbon(user))
+		var/mob/living/carbon/C = user
 		if(src == C.head)
 			to_chat(C, span_userdanger("Why would you want to take this off? Do you want them to get into your mind?!"))
 			return
@@ -63,7 +64,7 @@
 
 /obj/item/clothing/head/costume/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
-	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
+	desc = "A badly warped up hat. Quite unlikely this will still work against any of the fictional or real dangers it used to."
 	warped = TRUE
 	clothing_flags &= ~ANTI_TINFOIL_MANEUVER
 	if(!isliving(loc) || !paranoia)
@@ -108,7 +109,7 @@
 		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
 	)
 	user.say(pick(conspiracy_line), forced=type)
-	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.set_organ_damage(BRAIN_DAMAGE_DEATH)
 	return OXYLOSS

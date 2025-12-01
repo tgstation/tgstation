@@ -153,7 +153,7 @@
 		player_mob.set_species(/datum/species/human)
 
 	var/datum/mind/new_member_mind = new_team_member.mob.mind
-	if(new_member_mind?.current)
+	if(new_member_mind)
 		player_mob.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = new_member_mind, \
@@ -171,7 +171,7 @@
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
 
-/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, params)
+/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/ctf_flag))
 		var/obj/item/ctf_flag/flag = item
 		if(flag.team != team)
@@ -221,7 +221,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/ctf_flag/LateInitialize()
-	. = ..()
 	ctf_game = GLOB.ctf_games[game_id] //Flags don't create ctf games by themselves since you can get ctf flags from christmas trees.
 
 /obj/item/ctf_flag/Destroy()
@@ -269,14 +268,14 @@
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 
-/obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
+/obj/item/ctf_flag/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/ctf_flag))
 		return ..()
 
 	var/obj/item/ctf_flag/flag = item
 	if(flag.team != team)
 		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
-		user.playsound_local(get_turf(user), 'sound/machines/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+		user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
@@ -368,7 +367,7 @@
 			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
 		balloon_alert_to_viewers(scores)
 
-/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, params)
+/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	capture(user)
 
 /obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)
@@ -404,7 +403,7 @@
 	alpha = 255
 
 /obj/structure/trap/ctf/examine(mob/user)
-	return
+	return list()
 
 /obj/structure/trap/ctf/trap_effect(mob/living/living)
 	if(!is_ctf_target(living))
@@ -434,8 +433,6 @@
 /obj/structure/barricade/security/ctf
 	name = "barrier"
 	desc = "A barrier. Provides cover in fire fights."
-	deploy_time = 0
-	deploy_message = 0
 
 /obj/structure/barricade/security/ctf/make_debris()
 	new /obj/effect/ctf/dead_barricade(get_turf(src))
@@ -464,7 +461,12 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
+
+/obj/structure/table/reinforced/ctf/wrench_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
+
+/obj/structure/table/reinforced/ctf/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1

@@ -6,7 +6,7 @@ It's quite simple: create a file ending in `.test.ts` or `.spec.ts` (usually wit
 
 ```js
 test('something', () => {
-  expect('a').toBe('a');
+	expect('a').toBe('a');
 });
 ```
 

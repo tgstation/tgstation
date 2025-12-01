@@ -1,0 +1,8 @@
+help: "Use the directional variants when possible."
+/obj/machinery/computer/security/telescreen:
+  banned_variables:
+    pixel_x:
+    pixel_y:
+    dir:
+      deny: [1, 2, 4, 8]
+    network:

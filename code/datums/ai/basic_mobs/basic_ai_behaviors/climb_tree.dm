@@ -1,6 +1,6 @@
 /datum/ai_behavior/find_and_set/valid_tree
 
-/datum/ai_behavior/find_and_set/valid_tree/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/valid_tree/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/valid_trees = list()
 	for (var/obj/structure/flora/tree/tree_target in oview(search_range, controller.pawn))
 		if(istype(tree_target, /obj/structure/flora/tree/dead)) //no died trees
@@ -22,13 +22,12 @@
 	set_movement_target(controller, target)
 
 /datum/ai_behavior/climb_tree/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/obj/structure/flora/target_tree = controller.blackboard[target_key]
 	var/mob/living/basic/living_pawn = controller.pawn
 	if(QDELETED(living_pawn)) // pawn can be null at this point
 		return
 	SEND_SIGNAL(living_pawn, COMSIG_LIVING_CLIMB_TREE, target_tree)
-	finish_action(controller, TRUE, target_key)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/climb_tree/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

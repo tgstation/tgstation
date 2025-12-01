@@ -2,6 +2,7 @@
 /datum/hallucination/nearby_fake_item
 	abstract_hallucination_parent = /datum/hallucination/nearby_fake_item
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// The icon file to draw from for left hand icons
 	var/left_hand_file
@@ -50,7 +51,9 @@
 
 /// Generates the image with the given file on the passed mob.
 /datum/hallucination/nearby_fake_item/proc/generate_fake_image(mob/living/carbon/human/holder, file)
-	return image(file, holder, image_icon_state, layer = ABOVE_MOB_LAYER)
+	var/image/fake = image(file, holder, image_icon_state, layer = ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(fake, ABOVE_GAME_PLANE, holder)
+	return fake
 
 /// Remove the image when all's said and done.
 /datum/hallucination/nearby_fake_item/proc/remove_image(mob/living/carbon/human/holder)
@@ -67,12 +70,12 @@
 	image_icon_state = "e_sword_on_red"
 
 /datum/hallucination/nearby_fake_item/e_sword/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), 'sound/weapons/saberon.ogg', 35, TRUE)
+	hallucinator.playsound_local(get_turf(holder), 'sound/items/weapons/saberon.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/e_sword/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		hallucinator.playsound_local(get_turf(holder), 'sound/weapons/saberoff.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(holder), 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/e_sword/double_bladed
@@ -89,7 +92,7 @@
 /datum/hallucination/nearby_fake_item/baton
 	left_hand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	right_hand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	image_icon_state = "baton"
+	image_icon_state = "stunbaton"
 
 /datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder, file)
 	hallucinator.playsound_local(get_turf(holder), SFX_SPARKS, 75, TRUE, -1)
@@ -115,12 +118,12 @@
 	image_icon_state = "arm_blade"
 
 /datum/hallucination/nearby_fake_item/armblade/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), 'sound/effects/blobattack.ogg', 35, TRUE)
+	hallucinator.playsound_local(get_turf(holder), 'sound/effects/blob/blobattack.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/armblade/remove_image(mob/living/carbon/human/holder)
 	if(!QDELETED(holder))
-		hallucinator.playsound_local(get_turf(holder), 'sound/effects/blobattack.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(holder), 'sound/effects/blob/blobattack.ogg', 35, TRUE)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/ttv

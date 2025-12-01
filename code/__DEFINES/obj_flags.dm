@@ -1,21 +1,37 @@
 // Flags for the obj_flags var on /obj
 
-
+/// Object has been affected by a cryptographic sequencer (EMAG) disabling it or causing other malicious effects
 #define EMAGGED (1<<0)
-#define IN_USE (1<<1) // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
-#define CAN_BE_HIT (1<<2) //can this be bludgeoned by items?
-#define DANGEROUS_POSSESSION (1<<3) //Admin possession yes/no
-#define UNIQUE_RENAME (1<<4) // can you customize the description/name of the thing?
-#define BLOCK_Z_OUT_DOWN (1<<5)  // Should this object block z falling from loc?
-#define BLOCK_Z_OUT_UP (1<<6) // Should this object block z uprise from loc?
-#define BLOCK_Z_IN_DOWN (1<<7) // Should this object block z falling from above?
-#define BLOCK_Z_IN_UP (1<<8) // Should this object block z uprise from below?
-#define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
-#define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
-#define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
-#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
-#define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
-#define NO_DECONSTRUCTION (1<<14) //! Prevent deconstruction of this object.
+/// Can this be bludgeoned by items
+#define CAN_BE_HIT (1<<1)
+/// Admin possession yes/no
+#define DANGEROUS_POSSESSION (1<<2)
+/// Can you customize the description/name of the thing
+#define UNIQUE_RENAME (1<<3)
+/// If it can be renamed, is its description excluded
+#define RENAME_NO_DESC (1<<4)
+/// Should this object block z falling from loc
+#define BLOCK_Z_OUT_DOWN (1<<5)
+/// Should this object block z uprise from loc
+#define BLOCK_Z_OUT_UP (1<<6)
+/// Should this object block z falling from above
+#define BLOCK_Z_IN_DOWN (1<<7)
+/// Should this object block z uprise from below
+#define BLOCK_Z_IN_UP (1<<8)
+/// Does this object prevent things from being built on it
+#define BLOCKS_CONSTRUCTION (1<<9)
+/// Does this object prevent same-direction things from being built on it
+#define BLOCKS_CONSTRUCTION_DIR (1<<10)
+/// Can we ignore density when building on this object (for example, directional windows and grilles)
+#define IGNORE_DENSITY (1<<11)
+/// We can reskin this item infinitely
+#define INFINITE_RESKIN (1<<12)
+/// Can this object conduct electricity
+#define CONDUCTS_ELECTRICITY (1<<13)
+/// Atoms don't spawn anything when deconstructed (they just vanish)
+#define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<14)
+/// Flag which tells an object to hang onto an support atom on late initialize. Usefull only during mapload and supported by some atoms only
+#define MOUNT_ON_LATE_INITIALIZE (1<<15)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -30,23 +46,30 @@
 #define NO_MAT_REDEMPTION (1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
 #define DROPDEL (1<<6) // When dropped, it calls qdel on itself
 #define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-#define ABSTRACT (1<<9) // for all things that are technically items but used for various different stuff <= wow thanks for the fucking insight sherlock
+/**
+ * for all things that are technically items but don't want to be treated as such, given on a case-by-case basis
+ * examples of use are hand items, omni-toolsets, non-limb limbs (hand eater, mounted chainsaw, many null rods), borg modules, bodyparts, organs, etc.
+ * This is used for general exclusion, such as preventing insertions into other items
+ * Basically, these aren't "real" items. <= wow thanks for the fucking insight sherlock
+*/
+#define ABSTRACT (1<<9)
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, is a lot worse at the job if the target is alive rather than dead
+#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, causes a lot more pain for the patient, and is more efficient in a morbid users hands
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
-#define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
-#define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
-#define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
+#define XENOMORPH_HOLDABLE (1<<15) // A Xenomorph can hold this item.
+#define NO_PIXEL_RANDOM_DROP (1<<16) //if dropped, it wont have a randomized pixel_x/pixel_y
 ///Can be equipped on digitigrade legs.
-#define IGNORE_DIGITIGRADE (1<<18)
+#define IGNORE_DIGITIGRADE (1<<17)
 /// Has contextual screentips when HOVERING OVER OTHER objects
-#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
+#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 18)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
-#define NO_BLOOD_ON_ITEM (1 << 20)
+#define NO_BLOOD_ON_ITEM (1 << 19)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
-#define SKIP_FANTASY_ON_SPAWN (1<<21)
+#define SKIP_FANTASY_ON_SPAWN (1<<20)
+/// If an item has had its /datum/element/weapon_description initialized or not.
+#define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -76,18 +99,22 @@
 #define DANGEROUS_OBJECT (1<<10)
 /// Clothes that use large icons, for applying the proper overlays like blood
 #define LARGE_WORN_ICON (1<<11)
-/// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<12)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<13)
+#define STACKABLE_HELMET_EXEMPT (1<<12)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<14)
+#define PLASMAMAN_PREVENT_IGNITION (1<<13)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<15)
+#define CASTING_CLOTHES (1<<14)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<16)
+#define INEDIBLE_CLOTHING (1<<15)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<17)
+#define HEADINTERNALS (1<<16)
+/// Prevents masks from getting adjusted from enabling internals
+#define INTERNALS_ADJUST_EXEMPT (1<<17)
+/// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
+#define CARP_STYLE_FACTOR (1<<18)
+/// Prevents clothing from losing bodyparts coverage when shredded
+#define NO_ZONE_DISABLING (1<<19)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
@@ -107,3 +134,12 @@
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)
 #define SHARP_POINTY (1<<1)
+
+/// Flags for specifically what kind of items to get in get_equipped_items
+#define INCLUDE_POCKETS (1<<0)
+#define INCLUDE_ACCESSORIES (1<<1)
+#define INCLUDE_HELD (1<<2)
+/// Include prosthetic item limbs (which are not flavoured as being equipped items)
+#define INCLUDE_PROSTHETICS (1<<3)
+/// Include items that are not "real" items, such as hand items
+#define INCLUDE_ABSTRACT (1<<4)

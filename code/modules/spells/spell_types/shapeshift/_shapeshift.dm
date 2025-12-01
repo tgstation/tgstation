@@ -121,12 +121,12 @@
 		our_pipeline = pipenets
 
 	to_chat(cast_on, span_userdanger("Casting [src] inside of [pipe_you_die_in] quickly turns you into a bloody mush!"))
-	var/obj/effect/gib_type = isalien(cast_on) ? /obj/effect/gibspawner/xeno : /obj/effect/gibspawner/generic
+	var/obj/effect/gib_type = cast_on.get_gibs_type()
 
 	for(var/obj/machinery/atmospherics/components/unary/possible_vent in range(10, get_turf(cast_on)))
 		if(length(possible_vent.parents) && possible_vent.parents[1] == our_pipeline)
 			new gib_type(get_turf(possible_vent))
-			playsound(possible_vent, 'sound/effects/reee.ogg', 75, TRUE)
+			playsound(possible_vent, 'sound/mobs/non-humanoids/frog/reee.ogg', 75, TRUE)
 
 	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "[command_name()]")
 	// Gib our caster, and make sure to leave nothing behind
@@ -141,7 +141,7 @@
 	if(QDELETED(caster))
 		return FALSE
 
-	return !caster.incapacitated()
+	return !caster.incapacitated
 
 /// Actually does the shapeshift, for the caster.
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)

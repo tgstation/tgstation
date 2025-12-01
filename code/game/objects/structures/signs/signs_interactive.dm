@@ -8,7 +8,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/clock, 32)
 /obj/structure/sign/clock/examine(mob/user)
 	. = ..()
 	. += span_info("The current CST (local) time is: [station_time_timestamp()].")
-	. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss")].")
+	. += span_info("The current TCT (galactic) time is: [time2text(world.realtime, "hh:mm:ss", 0)].")
 
 /obj/structure/sign/calendar
 	name = "wall calendar"
@@ -19,7 +19,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 
 /obj/structure/sign/calendar/examine(mob/user)
 	. = ..()
-	. += span_info("The current date is: [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR].")
+	. += span_info("The current date is: [time2text(world.realtime, "DDD, MMM DD", world.timezone)], [CURRENT_STATION_YEAR].")
 	if(length(GLOB.holidays))
 		. += span_info("Events:")
 		for(var/holidayname in GLOB.holidays)

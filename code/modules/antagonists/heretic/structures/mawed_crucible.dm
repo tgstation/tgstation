@@ -6,23 +6,35 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "crucible"
 	base_icon_state = "crucible"
-	break_sound = 'sound/hallucinations/wail.ogg'
+	break_sound = 'sound/effects/hallucinations/wail.ogg'
 	light_power = 1
 	anchored = TRUE
 	density = TRUE
 	///How much mass this currently holds
-	var/current_mass = 5
+	var/current_mass = 3
 	///Maximum amount of mass
-	var/max_mass = 5
+	var/max_mass = 3
 	///Check to see if it is currently being used.
 	var/in_use = FALSE
+	///Cooldown for the crucible to create mass from the eldritch
+	COOLDOWN_DECLARE(refill_cooldown)
 
 /obj/structure/destructible/eldritch_crucible/Initialize(mapload)
 	. = ..()
 	break_message = span_warning("[src] falls apart with a thud!")
+	START_PROCESSING(SSobj, src)
 
-/obj/structure/destructible/eldritch_crucible/deconstruct(disassembled = TRUE)
+/obj/structure/destructible/eldritch_crucible/process(seconds_per_tick)
+	if(COOLDOWN_TIMELEFT(src, refill_cooldown))
+		return
+	if(current_mass >= max_mass)
+		return
+	COOLDOWN_START(src, refill_cooldown, 30 SECONDS)
+	current_mass++
+	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
+	update_appearance(UPDATE_ICON_STATE)
 
+/obj/structure/destructible/eldritch_crucible/atom_deconstruct(disassembled = TRUE)
 	// Create a spillage if we were destroyed with leftover mass
 	if(current_mass)
 		break_message = span_warning("[src] falls apart with a thud, spilling shining extract everywhere!")
@@ -32,7 +44,7 @@
 		for(var/turf/nearby_turf as anything in get_adjacent_open_turfs(our_turf))
 			if(prob(10 * current_mass))
 				new /obj/effect/decal/cleanable/greenglow(nearby_turf)
-		playsound(our_turf, 'sound/effects/bubbles2.ogg', 50, TRUE)
+		playsound(our_turf, 'sound/effects/bubbles/bubbles2.ogg', 50, TRUE)
 
 	return ..()
 
@@ -40,6 +52,9 @@
 	. = ..()
 	if(!IS_HERETIC_OR_MONSTER(user) && !isobserver(user))
 		return
+
+	if(current_mass > 0)
+		. += span_notice("You can refill an eldritch flask with this")
 
 	if(current_mass < max_mass)
 		var/to_fill = max_mass - current_mass
@@ -58,43 +73,60 @@
 		return span_notice("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
 
-/obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
-	if(!iscarbon(user))
-		return ..()
+// no breaky herety thingy
+/obj/structure/destructible/eldritch_crucible/rust_heretic_act()
+	return
 
-	if(!IS_HERETIC_OR_MONSTER(user))
-		bite_the_hand(user)
-		return TRUE
-
-	if(istype(weapon, /obj/item/codex_cicatrix) || istype(weapon, /obj/item/melee/touch_attack/mansus_fist))
+/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
 		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
 		set_anchored(!anchored)
 		balloon_alert(user, "[anchored ? "":"un"]anchored")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/reagent_containers/cup/beaker/eldritch))
+		if(current_mass < max_mass)
+			balloon_alert(user, "not full enough!")
+			return ITEM_INTERACT_SUCCESS
+		var/obj/item/reagent_containers/cup/beaker/eldritch/to_fill = tool
+		if(to_fill.reagents.total_volume >= to_fill.reagents.maximum_volume)
+			balloon_alert(user, "flask is full!")
+			return ITEM_INTERACT_SUCCESS
+		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
+		current_mass--
+		balloon_alert(user, "refilled flask")
+		return ITEM_INTERACT_SUCCESS
 
-	if(isbodypart(weapon))
-
-		var/obj/item/bodypart/consumed = weapon
+	if(isbodypart(tool))
+		var/obj/item/bodypart/consumed = tool
 		if(!IS_ORGANIC_LIMB(consumed))
 			balloon_alert(user, "not organic!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
 		consume_fuel(user, consumed)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(isorgan(weapon))
-		var/obj/item/organ/consumed = weapon
+	if(isorgan(tool))
+		var/obj/item/organ/consumed = tool
 		if(!IS_ORGANIC_ORGAN(consumed))
 			balloon_alert(user, "not organic!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(consumed.organ_flags & ORGAN_VITAL) // Basically, don't eat organs like brains
 			balloon_alert(user, "invalid organ!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
 		consume_fuel(user, consumed)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/destructible/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -160,7 +192,7 @@
 
 	var/obj/item/spawned_pot = new spawned_type(drop_location())
 
-	playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/desecration/desecration-02.ogg', 75, TRUE)
 	visible_message(span_notice("[src]'s shining liquid drains into a flask, creating a [spawned_pot.name]!"))
 	balloon_alert(user, "potion created")
 
@@ -180,7 +212,7 @@
 	if(QDELETED(arm))
 		return
 
-	to_chat(user, span_userdanger("[src] grabs your [arm.name]!"))
+	to_chat(user, span_userdanger("[src] grabs your [arm.plaintext_zone]!"))
 	arm.dismember()
 	consume_fuel(consumed = arm)
 
@@ -214,10 +246,14 @@
 	desc = "You should never see this"
 	icon = 'icons/obj/antags/eldritch.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 	/// When a heretic examines a mawed crucible, shows a list of possible potions by name + includes this tip to explain what it does.
 	var/crucible_tip = "Doesn't do anything."
 	/// Typepath to the status effect this applies
 	var/status_effect
+	/// If you can drink the same potion while the effect is active
+	var/can_refresh = TRUE
 
 /obj/item/eldritch_potion/examine(mob/user)
 	. = ..()
@@ -234,7 +270,10 @@
 	if(!iscarbon(user))
 		return
 
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	if(!can_refresh && user.has_status_effect(status_effect))
+		return
+
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 
 	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user, span_danger("You down some of the liquid from [src]. The taste causes you to retch, and the glass vanishes."))
@@ -259,21 +298,28 @@
 
 /obj/item/eldritch_potion/crucible_soul
 	name = "brew of the crucible soul"
-	desc = "A glass bottle contianing a bright orange, translucent liquid."
+	desc = "A glass bottle containing a bright orange, translucent liquid."
 	icon_state = "crucible_soul"
 	status_effect = /datum/status_effect/crucible_soul
-	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 15 seconds."
+	crucible_tip = "Allows you to walk through walls. After expiring, you are teleported to your original location. Lasts 40 seconds."
+	can_refresh = FALSE
+
+/obj/item/eldritch_potion/crucible_soul/attack_self(mob/user)
+	if(user.has_status_effect(/datum/status_effect/crucible_soul_cooldown))
+		balloon_alert(user, "on cooldown!")
+		return TRUE
+	return ..()
 
 /obj/item/eldritch_potion/duskndawn
 	name = "brew of dusk and dawn"
-	desc = "A glass bottle contianing a dull yellow liquid. It seems to fade in and out with regularity."
+	desc = "A glass bottle containing a dull yellow liquid. It seems to fade in and out with regularity."
 	icon_state = "clarity"
 	status_effect = /datum/status_effect/duskndawn
-	crucible_tip = "Allows you to see through walls and objects. Lasts 60 seconds."
+	crucible_tip = "Allows you to see through walls and objects. Lasts 90 seconds."
 
 /obj/item/eldritch_potion/wounded
 	name = "brew of the wounded soldier"
-	desc = "A glass bottle contianing a colorless, dark liquid."
+	desc = "A glass bottle containing a colorless, dark liquid."
 	icon_state = "marshal"
 	status_effect = /datum/status_effect/marshal
 	crucible_tip = "Causes all wounds you are experiencing to begin to heal you. Fractures, sprains, cuts, and punctures will heal bruises, \

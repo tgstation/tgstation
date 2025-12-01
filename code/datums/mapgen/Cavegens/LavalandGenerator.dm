@@ -10,6 +10,7 @@
 		/mob/living/basic/mining/bileworm = 20,
 		/mob/living/basic/mining/brimdemon = 20,
 		/mob/living/basic/mining/lobstrosity/lava = 20,
+		/obj/effect/spawner/random/lavaland_mob/raptor = 15,
 		/mob/living/basic/mining/goldgrub = 10,
 		/obj/structure/spawner/lavaland = 2,
 		/obj/structure/spawner/lavaland/goliath = 3,
@@ -28,11 +29,12 @@
 
 	///Note that this spawn list is also in the icemoon generator
 	weighted_feature_spawn_list = list(
-		/obj/structure/geyser/hollowwater = 10,
-		/obj/structure/geyser/plasma_oxide = 10,
-		/obj/structure/geyser/protozine = 10,
+		/obj/structure/geyser/hollowwater = 8,
+		/obj/structure/geyser/plasma_oxide = 8,
+		/obj/structure/geyser/protozine = 8,
 		/obj/structure/geyser/random = 2,
-		/obj/structure/geyser/wittel = 10,
+		/obj/structure/geyser/wittel = 8,
+		/obj/structure/geyser/chiral_buffer = 8,
 		/obj/structure/ore_vent/boss = 1,
 	)
 

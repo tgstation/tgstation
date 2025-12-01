@@ -7,6 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	resistance_flags = FIRE_PROOF
+	custom_materials = null
 	var/anomaly_type = /obj/effect/anomaly
 
 /obj/item/assembly/signaler/anomaly/receive_signal(datum/signal/signal)
@@ -20,15 +21,16 @@
 		A.anomalyNeutralize()
 	return TRUE
 
-/obj/item/assembly/signaler/anomaly/manual_suicide(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user]'s [src] is reacting to the radio signal, warping [user.p_their()] body!"))
+/obj/item/assembly/signaler/anomaly/manual_suicide(datum/mind/suicidee)
+	var/mob/living/user = suicidee.current
+	user.visible_message(span_suicide("[user]'s [name] is reacting to the radio signal, warping [user.p_their()] body!"))
 	user.set_suicide(TRUE)
 	user.gib(DROP_ALL_REMAINS)
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return
 
-/obj/item/assembly/signaler/anomaly/attackby(obj/item/I, mob/user, params)
+/obj/item/assembly/signaler/anomaly/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		to_chat(user, span_notice("Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code]."))
 	return ..()
@@ -81,6 +83,11 @@
 	desc = "The neutralized core of a dimensional anomaly. Objects reflected on its surface don't look quite right. It'd probably be valuable for research."
 	icon_state = "dimensional_core"
 	anomaly_type = /obj/effect/anomaly/dimensional
+
+/obj/item/assembly/signaler/anomaly/dimensional/Initialize(mapload)
+	. = ..()
+	var/static/list/recipes = list(/datum/crafting_recipe/dimensional_bombcore)
+	AddElement(/datum/element/slapcrafting, recipes)
 
 /obj/item/assembly/signaler/anomaly/ectoplasm
 	name = "\improper ectoplasm anomaly core"

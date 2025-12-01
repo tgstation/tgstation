@@ -3,6 +3,7 @@
 	lefthand_file = 'icons/mob/inhands/items/sheets_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/sheets_righthand.dmi'
 	icon_state = "sheet-metal_3"
+	abstract_type = /obj/item/stack/sheet
 	full_w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	throwforce = 5
@@ -13,10 +14,17 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "smash")
 	novariants = FALSE
 	material_flags = MATERIAL_EFFECTS
-	var/sheettype = null //this is used for girders in the creation of walls/false walls
-	var/point_value = 0 //turn-in value for the gulag stacker - loosely relative to its rarity.
-	///What type of wall does this sheet spawn
-	var/walltype
+	table_type = /obj/structure/table/greyscale
+	pickup_sound = 'sound/items/handling/materials/metal_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
+	sound_vary = TRUE
+	usable_for_construction = TRUE
+	/// text string used to find typepaths used in door and wall (false and tram too) construction for door assemblies and girders respectively
+	var/construction_path_type = null
+	///If true, this is worth points in the gulag labour stacker
+	var/gulag_valid = FALSE
+	///Set to true if this is vended from a material storage
+	var/manufactured = FALSE
 	/// whether this sheet can be sniffed by the material sniffer
 	var/sniffable = FALSE
 
@@ -32,10 +40,23 @@
 		GLOB.sniffable_sheets -= src
 	return ..()
 
+/obj/item/stack/sheet/examine(mob/user)
+	. = ..()
+	if (manufactured && gulag_valid)
+		. += "It has been embossed with a manufacturer's mark of guaranteed quality."
+
 /obj/item/stack/sheet/add(_amount)
 	. = ..()
 	if(sniffable && amount >= 10 && is_station_level(z))
 		GLOB.sniffable_sheets |= src
+
+/obj/item/stack/sheet/merge(obj/item/stack/sheet/target_stack, limit)
+	. = ..()
+	manufactured = manufactured && target_stack.manufactured
+
+/obj/item/stack/sheet/copy_evidences(obj/item/stack/sheet/from)
+	. = ..()
+	manufactured = from.manufactured
 
 /// removing from sniffable handled by the sniffer itself when it checks for targets
 
@@ -43,23 +64,32 @@
  * Facilitates sheets being smacked on the floor
  *
  * This is used for crafting by hitting the floor with items.
- * The inital use case is glass sheets breaking in to shards when the floor is hit.
+ * The initial use case is glass sheets breaking in to shards when the floor is hit.
  * Args:
+ * * target: The floor that was hit
  * * user: The user that did the action
- * * params: paramas passed in from attackby
+ * * modifiers: The modifiers passed in from attackby
  */
-/obj/item/stack/sheet/proc/on_attack_floor(mob/user, params)
+/obj/item/stack/sheet/proc/on_attack_floor(turf/open/floor/target, mob/user, list/modifiers)
 	var/list/shards = list()
 	for(var/datum/material/mat in custom_materials)
 		if(mat.shard_type)
-			var/obj/item/new_shard = new mat.shard_type(user.loc)
-			new_shard.add_fingerprint(user)
-			shards += "\a [new_shard.name]"
+			shards += mat.shard_type
 	if(!shards.len)
 		return FALSE
-	user.do_attack_animation(src, ATTACK_EFFECT_BOOP)
-	playsound(src, SFX_SHATTER, 70, TRUE)
-	use(1)
-	user.visible_message(span_notice("[user] shatters the sheet of [name] on the floor, leaving [english_list(shards)]."), \
-		span_notice("You shatter the sheet of [name] on the floor, leaving [english_list(shards)]."))
+	if(!use(1))
+		to_chat(user, is_cyborg ? span_warning("There is not enough material in the synthesizer to produce a shard!") : span_warning("Somehow, there is not enough of [src] to shatter!"))
+		if(!is_cyborg)
+			stack_trace("A stack of sheet material was attempted to be shattered into shards while having less than 1 sheets remaining.")
+		return FALSE
+	user.do_attack_animation(target, ATTACK_EFFECT_BOOP)
+	playsound(target, SFX_SHATTER, 70, TRUE)
+	var/list/shards_created = list()
+	for(var/shard_to_create in shards)
+		var/obj/item/new_shard = new shard_to_create(target)
+		new_shard.add_fingerprint(user)
+		shards_created += "[new_shard.name]"
+	user.visible_message(span_notice("[user] shatters the sheet of [name] on [target], leaving [english_list(shards_created)]."), \
+		span_notice("You shatter the sheet of [name] on [target], leaving [english_list(shards_created)]."))
 	return TRUE
+

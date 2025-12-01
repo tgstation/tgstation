@@ -1,53 +1,64 @@
 @font-face {
-    font-family: "tgfont";
-    src: url("./tgfont.woff2?ac4105718bed41e8015b97ba87c9ec71") format("woff2"),
-url("./tgfont.eot?ac4105718bed41e8015b97ba87c9ec71#iefix") format("embedded-opentype");
+  font-family: 'tgfont';
+  src: url('tgfont.woff2?t=1747971548188') format('woff2');
 }
 
-i[class^="tg-"]:before, i[class*=" tg-"]:before {
-    font-family: tgfont !important;
-    font-style: normal;
-    font-weight: normal !important;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+[class^='tg-'],
+[class*=' tg-'] {
+  font-family: 'tgfont' !important;
+  font-size: undefined;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.tg-air-tank-slash:before {
-    content: "\f101";
+:root {
+  --tg-air-tank-slash: '\ea01';
+  --tg-air-tank: '\ea02';
+  --tg-bad-touch: '\ea03';
+  --tg-image-minus: '\ea04';
+  --tg-image-plus: '\ea05';
+  --tg-nanotrasen-logo: '\ea06';
+  --tg-non-binary: '\ea07';
+  --tg-prosthetic-full: '\ea08';
+  --tg-prosthetic-leg: '\ea09';
+  --tg-sound-minus: '\ea0a';
+  --tg-sound-plus: '\ea0b';
+  --tg-syndicate-logo: '\ea0c';
 }
-.tg-air-tank:before {
-    content: "\f102";
+.tg-air-tank-slash::before {
+  content: var(--tg-air-tank-slash);
 }
-.tg-bad-touch:before {
-    content: "\f103";
+.tg-air-tank::before {
+  content: var(--tg-air-tank);
 }
-.tg-image-minus:before {
-    content: "\f104";
+.tg-bad-touch::before {
+  content: var(--tg-bad-touch);
 }
-.tg-image-plus:before {
-    content: "\f105";
+.tg-image-minus::before {
+  content: var(--tg-image-minus);
 }
-.tg-nanotrasen-logo:before {
-    content: "\f106";
+.tg-image-plus::before {
+  content: var(--tg-image-plus);
 }
-.tg-non-binary:before {
-    content: "\f107";
+.tg-nanotrasen-logo::before {
+  content: var(--tg-nanotrasen-logo);
 }
-.tg-prosthetic-full:before {
-    content: "\f108";
+.tg-non-binary::before {
+  content: var(--tg-non-binary);
 }
-.tg-prosthetic-leg:before {
-    content: "\f109";
+.tg-prosthetic-full::before {
+  content: var(--tg-prosthetic-full);
 }
-.tg-sound-minus:before {
-    content: "\f10a";
+.tg-prosthetic-leg::before {
+  content: var(--tg-prosthetic-leg);
 }
-.tg-sound-plus:before {
-    content: "\f10b";
+.tg-sound-minus::before {
+  content: var(--tg-sound-minus);
 }
-.tg-syndicate-logo:before {
-    content: "\f10c";
+.tg-sound-plus::before {
+  content: var(--tg-sound-plus);
+}
+.tg-syndicate-logo::before {
+  content: var(--tg-syndicate-logo);
 }

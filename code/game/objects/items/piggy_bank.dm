@@ -4,7 +4,7 @@
  */
 /obj/item/piggy_bank
 	name = "piggy bank"
-	desc = "A pig-shaped money container made of porkelain, oink. <i> Do not throw.</i>" //pun very intended.
+	desc = "A pig-shaped money container made of porkelain, oink. <i>Do not throw.</i>" //pun very intended.
 	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "piggy_bank"
 	max_integrity = 8
@@ -20,6 +20,8 @@
 	var/datum/callback/persistence_cb
 	///How much dosh can this piggy bank hold.
 	var/maximum_value = PAYCHECK_COMMAND * 20
+	///A limit to much dosh can you put inside this piggy bank each round. If 0, there's no limit. Only applies to persistent piggies.
+	var/maximum_savings_per_shift = 0
 	///How much dosh this piggy bank spawns with.
 	var/initial_value = 0
 
@@ -47,10 +49,40 @@
 	SSticker.OnRoundend(persistence_cb)
 
 	if(initial_value && initial_value + calculate_dosh_amount() <= maximum_value)
-		new /obj/item/holochip(src, initial_value)
+		var/obj/item/holochip/chip = locate() in src
+		if(!chip)
+			new /obj/item/holochip(src, initial_value)
+		else
+			chip.credits += initial_value
+			chip.update_appearance()
+
+	if(maximum_savings_per_shift)
+		maximum_value = calculate_dosh_amount() + maximum_savings_per_shift
 
 /obj/item/piggy_bank/proc/save_cash()
+	sanitize_piggy_bank_contents_len()
 	SSpersistence.save_piggy_bank(src)
+
+#define MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH 35
+
+///This prevents the piggy bank from becoming laggy as hell if broken with hundred upon hundreds of chips inside it.
+/obj/item/piggy_bank/proc/sanitize_piggy_bank_contents_len()
+	var/contents_len = length(contents)
+	if(contents_len <= MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH)
+		return
+	// that +1 is to make space for the holochip with the collected amount
+	var/iterations = contents_len + 1 - MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH
+	var/creds_amount = 0
+	for(var/i in 1 to iterations)
+		var/obj/item/money = pick(contents)
+		if(!istype(money)) // Very barebone safety for somethig that shouldn't happen just in case
+			continue // Yes, this means we lose an iteration, the code is that simple.
+		creds_amount += money.get_item_credit_value()
+		qdel(money)
+	if(creds_amount)
+		new /obj/item/holochip(src, creds_amount)
+
+#undef MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH
 
 /obj/item/piggy_bank/Destroy()
 	if(persistence_cb)
@@ -58,7 +90,7 @@
 		persistence_cb = null
 	return ..()
 
-/obj/item/piggy_bank/deconstruct(disassembled = TRUE)
+/obj/item/piggy_bank/atom_deconstruct(disassembled = TRUE)
 	for(var/obj/item/thing as anything in contents)
 		thing.forceMove(loc)
 	//Smashing the piggy after the round is over doesn't count.
@@ -92,7 +124,7 @@
 		if(95 to INFINITY)
 			balloon_alert(user, "brimming with cash")
 
-/obj/item/piggy_bank/attackby(obj/item/item, mob/user, params)
+/obj/item/piggy_bank/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	var/creds_value = item.get_item_credit_value()
 	if(isnull(creds_value))
 		return ..()
@@ -107,6 +139,7 @@
 		balloon_alert(user, "stuck in your hands!")
 	else
 		balloon_alert(user, "inserted [creds_value] creds")
+		sanitize_piggy_bank_contents_len()
 	return TRUE
 
 ///Returns the total amount of credits that its contents amount to.
@@ -119,6 +152,9 @@
 /obj/item/piggy_bank/museum
 	name = "Pigston Swinelord VI"
 	desc = "The museum's mascot piggy bank and favorite embezzler, known to carry donations between shifts without paying taxes. The space IRS hates him."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/piggy_bank/museum"
+	post_init_icon_state = "piggy_bank"
 	persistence_id = "museum_piggy"
 	greyscale_colors = COLOR_PINK
 	maximum_value = PAYCHECK_COMMAND * 100
@@ -127,3 +163,20 @@
 /obj/item/piggy_bank/museum/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/areabound) //do not steal.
+
+/obj/item/piggy_bank/vault
+	name = "vault piggy bank"
+	desc = "A pig-shaped money container made of porkelain, containing the station's emergency funds carried between shifts, oink. <i>Do not throw.</i>"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/piggy_bank/vault"
+	post_init_icon_state = "piggy_bank"
+	persistence_id = "vault_piggy"
+	greyscale_colors = COLOR_LIGHT_ORANGE
+	maximum_value = PAYCHECK_COMMAND * 33
+	initial_value = PAYCHECK_CREW //it takes about 66 shifts for it to hit its max value on its own.
+	maximum_savings_per_shift = PAYCHECK_COMMAND * 16 //and 2 if you actively use it.
+
+/obj/item/piggy_bank/vault/Initialize(mapload)
+	. = ..()
+	//one piggy bank should exist, preferibly inside the vault's safe.
+	REGISTER_REQUIRED_MAP_ITEM(1, 1)

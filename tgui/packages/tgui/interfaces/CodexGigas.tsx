@@ -1,5 +1,6 @@
+import { Button, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -92,7 +93,7 @@ const Prefixes = (props) => {
           key={prefix.toLowerCase()}
           content={prefix}
           disabled={currentSection !== 1}
-          onClick={() => act(prefix + ' ')}
+          onClick={() => act(`${prefix} `)}
         />
       ))}
     </LabeledList.Item>
@@ -146,7 +147,7 @@ const Suffixes = (props) => {
           key={suffix.toLowerCase()}
           content={suffix}
           disabled={currentSection !== 4}
-          onClick={() => act(' ' + suffix)}
+          onClick={() => act(` ${suffix}`)}
         />
       ))}
     </LabeledList.Item>

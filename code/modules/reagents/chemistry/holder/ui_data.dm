@@ -171,7 +171,7 @@
 			has_product = FALSE
 			var/list/names = splittext("[reaction.type]", "/")
 			var/product_name = names[names.len]
-			data["reagent_mode_recipe"] = list("name" = product_name, "id" = reaction.type, "hasProduct" = has_product, "reagentCol" = "#FFFFFF", "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = 1, "subReactIndex" = 1)
+			data["reagent_mode_recipe"] = list("name" = product_name, "id" = reaction.type, "hasProduct" = has_product, "reagentCol" = COLOR_WHITE, "thermodynamics" = generate_thermodynamic_profile(reaction), "explosive" = generate_explosive_profile(reaction), "lowerpH" = reaction.optimal_ph_min, "upperpH" = reaction.optimal_ph_max, "thermics" = determine_reaction_thermics(reaction), "thermoUpper" = reaction.rate_up_lim, "minPurity" = reaction.purity_min, "inversePurity" = "N/A", "tempMin" = reaction.required_temp, "explodeTemp" = reaction.overheat_temp, "reqContainer" = container_name, "subReactLen" = 1, "subReactIndex" = 1)
 
 		//If we do have a product then we find it
 		else
@@ -257,27 +257,8 @@
 	//Use GLOB list - saves processing
 	data["master_reaction_list"] = GLOB.chemical_reactions_results_lookup_list
 	data["bitflags"] = list()
-	data["bitflags"]["BRUTE"] = REACTION_TAG_BRUTE
-	data["bitflags"]["BURN"] = REACTION_TAG_BURN
-	data["bitflags"]["TOXIN"] = REACTION_TAG_TOXIN
-	data["bitflags"]["OXY"] = REACTION_TAG_OXY
-	data["bitflags"]["HEALING"] = REACTION_TAG_HEALING
-	data["bitflags"]["DAMAGING"] = REACTION_TAG_DAMAGING
-	data["bitflags"]["EXPLOSIVE"] = REACTION_TAG_EXPLOSIVE
-	data["bitflags"]["OTHER"] = REACTION_TAG_OTHER
-	data["bitflags"]["DANGEROUS"] = REACTION_TAG_DANGEROUS
-	data["bitflags"]["EASY"] = REACTION_TAG_EASY
-	data["bitflags"]["MODERATE"] = REACTION_TAG_MODERATE
-	data["bitflags"]["HARD"] = REACTION_TAG_HARD
-	data["bitflags"]["ORGAN"] = REACTION_TAG_ORGAN
-	data["bitflags"]["DRINK"] = REACTION_TAG_DRINK
-	data["bitflags"]["FOOD"] = REACTION_TAG_FOOD
-	data["bitflags"]["SLIME"] = REACTION_TAG_SLIME
-	data["bitflags"]["DRUG"] = REACTION_TAG_DRUG
-	data["bitflags"]["UNIQUE"] = REACTION_TAG_UNIQUE
-	data["bitflags"]["CHEMICAL"] = REACTION_TAG_CHEMICAL
-	data["bitflags"]["PLANT"] = REACTION_TAG_PLANT
-	data["bitflags"]["COMPETITIVE"] = REACTION_TAG_COMPETITIVE
+	for(var/readable_flag, real_flag in REACTION_TAG_READABLE)
+		data["bitflags"][readable_flag] = real_flag
 
 	return data
 
@@ -297,7 +278,7 @@
 	var/datum/chemical_reaction/reaction = sub_reactions[ui_reaction_index]
 	return reaction.type
 
-/datum/reagents/ui_act(action, params)
+/datum/reagents/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -407,5 +388,12 @@
 		if("toggle_tag_competitive")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_COMPETITIVE
 			return TRUE
+		if("toggle_tag_component")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_COMPONENT
+			return TRUE
+		if("toggle_tag_active")
+			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_ACTIVE
+			return TRUE
+
 		if("update_ui")
 			return TRUE

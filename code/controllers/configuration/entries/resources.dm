@@ -6,7 +6,7 @@
 
 /datum/config_entry/string/asset_transport
 /datum/config_entry/string/asset_transport/ValidateAndSet(str_val)
-	return (lowertext(str_val) in list("simple", "webroot")) && ..(lowertext(str_val))
+	return (LOWER_TEXT(str_val) in list("simple", "webroot")) && ..(LOWER_TEXT(str_val))
 
 /datum/config_entry/string/asset_cdn_webroot
 	protection = CONFIG_ENTRY_LOCKED
@@ -28,3 +28,7 @@
 	if (str_var && str_var[length(str_var)] != "/")
 		str_var += "/"
 	return ..(str_var)
+
+/datum/config_entry/string/storage_cdn_iframe
+	protection = CONFIG_ENTRY_LOCKED
+	default = "https://tgstation.github.io/byond-client-storage/iframe.html"

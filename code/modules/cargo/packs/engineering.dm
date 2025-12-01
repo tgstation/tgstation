@@ -76,7 +76,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/inducer/orderable = 2)
 	crate_name = "inducer crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/closet/crate/nakamura
 
 /datum/supply_pack/engineering/pacman
 	name = "P.A.C.M.A.N Generator Crate"
@@ -86,13 +86,13 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/machinery/power/port_gen/pacman)
 	crate_name = "\improper PACMAN generator crate"
-	crate_type = /obj/structure/closet/crate/engineering/electrical
+	crate_type = /obj/structure/closet/crate/nakamura
 
 /datum/supply_pack/engineering/power
 	name = "Power Cell Crate"
 	desc = "Looking for power overwhelming? Look no further. Contains three high-voltage power cells."
 	cost = CARGO_CRATE_VALUE * 3
-	contains = list(/obj/item/stock_parts/cell/high = 3)
+	contains = list(/obj/item/stock_parts/power_store/cell/high = 3)
 	crate_name = "power cell crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -103,10 +103,9 @@
 	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_CE
 	access_view = ACCESS_CE
-	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst/cargo)
+	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
-	special = TRUE
 
 /datum/supply_pack/engineering/tools
 	name = "Toolbox Crate"
@@ -199,7 +198,6 @@
 	desc = "Protect the very existence of this station with these Anti-Meteor defenses. \
 		Contains three Shield Generator Satellites."
 	cost = CARGO_CRATE_VALUE * 6
-	special = TRUE
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/machinery/satellite/meteor_shield = 3)
 	crate_name= "shield sat crate"
@@ -209,11 +207,18 @@
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
 	cost = CARGO_CRATE_VALUE * 10
-	special = TRUE
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
 
+/datum/supply_pack/engineering/ceturtlenecks
+	name = "Chief Engineer Turtlenecks"
+	desc = "Contains the CE's turtleneck and turtleneck skirt."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_CE
+	contains = list(/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck,
+					/obj/item/clothing/under/rank/engineering/chief_engineer/turtleneck/skirt,
+				)
 
 /// Engine Construction
 
@@ -319,4 +324,23 @@
 		/obj/item/paper/fluff/radiation_nebula = 1,
 	)
 	crate_name = "radioactive nebula shielding (IMPORTANT)"
+	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/portagrav
+	name = "Portable Gravity Unit Crate"
+	desc = "Contains a portable gravity unit, to make the clown float into the ceiling."
+	cost = CARGO_CRATE_VALUE * 4
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/machinery/power/portagrav = 1)
+	crate_name = "portable gravity unit crate"
+	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/golfcart
+	name = "Golf Cart Parts Kit Crate"
+	desc = "Contains the parts to build a cart intended for moving heavy machinery and cargo across the station. \
+		Nanotrasen assumes no liability for carts operated as 'party wagons'."
+	cost = CARGO_CRATE_VALUE * 11
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/item/golfcart_kit = 1, /obj/item/key/golfcart = 2, /obj/item/stock_parts/power_store/cell/lead = 1)
+	crate_name = "golf cart parts kit"
 	crate_type = /obj/structure/closet/crate/engineering

@@ -89,22 +89,22 @@
 		return
 	to_chat(user, span_notice("You link all parts toghether."))
 	active = TRUE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	linked_interface.active = TRUE
-	linked_interface.update_appearance()
+	linked_interface.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_interface, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_input.active = TRUE
-	linked_input.update_appearance()
+	linked_input.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_input, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_output.active = TRUE
-	linked_output.update_appearance()
+	linked_output.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_output, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	linked_moderator.active = TRUE
-	linked_moderator.update_appearance()
+	linked_moderator.update_appearance(UPDATE_ICON)
 	RegisterSignal(linked_moderator, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
-		corner.update_appearance()
+		corner.update_appearance(UPDATE_ICON)
 		RegisterSignal(corner, COMSIG_QDELETING, PROC_REF(unregister_signals))
 	soundloop = new(src, TRUE)
 	soundloop.volume = 5
@@ -138,27 +138,27 @@
 	if(!active)
 		return
 	active = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	if(linked_interface)
 		linked_interface.active = FALSE
-		linked_interface.update_appearance()
+		linked_interface.update_appearance(UPDATE_ICON)
 		linked_interface = null
 	if(linked_input)
 		linked_input.active = FALSE
-		linked_input.update_appearance()
+		linked_input.update_appearance(UPDATE_ICON)
 		linked_input = null
 	if(linked_output)
 		linked_output.active = FALSE
-		linked_output.update_appearance()
+		linked_output.update_appearance(UPDATE_ICON)
 		linked_output = null
 	if(linked_moderator)
 		linked_moderator.active = FALSE
-		linked_moderator.update_appearance()
+		linked_moderator.update_appearance(UPDATE_ICON)
 		linked_moderator = null
 	if(corners.len)
 		for(var/obj/machinery/hypertorus/corner/corner in corners)
 			corner.active = FALSE
-			corner.update_appearance()
+			corner.update_appearance(UPDATE_ICON)
 		corners = list()
 	QDEL_NULL(soundloop)
 
@@ -214,9 +214,9 @@
 /**
  * Infrequently plays accent sounds, and adjusts main loop parameters
  */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience()
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/play_ambience(seconds_per_tick)
 	// We play delam/neutral sounds at a rate determined by power and critical_threshold_proximity
-	if(last_accent_sound < world.time && prob(20))
+	if(last_accent_sound < world.time && SPT_PROB(10, seconds_per_tick))
 		var/aggression = min(((critical_threshold_proximity / 800) * ((power_level) / 5)), 1.0) * 100
 		if(critical_threshold_proximity >= 300)
 			playsound(src, SFX_HYPERTORUS_MELTING, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
@@ -301,13 +301,13 @@
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/alarm()
 	switch(get_status())
 		if(HYPERTORUS_MELTING)
-			playsound(src, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			playsound(src, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(HYPERTORUS_EMERGENCY)
-			playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(src, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_DANGER)
-			playsound(src, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(src, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(HYPERTORUS_WARNING)
-			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
+			playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 75)
 
 /**
  * Getter for the machine integrity
@@ -330,7 +330,7 @@
 	var/obj/machinery/power/apc/apc = area.apc
 	if (!apc)
 		return 0
-	var/obj/item/stock_parts/cell/cell = apc.cell
+	var/obj/item/stock_parts/power_store/cell = apc.cell
 	if (!cell)
 		return 0
 	return cell.percent()
@@ -413,9 +413,9 @@
 	var/critical = selected_fuel.meltdown_flags & HYPERTORUS_FLAG_CRITICAL_MELTDOWN
 	if(critical)
 		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
-				Get as far away as possible from the reactor or find a way to shut it down.", "Alert", 'sound/misc/notice3.ogg')
+				Get as far away as possible from the reactor or find a way to shut it down.", "Alert", 'sound/announcer/notice/notice3.ogg')
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
-	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+	radio.talk_into(src, speaking, common_channel)
 
 	notify_ghosts(
 		"The [src] has begun melting down!",
@@ -430,7 +430,7 @@
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
 			final_countdown = FALSE
 			return
-		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
+		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individually
 			sleep(1 SECONDS)
 			continue
 		else if(i > 50)
@@ -560,7 +560,7 @@
 			epicenter = loc,
 			heavy_range = critical ? emp_heavy_size * 2 : emp_heavy_size,
 			light_range = critical ? emp_light_size * 2 : emp_heavy_size,
-			log = TRUE
+			emp_source = src
 			)
 
 	qdel(src)
@@ -569,18 +569,27 @@
  * HFR cracking related procs
  */
 
+/**
+ * Checks for any hypertorus part that is cracked and returns it if found, otherwise returns null.
+ */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
 		if(part.cracked)
-			return TRUE
-	return FALSE
+			return part
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
+/**
+ * Causes a random hypertorus part in machine_parts to become cracked and update their appearance.
+ * Returns the hypertorus part.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack() as /obj/machinery/atmospherics/components/unary/hypertorus
 	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
 	part.cracked = TRUE
-	part.update_appearance()
+	part.update_appearance(UPDATE_ICON)
 	return part
 
+/**
+ * Takes a ratio portion of target_mix and moves it to the origin's location's air.
+ */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/spill_gases(obj/origin, datum/gas_mixture/target_mix, ratio)
 	var/datum/gas_mixture/remove_mixture = target_mix.remove_ratio(ratio)
 	var/turf/origin_turf = origin.loc
@@ -588,8 +597,12 @@
 		return
 	origin_turf.assume_air(remove_mixture)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(seconds_per_tick)
+/**
+ * Processes leaking from moderator hypercriticality.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_moderator_overflow(seconds_per_tick)
 	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
+	// Processing of a preexisting crack if any.
 	if (cracked_part)
 		// We have an existing crack
 		var/leak_rate
@@ -607,6 +620,7 @@
 		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** seconds_per_tick)
 		return
 
+	// No crack. Check for conditions to cause a leak and create a crack if possible.
 	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
 		return
 	cracked_part = create_crack()

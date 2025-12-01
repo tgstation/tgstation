@@ -9,6 +9,7 @@
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
+	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	use_power = NO_POWER_USE
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 0
@@ -54,10 +55,21 @@
 	var/self_sustaining = FALSE
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
+	///Whether the plant is currently being pollinated or polinating the nearby plants
+	var/being_pollinated = FALSE
+	///The light level on the tray tile
+	var/light_level = 0
+	///our snail overlay, if any
+	var/obj/effect/overlay/vis_effect/snail/our_snail
+	///Flags to indicate special tray type behaviours.
+	var/tray_flags = HYDROPONIC
+	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
+	var/plant_offset_y = 0
+
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
-	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
+	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF ITS MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(maxnutri, INJECTABLE)
 	if(mapload)
 		reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, max(maxnutri / 2, 10)) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
@@ -67,7 +79,6 @@
 	var/static/list/hovering_item_typechecks = list(
 		/obj/item/plant_analyzer = list(
 			SCREENTIP_CONTEXT_LMB = "Scan tray stats",
-			SCREENTIP_CONTEXT_RMB = "Scan tray chemicals"
 		),
 		/obj/item/cultivator = list(
 			SCREENTIP_CONTEXT_LMB = "Remove weeds",
@@ -105,16 +116,16 @@
 		if(HAS_SILICON_ACCESS(user))
 			return NONE
 
+		context[SCREENTIP_CONTEXT_RMB] = "Empty nutrients"
+
 		switch(plant_status)
 			if(HYDROTRAY_PLANT_DEAD)
 				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
 			if(HYDROTRAY_PLANT_HARVESTABLE)
 				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
-				return CONTEXTUAL_SCREENTIP_SET
 
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
@@ -138,8 +149,8 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	// Edibles and pills can be composted.
-	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
+	// Edibles can be composted (most of the times).
+	if(IS_EDIBLE(held_item) && HAS_TRAIT(held_item, TRAIT_UNCOMPOSTABLE))
 		context[SCREENTIP_CONTEXT_LMB] = "Compost"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -155,6 +166,11 @@
 	name = "hydroponics tray"
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
+
+/obj/machinery/hydroponics/constructable/fullupgrade
+	name = "deluxe hydroponics tray"
+	desc = "A basin used to grown plants in, packed full of cutting-edge technology."
+	circuit = /obj/item/circuitboard/machine/hydroponics/fullupgrade
 
 /obj/machinery/hydroponics/constructable/Initialize(mapload)
 	. = ..()
@@ -196,14 +212,25 @@
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
 		QDEL_NULL(myseed)
+	remove_shared_particles(/particles/pollen)
 	return ..()
 
 /obj/machinery/hydroponics/Exited(atom/movable/gone)
 	. = ..()
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
+	if(!istype(gone, /obj/item/mob_holder/snail))
+		return
+	var/obj/item/mob_holder/snail_object = gone
+	if(snail_object.held_mob)
+		UnregisterSignal(snail_object.held_mob, list(
+			COMSIG_LIVING_DEATH,
+			COMSIG_MOVABLE_ATTEMPTED_MOVE,
+		))
+	QDEL_NULL(our_snail)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
+
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!user.combat_mode)
 		// handle opening the panel
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -248,7 +275,7 @@
 		// So we'll let it leak in, and move the water over.
 		set_recipient_reagents_holder(nutri_reagents)
 		reagents = nutri_reagents
-		process_request(dir = dir)
+		process_request(dir = dir, round_robin = FALSE)
 
 		// Move the leaked water from nutrients to... water
 		var/leaking_water_amount = nutri_reagents.get_reagent_amount(/datum/reagent/water)
@@ -266,7 +293,7 @@
 		process_request(
 			amount = extra_water_to_gather,
 			reagent = /datum/reagent/water,
-			dir = dir,
+			dir = dir
 		)
 
 	// Now transfer all remaining water in that buffer and clear it out.
@@ -279,20 +306,21 @@
 	// Plumbing pauses if reagents is full.. so let's cheat and make sure it ticks unless both trays are happy
 	reagents = hydro_parent.waterlevel < hydro_parent.maxwater ? water_reagents : nutri_reagents
 
-/obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
+/obj/machinery/hydroponics/bullet_act(obj/projectile/proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(Proj , /obj/projectile/energy/flora/mut))
+	if(istype(proj, /obj/projectile/energy/flora/mut))
 		mutate()
-	else if(istype(Proj , /obj/projectile/energy/flora/yield))
-		return myseed.bullet_act(Proj)
-	else if(istype(Proj , /obj/projectile/energy/flora/evolution))
+		return BULLET_ACT_HIT
+	if(istype(proj, /obj/projectile/energy/flora/yield))
+		return myseed.projectile_hit(proj)
+	if(istype(proj, /obj/projectile/energy/flora/evolution))
 		if(myseed)
 			if(LAZYLEN(myseed.mutatelist))
 				myseed.set_instability(myseed.instability/2)
 		mutatespecie()
-	else
-		return ..()
+		return BULLET_ACT_HIT
+	return ..()
 
 /obj/machinery/hydroponics/power_change()
 	. = ..()
@@ -301,6 +329,9 @@
 
 /obj/machinery/hydroponics/process(seconds_per_tick)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
+
+	if(!isnull(our_snail))
+		handle_snail()
 
 	if(self_sustaining)
 		if(powered())
@@ -311,14 +342,18 @@
 			set_self_sustaining(FALSE)
 			visible_message(span_warning("[name]'s auto-grow functionality shuts off!"))
 
+	if(isturf(loc))
+		var/turf/currentTurf = loc
+		light_level = currentTurf.get_lumcount()
+
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
 		if(myseed && plant_status != HYDROTRAY_PLANT_DEAD)
-			// Advance age
-			age++
+			var/is_fungus = myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+			// Advance age, if planted in mushroom friendly soil and we are a mushroom we mature 40% faster.
+			age +=  1 * (is_fungus && (tray_flags & FAST_MUSHROOMS)) ? FAST_MUSH_MODIFIER : 1
 			if(age < myseed.maturation)
 				lastproduce = age
-
 			needs_update = TRUE
 
 
@@ -330,25 +365,25 @@
 			else
 				reagents.remove_all(nutridrain)
 
-			// Lack of nutrients hurts non-weeds
-			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-				adjust_plant_health(-rand(1,3))
+			if(reagents.total_volume <= 0)
+				//The microbiome slowly create nutrients by fixing nitrogen from the air or metabolizing organic matter.
+				if(tray_flags & SLOW_RELEASE)
+					reagents.add_reagent(/datum/reagent/nitrogen, 1) // In reality the nitrogen is in the form of ammonia or nitrates but this might be too OP and boring.
+				// Lack of nutrients hurts non-weeds
+				else if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+					adjust_plant_health(-rand(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
-			if(isturf(loc))
-				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.get_lumcount()
-				var/is_fungus = myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)
-				if(lightAmt < (is_fungus ? 0.2 : 0.4))
-					adjust_plant_health((is_fungus ? -1 : -2) / rating)
+			if(light_level < (is_fungus ? 0.2 : 0.4))
+				adjust_plant_health((is_fungus ? -1 : -2) / rating)
 
 //Water//////////////////////////////////////////////////////////////////
 			// Drink random amount of water
-			adjust_waterlevel(-rand(1,6) / rating)
+			adjust_waterlevel(-rand(1,6) * ((tray_flags & SUPERWATER) ? SUPER_WATER_MODIFIER : 1) / rating )
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(waterlevel <= 10 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+			if(waterlevel <= 10 && !is_fungus)
 				adjust_plant_health(-rand(0,1) / rating)
 				if(waterlevel <= 0)
 					adjust_plant_health(-rand(0,2) / rating)
@@ -401,7 +436,7 @@
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				if(myseed.yield >= 3)
 					myseed.adjust_yield(-rand(1,2)) //Weeds choke out the plant's ability to bear more fruit.
-					myseed.set_yield(min((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
+					myseed.set_yield(clamp((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
 
 //This is the part with pollination
 			pollinate()
@@ -448,7 +483,7 @@
 		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed && myseed.yield >= 3)
 				myseed.adjust_yield(-rand(1,2)) //Loses even more yield per tick, quickly dropping to 3 minimum.
-				myseed.set_yield(min((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
+				myseed.set_yield(clamp((myseed.yield), WEED_HARDY_YIELD_MIN, MAX_PLANT_YIELD))
 			if(!myseed)
 				weedinvasion()
 			needs_update = 1
@@ -473,35 +508,17 @@
 
 /obj/machinery/hydroponics/update_name(updates)
 	. = ..()
-	if(myseed)
+	if(!GetComponent(/datum/component/rename) && myseed)
 		name = "[initial(name)] ([myseed.plantname])"
-	else
-		name = initial(name)
 
 /obj/machinery/hydroponics/update_overlays()
 	. = ..()
 	if(myseed)
-		. += update_plant_overlay()
+		. += myseed.get_tray_overlay(age, plant_status, plant_offset_y)
 		. += update_status_light_overlays()
 
 	if(self_sustaining && self_sustaining_overlay_icon_state)
 		. += mutable_appearance(icon, self_sustaining_overlay_icon_state)
-
-/obj/machinery/hydroponics/proc/update_plant_overlay()
-	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
-	switch(plant_status)
-		if(HYDROTRAY_PLANT_DEAD)
-			plant_overlay.icon_state = myseed.icon_dead
-		if(HYDROTRAY_PLANT_HARVESTABLE)
-			if(!myseed.icon_harvest)
-				plant_overlay.icon_state = "[myseed.icon_grow][myseed.growthstages]"
-			else
-				plant_overlay.icon_state = myseed.icon_harvest
-		else
-			var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
-			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	plant_overlay.pixel_y = myseed.plant_icon_offset
-	return plant_overlay
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
 	. = list()
@@ -518,17 +535,23 @@
 
 ///Sets a new value for the myseed variable, which is the seed of the plant that's growing inside the tray.
 /obj/machinery/hydroponics/proc/set_seed(obj/item/seeds/new_seed, delete_old_seed = TRUE)
-	var/old_seed = myseed
+	var/obj/item/seeds/old_seed = myseed
 	myseed = new_seed
+	for(var/datum/plant_gene/trait/gene in old_seed?.genes)
+		gene.on_unplanted_from_tray(src, old_seed)
 	if(old_seed && delete_old_seed)
 		qdel(old_seed)
 	set_plant_status(new_seed ? HYDROTRAY_PLANT_GROWING : HYDROTRAY_NO_PLANT) //To make sure they can't just put in another seed and insta-harvest it
 	if(myseed && myseed.loc != src)
 		myseed.forceMove(src)
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SEED, new_seed)
+	for(var/datum/plant_gene/trait/gene in myseed?.genes)
+		gene.on_plant_in_tray(src, myseed)
+	age = 0
 	update_appearance()
 	if(isnull(myseed))
-		particles = null
+		remove_shared_particles(/particles/pollen)
+
 
 /*
  * Setter proc to set a tray to a new self_sustaining state and update all values associated with it.
@@ -550,7 +573,7 @@
 	if(weedlevel == new_weedlevel)
 		return
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_WEEDLEVEL, new_weedlevel)
-	weedlevel = new_weedlevel
+	weedlevel = max(new_weedlevel, 0)
 	if(update_icon)
 		update_appearance()
 
@@ -633,14 +656,29 @@
 /obj/machinery/hydroponics/proc/adjust_pestlevel(amt)
 	set_pestlevel(clamp(pestlevel + amt, 0, MAX_TRAY_PESTS), FALSE)
 
+/obj/machinery/hydroponics/proc/remove_snail(mob/source)
+	SIGNAL_HANDLER
+
+	var/atom/movable/mob_holder = source.loc
+	mob_holder.forceMove(drop_location())
+
+/obj/machinery/hydroponics/proc/handle_snail()
+	if(prob(15))
+		our_snail.handle_animation() //our snail waddles throughout the tray
+	if(prob(5))
+		adjust_weedlevel(-2)
 
 /**
  * Adjust Weeds.
  * Raises the plant's weed level stat by a given amount.
  * * adjustamt - Determines how much the weed level will be adjusted upwards or downwards.
  */
-/obj/machinery/hydroponics/proc/adjust_weedlevel (amt)
-	set_weedlevel(clamp(weedlevel + amt, 0, MAX_TRAY_WEEDS), FALSE)
+/obj/machinery/hydroponics/proc/adjust_weedlevel(amt)
+	var/weed_mod = 1
+	//If we are not a soil type tray and out plant is semiaquatic, increase weed.
+	if(!(tray_flags & SOIL) && myseed?.get_gene(/datum/plant_gene/trait/semiaquatic))
+		weed_mod *= SEMIAQUATIC_SOIL_WEED_MALUS
+	set_weedlevel(clamp(weedlevel + amt * weed_mod, 0, MAX_TRAY_WEEDS), FALSE)
 
 /obj/machinery/hydroponics/examine(user)
 	. = ..()
@@ -694,7 +732,6 @@
 		else
 			new_seed = new /obj/item/seeds/starthistle(src)
 	set_seed(new_seed)
-	age = 0
 	lastcycle = world.time
 	set_plant_health(myseed.endurance, update_icon = FALSE)
 	set_weedlevel(0, update_icon = FALSE) // Reset
@@ -718,7 +755,6 @@
 	set_seed(new mutantseed(src))
 
 	hardmutate()
-	age = 0
 	set_plant_health(myseed.endurance, update_icon = FALSE)
 	lastcycle = world.time
 	set_weedlevel(0, update_icon = FALSE)
@@ -735,7 +771,6 @@
 	set_seed(new polymorph_seed(src))
 
 	hardmutate()
-	age = 0
 	set_plant_health(myseed.endurance, update_icon = FALSE)
 	lastcycle = world.time
 	set_weedlevel(0, update_icon = FALSE)
@@ -749,7 +784,6 @@
 		var/newWeed = pick(/obj/item/seeds/liberty, /obj/item/seeds/angel, /obj/item/seeds/nettle/death, /obj/item/seeds/kudzu)
 		set_seed(new newWeed(src))
 		hardmutate()
-		age = 0
 		set_plant_health(myseed.endurance, update_icon = FALSE)
 		lastcycle = world.time
 		set_weedlevel(0, update_icon = FALSE) // Reset
@@ -769,22 +803,23 @@
  * Plant Death Proc.
  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
  */
-/obj/machinery/hydroponics/proc/plantdies()
+/obj/machinery/hydroponics/proc/plantdies(update_icon = TRUE)
 	set_plant_health(0, update_icon = FALSE, forced = TRUE)
 	set_plant_status(HYDROTRAY_PLANT_DEAD)
 	set_pestlevel(0, update_icon = FALSE) // Pests die
 	lastproduce = 0
-	update_appearance()
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_PLANT_DEATH)
+	if(update_icon)
+		update_appearance()
 
 /**
  * Plant Cross-Pollination.
  * Checks all plants in the tray's oview range, then averages out the seed's potency, instability, and yield values.
- * If the seed's instability is >= 20, the seed donates one of it's reagents to that nearby plant.
+ * If the seed's instability is >= 20, the seed donates one of its reagents to that nearby plant.
  * * Range - The Oview range of trays to which to look for plants to donate reagents.
  */
 /obj/machinery/hydroponics/proc/pollinate(range = 1)
-	var/any_adjacent = FALSE
+	being_pollinated = FALSE
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		//Here is where we check for window blocking.
 		if(!Adjacent(T) && range <= 1)
@@ -793,21 +828,12 @@
 			T.myseed.set_potency(round((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency))))
 			T.myseed.set_instability(round((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability))))
 			T.myseed.set_yield(round((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield))))
-			any_adjacent = TRUE
-			if(isnull(particles))
-				particles = new /particles/pollen()
+			being_pollinated = TRUE
+			add_shared_particles(/particles/pollen)
 			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
-				var/list/datum/plant_gene/reagent/possible_reagents = list()
-				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
-					possible_reagents += reag
-				var/datum/plant_gene/reagent/reagent_gene = pick(possible_reagents) //Let this serve as a lession to delete your WIP comments before merge.
-				if(reagent_gene.can_add(myseed))
-					if(!reagent_gene.try_upgrade_gene(myseed))
-						myseed.genes += reagent_gene.Copy()
-					myseed.reagents_from_genes()
-					continue
-	if(!any_adjacent)
-		particles = null
+				myseed.perform_reagent_pollination(T.myseed)
+	if(!being_pollinated)
+		remove_shared_particles(/particles/pollen)
 
 /**
  * Bee pollinate proc.
@@ -839,7 +865,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
+/obj/machinery/hydroponics/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	//Called when mob user "attacks" it with object O
 	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
@@ -857,10 +883,18 @@
 		var/visi_msg = ""
 		var/transfer_amount
 
-		if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
+		if(IS_EDIBLE(reagent_source))
+			if(HAS_TRAIT(reagent_source, TRAIT_UNCOMPOSTABLE))
+				to_chat(user, "[reagent_source] cannot be composted in its current state")
+				return
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 			transfer_amount = reagent_source.reagents.total_volume
 			SEND_SIGNAL(reagent_source, COMSIG_ITEM_ON_COMPOSTED, user)
+			if((tray_flags & WORM_HABITAT) && prob(transfer_amount / 2))
+				var/obj/item/food/bait/worm/premium/fat_worm = new(loc)
+				fat_worm.pixel_x = rand(-6,6)
+				fat_worm.pixel_y = rand(-6,6)
+				playsound(fat_worm, 'sound/items/eatfood.ogg', 20, TRUE)
 		else
 			transfer_amount = min(reagent_source.amount_per_transfer_from_this, reagent_source.reagents.total_volume)
 			if(istype(reagent_source, /obj/item/reagent_containers/syringe/))
@@ -891,7 +925,7 @@
 			else
 				reagent_source.reagents.trans_to(H.reagents, transfer_amount, transferred_by = user)
 			lastuser = WEAKREF(user)
-			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/applicator/pill))
 				qdel(reagent_source)
 				H.update_appearance()
 				return 1
@@ -901,22 +935,8 @@
 		return 1
 
 	else if(istype(O, /obj/item/seeds))
-		if(!myseed)
-			if(istype(O, /obj/item/seeds/kudzu))
-				investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
-			if(!user.transferItemToLoc(O, src))
-				return
-			SEND_SIGNAL(O, COMSIG_SEED_ON_PLANTED, src)
-			to_chat(user, span_notice("You plant [O]."))
-			set_seed(O)
-			age = 1
-			set_plant_health(myseed.endurance)
-			lastcycle = world.time
-			return
-		else
-			to_chat(user, span_warning("[src] already has seeds in it!"))
-			return
-
+		propagate_plant(O, user)
+		return
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
 			user.visible_message(span_notice("[user] uproots the weeds."), span_notice("You remove the weeds from [src]."))
@@ -933,8 +953,8 @@
 		else if(plant_status != HYDROTRAY_PLANT_HARVESTABLE)
 			to_chat(user, span_notice("This plant must be harvestable in order to be grafted."))
 			return
-		else if(myseed.grafted)
-			to_chat(user, span_notice("This plant has already been grafted."))
+		else if(myseed.grafts_taken >= ((tray_flags & MULTIGRAFT) ? MULTI_GRAFT_MAX_COUNT : 1))
+			to_chat(user, span_notice("You can't take any more cuttings from this plant!"))
 			return
 		else
 			user.visible_message(span_notice("[user] grafts off a limb from [src]."), span_notice("You carefully graft off a portion of [src]."))
@@ -943,7 +963,7 @@
 				return // The plant did not return a graft.
 
 			snip.forceMove(drop_location())
-			myseed.grafted = TRUE
+			myseed.grafts_taken++
 			adjust_plant_health(-5)
 			return
 
@@ -986,12 +1006,17 @@
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O
 		if(!myseed)
+			if(tray_flags & GRAFT_MEDIUM)
+				propagate_plant(snip.plant_dna, user)
+				qdel(snip)
+				return
 			to_chat(user, span_notice("The tray is empty."))
 			return
-		if(myseed.apply_graft(snip))
-			to_chat(user, span_notice("You carefully integrate the grafted plant limb onto [myseed.plantname], granting it [snip.stored_trait.get_name()]."))
+		var/datum/plant_gene/grafted_trait = myseed.apply_graft(snip)
+		if(grafted_trait)
+			to_chat(user, span_notice("You carefully integrate the grafted plant limb onto [myseed.plantname], granting it [grafted_trait.get_name()]."))
 		else
-			to_chat(user, span_notice("You integrate the grafted plant limb onto [myseed.plantname], but it does not accept the [snip.stored_trait.get_name()] trait from the [snip]."))
+			to_chat(user, span_notice("You try to integrate the grafted plant limb onto [myseed.plantname], but it rejects the trait from the [snip]."))
 		qdel(snip)
 		return
 
@@ -1013,16 +1038,8 @@
 			span_notice("You start digging out [src]'s plants..."))
 		if(O.use_tool(src, user, 50, volume=50) || (!myseed && !weedlevel))
 			user.visible_message(span_notice("[user] digs out the plants in [src]!"), span_notice("You dig out all of [src]'s plants!"))
-			if(myseed) //Could be that they're just using it as a de-weeder
-				age = 0
-				set_plant_health(0, update_icon = FALSE, forced = TRUE)
-				lastproduce = 0
-				set_seed(null)
-			set_weedlevel(0) //Has a side effect of cleaning up those nasty weeds
+			remove_plant()
 			return
-	else if(istype(O, /obj/item/storage/part_replacer))
-		RefreshParts()
-		return
 	else if(istype(O, /obj/item/gun/energy/floragun))
 		var/obj/item/gun/energy/floragun/flowergun = O
 		if(flowergun.cell.charge < flowergun.cell.maxcharge)
@@ -1032,7 +1049,7 @@
 			to_chat(user, span_warning("[src] is empty!"))
 			return
 		if(myseed.endurance <= FLORA_GUN_MIN_ENDURANCE)
-			to_chat(user, span_warning("[myseed.plantname] isn't hardy enough to sequence it's mutation!"))
+			to_chat(user, span_warning("[myseed.plantname] isn't hardy enough to sequence its mutation!"))
 			return
 		if(!LAZYLEN(myseed.mutatelist))
 			to_chat(user, span_warning("[myseed.plantname] has nothing else to mutate into!"))
@@ -1058,7 +1075,7 @@
 	else
 		return ..()
 
-/obj/machinery/hydroponics/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/hydroponics/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if (istype(weapon, /obj/item/reagent_containers/syringe))
 		to_chat(user, span_warning("You can't get any extract out of this plant."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1086,21 +1103,20 @@
 		if(user)
 			user.examinate(src)
 
-/obj/machinery/hydroponics/CtrlClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+/obj/machinery/hydroponics/click_ctrl(mob/user)
+	if(!anchored)
+		return NONE
+
+	update_use_power(ACTIVE_POWER_USE)
+
 	if(!powered())
 		to_chat(user, span_warning("[name] has no power."))
 		update_use_power(NO_POWER_USE)
-		return
-	if(!anchored)
-		return
+		return CLICK_ACTION_BLOCKING
+
 	set_self_sustaining(!self_sustaining)
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
-
-/obj/machinery/hydroponics/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -1110,10 +1126,16 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
 	if(warning == "Yes" && user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		reagents.clear_reagents()
-		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
+		empty_tray(user)
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+/obj/machinery/hydroponics/proc/empty_tray(mob/user)
+	reagents.clear_reagents()
+	for(var/obj/item/mob_holder/snail/possible_snail in contents)
+		possible_snail.forceMove(drop_location())
+	to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 
 /**
  * Update Tray Proc
@@ -1149,43 +1171,33 @@
 	var/mob/living/C = new chosen(get_turf(src))
 	C.faction = list(FACTION_PLANTS)
 
-///////////////////////////////////////////////////////////////////////////////
-/obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
-	name = "soil"
-	desc = "A patch of dirt."
-	icon = 'icons/obj/service/hydroponics/equipment.dmi'
-	icon_state = "soil"
-	gender = PLURAL
-	circuit = null
-	density = FALSE
-	use_power = NO_POWER_USE
-	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
-	unwrenchable = FALSE
-	self_sustaining_overlay_icon_state = null
-	maxnutri = 15
+/// Plants the seed / graft into the tray and resets growth related stats such as maturity on the tray.
+/obj/machinery/hydroponics/proc/propagate_plant(obj/item/seeds/young_plant, mob/living/user)
+	if(!istype(young_plant))
+		return
+	if(myseed)
+		to_chat(user, span_warning("[src] already has a plant growing in it!"))
+		return
+	if(istype(young_plant, /obj/item/seeds/kudzu))
+		investigate_log("had Kudzu planted in it by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_BOTANY)
+	if(!user.transferItemToLoc(young_plant, src))
+		return
+	SEND_SIGNAL(young_plant, COMSIG_SEED_ON_PLANTED, src)
+	to_chat(user, span_notice("You plant [young_plant]."))
+	set_seed(young_plant)
+	set_plant_health(myseed.endurance)
+	lastcycle = world.time
 
-/obj/machinery/hydroponics/soil/update_icon(updates=ALL)
-	. = ..()
-	if(self_sustaining)
-		add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
-
-/obj/machinery/hydroponics/soil/update_status_light_overlays()
-	return // Has no lights
-
-/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "clearing up soil...")
-	if(weapon.use_tool(src, user, 1 SECONDS, volume=50))
-		balloon_alert(user, "cleared")
-		deconstruct(disassembled = TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/hydroponics/soil/CtrlClick(mob/user)
-	return //Soil has no electricity.
-
-/obj/machinery/hydroponics/soil/on_deconstruction(disassembled)
-	new /obj/item/stack/ore/glass(drop_location(), 3)
+/// Clears the plant from the tray, killing it in the process, optionally clearing weeds as well.
+/obj/machinery/hydroponics/proc/remove_plant(clear_weeds = TRUE)
+	if(!myseed)
+		return
+	plantdies(FALSE)
+	if(clear_weeds)
+		set_weedlevel(0, FALSE)
+	if(self_sustaining) //No reason to pay for an empty tray.
+		set_self_sustaining(FALSE)
+	set_seed(null)
 
 ///The usb port circuit
 
@@ -1238,6 +1250,17 @@
 	plant_health = add_output_port("Plant Health", PORT_TYPE_NUMBER)
 	reagents_level = add_output_port("Reagents Level", PORT_TYPE_NUMBER)
 
+/obj/machinery/hydroponics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/item/mob_holder/snail))
+		return
+	our_snail = new
+	vis_contents += our_snail
+	our_snail.layer = layer + 0.01
+	var/obj/item/mob_holder/snail = arrived
+	RegisterSignals(snail.held_mob, list(COMSIG_MOVABLE_ATTEMPTED_MOVE, COMSIG_LIVING_DEATH), PROC_REF(remove_snail)) //rip
+
+
 /obj/item/circuit_component/hydroponics/register_usb_parent(atom/movable/parent)
 	. = ..()
 	if(istype(parent, /obj/machinery/hydroponics))
@@ -1252,13 +1275,7 @@
 		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_STATUS, PROC_REF(on_set_plant_status))
 		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_ON_HARVEST, PROC_REF(on_harvest))
 		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_PLANT_DEATH, PROC_REF(on_plant_death))
-		var/list/reagents_holder_signals = list(
-			COMSIG_REAGENTS_ADD_REAGENT,
-			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_NEW_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT,
-		)
-		RegisterSignal(attached_tray, reagents_holder_signals, PROC_REF(update_reagents_level))
+		RegisterSignal(attached_tray.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(update_reagents_level))
 
 /obj/item/circuit_component/hydroponics/unregister_usb_parent(atom/movable/parent)
 	attached_tray = null
@@ -1267,8 +1284,7 @@
 		COMSIG_HYDROTRAY_SET_PLANT_HEALTH, COMSIG_HYDROTRAY_SET_TOXIC, COMSIG_HYDROTRAY_SET_PLANT_STATUS,
 		COMSIG_HYDROTRAY_ON_HARVEST, COMSIG_HYDROTRAY_PLANT_DEATH))
 	if(parent.reagents)
-		UnregisterSignal(parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT))
+		UnregisterSignal(parent.reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
 	return ..()
 
 /obj/item/circuit_component/hydroponics/get_ui_notices()

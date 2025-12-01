@@ -63,8 +63,15 @@
 
 /datum/unit_test/drink_icons/Run()
 	for(var/obj/item/reagent_containers/cup/glass/glass_subtypes as anything in subtypesof(/obj/item/reagent_containers/cup))
-		var/glass_icon = initial(glass_subtypes.icon)
-		var/glass_icon_state = initial(glass_subtypes.icon_state)
+		var/glass_icon
+		var/glass_icon_state
+		if(glass_subtypes::greyscale_config)
+			var/datum/greyscale_config/greyscale_config = glass_subtypes::greyscale_config
+			glass_icon = greyscale_config::icon_file
+			glass_icon_state = glass_subtypes::post_init_icon_state
+		else
+			glass_icon = glass_subtypes::icon
+			glass_icon_state = glass_subtypes::icon_state
 		if(!glass_icon_state)
 			continue
 		if(!glass_icon)

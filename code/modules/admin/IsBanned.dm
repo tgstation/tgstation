@@ -1,6 +1,6 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
-//How many new ckey matches before we revert the stickyban to it's roundstart state
+//How many new ckey matches before we revert the stickyban to its roundstart state
 //These are exclusive, so once it goes over one of these numbers, it reverts the ban
 #define STICKYBAN_MAX_MATCHES 15
 #define STICKYBAN_MAX_EXISTING_USER_MATCHES 3 //ie, users who were connected before the ban triggered
@@ -214,7 +214,7 @@
 
 		if (ban["fromdb"])
 			if(SSdbcore.Connect())
-				INVOKE_ASYNC(SSdbcore, /datum/controller/subsystem/dbcore/proc.QuerySelect, list(
+				INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, QuerySelect), list(
 					SSdbcore.NewQuery(
 						"INSERT INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES (:ckey, :bannedckey) ON DUPLICATE KEY UPDATE last_matched = now()",
 						list("ckey" = ckey, "bannedckey" = bannedckey)

@@ -55,7 +55,7 @@
 	else
 		. += "It has no sorting tags set."
 
-/obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, params)
+/obj/structure/disposalpipe/sorting/mail/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/O = I
 
@@ -66,7 +66,7 @@
 			else
 				sortTypes |= O.currTag
 				to_chat(user, span_notice("Added \"[GLOB.TAGGERLOCATIONS[O.currTag]]\" filter."))
-			playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
+			playsound(src, 'sound/machines/beep/twobeep_high.ogg', 100, TRUE)
 	else
 		return ..()
 

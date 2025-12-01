@@ -1,7 +1,7 @@
 /datum/antagonist/brother
 	name = "\improper Brother"
 	antagpanel_category = "Brother"
-	job_rank = ROLE_BROTHER
+	pref_flag = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
@@ -9,11 +9,13 @@
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused
 	hardcore_random_bonus = TRUE
+	stinger_sound = 'sound/music/antag/traitor/tatoralert.ogg'
 	VAR_PRIVATE
 		datum/team/brother_team/team
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
+		team = new()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
@@ -24,44 +26,62 @@
 
 /datum/antagonist/brother/on_gain()
 	objectives += team.objectives
-	owner.special_role = special_role
 	finalize_brother()
 
+	if (team.brothers_left <= 0)
+		return ..()
+
+	var/mob/living/carbon/carbon_owner = owner.current
+	if (!istype(carbon_owner))
+		return ..()
+
+	grant_conversion_skills()
+	carbon_owner.equip_conspicuous_item(new /obj/item/assembly/flash)
+
 	var/is_first_brother = team.members.len == 1
-	team.brothers_left -= 1
-
-	if (is_first_brother || team.brothers_left > 0)
-		var/mob/living/carbon/carbon_owner = owner.current
-		if (istype(carbon_owner))
-			carbon_owner.equip_conspicuous_item(new /obj/item/assembly/flash)
-			carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
-			RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_mob_successful_flashed_carbon))
-
-			if (!is_first_brother)
-				to_chat(carbon_owner, span_boldwarning("The Syndicate have higher expectations from you than others. They have granted you an extra flash to convert one other person."))
+	if (!is_first_brother)
+		to_chat(carbon_owner, span_boldwarning("The Syndicate have higher expectations from you than others. They have granted you an extra flash to convert one other person."))
 
 	return ..()
 
 /datum/antagonist/brother/on_removal()
-	owner.special_role = null
-	owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-	UnregisterSignal(owner, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
-
+	remove_conversion_skills()
 	return ..()
 
-/datum/antagonist/brother/proc/on_mob_successful_flashed_carbon(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash)
+/// Give us the ability to add another brother
+/datum/antagonist/brother/proc/grant_conversion_skills()
+	var/mob/living/carbon/carbon_owner = owner.current
+	if (!istype(carbon_owner))
+		return
+	carbon_owner.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
+	RegisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_mob_successful_flashed_mob))
+
+/// Take away the ability to add more brothers
+/datum/antagonist/brother/proc/remove_conversion_skills()
+	if (isnull(owner.current))
+		return
+	var/mob/living/carbon/carbon_owner = owner.current
+	carbon_owner.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
+	UnregisterSignal(carbon_owner, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
+
+/datum/antagonist/brother/proc/on_mob_successful_flashed_mob(mob/living/source, mob/living/flashed, obj/item/assembly/flash/flash)
 	SIGNAL_HANDLER
 
-	if (flashed.stat == DEAD)
+	if (flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 
 	if (flashed.stat != CONSCIOUS)
 		flashed.balloon_alert(source, "unconscious!")
 		return
 
+#ifdef TESTING
+	if (isnull(flashed.mind))
+		flashed.mind_initialize()
+#else
 	if (isnull(flashed.mind) || !GET_CLIENT(flashed))
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
+#endif
 
 	for(var/datum/objective/brother_objective as anything in source.mind.get_all_objectives())
 		// If the objective has a target, are we flashing them?
@@ -73,7 +93,7 @@
 		flashed.balloon_alert(source, "[flashed.p_theyre()] loyal to someone else!")
 		return
 
-	if (HAS_TRAIT(flashed, TRAIT_MINDSHIELD) || flashed.mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+	if (HAS_TRAIT(flashed, TRAIT_UNCONVERTABLE))
 		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
 		return
 
@@ -95,30 +115,42 @@
 	)
 	flashed.balloon_alert(source, "converted")
 
-	UnregisterSignal(source, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
-	source.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
-
 /datum/antagonist/brother/antag_panel_data()
-	return "Conspirators : [get_brother_names()]"
+	return "Conspirators : [get_brother_names()] | Remaining: [team.brothers_left]"
+
+/datum/antagonist/brother/get_admin_commands()
+	. = ..()
+	.["Adjust Remaining Conversions"] = CALLBACK(src, PROC_REF(update_recruitments_remaining))
+
+/// Add or remove the potential to put more bros in here
+/datum/antagonist/brother/proc/update_recruitments_remaining(mob/admin)
+	var/new_count = tgui_input_number(admin, "How many more people should be able to be recruited?", "Adjust Conversions Remaining", default = 1, min_value = 0)
+	if (isnull(new_count))
+		return
+	team.set_brothers_left(new_count)
 
 /datum/antagonist/brother/get_preview_icon()
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
-	brother1.dna.features["ethcolor"] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.dna.features[FEATURE_ETHEREAL_COLOR] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
-	brother2.dna.features["moth_antennae"] = "Plain"
-	brother2.dna.features["moth_markings"] = "None"
-	brother2.dna.features["moth_wings"] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_ANTENNAE] = "Plain"
+	brother2.dna.features[FEATURE_MOTH_MARKINGS] = "None"
+	brother2.dna.features[FEATURE_MOTH_WINGS] = "Plain"
 	brother2.set_species(/datum/species/moth)
 
 	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
-	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
+	var/icon/brother1_blood_icon = icon('icons/effects/blood.dmi', "maskblood")
+	brother1_blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	brother1_icon.Blend(brother1_blood_icon, ICON_OVERLAY)
 	brother1_icon.Shift(WEST, 8)
 
 	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist/consistent, brother2)
-	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	var/icon/brother2_blood_icon = icon('icons/effects/blood.dmi', "uniformblood")
+	brother2_blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
+	brother2_icon.Blend(brother2_blood_icon, ICON_OVERLAY)
 	brother2_icon.Shift(EAST, 8)
 
 	var/icon/final_icon = brother1_icon
@@ -131,6 +163,9 @@
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
+	if (!length(brothers))
+		return "none"
+
 	var/brother_text = ""
 	for(var/i = 1 to brothers.len)
 		var/datum/mind/M = brothers[i]
@@ -142,19 +177,23 @@
 	return brother_text
 
 /datum/antagonist/brother/greet()
-	to_chat(owner.current, span_alertsyndie("You are the [owner.special_role]."))
+	to_chat(owner.current, span_alertsyndie("You are a Blood Brother."))
 	owner.announce_objectives()
 
 /datum/antagonist/brother/proc/finalize_brother()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	play_stinger()
 	team.update_name()
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	var/datum/team/brother_team/team = new
 	team.add_member(new_owner)
-	new_owner.add_antag_datum(/datum/antagonist/brother, team)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into a blood brother.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into a blood brother.")
+
+/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/the_mob = owner.current || mob_override
+	add_team_hud(the_mob)
 
 /datum/antagonist/brother/ui_static_data(mob/user)
 	var/list/data = list()
@@ -167,21 +206,28 @@
 	member_name = "blood brother"
 	var/brothers_left = 2
 
-/datum/team/brother_team/New()
+/datum/team/brother_team/New(starting_members)
 	. = ..()
 	if (prob(10))
 		brothers_left += 1
 
 /datum/team/brother_team/add_member(datum/mind/new_member)
 	. = ..()
+	if (!length(objectives))
+		forge_brother_objectives()
 	if (!new_member.has_antag_datum(/datum/antagonist/brother))
 		add_brother(new_member.current)
+	else
+		set_brothers_left(brothers_left - 1)
 
 /datum/team/brother_team/remove_member(datum/mind/member)
 	if (!(member in members))
 		return
 	. = ..()
 	member.remove_antag_datum(/datum/antagonist/brother)
+	if (!length(members))
+		qdel(src)
+		return
 	if (isnull(member.current))
 		return
 	for (var/datum/mind/brother_mind as anything in members)
@@ -190,14 +236,25 @@
 
 /// Adds a new brother to the team
 /datum/team/brother_team/proc/add_brother(mob/living/new_brother, source)
+#ifndef TESTING
 	if (isnull(new_brother) || isnull(new_brother.mind) || !GET_CLIENT(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
 		return FALSE
+#else
+	if (isnull(new_brother) || new_brother.mind.has_antag_datum(/datum/antagonist/brother))
+		return FALSE
+#endif
 
+	set_brothers_left(brothers_left - 1)
 	for (var/datum/mind/brother_mind as anything in members)
 		if (brother_mind == new_brother.mind)
 			continue
+
 		to_chat(brother_mind, span_notice("[span_bold("[new_brother.real_name]")] has been converted to aid you as your brother!"))
+		if (brothers_left == 0)
+			to_chat(brother_mind, span_notice("You cannot recruit any more brothers."))
+
 	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
+
 	return TRUE
 
 /datum/team/brother_team/proc/update_name()
@@ -217,7 +274,7 @@
 	add_objective(new /datum/objective/convert_brother)
 
 	var/is_hijacker = prob(10)
-	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (members.len > 2) - is_hijacker))
+	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (brothers_left > 2) - is_hijacker))
 		forge_single_objective()
 	if(is_hijacker)
 		if(!locate(/datum/objective/hijack) in objectives)
@@ -235,6 +292,22 @@
 			add_objective(new /datum/objective/assassinate, needs_target = TRUE)
 	else
 		add_objective(new /datum/objective/steal, needs_target = TRUE)
+
+/// Control how many more people we can recruit
+/datum/team/brother_team/proc/set_brothers_left(remaining_brothers)
+	if (brothers_left == remaining_brothers)
+		return
+
+	if (brothers_left == 0 && remaining_brothers > 0)
+		for (var/datum/mind/brother_mind as anything in members)
+			var/datum/antagonist/brother/brother_datum = brother_mind.has_antag_datum(/datum/antagonist/brother)
+			brother_datum?.grant_conversion_skills()
+
+	else if (brothers_left > 0 && remaining_brothers <= 0)
+		for (var/datum/mind/brother_mind as anything in members)
+			var/datum/antagonist/brother/brother_datum = brother_mind.has_antag_datum(/datum/antagonist/brother)
+			brother_datum?.remove_conversion_skills()
+	brothers_left = remaining_brothers
 
 /datum/objective/convert_brother
 	name = "convert brother"

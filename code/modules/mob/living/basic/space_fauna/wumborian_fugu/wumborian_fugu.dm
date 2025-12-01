@@ -16,7 +16,7 @@
 	health_doll_icon = "Fugu0"
 	pixel_x = -16
 	base_pixel_x = -16
-	status_flags = NONE
+	status_flags = CANSTUN
 	gold_core_spawnable = HOSTILE_SPAWN
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	mob_size = MOB_SIZE_SMALL
@@ -27,7 +27,7 @@
 	obj_damage = 0
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	melee_attack_cooldown = 2.5 SECONDS
 	attack_verb_continuous = "chomps"
@@ -41,7 +41,7 @@
 	lighting_cutoff_red = 20
 	lighting_cutoff_green = 10
 	lighting_cutoff_blue = 40
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 	ai_controller = /datum/ai_controller/basic_controller/wumborian_fugu
@@ -51,8 +51,7 @@
 /mob/living/basic/wumborian_fugu/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
-	var/static/list/death_loot = list(/obj/item/fugu_gland)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/fugu_gland)
 	add_traits(list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE), ROUNDSTART_TRAIT)
 	expand = new(src)
 	expand.Grant(src)

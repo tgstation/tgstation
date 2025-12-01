@@ -89,7 +89,7 @@
 #define FREON_MAXIMUM_BURN_TEMPERATURE 283
 ///Minimum temperature allowed for the burn to go at max speed, we would have negative pressure otherwise
 #define FREON_LOWER_TEMPERATURE 60
-///Terminal temperature after wich we stop the reaction
+///Terminal temperature after which we stop the reaction
 #define FREON_TERMINAL_TEMPERATURE 20
 /// Multiplier for freonfire with O2 moles * FREON_OXYGEN_FULLBURN for the maximum fuel consumption
 #define FREON_OXYGEN_FULLBURN 10
@@ -174,17 +174,23 @@
 
 /// The number of moles of hyper-noblium required to prevent reactions.
 #define REACTION_OPPRESSION_THRESHOLD 5
+/// Minimum temperature required for hypernoblium to prevent reactions.
+#define REACTION_OPPRESSION_MIN_TEMP 20
 
 // Halon:
-/// The minimum temperature required for halon to form from tritium and BZ.
-#define HALON_FORMATION_MIN_TEMPERATURE 30
-/// The maximum temperature required for halon to form from tritium and BZ.
-#define HALON_FORMATION_MAX_TEMPERATURE 55
-/// The amount of energy 4.25 moles of halon forming from tritium and BZ releases.
-#define HALON_FORMATION_ENERGY 300
+/// Energy released per mole of BZ consumed during halon formation.
+#define HALON_FORMATION_ENERGY 91232.1
 
 /// How much energy a mole of halon combusting consumes.
 #define HALON_COMBUSTION_ENERGY 2500
+/// The minimum temperature required for halon to combust.
+#define HALON_COMBUSTION_MIN_TEMPERATURE (T0C + 70)
+/// The temperature scale for halon combustion reaction rate.
+#define HALON_COMBUSTION_TEMPERATURE_SCALE (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10)
+/// Amount of halon required to be consumed in order to release resin. This is always possible as long as there's enough gas.
+#define HALON_COMBUSTION_MINIMUM_RESIN_MOLES (0.99 * HALON_COMBUSTION_MIN_TEMPERATURE / HALON_COMBUSTION_TEMPERATURE_SCALE)
+/// The volume of the resin foam fluid when halon combusts, in turfs.
+#define HALON_COMBUSTION_RESIN_VOLUME 1
 
 // Healium:
 /// The minimum temperature healium can form from BZ and freon at.
@@ -257,3 +263,12 @@
 #define PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM 6
 /// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
+
+// Antinoblium:
+/// The divisor for the maximum antinoblium conversion rate. (1/90 of the antinoblium converts other gases to antinoblium in one reaction tick.)
+#define ANTINOBLIUM_CONVERSION_DIVISOR 90
+
+// Electrolysis:
+// Electrolysis arguments:
+/// Supermatter power argument.
+#define ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER "electrolyzer_supermatter_power"

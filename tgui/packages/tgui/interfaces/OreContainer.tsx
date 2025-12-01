@@ -1,24 +1,28 @@
-import { createSearch, toTitleCase } from 'common/string';
 import { useState } from 'react';
+import {
+  Button,
+  DmIcon,
+  Flex,
+  Icon,
+  Input,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Button, Flex, Image, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Ores = {
   id: string;
   name: string;
   amount: number;
-};
-
-type Ore_images = {
-  name: string;
   icon: string;
+  icon_state: string;
 };
 
 type Data = {
   ores: Ores[];
-  ore_images: Ore_images[];
 };
 
 export const OreContainer = (props) => {
@@ -41,12 +45,9 @@ export const OreContainer = (props) => {
                 mt={0.5}
                 bottom="5%"
                 height="20px"
-                width="150px"
                 placeholder="Search Ore..."
                 value={searchItem}
-                onInput={(e, value) => {
-                  setSearchItem(value);
-                }}
+                onChange={setSearchItem}
                 fluid
               />
             </Section>
@@ -58,7 +59,13 @@ export const OreContainer = (props) => {
                   <Flex.Item key={ore.id}>
                     <Flex direction="column" m={0.5} textAlign="center">
                       <Flex.Item>
-                        <RetrieveIcon ore={ore} />
+                        <DmIcon
+                          height="64px"
+                          width="64px"
+                          icon={ore.icon}
+                          icon_state={ore.icon_state}
+                          fallback={<Icon name="spinner" size={2} spin />}
+                        />
                       </Flex.Item>
                       <Flex.Item>
                         <Orename ore_name={toTitleCase(ore.name)} />
@@ -84,30 +91,6 @@ export const OreContainer = (props) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const RetrieveIcon = (props) => {
-  const { data } = useBackend<Data>();
-  const { ore_images = [] } = data;
-  const { ore } = props;
-
-  let icon_display = ore_images.find((icon) => icon.name === ore.name);
-
-  if (!icon_display) {
-    return null;
-  }
-
-  return (
-    <Image
-      m={1}
-      src={`data:image/jpeg;base64,${icon_display.icon}`}
-      height="64px"
-      width="64px"
-      style={{
-        verticalAlign: 'middle',
-      }}
-    />
   );
 };
 

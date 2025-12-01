@@ -15,8 +15,12 @@
 /obj/item/organ/proc/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	mob_insert(receiver, special, movement_flags)
+	if(!mob_insert(receiver, special, movement_flags))
+		return FALSE
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
+
+	if(!special && !(receiver.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		receiver.update_body_parts()
 
 	return TRUE
 
@@ -32,6 +36,9 @@
 	mob_remove(organ_owner, special, movement_flags)
 	bodypart_remove(limb_owner = organ_owner, movement_flags = movement_flags)
 
+	if(!special && !(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
+		organ_owner.update_body_parts()
+
 /*
  * Insert the organ into the select mob.
  *
@@ -40,15 +47,17 @@
  * movement_flags - Flags for how we behave in movement. See DEFINES/organ_movement for flags
  */
 /obj/item/organ/proc/mob_insert(mob/living/carbon/receiver, special, movement_flags)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!iscarbon(receiver))
-		stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
-		return
+		//We try to insert the organ in a corgi when running the test, expecting it to return FALSE.
+		if(!PERFORM_ALL_TESTS(organ_sanity))
+			stack_trace("Tried to insert organ into non-carbon: [receiver.type]")
+		return FALSE
 
 	if(owner == receiver)
 		stack_trace("Organ receiver is already organ owner")
-		return
+		return FALSE
 
 	var/obj/item/organ/replaced = receiver.get_organ_slot(slot)
 	if(replaced)
@@ -69,7 +78,7 @@
 	receiver.organs_slot[slot] = src
 	owner = receiver
 
-	on_mob_insert(receiver, special)
+	on_mob_insert(receiver, special, movement_flags)
 
 	return TRUE
 
@@ -88,9 +97,16 @@
 	for(var/datum/status_effect/effect as anything in organ_effects)
 		organ_owner.apply_status_effect(effect, type)
 
-	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_owner_examine))
+	if(!special)
+		organ_owner.hud_used?.update_locked_slots()
 	SEND_SIGNAL(src, COMSIG_ORGAN_IMPLANTED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_GAIN_ORGAN, src, special)
+
+	// organs_slot must ALWAYS be ordered in the same way as organ_process_order
+	// Otherwise life processing breaks down
+	sortTim(owner.organs_slot, GLOBAL_PROC_REF(cmp_organ_slot_asc))
+
+	STOP_PROCESSING(SSobj, src)
 
 /// Insert an organ into a limb, assume the limb as always detached and include no owner operations here (except the get_bodypart helper here I guess)
 /// Give EITHER a limb OR a limb owner
@@ -120,6 +136,16 @@
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 
+	if(external_bodytypes)
+		limb.owner?.synchronize_bodytypes()
+	if(external_bodyshapes)
+		limb.owner?.synchronize_bodyshapes()
+
+	if(bodypart_overlay)
+		limb.add_bodypart_overlay(bodypart_overlay)
+
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_INSERTED, limb, movement_flags)
+
 /*
  * Remove the organ from the select mob.
  *
@@ -127,7 +153,7 @@
  * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(organ_owner)
 		if(organ_owner.organs_slot[slot] == src)
@@ -135,9 +161,7 @@
 		organ_owner.organs -= src
 
 	owner = null
-
-	on_mob_remove(organ_owner, special)
-
+	on_mob_remove(organ_owner, special, movement_flags)
 	return TRUE
 
 /// Called after the organ is removed from a mob.
@@ -158,9 +182,19 @@
 	for(var/datum/status_effect/effect as anything in organ_effects)
 		organ_owner.remove_status_effect(effect, type)
 
-	UnregisterSignal(organ_owner, COMSIG_ATOM_EXAMINE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
+	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
+
+	if(!special)
+		organ_owner.hud_used?.update_locked_slots()
+
+	if((organ_flags & ORGAN_VITAL) && !special && !HAS_TRAIT(organ_owner, TRAIT_GODMODE))
+		if(organ_owner.stat != DEAD)
+			organ_owner.investigate_log("has been killed by losing a vital organ ([src]).", INVESTIGATE_DEATHS)
+		organ_owner.death()
+
+	START_PROCESSING(SSobj, src)
 
 	var/list/diseases = organ_owner.get_static_viruses()
 	if(!LAZYLEN(diseases))
@@ -193,23 +227,47 @@
 
 	// The true movement is here
 	moveToNullspace()
-	bodypart_owner.contents -= src
 	bodypart_owner = null
 
-	on_bodypart_remove(limb)
+	if(!isnull(limb))
+		on_bodypart_remove(limb)
 
 	return TRUE
 
-/// Called on limb removal to remove limb specific limb effects or statusses
+/// Called on limb removal to remove limb specific limb effects or statuses
 /obj/item/organ/proc/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
-		AddElement(/datum/element/decal/blood)
+		var/blood_color = get_color_from_blood_list(blood_dna_info)
+		if (blood_color)
+			AddElement(/datum/element/decal/blood, _color = blood_color)
 
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 	interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
+
+	limb.owner?.synchronize_bodytypes()
+	limb.owner?.synchronize_bodyshapes()
+
+	if(!bodypart_overlay)
+		return
+
+	limb.remove_bodypart_overlay(bodypart_overlay)
+
+	if(use_mob_sprite_as_obj_sprite)
+		update_appearance(UPDATE_OVERLAYS)
+
+	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+	if(greyscale_config)
+		get_greyscale_color_from_draw_color()
+	else
+		color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
+
+///Here we define how draw_color from the bodypart overlay sets the greyscale colors of organs that use GAGS
+/obj/item/organ/proc/get_greyscale_color_from_draw_color()
+	color = bodypart_overlay.draw_color //Defaults to the legacy behaviour of applying the color to the item.
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()
@@ -224,9 +282,33 @@
 
 /**
  * Proc that gets called when the organ is surgically removed by someone, can be used for special effects
- * Currently only used so surplus organs can explode when surgically removed.
  */
 /obj/item/organ/proc/on_surgical_removal(mob/living/user, mob/living/carbon/old_owner, target_zone, obj/item/tool)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_REMOVED, user, old_owner, target_zone, tool)
-	RemoveElement(/datum/element/decal/blood)
+	RemoveElement(/datum/element/decal/blood, _color = old_owner.get_bloodtype()?.get_color() || BLOOD_COLOR_RED)
+/**
+ * Proc that gets called when the organ is surgically inserted by someone. Seem familiar?
+ */
+/obj/item/organ/proc/on_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone, obj/item/tool)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ORGAN_SURGICALLY_INSERTED, user, new_owner, target_zone, tool)
+
+/// Proc that gets called when someone starts surgically inserting the organ
+/obj/item/organ/proc/pre_surgical_insertion(mob/living/user, mob/living/carbon/new_owner, target_zone)
+	if (!valid_zones)
+		return TRUE
+
+	// Ensure that in case we're somehow placed elsewhere (HARS-esque bs) we don't break our zone
+	if (!valid_zones[target_zone])
+		return FALSE
+
+	swap_zone(target_zone)
+	return TRUE
+
+/// Readjusts the organ to fit into a different body zone/slot
+/obj/item/organ/proc/swap_zone(target_zone)
+	if (!valid_zones[target_zone])
+		CRASH("[src]'s ([type]) swap_zone was called with invalid zone [target_zone]")
+	zone = target_zone
+	slot = valid_zones[zone]

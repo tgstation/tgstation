@@ -17,4 +17,10 @@ REGULAR CANNONBALL: A fine choice for killing landlubbers! Will take off any lim
 EXPLOSIVE SHELLBALL: The most elegant in breaching (er killin', if you're good at aimin') tools, ye be packing this shell with many scuppering chemicals! Just make sure to not fire it when ye be close to target!<br>
 MALFUNCTION SHOT: A very gentle "cannonball" dart at first glance, but make no mistake: This is their worst nightmare! Enjoy an easy boarding process while all their machines are broken and all their weapons unloaded from an EMP!<br>
 THE BIGGEST ONE: A shellball, but much bigger. Ye won't be seein' much of these as they were discontinued for sinkin' the firer's ship as often as it sunk the scallywag's ship. Very big boom! If ye have one, ye have been warned!
+
+<br><center><b>FIRING THAR CANISTER GATLING</b><br></center>
+
+THE CANISTER GATLING AIN'T LIKE OTHER CANNONS, AND DOESN'T REQUIRE GUNPOWDER, INSTEAD RELYING ON SPECIAL CANISTER SHOT SHELLS.
+ALL YOU HAVE TO DO IS CRAM A SHELL IN THE BREACH, LIGHT HER UP AND YOU'LL BE BLOWING THOSE CORPORATE SODS TO KINGDOM COME!
+SHE LACKS THE SHEER WALL-BREAKING PUNCH OF THE HOLEMAKERS, BUT CHEWS THROUGH SOFT TARGETS LIKE A SHARK THROUGH A GROUP OF BEACH THROUGH A GROUP OF BEACHGOERS, YAHAR.
 	"}

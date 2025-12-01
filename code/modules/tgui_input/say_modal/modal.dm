@@ -24,13 +24,15 @@
 	/// The user who opened the window
 	var/client/client
 	/// Injury phrases to blurt out
-	var/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
+	var/static/list/hurt_phrases = list("GACK!", "GLORF!", "OOF!", "AUGH!", "OW!", "URGH!", "HRNK!")
 	/// Max message length
 	var/max_length = MAX_MESSAGE_LEN
 	/// The modal window
 	var/datum/tgui_window/window
 	/// Boolean for whether the tgui_say was opened by the user.
 	var/window_open
+	/// What text was present in the say box the last time save_text was called
+	var/saved_text = ""
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
@@ -64,11 +66,12 @@
 /datum/tgui_say/proc/load()
 	window_open = FALSE
 
-	winset(client, "tgui_say", "pos=848,500;size=231,30;is-visible=0;")
+	winset(client, "tgui_say", "pos=848,500;is-visible=0;")
 
 	window.send_message("props", list(
-		lightMode = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
-		maxLength = max_length,
+		"lightMode" = client.prefs?.read_preference(/datum/preference/toggle/tgui_say_light_mode),
+		"scale" = client.prefs?.read_preference(/datum/preference/toggle/ui_scale),
+		"maxLength" = max_length,
 	))
 
 	stop_thinking()
@@ -127,7 +130,7 @@
 	if (type == "typing")
 		start_typing()
 		return TRUE
-	if (type == "entry" || type == "force")
+	if (type == "entry" || type == "force" || type == "save")
 		handle_entry(type, payload)
 		return TRUE
 	return FALSE

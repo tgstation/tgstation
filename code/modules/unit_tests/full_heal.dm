@@ -4,12 +4,12 @@
 /datum/unit_test/full_heal_heals_organs/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
-	for(var/obj/item/organ/internal/organ in dummy.organs)
+	for(var/obj/item/organ/organ in dummy.organs)
 		organ.apply_organ_damage(50)
 
 	dummy.fully_heal(HEAL_ORGANS)
 
-	for(var/obj/item/organ/internal/organ in dummy.organs)
+	for(var/obj/item/organ/organ in dummy.organs)
 		if(organ.damage <= 0)
 			continue
 		TEST_FAIL("Organ [organ] did not get healed by fullyheal flag HEAL_ORGANS.")
@@ -22,7 +22,7 @@
 
 	var/list/we_started_with = list()
 
-	for(var/obj/item/organ/internal/organ in dummy.organs)
+	for(var/obj/item/organ/organ in dummy.organs)
 		if(organ.organ_flags & ORGAN_VITAL) // leave this for now
 			continue
 		we_started_with += organ.type
@@ -46,13 +46,13 @@
 	dummy.apply_damages(brute = 10, burn = 10, tox = 10, oxy = 10, stamina = 10)
 	dummy.fully_heal(HEAL_DAMAGE)
 
-	if(dummy.getBruteLoss())
+	if(dummy.get_brute_loss())
 		TEST_FAIL("The dummy still had brute damage after a fully heal!")
-	if(dummy.getFireLoss())
+	if(dummy.get_fire_loss())
 		TEST_FAIL("The dummy still had burn damage after a fully heal!")
-	if(dummy.getToxLoss())
+	if(dummy.get_tox_loss())
 		TEST_FAIL("The dummy still had toxins damage after a fully heal!")
-	if(dummy.getOxyLoss())
+	if(dummy.get_oxy_loss())
 		TEST_FAIL("The dummy still had oxy damage after a fully heal!")
-	if(dummy.getStaminaLoss())
+	if(dummy.get_stamina_loss())
 		TEST_FAIL("The dummy still had stamina damage after a fully heal!")

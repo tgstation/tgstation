@@ -7,11 +7,11 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "cosmic_rune"
 
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/effects/magic/forcewall.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
-	invocation = "ST'R R'N'"
+	invocation = "ST'R R'N."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
@@ -57,7 +57,8 @@
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// The other rune this rune is linked with
 	var/datum/weakref/linked_rune
 	/// Effect for when someone teleports
@@ -68,6 +69,14 @@
 	var/image/silicon_image = image(icon = 'icons/obj/service/hand_of_god_structures.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cosmic", silicon_image)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	for(var/mob/living/mobs in get_turf(src))
+		RegisterSignal(mobs, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_self))
 
 /obj/effect/cosmic_rune/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -90,21 +99,47 @@
 		return
 	invoke(user)
 
+/obj/effect/cosmic_rune/proc/on_entered(datum/source, atom/movable/arrived)
+	SIGNAL_HANDLER
+	if(!isliving(arrived))
+		return
+	RegisterSignal(arrived, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_self))
+
+/// If something clicks on themselves while on top of the rune, we instead will act as if they clicked on the rune instead
+/obj/effect/cosmic_rune/proc/on_attack_self(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(source == user)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, attack_hand), user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/obj/effect/cosmic_rune/proc/on_exited(datum/source, exiter)
+	SIGNAL_HANDLER
+	UnregisterSignal(exiter, COMSIG_ATOM_ATTACK_HAND)
+
 /// For invoking the rune
 /obj/effect/cosmic_rune/proc/invoke(mob/living/user)
 	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune?.resolve()
 	new rune_effect(get_turf(src))
+	var/atom/pulled_thing
+	if(IS_HERETIC(user))
+		if(user.pulling)
+			pulled_thing = user.pulling
+			do_teleport(user.pulling, get_turf(linked_rune_resolved), no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	do_teleport(
 		user,
 		get_turf(linked_rune_resolved),
 		no_effects = TRUE,
 		channel = TELEPORT_CHANNEL_MAGIC,
-		asoundin = 'sound/magic/cosmic_energy.ogg',
-		asoundout = 'sound/magic/cosmic_energy.ogg',
+		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
+		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
 	)
+	if(pulled_thing) // Regrab after the teleports are done
+		user.start_pulling(pulled_thing)
 	for(var/mob/living/person_on_rune in get_turf(src))
 		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))
 			do_teleport(person_on_rune, get_turf(linked_rune_resolved), no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+	if(!IS_HERETIC(user))
+		user.apply_status_effect(/datum/status_effect/star_mark)
 	new rune_effect(get_turf(linked_rune_resolved))
 
 /// For if someone failed to invoke the rune
@@ -113,7 +148,7 @@
 	var/oldcolor = rgb(255, 255, 255)
 	color = rgb(150, 50, 200)
 	animate(src, color = oldcolor, time = 5)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 5)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.5 SECONDS)
 
 /// For linking a new rune
 /obj/effect/cosmic_rune/proc/link_rune(datum/weakref/new_rune)
@@ -133,7 +168,8 @@
 	name = "cosmic rune"
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_fade"
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	anchored = TRUE
 	duration = 5
 
@@ -147,7 +183,8 @@
 	name = "cosmic rune"
 	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "cosmic_rune_light"
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	anchored = TRUE
 	duration = 5
 

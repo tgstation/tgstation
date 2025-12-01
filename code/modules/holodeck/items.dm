@@ -14,7 +14,7 @@
 	throw_speed = 2
 	block_chance = 0
 	throwforce = 0
-	embedding = null
+	embed_type = null
 	sword_color_icon = null
 
 	active_throwforce = 0
@@ -93,7 +93,7 @@
 	to_chat(user, span_warning("You are too primitive to use this device!"))
 	return
 
-/obj/machinery/readybutton/attackby(obj/item/W, mob/user, params)
+/obj/machinery/readybutton/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	to_chat(user, span_warning("The device is a solid button, there's nothing you can do with it!"))
 
 /obj/machinery/readybutton/attack_hand(mob/user, list/modifiers)
@@ -129,9 +129,12 @@
 	if(numbuttons == numready)
 		begin_event()
 
-/obj/machinery/readybutton/update_icon_state()
-	icon_state = "auth_[ready ? "on" : "off"]"
-	return ..()
+/obj/machinery/readybutton/update_overlays()
+	. = ..()
+	if(ready && is_operational)
+		. += mutable_appearance(icon, "auth_on")
+		. += emissive_appearance(icon, "auth_on", src, alpha = src.alpha)
+
 
 /obj/machinery/readybutton/proc/begin_event()
 
@@ -140,7 +143,7 @@
 	for (var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			for(var/obj/structure/window/barrier in area_turf)
-				if((barrier.obj_flags & NO_DECONSTRUCTION) || (barrier.flags_1 & HOLOGRAM_1))// Just in case: only holo-windows
+				if(barrier.flags_1 & HOLOGRAM_1)// Just in case: only holo-windows
 					qdel(barrier)
 
 			for(var/mob/contestant in area_turf)
@@ -148,7 +151,7 @@
 
 /obj/machinery/conveyor/holodeck
 
-/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
+/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!user.transferItemToLoc(I, drop_location()))
 		return ..()
 

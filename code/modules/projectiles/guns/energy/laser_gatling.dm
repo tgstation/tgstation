@@ -11,8 +11,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
+
 	var/obj/item/gun/energy/minigun/gun
-	var/obj/item/stock_parts/cell/minigun/battery
+	var/obj/item/stock_parts/power_store/cell/minigun/battery
 	var/armed = FALSE //whether the gun is attached, FALSE is attached, TRUE is the gun is wielded.
 	var/overheat = 0
 	var/overheat_max = 40
@@ -23,6 +24,7 @@
 	gun = new(src)
 	battery = new(src)
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/drag_pickup)
 
 /obj/item/minigunpack/Destroy()
 	if(!QDELETED(gun))
@@ -52,7 +54,7 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, params)
+/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else
@@ -62,23 +64,6 @@
 	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
-
-/obj/item/minigunpack/MouseDrop(atom/over_object)
-	. = ..()
-	if(armed)
-		return
-	if(iscarbon(usr))
-		var/mob/M = usr
-
-		if(!over_object)
-			return
-
-		if(!M.incapacitated())
-
-			if(istype(over_object, /atom/movable/screen/inventory/hand))
-				var/atom/movable/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
-
 
 /obj/item/minigunpack/update_icon_state()
 	icon_state = armed ? "notholstered" : "holstered"
@@ -90,9 +75,9 @@
 	gun.forceMove(src)
 	armed = FALSE
 	if(user)
-		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
+		to_chat(user, span_notice("You attach \the [gun] to \the [src]."))
 	else
-		src.visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
+		src.visible_message(span_warning("\The [gun] snaps back onto \the [src]!"))
 	update_appearance()
 	user.update_worn_back()
 
@@ -106,10 +91,11 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
+	spawn_blacklisted = TRUE
 	custom_materials = null
 	weapon_weight = WEAPON_HEAVY
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/minigun)
-	cell_type = /obj/item/stock_parts/cell/crap
+	cell_type = /obj/item/stock_parts/power_store/cell/crap
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
@@ -142,21 +128,23 @@
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
-	..()
+	. = ..()
+	if(!.)
+		return
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
-		var/totransfer = min(100, ammo_pack.battery.charge)
-		var/transferred = cell.give(totransfer)
-		ammo_pack.battery.use(transferred)
+		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)
+		cell.give(transferred)
 
 
-/obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/gun/energy/minigun/try_fire_gun(atom/target, mob/living/user, params)
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
-	. = ..()
+		return FALSE
+	return ..()
 
-/obj/item/stock_parts/cell/minigun
+/obj/item/stock_parts/power_store/cell/minigun
 	name = "gatling gun fusion core"
 	desc = "Where did these come from?"
-	maxcharge = 500000
-	chargerate = 5000
+	maxcharge = 500 * STANDARD_CELL_CHARGE
+	chargerate = 5 * STANDARD_CELL_CHARGE

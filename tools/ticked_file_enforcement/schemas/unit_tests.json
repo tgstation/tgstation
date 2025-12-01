@@ -2,8 +2,6 @@
 	"file": "code/modules/unit_tests/_unit_tests.dm",
 	"scannable_directory": "code/modules/unit_tests/",
 	"subdirectories": false,
-	"excluded_files": [
-		"find_reference_sanity.dm"
-	],
+	"excluded_files": ["find_reference_sanity.dm"],
 	"forbidden_includes": []
 }

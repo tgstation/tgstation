@@ -11,8 +11,8 @@
 	time = 3 SECONDS
 	reqs = list(/obj/item/stack/sheet/bone = 5)
 	result = /obj/item/skeleton_key
-	always_available = FALSE
 	category = CAT_MISC
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/coffee_cartridge
 	name = "Bootleg Coffee Cartridge"
@@ -35,6 +35,17 @@
 	tool_paths = list(/obj/item/stamp/head/captain)
 	category = CAT_MISC
 
+/datum/crafting_recipe/clipboard
+	name = "Clipboard"
+	result = /obj/item/clipboard
+	time = 3 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/stack/rods = 1,
+	)
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	category = CAT_MISC
+
 /datum/crafting_recipe/cardboard_id
 	name = "Cardboard ID Card"
 	tool_behaviors = list(TOOL_WIRECUTTER)
@@ -42,5 +53,15 @@
 	time = 4 SECONDS
 	reqs = list(
 		/obj/item/stack/sheet/cardboard = 1,
+	)
+	category = CAT_MISC
+
+/datum/crafting_recipe/battery_match
+	name = "Battery Match"
+	result = /obj/item/match/battery
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stock_parts/power_store/cell = 1,
+		/obj/item/storage/bubblegum_wrapper = 1,
 	)
 	category = CAT_MISC

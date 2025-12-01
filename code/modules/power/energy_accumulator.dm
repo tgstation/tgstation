@@ -1,4 +1,4 @@
-/// (this*100)% of stored power outputted per tick.
+/// The coefficient of the proportionate power output.
 /// Doesn't change output total, lower numbers just increases the smoothing - taking longer to ramp up, and longer to drop away.
 /// 4% means an accumulator, when starting up for the first time:
 /// - emits   50% of what is being received after 40 seconds
@@ -9,7 +9,9 @@
 /// - emits   25% of what was previously being received after 79 seconds
 /// - emits   10% of what was previously being received after two minutes
 /// - emits    1% of what was previously being received after four minutes
-#define ACCUMULATOR_STORED_OUTPUT 0.04
+#define ACCUMULATOR_PROPORTIONAL_COEFFICIENT 0.04
+/// The coefficient for the constant power output.
+#define ACCUMULATOR_CONSTANT_COEFFICIENT 2000
 
 /// Abstract type for generators that accumulate energy over time and slowly release it
 /// eg. radiation collectors, tesla coils
@@ -20,24 +22,45 @@
 	var/wants_powernet = TRUE
 	///The amount of energy that is currently inside the machine before being converted to electricity
 	var/stored_energy = 0
+	///The amount of energy that got processed last tick.
+	var/processed_energy = 0
 
 /obj/machinery/power/energy_accumulator/proc/get_stored_joules()
-	return energy_to_joules(stored_energy)
+	return stored_energy
 
-/obj/machinery/power/energy_accumulator/proc/get_power_output()
-	// Always consume at least 2kJ of energy if we have at least that much stored
-	return min(stored_energy, (stored_energy*ACCUMULATOR_STORED_OUTPUT)+joules_to_energy(2000))
+/**
+ * Gets the energy the energy_accumulator would release within the given timespan time.
+ * The power output is proportional to the energy, and has a constant power output added to it.
+ * Args:
+ * - time: The amount of time that is being processed, in seconds.
+ * Returns: The amount of energy it would release in the timespan.
+ */
+/obj/machinery/power/energy_accumulator/proc/calculate_energy_output(time = 0)
+	// dE/dt = -[ACCUMULATOR_PROPORTIONAL_COEFFICIENT] * E - [ACCUMULATOR_CONSTANT_COEFFICIENT]
+	return min(stored_energy, stored_energy - ((ACCUMULATOR_PROPORTIONAL_COEFFICIENT * stored_energy + ACCUMULATOR_CONSTANT_COEFFICIENT) * NUM_E ** (-ACCUMULATOR_PROPORTIONAL_COEFFICIENT * time) - ACCUMULATOR_CONSTANT_COEFFICIENT) / ACCUMULATOR_PROPORTIONAL_COEFFICIENT)
+
+/**
+ * Calculates the power needed to sustain the energy accumulator at its current energy.
+ */
+/obj/machinery/power/energy_accumulator/proc/calculate_sustainable_power()
+	return ACCUMULATOR_PROPORTIONAL_COEFFICIENT * stored_energy + ACCUMULATOR_CONSTANT_COEFFICIENT
 
 /obj/machinery/power/energy_accumulator/process(seconds_per_tick)
-	// NB: stored_energy is stored in energy units, a unit of measurement which already includes SSmachines.wait
-	// Do not multiply by seconds_per_tick here. It is already accounted for by being energy units.
-	var/power_produced = get_power_output()
-	release_energy(power_produced)
-	stored_energy -= power_produced
+	release_energy(calculate_energy_output(seconds_per_tick))
 
-/obj/machinery/power/energy_accumulator/proc/release_energy(power_produced)
+/**
+ * Releases joules amount of its stored energy onto the powernet.
+ * Args:
+ * - joules: The amount of energy to release.
+ * Returns: Whether it successfully released its energy or not.
+ */
+/obj/machinery/power/energy_accumulator/proc/release_energy(joules = 0)
 	if(wants_powernet)
-		add_avail(power_produced)
+		add_avail(joules)
+		stored_energy -= joules
+		processed_energy = joules
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/energy_accumulator/should_have_node()
 	return wants_powernet && anchored
@@ -53,4 +76,5 @@
 		return
 	connect_to_network()
 
-#undef ACCUMULATOR_STORED_OUTPUT
+#undef ACCUMULATOR_PROPORTIONAL_COEFFICIENT
+#undef ACCUMULATOR_CONSTANT_COEFFICIENT

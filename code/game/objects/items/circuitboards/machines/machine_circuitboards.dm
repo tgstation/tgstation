@@ -79,7 +79,6 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -174,6 +173,17 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/modular_shield_generator/gate
+	name = "Modular Shield Gate"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield_generator/gate
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
 /obj/item/circuitboard/machine/modular_shield_generator
 	name = "Modular Shield Generator"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -192,6 +202,14 @@
 	req_components = list(
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/modular_shield_cable
+	name = "Modular Shield Cable"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/node/cable
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 1,
 	)
 
 /obj/item/circuitboard/machine/modular_shield_well
@@ -330,7 +348,7 @@
 
 /obj/item/circuitboard/machine/scanner_gate
 	name = "Scanner Gate"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/scanner_gate
 	req_components = list(
 		/datum/stock_part/scanning_module = 3)
@@ -341,14 +359,37 @@
 	build_path = /obj/machinery/power/smes
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
-		/obj/item/stock_parts/cell = 5,
+		/obj/item/stock_parts/power_store/battery = 5,
 		/datum/stock_part/capacitor = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
+
+/obj/item/circuitboard/machine/smes/connector
+	name = "power connector"
+	build_path = /obj/machinery/power/smes/connector
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/datum/stock_part/capacitor = 1,)
+
+/obj/item/circuitboard/machine/smesbank
+	name = "portable SMES"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	needs_anchored = FALSE
+	build_path = /obj/machinery/smesbank
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/power_store/battery = 5,)
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/high/empty)
 
 /obj/item/circuitboard/machine/techfab/department/engineering
 	name = "\improper Departmental Techfab - Engineering"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/rnd/production/techfab/department/engineering
+
+/obj/item/circuitboard/machine/smes/super
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
+
+/obj/item/circuitboard/machine/smesbank/super
+	def_components = list(/obj/item/stock_parts/power_store/battery = /obj/item/stock_parts/power_store/battery/super/empty)
 
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine"
@@ -425,18 +466,9 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
-/obj/item/circuitboard/machine/bluespace_sender
-	name = "Bluespace Sender"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/atmospherics/components/unary/bluespace_sender
-	req_components = list(
-		/obj/item/stack/cable_coil = 10,
-		/obj/item/stack/sheet/glass = 10,
-		/obj/item/stack/sheet/plasteel = 5)
-
 //Generic
 /obj/item/circuitboard/machine/component_printer
-	name = "\improper Component Printer (Machine Board)"
+	name = "\improper Component Printer"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/component_printer
 	req_components = list(
@@ -445,7 +477,7 @@
 	)
 
 /obj/item/circuitboard/machine/module_duplicator
-	name = "\improper Module Duplicator (Machine Board)"
+	name = "\improper Module Duplicator"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/module_duplicator
 	req_components = list(
@@ -525,9 +557,11 @@
 /obj/item/circuitboard/machine/reagentgrinder
 	name = "All-In-One Grinder"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/reagentgrinder/constructed
+	build_path = /obj/machinery/reagentgrinder
 	req_components = list(
-		/datum/stock_part/servo = 1)
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 1,
+	)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/smartfridge
@@ -568,6 +602,11 @@
 		return
 	. += span_info("[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.")
 
+/obj/item/circuitboard/machine/dehydrator
+	name = "Dehydrator"
+	build_path = /obj/machinery/smartfridge/drying
+	req_components = list(/datum/stock_part/matter_bin = 1)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/space_heater
 	name = "Space Heater"
@@ -612,92 +651,42 @@
 	build_path = /obj/machinery/vending/custom
 	req_components = list(/obj/item/vending_refill/custom = 1)
 
-	var/static/list/vending_names_paths = list(
-		/obj/machinery/vending/assist = "Part-Mart",
-		/obj/machinery/vending/autodrobe = "AutoDrobe",
-		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-		/obj/machinery/vending/cart = "PTech",
-		/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-		/obj/machinery/vending/clothing = "ClothesMate",
-		/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
-		/obj/machinery/vending/cola = "Robust Softdrinks",
-		/obj/machinery/vending/custom = "Custom Vendor",
-		/obj/machinery/vending/dinnerware = "Plasteel Chef's Dinnerware Vendor",
-		/obj/machinery/vending/drugs = "NanoDrug Plus",
-		/obj/machinery/vending/engineering = "Robco Tool Maker",
-		/obj/machinery/vending/engivend = "Engi-Vend",
-		/obj/machinery/vending/games = "\improper Good Clean Fun",
-		/obj/machinery/vending/hydronutrients = "NutriMax",
-		/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
-		/obj/machinery/vending/medical = "NanoMed Plus",
-		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
-		/obj/machinery/vending/robotics = "Robotech Deluxe",
-		/obj/machinery/vending/security = "SecTech",
-		/obj/machinery/vending/snack = "Getmore Chocolate Corp",
-		/obj/machinery/vending/sovietsoda = "BODA",
-		/obj/machinery/vending/sustenance = "Sustenance Vendor",
-		/obj/machinery/vending/tool = "YouTool",
-		/obj/machinery/vending/wallmed = "NanoMed",
-		/obj/machinery/vending/wardrobe/atmos_wardrobe = "AtmosDrobe",
-		/obj/machinery/vending/wardrobe/bar_wardrobe = "BarDrobe",
-		/obj/machinery/vending/wardrobe/cargo_wardrobe = "CargoDrobe",
-		/obj/machinery/vending/wardrobe/chap_wardrobe = "ChapDrobe",
-		/obj/machinery/vending/wardrobe/chef_wardrobe = "ChefDrobe",
-		/obj/machinery/vending/wardrobe/chem_wardrobe = "ChemDrobe",
-		/obj/machinery/vending/wardrobe/coroner_wardrobe = "MortiDrobe",
-		/obj/machinery/vending/wardrobe/curator_wardrobe = "CuraDrobe",
-		/obj/machinery/vending/wardrobe/det_wardrobe = "DetDrobe",
-		/obj/machinery/vending/wardrobe/engi_wardrobe = "EngiDrobe",
-		/obj/machinery/vending/wardrobe/gene_wardrobe = "GeneDrobe",
-		/obj/machinery/vending/wardrobe/hydro_wardrobe = "HyDrobe",
-		/obj/machinery/vending/wardrobe/jani_wardrobe = "JaniDrobe",
-		/obj/machinery/vending/wardrobe/law_wardrobe = "LawDrobe",
-		/obj/machinery/vending/wardrobe/medi_wardrobe = "MediDrobe",
-		/obj/machinery/vending/wardrobe/robo_wardrobe = "RoboDrobe",
-		/obj/machinery/vending/wardrobe/science_wardrobe = "SciDrobe",
-		/obj/machinery/vending/wardrobe/sec_wardrobe = "SecDrobe",
-		/obj/machinery/vending/wardrobe/viro_wardrobe = "ViroDrobe",
-	)
+	///Assoc list (machine name = machine typepath) of all vendors that can be chosen when the circuit is screwdrivered
+	var/static/list/valid_vendor_names_paths
+
+/obj/item/circuitboard/machine/vendor/Initialize(mapload)
+	. = ..()
+	if(!valid_vendor_names_paths)
+		valid_vendor_names_paths = list()
+		for(var/obj/machinery/vending/vendor_type as anything in subtypesof(/obj/machinery/vending))
+			if(vendor_type::allow_custom && vendor_type::refill_canister)
+				valid_vendor_names_paths[vendor_type::name] = vendor_type
 
 /obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
-	var/static/list/display_vending_names_paths
-	if(!display_vending_names_paths)
-		display_vending_names_paths = list()
-		for(var/path in vending_names_paths)
-			display_vending_names_paths[vending_names_paths[path]] = path
-	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(display_vending_names_paths))
+	. = ITEM_INTERACT_FAILURE
+	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(valid_vendor_names_paths))
 	if(isnull(choice))
 		return
-	if(isnull(display_vending_names_paths[choice]))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
-	set_type(display_vending_names_paths[choice])
-	return TRUE
+	set_type(valid_vendor_names_paths[choice])
+	return ITEM_INTERACT_SUCCESS
 
+/**
+ * Sets circuitboard details based on the vending machine type to create
+ *
+ * Arguments
+ * * obj/machinery/vending/typepath - the vending machine type to create
+*/
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
-	name = "[vending_names_paths[build_path]] Vendor"
+	name = "[typepath::name] Vendor"
 	req_components = list(initial(typepath.refill_canister) = 1)
+	flatpack_components = list(initial(typepath.refill_canister))
 
 /obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
-	for(var/typepath in vending_names_paths)
-		if(istype(machine, typepath))
-			set_type(typepath)
-			break
+	set_type(machine.type)
 	return ..()
-
-/obj/item/circuitboard/machine/vending/donksofttoyvendor
-	name = "Donksoft Toy Vendor"
-	build_path = /obj/machinery/vending/donksofttoyvendor
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksoft = 1)
-
-/obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
-	name = "Syndicate Donksoft Toy Vendor"
-	build_path = /obj/machinery/vending/toyliberationstation
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/vending_refill/donksoft = 1)
 
 /obj/item/circuitboard/machine/bountypad
 	name = "Civilian Bounty Pad"
@@ -719,6 +708,32 @@
 		/datum/stock_part/micro_laser = 1,
 		/datum/stock_part/servo = 1,)
 
+/obj/item/circuitboard/machine/bookbinder
+	name = "Book Binder"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/bookbinder
+	req_components = list(
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/libraryscanner
+	name = "Book Scanner"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/libraryscanner
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+	)
+
+/obj/item/circuitboard/machine/photocopier
+	name = "Photocopier"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/photocopier
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/matter_bin = 1
+	)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -730,8 +745,8 @@
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/servo = 1,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+		/obj/item/stock_parts/power_store/cell = 1)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
@@ -742,7 +757,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
@@ -753,7 +768,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/abductor
@@ -767,7 +782,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 	needs_anchored = FALSE
 
@@ -780,7 +795,7 @@
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/chem_mass_spec
-	name = "High-Performance Liquid Chromatography"
+	name = "High-Performance Liquid Chromatography Machine"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/chem_mass_spec
 	req_components = list(
@@ -890,6 +905,9 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/sleeper/syndie
+	build_path = /obj/machinery/sleeper/syndie
+
 /obj/item/circuitboard/machine/sleeper/fullupgrade
 	build_path = /obj/machinery/sleeper/syndie/fullupgrade
 	req_components = list(
@@ -910,8 +928,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/servo = 1,
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell = 1)
+		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/stasis
@@ -948,9 +965,9 @@
 	build_path = /obj/machinery/recharge_station
 	req_components = list(
 		/datum/stock_part/capacitor = 2,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 		/datum/stock_part/servo = 1)
-	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
+	def_components = list(/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high)
 
 /obj/item/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer"
@@ -989,6 +1006,11 @@
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/vatgrower
+	name = "Growing Vat"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/vatgrower
+
 /obj/item/circuitboard/machine/monkey_recycler
 	name = "Monkey Recycler"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -1002,6 +1024,14 @@
 	name = "Slime Processor"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/processor/slime
+
+/obj/item/circuitboard/machine/processor/slime/fullupgrade
+	build_path = /obj/machinery/processor/slime/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 1,
+		/datum/stock_part/servo/tier4 = 1,
+	)
 
 /obj/item/circuitboard/machine/protolathe/department/science
 	name = "Departmental Protolathe - Science"
@@ -1079,6 +1109,28 @@
 		/obj/item/stack/cable_coil = 2,
 	)
 
+/obj/item/circuitboard/machine/experimental_cloner_scanner
+	name = "Experimental Cloning Scanner"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/experimental_cloner_scanner
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/micro_laser = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 2
+	)
+
+/obj/item/circuitboard/machine/experimental_cloner
+	name = "Experimental Cloning Pod"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/experimental_cloner
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 4
+	)
+
 /obj/item/circuitboard/machine/mechpad
 	name = "Mecha Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -1111,6 +1163,19 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/security
 
 //Service
+/obj/item/circuitboard/machine/photobooth
+	name = "Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/photobooth
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/photobooth/security
+	name = "Security Photobooth"
+	greyscale_colors = CIRCUIT_COLOR_SECURITY
+	build_path = /obj/machinery/photobooth/security
 
 /obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator"
@@ -1134,7 +1199,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
@@ -1149,7 +1214,7 @@
 		/datum/stock_part/capacitor/tier4 = 2,
 		/datum/stock_part/servo/tier4 = 2,
 		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/cell/bluespace = 1,
+		/obj/item/stock_parts/power_store/cell/bluespace = 1,
 	)
 
 /obj/item/circuitboard/machine/chem_master/condi
@@ -1213,11 +1278,10 @@
 	suction = !suction
 	to_chat(user, span_notice("You [suction ? "enable" : "disable"] the board's suction function."))
 
-/obj/item/circuitboard/machine/dish_drive/AltClick(mob/living/user)
-	if(!user.Adjacent(src))
-		return
+/obj/item/circuitboard/machine/dish_drive/click_alt(mob/living/user)
 	transmit = !transmit
 	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/circuitboard/machine/gibber
 	name = "Gibber"
@@ -1237,6 +1301,15 @@
 		/datum/stock_part/servo = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/hydroponics/fullupgrade
+	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
+	specific_parts = TRUE
+	req_components = list(
+		/datum/stock_part/matter_bin/tier4 = 2,
+		/datum/stock_part/servo/tier4 = 1,
+		/obj/item/stack/sheet/glass = 1
+	)
 
 /obj/item/circuitboard/machine/microwave
 	name = "Microwave"
@@ -1308,13 +1381,6 @@
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/rnd/production/techfab/department/service
 
-/obj/item/circuitboard/machine/vendatray
-	name = "Vend-A-Tray"
-	greyscale_colors = CIRCUIT_COLOR_SERVICE
-	build_path = /obj/structure/displaycase/forsale
-	req_components = list(
-		/datum/stock_part/card_reader = 1)
-
 /obj/item/circuitboard/machine/fishing_portal_generator
 	name = "Fishing Portal Generator"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
@@ -1323,6 +1389,10 @@
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/fishing_portal_generator/emagged
+	name = "Emagged Fishing Portal Generator"
+	build_path = /obj/machinery/fishing_portal_generator/emagged
 
 //Supply
 /obj/item/circuitboard/machine/ore_redemption
@@ -1381,6 +1451,16 @@
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/card_reader = 1)
 
+/obj/item/circuitboard/machine/mailsorter
+	name = "Mail Sorter"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/mailsorter
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/scanning_module = 1)
+	needs_anchored = TRUE
+
 //Tram
 /obj/item/circuitboard/machine/crossing_signal
 	name = "Crossing Signal"
@@ -1410,7 +1490,42 @@
 	name = "Restaurant Portal"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/restaurant_portal
+	req_components = list(
+		/datum/stock_part/scanning_module = 2,
+		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = TRUE
+	/// Type of the venue that we're linked to
+	var/venue_type = /datum/venue/restaurant
+
+/obj/item/circuitboard/machine/restaurant_portal/multitool_act(mob/living/user)
+	var/list/radial_items = list()
+	var/list/radial_results = list()
+
+	for(var/type_key in SSrestaurant.all_venues)
+		var/datum/venue/venue = SSrestaurant.all_venues[type_key]
+		radial_items[venue.name] = image('icons/obj/machines/restaurant_portal.dmi', venue.name)
+		radial_results[venue.name] = type_key
+
+	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
+
+	if(!choice)
+		return ITEM_INTERACT_BLOCKING
+
+	venue_type = radial_results[choice]
+	to_chat(user, span_notice("You change [src]'s linked venue."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/machine/restaurant_portal/examine(mob/user)
+	. = ..()
+	if (venue_type)
+		var/datum/venue/as_venue = venue_type
+		. += span_notice("[src] is linked to \a [initial(as_venue.name)] venue.")
+
+/obj/item/circuitboard/machine/restaurant_portal/configure_machine(obj/machinery/restaurant_portal/machine)
+	if(!istype(machine))
+		CRASH("Cargo board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+	machine.linked_venue = SSrestaurant.all_venues[venue_type]
+	machine.linked_venue.restaurant_portals += machine
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
@@ -1423,7 +1538,7 @@
 	req_components = list(
 		/datum/stock_part/capacitor = 1,
 		/datum/stock_part/micro_laser = 1,
-		/obj/item/stock_parts/cell/infinite/abductor = 1)
+		/obj/item/stock_parts/power_store/cell/infinite/abductor = 1)
 	def_components = list(
 		/datum/stock_part/capacitor = /datum/stock_part/capacitor/tier4,
 		/datum/stock_part/micro_laser = /datum/stock_part/micro_laser/tier4)
@@ -1517,7 +1632,7 @@
 		)
 
 /obj/item/circuitboard/machine/coffeemaker
-	name = "Coffeemaker (Machine Board)"
+	name = "Coffeemaker"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/coffeemaker
 	req_components = list(
@@ -1594,4 +1709,180 @@
 		/datum/stock_part/capacitor/tier2 = 2,
 		/datum/stock_part/micro_laser/tier2 = 2,
 		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/flatpacker
+	name = "Flatpacker"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/flatpacker
+	req_components = list(
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/micro_laser = 2,
+		/datum/stock_part/servo = 1,
+		/obj/item/stack/sheet/plasteel = 5,
+	)
+
+/obj/item/circuitboard/machine/scrubber
+	name = "Portable Air Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+	)
+
+/obj/item/circuitboard/machine/pump
+	name = "Portable Air Pump"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pump
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/vent = 1,
+	)
+
+/obj/item/circuitboard/machine/pipe_scrubber
+	name = "Portable Pipe Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/pipe_scrubber
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/trinary/flippable/filter = 1,
+	)
+
+/obj/item/circuitboard/machine/portagrav
+	name = "Portable Gravity Unit"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/portagrav
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/big_manipulator
+	name = "Big Manipulator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/big_manipulator
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		)
+
+/obj/item/circuitboard/machine/manucrafter
+	name = /obj/machinery/power/manufacturing/crafter::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/crafter
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manulathe
+	name = /obj/machinery/power/manufacturing/lathe::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/lathe
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/matter_bin = 1,
+	)
+
+/obj/item/circuitboard/machine/manucrusher
+	name = /obj/machinery/power/manufacturing/crusher::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/crusher
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manuunloader
+	name = /obj/machinery/power/manufacturing/unloader::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/unloader
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/servo = 1,
+	)
+
+/obj/item/circuitboard/machine/manusorter
+	name = /obj/machinery/power/manufacturing/sorter::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/sorter
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/scanning_module = 1,
+	)
+
+/obj/item/circuitboard/machine/manusmelter
+	name = /obj/machinery/power/manufacturing/smelter::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/smelter
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/manurouter
+	name = /obj/machinery/power/manufacturing/router::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/manufacturing/router
+	req_components = list(
+		/obj/item/stack/sheet/iron = 5,
+	)
+
+/obj/item/circuitboard/machine/atmos_shield_gen
+	name = /obj/machinery/atmos_shield_gen::name
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/atmos_shield_gen
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+	)
+
+/obj/item/circuitboard/machine/engine
+	name = "Shuttle Engine"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/shuttle_engine
+	needs_anchored = FALSE
+	req_components = list(
+		/datum/stock_part/capacitor = 2,
+		/datum/stock_part/micro_laser = 2,
+	)
+
+/obj/item/circuitboard/machine/engine/heater
+	name = "Shuttle Engine Heater"
+	build_path = /obj/machinery/power/shuttle_engine/heater
+
+/obj/item/circuitboard/machine/engine/propulsion
+	name = "Shuttle Engine Propulsion"
+	build_path = /obj/machinery/power/shuttle_engine/propulsion
+
+/obj/item/circuitboard/machine/quantum_server
+	name = "Quantum Server"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/quantum_server
+	req_components = list(
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/capacitor = 1,
+	)
+
+/obj/item/circuitboard/machine/netpod
+	name = "Netpod"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/netpod
+	req_components = list(
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 2,
+	)
+
+/obj/item/circuitboard/computer/quantum_console
+	name = "Quantum Console"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/computer/quantum_console
+
+/obj/item/circuitboard/machine/byteforge
+	name = "Byteforge"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/byteforge
+	req_components = list(
+		/datum/stock_part/micro_laser = 1,
 	)

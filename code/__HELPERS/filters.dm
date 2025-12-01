@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"y" = 0,
 			"icon" = ICON_NOT_SET,
 			"render_source" = "",
-			"flags" = 0
+			"flags" = NONE
 		),
 		"flags" = list(
 			"MASK_INVERSE" = MASK_INVERSE,
@@ -22,14 +22,28 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"size" = 1
 		)
 	),
-	// Not implemented, but if this isn't uncommented some windows will just error
-	// Needs either a proper matrix editor, or just a hook to our existing one 
-	// Issue is filterrific assumes variables will have the same value type if they share the same name, which this violates
-	// Gotta refactor this sometime
+	"bloom" = list(
+		"defaults" = list(
+			"threshold" = COLOR_BLACK,
+			"size" = 1,
+			"offset" = 0,
+			"alpha" = 255
+		)
+	),
+	// Not fully implemented, but if this isn't uncommented some windows will just error
+	// Needs either a proper matrix editor, or just a hook to our existing one
 	"color" = list(
 		"defaults" = list(
 			"color" = matrix(),
 			"space" = FILTER_COLOR_RGB
+		),
+		"options" = list(
+			"space" = list(
+				"FILTER_COLOR_RGB" = FILTER_COLOR_RGB,
+				"FILTER_COLOR_HSV" = FILTER_COLOR_HSV,
+				"FILTER_COLOR_HSL" = FILTER_COLOR_HSL,
+				"FILTER_COLOR_HCY" = FILTER_COLOR_HCY
+			)
 		)
 	),
 	"displace" = list(
@@ -38,7 +52,11 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"y" = 0,
 			"size" = null,
 			"icon" = ICON_NOT_SET,
-			"render_source" = ""
+			"render_source" = "",
+			"flags" = NONE
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY
 		)
 	),
 	"drop_shadow" = list(
@@ -62,10 +80,24 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 			"icon" = ICON_NOT_SET,
 			"render_source" = "",
 			"flags" = FILTER_OVERLAY,
-			"color" = "",
+			"color" = COLOR_WHITE,
 			"transform" = null,
 			"blend_mode" = BLEND_DEFAULT
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY,
+		),
+		"options" = list(
+			"blend_mode" = list(
+				"BLEND_DEFAULT" = BLEND_DEFAULT,
+				"BLEND_OVERLAY" = BLEND_OVERLAY,
+				"BLEND_ADD" = BLEND_ADD,
+				"BLEND_SUBTRACT" = BLEND_SUBTRACT,
+				"BLEND_MULTIPLY" = BLEND_MULTIPLY,
+				"BLEND_INSET_OVERLAY" = BLEND_INSET_OVERLAY
+			)
 		)
+
 	),
 	"motion_blur" = list(
 		"defaults" = list(
@@ -169,7 +201,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(space))
 		.["space"] = space
 
-/proc/displacement_map_filter(icon, render_source, x, y, size = 32)
+/proc/displacement_map_filter(icon, render_source, x, y, size = ICON_SIZE_ALL)
 	. = list("type" = "displace")
 	if(!isnull(icon))
 		.["icon"] = icon
@@ -199,6 +231,17 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	. = list("type" = "blur")
 	if(!isnull(size))
 		.["size"] = size
+
+/proc/bloom_filter(threshold, size, offset, alpha)
+	. = list("type" = "bloom")
+	if(!isnull(threshold))
+		.["threshold"] = threshold
+	if(!isnull(size))
+		.["size"] = size
+	if(!isnull(offset))
+		.["offset"] = offset
+	if(!isnull(alpha))
+		.["alpha"] = alpha
 
 /proc/layering_filter(icon, render_source, x, y, flags, color, transform, blend_mode)
 	. = list("type" = "layer")
@@ -312,9 +355,20 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
-/proc/remove_wibbly_filters(atom/in_atom)
+/proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
+	if(QDELETED(in_atom))
+		return
 	var/filter
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")
-		animate(filter)
-		in_atom.remove_filter("wibbly-[i]")
+		if(remove_duration == 0)
+			animate(filter)
+			in_atom.remove_filter("wibbly-[i]")
+			continue
+		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration)
+		addtimer(CALLBACK(in_atom, TYPE_PROC_REF(/datum, remove_filter), "wibbly-[i]"), remove_duration)
+
+/proc/convert_list_to_filter(list/list_filter)
+	var/list/arguments = list_filter.Copy()
+	arguments -= "priority"
+	return filter(arglist(arguments))

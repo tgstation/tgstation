@@ -14,7 +14,7 @@
 	cost = 20
 	lock_other_purchases = TRUE
 	cant_discount = TRUE
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/badass/balloon/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -23,7 +23,7 @@
 		return
 
 	notify_ghosts(
-		"[user] has purchased a BADASS Syndicate Balloon!",
+		"[user.real_name] has purchased a BADASS Syndicate Balloon!",
 		source = .,
 		header = "What are they THINKING?",
 	)
@@ -36,14 +36,14 @@
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	surplus = 40
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
@@ -53,22 +53,17 @@
 	item = /obj/item/storage/briefcase/secure/syndie
 	cost = 3
 	restricted = TRUE
-	illegal_tech = FALSE
+	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
 	desc = "Nothing is more terrifying than clowns with fully automatic weaponry."
 	item = /obj/item/storage/backpack/duffelbag/clown/syndie
-	purchasable_from = ALL
-	progression_minimum = 70 MINUTES
 
 /datum/uplink_item/badass/costumes/tactical_naptime
 	name = "Sleepy Time Pajama Bundle"
 	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
 	item = /obj/item/storage/box/syndie_kit/sleepytime
-	purchasable_from = ALL
-	progression_minimum = 90 MINUTES
-	cost = 4
 	limited_stock = 1
 	cant_discount = TRUE
 
@@ -76,22 +71,18 @@
 	name = "Broken Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
 			Please note that this kit did NOT pass quality control."
-	purchasable_from = ALL
-	progression_minimum = 90 MINUTES
 	item = /obj/item/storage/box/syndie_kit/chameleon/broken
 
 /datum/uplink_item/badass/costumes/centcom_official
 	name = "CentCom Official Costume"
 	desc = "Ask the crew to \"inspect\" their nuclear disk and weapons system, and then when they decline, pull out a fully automatic rifle and gun down the Captain. \
 			Radio headset does not include encryption key. No gun included."
-	purchasable_from = ALL
-	progression_minimum = 110 MINUTES
 	item = /obj/item/storage/box/syndie_kit/centcom_costume
 
 /datum/uplink_item/badass/stickers
 	name = "Syndicate Sticker Pack"
 	desc = "Contains 8 random stickers precisely engineered to resemble suspicious objects, which may or may not be useful for fooling crew."
-	item = /obj/item/storage/box/syndie_kit/stickers
+	item = /obj/item/storage/box/stickers/syndie_kit
 	cost = 1
 
 /datum/uplink_item/badass/demotivational_posters
@@ -106,3 +97,15 @@
 		Contains enough special solution to spray a single super-size seditious symbol, subjecting station staff to slippery suffering."
 	item = /obj/item/traitor_spraycan
 	cost = 1
+
+/datum/uplink_item/badass/pinpointer
+	name = "Surplus Pinpointer"
+	desc = "Provides a surplus pinpointer, left over from the previous models that were abandoned in favor of a SAAS cloud-based PDA app."
+	item = /obj/item/pinpointer/nuke/syndicate
+	cost = 2
+
+/datum/uplink_item/badass/dangerous_horse
+	name = "a boxed syndicate pony"
+	desc = "This box contains everything for a better life. Pony, a mind potion for this pony, an apple for this pony. For God's sake, don't make apple pie!"
+	item = /obj/item/storage/box/syndicate/horse_box
+	cost = 10

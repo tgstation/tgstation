@@ -13,27 +13,27 @@
 	icon_state = "eradicationlock"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The ckey we lock with, to allow all alternate versions of the user.
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
+	. = ..()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_mod_activation))
 	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, PROC_REF(on_mod_removal))
 
 /obj/item/mod/module/eradication_lock/on_uninstall(deleting = FALSE)
+	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
-/obj/item/mod/module/eradication_lock/on_use()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/eradication_lock/on_use(mob/activator)
 	true_owner_ckey = mod.wearer.ckey
-	balloon_alert(mod.wearer, "user remembered")
-	drain_power(use_power_cost)
+	balloon_alert(activator, "user remembered")
+	playsound(src, 'sound/items/pshoom/pshoom.ogg', 25, TRUE)
+	drain_power(use_energy_cost)
 
 ///Signal fired when the modsuit tries activating
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
@@ -62,15 +62,13 @@
 	icon_state = "rewinder"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/rewinder)
 	cooldown_time = 20 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 
-/obj/item/mod/module/rewinder/on_use()
-	. = ..()
-	if(!.)
-		return
-	balloon_alert(mod.wearer, "anchor point set")
+/obj/item/mod/module/rewinder/on_use(mob/activator)
+	balloon_alert(activator, "anchor point set")
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
@@ -106,19 +104,20 @@
 	icon_state = "timestop"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 	///The current timestop in progress.
 	var/obj/effect/timestop/channelled/timestop
 
-/obj/item/mod/module/timestopper/on_use()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/timestopper/used(mob/activator)
 	if(timestop)
-		mod.balloon_alert(mod.wearer, "already freezing time!")
-		return
+		mod.balloon_alert(activator, "already freezing time!")
+		return FALSE
+	return ..()
+
+/obj/item/mod/module/timestopper/on_use(mob/activator)
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, PROC_REF(on_module_triggered))
@@ -137,13 +136,13 @@
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source)
 	SIGNAL_HANDLER
-	balloon_alert(mod.wearer, "not while channelling timestop!")
+	balloon_alert(mod.wearer, "not while stopping time!")
 	return MOD_ABORT_USE
 
 ///Signal fired when wearer attempts to activate/deactivate suits, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
-	balloon_alert(user, "not while channelling timestop!")
+	balloon_alert(user, "not while stopping time!")
 	return MOD_CANCEL_ACTIVATE
 
 ///Timeline Jumper - Infinite phasing. needs some special effects
@@ -153,27 +152,27 @@
 	icon_state = "timeline_jumper"
 	module_type = MODULE_USABLE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
 	cooldown_time = 5 SECONDS
 	allow_flags = MODULE_ALLOW_PHASEOUT
+	required_slots = list(ITEM_SLOT_BACK)
 	///The dummy for phasing from this module, the wearer is phased out while this exists.
 	var/obj/effect/dummy/phased_mob/chrono/phased_mob
 
-/obj/item/mod/module/timeline_jumper/on_use()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/timeline_jumper/used(mob/activator)
 	var/area/noteleport_check = get_area(mod.wearer)
-	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
-		to_chat(mod.wearer, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
+	if(noteleport_check && !check_teleport_valid(mod.wearer, get_turf(mod.wearer)))
+		to_chat(activator, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
 		return FALSE
+	return ..()
 
+/obj/item/mod/module/timeline_jumper/on_use(mob/activator)
 	if(!phased_mob)
 		//phasing out
 		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
 		mod.wearer.SetAllImmobility(0)
-		mod.wearer.setStaminaLoss(0)
+		mod.wearer.set_stamina_loss(0)
 		phased_mob = new(get_turf(mod.wearer.loc), mod.wearer)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(on_activate_block))
 	else
@@ -207,9 +206,10 @@
 	icon_state = "chronogun"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tem)
 	cooldown_time = 0.5 SECONDS
+	required_slots = list(ITEM_SLOT_BACK)
 	///Reference to the chrono field being controlled by this module
 	var/obj/structure/chrono_field/field = null
 	///Where the chronofield maker was when the field went up
@@ -225,12 +225,13 @@
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/chrono_beam = new /obj/projectile/energy/chrono_beam(get_turf(src))
 	chrono_beam.tem_weakref = WEAKREF(src)
-	chrono_beam.preparePixelProjectile(target, mod.wearer)
+	chrono_beam.aim_projectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(!field)
 		return
 	field_disconnect(field)
@@ -400,15 +401,15 @@
 			timetokill += seconds_per_tick
 
 
-/obj/structure/chrono_field/bullet_act(obj/projectile/projectile)
-	if(istype(projectile, /obj/projectile/energy/chrono_beam))
-		var/obj/projectile/energy/chrono_beam/beam = projectile
-		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
-		if(linked_tem && istype(linked_tem))
-			linked_tem.field_connect(src)
-		return BULLET_ACT_HIT
+/obj/structure/chrono_field/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if(!istype(hitting_projectile, /obj/projectile/energy/chrono_beam))
+		return ..()
 
-	return ..()
+	var/obj/projectile/energy/chrono_beam/beam = hitting_projectile
+	var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
+	if(linked_tem && istype(linked_tem))
+		linked_tem.field_connect(src)
+	return BULLET_ACT_HIT
 
 /obj/structure/chrono_field/assume_air()
 	return FALSE
@@ -424,7 +425,7 @@
 /obj/structure/chrono_field/singularity_act()
 	return
 
-/obj/structure/chrono_field/singularity_pull()
+/obj/structure/chrono_field/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/structure/chrono_field/ex_act()

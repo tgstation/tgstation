@@ -142,7 +142,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "ih" = (
 /obj/item/bedsheet/purple,
-/obj/item/clothing/mask/cigarette/space_cigarette,
+/obj/item/cigarette/space_cigarette,
 /obj/structure/bed/maint,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/fuel_pool,
@@ -187,7 +187,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "kb" = (
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/stock_parts/cell/crap/empty,
+/obj/item/stock_parts/power_store/cell/crap/empty,
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating/dumpsterair,
@@ -202,7 +202,7 @@
 "la" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "le" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
@@ -237,10 +237,8 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "lE" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
-	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "lY" = (
@@ -286,7 +284,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pk" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pC" = (
 /obj/effect/decal/cleanable/fuel_pool,
@@ -314,7 +312,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /obj/item/toy/brokenradio,
 /obj/effect/spawner/random/engineering/tool,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "rq" = (
@@ -373,7 +371,7 @@
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "tu" = (
-/obj/item/clothing/mask/cigarette/robust,
+/obj/item/cigarette/robust,
 /obj/structure/closet/emcloset,
 /obj/item/clothing/suit/utility/fire/heavy,
 /obj/item/clothing/head/utility/hardhat/welding/atmos,
@@ -447,7 +445,7 @@
 /obj/structure/broken_flooring/pile,
 /obj/item/food/deadmouse/moldy,
 /obj/item/stock_parts/water_recycler,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "vW" = (
@@ -470,7 +468,6 @@
 	},
 /obj/machinery/light/warm,
 /obj/machinery/power/apc{
-	cell_type = /obj/item/stock_parts/cell/lead;
 	locked = 0;
 	pixel_y = -25;
 	start_charge = 0
@@ -504,7 +501,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zz" = (
 /obj/item/cigbutt/cigarbutt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/structure/closet/crate/trashcart,
 /obj/item/storage/bag/trash,
@@ -514,7 +511,7 @@
 "zC" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zN" = (
 /obj/structure/table/reinforced,
@@ -649,7 +646,7 @@
 "Hn" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/item/pen,
 /obj/item/stock_parts/subspace/analyzer,
 /turf/open/floor/plating/dumpsterair,
@@ -663,13 +660,13 @@
 /obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/molten_object,
-/obj/item/organ/internal/tongue/robot,
+/obj/item/organ/tongue/robot,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/lead,
+/obj/item/stock_parts/power_store/cell/lead,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HZ" = (
@@ -708,7 +705,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "JR" = (
 /obj/effect/decal/cleanable/ash,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /mob/living/basic/trooper/russian,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -717,8 +714,8 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "JX" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Ko" = (
 /obj/machinery/computer/terminal{
 	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
@@ -752,14 +749,14 @@
 "MJ" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "MQ" = (
-/obj/item/stock_parts/cell/crap/empty{
+/obj/item/stock_parts/power_store/cell/crap/empty{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/clothing/mask/cigarette/space_cigarette{
+/obj/item/cigarette/space_cigarette{
 	pixel_x = -5;
 	pixel_y = 7
 	},
@@ -784,7 +781,7 @@
 "Ol" = (
 /obj/item/plate_shard,
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Pz" = (
@@ -886,8 +883,8 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/space/nearstation)
 "WK" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/clothing/shoes/workboots{
@@ -906,7 +903,7 @@
 "Xv" = (
 /obj/item/food/deadmouse,
 /obj/item/clothing/shoes/sneakers/red,
-/obj/item/clothing/mask/cigarette/carp,
+/obj/item/cigarette/carp,
 /obj/item/extinguisher/mini,
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
@@ -922,7 +919,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Zu" = (
 /obj/item/food/candy,

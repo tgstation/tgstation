@@ -13,7 +13,7 @@
 	exit_delay = 40
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 	mech_type = EXOSUIT_MODULE_HONK
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
@@ -28,6 +28,10 @@
 	melee = -20
 	fire = 100
 	acid = 100
+
+/obj/vehicle/sealed/mecha/honker/Initialize(mapload, built_manually)
+	. = ..()
+	AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 
 /obj/vehicle/sealed/mecha/honker/play_stepsound()
 	if(squeak)
@@ -47,13 +51,13 @@
 	max_temperature = 35000
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
-	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 3,
+		MECHA_ARMOR = 2,
 	)
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded
@@ -75,7 +79,7 @@
 	acid = 100
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/hyper(src)
+	cell = new /obj/item/stock_parts/power_store/cell/hyper(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/super(src)
 	servo = new /obj/item/stock_parts/servo/pico(src)

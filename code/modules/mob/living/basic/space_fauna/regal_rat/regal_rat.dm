@@ -11,6 +11,7 @@
 
 	maxHealth = 70
 	health = 70
+	max_stamina = 120
 
 	butcher_results = list(/obj/item/food/meat/slab/mouse = 2, /obj/item/clothing/head/costume/crown = 1)
 
@@ -27,7 +28,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 
 	// Slightly brown red, for the eyes
 	lighting_cutoff_red = 22
@@ -49,12 +50,12 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 
 	AddElementTrait(TRAIT_WADDLING, INNATE_TRAIT, /datum/element/waddling)
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = REGALRAT_INTERACTION)
+	AddElement(/datum/element/poster_tearer, interaction_key = REGALRAT_INTERACTION)
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		poll_candidates = poll_ghosts,\
@@ -168,21 +169,24 @@
 	special_moniker = "You better not screw with [p_their()] [selected_kingdom]... How do you become a [selected_title] of that anyways?"
 
 /// Checks if we are able to attack this object, as well as send out the signal to see if we get any special regal rat interactions.
-/mob/living/basic/regal_rat/proc/pre_attack(mob/living/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/regal_rat/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(DOING_INTERACTION(src, REGALRAT_INTERACTION) || !allowed_to_attack(target))
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
 	if(SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src) & COMPONENT_RAT_INTERACTED)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return FALSE
 
-	if(isnull(mind))
-		return
+	if(isnull(mind) || combat_mode)
+		return TRUE
 
-	if(!combat_mode)
-		INVOKE_ASYNC(src, PROC_REF(poison_target), target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+	if(poison_target(target))
+		return FALSE
+
+	return TRUE
 
 /// Checks if we are allowed to attack this mob. Will return TRUE if we are potentially allowed to attack, but if we end up in a case where we should NOT attack, return FALSE.
 /mob/living/basic/regal_rat/proc/allowed_to_attack(atom/the_target)
@@ -193,7 +197,7 @@
 		return TRUE // it might be possible to attack this? we'll find out soon enough
 
 	var/mob/living/living_target = the_target
-	if (HAS_TRAIT(living_target, TRAIT_FAKEDEATH) || living_target.stat == DEAD)
+	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
 		balloon_alert(src, "already dead!")
 		return FALSE
 
@@ -203,10 +207,17 @@
 
 	return TRUE
 
-/// Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+/**
+ * Attempts to add rat spit to a target, effectively poisoning it to whoever eats it. Yuckers.
+ * Returns TRUE if the target is valid for adding rat spit
+ * Returns FALSE if the target is invalid for adding rat spit
+ * Arguments
+ *
+ * * atom/lean_target - the target we try to add the spit to
+ */
 /mob/living/basic/regal_rat/proc/poison_target(atom/target)
-	if(isnull(target.reagents) || !target.is_injectable(src, allowmobs = TRUE))
-		return
+	if(isnull(target.reagents) || !target.is_injectable(src, /*allowmobs = */TRUE))
+		return FALSE
 
 	visible_message(
 		span_warning("[src] starts licking [target] passionately!"),
@@ -215,10 +226,11 @@
 	)
 
 	if (!do_after(src, 2 SECONDS, target, interaction_key = REGALRAT_INTERACTION))
-		return
+		return TRUE // don't return false here because they tried to lick and the do_after was interrupted, otherwise cancelling the do_after will make them hit the target.
 
 	target.reagents.add_reagent(/datum/reagent/rat_spit, rand(1,3), no_react = TRUE)
 	balloon_alert(src, "licked")
+	return TRUE
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.

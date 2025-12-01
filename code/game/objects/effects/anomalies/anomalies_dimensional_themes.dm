@@ -11,7 +11,7 @@
 	/// Typepath of custom material to use for objects.
 	var/datum/material/material
 	/// Sound to play when transforming a tile
-	var/sound = 'sound/magic/blind.ogg'
+	var/sound = 'sound/effects/magic/blind.ogg'
 	/// Weighted list of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
 	/// Typepath of turf to replace walls with.
@@ -22,6 +22,7 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/greyscale = 1),
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/material = 1),
 	)
 	/// List of random spawns to place in completely open turfs
 	var/list/random_spawns
@@ -36,7 +37,7 @@
 /datum/dimension_theme/New()
 	if (material)
 		var/datum/material/using_mat = GET_MATERIAL_REF(material)
-		window_colour = using_mat.greyscale_colors
+		window_colour = using_mat.color
 
 /**
  * Applies themed transformation to the provided turf.
@@ -152,6 +153,15 @@
 	var/obj/new_object = new replace_path(object.loc)
 	new_object.setDir(object.dir)
 	if(istype(object, /obj/machinery/door/airlock))
+		if(istype(new_object, /obj/machinery/door/airlock)) //carry over access-related and adjacent variables. The rest is not as important
+			var/obj/machinery/door/airlock/airlock = object
+			var/obj/machinery/door/new_airlock = new_object
+			new_airlock.unres_sides = airlock.unres_sides
+			new_airlock.req_access = airlock.req_access?.Copy()
+			new_airlock.req_one_access = airlock.req_one_access?.Copy()
+			new_airlock.locked = airlock.locked
+			new_airlock.emergency = airlock.emergency
+			new_airlock.update_appearance()
 		new_object.name = object.name
 	qdel(object)
 
@@ -194,7 +204,9 @@
 	/obj/structure/table, \
 	/obj/structure/toilet, \
 	/obj/structure/window, \
-	/obj/structure/sink,)
+	/obj/structure/sink, \
+	/obj/structure/platform, \
+)
 
 /**
  * Returns true if the provided object can have its material modified.
@@ -236,6 +248,13 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-gold_2"
 	material = /datum/material/gold
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/gold = 1, /obj/machinery/door/airlock/gold/glass = 1),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/gold = 1),
+	)
 
 /datum/dimension_theme/plasma
 	name = "Plasma"
@@ -255,7 +274,7 @@
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "uranium"
 	material = /datum/material/uranium
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 
 /datum/dimension_theme/meat
 	name = "Meat"
@@ -270,6 +289,13 @@
 	icon_state = "pizzamargherita"
 	material = /datum/material/pizza
 	sound = 'sound/items/eatfood.ogg'
+	replace_objs = list(
+		/obj/structure/chair = list(/obj/structure/chair/greyscale = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 1),
+		/obj/structure/table = list(/obj/structure/table/greyscale = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/pizza = 1),
+	)
 
 /datum/dimension_theme/natural
 	name = "Natural"
@@ -282,6 +308,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 3, /obj/structure/chair/wood/wings = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 5, /obj/structure/table/wood/fancy = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 
 /datum/dimension_theme/bamboo
@@ -295,6 +322,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/stool/bamboo = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/bamboo = 1),
 	)
 
 /datum/dimension_theme/icebox
@@ -321,6 +349,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 
 /datum/dimension_theme/lavaland
@@ -330,7 +359,10 @@
 	window_colour = "#860000"
 	replace_floors = list(/turf/open/floor/fakebasalt = 5, /turf/open/floor/fakepit = 1)
 	replace_walls = /turf/closed/wall/mineral/cult
-	replace_objs = list(/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1))
+	replace_objs = list(
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/external/glass/ruin = 1),
+		/obj/structure/platform = list(/obj/structure/platform/cult = 1),
+	)
 	random_spawns = list(/mob/living/basic/mining/goldgrub)
 	random_spawn_chance = 1
 
@@ -338,7 +370,7 @@
 	name = "Space"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blessed"
-	window_colour = "#000000"
+	window_colour = COLOR_BLACK
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/fakespace = 1)
 	replace_walls = /turf/closed/wall/rock/porous
@@ -361,32 +393,43 @@
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/comfy = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1, /obj/machinery/door/airlock/wood/glass = 1),
+		/obj/structure/platform = list(/obj/structure/platform/paper = 1),
 	)
-	///cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
+	/// Cooldown for changing carpets, It's kinda dull to always use the same one, but we also can't make it too random.
 	COOLDOWN_DECLARE(carpet_switch_cd)
+	/// List of carpets we can pick from, set up in New
+	var/list/valid_carpets
+	/// List of tables we can pick from, set up in New
+	var/list/valid_tables
 
-#define FANCY_CARPETS list(\
-	/turf/open/floor/eighties, \
-	/turf/open/floor/eighties/red, \
-	/turf/open/floor/carpet/lone/star, \
-	/turf/open/floor/carpet/black, \
-	/turf/open/floor/carpet/blue, \
-	/turf/open/floor/carpet/cyan, \
-	/turf/open/floor/carpet/green, \
-	/turf/open/floor/carpet/orange, \
-	/turf/open/floor/carpet/purple, \
-	/turf/open/floor/carpet/red, \
-	/turf/open/floor/carpet/royalblack, \
-	/turf/open/floor/carpet/royalblue,)
+/datum/dimension_theme/fancy/New()
+	. = ..()
+	valid_carpets = list(
+		/turf/open/floor/carpet/black,
+		/turf/open/floor/carpet/blue,
+		/turf/open/floor/carpet/cyan,
+		/turf/open/floor/carpet/green,
+		/turf/open/floor/carpet/lone/star,
+		/turf/open/floor/carpet/orange,
+		/turf/open/floor/carpet/purple,
+		/turf/open/floor/carpet/red,
+		/turf/open/floor/carpet/royalblack,
+		/turf/open/floor/carpet/royalblue,
+		/turf/open/floor/eighties,
+		/turf/open/floor/eighties/red,
+	)
+	valid_tables = subtypesof(/obj/structure/table/wood/fancy)
+	randomize_theme()
+
+/datum/dimension_theme/fancy/proc/randomize_theme()
+	replace_floors = list(pick(valid_carpets) = 1)
+	replace_objs[/obj/structure/table/wood] = list(pick(valid_tables) = 1)
 
 /datum/dimension_theme/fancy/apply_theme(turf/affected_turf, skip_sound = FALSE, show_effect = FALSE)
 	if(COOLDOWN_FINISHED(src, carpet_switch_cd))
-		replace_floors = list(pick(FANCY_CARPETS) = 1)
-		replace_objs[/obj/structure/table/wood] = list(pick(subtypesof(/obj/structure/table/wood/fancy)) = 1)
+		randomize_theme()
 		COOLDOWN_START(src, carpet_switch_cd, 90 SECONDS)
 	return ..()
-
-#undef FANCY_CARPETS
 
 /datum/dimension_theme/disco
 	name = "Disco"
@@ -414,6 +457,7 @@
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
 		/obj/structure/table = list(/obj/structure/table/wood = 1),
+		/obj/structure/platform = list(/obj/structure/platform/wood = 1),
 	)
 	random_spawns = list(
 		/mob/living/carbon/human/species/monkey,
@@ -438,4 +482,26 @@
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/material = 1, /obj/machinery/door/airlock/material/glass = 2),
 		/obj/structure/table = list(/obj/structure/table/greyscale = 9, /obj/structure/table/abductor = 1),
 		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/platform = list(/obj/structure/platform/uranium = 1),
 	)
+
+/datum/dimension_theme/bronze
+	name = "Bronze"
+	icon = 'icons/obj/weapons/spear.dmi'
+	icon_state = "ratvarian_spear"
+	material = /datum/material/bronze
+	replace_walls = /turf/closed/wall/mineral/bronze
+	replace_floors = list(/turf/open/floor/bronze = 1, /turf/open/floor/bronze/flat = 1, /turf/open/floor/bronze/filled = 1)
+	replace_objs = list(
+		/obj/structure/girder = list(/obj/structure/girder/bronze = 1),
+		/obj/structure/window/fulltile = list(/obj/structure/window/bronze/fulltile = 1),
+		/obj/structure/window = list(/obj/structure/window/bronze = 1),
+		/obj/structure/statue = list(/obj/structure/statue/bronze/marx = 1), // karl marx was a servant of ratvar
+		/obj/structure/table = list(/obj/structure/table/bronze = 1),
+		/obj/structure/toilet = list(/obj/structure/toilet/greyscale = 1),
+		/obj/structure/chair = list(/obj/structure/chair/bronze = 1),
+		/obj/item/reagent_containers/cup/glass/trophy = list(/obj/item/reagent_containers/cup/glass/trophy/bronze_cup = 1),
+		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/bronze = 1),
+		/obj/structure/platform = list(/obj/structure/platform/bronze = 1),
+	)
+	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'

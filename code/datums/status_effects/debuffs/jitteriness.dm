@@ -22,12 +22,10 @@
 /datum/status_effect/jitter/on_remove()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	owner.clear_mood_event(id)
-	// juuust in case, reset our x and y's from our jittering
-	owner.pixel_x = 0
-	owner.pixel_y = 0
+	owner.update_offsets()
 
 /datum/status_effect/jitter/get_examine_text()
-	switch(duration - world.time)
+	switch(duration)
 		if(5 MINUTES to INFINITY)
 			return span_boldwarning("[owner.p_They()] [owner.p_are()] convulsing violently!")
 		if(3 MINUTES to 5 MINUTES)
@@ -49,14 +47,14 @@
 	if(owner.resting && remove_duration(4 * seconds_between_ticks))
 		return
 
-	var/time_left_in_seconds = (duration - world.time) / 10
+	var/time_left_in_seconds = duration / 10
 	owner.do_jitter_animation(time_left_in_seconds)
 
 /// Helper proc that causes the mob to do a jittering animation by jitter_amount.
 /// jitter_amount will only apply up to 300 (maximum jitter effect).
 /mob/living/proc/do_jitter_animation(jitter_amount = 100)
 	var/amplitude = min(4, (jitter_amount / 100) + 1)
-	var/pixel_x_diff = rand(-amplitude, amplitude)
-	var/pixel_y_diff = rand(-amplitude / 3, amplitude / 3)
-	animate(src, pixel_x = pixel_x_diff, pixel_y = pixel_y_diff , time = 0.2 SECONDS, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
-	animate(pixel_x = -pixel_x_diff , pixel_y = -pixel_y_diff , time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)
+	var/pixel_w_diff = rand(-amplitude, amplitude)
+	var/pixel_z_diff = rand(-amplitude / 3, amplitude / 3)
+	animate(src, pixel_w = pixel_w_diff, pixel_z = pixel_z_diff , time = 0.2 SECONDS, loop = 6, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(pixel_w = -pixel_w_diff , pixel_z = -pixel_z_diff , time = 0.2 SECONDS, flags = ANIMATION_RELATIVE)

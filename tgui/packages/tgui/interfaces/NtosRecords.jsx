@@ -1,8 +1,8 @@
-import { createSearch } from 'common/string';
 import { useState } from 'react';
+import { Box, Icon, Input, Section } from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Icon, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRecords = (props) => {
@@ -20,11 +20,12 @@ export const NtosRecords = (props) => {
         </Section>
         <Section>
           <Input
-            placeholder={'Filter results...'}
+            placeholder="Filter results..."
             value={searchTerm}
             fluid
             textAlign="center"
-            onChange={(e, value) => setSearchTerm(value)}
+            onChange={setSearchTerm}
+            expensive
           />
         </Section>
         {mode === 'security' &&

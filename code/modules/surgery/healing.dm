@@ -38,11 +38,12 @@
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 65,
+		TOOL_WIRECUTTER = 60,
 		/obj/item/pen = 55)
 	repeatable = TRUE
-	time = 25
-	success_sound = 'sound/surgery/retractor2.ogg'
-	failure_sound = 'sound/surgery/organ2.ogg'
+	time = 2.5 SECONDS
+	success_sound = 'sound/items/handling/surgery/retractor2.ogg'
+	failure_sound = 'sound/items/handling/surgery/organ2.ogg'
 	var/brutehealing = 0
 	var/burnhealing = 0
 	var/brute_multiplier = 0 //multiplies the damage that the patient has. if 0 the patient wont get any additional healing from the damage he has.
@@ -75,7 +76,7 @@
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())
 		return
-	while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
+	while((brutehealing && target.get_brute_loss()) || (burnhealing && target.get_fire_loss()))
 		if(!..())
 			break
 
@@ -86,12 +87,12 @@
 	var/burn_healed = burnhealing
 	var/dead_patient = FALSE
 	if(target.stat == DEAD) //dead patients get way less additional heal from the damage they have.
-		brute_healed += round((target.getBruteLoss() * (brute_multiplier * 0.2)),0.1)
-		burn_healed += round((target.getFireLoss() * (burn_multiplier * 0.2)),0.1)
+		brute_healed += round((target.get_brute_loss() * (brute_multiplier * 0.2)),0.1)
+		burn_healed += round((target.get_fire_loss() * (burn_multiplier * 0.2)),0.1)
 		dead_patient = TRUE
 	else
-		brute_healed += round((target.getBruteLoss() * brute_multiplier),0.1)
-		burn_healed += round((target.getFireLoss() * burn_multiplier),0.1)
+		brute_healed += round((target.get_brute_loss() * brute_multiplier),0.1)
+		burn_healed += round((target.get_fire_loss() * burn_multiplier),0.1)
 		dead_patient = FALSE
 	if(!get_location_accessible(target, target_zone))
 		brute_healed *= 0.55
@@ -129,8 +130,8 @@
 	)
 	var/brute_dealt = brutehealing * 0.8
 	var/burn_dealt = burnhealing * 0.8
-	brute_dealt += round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
-	burn_dealt += round((target.getFireLoss() * (burn_multiplier * 0.5)),0.1)
+	brute_dealt += round((target.get_brute_loss() * (brute_multiplier * 0.5)),0.1)
+	burn_dealt += round((target.get_fire_loss() * (burn_multiplier * 0.5)),0.1)
 	target.take_bodypart_damage(brute_dealt, burn_dealt, wound_bonus=CANT_WOUND)
 	return FALSE
 
@@ -163,11 +164,11 @@
 	if(!brute_healed)
 		return
 
-	var/estimated_remaining_steps = target.getBruteLoss() / brute_healed
+	var/estimated_remaining_steps = target.get_brute_loss() / brute_healed
 	var/progress_text
 
 	if(locate(/obj/item/healthanalyzer) in user.held_items)
-		progress_text = ". Remaining brute: <font color='#ff3333'>[target.getBruteLoss()]</font>"
+		progress_text = ". Remaining brute: <font color='#ff3333'>[target.get_brute_loss()]</font>"
 	else
 		switch(estimated_remaining_steps)
 			if(-INFINITY to 1)
@@ -228,11 +229,11 @@
 /datum/surgery_step/heal/burn/get_progress(mob/user, mob/living/carbon/target, brute_healed, burn_healed)
 	if(!burn_healed)
 		return
-	var/estimated_remaining_steps = target.getFireLoss() / burn_healed
+	var/estimated_remaining_steps = target.get_fire_loss() / burn_healed
 	var/progress_text
 
 	if(locate(/obj/item/healthanalyzer) in user.held_items)
-		progress_text = ". Remaining burn: <font color='#ff9933'>[target.getFireLoss()]</font>"
+		progress_text = ". Remaining burn: <font color='#ff9933'>[target.get_fire_loss()]</font>"
 	else
 		switch(estimated_remaining_steps)
 			if(-INFINITY to 1)
@@ -293,17 +294,17 @@
 /datum/surgery_step/heal/combo/get_progress(mob/user, mob/living/carbon/target, brute_healed, burn_healed)
 	var/estimated_remaining_steps = 0
 	if(brute_healed > 0)
-		estimated_remaining_steps = max(0, (target.getBruteLoss() / brute_healed))
+		estimated_remaining_steps = max(0, (target.get_brute_loss() / brute_healed))
 	if(burn_healed > 0)
-		estimated_remaining_steps = max(estimated_remaining_steps, (target.getFireLoss() / burn_healed)) // whichever is higher between brute or burn steps
+		estimated_remaining_steps = max(estimated_remaining_steps, (target.get_fire_loss() / burn_healed)) // whichever is higher between brute or burn steps
 
 	var/progress_text
 
 	if(locate(/obj/item/healthanalyzer) in user.held_items)
-		if(target.getBruteLoss())
-			progress_text = ". Remaining brute: <font color='#ff3333'>[target.getBruteLoss()]</font>"
-		if(target.getFireLoss())
-			progress_text += ". Remaining burn: <font color='#ff9933'>[target.getFireLoss()]</font>"
+		if(target.get_brute_loss())
+			progress_text = ". Remaining brute: <font color='#ff3333'>[target.get_brute_loss()]</font>"
+		if(target.get_fire_loss())
+			progress_text += ". Remaining burn: <font color='#ff9933'>[target.get_fire_loss()]</font>"
 	else
 		switch(estimated_remaining_steps)
 			if(-INFINITY to 1)
@@ -329,7 +330,7 @@
 	burnhealing = 3
 	brute_multiplier = 0.07
 	burn_multiplier = 0.07
-	time = 10
+	time = 1 SECONDS
 
 /datum/surgery_step/heal/combo/upgraded
 	brutehealing = 3

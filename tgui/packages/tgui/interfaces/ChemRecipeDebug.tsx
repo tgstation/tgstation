@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,10 +8,13 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { ActiveReaction, ReactionDisplay } from './ChemHeater';
-import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
+import { type ActiveReaction, ReactionDisplay } from './ChemHeater';
+import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
 const TEMP_MODES = [
   'Reaction Temp',
@@ -120,13 +120,14 @@ export const ChemRecipeDebug = (props) => {
                   <LabeledList>
                     <LabeledList.Item label="Temperature">
                       <NumberInput
+                        tickWhileDragging
                         width="65px"
                         step={1}
                         stepPixelSize={3}
                         value={forced_temp}
                         minValue={0}
                         maxValue={1000}
-                        onDrag={(e, value) =>
+                        onChange={(value) =>
                           act('forced_temp', {
                             target: value,
                           })
@@ -167,13 +168,14 @@ export const ChemRecipeDebug = (props) => {
                   <LabeledList>
                     <LabeledList.Item label={<Box width="82px">PH:</Box>}>
                       <NumberInput
+                        tickWhileDragging
                         width="65px"
                         step={1}
                         stepPixelSize={3}
                         value={forced_ph}
                         minValue={0}
                         maxValue={14}
-                        onDrag={(e, value) =>
+                        onChange={(value) =>
                           act('forced_ph', {
                             target: value,
                           })
@@ -200,13 +202,14 @@ export const ChemRecipeDebug = (props) => {
                   <LabeledList>
                     <LabeledList.Item label={<Box width="82px">Purity:</Box>}>
                       <NumberInput
+                        tickWhileDragging
                         width="65px"
                         step={0.01}
                         stepPixelSize={3}
                         value={forced_purity}
                         minValue={0}
                         maxValue={1}
-                        onDrag={(e, value) =>
+                        onChange={(value) =>
                           act('forced_purity', {
                             target: value,
                           })
@@ -233,6 +236,7 @@ export const ChemRecipeDebug = (props) => {
                   <LabeledList>
                     <LabeledList.Item label="Volume Mulx">
                       <NumberInput
+                        tickWhileDragging
                         width="65px"
                         step={1}
                         stepPixelSize={3}
@@ -240,7 +244,7 @@ export const ChemRecipeDebug = (props) => {
                         minValue={1}
                         maxValue={1000}
                         unit="x"
-                        onDrag={(e, value) =>
+                        onChange={(value) =>
                           act('volume_multiplier', {
                             target: value,
                           })
@@ -364,6 +368,7 @@ export const ChemRecipeDebug = (props) => {
                   <LabeledList>
                     <LabeledList.Item label={<Box width="57px">Value:</Box>}>
                       <NumberInput
+                        tickWhileDragging
                         width="65px"
                         step={0.1}
                         stepPixelSize={3}
@@ -371,7 +376,7 @@ export const ChemRecipeDebug = (props) => {
                         minValue={-1000}
                         maxValue={1000}
                         disabled={editReaction === null}
-                        onDrag={(e, value) =>
+                        onChange={(value) =>
                           act('edit_value', {
                             target: value,
                           })

@@ -5,7 +5,8 @@
 	var/list/swarm_members = list()
 	var/static/list/swarming_loc_connections = list(
 		COMSIG_ATOM_EXITED = PROC_REF(leave_swarm),
-		COMSIG_ATOM_ENTERED = PROC_REF(join_swarm)
+		COMSIG_ATOM_ENTERED = PROC_REF(join_swarm),
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(join_swarm)
 	)
 
 
@@ -26,7 +27,7 @@
 	swarm_members = null
 	return ..()
 
-/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
 
 	var/datum/component/swarming/other_swarm = arrived.GetComponent(/datum/component/swarming)

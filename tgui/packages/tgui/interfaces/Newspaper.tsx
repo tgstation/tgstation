@@ -1,6 +1,7 @@
-import { BooleanLike } from '../../common/react';
+import { Box, Button, Divider, Image, Section } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Image, Section } from '../components';
 import { Window } from '../layouts';
 import { processedText } from '../process';
 
@@ -39,24 +40,7 @@ export const Newspaper = (props) => {
 
   return (
     <Window width={300} height={400}>
-      <Window.Content backgroundColor="#858387">
-        {current_page === channels.length + 1 ? (
-          <NewspaperEnding />
-        ) : current_page ? (
-          <NewspaperChannel />
-        ) : (
-          <NewspaperIntro />
-        )}
-        {!!scribble_message && (
-          <Box
-            style={{
-              borderTop: '3px dotted rgba(255, 255, 255, 0.8)',
-              borderBottom: '3px dotted rgba(255, 255, 255, 0.8)',
-            }}
-          >
-            {scribble_message}
-          </Box>
-        )}
+      <Window.Content backgroundColor="#858387" scrollable>
         <Section>
           <Button
             icon="arrow-left"
@@ -75,6 +59,23 @@ export const Newspaper = (props) => {
             Next Page
           </Button>
         </Section>
+        {current_page === channels.length + 1 ? (
+          <NewspaperEnding />
+        ) : current_page ? (
+          <NewspaperChannel />
+        ) : (
+          <NewspaperIntro />
+        )}
+        {!!scribble_message && (
+          <Box
+            style={{
+              borderTop: '3px dotted rgba(255, 255, 255, 0.8)',
+              borderBottom: '3px dotted rgba(255, 255, 255, 0.8)',
+            }}
+          >
+            {scribble_message}
+          </Box>
+        )}
       </Window.Content>
     </Window>
   );
@@ -119,9 +120,8 @@ const NewspaperChannel = (props) => {
           <Box fontSize="12px">
             Channel made by: {individual_channel.author_name}
           </Box>
-          {channel_has_messages ? (
-            <>
-              {individual_channel.channel_messages.map((message) => (
+          {channel_has_messages
+            ? individual_channel.channel_messages.map((message) => (
                 <>
                   <Box key={message.message}>
                     <Box
@@ -132,11 +132,8 @@ const NewspaperChannel = (props) => {
                   </Box>
                   <Divider />
                 </>
-              ))}
-            </>
-          ) : (
-            'No feed stories stem from this channel...'
-          )}
+              ))
+            : 'No feed stories stem from this channel...'}
         </Box>
       ))}
     </Section>

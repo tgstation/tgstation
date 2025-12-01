@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /// Global assoc list of required mapping items, [item typepath] to [required item datum].
 GLOBAL_LIST_EMPTY(required_map_items)
 
+GLOBAL_LIST_EMPTY(test_run_times)
+
 /// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
 GLOBAL_VAR_INIT(focused_tests, focused_tests())
@@ -31,6 +33,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	return focused_tests.len > 0 ? focused_tests : null
 
 /datum/unit_test
+	/// Do not instantiate if type matches this
+	abstract_type = /datum/unit_test
+
 	//Bit of metadata for the future maybe
 	var/list/procs_tested
 
@@ -46,9 +51,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	var/succeeded = TRUE
 	var/list/allocated
 	var/list/fail_reasons
-
-	/// Do not instantiate if type matches this
-	var/abstract_type = /datum/unit_test
 
 	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
 	var/static/list/uncreatables = null
@@ -67,9 +69,14 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		uncreatables = build_list_of_uncreatables()
 
 	allocated = new
+
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
 	run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
 
+	if(priority > TEST_CREATE_AND_DESTROY) //the create and destroy test WILL wreck havok in the unit test room. You CANNOT stop the inevitable.
+		return
+
+	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
 	TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
 	TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
 
@@ -97,6 +104,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
+	if(priority > TEST_CREATE_AND_DESTROY) //I'm not using TEST_ASSERT here since these are just numbers that tell nothing useful about the problem.
+		TEST_FAIL("allocate() was called for a unit test after 'create_and_destroy' has finished. The unit test room is no longer a reliable testing ground for atoms.")
+		return null //you deserve runtime errors for it
 	var/list/arguments = args.Copy(2)
 	if(ispath(type, /atom))
 		if (!arguments.len)
@@ -112,6 +122,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	allocated += instance
 	return instance
 
+/// Resets the air of our testing room to its default
+/datum/unit_test/proc/restore_atmos()
+	var/area/working_area = run_loc_floor_bottom_left.loc
+	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
+	for(var/turf/open/restore in to_restore)
+		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
+		restore.copy_air(GM)
+		restore.temperature = initial(restore.temperature)
+		restore.air_update_turf(update = FALSE, remove = FALSE)
+
 /datum/unit_test/proc/test_screenshot(name, icon/icon)
 	if (!istype(icon))
 		TEST_FAIL("[icon] is not an icon.")
@@ -126,15 +146,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
 		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
-	else if (fexists("code"))
-		// We are probably running in a local build
-		fcopy(icon, filename)
-		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
 	else
-		// We are probably running in real CI, so just pretend it worked and move on
+#ifdef CIBUILDING
+		// We are runing in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+#else
+		// We are probably running in a local build
+		fcopy(icon, filename)
+		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+#endif
+
 
 /// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
 /datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
@@ -148,13 +171,25 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
-	var/map_name = SSmapping.config.map_name
+	var/map_name = SSmapping.current_map.map_name
 
 	// Need to escape the text to properly support newlines.
 	var/annotation_text = replacetext(text, "%", "%25")
 	annotation_text = replacetext(annotation_text, "\n", "%0A")
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
+
+/**
+ * Helper to perform a click
+ *
+ * * clicker: The mob that will be clicking
+ * * clicked_on: The atom that will be clicked
+ * * passed_params: A list of parameters to pass to the click
+ */
+/datum/unit_test/proc/click_wrapper(mob/living/clicker, atom/clicked_on, list/passed_params = list(LEFT_CLICK = 1, BUTTON = LEFT_CLICK))
+	clicker.next_click = -1
+	clicker.next_move = -1
+	clicker.ClickOn(clicked_on, list2params(passed_params))
 
 /proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
 	if(ispath(test_path, /datum/unit_test/focus_only))
@@ -167,18 +202,20 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
-	var/skip_test = (test_path in SSmapping.config.skipped_tests)
+	var/skip_test = (test_path in SSmapping.current_map.skipped_tests)
 	var/test_output_desc = "[test_path]"
 	var/message = ""
 
 	log_world("::group::[test_path]")
 
 	if(skip_test)
-		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.config.map_name].")
+		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.current_map.map_name].")
 
 	else
 
 		test.Run()
+		if(test.priority < TEST_CREATE_AND_DESTROY) //We shouldn't care about restoring atmos after create_and_destroy.
+			test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
@@ -202,6 +239,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			log_test(message)
 
 		test_output_desc += " [duration / 10]s"
+		if(duration > 10)
+			GLOB.test_run_times[test_path] = duration
 		if (test.succeeded)
 			log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
 
@@ -231,6 +270,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
 		//Template type
+		/obj/machinery/power/turbine,
+		//Template type
 		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
@@ -242,11 +283,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/merge_conflict_marker,
 		//briefcase launchpads erroring
 		/obj/machinery/launchpad/briefcase,
-		//Both are abstract types meant to scream bloody murder if spawned in raw
-		/obj/item/organ/external,
-		/obj/item/organ/external/wings,
+		//Wings abstract path
+		/obj/item/organ/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
+		//The abstract grown item expects a seed, but doesn't have one
+		/obj/item/food/grown,
+		//Single use case holder atom requiring a user
+		/atom/movable/looking_holder,
+		//Should not exist outside of holders
+		/obj/effect/decal/cleanable/blood/trail,
 	)
 
 	// Everything that follows is a typesof() check.
@@ -262,8 +308,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	returnable_list += typesof(/obj/item/poster/wanted)
-	//This expects a seed, we can't pass it
-	returnable_list += typesof(/obj/item/food/grown)
 	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
 	returnable_list += typesof(/obj/effect/client_image_holder)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
@@ -275,19 +319,21 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	returnable_list += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
-	returnable_list += typesof(/mob/camera/imaginary_friend)
-	//No pod to gondola
-	returnable_list += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
+	returnable_list += typesof(/mob/eye/imaginary_friend)
 	//No heart to give
 	returnable_list += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	returnable_list += typesof(/mob/camera/ai_eye/remote/base_construction)
+	returnable_list += typesof(/mob/eye/camera/remote/base_construction)
 	//See above
-	returnable_list += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	returnable_list += typesof(/mob/eye/camera/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	returnable_list += typesof(/obj/effect/timestop)
+	//Sparks can ignite a number of things, causing a fire to burn the floor away. Only you can prevent CI fires
+	returnable_list += typesof(/obj/effect/particle_effect/sparks)
+	//See above - These are one of those things.
+	returnable_list += typesof(/obj/effect/decal/cleanable/fuel_pool)
 	//Invoke async in init, skippppp
 	returnable_list += typesof(/mob/living/silicon/robot/model)
 	//This lad also sleeps
@@ -311,7 +357,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Needs a linked mecha
 	returnable_list += typesof(/obj/effect/skyfall_landingzone)
 	//Expects a mob to holderize, we have nothing to give
-	returnable_list += typesof(/obj/item/clothing/head/mob_holder)
+	returnable_list += typesof(/obj/item/mob_holder)
 	//Needs cards passed into the initilazation args
 	returnable_list += typesof(/obj/item/toy/cards/cardhand)
 	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
@@ -325,6 +371,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
+	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
 
 	return returnable_list
 
@@ -340,7 +387,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 
@@ -350,6 +397,12 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
 		RunUnitTest(unit_path, test_results)
 	SSticker.delay_end = FALSE
+
+	log_world("::group::Expensive Unit Test Times")
+	sortTim(GLOB.test_run_times, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	for(var/type, duration in GLOB.test_run_times)
+		log_world("[type] took [duration/10]s")
+	log_world("::endgroup::")
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

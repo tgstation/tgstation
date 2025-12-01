@@ -77,21 +77,19 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 
-/obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		dump()
-		if(!disassembled)
-			new /obj/item/shard(drop_location())
-			trigger_alarm()
-	qdel(src)
+/obj/structure/displaycase/atom_deconstruct(disassembled = TRUE)
+	dump()
+	if(!disassembled)
+		new /obj/item/shard(drop_location())
+		trigger_alarm()
 
 /obj/structure/displaycase/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
@@ -127,7 +125,7 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/displaycase/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.GetID() && !broken)
 		if(allowed(user))
 			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
@@ -161,14 +159,14 @@
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(attacking_item, user)
-		return TRUE //cancel the attack chain, wether we successfully placed an item or not
+		return TRUE //cancel the attack chain, whether we successfully placed an item or not
 	else if(glass_fix && broken && istype(attacking_item, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheet = attacking_item
 		if(glass_sheet.get_amount() < 2)
 			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
 		to_chat(user, span_notice("You start fixing [src]..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			glass_sheet.use(2)
 			broken = FALSE
 			atom_integrity = max_integrity
@@ -274,7 +272,7 @@
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase_chassis/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/electronics/airlock))
 		balloon_alert(user, "installing electronics...")
 		if(do_after(user, 3 SECONDS, target = src) && user.transferItemToLoc(attacking_item, src))
@@ -361,7 +359,7 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
@@ -389,7 +387,7 @@
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
 	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
-	playsound(src, 'sound/machines/twobeep.ogg', vary = 50)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', vary = 50)
 	SStgui.update_uis(src)
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)
@@ -413,7 +411,7 @@
 		data["showpiece_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 	return data
 
-/obj/structure/displaycase/trophy/ui_act(action, params)
+/obj/structure/displaycase/trophy/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -428,7 +426,7 @@
 			return
 		if("change_message")
 			if(showpiece && !holographic_showpiece)
-				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, MAX_PLAQUE_LEN)
+				var/new_trophy_message = tgui_input_text(usr, "Let's make history!", "Trophy Message", trophy_message, max_length = MAX_PLAQUE_LEN)
 				if(!new_trophy_message)
 					return
 				trophy_message = new_trophy_message
@@ -453,8 +451,8 @@
 		ui.open()
 
 /obj/item/key/displaycase
-	name = "display case key"
-	desc = "The key to the curator's display cases."
+	name = "curator key"
+	desc = "The key to the curator's display cases and arcade cabinets."
 
 /obj/item/showpiece_dummy
 	name = "holographic replica"
@@ -528,7 +526,7 @@
 	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
-/obj/structure/displaycase/forsale/ui_act(action, params)
+/obj/structure/displaycase/forsale/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -578,7 +576,7 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 			toggle_lock()
 		if("Register")
@@ -587,13 +585,13 @@
 			if(!potential_acc || !potential_acc.registered_account)
 				return
 			if(!check_access(potential_acc))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 			payments_acc = potential_acc.registered_account
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 		if("Adjust")
 			if(!check_access(potential_acc) || potential_acc.registered_account != payments_acc)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 				return
 
 			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
@@ -611,7 +609,7 @@
 			return TRUE
 	. = TRUE
 
-/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/displaycase/forsale/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(isidcard(attacking_item))
 		//Card Registration
 		var/obj/item/card/id/potential_acc = attacking_item
@@ -630,7 +628,7 @@
 	. = ..()
 	if(atom_integrity <= (integrity_failure * max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECONDS, target = src))
 			broken = FALSE
 			atom_integrity = max_integrity
 			update_appearance()
@@ -673,7 +671,7 @@
 
 /obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
+	if(!broken)
 		broken = TRUE
 		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()

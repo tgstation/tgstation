@@ -17,7 +17,7 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "grips"
 	attack_verb_simple = "grip"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	melee_attack_cooldown = 1 SECONDS
 	speak_emote = list("growls")
 
@@ -63,6 +63,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/attack_obstacle_in_path/low_priority_target,

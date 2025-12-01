@@ -8,7 +8,7 @@
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "caretaker"
-	sound = 'sound/effects/curse2.ogg'
+	sound = 'sound/effects/curse/curse2.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 1 MINUTES
@@ -24,15 +24,18 @@
 /datum/action/cooldown/spell/caretaker/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/caretaker/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/caretaker/before_cast(mob/living/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
 
 	for(var/mob/living/alive in orange(5, owner))
-		if(alive.stat != DEAD && alive.client)
+		if(alive.stat != DEAD && alive.client && (owner in view(alive)))
 			owner.balloon_alert(owner, "other minds nearby!")
 			return . | SPELL_CANCEL_CAST
+
+	if(!cast_on.has_status_effect(/datum/status_effect/caretaker_refuge))
+		return SPELL_NO_IMMEDIATE_COOLDOWN // cooldown only on exit
 
 /datum/action/cooldown/spell/caretaker/cast(mob/living/cast_on)
 	. = ..()

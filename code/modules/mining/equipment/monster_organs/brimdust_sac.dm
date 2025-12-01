@@ -4,6 +4,8 @@
 #define BRIMDUST_STACKS_ON_LIFE 1
 /// Number of stacks to add if you activate the item in hand
 #define BRIMDUST_STACKS_ON_USE 3
+/// Overlay alpha per effect stack
+#define BRIMDUST_ALPHA_PER_STACK 75
 
 /**
  * Gives you three stacks of Brimdust Coating, when you get hit by anything it will make a short ranged explosion.
@@ -11,7 +13,7 @@
  * If implanted, you can shake off a cloud of brimdust to give this buff to people around you.area
  * It will also automatically grant you one stack every 30 seconds if you are on lavaland.
  */
-/obj/item/organ/internal/monster_core/brimdust_sac
+/obj/item/organ/monster_core/brimdust_sac
 	name = "brimdust sac"
 	desc = "A strange organ from a brimdemon. You can shake it out to coat yourself in explosive powder."
 	icon_state = "brim_sac"
@@ -24,16 +26,16 @@
 	/// You will gain a stack of the buff every x seconds
 	COOLDOWN_DECLARE(brimdust_auto_apply_cooldown)
 
-/obj/item/organ/internal/monster_core/brimdust_sac/Initialize(mapload)
+/obj/item/organ/monster_core/brimdust_sac/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/explodable, light_impact_range = 1)
 
-/obj/item/organ/internal/monster_core/brimdust_sac/apply_to(mob/living/target, mob/user)
+/obj/item/organ/monster_core/brimdust_sac/apply_to(mob/living/target, mob/user)
 	target.apply_status_effect(user_status, BRIMDUST_STACKS_ON_USE)
 	qdel(src)
 
 // Every x seconds, if on lavaland, add one stack
-/obj/item/organ/internal/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/monster_core/brimdust_sac/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, brimdust_auto_apply_cooldown))
 		return
@@ -43,7 +45,7 @@
 	owner.apply_status_effect(user_status, BRIMDUST_STACKS_ON_LIFE)
 
 /// Make a cloud which applies brimdust to everyone nearby
-/obj/item/organ/internal/monster_core/brimdust_sac/on_triggered_internal()
+/obj/item/organ/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
 	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 
@@ -71,7 +73,7 @@
 	id = "brimdust_coating"
 	stacks = 0
 	max_stacks = 3
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	consumed_on_threshold = FALSE
 	alert_type = /atom/movable/screen/alert/status_effect/brimdust_coating
 	status_type = STATUS_EFFECT_REFRESH // Allows us to add one stack at a time by just applying the effect
@@ -89,7 +91,10 @@
 /atom/movable/screen/alert/status_effect/brimdust_coating
 	name = "Brimdust Coating"
 	desc = "You %STACKS% explosive dust, kinetic impacts will cause it to detonate! \
-		The explosion will not harm you as long as you're not under atmospheric pressure."
+		The explosion will not harm you as long as you're not under atmospheric pressure. \
+		Click this alert to shake off the dust."
+	use_user_hud_icon = TRUE
+	overlay_state = "brimdemon_1"
 
 /atom/movable/screen/alert/status_effect/brimdust_coating/MouseEntered(location,control,params)
 	desc = initial(desc)
@@ -106,6 +111,21 @@
 	desc = replacetext(desc, "%STACKS%", dust_amount_string)
 	return ..()
 
+/atom/movable/screen/alert/status_effect/brimdust_coating/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	if(!owner.can_resist())
+		return
+	owner.balloon_alert(owner, "shaking off the dust...")
+	var/datum/status_effect/stacking/brimdust_coating/dust = attached_effect
+	if (!do_after(owner, dust.stacks * 1.5 SECONDS, owner))
+		return
+	dust.explode()
+	// The effect can get deleted from exploding and reducing stacks
+	if (!QDELETED(dust))
+		qdel(dust)
+
 /datum/status_effect/stacking/brimdust_coating/refresh(effect, stacks_to_add)
 	. = ..()
 	add_stacks(stacks_to_add)
@@ -114,7 +134,12 @@
 	. = ..()
 	if (stacks == 0)
 		return
-	linked_alert.icon_state = "brimdemon_[stacks]"
+	linked_alert.overlay_state = "brimdemon_[stacks]"
+	linked_alert.update_appearance(UPDATE_OVERLAYS)
+	if (dust_overlay)
+		owner.cut_overlay(dust_overlay)
+		dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
+		owner.add_overlay(dust_overlay)
 
 /datum/status_effect/stacking/brimdust_coating/on_creation(mob/living/new_owner, stacks_to_apply)
 	. = ..()
@@ -122,23 +147,28 @@
 
 /datum/status_effect/stacking/brimdust_coating/on_apply()
 	. = ..()
-
 	dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
+	dust_overlay.alpha = stacks * BRIMDUST_ALPHA_PER_STACK
+	dust_overlay.color = COLOR_RED_LIGHT
 	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
 	owner.add_overlay(dust_overlay)
+	owner.add_shared_particles(/particles/brimdust)
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 /datum/status_effect/stacking/brimdust_coating/on_remove()
 	. = ..()
 	owner.cut_overlay(dust_overlay)
+	owner.remove_shared_particles(/particles/brimdust)
 	UnregisterSignal(owner, list(COMSIG_MOB_APPLY_DAMAGE, COMSIG_COMPONENT_CLEAN_ACT))
 
 /// When you are cleaned, wash off the buff
 /datum/status_effect/stacking/brimdust_coating/proc/on_cleaned()
 	SIGNAL_HANDLER
-	owner.remove_status_effect(/datum/status_effect/stacking/brimdust_coating)
-	return COMPONENT_CLEANED
+
+	. = NONE
+	if(owner.remove_status_effect(/datum/status_effect/stacking/brimdust_coating))
+		. |= COMPONENT_CLEANED
 
 /// When you take brute damage, schedule an explosion
 /datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype, ...)
@@ -160,14 +190,14 @@
 	new /obj/effect/temp_visual/explosion/fast(origin_turf)
 
 	var/damage_dealt = blast_damage
-	var/list/possible_targets = range(1, origin_turf)
-	if(lavaland_equipment_pressure_check(origin_turf))
-		possible_targets -= owner
-	else
+	var/safe_explosion = lavaland_equipment_pressure_check(origin_turf)
+	if(!safe_explosion)
 		damage_dealt *= pressure_modifier
 		owner.apply_status_effect(/datum/status_effect/brimdust_concussion)
 
-	for(var/mob/living/target in possible_targets)
+	for(var/mob/living/target in range(1, origin_turf) - (safe_explosion ? list(owner, owner.buckled) : null))
+		if (safe_explosion && owner.faction_check_atom(target))
+			continue
 		var/armor = target.run_armor_check(attack_flag = BOMB)
 		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
@@ -200,3 +230,4 @@
 #undef BRIMDUST_LIFE_APPLY_COOLDOWN
 #undef BRIMDUST_STACKS_ON_LIFE
 #undef BRIMDUST_STACKS_ON_USE
+#undef BRIMDUST_ALPHA_PER_STACK

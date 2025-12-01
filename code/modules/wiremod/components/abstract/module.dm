@@ -190,7 +190,7 @@
 	))
 	return ..()
 
-/obj/item/circuit_component/module/proc/handle_set_cell(datum/source, obj/item/stock_parts/cell/cell)
+/obj/item/circuit_component/module/proc/handle_set_cell(datum/source, obj/item/stock_parts/power_store/cell/cell)
 	SIGNAL_HANDLER
 	internal_circuit.set_cell(cell)
 
@@ -229,15 +229,15 @@
 	. = list()
 	.["global_port_types"] = GLOB.wiremod_basic_types
 
-/obj/item/circuit_component/module/attackby(obj/item/I, mob/living/user, params)
+/obj/item/circuit_component/module/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/circuit_component))
-		internal_circuit.attackby(I, user, params)
+		internal_circuit.attackby(I, user, modifiers)
 		return
 	return ..()
 
 #define WITHIN_RANGE(id, table) (id >= 1 && id <= length(table))
 
-/obj/item/circuit_component/module/ui_act(action, list/params)
+/obj/item/circuit_component/module/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

@@ -12,14 +12,15 @@
 	key = "stairs_and_cliffs"
 	map_name = "stairs_and_cliffs"
 	reward_points = BITRUNNER_REWARD_MEDIUM
+	domain_flags = DOMAIN_NO_NOHIT_BONUS
 
 /turf/open/cliff/snowrock/virtual_domain
 	name = "icy cliff"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 
 /turf/open/lava/plasma/virtual_domain
 	name = "plasma lake"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 
 /datum/outfit/job/virtual_domain_iceclimber
 	name = "Ice Climber"

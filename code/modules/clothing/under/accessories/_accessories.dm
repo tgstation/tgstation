@@ -15,6 +15,7 @@
 	worn_icon = 'icons/mob/clothing/accessories.dmi'
 	icon_state = "plasma"
 	inhand_icon_state = "" //no inhands
+	abstract_type = /obj/item/clothing/accessory
 	slot_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
@@ -29,6 +30,13 @@
 /obj/item/clothing/accessory/Initialize(mapload)
 	. = ..()
 	register_context()
+
+/obj/item/clothing/accessory/setup_reskinning()
+	if(!check_setup_reskinning())
+		return
+
+	// We already register context regardless in Initialize.
+	RegisterSignal(src, COMSIG_CLICK_ALT, PROC_REF(on_click_alt_reskin))
 
 /**
  * Can we be attached to the passed clothing article?
@@ -82,7 +90,7 @@
 		atom_storage.close_all()
 		attach_to.clone_storage(atom_storage)
 		attach_to.atom_storage.set_real_location(src)
-		attach_to.atom_storage.rustle_sound = TRUE // it's on the suit now
+		attach_to.atom_storage.do_rustle = TRUE // it's on the suit now
 
 	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
 	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
@@ -90,8 +98,8 @@
 
 	if(minimize_when_attached)
 		transform *= 0.5
-		pixel_x += 8
-		pixel_y += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
+		pixel_w += 8
+		pixel_z += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))
@@ -104,6 +112,10 @@
 /obj/item/clothing/accessory/proc/successful_attach(obj/item/clothing/under/attached_to)
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(!attached_to.accessory_overlay)
+		attached_to.accessory_overlay = mutable_appearance()
+	attached_to.accessory_overlay.overlays += generate_accessory_overlay(attached_to) //uniform appearance will be updated by the caller
+
 	// Do on-equip effects if we're already equipped
 	var/mob/worn_on = attached_to.loc
 	if(istype(worn_on))
@@ -111,6 +123,13 @@
 
 	SEND_SIGNAL(src, COMSIG_ACCESSORY_ATTACHED, attached_to)
 	SEND_SIGNAL(attached_to, COMSIG_CLOTHING_ACCESSORY_ATTACHED, src)
+
+/obj/item/clothing/accessory/proc/generate_accessory_overlay(obj/item/clothing/under/attached_to)
+	SHOULD_CALL_PARENT(TRUE)
+	var/mutable_appearance/appearance = mutable_appearance(worn_icon, icon_state)
+	appearance.alpha = alpha
+	appearance.color = color
+	return appearance
 
 /**
  * Detach this accessory from the passed clothing article
@@ -136,6 +155,9 @@
 
 	if(minimize_when_attached)
 		transform *= 2
+		// Reset our applied offset
+		pixel_w = 0
+		pixel_z = 0
 		// just randomize position
 		pixel_x = rand(4, -4)
 		pixel_y = rand(4, -4)
@@ -148,21 +170,20 @@
 /obj/item/clothing/accessory/proc/on_uniform_equipped(obj/item/clothing/under/source, mob/living/user, slot)
 	SIGNAL_HANDLER
 
-	if(!(slot & source.slot_flags))
-		return
-
-	accessory_equipped(source, user)
+	if(slot & source.slot_flags)
+		accessory_equipped(source, user)
 
 /// Signal proc for [COMSIG_ITEM_DROPPED] on the uniform we're pinned to
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/source, mob/living/user)
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
-	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 
 /// Called when the uniform this accessory is pinned to is equipped in a valid slot
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	equipped(user, user.get_slot_by_item(clothes)) // so we get any actions, item_flags get set, etc
+	user.update_clothing(ITEM_SLOT_OCLOTHING|ITEM_SLOT_NECK)
 	return
 
 /// Called when the uniform this accessory is pinned to is dropped
@@ -203,8 +224,9 @@
 	. += "It can be worn above or below your suit. Right-click to toggle."
 
 /obj/item/clothing/accessory/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(!isnull(held_item))
-		return NONE
+	. = ..()
+	if(held_item != source)
+		return .
 
 	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"
 	return CONTEXTUAL_SCREENTIP_SET

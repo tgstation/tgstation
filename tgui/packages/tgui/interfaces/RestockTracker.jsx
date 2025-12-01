@@ -1,8 +1,8 @@
-import { sortBy } from 'common/collections';
-import { round } from 'common/math';
+import { sortBy } from 'es-toolkit';
+import { ColorBox, ProgressBar, Section, Stack } from 'tgui-core/components';
+import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { ColorBox, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Restock = (props) => {
@@ -17,9 +17,9 @@ export const Restock = (props) => {
 
 export const RestockTracker = (props) => {
   const { data } = useBackend();
-  const vending_list = sortBy((vend) => vend.percentage)(
-    data.vending_list ?? [],
-  );
+  const vending_list = sortBy(data.vending_list ?? [], [
+    (vend) => vend.percentage,
+  ]);
   return (
     <Section fill title="Vendor Stocking Status">
       <Stack vertical>
@@ -80,7 +80,17 @@ export const RestockTracker = (props) => {
             </Stack.Item>
           </Stack>
         ))}
+        {vending_list.length === 0 && <RestockTrackerFull />}
       </Stack>
+    </Section>
+  );
+};
+
+export const RestockTrackerFull = (props) => {
+  const { data } = useBackend();
+  return (
+    <Section bold textAlign="center">
+      All vending machines stocked!
     </Section>
   );
 };

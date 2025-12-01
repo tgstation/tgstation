@@ -5,11 +5,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/gpstag = "COM0"
 	var/tracking = TRUE
 	var/emped = FALSE
+	var/list/turf/tagged
 
-/datum/component/gps/Initialize(_gpstag = "COM0")
+/datum/component/gps/Initialize(_gpstag = "COM0", _tracking = TRUE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	gpstag = _gpstag
+	tracking = _tracking
 	GLOB.GPS_list += src
 
 /datum/component/gps/Destroy()
@@ -32,8 +34,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 	/// UI state of GPS, altering when it can be used.
 	var/datum/ui_state/state = null
+	var/debug_mode = FALSE
 
-/datum/component/gps/item/Initialize(_gpstag = "COM0", emp_proof = FALSE, state = null, overlay_state = "working")
+/datum/component/gps/item/Initialize(_gpstag = "COM0", _tracking = TRUE, emp_proof = FALSE, state = null, overlay_state = "working", debug = FALSE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE || !isitem(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -41,16 +44,27 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(isnull(state))
 		state = GLOB.default_state
 	src.state = state
+	debug_mode = debug
 
 	var/atom/A = parent
 	if(overlay_state)
 		A.add_overlay(overlay_state)
 	A.name = "[initial(A.name)] ([gpstag])"
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
+
+	if(debug_mode && tracking)
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(tag_the_floor))
+
 	if(!emp_proof)
 		RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_AltClick))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
+
+/datum/component/gps/item/Destroy()
+	if(tagged)
+		clear()
+	return ..()
 
 ///Called on COMSIG_ITEM_ATTACK_SELF
 /datum/component/gps/item/proc/interact(datum/source, mob/user)
@@ -58,6 +72,29 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 	if(user)
 		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+
+///Called on COMSIG_MOVABLE_MOVED
+/datum/component/gps/item/proc/tag_the_floor(atom/movable/mover, turf/old_loc)
+	SIGNAL_HANDLER
+
+	if(!debug_mode)
+		return
+
+	var/turf/tagged_turf = get_turf(mover)
+	if(tagged_turf)
+		tagged_turf.color = RANDOM_COLOUR
+		tagged_turf.maptext = MAPTEXT("[tagged_turf.x],[tagged_turf.y],[tagged_turf.z]")
+		LAZYOR(tagged, tagged_turf)
+
+///Called on COMSIG_MOVABLE_MOVED
+/datum/component/gps/item/proc/clear()
+	SIGNAL_HANDLER
+
+	while(tagged.len)
+		var/turf/tagged_turf = pop(tagged)
+		tagged_turf.color = initial(tagged_turf.color)
+		tagged_turf.maptext = initial(tagged_turf.maptext)
+	LAZYNULL(tagged)
 
 ///Called on COMSIG_ATOM_EXAMINE
 /datum/component/gps/item/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -85,14 +122,15 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	A.add_overlay("working")
 
 ///Calls toggletracking
-/datum/component/gps/item/proc/on_AltClick(datum/source, mob/user)
+/datum/component/gps/item/proc/on_click_alt(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	toggletracking(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Toggles the tracking for the gps
 /datum/component/gps/item/proc/toggletracking(mob/user)
-	if(!user.can_perform_action(parent))
+	if(!user.can_perform_action(parent, ALLOW_RESTING | ALLOW_PAI))
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, span_warning("It's busted!"))
@@ -106,6 +144,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		A.add_overlay("working")
 		to_chat(user, span_notice("[parent] is now tracking, and visible to other GPS devices."))
 		tracking = TRUE
+
+	if(debug_mode)
+		if(tracking)
+			RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(tag_the_floor))
+		else
+			UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+			clear()
 
 /datum/component/gps/item/ui_interact(mob/user, datum/tgui/ui)
 	if(emped)
@@ -136,24 +181,28 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/list/signals = list()
 	data["signals"] = list()
 
-	for(var/gps in GLOB.GPS_list)
-		var/datum/component/gps/G = gps
-		if(G.emped || !G.tracking || G == src)
+	for(var/datum/component/gps/gps as anything in GLOB.GPS_list)
+		if(gps == src || gps.emped || !gps.tracking)
 			continue
-		var/turf/pos = get_turf(G.parent)
-		if(!pos || !global_mode && pos.z != curr.z)
+		var/turf/pos = get_turf(gps.parent)
+		if(!pos || (!global_mode && pos.z != curr.z))
 			continue
 		var/list/signal = list()
-		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
+		signal["entrytag"] = gps.gpstag //Name or 'tag' of the GPS
 		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
-		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
+		// Distance is calculated for the same z-level only, and direction is calculated for crosslinked/neighboring and same z-levels.
+		if(pos.z == curr.z)
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
 			signal["degrees"] = round(get_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+		else
+			var/angle = get_linked_z_angle(curr.z, pos.z)
+			if(!isnull(angle))
+				signal["degrees"] = angle
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
 	return data
 
-/datum/component/gps/item/ui_act(action, params)
+/datum/component/gps/item/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -161,8 +210,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
-			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, 20)
-
+			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, max_length = 20)
+			if (QDELETED(ui) || ui.status != UI_INTERACTIVE)
+				return
 			if (!a)
 				return
 

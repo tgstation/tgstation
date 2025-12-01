@@ -3,12 +3,12 @@
 	desc = "This spell opens nearby doors and closets."
 	button_icon_state = "knock"
 
-	sound = 'sound/magic/knock.ogg'
+	sound = 'sound/effects/magic/knock.ogg'
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
 
-	invocation = "AULIE OXIN FIERA"
+	invocation = "AULIE OXIN FIERA!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	aoe_radius = 3

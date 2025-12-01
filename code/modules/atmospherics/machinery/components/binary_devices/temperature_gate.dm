@@ -27,21 +27,23 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target temperature"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/CtrlClick(mob/user)
-	if(can_interact(user))
-		on = !on
+/obj/machinery/atmospherics/components/binary/temperature_gate/click_ctrl(mob/user)
+	if(is_operational)
+		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/AltClick(mob/user)
-	if(can_interact(user))
-		target_temperature = max_temperature
-		investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
-		balloon_alert(user, "target temperature set to [target_temperature] K")
-		update_appearance()
-	return ..()
+/obj/machinery/atmospherics/components/binary/temperature_gate/click_alt(mob/user)
+	if(target_temperature == max_temperature)
+		return CLICK_ACTION_BLOCKING
+
+	target_temperature = max_temperature
+	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "target temperature set to [target_temperature] K")
+	update_appearance(UPDATE_ICON)
+	return CLICK_ACTION_SUCCESS
 
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/examine(mob/user)
@@ -65,19 +67,20 @@
 	if(!on || !is_operational)
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/input_air = airs[1]
+	var/datum/gas_mixture/output_air = airs[2]
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
 	if(!inverted)
-		if(air1.temperature < target_temperature)
-			if(air1.release_gas_to(air2, air1.return_pressure()))
+		if(input_air.temperature < target_temperature)
+			if(input_air.release_gas_to(output_air, input_air.return_pressure(), output_pipenet_air = output_pipenet_air))
 				update_parents()
 				is_gas_flowing = TRUE
 		else
 			is_gas_flowing = FALSE
 	else
-		if(air1.temperature > target_temperature)
-			if(air1.release_gas_to(air2, air1.return_pressure()))
+		if(input_air.temperature > target_temperature)
+			if(input_air.release_gas_to(output_air, input_air.return_pressure(), output_pipenet_air = output_pipenet_air))
 				update_parents()
 				is_gas_flowing = TRUE
 		else
@@ -103,13 +106,13 @@
 	data["max_temperature"] = round(max_temperature)
 	return data
 
-/obj/machinery/atmospherics/components/binary/temperature_gate/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/temperature_gate/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("temperature")
@@ -123,7 +126,7 @@
 			if(.)
 				target_temperature = clamp(minimum_temperature, temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/can_unwrench(mob/user)
 	. = ..()
@@ -140,3 +143,13 @@
 		else
 			to_chat(user, span_notice("You set the [src]'s sensors to the default settings."))
 	return TRUE
+
+//mapping
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/layer2
+	piping_layer = 2
+	icon_state = "tgate_map-2"
+
+/obj/machinery/atmospherics/components/binary/temperature_gate/layer4
+	piping_layer = 4
+	icon_state = "tgate_map-4"

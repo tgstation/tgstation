@@ -1,4 +1,4 @@
-import { Box, Flex } from '../../components';
+import { Box, Flex } from 'tgui-core/components';
 
 export const calculateProgression = (progression_points: number) => {
   return Math.round(progression_points / 6) / 10;
@@ -70,8 +70,6 @@ export const ranks: Rank[] = [
   },
 ];
 
-export const dangerDefault = 50 * 600;
-
 let lastMinutesThan = -1;
 export const dangerLevelsTooltip = (
   <Box preserveWhitespace>
@@ -90,7 +88,7 @@ export const dangerLevelsTooltip = (
               color="white"
               className={value.gradient}
               style={{
-                borderRadius: '5px',
+                borderRadius: '2px',
                 display: 'inline-block',
               }}
               px={0.8}
@@ -137,11 +135,12 @@ export const calculateDangerLevel = (
       color="white"
       className={dangerLevel.gradient}
       style={{
-        borderRadius: '5px',
+        borderRadius: '2px',
         display: 'inline-block',
       }}
       px={0.8}
       py={0.6}
+      textAlign="center"
     >
       {dangerLevel.title} ({displayedProgression})
     </Box>

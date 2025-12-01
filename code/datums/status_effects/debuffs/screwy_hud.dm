@@ -8,6 +8,7 @@
  * accidentally removing another source's hud.
  */
 /datum/status_effect/grouped/screwy_hud
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	/// The priority of this screwyhud over other screwyhuds.
 	var/priority = -1

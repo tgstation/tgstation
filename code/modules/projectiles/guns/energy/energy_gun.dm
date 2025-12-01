@@ -8,6 +8,7 @@
 	modifystate = TRUE
 	ammo_x_offset = 3
 	dual_wield_spread = 60
+	light_color = LIGHT_COLOR_CYAN
 
 /obj/item/gun/energy/e_gun/Initialize(mapload)
 	. = ..()
@@ -16,8 +17,8 @@
 		return
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/advancedegun, /datum/crafting_recipe/tempgun, /datum/crafting_recipe/beam_rifle)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -34,7 +35,7 @@
 	icon_state = "mini"
 	inhand_icon_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
-	cell_type = /obj/item/stock_parts/cell/mini_egun
+	cell_type = /obj/item/stock_parts/power_store/cell/mini_egun
 	ammo_x_offset = 2
 	charge_sections = 3
 	single_shot_type_overlay = FALSE
@@ -75,7 +76,7 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
-	cell_type = /obj/item/stock_parts/cell/hos_gun
+	cell_type = /obj/item/stock_parts/power_store/cell/hos_gun
 	icon_state = "hoslaser"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
@@ -85,24 +86,51 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 /obj/item/gun/energy/e_gun/dragnet
-	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
+	name = "\improper DRAGnet translocation shotgun"
+	desc = "The \"Dynamic Rapid-Apprehension of the Guilty Network\" translocation shotgun (or DRAGnet for short) is a revolution in law enforcement technology. \
+		By syncing the weapon to a DRAGnet beacon, the bluespace transportation fields produced by the weapon's 'snare' function can rapidly exfiltrate an entire \
+		security squad, with criminal in tow. Otherwise, the weapon is an entirely nonlethal apprehension tool. Exceptionally useful for nonlethal close-quarters battle."
 	icon_state = "dragnet"
-	inhand_icon_state = "dragnet"
+	worn_icon_state = "dragnet"
+	base_icon_state = "dragnet"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
-	modifystate = FALSE
-	w_class = WEIGHT_CLASS_NORMAL
-	ammo_x_offset = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/scatter, /obj/item/ammo_casing/energy/snare)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_BACK
+	ammo_y_offset = 1
+	ammo_x_offset = 0
+	charge_sections = 3
+	shot_type_fluff_overlay = TRUE
+	///A dragnet beacon set to be the teleport destination for snare teleport rounds.
+	var/obj/item/dragnet_beacon/linked_beacon
 
 /obj/item/gun/energy/e_gun/dragnet/add_seclight_point()
 	return
 
-/obj/item/gun/energy/e_gun/dragnet/snare
-	name = "Energy Snare Launcher"
-	desc = "Fires an energy snare that slows the target down."
-	ammo_type = list(/obj/item/ammo_casing/energy/trap)
+/obj/item/gun/energy/e_gun/dragnet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/dragnet_beacon))
+		link_beacon(user, tool)
+
+///Sets the linked_beacon var on the dragnet, which becomes the snare round's teleport destination.
+/obj/item/gun/energy/e_gun/dragnet/proc/link_beacon(mob/living/user, obj/item/dragnet_beacon/our_beacon)
+	if(linked_beacon)
+		if(our_beacon == linked_beacon)
+			balloon_alert(user, "already synced!")
+			return
+		else
+			UnregisterSignal(linked_beacon, COMSIG_QDELETING) //You're getting overridden dude.
+
+	linked_beacon = our_beacon
+	balloon_alert(user, "beacon synced")
+	RegisterSignal(our_beacon, COMSIG_QDELETING, PROC_REF(handle_beacon_disable))
+
+///Handles clearing the linked_beacon reference in the event that it is deleted.
+/obj/item/gun/energy/e_gun/dragnet/proc/handle_beacon_disable(datum/source)
+	SIGNAL_HANDLER
+	visible_message(span_warning("A light on the [src] flashes, indicating that it is no longer linked with a DRAGnet beacon!"))
+	linked_beacon = null
 
 /obj/item/gun/energy/e_gun/turret
 	name = "hybrid turret gun"
@@ -111,7 +139,7 @@
 	inhand_icon_state = "turretlaser"
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/ai_turrets, /obj/item/ammo_casing/energy/laser)
 	weapon_weight = WEAPON_HEAVY
 	trigger_guard = TRIGGER_GUARD_NONE
 	ammo_x_offset = 2
@@ -149,11 +177,11 @@
 		switch(fail_tick)
 			if(0 to 200)
 				fail_tick += (2*(fail_chance))
-				M.adjustFireLoss(3)
+				M.adjust_fire_loss(3)
 				to_chat(M, span_userdanger("Your [name] feels warmer."))
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
-				M.adjustFireLoss(10)
+				M.adjust_fire_loss(10)
 				reactor_overloaded = TRUE
 				to_chat(M, span_userdanger("Your [name]'s reactor overloads!"))
 

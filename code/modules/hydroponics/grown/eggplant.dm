@@ -1,6 +1,6 @@
 // Eggplant
 /obj/item/seeds/eggplant
-	name = "pack of eggplant seeds"
+	name = "eggplant seed pack"
 	desc = "These seeds grow to produce berries that look nothing like eggs."
 	icon_state = "seed-eggplant"
 	species = "eggplant"
@@ -20,23 +20,23 @@
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"
 	icon_state = "eggplant"
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 20
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
-	name = "pack of egg-plant seeds"
+	name = "egg-plant seed pack"
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"
 	plantname = "Egg-Plants"
-	product = /obj/item/food/grown/shell/eggy
+	product = /obj/item/food/grown/eggy
 	lifespan = 75
 	production = 12
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 
-/obj/item/food/grown/shell/eggy
+/obj/item/food/grown/eggy
 	seed = /obj/item/seeds/eggplant/eggy
 	name = "egg-plant"
 	desc = "There MUST be a chicken inside."

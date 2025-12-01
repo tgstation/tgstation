@@ -39,6 +39,10 @@
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
 
+/area/station/security/brig/lower
+	name = "\improper Lower Brig"
+	icon_state = "lower_brig"
+
 /area/station/security/brig/entrance
 	name = "\improper Brig Entrance"
 	icon_state = "brigentry"
@@ -75,12 +79,21 @@
 	icon_state = "evidence"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/security/armory
+	name = "\improper Armory"
+	icon_state = "armory"
+	ambience_index = AMBIENCE_DANGER
+	motion_monitored = TRUE
+
+/area/station/security/armory/upper
+	name = "Upper Armory"
+
 /area/station/security/detectives_office
 	name = "\improper Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list(
-		'sound/ambience/ambidet1.ogg',
-		'sound/ambience/ambidet2.ogg',
+		'sound/ambience/security/ambidet1.ogg',
+		'sound/ambience/security/ambidet2.ogg',
 		)
 
 /area/station/security/detectives_office/private_investigators_office
@@ -181,7 +194,7 @@
 /area/station/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
-	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 
 //Rad proof
 /area/station/security/prison/toilet

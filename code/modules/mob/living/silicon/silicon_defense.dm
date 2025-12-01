@@ -2,28 +2,29 @@
 /mob/living/silicon/grippedby(mob/living/carbon/user, instant = FALSE)
 	return //can't upgrade a simple pull into a more aggressive grab.
 
-/mob/living/silicon/get_ear_protection()//no ears
-	return 2
+/mob/living/silicon/get_ear_protection(ignore_deafness = FALSE)
+	return ..() + EAR_PROTECTION_HEAVY //no ears
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(..()) //if harm or disarm intent
-		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-		if (prob(90))
-			log_combat(user, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user] slashes at [src]!"), \
-							span_userdanger("[user] slashes at you!"), null, null, user)
-			to_chat(user, span_danger("You slash at [src]!"))
-			if(prob(8))
-				flash_act(affect_silicon = 1)
-			log_combat(user, src, "attacked")
-			adjustBruteLoss(damage)
-			updatehealth()
-		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
-			visible_message(span_danger("[user]'s swipe misses [src]!"), \
-							span_danger("You avoid [user]'s swipe!"), null, null, user)
-			to_chat(user, span_warning("Your swipe misses [src]!"))
+	. = ..()
+	if(!.) //if harm or disarm intent
+		return
+	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+	if (prob(90))
+		playsound(loc, 'sound/items/weapons/slash.ogg', 25, TRUE, -1)
+		visible_message(span_danger("[user] slashes at [src]!"), \
+						span_userdanger("[user] slashes at you!"), null, null, user)
+		to_chat(user, span_danger("You slash at [src]!"))
+		if(prob(8))
+			flash_act(affect_silicon = 1)
+		adjust_brute_loss(damage)
+		log_combat(user, src, "attacked")
+	else
+		playsound(loc, 'sound/items/weapons/slashmiss.ogg', 25, TRUE, -1)
+		visible_message(span_danger("[user]'s swipe misses [src]!"),
+						span_danger("You avoid [user]'s swipe!"), null, null, user)
+		to_chat(user, span_warning("Your swipe misses [src]!"))
+		log_combat(user, src, "attacked and missed")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
@@ -50,7 +51,7 @@
 	. = ..()
 	if(!.)
 		return
-	adjustBruteLoss(rand(10, 15))
+	adjust_brute_loss(rand(10, 15))
 	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
@@ -83,13 +84,13 @@
 
 /mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)
 	. = ..()
-	if(.)
-		return TRUE
+	if(. == SUCCESSFUL_BLOCK)
+		return SUCCESSFUL_BLOCK
 	if(damage_type == BRUTE && attack_type == UNARMED_ATTACK && attack_flag == MELEE && damage <= 10)
 		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 		visible_message(span_danger("[attack_text] doesn't leave a dent on [src]!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		return TRUE
-	return FALSE
+		return SUCCESSFUL_BLOCK
+	return FAILED_BLOCK
 
 /mob/living/silicon/attack_drone(mob/living/basic/drone/user)
 	if(user.combat_mode)
@@ -108,9 +109,9 @@
 		return
 	switch(severity)
 		if(1)
-			src.take_bodypart_damage(20)
+			src.take_bodypart_damage(burn = 20)
 		if(2)
-			src.take_bodypart_damage(10)
+			src.take_bodypart_damage(burn = 10)
 	to_chat(src, span_userdanger("*BZZZT*"))
 	for(var/mob/living/M in buckled_mobs)
 		if(prob(severity*50))
@@ -120,12 +121,14 @@
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+	if(hitting_projectile.damage_type == BURN)
+		hitting_projectile.damage_type = BRUTE //Burn is for wire damage. Brute is the outer chassis.
 	. = ..()
 	if(. != BULLET_ACT_HIT)
 		return .
 
 	var/prob_of_knocking_dudes_off = 0
-	if(hitting_projectile.damage_type == BRUTE || hitting_projectile.damage_type == BURN)
+	if(hitting_projectile.damage_type == BRUTE)
 		prob_of_knocking_dudes_off = hitting_projectile.damage * 1.5
 	if(hitting_projectile.stun || hitting_projectile.knockdown || hitting_projectile.paralyze)
 		prob_of_knocking_dudes_off = 100
@@ -139,3 +142,23 @@
 /mob/living/silicon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/static, length = 25)
 	if(affect_silicon)
 		return ..()
+
+/// If an item does this or more throwing damage it will slow a borg down on hit
+#define CYBORG_SLOWDOWN_THRESHOLD 10
+
+/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(. || AM.throwforce < CYBORG_SLOWDOWN_THRESHOLD) // can cyborgs even catch things?
+		return
+	apply_status_effect(/datum/status_effect/borg_slow, AM.throwforce / 20)
+
+/mob/living/silicon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
+	. = ..()
+	if(damage_done < CYBORG_SLOWDOWN_THRESHOLD)
+		return
+	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
+
+#undef CYBORG_SLOWDOWN_THRESHOLD
+
+/mob/living/silicon/hypnosis_vulnerable()
+	return FALSE //It obeys its laws

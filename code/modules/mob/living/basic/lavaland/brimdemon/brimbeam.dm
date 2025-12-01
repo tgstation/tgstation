@@ -1,6 +1,6 @@
 /// Fires a bloody beam. Brimdemon Blast!
 /datum/action/cooldown/mob_cooldown/brimbeam
-	name = "brimstone blast"
+	name = "Brimstone Blast"
 	desc = "Unleash a barrage of infernal energies in the targeted direction."
 	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	button_icon_state = "brimdemon_firing"
@@ -15,8 +15,6 @@
 	var/beam_duration = 2 SECONDS
 	/// How long do we wind up before firing?
 	var/charge_duration = 1 SECONDS
-	/// Overlay we show when we're about to fire
-	var/static/image/direction_overlay = image('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
 	/// A list of all the beam parts.
 	var/list/beam_parts = list()
 
@@ -29,11 +27,15 @@
 
 	owner.face_atom(target)
 	owner.move_resist = MOVE_FORCE_VERY_STRONG
-	owner.add_overlay(direction_overlay)
 	owner.balloon_alert_to_viewers("charging...")
+	var/mutable_appearance/direction_overlay = mutable_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir")
+	var/mutable_appearance/direction_emissive = emissive_appearance('icons/mob/simple/lavaland/lavaland_monsters.dmi', "brimdemon_telegraph_dir", owner, alpha = 150, effect_type = EMISSIVE_NO_BLOOM)
+	owner.add_overlay(direction_overlay)
+	owner.add_overlay(direction_emissive)
 
 	var/fully_charged = do_after(owner, delay = charge_duration, target = owner)
 	owner.cut_overlay(direction_overlay)
+	owner.cut_overlay(direction_emissive)
 	if (!fully_charged)
 		StartCooldown()
 		return TRUE
@@ -44,7 +46,12 @@
 		StartCooldown()
 		return TRUE
 
-	do_after(owner, delay = beam_duration, target = owner)
+	if (istype(owner, /mob/living/basic/mining/brimdemon))
+		var/mob/living/basic/mining/brimdemon/demon = owner
+		demon.icon_state = demon.firing_icon_state
+		demon.update_appearance(UPDATE_OVERLAYS)
+
+	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE)
 	extinguish_laser()
 	StartCooldown()
 	return TRUE
@@ -52,7 +59,7 @@
 /// Create a laser in the direction we are facing
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/fire_laser()
 	owner.visible_message(span_danger("[owner] fires a brimbeam!"))
-	playsound(owner, 'sound/creatures/brimdemon.ogg', 150, FALSE, 0, 3)
+	playsound(owner, 'sound/mobs/non-humanoids/brimdemon/brimdemon.ogg', 150, FALSE, 0, 3)
 	var/turf/target_turf = get_ranged_target_turf(owner, owner.dir, beam_range)
 	var/turf/origin_turf = get_turf(owner)
 	var/list/affected_turfs = get_line(origin_turf, target_turf) - origin_turf
@@ -86,7 +93,12 @@
 /datum/action/cooldown/mob_cooldown/brimbeam/proc/extinguish_laser()
 	if(!length(beam_parts))
 		return FALSE
-	owner.move_resist = initial(owner.move_resist)
+	if (owner)
+		owner.move_resist = initial(owner.move_resist)
+		if (istype(owner, /mob/living/basic/mining/brimdemon) && owner.stat != DEAD)
+			var/mob/living/basic/mining/brimdemon/demon = owner
+			demon.icon_state = demon.icon_living
+			demon.update_appearance(UPDATE_OVERLAYS)
 	for(var/obj/effect/brimbeam/beam in beam_parts)
 		beam.disperse()
 	beam_parts = list()

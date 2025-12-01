@@ -10,18 +10,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/roundend_category = "other antagonists"
 	///Set to false to hide the antagonists from roundend report
 	var/show_in_roundend = TRUE
-	///If false, the roundtype will still convert with this antag active
-	var/prevent_roundtype_conversion = TRUE
 	///Mind that owns this datum
 	var/datum/mind/owner
 	///Silent will prevent the gain/lose texts to show
 	var/silent = FALSE
-	///Whether or not the person will be able to have more than one datum
-	var/can_coexist_with_others = TRUE
-	///List of datums this type can't coexist with
-	var/list/typecache_datum_blacklist = list()
-	///The define string we use to identify the role for bans/player polls to spawn a random new one in.
-	var/job_rank
+	/// What flag is checked for jobbans and polling? Optional, if unset, will use pref_flag
+	var/jobban_flag
+	/// What flag to check for prefs? Required for antags with preferences associated
+	var/pref_flag
 	///Should replace jobbanned player with ghosts if granted.
 	var/replace_banned = TRUE
 	///List of the objective datums that this role currently has, completing all objectives at round-end will cause this antagonist to greentext.
@@ -38,8 +34,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	///Name of the antag hud we provide to this mob.
 	var/antag_hud_name
-	/// If set to true, the antag will not be added to the living antag list.
-	var/count_against_dynamic_roll_chance = TRUE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
 	//Antag panel properties
@@ -61,6 +55,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/default_custom_objective = "Cause chaos on the space station."
 	/// Whether we give a hardcore random bonus for greentexting as this antagonist while playing hardcore random
 	var/hardcore_random_bonus = FALSE
+	/// A path to the audio stinger that plays upon gaining this datum.
+	var/stinger_sound
 
 	//ANTAG UI
 
@@ -74,7 +70,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
-	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
@@ -126,10 +121,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 		ui = new(user, src, ui_name, name)
 		ui.open()
 
-/datum/antagonist/ui_act(action, params)
+/datum/antagonist/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
-		return
+	if(. || ui.user != owner.current)
+		return TRUE
 	switch(action)
 		if("change_objectives")
 			submit_player_objective()
@@ -137,6 +132,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/ui_state(mob/user)
 	return GLOB.always_state
+
+/datum/antagonist/ui_status(mob/user, datum/ui_state/state)
+	. = ..()
+	if(isobserver(user) && antag_flags & ANTAG_OBSERVER_VISIBLE_PANEL)
+		return UI_UPDATE
 
 /datum/antagonist/ui_static_data(mob/user)
 	var/list/data = list()
@@ -155,12 +155,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	name = "Open [target] Information:"
 
-/datum/action/antag_info/Trigger(trigger_flags)
+/datum/action/antag_info/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return
 
-	target.ui_interact(owner)
+	target.ui_interact(clicker || owner)
 
 /datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
@@ -175,12 +175,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	var/datum/mind/tested = new_owner || owner
-	if(tested.has_antag_datum(type))
-		return FALSE
-	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
-		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
-			return FALSE
-	return TRUE
+	return !tested.has_antag_datum(type)
 
 //This will be called in add_antag_datum before owner assignment.
 //Should return antag datum without owner.
@@ -190,15 +185,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 ///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transferred.
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
-	remove_innate_effects(old_body)
+	if(old_body)
+		remove_innate_effects(old_body)
 	if(old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
 	if(info_button)
-		info_button.Remove(old_body)
+		if(old_body)
+			info_button.Remove(old_body)
 		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
-	if(count_against_dynamic_roll_chance && new_body.stat != DEAD)
+	if(new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
@@ -225,11 +222,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	var/mob/living/carbon/human/human_override = mob_override
 	if(removing) // They're a clown becoming an antag, remove clumsy
-		human_override.dna.remove_mutation(/datum/mutation/human/clumsy)
+		human_override.dna.remove_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 		if(!silent && message)
 			to_chat(human_override, span_boldnotice("[message]"))
 	else
-		human_override.dna.add_mutation(/datum/mutation/human/clumsy) // We're removing their antag status, add back clumsy
+		human_override.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS) // We're removing their antag status, add back clumsy
 
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -246,6 +243,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
 		info_button = new(src)
+		if(antag_flags & ANTAG_OBSERVER_VISIBLE_PANEL)
+			info_button.show_to_observers = TRUE
+			info_button.allow_observer_click = TRUE
 		info_button.Grant(owner.current)
 		info_button_ref = WEAKREF(info_button)
 	if(!silent)
@@ -266,8 +266,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(count_against_dynamic_roll_chance && owner.current.stat != DEAD && owner.current.client)
+	if(owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
+
+	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
+		antag_hud.apply_to_new_mob(owner.current)
+
+	LAZYADD(owner.special_roles, (jobban_flag || pref_flag))
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
@@ -285,7 +290,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!player.ckey)
 		return FALSE
 
-	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
+	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, jobban_flag || pref_flag)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.
@@ -293,12 +298,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = job_rank, role = job_rank, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = jobban_flag || pref_flag, role = pref_flag, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
 	if(chosen_one)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
+		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
+		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
-		owner.current.key = chosen_one.key
+		owner.current.PossessByPlayer(chosen_one.key)
+	else
+		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
 /**
  * Called by the remove_antag_datum() and remove_all_antag_datums() mind procs for the antag datum to handle its own removal and deletion.
@@ -308,10 +316,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner)
 		CRASH("Antag datum with no owner.")
 
-	remove_innate_effects()
+	if(owner.current)
+		remove_innate_effects()
 	clear_antag_moodies()
 	LAZYREMOVE(owner.antag_datums, src)
-	if(!LAZYLEN(owner.antag_datums))
+	if(!LAZYLEN(owner.antag_datums) && owner.current)
 		owner.current.remove_from_current_living_antags()
 	if(info_button_ref)
 		QDEL_NULL(info_button_ref)
@@ -322,14 +331,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	LAZYREMOVE(owner.special_roles, (jobban_flag || pref_flag))
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
-
-	// Remove HUDs that they should no longer see
-	var/mob/living/current = owner.current
-	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
-		if (!antag_hud.mobShouldSee(current))
-			antag_hud.hide_from(current)
-
+	if(owner.current)
+		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
 	qdel(src)
 
 /**
@@ -339,13 +344,21 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/greet()
 	if(!silent)
 		to_chat(owner.current, span_big("You are \the [src]."))
+		play_stinger()
+
+/// Plays the antag stinger sound, if we have one
+/datum/antagonist/proc/play_stinger()
+	if(isnull(stinger_sound))
+		return
+
+	owner.current.playsound_local(get_turf(owner.current), stinger_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.
  * Use this proc for playing sounds, sending alerts, or otherwise informing the player that they're no longer a specific antagonist type.
  */
 /datum/antagonist/proc/farewell()
-	if(!silent)
+	if(!silent && owner.current)
 		to_chat(owner.current, span_userdanger("You are no longer \the [src]!"))
 
 /**
@@ -404,7 +417,7 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Appears at start of roundend_catagory section.
  */
 /datum/antagonist/proc/roundend_report_header()
-	return "<span class='header'>The [roundend_category] were:</span><br>"
+	return span_header("The [roundend_category] were:<br>")
 
 /**
  * Proc that sends string data for the round-end report.
@@ -441,8 +454,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return ""
 
 /datum/antagonist/proc/enabled_in_preferences(datum/mind/noggin)
-	if(job_rank)
-		if(noggin.current && noggin.current.client && (job_rank in noggin.current.client.prefs.be_special))
+	if(pref_flag)
+		if(noggin.current && noggin.current.client && (pref_flag in noggin.current.client.prefs.be_special))
 			return TRUE
 		else
 			return FALSE
@@ -457,8 +470,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// result of `get_preview_icon` is expected to be the completed version.
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
-	dummy.equipOutfit(outfit, visualsOnly = TRUE)
+	dummy.equipOutfit(outfit, visuals_only = TRUE)
 	dummy.wear_suit?.update_greyscale()
+	dummy.set_combat_mode(TRUE)
 	var/icon = getFlatIcon(dummy)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
@@ -512,12 +526,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 		"antag_team_hud_[REF(src)]",
 		hud_image_on(target),
 		antag_to_check || type,
+		get_team() && WEAKREF(get_team()),
 	))
 
 	// Add HUDs that they couldn't see before
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
-		if (antag_hud.mobShouldSee(owner.current))
-			antag_hud.show_to(owner.current)
+		antag_hud.apply_to_new_mob(owner.current)
 
 /// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
 /datum/antagonist/proc/hud_image_on(mob/hud_loc)
@@ -546,17 +560,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /**
  * Allows player to replace their objectives with a new one they wrote themselves.
+ * Returns true if they did it successfully.
  * * retain_existing - If true, will just be added as a new objective instead of replacing existing ones.
  * * retain_escape - If true, will retain specifically 'escape alive' objectives (or similar)
  * * force - Skips the check about whether this antagonist is supposed to set its own objectives, for badminning
  */
 /datum/antagonist/proc/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
 	if (isnull(owner) || isnull(owner.current))
-		return
+		return FALSE
 	var/mob/living/owner_mob = owner.current
 	if (!force && !can_assign_self_objectives)
 		owner_mob.balloon_alert(owner_mob, "can't do that!")
-		return
+		return FALSE
 	var/custom_objective_text = tgui_input_text(
 		owner_mob,
 		message = "Specify your new objective.",
@@ -565,7 +580,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		max_length = CUSTOM_OBJECTIVE_MAX_LENGTH,
 	)
 	if (QDELETED(src) || QDELETED(owner_mob) || isnull(custom_objective_text))
-		return // Some people take a long-ass time to type maybe they got dusted
+		return FALSE // Some people take a long-ass time to type maybe they got dusted
 
 	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
@@ -595,4 +610,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	can_assign_self_objectives = FALSE
 	owner.announce_objectives()
 
+	return TRUE
+
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH
+
+/// Return TRUE to prevent the antag's job from handling the respawn
+/datum/antagonist/proc/on_respawn(mob/new_character)
+	return FALSE

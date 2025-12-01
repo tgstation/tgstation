@@ -58,15 +58,15 @@
 /obj/machinery/brm/examine(mob/user)
 	. = ..()
 	. += span_notice("The small screen reads there are [span_boldnotice("[SSore_generation.available_boulders.len] boulders")] available to teleport.")
-	. += span_notice("Can collect upto <b>[boulders_processing_max] boulders</b> at a time.")
-	. += span_notice("Automatic boulder retrival can be toggled [EXAMINE_HINT("[toggled_on ? "Off" : "On"]")] with [EXAMINE_HINT("Right Click")].")
+	. += span_notice("Can collect up to <b>[boulders_processing_max] boulders</b> at a time.")
+	. += span_notice("Automatic boulder retrieval can be toggled [EXAMINE_HINT("[toggled_on ? "Off" : "On"]")] with [EXAMINE_HINT("Right Click")].")
 
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("anchored")] in place.")
+		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
 	else
 		. += span_warning("It needs to be [EXAMINE_HINT("anchored")] to start operations.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "Closed" : "Open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
@@ -101,7 +101,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-///To allow boulders on a conveyer belt to move unobstructed if multiple machines are made on a single line
+///To allow boulders on a conveyor belt to move unobstructed if multiple machines are made on a single line
 /obj/machinery/brm/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!anchored)
 		return FALSE
@@ -127,7 +127,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space")
+		balloon_alert(user, "no space!")
+	else if(result)
+		balloon_alert(user, "teleporting...")
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
 	return TRUE
@@ -153,6 +155,23 @@
 	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
+/obj/machinery/brm/attack_ai(mob/user)
+	. = ..()
+	if(. || panel_open)
+		return
+	if(!handle_teleport_conditions(user))
+		return
+
+	var/result = pre_collect_boulder()
+	if(result == TURF_BLOCKED_BY_BOULDER)
+		balloon_alert(user, "no space!")
+	else if(result)
+		balloon_alert(user, "teleporting...")
+
+	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
+
+	return TRUE
+
 /obj/machinery/brm/attack_robot(mob/user)
 	. = ..()
 	if(. || panel_open)
@@ -162,9 +181,9 @@
 
 	var/result = pre_collect_boulder()
 	if(result == TURF_BLOCKED_BY_BOULDER)
-		balloon_alert(user, "no space")
+		balloon_alert(user, "no space!")
 	else if(result)
-		balloon_alert(user, "teleporting")
+		balloon_alert(user, "teleporting...")
 
 	COOLDOWN_START(src, manual_teleport_cooldown, TELEPORTATION_TIME)
 
@@ -175,7 +194,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "anchor it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	toggle_auto_on(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -194,7 +213,7 @@
 		balloon_alert(user, "close panel first!")
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "anchor it first!")
 		return
 	if(!is_operational || machine_stat & (BROKEN | NOPOWER))
 		return
@@ -206,12 +225,25 @@
 		end_processing()
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/machinery/brm/attack_robot_secondary(mob/user, list/modifiers)
+/obj/machinery/brm/attack_ai_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
 		return
 	if(!anchored)
-		balloon_alert(user, "anchor first!")
+		balloon_alert(user, "unanchored!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	toggle_auto_on(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/brm/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || panel_open)
+		return
+	if(!user.can_perform_action(src, ALLOW_SILICON_REACH | FORBID_TELEKINESIS_REACH))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!anchored)
+		balloon_alert(user, "unanchored!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	toggle_auto_on(user)
@@ -254,7 +286,7 @@
 	//no more boulders
 	if(!SSore_generation.available_boulders.len)
 		if(feedback)
-			playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
+			playsound(loc, 'sound/machines/synth/synth_no.ogg', 30 , TRUE)
 			balloon_alert_to_viewers("no boulders to collect!")
 		batch_processing = FALSE
 		return FALSE
@@ -268,7 +300,7 @@
 	random_boulder.pixel_x = rand(-2, 2)
 	random_boulder.pixel_y = rand(-2, 2)
 	balloon_alert_to_viewers("boulder appears!")
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 	//try again if we have more boulders to work with
 	boulders_remaining -= 1

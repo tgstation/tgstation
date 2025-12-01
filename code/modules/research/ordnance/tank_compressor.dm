@@ -14,7 +14,7 @@
 	var/active = FALSE
 	var/transfer_rate = TANK_COMPRESSOR_MAX_TRANSFER_RATE
 	var/datum/gas_mixture/leaked_gas_buffer
-	var/list/compressor_record
+	var/list/compressor_record = list()
 	var/last_recorded_pressure = 0
 	var/record_number = 1
 	var/obj/item/tank/inserted_tank
@@ -26,7 +26,6 @@
 /obj/machinery/atmospherics/components/binary/tank_compressor/Initialize(mapload)
 	. = ..()
 	leaked_gas_buffer = new(200)
-	compressor_record = list()
 
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(explosion_handle))
 
@@ -201,7 +200,7 @@
 	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
-		playsound(src, 'sound/machines/terminal_error.ogg', 25)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
 
 /// Ejecting a tank. Also called on insertion to clear previous tanks.
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/eject_tank(mob/user)
@@ -221,10 +220,10 @@
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/eject_disk(mob/user)
 	if(!inserted_disk)
 		return FALSE
-	if(user)
-		user.put_in_hands(inserted_disk)
-	else
+	if(!user || !Adjacent(user))
 		inserted_disk.forceMove(drop_location())
+	else
+		user.put_in_hands(inserted_disk)
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 	return TRUE
 
@@ -247,7 +246,7 @@
 	inserted_tank = null
 	inserted_disk = null
 	leaked_gas_buffer = null
-	QDEL_NULL(compressor_record) //We only want the list nuked, not the contents.
+	compressor_record.Cut() // We only want to clear the list itself, not delete its contents.
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/update_icon_state()
@@ -275,7 +274,7 @@
 		ui = new(user, src, "TankCompressor")
 		ui.open()
 
-/obj/machinery/atmospherics/components/binary/tank_compressor/ui_act(action, list/params)
+/obj/machinery/atmospherics/components/binary/tank_compressor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
@@ -320,10 +319,6 @@
 	data["active"] = active
 	data["transferRate"] = transfer_rate
 	data["lastPressure"] = last_recorded_pressure
-
-	data["inputData"] = gas_mixture_parser(airs[2], "Input Port")
-	data["outputData"] = gas_mixture_parser(airs[1], "Ouput Port")
-	data["bufferData"] = gas_mixture_parser(leaked_gas_buffer, "Gas Buffer")
 
 	data["disk"] = inserted_disk?.name
 	data["storage"] = "[inserted_disk?.used_capacity] / [inserted_disk?.max_capacity] GQ"

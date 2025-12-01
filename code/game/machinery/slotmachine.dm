@@ -8,8 +8,8 @@
 #define SMALL_PRIZE 400
 #define BIG_PRIZE 1000
 #define JACKPOT 10000
-#define SPIN_TIME 65 //As always, deciseconds.
-#define REEL_DEACTIVATE_DELAY 7
+#define SPIN_TIME 36 //As always, deciseconds.
+#define REEL_DEACTIVATE_DELAY 4
 #define JACKPOT_SEVENS FA_ICON_7
 #define HOLOCHIP 1
 #define COIN 2
@@ -68,10 +68,9 @@
 			coinvalues["[cointype]"] = C.get_item_credit_value()
 			qdel(C) //Sigh
 
-/obj/machinery/computer/slot_machine/Destroy()
+/obj/machinery/computer/slot_machine/on_deconstruction(disassembled)
 	if(balance)
 		give_payout(balance)
-	return ..()
 
 /obj/machinery/computer/slot_machine/process(seconds_per_tick)
 	. = ..() //Sanity checks.
@@ -95,50 +94,56 @@
 	return ..()
 
 
-/obj/machinery/computer/slot_machine/item_interaction(mob/living/user, obj/item/inserted, list/modifiers, is_right_clicking)
+/obj/machinery/computer/slot_machine/item_interaction(mob/living/user, obj/item/inserted, list/modifiers)
 	if(istype(inserted, /obj/item/coin))
 		var/obj/item/coin/inserted_coin = inserted
 		if(paymode == COIN)
 			if(prob(2))
-				if(!user.transferItemToLoc(inserted_coin, drop_location(), silent = FALSE))
-					return
+				if(!user.transfer_item_to_turf(inserted_coin, drop_location(), silent = FALSE))
+					return ITEM_INTERACT_BLOCKING
 				inserted_coin.throw_at(user, 3, 10)
 				if(prob(10))
 					balance = max(balance - SPIN_PRICE, 0)
 				to_chat(user, span_warning("[src] spits your coin back out!"))
-
+				return ITEM_INTERACT_BLOCKING
 			else
 				if(!user.temporarilyRemoveItemFromInventory(inserted_coin))
-					return
-				balloon_alert(user, "coin insterted")
+					return ITEM_INTERACT_BLOCKING
+				balloon_alert(user, "coin inserted")
 				balance += inserted_coin.value
 				qdel(inserted_coin)
+				return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "holochips only!")
+		return ITEM_INTERACT_BLOCKING
 
-	else if(istype(inserted, /obj/item/holochip))
+	if(istype(inserted, /obj/item/holochip))
 		if(paymode == HOLOCHIP)
 			var/obj/item/holochip/inserted_chip = inserted
 			if(!user.temporarilyRemoveItemFromInventory(inserted_chip))
-				return
+				return ITEM_INTERACT_BLOCKING
 			balloon_alert(user, "[inserted_chip.credits] credit[inserted_chip.credits == 1 ? "" : "s"] inserted")
 			balance += inserted_chip.credits
 			qdel(inserted_chip)
+			return ITEM_INTERACT_SUCCESS
 		else
 			balloon_alert(user, "coins only!")
+		return ITEM_INTERACT_BLOCKING
 
-	else if(inserted.tool_behaviour == TOOL_MULTITOOL)
-		if(balance > 0)
-			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
-		else
-			if(paymode == HOLOCHIP)
-				paymode = COIN
-				balloon_alert(user, "now using coins")
-			else
-				paymode = HOLOCHIP
-				balloon_alert(user, "now using holochips")
+	return NONE
+
+/obj/machinery/computer/slot_machine/multitool_act(mob/living/user, obj/item/tool)
+	if(balance > 0)
+		visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
+		return ITEM_INTERACT_BLOCKING
+
+	if(paymode == HOLOCHIP)
+		paymode = COIN
+		balloon_alert(user, "now using coins")
 	else
-		return ..()
+		paymode = HOLOCHIP
+		balloon_alert(user, "now using holochips")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -222,6 +227,9 @@
 	if(user)
 		the_name = user.real_name
 		visible_message(span_notice("[user] pulls the lever and the slot machine starts spinning!"))
+		if(isliving(user))
+			var/mob/living/living_user = user
+			living_user.add_mood_event("slots_spin", /datum/mood_event/slots)
 	else
 		the_name = "Exaybachay"
 
@@ -238,8 +246,10 @@
 	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
 
 /obj/machinery/computer/slot_machine/proc/do_spin()
+	if(!use_energy(active_power_usage, force = FALSE))
+		say("Not enough energy!")
+		return
 	randomize_reels()
-	use_power(active_power_usage)
 
 /obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
 	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
@@ -301,6 +311,9 @@
 		var/prize = money + JACKPOT
 		visible_message("<b>[src]</b> says, 'JACKPOT! You win [prize] credits!'")
 		priority_announce("Congratulations to [user ? user.real_name : usrname] for winning the jackpot at the slot machine in [get_area(src)]!")
+		if(isliving(user) && (user in viewers(src)))
+			var/mob/living/living_user = user
+			living_user.add_mood_event("slots", /datum/mood_event/slots/win/jackpot)
 		jackpots += 1
 		money = 0
 		if(paymode == HOLOCHIP)
@@ -316,10 +329,16 @@
 	else if(linelength == 5)
 		visible_message("<b>[src]</b> says, 'Big Winner! You win a thousand credits!'")
 		give_money(BIG_PRIZE)
+		if(isliving(user) && (user in viewers(src)))
+			var/mob/living/living_user = user
+			living_user.add_mood_event("slots", /datum/mood_event/slots/win/big)
 
 	else if(linelength == 4)
 		visible_message("<b>[src]</b> says, 'Winner! You win four hundred credits!'")
 		give_money(SMALL_PRIZE)
+		if(isliving(user) && (user in viewers(src)))
+			var/mob/living/living_user = user
+			living_user.add_mood_event("slots", /datum/mood_event/slots/win)
 
 	else if(linelength == 3)
 		to_chat(user, span_notice("You win three free games!"))
@@ -328,14 +347,17 @@
 
 	else
 		balloon_alert(user, "no luck!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50)
 		did_player_win = FALSE
+		if(isliving(user) && (user in viewers(src)))
+			var/mob/living/living_user = user
+			living_user.add_mood_event("slots", /datum/mood_event/slots/loss)
 
 	if(did_player_win)
 		add_filter("jackpot_rays", 3, ray_filter)
 		animate(get_filter("jackpot_rays"), offset = 10, time = 3 SECONDS, loop = -1)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "jackpot_rays"), 3 SECONDS)
-		playsound(src, 'sound/machines/roulettejackpot.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/roulette/roulettejackpot.ogg', 50, TRUE)
 
 /// Checks for a jackpot (5 matching icons in the middle row) with the given icon name
 /obj/machinery/computer/slot_machine/proc/check_jackpot(name)

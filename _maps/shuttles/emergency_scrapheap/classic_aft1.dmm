@@ -1,0 +1,207 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"b" = (
+/obj/machinery/recharge_station,
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"g" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"j" = (
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"l" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"o" = (
+/obj/machinery/door/airlock{
+	name = "Unit B"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"r" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"t" = (
+/obj/machinery/door/airlock{
+	name = "Unit 1"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"u" = (
+/obj/machinery/status_display/evac/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"v" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms"
+	},
+/obj/modular_map_connector,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"w" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/machinery/power/shuttle_engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"B" = (
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/obj/machinery/door/airlock{
+	name = "Unit 2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"F" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/template_noop,
+/area/template_noop)
+"G" = (
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+"J" = (
+/obj/machinery/light/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/template_noop,
+/area/template_noop)
+"L" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/freezer,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+B
+B
+a
+B
+a
+a
+a
+B
+"}
+(2,1,1) = {"
+B
+B
+a
+f
+t
+r
+a
+a
+"}
+(3,1,1) = {"
+B
+F
+a
+f
+a
+a
+A
+g
+"}
+(4,1,1) = {"
+B
+B
+a
+L
+C
+r
+A
+g
+"}
+(5,1,1) = {"
+B
+u
+a
+j
+a
+a
+A
+g
+"}
+(6,1,1) = {"
+B
+B
+v
+G
+o
+b
+A
+g
+"}
+(7,1,1) = {"
+B
+J
+l
+a
+a
+a
+w
+g
+"}
+(8,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}
+(9,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}
+(10,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}
+(11,1,1) = {"
+a
+B
+B
+B
+B
+B
+B
+B
+"}

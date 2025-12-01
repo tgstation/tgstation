@@ -1,0 +1,5 @@
+/mob/living/simple_animal/hostile/mimic : /mob/living/basic/mimic/crate{@OLD}
+/mob/living/simple_animal/hostile/mimic/crate : /mob/living/basic/mimic/crate{@OLD}
+/mob/living/simple_animal/hostile/mimic/xenobio : /mob/living/basic/mimic/crate/xenobio{@OLD}
+/mob/living/simple_animal/hostile/mimic/copy : /mob/living/basic/mimic/copy{@OLD}
+/mob/living/simple_animal/hostile/mimic/copy/ranged : /mob/living/basic/mimic/copy/ranged{@OLD}

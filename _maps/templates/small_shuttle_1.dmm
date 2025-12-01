@@ -22,7 +22,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/template_noop)
 "j" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/template_noop)
 "l" = (

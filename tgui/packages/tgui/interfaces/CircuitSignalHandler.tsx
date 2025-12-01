@@ -1,8 +1,15 @@
-import { BooleanLike } from 'common/react';
-import { Component, KeyboardEvent, MouseEvent } from 'react';
+import { Component, type MouseEvent } from 'react';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Response = {
@@ -31,7 +38,7 @@ type BitflagToString = {
 };
 
 export class CircuitSignalHandler extends Component<
-  {},
+  any,
   CircuitSignalHandlerState
 > {
   bitflags: BitflagToString;
@@ -68,7 +75,7 @@ export class CircuitSignalHandler extends Component<
                     placeholder="Signal ID"
                     value={signal_id}
                     fluid
-                    onChange={(e, value) => this.setState({ signal_id: value })}
+                    onChange={(value) => this.setState({ signal_id: value })}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -94,7 +101,7 @@ export class CircuitSignalHandler extends Component<
                             responseList.splice(index, 1);
                             this.setState({ parameterList });
                           }}
-                          onChange={(e, value) => {
+                          onChange={(value) => {
                             const param = responseList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -143,7 +150,7 @@ export class CircuitSignalHandler extends Component<
                             param.datatype = type;
                             this.setState({ parameterList });
                           }}
-                          onChange={(e, value) => {
+                          onChange={(value) => {
                             const param = parameterList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -194,7 +201,7 @@ export class CircuitSignalHandler extends Component<
 
 type EntryProps = {
   onRemove: (e: MouseEvent<HTMLDivElement>) => any;
-  onChange: (e: KeyboardEvent<HTMLInputElement>, value: string) => any;
+  onChange: (value: string) => any;
   onSetOption?: (type: string) => any;
   name: string;
   current_option: string;
@@ -219,13 +226,13 @@ const Entry = (props: EntryProps) => {
           <Input placeholder="Name" value={name} onChange={onChange} fluid />
         </Stack.Item>
         <Stack.Item>
-          {(options.length && (
+          {options.length > 0 ? (
             <Dropdown
-              displayText={current_option}
+              selected={current_option}
               options={options}
               onSelected={onSetOption}
             />
-          )) || (
+          ) : (
             <Box textAlign="center" py="2px" px={2}>
               {current_option}
             </Box>

@@ -7,7 +7,6 @@
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-	var/client/client
 	var/atom/movable/screen/tutorial_instruction_text/instruction_text
 
 /atom/movable/screen/tutorial_instruction/Initialize(mapload, datum/hud/hud_owner, message, client/client)
@@ -15,14 +14,12 @@
 
 	transform = transform.Scale(36, 2.5)
 
-	src.client = client
 	animate(src, alpha = 245, time = 0.8 SECONDS, easing = SINE_EASING)
 
 	instruction_text = new(src, null, message, client)
 	vis_contents += instruction_text
 
 /atom/movable/screen/tutorial_instruction/Destroy()
-	client = null
 	QDEL_NULL(instruction_text)
 
 	return ..()
@@ -35,13 +32,14 @@
 	maptext_y = -2
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = TUTORIAL_INSTRUCTIONS_LAYER
+	appearance_flags = parent_type::appearance_flags | KEEP_APART
 
 /atom/movable/screen/tutorial_instruction_text/Initialize(mapload, datum/hud/hud_owner, message, client/client)
 	. = ..()
 
 	var/view = client?.view_size.getView()
 	maptext_width = view ? view_to_pixels(view)[1] : 480
-	pixel_x = (maptext_width - world.icon_size) * -0.5
+	pixel_x = (maptext_width - ICON_SIZE_X) * -0.5
 
 	change_message(message)
 

@@ -1,5 +1,5 @@
 
-/obj/item/organ/internal/appendix/golem
+/obj/item/organ/appendix/golem
 	name = "internal forge"
 	desc = "This expanded digestive chamber allows golems to smelt minerals, provided that they are immersed in lava."
 	icon_state = "ethereal_heart-off"
@@ -8,16 +8,16 @@
 	/// Action which performs smelting
 	var/datum/action/cooldown/internal_smelting/smelter
 
-/obj/item/organ/internal/appendix/golem/Initialize(mapload)
+/obj/item/organ/appendix/golem/Initialize(mapload)
 	. = ..()
 	smelter = new(src)
 
-/obj/item/organ/internal/appendix/golem/on_mob_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/appendix/golem/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_for_lava))
 
 /// Give the action while in lava
-/obj/item/organ/internal/appendix/golem/proc/check_for_lava(mob/living/owner)
+/obj/item/organ/appendix/golem/proc/check_for_lava(mob/living/owner)
 	SIGNAL_HANDLER
 	if (!islava(owner.loc))
 		smelter.Remove(owner)
@@ -25,12 +25,12 @@
 	if (smelter.owner != owner)
 		smelter.Grant(owner)
 
-/obj/item/organ/internal/appendix/golem/on_mob_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/appendix/golem/on_mob_remove(mob/living/carbon/organ_owner)
 	UnregisterSignal(organ_owner, COMSIG_MOVABLE_MOVED)
 	smelter?.Remove(organ_owner) // Might have been deleted by Destroy already
 	return ..()
 
-/obj/item/organ/internal/appendix/golem/Destroy()
+/obj/item/organ/appendix/golem/Destroy()
 	QDEL_NULL(smelter)
 	return ..()
 

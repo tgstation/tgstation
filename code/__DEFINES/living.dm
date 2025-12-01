@@ -1,3 +1,29 @@
 // living_flags
 /// Simple mob trait, indicating it may follow continuous move actions controlled by code instead of by user input.
 #define MOVES_ON_ITS_OWN (1<<0)
+/// Always does *deathgasp when they die
+/// If unset mobs will only deathgasp if supplied a death sound or custom death message
+#define ALWAYS_DEATHGASP (1<<1)
+/**
+ * For carbons, this stops bodypart overlays being added to bodyparts from calling mob.update_body_parts().
+ * This is useful for situations like initialization or species changes, where
+ * update_body_parts() is going to be called ONE time once everything is done.
+ */
+#define STOP_OVERLAY_UPDATE_BODY_PARTS (1<<2)
+/// Nutrition changed last life tick, so we should bulk update this tick
+#define QUEUE_NUTRITION_UPDATE (1<<3)
+/// Blood volume has changed since the last [proc/update_blood_effects] call
+#define QUEUE_BLOOD_UPDATE (1<<4)
+/// This mob can have blood, cached value of [proc/can_have_blood]
+#define LIVING_CAN_HAVE_BLOOD (1<<5)
+
+/// Getter for a mob/living's lying angle, otherwise protected
+#define GET_LYING_ANGLE(mob) (UNLINT(mob.lying_angle))
+/// Checks if the mob can have blood
+#define CAN_HAVE_BLOOD(mob) (mob.living_flags & LIVING_CAN_HAVE_BLOOD)
+
+// Used in living mob offset list for determining pixel offsets
+#define PIXEL_W_OFFSET "w"
+#define PIXEL_X_OFFSET "x"
+#define PIXEL_Y_OFFSET "y"
+#define PIXEL_Z_OFFSET "z"

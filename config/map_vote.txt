@@ -1,0 +1,12 @@
+
+## A flat bonus to give to all maps after a map vote is concluded.
+MAP_VOTE_FLAT_BONUS 5
+
+## The minimum number of tallies a map can have for purposes of map rotation.
+MAP_VOTE_MINIMUM_TALLIES 1
+
+## The maximum number of tallies a map can have for purposes of keeping things sane.
+MAP_VOTE_MAXIMUM_TALLIES 200
+
+## The percentage of tallies that are carried over between rounds.
+MAP_VOTE_TALLY_CARRYOVER_PERCENTAGE 100

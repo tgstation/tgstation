@@ -16,7 +16,6 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/broken_flooring/LateInitialize()
-	. = ..()
 	var/turf/turf = get_turf(src)
 	if(!isplatingturf(turf) && !always_floorplane) // Render as trash if not on plating
 		plane = GAME_PLANE

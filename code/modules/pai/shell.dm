@@ -30,7 +30,7 @@
  * 	FALSE otherwise.
  */
 /mob/living/silicon/pai/proc/check_menu(atom/anchor)
-	if(incapacitated())
+	if(incapacitated)
 		return FALSE
 	if(get_turf(src) != get_turf(anchor))
 		return FALSE
@@ -81,7 +81,7 @@
 	visible_message(span_notice("[src] dematerialises!"))
 	stop_pulling()
 	if(ispickedupmob(loc))
-		var/obj/item/clothing/head/mob_holder/mob_head = loc
+		var/obj/item/mob_holder/mob_head = loc
 		mob_head.release(display_messages = FALSE)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE

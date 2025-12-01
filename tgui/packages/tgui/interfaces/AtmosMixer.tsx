@@ -1,7 +1,12 @@
-import { BooleanLike } from 'common/react';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -44,7 +49,7 @@ export const AtmosMixer = (props) => {
                 minValue={0}
                 maxValue={max_pressure}
                 step={10}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('pressure', {
                     pressure: value,
                   })
@@ -65,13 +70,15 @@ export const AtmosMixer = (props) => {
             <LabeledList.Item label="Main Node" labelColor="green">
               <NumberInput
                 animated
+                tickWhileDragging
                 value={node1_concentration}
+                step={1}
                 unit="%"
                 width="60px"
                 minValue={0}
                 maxValue={100}
                 stepPixelSize={2}
-                onDrag={(e, value) =>
+                onChange={(value) =>
                   act('node1', {
                     concentration: value,
                   })
@@ -81,13 +88,15 @@ export const AtmosMixer = (props) => {
             <LabeledList.Item label="Side Node" labelColor="blue">
               <NumberInput
                 animated
+                tickWhileDragging
                 value={node2_concentration}
+                step={1}
                 unit="%"
                 width="60px"
                 minValue={0}
                 maxValue={100}
                 stepPixelSize={2}
-                onDrag={(e, value) =>
+                onChange={(value) =>
                   act('node2', {
                     concentration: value,
                   })

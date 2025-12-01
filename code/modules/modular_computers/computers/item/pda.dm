@@ -1,7 +1,8 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	icon = 'icons/obj/modular_pda.dmi'
-	icon_state = "pda"
+	icon = 'icons/map_icons/items/pda.dmi'
+	icon_state = "/obj/item/modular_computer/pda"
+	post_init_icon_state = "pda"
 	worn_icon_state = "nothing"
 	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet
@@ -10,6 +11,8 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	inhand_icon_state = "electronic"
+
+	overlays_icon = 'icons/obj/devices/modular_pda.dmi'
 
 	steel_sheet_cost = 2
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass=SMALL_MATERIAL_AMOUNT, /datum/material/plastic=SMALL_MATERIAL_AMOUNT)
@@ -27,6 +30,10 @@
 	looping_sound = FALSE
 
 	shell_capacity = SHELL_CAPACITY_SMALL
+	action_slots = ALL
+	sound_vary = TRUE
+	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
+	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -38,6 +45,7 @@
 		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/nt_pay,
 		/datum/computer_file/program/notepad,
+		/datum/computer_file/program/crew_manifest,
 	)
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
@@ -46,7 +54,7 @@
 		/obj/item/lipstick,
 		/obj/item/flashlight/pen,
 		/obj/item/reagent_containers/hypospray/medipen,
-		/obj/item/clothing/mask/cigarette,
+		/obj/item/cigarette,
 	)
 
 /obj/item/modular_computer/pda/Initialize(mapload)
@@ -65,22 +73,18 @@
 		apps_to_download += default_programs + pda_programs
 	apps_to_download += starting_programs
 
-	for(var/programs as anything in apps_to_download)
+	for(var/programs in apps_to_download)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
-	if(computer_id_slot)
-		. += mutable_appearance(initial(icon), "id_overlay")
+	if(stored_id)
+		. += mutable_appearance(overlays_icon, "id_overlay")
 	if(light_on)
-		. += mutable_appearance(initial(icon), "light_overlay")
+		. += mutable_appearance(overlays_icon, "light_overlay")
 	if(inserted_pai)
-		. += mutable_appearance(initial(icon), "pai_inserted")
-
-/obj/item/modular_computer/pda/attack_ai(mob/user)
-	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
-	return // we don't want ais or cyborgs using a private role tablet
+		. += mutable_appearance(overlays_icon, "pai_inserted")
 
 /obj/item/modular_computer/pda/interact(mob/user)
 	. = ..()
@@ -100,7 +104,7 @@
 
 	return ..()
 
-/obj/item/modular_computer/pda/pre_attack(atom/target, mob/living/user, params)
+/obj/item/modular_computer/pda/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!inserted_disk || !ismachinery(target))
 		return ..()
 
@@ -140,36 +144,34 @@
 
 	return . || NONE
 
-/obj/item/modular_computer/pda/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
+/obj/item/modular_computer/pda/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(iscash(interacting_with))
+		return money_act(user,interacting_with)
+	return NONE
 
-	if(!is_type_in_list(attacking_item, contained_item))
-		return
-	if(attacking_item.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+/obj/item/modular_computer/pda/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	if(!is_type_in_list(tool, contained_item))
+		return NONE
+	if(tool.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
 		user.balloon_alert(user, "too big!")
-		return
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 	if(inserted_item)
-		balloon_alert(user, "no room!")
-		return
-	if(!user.transferItemToLoc(attacking_item, src))
-		return
-	balloon_alert(user, "inserted [attacking_item]")
-	inserted_item = attacking_item
-	playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
+		swap_pen(user, tool)
+	else
+		balloon_alert(user, "inserted [tool]")
+		inserted_item = tool
+		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/modular_computer/pda/AltClick(mob/user)
-	. = ..()
-	if(.)
-		return
 
+/obj/item/modular_computer/pda/item_ctrl_click(mob/user)
 	remove_pen(user)
-
-/obj/item/modular_computer/pda/CtrlClick(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	remove_pen(user)
+	return CLICK_ACTION_SUCCESS
 
 ///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
 /obj/item/modular_computer/pda/proc/get_detomatix_difficulty()
@@ -182,7 +184,7 @@
 
 /obj/item/modular_computer/pda/proc/remove_pen(mob/user)
 
-	if(issilicon(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH)) //TK doesn't work even with this removed but here for readability
+	if(issilicon(user) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH | NEED_DEXTERITY)) //TK doesn't work even with this removed but here for readability
 		return
 
 	if(inserted_item)
@@ -190,7 +192,15 @@
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
-		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/pda_button/pda_button2.ogg', 50, TRUE)
+
+/obj/item/modular_computer/pda/proc/swap_pen(mob/user, obj/item/tool)
+	if(inserted_item)
+		balloon_alert(user, "swapped pens")
+		user.put_in_hands(inserted_item)
+		inserted_item = tool
+		update_appearance()
+		playsound(src, 'sound/machines/pda_button/pda_button1.ogg', 50, TRUE)
 
 /obj/item/modular_computer/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/current_turf = get_turf(src)
@@ -198,7 +208,7 @@
 	if(from_message_menu)
 		log_bomber(null, null, target, "'s tablet exploded as [target.p_they()] tried to open their tablet message menu because of a recent tablet bomb.")
 	else
-		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
+		log_bomber(bomber, "successfully tablet-bombed", target, "as [target.p_they()] tried to reply to a rigged tablet message [bomber?.is_antag() ? "" : "(SENT BY NON-ANTAG)"]")
 
 	if (ismob(loc))
 		var/mob/loc_mob = loc
@@ -257,6 +267,7 @@
  */
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
+	icon_state = "/obj/item/modular_computer/pda/nukeops"
 	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
@@ -276,8 +287,9 @@
 
 /obj/item/modular_computer/pda/syndicate_contract_uplink
 	name = "contractor tablet"
-	device_theme = PDA_THEME_SYNDICATE
+	icon_state = "/obj/item/modular_computer/pda/syndicate_contract_uplink"
 	icon_state_menu = "contractor-assign"
+	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3
 	has_pda_programs = FALSE
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
@@ -295,7 +307,9 @@
  */
 /obj/item/modular_computer/pda/silicon
 	name = "modular interface"
+	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "tablet-silicon"
+	post_init_icon_state = null
 	base_icon_state = "tablet-silicon"
 	greyscale_config = null
 	greyscale_colors = null
@@ -315,10 +329,18 @@
 	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
 	var/mob/living/silicon/silicon_owner
 
+/obj/item/modular_computer/pda/silicon/pai
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/chatclient,
+	)
+
 /obj/item/modular_computer/pda/silicon/cyborg
 	starting_programs = list(
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
+		/datum/computer_file/program/atmosscan,
+		/datum/computer_file/program/crew_manifest,
 	)
 
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
@@ -382,7 +404,7 @@
 		return robotact
 	qdel(robotact)
 	robotact = null
-	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected receiving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
 /obj/item/modular_computer/pda/silicon/cyborg/ui_data(mob/user)
@@ -413,7 +435,7 @@
 	return TRUE
 
 /obj/item/modular_computer/pda/silicon/ui_state(mob/user)
-	return GLOB.reverse_contained_state
+	return GLOB.deep_inventory_state
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"

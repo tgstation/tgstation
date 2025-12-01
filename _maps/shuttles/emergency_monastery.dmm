@@ -8,10 +8,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"af" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/space,
-/area/shuttle/escape)
 "ap" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -25,10 +21,6 @@
 	},
 /turf/open/floor/carpet,
 /area/shuttle/escape)
-"as" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
-/area/shuttle/escape)
 "aF" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -38,13 +30,6 @@
 /area/shuttle/escape)
 "aH" = (
 /obj/structure/grille/broken,
-/turf/open/space/basic,
-/area/shuttle/escape)
-"aN" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
 /turf/open/space/basic,
 /area/shuttle/escape)
 "aO" = (
@@ -61,23 +46,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/shuttle/escape)
-"aT" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/space/basic,
-/area/shuttle/escape)
-"aW" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/shuttle/escape)
 "bb" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -92,7 +60,7 @@
 "bd" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "be" = (
 /obj/machinery/light/small/directional/west,
@@ -103,9 +71,7 @@
 /area/shuttle/escape)
 "bl" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "bn" = (
@@ -145,13 +111,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"bx" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "by" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/painting/library_private{
@@ -162,13 +121,9 @@
 /area/shuttle/escape)
 "bC" = (
 /obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bI" = (
@@ -187,7 +142,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/lattice,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "cu" = (
 /obj/structure/table/wood,
@@ -240,11 +195,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"dp" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/lattice,
-/turf/open/space,
-/area/shuttle/escape)
 "du" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
@@ -271,7 +221,7 @@
 "dX" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "dY" = (
 /obj/structure/table/wood,
@@ -343,7 +293,7 @@
 "fm" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "fn" = (
 /obj/effect/spawner/xmastree,
@@ -378,16 +328,11 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"fA" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
-/area/shuttle/escape)
 "fL" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "fT" = (
 /obj/structure/table/wood,
@@ -428,13 +373,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
-"hC" = (
-/obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "hI" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4;
@@ -467,9 +405,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "hW" = (
@@ -495,15 +431,10 @@
 "hZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"ib" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/mineral,
 /area/shuttle/escape)
 "ig" = (
 /obj/machinery/light/small/directional/west,
@@ -522,11 +453,11 @@
 "iw" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "iB" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iE" = (
@@ -633,9 +564,7 @@
 "jt" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "jx" = (
@@ -733,7 +662,7 @@
 "kJ" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "kM" = (
 /obj/structure/table/wood/fancy,
@@ -754,10 +683,6 @@
 	},
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"lj" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
 /area/shuttle/escape)
 "lm" = (
 /obj/machinery/meter,
@@ -789,10 +714,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"mm" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space,
 /area/shuttle/escape)
 "mn" = (
 /obj/structure/chair/wood,
@@ -910,12 +831,6 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"nQ" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/turf/open/space/basic,
-/area/shuttle/escape)
 "oa" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet,
@@ -931,12 +846,6 @@
 "od" = (
 /obj/machinery/vending/wardrobe/curator_wardrobe,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"om" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/turf/open/space,
 /area/shuttle/escape)
 "ov" = (
 /obj/machinery/light/small/directional/east,
@@ -1078,7 +987,6 @@
 "qi" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -1213,6 +1121,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"rZ" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/shuttle/escape)
 "sa" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -1260,7 +1173,7 @@
 "sv" = (
 /obj/item/book/bible,
 /obj/structure/cable,
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "sz" = (
@@ -1310,6 +1223,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ti" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/shuttle/escape)
 "tm" = (
 /obj/structure/table/wood/fancy,
@@ -1422,10 +1339,6 @@
 "vn" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Monastery Archives Access Tunnel";
-	network = list("ss13","monastery")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1632,7 +1545,6 @@
 "yP" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/condiment/saltshaker{
-	layer = 3.1;
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -1662,12 +1574,9 @@
 /area/shuttle/escape)
 "zh" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/stack/sheet/glass/fifty{
-	layer = 4
-	},
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron{
-	amount = 20;
-	layer = 3.1
+	amount = 20
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 10
@@ -2162,9 +2071,7 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/condiment/peppermill,
-/obj/item/storage/box/ingredients/wildcard{
-	layer = 3.1
-	},
+/obj/item/storage/box/ingredients/wildcard,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "FA" = (
@@ -2402,9 +2309,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Jf" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/full,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2413,10 +2318,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Jl" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/space,
 /area/shuttle/escape)
 "Jp" = (
 /obj/structure/table,
@@ -2508,8 +2409,7 @@
 "JZ" = (
 /obj/docking_port/mobile/emergency{
 	movement_force = list("KNOCKDOWN"=3,"THROW"=6);
-	name = "\proper a monastery with engines strapped to it";
-	port_direction = 1
+	name = "\proper a monastery with engines strapped to it"
 	},
 /turf/closed/mineral,
 /area/shuttle/escape)
@@ -2666,16 +2566,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"Ms" = (
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
-/turf/open/space,
-/area/shuttle/escape)
-"Mt" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/shuttle/escape)
 "MC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2714,12 +2604,8 @@
 /area/shuttle/escape)
 "Nb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Nf" = (
@@ -2761,6 +2647,12 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"NG" = (
+/obj/structure/closet/crate/bin,
+/obj/item/rag,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "NJ" = (
@@ -2888,9 +2780,7 @@
 "Pb" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Pe" = (
@@ -2976,7 +2866,6 @@
 "Qj" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
-	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -3256,9 +3145,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "SU" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "SV" = (
@@ -3351,6 +3238,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/camera/directional/west{
+	c_tag = "Monastery Archives Access Tunnel";
+	network = list("ss13","monastery")
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "TJ" = (
@@ -3500,9 +3391,7 @@
 /area/shuttle/escape)
 "VF" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/west{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	name = "Outlet Injector"
 	},
@@ -3510,9 +3399,7 @@
 /area/shuttle/escape)
 "VM" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -3634,9 +3521,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Xx" = (
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -3655,12 +3540,6 @@
 "XI" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"XK" = (
-/obj/structure/closet/crate/bin,
-/obj/item/reagent_containers/cup/rag,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "XL" = (
@@ -3752,9 +3631,7 @@
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/space/basic,
 /area/shuttle/escape)
 "YZ" = (
@@ -3799,9 +3676,7 @@
 /area/shuttle/escape)
 "Zn" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Zr" = (
@@ -4382,8 +4257,8 @@ nr
 nr
 nr
 nr
-om
-nQ
+hq
+hq
 JG
 JG
 JG
@@ -4681,8 +4556,8 @@ JG
 qA
 zE
 Ho
-ib
-ib
+Ho
+Ho
 Ho
 Ho
 nr
@@ -4919,7 +4794,7 @@ JG
 JG
 JG
 PB
-lj
+ti
 iw
 iw
 iw
@@ -5001,7 +4876,7 @@ JG
 JG
 JG
 PB
-lj
+ti
 iw
 JG
 JG
@@ -5083,10 +4958,10 @@ JG
 JG
 JG
 PB
-lj
-Mt
-af
-fA
+ti
+PB
+hq
+gl
 zE
 zE
 AJ
@@ -5120,8 +4995,8 @@ nr
 nr
 nr
 nr
-aT
-aT
+IM
+IM
 JG
 JG
 JG
@@ -5160,7 +5035,7 @@ JG
 JG
 JG
 iw
-Mt
+PB
 iw
 iw
 iw
@@ -5244,8 +5119,8 @@ JG
 iw
 JG
 JG
-dp
-af
+rZ
+hq
 zE
 Zf
 zE
@@ -5324,7 +5199,7 @@ JG
 JG
 JG
 bd
-Mt
+PB
 bT
 zE
 zE
@@ -5406,7 +5281,7 @@ aH
 iw
 iw
 iw
-as
+qA
 zE
 zE
 jc
@@ -5483,11 +5358,11 @@ JG
 JG
 "}
 (21,1,1) = {"
-af
-af
-nQ
-aW
-nQ
+hq
+hq
+hq
+rZ
+hq
 bl
 zE
 jc
@@ -5567,7 +5442,7 @@ JG
 (22,1,1) = {"
 zE
 zE
-aR
+zE
 LK
 LK
 LK
@@ -5893,7 +5768,7 @@ JG
 JG
 "}
 (26,1,1) = {"
-as
+qA
 zE
 ox
 bb
@@ -6058,7 +5933,7 @@ JG
 "}
 (28,1,1) = {"
 JG
-aN
+jS
 zE
 wt
 Mf
@@ -6218,7 +6093,7 @@ Ho
 Ho
 Ho
 jt
-bx
+bv
 "}
 (30,1,1) = {"
 JG
@@ -6312,7 +6187,7 @@ LK
 zE
 LK
 dX
-Jl
+IM
 fm
 zE
 zE
@@ -6382,17 +6257,17 @@ Ho
 Ho
 Ho
 Pb
-hC
+Ye
 "}
 (32,1,1) = {"
 JG
 JG
-aT
-aT
-Ms
-Ms
-Ms
-aT
+IM
+IM
+IM
+IM
+IM
+IM
 JG
 JG
 JG
@@ -6479,7 +6354,7 @@ JG
 JG
 JG
 JG
-Jl
+IM
 fm
 zE
 zE
@@ -6730,8 +6605,8 @@ JG
 JG
 JG
 JG
-Jl
-Jl
+IM
+IM
 jS
 zE
 ko
@@ -6816,7 +6691,7 @@ JG
 JG
 JG
 kJ
-mm
+ti
 zE
 jc
 jc
@@ -6898,7 +6773,7 @@ JG
 JG
 JG
 PB
-mm
+ti
 zE
 zE
 zE
@@ -6979,8 +6854,8 @@ JG
 JG
 JG
 JG
-Mt
-mm
+PB
+ti
 kJ
 IM
 IM
@@ -7169,7 +7044,7 @@ by
 Nt
 Nt
 LU
-XK
+NG
 yc
 Ho
 Ho

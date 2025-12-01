@@ -47,7 +47,7 @@
 
 /obj/item/clothing/head/costume/garland/lily
 	name = "lily crown"
-	desc = "A leafy flower crown with a cluster of large white lilies at at the front."
+	desc = "A leafy flower crown with a cluster of large white lilies at the front."
 	icon_state = "lily_crown"
 	worn_icon_state = "lily_crown"
 

@@ -25,3 +25,6 @@
 /obj/item/computer_disk/maintenance/theme/Initialize(mapload)
 	starting_programs = list(pick(subtypesof(/datum/computer_file/program/maintenance/theme)))
 	return ..()
+
+/obj/item/computer_disk/maintenance/cool_sword
+	starting_programs = list(/datum/computer_file/program/maintenance/cool_sword)

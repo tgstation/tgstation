@@ -6,7 +6,6 @@
 		/obj/item/stack/sheet/animalhide/mothroach = 2,
 		/obj/item/clothing/shoes/clown_shoes = 1,
 	)
-	parts = list(/obj/item/clothing/shoes/clown_shoes = 1)
 	blacklist = list(
 		/obj/item/clothing/shoes/clown_shoes/combat,
 		/obj/item/clothing/shoes/clown_shoes/banana_shoes,
@@ -22,7 +21,7 @@
 	result = /obj/item/toy/plush/moth
 	reqs = list(
 		/obj/item/stack/sheet/animalhide/mothroach = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/stack/sheet/cloth = 3,
 	)
 	category = CAT_ENTERTAINMENT
@@ -34,6 +33,16 @@
 		/obj/item/clothing/suit/hooded/shark_costume = 1,
 		/obj/item/grown/cotton = 10,
 		/obj/item/stack/sheet/cloth = 5,
+	)
+	category = CAT_ENTERTAINMENT
+
+/datum/crafting_recipe/monkeyplush
+	name = "Monkey Plushie"
+	result = /obj/item/toy/plush/monkey
+	reqs = list(
+		/obj/item/clothing/mask/gas/monkeymask = 1,
+		/obj/item/clothing/suit/costume/monkeysuit = 1,
+		/obj/item/grown/cotton = 10,
 	)
 	category = CAT_ENTERTAINMENT
 
@@ -73,7 +82,6 @@
 		/obj/item/camera = 1,
 		/datum/reagent/water/holywater = 10,
 	)
-	parts = list(/obj/item/camera = 1)
 	category = CAT_ENTERTAINMENT
 
 
@@ -112,6 +120,7 @@
 		/obj/item/spear/explosive,
 		/obj/item/spear/bonespear,
 		/obj/item/spear/bamboospear,
+		/obj/item/spear/military,
 	)
 	result = /obj/structure/headpike
 	category = CAT_ENTERTAINMENT
@@ -144,6 +153,20 @@
 	result = /obj/structure/headpike/bamboo
 	category = CAT_ENTERTAINMENT
 
+/datum/crafting_recipe/headpikemilitary
+	name = "Spike Head (Military)"
+	time = 6.5 SECONDS
+	reqs = list(
+		/obj/item/spear/military = 1,
+		/obj/item/bodypart/head = 1,
+	)
+	parts = list(
+		/obj/item/bodypart/head = 1,
+		/obj/item/spear/military = 1,
+	)
+	result = /obj/structure/headpike/military
+	category = CAT_ENTERTAINMENT
+
 /datum/crafting_recipe/guillotine
 	name = "Guillotine"
 	result = /obj/structure/guillotine
@@ -161,7 +184,7 @@
 	category = CAT_ENTERTAINMENT
 	tool_behaviors = list(TOOL_WRENCH)
 	reqs = list(/obj/item/flamethrower = 1)
-	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_USE) // we will handle the consumption manually in on_craft_completion for this one
+	structures = list(/obj/structure/toilet = CRAFTING_STRUCTURE_CONSUME)
 	result = /obj/structure/toiletbong
 	time = 5 SECONDS
 	steps = list(
@@ -173,21 +196,6 @@
 	if(!flamethrower.ptank)
 		return FALSE
 	return ..()
-
-/datum/crafting_recipe/toiletbong/on_craft_completion(mob/user, atom/result)
-	var/obj/structure/toiletbong/toiletbong = result
-
-	// because we want to set the toilet's location and dir, we need to do the consumption manually
-	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in range(1)
-	if(toilet)
-		for (var/obj/item/cistern_item in toilet.contents)
-			cistern_item.forceMove(user.drop_location())
-			to_chat(user, span_warning("[cistern_item] falls out of the toilet!"))
-		toiletbong.dir = toilet.dir
-		toiletbong.loc = toilet.loc
-		qdel(toilet)
-
-	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
 /datum/crafting_recipe/punching_bag
 	name = "Punching Bag"
@@ -233,4 +241,31 @@
 		/obj/item/clothing/gloves/latex = 1,
 		/obj/item/stack/cable_coil = 2,
 	)
-	category = CAT_EQUIPMENT
+	category = CAT_ENTERTAINMENT
+
+/datum/crafting_recipe/violin
+	name = "Violin"
+	result = /obj/item/instrument/violin
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 4,
+		/obj/item/stack/sheet/cloth = 2,
+		/obj/item/stack/sheet/iron = 1,
+	)
+	tool_paths = list(
+		/obj/item/hatchet,
+	)
+	time = 30 SECONDS
+	category = CAT_ENTERTAINMENT
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/crackpipe
+	name = "Glass Pipe"
+	result = /obj/item/cigarette/pipe/crackpipe
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/glass = 3,
+	)
+	tool_paths = list(
+		/obj/item/screwdriver,
+	)
+	category = CAT_ENTERTAINMENT

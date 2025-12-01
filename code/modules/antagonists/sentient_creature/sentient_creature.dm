@@ -2,7 +2,7 @@
 	name = "\improper Sentient Creature"
 	show_in_antagpanel = FALSE
 	show_in_roundend = FALSE
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	ui_name = "AntagInfoSentient"
 
 /datum/antagonist/sentient_creature/get_preview_icon()
@@ -10,11 +10,11 @@
 
 	var/icon/pandora = icon('icons/mob/simple/lavaland/lavaland_elites.dmi', "pandora")
 	pandora.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
-	final_icon.Blend(pandora, ICON_UNDERLAY, -world.icon_size / 4, 0)
+	final_icon.Blend(pandora, ICON_UNDERLAY, -ICON_SIZE_X / 4, 0)
 
 	var/icon/rat = icon('icons/mob/simple/animal.dmi', "regalrat")
 	rat.Blend(rgb(128, 128, 128, 128), ICON_MULTIPLY)
-	final_icon.Blend(rat, ICON_UNDERLAY, world.icon_size / 4, 0)
+	final_icon.Blend(rat, ICON_UNDERLAY, ICON_SIZE_X / 4, 0)
 
 	final_icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 	return final_icon
@@ -23,6 +23,11 @@
 	var/mob/living/master = owner.enslaved_to?.resolve()
 	if(master)
 		owner.current.copy_languages(master, LANGUAGE_MASTER)
+		ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
+	return ..()
+
+/datum/antagonist/sentient_creature/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src))
 	return ..()
 
 /datum/antagonist/sentient_creature/ui_static_data(mob/user)

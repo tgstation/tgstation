@@ -1,0 +1,1 @@
+/obj/item/clothing/head/frenchberet : /obj/item/clothing/head/beret/frenchberet{@OLD}

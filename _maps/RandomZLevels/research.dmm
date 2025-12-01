@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
+/turf/open/space/basic,
 /area/space)
 "ab" = (
 /turf/closed/mineral,
@@ -76,8 +76,8 @@
 	},
 /obj/structure/frame/machine,
 /obj/item/circuitboard/machine/smes,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aw" = (
@@ -96,12 +96,12 @@
 /area/awaymission/research/interior/engineering)
 "az" = (
 /obj/effect/gibspawner/human,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aA" = (
 /obj/item/stack/sheet/plasteel,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aB" = (
@@ -125,11 +125,11 @@
 "aF" = (
 /obj/item/stack/rods,
 /obj/item/stack/sheet/iron,
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aG" = (
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aH" = (
@@ -161,7 +161,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aM" = (
-/obj/item/stock_parts/cell/high/empty,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/engineering)
 "aO" = (
@@ -389,7 +389,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bR" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bS" = (
@@ -438,7 +438,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "bZ" = (
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -481,12 +481,12 @@
 /area/awaymission/research/interior/gateway)
 "cj" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "ck" = (
 /obj/machinery/door/window/right/directional/south,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -1134,8 +1134,7 @@
 /area/awaymission/research/interior/security)
 "fw" = (
 /obj/machinery/power/smes{
-	capacity = 9e+006;
-	charge = 10000
+	charge = 2e+005
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1605,18 +1604,11 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "hP" = (
-/obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = -32
-	},
 /obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -24
+	pixel_y = 10
 	},
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
+/obj/structure/sign/directions/medical,
+/turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
 "hQ" = (
 /turf/open/floor/iron/white/corner{
@@ -1761,7 +1753,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/awaymission/research/interior/bathroom)
@@ -2007,7 +1999,7 @@
 "jU" = (
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jV" = (
@@ -2347,7 +2339,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "ls" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
@@ -2461,9 +2453,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lN" = (
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
@@ -2507,7 +2497,7 @@
 "lT" = (
 /obj/structure/bed,
 /obj/item/bedsheet/patriot,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lX" = (
@@ -2707,25 +2697,19 @@
 "mK" = (
 /obj/structure/flora/bush/flowers_br/style_random,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mL" = (
 /obj/structure/flora/bush/ferny/style_random,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mM" = (
 /obj/structure/flora/bush/grassy/style_random,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/north{
-	layer = 2.9
-	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mO" = (
@@ -2984,7 +2968,7 @@
 /area/awaymission/research/interior)
 "sM" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/landmark/awaystart,
+/obj/effect/landmark/awaystart/research,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -3149,24 +3133,18 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "yj" = (
-/obj/structure/sign/directions/security{
+/obj/structure/sign/directions/science{
 	dir = 1;
-	pixel_x = 32;
-	pixel_y = 40
+	pixel_y = 10
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 1;
-	pixel_x = 32;
-	pixel_y = 33
+	pixel_y = -10
 	},
-/obj/structure/sign/directions/science{
-	dir = 1;
-	pixel_x = 32;
-	pixel_y = 26
+/obj/structure/sign/directions/security{
+	dir = 1
 	},
-/mob/living/basic/trooper/syndicate/ranged/smg,
-/obj/effect/turf_decal/tile/green/fourcorners,
-/turf/open/floor/iron/white,
+/turf/closed/wall/r_wall,
 /area/awaymission/research/interior)
 "yn" = (
 /obj/item/ammo_casing/c45,
@@ -3910,7 +3888,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
 "TK" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/iron/dark,
@@ -42267,7 +42245,7 @@ Nf
 eJ
 eJ
 hB
-hP
+kv
 ia
 ia
 it
@@ -42278,7 +42256,7 @@ ia
 ia
 ia
 ia
-yj
+sn
 ut
 HS
 kv
@@ -42525,7 +42503,7 @@ eJ
 eJ
 hC
 hM
-cp
+hP
 cp
 eH
 cp
@@ -42534,7 +42512,7 @@ cp
 cp
 cp
 cp
-cp
+yj
 js
 ry
 ke

@@ -23,6 +23,17 @@
 	time = 4 SECONDS
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/moonflowershield
+	name = "Moonflower Shield"
+	result = /obj/item/shield/buckler/moonflower
+	reqs = list(
+		/obj/item/seeds/sunflower/moonflower = 3,
+		/obj/item/grown/log/steel = 3,
+	)
+	time = 4 SECONDS
+	category = CAT_EQUIPMENT
+
+
 /datum/crafting_recipe/radiogloves
 	name = "Radio Gloves"
 	result = /obj/item/clothing/gloves/radio
@@ -58,12 +69,12 @@
 		/obj/item/stack/rods = 8,
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	parts = list(
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/cell = 1,
+		/obj/item/stock_parts/power_store/cell = 1,
 	)
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WRENCH)
 	time = 20 SECONDS
@@ -75,9 +86,6 @@
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
 		/obj/item/assembly/igniter/condenser = 1,
-		/obj/item/electronics/airlock = 1,
-	)
-	parts = list(
 		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
@@ -99,9 +107,6 @@
 	result = /obj/structure/closet/secure_closet
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
-		/obj/item/electronics/airlock = 1,
-	)
-	parts = list(
 		/obj/item/electronics/airlock = 1,
 	)
 	time = 5 SECONDS
@@ -145,13 +150,20 @@
 
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
-	result = /obj/item/organ/internal/eyes/robotic/flashlight
-	time = 10
+	result = /obj/item/organ/eyes/robotic/flashlight
+	time = 1 SECONDS
 	reqs = list(
 		/obj/item/flashlight = 2,
 		/obj/item/restraints/handcuffs/cable = 1
 	)
+	blacklist = list(
+		/obj/item/flashlight/lamp/space_bubble,
+	)
 	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/flashlight_eyes/New()
+	. = ..()
+	blacklist += typesof(/obj/item/flashlight/flare)
 
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
@@ -216,7 +228,7 @@
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
-	time = 30
+	time = 3 SECONDS
 	reqs = list(
 		/obj/item/tank/internals/oxygen = 2,
 		/obj/item/extinguisher = 1,
@@ -249,3 +261,61 @@
 	tool_paths = list(/obj/item/bikehorn)
 	time = 40 SECONDS
 	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/rebar_quiver
+	name = "Rebar Storage Quiver"
+	result = /obj/item/storage/bag/rebar_quiver
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/tank/internals/oxygen = 1,
+		/obj/item/stack/cable_coil = 15,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/arrow_quiver
+	name = "Archery Quiver"
+	result = /obj/item/storage/bag/quiver/lesser
+	time = 1 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/leather = 4,
+		/obj/item/stack/sheet/mineral/wood = 1,
+	)
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/tether_anchor
+	name = "Tether Anchor"
+	result = /obj/item/tether_anchor
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/cable_coil = 15
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WRENCH)
+	time = 5 SECONDS
+	category = CAT_EQUIPMENT
+
+/datum/crafting_recipe/morbid_surgical_toolset
+	name = "Morbid Surgical Toolset Implant"
+	result = /obj/item/organ/cyberimp/arm/toolkit/surgery/cruel
+	reqs = list(
+		/obj/item/organ/cyberimp/arm/toolkit/surgery = 1
+	)
+	time = 10 SECONDS
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/morbid_surgical_toolset/New()
+	..()
+	blacklist |= subtypesof(/obj/item/organ/cyberimp/arm/toolkit/surgery)
+
+/datum/crafting_recipe/surgical_toolset
+	name = "Surgical Toolset Implant"
+	result = /obj/item/organ/cyberimp/arm/toolkit/surgery
+	reqs = list(
+		/obj/item/organ/cyberimp/arm/toolkit/surgery/cruel = 1
+	)
+	time = 10 SECONDS
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)

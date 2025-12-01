@@ -9,11 +9,7 @@
 	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/dice/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(/obj/item/dice)
+	storage_type = /datum/storage/dice
 
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
@@ -37,8 +33,6 @@
 /obj/item/storage/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
-
-/obj/item/storage/dice/hazard
 
 /obj/item/storage/dice/hazard/PopulateContents()
 	new /obj/item/dice/d6(src)
@@ -70,6 +64,67 @@
 	if(!result)
 		result = roll(sides)
 	update_appearance()
+
+/obj/item/dice/attack_self(mob/user)
+	diceroll(user, in_hand = TRUE)
+
+/obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/mob/thrown_by = throwingdatum?.get_thrower()
+	if(istype(thrown_by))
+		diceroll(thrown_by)
+	return ..()
+
+/obj/item/dice/proc/diceroll(mob/user, in_hand=FALSE)
+	result = roll(sides)
+	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
+		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
+			result = rigged_value
+		else if(rigged == DICE_TOTALLY_RIGGED)
+			result = rigged_value
+
+	. = result
+	playsound(src, 'sound/items/dice_roll.ogg', 50, TRUE)
+
+	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
+	var/comment = ""
+	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
+		comment = "Ouch, bad luck."
+	if(sides == 20 && result == 20)
+		comment = "NAT 20!"
+	update_appearance()
+	result = manipulate_result(result)
+	if(special_faces.len == sides)
+		comment = ""  // its not a number
+		result = special_faces[result]
+		if(!ISINTEGER(result))
+			comment = special_faces[result]  // should be a str now
+
+	if(in_hand) //Dice was rolled in someone's hand
+		user.visible_message(
+			span_notice("[user] rolls [src]. It lands on [result]. [comment]"),
+			span_notice("You roll [src]. It lands on [result]. [comment]"),
+			span_hear("You hear [src] rolling, it sounds like a [fake_result]."),
+		)
+	else
+		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
+
+	return .
+
+
+/obj/item/dice/update_overlays()
+	. = ..()
+	. += "[icon_state]-[result]"
+
+/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	if(microwave_riggable)
+		rigged = DICE_BASICALLY_RIGGED
+		rigged_value = result
+
+	return ..() | COMPONENT_MICROWAVE_SUCCESS
+
+/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
+/obj/item/dice/proc/manipulate_result(original)
+	return original
 
 /obj/item/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -121,7 +176,7 @@
 	name = "knucklebones rules"
 	default_raw_text = "How to play knucklebones<br>\
 	<ul>\
-	<li>Make two 3x3 grids right next to eachother using anything you can find to mark the ground. I like using the bartenders hologram projector.</li>\
+	<li>Make two 3x3 grids right next to each other using anything you can find to mark the ground. I like using the bartenders hologram projector.</li>\
 	<li>Take turns rolling the dice and moving the dice into one of the three rows on your 3x3 grid.</li>\
 	<li>Your goal is to get the most points by putting die of the same number in the same row.</li>\
 	<li>If you have two of the same die in the same row, you will add them together and then times the sum by two. Then add that to the rest of the die.</li>\
@@ -208,61 +263,6 @@
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/item/dice/attack_self(mob/user)
-	diceroll(user)
-
-/obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
-	if(thrown_by)
-		diceroll(thrown_by)
-	return ..()
-
-/obj/item/dice/proc/diceroll(mob/user)
-	result = roll(sides)
-	if(rigged != DICE_NOT_RIGGED && result != rigged_value)
-		if(rigged == DICE_BASICALLY_RIGGED && prob(clamp(1/(sides - 1) * 100, 25, 80)))
-			result = rigged_value
-		else if(rigged == DICE_TOTALLY_RIGGED)
-			result = rigged_value
-
-	. = result
-
-	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
-	var/comment = ""
-	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
-		comment = "Ouch, bad luck."
-	if(sides == 20 && result == 20)
-		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
-	update_appearance()
-	result = manipulate_result(result)
-	if(special_faces.len == sides)
-		comment = ""  // its not a number
-		result = special_faces[result]
-		if(!ISINTEGER(result))
-			comment = special_faces[result]  // should be a str now
-
-	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
-			span_notice("You throw [src]. It lands on [result]. [comment]"), \
-			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
-	else if(!src.throwing) //Dice was thrown and is coming to rest
-		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
-
-/obj/item/dice/update_overlays()
-	. = ..()
-	. += "[icon_state]-[result]"
-
-/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
-	if(microwave_riggable)
-		rigged = DICE_BASICALLY_RIGGED
-		rigged_value = result
-
-	return ..() | COMPONENT_MICROWAVE_SUCCESS
-
-/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
-/obj/item/dice/proc/manipulate_result(original)
-	return original
-
 // Die of fate stuff
 /obj/item/dice/d20/fate
 	name = "\improper Die of Fate"
@@ -303,7 +303,7 @@
 /obj/item/dice/d20/fate/stealth/cursed/one_use
 	reusable = FALSE
 
-/obj/item/dice/d20/fate/diceroll(mob/user)
+/obj/item/dice/d20/fate/diceroll(mob/user, in_hand=FALSE)
 	if(!COOLDOWN_FINISHED(src, roll_cd))
 		to_chat(user, span_warning("Hold on, [src] isn't caught up with your last roll!"))
 		return
@@ -355,10 +355,8 @@
 		if(4)
 			//Destroy Equipment
 			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))
-			for(var/obj/item/non_implant in user)
-				if(istype(non_implant, /obj/item/implant))
-					continue
-				qdel(non_implant)
+			var/list/belongings = user.get_all_gear(NONE) //don't delete prosthetics or abstract items.
+			QDEL_LIST(belongings)
 		if(5)
 			//Monkeying
 			selected_turf.visible_message(span_userdanger("[user] transforms into a monkey!"))
@@ -371,7 +369,7 @@
 			//Throw
 			selected_turf.visible_message(span_userdanger("Unseen forces throw [user]!"))
 			user.Stun(60)
-			user.adjustBruteLoss(50)
+			user.adjust_brute_loss(50)
 			var/throw_dir = pick(GLOB.cardinals)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
@@ -390,9 +388,9 @@
 		if(11)
 			//Cookie
 			selected_turf.visible_message(span_userdanger("A cookie appears out of thin air!"))
-			var/obj/item/food/cookie/C = new(drop_location())
+			var/obj/item/food/cookie/ooh_a_cookie = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
-			C.name = "Cookie of Fate"
+			ooh_a_cookie.name = "Cookie of Fate"
 		if(12)
 			//Healing
 			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
@@ -421,25 +419,9 @@
 			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
-			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
-			var/mob/living/carbon/human/human_servant = new(drop_location())
-			do_smoke(0, holder = src, location = drop_location())
-
-			var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 5 SECONDS, checked_target = human_servant, alert_pic = user, role_name_text = "dice servant")
-			if(chosen_one)
-				message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
-				human_servant.key = chosen_one.key
-
-			human_servant.equipOutfit(/datum/outfit/butler)
-			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/antagonist/magic_servant/servant_antagonist = new
-			servant_mind.transfer_to(human_servant)
-			servant_antagonist.setup_master(user)
-			servant_mind.add_antag_datum(servant_antagonist)
-
-			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
+			selected_turf.visible_message(span_userdanger("[user] ripples with newfound magical power!"))
+			var/datum/action/cooldown/spell/summon_mob/dice/summon_servant = new(user.mind || user)
 			summon_servant.Grant(user)
-
 		if(17)
 			//Tator Kit
 			selected_turf.visible_message(span_userdanger("A suspicious box appears!"))
@@ -460,53 +442,5 @@
 			//Free wizard!
 			selected_turf.visible_message(span_userdanger("Magic flows out of [src] and into [user]!"))
 			user.mind.make_wizard()
-
-/datum/outfit/butler
-	name = "Butler"
-	uniform = /obj/item/clothing/under/suit/black_really
-	neck = /obj/item/clothing/neck/tie/red/tied
-	shoes = /obj/item/clothing/shoes/laceup
-	head = /obj/item/clothing/head/hats/bowler
-	glasses = /obj/item/clothing/glasses/monocle
-	gloves = /obj/item/clothing/gloves/color/white
-
-/datum/action/cooldown/spell/summon_mob
-	name = "Summon Servant"
-	desc = "This spell can be used to call your servant, whenever you need it."
-	button_icon_state = "summons"
-
-	school = SCHOOL_CONJURATION
-	cooldown_time = 10 SECONDS
-
-	invocation = "JE VES"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
-	spell_max_level = 0 //cannot be improved
-
-	smoke_type = /datum/effect_system/fluid_spread/smoke
-	smoke_amt = 2
-
-	var/datum/weakref/summon_weakref
-
-/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
-	. = ..()
-	if(summoned_mob)
-		summon_weakref = WEAKREF(summoned_mob)
-
-/datum/action/cooldown/spell/summon_mob/cast(atom/cast_on)
-	. = ..()
-	var/mob/living/to_summon = summon_weakref?.resolve()
-	if(QDELETED(to_summon))
-		to_chat(cast_on, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
-		return
-
-	do_teleport(
-		to_summon,
-		get_turf(cast_on),
-		precision = 1,
-		asoundin = 'sound/magic/wand_teleport.ogg',
-		asoundout = 'sound/magic/wand_teleport.ogg',
-		channel = TELEPORT_CHANNEL_MAGIC,
-	)
 
 #undef MIN_SIDES_ALERT

@@ -23,7 +23,7 @@
 
 ///Setup the random hardcore quirks and give the character the new score prize.
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
-	var/next_hardcore_score = select_hardcore_quirks()
+	var/next_hardcore_score = select_hardcore_quirks(character.dna.species.type)
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
 	log_game("[character] started hardcore random with [english_list(all_quirks)], for a score of [next_hardcore_score].")
 
@@ -35,7 +35,7 @@
  * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.
  * Returns the new value to be gained with this setup, plus the previously earned score.
  **/
-/datum/preferences/proc/select_hardcore_quirks()
+/datum/preferences/proc/select_hardcore_quirks(species)
 	. = 0
 
 	var/quirk_budget = rand(8, 35)
@@ -45,10 +45,10 @@
 	var/list/available_hardcore_quirks = SSquirks.hardcore_quirks.Copy()
 
 	while(quirk_budget > 0)
-		for(var/i in available_hardcore_quirks) //Remove from available quirks if its too expensive.
-			var/datum/quirk/available_quirk = i
-			if(available_hardcore_quirks[available_quirk] > quirk_budget)
-				available_hardcore_quirks -= available_quirk
+		for(var/quirk in available_hardcore_quirks) //Remove from available quirks if its too expensive.
+			var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk]
+			if(available_hardcore_quirks[quirk] > quirk_budget || !quirk_prototype.is_species_appropriate(species))
+				available_hardcore_quirks -= quirk
 
 		if(!available_hardcore_quirks.len)
 			break
@@ -88,13 +88,14 @@
 
 	for(var/job in job_preferences)
 		if(job_preferences[job] > highest_pref)
-			preview_job = SSjob.GetJob(job)
+			preview_job = SSjob.get_job(job)
 			highest_pref = job_preferences[job]
 
 	return preview_job
 
-/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin)
-	var/datum/job/preview_job = get_highest_priority_job()
+/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin, show_job_clothes = TRUE)
+	var/datum/job/no_job = SSjob.get_job_type(/datum/job/unassigned)
+	var/datum/job/preview_job = get_highest_priority_job() || no_job
 
 	if(preview_job)
 		// Silicons only need a very basic preview since there is no customization for them.
@@ -106,19 +107,23 @@
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE)
 
-	if(preview_job)
-		mannequin.job = preview_job.title
-		mannequin.dress_up_as_job(preview_job, TRUE)
+	mannequin.job = preview_job.title
+	mannequin.dress_up_as_job(
+		equipping = show_job_clothes ? preview_job : no_job,
+		visual_only = TRUE,
+		player_client = parent,
+		consistent = TRUE,
+	)
 
 	// Apply visual quirks
 	// Yes we do it every time because it needs to be done after job gear
 	if(SSquirks?.initialized)
 		// And yes we need to clean all the quirk datums every time
 		mannequin.cleanse_quirk_datums()
-		for(var/quirk_name as anything in all_quirks)
+		for(var/quirk_name in all_quirks)
 			var/datum/quirk/quirk_type = SSquirks.quirks[quirk_name]
 			if(!(initial(quirk_type.quirk_flags) & QUIRK_CHANGES_APPEARANCE))
 				continue
-			mannequin.add_quirk(quirk_type, parent)
+			mannequin.add_quirk(quirk_type, parent, announce = FALSE)
 
 	return mannequin.appearance

@@ -33,7 +33,7 @@
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.")
+		. += span_notice("The status display reads: Success chance is <b>[70 + (accuracy * 10)]%</b>.")
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -52,7 +52,7 @@
 	if(is_ready())
 		teleport(AM)
 
-/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
+/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		if(power_station?.engaged)
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
@@ -73,22 +73,25 @@
 		com.target_ref = null
 		visible_message(span_alert("Cannot authenticate locked on coordinates. Please reinstate coordinate matrix."))
 		return
-	if (ismovable(M))
-		if(do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
-			use_power(active_power_usage)
-			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
-				if(ishuman(M))//don't remove people from the round randomly you jerks
-					var/mob/living/carbon/human/human = M
-					if(!(human.mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_UNDEAD|MOB_SPIRIT)))
-						var/datum/species/species_to_transform = /datum/species/fly
-						if(check_holidays(MOTH_WEEK))
-							species_to_transform = /datum/species/moth
-						if(human.dna && human.dna.species.id != initial(species_to_transform.id))
-							to_chat(M, span_hear("You hear a buzzing in your ears."))
-							human.set_species(species_to_transform)
-							human.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
-			calibrated = FALSE
-	return
+	if(!ismovable(M))
+		return
+	var/turf/start_turf = get_turf(M)
+	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
+		return
+	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	use_energy(active_power_usage)
+	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
+	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem
+		var/mob/living/carbon/human/human = M
+		if(!(human.mob_biotypes & (MOB_ROBOTIC|MOB_MINERAL|MOB_UNDEAD|MOB_SPIRIT)))
+			var/datum/species/species_to_transform = /datum/species/fly
+			if(check_holidays(MOTH_WEEK))
+				species_to_transform = /datum/species/moth
+			if(human.dna && human.dna.species.id != initial(species_to_transform.id))
+				to_chat(M, span_hear("You hear a buzzing in your ears."))
+				human.set_species(species_to_transform)
+				human.log_message("was turned into a [initial(species_to_transform.name)] through [src].", LOG_GAME)
+	calibrated = FALSE
 
 /obj/machinery/teleport/hub/update_icon_state()
 	icon_state = "[base_icon_state][panel_open ? "-o" : (is_ready() ? 1 : 0)]"
@@ -99,8 +102,7 @@
 
 /obj/machinery/teleport/hub/syndicate/Initialize(mapload)
 	. = ..()
-	var/obj/item/stock_parts/matter_bin/super/super_bin = new(src)
-	LAZYADD(component_parts, super_bin)
+	LAZYADD(component_parts, GLOB.stock_part_datums[/datum/stock_part/matter_bin/tier3])
 	RefreshParts()
 
 /obj/machinery/teleport/station
@@ -159,24 +161,25 @@
 		teleporter_console = null
 	return ..()
 
-/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, W))
-			return
-		var/obj/item/multitool/M = W
-		if(panel_open)
-			M.set_buffer(src)
-			balloon_alert(user, "saved to multitool buffer")
-		else
-			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-				if(linked_stations.len < efficiency)
-					linked_stations.Add(M.buffer)
-					M.set_buffer(null)
-					balloon_alert(user, "data uploaded from buffer")
-				else
-					to_chat(user, span_alert("This station can't hold more information, try to use better parts."))
-		return
-	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+/obj/machinery/teleport/station/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = NONE
+
+	if(panel_open)
+		tool.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool.buffer, /obj/machinery/teleport/station) || tool.buffer == src)
+		return ITEM_INTERACT_BLOCKING
+
+	if(linked_stations.len < efficiency)
+		linked_stations.Add(tool.buffer)
+		tool.set_buffer(null)
+		balloon_alert(user, "data uploaded from buffer")
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_appearance()
 		return
 
@@ -196,7 +199,7 @@
 			to_chat(user, span_alert("The teleporter hub isn't responding."))
 		else
 			engaged = !engaged
-			use_power(active_power_usage)
+			use_energy(active_power_usage)
 			to_chat(user, span_notice("Teleporter [engaged ? "" : "dis"]engaged!"))
 	else
 		teleporter_console.target_ref = null

@@ -1,13 +1,48 @@
+#define PURGING_REAGENTS list( \
+	/datum/reagent/medicine/c2/multiver, \
+	/datum/reagent/medicine/pen_acid, \
+	/datum/reagent/medicine/calomel, \
+	/datum/reagent/medicine/ammoniated_mercury, \
+	/datum/reagent/medicine/c2/syriniver, \
+	/datum/reagent/medicine/c2/musiver \
+)
+
 /datum/chemical_reaction/reagent_explosion
 	var/strengthdiv = 10
 	var/modifier = 0
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EXPLOSIVE | REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 	required_temp = 0 //Prevent impromptu RPGs
+	// Only clear mob reagents in special cases
+	var/clear_mob_reagents = FALSE
 
-/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	default_explode(holder, created_volume, modifier, strengthdiv)
+/datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume, clear_mob_reagents)
+	// If an explosive reaction clears mob reagents, it should always be a minimum power
+	if(ismob(holder.my_atom) && clear_mob_reagents)
+		if(round((created_volume / strengthdiv) + modifier, 1) < 1)
+			modifier += 1 - ((created_volume / strengthdiv) + modifier)
+	// If this particular explosion doesn't automatically clear mob reagents as an inherent quality,
+	// then we can still clear mob reagents with some mad science malpractice that shouldn't work but
+	// does because omnizine is magic and also it's the future or whatever
+	if(ismob(holder.my_atom) && !clear_mob_reagents)
+		// The explosion needs to be a minimum power to clear reagents: see above
+		var/purge_power = round((created_volume / strengthdiv) + modifier, 1)
+		if(purge_power >= 1)
+			var/has_purging_chemical = FALSE
+			// They need one of the purge reagents in them
+			for(var/purging_chem in PURGING_REAGENTS)
+				if(holder.has_reagent(purging_chem))
+					// We have a purging chemical
+					has_purging_chemical = TRUE
+					break
+			// Then we need omnizine! MAGIC!
+			var/has_omnizine = holder.has_reagent(/datum/reagent/medicine/omnizine)
+			if(has_purging_chemical && has_omnizine)
+				// With all this medical "science" combined, we can clear mob reagents
+				clear_mob_reagents = TRUE
+	default_explode(holder, created_volume, modifier, strengthdiv, clear_mob_reagents)
 
+#undef PURGING_REAGENTS
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
 	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
@@ -104,11 +139,18 @@
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
 	strengthdiv = 5
+	// Penthrite is rare as hell, so this clears your reagents
+	// Will most likely be from miners accidentally penstacking
+	clear_mob_reagents = TRUE
+
 
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_atropine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/atropine = 1)
 	strengthdiv = 5
 	modifier = 5
+	// Rare reagents clear your reagents
+	// Probably not good for you because you'll need healing chems to survive this most likely
+	clear_mob_reagents = TRUE
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
@@ -136,28 +178,28 @@
 			ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 			ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 10 SECONDS)
 			ghostie.adjust_health(50)
-		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
-			if(IS_CULTIST(C))
-				to_chat(C, span_userdanger("The divine explosion sears you!"))
-				C.Paralyze(40)
-				C.adjust_fire_stacks(5)
-				C.ignite_mob()
+		for(var/mob/living/carbon/evil_motherfucker in get_hearers_in_view(effective_size,T))
+			if(IS_CULTIST(evil_motherfucker) || HAS_TRAIT(evil_motherfucker, TRAIT_EVIL))
+				to_chat(evil_motherfucker, span_userdanger("The divine explosion sears you!"))
+				evil_motherfucker.Paralyze(40)
+				evil_motherfucker.adjust_fire_stacks(5)
+				evil_motherfucker.ignite_mob()
 	..()
 
 /datum/chemical_reaction/gunpowder
 	results = list(/datum/reagent/gunpowder = 3)
 	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/c2/multiver = 1, /datum/reagent/sulfur = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion
 	required_reagents = list(/datum/reagent/gunpowder = 1)
 	required_temp = 474
 	strengthdiv = 10
 	modifier = 5
-	mix_message = "<span class='boldnotice'>Sparks start flying around the gunpowder!</span>"
+	mix_message = span_boldnotice("Sparks start flying around the gunpowder!")
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5,10) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(default_explode), holder, created_volume, modifier, strengthdiv), rand(5 SECONDS, 10 SECONDS))
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -166,27 +208,34 @@
 
 /datum/chemical_reaction/emp_pulse
 	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1, /datum/reagent/aluminium = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	//pretending this reaction took two ingredients and not three for its effects
+	var/turf/turf = get_turf(holder.my_atom)
 	var/two_thirds = created_volume / 1.5
 	var/location = get_turf(holder.my_atom)
+	var/lastkey = holder.my_atom.fingerprintslast
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
-	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1)
+	empulse(location, round(two_thirds / 12), round(two_thirds / 7), 1, emp_source = src)
 	holder.clear_reagents()
+	if(lastkey)
+		var/mob/toucher = get_mob_by_key(lastkey)
+		toucher.log_message("triggered EMP reaction at [AREACOORD(turf)].", LOG_GAME, log_globally = FALSE)
+	..()
+
 
 /datum/chemical_reaction/beesplosion
 	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/uranium/radium = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = holder.my_atom.drop_location()
 	if(created_volume < 5)
-		playsound(location,'sound/effects/sparks1.ogg', 100, TRUE)
+		playsound(location,'sound/effects/sparks/sparks1.ogg', 100, TRUE)
 	else
-		playsound(location,'sound/creatures/bee.ogg', 100, TRUE)
+		playsound(location,'sound/mobs/non-humanoids/bee/bee.ogg', 100, TRUE)
 		var/list/beeagents = list()
 		for(var/R in holder.reagent_list)
 			if(required_reagents[R])
@@ -202,7 +251,7 @@
 /datum/chemical_reaction/stabilizing_agent
 	results = list(/datum/reagent/stabilizing_agent = 3)
 	required_reagents = list(/datum/reagent/iron = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_CHEMICAL | REACTION_TAG_PLANT | REACTION_TAG_COMPONENT
 
 /datum/chemical_reaction/clf3
 	results = list(/datum/reagent/clf3 = 4)
@@ -251,7 +300,7 @@
 /datum/chemical_reaction/sorium_vortex
 	required_reagents = list(/datum/reagent/sorium = 1)
 	required_temp = 474
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -274,7 +323,7 @@
 /datum/chemical_reaction/ldm_vortex
 	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	required_temp = 474
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
@@ -307,7 +356,7 @@
 /datum/chemical_reaction/flash_powder_flash
 	required_reagents = list(/datum/reagent/flash_powder = 1)
 	required_temp = 374
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -348,7 +397,7 @@
 	required_temp = 374
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/smoke_powder_smoke/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -372,19 +421,19 @@
 	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/3, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	required_reagents = list(/datum/reagent/sonic_powder = 1)
 	required_temp = 374
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS | REACTION_TAG_ACTIVE
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 100, rand(0, 5))
+	for(var/mob/living/living in get_hearers_in_view(created_volume/10, location))
+		living.soundbang_act(1, 10 SECONDS, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	results = list(/datum/reagent/phlogiston = 3)
@@ -456,8 +505,8 @@
 	if(!cryostylane)
 		return ..()
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	local_turf.visible_message("The reaction frosts over, releasing it's chilly contents!")
+	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg', 50, 1)
+	local_turf.visible_message("The reaction frosts over, releasing its chilly contents!")
 	freeze_radius(holder, null, holder.chem_temp*2, clamp(cryostylane.volume/30, 2, 6), 120 SECONDS, 2)
 	clear_reactants(holder, 15)
 	holder.chem_temp += 100
@@ -466,8 +515,8 @@
 /datum/chemical_reaction/cryostylane/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
 	var/datum/reagent/cryostylane/cryostylane = holder.has_reagent(/datum/reagent/cryostylane)
 	var/turf/local_turf = get_turf(holder.my_atom)
-	playsound(local_turf, 'sound/magic/ethereal_exit.ogg', 50, 1)
-	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of the [holder.my_atom.name]!")
+	playsound(local_turf, 'sound/effects/magic/ethereal_exit.ogg', 50, 1)
+	local_turf.visible_message("The reaction furiously freezes up as a snowman suddenly rises out of \the [holder.my_atom]!")
 	freeze_radius(holder, equilibrium, holder.chem_temp, clamp(cryostylane.volume/15, 3, 10), 180 SECONDS, 5)
 	new /obj/structure/statue/snow/snowman(local_turf)
 	clear_reactants(holder)
@@ -522,22 +571,22 @@
 /datum/chemical_reaction/teslium
 	results = list(/datum/reagent/teslium = 3)
 	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/gunpowder = 1)
-	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
+	mix_message = span_danger("A jet of sparks flies from the mixture as it merges into a flickering slurry.")
 	required_temp = 400
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE
 
 /datum/chemical_reaction/energized_jelly
 	results = list(/datum/reagent/teslium/energized_jelly = 2)
 	required_reagents = list(/datum/reagent/toxin/slimejelly = 1, /datum/reagent/teslium = 1)
-	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
+	mix_message = span_danger("The slime jelly starts glowing intermittently.")
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_DANGEROUS | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	required_reagents = list(/datum/reagent/teslium = 1, /datum/reagent/water = 1)
 	strengthdiv = 100
 	modifier = -100
-	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
-	mix_sound = 'sound/machines/defib_zap.ogg'
+	mix_message = span_bolddanger("The teslium starts to spark as electricity arcs away from it!")
+	mix_sound = 'sound/machines/defib/defib_zap.ogg'
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_EXPLOSIVE | REACTION_TAG_DANGEROUS
 
@@ -560,8 +609,8 @@
 	var/atom/holder_atom = holder.my_atom
 	if(QDELETED(holder_atom))
 		return
-	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1e3, zap_flags = zap_flags)
-	playsound(holder_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
+	tesla_zap(source = holder_atom, zap_range = 7, power = power, cutoff = 1 KILO JOULES, zap_flags = zap_flags)
+	playsound(holder_atom, 'sound/machines/defib/defib_zap.ogg', 50, TRUE)
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	required_temp = 474
@@ -598,4 +647,4 @@
 /datum/chemical_reaction/reagent_explosion/patriotism_overload
 	required_reagents = list(/datum/reagent/consumable/ethanol/planet_cracker = 1, /datum/reagent/consumable/ethanol/triumphal_arch = 1)
 	strengthdiv = 20
-	mix_message = "<span class='boldannounce'>The two patriotic drinks instantly reject each other!</span>"
+	mix_message = span_bolddanger("The two patriotic drinks instantly reject each other!")

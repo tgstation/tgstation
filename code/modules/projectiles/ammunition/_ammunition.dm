@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
@@ -16,6 +16,8 @@
 	var/caliber = null
 	///The bullet type to create when New() is called
 	var/projectile_type = null
+	///Muzzle flash color based on ammo casing.
+	var/muzzle_flash_color = LIGHT_COLOR_ORANGE
 	///the loaded projectile in this ammo casing
 	var/obj/projectile/loaded_projectile = null
 	///Pellets for spreadshot
@@ -32,6 +34,18 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
+	/// How much force is applied when fired in zero-G
+	var/newtonian_force = 1
+
+	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
+	var/can_misfire = null
+	///This is how much misfire probability is added to the gun when it fires this casing.
+	var/misfire_increment = 0
+	///If set, this casing will damage any gun it's fired from by the specified amount
+	var/integrity_damage = 0
+
+	/// Set when this casing is fired. Only used for checking if it should burn a user's hand when caught from an ejection port.
+	var/shot_timestamp = 0
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -120,7 +134,7 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
+/obj/item/ammo_casing/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/ammo_box))
 		var/obj/item/ammo_box/box = I
 		if(isturf(loc))
@@ -135,7 +149,7 @@
 					continue
 			if (boolets > 0)
 				box.update_appearance()
-				to_chat(user, span_notice("You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s."))
+				to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
 			else
 				to_chat(user, span_warning("You fail to collect anything!"))
 	else
@@ -150,6 +164,6 @@
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/tools/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
 	else if(T?.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

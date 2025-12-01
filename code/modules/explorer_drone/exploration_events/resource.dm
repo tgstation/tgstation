@@ -1,7 +1,7 @@
 /// Simple event type that checks if you have a tool and after a retrieval delay adds loot to drone.
 /datum/exploration_event/simple/resource
 	name = "retrievable resource"
-	root_abstract_type = /datum/exploration_event/simple/resource
+	abstract_type = /datum/exploration_event/simple/resource
 	discovery_log = "Encountered recoverable resource."
 	action_text = "Extract"
 	/// Tool type required to recover this resource
@@ -84,7 +84,7 @@
 
 // EXPLORATION_SITE_RUINS 2/2
 /datum/exploration_event/simple/resource/remnants
-	name = "dessicated corpse"
+	name = "desiccated corpse"
 	required_site_traits = list(EXPLORATION_SITE_RUINS)
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	discovery_log = "Discovered a corpse of a humanoid."

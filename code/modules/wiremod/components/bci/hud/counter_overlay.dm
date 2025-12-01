@@ -7,10 +7,10 @@
 
 /obj/item/circuit_component/counter_overlay
 	display_name = "Counter Overlay"
-	desc = "A component that shows an three digit counter. Requires a BCI shell."
+	desc = "A component that shows a three-digit counter. Requires a BCI shell."
 	category = "BCI"
 
-	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
+	required_shells = list(/obj/item/organ/cyberimp/bci)
 
 	var/datum/port/input/counter_number
 
@@ -19,7 +19,7 @@
 
 	var/datum/port/input/signal_update
 
-	var/obj/item/organ/internal/cyberimp/bci/bci
+	var/obj/item/organ/cyberimp/bci/bci
 	var/list/numbers = list()
 	var/datum/weakref/counter_appearance
 
@@ -32,7 +32,7 @@
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/internal/cyberimp/bci))
+	if(istype(shell, /obj/item/organ/cyberimp/bci))
 		bci = shell
 		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
@@ -68,9 +68,9 @@
 	SET_PLANE_EXPLICIT(counter, ABOVE_LIGHTING_PLANE, owner)
 
 	if(image_pixel_x.value != null)
-		counter.pixel_x = image_pixel_x.value
+		counter.pixel_w = image_pixel_x.value
 	if(image_pixel_y.value != null)
-		counter.pixel_y = image_pixel_y.value
+		counter.pixel_z = image_pixel_y.value
 
 	var/datum/atom_hud/alternate_appearance/basic/one_person/alt_appearance = owner.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
@@ -91,12 +91,12 @@
 		SET_PLANE_EXPLICIT(number, ABOVE_LIGHTING_PLANE, owner)
 
 		if(image_pixel_x.value != null)
-			number.pixel_x = image_pixel_x.value + (i - 1) * 9
+			number.pixel_w = image_pixel_x.value + (i - 1) * 9
 		else
-			number.pixel_x = (i - 1) * 9
+			number.pixel_w = (i - 1) * 9
 
 		if(image_pixel_y.value != null)
-			number.pixel_y = image_pixel_y.value
+			number.pixel_z = image_pixel_y.value
 
 		var/datum/atom_hud/alternate_appearance/basic/one_person/number_alt_appearance = owner.add_alt_appearance(
 			/datum/atom_hud/alternate_appearance/basic/one_person,

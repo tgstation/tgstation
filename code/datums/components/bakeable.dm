@@ -29,6 +29,18 @@
 	if(positive_result)
 		ADD_TRAIT(parent, TRAIT_BAKEABLE, REF(src))
 
+
+	var/obj/item/item_target = parent
+	if(!PERFORM_ALL_TESTS(focus_only/check_materials_when_processed) || !positive_result || !item_target.custom_materials)
+		return
+
+	var/atom/result = new bake_result
+	if(!item_target.compare_materials(result))
+		var/warning = "custom_materials of [result.type] when baked compared to just spawned don't match"
+		var/what_it_should_be = item_target.get_materials_english_list()
+		stack_trace("[warning]. custom_materials should be [what_it_should_be].")
+	qdel(result)
+
 // Inherit the new values passed to the component
 /datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
 	if(!original)
@@ -74,7 +86,12 @@
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
-	if(baked_result.reagents && positive_result) //make space and tranfer reagents if it has any & the resulting item isn't bad food or other bad baking result
+	if(positive_result && istype(original_object, /obj/item/food) && istype(baked_result, /obj/item/food))
+		var/obj/item/food/original_food = original_object
+		var/obj/item/food/baked_food = baked_result
+		LAZYADD(baked_food.intrinsic_food_materials, original_food.intrinsic_food_materials)
+	//make space and tranfer reagents if it has any, also let any bad result handle removing or converting the transferred reagents on its own terms
+	if(baked_result.reagents && original_object.reagents)
 		baked_result.reagents.clear_reagents()
 		original_object.reagents.trans_to(baked_result, original_object.reagents.total_volume)
 		if(added_reagents) // Add any new reagents that should be added
@@ -90,12 +107,26 @@
 	baked_result.pixel_y = original_object.pixel_y
 	used_tray.AddToPlate(baked_result)
 
+	var/list/asomnia_hadders = list()
+	for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, used_oven))
+		if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
+			asomnia_hadders += smeller
+
 	if(positive_result)
-		used_oven.visible_message(span_notice("You smell something great coming from [used_oven]."), blind_message = span_notice("You smell something great..."))
+		used_oven.visible_message(
+			span_notice("You smell something great coming from [used_oven]."),
+			blind_message = span_notice("You smell something great..."),
+			ignored_mobs = asomnia_hadders,
+		)
 		BLACKBOX_LOG_FOOD_MADE(baked_result.type)
 	else
-		used_oven.visible_message(span_warning("You smell a burnt smell coming from [used_oven]."), blind_message = span_warning("You smell a burnt smell..."))
+		used_oven.visible_message(
+			span_warning("You smell a burnt smell coming from [used_oven]."),
+			blind_message = span_warning("You smell a burnt smell..."),
+			ignored_mobs = asomnia_hadders,
+		)
 	SEND_SIGNAL(parent, COMSIG_ITEM_BAKED, baked_result)
+	SEND_SIGNAL(baked_result, COMSIG_ITEM_BAKED_RESULT, parent)
 	qdel(parent)
 
 ///Gives info about the items baking status so you can see if its almost done

@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Dimmer,
@@ -10,10 +6,13 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
-  Objective,
+  type Objective,
   ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
@@ -87,10 +86,10 @@ export const AntagInfoChangeling = (props) => {
           </Stack.Item>
           <Stack.Item grow={3}>
             <Stack fill>
-              <Stack.Item grow basis={0}>
+              <Stack.Item grow>
                 <MemoriesSection />
               </Stack.Item>
-              <Stack.Item grow basis={0}>
+              <Stack.Item grow>
                 <VictimPatternsSection />
               </Stack.Item>
             </Stack>
@@ -156,14 +155,13 @@ const IntroductionSection = (props) => {
   );
 };
 
-const AbilitiesSection = (props) => {
-  const { data } = useBackend<Info>();
+const AbilitiesSection = () => {
   return (
     <Section fill title="Abilities">
       <Stack fill>
-        <Stack.Item basis={0} grow>
+        <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               Your
               <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
               you to steal the DNA and memories of a victim. The
@@ -172,7 +170,7 @@ const AbilitiesSection = (props) => {
               grant you their memories or speech patterns.
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               Your
               <span style={revivestyle}>&ensp;Reviving Stasis</span> ability
               allows you to revive. It means nothing short of a complete body
@@ -182,9 +180,9 @@ const AbilitiesSection = (props) => {
           </Stack>
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item basis={0} grow>
+        <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               Your
               <span style={transformstyle}>&ensp;Transform</span> ability allows
               you to change into the form of those you have collected DNA from,
@@ -192,7 +190,7 @@ const AbilitiesSection = (props) => {
               the clothing they were wearing for every slot you have open.
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               The
               <span style={storestyle}>&ensp;Cellular Emporium</span> is where
               you purchase more abilities beyond your starting kit. You have 10
@@ -227,7 +225,7 @@ const MemoriesSection = (props) => {
         <Button
           icon="info"
           tooltipPosition="left"
-          tooltip={multiline`
+          tooltip={`
             Absorbing targets allows
             you to collect their memories. They should
             help you impersonate your target!

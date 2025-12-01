@@ -1,9 +1,8 @@
-import { multiline } from 'common/string';
+import { Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, Section } from '../../components';
 import { BAYS } from './constants';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function PodBays(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -17,7 +16,7 @@ export function PodBays(props) {
             color="transparent"
             icon="trash"
             onClick={() => act('clearBay')}
-            tooltip={multiline`
+            tooltip={`
               Clears everything
               from the selected bay`}
             tooltipPosition="top-end"
@@ -25,7 +24,7 @@ export function PodBays(props) {
           <Button
             color="transparent"
             icon="question"
-            tooltip={multiline`
+            tooltip={`
               Each option corresponds
               to an area on centcom.
               Launched pods will
@@ -43,8 +42,8 @@ export function PodBays(props) {
       {BAYS.map((bay, i) => (
         <Button
           key={i}
-          onClick={() => act('switchBay', { bayNumber: '' + (i + 1) })}
-          selected={bayNumber === '' + (i + 1)}
+          onClick={() => act('switchBay', { bayNumber: `${i + 1}` })}
+          selected={bayNumber === `${i + 1}`}
           tooltipPosition="bottom-end"
         >
           {bay.title}

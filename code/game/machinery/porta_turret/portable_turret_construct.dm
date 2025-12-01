@@ -15,6 +15,7 @@
 	desc = "An unfinished covered turret frame."
 	anchored = FALSE
 	density = TRUE
+	obj_flags = UNIQUE_RENAME | RENAME_NO_DESC
 	use_power = NO_POWER_USE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret" //the name applied to the product turret
@@ -40,7 +41,7 @@
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off.")
 
-/obj/machinery/porta_turret_construct/attackby(obj/item/used, mob/user, params)
+/obj/machinery/porta_turret_construct/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(PTURRET_UNSECURED) //first step
@@ -181,8 +182,8 @@
 				build_step = PTURRET_CLOSED
 				return
 
-	if(istype(used, /obj/item/pen)) //you can rename turrets like bots!
-		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, MAX_NAME_LEN)
+	if(used.get_writing_implement_details()?["interaction_mode"] == MODE_WRITING) //you can rename turrets like bots!
+		var/choice = tgui_input_text(user, "Enter a new turret name", "Turret Classification", finish_name, max_length = MAX_NAME_LEN)
 		if(!choice)
 			return
 		if(!user.can_perform_action(src))
@@ -192,6 +193,12 @@
 		return
 	return ..()
 
+/obj/machinery/porta_turret_construct/nameformat(input, user)
+	finish_name = input
+	return input
+
+/obj/machinery/porta_turret_construct/rename_reset()
+	finish_name = initial(finish_name)
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user, list/modifiers)
 	. = ..()

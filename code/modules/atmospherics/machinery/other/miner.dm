@@ -12,13 +12,16 @@
 	icon_state = "miner"
 	density = FALSE
 	resistance_flags = INDESTRUCTIBLE|ACID_PROOF|FIRE_PROOF
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 1.25
+	initialize_directions = NONE
 	var/spawn_id = null
 	var/spawn_temp = T20C
 	/// Moles of gas to spawn per second
 	var/spawn_mol = MOLES_CELLSTANDARD * 5
 	var/max_ext_mol = INFINITY
 	var/max_ext_kpa = 6500
-	var/overlay_color = "#FFFFFF"
+	var/overlay_color = COLOR_WHITE
 	var/active = TRUE
 	var/power_draw = 0
 	var/power_draw_static = 2000
@@ -26,8 +29,6 @@
 	var/power_draw_dynamic_kpa_coeff = 0.5
 	var/broken = FALSE
 	var/broken_message = "ERROR"
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 1.5
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
 /obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
@@ -97,7 +98,7 @@
 		if(GASMINER_POWER_FULLSCALE)
 			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
 
-/obj/machinery/atmospherics/miner/proc/do_use_power(amount)
+/obj/machinery/atmospherics/miner/proc/do_use_energy(amount)
 	var/turf/T = get_turf(src)
 	if(T && istype(T))
 		var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
@@ -105,7 +106,7 @@
 			C.powernet.load += amount
 			return TRUE
 	if(powered())
-		use_power(amount)
+		use_energy(amount)
 		return TRUE
 	return FALSE
 
@@ -126,7 +127,7 @@
 	if(active && !broken)
 		if(isnull(spawn_id))
 			return FALSE
-		if(do_use_power(active_power_usage))
+		if(do_use_energy(active_power_usage))
 			mine_gas(seconds_per_tick)
 
 /obj/machinery/atmospherics/miner/proc/mine_gas(seconds_per_tick = 2)
@@ -161,7 +162,7 @@
 
 /obj/machinery/atmospherics/miner/plasma
 	name = "\improper Plasma Gas Miner"
-	overlay_color = "#FF0000"
+	overlay_color = COLOR_RED
 	spawn_id = /datum/gas/plasma
 
 /obj/machinery/atmospherics/miner/carbon_dioxide

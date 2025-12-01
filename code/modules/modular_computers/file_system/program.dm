@@ -42,6 +42,8 @@
 	var/alert_silenced = FALSE
 	/// Whether to highlight our program in the main screen. Intended for alerts, but loosely available for any need to notify of changed conditions. Think Windows task bar highlighting. Available even if alerts are muted.
 	var/alert_pending = FALSE
+	/// Whether the UI should *always* be updated while active.
+	var/always_update_ui = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
 	/// Unremovable circuit componentn added to the physical computer while the program is installed
@@ -122,9 +124,9 @@
  *Arguments:
  *A is the atom being tapped
  *user is the person making the attack action
- *params is anything the pre_attack() proc had in the same-named variable.
+ *modifiers is anything the pre_attack() proc had in the same-named variable.
 */
-/datum/computer_file/program/proc/tap(atom/tapped_atom, mob/living/user, params)
+/datum/computer_file/program/proc/tap(atom/tapped_atom, mob/living/user, list/modifiers)
 	return FALSE
 
 ///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
@@ -171,7 +173,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = computer.computer_id_slot?.GetID()
+			accesscard = computer.stored_id?.GetID()
 
 		if(!accesscard)
 			if(loud && user)
@@ -200,7 +202,7 @@
 	if(!can_run(user, loud = TRUE))
 		return FALSE
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		var/obj/item/card/id/ID = computer.stored_id?.GetID()
 		generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
 	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_START, user)
 	return TRUE
@@ -226,7 +228,7 @@
 		return FALSE
 
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		var/obj/item/card/id/ID = computer.stored_id?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 
 	computer.update_appearance(UPDATE_ICON)

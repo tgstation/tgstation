@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a Skub-related station trait. You can now choose if you want to be pro-skub or anti-skub, complete of shirt and stickers. Please don't shank each other over it."
-  - balance: "Halved the weight of station traits such as scarves, wallets and glitched PDAs."

@@ -30,7 +30,6 @@
 /area/ruin/space/djstation)
 "t" = (
 /obj/structure/closet/secure_closet/freezer/fridge/all_access,
-/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
@@ -64,7 +63,7 @@
 	},
 /obj/modular_map_connector,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "L" = (
 /turf/closed/wall,
 /area/ruin/space/djstation)
@@ -77,7 +76,7 @@
 	name = "Kitchen"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "P" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,

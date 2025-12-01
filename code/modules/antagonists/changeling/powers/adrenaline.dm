@@ -1,19 +1,25 @@
 /datum/action/changeling/adrenaline
-	name = "Adrenaline Sacs"
-	desc = "We evolve additional sacs of adrenaline throughout our body. Costs 30 chemicals."
-	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Continued use poisons the body."
+	name = "Gene Stim"
+	desc = "We concentrate our chemicals into a potent stimulant, rendering our form stupendously robust against being incapacitated. Costs 25 chemicals."
+	helptext = "Disregard any condition that has stunned us and suffuse our form with FOUR units of Changeling Adrenaline; our form recovers massive stamina and simply disregards any pain or fatigue during its effects."
 	button_icon_state = "adrenaline"
-	chemical_cost = 30
+	chemical_cost = 25 // similar cost to biodegrade, as they serve similar purposes
 	dna_cost = 2
-	req_human = TRUE
-	req_stat = UNCONSCIOUS
+	req_human = FALSE
+	req_stat = CONSCIOUS
+	disabled_by_fire = TRUE
 
 //Recover from stuns.
-/datum/action/changeling/adrenaline/sting_action(mob/living/user)
+/datum/action/changeling/adrenaline/sting_action(mob/living/carbon/user)
 	..()
-	to_chat(user, span_notice("Energy rushes through us."))
-	user.SetKnockdown(0)
-	user.set_resting(FALSE)
-	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //20 seconds
-	user.reagents.add_reagent(/datum/reagent/medicine/changelinghaste, 3) //6 seconds, for a really quick burst of speed
+
+	// Get us standing up.
+	user.SetAllImmobility(0)
+	user.set_stamina_loss(0)
+	user.set_resting(FALSE, instant = TRUE)
+
+	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //Tank 5 consecutive baton hits
+
+	to_chat(user, span_changeling("The staggering rush of a stimulant honed precisely to our biology is INVIGORATING. We will not be subdued."))
+
 	return TRUE

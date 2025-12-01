@@ -1,5 +1,6 @@
+import { Box, Button, Icon, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type AirlockControllerData = {
@@ -111,7 +112,7 @@ const PressureIndicator = (props) => {
   const {
     currentStatus: { icon, color },
   } = props;
-  let spin = icon === 'fan';
+  const spin = icon === 'fan';
 
   return (
     <Box color={color}>

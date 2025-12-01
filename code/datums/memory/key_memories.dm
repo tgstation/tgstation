@@ -115,7 +115,7 @@
 	return ..()
 
 /datum/memory/key/quirk_smoker/get_names()
-	return list("[protagonist_name]'s smoking problem.")
+	return list("[protagonist_name]'s addiction to [preferred_brand] cigarettes.")
 
 /datum/memory/key/quirk_smoker/get_starts()
 	return list(
@@ -143,7 +143,7 @@
 	return ..()
 
 /datum/memory/key/quirk_alcoholic/get_names()
-	return list("[protagonist_name]'s drinking problem.")
+	return list("[protagonist_name]'s addiction to [preferred_brandy] alcohol.")
 
 /datum/memory/key/quirk_alcoholic/get_starts()
 	return list(

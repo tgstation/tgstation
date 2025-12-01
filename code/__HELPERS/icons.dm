@@ -35,7 +35,7 @@ icon/MinColors(icon)
 icon/MaxColors(icon)
 	The icon is blended with a second icon where the maximum of each RGB pixel is the result.
 	Opacity may increase, as if the icons were blended with ICON_OR. You may supply a color in place of an icon.
-icon/Opaque(background = "#000000")
+icon/Opaque(background = COLOR_BLACK)
 	All alpha values are set to 255 throughout the icon. Transparent pixels become black, or whatever background color you specify.
 icon/BecomeAlphaMask()
 	You can convert a simple grayscale icon into an alpha mask to use with other icons very easily with this proc.
@@ -242,8 +242,8 @@ world
 	else
 		// solid color
 		new_icon = new(src)
-		new_icon.Blend("#000000", ICON_OVERLAY)
-		new_icon.SwapColor("#000000", null)
+		new_icon.Blend(COLOR_BLACK, ICON_OVERLAY)
+		new_icon.SwapColor(COLOR_BLACK, null)
 		new_icon.Blend(icon, ICON_OVERLAY)
 	var/icon/blend_icon = new(src)
 	blend_icon.Opaque()
@@ -251,7 +251,7 @@ world
 	Blend(new_icon, ICON_OR)
 
 // make this icon fully opaque--transparent pixels become black
-/icon/proc/Opaque(background = "#000000")
+/icon/proc/Opaque(background = COLOR_BLACK)
 	SwapColor(null, background)
 	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
@@ -272,7 +272,7 @@ world
 	Blend(mask_icon, ICON_ADD)
 
 /// Converts an rgb color into a list storing hsva
-/// Exists because it's useful to have a guarenteed alpha value
+/// Exists because it's useful to have a guaranteed alpha value
 /proc/rgb2hsv(rgb)
 	var/list/hsv = rgb2num(rgb, COLORSPACE_HSV)
 	if(length(hsv) < 4)
@@ -282,7 +282,7 @@ world
 /// Converts a list storing hsva into an rgb color
 /proc/hsv2rgb(hsv)
 	if(length(hsv) < 3)
-		return "#000000"
+		return COLOR_BLACK
 	if(length(hsv) == 3)
 		return rgb(hsv[1], hsv[2], hsv[3], space = COLORSPACE_HSV)
 	return rgb(hsv[1], hsv[2], hsv[3], hsv[4], space = COLORSPACE_HSV)
@@ -334,26 +334,14 @@ world
 /proc/RotateHue(rgb, angle)
 	var/list/HSV = rgb2hsv(rgb)
 
-	// normalize hsv in case anything is screwy
-	if(HSV[1] >= 1536)
-		HSV[1] %= 1536
+	angle %= 360
+
+	HSV[1] = round(HSV[1] + angle)
+
+	HSV[1] %= 360
+
 	if(HSV[1] < 0)
-		HSV[1] += 1536
-
-	// Compress hue into easier-to-manage range
-	HSV[1] -= HSV[1] >> 8
-
-	if(angle < 0 || angle >= 360)
-		angle -= 360 * round(angle / 360)
-	HSV[1] = round(HSV[1] + angle * (1530/360), 1)
-
-	// normalize hue
-	if(HSV[1] < 0 || HSV[1] >= 1530)
-		HSV[1] %= 1530
-	if(HSV[1] < 0)
-		HSV[1] += 1530
-	// decompress hue
-	HSV[1] += round(HSV[1] / 255)
+		HSV[1] += 360
 
 	return hsv2rgb(HSV)
 
@@ -372,7 +360,7 @@ world
 	var/tone_gray = TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11
 
 	if(gray <= tone_gray)
-		return BlendRGB("#000000", tone, gray/(tone_gray || 1))
+		return BlendRGB(COLOR_BLACK, tone, gray/(tone_gray || 1))
 	else
 		return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
@@ -402,7 +390,7 @@ world
 /// appearance system (overlays/underlays, etc.) is not available.
 ///
 /// Only the first argument is required.
-/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, parentcolor)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
 		for (var/i in 1 to process.len) { \
@@ -420,6 +408,10 @@ world
 				} \
 				current_layer = base_layer + appearance.layer + current_layer / 1000; \
 			} \
+			/* If we are using topdown rendering, chop that part off so things layer together as expected */ \
+			if((current_layer >= TOPDOWN_LAYER && current_layer < EFFECTS_LAYER) || current_layer > TOPDOWN_LAYER + EFFECTS_LAYER) { \
+				current_layer -= TOPDOWN_LAYER; \
+			} \
 			for (var/index_to_compare_to in 1 to layers.len) { \
 				var/compare_to = layers[index_to_compare_to]; \
 				if (current_layer < layers[compare_to]) { \
@@ -431,9 +423,10 @@ world
 		}
 
 	var/static/icon/flat_template = icon('icons/blanks/32x32.dmi', "nothing")
+	var/icon/flat = icon(flat_template)
 
 	if(!appearance || appearance.alpha <= 0)
-		return icon(flat_template)
+		return flat
 
 	if(start)
 		if(!defdir)
@@ -452,24 +445,28 @@ world
 	var/render_icon = curicon
 
 	if (render_icon)
-		var/curstates = icon_states(curicon)
-		if(!(curstate in curstates))
-			if ("" in curstates)
+		if(!icon_exists(curicon, curstate))
+			if(icon_exists(curicon, ""))
 				curstate = ""
 			else
 				render_icon = FALSE
 
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
-	//Try to remove/optimize this section ASAP, CPU hog.
-	//Determines if there's directionals.
-	if(render_icon && curdir != SOUTH)
-		if (
-			!length(icon_states(icon(curicon, curstate, NORTH))) \
-			&& !length(icon_states(icon(curicon, curstate, EAST))) \
-			&& !length(icon_states(icon(curicon, curstate, WEST))) \
-		)
-			base_icon_dir = SOUTH
+	if(render_icon)
+		//Try to remove/optimize this section if you can, it's a CPU hog.
+		//Determines if there're directionals.
+		if (curdir != SOUTH)
+			// icon states either have 1, 4 or 8 dirs. We only have to check
+			// one of NORTH, EAST or WEST to know that this isn't a 1-dir icon_state since they just have SOUTH.
+			if(!length(icon_states(icon(curicon, curstate, NORTH))))
+				base_icon_dir = SOUTH
+
+		var/list/icon_dimensions = get_icon_dimensions(curicon)
+		var/icon_width = icon_dimensions["width"]
+		var/icon_height = icon_dimensions["height"]
+		if(icon_width != 32 || icon_height != 32)
+			flat.Scale(icon_width, icon_height)
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
@@ -477,7 +474,6 @@ world
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		var/icon/flat = icon(flat_template)
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
@@ -504,6 +500,20 @@ world
 		var/addY1 = 0
 		var/addY2 = 0
 
+		if(appearance.color)
+			if(islist(appearance.color))
+				flat.MapColors(arglist(appearance.color))
+			else
+				flat.Blend(appearance.color, ICON_MULTIPLY)
+
+		if(parentcolor && !(appearance.appearance_flags & RESET_COLOR))
+			if(islist(parentcolor))
+				flat.MapColors(arglist(parentcolor))
+			else
+				flat.Blend(parentcolor, ICON_MULTIPLY)
+
+		var/next_parentcolor = appearance.color || parentcolor
+
 		for(var/image/layer_image as anything in layers)
 			if(layer_image.alpha == 0)
 				continue
@@ -511,16 +521,22 @@ world
 			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
+				if(appearance.color)
+					if(islist(appearance.color))
+						add.MapColors(arglist(appearance.color))
+					else
+						add.Blend(appearance.color, ICON_MULTIPLY)
 			else // 'I' is an appearance object.
-				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim)
+				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim, next_parentcolor)
+
 			if(!add)
 				continue
 
 			// Find the new dimensions of the flat icon to fit the added overlay
-			addX1 = min(flatX1, layer_image.pixel_x + 1)
-			addX2 = max(flatX2, layer_image.pixel_x + add.Width())
-			addY1 = min(flatY1, layer_image.pixel_y + 1)
-			addY2 = max(flatY2, layer_image.pixel_y + add.Height())
+			addX1 = min(flatX1, layer_image.pixel_x + layer_image.pixel_w + 1)
+			addX2 = max(flatX2, layer_image.pixel_x + layer_image.pixel_w + add.Width())
+			addY1 = min(flatY1, layer_image.pixel_y + layer_image.pixel_z + 1)
+			addY2 = max(flatY2, layer_image.pixel_y + layer_image.pixel_z + add.Height())
 
 			if (
 				addX1 != flatX1 \
@@ -542,13 +558,8 @@ world
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + 2 - flatX1, layer_image.pixel_y + 2 - flatY1)
+			flat.Blend(add, blendMode2iconMode(curblend), layer_image.pixel_x + layer_image.pixel_w + 2 - flatX1, layer_image.pixel_y + layer_image.pixel_z + 2 - flatY1)
 
-		if(appearance.color)
-			if(islist(appearance.color))
-				flat.MapColors(arglist(appearance.color))
-			else
-				flat.Blend(appearance.color, ICON_MULTIPLY)
 
 		if(appearance.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, appearance.alpha), ICON_MULTIPLY)
@@ -679,7 +690,7 @@ world
 		if(uppercase == 1)
 			letter = uppertext(letter)
 		else if(uppercase == -1)
-			letter = lowertext(letter)
+			letter = LOWER_TEXT(letter)
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = MAPTEXT("<span style='font-size: 24pt'>[letter]</span>")
@@ -742,7 +753,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 /// # If you already have a human and need to get its flat icon, call `get_flat_existing_human_icon()` instead.
 /// For creating consistent icons for human looking simple animals.
-/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
+/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null, no_anim = FALSE)
 	var/static/list/humanoid_icon_cache = list()
 	if(icon_id && humanoid_icon_cache[icon_id])
 		return humanoid_icon_cache[icon_id]
@@ -760,7 +771,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 	for(var/direction in showDirs)
-		var/icon/partial = getFlatIcon(body, defdir = direction)
+		var/icon/partial = getFlatIcon(body, defdir = direction, no_anim = no_anim)
 		out_icon.Insert(partial, dir = direction)
 
 	humanoid_icon_cache[icon_id] = out_icon
@@ -805,11 +816,11 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 /// generates a filename for a given asset.
 /// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
-/// used so that certain asset files dont have to be hashed twice
+/// used so that certain asset files don't have to be hashed twice
 /proc/generate_and_hash_rsc_file(file, dmi_file_path)
 	var/rsc_ref = fcopy_rsc(file)
 	var/hash
-	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesnt have the bug described in http://www.byond.com/forum/post/2611357
+	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesn't have the bug described in http://www.byond.com/forum/post/2611357
 	if(dmi_file_path)
 		hash = md5(rsc_ref)
 	else //otherwise, we need to do the expensive fcopy() workaround
@@ -835,7 +846,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			fdel(savefile_path)
 		return new /savefile(savefile_path)
 	catch(var/exception/error)
-		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldnt have
+		// if we failed to create a dummy once, try again; maybe someone slept somewhere they shouldn't have
 		if(from_failure) // this *is* the retry, something fucked up
 			CRASH("get_dummy_savefile failed to create a dummy savefile: '[error]'")
 		return get_dummy_savefile(from_failure = TRUE)
@@ -880,18 +891,18 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/atom/atom_icon = icon
 		icon = atom_icon.icon
 		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
-		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
+		//if they're unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
 
 	if(isicon(icon) && isfile(icon))
-		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
-		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
+		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and aren't really /icon objects,
+		///but they pass both isicon() and isfile() checks. they're the easiest case since stringifying them gives us the path we want
 		var/icon_ref = text_ref(icon)
 		var/locate_icon_string = "[locate(icon_ref)]"
 
 		icon_path = locate_icon_string
 
 	else if(isicon(icon) && "[icon]" == "/icon")
-		// icon objects generated from icon() at runtime are icons, but they ARENT files themselves, they represent icon files.
+		// icon objects generated from icon() at runtime are icons, but they AREN'T files themselves, they represent icon files.
 		// if the files they represent are compile time dmi files in the rsc, then
 		// the rsc reference returned by fcopy_rsc() will be stringifiable to "icons/path/to/dmi_file.dmi"
 		var/rsc_ref = fcopy_rsc(icon)
@@ -950,7 +961,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(!length(targets))
 		return
 
-	//check if the given object is associated with a dmi file in the icons folder. if it is then we dont need to do a lot of work
+	//check if the given object is associated with a dmi file in the icons folder. if it is then we don't need to do a lot of work
 	//for asset generation to get around byond limitations
 	var/icon_path = get_icon_dmi_path(thing)
 
@@ -972,9 +983,9 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 			icon_state = thing.icon_state
 			//Despite casting to atom, this code path supports mutable appearances, so let's be nice to them
 			if(isnull(icon_state) || (isatom(thing) && thing.flags_1 & HTML_USE_INITAL_ICON_1))
-				icon_state = initial(thing.icon_state)
+				icon_state = thing::post_init_icon_state || thing::icon_state
 				if (isnull(dir))
-					dir = initial(thing.dir)
+					dir = thing::dir
 
 		if (isnull(dir))
 			dir = thing.dir
@@ -994,7 +1005,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	var/list/name_and_ref = generate_and_hash_rsc_file(icon2collapse, icon_path)//pretend that tuples exist
 
-	var/rsc_ref = name_and_ref[1] //weird object thats not even readable to the debugger, represents a reference to the icons rsc entry
+	var/rsc_ref = name_and_ref[1] //weird object that's not even readable to the debugger, represents a reference to the icons rsc entry
 	var/file_hash = name_and_ref[2]
 	key = "[name_and_ref[3]].png"
 
@@ -1014,7 +1025,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/icon/target_icon = target
 		var/icon_base64 = icon2base64(target_icon)
 
-		if (target_icon.Height() > world.icon_size || target_icon.Width() > world.icon_size)
+		if (target_icon.Height() > ICON_SIZE_Y || target_icon.Width() > ICON_SIZE_X)
 			var/icon_md5 = md5(icon_base64)
 			icon_base64 = bicon_cache[icon_md5]
 			if (!icon_base64) // Doesn't exist yet, make it.
@@ -1068,14 +1079,14 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/top_part_filter = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0)
 	filters += top_part_filter
 	var/filter_index = length(filters)
-	animate(filters[filter_index],y=-32,time=time)
+	animate(filters[filter_index],y=-ICON_SIZE_Y,time=time)
 	//Appearing part
 	var/obj/effect/overlay/appearing_part = new
 	appearing_part.appearance = result_appearance
 	appearing_part.appearance_flags |= KEEP_TOGETHER | KEEP_APART
 	appearing_part.vis_flags = VIS_INHERIT_ID
 	appearing_part.filters = filter(type="alpha",icon=icon('icons/effects/alphacolors.dmi',"white"),y=0,flags=MASK_INVERSE)
-	animate(appearing_part.filters[1],y=-32,time=time)
+	animate(appearing_part.filters[1],y=-ICON_SIZE_Y,time=time)
 	transformation_objects += appearing_part
 	//Transform effect thing
 	if(transform_appearance)
@@ -1107,7 +1118,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		filters -= filters[filter_index]
 
 /**
- * Center's an image.
+ * Center's an image. Only run this on float overlays and not physical
  * Requires:
  * The Image
  * The x dimension of the icon file used in the image
@@ -1122,23 +1133,23 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	if(!x_dimension || !y_dimension)
 		return
 
-	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+	if((x_dimension == ICON_SIZE_X) && (y_dimension == ICON_SIZE_Y))
 		return image_to_center
 
-	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//Offset the image so that its bottom left corner is shifted this many pixels
 	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
 	//but still use them in game
-	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
-	var/y_offset = -((y_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
+	var/x_offset = -((x_dimension / ICON_SIZE_X) - 1) * (ICON_SIZE_X * 0.5)
+	var/y_offset = -((y_dimension / ICON_SIZE_Y) - 1) * (ICON_SIZE_Y * 0.5)
 
-	//Correct values under world.icon_size
-	if(x_dimension < world.icon_size)
+	//Correct values under icon_size
+	if(x_dimension < ICON_SIZE_X)
 		x_offset *= -1
-	if(y_dimension < world.icon_size)
+	if(y_dimension < ICON_SIZE_Y)
 		y_offset *= -1
 
-	image_to_center.pixel_x = x_offset
-	image_to_center.pixel_y = y_offset
+	image_to_center.pixel_w = x_offset
+	image_to_center.pixel_z = y_offset
 
 	return image_to_center
 
@@ -1160,28 +1171,75 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		animate(pixel_x = initialpixelx + rand(-pixelshiftx,pixelshiftx), pixel_y = initialpixely + rand(-pixelshifty,pixelshifty), time = shake_interval)
 	animate(pixel_x = initialpixelx, pixel_y = initialpixely, time = shake_interval)
 
-///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
-/proc/icon_exists(file, state, scream)
-	var/static/list/icon_states_cache = list()
-	if(icon_states_cache[file]?[state])
-		return TRUE
-
-	if(icon_states_cache[file]?[state] == FALSE)
-		return FALSE
-
-	var/list/states = icon_states(file)
-
-	if(!icon_states_cache[file])
-		icon_states_cache[file] = list()
-
-	if(state in states)
-		icon_states_cache[file][state] = TRUE
-		return TRUE
+/// Returns rustg-parsed metadata for an icon, universal icon, or DMI file, using cached values where possible
+/// Returns null if passed object is not a filepath or icon with a valid DMI file
+/proc/icon_metadata(file)
+	var/static/list/icon_metadata_cache = list()
+	if(istype(file, /datum/universal_icon))
+		var/datum/universal_icon/u_icon = file
+		file = u_icon.icon_file
+	var/file_string = "[file]"
+	if(!istext(file) && !(isfile(file) && length(file_string)))
+		return null
+	var/list/cached_metadata = icon_metadata_cache[file_string]
+	if(islist(cached_metadata))
+		return cached_metadata
+	var/list/metadata_result = rustg_dmi_read_metadata(file_string)
+	if(!islist(metadata_result) || !length(metadata_result))
+		CRASH("Error while reading DMI metadata for path '[file_string]': [metadata_result]")
 	else
-		icon_states_cache[file][state] = FALSE
-		if(scream)
-			stack_trace("Icon Lookup for state: [state] in file [file] failed.")
-		return FALSE
+		icon_metadata_cache[file_string] = metadata_result
+		return metadata_result
+
+/// Checks whether a given icon state exists in a given icon file. If `file` and `state` both exist,
+/// this will return `TRUE` - otherwise, it will return `FALSE`.
+///
+/// If you want a stack trace to be output when the given state/file doesn't exist, use
+/// `/proc/icon_exists_or_scream()`.
+/proc/icon_exists(file, state)
+	if(isnull(file) || isnull(state))
+		return FALSE //This is common enough that it shouldn't panic, imo.
+
+	if(isnull(GLOB.icon_states_cache_lookup[file]))
+		compile_icon_states_cache(file)
+	return !isnull(GLOB.icon_states_cache_lookup[file][state])
+
+/// Cached, rustg-based alternative to icon_states()
+/proc/icon_states_fast(file)
+	if(isnull(file))
+		return null
+	if(isnull(GLOB.icon_states_cache[file]))
+		compile_icon_states_cache(file)
+	return GLOB.icon_states_cache[file]
+
+/proc/compile_icon_states_cache(file)
+	GLOB.icon_states_cache[file] = list()
+	GLOB.icon_states_cache_lookup[file] = list()
+	// Try to use rustg first
+	var/list/metadata = icon_metadata(file)
+	if(islist(metadata) && islist(metadata["states"]))
+		for(var/list/state_data as anything in metadata["states"])
+			GLOB.icon_states_cache[file] += state_data["name"]
+			GLOB.icon_states_cache_lookup[file][state_data["name"]] = TRUE
+	else // Otherwise, we have to use the slower BYOND proc
+		for(var/istate in icon_states(file))
+			GLOB.icon_states_cache[file] += istate
+			GLOB.icon_states_cache_lookup[file][istate] = TRUE
+
+/// Functions the same as `/proc/icon_exists()`, but with the addition of a stack trace if the
+/// specified file or state doesn't exist.
+///
+/// Stack traces will only be output once for each file.
+/proc/icon_exists_or_scream(file, state)
+	if(icon_exists(file, state))
+		return TRUE
+
+	var/static/list/screams = list()
+	if(!isnull(screams[file]))
+		screams[file] = TRUE
+		stack_trace("State [state] in file [file] does not exist.")
+
+	return FALSE
 
 /**
  * Returns the size of the sprite in tiles.
@@ -1192,7 +1250,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
  */
 /proc/get_size_in_tiles(obj/target)
 	var/icon/size_check = icon(target.icon, target.icon_state)
-	var/size = size_check.Width() / world.icon_size
+	var/size = size_check.Width() / ICON_SIZE_X
 
 	return size
 
@@ -1205,14 +1263,39 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/size = get_size_in_tiles(src)
 
 	if(dir in list(NORTH, SOUTH))
-		bound_width = size * world.icon_size
-		bound_height = world.icon_size
+		bound_width = size * ICON_SIZE_X
+		bound_height = ICON_SIZE_Y
 	else
-		bound_width = world.icon_size
-		bound_height = size * world.icon_size
+		bound_width = ICON_SIZE_X
+		bound_height = size * ICON_SIZE_Y
 
 /// Returns a list containing the width and height of an icon file
 /proc/get_icon_dimensions(icon_path)
+	if(istype(icon_path, /datum/universal_icon))
+		var/datum/universal_icon/u_icon = icon_path
+		icon_path = u_icon.icon_file
+	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
+	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
+	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
+	if (!istext(icon_path) && (!isfile(icon_path) || !length("[icon_path]")))
+		var/icon/my_icon = icon(icon_path)
+		return list("width" = my_icon.Width(), "height" = my_icon.Height())
+	if (isnull(GLOB.icon_dimensions[icon_path]))
+		// Used cached icon metadata
+		var/list/metadata = icon_metadata(icon_path)
+		var/list/result = null
+		if(islist(metadata) && isnum(metadata["width"]) && isnum(metadata["height"]))
+			result = list("width" = metadata["width"], "height" = metadata["height"])
+		// Otherwise, we have to use the slower BYOND proc
+		else
+			var/icon/my_icon = icon(icon_path)
+			result = list("width" = my_icon.Width(), "height" = my_icon.Height())
+		GLOB.icon_dimensions[icon_path] = result
+
+	return GLOB.icon_dimensions[icon_path]
+
+/// Returns a list containing the width and height of an icon file, without using rustg for pure function calls
+/proc/get_icon_dimensions_pure(icon_path)
 	// Icons can be a real file(), a rsc backed file(), a dynamic rsc (dyn.rsc) reference (known as a cache reference in byond docs), or an /icon which is pointing to one of those.
 	// Runtime generated dynamic icons are an unbounded concept cache identity wise, the same icon can exist millions of ways and holding them in a list as a key can lead to unbounded memory usage if called often by consumers.
 	// Check distinctly that this is something that has this unspecified concept, and thus that we should not cache.
@@ -1229,21 +1312,84 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/mutable_appearance/alert_overlay = new(source)
 	alert_overlay.pixel_x = 0
 	alert_overlay.pixel_y = 0
+	alert_overlay.pixel_z = 0
+	alert_overlay.pixel_w = 0
 
 	var/scale = 1
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
 
-	if(width > world.icon_size)
-		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
-	if(height > world.icon_size)
-		alert_overlay.pixel_y = -(world.icon_size / 2) * ((height - world.icon_size) / world.icon_size)
-	if(width > world.icon_size || height > world.icon_size)
+	if(width > ICON_SIZE_X)
+		alert_overlay.pixel_w = -(ICON_SIZE_X / 2) * ((width - ICON_SIZE_X) / ICON_SIZE_X)
+	if(height > ICON_SIZE_Y)
+		alert_overlay.pixel_z = -(ICON_SIZE_Y / 2) * ((height - ICON_SIZE_Y) / ICON_SIZE_Y)
+	if(width > ICON_SIZE_X || height > ICON_SIZE_Y)
 		if(width >= height)
-			scale = world.icon_size / width
+			scale = ICON_SIZE_X / width
 		else
-			scale = world.icon_size / height
+			scale = ICON_SIZE_Y / height
 	alert_overlay.transform = alert_overlay.transform.Scale(scale)
 
 	return alert_overlay
+
+/// Strips all underlays on a different plane from an appearance.
+/// Returns the stripped appearance.
+/proc/strip_appearance_underlays(mutable_appearance/appearance)
+	var/base_plane = PLANE_TO_TRUE(appearance.plane)
+	for(var/mutable_appearance/underlay as anything in appearance.underlays)
+		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
+			appearance.underlays -= underlay
+	return appearance
+
+/**
+ * Copies the passed /appearance, returns a /mutable_appearance
+ *
+ * Filters out certain overlays from the copy, depending on their planes
+ * Prevents stuff like lighting from being copied to the new appearance
+ */
+/proc/copy_appearance_filter_overlays(appearance_to_copy)
+	var/mutable_appearance/copy = new(appearance_to_copy)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+
+	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
+	var/list/overlays_to_keep = list()
+	for(var/mutable_appearance/special_overlay as anything in copy.overlays)
+		var/mutable_appearance/real = new()
+		real.appearance = special_overlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			overlays_to_keep += real
+	copy.overlays = overlays_to_keep
+
+	var/list/underlays_to_keep = list()
+	for(var/mutable_appearance/special_underlay as anything in copy.underlays)
+		var/mutable_appearance/real = new()
+		real.appearance = special_underlay
+		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
+			underlays_to_keep += real
+	copy.underlays = underlays_to_keep
+
+	return copy
+
+/// Returns the (isolated) security HUD icon for the given job.
+/proc/get_job_hud_icon(datum/job/job) as /icon
+	var/static/alist/icon_cache = alist()
+	if(isnull(job))
+		return
+
+	if(!is_job(job))
+		if(ispath(job, /datum/job))
+			job = SSjob.get_job_type(job)
+		else if(istext(job))
+			job = SSjob.get_job(job)
+		if(isnull(job))
+			return null
+
+	//add it to the cache if it isn't already
+	var/job_type = job.type
+	if(!icon_cache[job_type])
+		var/icon/sechud_icon = job.get_lobby_icon()
+		sechud_icon.Crop(1, 17, 8, 24)
+		icon_cache[job_type] = sechud_icon
+
+	return icon(icon_cache[job_type])

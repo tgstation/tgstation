@@ -1,8 +1,6 @@
 SUBSYSTEM_DEF(statpanels)
 	name = "Stat Panels"
 	wait = 4
-	init_order = INIT_ORDER_STATPANELS
-	init_stage = INITSTAGE_EARLY
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	flags = SS_NO_INIT
@@ -22,21 +20,42 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
 		num_fires++
-		var/datum/map_config/cached = SSmapping.next_map_config
-		global_data = list(
-			"Map: [SSmapping.config?.map_name || "Loading..."]",
-			cached ? "Next Map: [cached.map_name]" : null,
+		var/datum/map_config/cached = SSmap_vote.next_map_config
+
+		if(isnull(SSmapping.current_map))
+			global_data = list("Loading")
+		else if(SSmapping.current_map.feedback_link)
+			global_data = list(list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]"))
+		else
+			global_data = list("Map: [SSmapping.current_map?.map_name]")
+
+		if(SSmapping.current_map?.mapping_url)
+			global_data += list(list("same_line", " | (View in Browser)", "action=openWebMap"))
+
+		if(cached)
+			global_data += "Next Map: [cached.map_name]"
+
+		global_data += list(
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
+			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
 			"Round Time: [ROUND_TIME()]",
 			"Station Time: [station_time_timestamp()]",
-			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
+			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
 		if(SSshuttle.emergency)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+
+		if(SSticker.reboot_timer)
+			var/reboot_time = timeleft(SSticker.reboot_timer)
+			if(reboot_time)
+				global_data += "Reboot: [DisplayTimeText(reboot_time, 1)]"
+		// admin must have delayed round end
+		else if(SSticker.ready_for_reboot)
+			global_data += "Reboot: DELAYED"
+
 		src.currentrun = GLOB.clients.Copy()
 		mc_data = null
 
@@ -88,19 +107,21 @@ SUBSYSTEM_DEF(statpanels)
 			if(update_actions && num_fires % default_wait == 0)
 				set_action_tabs(target, target_mob)
 
-			// Handle the examined turf of the stat panel, if it's been long enough, or if we've generated new images for it
-			var/turf/listed_turf = target_mob?.listed_turf
-			if(listed_turf && num_fires % default_wait == 0)
-				if(target.stat_tab == listed_turf.name || !(listed_turf.name in target.panel_tabs))
-					set_turf_examine_tab(target, target_mob)
-
 		if(MC_TICK_CHECK)
 			return
 
+/*
+ * send_message for the stat panel can be sent 1 of 4 things:
+ * 1- A string entry, to show up as plain text.
+ * 2- An empty string (""), which will translate to a new line, to for a break between lines.
+ * 3- a list, in which the first entry is plain text, the second entry is highlighted text, and the third entry is a link
+ * that clicking the second entry will take you to.
+ * 4- a list with "same_line" as the first entry, which will automatically put it on the line above it,
+ * with the second/third entry matching #3 (text & url), allowing you to have 2 clickable links on one line.
+ */
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
-
 	target.stat_panel.send_message("update_stat", list(
 		"global_data" = global_data,
 		"ping_str" = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
@@ -166,71 +187,6 @@ SUBSYSTEM_DEF(statpanels)
 
 	target.stat_panel.send_message("update_spells", list(spell_tabs = target.spell_tabs, actions = actions))
 
-/datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
-	var/list/overrides = list()
-	for(var/image/target_image as anything in target.images)
-		if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
-			continue
-		overrides += target_image.loc
-
-	var/list/atoms_to_display = list(target_mob.listed_turf)
-	for(var/atom/movable/turf_content as anything in target_mob.listed_turf)
-		if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
-			continue
-		if(turf_content.invisibility > target_mob.see_invisible)
-			continue
-		if(turf_content in overrides)
-			continue
-		if(turf_content.IsObscured())
-			continue
-		atoms_to_display += turf_content
-
-	/// Set the atoms we're meant to display
-	var/datum/object_window_info/obj_window = target.obj_window
-	obj_window.atoms_to_show = atoms_to_display
-	START_PROCESSING(SSobj_tab_items, obj_window)
-	refresh_client_obj_view(target)
-
-/datum/controller/subsystem/statpanels/proc/refresh_client_obj_view(client/refresh)
-	var/list/turf_items = return_object_images(refresh)
-	if(!length(turf_items) || !refresh.mob?.listed_turf)
-		return
-	refresh.stat_panel.send_message("update_listedturf", turf_items)
-
-#define OBJ_IMAGE_LOADING "statpanels obj loading temporary"
-/// Returns all our ready object tab images
-/// Returns a list in the form list(list(object_name, object_ref, loaded_image), ...)
-/datum/controller/subsystem/statpanels/proc/return_object_images(client/load_from)
-	// You might be inclined to think that this is a waste of cpu time, since we
-	// A: Double iterate over atoms in the build case, or
-	// B: Generate these lists over and over in the refresh case
-	// It's really not very hot. The hot portion of this code is genuinely mostly in the image generation
-	// So it's ok to pay a performance cost for cleanliness here
-
-	// No turf? go away
-	if(!load_from.mob?.listed_turf)
-		return list()
-	var/datum/object_window_info/obj_window = load_from.obj_window
-	var/list/already_seen = obj_window.atoms_to_images
-	var/list/to_make = obj_window.atoms_to_imagify
-	var/list/turf_items = list()
-	for(var/atom/turf_item as anything in obj_window.atoms_to_show)
-		// First, we fill up the list of refs to display
-		// If we already have one, just use that
-		var/existing_image = already_seen[turf_item]
-		if(existing_image == OBJ_IMAGE_LOADING)
-			continue
-		// We already have it. Success!
-		if(existing_image)
-			turf_items[++turf_items.len] = list("[turf_item.name]", REF(turf_item), existing_image)
-			continue
-		// Now, we're gonna queue image generation out of those refs
-		to_make += turf_item
-		already_seen[turf_item] = OBJ_IMAGE_LOADING
-		obj_window.RegisterSignal(turf_item, COMSIG_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
-	return turf_items
-
-#undef OBJ_IMAGE_LOADING
 
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	mc_data = list(
@@ -239,14 +195,31 @@ SUBSYSTEM_DEF(statpanels)
 		list("World Time:", "[world.time]"),
 		list("Globals:", GLOB.stat_entry(), text_ref(GLOB)),
 		list("[config]:", config.stat_entry(), text_ref(config)),
-		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
+		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))\n  (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
 		list("Master Controller:", Master.stat_entry(), text_ref(Master)),
 		list("Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
 		list("","")
 	)
+#if defined(MC_TAB_TRACY_INFO) || defined(SPACEMAN_DMM)
+	var/static/tracy_dll
+	var/static/tracy_present
+	if(isnull(tracy_dll))
+		tracy_dll = TRACY_DLL_PATH
+		tracy_present = fexists(tracy_dll)
+	if(tracy_present)
+		if(Tracy.enabled)
+			mc_data.Insert(2, list(list("byond-tracy:", "Active (reason: [Tracy.init_reason || "N/A"])")))
+		else if(Tracy.error)
+			mc_data.Insert(2, list(list("byond-tracy:", "Errored ([Tracy.error])")))
+		else if(fexists(TRACY_ENABLE_PATH))
+			mc_data.Insert(2, list(list("byond-tracy:", "Queued for next round")))
+		else
+			mc_data.Insert(2, list(list("byond-tracy:", "Inactive")))
+	else
+		mc_data.Insert(2, list(list("byond-tracy:", "[tracy_dll] not present")))
+#endif
 	for(var/datum/controller/subsystem/sub_system as anything in Master.subsystems)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), text_ref(sub_system))
-	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [GLOB.cameranet.cameras.len] | Chunks: [GLOB.cameranet.chunks.len]", text_ref(GLOB.cameranet))
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)
@@ -272,16 +245,6 @@ SUBSYSTEM_DEF(statpanels)
 		set_action_tabs(target, target_mob)
 		return TRUE
 
-	// Handle turfs
-
-	if(target_mob?.listed_turf)
-		if(!target_mob.TurfAdjacent(target_mob.listed_turf))
-			target_mob.set_listed_turf(null)
-
-		else if(target.stat_tab == target_mob?.listed_turf.name || !(target_mob?.listed_turf.name in target.panel_tabs))
-			set_turf_examine_tab(target, target_mob)
-			return TRUE
-
 	if(!target.holder)
 		return FALSE
 
@@ -301,105 +264,3 @@ SUBSYSTEM_DEF(statpanels)
 
 /// Stat panel window declaration
 /client/var/datum/tgui_window/stat_panel
-
-/// Datum that holds and tracks info about a client's object window
-/// Really only exists because I want to be able to do logic with signals
-/// And need a safe place to do the registration
-/datum/object_window_info
-	/// list of atoms to show to our client via the object tab, at least currently
-	var/list/atoms_to_show = list()
-	/// list of atom -> image string for objects we have had in the right click tab
-	/// this is our caching
-	var/list/atoms_to_images = list()
-	/// list of atoms to turn into images for the object tab
-	var/list/atoms_to_imagify = list()
-	/// Our owner client
-	var/client/parent
-	/// Are we currently tracking a turf?
-	var/actively_tracking = FALSE
-
-/datum/object_window_info/New(client/parent)
-	. = ..()
-	src.parent = parent
-
-/datum/object_window_info/Destroy(force)
-	atoms_to_show = null
-	atoms_to_images = null
-	atoms_to_imagify = null
-	parent.obj_window = null
-	parent = null
-	STOP_PROCESSING(SSobj_tab_items, src)
-	return ..()
-
-/// Takes a client, attempts to generate object images for it
-/// We will update the client with any improvements we make when we're done
-/datum/object_window_info/process(seconds_per_tick)
-	// Cache the datum access for sonic speed
-	var/list/to_make = atoms_to_imagify
-	var/list/newly_seen = atoms_to_images
-	var/index = 0
-	for(index in 1 to length(to_make))
-		var/atom/thing = to_make[index]
-
-		var/generated_string
-		if(ismob(thing) || length(thing.overlays) > 2)
-			generated_string = costly_icon2html(thing, parent, sourceonly=TRUE)
-		else
-			generated_string = icon2html(thing, parent, sourceonly=TRUE)
-
-		newly_seen[thing] = generated_string
-		if(TICK_CHECK)
-			to_make.Cut(1, index + 1)
-			index = 0
-			break
-	// If we've not cut yet, do it now
-	if(index)
-		to_make.Cut(1, index + 1)
-	SSstatpanels.refresh_client_obj_view(parent)
-	if(!length(to_make))
-		return PROCESS_KILL
-
-/datum/object_window_info/proc/start_turf_tracking()
-	if(actively_tracking)
-		stop_turf_tracking()
-	var/static/list/connections = list(
-		COMSIG_MOVABLE_MOVED = PROC_REF(on_mob_move),
-		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
-	)
-	AddComponent(/datum/component/connect_mob_behalf, parent, connections)
-	actively_tracking = TRUE
-
-/datum/object_window_info/proc/stop_turf_tracking()
-	qdel(GetComponent(/datum/component/connect_mob_behalf))
-	actively_tracking = FALSE
-
-/datum/object_window_info/proc/on_mob_move(mob/source)
-	SIGNAL_HANDLER
-	var/turf/listed = source.listed_turf
-	if(!listed || !source.TurfAdjacent(listed))
-		source.set_listed_turf(null)
-
-/datum/object_window_info/proc/on_mob_logout(mob/source)
-	SIGNAL_HANDLER
-	on_mob_move(parent.mob)
-
-/// Clears any cached object window stuff
-/// We use hard refs cause we'd need a signal for this anyway. Cleaner this way
-/datum/object_window_info/proc/viewing_atom_deleted(atom/deleted)
-	SIGNAL_HANDLER
-	atoms_to_show -= deleted
-	atoms_to_imagify -= deleted
-	atoms_to_images -= deleted
-
-/mob/proc/set_listed_turf(turf/new_turf)
-	listed_turf = new_turf
-	if(!client)
-		return
-	if(!client.obj_window)
-		client.obj_window = new(client)
-	if(listed_turf)
-		client.stat_panel.send_message("create_listedturf", listed_turf.name)
-		client.obj_window.start_turf_tracking()
-	else
-		client.stat_panel.send_message("remove_listedturf")
-		client.obj_window.stop_turf_tracking()

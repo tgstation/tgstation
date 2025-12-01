@@ -1,6 +1,7 @@
 /turf/open/floor/iron
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/iron/base
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -12,12 +13,6 @@
 /turf/open/floor/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("There's a <b>small crack</b> on the edge of it.")
-
-
-/turf/open/floor/iron/rust_heretic_act()
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
-	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/iron/update_icon_state()
 	if(broken || burnt)
@@ -315,7 +310,7 @@
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor
 
-/turf/open/floor/iron/recharge_floor/Airless
+/turf/open/floor/iron/recharge_floor/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/recharge_floor/asteroid
@@ -425,9 +420,29 @@
 
 
 /turf/open/floor/iron/freezer
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
+
+/turf/open/floor/iron/freezer/edge
+	icon_state = "freezer_edge"
+	base_icon_state = "freezer_edge"
+	floor_tile = /obj/item/stack/tile/iron/freezer/edge
+
+/turf/open/floor/iron/freezer/half
+	icon_state = "freezer_half"
+	base_icon_state = "freezer_half"
+	floor_tile = /obj/item/stack/tile/iron/freezer/half
+
+/turf/open/floor/iron/freezer/corner
+	icon_state = "freezer_corner"
+	base_icon_state = "freezer_corner"
+	floor_tile = /obj/item/stack/tile/iron/freezer/corner
+
+/turf/open/floor/iron/freezer/large
+	icon_state = "freezer_large"
+	base_icon_state = "freezer_large"
+	floor_tile = /obj/item/stack/tile/iron/freezer/large
 
 /turf/open/floor/iron/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -439,15 +454,25 @@
 	name = "cold room floor"
 	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
 
+/turf/open/floor/iron/kitchen_coldroom/dark
+	icon_state = "darkfull"
+	base_icon_state = "darkfull"
+	floor_tile = /obj/item/stack/tile/iron/dark
+
+/turf/open/floor/iron/kitchen_coldroom/dark/textured
+	icon_state = "textured_dark"
+	base_icon_state = "textured_dark"
+	floor_tile = /obj/item/stack/tile/iron/dark/textured
+
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor
-	icon_state = "freezerfloor"
-	base_icon_state = "freezerfloor"
+	icon_state = "freezer"
+	base_icon_state = "freezer"
 	floor_tile = /obj/item/stack/tile/iron/freezer
 
 /turf/open/floor/iron/grimy
 	icon_state = "grimy"
 	base_icon_state = "grimy"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	floor_tile = /obj/item/stack/tile/iron/grimy
 
 /turf/open/floor/iron/vaporwave
@@ -460,13 +485,13 @@
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 	icon_state = "plaque"
 	base_icon_state = "plaque"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	floor_tile = /obj/item/stack/tile/iron/goonplaque
 
 /turf/open/floor/iron/stairs
 	icon_state = "stairs"
 	base_icon_state = "stairs"
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/iron/stairs/airless
 	initial_gas_mix = AIRLESS_ATMOS

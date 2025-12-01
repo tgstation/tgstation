@@ -15,7 +15,7 @@
 		FREQ_CTF_BLUE,
 	)
 
-/obj/machinery/telecomms/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/telecomms/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 
 	var/icon_closed = initial(icon_state)
 	var/icon_open = "[initial(icon_state)]_o"
@@ -45,6 +45,7 @@
 
 	data += add_option()
 
+	data["channels"] = get_channels()
 	data["minfreq"] = MIN_FREE_FREQ
 	data["maxfreq"] = MAX_FREE_FREQ
 	data["frequency"] = tempfreq
@@ -79,10 +80,9 @@
 	for(var/x in freq_listening)
 		frequencies += list(x)
 	data["frequencies"] = frequencies
-
 	return data
 
-/obj/machinery/telecomms/ui_act(action, params)
+/obj/machinery/telecomms/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -105,7 +105,7 @@
 			if(params["value"])
 				if(length(params["value"]) > 32)
 					to_chat(current_user, span_warning("Error: Machine ID too long!"))
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
 					id = params["value"]
@@ -115,7 +115,7 @@
 			if(params["value"])
 				if(length(params["value"]) > 15)
 					to_chat(current_user, span_warning("Error: Network name too long!"))
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
 					for(var/obj/machinery/telecomms/linked_machine in links)
@@ -130,7 +130,7 @@
 		if("freq")
 			if(tempfreq in banned_frequencies)
 				to_chat(current_user, span_warning("Error: Interference preventing filtering frequency: \"[tempfreq / 10] kHz\""))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			else
 				if(!(tempfreq in freq_listening))
 					freq_listening.Add(tempfreq)
@@ -195,6 +195,52 @@
 	return TRUE
 
 /**
+ *
+ * Returns information (name and color) about all channels in machine's network
+ */
+/obj/machinery/telecomms/proc/get_channels()
+	var/list/channels = list()
+	for(var/channel_freq in GLOB.reserved_radio_frequencies)
+		var/channel_name = GLOB.reserved_radio_frequencies[channel_freq]
+		channels += list(list(
+			"freq" = text2num(channel_freq),
+			"name" = channel_name,
+			"color" = GLOB.reserved_radio_colors[channel_name]
+		))
+
+	var/obj/machinery/telecomms/hub/hub
+	if(istype(src, /obj/machinery/telecomms/hub))
+		hub = src
+	else
+		for(var/obj/machinery/telecomms/link in links)
+			if(istype(link, /obj/machinery/telecomms/hub))
+				hub = link
+				break
+
+	if(hub)
+		for(var/obj/machinery/telecomms/link in hub.links)
+			if(istype(link, /obj/machinery/telecomms/server))
+				var/obj/machinery/telecomms/server/server = link
+				for(var/freq_info_freq in server.frequency_infos)
+					var/list/freq_info = server.frequency_infos[freq_info_freq]
+					channels += list(list(
+						"freq" = text2num(freq_info_freq),
+						"name" = freq_info["name"],
+						"color" = freq_info["color"]
+					))
+	else if(istype(src, /obj/machinery/telecomms/server))
+		var/obj/machinery/telecomms/server/server = src
+		for(var/freq_info_freq in server.frequency_infos)
+			var/list/freq_info = server.frequency_infos[freq_info_freq]
+			channels += list(list(
+				"freq" = text2num(freq_info_freq),
+				"name" = freq_info["name"],
+				"color" = freq_info["color"]
+			))
+
+	return channels
+
+/**
  * Wrapper for adding additional options to a machine's interface.
  *
  * Returns a list, or `null` if it wasn't implemented by the machine.
@@ -213,6 +259,21 @@
 	data["type"] = "relay"
 	data["broadcasting"] = broadcasting
 	data["receiving"] = receiving
+	return data
+
+/obj/machinery/telecomms/server/add_option()
+	var/list/data = list()
+	data["type"] = "server"
+	var/list/infos = list()
+	for(var/freq_info_freq in frequency_infos)
+		var/list/freq_info = frequency_infos[freq_info_freq]
+		infos += list(list(
+			"frequency" = freq_info_freq,
+			"name" = freq_info["name"],
+			"color" = freq_info["color"]
+		))
+
+	data["frequencyinfos"] = infos
 	return data
 
 /**
@@ -244,21 +305,69 @@
 				else
 					change_frequency = 0
 
+/obj/machinery/telecomms/server/add_act(action, params)
+	switch(action)
+		if("delete")
+			frequency_infos.Remove(num2text(params["value"]))
+			. = TRUE
+		if("modify_freq_info")
+			var/freq = params["freq"]
+			var/info = frequency_infos[freq]
+			if(info)
+				var/new_name = tgui_input_text(usr, "Please enter new frequency name", "Modifying Frequency Information", info["name"], MAX_NAME_LEN)
+				if(new_name)
+					for(var/list/channel in get_channels())
+						if(num2text(channel["freq"]) != freq && channel["name"] == new_name)
+							return
+				info["name"] = new_name
+				// No color changing for channels with theme settings
+				if(!GLOB.freqtospan["[freq]"])
+					var/new_color = input(usr, "Choose color for frequency", "Modifying Frequency Information", info["color"]) as color|null
+					if(new_color)
+						info["color"] = new_color
+				frequency_infos[params["freq"]] = info
+				. = TRUE
+		if("add_freq_info")
+			var/freq = tgui_input_number(usr, "Please enter frequency", "Adding Frequency Information", 145.9, 160, 120, round_value = FALSE)
+			if(!freq)
+				return
+			freq = round(freq*10)
+			if(!(freq in freq_listening))
+				return
+			var/name = tgui_input_text(usr, "Please enter frequency name", "Adding Frequency Information", max_length = MAX_NAME_LEN)
+			if(!name)
+				return
+
+			for(var/list/channel in get_channels())
+				if(channel["freq"] == freq || channel["name"] == name)
+					return
+			var/color = input(usr, "Choose color for frequency", "Adding Frequency Information") as color|null
+			if(!color)
+				return
+			frequency_infos[num2text(freq)] = list(
+				"name" = name,
+				"color" = color
+			)
+			. = TRUE
+		if("delete_freq_info")
+			frequency_infos.Remove(params["freq"])
+			. = TRUE
+
 /// Returns a multitool from a user depending on their mobtype.
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
-	var/obj/item/multitool/multitool = null
-	// Let's double check
-	if(!HAS_SILICON_ACCESS(user) && istype(user.get_active_held_item(), /obj/item/multitool))
-		multitool = user.get_active_held_item()
-	else if(isAI(user))
+	. = null
+	if(isAI(user))
 		var/mob/living/silicon/ai/U = user
-		multitool = U.aiMulti
-	else if(iscyborg(user) && in_range(user, src))
-		if(istype(user.get_active_held_item(), /obj/item/multitool))
-			multitool = user.get_active_held_item()
-	return multitool
+		return U.aiMulti
 
-/obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(HAS_SILICON_ACCESS(user) || in_range(user, src))
-		return TRUE
-	return FALSE
+	var/obj/item/held_item = user.get_active_held_item()
+	if(QDELETED(held_item))
+		return
+	held_item = held_item.get_proxy_attacker_for(src, user) //for borgs omni tool
+	if(held_item.tool_behaviour != TOOL_MULTITOOL)
+		return
+
+	if(!HAS_SILICON_ACCESS(user))
+		return held_item
+	if(iscyborg(user) && in_range(user, src))
+		return held_item

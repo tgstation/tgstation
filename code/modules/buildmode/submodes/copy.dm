@@ -7,7 +7,7 @@
 	return ..()
 
 /datum/buildmode_mode/copy/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Spawn a copy of selected target")] -> Left Mouse Button on obj/turf/mob\n\
 		[span_bold("Select target to copy")] -> Right Mouse Button on obj/mob"))
 	)

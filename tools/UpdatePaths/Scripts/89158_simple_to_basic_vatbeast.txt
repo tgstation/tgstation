@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/vatbeast : /mob/living/basic/vatbeast{@OLD}

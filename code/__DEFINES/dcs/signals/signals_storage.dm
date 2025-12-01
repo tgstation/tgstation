@@ -5,5 +5,19 @@
 /// Sent after dumping into some other storage object: (atom/dest_object, mob/user)
 #define COMSIG_STORAGE_DUMP_POST_TRANSFER "storage_dump_into_storage"
 
-/// Sent to the STORAGE when an ITEM is STORED INSIDE.
+/// Sent before storing an item (obj/item/being_stored, mob/user, force, messages)
+#define COMSIG_ATOM_PRE_STORED_ITEM "atom_pre_storing_item"
+	/// Return to block the item from being stored.
+	#define BLOCK_STORAGE_INSERT (1<<0)
+
+/// Fired off the storage's PARENT when an ITEM is STORED INSIDE. (obj/item, mob, force)
+#define COMSIG_ATOM_STORED_ITEM "atom_storing_item"
+
+/// Fired off the storage's PARENT when an ITEM is REMOVED. (obj/item, atom, silent)
+#define COMSIG_ATOM_REMOVED_ITEM "atom_removing_item"
+
+/// Sent to the STORAGE when an ITEM is STORED INSIDE. (obj/item, mob, force)
 #define COMSIG_STORAGE_STORED_ITEM "storage_storing_item"
+
+/// Sent to the STORAGE when an ITEM is REMOVED. (obj/item, atom, silent)
+#define COMSIG_STORAGE_REMOVED_ITEM "storage_removing_item"

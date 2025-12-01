@@ -76,7 +76,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	//destination_list = new()
 	/*This will draw a block around the target turf, given what the error is.
 	Specifying the values above will basically draw a different sort of block.
-	If the values are the same, it will be a square. If they are different, it will be a rectengle.
+	If the values are the same, it will be a square. If they are different, it will be a rectangle.
 	In either case, it will center based on offset. Offset is position from center.
 	Offset always calculates in relation to direction faced. In other words, depending on the direction of the teleport,
 	the offset should remain positioned in relation to destination.*/
@@ -110,9 +110,10 @@ Turf and target are separate in case you want to teleport some distance from a t
  *
  * Arguments
  * * something_in_turf - a movable within the turf, somewhere.
- * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
+ * * stop_type - stops looking if stop_type is found in the turf, returning that type (if found).
+ * * return_any - if set to TRUE, will return last movable found even if its not of the passed type
  **/
-/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type = null, return_any = FALSE)
 	if(!istype(something_in_turf))
 		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(something_in_turf) ? "null":"type: [something_in_turf.type]"]")
 
@@ -121,9 +122,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
 		topmost_thing = topmost_thing.loc
 		if(stop_type && istype(topmost_thing, stop_type))
-			break
+			return topmost_thing
 
-	return topmost_thing
+	if (!stop_type || return_any)
+		return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)
@@ -206,13 +208,15 @@ Turf and target are separate in case you want to teleport some distance from a t
  * NOTE: if your atom has non-standard bounds then this proc
  * will handle it, but:
  * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
- * this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
+ * this may seem bad, but you're at least as close to the center of the atom as possible, better than byond's default loc being all the way off)
  * if the bounds are odd, the true middle turf of the atom is returned
 **/
 /proc/get_turf_pixel(atom/checked_atom)
-	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as it's coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
+	var/turf/atom_turf = get_turf(checked_atom) //use checked_atom's turfs, as its coords are the same as checked_atom's AND checked_atom's coords are lost if it is inside another atom
 	if(!atom_turf)
 		return null
+	if(checked_atom.flags_1 & IGNORE_TURF_PIXEL_OFFSET_1)
+		return atom_turf
 
 	var/list/offsets = get_visual_offset(checked_atom)
 	return pixel_offset_turf(atom_turf, offsets)
@@ -225,19 +229,19 @@ Turf and target are separate in case you want to teleport some distance from a t
  * Icon width/height
 **/
 /proc/get_visual_offset(atom/checked_atom)
-	//Find checked_atom's matrix so we can use it's X/Y pixel shifts
+	//Find checked_atom's matrix so we can use its X/Y pixel shifts
 	var/matrix/atom_matrix = matrix(checked_atom.transform)
 
 	var/pixel_x_offset = checked_atom.pixel_x + checked_atom.pixel_w + atom_matrix.get_x_shift()
 	var/pixel_y_offset = checked_atom.pixel_y + checked_atom.pixel_z + atom_matrix.get_y_shift()
 
 	//Irregular objects
-	var/list/icon_dimensions = get_icon_dimensions(checked_atom.icon)
+	var/list/icon_dimensions = get_icon_dimensions_pure(checked_atom.icon)
 	var/checked_atom_icon_height = icon_dimensions["height"]
 	var/checked_atom_icon_width = icon_dimensions["width"]
-	if(checked_atom_icon_height != world.icon_size || checked_atom_icon_width != world.icon_size)
-		pixel_x_offset += ((checked_atom_icon_width / world.icon_size) - 1) * (world.icon_size * 0.5)
-		pixel_y_offset += ((checked_atom_icon_height / world.icon_size) - 1) * (world.icon_size * 0.5)
+	if(checked_atom_icon_height != ICON_SIZE_Y || checked_atom_icon_width != ICON_SIZE_X)
+		pixel_x_offset += ((checked_atom_icon_width / ICON_SIZE_X) - 1) * (ICON_SIZE_X * 0.5)
+		pixel_y_offset += ((checked_atom_icon_height / ICON_SIZE_Y) - 1) * (ICON_SIZE_Y * 0.5)
 
 	return list(pixel_x_offset, pixel_y_offset)
 
@@ -246,8 +250,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 **/
 /proc/pixel_offset_turf(turf/offset_from, list/offsets)
 	//DY and DX
-	var/rough_x = round(round(offsets[1], world.icon_size) / world.icon_size)
-	var/rough_y = round(round(offsets[2], world.icon_size) / world.icon_size)
+	var/rough_x = round(round(offsets[1], ICON_SIZE_X) / ICON_SIZE_X)
+	var/rough_y = round(round(offsets[2], ICON_SIZE_Y) / ICON_SIZE_Y)
 
 	var/final_x = clamp(offset_from.x + rough_x, 1, world.maxx)
 	var/final_y = clamp(offset_from.y + rough_y, 1, world.maxy)
@@ -273,9 +277,81 @@ Turf and target are separate in case you want to teleport some distance from a t
 	click_turf_y = origin.y + text2num(click_turf_y[1]) - round(actual_view[2] / 2) - 1
 
 	var/turf/click_turf = locate(clamp(click_turf_x, 1, world.maxx), clamp(click_turf_y, 1, world.maxy), click_turf_z)
-	LAZYSET(modifiers, ICON_X, "[(click_turf_px - click_turf.pixel_x) + ((click_turf_x - click_turf.x) * world.icon_size)]")
-	LAZYSET(modifiers, ICON_Y, "[(click_turf_py - click_turf.pixel_y) + ((click_turf_y - click_turf.y) * world.icon_size)]")
+	LAZYSET(modifiers, ICON_X, "[(click_turf_px - click_turf.pixel_x) + ((click_turf_x - click_turf.x) * ICON_SIZE_X)]")
+	LAZYSET(modifiers, ICON_Y, "[(click_turf_py - click_turf.pixel_y) + ((click_turf_y - click_turf.y) * ICON_SIZE_Y)]")
 	return click_turf
+
+/**
+ * Converts mouse-pos control coordinates to a specific turf location on the map.
+ *
+ * Handles the conversion between control-space mouse coordinates and screen-space map coordinates,
+ * accounting for various BYOND quirks and display scaling factors.
+ *
+ * @param mousepos_x	The x-coordinate of the mouse click (in control pixels, top-left origin)
+ * @param mousepos_y	The y-coordinate of the mouse click (in control pixels, top-left origin)
+ * @param sizex			x control width of the map
+ * @param sizey			y control width of the map
+ * @param viewing_client The client whose view perspective to use for the conversion
+ *
+ * @return The turf at the calculated map position, or the closest one if out of bounds, as well as the residual x and y map offsets
+ *
+ * Important Notes:
+ * - This WILL be incorrect when client pixel_wxyz is animating, and it WILL be incorrect if the user is gliding, because we don't have a good way to compensate this on the serverside. Yay!!!
+ * - Mouse coordinates originate from the top-left corner because we can't have consistency in this engine
+ * - Coordinate systems are inconsistent between control pixels and screen pixels
+ * - Something on the byond side (icon size likely? needs debugging) affects the control pixels
+ * - This uses the ratios between them rather than absolute values for reliable results
+ * - For absolute value comparisons, dividing by 2 may work as a temporary hack,
+ *   but using ratios (as implemented in the proc) is the recommended approach
+ */
+/proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
+	if(sizex == 0 || sizey == 0) //contexts where this information is not availible should return 0 in size, aka tgui passthrough
+		return list(null, 0, 0)
+	var/turf/baseloc = get_turf(viewing_client.eye)
+	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
+
+	var/screen_width = actual_view[1] * ICON_SIZE_X
+	var/screen_height = actual_view[2] * ICON_SIZE_Y
+
+	//handle letterboxing to get the right sizes and mouseposes
+	var/size_ratio = sizex/sizey
+	var/screen_ratio = screen_width/screen_height
+	if(size_ratio < screen_ratio) //sizex too high, y has black banners
+		var/effective_height = sizex / screen_ratio
+		var/banner_height = (sizey - effective_height) / 2
+		mousepos_y -= banner_height
+		sizey -= (banner_height*2)
+	else if (size_ratio > screen_ratio) //sizey too high, x has black banners
+		var/effective_width = sizey * screen_ratio
+		var/banner_width = (sizex - effective_width) / 2
+		mousepos_x -= banner_width
+		sizex -= (banner_width*2)
+
+	// if its a black banner, just assume we clicked the turf
+	mousepos_x = max(mousepos_x, 0)
+	mousepos_y = max(mousepos_y, 0)
+
+	//fix ratios being off due to screen width/height
+	var/x_ratio = sizex/screen_width
+	var/y_ratio = sizey/screen_height
+	mousepos_x /= x_ratio
+	mousepos_y /= y_ratio
+
+	//relative to bottom left corner of turf in the middle of the screen
+	var/relative_x = mousepos_x - (screen_width / 2) + (ICON_SIZE_X/2) + viewing_client.pixel_x + viewing_client.pixel_w
+	var/relative_y = -(mousepos_y - (screen_height / 2))+ (ICON_SIZE_Y/2) - 1 + viewing_client.pixel_y + viewing_client.pixel_z
+	var/turf_x_diff = FLOOR(relative_x / ICON_SIZE_X, 1)
+	var/turf_y_diff = FLOOR(relative_y / ICON_SIZE_Y, 1)
+
+	var/click_turf_x = baseloc.x + turf_x_diff
+	var/click_turf_y = baseloc.y + turf_y_diff
+	var/click_turf_z = baseloc.z
+
+	var/turf/click_turf = locate(clamp(click_turf_x, 1, world.maxx), clamp(click_turf_y, 1, world.maxy), click_turf_z)
+
+	var/x_residual = relative_x % ICON_SIZE_X
+	var/y_residual = relative_y % ICON_SIZE_Y
+	return list(click_turf, x_residual, y_residual)
 
 ///Almost identical to the params_to_turf(), but unused (remove?)
 /proc/screen_loc_to_turf(text, turf/origin, client/C)
@@ -374,6 +450,35 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if (target)
 			return target
 
+///Returns a random department of areas to pass into get_safe_random_station_turf() for more equal spawning.
+/proc/get_safe_random_station_turf_equal_weight()
+	// Big list of departments, each with lists of each area subtype.
+	var/static/list/department_areas
+	if(isnull(department_areas))
+		department_areas = list(
+				subtypesof(/area/station/engineering), \
+				subtypesof(/area/station/medical), \
+				subtypesof(/area/station/science), \
+				subtypesof(/area/station/security), \
+				subtypesof(/area/station/service), \
+				subtypesof(/area/station/command), \
+				subtypesof(/area/station/hallway), \
+				subtypesof(/area/station/ai), \
+				subtypesof(/area/station/cargo)
+			)
+
+	var/list/area/final_department = pick(department_areas) // Pick a department
+	var/list/area/final_area_list = list()
+
+	for(var/area/checked_area as anything in final_department) // Check each area to make sure it exists on the station
+		if(checked_area in GLOB.the_station_areas)
+			final_area_list += checked_area
+
+	if(!final_area_list.len) // Failsafe
+		return get_safe_random_station_turf()
+
+	return get_safe_random_station_turf(final_area_list)
+
 /**
  * Checks whether the target turf is in a valid state to accept a directional construction
  * such as windows or railings.
@@ -400,8 +505,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 /**
  * Checks whether or not a particular typepath or subtype of it is present on a turf
  *
- * Returns TRUE if an instance of the desired type or a subtype of it is found
- * Returns FALSE if the type is not found, or if no turf is supplied
+ * Returns the first instance located if an instance of the desired type or a subtype of it is found
+ * Returns null if the type is not found, or if no turf is supplied
  *
  * Arguments:
  * * location - The turf to be checked for the desired type
@@ -409,7 +514,40 @@ Turf and target are separate in case you want to teleport some distance from a t
  */
 /proc/is_type_on_turf(turf/location, type_to_find)
 	if(!location)
-		return FALSE
-	if(locate(type_to_find) in location)
-		return TRUE
+		return
+	var/found_type = locate(type_to_find) in location
+	return found_type
+
+/**
+ * get_blueprint_data
+ * Gets a list of turfs around a central turf and gets the blueprint data in a list
+ * Args:
+ * - central_turf: The center turf we're getting data from.
+ * - viewsize: The viewsize we're getting the turfs around central_turf of.
+ */
+/proc/get_blueprint_data(turf/central_turf, viewsize)
+	var/list/blueprint_data_returned = list()
+	var/list/dimensions = getviewsize(viewsize)
+	var/horizontal_radius = dimensions[1] / 2
+	var/vertical_radius = dimensions[2] / 2
+	for(var/turf/nearby_turf as anything in RECT_TURFS(horizontal_radius, vertical_radius, central_turf))
+		if(nearby_turf.blueprint_data)
+			blueprint_data_returned += nearby_turf.blueprint_data
+	return blueprint_data_returned
+
+/// Returns the diffrence in pressure between a turf from surrounding turfs
+/turf/proc/return_turf_delta_p()
+	var/pressure_greatest = 0
+	var/pressure_smallest = INFINITY //Freaking terrified to use INFINITY, man
+	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src)) //Begin processing the delta pressure across the wall.
+		pressure_greatest = max(pressure_greatest, turf_adjacent.air.return_pressure())
+		pressure_smallest = min(pressure_smallest, turf_adjacent.air.return_pressure())
+
+	return pressure_greatest - pressure_smallest
+
+///Runs through all adjacent open turfs and checks if any are planetary_atmos returns true if even one passes.
+/turf/proc/is_nearby_planetary_atmos()
+	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src))
+		if(turf_adjacent.planetary_atmos)
+			return TRUE
 	return FALSE

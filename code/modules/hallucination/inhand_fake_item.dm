@@ -2,6 +2,7 @@
 /datum/hallucination/fake_item
 	abstract_hallucination_parent = /datum/hallucination/fake_item
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// A flag of slots this fake item can appear in.
 	var/valid_slots = ITEM_SLOT_HANDS|ITEM_SLOT_BELT|ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET
@@ -43,7 +44,7 @@
 	hallucinated_item.desc = initial(template_item_type.desc)
 	hallucinated_item.icon = initial(template_item_type.icon)
 	hallucinated_item.icon_state = initial(template_item_type.icon_state)
-	hallucinated_item.w_class = initial(template_item_type.w_class) // Not strictly necessary, but keen eyed people will notice
+	hallucinated_item.update_weight_class(initial(template_item_type.w_class)) // Not strictly necessary, but keen eyed people will notice
 
 	return hallucinated_item
 
@@ -72,7 +73,7 @@
 		var/obj/item/melee/energy/sword/saber/sabre_color = pick(subtypesof(/obj/item/melee/energy/sword/saber))
 		// Yes this can break if someone changes esword icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_on_[initial(sabre_color.sword_color_icon)]"
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/saberon.ogg', 35, TRUE)
+		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/saberon.ogg', 35, TRUE)
 
 	return hallucinated_item
 
@@ -109,16 +110,34 @@
 	if(prob(15))
 		// Yes this can break if someone changse grenade icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
-		hallucinator.playsound_local(get_turf(hallucinator), 'sound/weapons/armbomb.ogg', 60, TRUE)
+		hallucinator.playsound_local(get_turf(hallucinator), 'sound/items/weapons/armbomb.ogg', 60, TRUE)
 		to_chat(hallucinator, span_warning("You prime [hallucinated_item]! 5 seconds!"))
 
 	return hallucinated_item
+
+/datum/hallucination/fake_item/summon_guns
+	hallucination_tier = HALLUCINATION_TIER_RARE
+	valid_slots = ITEM_SLOT_HANDS
+
+/datum/hallucination/fake_item/summon_guns/make_fake_item(where_to_put_it, equip_flags)
+	template_item_type = pick(GLOB.summoned_guns)
+	. = ..()
+	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/summon_guns.ogg', 50, TRUE)
+
+/datum/hallucination/fake_item/summon_magic
+	hallucination_tier = HALLUCINATION_TIER_RARE
+	valid_slots = ITEM_SLOT_HANDS
+
+/datum/hallucination/fake_item/summon_magic/make_fake_item(where_to_put_it, equip_flags)
+	template_item_type = pick(GLOB.summoned_magic + GLOB.summoned_special_magic)
+	. = ..()
+	hallucinator.playsound_local(get_turf(hallucinator), 'sound/effects/magic/summon_magic.ogg', 50, TRUE)
 
 /obj/item/hallucinated
 	name = "mirage"
 	plane = ABOVE_HUD_PLANE
 	interaction_flags_item = NONE
-	item_flags = ABSTRACT | DROPDEL | EXAMINE_SKIP | HAND_ITEM | NOBLUDGEON // Most of these flags don't matter, but better safe than sorry
+	item_flags = ABSTRACT | DROPDEL | HAND_ITEM | NOBLUDGEON // Most of these flags don't matter, but better safe than sorry
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// The hallucination that created us.
 	var/datum/hallucination/parent
@@ -132,7 +151,7 @@
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(parent_deleting))
 	src.parent = parent
 
-	ADD_TRAIT(src, TRAIT_NODROP, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROP, TRAIT_EXAMINE_SKIP), INNATE_TRAIT)
 
 /obj/item/hallucinated/Destroy(force)
 	UnregisterSignal(parent, COMSIG_QDELETING)

@@ -10,13 +10,17 @@
 	icon_living = "headslug"
 	icon_dead = "headslug_dead"
 	gender = NEUTER
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_SMALL
+	density = FALSE
 	health = 50
 	maxHealth = 50
+	max_stamina = 120
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_CREATURE)
@@ -74,7 +78,7 @@
 /// Simply infects the target corpse with our changeling eggs. This shouldn't fail, because all checks should have been done in check_and_implant()
 /// Just to be super-duper safe to the player, we do return TRUE if all goes well and read that value in check_and_implant() to be nice to the player.
 /mob/living/basic/headslug/proc/infect(mob/living/carbon/victim)
-	var/obj/item/organ/internal/body_egg/changeling_egg/egg = new(victim)
+	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
 
 	egg.origin = mind
 

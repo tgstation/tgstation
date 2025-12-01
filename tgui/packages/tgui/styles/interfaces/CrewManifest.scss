@@ -1,15 +1,13 @@
-@use '../colors.scss';
-
 $department_map: (
-  'Cargo': colors.$brown,
-  'Command': colors.$yellow,
-  'Security': colors.$red,
-  'Engineering': colors.$orange,
-  'Medical': colors.$teal,
-  'Misc': colors.$white,
-  'Science': colors.$purple,
-  'Service': colors.$green,
-  'Silicon': colors.$pink,
+  'Cargo': var(--color-brown),
+  'Command': var(--color-yellow),
+  'Security': var(--color-red),
+  'Engineering': var(--color-orange),
+  'Medical': var(--color-teal),
+  'Misc': var(--color-white),
+  'Science': var(--color-purple),
+  'Service': var(--color-green),
+  'Silicon': var(--color-pink),
 );
 
 .CrewManifest {
@@ -27,32 +25,32 @@ $department_map: (
   }
 
   &__Cell {
-    padding: 3px 0;
+    padding: var(--space-s) 0;
 
     &--Rank {
-      color: colors.$label;
+      color: var(--color-label);
     }
   }
 
   &__Icons {
-    padding: 3px 9px;
+    padding: var(--space-s) var(--space-l);
     text-align: right;
   }
 
   &__Icon {
-    color: colors.$label;
+    color: var(--color-label);
     position: relative;
 
     &:not(:last-child) {
-      margin-right: 7px;
+      margin-right: var(--space-m);
     }
 
     &--Chevron {
-      padding-right: 2px;
+      padding-right: var(--space-xs);
     }
 
     &--Command {
-      color: colors.$yellow;
+      color: var(--color-yellow);
     }
   }
 }

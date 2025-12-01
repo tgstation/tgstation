@@ -4,7 +4,6 @@
 	required_drink_type = /datum/reagent/consumable/coffee
 	name = "glass of coffee"
 	desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
-	icon_state = "glass_brown"
 
 /datum/glass_style/drinking_glass/tea
 	required_drink_type = /datum/reagent/consumable/tea
@@ -58,7 +57,6 @@
 	required_drink_type = /datum/reagent/consumable/hot_coco
 	name = "glass of hot coco"
 	desc = "A favorite winter drink to warm you up."
-	icon_state = "chocolateglass"
 	drink_type = SUGAR | DAIRY
 
 /datum/glass_style/drinking_glass/italian_coco

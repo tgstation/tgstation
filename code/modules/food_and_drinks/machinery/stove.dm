@@ -34,11 +34,14 @@
 	volume = 200
 	possible_transfer_amounts = list(20, 50, 100, 200)
 	amount_per_transfer_from_this = 50
-	reagent_flags = REFILLABLE | DRAINABLE
+	initial_reagent_flags = REFILLABLE | DRAINABLE
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5)
 	w_class = WEIGHT_CLASS_BULKY
 	custom_price = PAYCHECK_LOWER * 8
 	fill_icon_thresholds = null
+	sound_vary = TRUE
+	pickup_sound = SFX_POT_PICKUP
+	drop_sound = SFX_POT_DROP
 
 	/// Max number of ingredients we can add
 	var/max_ingredients = 24
@@ -47,7 +50,7 @@
 
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
-	RegisterSignal(reagents, COMSIG_REAGENTS_CLEAR_REAGENTS, PROC_REF(on_reagents_cleared))
+	AddElement(/datum/element/cuffable_item)
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(reagent_special_examine))
 	register_context()
 
@@ -115,30 +118,64 @@
 	. = ..()
 	LAZYREMOVE(added_ingredients, gone)
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	if(.)
+/**
+ * Adds items to a soup pot without invoking any procs that call sleep() when using in a component.
+ *
+ * Args:
+ * * transfer_from: The container that's being used to add items to the soup pot. Must not be null.
+ * * user: the entity adding ingredients via a container to a soup pot. Must not be null.
+ */
+/obj/item/reagent_containers/cup/soup_pot/proc/transfer_from_container_to_pot(obj/item/transfer_from, mob/user)
+	if(!transfer_from.atom_storage)
 		return
 
-	if(!can_add_ingredient(attacking_item))
-		return FALSE
+	var/obj/item/storage/tray = transfer_from
+	var/loaded = 0
+
+	for(var/obj/tray_item in tray.contents)
+		if(!can_add_ingredient(tray_item))
+			continue
+		if(LAZYLEN(added_ingredients) >= max_ingredients)
+			balloon_alert(user, "it's full!")
+			return TRUE
+		if(tray.atom_storage.attempt_remove(tray_item, src))
+			loaded++
+			LAZYADD(added_ingredients, tray_item)
+	if(loaded)
+		to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
+		update_appearance(UPDATE_OVERLAYS)
+	return TRUE
+
+/obj/item/reagent_containers/cup/soup_pot/item_interaction(mob/living/user, obj/item/item, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(item.is_open_container())
+		// (assuming they want to pour rather than add the container itself)
+		// allow interaction to fall through to reagent container coed
+		return NONE
+	if(!can_add_ingredient(item))
+		return ITEM_INTERACT_BLOCKING
 
 	// Too many ingredients
 	if(LAZYLEN(added_ingredients) >= max_ingredients)
 		balloon_alert(user, "too many ingredients!")
-		return TRUE
-	if(!user.transferItemToLoc(attacking_item, src))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(item, src))
 		balloon_alert(user, "can't add that!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
 	balloon_loc.balloon_alert(user, "ingredient added")
 	user.face_atom(balloon_loc)
 
-	LAZYADD(added_ingredients, attacking_item)
+	LAZYADD(added_ingredients, item)
 	update_appearance(UPDATE_OVERLAYS)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/cup/soup_pot/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return transfer_from_container_to_pot(tool, user)
 
 /obj/item/reagent_containers/cup/soup_pot/attack_hand_secondary(mob/user, list/modifiers)
 	if(!LAZYLEN(added_ingredients))
@@ -169,15 +206,14 @@
 		return FALSE
 	return TRUE
 
-/obj/item/reagent_containers/cup/soup_pot/proc/on_reagents_cleared(datum/source, datum/reagent/changed)
-	SIGNAL_HANDLER
-
-	dump_ingredients()
+/obj/item/reagent_containers/cup/soup_pot/try_splash(mob/user, atom/target)
+	. = ..()
+	if(!. && LAZYLEN(added_ingredients))
+		dump_ingredients()
 
 /obj/item/reagent_containers/cup/soup_pot/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash)
 	. = ..()
 	if(!. && LAZYLEN(added_ingredients))
-		// Clearing reagents Will do this for us already, but if we have no reagents this is a failsafe
 		dump_ingredients()
 
 /**

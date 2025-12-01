@@ -39,7 +39,7 @@
 	///Base icon state for the customer
 	var/base_icon_state = "amerifat"
 	///Sound to use when this robot type speaks
-	var/speech_sound = 'sound/creatures/tourist/tourist_talk.ogg'
+	var/speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk.ogg'
 
 	/// Is this unique once per venue?
 	var/is_unique = FALSE
@@ -47,9 +47,13 @@
 /datum/customer_data/New()
 	. = ..()
 	name_prefixes = world.file2list(prefix_file)
+	if(check_holidays(ICE_CREAM_DAY)) ///customers are more likely to order ice cream on this holiday
+		var/list/orderable_restaurant = orderable_objects[VENUE_RESTAURANT]
+		if(orderable_restaurant?[/datum/custom_order/icecream])
+			orderable_restaurant[/datum/custom_order/icecream] *= 3
 
 /// Can this customer be chosen for this venue?
-/datum/customer_data/proc/can_use(datum/venue/venue)
+/datum/customer_data/proc/can_use(datum/venue/venue, obj/machinery/restaurant_portal/portal)
 	return TRUE
 
 /datum/customer_data/proc/get_overlays(mob/living/basic/robot_customer/customer)
@@ -91,6 +95,7 @@
 			/datum/reagent/consumable/ethanol/beer = 25,
 			/datum/reagent/consumable/ethanol/b52 = 6,
 			/datum/reagent/consumable/ethanol/manhattan = 3,
+			/datum/reagent/consumable/ethanol/old_fashioned = 3,
 			/datum/reagent/consumable/ethanol/atomicbomb = 1,
 		),
 	)
@@ -137,6 +142,7 @@
 			/datum/reagent/consumable/ethanol/wine = 3,
 			/datum/reagent/consumable/ethanol/grappa = 3,
 			/datum/reagent/consumable/ethanol/amaretto = 5,
+			/datum/reagent/consumable/ethanol/amaretto_sour = 3,
 			/datum/reagent/consumable/cucumberlemonade = 2,
 		),
 	)
@@ -155,7 +161,7 @@
 	first_warning_line = "Get your hands off of me!"
 	second_warning_line = "Do not touch me you filthy animal, last warning!"
 	self_defense_line = "I will break you like a baguette!"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/obj/item/food/baguette = 20,
@@ -174,14 +180,13 @@
 			/datum/reagent/consumable/ethanol/beer = 5,
 			/datum/reagent/consumable/ethanol/wine = 5,
 			/datum/reagent/consumable/ethanol/gin_garden = 2,
+			/datum/reagent/consumable/ethanol/french_75 = 5,
 		),
 	)
 
 /datum/customer_data/french/get_overlays(mob/living/basic/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
-		var/mutable_appearance/flag = mutable_appearance(customer.icon, "french_flag")
-		flag.appearance_flags = RESET_COLOR
-		return flag
+		return mutable_appearance(customer.icon, "french_flag", appearance_flags = RESET_COLOR|KEEP_APART)
 
 
 
@@ -199,7 +204,7 @@
 	first_warning_line = "Don't touch me you pervert!"
 	second_warning_line = "I'm going to go super saiyan if you touch me again! Last warning!"
 	self_defense_line = "OMAE WA MO, SHINDEROU!"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese1.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/datum/custom_order/icecream = 4,
@@ -227,9 +232,7 @@
 /datum/customer_data/japanese/get_overlays(mob/living/basic/robot_customer/customer)
 	//leaving and eaten
 	if(type == /datum/customer_data/japanese && customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING] && customer.ai_controller.blackboard[BB_CUSTOMER_EATING])
-		var/mutable_appearance/you_won_my_heart = mutable_appearance('icons/effects/effects.dmi', "love_hearts")
-		you_won_my_heart.appearance_flags = RESET_COLOR
-		return you_won_my_heart
+		return mutable_appearance('icons/effects/effects.dmi', "love_hearts", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /datum/customer_data/japanese/salaryman
 	clothing_sets = list("japanese_salary")
@@ -243,7 +246,7 @@
 	first_warning_line = "Hey, only my employer gets to mess with me like that."
 	second_warning_line = "Leave me be, I'm trying to focus. Last warning!"
 	self_defense_line = "I didn't want it to end up like this."
-	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/datum/reagent/consumable/nutriment/soup/miso = 6,
@@ -278,7 +281,7 @@
 	second_warning_line = "Last warning! I'll destroy you!"
 	self_defense_line = "Flap attack!"
 
-	speech_sound = 'sound/creatures/tourist/tourist_talk_moth.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_moth.ogg'
 
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
@@ -295,8 +298,8 @@
 // The whole gag is taking off your hat and giving it to the customer.
 // If it takes any more effort, it loses a bit of the comedy.
 // Therefore, only show up if it's reasonable for that gag to happen.
-/datum/customer_data/moth/can_use(datum/venue/venue)
-	var/mob/living/carbon/buffet = venue.restaurant_portal?.turned_on_portal?.resolve()
+/datum/customer_data/moth/can_use(datum/venue/venue, obj/machinery/restaurant_portal/portal)
+	var/mob/living/carbon/buffet = portal.turned_on_portal?.resolve()
 	if (!istype(buffet))
 		return FALSE
 	if(QDELETED(buffet.head) && QDELETED(buffet.gloves) && QDELETED(buffet.shoes))
@@ -306,39 +309,29 @@
 /datum/customer_data/moth/proc/get_wings(mob/living/basic/robot_customer/customer)
 	var/customer_ref = WEAKREF(customer)
 	if (!LAZYACCESS(wings_chosen, customer_ref))
-		LAZYSET(wings_chosen, customer_ref, GLOB.moth_wings_list[pick(GLOB.moth_wings_list)])
+		var/picked_wings = pick(SSaccessories.feature_list[FEATURE_MOTH_WINGS])
+		LAZYSET(wings_chosen, customer_ref, SSaccessories.feature_list[FEATURE_MOTH_WINGS][picked_wings])
 	return wings_chosen[customer_ref]
 
 /datum/customer_data/moth/get_underlays(mob/living/basic/robot_customer/customer)
 	var/list/underlays = list()
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
-
-	var/mutable_appearance/wings_behind = mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND")
-	wings_behind.appearance_flags = RESET_COLOR
-	underlays += wings_behind
-
+	underlays += mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_BEHIND", appearance_flags = RESET_COLOR|KEEP_APART)
 	return underlays
 
 /datum/customer_data/moth/get_overlays(mob/living/basic/robot_customer/customer)
 	var/list/overlays = list()
 
 	var/datum/sprite_accessory/moth_wings/wings = get_wings(customer)
-
-	var/mutable_appearance/wings_front = mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT")
-	wings_front.appearance_flags = RESET_COLOR
-	overlays += wings_front
-
-	var/mutable_appearance/jetpack = mutable_appearance(icon = customer.icon, icon_state = "mothbot_jetpack")
-	jetpack.appearance_flags = RESET_COLOR
-	overlays += jetpack
-
+	overlays += mutable_appearance(icon = 'icons/mob/human/species/moth/moth_wings.dmi', icon_state = "m_moth_wings_[wings.icon_state]_FRONT", appearance_flags = RESET_COLOR|KEEP_APART)
+	overlays += mutable_appearance(icon = customer.icon, icon_state = "mothbot_jetpack", appearance_flags = RESET_COLOR|KEEP_APART)
 	return overlays
 
 /datum/customer_data/mexican
 	base_icon_state = "mexican"
 	prefix_file = "strings/names/mexican_prefix.txt"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_mexican.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_mexican.ogg'
 	clothing_sets = list("mexican_poncho")
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
@@ -378,7 +371,7 @@
 /datum/customer_data/british
 	base_icon_state = "british"
 	prefix_file = "strings/names/british_prefix.txt"
-	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
+	speech_sound = 'sound/mobs/non-humanoids/tourist/tourist_talk_british.ogg'
 
 	friendly_pull_line = "I don't enjoy being pulled around like this."
 	first_warning_line = "Our sovereign lord the Queen chargeth and commandeth all persons, being assembled, immediately to disperse themselves."
@@ -394,7 +387,7 @@
 			/obj/item/food/benedict = 5,
 			/obj/item/food/fishandchips = 10,
 			/obj/item/food/full_english = 2,
-			/obj/item/food/sandwich/cheese/grilled = 5,
+			/obj/item/food/sandwich/grilled_cheese = 5,
 			/obj/item/food/pie/meatpie = 5,
 			/obj/item/food/salad/ricepudding = 5,
 		),
@@ -407,6 +400,7 @@
 			/datum/reagent/consumable/ethanol/martini = 5,
 			/datum/reagent/consumable/ethanol/gintonic = 5,
 			/datum/reagent/consumable/tea = 10,
+			/datum/reagent/consumable/ethanol/hot_toddy = 5,
 		),
 	)
 

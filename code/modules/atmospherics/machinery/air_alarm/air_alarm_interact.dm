@@ -46,12 +46,12 @@
 
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_WALLFRAME)
 		balloon_alert(user, "circuit installed")
 		buildstage = AIR_ALARM_BUILD_NO_WIRES
 		update_appearance()
@@ -71,6 +71,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, span_warning("It does nothing!"))
 	else
+		if(HAS_SILICON_ACCESS(user))
+			locked = !locked
+			return
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
 			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the air alarm interface."))
@@ -78,7 +81,6 @@
 				ui_interact(user)
 		else
 			to_chat(user, span_danger("Access denied."))
-	return
 
 /obj/machinery/airalarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -98,7 +100,7 @@
 	if((buildstage == AIR_ALARM_BUILD_COMPLETE))
 		new /obj/item/stack/cable_coil(loc, 3)
 
-/obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/airalarm/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	update_last_used(user)
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_COMPLETE)
@@ -116,7 +118,7 @@
 					return
 				user.visible_message(span_notice("[user.name] wires the air alarm."), \
 									span_notice("You start wiring the air alarm..."))
-				if (do_after(user, 20, target = src))
+				if (do_after(user, 2 SECONDS, target = src))
 					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
 						cable.use(5)
 						to_chat(user, span_notice("You wire the air alarm."))
@@ -140,7 +142,7 @@
 
 			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
 				var/obj/item/electroadaptive_pseudocircuit/P = W
-				if(!P.adapt_circuit(user, 25))
+				if(!P.adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
 					return
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt an air alarm circuit and slot it into the assembly."))
@@ -184,3 +186,10 @@
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
 	pixel_shift = 27
+
+/obj/item/wallframe/airalarm/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()

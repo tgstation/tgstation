@@ -65,6 +65,10 @@
 
 	downloaded_file = PRG.clone()
 
+	// If the filesize is 0 (or somehow lower), we instantly download to avoid invalid number issues with stepwise download.
+	if(downloaded_file.size <= 0)
+		complete_file_download()
+
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
 		return
@@ -89,8 +93,9 @@
 		return
 	if(download_completion >= downloaded_file.size)
 		complete_file_download()
+		return
 	// Download speed according to connectivity state. NTNet server is assumed to be on unlimited speed so we're limited by our local connectivity
-	var/download_netspeed
+	var/download_netspeed = 0
 	// Speed defines are found in misc.dm
 	switch(ntnet_status)
 		if(NTNET_LOW_SIGNAL)
@@ -99,10 +104,13 @@
 			download_netspeed = NTNETSPEED_HIGHSIGNAL
 		if(NTNET_ETHERNET_SIGNAL)
 			download_netspeed = NTNETSPEED_ETHERNET
-	if(download_netspeed)
-		if(HAS_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED))
-			download_netspeed *= 0.5
-		download_completion += download_netspeed
+	if(download_netspeed <= 0)
+		return
+	if(HAS_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED))
+		download_netspeed *= 0.5
+	// We don't complete it here so we stay on 100% for a cycle
+	// We do cap out our completion to avoid UI issues
+	download_completion = min(download_completion  + download_netspeed, downloaded_file.size)
 
 /datum/computer_file/program/ntnetdownload/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

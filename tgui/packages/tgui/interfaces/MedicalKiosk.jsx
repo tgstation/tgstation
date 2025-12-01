@@ -1,6 +1,3 @@
-import { multiline } from 'common/string';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -11,7 +8,9 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const MedicalKiosk = (props) => {
@@ -29,7 +28,7 @@ export const MedicalKiosk = (props) => {
                 index={1}
                 icon="procedures"
                 name="General Health Scan"
-                description={multiline`
+                description={`
                   Reads back exact values of your general health scan.
                 `}
               />
@@ -37,7 +36,7 @@ export const MedicalKiosk = (props) => {
                 index={2}
                 icon="heartbeat"
                 name="Symptom Based Checkup"
-                description={multiline`
+                description={`
                   Provides information based on various non-obvious symptoms,
                   like blood levels or disease status.
                 `}
@@ -46,7 +45,7 @@ export const MedicalKiosk = (props) => {
                 index={3}
                 icon="radiation-alt"
                 name="Neurological/Radiological Scan"
-                description={multiline`
+                description={`
                   Provides information about brain trauma and radiation.
                 `}
               />
@@ -54,7 +53,7 @@ export const MedicalKiosk = (props) => {
                 index={4}
                 icon="mortar-pestle"
                 name="Chemical and Psychoactive Scan"
-                description={multiline`
+                description={`
                   Provides a list of consumed chemicals, as well as potential
                   side effects.
                 `}
@@ -124,7 +123,7 @@ const MedicalKioskInstructions = (props) => {
       </Box>
       <Button
         mt={1}
-        tooltip={multiline`
+        tooltip={`
           Resets the current scanning target, cancelling current scans.
         `}
         icon="sync"
@@ -187,6 +186,7 @@ const MedicalKioskScanResults2 = (props) => {
     illness_info,
     bleed_status,
     blood_levels,
+    blood_name,
     blood_status,
   } = data;
   return (
@@ -203,7 +203,7 @@ const MedicalKioskScanResults2 = (props) => {
           {illness_info}
         </LabeledList.Item>
         <LabeledList.Divider />
-        <LabeledList.Item label="Blood Levels">
+        <LabeledList.Item label={`${blood_name} Levels`}>
           <ProgressBar value={blood_levels / 100} color="bad">
             <AnimatedNumber value={blood_levels} />
           </ProgressBar>
@@ -211,7 +211,7 @@ const MedicalKioskScanResults2 = (props) => {
             {bleed_status}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item label="Blood Information">
+        <LabeledList.Item label={`${blood_name} Information`}>
           {blood_status}
         </LabeledList.Item>
       </LabeledList>

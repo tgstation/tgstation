@@ -10,11 +10,12 @@
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/docking_port,
 		/obj/effect/abstract,
+		/obj/effect/atmos_shield,
 		/obj/effect/collapse,
 		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
 		/obj/effect/ebeam,
-		/obj/effect/fishing_lure,
+		/obj/effect/fishing_float,
 		/obj/effect/hotspot,
 		/obj/effect/landmark,
 		/obj/effect/light_emitter/tendril,
@@ -41,6 +42,7 @@
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
 	target_turf = target
+	ADD_TRAIT(parent, TRAIT_AI_AVOID_TURF, REF(src))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
@@ -49,9 +51,10 @@
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
-	parent.AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/chasm)
+	parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_AI_AVOID_TURF, REF(src))
 	storage = null
 
 /datum/component/chasm/proc/entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -67,7 +70,7 @@
 	drop_stuff(movable)
 
 /datum/component/chasm/proc/block_teleport()
-	return COMPONENT_BLOCK_TELEPORT
+	return TRUE
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER
@@ -113,22 +116,13 @@
 		if(HAS_TRAIT(thing_to_check, TRAIT_CHASM_STOPPER))
 			return CHASM_NOT_DROPPING
 
+	if(!ismob(dropped_thing))
+		return CHASM_DROPPING
+
 	//Flies right over the chasm
-	if(ismob(dropped_thing))
-		var/mob/M = dropped_thing
-		if(M.buckled) //middle statement to prevent infinite loops just in case!
-			var/mob/buckled_to = M.buckled
-			if((!ismob(M.buckled) || (buckled_to.buckled != M)) && !droppable(M.buckled))
-				return CHASM_REGISTER_SIGNALS
-		if(ishuman(dropped_thing))
-			var/mob/living/carbon/human/victim = dropped_thing
-			if(istype(victim.belt, /obj/item/wormhole_jaunter))
-				var/obj/item/wormhole_jaunter/jaunter = victim.belt
-				var/turf/chasm = get_turf(victim)
-				var/fall_into_chasm = jaunter.chasm_react(victim)
-				if(!fall_into_chasm)
-					chasm.visible_message(span_boldwarning("[victim] falls into the [chasm]!")) //To freak out any bystanders
-				return fall_into_chasm ? CHASM_DROPPING : CHASM_NOT_DROPPING
+	var/mob/victim = dropped_thing
+	if(victim.buckled && droppable(victim.buckled) != CHASM_DROPPING)
+		return CHASM_REGISTER_SIGNALS
 	return CHASM_DROPPING
 
 #undef CHASM_NOT_DROPPING
@@ -141,12 +135,21 @@
 	if(!dropped_thing || !falling_ref?.resolve())
 		falling_atoms -= falling_ref
 		return
+
 	falling_atoms[falling_ref] = (falling_atoms[falling_ref] || 0) + 1
 	var/turf/below_turf = target_turf
 	var/atom/parent = src.parent
 
 	if(falling_atoms[falling_ref] > 1)
 		return // We're already handling this
+
+	if(SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_CHASM_DROPPED, parent) & COMPONENT_NO_CHASM_DROP)
+		return
+
+	// Free (if possible) and drop all buckled mobs separately, so drivers can escape their doomed vehicle if they're not glued to it
+	for(var/mob/living/buckled as anything in dropped_thing.buckled_mobs)
+		dropped_thing.unbuckle_mob(buckled)
+		drop_stuff(buckled)
 
 	if(below_turf)
 		if(HAS_TRAIT(dropped_thing, TRAIT_CHASM_DESTROYED))
@@ -160,7 +163,7 @@
 		if(isliving(dropped_thing))
 			var/mob/living/fallen = dropped_thing
 			fallen.Paralyze(100)
-			fallen.adjustBruteLoss(30)
+			fallen.adjust_brute_loss(30)
 		falling_atoms -= falling_ref
 		return
 
@@ -212,6 +215,10 @@
 		REMOVE_TRAIT(fallen_mob, TRAIT_NO_TRANSFORM, REF(src))
 		if (fallen_mob.stat != DEAD)
 			fallen_mob.investigate_log("has died from falling into a chasm.", INVESTIGATE_DEATHS)
+			if(issilicon(fallen_mob))
+				//Silicons are held together by hopes and dreams, unfortunately, I'm having a nightmare
+				var/mob/living/silicon/robot/fallen_borg = fallen_mob
+				fallen_borg.mmi = null
 			fallen_mob.death(TRUE)
 			fallen_mob.apply_damage(300)
 
@@ -247,14 +254,51 @@ GLOBAL_LIST_EMPTY(chasm_fallen_mobs)
 /obj/effect/abstract/chasm_storage/Entered(atom/movable/arrived)
 	. = ..()
 	if(isliving(arrived))
+		//Mobs that have fallen in reserved area should be deleted to avoid fishing stuff from the deathmatch or VR.
+		if(is_reserved_level(loc.z) && !istype(get_area(loc), /area/shuttle))
+			qdel(arrived)
+			return
 		RegisterSignal(arrived, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
-		GLOB.chasm_fallen_mobs += arrived
+		LAZYADD(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], arrived)
 
 /obj/effect/abstract/chasm_storage/Exited(atom/movable/gone)
 	. = ..()
 	if(isliving(gone))
 		UnregisterSignal(gone, COMSIG_LIVING_REVIVE)
-		GLOB.chasm_fallen_mobs -= gone
+		LAZYREMOVE(GLOB.chasm_fallen_mobs[get_chasm_category(loc)], gone)
+
+/obj/effect/abstract/chasm_storage/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	var/old_cat = get_chasm_category(old_turf)
+	var/new_cat = get_chasm_category(new_turf)
+	var/list/mobs = list()
+	for(var/mob/fallen in src)
+		mobs += fallen
+	LAZYREMOVE(GLOB.chasm_fallen_mobs[old_cat], mobs)
+	LAZYADD(GLOB.chasm_fallen_mobs[new_cat], mobs)
+
+/**
+ * Returns a key to store, remove and access fallen mobs depending on the z-level.
+ * This stops rescuing people from places that are waaaaaaaay too far-fetched.
+ */
+/proc/get_chasm_category(turf/turf)
+	var/z_level = turf?.z
+	var/area/area = get_area(turf)
+	if(istype(area, /area/shuttle)) //shuttle move between z-levels, so they're a special case.
+		return area
+
+	if(is_away_level(z_level))
+		return ZTRAIT_AWAY
+	if(is_mining_level(z_level))
+		return ZTRAIT_MINING
+	if(is_station_level(z_level))
+		return ZTRAIT_STATION
+	if(is_centcom_level(z_level))
+		return ZTRAIT_CENTCOM
+	if(is_reserved_level(z_level))
+		return ZTRAIT_RESERVED
+
+	return ZTRAIT_SPACE_RUINS
 
 #define CHASM_TRAIT "chasm trait"
 /**

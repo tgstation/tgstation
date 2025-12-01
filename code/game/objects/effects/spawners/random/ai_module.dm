@@ -29,6 +29,7 @@
 	name = "neutral AI module spawner"
 	loot = list( // These shouldn't allow the AI to start butchering people without reason
 		/obj/item/ai_module/core/full/reporter,
+		/obj/item/ai_module/core/full/thinkermov,
 		/obj/item/ai_module/core/full/hulkamania,
 		/obj/item/ai_module/core/full/overlord,
 		/obj/item/ai_module/core/full/tyrant,
@@ -37,6 +38,7 @@
 		/obj/item/ai_module/supplied/safeguard,
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,
+		/obj/item/ai_module/core/full/yesman,
 		/obj/item/ai_module/remove,
 	)
 

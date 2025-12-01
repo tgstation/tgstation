@@ -79,7 +79,7 @@
 	shoves_the_guy.disarm(wears_the_glasses)
 	TEST_ASSERT(wears_the_glasses.glasses != glasses, "Dummy kept their glasses, even though were disarm shoved into a wall.")
 
-/// Helper to reset the glasses dummy back to it's original position, clear knockdown, and return glasses (if gone)
+/// Helper to reset the glasses dummy back to its original position, clear knockdown, and return glasses (if gone)
 /datum/unit_test/knockoff_component/proc/set_glasses_wearer(mob/living/carbon/human/wearer, turf/reset_to, obj/item/clothing/glasses/reset_worn)
 	wearer.forceMove(reset_to)
 	wearer.SetKnockdown(0 SECONDS)

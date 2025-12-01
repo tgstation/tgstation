@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Voltaic combat cyberhearts no longer kill toxlovers (i.e jellypeople), albeit they won't heal toxins for them either."

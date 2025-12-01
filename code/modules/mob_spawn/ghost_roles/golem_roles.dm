@@ -32,15 +32,7 @@
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)
 
-/obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)
-	if(forced_name || !iscarbon(spawned_mob))
-		return ..()
-
-	var/datum/species/golem/golem_species = new()
-	forced_name = golem_species.random_name()
-	return ..()
-
-/obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor, apply_prefs)
 	. = ..()
 	if(is_path_in_list(initial_type, GLOB.golem_stack_food_directory))
 		var/datum/golem_food_buff/initial_buff = GLOB.golem_stack_food_directory[initial_type]
@@ -74,12 +66,12 @@
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	prompt_name = "a free golem"
 
-/obj/effect/mob_spawn/ghost_role/human/golem/adamantine/special(mob/living/new_spawn, mob/mob_possessor)
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine/special(mob/living/new_spawn, mob/mob_possessor, apply_prefs)
 	. = ..()
 	if(!ishuman(new_spawn))
 		return
 	var/mob/living/carbon/human/new_golem = new_spawn
-	var/obj/item/organ/internal/vocal_cords/adamantine/free_golem_radio = new()
+	var/obj/item/organ/vocal_cords/adamantine/free_golem_radio = new()
 	free_golem_radio.Insert(new_golem)
 
 // Subtype which follows orders
@@ -111,8 +103,6 @@
 	to_chat(new_spawn, span_userdanger("Serve [real_owner.real_name], and assist [real_owner.p_them()] in completing [real_owner.p_their()] goals at any cost."))
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant/name_mob(mob/living/spawned_mob, forced_name)
-	if(forced_name || !iscarbon(spawned_mob))
-		return ..()
 	if(owner_ref?.resolve())
 		forced_name =  "Golem ([rand(1,999)])"
 	return ..()

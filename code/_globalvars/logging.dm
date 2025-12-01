@@ -33,13 +33,15 @@ GLOBAL_PROTECT(##log_var_name);\
 DECLARE_LOG(config_error_log, DONT_START_LOG)
 DECLARE_LOG(perf_log, DONT_START_LOG) // Declared here but name is set in time_track subsystem
 
-#ifdef REFERENCE_DOING_IT_LIVE
+#ifdef REFERENCE_TRACKING_LOG_APART
 DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
 #endif
 
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 DECLARE_LOG_NAMED(test_log, "tests", START_LOG)
 #endif
+
+DECLARE_LOG_NAMED(reta_log, "reta", START_LOG)
 
 
 /// Picture logging

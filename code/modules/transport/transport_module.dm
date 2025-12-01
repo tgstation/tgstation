@@ -14,7 +14,7 @@
 	armor_type = /datum/armor/transport_module
 	max_integrity = 50
 	layer = TRAM_FLOOR_LAYER
-	plane = FLOOR_PLANE
+	plane = GAME_PLANE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
@@ -96,7 +96,6 @@
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/transport/linear/LateInitialize()
-	. = ..()
 	//after everything is initialized the transport controller can order everything
 	transport_controller_datum.order_platforms_by_z_level()
 
@@ -137,8 +136,8 @@
 
 /obj/structure/transport/linear/proc/add_item_on_transport(datum/source, atom/movable/new_transport_contents)
 	SIGNAL_HANDLER
-	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/camera))
-	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT) //prevents the tram from stealing things like landmarks
+	var/static/list/blacklisted_types = typecacheof(list(/obj/structure/fluff/tram_rail, /obj/effect/decal/cleanable, /obj/structure/transport/linear, /mob/eye, /obj/effect/gravity_fluff_field))
+	if(is_type_in_typecache(new_transport_contents, blacklisted_types) || new_transport_contents.invisibility == INVISIBILITY_ABSTRACT || HAS_TRAIT(new_transport_contents, TRAIT_UNDERFLOOR)) //prevents the tram from stealing things like landmarks
 		return FALSE
 	if(new_transport_contents in transport_contents)
 		return FALSE
@@ -165,6 +164,19 @@
 					continue
 
 				initial_contents += new_initial_contents
+
+///verify the movables in our list of contents are actually on our loc
+/obj/structure/transport/linear/proc/verify_transport_contents()
+	for(var/atom/movable/movable_contents as anything in transport_contents)
+		if(!(movable_contents.loc in locs))
+			remove_item_from_transport(movable_contents)
+
+/obj/structure/transport/linear/proc/check_for_humans()
+	for(var/atom/movable/movable_contents as anything in transport_contents)
+		if(ishuman(movable_contents))
+			return TRUE
+
+	return FALSE
 
 ///signal handler for COMSIG_MOVABLE_UPDATE_GLIDE_SIZE: when a movable in transport_contents changes its glide_size independently.
 ///adds that movable to a lazy list, movables in that list have their glide_size updated when the tram next moves
@@ -220,11 +232,11 @@
 
 	for(var/y in first_y to last_y)
 
-		var/y_pixel_offset = world.icon_size * y
+		var/y_pixel_offset = ICON_SIZE_Y * y
 
 		for(var/x in first_x to last_x)
 
-			var/x_pixel_offset = world.icon_size * x
+			var/x_pixel_offset = ICON_SIZE_X * x
 
 			var/turf/set_turf = locate(x + min_x, y + min_y, z)
 
@@ -289,18 +301,19 @@
 		destination = travel_direction
 		travel_direction = get_dir_multiz(loc, travel_direction)
 
-	var/x_offset = ROUND_UP(bound_width / 32) - 1 //how many tiles our horizontally farthest edge is from us
-	var/y_offset = ROUND_UP(bound_height / 32) - 1 //how many tiles our vertically farthest edge is from us
+	var/x_offset = ROUND_UP(bound_width / ICON_SIZE_X) - 1 //how many tiles our horizontally farthest edge is from us
+	var/y_offset = ROUND_UP(bound_height / ICON_SIZE_Y) - 1 //how many tiles our vertically farthest edge is from us
 
+	var/destination_x = destination.x
+	var/destination_y = destination.y
+	var/destination_z = destination.z
 	//the x coordinate of the edge furthest from our future destination, which would be our right hand side
-	var/back_edge_x = destination.x + x_offset//if we arent multitile this should just be destination.x
-	var/upper_edge_y = destination.y + y_offset
-
-	var/turf/upper_right_corner = locate(min(world.maxx, back_edge_x), min(world.maxy, upper_edge_y), destination.z)
+	var/back_edge_x = destination_x + x_offset//if we arent multitile this should just be destination.x
+	var/upper_edge_y = destination_y + y_offset
 
 	var/list/dest_locs = block(
-		destination,
-		upper_right_corner
+		destination_x, destination_y, destination_z,
+		back_edge_x, upper_edge_y, destination_z
 	)
 
 	var/list/entering_locs = dest_locs - locs
@@ -368,24 +381,24 @@
 				var/turf/closed/mineral/dest_mineral_turf = dest_turf
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(dest_mineral_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
 					shake_camera(client_mob, duration = 2, strength = 3)
-				dest_mineral_turf.gets_drilled(give_exp = FALSE)
+				dest_mineral_turf.gets_drilled()
 
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELING(victim_structure))
 					continue
-				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs) && victim_structure.layer >= LOW_OBJ_LAYER)
+				if(!is_type_in_typecache(victim_structure, transport_controller_datum.ignored_smashthroughs))
+					if((PLANE_TO_TRUE(victim_structure.plane) == FLOOR_PLANE && victim_structure.layer > TRAM_RAIL_LAYER) || (PLANE_TO_TRUE(victim_structure.plane) == GAME_PLANE && victim_structure.layer > LOW_OBJ_LAYER) )
+						if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
+							visible_message(span_danger("[src] smashes through [victim_structure]!"))
+							victim_structure.deconstruct(FALSE)
 
-					if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
-						visible_message(span_danger("[src] smashes through [victim_structure]!"))
-						victim_structure.deconstruct(FALSE)
-
-					else
-						if(!throw_target)
-							throw_target = get_edge_target_turf(src, turn(travel_direction, pick(45, -45)))
-						visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
-						victim_structure.anchored = FALSE
-						victim_structure.take_damage(rand(20, 25) * collision_lethality)
-						victim_structure.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality)
+						else
+							if(!throw_target)
+								throw_target = get_edge_target_turf(src, turn(travel_direction, pick(45, -45)))
+							visible_message(span_danger("[src] violently rams [victim_structure] out of the way!"))
+							victim_structure.anchored = FALSE
+							victim_structure.take_damage(rand(20, 25) * collision_lethality)
+							victim_structure.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality)
 
 			for(var/obj/machinery/victim_machine in dest_turf.contents)
 				if(QDELING(victim_machine))
@@ -404,9 +417,11 @@
 				var/extra_ouch = FALSE // if emagged you're gonna have a really bad time
 				if(speed_limiter == 0.5) // slow trams don't cause extra damage
 					for(var/obj/structure/tram/spoiler/my_spoiler in transport_contents)
+						if(istype(victim_living.buckled, /obj/structure/fluff/tram_rail))
+							extra_ouch = TRUE
+							break
 						if(get_dist(my_spoiler, victim_living) != 1)
 							continue
-
 						if(my_spoiler.deployed)
 							extra_ouch = TRUE
 							break
@@ -414,31 +429,31 @@
 				if(transport_controller_datum.ignored_smashthroughs[victim_living.type])
 					continue
 				to_chat(victim_living, span_userdanger("[src] collides into you!"))
+				SEND_SIGNAL(victim_living, COMSIG_LIVING_HIT_BY_TRAM, src)
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 				var/damage = 0
-				switch(extra_ouch)
-					if(TRUE)
-						playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
-						var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
-						if(head)
-							log_combat(src, victim_living, "beheaded")
-							head.dismember()
-							victim_living.regenerate_icons()
-							add_overlay(mutable_appearance(icon, "blood_overlay"))
-							register_collision(points = 3)
 
-					if(FALSE)
-						log_combat(src, victim_living, "collided with")
-						if(prob(15)) //sorry buddy, luck wasn't on your side
-							damage = 29 * collision_lethality * damage_multiplier
-						else
-							damage = rand(7, 21) * collision_lethality * damage_multiplier
-						victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
-						victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
-						victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+				log_combat(src, victim_living, "collided with")
+				if(prob(15)) //sorry buddy, luck wasn't on your side
+					damage = 29 * collision_lethality * damage_multiplier
+				else
+					damage = rand(7, 21) * collision_lethality * damage_multiplier
+				victim_living.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD, wound_bonus = 7)
+				victim_living.apply_damage(3 * damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = 21)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_ARM, wound_bonus = 14)
+				victim_living.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_R_ARM, wound_bonus = 14)
+
+				if (extra_ouch)
+					playsound(src, 'sound/effects/grillehit.ogg', 50, TRUE)
+					var/obj/item/bodypart/head/head = victim_living.get_bodypart("head")
+					if(head)
+						log_combat(src, victim_living, "beheaded")
+						head.dismember()
+						victim_living.regenerate_icons()
+						add_overlay(mutable_appearance(icon, "blood_overlay"))
+						register_collision(points = 3)
 
 				if(QDELETED(victim_living)) //in case it was a mob that dels on death
 					continue
@@ -607,7 +622,7 @@
 	if(!isliving(user))
 		return FALSE
 	// Gotta be awake and aware
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	// Maintain the god given right to fight an elevator
 	if(user.combat_mode)
@@ -699,7 +714,7 @@
  * * boolean, FALSE if the menu should be closed, TRUE if the menu is clear to stay opened.
  */
 /obj/structure/transport/linear/proc/check_menu(mob/user, starting_loc)
-	if(user.incapacitated() || !user.Adjacent(src) || starting_loc != src.loc)
+	if(user.incapacitated || !user.Adjacent(src) || starting_loc != src.loc)
 		return FALSE
 	return TRUE
 
@@ -730,7 +745,7 @@
 
 	return open_lift_radial(user)
 
-/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!radial_travel)
 		return ..()
 
@@ -754,6 +769,23 @@
 
 	if(direction == DOWN)
 		user.visible_message(span_notice("[user] moves the lift downwards."), span_notice("You move the lift downwards."))
+
+/obj/machinery/door/poddoor/lift
+	name = "elevator door"
+	desc = "Keeps idiots like you from walking into an open elevator shaft."
+	icon = 'icons/obj/doors/liftdoor.dmi'
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/poddoor/lift/Initialize(mapload)
+	if(!isnull(transport_linked_id)) //linter and stuff
+		elevator_mode = TRUE
+	return ..()
+
+/obj/machinery/door/poddoor/lift/preopen
+	icon_state = "open"
+	density = FALSE
+	opacity = FALSE
 
 // A subtype intended for "public use"
 /obj/structure/transport/linear/public
@@ -908,7 +940,7 @@
 		new overlay(our_turf)
 		turfs += our_turf
 
-	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
+	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 0.1 SECONDS)
 
 /obj/structure/transport/linear/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
 	for(var/turf/our_old_turf as anything in turfs_to_clear)
@@ -928,11 +960,10 @@
 		turfs += our_turf
 
 	if(iterations)
-		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
+		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 0.1 SECONDS)
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
 	for(var/mob/living/passenger in transport_contents)
-		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
 		var/mob_throw_chance = transport_controller_datum.throw_chance
 		if(prob(mob_throw_chance || 17.5) || HAS_TRAIT(passenger, TRAIT_CURSED)) // sometimes you go through a window, especially with bad luck
 			passenger.AddElement(/datum/element/window_smashing, duration = 1.5 SECONDS)

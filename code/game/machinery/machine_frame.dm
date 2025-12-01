@@ -17,17 +17,10 @@
 	QDEL_LIST(components)
 	return ..()
 
-/obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(state >= FRAME_STATE_WIRED)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
-		dump_contents()
-	return ..()
-
-/obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time)
-	if(anchored && state == FRAME_STATE_EMPTY) //when using a screwdriver on an incomplete frame(missing components) no point checking for this
-		balloon_alert(user, "must be unanchored first!")
-		return FALSE
+/obj/structure/frame/machine/atom_deconstruct(disassembled = TRUE)
+	if(state >= FRAME_STATE_WIRED)
+		new /obj/item/stack/cable_coil(drop_location(), 5)
+	dump_contents()
 	return ..()
 
 /obj/structure/frame/machine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -88,14 +81,16 @@
 /obj/structure/frame/machine/examine(user)
 	. = ..()
 	if(!circuit?.needs_anchored)
-		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"]")
+		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose." : "into place."]")
 	if(state == FRAME_STATE_EMPTY)
-		. += span_warning("It needs [EXAMINE_HINT("5 cable")] pieces to wire it.")
+		if(!anchored)
+			. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
+		. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
 		return
 	if(state == FRAME_STATE_WIRED)
-		. += span_info("Its wires can be cut with a [EXAMINE_HINT("wirecutter")].")
+		. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
 	if(state != FRAME_STATE_BOARD_INSTALLED)
-		. += span_warning("Its missing a circuit board..")
+		. += span_warning("It's missing a circuit board!")
 		return
 	if(!length(req_components))
 		. += span_info("It requires no components.")
@@ -108,9 +103,9 @@
 		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
 	. += span_info("It requires [english_list(nice_list, "no more components")].")
 
-	. += span_info("All the components can be [EXAMINE_HINT("pried")] out.")
+	. += span_notice("All the components can be [EXAMINE_HINT("pried")] out.")
 	if(!length(nice_list))
-		. += span_info("The frame can be [EXAMINE_HINT("screwed")] to complete it.")
+		. += span_info("The frame should be [EXAMINE_HINT("screwed")] to complete it.")
 
 /obj/structure/frame/machine/dump_contents()
 	var/atom/drop_loc = drop_location()
@@ -263,9 +258,8 @@
 				play_sound = TRUE
 
 	if(play_sound && !no_sound)
-		replacer.play_rped_sound()
-		if(replacer.works_from_distance)
-			user.Beam(src, icon_state = "rped_upgrade", time = 0.5 SECONDS)
+		replacer.play_rped_effect()
+
 	return TRUE
 
 /obj/structure/frame/machine/can_be_unfasten_wrench(mob/user, silent)
@@ -285,7 +279,6 @@
 		return .
 	if(state != FRAME_STATE_BOARD_INSTALLED)
 		return .
-
 	if(finalize_construction(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
@@ -394,7 +387,7 @@
 	balloon_alert(user, "can't add that!")
 	return FALSE
 
-/obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/obj/structure/frame/machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
@@ -421,10 +414,17 @@
 			if(istype(tool, /obj/item/storage/part_replacer))
 				return install_parts_from_part_replacer(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-			if(!user.combat_mode)
-				return add_part(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-
 	return  .
+
+// Override of base_item_interaction so we only try to add parts to the frame AFTER running item_interaction and all the tool_acts
+/obj/structure/frame/machine/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(user.combat_mode)
+		return NONE
+
+	return add_part(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /**
  * Attempt to finalize the construction of the frame into a machine
@@ -437,28 +437,26 @@
  * * tool - the tool used to finalize the construction
  */
 /obj/structure/frame/machine/finalize_construction(mob/living/user, obj/item/tool)
+	if(locate(circuit.build_path) in loc)
+		balloon_alert(user, "identical machine present!")
+		return FALSE
 	for(var/component in req_components)
 		if(req_components[component] > 0)
 			user.balloon_alert(user, "missing components!")
 			return FALSE
 
 	tool.play_tool_sound(src)
-	var/obj/machinery/new_machine = new circuit.build_path(loc)
+	// Prevent us from dropping stuff thanks to /Exited
+	var/obj/item/circuitboard/machine/leaving_circuit = circuit
+	components -= leaving_circuit
+	leaving_circuit.replacement_parts = components
+	// Build the machine with the replacement parts
+	circuit = null
+	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
 	if(istype(new_machine))
-		new_machine.clear_components()
 		// Set anchor state
 		new_machine.set_anchored(anchored)
-		// Prevent us from dropping stuff thanks to /Exited
-		var/obj/item/circuitboard/machine/leaving_circuit = circuit
-		circuit = null
-		// Assign the circuit & parts & move them all at once into the machine
-		// no need to seperatly move circuit board as its already part of the components list
-		new_machine.circuit = leaving_circuit
-		new_machine.component_parts = components
-		for (var/obj/new_part in components)
-			new_part.forceMove(new_machine)
 		//Inform machine that its finished & cleanup
-		new_machine.RefreshParts()
 		new_machine.on_construction(user)
 		components = null
 	qdel(src)

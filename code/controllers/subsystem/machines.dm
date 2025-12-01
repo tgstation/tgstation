@@ -1,6 +1,8 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = INIT_ORDER_MACHINES
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_KEEP_TIMING
 	wait = 2 SECONDS
 
@@ -11,7 +13,19 @@ SUBSYSTEM_DEF(machines)
 	VAR_PRIVATE/list/all_machines = list()
 
 	var/list/processing = list()
+	var/list/processing_early = list()
+	var/list/processing_late = list()
+	var/list/processing_apcs = list()
+
 	var/list/currentrun = list()
+	var/current_part = SSMACHINES_MACHINES_EARLY
+	var/list/apc_steps = list(
+		SSMACHINES_APCS_EARLY,
+		SSMACHINES_APCS_ENVIRONMENT,
+		SSMACHINES_APCS_LIGHTS,
+		SSMACHINES_APCS_EQUIPMENT,
+		SSMACHINES_APCS_LATE
+		)
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
 
@@ -43,7 +57,7 @@ SUBSYSTEM_DEF(machines)
 	for(var/next_type in typesof(machine_type))
 		var/list/found_machines = machines_by_type[next_type]
 		if(found_machines)
-			machines += found_machines 
+			machines += found_machines
 	return machines
 
 
@@ -72,26 +86,86 @@ SUBSYSTEM_DEF(machines)
 			propagate_network(power_cable, power_cable.powernet)
 
 /datum/controller/subsystem/machines/stat_entry(msg)
-	msg = "M:[length(all_machines)]|MT:[length(machines_by_type)]|PM:[length(processing)]|PN:[length(powernets)]"
+	msg = "\n  M:[length(all_machines)]|MT:[length(machines_by_type)]|PM:[length(processing)]|PN:[length(powernets)]"
 	return ..()
 
 /datum/controller/subsystem/machines/fire(resumed = FALSE)
 	if (!resumed)
 		for(var/datum/powernet/powernet as anything in powernets)
 			powernet.reset() //reset the power state.
-		src.currentrun = processing.Copy()
+		current_part = SSMACHINES_MACHINES_EARLY
+		src.currentrun = processing_early.Copy()
 
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	//Processing machines that get the priority power draw
+	if(current_part == SSMACHINES_MACHINES_EARLY)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(thing) || thing.process_early(wait * 0.1) == PROCESS_KILL)
+				processing_early -= thing
+				thing.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
+				return
+		current_part = apc_steps[1]
+		src.currentrun = processing_apcs.Copy()
 
-	while(currentrun.len)
-		var/obj/machinery/thing = currentrun[currentrun.len]
-		currentrun.len--
-		if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
-			processing -= thing
-			thing.datum_flags &= ~DF_ISPROCESSING
-		if (MC_TICK_CHECK)
-			return
+	//Processing APCs
+	while(current_part in apc_steps)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/power/apc/apc = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(apc))
+				processing_apcs -= apc
+				apc.datum_flags &= ~DF_ISPROCESSING
+			switch(current_part)
+				if(SSMACHINES_APCS_EARLY)
+					apc.early_process(wait * 0.1)
+				if(SSMACHINES_APCS_LATE)
+					apc.charge_channel(null, wait * 0.1)
+					apc.late_process(wait * 0.1)
+				else
+					apc.charge_channel(current_part, wait * 0.1)
+			if(MC_TICK_CHECK)
+				return
+		var/next_index = apc_steps.Find(current_part) + 1
+		if (next_index > apc_steps.len)
+			current_part = SSMACHINES_MACHINES
+			src.currentrun = processing.Copy()
+			break
+		current_part = apc_steps[next_index]
+		src.currentrun = processing_apcs.Copy()
+
+	//Processing all machines
+	if(current_part == SSMACHINES_MACHINES)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
+				processing -= thing
+				thing.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
+				return
+		current_part = SSMACHINES_MACHINES_LATE
+		src.currentrun = processing_late.Copy()
+
+	//Processing machines that record the power usage statistics
+	if(current_part == SSMACHINES_MACHINES_LATE)
+		//cache for sanic speed (lists are references anyways)
+		var/list/currentrun = src.currentrun
+		while(currentrun.len)
+			var/obj/machinery/thing = currentrun[currentrun.len]
+			currentrun.len--
+			if(QDELETED(thing) || thing.process_late(wait * 0.1) == PROCESS_KILL)
+				processing_late -= thing
+				thing.datum_flags &= ~DF_ISPROCESSING
+			if (MC_TICK_CHECK)
+				return
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	var/obj/structure/cable/PC

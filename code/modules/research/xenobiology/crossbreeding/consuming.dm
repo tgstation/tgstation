@@ -43,7 +43,7 @@ Consuming extracts:
 /obj/item/slimecross/consuming/proc/spawncookie()
 	return new cookietype(get_turf(src))
 
-/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its' own type.
+/obj/item/slime_cookie //While this technically acts like food, it's so removed from it that I made it its own type.
 	name = "error cookie"
 	desc = "A weird slime cookie. You shouldn't see this."
 	icon = 'icons/obj/food/slimecookies.dmi'
@@ -59,28 +59,29 @@ Consuming extracts:
 /obj/item/slime_cookie/proc/do_effect(mob/living/M, mob/user)
 	return
 
-/obj/item/slime_cookie/attack(mob/living/M, mob/user)
+/obj/item/slime_cookie/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with))
+		return NONE
+	var/mob/living/living_mob = interacting_with
 	var/fed = FALSE
-	if(M == user)
-		M.visible_message(span_notice("[user] eats [src]!"), span_notice("You eat [src]."))
+	if(living_mob == user)
+		living_mob.visible_message(span_notice("[user] eats [src]!"), span_notice("You eat [src]."))
 		fed = TRUE
 	else
-		M.visible_message(span_danger("[user] tries to force [M] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
-		if(do_after(user, 20, target = M))
+		living_mob.visible_message(span_danger("[user] tries to force [living_mob] to eat [src]!"), span_userdanger("[user] tries to force you to eat [src]!"))
+		if(do_after(user, 2 SECONDS, target = living_mob))
 			fed = TRUE
-			M.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
+			living_mob.visible_message(span_danger("[user] forces [living_mob] to eat [src]!"), span_warning("[user] forces you to eat [src]."))
 	if(fed)
-		var/mob/living/carbon/human/H = M
-
-		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
-			to_chat(M, span_notice("Tastes like [taste]."))
-		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, TRUE)
+		if(!HAS_TRAIT(living_mob, TRAIT_AGEUSIA))
+			to_chat(living_mob, span_notice("You can taste [taste]."))
+		playsound(get_turf(living_mob), 'sound/items/eatfood.ogg', 20, TRUE)
 		if(nutrition)
-			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
-		do_effect(M, user)
+			living_mob.reagents.add_reagent(/datum/reagent/consumable/nutriment, nutrition)
+		do_effect(living_mob, user)
 		qdel(src)
-		return
-	..()
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/slimecross/consuming/grey
 	colour = SLIME_TYPE_GREY
@@ -121,11 +122,11 @@ Consuming extracts:
 
 /obj/item/slime_cookie/purple/do_effect(mob/living/M, mob/user)
 	var/need_mob_update = FALSE
-	need_mob_update += M.adjustBruteLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustFireLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE) //To heal slimepeople.
-	need_mob_update += M.adjustOxyLoss(-5, updating_health = FALSE)
-	need_mob_update += M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
+	need_mob_update += M.adjust_brute_loss(-5, updating_health = FALSE)
+	need_mob_update += M.adjust_fire_loss(-5, updating_health = FALSE)
+	need_mob_update += M.adjust_tox_loss(-5, updating_health = FALSE, forced = TRUE) //To heal slimepeople.
+	need_mob_update += M.adjust_oxy_loss(-5, updating_health = FALSE)
+	need_mob_update += M.adjust_organ_loss(ORGAN_SLOT_BRAIN, -5)
 	if(need_mob_update)
 		M.updatehealth()
 
@@ -152,7 +153,7 @@ Consuming extracts:
 	name = "metallic cookie"
 	desc = "A shiny grey cookie. Hard to the touch."
 	icon_state = "metal"
-	taste = /datum/reagent/copper
+	taste = "copper"
 
 /obj/item/slime_cookie/metal/do_effect(mob/living/M, mob/user)
 	M.apply_status_effect(/datum/status_effect/metalcookie)
@@ -226,30 +227,35 @@ Consuming extracts:
 	icon_state = "bluespace"
 	taste = "sugar and starlight"
 
-/obj/item/slime_cookie/bluespace/do_effect(mob/living/M, mob/user)
-	var/list/L = get_area_turfs(get_area(get_turf(M)))
+/obj/item/slime_cookie/bluespace/do_effect(mob/living/eater, mob/user)
+	var/list/area_turfs = get_area_turfs(get_area(get_turf(eater)))
 	var/turf/target
-	while (L.len && !target)
-		var/I = rand(1, L.len)
-		var/turf/T = L[I]
-		if (is_centcom_level(T.z))
-			L.Cut(I,I+1)
-			continue
-		if(!T.density)
-			var/clear = TRUE
-			for(var/obj/O in T)
-				if(O.density)
-					clear = FALSE
-					break
-			if(clear)
-				target = T
-		if (!target)
-			L.Cut(I,I+1)
 
-	if(target)
-		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	while (length(area_turfs))
+		var/turf/check_turf = pick_n_take(area_turfs)
+		if (is_centcom_level(check_turf.z))
+			continue // Probably already filtered out by NOTELEPORT but let's just be careful
+		if (check_turf.is_blocked_turf())
+			continue
+		target = check_turf
+		break
+
+	if (isnull(target))
+		fail_effect(eater)
+		return
+	if (!do_teleport(eater, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE))
+		fail_effect(eater)
+		return
+	new /obj/effect/particle_effect/sparks(target)
+	playsound(target, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+/obj/item/slime_cookie/bluespace/proc/fail_effect(mob/living/eater)
+	eater.visible_message(
+		message = span_warning("[eater] briefly vanishes... then slams forcefully into the ground"),
+		self_message = span_warning("You briefly vanish... and are returned forcefully to the ground.")
+	)
+	eater.Knockdown(0.1 SECONDS)
+	new /obj/effect/particle_effect/sparks(get_turf(eater))
 
 /obj/item/slimecross/consuming/sepia
 	colour = SLIME_TYPE_SEPIA
@@ -293,7 +299,7 @@ Consuming extracts:
 	desc = "A yellow cookie with rainbow-colored icing. Reflects the light strangely."
 	icon_state = "pyrite"
 	taste = "vanilla and " //Randomly selected color dye.
-	var/colour = "#FFFFFF"
+	var/colour = COLOR_WHITE
 
 /obj/item/slime_cookie/pyrite/Initialize(mapload)
 	. = ..()
@@ -301,25 +307,25 @@ Consuming extracts:
 	switch(rand(1,7))
 		if(1)
 			tastemessage = "red dye"
-			colour = "#FF0000"
+			colour = COLOR_RED
 		if(2)
 			tastemessage = "orange dye"
 			colour = "#FFA500"
 		if(3)
 			tastemessage = "yellow dye"
-			colour = "#FFFF00"
+			colour = COLOR_YELLOW
 		if(4)
 			tastemessage = "green dye"
-			colour = "#00FF00"
+			colour = COLOR_VIBRANT_LIME
 		if(5)
 			tastemessage = "blue dye"
-			colour = "#0000FF"
+			colour = COLOR_BLUE
 		if(6)
 			tastemessage = "indigo dye"
 			colour = "#4B0082"
 		if(7)
 			tastemessage = "violet dye"
-			colour = "#FF00FF"
+			colour = COLOR_MAGENTA
 	taste += tastemessage
 
 /obj/item/slime_cookie/pyrite/do_effect(mob/living/M, mob/user)
@@ -341,7 +347,7 @@ Consuming extracts:
 	playsound(get_turf(M), 'sound/effects/splat.ogg', 10, TRUE)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.blood_volume += 25 //Half a vampire drain.
+		C.adjust_blood_volume(25) //Half a vampire drain.
 
 /obj/item/slimecross/consuming/green
 	colour = SLIME_TYPE_GREEN

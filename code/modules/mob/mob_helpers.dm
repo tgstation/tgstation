@@ -116,6 +116,27 @@
 	return sanitize(.)
 
 /**
+ * For when you're only able to speak a limited amount of words
+ * phrase - the string to convert
+ * definitive_limit - the amount of words to limit the phrase to, optional
+*/
+/proc/stifled(phrase, definitive_limit = null)
+	phrase = html_decode(phrase)
+	var/num_words = 0
+	var/words = splittext(phrase, " ")
+	if(definitive_limit > 0) // in case someone passes a negative
+		num_words = min(definitive_limit, length(words))
+	else
+		num_words = min(rand(3, 5), length(words))
+	. = ""
+	for(var/i = 1, i <= num_words, i++)
+		if(num_words == i)
+			. += words[i] + "..."
+		else
+			. += words[i] + " ... "
+	return sanitize(.)
+
+/**
  * Turn text into complete gibberish!
  *
  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
@@ -146,19 +167,27 @@
 	var/client/C = M.client
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*world.icon_size
-	var/min = -(strength*world.icon_size)
+	var/max_x = strength*ICON_SIZE_X
+	var/max_y = strength*ICON_SIZE_Y
+	var/min_x = -(strength*ICON_SIZE_X)
+	var/min_y = -(strength*ICON_SIZE_Y)
+
+	if(C.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
+		var/type = /atom/movable/screen/fullscreen/flash/black
+
+		M.overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 3 SECONDS), 3 SECONDS)
 
 	//How much time to allot for each pixel moved
-	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
 	var/last_x = oldx
 	var/last_y = oldy
 
 	var/time_spent = 0
 	while(time_spent < duration)
 		//Get a random pos in our box
-		var/x_pos = rand(min, max) + oldx
-		var/y_pos = rand(min, max) + oldy
+		var/x_pos = rand(min_x, max_x) + oldx
+		var/y_pos = rand(min_y, max_y) + oldy
 
 		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
 		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
@@ -187,57 +216,28 @@
 			return M
 	return 0
 
-///Find the first name of a mob from the real name with regex
-/mob/proc/first_name()
-	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
-	firstname.Find(real_name)
-	return firstname.match
-
-/// Find the last name of a mob from the real name with regex
-/mob/proc/last_name()
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(real_name)
-	return lasttname.match
-
 ///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
 	if(real_name && real_name != name)
 		return " \[[real_name]\]"
 	return ""
 
-// moved out of admins.dm because things other than admin procs were calling this.
 /**
- * Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
- * If allow_fake_antags is set to FALSE, Valentines, ERTs, and any such roles with FLAG_FAKE_ANTAG won't pass.
-*/
-/proc/is_special_character(mob/M, allow_fake_antags = FALSE)
-	if(!SSticker.HasRoundStarted())
-		return FALSE
-	if(!istype(M))
-		return FALSE
-	if(iscyborg(M)) //as a borg you're now beholden to your laws rather than greentext
-		return FALSE
-
-
-	// Returns TRUE if AI has a zeroth law *and* either has a special role *or* an antag datum.
-	if(isAI(M))
-		var/mob/living/silicon/ai/A = M
-		return (A.laws?.zeroth && (A.mind?.special_role || !isnull(M.mind?.antag_datums)))
-
-	if(M.mind?.special_role)
-		return TRUE
-
-	// Turns 'faker' to TRUE if the antag datum is fake. If it's not fake, returns TRUE directly.
-	var/faker = FALSE
-	for(var/datum/antagonist/antag_datum as anything in M.mind?.antag_datums)
-		if((antag_datum.antag_flags & FLAG_FAKE_ANTAG))
-			faker = TRUE
-		else
+ * Checks if this mob is an antag
+ * By default excludes antags like Valentines, which are "fake antags"
+ */
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
 			return TRUE
 
-	// If 'faker' was assigned TRUE in the above loop and the argument 'allow_fake_antags' is set to TRUE, this passes.
-	// Else, return FALSE.
-	return (faker && allow_fake_antags)
+	return FALSE
+
+/mob/living/silicon/robot/is_antag(blacklisted_antag_flags)
+	return FALSE
+
+/mob/living/silicon/ai/is_antag(blacklisted_antag_flags)
+	return ..() && !!(laws?.zeroth) // AIs only count as antags if they have a zeroth law (apparently)
 
 /**
  * Fancy notifications for ghosts
@@ -295,8 +295,8 @@
 			to_chat(ghost, span_ghostalert(message))
 			continue
 
-		var/interact_link = click_interact ? " <a href='?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
-		var/view_link = " <a href='?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
+		var/interact_link = click_interact ? " <a href='byond://?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
+		var/view_link = " <a href='byond://?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][interact_link][view_link]"))
 
@@ -310,19 +310,6 @@
 		toast.name = header
 		toast.target_ref = WEAKREF(source)
 
-/// Heals a robotic limb on a mob
-/proc/item_heal_robotic(mob/living/carbon/human/human, mob/user, brute_heal, burn_heal)
-	var/obj/item/bodypart/affecting = human.get_bodypart(check_zone(user.zone_selected))
-	if(!affecting || IS_ORGANIC_LIMB(affecting))
-		to_chat(user, span_warning("[affecting] is already in good condition!"))
-		return FALSE
-	var/brute_damage = brute_heal > burn_heal //changes repair text based on how much brute/burn was supplied
-	if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-		if(affecting.heal_damage(brute_heal, burn_heal, required_bodytype = BODYTYPE_ROBOTIC))
-			human.update_damage_overlays()
-		user.visible_message(span_notice("[user] fixes some of the [brute_damage ? "dents on" : "burnt wires in"] [human]'s [affecting.name]."), \
-			span_notice("You fix some of the [brute_damage ? "dents on" : "burnt wires in"] [human == user ? "your" : "[human]'s"] [affecting.name]."))
-		return TRUE //successful heal
 
 
 ///Is the passed in mob a ghost with admin powers, doesn't check for AI interact like isAdminGhost() used to
@@ -337,12 +324,14 @@
 		return
 	return TRUE
 
-///Is the passed in mob an admin ghost WITH AI INTERACT enabled
+///Returns TRUE/FALSE on whether the mob is an Admin Ghost AI.
+///This requires this snowflake check because AI interact gives the access to the mob's client, rather
+///than the mob like everyone else, and we keep it that way so they can't accidentally give someone Admin AI access.
 /proc/isAdminGhostAI(mob/user)
 	if(!isAdminObserver(user))
-		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
+		return FALSE
+	if(!HAS_TRAIT_FROM(user.client, TRAIT_AI_ACCESS, ADMIN_TRAIT)) // Do they have it enabled?
+		return FALSE
 	return TRUE
 
 /**
@@ -351,26 +340,26 @@
  * Automatic logging and uses poll_candidates_for_mob, how convenient
  */
 /proc/offer_control(mob/M)
+	if(isdead(M))
+		to_chat(usr, "You can't give ghosts control of a ghost. They're already ghosts.")
+		return FALSE
+
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
-	var/poll_message = "Do you want to play as [span_danger(M.real_name)]?"
-	if(M.mind)
-		poll_message = "[poll_message] Job: [span_notice(M.mind.assigned_role.title)]."
-		if(M.mind.special_role)
-			poll_message = "[poll_message] Status: [span_boldnotice(M.mind.special_role)]."
-		else
-			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
-			if(A)
-				poll_message = "[poll_message] Status: [span_boldnotice(A.name)]."
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
+	var/whomst = span_danger(M.real_name)
+	if(M.mind && !is_unassigned_job(M.mind?.assigned_role))
+		whomst += "Job: [span_notice(M.mind.assigned_role.title)]."
+	if(length(M.mind?.get_special_roles()))
+		whomst += "Status: [span_boldnotice(english_list(M.mind?.get_special_roles()))]."
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [whomst]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, checked_target = M, alert_pic = M, role_name_text = "ghost control")
 
 	if(chosen_one)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = chosen_one.key
+		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
@@ -393,15 +382,6 @@
 	return !HAS_TRAIT(src, TRAIT_DEAF)
 
 /**
- * Examine text for traits shared by multiple types.
- *
- * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
- */
-/mob/proc/common_trait_examine()
-	if(HAS_TRAIT(src,TRAIT_HUSK))
-		. += span_warning("This body has been reduced to a grotesque husk.")
-
-/**
  * Get the list of keywords for policy config
  *
  * This gets the type, mind assigned roles and antag datums as a list, these are later used
@@ -410,17 +390,21 @@
 /mob/proc/get_policy_keywords()
 	. = list()
 	. += "[type]"
-	if(mind)
-		if(mind.assigned_role.policy_index)
-			. += mind.assigned_role.policy_index
-		. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
-		. += mind.special_role //In case there's something special leftover, try to avoid
-		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
-			. += "[antag_datum.type]"
+	if(isnull(mind))
+		return
+	if(mind.assigned_role.policy_index)
+		. += mind.assigned_role.policy_index
+	. += mind.assigned_role.title //A bit redunant, but both title and policy index are used
+	for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
+		. += "[antag_datum.type]"
+		if(antag_datum.pref_flag)
+			. += antag_datum.pref_flag
+		if(antag_datum.jobban_flag)
+			. += antag_datum.jobban_flag
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
+	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)
@@ -428,7 +412,7 @@
 
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
-	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
+	if(client?.combo_hud_enabled && (client?.prefs?.toggles & COMBOHUD_LIGHTING))
 		return LIGHTING_CUTOFF_FULLBRIGHT
 	return initial(lighting_cutoff)
 
@@ -559,7 +543,7 @@
 		recent_speech[spoken_memory] = splittext(say_log[spoken_memory], "\"", 1, 0, TRUE)[3]
 
 	var/list/raw_lines = list()
-	for (var/key as anything in recent_speech)
+	for (var/key in recent_speech)
 		raw_lines += recent_speech[key]
 
 	return raw_lines

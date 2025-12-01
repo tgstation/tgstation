@@ -3,7 +3,7 @@
 	name = "Bestow Cursed Duffel Bag"
 	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
 	button_icon_state = "duffelbag_curse"
-	sound = 'sound/magic/mm_hit.ogg'
+	sound = 'sound/effects/magic/mm_hit.ogg'
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 6 SECONDS

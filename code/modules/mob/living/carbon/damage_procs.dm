@@ -6,10 +6,11 @@
 	forced = FALSE,
 	spread_damage = FALSE,
 	wound_bonus = 0,
-	bare_wound_bonus = 0,
+	exposed_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
+	wound_clothing = TRUE,
 )
 	// Spread damage should always have def zone be null
 	if(spread_damage)
@@ -42,10 +43,11 @@
 	forced = FALSE,
 	spread_damage = FALSE,
 	wound_bonus = 0,
-	bare_wound_bonus = 0,
+	exposed_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
+	wound_clothing = TRUE,
 )
 
 	// Add relevant DR modifiers into blocked value to pass to parent
@@ -80,21 +82,50 @@
 	return final_mod
 
 //These procs fetch a cumulative total damage from all bodyparts
-/mob/living/carbon/getBruteLoss()
+/mob/living/carbon/get_brute_loss()
 	var/amount = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		amount += BP.brute_dam
-	return amount
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		amount += bodypart.brute_dam
+	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/getFireLoss()
+/mob/living/carbon/get_fire_loss()
 	var/amount = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		amount += BP.burn_dam
-	return amount
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		amount += bodypart.burn_dam
+	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+
+/**
+ * Returns the amount of bruteloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the bruteloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/get_brute_loss_for_type(required_bodytype = ALL)
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
+		amount += bodypart.brute_dam
+	return round(amount, DAMAGE_PRECISION)
+
+/**
+ * Returns the amount of fireloss across all bodyparts meeting the matching bodytype.
+ * Useful for if you would like to check the fireloss for only organic bodyparts, for example.
+ *
+ * Arguments:
+ * *  required_bodytype - The bodytype(s) to match against.
+ */
+/mob/living/carbon/proc/get_fire_loss_for_type(required_bodytype = ALL)
+	var/amount = 0
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(!(bodypart.bodytype & required_bodytype))
+			continue
+		amount += bodypart.burn_dam
+	return round(amount, DAMAGE_PRECISION)
+
+/mob/living/carbon/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
@@ -102,16 +133,16 @@
 	else
 		. = heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
-/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(!forced && (status_flags & GODMODE))
+/mob/living/carbon/set_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
-	var/current = getBruteLoss()
+	var/current = get_brute_loss()
 	var/diff = amount - current
 	if(!diff)
 		return FALSE
-	return adjustBruteLoss(diff, updating_health, forced, required_bodytype)
+	return adjust_brute_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
 	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
@@ -119,37 +150,38 @@
 	else
 		. = heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
-/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
-	if(!forced && (status_flags & GODMODE))
+/mob/living/carbon/set_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
-	var/current = getFireLoss()
+	var/current = get_fire_loss()
 	var/diff = amount - current
 	if(!diff)
 		return FALSE
-	return adjustFireLoss(diff, updating_health, forced, required_bodytype)
+	return adjust_fire_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
-	if(!can_adjust_tox_loss(amount, forced, required_biotype))
-		return 0
-	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
-			amount = min(amount, 0)
-		if(amount > 0)
-			blood_volume = max(blood_volume - (5*amount), 0)
-		else
-			blood_volume = max(blood_volume - amount, 0)
-	else if(!forced && HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
-		amount = min(amount, 0)
-	return ..()
-
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced, required_biotype = ALL)
+/mob/living/carbon/human/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	. = ..()
-	if(amount > 0)
-		stam_regen_start_time = world.time + STAMINA_REGEN_BLOCK_TIME
+	if(. >= 0) // 0 = no damage, + values = healed damage
+		return .
+
+	if(AT_TOXIN_VOMIT_THRESHOLD(src))
+		apply_status_effect(/datum/status_effect/tox_vomit)
+
+/mob/living/carbon/human/set_tox_loss(amount, updating_health, forced, required_biotype)
+	. = ..()
+	if(. >= 0)
+		return .
+
+	if(AT_TOXIN_VOMIT_THRESHOLD(src))
+		apply_status_effect(/datum/status_effect/tox_vomit)
+
+/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
+	. = ..()
+	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**
- * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
+ * If an organ exists in the slot requested, and we are capable of taking damage (we don't have TRAIT_GODMODE), call the damage proc on that organ.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
@@ -159,17 +191,17 @@
  *
  * Returns: The net change in damage from apply_organ_damage()
  */
-/mob/living/carbon/adjustOrganLoss(slot, amount, maximum, required_organ_flag = NONE)
+/mob/living/carbon/adjust_organ_loss(slot, amount, maximum, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(!affected_organ || (status_flags & GODMODE))
+	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return FALSE
 	return affected_organ.apply_organ_damage(amount, maximum)
 
 /**
- * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
- * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+ * If an organ exists in the slot requested, and we are capable of taking damage (we don't have TRAIT_GODMODE), call the set damage proc on that organ, which can
+ * set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjust_organ_loss.
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
@@ -178,9 +210,9 @@
  *
  * Returns: The net change in damage from set_organ_damage()
  */
-/mob/living/carbon/setOrganLoss(slot, amount, required_organ_flag = NONE)
+/mob/living/carbon/set_organ_loss(slot, amount, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
-	if(!affected_organ || (status_flags & GODMODE))
+	if(!affected_organ || HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
 		return FALSE
@@ -193,10 +225,13 @@
  *
  * Arguments:
  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+ * * required_organ_flag - if you only want to check the damage of organs with the specified organ_flag(s) then you can use this.
  */
-/mob/living/carbon/get_organ_loss(slot)
+/mob/living/carbon/get_organ_loss(slot, required_organ_flag = NONE)
 	var/obj/item/organ/affected_organ = get_organ_slot(slot)
 	if(affected_organ)
+		if(required_organ_flag && !(affected_organ.organ_flags & required_organ_flag))
+			return
 		return affected_organ.damage
 
 ////////////////////////////////////////////
@@ -264,9 +299,9 @@
  *
  * It automatically updates health status
  */
-/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
+/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, updating_health = TRUE, required_bodytype, check_armor = FALSE, wound_bonus = 0, exposed_wound_bonus = 0, sharpness = NONE)
 	. = FALSE
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_bodytype)
 	if(!parts.len)
@@ -274,7 +309,7 @@
 
 	var/obj/item/bodypart/picked = pick(parts)
 	var/damage_calculator = picked.get_damage()
-	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness))
+	if(picked.receive_damage(abs(brute), abs(burn), check_armor ? run_armor_check(picked, (brute ? MELEE : burn ? FIRE : null)) : FALSE, wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, sharpness = sharpness))
 		update_damage_overlays()
 	return (damage_calculator - picked.get_damage())
 
@@ -313,7 +348,7 @@
 
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, forced = FALSE, required_bodytype)
 	. = FALSE
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	// treat negative args as positive
 	brute = abs(brute)

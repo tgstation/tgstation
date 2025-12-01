@@ -46,9 +46,7 @@
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
 	if(start)
-		//We're registering here because I need to check whether we start active or not, and this is just easier
-		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
-		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
+		enable()
 
 /datum/component/plumbing/RegisterWithParent()
 	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(disable))
@@ -60,7 +58,7 @@
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
-	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
+	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER))
 	REMOVE_TRAIT(parent, TRAIT_UNDERFLOOR, REF(src))
 
 /datum/component/plumbing/Destroy()
@@ -94,7 +92,7 @@
 	process_request(dir = dir)
 
 ///check who can give us what we want, and how many each of them will give us
-/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir)
+/datum/component/plumbing/proc/process_request(amount = MACHINE_REAGENT_TRANSFER, reagent, dir, round_robin = TRUE)
 	//find the duct to take from
 	var/datum/ductnet/net
 	if(!ducts.Find(num2text(dir)))
@@ -115,12 +113,14 @@
 	var/target_volume = reagents.total_volume + amount
 	for(var/datum/component/plumbing/give as anything in valid_suppliers)
 		currentRequest = (target_volume - reagents.total_volume) / suppliersLeft
-		give.transfer_to(src, currentRequest, reagent, net)
+		give.transfer_to(src, currentRequest, reagent, net, round_robin)
 		suppliersLeft--
 	return TRUE
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
+	SHOULD_BE_PURE(TRUE)
+
 	if(amount <= 0)
 		return
 
@@ -134,11 +134,11 @@
 	return FALSE
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, round_robin = TRUE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 
-	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent)
+	reagents.trans_to(target.recipient_reagents_holder, amount, target_id = reagent, methods = round_robin ? LINEAR : NONE)
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
@@ -186,8 +186,8 @@
 			overlay.dir = direction
 
 		overlay.color = color
-		overlay.pixel_x = duct_x
-		overlay.pixel_y = duct_y
+		overlay.pixel_w = duct_x
+		overlay.pixel_z = duct_y
 
 		overlays += overlay
 
@@ -196,8 +196,8 @@
 			var/image/edge_overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "edge-extension", layer = duct_layer)
 			edge_overlay.dir = parent_movable.dir
 			edge_overlay.color = color
-			edge_overlay.pixel_x = -parent_movable.pixel_x - parent_movable.pixel_w
-			edge_overlay.pixel_y = -parent_movable.pixel_y - parent_movable.pixel_z
+			edge_overlay.pixel_w = -parent_movable.pixel_x - parent_movable.pixel_w
+			edge_overlay.pixel_z = -parent_movable.pixel_y - parent_movable.pixel_z
 			overlays += edge_overlay
 			// only show extension for the first pipe. This means we'll only reflect that color.
 			extension_handled = TRUE
@@ -231,10 +231,8 @@
 			duct.update_appearance()
 
 ///settle wherever we are, and start behaving like a piece of plumbing
-/datum/component/plumbing/proc/enable(obj/object, datum/component/component)
-	SIGNAL_HANDLER
-	if(active || (component && component != src))
-		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
+/datum/component/plumbing/proc/enable()
+	if(active)
 		return
 
 	update_dir()
@@ -246,6 +244,8 @@
 	// Machines disable when they get moved
 	for(var/obj/machinery/duct/duct in parent_movable.loc)
 		if(duct.anchored && (duct.duct_layer & ducting_layer))
+			log_mapping("[duct.name] was found at [AREACOORD(parent_movable)] spawning on top of [parent_movable.name], \
+				which should not occur as it takes ducts itself!")
 			duct.disconnect_duct()
 
 	if(demand_connects)
@@ -302,7 +302,7 @@
 		demand_connects = new_demand_connects
 		supply_connects = new_supply_connects
 
-///Give the direction of a pipe, and it'll return wich direction it originally was when it's object pointed SOUTH
+///Give the direction of a pipe, and it'll return wich direction it originally was when its object pointed SOUTH
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/parent_movable = parent
 	return turn(dir, dir2angle(parent_movable.dir) - 180)
@@ -335,7 +335,7 @@
 		tile_covered = should_hide
 		parent_obj.update_appearance()
 
-/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
+/datum/component/plumbing/proc/change_ducting_layer(obj/source, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
 	SIGNAL_HANDLER
 	ducting_layer = new_layer
 
@@ -343,7 +343,7 @@
 	parent_movable.update_appearance()
 
 	if(changer)
-		playsound(changer, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)
@@ -375,51 +375,4 @@
 		return
 
 	// Defer to later frame because pixel_* is actually updated after all callbacks
-	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 1)
-
-///has one pipe input that only takes, example is manual output pipe
-/datum/component/plumbing/simple_demand
-	demand_connects = SOUTH
-
-///has one pipe output that only supplies. example is liquid pump and manual input pipe
-/datum/component/plumbing/simple_supply
-	supply_connects = SOUTH
-
-///input and output, like a holding tank
-/datum/component/plumbing/tank
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/manifold
-	demand_connects = NORTH
-	supply_connects = SOUTH
-
-/datum/component/plumbing/iv_drip
-	demand_connects = SOUTH
-	supply_connects = NORTH
-
-/datum/component/plumbing/manifold/change_ducting_layer(obj/caller, obj/changer, new_layer)
-	return
-
-#define READY 2
-///Baby component for the buffer plumbing machine
-/datum/component/plumbing/buffer
-	demand_connects = WEST
-	supply_connects = EAST
-
-/datum/component/plumbing/buffer/Initialize(start=TRUE, _turn_connects=TRUE, _ducting_layer, datum/reagents/custom_receiver)
-	if(!istype(parent, /obj/machinery/plumbing/buffer))
-		return COMPONENT_INCOMPATIBLE
-
-	return ..()
-
-/datum/component/plumbing/buffer/can_give(amount, reagent, datum/ductnet/net)
-	var/obj/machinery/plumbing/buffer/buffer = parent
-	return (buffer.mode == READY) ? ..() : FALSE
-
-#undef READY
-
-///Lazily demand from any direction. Overlays won't look good, and the aquarium sprite occupies about the entire 32x32 area anyway.
-/datum/component/plumbing/aquarium
-	demand_connects = SOUTH|NORTH|EAST|WEST
-	use_overlays = FALSE
+	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 0.1 SECONDS)

@@ -38,28 +38,6 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	name = "lock heretic sacrifice landmark"
 	for_heretic_path = PATH_LOCK
 
-// A fluff signpost object that doesn't teleport you somewhere when you touch it.
-/obj/structure/no_effect_signpost
-	name = "signpost"
-	desc = "Won't somebody give me a sign?"
-	icon = 'icons/obj/fluff/general.dmi'
-	icon_state = "signpost"
-	anchored = TRUE
-	density = TRUE
-
-/obj/structure/no_effect_signpost/void
-	name = "signpost at the edge of the universe"
-	desc = "A direction in the directionless void."
-	density = FALSE
-	/// Brightness of the signpost.
-	var/range = 2
-	/// Light power of the signpost.
-	var/power = 0.8
-
-/obj/structure/no_effect_signpost/void/Initialize(mapload)
-	. = ..()
-	set_light(range, power)
-
 // Some VERY dim lights, used for the void sacrifice realm.
 /obj/machinery/light/very_dim
 	nightshift_allowed = FALSE
@@ -84,15 +62,14 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 /area/centcom/heretic_sacrifice
 	name = "Mansus"
 	icon_state = "heretic"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
-	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
+	area_flags = NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE | NO_BOH
 
 /area/centcom/heretic_sacrifice/Initialize(mapload)
 	if(!ambientsounds)
-		ambientsounds = GLOB.ambience_assoc[ambience_index]
-		ambientsounds += 'sound/ambience/ambiatm1.ogg'
+		ambientsounds = GLOB.ambience_assoc[ambience_index] + 'sound/ambience/misc/ambiatm1.ogg'
 	return ..()
 
 /area/centcom/heretic_sacrifice/ash //also, the default

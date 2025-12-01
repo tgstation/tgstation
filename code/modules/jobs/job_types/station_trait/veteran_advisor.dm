@@ -35,12 +35,21 @@
 	)
 	rpg_title = "Royal Advisor"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
-/datum/job/veteran_advisor/get_roundstart_spawn_point() //Spawning at Brig where Officers spawn
-	if (length(GLOB.start_landmarks_list["Security Officer"]))
-		return pick(GLOB.start_landmarks_list["Security Officer"])
-	return ..()
+/datum/job/veteran_advisor/get_default_roundstart_spawn_point()
+	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)
+		if(spawn_point.name != "Security Officer")
+			continue
+		. = spawn_point
+		if(spawn_point.used) //so we can revert to spawning them on top of eachother if something goes wrong
+			continue
+		spawn_point.used = TRUE
+		break
+	if(!.) // Try to fall back to "our" landmark
+		. = ..()
+	if(!.)
+		log_mapping("Job [title] ([type]) couldn't find a round start spawn point.")
 
 /datum/job/veteran_advisor/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -63,8 +72,8 @@
 
 	uniform = /obj/item/clothing/under/rank/security/officer/formal
 	head = /obj/item/clothing/head/soft/veteran
-	mask = /obj/item/clothing/mask/cigarette/cigar
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	mask = /obj/item/cigarette/cigar
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	belt = /obj/item/storage/belt/holster/detective/full/ert //M1911 pistol
 	ears = /obj/item/radio/headset/heads/hos/advisor
 	glasses = /obj/item/clothing/glasses/eyepatch
@@ -74,3 +83,4 @@
 	r_hand = /obj/item/cane
 
 	implants = list(/obj/item/implant/mindshield)
+	pda_slot = ITEM_SLOT_BACK

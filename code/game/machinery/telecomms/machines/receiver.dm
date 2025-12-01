@@ -30,7 +30,7 @@
 	if(!relay_information(signal_copy, /obj/machinery/telecomms/hub))
 		relay_information(signal_copy, /obj/machinery/telecomms/bus)
 
-	use_power(idle_power_usage)
+	use_energy(idle_power_usage)
 
 /**
  * Checks whether the signal can be received by this receiver or not, based on
@@ -57,7 +57,7 @@
 	id = "Receiver A"
 	network = "tcommsat"
 	autolinkers = list("receiverA") // link to relay
-	freq_listening = list(FREQ_SCIENCE, FREQ_MEDICAL, FREQ_SUPPLY, FREQ_SERVICE)
+	freq_listening = list(FREQ_SCIENCE, FREQ_MEDICAL, FREQ_SUPPLY, FREQ_SERVICE, FREQ_ENTERTAINMENT)
 
 
 //--PRESET RIGHT--//

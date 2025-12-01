@@ -3,7 +3,7 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
 	view_range = 7;
-	x_offset = 6
+	x_offset = 5
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
@@ -125,7 +125,9 @@
 	dir = 4;
 	name = "hunter shuttle";
 	rechargeTime = 1800;
-	shuttle_id = "huntership"
+	shuttle_id = "huntership";
+	port_direction = 2;
+	preferred_direction = 4
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Interpolship"

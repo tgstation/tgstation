@@ -1,5 +1,5 @@
 /// Makes sure only integer values are used when consuming, removing & checking for mats
-#define OPTIMAL_COST(cost)(max(1, round(cost)))
+#define OPTIMAL_COST(cost)(max(1, floor(cost)))
 
 /// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
 #define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))
@@ -31,7 +31,7 @@
  */
 /proc/amount2sheet(amt)
 	if(amt >= SHEET_MATERIAL_AMOUNT)
-		return round(amt / SHEET_MATERIAL_AMOUNT)
+		return floor(amt / SHEET_MATERIAL_AMOUNT)
 	return 0
 
 /**
@@ -46,9 +46,9 @@
 	return 0
 
 /**
- * Splits a stack. we don't use /obj/item/stack/proc/fast_split_stack because Byond complains that should only be called asynchronously.
+ * Splits a stack. we don't use /obj/item/stack/proc/split_stack because Byond complains that should only be called asynchronously.
  * This proc is also more faster because it doesn't deal with mobs, copying evidences or refreshing atom storages
- * Has special internal uses for e.g. by the material container
+ * Has special internal uses for e.g. by the material container & RPED
  *
  * Arguments:
  * - [target][obj/item/stack]: the stack to split
@@ -61,7 +61,7 @@
 	. = new target.type(target.drop_location(), amount, FALSE, target.mats_per_unit)
 
 /**
- * divides a list of materials uniformly among all contents of the target_object reccursively
+ * divides a list of materials uniformly among all contents of the target_object recursively
  * Used to set materials of printed items with their design cost by taking into consideration their already existing materials
  * e.g. if 12 iron is to be divided uniformly among 2 objects A, B who's current iron contents are 3 & 7
  * Then first we normalize those values i.e. find their weights to decide who gets an higher share of iron
@@ -81,7 +81,7 @@
 		target_object.set_custom_materials(custom_materials, multiplier)
 		return
 
-	//Step 1: Get reccursive contents of all objects, only filter obj cause that what's material container accepts
+	//Step 1: Get recursive contents of all objects, only filter obj cause that what's material container accepts
 	var/list/reccursive_contents = target_object.get_all_contents_type(/obj/item)
 
 	//Step 2: find the sum of each material type per object and record their amounts into an 2D list
@@ -89,7 +89,7 @@
 	var/list/material_map_amounts = list()
 	for(var/atom/object as anything in reccursive_contents)
 		var/list/item_materials = object.custom_materials
-		for(var/mat as anything in custom_materials)
+		for(var/mat in custom_materials)
 			var/mat_amount = 1 //no materials mean we assign this default amount
 			if(length(item_materials))
 				mat_amount = item_materials[mat] || 1 //if this object doesn't have our material type then assign a default value of 1
@@ -104,7 +104,7 @@
 				mat_list_per_item += mat_amount
 
 	//Step 3: normalize & scale material_map_amounts with material_map_sum
-	for(var/mat as anything in material_map_amounts)
+	for(var/mat in material_map_amounts)
 		var/mat_sum = material_map_sum[mat]
 		var/list/mat_per_item = material_map_amounts[mat]
 		for(var/i in 1 to mat_per_item.len)
@@ -114,7 +114,7 @@
 	var/index = 1
 	for(var/atom/object as anything in reccursive_contents)
 		var/list/final_material_list = list()
-		for(var/mat as anything in material_map_amounts)
+		for(var/mat in material_map_amounts)
 			var/list/mat_per_item = material_map_amounts[mat]
 			final_material_list[mat] = mat_per_item[index]
 		object.set_custom_materials(final_material_list, multiplier)

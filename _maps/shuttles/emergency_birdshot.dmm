@@ -9,9 +9,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
 "aQ" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/plastitanium/red,
@@ -43,10 +40,6 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"cr" = (
-/obj/effect/decal/cleanable/oil/streak,
-/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "cX" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -99,7 +92,7 @@
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/clothing/mask/cigarette/dromedary{
+/obj/item/cigarette/dromedary{
 	pixel_x = 8;
 	pixel_y = 15
 	},
@@ -115,6 +108,14 @@
 	},
 /obj/effect/decal/cleanable/leaper_sludge,
 /turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"fl" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "fn" = (
 /obj/structure/table,
@@ -196,14 +197,6 @@
 "ig" = (
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
-"iD" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/spawner/random/structure/crate,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "iU" = (
 /obj/effect/decal/cleanable/insectguts,
 /turf/open/floor/mineral/titanium/tiled,
@@ -221,7 +214,7 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/machinery/light/small/built/directional/north,
+/obj/machinery/light/small/empty/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "kZ" = (
@@ -235,7 +228,8 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	name = "birdshot emergency shuttle"
+	name = "birdshot emergency shuttle";
+	port_direction = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -253,23 +247,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"lI" = (
-/obj/effect/mapping_helpers/broken_floor,
-/obj/structure/table,
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = -4
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
 "lN" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"lO" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "mp" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
@@ -287,7 +273,7 @@
 "mU" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "no" = (
 /obj/item/trash/popcorn/caramel,
 /turf/open/floor/mineral/titanium,
@@ -306,14 +292,6 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/shuttle/escape)
-"oC" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/robot_debris,
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "oL" = (
 /obj/machinery/computer/records/security{
@@ -360,7 +338,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/item/reagent_containers/syringe/contraband{
 	pixel_x = -4;
 	pixel_y = -16
@@ -497,6 +475,18 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
+"xn" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/table,
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = -4
+	},
+/obj/item/rag{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
 "xo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -552,7 +542,7 @@
 /obj/structure/lattice,
 /obj/item/stack/rods/two,
 /turf/template_noop,
-/area/template_noop)
+/area/shuttle/escape)
 "Ay" = (
 /obj/item/shard{
 	pixel_y = 19
@@ -697,7 +687,7 @@
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Id" = (
@@ -712,6 +702,14 @@
 	},
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Ip" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/xeno,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "Iv" = (
 /obj/item/restraints/handcuffs/cable,
@@ -751,7 +749,7 @@
 /area/shuttle/escape)
 "Ko" = (
 /obj/structure/table/optable,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/mask/surgical,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/mineral/titanium/white,
@@ -887,14 +885,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
-"Uh" = (
-/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/xenoblood,
-/turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
 "UG" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -906,14 +896,14 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/bodypart/arm/left/moth,
 /obj/item/bodypart/arm/left/moth,
-/obj/item/organ/external/tail/lizard,
+/obj/item/organ/tail/lizard,
 /obj/item/bodypart/leg/right/digitigrade,
 /obj/item/bodypart/leg/right/digitigrade,
 /obj/item/bodypart/leg/left/fly,
 /obj/item/bodypart/leg/left/fly,
 /obj/item/bodypart/arm/right,
 /obj/item/bodypart/arm/right,
-/obj/item/organ/external/tail/cat,
+/obj/item/organ/tail/cat,
 /obj/effect/turf_decal/stripes/white/end{
 	dir = 1
 	},
@@ -971,6 +961,14 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Yv" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 "ZA" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/mineral/titanium/white,
@@ -1001,24 +999,24 @@ nQ
 nQ
 nQ
 nQ
-ax
-LX
-rZ
-LX
-ax
-nQ
-nQ
-nQ
-ax
-rZ
 LX
 LX
 rZ
 LX
 LX
+nQ
+nQ
+nQ
+LX
+rZ
 LX
 LX
-ax
+rZ
+LX
+LX
+LX
+LX
+LX
 nQ
 "}
 (2,1,1) = {"
@@ -1030,7 +1028,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 LX
 LX
 ON
@@ -1058,7 +1056,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 rZ
 rZ
 LX
@@ -1086,7 +1084,7 @@ vk
 (4,1,1) = {"
 nQ
 nQ
-ax
+LX
 LX
 LX
 LX
@@ -1104,7 +1102,7 @@ dM
 dM
 hF
 yn
-iD
+Yv
 gz
 fG
 LX
@@ -1158,7 +1156,7 @@ LX
 Ve
 pj
 Bm
-lI
+xn
 by
 LX
 rZ
@@ -1185,13 +1183,13 @@ ye
 LX
 mU
 nQ
-ax
+LX
 LX
 LX
 hF
 LX
 LX
-ax
+LX
 nQ
 nQ
 mU
@@ -1200,9 +1198,9 @@ hF
 LX
 rZ
 LX
-ax
+LX
 nQ
-ax
+LX
 LX
 nQ
 nQ
@@ -1229,7 +1227,7 @@ mU
 mp
 ig
 Kh
-Uh
+Ip
 mU
 nQ
 nQ
@@ -1250,8 +1248,8 @@ nQ
 nQ
 mU
 IN
-cr
-oC
+lO
+fl
 mU
 nQ
 nQ
@@ -1309,13 +1307,13 @@ eR
 LX
 mU
 nQ
-ax
+LX
 LX
 LX
 hF
 LX
 LX
-ax
+LX
 nQ
 nQ
 mU
@@ -1324,7 +1322,7 @@ hF
 LX
 rZ
 LX
-ax
+LX
 nQ
 bo
 mU
@@ -1396,7 +1394,7 @@ ST
 (14,1,1) = {"
 nQ
 nQ
-ax
+LX
 LX
 LX
 LX
@@ -1430,7 +1428,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 rZ
 rZ
 LX
@@ -1464,7 +1462,7 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 LX
 LX
 dv
@@ -1497,15 +1495,15 @@ nQ
 nQ
 nQ
 nQ
-ax
+LX
 Xy
 rZ
 Xy
-ax
+LX
 nQ
 nQ
 nQ
-ax
+LX
 ll
 LX
 lp
@@ -1514,6 +1512,6 @@ LX
 rZ
 rZ
 rZ
-ax
+LX
 nQ
 "}

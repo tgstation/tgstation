@@ -5,6 +5,10 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+///This is a mob that is forcing us to say something, so we can use the mob typing the text for bans rather than the one speaking.
+#define MANNEQUIN_CONTROLLED "mannequin controlled"
+/// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
+#define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 #define SAY_MOD_VERB "say_mod_verb"
 
 //Message modes. Each one defines a radio channel, more or less.
@@ -44,7 +48,10 @@
 #define MODE_KEY_PUPPET "j"
 
 #define MODE_ALIEN "alientalk"
+#define MODE_KEY_ALIEN "a"
+
 #define MODE_HOLOPAD "holopad"
+#define MODE_KEY_HOLOPAD "h"
 
 #define MODE_CHANGELING "changeling"
 #define MODE_KEY_CHANGELING "g"
@@ -52,6 +59,9 @@
 
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
+
+/// Automatically playing a set of lines
+#define MODE_SEQUENTIAL "sequential"
 
 #define MODE_MAFIA "mafia"
 
@@ -75,8 +85,8 @@
 #define SPAN_CLOWN "clown"
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
-#define SPAN_HELIUM "small"
-
+#define SPAN_SMALL_VOICE "small"
+#define SPAN_SOAPBOX "soapbox"
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
 #define ITALICS (1<<0)
@@ -96,9 +106,9 @@
 #define MODE_RANGE_INTERCOM 1
 
 // A link given to ghost alice to follow bob
-#define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
-#define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
-#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+#define FOLLOW_LINK(alice, bob) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
+#define TURF_LINK(alice, turfy) "<a href=byond://?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
@@ -106,12 +116,31 @@
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
 #define MAX_PLAQUE_LEN 144
+#define MAX_LABEL_LEN 64
+#define MAX_DESC_LEN 280
+#define MAX_AAS_LENGTH 168
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)
 
 
+// Say mode message handling return flags, exist for readability.
+/// Say mode has handled the message.
+#define SAYMODE_MESSAGE_HANDLED (1<<0)
 
-//Used in visible_message_flags, audible_message_flags and runechat_flags
+// Used in visible_message_flags, audible_message_flags and runechat_flags
+/// Automatically applies emote related spans/fonts/formatting to the message
 #define EMOTE_MESSAGE (1<<0)
+/// By default, self_message will respect the visual / audible component of the message.
+/// Meaning that if the message is visual, and sourced from a blind mob, they will not see it.
+/// This flag skips that behavior, and will always show the self message to the mob.
+#define ALWAYS_SHOW_SELF_MESSAGE (1<<1)
+/// Applies emphasis formatting to the message.
+#define WITH_EMPHASIS_MESSAGE (1<<2)
+/// Blocks chat highlighting from being applied to the message sent to the self.
+#define BLOCK_SELF_HIGHLIGHT_MESSAGE (1<<3)
+
+///Defines for priorities for the bubble_icon_override comp
+#define BUBBLE_ICON_PRIORITY_ACCESSORY 2
+#define BUBBLE_ICON_PRIORITY_ORGAN 1

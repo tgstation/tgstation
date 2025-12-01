@@ -7,21 +7,17 @@
 	action_cooldown = 2 SECONDS
 
 /datum/ai_behavior/find_and_set/perform(seconds_per_tick, datum/ai_controller/controller, set_key, locate_path, search_range)
-	. = ..()
 	if (controller.blackboard_key_exists(set_key))
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	if(QDELETED(controller.pawn))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
 	if(isnull(find_this_thing))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	controller.set_blackboard_key(set_key, find_this_thing)
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range = 3)
 	return locate(locate_path) in oview(search_range, controller.pawn)
 
 /**
@@ -38,23 +34,42 @@
 /**
  * Variant of find and set that also requires the item to be edible. checks hands too
  */
-/datum/ai_behavior/find_and_set/edible
+/datum/ai_behavior/find_and_set/food_or_drink
+	var/force_find_drinks = FALSE
 
-/datum/ai_behavior/find_and_set/edible/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/food_or_drink/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
-	var/list/food_candidates = list()
-	for(var/held_candidate as anything in living_pawn.held_items)
-		if(!held_candidate || !IsEdible(held_candidate))
-			continue
-		food_candidates += held_candidate
+	var/find_drinks = force_find_drinks || controller.blackboard[BB_IGNORE_DRINKS] || FALSE
 
-	var/list/local_results = locate(locate_path) in oview(search_range, controller.pawn)
-	for(var/local_candidate in local_results)
-		if(!IsEdible(local_candidate))
-			continue
-		food_candidates += local_candidate
-	if(food_candidates.len)
-		return pick(food_candidates)
+	for(var/atom/held_candidate in living_pawn.held_items)
+		if(is_food_or_drink(controller, held_candidate, find_drinks))
+			return held_candidate
+
+	for(var/atom/local_candidate in oview(search_range, controller.pawn))
+		if(is_food_or_drink(controller, local_candidate, find_drinks) && istype(local_candidate, locate_path))
+			return local_candidate
+
+	return null
+
+/datum/ai_behavior/find_and_set/food_or_drink/proc/is_food_or_drink(datum/ai_controller/controller, obj/item/thing, find_drinks = FALSE)
+	return is_food(thing) || (find_drinks && is_drink(thing))
+
+/datum/ai_behavior/find_and_set/food_or_drink/proc/is_food(obj/item/thing)
+	if(IS_EDIBLE(thing))
+		return TRUE
+	if(istype(thing, /obj/item/reagent_containers/cup/bowl))
+		return thing.reagents.total_volume > 0
+	return FALSE
+
+/datum/ai_behavior/find_and_set/food_or_drink/proc/is_drink(obj/item/thing)
+	if(istype(thing, /obj/item/reagent_containers/cup/glass))
+		return thing.reagents.total_volume > 0
+	return FALSE
+
+/datum/ai_behavior/find_and_set/food_or_drink/to_eat
+
+/datum/ai_behavior/find_and_set/food_or_drink/to_serve
+	force_find_drinks = TRUE
 
 /**
  * Variant of find and set that only checks in hands, search range should be excluded for this
@@ -77,7 +92,7 @@
  */
 /datum/ai_behavior/find_and_set/in_list
 
-/datum/ai_behavior/find_and_set/in_list/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+/datum/ai_behavior/find_and_set/in_list/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	if(length(found))
 		return pick(found)
@@ -97,11 +112,11 @@
  */
 /datum/ai_behavior/find_and_set/animatable
 
-/datum/ai_behavior/find_and_set/animatable/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/animatable/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/nearby_items = list()
-	for (var/obj/new_friend as anything in oview(search_range, controller.pawn))
+	for (var/obj/new_friend in oview(search_range, controller.pawn))
 		if (!isitem(new_friend) && !isstructure(new_friend))
 			continue
 		if (is_type_in_list(new_friend, GLOB.animatable_blacklist))
@@ -118,7 +133,7 @@
  */
 /datum/ai_behavior/find_and_set/nearest_wall
 
-/datum/ai_behavior/find_and_set/nearest_wall/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/nearest_wall/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 
 	var/list/nearby_walls = list()
@@ -135,7 +150,7 @@
  */
 /datum/ai_behavior/find_and_set/friendly_corpses
 
-/datum/ai_behavior/find_and_set/friendly_corpses/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/friendly_corpses/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/nearby_bodies = list()
 	for (var/mob/living/dead_pal in oview(search_range, controller.pawn))
@@ -157,7 +172,7 @@
  */
 /datum/ai_behavior/find_and_set/conscious_person
 
-/datum/ai_behavior/find_and_set/conscious_person/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/conscious_person/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/list/customers = list()
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
 		if(IS_DEAD_OR_INCAP(target) || !target.mind)
@@ -172,7 +187,7 @@
 /datum/ai_behavior/find_and_set/nearby_friends
 	action_cooldown = 2 SECONDS
 
-/datum/ai_behavior/find_and_set/nearby_friends/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/nearby_friends/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
 	var/atom/friend = locate(/mob/living/carbon/human) in oview(search_range, controller.pawn)
 
 	if(isnull(friend))
@@ -181,3 +196,25 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/potential_friend = living_pawn.faction.Find(REF(friend)) ? friend : null
 	return potential_friend
+
+
+/datum/ai_behavior/find_and_set/in_list/turf_types
+
+/datum/ai_behavior/find_and_set/in_list/turf_types/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
+	var/list/found = RANGE_TURFS(search_range, controller.pawn)
+	shuffle_inplace(found)
+	for(var/turf/possible_turf as anything in found)
+		if(!is_type_in_typecache(possible_turf, locate_paths))
+			continue
+		if(can_see(controller.pawn, possible_turf, search_range))
+			return possible_turf
+	return null
+
+/datum/ai_behavior/find_and_set/in_list/closest_turf
+
+/datum/ai_behavior/find_and_set/in_list/closest_turf/search_tactic(datum/ai_controller/controller, locate_paths, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
+	var/list/found = RANGE_TURFS(search_range, controller.pawn)
+	for(var/turf/possible_turf as anything in found)
+		if(!is_type_in_typecache(possible_turf, locate_paths) || !can_see(controller.pawn, possible_turf, search_range))
+			found -= possible_turf
+	return (length(found)) ? get_closest_atom(/turf, found, controller.pawn) : null

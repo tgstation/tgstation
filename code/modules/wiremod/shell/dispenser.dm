@@ -18,10 +18,9 @@
 	var/list/obj/item/stored_items = list()
 	var/locked = FALSE
 
-/obj/structure/dispenser_bot/deconstruct(disassembled)
+/obj/structure/dispenser_bot/atom_deconstruct(disassembled = TRUE)
 	for(var/obj/item/stored_item as anything in stored_items)
 		remove_item(stored_item)
-	return ..()
 
 /obj/structure/dispenser_bot/Destroy()
 	QDEL_LIST(stored_items)
@@ -61,7 +60,7 @@
 		new /obj/item/circuit_component/dispenser_bot()
 	), SHELL_CAPACITY_LARGE)
 
-/obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
+/obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode)
 		return ..()
 	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))

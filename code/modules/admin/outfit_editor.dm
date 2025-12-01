@@ -24,7 +24,7 @@
 		drip.name = "New Outfit"
 
 /datum/outfit_editor/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_NONE)
 
 /datum/outfit_editor/ui_status(mob/user, datum/ui_state/state)
 	if(QDELETED(drip))
@@ -55,7 +55,7 @@
 			"name" = initial(item.name),
 			"desc" = initial(item.desc),
 			// at this point initializing the item is probably faster tbh
-			"sprite" = icon2base64(icon(initial(item.icon), initial(item.icon_state))),
+			"sprite" = icon2base64(icon(initial(item.icon), initial(item.icon_state), frame = 1)),
 		)
 
 	return data
@@ -78,7 +78,9 @@
 	var/icon/dummysprite = get_flat_human_icon(null,
 		dummy_key = dummy_key,
 		showDirs = list(SOUTH),
-		outfit_override = drip)
+		outfit_override = drip,
+		no_anim = TRUE,
+	)
 	data["dummy64"] = icon2base64(dummysprite)
 
 	return data
@@ -100,7 +102,7 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = tgui_input_text(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
+			var/newname = tgui_input_text(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME, max_length = MAX_NAME_LEN)
 			if(newname)
 				drip.name = newname
 		if("save")

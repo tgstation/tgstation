@@ -48,7 +48,7 @@
 	. = ..()
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
-/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
+/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/computer_disk))
 		var/obj/item/computer_disk/disk = item
 		eject_disk(user)
@@ -89,7 +89,7 @@
 	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
-		playsound(src, 'sound/machines/terminal_error.ogg', 25)
+		playsound(src, 'sound/machines/terminal/terminal_error.ogg', 25)
 
 /**
  * Checks a specified tachyon record for fitting reactions, then returns a list with
@@ -207,10 +207,10 @@
 /obj/machinery/doppler_array/proc/eject_disk(mob/user)
 	if(!inserted_disk)
 		return FALSE
-	if(user)
-		user.put_in_hands(inserted_disk)
-	else
+	if(!user || !Adjacent(user))
 		inserted_disk.forceMove(drop_location())
+	else
+		user.put_in_hands(inserted_disk)
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 	return TRUE
 
@@ -243,15 +243,13 @@
 
 /obj/machinery/doppler_array/Destroy()
 	inserted_disk = null
-	QDEL_NULL(records) //We only want the list nuked, not the contents.
-	. = ..()
+	records.Cut() // We only want to clear the list itself, not delete its contents.
+	return ..()
 
 /obj/machinery/doppler_array/proc/update_doppler_light()
 	SIGNAL_HANDLER
 	set_light_on(!(machine_stat & NOPOWER))
 
-/obj/machinery/doppler_array/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/doppler_array/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -292,7 +290,7 @@
 		data["records"] += list(record_data)
 	return data
 
-/obj/machinery/doppler_array/ui_act(action, list/params)
+/obj/machinery/doppler_array/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

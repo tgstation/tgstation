@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loops"
-	flags = SS_NO_INIT|SS_BACKGROUND|SS_TICKER
+	flags = SS_NO_INIT|SS_TICKER
 	wait = 1 //Fire each tick
 	/*
 		A breif aside about the bucketing system here
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(movement)
 		return // Still work to be done
 	var/bucket_time = bucket_info[MOVEMENT_BUCKET_TIME]
 	smash_bucket(1, bucket_time) // We assume we're the first bucket in the queue right now
-	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / wait, 1))
+	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / TICKS2DS(wait), 1))
 
 /// Removes a bucket from our system. You only need to pass in the time, but if you pass in the index of the list you save us some work
 /datum/controller/subsystem/movement/proc/smash_bucket(index, bucket_time)

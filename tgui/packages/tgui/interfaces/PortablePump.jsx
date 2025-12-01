@@ -1,5 +1,11 @@
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
@@ -26,8 +32,8 @@ export const PortablePump = (props) => {
             <Button
               content={
                 direction
-                  ? area_or_tank + ' → ' + pump_or_port
-                  : pump_or_port + ' → ' + area_or_tank
+                  ? `${area_or_tank} → ${pump_or_port}`
+                  : `${pump_or_port} → ${area_or_tank}`
               }
               color={!direction && !holding ? 'caution' : null}
               onClick={() => act('direction')}
@@ -43,7 +49,7 @@ export const PortablePump = (props) => {
                 minValue={minPressure}
                 maxValue={maxPressure}
                 step={10}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('pressure', {
                     pressure: value,
                   })

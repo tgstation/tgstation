@@ -23,24 +23,26 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
+	mind_traits = list(SECURITY_MIND_TRAITS)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 
 	mail_goodies = list(
 		/obj/item/storage/fancy/cigarettes = 25,
-		/obj/item/ammo_box/c38 = 25,
-		/obj/item/ammo_box/c38/dumdum = 5,
-		/obj/item/ammo_box/c38/hotshot = 5,
-		/obj/item/ammo_box/c38/iceblox = 5,
-		/obj/item/ammo_box/c38/match = 5,
-		/obj/item/ammo_box/c38/trac = 5,
-		/obj/item/storage/belt/holster/detective/full = 1
+		/obj/item/ammo_box/speedloader/c38 = 20,
+		/obj/item/ammo_box/speedloader/c38/dumdum = 5,
+		/obj/item/ammo_box/speedloader/c38/hotshot = 5,
+		/obj/item/ammo_box/speedloader/c38/iceblox = 5,
+		/obj/item/ammo_box/speedloader/c38/match = 5,
+		/obj/item/ammo_box/speedloader/c38/trac = 5,
+		/obj/item/card/id/advanced/plainclothes = 5,
+		/obj/item/storage/belt/holster/detective/full = 1,
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
-	job_flags = STATION_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 	job_tone = "objection"
 
@@ -49,9 +51,11 @@
 	name = "Detective"
 	jobtype = /datum/job/detective
 
+	id = /obj/item/card/id/advanced/plainclothes
+
 	id_trim = /datum/id_trim/job/detective
 	uniform = /obj/item/clothing/under/rank/security/detective
-	suit = /obj/item/clothing/suit/jacket/det_suit
+	suit = /obj/item/clothing/suit/toggle/jacket/det_trench
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
 		/obj/item/melee/baton = 1,
@@ -61,7 +65,7 @@
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
-	mask = /obj/item/clothing/mask/cigarette
+	mask = /obj/item/cigarette
 	neck = /obj/item/clothing/neck/tie/detective
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_pocket = /obj/item/toy/crayon/white
@@ -73,17 +77,19 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visualsOnly = FALSE)
+	skillchips = list(/obj/item/skillchip/job/detectives_taste)
+
+/datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visuals_only = FALSE)
 	. = ..()
 	if (human.age < AGE_MINOR)
-		mask = /obj/item/clothing/mask/cigarette/candy
+		mask = /obj/item/cigarette/candy
 		head = /obj/item/clothing/head/fedora/det_hat/minor
 
-/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
-	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
+	var/obj/item/cigarette/cig = H.wear_mask
 	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
 		cig.light("")
 
-	if(visualsOnly)
+	if(visuals_only)
 		return

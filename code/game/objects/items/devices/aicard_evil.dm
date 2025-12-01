@@ -35,7 +35,7 @@
 		balloon_alert(user, "invalid access!")
 		return
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
-		check_jobban = ROLE_OPERATIVE,
+		check_jobban = list(ROLE_OPERATIVE, JOB_AI),
 		poll_time = 20 SECONDS,
 		checked_target = src,
 		ignore_category = POLL_IGNORE_SYNDICATE,
@@ -47,26 +47,31 @@
 
 /// Poll has concluded with a ghost, create the AI
 /obj/item/aicard/syndie/loaded/proc/on_poll_concluded(mob/user, datum/antagonist/nukeop/op_datum, mob/dead/observer/ghost)
-	if(isnull(ghost))
+	if(!ismob(ghost))
 		to_chat(user, span_warning("Unable to connect to S.E.L.F. dispatch. Please wait and try again later or use the intelliCard on your uplink to get your points refunded."))
 		return
 
 	// pick ghost, create AI and transfer
-	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(get_turf(src), new /datum/ai_laws/syndicate_override, ghost)
+	var/mob/living/silicon/ai/weak_syndie/new_ai = new /mob/living/silicon/ai/weak_syndie(null, new /datum/ai_laws/syndicate_override, ghost)
 	// create and apply syndie datum
 	var/datum/antagonist/nukeop/nuke_datum = new()
 	nuke_datum.send_to_spawnpoint = FALSE
 	new_ai.mind.add_antag_datum(nuke_datum, op_datum.nuke_team)
-	new_ai.mind.special_role = "Syndicate AI"
+	LAZYADD(new_ai.mind.special_roles, "Syndicate AI")
 	new_ai.faction |= ROLE_SYNDICATE
 	// Make it look evil!!!
 	new_ai.hologram_appearance = mutable_appearance('icons/mob/silicon/ai.dmi',"xeno_queen") //good enough
 	new_ai.icon_state = resolve_ai_icon("hades")
+	// Hide PDA from messenger
+	var/datum/computer_file/program/messenger/msg = locate() in new_ai.modularInterface.stored_files
+	if(msg)
+		msg.invisible = TRUE
+
 	// Transfer the AI from the core we created into the card, then delete the core
 	capture_ai(new_ai, user)
 	var/obj/structure/ai_core/deactivated/detritus = locate() in get_turf(src)
 	qdel(detritus)
-	AI.control_disabled = FALSE
+	AI.set_control_disabled(FALSE)
 	AI.radio_enabled = TRUE
 	do_sparks(4, TRUE, src)
 	playsound(src, 'sound/machines/chime.ogg', 25, TRUE)
@@ -90,20 +95,20 @@
 	max_capacity = 1000
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/A, mob/living/user, params)
+/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/silicon/ai/AI
-	if(isAI(A))
-		AI = A
+	if(isAI(target))
+		AI = target
 	else
-		AI = locate() in A
+		AI = locate() in target
 	if(!AI || AI.interaction_range == INFINITY)
-		playsound(src,'sound/machines/buzz-sigh.ogg',50,FALSE)
+		playsound(src,'sound/machines/buzz/buzz-sigh.ogg',50,FALSE)
 		to_chat(user, span_notice("Error! Incompatible object!"))
 		return ..()
 	AI.interaction_range += 2
 	if(AI.interaction_range > 7)
 		AI.interaction_range = INFINITY
-	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 	to_chat(user, span_notice("You insert [src] into [AI]'s compartment, and it beeps as it processes the data."))
 	to_chat(AI, span_notice("You process [src], and find yourself able to manipulate electronics from up to [AI.interaction_range] meters!"))
 	qdel(src)

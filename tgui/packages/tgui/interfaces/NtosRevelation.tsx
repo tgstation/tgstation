@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { Button, LabeledList, Section } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -18,8 +18,8 @@ export const NtosRevelation = (props) => {
         <Section>
           <Button.Input
             fluid
-            content="Obfuscate Name..."
-            onCommit={(_, value) =>
+            buttonText="Obfuscate Name..."
+            onCommit={(value) =>
               act('PRG_obfuscate', {
                 new_name: value,
               })

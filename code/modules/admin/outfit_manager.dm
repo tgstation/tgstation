@@ -1,24 +1,11 @@
-/client/proc/outfit_manager()
-	set category = "Debug"
-	set name = "Outfit Manager"
-
-	if(!check_rights(R_DEBUG))
-		return
-	var/datum/outfit_manager/ui = new(usr)
-	ui.ui_interact(usr)
-
+ADMIN_VERB(outfit_manager, R_DEBUG|R_ADMIN, "Outfit Manager", "View and edit outfits.", ADMIN_CATEGORY_DEBUG)
+	var/static/datum/outfit_manager/ui = new
+	ui.ui_interact(user.mob)
 
 /datum/outfit_manager
-	var/client/owner
-
-/datum/outfit_manager/New(user)
-	owner = CLIENT_FROM_VAR(user)
 
 /datum/outfit_manager/ui_state(mob/user)
-	return GLOB.admin_state
-
-/datum/outfit_manager/ui_close(mob/user)
-	qdel(src)
+	return ADMIN_STATE(R_DEBUG | R_ADMIN)
 
 /datum/outfit_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -53,24 +40,24 @@
 
 	switch(action)
 		if("new")
-			owner.open_outfit_editor(new /datum/outfit)
+			ui.user.client.open_outfit_editor(new /datum/outfit)
 		if("load")
-			owner.holder.load_outfit(owner.mob)
+			ui.user.client.holder.load_outfit(ui.user)
 		if("copy")
-			var/datum/outfit/outfit = tgui_input_list(owner, "Pick an outfit to copy from", "Outfit Manager", subtypesof(/datum/outfit))
+			var/datum/outfit/outfit = tgui_input_list(ui.user, "Pick an outfit to copy from", "Outfit Manager", subtypesof(/datum/outfit))
 			if(isnull(outfit))
 				return
 			if(!ispath(outfit))
 				return
-			owner.open_outfit_editor(new outfit)
+			ui.user.client.open_outfit_editor(new outfit)
 
 	var/datum/outfit/target_outfit = locate(params["outfit"])
 	if(!istype(target_outfit))
 		return
 	switch(action) //wow we're switching through action again this is horrible optimization smh
 		if("edit")
-			owner.open_outfit_editor(target_outfit)
+			ui.user.client.open_outfit_editor(target_outfit)
 		if("save")
-			owner.holder.save_outfit(owner.mob, target_outfit)
+			ui.user.client.holder.save_outfit(ui.user, target_outfit)
 		if("delete")
-			owner.holder.delete_outfit(owner.mob, target_outfit)
+			ui.user.client.holder.delete_outfit(ui.user, target_outfit)

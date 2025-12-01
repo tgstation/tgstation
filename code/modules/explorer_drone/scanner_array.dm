@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	. = ..()
 	.["all_bands"] = GLOB.exoscanner_bands
 
-/obj/machinery/computer/exoscanner_control/ui_act(action, list/params)
+/obj/machinery/computer/exoscanner_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -175,17 +175,14 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	var/datum/exoscan/scan = GLOB.exoscanner_controller.create_scan(scan_type,target)
 	if(scan)
 		RegisterSignal(scan, COMSIG_EXOSCAN_INTERRUPTED, PROC_REF(scan_failed))
+	playsound(src, 'sound/machines/terminal/terminal_processing.ogg', 20, vary = TRUE)
 
 /obj/machinery/computer/exoscanner_control/proc/scan_failed()
 	SIGNAL_HANDLER
 	failed_popup = TRUE
 	SStgui.update_uis(src)
 
-/obj/machinery/computer/exoscanner_control/Initialize(mapload)
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/computer/exoscanner_control/LateInitialize()
+/obj/machinery/computer/exoscanner_control/post_machine_initialize()
 	. = ..()
 	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/exploration_scan), \
@@ -205,7 +202,6 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	. = ..()
 	RegisterSignals(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED), PROC_REF(scan_change))
 	update_readiness()
-	RefreshParts()
 
 /obj/machinery/exoscanner/RefreshParts()
 	. = ..()

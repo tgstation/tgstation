@@ -1,9 +1,8 @@
-import { multiline } from 'common/string';
+import { Box, Button } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Button } from '../../components';
 import { useCompact } from './hooks';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function PodLaunch(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -17,7 +16,7 @@ export function PodLaunch(props) {
       onClick={() => act('giveLauncher')}
       selected={giveLauncher}
       textAlign="center"
-      tooltip={multiline`
+      tooltip={`
         You should know what the
         Codex Astartes says about this`}
       tooltipPosition="top"

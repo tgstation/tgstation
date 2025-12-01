@@ -7,6 +7,8 @@
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = ""
+	/// Abstract root type
+	abstract_type = /obj/structure/statue
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
@@ -18,8 +20,8 @@
 	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
-	/// Abstract root type
-	var/abstract_type = /obj/structure/statue
+	/// Set to true to prevent it from being carved out of a block
+	var/uncarveable = FALSE
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
@@ -30,37 +32,63 @@
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/statue/attackby(obj/item/W, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(W.tool_behaviour == TOOL_WELDER)
-			if(!W.tool_start_check(user, amount=1))
-				return FALSE
-			user.balloon_alert(user, "slicing apart...")
-			if(W.use_tool(src, user, 40, volume=50))
-				deconstruct(TRUE)
-			return
+	if(W.tool_behaviour == TOOL_WELDER)
+		if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
+			return FALSE
+		user.balloon_alert(user, "slicing apart...")
+		if(W.use_tool(src, user, 40, volume=50))
+			deconstruct(TRUE)
+		return
 	return ..()
 
-/obj/structure/statue/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
-/obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		var/amount_mod = disassembled ? 0 : -2
-		for(var/mat in custom_materials)
-			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
-			var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
-			if(amount > 0)
-				new custom_material.sheet_type(drop_location(), amount)
-	qdel(src)
+/obj/structure/statue/atom_deconstruct(disassembled = TRUE)
+	var/amount_mod = disassembled ? 0 : -2
+	for(var/mat in custom_materials)
+		var/datum/material/custom_material = GET_MATERIAL_REF(mat)
+		var/amount = max(0,round(custom_materials[mat]/SHEET_MATERIAL_AMOUNT) + amount_mod)
+		if(amount > 0)
+			new custom_material.sheet_type(drop_location(), amount)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
+
+/obj/structure/statue/drake
+	name = "drake statue"
+	desc = "Statue of a lesser drake. Its carved eye sockets glow slightly."
+	icon_state = "drake"
+	anchored = TRUE
+
+/obj/structure/statue/drake/Initialize(mapload)
+	. = ..()
+	if (prob(25))
+		icon_state = "drake_headless"
+		desc = "Statue of a lesser drake. Time has not been kind."
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/statue/drake/update_overlays()
+	. = ..()
+	if (icon_state == "drake")
+		. += emissive_appearance(icon, "drake_emissive", src)
+
+/obj/structure/statue/dragonman
+	name = "dragonman statue"
+	desc = "Statue of a draconic humanoid warrior. Its glittering eyes seem to follow you around the room."
+	icon_state = "dragonman"
+	anchored = TRUE
+
+/obj/structure/statue/dragonman/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/statue/dragonman/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "dragonman_emissive", src)
+
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
@@ -172,15 +200,15 @@
 	abstract_type = /obj/structure/statue/diamond
 
 /obj/structure/statue/diamond/captain
-	name = "statue of THE captain."
+	name = "statue of THE captain"
 	icon_state = "cap"
 
 /obj/structure/statue/diamond/ai1
-	name = "statue of the AI hologram."
+	name = "statue of the AI hologram"
 	icon_state = "ai1"
 
 /obj/structure/statue/diamond/ai2
-	name = "statue of the AI core."
+	name = "statue of the AI core"
 	icon_state = "ai2"
 
 ////////////////////////bananium///////////////////////////////////////
@@ -254,7 +282,7 @@
 	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
 	impressiveness = 100
-	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
+	uncarveable = TRUE
 
 ///////////Goliath//////////////////////////////////////////////////
 /obj/structure/statue/goliath
@@ -272,6 +300,7 @@
 	icon = 'icons/obj/art/statue.dmi'
 	icon_state = "chisel"
 	inhand_icon_state = "screwdriver_nuke"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -284,10 +313,10 @@
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75)
 	attack_verb_continuous = list("stabs")
 	attack_verb_simple = list("stab")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
-	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
-	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	usesound = list('sound/effects/pickaxe/picaxe1.ogg', 'sound/effects/pickaxe/picaxe2.ogg', 'sound/effects/pickaxe/picaxe3.ogg')
+	drop_sound = 'sound/items/handling/tools/screwdriver_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 3 // You're gonna have a bad time
@@ -317,12 +346,12 @@ Point with the chisel at the target to choose what to sculpt or hit block to cho
 Hit block again to start sculpting.
 Moving interrupts
 */
-/obj/item/chisel/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
+/obj/item/chisel/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(sculpting)
-		return TRUE
-	if(istype(target, /obj/structure/carving_block))
-		var/obj/structure/carving_block/sculpt_block = target
+		return ITEM_INTERACT_BLOCKING
+
+	if(istype(interacting_with, /obj/structure/carving_block))
+		var/obj/structure/carving_block/sculpt_block = interacting_with
 
 		if(sculpt_block.completion) // someone already started sculpting this so just finish
 			set_block(sculpt_block, user, silent = TRUE)
@@ -333,19 +362,20 @@ Moving interrupts
 			set_block(sculpt_block, user)
 		else if(sculpt_block == prepared_block)
 			show_generic_statues_prompt(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
 	else if(prepared_block) //We're aiming at something next to us with block prepared
-		prepared_block.set_target(target, user)
-		return TRUE
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 // We aim at something distant.
-/obj/item/chisel/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
-	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
-		prepared_block.set_target(target,user)
-
-	return . | AFTERATTACK_PROCESSED_ITEM
+/obj/item/chisel/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!sculpting && prepared_block && ismovable(interacting_with) && prepared_block.completion == 0)
+		prepared_block.set_target(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /// Starts or continues the sculpting action on the carving block material
 /obj/item/chisel/proc/start_sculpting(mob/living/user)
@@ -355,7 +385,7 @@ Moving interrupts
 	//How long whole process takes
 	var/sculpting_time = 30 SECONDS
 	//Single interruptible progress period
-	var/sculpting_period = round(sculpting_time / world.icon_size) //this is just so it reveals pixels line by line for each.
+	var/sculpting_period = round(sculpting_time / ICON_SIZE_Y) //this is just so it reveals pixels line by line for each.
 	var/interrupted = FALSE
 	var/remaining_time = sculpting_time - (prepared_block.completion * sculpting_time)
 
@@ -374,6 +404,10 @@ Moving interrupts
 	if(!interrupted && !QDELETED(prepared_block))
 		prepared_block.create_statue()
 		user.balloon_alert(user, "statue finished")
+		if(HAS_PERSONALITY(user, /datum/personality/creative))
+			user.add_mood_event("creative_sculpting", /datum/mood_event/creative_sculpting)
+		if(HAS_PERSONALITY(user, /datum/personality/unimaginative))
+			user.add_mood_event("unimaginative_sculpting", /datum/mood_event/unimaginative_sculpting)
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block
@@ -412,15 +446,16 @@ Moving interrupts
 	for(var/statue_path in prepared_block.get_possible_statues())
 		var/obj/structure/statue/abstract_statue = statue_path
 		choices[statue_path] = image(icon = initial(abstract_statue.icon), icon_state = initial(abstract_statue.icon_state))
+
 	if(!choices.len)
-		user.balloon_alert(user, "no abstract statues for material!")
+		user.balloon_alert(user, "no statues for material!")
 
 	var/choice = show_radial_menu(user, prepared_block, choices, require_near = TRUE)
 	if(choice)
 		prepared_block.current_preset_type = choice
 		var/image/chosen_looks = choices[choice]
 		prepared_block.current_target = chosen_looks.appearance
-		user.balloon_alert(user, "abstract statue selected")
+		user.balloon_alert(user, "statue selected")
 
 /obj/structure/carving_block
 	name = "block"
@@ -480,7 +515,7 @@ Moving interrupts
 		return FALSE
 	//No big icon things
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
-	if(icon_dimensions["width"] != world.icon_size || icon_dimensions["height"] != world.icon_size)
+	if(icon_dimensions["width"] != ICON_SIZE_X || icon_dimensions["height"] != ICON_SIZE_Y)
 		user.balloon_alert(user, "sculpt target is too big!")
 		return FALSE
 	return TRUE
@@ -516,7 +551,7 @@ Moving interrupts
 			remove_filter("partial_uncover")
 			target_appearance_with_filters = null
 		else
-			var/mask_offset = min(world.icon_size,round(completion * world.icon_size))
+			var/mask_offset = min(ICON_SIZE_Y,round(completion * ICON_SIZE_Y))
 			remove_filter("partial_uncover")
 			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
 			target_appearance_with_filters.filters = filter(type="alpha",icon=white,y=-mask_offset,flags=MASK_INVERSE)
@@ -541,11 +576,11 @@ Moving interrupts
 /obj/structure/carving_block/proc/build_statue_cost_table()
 	. = list()
 	for(var/statue_type in subtypesof(/obj/structure/statue) - /obj/structure/statue/custom)
-		var/obj/structure/statue/S = new statue_type()
-		if(!S.icon_state || S.abstract_type == S.type || !S.custom_materials)
+		var/obj/structure/statue/fake_statue = new statue_type()
+		if(!fake_statue.icon_state || fake_statue.abstract_type == fake_statue.type || fake_statue.uncarveable || !fake_statue.custom_materials)
 			continue
-		.[S.type] = S.custom_materials
-		qdel(S)
+		.[fake_statue.type] = fake_statue.custom_materials
+		qdel(fake_statue)
 
 /obj/structure/statue/custom
 	name = "custom statue"
@@ -564,31 +599,10 @@ Moving interrupts
 /obj/structure/statue/custom/proc/set_visuals(model_appearance)
 	if(content_ma)
 		QDEL_NULL(content_ma)
-	content_ma = new
-	content_ma.appearance = model_appearance
+	content_ma = copy_appearance_filter_overlays(model_appearance)
 	content_ma.pixel_x = 0
 	content_ma.pixel_y = 0
 	content_ma.alpha = 255
-
-	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
-
-	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
-	var/list/overlays_to_keep = list()
-	for(var/mutable_appearance/special_overlay as anything in content_ma.overlays)
-		var/mutable_appearance/real = new()
-		real.appearance = special_overlay
-		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			overlays_to_keep += real
-	content_ma.overlays = overlays_to_keep
-
-	var/list/underlays_to_keep = list()
-	for(var/mutable_appearance/special_underlay as anything in content_ma.underlays)
-		var/mutable_appearance/real = new()
-		real.appearance = special_underlay
-		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
-			underlays_to_keep += real
-	content_ma.underlays = underlays_to_keep
-
 	content_ma.appearance_flags &= ~KEEP_APART //Don't want this
 	content_ma.filters = filter(type="color",color=greyscale_with_value_bump,space=FILTER_COLOR_HSV)
 	update_content_planes()

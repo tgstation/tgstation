@@ -4,18 +4,18 @@
   height: 96%;
   left: 2.5%;
   top: 2%;
-  border: 5px outset #3e4f6a;
-  padding: 5px;
+  border: var(--border-thickness-larger) outset hsl(217, 27%, 34%);
+  padding: var(--space-m);
   text-align: center;
 }
 
 .Safe__engraving-arrow {
-  color: #35435a;
+  color: var(--color-primary);
 }
 
 .Safe__engraving-hinge {
   content: ' ';
-  background-color: #191f2a;
+  background-color: hsl(217, 27%, 15%);
   width: 25px;
   height: 40px;
   position: absolute;
@@ -39,20 +39,20 @@
 }
 
 .Safe__dialer-number {
-  color: #bbbbbb;
+  color: hsl(0, 0%, 73.3%);
   display: inline;
-  background-color: #191f2a;
+  background-color: hsl(217, 27%, 15%);
   font-size: 1.5rem;
   font-weight: bold;
-  padding: 0 0.5rem;
+  padding: 0 var(--space-m);
 }
 
 .Safe__contents {
-  border: 10px solid #191f2a;
-  background-color: #0f131a;
+  border: 10px solid hsl(217, 27%, 15%);
+  background-color: hsl(217, 27%, 10%);
   height: calc(85% + 7.5px);
   text-align: left;
-  padding: 5px;
+  padding: var(--space-m);
 }
 
 .Safe__help {
@@ -64,8 +64,12 @@
   font-family: 'Comic Sans MS', cursive, sans-serif;
   font-style: italic;
   color: black;
-  box-shadow: 5px 5px #111111;
-  background-image: linear-gradient(to bottom, #b2ae74 0%, #8e8b5d 100%);
+  box-shadow: 5px 5px hsl(0, 0%, 6.7%);
+  background-image: linear-gradient(
+    to bottom,
+    hsl(50, 20%, 58.8%) 0%,
+    hsl(50, 6%, 45.5%) 100%
+  );
   transform: rotate(-1deg);
 
   &:before {
@@ -73,8 +77,12 @@
     display: block;
     width: 24px;
     height: 40px;
-    background-image: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
-    box-shadow: 1px 1px #111111;
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      hsl(0, 0%, 100%) 100%
+    );
+    box-shadow: 1px 1px hsl(0, 0%, 6.7%);
     opacity: 0.2;
     position: absolute;
     top: -30px;

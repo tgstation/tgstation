@@ -10,6 +10,7 @@
 
 	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	/// Current items in the build queue.
 	var/list/datum/design/queue = list()
 
@@ -49,13 +50,23 @@
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
 
+	/// Looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
+
+	/// Direction the produced items will drop (0 means on top of us)
+	var/drop_direction = SOUTH
+
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
+	print_sound = new(src,  FALSE)
 	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
 	cached_designs = list()
-	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
-/obj/machinery/mecha_part_fabricator/LateInitialize()
+/obj/machinery/mecha_part_fabricator/Destroy()
+	QDEL_NULL(print_sound)
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/post_machine_initialize()
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
@@ -124,17 +135,19 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
-	if(panel_open)
-		. += span_notice("Alt-click to rotate the output direction.")
+		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 
-/obj/machinery/mecha_part_fabricator/AltClick(mob/user)
-	. = ..()
-	if(!user.can_perform_action(src))
+/obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
-	if(panel_open)
-		dir = turn(dir, -90)
-		balloon_alert(user, "rotated to [dir2text(dir)].")
-		return TRUE
+	if(being_built)
+		balloon_alert(user, "printing started!")
+		return
+	var/direction = get_dir(src, over_location)
+	if(!direction)
+		return
+	drop_direction = direction
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /**
  * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
@@ -153,7 +166,7 @@
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
@@ -165,7 +178,7 @@
 /obj/machinery/mecha_part_fabricator/proc/on_start_printing()
 	add_overlay("fab-active")
 	update_use_power(ACTIVE_POWER_USE)
-
+	print_sound.start()
 /**
  * Intended to be called when the exofab has stopped working and is no longer printing items.
  *
@@ -176,6 +189,7 @@
 	update_use_power(IDLE_POWER_USE)
 	desc = initial(desc)
 	process_queue = FALSE
+	print_sound.stop()
 
 /**
  * Attempts to build the next item in the build queue.
@@ -188,8 +202,10 @@
 	if(!length(queue))
 		return FALSE
 
-	var/datum/design/D = queue[1]
-	if(build_part(D, verbose))
+	var/alist/queue_record = queue[1]
+	var/datum/design/D = queue_record["design"]
+	var/alist/user_data = queue_record["user"]
+	if(build_part(D, verbose, user_data))
 		remove_from_queue(1)
 		return TRUE
 
@@ -202,8 +218,9 @@
  * Uses materials.
  * * D - Design datum to attempt to print.
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
+ * * user_data - ID_DATA(user), see the proc on SSid_access
  */
-/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE)
+/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, alist/user_data)
 	if(!D || length(D.reagents_list))
 		return FALSE
 
@@ -212,16 +229,14 @@
 		if(verbose)
 			say("No access to material storage, please contact the quartermaster.")
 		return FALSE
-	if (rmat.on_hold())
-		if(verbose)
-			say("Mineral access is on hold, please contact the quartermaster.")
+	if (!rmat.can_use_resource(user_data = user_data))
 		return FALSE
 	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]")
+	rmat.use_materials(D.materials, component_coeff, 1, "processed", "[D.name]", user_data)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
@@ -232,7 +247,7 @@
 /obj/machinery/mecha_part_fabricator/process()
 	// If there's a stored part to dispense due to an obstruction, try to dispense it.
 	if(stored_part)
-		var/turf/exit = get_step(src,(dir))
+		var/turf/exit = get_step(src, drop_direction)
 		if(exit.density)
 			return TRUE
 
@@ -262,22 +277,23 @@
  *
  * Returns FALSE is the machine cannot dispense the part on the appropriate turf.
  * Return TRUE if the part was successfully dispensed.
- * * D - Design datum to attempt to dispense.
+ * * dispensed_design - Design datum to attempt to dispense.
  */
-/obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/D)
-	var/obj/item/I = new D.build_path(src)
+/obj/machinery/mecha_part_fabricator/proc/dispense_built_part(datum/design/dispensed_design)
+	var/obj/item/built_part = new dispensed_design.build_path(src)
+	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[built_part.type]"))
 
 	being_built = null
 
-	var/turf/exit = get_step(src,(dir))
+	var/turf/exit = get_step(src, drop_direction)
 	if(exit.density)
 		say("Error! The part outlet is obstructed.")
-		desc = "It's trying to dispense the fabricated [D.name], but the part outlet is obstructed."
-		stored_part = I
+		desc = "It's trying to dispense the fabricated [dispensed_design.name], but the part outlet is obstructed."
+		stored_part = built_part
 		return FALSE
 
-	say("The fabrication of [I] is now complete.")
-	I.forceMove(exit)
+	say("The fabrication of [built_part] is now complete.")
+	built_part.forceMove(exit)
 
 	top_job_id += 1
 
@@ -288,13 +304,14 @@
  *
  * Returns TRUE if successful and FALSE if the design was not added to the queue.
  * * D - Datum design to add to the queue.
+ * user_data - user data in the form rendered by ID_DATA(user), see the proc on SSidaccess
  */
-/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D)
+/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, alist/user_data)
 	if(!istype(queue))
 		queue = list()
 
 	if(D)
-		queue[++queue.len] = D
+		queue[++queue.len] = alist("design" = D, "user" = user_data)
 		return TRUE
 
 	return FALSE
@@ -323,8 +340,8 @@
 
 /obj/machinery/mecha_part_fabricator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user, datum/tgui/ui)
@@ -338,12 +355,12 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	for(var/datum/design/design in cached_designs)
 		var/cost = list()
-		var/list/materials = design["materials"]
+		var/list/materials = design.materials
 		for(var/datum/material/mat in materials)
 			cost[mat.name] = OPTIMAL_COST(materials[mat] * component_coeff)
 
@@ -379,8 +396,9 @@
 
 	var/offset = 0
 
-	for(var/datum/design/design in queue)
+	for(var/alist/queue_item in queue)
 		offset += 1
+		var/datum/design/design = queue_item["design"]
 
 		data["queue"] += list(list(
 			"jobId" = top_job_id + offset,
@@ -391,7 +409,7 @@
 
 	return data
 
-/obj/machinery/mecha_part_fabricator/ui_act(action, list/params)
+/obj/machinery/mecha_part_fabricator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
 	if(.)
@@ -401,6 +419,8 @@
 
 	switch(action)
 		if("build")
+			if(!rmat.can_use_resource(user_data = ID_DATA(usr)))
+				return
 			var/designs = params["designs"]
 
 			if(!islist(designs))
@@ -418,7 +438,7 @@
 				if(!(design.build_type & MECHFAB) || design.id != design_id)
 					continue
 
-				add_to_queue(design)
+				add_to_queue(design, ID_DATA(usr))
 
 			if(params["now"])
 				if(process_queue)
@@ -432,7 +452,7 @@
 			return
 
 		if("del_queue_part")
-			// Delete a specific from from the queue
+			// Delete a specific from the queue
 			var/index = text2num(params["index"])
 			remove_from_queue(index)
 
@@ -474,7 +494,7 @@
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted
 	add_overlay("fab-load-[M.name]")
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "fab-load-[M.name]"), 10)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "fab-load-[M.name]"), 1 SECONDS)
 
 /obj/machinery/mecha_part_fabricator/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

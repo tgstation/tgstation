@@ -1,16 +1,16 @@
 {
-	"": [
+	"wrap_paper": [
 		{
 			"type": "icon_state",
 			"icon_state": "wrap_paper_base",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "wrap_paper_ribbon",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	]
 }

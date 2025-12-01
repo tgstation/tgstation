@@ -25,7 +25,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	ears = /obj/item/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
-	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	mask = /obj/item/cigarette/cigar/cohiba
 	head = /obj/item/clothing/head/hats/centhat
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/combat/swat
@@ -54,7 +54,7 @@
 	outfit = /datum/outfit/centcom/centcom_intern/unarmed
 	mob_name = "Nameless Intern"
 
-/obj/effect/mob_spawn/corpse/human/intern/special(mob/living/carbon/human/spawned_human)
+/obj/effect/mob_spawn/corpse/human/intern/special(mob/living/carbon/human/spawned_human, mob/mob_possessor, apply_prefs)
 	. = ..()
 	spawned_human.gender = MALE //we're making it canon babies
 	spawned_human.update_body()

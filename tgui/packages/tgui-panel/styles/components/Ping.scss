@@ -5,24 +5,24 @@
 
 @use 'sass:math';
 
-$border-color: rgba(140, 140, 140, 0.5) !default;
-
 .Ping {
   position: relative;
-  padding: 0.125em 0.25em;
-  border: math.div(1em, 12) solid $border-color;
-  border-radius: 0.25em;
-  width: 3.75em;
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--border-thickness-tiny) solid
+    hsl(from var(--color-border-primary) h 10 50 / 0.33);
+  border-radius: var(--border-radius-medium);
+  min-width: 4em;
+  max-width: 5em;
   text-align: right;
 }
 
 .Ping__indicator {
   content: '';
   position: absolute;
-  top: 0.5em;
-  left: 0.5em;
+  top: var(--space-m);
+  left: var(--space-m);
   width: 0.5em;
   height: 0.5em;
-  background-color: #888;
-  border-radius: 0.25em;
+  background-color: hsl(0, 0%, 53.3%);
+  border-radius: var(--border-radius-medium);
 }

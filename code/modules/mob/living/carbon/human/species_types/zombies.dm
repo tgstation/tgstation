@@ -4,9 +4,10 @@
 	id = SPECIES_ZOMBIE
 	sexes = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	mutanttongue = /obj/item/organ/tongue/zombie
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
+		TRAIT_BLOODY_MESS,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
@@ -14,6 +15,7 @@
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
 		TRAIT_NODEATH,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_ZOMBIFY,
@@ -31,7 +33,7 @@
 	mutantliver = null
 	mutantlungs = null
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	bodytemp_normal = T0C // They have no natural body heat, the environment regulates body temp
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
 	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
@@ -47,11 +49,11 @@
 
 	/// Spooky growls we sometimes play while alive
 	var/static/list/spooks = list(
-		'sound/hallucinations/growl1.ogg',
-		'sound/hallucinations/growl2.ogg',
-		'sound/hallucinations/growl3.ogg',
-		'sound/hallucinations/veryfar_noise.ogg',
-		'sound/hallucinations/wail.ogg',
+		'sound/effects/hallucinations/growl1.ogg',
+		'sound/effects/hallucinations/growl2.ogg',
+		'sound/effects/hallucinations/growl3.ogg',
+		'sound/effects/hallucinations/veryfar_noise.ogg',
+		'sound/effects/hallucinations/wail.ogg',
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
@@ -64,7 +66,7 @@
 	return ..()
 
 /datum/species/zombie/get_physical_attributes()
-	return "Zombies are undead, and thus completely immune to any enviromental hazard, or any physical threat besides blunt force trauma and burns. \
+	return "Zombies are undead, and thus completely immune to any environmental hazard, or any physical threat besides blunt force trauma and burns. \
 		Their limbs are easy to pop off their joints, but they can somehow just slot them back in."
 
 /datum/species/zombie/get_species_description()
@@ -94,19 +96,21 @@
 	id = SPECIES_ZOMBIE_INFECTIOUS
 	examine_limb_id = SPECIES_ZOMBIE
 	damage_modifier = 20 // 120 damage to KO a zombie, which kills it
-	mutanteyes = /obj/item/organ/internal/eyes/zombie
-	mutantbrain = /obj/item/organ/internal/brain/zombie
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
+	mutanteyes = /obj/item/organ/eyes/zombie
+	mutantbrain = /obj/item/organ/brain/zombie
+	mutanttongue = /obj/item/organ/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	inherent_traits = list(
 		// SHARED WITH ALL ZOMBIES
+		TRAIT_BLOODY_MESS,
 		TRAIT_EASILY_WOUNDED,
 		TRAIT_EASYDISMEMBER,
 		TRAIT_FAKEDEATH,
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBREATH,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NODEATH,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
@@ -130,14 +134,16 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie/infectious,
 	)
 
-/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species)
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/human/new_zombie, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	new_zombie.set_combat_mode(TRUE)
+	// Needs to be added after combat mode is set
+	ADD_TRAIT(new_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 
 	// Deal with the source of this zombie corruption
 	// Infection organ needs to be handled separately from mutant_organs
 	// because it persists through species transitions
-	var/obj/item/organ/internal/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
+	var/obj/item/organ/zombie_infection/infection = new_zombie.get_organ_slot(ORGAN_SLOT_ZOMBIE)
 	if(isnull(infection))
 		infection = new()
 		infection.Insert(new_zombie)
@@ -158,6 +164,7 @@
 
 /datum/species/zombie/infectious/on_species_loss(mob/living/carbon/human/was_zombie, datum/species/new_species, pref_load)
 	. = ..()
+	REMOVE_TRAIT(was_zombie, TRAIT_COMBAT_MODE_LOCK, SPECIES_TRAIT)
 	qdel(was_zombie.GetComponent(/datum/component/mutant_hands))
 	qdel(was_zombie.GetComponent(/datum/component/regenerator))
 
@@ -169,8 +176,6 @@
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/carbon_mob, seconds_per_tick, times_fired)
 	. = ..()
-	carbon_mob.set_combat_mode(TRUE) // THE SUFFERING MUST FLOW
-
 	if(!HAS_TRAIT(carbon_mob, TRAIT_CRITICAL_CONDITION) && SPT_PROB(2, seconds_per_tick))
 		playsound(carbon_mob, pick(spooks), 50, TRUE, 10)
 

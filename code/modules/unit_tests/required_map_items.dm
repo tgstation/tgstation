@@ -5,24 +5,25 @@
  * - Add the typepath(s) to setup_expected_types
  * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM() a minimum and maximum
  */
-/datum/unit_test/required_map_items
+/datum/unit_test/maptest_required_map_items
 	/// A list of all typepaths that we expect to be in the required items list
 	var/list/expected_types = list()
 
 /// Used to fill the expected types list with all the types we look for on the map.
 /// This list will just be full of typepaths that we expect.
 /// More detailed information about each item (mainly, how much of each should exist) is set on a per item basis
-/datum/unit_test/required_map_items/proc/setup_expected_types()
+/datum/unit_test/maptest_required_map_items/proc/setup_expected_types()
 	expected_types += subtypesof(/obj/item/stamp/head)
-	expected_types += subtypesof(/obj/machinery/computer/department_orders)
+	expected_types += subtypesof(/obj/machinery/modular_computer/preset/cargochat)
 
 	expected_types += /mob/living/basic/parrot/poly
 	expected_types += /mob/living/basic/pet/dog/corgi/ian
 	expected_types += /mob/living/carbon/human/species/monkey/punpun
 	expected_types += /obj/machinery/computer/communications
 	expected_types += /obj/machinery/drone_dispenser
+	expected_types += /obj/item/piggy_bank/vault
 
-/datum/unit_test/required_map_items/Run()
+/datum/unit_test/maptest_required_map_items/Run()
 	setup_expected_types()
 
 	var/list/required_map_items = GLOB.required_map_items.Copy()

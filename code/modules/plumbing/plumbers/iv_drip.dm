@@ -6,35 +6,40 @@
 	base_icon_state = "plumb"
 	density = TRUE
 	use_internal_storage = TRUE
+	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/iv_drip, bolt, layer)
+	AddComponent(/datum/component/plumbing/automated_iv, bolt, layer)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(attached)
-		context[SCREENTIP_CONTEXT_RMB] = "Take needle out"
-	else if(reagent_container && !use_internal_storage)
-		context[SCREENTIP_CONTEXT_RMB] = "Eject container"
-	else if(!inject_only)
-		context[SCREENTIP_CONTEXT_RMB] = "Change direction"
+/obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
+	return FALSE
 
+/obj/machinery/iv_drip/plumbing/click_alt(mob/user)
+	return FALSE
+
+/obj/machinery/iv_drip/plumbing/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item) || held_item.tool_behaviour != TOOL_WRENCH)
+		return
+	context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Una" : "A"]nchor"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/iv_drip/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, span_notice("You start furiously plunging [name]."))
-	if(do_after(user, 30, target = src))
-		to_chat(user, span_notice("You finish plunging the [name]."))
-		reagents.expose(get_turf(src), TOUCH) //splash on the floor
-		reagents.clear_reagents()
-
-/obj/machinery/iv_drip/plumbing/can_use_alt_click(mob/user)
-	return FALSE //Alt click is used for rotation
+/obj/machinery/iv_drip/plumbing/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
+	user.balloon_alert_to_viewers("furiously plunging...", "plunging iv drip...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		return TRUE
+	user.balloon_alert_to_viewers("finished plunging")
+	reagents.expose(get_turf(src), TOUCH) //splash on the floor
+	reagents.clear_reagents()
+	return TRUE
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
-	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/iv_drip/plumbing/on_deconstruction(disassembled)
-	qdel(src)
+	if(default_unfasten_wrench(user, tool) != SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_BLOCKING
+	if(anchored)
+		begin_processing()
+	else
+		end_processing()
+	return ITEM_INTERACT_SUCCESS

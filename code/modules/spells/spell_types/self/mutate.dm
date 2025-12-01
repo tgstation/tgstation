@@ -1,7 +1,7 @@
 /// A spell type that adds mutations to the caster temporarily.
 /datum/action/cooldown/spell/apply_mutations
 	button_icon_state = "mutate"
-	sound = 'sound/magic/mutate.ogg'
+	sound = 'sound/effects/magic/mutate.ogg'
 
 	school = SCHOOL_TRANSMUTATION
 
@@ -25,7 +25,7 @@
 /datum/action/cooldown/spell/apply_mutations/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	for(var/mutation in mutations_to_add)
-		cast_on.dna.add_mutation(mutation)
+		cast_on.dna.add_mutation(mutation, MUTATION_SOURCE_SPELL)
 	addtimer(CALLBACK(src, PROC_REF(remove_mutations), cast_on), mutation_duration, TIMER_DELETE_ME)
 
 /// Removes the mutations we added from casting our spell
@@ -34,7 +34,7 @@
 		return
 
 	for(var/mutation in mutations_to_add)
-		cast_on.dna.remove_mutation(mutation)
+		cast_on.dna.remove_mutation(mutation, MUTATION_SOURCE_SPELL)
 
 /datum/action/cooldown/spell/apply_mutations/mutate
 	name = "Mutate"
@@ -43,10 +43,10 @@
 	cooldown_reduction_per_rank = 5 SECONDS
 	spell_max_level = 3
 
-	invocation = "BIRUZ BENNAR"
+	invocation = "BIRUZ BENNAR!"
 	invocation_type = INVOCATION_SHOUT
 
-	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk/wizardly, /datum/mutation/human/gigantism)
+	mutations_to_add = list(/datum/mutation/laser_eyes, /datum/mutation/hulk/wizardly, /datum/mutation/gigantism)
 	mutation_duration = 30 SECONDS
 
 /datum/action/cooldown/spell/apply_mutations/mutate/cast(mob/living/carbon/human/cast_on)
@@ -54,10 +54,10 @@
 	if(HAS_TRAIT(cast_on, TRAIT_USES_SKINTONES) || HAS_TRAIT(cast_on, TRAIT_MUTANT_COLORS))
 		return
 	// Our caster has a species that doesn't greenify when hulked, so we will do it manually.
-	cast_on.add_atom_colour("#00FF00", TEMPORARY_COLOUR_PRIORITY)
+	cast_on.add_atom_colour(COLOR_VIBRANT_LIME, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/action/cooldown/spell/apply_mutations/mutate/remove_mutations(mob/living/carbon/human/cast_on)
-	if(QDELETED(cast_on) || !is_valid_target(cast_on))
+	if(QDELETED(cast_on) || !is_valid_target(cast_on)) // Not 100% sure if this check is still needed, leaving it just in case
 		return
-
+	..()
 	cast_on.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)

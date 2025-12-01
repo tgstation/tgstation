@@ -1,0 +1,5 @@
+output_name = "hierophant_wall"
+template = "bitmask/diagonal_32x32.toml"
+
+[animation]
+delays = [ 22,1,1,1,1,1,1,1,1,1 ]
