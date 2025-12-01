@@ -378,6 +378,7 @@
 		moveToNullspace()
 		addtimer(CALLBACK(src, PROC_REF(open_pod), benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (ispath(style, /datum/pod_style/seethrough))
+		transform = matrix()
 		open_pod(src)
 	else
 		addtimer(CALLBACK(src, PROC_REF(open_pod), src), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
@@ -429,7 +430,8 @@
 	if (!holder)
 		return
 	take_contents(holder)
-	playsound(holder, close_sound, soundVolume*0.75, TRUE, -3)
+	if (close_sound)
+		playsound(holder, close_sound, soundVolume*0.75, TRUE, -3)
 	holder.setClosed()
 	addtimer(CALLBACK(src, PROC_REF(preReturn), holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
 

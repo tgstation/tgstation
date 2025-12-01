@@ -92,7 +92,7 @@
 		return
 	balloon_alert(activator, "implanted")
 	if(!(activator == mod.wearer)) // someone else implanted you
-		balloon_alert(mod.wearer, "pathfinder MOD tracker implanted!")
+		balloon_alert(mod.wearer, "tracker implanted!")
 	playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -6)
 
 /obj/item/mod/module/pathfinder/proc/attach(mob/living/user)
@@ -105,7 +105,6 @@
 		return
 	mod.quick_deploy(user)
 	human_user.update_action_buttons(TRUE)
-	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
 	drain_power(use_energy_cost)
 
@@ -120,7 +119,7 @@
 		balloon_alert(recaller, "cover open!")
 		return FALSE
 	if(in_transit)
-		balloon_alert(recaller, "already moving!")
+		balloon_alert(recaller, "suit in transit!")
 		return FALSE
 	if(ismob(get_atom_on_turf(mod)))
 		balloon_alert(recaller, "already worn!")
@@ -129,7 +128,7 @@
 	in_transit = TRUE
 	animate(mod, 0.5 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
 	mod.Shake(pixelshiftx = 1, pixelshifty = 1, duration = PATHFINDER_PRE_ANIMATE_TIME)
-	addtimer(CALLBACK(src, PROC_REF(do_recall)), PATHFINDER_PRE_ANIMATE_TIME, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(do_recall), recaller), PATHFINDER_PRE_ANIMATE_TIME, TIMER_DELETE_ME)
 
 	balloon_alert(recaller, "suit recalled")
 	if(!(recaller == mod.wearer))
@@ -137,14 +136,28 @@
 	return TRUE
 
 /// Pod-transport the suit to its owner
-/obj/item/mod/module/pathfinder/proc/do_recall()
+/obj/item/mod/module/pathfinder/proc/do_recall(mob/recaller)
+	var/container = get_atom_on_turf(mod)
+	if(ismob(container))
+		balloon_alert(recaller, "launch interrupted!")
+		return
+
+	if(iscloset(container))
+		var/obj/structure/closet/closet = container
+		if (!closet.opened)
+			if (!closet.open())
+				playsound(closet, 'sound/effects/bang.ogg', vol = 50, vary = TRUE)
+				closet.bust_open()
+
+	mod.add_overlay(jet_icon)
 	playsound(mod, 'sound/vehicles/rocketlaunch.ogg', vol = 80, vary = FALSE)
-	var/turf/land_target = get_turf(imp_in)
+	var/turf/land_target = get_turf(implant.imp_in)
 	var/obj/structure/closet/supplypod/pod = podspawn(list(
 		"target" = get_turf(mod),
 		"path" = /obj/structure/closet/supplypod/transport/module_pathfinder,
 		"reverse_dropoff_coords" = list(land_target.x, land_target.y, land_target.z),
 	))
+
 	pod.insert(mod, pod)
 	RegisterSignal(pod, COMSIG_SUPPLYPOD_RETURNING, PROC_REF(pod_takeoff))
 
@@ -157,29 +170,10 @@
 /obj/item/mod/module/pathfinder/proc/pod_landed()
 	SIGNAL_HANDLER
 	in_transit = FALSE
-	playsound(mod, 'sound/items/handling/toolbox_drop.ogg', vol = 80, vary = FALSE)
-	if (imp_in.Adjacent(src))
-		attach(imp_in)
-
-/obj/item/mod/module/pathfinder/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
-	SIGNAL_HANDLER
-
-	var/matrix/mod_matrix = matrix()
-	mod_matrix.Turn(get_angle(source, implant.imp_in))
-	source.transform = mod_matrix
-
-/obj/item/mod/module/pathfinder/proc/end_recall(successful = TRUE)
-	if(!mod)
-		return
-	QDEL_NULL(mod.ai_controller)
-	mod.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
-	REMOVE_TRAIT(mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
-	mod.RemoveElement(/datum/element/movetype_handler)
 	mod.cut_overlay(jet_icon)
-	mod.transform = matrix()
-	UnregisterSignal(mod, COMSIG_MOVABLE_MOVED)
-	if(!successful)
-		balloon_alert(implant.imp_in, "suit lost connection!")
+	playsound(mod, 'sound/items/handling/toolbox/toolbox_drop.ogg', vol = 80, vary = FALSE)
+	if (implant?.imp_in?.Adjacent(src))
+		INVOKE_ASYNC(src, PROC_REF(attach), implant.imp_in)
 
 // ###########
 // THE INPLANT
@@ -231,10 +225,9 @@
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
 		implant.balloon_alert(owner, "on cooldown!")
 		return
-	if(!implant.recall())
-		return
-	COOLDOWN_START(src, recall_cooldown, 5 SECONDS)
-
+	if(implant.module.recall(owner))
+		implant.balloon_alert(owner, "suit incoming...")
+		COOLDOWN_START(src, recall_cooldown, 5 SECONDS)
 
 /// Special pod subtype we use just to make insertion check easy
 /obj/structure/closet/supplypod/transport/module_pathfinder

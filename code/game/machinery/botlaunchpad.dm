@@ -67,6 +67,5 @@
 	simple_bot.call_bot(src,  get_turf(src))
 
 /obj/structure/closet/supplypod/transport/botpod
-	style = /datum/pod_style/seethrough
 	reverse_option_list = list("Mobs"=TRUE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=FALSE)
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
