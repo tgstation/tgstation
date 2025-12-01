@@ -33,8 +33,8 @@ export const min_recoil_multiplier: Feature<number> = {
   name: 'Cosmetic Recoil Multiplier',
   category: 'ACCESSIBILITY',
   description: `
-      A percentage for how much the small minimum recoil of weapons affects you.
-      0 will remove it entirely, but this does not affect the base recoil that is used for balance.
+      Modifies the strength of cosmetic recoil's effect on your camera.
+      0 will disable cosmetic recoil entirely, though mechanical recoil will be unaffected.
     `,
   component: FeatureSliderInput,
 };
