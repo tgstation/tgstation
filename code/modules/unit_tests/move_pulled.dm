@@ -19,12 +19,12 @@
 	TEST_ASSERT(crate.loc == get_step(puller, NORTHEAST), "The crate should be located at the northeast of the puller.")
 
 /// Try to move a pulled object to the turf below us, then to the opposite corner
-/datum/unit_test/move_pulled/toturf
+/datum/unit_test/move_pulled/to_turf
 
-/datum/unit_test/move_pulled/toturf/get_first_target()
+/datum/unit_test/move_pulled/to_turf/get_first_target()
 	return get_turf(run_loc_floor_bottom_left)
 
-/datum/unit_test/move_pulled/toturf/get_second_target()
+/datum/unit_test/move_pulled/to_turf/get_second_target()
 	return get_turf(run_loc_floor_top_right)
 
 /// Try to move a pulled object to a decal below us, then to a decal in the opposite corner
