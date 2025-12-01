@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Bot assemblies will only be picked up if you held the medkit/toolbox/helmet/etc in your hands when creating one."
-  - qol: "Assembling med/repair/secbots will now put their assemblies in your main hand instead of your offhand"

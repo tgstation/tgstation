@@ -131,7 +131,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 	alarm_manager = new(src)
 	if(mapload)
-		find_and_hang_on_atom(mark_for_late_init = TRUE)
+		find_and_mount_on_atom(mark_for_late_init = TRUE)
+
+/obj/machinery/camera/get_turfs_to_mount_on()
+	return list(get_step(src, dir))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())

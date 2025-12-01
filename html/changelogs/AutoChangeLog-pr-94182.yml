@@ -1,0 +1,11 @@
+author: "ezel"
+delete-after: True
+changes:
+  - rscadd: "Compact Defibrillator is now a Spy objective"
+  - balance: "Compact Defib is CMO exclusive again"
+  - balance: "you can no longer print Defibrillators in techlathe (purchase them via cargo if needed)"
+  - map: "catwalk defibs trimmed to 4 instead of 6"
+  - map: "metastation defib added from 3 to 4"
+  - map: "wawastation defib added from 3 to 4"
+  - map: "tramstation defib added from 3 to 4"
+  - map: "nebulastation defibs trimmed from 6 to 4"

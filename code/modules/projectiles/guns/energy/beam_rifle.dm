@@ -19,6 +19,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/event_horizon)
 	selfcharge = TRUE
+	light_color = COLOR_STRONG_BLUE
 	self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * 10
 
 /obj/item/gun/energy/event_horizon/Initialize(mapload)

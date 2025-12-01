@@ -1,5 +1,0 @@
-author: "ezel"
-delete-after: True
-changes:
-  - bugfix: "fixes catwalk atmos pipeline at the courtroom"
-  - bugfix: "removes random powerline going trough the walls"
