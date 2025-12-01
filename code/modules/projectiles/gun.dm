@@ -506,12 +506,30 @@
 	update_appearance()
 	return TRUE
 
+/**
+ * Calculates the final recoil value applied when firing a gun.
+ *
+ * Arguments:
+ * * user - The living mob attempting to fire the gun. Used for preference lookups.
+ * * recoil_amount - The raw recoil value to be processed before clamping.
+ *
+ * Returns:
+ * The clamped recoil value after applying all modifiers.
+ */
 /obj/item/gun/proc/calculate_recoil(mob/living/user, recoil_amount = 0)
 	var/used_min_recoil = min_recoil
 	if(user.client)
 		used_min_recoil *= (user.client.prefs.read_preference(/datum/preference/numeric/min_recoil_multiplier) / 100)
 	return clamp(recoil_amount, used_min_recoil, INFINITY)
 
+/**
+ * Simulates firearm recoil and applies camera feedback when firing.
+ *
+ * Arguments:
+ * * user - The mob firing the gun. Used for recoil calculation and camera shake.
+ * * recoil_amount - The base recoil value before modifiers.
+ * * firing_angle - The firing direction used to determine camera kick direction.
+ */
 /obj/item/gun/proc/simulate_recoil(mob/living/user, recoil_amount = 0, firing_angle)
 	var/total_recoil = calculate_recoil(user, recoil_amount)
 
@@ -520,7 +538,6 @@
 		actual_angle -= 360
 	if(total_recoil > 0)
 		recoil_camera(user, total_recoil + 1, (total_recoil * recoil_backtime_multiplier)+1, total_recoil, actual_angle)
-		return TRUE
 
 ///returns true if the gun successfully fires
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
