@@ -157,6 +157,9 @@
 	ammo_x_offset = 2
 	shaded_charge = FALSE
 
+/obj/item/gun/energy/laser/instakill/add_deep_lore()
+	return
+
 /obj/item/gun/energy/laser/instakill/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
@@ -169,6 +172,7 @@
 	projectile_type = /obj/projectile/beam/instakill
 	e_cost = 0 // Not possible to use the macro
 	select_name = "DESTROY"
+	muzzle_flash_color = LIGHT_COLOR_BLUE
 
 /obj/projectile/beam/instakill
 	name = "instagib laser"

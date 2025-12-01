@@ -156,10 +156,10 @@
 	var/list/render_list = list()
 
 	// Damage specifics
-	var/oxy_loss = target.getOxyLoss()
-	var/tox_loss = target.getToxLoss()
-	var/fire_loss = target.getFireLoss()
-	var/brute_loss = target.getBruteLoss()
+	var/oxy_loss = target.get_oxy_loss()
+	var/tox_loss = target.get_tox_loss()
+	var/fire_loss = target.get_fire_loss()
+	var/brute_loss = target.get_brute_loss()
 	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
@@ -178,19 +178,19 @@
 	// Husk detection
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		if(advanced)
-			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
-			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
-			else
+			else if(!HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
+			else
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 
 		else
 			render_list += "<span class='alert ml-1'>Subject has been husked.</span><br>"
 
-	if(target.getStaminaLoss())
+	if(target.get_stamina_loss())
 		if(advanced)
-			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span><br>"
+			render_list += "<span class='alert ml-1'>Fatigue level: [target.get_stamina_loss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span><br>"
 
@@ -371,15 +371,16 @@
 	// Blood Level
 	var/datum/blood_type/blood_type = target.get_bloodtype()
 	if(blood_type)
-		var/blood_percent = round((target.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/cached_blood_volume = target.get_blood_volume(apply_modifiers = TRUE)
+		var/blood_percent = round((cached_blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 		var/blood_type_format
 		var/level_format
-		if(target.blood_volume <= BLOOD_VOLUME_SAFE && target.blood_volume > BLOOD_VOLUME_OKAY)
-			level_format = "LOW [blood_percent]%, [target.blood_volume] cl"
+		if(cached_blood_volume <= BLOOD_VOLUME_SAFE && cached_blood_volume > BLOOD_VOLUME_OKAY)
+			level_format = "LOW [blood_percent]%, [cached_blood_volume] cl"
 			if (blood_type.restoration_chem)
 				level_format = conditional_tooltip(level_format, "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
-		else if(target.blood_volume <= BLOOD_VOLUME_OKAY)
-			level_format = "<b>CRITICAL [blood_percent]%</b>, [target.blood_volume] cl"
+		else if(cached_blood_volume <= BLOOD_VOLUME_OKAY)
+			level_format = "<b>CRITICAL [blood_percent]%</b>, [cached_blood_volume] cl"
 			var/recommendation = list()
 			if (blood_type.restoration_chem)
 				recommendation += "[blood_type.restoration_chem::name] supplement"
@@ -391,7 +392,7 @@
 				recommendation += "immediate [blood_type.get_blood_name()] transufion"
 			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
-			level_format = "[blood_percent]%, [target.blood_volume] cl"
+			level_format = "[blood_percent]%, [cached_blood_volume] cl"
 
 		if (blood_type.get_type())
 			blood_type_format = "type: [blood_type.get_type()]"
@@ -401,7 +402,7 @@
 					compatible_types_readable |= initial(comp_blood_type.name)
 				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
 
-		render_list += "<span class='[target.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
+		render_list += "<span class='[cached_blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
@@ -694,7 +695,7 @@
 		show_emotion(AID_EMOTION_HAPPY)
 
 /obj/item/healthanalyzer/simple/proc/violence_damage(mob/living/user)
-	user.adjustBruteLoss(4)
+	user.adjust_brute_loss(4)
 
 /obj/item/healthanalyzer/simple/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -762,7 +763,7 @@
 	scan_for_what = "diseases"
 
 /obj/item/healthanalyzer/simple/disease/violence_damage(mob/living/user)
-	user.adjustBruteLoss(1)
+	user.adjust_brute_loss(1)
 	user.reagents.add_reagent(/datum/reagent/toxin, rand(1, 3))
 
 /obj/item/healthanalyzer/simple/disease/do_the_scan(mob/living/carbon/scanning, mob/living/user)

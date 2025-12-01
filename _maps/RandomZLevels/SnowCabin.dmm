@@ -1659,7 +1659,8 @@
 /area/awaymission/cabin/caves)
 "iP" = (
 /obj/structure/sign/picture_frame{
-	pixel_y = 32
+	pixel_y = 32;
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
@@ -3587,10 +3588,8 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "yJ" = (
-/obj/structure/sign/poster/contraband/free_drone{
-	desc = "This poster seems to be meant for a bunch of machines that used to be deployed on space stations."
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/structure/sign/poster/contraband/free_drone/directional/west,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
 "yP" = (
@@ -5525,16 +5524,13 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
 "Zb" = (
-/obj/structure/fence{
-	dir = 4
-	},
 /obj/structure/sign/nanotrasen,
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
-/turf/open/misc/asteroid/snow/snow_cabin,
+/turf/closed/wall,
 /area/awaymission/cabin/caves)
 "Zf" = (
 /obj/structure/fence{

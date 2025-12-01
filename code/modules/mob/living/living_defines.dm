@@ -113,7 +113,7 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
-	/// The type of respiration the mob is capable of doing. Used by adjustOxyLoss.
+	/// The type of respiration the mob is capable of doing. Used by adjust_oxy_loss.
 	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
@@ -164,8 +164,13 @@
 	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 	var/butcher_difficulty = 0
 
-	///how much blood the mob has
+	/// How much blood the mob currently has.
+	/// Don't read directly, use get_blood_volume() and get_blood_volume(apply_modifiers = TRUE).
+	/// Don't write directly either, use set_blood_volume() and adjust_blood_volume().
+	/// Also don't initialize this. Initialize default_blood_volume instead.
 	var/blood_volume = 0
+	/// The default blood volume of the mob. Used primarily for healing bloodloss.
+	var/default_blood_volume = 0
 
 	///a list of all status effects the mob has
 	var/list/status_effects

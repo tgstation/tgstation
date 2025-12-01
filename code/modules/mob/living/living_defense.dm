@@ -166,7 +166,7 @@
 		return
 
 	var/obj/item/bodypart/hit_bodypart = get_bodypart(check_hit_limb_zone_name(def_zone))
-	if (blood_volume && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
+	if (get_blood_volume() && (isnull(hit_bodypart) || hit_bodypart.can_bleed()))
 		create_splatter(angle2dir(proj.angle))
 		if(prob(33))
 			add_splatter_floor(get_turf(src))
@@ -581,12 +581,12 @@
 	if(shock_damage < 1)
 		return FALSE
 	if(!(flags & SHOCK_ILLUSION))
-		adjustFireLoss(shock_damage)
-		if(getFireLoss() > 100)
+		adjust_fire_loss(shock_damage)
+		if(get_fire_loss() > 100)
 			add_shared_particles(/particles/smoke/burning)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, remove_shared_particles), /particles/smoke/burning), 10 SECONDS)
 	else
-		adjustStaminaLoss(shock_damage)
+		adjust_stamina_loss(shock_damage)
 	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
 		visible_message(
 			span_danger("[src] was shocked by \the [source]!"), \

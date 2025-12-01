@@ -807,3 +807,21 @@
 
 /obj/effect/temp_visual/circle_wave/star_blast
 	color = COLOR_VOID_PURPLE
+
+/obj/effect/temp_visual/focus_ring
+	randomdir = FALSE
+	name = "ring"
+	icon_state = "focus_ring"
+	layer = BELOW_MOB_LAYER
+	duration = 2.5 SECONDS
+	pixel_y = -4
+	alpha = 0
+
+/obj/effect/temp_visual/focus_ring/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 100, time = 2 SECONDS, easing = QUAD_EASING|EASE_IN)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 2 SECONDS)
+
+
+/obj/effect/temp_visual/focus_ring/proc/dissipate()
+	animate(src, alpha = 0, time = 0.5 SECONDS, easing = QUAD_EASING|EASE_OUT)

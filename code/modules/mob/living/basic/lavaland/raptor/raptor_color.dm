@@ -237,9 +237,6 @@ GLOBAL_LIST_INIT(raptor_colors, init_raptor_colors())
 	if (!istype(user) || user.stat || user.body_position == LYING_DOWN || isnull(user.client))
 		return FALSE
 
-	if (user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS))
-		return FALSE
-
 	var/turf/location = get_turf(user)
 	if (!istype(location))
 		return FALSE

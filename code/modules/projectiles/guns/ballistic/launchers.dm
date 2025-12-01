@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
@@ -60,7 +61,7 @@
 	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	actions_types = list()
 	casing_ejector = FALSE
 
@@ -82,7 +83,7 @@
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -90,6 +91,7 @@
 	cartridge_wording = "rocket"
 	empty_indicator = TRUE
 	tac_reloads = FALSE
+	can_muzzle_flash = FALSE
 	/// Do we shit flames behind us when we fire?
 	var/backblast = TRUE
 

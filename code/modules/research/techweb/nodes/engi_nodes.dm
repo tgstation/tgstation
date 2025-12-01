@@ -59,7 +59,7 @@
 		"hyper_cell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	required_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_any)
+	discount_experiments = list(/datum/experiment/scanning/points/machinery_tiered_scan/tier2_any = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
 

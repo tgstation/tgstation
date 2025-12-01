@@ -206,7 +206,8 @@
 		zone_name = parse_zone(def_zone)
 
 	zones_disabled++
-	body_parts_covered &= ~body_zone2cover_flags(def_zone)
+	if(clothing_flags & NO_ZONE_DISABLING)
+		body_parts_covered &= ~body_zone2cover_flags(def_zone)
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
 		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
@@ -404,7 +405,7 @@
 				continue
 			if(!added_durability_header)
 				readout += "<b><u>DURABILITY (I-X)</u></b>"
-				added_damage_header = TRUE
+				added_durability_header = TRUE
 			readout += "[armor_to_protection_name(durability_key)] [armor_to_protection_class(rating)]"
 
 		if((flags_cover & HEADCOVERSMOUTH) || (flags_cover & PEPPERPROOF))

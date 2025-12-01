@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Refactored item reskinning (the alt-click way), report any oddities with that"
+  - rscdel: "Deleted the crusher retool kit, now you can just reskin your crusher with alt-click. The Skull skin is still locked behind having the Ashen Skull trophy applied."
+  - bugfix: "Stunswords no longer have an incorrect lore blurb"
+  - bugfix: "Fixed loadout item reskinning's UI"

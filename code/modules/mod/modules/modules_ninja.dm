@@ -289,7 +289,7 @@
 
 /obj/item/mod/module/emp_shield/pulse/on_use(mob/activator)
 	playsound(src, 'sound/effects/empulse.ogg', 60, TRUE)
-	empulse(src, heavy_range = 4, light_range = 6)
+	empulse(src, heavy_range = 4, light_range = 6, emp_source = src)
 	drain_power(use_energy_cost)
 
 /// Ninja Status Readout - Like the normal status display (see the base type), but with a clock.
@@ -425,7 +425,7 @@
 		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetAllImmobility(0)
-	mod.wearer.adjustStaminaLoss(-200)
+	mod.wearer.adjust_stamina_loss(-200)
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 	reagents.remove_reagent(reagent_required, reagents.total_volume * 0.75)

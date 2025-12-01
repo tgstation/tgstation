@@ -95,16 +95,26 @@
 	var/static/list/config_songs
 	if(isnull(config_songs))
 		config_songs = list()
-		var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
+		var/list/tracks = flist(CONFIG_JUKEBOX_SOUNDS)
 		for(var/track_file in tracks)
 			var/datum/track/new_track = new()
-			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
+			new_track.song_path = file("[CONFIG_JUKEBOX_SOUNDS][track_file]")
 			var/list/track_data = splittext(track_file, "+")
-			if(length(track_data) < 3)
+			if(!length(track_data) || !IS_SOUND_FILE_SAFE(new_track.song_path))
 				continue
-			new_track.song_name = track_data[1]
-			new_track.song_length = text2num(track_data[2])
-			new_track.song_beat = text2num(track_data[3])
+			var/track_name = track_data[JUKEBOX_NAME]
+			track_name = strip_filepath_extension(track_name, SSsounds.safe_formats)
+			new_track.song_name = track_name
+			new_track.song_length = SSsounds.get_sound_length(new_track.song_path)
+			if(track_data.len >= 3) // Bandaid for legacy tracks to not use the length for the bpm rather then the actual beats.
+				var/static/logged_to_admins = FALSE
+				log_game("[new_track.song_path] track data seems to be using the legacy format; we will attempt to make it work.")
+				if(!logged_to_admins)
+					message_admins("The jukebox has tracks uploaded in a legacy format. Length is now fetched programmatically, with title and beats being the only required fields.")
+					logged_to_admins = TRUE
+				new_track.song_beat_deciseconds = text2num(track_data[3])
+			else if(track_data.len >= 2)
+				new_track.song_beat_deciseconds = text2num(track_data[JUKEBOX_BEATS])
 			config_songs[new_track.song_name] = new_track
 
 		if(!length(config_songs))
@@ -128,7 +138,7 @@
 		UNTYPED_LIST_ADD(songs_data, list( \
 			"name" = song_name, \
 			"length" = DisplayTimeText(one_song.song_length), \
-			"beat" = one_song.song_beat, \
+			"beat" = one_song.song_beat_deciseconds || "Unknown", \
 		))
 
 	data["active"] = !!active_song_sound
@@ -399,11 +409,12 @@
 	var/song_length = 0
 	/// How long is a beat of the song in decisconds
 	/// Used to determine time between effects when played
-	var/song_beat = 0
+	/// Do note this is NOT BPM.
+	var/song_beat_deciseconds = 0
 
 // Default track supplied for testing and also because it's a banger
 /datum/track/default
 	song_path = 'sound/music/lobby_music/title3.ogg'
 	song_name = "Tintin on the Moon"
 	song_length = 3 MINUTES + 52 SECONDS
-	song_beat = 1 SECONDS
+	song_beat_deciseconds = 1 SECONDS
