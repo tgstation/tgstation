@@ -71,7 +71,7 @@
 	var/obj/item/stock_block/new_block = new /obj/item/stock_block(drop_location())
 	new_block.export_value = price
 	new_block.set_custom_materials(materials)
-	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] cr! Sell it before it becomes liquid!"))
+	to_chat(user, span_notice("You have created a stock block worth [new_block.export_value * exportable.amount] [MONEY_SYMBOL]! Sell it before it becomes liquid!"))
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, FALSE)
 	qdel(exportable)
 	use_energy(active_power_usage)
@@ -363,7 +363,7 @@
 
 	var/datum/material/export_mat = custom_materials[1]
 	var/quantity = custom_materials[export_mat] / SHEET_MATERIAL_AMOUNT
-	. += span_notice("\The [src] is worth [quantity * export_value] cr, from selling [quantity] sheets of [export_mat.name].")
+	. += span_notice("\The [src] is worth [quantity * export_value] [MONEY_SYMBOL], from selling [quantity] sheets of [export_mat.name].")
 
 	if(fluid)
 		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")

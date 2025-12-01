@@ -221,7 +221,7 @@
 	if(!transfer_money(department_account, money_to_transfer))
 		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
 		return FALSE
-	bank_card_talk("[event] processed, account now holds [account_balance] cr.")
+	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
 	return TRUE
 
 /**

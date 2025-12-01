@@ -80,7 +80,7 @@
 		return ..()
 	/// Users can pay with an ID to skip the UI
 	if(isidcard(held_item))
-		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] [MONEY_SYMBOL] fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
 		return TRUE
@@ -290,7 +290,7 @@
 	/// Pay the owner
 	linked_card.registered_account.adjust_money(amount, "Holopay: [name]")
 	/// Make alerts
-	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] cr at your holographic pay stand.")
+	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] [MONEY_SYMBOL] at your holographic pay stand.")
 	say("Thank you for your patronage, [payee]!")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 	/// Log the event

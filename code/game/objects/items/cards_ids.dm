@@ -709,7 +709,7 @@
 	else
 		to_chat(user, span_notice("You insert [money] into [src], adding [cash_money] [MONEY_NAME] to the linked account."))
 
-	to_chat(user, span_notice("The linked account now reports a balance of [registered_account.account_balance] cr."))
+	to_chat(user, span_notice("The linked account now reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."))
 	qdel(money)
 	return TRUE
 
@@ -798,7 +798,7 @@
 		if(choice == "Link Account")
 			set_new_account(user)
 			return CLICK_ACTION_SUCCESS
-	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] [MONEY_SYMBOL])", "Withdraw Funds", max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
 		return CLICK_ACTION_BLOCKING
 	if(!alt_click_can_use_id(user))
@@ -822,13 +822,13 @@
 		set_new_account(user)
 
 /obj/item/card/id/proc/pay_debt(user)
-	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] cr)", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
+	var/amount_to_pay = tgui_input_number(user, "How much do you want to pay? (Max: [registered_account.account_balance] [MONEY_SYMBOL])", "Debt Payment", max_value = min(registered_account.account_balance, registered_account.account_debt))
 	if(!amount_to_pay || QDELETED(src) || loc != user || !alt_click_can_use_id(user))
 		return
 	var/prev_debt = registered_account.account_debt
 	var/amount_paid = registered_account.pay_debt(amount_to_pay)
 	if(amount_paid)
-		var/message = span_notice("You pay [amount_to_pay] [MONEY_NAME] of a [prev_debt] cr debt. [registered_account.account_debt] cr to go.")
+		var/message = span_notice("You pay [amount_to_pay] [MONEY_NAME] of a [prev_debt] [MONEY_SYMBOL] debt. [registered_account.account_debt] [MONEY_SYMBOL] to go.")
 		if(!registered_account.account_debt)
 			message = span_nicegreen("You pay the last [amount_to_pay] [MONEY_NAME] of your debt, extinguishing it. Congratulations!")
 		to_chat(user, message)
@@ -839,10 +839,10 @@
 		return
 
 	if(registered_account && !isnull(registered_account.account_id))
-		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
-			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] [MONEY_SYMBOL]."
 	else
 		. += span_notice("Alt-Right-Click the ID to set the linked bank account.")
 
@@ -882,13 +882,13 @@
 	if(registered_account)
 		if(registered_account.mining_points)
 			. += "There's [registered_account.mining_points] mining point\s loaded onto the card's bank account."
-		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."
 		if(registered_account.account_debt)
-			. += span_warning("The account is currently indebted for [registered_account.account_debt] cr. [100*DEBT_COLLECTION_COEFF]% of all earnings will go towards extinguishing it.")
+			. += span_warning("The account is currently indebted for [registered_account.account_debt] [MONEY_SYMBOL]. [100*DEBT_COLLECTION_COEFF]% of all earnings will go towards extinguishing it.")
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+				. += "The [D.account_holder] reports a balance of [D.account_balance] [MONEY_SYMBOL]."
 		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
 		. += span_info("You can insert [MONEY_NAME] into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.replaceable)

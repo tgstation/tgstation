@@ -120,7 +120,7 @@
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 			return
 		new_custom_price = chosen_price
-		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
+		to_chat(user, span_notice("[src] will now give things a [new_custom_price] [MONEY_SYMBOL] tag."))
 
 /obj/item/universal_scanner/item_ctrl_click(mob/user)
 	. = CLICK_ACTION_BLOCKING
@@ -149,7 +149,7 @@
 			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [new_custom_price] cr. <b>Right-click</b> to change.")
+		. += span_notice("The current custom price is set to [new_custom_price] [MONEY_SYMBOL]. <b>Right-click</b> to change.")
 
 /obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(scanning_mode)
@@ -247,7 +247,7 @@
 	if(isitem(target))
 		var/obj/item/selected_target = target
 		selected_target.custom_price = new_custom_price
-		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] cr."))
+		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] [MONEY_SYMBOL]."))
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu

@@ -141,7 +141,7 @@
 		return
 	contractor_id.registered_account.adjust_money(ransom * 0.35)
 	contractor_id.registered_account.bank_card_talk("We've processed the ransom, agent. \
-		Here's your cut - your balance is now [contractor_id.registered_account.account_balance] cr.", TRUE)
+		Here's your cut - your balance is now [contractor_id.registered_account.account_balance] [MONEY_SYMBOL].", TRUE)
 
 #define VICTIM_EXPERIENCE_START 0
 #define VICTIM_EXPERIENCE_FIRST_HIT 1

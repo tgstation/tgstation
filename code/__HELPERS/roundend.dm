@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		parts += "An average of [station_vault/total_players] [MONEY_NAME] were collected.<br>"
 		log_econ("Roundend [MONEY_NAME_SINGULAR] total: [station_vault] [MONEY_NAME]. Average [MONEY_NAME_CAPITALIZED]: [station_vault/total_players]")
 	if(mr_moneybags)
-		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> cr!</div>"
+		parts += "The most affluent crew member at shift end was <b>[mr_moneybags.account_holder] with [mr_moneybags.account_balance]</b> [MONEY_SYMBOL]!</div>"
 	else
 		parts += "Somehow, nobody made any money this shift! This'll result in some budget cuts...</div>"
 	return parts.Join()
